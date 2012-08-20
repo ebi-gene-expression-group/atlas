@@ -34,6 +34,10 @@
         <java-version>1.7</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
+        <selenium.test.host>localhost:8080</selenium.test.host>
+        <selenium.version>2.25.0</selenium.version>
+        <test.acceptance.pattern>**/acceptance/**</test.acceptance.pattern>
+
     </properties>
 
     <build>
@@ -52,13 +56,12 @@
                 </configuration>
             </plugin>
 
-
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12.2</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/*IT.java</exclude>
+                        <exclude>${test.acceptance.pattern}</exclude>
                     </excludes>
                 </configuration>
                 <dependencies>
@@ -73,6 +76,17 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.12</version>
+                <configuration>
+                    <includes>
+                        <include>${test.acceptance.pattern}</include>
+                    </includes>
+                    <systemProperties>
+                        <property>
+                            <name>selenium.test.host</name>
+                            <value>${selenium.test.host}</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -89,6 +103,7 @@
 
     <dependencies>
         <!--Spring dependencies-->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -103,9 +118,9 @@
         </dependency>
 
         <!--
-                    Bean Factory and JavaBeans utilities (depends on spring-core)
-                    Define this if you use Spring Bean APIs (org.springframework.beans.*)
-                -->
+            Bean Factory and JavaBeans utilities (depends on spring-core)
+            Define this if you use Spring Bean APIs (org.springframework.beans.*)
+        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -113,13 +128,35 @@
         </dependency>
 
         <!--
-                    Application Context (depends on spring-core, spring-expression, spring-aop, spring-beans)
-                    This is the central artifact for Spring's Dependency Injection Container and is generally always defined
-                -->
+            Application Context (depends on spring-core, spring-expression, spring-aop, spring-beans)
+            This is the central artifact for Spring's Dependency Injection Container and is generally always defined
+        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${org.springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!-- Test -->
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.0</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -130,9 +167,17 @@
         </dependency>
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -164,6 +209,21 @@
         Please download and install those yourself.
         -->
     </repositories>
+
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshots</name>
+            <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <distributionManagement>
         <repository>

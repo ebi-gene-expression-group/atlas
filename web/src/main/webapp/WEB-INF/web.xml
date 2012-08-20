@@ -41,18 +41,23 @@
     </listener>
 
 
-     <!--Spring MVC Services Servlet-->
+    <welcome-file-list>
+        <welcome-file>experiment.html</welcome-file>
+    </welcome-file-list>
+
+    <!-- Spring MVC Services Servlet -->
     <servlet>
-    <servlet-name>services</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-    </servlet>
-
-
-    <servlet-mapping>
-            <servlet-name>services</servlet-name>
-            <url-pattern>/</url-pattern>
-        </servlet-mapping>
+     <servlet-name>services</servlet-name>
+     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+     <load-on-startup>1</load-on-startup>
+     </servlet>
+ 
+ 
+     <servlet-mapping>
+             <servlet-name>services</servlet-name>
+             <url-pattern>/</url-pattern>
+         </servlet-mapping>
+  
 
 
 </web-app>
