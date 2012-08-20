@@ -1,10 +1,7 @@
-package model;
+package uk.ac.ebi.atlas.model;
 
 import junitx.extensions.EqualsHashCodeTestCase;
 
-/**
- * Date: 17/08/2012
- */
 public class FactorValueEqualsHashCodeTest extends EqualsHashCodeTestCase {
 
     public FactorValueEqualsHashCodeTest(String name) {

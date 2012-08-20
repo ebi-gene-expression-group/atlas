@@ -1,11 +1,8 @@
-package model;
+package uk.ac.ebi.atlas.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Date: 17/08/2012
- */
 public class ExpressionLevel {
 
     private String identifier;

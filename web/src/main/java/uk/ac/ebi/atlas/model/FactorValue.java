@@ -1,8 +1,5 @@
-package model;
+package uk.ac.ebi.atlas.model;
 
-/**
- * Date: 17/08/2012
- */
 public class FactorValue {
 
     private String factor;
