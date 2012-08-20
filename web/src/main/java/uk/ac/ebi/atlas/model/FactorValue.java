@@ -19,6 +19,10 @@ public class FactorValue {
         return value;
     }
 
+    public String getDisplayName() {
+        return factor + ":" + value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,4 +42,5 @@ public class FactorValue {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
+
 }

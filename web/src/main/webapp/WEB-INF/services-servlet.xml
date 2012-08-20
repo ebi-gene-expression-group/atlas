@@ -10,7 +10,7 @@
 
     <mvc:default-servlet-handler/>
 
-    <context:component-scan base-package="uk.ac.ebi.atlas.services"/>
+    <context:component-scan base-package="uk.ac.ebi.atlas.controllers"/>
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="order" value="1"/>
@@ -37,8 +37,8 @@
                 <!--entry key="xml" value="application/xml"/-->
                 <entry key="json" value="application/json"/>
                 <entry key="html" value="text/html"/>
-                <entry key="csv" value="text/csv" />
-                <entry key="tsv" value="text/tab-separated-values" />
+                <entry key="csv" value="text/csv"/>
+                <entry key="tsv" value="text/tab-separated-values"/>
             </map>
         </property>
         <property name="defaultContentType" value="text/html"/>

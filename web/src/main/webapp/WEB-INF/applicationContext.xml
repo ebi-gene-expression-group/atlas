@@ -9,5 +9,6 @@
 
     <context:annotation-config/>
 
+    <bean id="dummyExpressionService" class="uk.ac.ebi.atlas.services.DummyExpressionService"/>
 
 </beans>
