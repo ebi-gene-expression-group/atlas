@@ -1,10 +1,16 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import com.google.common.io.Files;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-public abstract class AtlasPage<T extends LoadableComponent<T>>  extends LoadableComponent<T> {
+import java.io.File;
+
+public abstract class AtlasPage<T extends LoadableComponent<T>>  extends LoadableComponent<T>{
 
     protected WebDriver driver;
 

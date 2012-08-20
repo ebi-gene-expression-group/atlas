@@ -23,7 +23,8 @@ public class VisualizeTopTenExpressionLevels {
 
     @Test
     public void titleShallBeExperiment(){
-    	assertThat(driver.getTitle(), is(subject.getTitle()));
+        String title = driver.getTitle();
+    	assertThat(title, is(subject.getTitle()));
     }
 
     @Test
