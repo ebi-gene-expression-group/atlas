@@ -37,7 +37,7 @@
 
 
     <build>
-        <finalName>web-1.0-SNAPSHOT</finalName>
+        <finalName>atlas</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

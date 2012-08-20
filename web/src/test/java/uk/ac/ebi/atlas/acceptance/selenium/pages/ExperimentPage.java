@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class ExperimentPage  extends AtlasPage {
 
-    private static final String PAGE_URI = "/experiment.html";
+    private static final String PAGE_URI = "/atlas/experiment.html";
 
     @FindBy(id = "topTenExpressionLevels")
     WebElement tableElement;
