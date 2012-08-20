@@ -50,4 +50,13 @@ public class ExpressionLevel {
         result = 31 * result + rpkm;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "ExpressionLevel{" +
+                "identifier='" + identifier + '\'' +
+                ", rpkm=" + rpkm +
+                ", factorValues=" + factorValues +
+                '}';
+    }
 }
