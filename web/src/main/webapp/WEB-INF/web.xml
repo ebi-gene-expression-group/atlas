@@ -41,6 +41,10 @@
     </listener>
 
 
+    <welcome-file-list>
+        <welcome-file>experiment.html</welcome-file>
+    </welcome-file-list>
+
     <!-- Spring MVC Services Servlet -->
     <!--<servlet>-->
     <!--<servlet-name>services</servlet-name>-->
