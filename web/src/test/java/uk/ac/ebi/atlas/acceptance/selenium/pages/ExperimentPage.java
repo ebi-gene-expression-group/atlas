@@ -13,9 +13,9 @@ import static org.junit.Assert.assertThat;
 
 public class ExperimentPage extends AtlasPage {
 
-    private static final String PAGE_URI = "/atlas/experiment.html";
+    private static final String PAGE_URI = "/atlas/experiment";
 
-    @FindBy(id = "topTenExpressionLevels")
+    @FindBy(id = "expressionTable")
     WebElement tableElement;
 
 
@@ -33,7 +33,7 @@ public class ExperimentPage extends AtlasPage {
     }
 
     public String getTitle() {
-        return driver.getTitle();
+        return "Experiment";
     }
 
     @Override

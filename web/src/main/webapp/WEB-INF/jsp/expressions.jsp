@@ -10,9 +10,11 @@
 
 <jsp:useBean id="expressions" type="java.util.List" scope="request"/>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
-
-
-<display:table name="${expressions}" id="expression">
+<head>
+    <title>Experiment</title>
+</head>
+<body>
+<display:table name="${expressions}" id="expressionTable">
 
     <display:column title="Identifier" property="identifier"/>
 
@@ -24,5 +26,5 @@
 
     <display:column title="RPKM" property="rpkm"/>
 </display:table>
-
+</body>
 </html>
