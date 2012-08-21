@@ -29,7 +29,7 @@ public class VisualizeTopTenExpressionLevels {
 
     @Test
     public void verifyMostExpressedTranscriptId(){
-        assertThat(subject.getMostExpressedTranscriptId(), is("ENST11111"));
+        assertThat(subject.getMostExpressedTranscriptId(), is("ENST1"));
     }
 
     @Test

@@ -10,19 +10,21 @@
 
 <jsp:useBean id="expressions" type="java.util.List" scope="request"/>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
+    <head>
+        <title>Experiment</title>
+    </head>
+    <body>
+        <display:table name="${expressions}" id="expressionTable">
 
+            <display:column title="Identifier" property="identifier"/>
 
-<display:table name="${expressions}" id="expression">
+            <display:column title="Conditions">
+                <c:forEach var="factor" items="${expression.factorValues}">
+                    <c:out value="${factor.displayName}"/><br/>
+                </c:forEach>
+            </display:column>
 
-    <display:column title="Identifier" property="identifier"/>
-
-    <display:column title="Conditions">
-        <c:forEach var="factor" items="${expression.factorValues}">
-            <c:out value="${factor.displayName}"/><br/>
-        </c:forEach>
-    </display:column>
-
-    <display:column title="RPKM" property="rpkm"/>
-</display:table>
-
+            <display:column title="RPKM" property="rpkm"/>
+        </display:table>
+    </body>
 </html>
