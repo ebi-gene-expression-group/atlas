@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 
 
-public class ExperimentPage  extends AtlasPage {
+public class ExperimentPage extends AtlasPage {
 
     private static final String PAGE_URI = "/atlas/experiment.html";
 
@@ -19,21 +19,21 @@ public class ExperimentPage  extends AtlasPage {
     WebElement tableElement;
 
 
-    public ExperimentPage(WebDriver driver){
+    public ExperimentPage(WebDriver driver) {
         super(driver);
     }
 
     public int getTableRowCount() {
-       List<WebElement> tableRows = tableElement.findElements(By.xpath("tbody/tr"));
-       return tableRows.size();
+        List<WebElement> tableRows = tableElement.findElements(By.xpath("tbody/tr"));
+        return tableRows.size();
     }
-    
+
     public String getMostExpressedTranscriptId() {
-    	return tableElement.findElement(By.xpath("tbody/tr/td[1]")).getText();
-	}
+        return tableElement.findElement(By.xpath("tbody/tr/td[1]")).getText();
+    }
 
     public String getTitle() {
-        return "Experiment Page";
+        return driver.getTitle();
     }
 
     @Override
