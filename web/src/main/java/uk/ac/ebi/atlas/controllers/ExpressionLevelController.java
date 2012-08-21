@@ -15,7 +15,6 @@ public class ExpressionLevelController {
     @RequestMapping("/experiment")
     public String getExpressionLevels(Model model) {
 
-
         model.addAttribute("expressions", expressionLevelService.getExpressionLevels());
         return "expressions";
     }

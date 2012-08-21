@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ExpressionLevel {
+public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
     private String identifier;
 
@@ -17,6 +17,11 @@ public class ExpressionLevel {
         this.rpkm = rpkm;
     }
 
+    public ExpressionLevel(String identifier, int rpkm) {
+        this.rpkm = rpkm;
+        this.identifier = identifier;
+    }
+
     public String getIdentifier() {
         return identifier;
     }
@@ -27,6 +32,10 @@ public class ExpressionLevel {
 
     public int getRpkm() {
         return rpkm;
+    }
+
+    public boolean addFactorValue(FactorValue factorValue) {
+        return this.factorValues.add(factorValue);
     }
 
     @Override
@@ -58,5 +67,20 @@ public class ExpressionLevel {
                 ", rpkm=" + rpkm +
                 ", factorValues=" + factorValues +
                 '}';
+    }
+
+    @Override
+    public int compareTo(ExpressionLevel expressionLevel) {
+        final int rpkmDiff = rpkm - expressionLevel.rpkm;
+        if (rpkmDiff != 0) {
+            return rpkmDiff;
+        }
+
+        final int idDiff = identifier.compareTo(expressionLevel.identifier);
+        if (idDiff != 0) {
+            return idDiff;
+        }
+
+        return (factorValues.size() - expressionLevel.factorValues.size());
     }
 }

@@ -10,6 +10,7 @@ public class DummyExpressionService implements ExpressionLevelService {
 
     @Override
     public Collection<ExpressionLevel> getExpressionLevels() {
+
         List<ExpressionLevel> expressionLevels = new ArrayList<>();
 
         Set<FactorValue> factorValues1 = new HashSet<>();
