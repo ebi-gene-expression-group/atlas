@@ -81,6 +81,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
             return idDiff;
         }
 
+        //ToDo: decide if we need to sort by factor/factor value
         return (factorValues.size() - expressionLevel.factorValues.size());
     }
 }

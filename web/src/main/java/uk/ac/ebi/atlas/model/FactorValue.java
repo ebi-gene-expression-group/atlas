@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
-public class FactorValue {
+public class FactorValue implements Comparable<FactorValue> {
 
     private String factor;
 
@@ -43,4 +43,12 @@ public class FactorValue {
         return result;
     }
 
+    @Override
+    public int compareTo(FactorValue fv) {
+        int factorCompare = factor.compareTo(fv.factor);
+        if (factorCompare != 0) {
+            return factorCompare;
+        }
+        return value.compareTo(fv.value);
+    }
 }
