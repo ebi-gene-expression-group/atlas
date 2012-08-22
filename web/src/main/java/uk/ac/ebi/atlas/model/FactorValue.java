@@ -1,14 +1,21 @@
 package uk.ac.ebi.atlas.model;
 
+import java.util.Objects;
+
+import static com.google.common.base.Objects.toStringHelper;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class FactorValue implements Comparable<FactorValue> {
+
+    public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private String factor;
 
     private String value;
 
     public FactorValue(String factor, String value) {
-        this.factor = factor;
-        this.value = value;
+        this.factor = checkNotNull(factor);
+        this.value = checkNotNull(value);
     }
 
     public String getFactor() {
@@ -19,36 +26,39 @@ public class FactorValue implements Comparable<FactorValue> {
         return value;
     }
 
-    public String getDisplayName() {
-        return factor + ":" + value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        FactorValue that = (FactorValue) o;
-
-        if (factor != null ? !factor.equals(that.factor) : that.factor != null) return false;
-        if (value != null ? !value.equals(that.value) : that.value != null) return false;
-
-        return true;
+    public String getDisplayString() {
+        return factor.concat(FACTOR_VALUE_SEPARATOR)
+                     .concat(value);
     }
 
     @Override
     public int hashCode() {
-        int result = factor != null ? factor.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
+        return Objects.hash(factor, value);
     }
 
     @Override
-    public int compareTo(FactorValue fv) {
-        int factorCompare = factor.compareTo(fv.factor);
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FactorValue other = (FactorValue) obj;
+        return Objects.equals(this.factor, other.factor) && Objects.equals(this.value, other.value);
+    }
+
+    @Override
+    public String toString(){
+        return toStringHelper(this).addValue(getDisplayString()).toString();
+    }
+
+    @Override
+    public int compareTo(FactorValue factorValue) {
+        int factorCompare = factor.compareTo(factorValue.factor);
         if (factorCompare != 0) {
             return factorCompare;
         }
-        return value.compareTo(fv.value);
+        return value.compareTo(factorValue.value);
     }
 }

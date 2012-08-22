@@ -1,39 +1,65 @@
 package uk.ac.ebi.atlas.model;
 
+import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.util.ExpressionLevelBuilder;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 
 public class ExpressionLevelCompareTest {
 
-    @Test
-    public void testCompareEqualObjects() {
-        ExpressionLevel instance1 = ExpressionLevelBuilder.createExpressionLevelInstance("id", 100, new FactorValue("f1", "v1"), new FactorValue("f2", "v2"));
-        ExpressionLevel instance2 = ExpressionLevelBuilder.createExpressionLevelInstance("id", 100, new FactorValue("f1", "v1"), new FactorValue("f2", "v2"));
+    private ExpressionLevel subject;
 
-        assertEquals(0, instance1.compareTo(instance2));
-        assertEquals(0, instance2.compareTo(instance1));
+    @Before
+    public void initializeSubject(){
+        subject = new ExpressionLevel("id", 100).addFactorValue("f1", "v1")
+                                                 .addFactorValue("f2", "v2");
     }
 
     @Test
-    public void testCompareRPKMDiff() {
-        ExpressionLevel instance1 = ExpressionLevelBuilder.createExpressionLevelInstance("id", 100, new FactorValue("f1", "v1"), new FactorValue("f2", "v2"));
-        ExpressionLevel instance2 = ExpressionLevelBuilder.createExpressionLevelInstance("id", 101, new FactorValue("f1", "v1"), new FactorValue("f2", "v2"));
+    public void compareToShouldReturn0WhenObjectsAreEquals() {
+        //given
+        ExpressionLevel other = new ExpressionLevel("id", 100).addFactorValue("f1", "v1")
+                                                              .addFactorValue("f2", "v2");
+        //given
+        assertThat(subject.compareTo(other), is(0));
+        //and
+        assertThat(other.compareTo(subject), is(0));
+    }
 
-        assertTrue(instance1.compareTo(instance2) < 0);
-        assertTrue(instance2.compareTo(instance1) > 0);
+    @Test
+    public void compareToShouldReturnNegativeIntegerWhenRPKMIsLowerThanOther() {
+        //given
+        ExpressionLevel other = new ExpressionLevel("id", 101).addFactorValue("f1", "v1")
+                                                              .addFactorValue("f2", "v2");
+        //then
+        assertThat(subject.compareTo(other), is(lessThan(0)));
+    }
+
+    @Test
+    public void compareToShouldReturnPositiveIntegerWhenRPKMIsGreaterThanOther() {
+        //given
+        ExpressionLevel other = new ExpressionLevel("id", 99).addFactorValue("f1", "v1")
+                                                             .addFactorValue("f2", "v2");
+        //then
+        assertThat(subject.compareTo(other), is(greaterThan(0)));
     }
 
 
     @Test
-    public void testCompareIDDiff() {
-        ExpressionLevel instance1 = ExpressionLevelBuilder.createExpressionLevelInstance("abc", 100, new FactorValue("f1", "v1"), new FactorValue("f2", "v2"));
-        ExpressionLevel instance2 = ExpressionLevelBuilder.createExpressionLevelInstance("def", 100, new FactorValue("f1", "v1"), new FactorValue("f2", "v2"));
+    public void givenEqualRpkmCompareToShouldBeCoherentWithAlphabeticOrderOfId() {
 
-        assertTrue(instance1.compareTo(instance2) < 0);
-        assertTrue(instance2.compareTo(instance1) > 0);
+        //given
+        ExpressionLevel other = new ExpressionLevel("zzId", 100).addFactorValue("f1", "v1")
+                                                               .addFactorValue("f2", "v2");
+        //then
+        assertThat(subject.compareTo(other), is(lessThan(0)));
+
+        //given
+        other = new ExpressionLevel("aaId", 100).addFactorValue("f1", "v1")
+                                                .addFactorValue("f2", "v2");
+        //then
+        assertThat(subject.compareTo(other), is(greaterThan(0)));
     }
 }

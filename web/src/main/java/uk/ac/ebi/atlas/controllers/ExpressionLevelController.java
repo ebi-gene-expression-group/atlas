@@ -26,6 +26,6 @@ public class ExpressionLevelController {
 
     @RequestMapping("/experiment")
     public String showExpressionLevels() {
-        return "expressions";
+        return "experiment";
     }
 }

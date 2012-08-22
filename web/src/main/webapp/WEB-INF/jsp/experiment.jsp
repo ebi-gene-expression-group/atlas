@@ -21,7 +21,7 @@
         <display:column title="Identifier" property="identifier"/>
         <display:column title="Conditions">
             <c:forEach var="factor" items="${expression.factorValues}">
-                <c:out value="${factor.displayName}"/><br/>
+                <c:out value="${factor.displayString}"/><br/>
             </c:forEach>
         </display:column>
 
