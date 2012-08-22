@@ -119,6 +119,13 @@
     <!-- Project dependencies -->
     <dependencies>
 
+        <!--limpopo MAGET-Tab parser-->
+        <dependency>
+            <groupId>uk.ac.ebi.arrayexpress2</groupId>
+            <artifactId>limpopo</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
