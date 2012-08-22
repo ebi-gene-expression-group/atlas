@@ -3,8 +3,10 @@ package uk.ac.ebi.atlas.services;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
 import uk.ac.ebi.atlas.model.FactorValue;
 
+import javax.inject.Named;
 import java.util.*;
 
+@Named("dummyExpressionService")
 public class DummyExpressionService implements ExpressionLevelService {
 
 

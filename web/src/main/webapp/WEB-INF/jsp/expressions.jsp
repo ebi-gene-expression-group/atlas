@@ -10,15 +10,15 @@
 
 <jsp:useBean id="expressions" type="java.util.List" scope="request"/>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
+
 <head>
     <title>Experiment</title>
 </head>
+
 <body>
-<div id="expressionTable">
-    <display:table name="${expressions}" id="expression">
+    <display:table name="${expressions}" htmlId="expressionTable" id="expression">
 
         <display:column title="Identifier" property="identifier"/>
-
         <display:column title="Conditions">
             <c:forEach var="factor" items="${expression.factorValues}">
                 <c:out value="${factor.displayName}"/><br/>
@@ -27,6 +27,5 @@
 
         <display:column title="RPKM" property="rpkm"/>
     </display:table>
-</div>
 </body>
 </html>

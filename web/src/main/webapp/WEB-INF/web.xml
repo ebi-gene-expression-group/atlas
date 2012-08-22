@@ -40,9 +40,8 @@
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
-
     <welcome-file-list>
-        <welcome-file>experiment.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- Spring MVC Services Servlet -->
