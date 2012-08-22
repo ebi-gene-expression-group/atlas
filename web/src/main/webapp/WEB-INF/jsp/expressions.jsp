@@ -14,17 +14,19 @@
     <title>Experiment</title>
 </head>
 <body>
-<display:table name="${expressions}" id="expressionTable">
+<div id="expressionTable">
+    <display:table name="${expressions}" id="expression">
 
-    <display:column title="Identifier" property="identifier"/>
+        <display:column title="Identifier" property="identifier"/>
 
-    <display:column title="Conditions">
-        <c:forEach var="factor" items="${expression.factorValues}">
-            <c:out value="${factor.displayName}"/><br/>
-        </c:forEach>
-    </display:column>
+        <display:column title="Conditions">
+            <c:forEach var="factor" items="${expression.factorValues}">
+                <c:out value="${factor.displayName}"/><br/>
+            </c:forEach>
+        </display:column>
 
-    <display:column title="RPKM" property="rpkm"/>
-</display:table>
+        <display:column title="RPKM" property="rpkm"/>
+    </display:table>
+</div>
 </body>
 </html>

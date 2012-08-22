@@ -23,7 +23,7 @@ public class VisualizeTopTenExpressionLevels {
 
     @Test
     public void titleShallBeExperiment() {
-        assertThat(subject.getTitle(), is("Experiment Page"));
+        assertThat(subject.getTitle(), is("Experiment"));
     }
 
     @Test

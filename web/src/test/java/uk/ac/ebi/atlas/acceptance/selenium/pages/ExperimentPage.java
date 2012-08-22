@@ -24,16 +24,16 @@ public class ExperimentPage extends AtlasPage {
     }
 
     public int getTableRowCount() {
-        List<WebElement> tableRows = tableElement.findElements(By.xpath("tbody/tr"));
+        List<WebElement> tableRows = tableElement.findElements(By.xpath("table/tbody/tr"));
         return tableRows.size();
     }
 
     public String getMostExpressedTranscriptId() {
-        return tableElement.findElement(By.xpath("tbody/tr/td[1]")).getText();
+        return tableElement.findElement(By.xpath("table/tbody/tr/td[1]")).getText();
     }
 
     public String getTitle() {
-        return "Experiment";
+        return driver.getTitle();
     }
 
     @Override
