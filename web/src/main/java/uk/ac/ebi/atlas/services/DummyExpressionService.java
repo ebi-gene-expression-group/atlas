@@ -4,14 +4,17 @@ import uk.ac.ebi.atlas.model.ExpressionLevel;
 import uk.ac.ebi.atlas.model.FactorValue;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Named("dummyExpressionService")
 public class DummyExpressionService implements ExpressionLevelService {
 
 
     @Override
-    public Collection<ExpressionLevel> getExpressionLevels() {
+    public List<ExpressionLevel> getExpressionLevels() {
 
         List<ExpressionLevel> expressionLevels = new ArrayList<>();
 

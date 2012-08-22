@@ -1,11 +1,13 @@
 package uk.ac.ebi.atlas.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.ExpressionLevel;
 import uk.ac.ebi.atlas.services.ExpressionLevelService;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Controller
 public class ExpressionLevelController {
@@ -17,10 +19,13 @@ public class ExpressionLevelController {
         this.expressionLevelService = expressionLevelService;
     }
 
-    @RequestMapping("/experiment")
-    public String getExpressionLevels(Model model) {
+    @ModelAttribute("expressions")
+    public List<ExpressionLevel> getExpressionLevels(){
+        return expressionLevelService.getExpressionLevels();
+    }
 
-        model.addAttribute("expressions", expressionLevelService.getExpressionLevels());
+    @RequestMapping("/experiment")
+    public String showExpressionLevels() {
         return "expressions";
     }
 }
