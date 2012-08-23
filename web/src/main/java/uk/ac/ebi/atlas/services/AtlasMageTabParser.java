@@ -61,7 +61,8 @@ public class AtlasMageTabParser {
         for (ScanNode scanNode : scanNodes) {
 
             if (scanNode.comments.keySet().contains(ENA_RUN)) {
-                buildExperimentRun(scanNode);
+                ExperimentRun run = buildExperimentRun(scanNode);
+                experimentRuns.put(run.getAccession(), run);
             }
         }
 
@@ -69,7 +70,7 @@ public class AtlasMageTabParser {
     }
 
 
-    protected void buildExperimentRun(ScanNode scanNode) {
+    protected ExperimentRun buildExperimentRun(ScanNode scanNode) {
         ExperimentRun run = new ExperimentRun(scanNode.comments.get(ENA_RUN));
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
@@ -84,7 +85,7 @@ public class AtlasMageTabParser {
             run.addFactorValue(factorValueAttribute.getAttributeType(), factorValueAttribute.getAttributeValue());
         }
 
-        experimentRuns.put(run.getAccession(), run);
+        return run;
     }
 
 

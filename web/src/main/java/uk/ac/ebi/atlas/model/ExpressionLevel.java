@@ -14,17 +14,17 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
     private Set<FactorValue> factorValues = new HashSet<>();
 
-    private int rpkm;
+    private double rpkm;
 
-    public ExpressionLevel(String identifier, int rpkm, Collection<FactorValue> factorValues) {
+    public ExpressionLevel(String identifier, double rpkm, Collection<FactorValue> factorValues) {
         this.identifier = checkNotNull(identifier);
         this.rpkm = rpkm;
-        if (factorValues != null){
+        if (factorValues != null) {
             this.factorValues.addAll(factorValues);
         }
     }
 
-    public ExpressionLevel(String identifier, int rpkm) {
+    public ExpressionLevel(String identifier, double rpkm) {
         this(identifier, rpkm, null);
     }
 
@@ -36,7 +36,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         return factorValues;
     }
 
-    public int getRpkm() {
+    public double getRpkm() {
         return rpkm;
     }
 
@@ -75,7 +75,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
     @Override
     public int compareTo(ExpressionLevel expressionLevel) {
-        final int rpkmDiff = rpkm - expressionLevel.rpkm;
+        final int rpkmDiff = Double.compare(rpkm, expressionLevel.rpkm);
         if (rpkmDiff != 0) {
             return rpkmDiff;
         }
