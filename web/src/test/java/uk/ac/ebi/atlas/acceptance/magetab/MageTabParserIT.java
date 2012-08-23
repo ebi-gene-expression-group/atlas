@@ -54,7 +54,7 @@ public class MageTabParserIT {
 
     @Test
     public void testParseRunsReturnsMoreThanOneRun() {
-        Map<String, ExperimentRun> experimentRunMap = subject.parseRuns();
+        Map<String, ExperimentRun> experimentRunMap = subject.parseExperimentRuns();
         assertThat(experimentRunMap.size(), is(48));
     }
 

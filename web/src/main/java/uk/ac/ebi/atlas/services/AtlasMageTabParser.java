@@ -30,9 +30,11 @@ public class AtlasMageTabParser {
 
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
+
     public AtlasMageTabParser(MAGETABParser parser) {
         this.parser = parser;
     }
+
 
     public AtlasMageTabParser parse(URL url) throws ParseException {
         investigation = parser.parse(url);
@@ -40,9 +42,11 @@ public class AtlasMageTabParser {
         return this;
     }
 
+
     public Experiment getExperiment() {
         return experiment;
     }
+
 
     public String[] getSDRFHeaders(InputStream input) throws ParseException {
         SDRFParser sdrfParser = new SDRFParser();
@@ -52,35 +56,42 @@ public class AtlasMageTabParser {
     }
 
 
-    public Map<String, ExperimentRun> parseRuns() {
+    public Map<String, ExperimentRun> parseExperimentRuns() {
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
         for (ScanNode scanNode : scanNodes) {
 
             if (scanNode.comments.keySet().contains(ENA_RUN)) {
-                ExperimentRun run = new ExperimentRun(scanNode.comments.get(ENA_RUN));
-
-                Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
-
-                if (assayNodes.size() != 1) {
-                    throw new IllegalStateException("No assay corresponds to ENA run " + run.getAccession());
-                }
-
-                AssayNode assayNode = assayNodes.iterator().next();
-
-                for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
-                    run.addFactorValue(factorValueAttribute.getAttributeType(), factorValueAttribute.getAttributeValue());
-                }
-
-                experimentRuns.put(run.getAccession(), run);
+                buildExperimentRun(scanNode);
             }
         }
 
         return experimentRuns;
     }
 
+
+    protected void buildExperimentRun(ScanNode scanNode) {
+        ExperimentRun run = new ExperimentRun(scanNode.comments.get(ENA_RUN));
+
+        Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
+
+        if (assayNodes.size() != 1) {
+            throw new IllegalStateException("No assay corresponds to ENA run " + run.getAccession());
+        }
+
+        AssayNode assayNode = assayNodes.iterator().next();
+
+        for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
+            run.addFactorValue(factorValueAttribute.getAttributeType(), factorValueAttribute.getAttributeValue());
+        }
+
+        experimentRuns.put(run.getAccession(), run);
+    }
+
+
     public Collection<ScanNode> getScanNodes() {
         return investigation.SDRF.getNodes(ScanNode.class);
     }
+
 
     public ScanNode getScanNode(String nodeName) {
         return investigation.SDRF.getNode(nodeName, ScanNode.class);
