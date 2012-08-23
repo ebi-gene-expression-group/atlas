@@ -9,11 +9,15 @@ import java.io.InputStream;
 
 public class MageTabParser {
 
+    private IDFParser idfParser;
+
+    public MageTabParser(IDFParser idfParser){
+        this.idfParser = idfParser;
+    }
 
 
     public Experiment parse(InputStream inputStream) throws ParseException {
-        IDFParser parser = new IDFParser();
-        IDF idf = parser.parse(inputStream);
+        IDF idf = idfParser.parse(inputStream);
 
         return new Experiment(idf.accession);
 
