@@ -32,6 +32,11 @@ public class VisualizeTopTenExpressionLevels {
     }
 
     @Test
+    public void verifyRPKMForMostExpressedTranscriptId() {
+        assertThat(subject.getMostExpressedRPKM(), is("100.0001"));
+    }
+
+    @Test
     public void numberOfRowsInExpressionLevelsTableShallBeTen() {
         assertThat(subject.getTableRowCount(), is(10));
     }

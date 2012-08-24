@@ -32,6 +32,10 @@ public class ExperimentPage extends AtlasPage {
         return tableElement.findElement(By.xpath("tbody/tr/td[1]")).getText();
     }
 
+    public String getMostExpressedRPKM() {
+        return tableElement.findElement(By.xpath("tbody/tr/td[3]")).getText();
+    }
+
     public String getTitle() {
         return driver.getTitle();
     }

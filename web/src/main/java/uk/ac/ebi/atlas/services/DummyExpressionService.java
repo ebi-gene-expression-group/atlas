@@ -22,7 +22,7 @@ public class DummyExpressionService implements ExpressionLevelService {
         factorValues1.add(new FactorValue("f1", "v1"));
         factorValues1.add(new FactorValue("f2", "v2"));
 
-        expressionLevels.add(new ExpressionLevel("ENST1", 100, factorValues1));
+        expressionLevels.add(new ExpressionLevel("ENST1", 100.0001, factorValues1));
 
         Set<FactorValue> factorValues2 = new HashSet<>();
         factorValues2.add(new FactorValue("f2_1", "v_2_1"));
