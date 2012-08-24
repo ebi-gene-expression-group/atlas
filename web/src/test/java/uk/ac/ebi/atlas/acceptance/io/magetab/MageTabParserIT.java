@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.magetab;
+package uk.ac.ebi.atlas.acceptance.io.magetab;
 
 import org.junit.Before;
 import org.junit.Test;

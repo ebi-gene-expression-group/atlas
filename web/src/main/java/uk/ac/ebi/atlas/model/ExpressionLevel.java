@@ -10,26 +10,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
-    private String identifier;
+    private String transcriptId;
 
     private Set<FactorValue> factorValues = new HashSet<>();
 
     private double rpkm;
 
-    public ExpressionLevel(String identifier, double rpkm, Collection<FactorValue> factorValues) {
-        this.identifier = checkNotNull(identifier);
+    public ExpressionLevel(String transcriptId, double rpkm, Collection<FactorValue> factorValues) {
+        this.transcriptId = checkNotNull(transcriptId);
         this.rpkm = rpkm;
         if (factorValues != null) {
             this.factorValues.addAll(factorValues);
         }
     }
 
-    public ExpressionLevel(String identifier, double rpkm) {
-        this(identifier, rpkm, null);
+    public ExpressionLevel(String transcriptId, double rpkm) {
+        this(transcriptId, rpkm, null);
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public String getTranscriptId() {
+        return transcriptId;
     }
 
     public Set<FactorValue> getFactorValues() {
@@ -47,7 +47,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(identifier, factorValues, rpkm);
+        return Objects.hash(transcriptId, factorValues, rpkm);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         }
         final ExpressionLevel other = (ExpressionLevel) obj;
 
-        return Objects.equals(this.identifier, other.identifier)
+        return Objects.equals(this.transcriptId, other.transcriptId)
                 && Objects.equals(this.factorValues, other.factorValues)
                 && Objects.equals(this.rpkm, other.rpkm);
     }
@@ -68,7 +68,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
     @Override
     public String toString() {
         return toStringHelper(this)
-                .add("identifier", identifier)
+                .add("transcriptId", transcriptId)
                 .add("rpkm", rpkm)
                 .add("factorValues", factorValues).toString();
     }
@@ -80,7 +80,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
             return rpkmDiff;
         }
 
-        return identifier.compareTo(expressionLevel.identifier);
+        return transcriptId.compareTo(expressionLevel.transcriptId);
 
     }
 }

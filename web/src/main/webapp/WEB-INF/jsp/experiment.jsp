@@ -18,7 +18,7 @@
 <body>
     <display:table name="${expressions}" htmlId="expressionTable" id="expression">
 
-        <display:column title="Identifier" property="identifier"/>
+        <display:column title="Transcript id" property="transcriptId"/>
         <display:column title="Conditions">
             <c:forEach var="factor" items="${expression.factorValues}">
                 <c:out value="${factor.displayString}"/><br/>
