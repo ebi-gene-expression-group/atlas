@@ -34,7 +34,7 @@ public class MageTabParserIT {
         URL resource = MageTabParserIT.class.getResource("E-MTAB-513.idf.txt");
 
         MAGETABParser mageTabParser = new MAGETABParser();
-        subject = new AtlasMageTabParser(mageTabParser);
+        subject = AtlasMageTabParser(mageTabParser);
         subject.parse(resource);
     }
 

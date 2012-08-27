@@ -4,8 +4,8 @@ import uk.ac.ebi.atlas.model.ExpressionLevel;
 
 import java.io.Closeable;
 
-public interface ExpressionLevelStream extends Closeable {
+public interface ObjectInputStream<E> extends Closeable {
 
-    public ExpressionLevel readNext();
+    public E readNext();
 
 }
