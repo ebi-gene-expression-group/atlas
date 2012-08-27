@@ -1,15 +1,10 @@
 package uk.ac.ebi.atlas.services;
 
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-
-
-
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class MageTabParserTest {
 
 /*
-    private AtlasMageTabParser subject;
+    private MageTabInvestigation subject;
 
     @Mock
     private InputStream inputStreamMock;
@@ -28,7 +23,7 @@ public class MageTabParserTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new AtlasMageTabParser(mageTabParserMock);
+        subject = new MageTabInvestigation(mageTabParserMock);
     }
 
     @Test

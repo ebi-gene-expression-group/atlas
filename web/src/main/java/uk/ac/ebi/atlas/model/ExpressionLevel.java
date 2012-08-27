@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,18 +8,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
+    private static final String UNKNOWN_EXPERIMENT_RUN_ACCESSION = "UNKNOWN_EXPERIMENT_RUN";
     private String transcriptId;
 
-    private Set<FactorValue> factorValues = new HashSet<>();
+    private ExperimentRun experimentRun;
 
     private double rpkm;
 
-    public ExpressionLevel(String transcriptId, double rpkm, Collection<FactorValue> factorValues) {
+    public ExpressionLevel(String transcriptId, double rpkm, ExperimentRun experimentRun) {
         this.transcriptId = checkNotNull(transcriptId);
-        this.rpkm = rpkm;
-        if (factorValues != null) {
-            this.factorValues.addAll(factorValues);
+        if (experimentRun == null) {
+            experimentRun = new ExperimentRun(UNKNOWN_EXPERIMENT_RUN_ACCESSION);
         }
+        this.experimentRun = experimentRun;
+        this.rpkm = rpkm;
     }
 
     public ExpressionLevel(String transcriptId, double rpkm) {
@@ -32,8 +32,12 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         return transcriptId;
     }
 
+    public String getRunAccession(){
+        return experimentRun.getRunAccession();
+    }
+
     public Set<FactorValue> getFactorValues() {
-        return factorValues;
+        return experimentRun.getFactorValues();
     }
 
     public double getRpkm() {
@@ -41,13 +45,13 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
     }
 
     public ExpressionLevel addFactorValue(String factor, String value) {
-        factorValues.add(new FactorValue(factor, value));
+        experimentRun.addFactorValue(factor, value);
         return this;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transcriptId, factorValues, rpkm);
+        return Objects.hash(transcriptId, experimentRun, rpkm);
     }
 
     @Override
@@ -61,7 +65,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         final ExpressionLevel other = (ExpressionLevel) obj;
 
         return Objects.equals(this.transcriptId, other.transcriptId)
-                && Objects.equals(this.factorValues, other.factorValues)
+                && Objects.equals(this.experimentRun, other.experimentRun)
                 && Objects.equals(this.rpkm, other.rpkm);
     }
 
@@ -70,7 +74,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         return toStringHelper(this)
                 .add("transcriptId", transcriptId)
                 .add("rpkm", rpkm)
-                .add("factorValues", factorValues).toString();
+                .add("experimentRun", experimentRun).toString();
     }
 
     @Override
@@ -79,7 +83,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         if (rpkmDiff != 0) {
             return rpkmDiff;
         }
-
+        //Todo: when compare returns 0 the two objects should be equals, but here equals depends also on factor values...
         return transcriptId.compareTo(expressionLevel.transcriptId);
 
     }

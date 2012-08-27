@@ -22,7 +22,7 @@ public class MageTabInvestigation {
 
     private static final String ENA_RUN = "ENA_RUN";
 
-    public static MageTabInvestigation newInstance(URL url){
+    public static MageTabInvestigation parse(URL url){
         MageTabInvestigation investigation = new MageTabInvestigation(new MAGETABParser());
         return investigation.parseInvestigation(url);
     }
@@ -43,7 +43,7 @@ public class MageTabInvestigation {
     }
 
 
-    public Set<ExperimentRun> parseExperimentRuns() {
+    public Set<ExperimentRun> extractExperimentRuns() {
         Set<ExperimentRun> experimentRuns = new LinkedHashSet<>();
 
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);

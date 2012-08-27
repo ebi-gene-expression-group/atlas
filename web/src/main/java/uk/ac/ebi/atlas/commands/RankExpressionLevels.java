@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
-import uk.ac.ebi.atlas.services.AtlasMageTabParser;
+import uk.ac.ebi.atlas.services.MageTabInvestigation;
 import uk.ac.ebi.atlas.services.ExpressionLevelsCsvReader;
 
 import javax.inject.Named;
@@ -42,8 +42,8 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
             //ToDo: build URL properly...
             URL mageTabURL = buildURL("..." + experimentAccession + "...");
 
-            List<ExperimentRun> experimentRuns =  Lists.newArrayList(AtlasMageTabParser.newInstance(mageTabURL)
-                    .parseExperimentRuns());
+            List<ExperimentRun> experimentRuns =  Lists.newArrayList(MageTabInvestigation.parse(mageTabURL)
+                    .extractExperimentRuns());
             //ToDo: build URL properly...
             URL dataFileURL = buildURL("..." + experimentAccession + "...");
 
@@ -62,8 +62,13 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
     }
 
     protected List<ExpressionLevel> rankExpressionLevels(ExpressionLevelsCsvReader expressionLevelReader) {
-        RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand = new RankStreamingObjects<ExpressionLevel>();
+        RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand = new RankStreamingObjects<ExpressionLevel>(rankingSize);
         return rankStreamingObjectsCommand.apply(expressionLevelReader);
+    }
+
+    public RankExpressionLevels setRankingSize(int rankingSize){
+        this.rankingSize = rankingSize;
+        return this;
     }
 
     private URL buildURL(String experimentAccession) throws IOException{

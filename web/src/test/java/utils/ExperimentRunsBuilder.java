@@ -2,41 +2,25 @@ package utils;
 
 import uk.ac.ebi.atlas.model.ExperimentRun;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ExperimentRunsBuilder {
 
-    int factorValueIndex;
+    private int factorValueIndex;
 
-    public Map<String, ExperimentRun> buildExperimentRuns(String... runAccessions) {
+    public List<ExperimentRun> buildExperimentRuns(String... runAccessions) {
 
-        Map<String, ExperimentRun> runs = new HashMap<>();
+        List<ExperimentRun> runs = new ArrayList<ExperimentRun>();
 
-        for (String runAccession : runAccessions) {
+        for (String runAccession: runAccessions) {
             ExperimentRun run = buildExperimentRun(runAccession);
 
-            runs.put(runAccession, run);
+            runs.add(run);
         }
 
         return runs;
 
     }
-
-    public Map<Integer, ExperimentRun> buildIndexedExperimentRuns(String... runAccessions) {
-
-        Map<Integer, ExperimentRun> runs = new HashMap<>();
-
-        for (String runAccession : runAccessions) {
-            ExperimentRun run = buildExperimentRun(runAccession);
-
-            runs.put(factorValueIndex, run);
-        }
-
-        return runs;
-
-    }
-
 
     private ExperimentRun buildExperimentRun(String runAccession) {
 

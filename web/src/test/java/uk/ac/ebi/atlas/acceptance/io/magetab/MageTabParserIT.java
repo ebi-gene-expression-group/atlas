@@ -2,79 +2,52 @@ package uk.ac.ebi.atlas.acceptance.io.magetab;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.services.AtlasMageTabParser;
+import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.services.MageTabInvestigation;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItem;
 
 public class MageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private static final String RUN_ACCESSION_FIRST = "ERR030872";
 
-    private AtlasMageTabParser subject;
+    private MageTabInvestigation subject;
 
-    private InputStream idfFileinputStream;
 
     @Before
     public void initSubject() throws IOException, ParseException {
-        URL resource = MageTabParserIT.class.getResource("E-MTAB-513.idf.txt");
+        URL mageTabURL = MageTabParserIT.class.getResource("E-MTAB-513.idf.txt");
 
-        MAGETABParser mageTabParser = new MAGETABParser();
-        subject = AtlasMageTabParser(mageTabParser);
-        subject.parse(resource);
+        subject = MageTabInvestigation.parse(mageTabURL);
     }
 
     @Test
-    public void getExperimentTest() throws ParseException {
+    public void parseExperimentRunsReturnsMoreThanOneRun() {
+        Set<ExperimentRun> experimentRuns = subject.extractExperimentRuns();
+        assertThat(experimentRuns.size(), is(48));
+    }
+
+    @Test
+    public void RunsReturnsMoreThanOneRun() {
         //given
-        Experiment experiment = subject.getExperiment();
-
+        Set<ExperimentRun> experimentRuns = subject.extractExperimentRuns();
+        Iterator<ExperimentRun> experimentRunIterator = experimentRuns.iterator();
+        ExperimentRun firstExperimentRun = experimentRunIterator.next();
+        Iterator<FactorValue> factorValueIterator = firstExperimentRun.getFactorValues().iterator();
         //then
-        assertThat(experiment, is(notNullValue()));
-
-        //and
-        assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
-
+        assertThat(firstExperimentRun.getRunAccession(), startsWith("ERR"));
+        assertThat(firstExperimentRun.getFactorValues().size(), is(3));
+        assertThat(factorValueIterator.next(), is(equalTo(new FactorValue("ORGANISMPART","adipose"))));
 
     }
 
-    @Test
-    public void testParseRunsReturnsMoreThanOneRun() {
-        Map<String, ExperimentRun> experimentRunMap = subject.parseExperimentRuns();
-        assertThat(experimentRunMap.size(), is(48));
-    }
-
-    @Test
-    public void testSDRFParser() throws IOException, ParseException {
-        URL resource = MageTabParserIT.class.getResource("E-MTAB-513.sdrf.txt");
-        String[] sdrfHeaders = subject.getSDRFHeaders(resource.openStream());
-
-        assertThat(sdrfHeaders, is(notNullValue()));
-        assertThat(Arrays.asList(sdrfHeaders), hasItem("Factor Value[ORGANISMPART]"));
-    }
-
-    @Test
-    public void testScanNodes() {
-        Collection<ScanNode> scanNodes = subject.getScanNodes();
-        System.out.println("scanNodes = " + scanNodes);
-    }
-
-    @Test
-    public void testScanNode() {
-        ScanNode scanNodes = subject.getScanNode("50bp_PE_mRNA_Seq_FCA_s_3_1_sequence.txt.gz");
-    }
 }

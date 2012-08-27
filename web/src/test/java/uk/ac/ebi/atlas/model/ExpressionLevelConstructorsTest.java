@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +34,7 @@ public class ExpressionLevelConstructorsTest {
     public void constructorShouldHandleNonEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new ExpressionLevel("id1", 1, factorValues);
+        subject = new ExpressionLevel("id1", 1, new ExperimentRun("RUN_ACCESSION", factorValues));
 
         //then
         assertThat(subject.getFactorValues().size(), is(2));
@@ -46,7 +45,7 @@ public class ExpressionLevelConstructorsTest {
     public void constructorShouldHandleEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new ExpressionLevel("id1", 1, new ArrayList<FactorValue>());
+        subject = new ExpressionLevel("id1", 1, new ExperimentRun("RUN_ACCESSION"));
 
         //then
         assertThat(subject.getFactorValues().size(), is(0));

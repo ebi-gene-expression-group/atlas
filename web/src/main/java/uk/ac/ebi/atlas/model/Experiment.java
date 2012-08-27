@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+//ToDo: remove this class, not required and doesn't make sense since we are exposing top tens and experiments are not made of top tens
 public class Experiment implements Iterable<ExpressionLevel> {
 
     private String accession;
