@@ -11,13 +11,16 @@ import uk.ac.ebi.atlas.model.ExpressionLevel;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 //ToDo: rename this class into ExpressionLevelsInputStream, that is more coherent with JDK API and in general is better to avoid names that describe roles (ending in -er -or), they are too generic and introduce functional - dataflow drift
 public class ExpressionLevelsCsvReader implements ObjectInputStream<ExpressionLevel> {
 
     private static final Logger logger = Logger.getLogger(ExpressionLevelsCsvReader.class);
-    public static final int TRANSACTION_ID_COLUMN = 0;
+    public static final int TRANSCRIPT_ID_COLUMN = 0;
 
     private CSVReader csvReader;
 
@@ -36,7 +39,7 @@ public class ExpressionLevelsCsvReader implements ObjectInputStream<ExpressionLe
 
     void initializeBuffer(List<ExperimentRun> experimentRuns) {
         String[] firstLine = readCsvLine();
-        final List<String> orderSpecification = Arrays.asList(ArrayUtils.remove(firstLine, TRANSACTION_ID_COLUMN));
+        final List<String> orderSpecification = Arrays.asList(ArrayUtils.remove(firstLine, TRANSCRIPT_ID_COLUMN));
 
         Collections.sort(experimentRuns, buildExperimentRunComparator(orderSpecification));
         expressionLevelBuffer = new ExpressionLevelsBuffer(experimentRuns);

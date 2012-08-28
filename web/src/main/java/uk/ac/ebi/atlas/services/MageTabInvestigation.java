@@ -11,7 +11,9 @@ import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class MageTabInvestigation {
     private static final Logger logger = Logger.getLogger(MageTabInvestigation.class);
@@ -22,7 +24,7 @@ public class MageTabInvestigation {
 
     private static final String ENA_RUN = "ENA_RUN";
 
-    public static MageTabInvestigation parse(URL url){
+    public static MageTabInvestigation parse(URL url) {
         MageTabInvestigation investigation = new MageTabInvestigation(new MAGETABParser());
         return investigation.parseInvestigation(url);
     }

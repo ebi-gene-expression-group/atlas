@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-public class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>>{
+public class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
 
     private static final int DEFAULT_SIZE = 100;
 
     private int size;
 
-    public RankStreamingObjects(){
+    public RankStreamingObjects() {
         this(DEFAULT_SIZE);
     }
 
-    public RankStreamingObjects(int size){
+    public RankStreamingObjects(int size) {
         this.size = size;
     }
 
@@ -27,12 +27,10 @@ public class RankStreamingObjects<E extends Comparable<E>> implements Function<O
         Queue<E> topTenObjects = MinMaxPriorityQueue.maximumSize(size).create();
 
         E object;
-        do{
-            object = objectStream.readNext();
-            if (object !=null) {
-                topTenObjects.add(object);
-            }
-        } while (object != null);
-        return new ArrayList<E>(topTenObjects);
+        while ((object = objectStream.readNext()) != null) {
+            topTenObjects.add(object);
+        }
+
+        return new ArrayList<>(topTenObjects);
     }
 }
