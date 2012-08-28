@@ -9,11 +9,11 @@ import uk.ac.ebi.atlas.services.MageTabInvestigation;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MageTabParserIT {
 

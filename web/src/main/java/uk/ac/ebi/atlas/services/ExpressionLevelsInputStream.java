@@ -16,23 +16,23 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-//ToDo: rename this class into ExpressionLevelsInputStream, that is more coherent with JDK API and in general is better to avoid names that describe roles (ending in -er -or), they are too generic and introduce functional - dataflow drift
-public class ExpressionLevelsCsvReader implements ObjectInputStream<ExpressionLevel> {
+public class ExpressionLevelsInputStream implements ObjectInputStream<ExpressionLevel> {
 
-    private static final Logger logger = Logger.getLogger(ExpressionLevelsCsvReader.class);
+    private static final Logger logger = Logger.getLogger(ExpressionLevelsInputStream.class);
     public static final int TRANSCRIPT_ID_COLUMN = 0;
 
     private CSVReader csvReader;
 
     private ExpressionLevelsBuffer expressionLevelBuffer;
 
-    ExpressionLevelsCsvReader(CSVReader csvReader, List<ExperimentRun> experimentRuns) {
+
+    ExpressionLevelsInputStream(CSVReader csvReader, List<ExperimentRun> experimentRuns) {
         this.csvReader = csvReader;
         initializeBuffer(experimentRuns);
     }
 
 
-    public ExpressionLevelsCsvReader(Reader reader, List<ExperimentRun> experimentRuns) {
+    public ExpressionLevelsInputStream(Reader reader, List<ExperimentRun> experimentRuns) {
         this(new CSVReader(reader, '\t'), experimentRuns);
     }
 
@@ -85,6 +85,11 @@ public class ExpressionLevelsCsvReader implements ObjectInputStream<ExpressionLe
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
         }
+    }
+
+    ExpressionLevelsInputStream setExpressionLevelBuffer(ExpressionLevelsBuffer buffer){
+        this.expressionLevelBuffer = buffer;
+        return this;
     }
 
 

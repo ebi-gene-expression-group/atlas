@@ -78,13 +78,16 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
     }
 
     @Override
-    public int compareTo(ExpressionLevel expressionLevel) {
-        final int rpkmDiff = Double.compare(rpkm, expressionLevel.rpkm);
-        if (rpkmDiff != 0) {
-            return rpkmDiff;
+    public int compareTo(ExpressionLevel other) {
+        int compareTo = Double.compare(rpkm, other.rpkm);
+        if (compareTo != 0) {
+            return compareTo;
         }
-        //Todo: when compare returns 0 the two objects should be equals, but here equals depends also on factor values...
-        return transcriptId.compareTo(expressionLevel.transcriptId);
+        compareTo = transcriptId.compareTo(other.transcriptId);
+        if (compareTo != 0) {
+            return compareTo;
+        }
+        return experimentRun.compareTo(other.experimentRun);
 
     }
 }

@@ -5,15 +5,17 @@ import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.services.ExpressionLevelsInputStream;
 import uk.ac.ebi.atlas.services.MageTabInvestigation;
-import uk.ac.ebi.atlas.services.ExpressionLevelsCsvReader;
 
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Named("rankExpressionLevels")
 public class RankExpressionLevels implements Function<String, List<ExpressionLevel>> {
@@ -49,7 +51,7 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
 
             Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
 
-            ExpressionLevelsCsvReader expressionLevelStream = new ExpressionLevelsCsvReader(dataFileReader, experimentRuns);
+            ExpressionLevelsInputStream expressionLevelStream = new ExpressionLevelsInputStream(dataFileReader, experimentRuns);
 
             List<ExpressionLevel> expressionLevelsRanking = rankExpressionLevels(expressionLevelStream);
 
@@ -61,7 +63,7 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
         }
     }
 
-    protected List<ExpressionLevel> rankExpressionLevels(ExpressionLevelsCsvReader expressionLevelReader) {
+    protected List<ExpressionLevel> rankExpressionLevels(ExpressionLevelsInputStream expressionLevelReader) {
         RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand = new RankStreamingObjects<ExpressionLevel>(rankingSize);
         return rankStreamingObjectsCommand.apply(expressionLevelReader);
     }

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
-import uk.ac.ebi.atlas.services.ExpressionLevelsCsvReader;
+import uk.ac.ebi.atlas.services.ExpressionLevelsInputStream;
 import utils.ExperimentRunsBuilder;
 
 import java.io.InputStreamReader;
@@ -28,7 +28,7 @@ public class ExpressionLevelsCsvReaderIT {
 
     private static List<ExperimentRun> EXPERIMENT_RUNS;
 
-    private ExpressionLevelsCsvReader subject;
+    private ExpressionLevelsInputStream subject;
 
     @Before
     public void initSubject() throws Exception {
@@ -39,7 +39,7 @@ public class ExpressionLevelsCsvReaderIT {
         EXPERIMENT_RUNS = new ExperimentRunsBuilder().buildExperimentRuns(RUN_ACCESSION2,
                 RUN_ACCESSION3, RUN_ACCESSION1);
 
-        subject = new ExpressionLevelsCsvReader(dataFileReader, EXPERIMENT_RUNS);
+        subject = new ExpressionLevelsInputStream(dataFileReader, EXPERIMENT_RUNS);
     }
 
     @Test
