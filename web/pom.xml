@@ -35,7 +35,6 @@
     <name>Gene Expression Atlas WebApp</name>
     <url>http://www.ebi.ac.uk/gxa</url>
 
-
     <build>
         <finalName>atlas</finalName>
         <resources>

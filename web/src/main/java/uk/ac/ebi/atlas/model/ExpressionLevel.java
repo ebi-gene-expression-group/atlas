@@ -21,7 +21,11 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
             experimentRun = new ExperimentRun(UNKNOWN_EXPERIMENT_RUN_ACCESSION);
         }
         this.experimentRun = experimentRun;
-        this.rpkm = rpkm;
+        if(Double.isNaN(rpkm)){
+            rpkm = Double.NEGATIVE_INFINITY;
+        } else {
+           this.rpkm = rpkm;
+        }
     }
 
     public ExpressionLevel(String transcriptId, double rpkm) {

@@ -36,6 +36,15 @@ public class ExpressionLevelCompareTest {
     }
 
     @Test
+    public void compareToShouldReturnNegativeIntegerWhenOtherObjectRPKMIsNaN() {
+        //given
+        ExpressionLevel other = new ExpressionLevel("id", Double.NaN);
+        //then
+        assertThat(subject.compareTo(other), is(greaterThan(0)));
+    }
+
+
+    @Test
     public void compareToShouldReturnPositiveIntegerWhenRPKMIsGreaterThanOther() {
         //given
         ExpressionLevel other = new ExpressionLevel("id", 99.999999);

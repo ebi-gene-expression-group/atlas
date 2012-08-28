@@ -13,10 +13,12 @@
 
 <head>
     <title>Experiment</title>
+    <link rel="stylesheet" type="text/css" href="/atlas/css/demo.css">
 </head>
 
 <body>
-    <display:table name="${expressions}" htmlId="expressionTable" id="expression">
+    <display:table name="${expressions}" htmlId="expressionTable" id="expression"
+            style='width:50%'>
 
         <display:column title="Transcript id" property="transcriptId"/>
         <display:column title="Conditions">

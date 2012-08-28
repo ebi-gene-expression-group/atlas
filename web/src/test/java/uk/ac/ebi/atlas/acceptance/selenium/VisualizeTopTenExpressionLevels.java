@@ -28,12 +28,12 @@ public class VisualizeTopTenExpressionLevels {
 
     @Test
     public void verifyMostExpressedTranscriptId() {
-        assertThat(subject.getMostExpressedTranscriptId(), is("ENST1"));
+        assertThat(subject.getMostExpressedTranscriptId(), is("ENST00000005178"));
     }
 
     @Test
     public void verifyRPKMForMostExpressedTranscriptId() {
-        assertThat(subject.getMostExpressedRPKM(), is("100.0001"));
+        assertThat(subject.getMostExpressedRPKM(), is("285.083"));
     }
 
     @Test

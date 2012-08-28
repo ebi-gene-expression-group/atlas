@@ -5,6 +5,7 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.services.ObjectInputStream;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
@@ -24,7 +25,7 @@ public class RankStreamingObjects<E extends Comparable<E>> implements Function<O
 
     @Override
     public List<E> apply(ObjectInputStream<E> objectStream) {
-        Queue<E> topTenObjects = MinMaxPriorityQueue.maximumSize(size).create();
+        Queue<E> topTenObjects = MinMaxPriorityQueue.orderedBy(new ReverseOrderComparator()).maximumSize(size).create();
 
         E object;
         while ((object = objectStream.readNext()) != null) {
@@ -32,5 +33,13 @@ public class RankStreamingObjects<E extends Comparable<E>> implements Function<O
         }
 
         return new ArrayList<>(topTenObjects);
+    }
+
+    class ReverseOrderComparator implements Comparator<E>{
+
+        @Override
+        public int compare(E object, E other) {
+            return other.compareTo(object);
+        }
     }
 }
