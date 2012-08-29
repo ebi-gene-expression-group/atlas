@@ -140,6 +140,10 @@
                     <artifactId>commons-lang</artifactId>
                     <groupId>commons-lang</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>fluxion-spi</artifactId>
+                    <groupId>net.sourceforge.fluxion</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
