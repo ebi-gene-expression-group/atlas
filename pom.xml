@@ -36,8 +36,7 @@
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
         <selenium.test.host>localhost:8080</selenium.test.host>
         <selenium.version>2.25.0</selenium.version>
-        <test.acceptance.pattern>**/acceptance/**</test.acceptance.pattern>
-
+        <test.acceptance.pattern>**/acceptance/**/*IT.java</test.acceptance.pattern>
     </properties>
 
     <build>
