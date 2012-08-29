@@ -78,7 +78,6 @@ public class ExpressionLevelsInputStream implements ObjectInputStream<Expression
 
     String[] readCsvLine() {
         try {
-
             return csvReader.readNext();
 
         } catch (IOException e) {
