@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class ExpressionLevelController {
 
-    public static final String DEMO_ACCESSION = "E-MTAB-513" ;
+    public static final String DEMO_ACCESSION = "E-MTAB-513";
     private RankExpressionLevels rankExpressionLevels;
 
     @Inject
@@ -23,7 +23,7 @@ public class ExpressionLevelController {
     }
 
     @RequestMapping("/experiment")
-    public String showExpressionLevels(@RequestParam(value = "dataFileURL", required = false) String dataFileURL,  Model model) {
+    public String showExpressionLevels(@RequestParam(value = "dataFileURL", required = false) String dataFileURL, Model model) {
 
         return showExpressionLevels(dataFileURL, DEMO_ACCESSION, model);
 
@@ -40,11 +40,11 @@ public class ExpressionLevelController {
 
         List<ExpressionLevel> expressionLevels;
 
-        if (experimentAccession != null) {
-            expressionLevels = rankExpressionLevels.apply(experimentAccession);
-        } else {
-            expressionLevels = rankExpressionLevels.apply(DEMO_ACCESSION);
+        if (experimentAccession == null) {
+            experimentAccession = DEMO_ACCESSION;
         }
+
+        expressionLevels = rankExpressionLevels.apply(experimentAccession);
 
         model.addAttribute("expressions", expressionLevels);
 

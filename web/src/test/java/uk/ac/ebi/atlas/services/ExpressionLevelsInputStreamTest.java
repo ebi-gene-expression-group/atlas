@@ -33,14 +33,6 @@ public class ExpressionLevelsInputStreamTest {
     @Mock
     private ExpressionLevelsBuffer expressionLevelsBufferMock;
 
-    @Mock
-    private ExpressionLevel expressionLevelMock;
-
-    @Mock
-    private ExperimentRun experimentRuns1Mock;
-
-    @Mock
-    private ExperimentRun experimentRuns2Mock;
 
     private String[] rpkmLine = new String[]{"TRANSCRIPT_ID", "2.22222", "0.11111"};
 
@@ -51,14 +43,19 @@ public class ExpressionLevelsInputStreamTest {
 
     @Before
     public void initSubject() throws Exception {
+
+        ExperimentRun experimentRuns1Mock = mock(ExperimentRun.class);
+        ExperimentRun experimentRuns2Mock = mock(ExperimentRun.class);
+
+
         given(experimentRuns1Mock.getRunAccession()).willReturn(RUN_ACCESSION_1);
         given(experimentRuns1Mock.getRunAccession()).willReturn(RUN_ACCESSION_2);
 
         experimentRunsMock = Lists.newArrayList(experimentRuns1Mock, experimentRuns2Mock);
 
         given(csvReaderMock.readNext())
-            .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
-            .willReturn(rpkmLine);
+                .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
+                .willReturn(rpkmLine);
 
         subject = new ExpressionLevelsInputStream(csvReaderMock, experimentRunsMock);
 
@@ -67,6 +64,9 @@ public class ExpressionLevelsInputStreamTest {
 
     @Test
     public void readNextShouldPollTheBuffer() throws Exception {
+
+        ExpressionLevel expressionLevelMock = mock(ExpressionLevel.class);
+
         //given
         given(expressionLevelsBufferMock.poll()).willReturn(expressionLevelMock);
         //when
@@ -139,8 +139,6 @@ public class ExpressionLevelsInputStreamTest {
         subject.close();
         //then expect exception to be thrown
     }
-
-
 
 
 }
