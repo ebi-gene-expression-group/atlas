@@ -96,6 +96,16 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-clover2-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <snapshot>${user.home}/.clover/atlassian-plugins-clover.snapshot</snapshot>
+                    <singleCloverDatabase>true</singleCloverDatabase>
+                </configuration>
+            </plugin>
+
         </plugins>
 
     </build>
