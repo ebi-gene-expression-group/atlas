@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.controllers;
+package uk.ac.ebi.atlas.web.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

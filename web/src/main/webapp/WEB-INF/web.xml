@@ -50,13 +50,16 @@
      <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
      <load-on-startup>1</load-on-startup>
      </servlet>
- 
- 
+
      <servlet-mapping>
              <servlet-name>services</servlet-name>
              <url-pattern>/</url-pattern>
-         </servlet-mapping>
-  
+     </servlet-mapping>
 
+    <!-- Define error page to react on Java exception -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
 
 </web-app>

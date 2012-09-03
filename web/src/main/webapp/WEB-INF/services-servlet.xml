@@ -17,11 +17,6 @@
     <mvc:annotation-driven/>
 
     <!--
-    enables scanning to identify controllers by looking for the @Controller annotation
-    -->
-    <context:component-scan base-package="uk.ac.ebi.atlas.controllers"/>
-
-    <!--
     view resolver specialized for page with JSTL tag libraries
     -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

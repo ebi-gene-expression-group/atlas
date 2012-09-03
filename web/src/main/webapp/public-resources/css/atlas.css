@@ -1,0 +1,31 @@
+.error{
+    color:#8a2be2;
+}
+
+.errorMessage{
+    color:red;
+}
+
+table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 0.9em;
+    width: 50%;
+    text-align: left;
+    border-collapse: collapse;
+    margin: 1em;
+}
+
+th {
+    font-size: 1.2em;
+    font-weight: bold;
+    background: #B9C9FE;
+    color: #039;
+    padding: 1em;
+}
+
+td {
+    background: #E8EDFF;
+    border-top: 0.3em solid white;
+    color: #669;
+    padding: 0.5em;
+}
