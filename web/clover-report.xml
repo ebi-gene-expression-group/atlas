@@ -1,0 +1,28 @@
+<project name="Clover Report" default="current">
+    <!-- Initialize Clover -->
+    <clover-setup initString="${cloverdb}"/>
+    <target name="historical">
+        <!-- Empty as we're not interested in historical reports right now -->
+    </target>
+    <target name="current">
+        <clover-report>
+            <current outfile="${output}" title="${title}">
+                <format type="html"/>
+                <!-- Declare naming convention in order to have test classes listed on the "Tests" tab in HTML report -->
+                <testsources dir="src/test">
+                    <!-- Use Maven-Failsafe-Plugin naming convention -->
+                    <include name="**/IT*.java"/>
+                    <include name="**/*IT.java"/>
+                    <include name="**/*ITCase.java"/>
+                    <!-- Use Maven-Surefire-Pugin naming convention.
+                    NOTE: Although we don't run unit tests, we still want to have them on "Tests" tab instead of "Classes" -->
+                    <include name="**/Test*.java"/>
+                    <include name="**/*Test.java"/>
+                    <include name="**/*TestCase.java"/>
+                </testsources>
+                <!-- Tell Clover to get test results from failsafe. They will be listed on "Results" tab -->
+                <testresults dir="target/failsafe-reports" includes="TEST-*.xml"/>
+            </current>
+        </clover-report>
+    </target>
+</project>

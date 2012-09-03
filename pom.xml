@@ -36,7 +36,8 @@
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
         <selenium.test.host>localhost:8080</selenium.test.host>
         <selenium.version>2.25.0</selenium.version>
-        <test.acceptance.pattern>**/acceptance/**/*IT.java</test.acceptance.pattern>
+        <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
+        <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
     </properties>
 
     <build>
@@ -59,10 +60,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12.2</version>
                 <configuration>
+                    <reportsDirectory>${surefire.and.failsafe.report.dir}</reportsDirectory>
                     <excludes>
                         <exclude>${test.acceptance.pattern}</exclude>
                     </excludes>
-                </configuration>
+               </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
@@ -79,6 +81,7 @@
                     <includes>
                         <include>${test.acceptance.pattern}</include>
                     </includes>
+                    <reportsDirectory>${surefire.and.failsafe.report.dir}</reportsDirectory>
                     <systemProperties>
                         <property>
                             <name>selenium.test.host</name>
@@ -103,6 +106,8 @@
                 <configuration>
                     <snapshot>${user.home}/.clover/atlassian-plugins-clover.snapshot</snapshot>
                     <singleCloverDatabase>true</singleCloverDatabase>
+                    <targetPercentage>60%</targetPercentage>
+                    <reportDescriptor>clover-report.xml</reportDescriptor>
                 </configuration>
             </plugin>
 
