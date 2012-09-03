@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.services;
+package uk.ac.ebi.atlas.loader;
 
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -6,6 +6,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
+import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
 
@@ -16,7 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExpressionLevelsInputStream implements ObjectInputStream<ExpressionLevel> {
+class ExpressionLevelsInputStream implements ObjectInputStream<ExpressionLevel> {
 
     private static final Logger logger = Logger.getLogger(ExpressionLevelsInputStream.class);
     public static final int TRANSCRIPT_ID_COLUMN = 0;
@@ -86,7 +87,7 @@ public class ExpressionLevelsInputStream implements ObjectInputStream<Expression
         }
     }
 
-    ExpressionLevelsInputStream setExpressionLevelBuffer(ExpressionLevelsBuffer buffer){
+    ExpressionLevelsInputStream setExpressionLevelBuffer(ExpressionLevelsBuffer buffer) {
         this.expressionLevelBuffer = buffer;
         return this;
     }

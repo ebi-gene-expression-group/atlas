@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.services;
+package uk.ac.ebi.atlas.loader;
 
 import org.apache.log4j.Logger;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class MageTabInvestigation {
+class MageTabInvestigation {
     private static final Logger logger = Logger.getLogger(MageTabInvestigation.class);
 
     private MAGETABParser parser;

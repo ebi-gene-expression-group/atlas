@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.services;
+package uk.ac.ebi.atlas.loader;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.Lists;

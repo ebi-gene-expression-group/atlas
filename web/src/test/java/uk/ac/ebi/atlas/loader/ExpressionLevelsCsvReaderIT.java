@@ -1,10 +1,9 @@
-package uk.ac.ebi.atlas.acceptance.io.magetab.csvreader;
+package uk.ac.ebi.atlas.loader;
 
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
-import uk.ac.ebi.atlas.services.ExpressionLevelsInputStream;
 import utils.ExperimentRunsBuilder;
 
 import java.io.InputStreamReader;
@@ -70,7 +69,7 @@ public class ExpressionLevelsCsvReaderIT {
     @Test
     public void readNextShouldReturnNullGivenAllRpkmsHaveBeenRead() throws Exception {
         ExpressionLevel expressionLevel;
-        for(int i=0; i<9; i++){
+        for (int i = 0; i < 9; i++) {
             //given
             expressionLevel = subject.readNext();
             //then

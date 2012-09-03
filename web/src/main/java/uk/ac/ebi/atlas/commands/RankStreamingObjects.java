@@ -2,14 +2,14 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
-import uk.ac.ebi.atlas.services.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.ObjectInputStream;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
-public class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
+class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
 
     private static final int DEFAULT_SIZE = 100;
 
@@ -35,7 +35,7 @@ public class RankStreamingObjects<E extends Comparable<E>> implements Function<O
         return new ArrayList<>(topTenObjects);
     }
 
-    class ReverseOrderComparator implements Comparator<E>{
+    class ReverseOrderComparator implements Comparator<E> {
 
         @Override
         public int compare(E object, E other) {

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.services;
+package uk.ac.ebi.atlas.loader;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.ExperimentRun;
@@ -9,7 +9,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-public class ExpressionLevelsBuffer {
+class ExpressionLevelsBuffer {
 
     private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain transcript id and rpkm values for all experiment runs";
     private String transcriptId;

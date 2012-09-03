@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.services;
+package uk.ac.ebi.atlas.loader;
 
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
