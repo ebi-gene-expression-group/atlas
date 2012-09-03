@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.services;
+package uk.ac.ebi.atlas.loader;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
 import utils.ExperimentRunsBuilder;
 
-import java.util.*;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -26,11 +26,11 @@ public class ExpressionLevelBufferTest {
 
     @Before
     public void initializeSubject() {
-        String[] orderedRunAccessions = new String[] {RUN_ACCESSION1,
-            RUN_ACCESSION2, RUN_ACCESSION3};
+        String[] orderedRunAccessions = new String[]{RUN_ACCESSION1,
+                RUN_ACCESSION2, RUN_ACCESSION3};
 
         EXPERIMENT_RUNS = new ExperimentRunsBuilder().buildExperimentRuns(RUN_ACCESSION1,
-            RUN_ACCESSION2, RUN_ACCESSION3);
+                RUN_ACCESSION2, RUN_ACCESSION3);
         subject = new ExpressionLevelsBuffer(EXPERIMENT_RUNS);
     }
 
@@ -71,7 +71,7 @@ public class ExpressionLevelBufferTest {
         subject.reload(RPKM_VALUES);
         //and we poll until exhaustion
         ExpressionLevel run;
-        do{
+        do {
             run = subject.poll();
         } while (run != null);
         //when we reload again with new values

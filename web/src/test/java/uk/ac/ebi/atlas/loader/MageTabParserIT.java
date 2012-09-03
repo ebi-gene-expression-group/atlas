@@ -1,11 +1,10 @@
-package uk.ac.ebi.atlas.acceptance.io.magetab;
+package uk.ac.ebi.atlas.loader;
 
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.services.MageTabInvestigation;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +24,7 @@ public class MageTabParserIT {
 
     @Before
     public void initSubject() throws IOException, ParseException {
-        URL mageTabURL = MageTabParserIT.class.getResource("E-MTAB-513.idf.txt");
+        URL mageTabURL = MageTabParserIT.class.getResource("magetab/E-MTAB-513.idf.txt");
 
         subject = MageTabInvestigation.parse(mageTabURL);
     }
@@ -46,7 +45,7 @@ public class MageTabParserIT {
         //then
         assertThat(firstExperimentRun.getRunAccession(), startsWith("ERR"));
         assertThat(firstExperimentRun.getFactorValues().size(), is(3));
-        assertThat(factorValueIterator.next(), is(equalTo(new FactorValue("ORGANISMPART","adipose"))));
+        assertThat(factorValueIterator.next(), is(equalTo(new FactorValue("ORGANISMPART", "adipose"))));
 
     }
 

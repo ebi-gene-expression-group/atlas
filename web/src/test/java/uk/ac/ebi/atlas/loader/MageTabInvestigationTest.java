@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.services;
+package uk.ac.ebi.atlas.loader;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,8 +47,8 @@ public class MageTabInvestigationTest {
     @Test
     public void parseInvestigationShouldUseMAGETABParser() throws Exception {
         //given
-        subject.parseInvestigation(urlFake) ;
-         //then
+        subject.parseInvestigation(urlFake);
+        //then
         verify(MAGETABParserMock).parse(urlFake);
     }
 
@@ -58,7 +58,7 @@ public class MageTabInvestigationTest {
         //given
         given(MAGETABParserMock.parse(urlFake)).willThrow(new ParseException());
         //when
-        subject.parseInvestigation(urlFake) ;
+        subject.parseInvestigation(urlFake);
         //then expect IllegalStateException
     }
 
