@@ -58,7 +58,7 @@
                     <!-- http port -->
                     <port>9090</port>
                     <!-- application path always starts with /-->
-                    <path>/</path>
+                    <path>/atlas</path>
                     <!-- optionnal path to a context file -->
                     <contextFile></contextFile>
                     <!-- optionnal system propoerties you want to add -->
@@ -72,19 +72,10 @@
                     </additionalClasspathDirs>
                 </configuration>
                 <executions>
-                    <!--
-                    <execution>
-                        <id>tomcat-exec-war</id>
-                        <goals>
-                            <goal>exec-war-only</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                    -->
                     <execution>
                         <id>tomcat-run</id>
                         <goals>
-                            <goal>run</goal>
+                            <goal>run-war</goal>
                         </goals>
                         <phase>pre-integration-test</phase>
                         <configuration>
@@ -237,4 +228,5 @@
         </dependency>
 
     </dependencies>
+
 </project>

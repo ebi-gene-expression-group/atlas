@@ -17,9 +17,13 @@ public abstract class AtlasPage<T extends LoadableComponent<T>> extends Loadable
     protected void load() {
         String hostname = System.getProperty("selenium.test.host");
         if (hostname == null) {
-            hostname = "localhost:8080";
+            hostname = "localhost";
         }
-        String URL = "http://" + hostname + getPageURI();
+        String portNumber = System.getProperty("selenium.test.portnumber");
+        if (portNumber == null) {
+            portNumber = "9090";
+        }
+        String URL = "http://" + hostname + ":" + portNumber + getPageURI();
         driver.get(URL);
     }
 
