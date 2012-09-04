@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.web.controllers;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Controller
+@Scope("request")
 public class ExpressionLevelController {
 
     public static final String DEMO_ACCESSION = "E-MTAB-513";
