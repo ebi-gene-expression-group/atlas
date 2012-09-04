@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.loader;
+package uk.ac.ebi.atlas.streams;
 
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -17,9 +17,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class ExpressionLevelsInputStream implements ObjectInputStream<ExpressionLevel> {
+public class ExpressionLevelInputStream implements ObjectInputStream<ExpressionLevel> {
 
-    private static final Logger logger = Logger.getLogger(ExpressionLevelsInputStream.class);
+    private static final Logger logger = Logger.getLogger(ExpressionLevelInputStream.class);
     public static final int TRANSCRIPT_ID_COLUMN = 0;
 
     private CSVReader csvReader;
@@ -27,13 +27,13 @@ class ExpressionLevelsInputStream implements ObjectInputStream<ExpressionLevel> 
     private ExpressionLevelsBuffer expressionLevelBuffer;
 
 
-    ExpressionLevelsInputStream(CSVReader csvReader, List<ExperimentRun> experimentRuns) {
+    ExpressionLevelInputStream(CSVReader csvReader, List<ExperimentRun> experimentRuns) {
         this.csvReader = csvReader;
         initializeBuffer(experimentRuns);
     }
 
 
-    public ExpressionLevelsInputStream(Reader reader, List<ExperimentRun> experimentRuns) {
+    public ExpressionLevelInputStream(Reader reader, List<ExperimentRun> experimentRuns) {
         this(new CSVReader(reader, '\t'), experimentRuns);
     }
 
@@ -87,7 +87,7 @@ class ExpressionLevelsInputStream implements ObjectInputStream<ExpressionLevel> 
         }
     }
 
-    ExpressionLevelsInputStream setExpressionLevelBuffer(ExpressionLevelsBuffer buffer) {
+    ExpressionLevelInputStream setExpressionLevelBuffer(ExpressionLevelsBuffer buffer) {
         this.expressionLevelBuffer = buffer;
         return this;
     }

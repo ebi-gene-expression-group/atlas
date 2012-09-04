@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.loader;
+package uk.ac.ebi.atlas.streams;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;

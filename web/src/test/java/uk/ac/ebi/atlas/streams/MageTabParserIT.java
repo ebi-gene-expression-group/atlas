@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.loader;
+package uk.ac.ebi.atlas.streams;
 
 import org.junit.Before;
 import org.junit.Test;

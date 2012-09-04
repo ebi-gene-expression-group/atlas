@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.loader;
+package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.ExperimentRun;

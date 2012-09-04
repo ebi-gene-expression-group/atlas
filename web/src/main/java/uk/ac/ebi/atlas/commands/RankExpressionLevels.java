@@ -2,9 +2,10 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.loader.ExperimentLoader;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.streams.ExpressionLevelInputStreamBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,17 +13,20 @@ import java.io.IOException;
 import java.util.List;
 
 @Named("rankExpressionLevels")
-public class RankExpressionLevels implements Function<String, List<ExpressionLevel>> {
+@Scope("prototype")
+public class RankExpressionLevels implements Function<String, List<ExpressionLevel>>{
 
     private static final Logger logger = Logger.getLogger(RankExpressionLevels.class);
 
     private int rankingSize = 10;
 
-    private ExperimentLoader experimentLoader;
+    private ExpressionLevelInputStreamBuilder inputStreamBuilder;
+    RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand;
 
     @Inject
-    public RankExpressionLevels(ExperimentLoader loader) {
-        this.experimentLoader = loader;
+    public RankExpressionLevels(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankStreamingObjects rankStreamingObjects) {
+        this.inputStreamBuilder = inputStreamBuilder;
+        this.rankStreamingObjectsCommand = rankStreamingObjects.setRankSize(rankingSize);
     }
 
     @Override
@@ -36,11 +40,16 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
 
 
     private List<ExpressionLevel> loadTopTenExpressionLevels(String experimentAccession) {
-        ObjectInputStream inputStream = experimentLoader.getExpressionLevelsInputStream(experimentAccession);
-        List<ExpressionLevel> expressionLevelsRanking = rankExpressionLevels(inputStream);
+
+        ObjectInputStream inputStream = inputStreamBuilder.createFor(experimentAccession);
+
+        List<ExpressionLevel> expressionLevelsRanking = rankStreamingObjectsCommand.apply(inputStream);
+
         try {
+
             inputStream.close();
             return expressionLevelsRanking;
+
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
@@ -48,18 +57,13 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
     }
 
 
-    protected List<ExpressionLevel> rankExpressionLevels(ObjectInputStream expressionLevelReader) {
-        RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand = new RankStreamingObjects<ExpressionLevel>(rankingSize);
-        return rankStreamingObjectsCommand.apply(expressionLevelReader);
-    }
-
     public RankExpressionLevels setRankingSize(int rankingSize) {
         this.rankingSize = rankingSize;
         return this;
     }
 
     public RankExpressionLevels setDataFileURL(String dataFileURL) {
-        this.experimentLoader.setDataFileURL(dataFileURL);
+        this.inputStreamBuilder.setDataFileURL(dataFileURL);
         return this;
     }
 }

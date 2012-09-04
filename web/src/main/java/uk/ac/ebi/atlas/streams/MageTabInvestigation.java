@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.loader;
+package uk.ac.ebi.atlas.streams;
 
 import org.apache.log4j.Logger;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;

@@ -2,13 +2,17 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
+import com.google.common.collect.Ordering;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 
-import java.util.ArrayList;
+import javax.inject.Named;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
+@Named("rankStreamingObjects")
+@Scope("prototype")
 class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
 
     private static final int DEFAULT_SIZE = 100;
@@ -31,8 +35,12 @@ class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectIn
         while ((object = objectStream.readNext()) != null) {
             topTenObjects.add(object);
         }
+        return Ordering.natural().reverse().sortedCopy(topTenObjects);
+    }
 
-        return new ArrayList<>(topTenObjects);
+    public RankStreamingObjects setRankSize(int rankingSize) {
+        this.size = rankingSize;
+        return this;
     }
 
     class ReverseOrderComparator implements Comparator<E> {

@@ -1,9 +1,12 @@
-package uk.ac.ebi.atlas.loader;
+package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.ExpressionLevel;
 
 import javax.inject.Named;
 import java.io.IOException;
@@ -12,10 +15,13 @@ import java.io.Reader;
 import java.net.URL;
 import java.util.List;
 
-@Named("experimentLoader")
-public class ExperimentLoader {
+import static com.google.common.base.Preconditions.checkNotNull;
 
-    private static final Logger logger = Logger.getLogger(ExperimentLoader.class);
+@Named("experimentLoader")
+@Scope("prototype")
+public class ExpressionLevelInputStreamBuilder {
+
+    private static final Logger logger = Logger.getLogger(ExpressionLevelInputStreamBuilder.class);
 
 
     @Value("#{webappProperties['magetab.idf.url.template']}")
@@ -25,7 +31,8 @@ public class ExperimentLoader {
     private String dataFileURL;
 
 
-    public ExpressionLevelsInputStream getExpressionLevelsInputStream(String experimentAccession) {
+    public ObjectInputStream<ExpressionLevel> createFor(String experimentAccession) {
+
         String idfFileLocation = String.format(idfFileUrlTemplate, experimentAccession, experimentAccession);
 
         URL mageTabURL = buildURL(idfFileLocation);
@@ -38,7 +45,7 @@ public class ExperimentLoader {
 
             Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
 
-            return new ExpressionLevelsInputStream(dataFileReader, experimentRuns);
+            return new ExpressionLevelInputStream(dataFileReader, experimentRuns);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -46,8 +53,9 @@ public class ExperimentLoader {
         }
     }
 
-    private URL buildURL(String location) {
+    URL buildURL(String location) {
         try {
+            checkNotNull(location);
             return new URL(location);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -56,9 +64,11 @@ public class ExperimentLoader {
 
     }
 
-    public ExperimentLoader setDataFileURL(String dataFileURL) {
+    public ExpressionLevelInputStreamBuilder setDataFileURL(String dataFileURL) {
+
         this.dataFileURL = dataFileURL;
         return this;
+
     }
 
 }

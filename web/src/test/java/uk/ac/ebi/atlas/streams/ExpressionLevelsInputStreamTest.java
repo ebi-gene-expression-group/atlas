@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.loader;
+package uk.ac.ebi.atlas.streams;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.Lists;
@@ -38,7 +38,7 @@ public class ExpressionLevelsInputStreamTest {
 
     private List<ExperimentRun> experimentRunsMock;
 
-    private ExpressionLevelsInputStream subject;
+    private ExpressionLevelInputStream subject;
 
 
     @Before
@@ -49,7 +49,7 @@ public class ExpressionLevelsInputStreamTest {
 
 
         given(experimentRuns1Mock.getRunAccession()).willReturn(RUN_ACCESSION_1);
-        given(experimentRuns1Mock.getRunAccession()).willReturn(RUN_ACCESSION_2);
+        given(experimentRuns2Mock.getRunAccession()).willReturn(RUN_ACCESSION_2);
 
         experimentRunsMock = Lists.newArrayList(experimentRuns1Mock, experimentRuns2Mock);
 
@@ -57,7 +57,7 @@ public class ExpressionLevelsInputStreamTest {
                 .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
                 .willReturn(rpkmLine);
 
-        subject = new ExpressionLevelsInputStream(csvReaderMock, experimentRunsMock);
+        subject = new ExpressionLevelInputStream(csvReaderMock, experimentRunsMock);
 
         subject.setExpressionLevelBuffer(expressionLevelsBufferMock);
     }
