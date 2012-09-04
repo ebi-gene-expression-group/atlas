@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +8,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentPage;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.junit.Assert.assertThat;
 
 public class VisualizeTopTenExpressionLevels {
@@ -28,12 +30,32 @@ public class VisualizeTopTenExpressionLevels {
 
     @Test
     public void verifyMostExpressedTranscriptId() {
-        assertThat(subject.getMostExpressedTranscriptId(), is("ENST00000005178"));
+        assertThat(subject.getTranscriptIdForGreatestRPKMValue(), is("ENST00000005178"));
+    }
+
+    @Test
+    public void verifyFactorValuesForMostExpressedTranscriptId() {
+        assertThat(subject.getFactorValuesForGreatestRPKMValue(), stringContainsInOrder(Lists.newArrayList("adipose", "caucasian")));
     }
 
     @Test
     public void verifyRPKMForMostExpressedTranscriptId() {
-        assertThat(subject.getMostExpressedRPKM(), is("285.083"));
+        assertThat(subject.getGreatestRPKMValue(), is("285.083"));
+    }
+
+    @Test
+    public void verifyLeastExpressedTranscriptId() {
+        assertThat(subject.getTranscriptIdForSmallestRPKMValue(), is("ENST00000004982"));
+    }
+
+    @Test
+    public void verifyFactorValuesForLeastExpressedTranscriptId() {
+        assertThat(subject.getFactorValuesForSmallestRPKMValue(), stringContainsInOrder(Lists.newArrayList("heart", "caucasian")));
+    }
+
+    @Test
+    public void verifyRPKMForLeastExpressedTranscriptId() {
+        assertThat(subject.getSmallestRPKMValue(), is("159.087"));
     }
 
     @Test

@@ -28,12 +28,28 @@ public class ExperimentPage extends AtlasPage {
         return tableRows.size();
     }
 
-    public String getMostExpressedTranscriptId() {
+    public String getTranscriptIdForGreatestRPKMValue() {
         return tableElement.findElement(By.xpath("tbody/tr/td[1]")).getText();
     }
 
-    public String getMostExpressedRPKM() {
+    public String getGreatestRPKMValue() {
         return tableElement.findElement(By.xpath("tbody/tr/td[3]")).getText();
+    }
+
+    public String getFactorValuesForGreatestRPKMValue() {
+        return tableElement.findElement(By.xpath("tbody/tr/td[2]")).getText();
+    }
+
+    public String getTranscriptIdForSmallestRPKMValue() {
+        return tableElement.findElement(By.xpath("tbody/tr[10]/td[1]")).getText();
+    }
+
+    public String getSmallestRPKMValue() {
+        return tableElement.findElement(By.xpath("tbody/tr[10]/td[3]")).getText();
+    }
+
+    public String getFactorValuesForSmallestRPKMValue() {
+        return tableElement.findElement(By.xpath("tbody/tr[10]/td[2]")).getText();
     }
 
     public String getTitle() {
