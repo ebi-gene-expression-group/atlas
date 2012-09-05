@@ -4,23 +4,22 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentPage;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.junit.Assert.assertThat;
 
-public class VisualizeTopTenExpressionLevels {
-
-    private WebDriver driver = new HtmlUnitDriver();
+public class VisualizeTopTenExpressionLevelsIT extends SeleniumFixture{
 
     private ExperimentPage subject;
 
-    @Before
-    public void initializeTest() {
-        subject = new ExperimentPage(driver);
-        subject.get();
+    public LoadableComponent getStartingPage(FirefoxDriver firefoxDriver) {
+        subject = new ExperimentPage(firefoxDriver);
+        return subject.get();
     }
 
     @Test
