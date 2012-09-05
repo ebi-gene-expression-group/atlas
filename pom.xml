@@ -34,7 +34,6 @@
         <java-version>1.7</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
-        <selenium.version>2.25.0</selenium.version>
         <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
         <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
         <!-- default values for configuration properties,
@@ -108,22 +107,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>selenium-maven-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <id>xvfb</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>xvfb</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-clover2-plugin</artifactId>
@@ -252,20 +235,6 @@
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
             <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>${selenium.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
             <scope>test</scope>
         </dependency>
 
