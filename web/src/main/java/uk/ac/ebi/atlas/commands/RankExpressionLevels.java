@@ -14,7 +14,7 @@ import java.util.List;
 
 @Named("rankExpressionLevels")
 @Scope("prototype")
-public class RankExpressionLevels implements Function<String, List<ExpressionLevel>>{
+public class RankExpressionLevels implements Function<String, List<ExpressionLevel>> {
 
     private static final Logger logger = Logger.getLogger(RankExpressionLevels.class);
 
@@ -24,7 +24,7 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
     RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand;
 
     @Inject
-    public RankExpressionLevels(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankStreamingObjects rankStreamingObjects) {
+    public RankExpressionLevels(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankStreamingObjects<ExpressionLevel> rankStreamingObjects) {
         this.inputStreamBuilder = inputStreamBuilder;
         this.rankStreamingObjectsCommand = rankStreamingObjects.setRankSize(rankingSize);
     }

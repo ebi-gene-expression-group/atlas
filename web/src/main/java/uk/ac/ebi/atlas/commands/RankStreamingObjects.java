@@ -38,7 +38,7 @@ class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectIn
         return Ordering.natural().reverse().sortedCopy(topTenObjects);
     }
 
-    public RankStreamingObjects setRankSize(int rankingSize) {
+    public RankStreamingObjects<E> setRankSize(int rankingSize) {
         this.size = rankingSize;
         return this;
     }
