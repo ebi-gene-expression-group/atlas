@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class RankExpressionLevelsTest {
 
-    public static final String EXPERIMENT_ACCESSION = "ACCESSION_VALUE" ;
+    public static final String EXPERIMENT_ACCESSION = "ACCESSION_VALUE";
 
     @Mock
     ExpressionLevelInputStreamBuilder inputStreamBuilder;
@@ -50,8 +50,6 @@ public class RankExpressionLevelsTest {
         List<ExpressionLevel> expressionLevels = subject.apply(EXPERIMENT_ACCESSION);
 
         //then
-        verify(rankObjectsCommand).setRankSize(10);
-        //and
         verify(inputStreamBuilder).createFor(EXPERIMENT_ACCESSION);
         //and
         verify(rankObjectsCommand).apply(inputStream);

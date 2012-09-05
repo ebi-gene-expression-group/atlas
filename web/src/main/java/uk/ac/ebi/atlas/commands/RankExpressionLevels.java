@@ -18,15 +18,13 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
 
     private static final Logger logger = Logger.getLogger(RankExpressionLevels.class);
 
-    private int rankingSize = 10;
-
     private ExpressionLevelInputStreamBuilder inputStreamBuilder;
     RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand;
 
     @Inject
     public RankExpressionLevels(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankStreamingObjects<ExpressionLevel> rankStreamingObjects) {
         this.inputStreamBuilder = inputStreamBuilder;
-        this.rankStreamingObjectsCommand = rankStreamingObjects.setRankSize(rankingSize);
+        this.rankStreamingObjectsCommand = rankStreamingObjects;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
 
     private List<ExpressionLevel> loadTopTenExpressionLevels(String experimentAccession) {
 
-        ObjectInputStream inputStream = inputStreamBuilder.createFor(experimentAccession);
+        ObjectInputStream<ExpressionLevel> inputStream = inputStreamBuilder.createFor(experimentAccession);
 
         List<ExpressionLevel> expressionLevelsRanking = rankStreamingObjectsCommand.apply(inputStream);
 
@@ -54,12 +52,6 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
-    }
-
-
-    public RankExpressionLevels setRankingSize(int rankingSize) {
-        this.rankingSize = rankingSize;
-        return this;
     }
 
     public RankExpressionLevels setDataFileURL(String dataFileURL) {

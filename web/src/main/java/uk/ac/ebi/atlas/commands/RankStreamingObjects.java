@@ -15,11 +15,11 @@ import java.util.Queue;
 @Scope("prototype")
 class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
 
-    private static final int DEFAULT_SIZE = 100;
+    private static final int DEFAULT_SIZE = 10;
 
     private int size;
 
-    public RankStreamingObjects() {
+    RankStreamingObjects() {
         this(DEFAULT_SIZE);
     }
 
