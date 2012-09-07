@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankStreamingObjectsTest {
+public class RankTopObjectsCommandTest {
 
     private static final int QUEUE_SIZE = 3;
 
@@ -25,28 +25,28 @@ public class RankStreamingObjectsTest {
     @Mock
     private ObjectInputStream<String> smallInputStream;
 
-    private RankStreamingObjects subject;
+    private RankTopObjectsCommand subject;
 
     @Before
     public void initializeInputStreamMock() throws Exception {
         when(largeInputStream.readNext()).thenReturn("4")
-                                         .thenReturn("1")
-                                         .thenReturn("7")
-                                         .thenReturn("0")
-                                         .thenReturn("7")
-                                         .thenReturn("2")
-                                         .thenReturn("5")
-                                         .thenReturn(null);
+                .thenReturn("1")
+                .thenReturn("7")
+                .thenReturn("0")
+                .thenReturn("7")
+                .thenReturn("2")
+                .thenReturn("5")
+                .thenReturn(null);
 
         when(smallInputStream.readNext()).thenReturn("0")
-                                         .thenReturn("1")
-                                         .thenReturn(null);
+                .thenReturn("1")
+                .thenReturn(null);
 
     }
 
     @Before
     public void initializeSubject() throws Exception {
-        subject = new RankStreamingObjects(QUEUE_SIZE);
+        subject = new RankTopObjectsCommand(QUEUE_SIZE);
     }
 
     @Test

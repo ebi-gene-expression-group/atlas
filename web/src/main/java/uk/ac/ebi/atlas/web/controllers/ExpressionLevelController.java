@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.commands.RankExpressionLevels;
+import uk.ac.ebi.atlas.commands.LoadExpressionLevel;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
 
 import javax.inject.Inject;
@@ -17,11 +17,11 @@ import java.util.List;
 public class ExpressionLevelController {
 
     public static final String DEMO_ACCESSION = "E-MTAB-513";
-    private RankExpressionLevels rankExpressionLevels;
+    private LoadExpressionLevel loadExpressionLevel;
 
     @Inject
-    public ExpressionLevelController(RankExpressionLevels rankExpressionLevels) {
-        this.rankExpressionLevels = rankExpressionLevels;
+    public ExpressionLevelController(LoadExpressionLevel loadExpressionLevel) {
+        this.loadExpressionLevel = loadExpressionLevel;
     }
 
     @RequestMapping("/experiment")
@@ -37,7 +37,7 @@ public class ExpressionLevelController {
                                        Model model) {
 
         if (dataFileURL != null) {
-            rankExpressionLevels.setDataFileURL(dataFileURL);
+            loadExpressionLevel.setDataFileURL(dataFileURL);
         }
 
         List<ExpressionLevel> expressionLevels;
@@ -46,7 +46,7 @@ public class ExpressionLevelController {
             experimentAccession = DEMO_ACCESSION;
         }
 
-        expressionLevels = rankExpressionLevels.apply(experimentAccession);
+        expressionLevels = loadExpressionLevel.apply(experimentAccession);
 
         model.addAttribute("expressions", expressionLevels);
 

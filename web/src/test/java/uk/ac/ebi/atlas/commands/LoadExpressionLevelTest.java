@@ -18,7 +18,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankExpressionLevelsTest {
+public class LoadExpressionLevelTest {
 
     public static final String EXPERIMENT_ACCESSION = "ACCESSION_VALUE";
 
@@ -29,19 +29,19 @@ public class RankExpressionLevelsTest {
     ExpressionLevelInputStream inputStream;
 
     @Mock
-    RankStreamingObjects<ExpressionLevel> rankObjectsCommand;
+    RankTopObjectsCommand<ExpressionLevel> rankObjectsCommandCommand;
 
     private List<ExpressionLevel> top10LevelsMock = Lists.newArrayList(mock(ExpressionLevel.class));
 
-    private RankExpressionLevels subject;
+    private LoadExpressionLevel subject;
 
     @Before
     public void init() throws Exception {
         when(inputStreamBuilder.createFor(EXPERIMENT_ACCESSION)).thenReturn(inputStream);
-        when(rankObjectsCommand.setRankSize(anyInt())).thenReturn(rankObjectsCommand);
-        when(rankObjectsCommand.apply(inputStream)).thenReturn(top10LevelsMock);
+        when(rankObjectsCommandCommand.setRankSize(anyInt())).thenReturn(rankObjectsCommandCommand);
+        when(rankObjectsCommandCommand.apply(inputStream)).thenReturn(top10LevelsMock);
 
-        subject = new RankExpressionLevels(inputStreamBuilder, rankObjectsCommand);
+        subject = new LoadExpressionLevel(inputStreamBuilder, rankObjectsCommandCommand);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class RankExpressionLevelsTest {
         //then
         verify(inputStreamBuilder).createFor(EXPERIMENT_ACCESSION);
         //and
-        verify(rankObjectsCommand).apply(inputStream);
+        verify(rankObjectsCommandCommand).apply(inputStream);
         //and
         assertThat(expressionLevels, is(top10LevelsMock));
 

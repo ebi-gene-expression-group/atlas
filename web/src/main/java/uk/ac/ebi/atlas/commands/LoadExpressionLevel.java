@@ -14,17 +14,17 @@ import java.util.List;
 
 @Named("rankExpressionLevels")
 @Scope("prototype")
-public class RankExpressionLevels implements Function<String, List<ExpressionLevel>> {
+public class LoadExpressionLevel implements Function<String, List<ExpressionLevel>> {
 
-    private static final Logger logger = Logger.getLogger(RankExpressionLevels.class);
+    private static final Logger logger = Logger.getLogger(LoadExpressionLevel.class);
 
     private ExpressionLevelInputStreamBuilder inputStreamBuilder;
-    RankStreamingObjects<ExpressionLevel> rankStreamingObjectsCommand;
+    RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommandCommand;
 
     @Inject
-    public RankExpressionLevels(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankStreamingObjects<ExpressionLevel> rankStreamingObjects) {
+    public LoadExpressionLevel(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommand) {
         this.inputStreamBuilder = inputStreamBuilder;
-        this.rankStreamingObjectsCommand = rankStreamingObjects;
+        this.rankTopObjectsCommandCommand = rankTopObjectsCommand;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
 
         ObjectInputStream<ExpressionLevel> inputStream = inputStreamBuilder.createFor(experimentAccession);
 
-        List<ExpressionLevel> expressionLevelsRanking = rankStreamingObjectsCommand.apply(inputStream);
+        List<ExpressionLevel> expressionLevelsRanking = rankTopObjectsCommandCommand.apply(inputStream);
 
         try {
 
@@ -54,7 +54,7 @@ public class RankExpressionLevels implements Function<String, List<ExpressionLev
         }
     }
 
-    public RankExpressionLevels setDataFileURL(String dataFileURL) {
+    public LoadExpressionLevel setDataFileURL(String dataFileURL) {
         this.inputStreamBuilder.setDataFileURL(dataFileURL);
         return this;
     }

@@ -13,17 +13,17 @@ import java.util.Queue;
 
 @Named("rankStreamingObjects")
 @Scope("prototype")
-class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
+class RankTopObjectsCommand<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
 
-    private static final int DEFAULT_SIZE = 10;
+    private static final int DEFAULT_SIZE = 1000;
 
     private int size;
 
-    RankStreamingObjects() {
+    RankTopObjectsCommand() {
         this(DEFAULT_SIZE);
     }
 
-    public RankStreamingObjects(int size) {
+    public RankTopObjectsCommand(int size) {
         this.size = size;
     }
 
@@ -38,7 +38,7 @@ class RankStreamingObjects<E extends Comparable<E>> implements Function<ObjectIn
         return Ordering.natural().reverse().sortedCopy(topTenObjects);
     }
 
-    public RankStreamingObjects<E> setRankSize(int rankingSize) {
+    public RankTopObjectsCommand<E> setRankSize(int rankingSize) {
         this.size = rankingSize;
         return this;
     }
