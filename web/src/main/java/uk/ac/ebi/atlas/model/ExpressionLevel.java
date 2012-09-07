@@ -9,14 +9,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
     private static final String UNKNOWN_EXPERIMENT_RUN_ACCESSION = "UNKNOWN_EXPERIMENT_RUN";
-    private String transcriptId;
+    private Transcript transcript;
 
     private ExperimentRun experimentRun;
 
     private double rpkm;
 
     public ExpressionLevel(String transcriptId, double rpkm, ExperimentRun experimentRun) {
-        this.transcriptId = checkNotNull(transcriptId);
+        this.transcript = new Transcript(checkNotNull(transcriptId));
         if (experimentRun == null) {
             experimentRun = new ExperimentRun(UNKNOWN_EXPERIMENT_RUN_ACCESSION);
         }
@@ -28,12 +28,25 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         }
     }
 
+    public ExpressionLevel(Transcript transcript, double rpkm, ExperimentRun experimentRun) {
+        this.transcript = checkNotNull(transcript);
+        if (experimentRun == null) {
+            experimentRun = new ExperimentRun(UNKNOWN_EXPERIMENT_RUN_ACCESSION);
+        }
+        this.experimentRun = experimentRun;
+        if(Double.isNaN(rpkm)){
+            rpkm = Double.NEGATIVE_INFINITY;
+        } else {
+            this.rpkm = rpkm;
+        }
+    }
+
     public ExpressionLevel(String transcriptId, double rpkm) {
         this(transcriptId, rpkm, null);
     }
 
     public String getTranscriptId() {
-        return transcriptId;
+        return transcript.getId();
     }
 
     public String getRunAccession(){
@@ -55,7 +68,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(transcriptId, experimentRun, rpkm);
+        return Objects.hash(transcript.getId(), experimentRun, rpkm);
     }
 
     @Override
@@ -68,7 +81,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         }
         final ExpressionLevel other = (ExpressionLevel) obj;
 
-        return Objects.equals(this.transcriptId, other.transcriptId)
+        return Objects.equals(this.getTranscriptId(), other.getTranscriptId())
                 && Objects.equals(this.experimentRun, other.experimentRun)
                 && Objects.equals(this.rpkm, other.rpkm);
     }
@@ -76,7 +89,7 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
     @Override
     public String toString() {
         return toStringHelper(this)
-                .add("transcriptId", transcriptId)
+                .add("transcriptId", getTranscriptId())
                 .add("rpkm", rpkm)
                 .add("experimentRun", experimentRun).toString();
     }
@@ -87,11 +100,15 @@ public class ExpressionLevel implements Comparable<ExpressionLevel> {
         if (compareTo != 0) {
             return compareTo;
         }
-        compareTo = transcriptId.compareTo(other.transcriptId);
+        compareTo = getTranscriptId().compareTo(other.getTranscriptId());
         if (compareTo != 0) {
             return compareTo;
         }
         return experimentRun.compareTo(other.experimentRun);
 
+    }
+
+    public Integer getTranscriptSpecificity() {
+        return transcript.getSpecificityIndex();
     }
 }
