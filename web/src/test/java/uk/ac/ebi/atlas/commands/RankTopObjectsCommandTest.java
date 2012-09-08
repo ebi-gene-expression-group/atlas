@@ -25,7 +25,7 @@ public class RankTopObjectsCommandTest {
     @Mock
     private ObjectInputStream<String> smallInputStream;
 
-    private RankTopObjectsCommand subject;
+    private RankTopObjectsCommand<String> subject;
 
     @Before
     public void initializeInputStreamMock() throws Exception {
@@ -46,7 +46,7 @@ public class RankTopObjectsCommandTest {
 
     @Before
     public void initializeSubject() throws Exception {
-        subject = new RankTopObjectsCommand(QUEUE_SIZE);
+        subject = new RankTopObjectsCommand<String>().setRankingSize(QUEUE_SIZE);
     }
 
     @Test

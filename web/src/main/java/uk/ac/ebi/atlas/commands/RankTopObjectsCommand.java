@@ -11,25 +11,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
-@Named("rankStreamingObjects")
+@Named("rankTopObjects")
 @Scope("prototype")
-class RankTopObjectsCommand<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
+public class RankTopObjectsCommand<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {
 
     private static final int DEFAULT_SIZE = 10;
 
-    private int size;
+    private int rankingSize = DEFAULT_SIZE;
 
-    RankTopObjectsCommand() {
-        this(DEFAULT_SIZE);
-    }
-
-    public RankTopObjectsCommand(int size) {
-        this.size = size;
+    public RankTopObjectsCommand() {
+        this.rankingSize = rankingSize;
     }
 
     @Override
     public List<E> apply(ObjectInputStream<E> objectStream) {
-        Queue<E> topTenObjects = MinMaxPriorityQueue.orderedBy(new ReverseOrderComparator()).maximumSize(size).create();
+        Queue<E> topTenObjects = MinMaxPriorityQueue.orderedBy(new ReverseOrderComparator()).maximumSize(rankingSize).create();
 
         E object;
         while ((object = objectStream.readNext()) != null) {
@@ -38,8 +34,8 @@ class RankTopObjectsCommand<E extends Comparable<E>> implements Function<ObjectI
         return Ordering.natural().reverse().sortedCopy(topTenObjects);
     }
 
-    public RankTopObjectsCommand<E> setRankSize(int rankingSize) {
-        this.size = rankingSize;
+    public RankTopObjectsCommand<E> setRankingSize(int rankingSize) {
+        this.rankingSize = rankingSize;
         return this;
     }
 
