@@ -12,19 +12,19 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
 
-@Named("rankExpressionLevels")
+@Named("loadExpressionLevels")
 @Scope("prototype")
-public class LoadExpressionLevel implements Function<String, List<ExpressionLevel>> {
+public class LoadExpressionLevelsCommand implements Function<String, List<ExpressionLevel>> {
 
-    private static final Logger logger = Logger.getLogger(LoadExpressionLevel.class);
+    private static final Logger logger = Logger.getLogger(LoadExpressionLevelsCommand.class);
 
     private ExpressionLevelInputStreamBuilder inputStreamBuilder;
-    RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommandCommand;
+    RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommand;
 
     @Inject
-    public LoadExpressionLevel(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommand) {
+    public LoadExpressionLevelsCommand(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommand) {
         this.inputStreamBuilder = inputStreamBuilder;
-        this.rankTopObjectsCommandCommand = rankTopObjectsCommand;
+        this.rankTopObjectsCommand = rankTopObjectsCommand;
     }
 
     @Override
@@ -39,13 +39,10 @@ public class LoadExpressionLevel implements Function<String, List<ExpressionLeve
 
     private List<ExpressionLevel> loadTopTenExpressionLevels(String experimentAccession) {
 
-        ObjectInputStream<ExpressionLevel> inputStream = inputStreamBuilder.createFor(experimentAccession);
+        try (ObjectInputStream<ExpressionLevel> inputStream = inputStreamBuilder.createFor(experimentAccession)){
 
-        List<ExpressionLevel> expressionLevelsRanking = rankTopObjectsCommandCommand.apply(inputStream);
+            List<ExpressionLevel> expressionLevelsRanking = rankTopObjectsCommand.apply(inputStream);
 
-        try {
-
-            inputStream.close();
             return expressionLevelsRanking;
 
         } catch (IOException e) {
@@ -54,8 +51,18 @@ public class LoadExpressionLevel implements Function<String, List<ExpressionLeve
         }
     }
 
-    public LoadExpressionLevel setDataFileURL(String dataFileURL) {
+    public LoadExpressionLevelsCommand setRankingSize(int rankingSize){
+        rankTopObjectsCommand.setRankingSize(rankingSize);
+        return this;
+    }
+
+    public LoadExpressionLevelsCommand setDataFileURL(String dataFileURL) {
         this.inputStreamBuilder.setDataFileURL(dataFileURL);
+        return this;
+    }
+
+    public LoadExpressionLevelsCommand setRpkmCutOff(double rpkmCutOffValue) {
+        this.inputStreamBuilder.setRpkmCutOff(rpkmCutOffValue);
         return this;
     }
 }
