@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.commons;
 
 import java.io.Closeable;
 
-public interface ObjectInputStream<E> extends Closeable {
+public interface ObjectInputStream<T> extends Closeable {
 
-    public E readNext();
+    public T readNext();
 
 }
