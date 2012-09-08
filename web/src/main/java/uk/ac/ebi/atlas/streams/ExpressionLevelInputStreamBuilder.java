@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.RpkmCutOffInputStreamFilter;
 
 import javax.inject.Named;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class ExpressionLevelInputStreamBuilder {
     @Value("#{webappProperties['magetab.test.datafile.url']}")
     private String dataFileURL;
 
+    private Double rpkmCutOffValue;
 
     public ObjectInputStream<ExpressionLevel> createFor(String experimentAccession) {
 
@@ -45,7 +47,13 @@ public class ExpressionLevelInputStreamBuilder {
 
             Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
 
-            return new ExpressionLevelInputStream(dataFileReader, experimentRuns);
+            ObjectInputStream<ExpressionLevel> objectInputStream = new ExpressionLevelInputStream(dataFileReader, experimentRuns);
+
+            if (rpkmCutOffValue == null){
+                return objectInputStream;
+            }
+
+            return new RpkmCutOffInputStreamFilter(objectInputStream).setRpkmCutOffValue(rpkmCutOffValue);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -71,4 +79,10 @@ public class ExpressionLevelInputStreamBuilder {
 
     }
 
+    public ExpressionLevelInputStreamBuilder setRpkmCutOff(double rpkmCutOffValue) {
+
+        this.rpkmCutOffValue = rpkmCutOffValue;
+        return this;
+
+    }
 }
