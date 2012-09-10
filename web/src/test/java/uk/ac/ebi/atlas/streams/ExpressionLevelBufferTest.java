@@ -4,7 +4,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpression;
 import utils.ExperimentRunsBuilder;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class ExpressionLevelBufferTest {
     public void pollShouldReturnExpressionLevelsInTheRightOrder() throws Exception {
         subject.reload(RPKM_VALUES);
         //given the object was just initialized
-        TranscriptExpressionLevel transcriptExpressionLevel = subject.poll();
+        TranscriptExpression transcriptExpressionLevel = subject.poll();
         //then we expect first transcriptExpressionLevel
         assertThat(transcriptExpressionLevel.getTranscriptId(), is(TRANSCRIPT_ID));
         assertThat(transcriptExpressionLevel.getRpkm(), is(0d));
@@ -68,14 +68,14 @@ public class ExpressionLevelBufferTest {
         //given we do first reload
         subject.reload(RPKM_VALUES);
         //and we poll until exhaustion
-        TranscriptExpressionLevel run;
+        TranscriptExpression run;
         do {
             run = subject.poll();
         } while (run != null);
         //when we reload again with new values
         subject.reload("T1", "1", "2", "3");
         //and we poll
-        TranscriptExpressionLevel transcriptExpressionLevel = subject.poll();
+        TranscriptExpression transcriptExpressionLevel = subject.poll();
         //then we expect to find the new values
         assertThat(transcriptExpressionLevel.getTranscriptId(), is("T1"));
         assertThat(transcriptExpressionLevel.getRpkm(), is(1d));

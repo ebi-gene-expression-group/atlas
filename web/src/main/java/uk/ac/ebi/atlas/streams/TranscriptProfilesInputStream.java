@@ -8,7 +8,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpression;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -17,22 +17,22 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExpressionLevelInputStream implements ObjectInputStream<TranscriptExpressionLevel> {
+public class TranscriptProfilesInputStream implements ObjectInputStream<TranscriptExpression> {
 
-    private static final Logger logger = Logger.getLogger(ExpressionLevelInputStream.class);
+    private static final Logger logger = Logger.getLogger(TranscriptProfilesInputStream.class);
     public static final int TRANSCRIPT_ID_COLUMN = 0;
 
     private CSVReader csvReader;
 
     private ExpressionLevelsBuffer expressionLevelBuffer;
 
-    ExpressionLevelInputStream(CSVReader csvReader, List<ExperimentRun> experimentRuns) {
+    TranscriptProfilesInputStream(CSVReader csvReader, List<ExperimentRun> experimentRuns) {
         this.csvReader = csvReader;
         initializeBuffer(experimentRuns);
     }
 
 
-    public ExpressionLevelInputStream(Reader reader, List<ExperimentRun> experimentRuns) {
+    public TranscriptProfilesInputStream(Reader reader, List<ExperimentRun> experimentRuns) {
         this(new CSVReader(reader, '\t'), experimentRuns);
     }
 
@@ -59,20 +59,20 @@ public class ExpressionLevelInputStream implements ObjectInputStream<TranscriptE
 
 
     @Override
-    public TranscriptExpressionLevel readNext() {
-        TranscriptExpressionLevel transcriptExpressionLevel = expressionLevelBuffer.poll();
+    public TranscriptExpression readNext() {
+        TranscriptExpression transcriptExpression = expressionLevelBuffer.poll();
 
-        if (transcriptExpressionLevel == null) {
+        if (transcriptExpression == null) {
 
             String[] values = readCsvLine();
             if (values == null) {
                 return null;
             }
             expressionLevelBuffer.reload(values);
-            transcriptExpressionLevel = expressionLevelBuffer.poll();
+            transcriptExpression = expressionLevelBuffer.poll();
         }
 
-        return transcriptExpressionLevel;
+        return transcriptExpression;
     }
 
 
@@ -86,7 +86,7 @@ public class ExpressionLevelInputStream implements ObjectInputStream<TranscriptE
         }
     }
 
-    ExpressionLevelInputStream setExpressionLevelBuffer(ExpressionLevelsBuffer buffer) {
+    TranscriptProfilesInputStream setExpressionLevelBuffer(ExpressionLevelsBuffer buffer) {
         this.expressionLevelBuffer = buffer;
         return this;
     }

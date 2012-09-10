@@ -9,12 +9,12 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class TranscriptExpressionLevelsTest {
 
-    private TranscriptExpressionLevels subject;
+    private TranscriptProfile subject;
 
     @Before
     public void setUp() throws Exception {
         ExpressionLevel expressionLevel = new ExpressionLevel(new ExperimentRun("RUN_ACCESSION_1"), 2.2D);
-        subject = TranscriptExpressionLevels.forTranscriptId("EMBL-1")
+        subject = TranscriptProfile.forTranscriptId("EMBL-1")
                 .addExpressionLevel(expressionLevel).create();
     }
 

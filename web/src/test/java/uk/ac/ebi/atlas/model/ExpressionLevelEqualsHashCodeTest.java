@@ -13,7 +13,7 @@ public class ExpressionLevelEqualsHashCodeTest extends EqualsHashCodeTestCase {
 
     @Override
     protected Object createInstance() throws Exception {
-        TranscriptExpressionLevel transcriptExpressionLevel = new TranscriptExpressionLevel("id", 100, experimentRun)
+        TranscriptExpression transcriptExpressionLevel = new TranscriptExpression("id", 100, experimentRun)
                 .addFactorValue("f1", "v1")
                 .addFactorValue("f2", "v2");
         return transcriptExpressionLevel;
@@ -21,7 +21,7 @@ public class ExpressionLevelEqualsHashCodeTest extends EqualsHashCodeTestCase {
 
     @Override
     protected Object createNotEqualInstance() throws Exception {
-        TranscriptExpressionLevel transcriptExpressionLevel = new TranscriptExpressionLevel("id", 200, experimentRun)
+        TranscriptExpression transcriptExpressionLevel = new TranscriptExpression("id", 200, experimentRun)
                 .addFactorValue("f1", "v1")
                 .addFactorValue("f2", "v2_2");
         return transcriptExpressionLevel;

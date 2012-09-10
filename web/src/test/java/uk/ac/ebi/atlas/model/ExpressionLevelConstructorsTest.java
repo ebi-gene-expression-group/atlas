@@ -17,7 +17,7 @@ public class ExpressionLevelConstructorsTest {
 
     public static final String RUN_ACCESSION = "RUN_ACCESSION";
 
-    private TranscriptExpressionLevel subject;
+    private TranscriptExpression subject;
 
     @Mock
     private FactorValue factorValue1;
@@ -36,7 +36,7 @@ public class ExpressionLevelConstructorsTest {
     public void constructorShouldHandleNonEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new TranscriptExpressionLevel("id1", 1, new ExperimentRun(RUN_ACCESSION, factorValues));
+        subject = new TranscriptExpression("id1", 1, new ExperimentRun(RUN_ACCESSION, factorValues));
 
         //then
         assertThat(subject.getFactorValues().size(), is(2));
@@ -47,7 +47,7 @@ public class ExpressionLevelConstructorsTest {
     public void constructorShouldHandleEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new TranscriptExpressionLevel("id1", 1, new ExperimentRun(RUN_ACCESSION));
+        subject = new TranscriptExpression("id1", 1, new ExperimentRun(RUN_ACCESSION));
 
         //then
         assertThat(subject.getFactorValues().size(), is(0));

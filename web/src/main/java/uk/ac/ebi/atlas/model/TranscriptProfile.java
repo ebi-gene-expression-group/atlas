@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class TranscriptExpressionLevels implements Iterable<ExpressionLevel> {
+public class TranscriptProfile implements Iterable<ExpressionLevel> {
 
     private String transcriptId;
 
     private Set<ExpressionLevel> expressionLevels = new HashSet<>();
 
-    private TranscriptExpressionLevels(String transcriptId) {
+    private TranscriptProfile(String transcriptId) {
         this.transcriptId = transcriptId;
     }
 
@@ -34,20 +34,20 @@ public class TranscriptExpressionLevels implements Iterable<ExpressionLevel> {
     public static class Builder {
 
         private String transcriptId;
-        private TranscriptExpressionLevels transcriptExpressionLevels;
+        private TranscriptProfile transcriptExpressions;
 
         public Builder(String transcriptId) {
-            transcriptExpressionLevels = new TranscriptExpressionLevels(transcriptId);
+            transcriptExpressions = new TranscriptProfile(transcriptId);
             this.transcriptId = transcriptId;
         }
 
         public Builder addExpressionLevel(ExpressionLevel expressionLevel) {
-            transcriptExpressionLevels.expressionLevels.add(expressionLevel);
+            transcriptExpressions.expressionLevels.add(expressionLevel);
             return this;
         }
 
-        public TranscriptExpressionLevels create() {
-            return transcriptExpressionLevels;
+        public TranscriptProfile create() {
+            return transcriptExpressions;
         }
 
 

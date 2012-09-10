@@ -18,16 +18,16 @@ public class TranscriptSpecificityComparatorTest {
     private TranscriptSpecificityComparator subject;
 
     @Mock
-    private TranscriptExpressionLevel nullTranscriptSpecificity;
+    private TranscriptExpression nullTranscriptSpecificity;
 
     @Mock
-    private TranscriptExpressionLevel highestTranscriptSpecificity;
+    private TranscriptExpression highestTranscriptSpecificity;
 
     @Mock
-    private TranscriptExpressionLevel lowTranscriptSpecificity;
+    private TranscriptExpression lowTranscriptSpecificity;
 
     @Mock
-    private TranscriptExpressionLevel lowTranscriptSpecificityWithSmallerRPKM;
+    private TranscriptExpression lowTranscriptSpecificityWithSmallerRPKM;
 
 
     @Before

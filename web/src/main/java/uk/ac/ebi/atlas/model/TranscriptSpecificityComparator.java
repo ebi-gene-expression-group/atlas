@@ -4,21 +4,21 @@ import com.google.common.collect.Ordering;
 
 import java.util.Comparator;
 
-public class TranscriptSpecificityComparator implements Comparator<TranscriptExpressionLevel> {
+public class TranscriptSpecificityComparator implements Comparator<TranscriptExpression> {
 
     @Override
-    public int compare(TranscriptExpressionLevel firstTranscriptExpressionLevel, TranscriptExpressionLevel otherTranscriptExpressionLevel) {
-        if (firstTranscriptExpressionLevel.getSpecificity() == null) {
+    public int compare(TranscriptExpression firstTranscriptExpression, TranscriptExpression otherTranscriptExpression) {
+        if (firstTranscriptExpression.getSpecificity() == null) {
             return -1;
         }
-        if (otherTranscriptExpressionLevel.getSpecificity() == null) {
+        if (otherTranscriptExpression.getSpecificity() == null) {
             return +1;
         }
-        int order = Ordering.natural().reverse().compare(firstTranscriptExpressionLevel.getSpecificity(), otherTranscriptExpressionLevel.getSpecificity());
+        int order = Ordering.natural().reverse().compare(firstTranscriptExpression.getSpecificity(), otherTranscriptExpression.getSpecificity());
         if (order != 0) {
             return order;
         }
-        return firstTranscriptExpressionLevel.compareTo(otherTranscriptExpressionLevel);
+        return firstTranscriptExpression.compareTo(otherTranscriptExpression);
 
     }
 

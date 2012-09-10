@@ -9,7 +9,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpression;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ExpressionLevelsInputStreamTest {
 
     private List<ExperimentRun> experimentRunsMock;
 
-    private ExpressionLevelInputStream subject;
+    private TranscriptProfilesInputStream subject;
 
 
     @Before
@@ -57,7 +57,7 @@ public class ExpressionLevelsInputStreamTest {
                 .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
                 .willReturn(rpkmLine);
 
-        subject = new ExpressionLevelInputStream(csvReaderMock, experimentRunsMock);
+        subject = new TranscriptProfilesInputStream(csvReaderMock, experimentRunsMock);
 
         subject.setExpressionLevelBuffer(expressionLevelsBufferMock);
     }
@@ -65,7 +65,7 @@ public class ExpressionLevelsInputStreamTest {
     @Test
     public void readNextShouldPollTheBuffer() throws Exception {
 
-        TranscriptExpressionLevel transcriptExpressionLevelMock = mock(TranscriptExpressionLevel.class);
+        TranscriptExpression transcriptExpressionLevelMock = mock(TranscriptExpression.class);
 
         //given
         given(expressionLevelsBufferMock.poll()).willReturn(transcriptExpressionLevelMock);
@@ -98,7 +98,7 @@ public class ExpressionLevelsInputStreamTest {
         //and
         given(csvReaderMock.readNext()).willReturn(null);
         //when
-        TranscriptExpressionLevel transcriptExpressionLevel = subject.readNext();
+        TranscriptExpression transcriptExpressionLevel = subject.readNext();
         //then
         String[] values = verify(csvReaderMock, times(2)).readNext();
         //and

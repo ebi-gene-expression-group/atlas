@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpression;
 
 import java.util.*;
 
@@ -25,7 +25,7 @@ class ExpressionLevelsBuffer {
     }
 
 
-    public TranscriptExpressionLevel poll() {
+    public TranscriptExpression poll() {
         String rpkmStringValue = rpkmValuesBuffer.poll();
 
         if (rpkmStringValue == null) {
@@ -33,7 +33,7 @@ class ExpressionLevelsBuffer {
         }
         double rpkmValue = Double.parseDouble(rpkmStringValue);
 
-        return new TranscriptExpressionLevel(transcriptId, rpkmValue, runsCircularQueue.next());
+        return new TranscriptExpression(transcriptId, rpkmValue, runsCircularQueue.next());
     }
 
 

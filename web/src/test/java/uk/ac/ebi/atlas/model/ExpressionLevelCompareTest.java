@@ -10,18 +10,18 @@ import static org.junit.Assert.assertThat;
 public class ExpressionLevelCompareTest {
 
     private ExperimentRun experimentRun = new ExperimentRun("RUN_ACCESSION");
-    private TranscriptExpressionLevel subject;
+    private TranscriptExpression subject;
 
     @Before
     public void initializeSubject() {
-        subject = new TranscriptExpressionLevel("id", 100.0000, new ExperimentRun("RUN_ACCESSION").addFactorValue("f1", "v1")
+        subject = new TranscriptExpression("id", 100.0000, new ExperimentRun("RUN_ACCESSION").addFactorValue("f1", "v1")
                 .addFactorValue("f2", "v2"));
     }
 
     @Test
     public void compareToShouldReturn0WhenObjectsAreEquals() {
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 100, experimentRun);
+        TranscriptExpression other = new TranscriptExpression("id", 100, experimentRun);
         //given
         assertThat(subject.compareTo(other), is(0));
         //and
@@ -31,7 +31,7 @@ public class ExpressionLevelCompareTest {
     @Test
     public void compareToShouldReturnNegativeIntegerWhenRPKMIsLowerThanOther() {
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 100.000001, experimentRun);
+        TranscriptExpression other = new TranscriptExpression("id", 100.000001, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(lessThan(0)));
     }
@@ -40,7 +40,7 @@ public class ExpressionLevelCompareTest {
     @Test
     public void compareToShouldReturnPositiveIntegerWhenRPKMIsGreaterThanOther() {
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 99.999999, experimentRun);
+        TranscriptExpression other = new TranscriptExpression("id", 99.999999, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(greaterThan(0)));
     }
@@ -50,12 +50,12 @@ public class ExpressionLevelCompareTest {
     public void givenEqualRpkmCompareToShouldBeCoherentWithAlphabeticOrderOfId() {
 
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("zzId", 100, experimentRun);
+        TranscriptExpression other = new TranscriptExpression("zzId", 100, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(lessThan(0)));
 
         //given
-        other = new TranscriptExpressionLevel("aaId", 100, experimentRun);
+        other = new TranscriptExpression("aaId", 100, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(greaterThan(0)));
     }
@@ -63,12 +63,12 @@ public class ExpressionLevelCompareTest {
     @Test
     public void givenEqualRpkmAndEqualTrasncriptIdCompareToShouldBeBasedOnExperimentRun() {
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 100, new ExperimentRun("RUN_ACCESSION_Z"));
+        TranscriptExpression other = new TranscriptExpression("id", 100, new ExperimentRun("RUN_ACCESSION_Z"));
         //then
         assertThat(subject.compareTo(other), is(lessThan(0)));
 
         //given
-        other = new TranscriptExpressionLevel("id", 100, new ExperimentRun("A_RUN_ACCESSION"));
+        other = new TranscriptExpression("id", 100, new ExperimentRun("A_RUN_ACCESSION"));
         //then
         assertThat(subject.compareTo(other), is(greaterThan(0)));
     }

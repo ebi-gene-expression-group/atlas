@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
-import uk.ac.ebi.atlas.streams.ExpressionLevelInputStreamBuilder;
+import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.streams.TranscriptProfilesInputStreamBuilder;
 
 import java.util.List;
 
@@ -23,15 +23,15 @@ public class LoadExpressionLevelsCommandTest {
     public static final String EXPERIMENT_ACCESSION = "ACCESSION_VALUE";
 
     @Mock
-    ExpressionLevelInputStreamBuilder inputStreamBuilder;
+    TranscriptProfilesInputStreamBuilder inputStreamBuilder;
 
     @Mock
-    ObjectInputStream<TranscriptExpressionLevel> inputStream;
+    ObjectInputStream<TranscriptExpression> inputStream;
 
     @Mock
-    RankTopObjectsCommand<TranscriptExpressionLevel> rankObjectsCommandCommand;
+    RankTopObjectsCommand<TranscriptExpression> rankObjectsCommandCommand;
 
-    private List<TranscriptExpressionLevel> top10LevelsMock = Lists.newArrayList(mock(TranscriptExpressionLevel.class));
+    private List<TranscriptExpression> top10LevelsMock = Lists.newArrayList(mock(TranscriptExpression.class));
 
     private LoadExpressionLevelsCommand subject;
 
@@ -47,7 +47,7 @@ public class LoadExpressionLevelsCommandTest {
     @Test
     public void rankingShouldBuildAnObjectInputStreamAndUseItWithARankObjectsCommand() throws Exception {
         //when
-        List<TranscriptExpressionLevel> transcriptExpressionLevels = subject.apply(EXPERIMENT_ACCESSION);
+        List<TranscriptExpression> transcriptExpressionLevels = subject.apply(EXPERIMENT_ACCESSION);
 
         //then
         verify(inputStreamBuilder).createFor(EXPERIMENT_ACCESSION);

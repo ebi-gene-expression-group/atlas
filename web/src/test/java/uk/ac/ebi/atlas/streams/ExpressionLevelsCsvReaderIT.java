@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.streams;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpression;
 import utils.ExperimentRunsBuilder;
 
 import java.io.InputStreamReader;
@@ -27,7 +27,7 @@ public class ExpressionLevelsCsvReaderIT {
 
     private static List<ExperimentRun> EXPERIMENT_RUNS;
 
-    private ExpressionLevelInputStream subject;
+    private TranscriptProfilesInputStream subject;
 
     @Before
     public void initSubject() throws Exception {
@@ -38,13 +38,13 @@ public class ExpressionLevelsCsvReaderIT {
         EXPERIMENT_RUNS = new ExperimentRunsBuilder().buildExperimentRuns(RUN_ACCESSION2,
                 RUN_ACCESSION3, RUN_ACCESSION1);
 
-        subject = new ExpressionLevelInputStream(dataFileReader, EXPERIMENT_RUNS);
+        subject = new TranscriptProfilesInputStream(dataFileReader, EXPERIMENT_RUNS);
     }
 
     @Test
     public void readNextShouldReturnNextExpressionLevel() throws Exception {
         //given
-        TranscriptExpressionLevel transcriptExpressionLevel = subject.readNext();
+        TranscriptExpression transcriptExpressionLevel = subject.readNext();
         //then
         assertThat(transcriptExpressionLevel.getTranscriptId(), is(TRANSCRIPT_ID_1));
         assertThat(transcriptExpressionLevel.getRunAccession(), is(RUN_ACCESSION1));
@@ -68,7 +68,7 @@ public class ExpressionLevelsCsvReaderIT {
 
     @Test
     public void readNextShouldReturnNullGivenAllRpkmsHaveBeenRead() throws Exception {
-        TranscriptExpressionLevel transcriptExpressionLevel;
+        TranscriptExpression transcriptExpressionLevel;
         for (int i = 0; i < 9; i++) {
             //given
             transcriptExpressionLevel = subject.readNext();

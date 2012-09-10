@@ -6,7 +6,7 @@ import java.util.Set;
 import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class TranscriptExpressionLevel implements Comparable<TranscriptExpressionLevel> {
+public class TranscriptExpression implements Comparable<TranscriptExpression> {
 
     private String transcriptId;
 
@@ -15,7 +15,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
     private Integer specificity;
 
 
-    public TranscriptExpressionLevel(String transcriptId, double rpkm, ExperimentRun experimentRun) {
+    public TranscriptExpression(String transcriptId, double rpkm, ExperimentRun experimentRun) {
         this.transcriptId = checkNotNull(transcriptId);
         this.expressionLevel = new ExpressionLevel(checkNotNull(experimentRun), rpkm);
     }
@@ -36,7 +36,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
         return expressionLevel.getRpkm();
     }
 
-    public TranscriptExpressionLevel addFactorValue(String factor, String value) {
+    public TranscriptExpression addFactorValue(String factor, String value) {
         expressionLevel.addFactorValue(factor, value);
 
         return this;
@@ -71,7 +71,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TranscriptExpressionLevel other = (TranscriptExpressionLevel) obj;
+        final TranscriptExpression other = (TranscriptExpression) obj;
 
         return Objects.equals(this.getTranscriptId(), other.getTranscriptId())
                 && Objects.equals(this.expressionLevel.getExperimentRun(), other.expressionLevel.getExperimentRun())
@@ -87,7 +87,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
     }
 
     @Override
-    public int compareTo(TranscriptExpressionLevel other) {
+    public int compareTo(TranscriptExpression other) {
         int compareTo = Double.compare(expressionLevel.getRpkm(), other.expressionLevel.getRpkm());
         if (compareTo != 0) {
             return compareTo;
