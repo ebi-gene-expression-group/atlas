@@ -56,13 +56,7 @@ public class ExpressionLevelConstructorsTest {
     public void constructorsShouldHandleNullFactorValuesCollection() throws Exception {
 
         //given
-        subject = new TranscriptExpressionLevel("id1", 1, null);
-
-        //then
-        assertThat(subject.getFactorValues().size(), is(0));
-
-        //given
-        subject = new TranscriptExpressionLevel("id1", 1);
+        subject = new TranscriptExpressionLevel("id1", 1, new ExperimentRun("RUN_ACCESSION"));
 
         //then
         assertThat(subject.getFactorValues().size(), is(0));

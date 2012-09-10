@@ -8,13 +8,13 @@ public class ExpressionLevelTranscriptSpecificityComparator implements Comparato
 
     @Override
     public int compare(TranscriptExpressionLevel firstTranscriptExpressionLevel, TranscriptExpressionLevel otherTranscriptExpressionLevel) {
-        if (firstTranscriptExpressionLevel.getTranscriptSpecificity() == null) {
+        if (firstTranscriptExpressionLevel.getSpecificity() == null) {
             return -1;
         }
-        if (otherTranscriptExpressionLevel.getTranscriptSpecificity() == null) {
+        if (otherTranscriptExpressionLevel.getSpecificity() == null) {
             return +1;
         }
-        int order = Ordering.natural().reverse().compare(firstTranscriptExpressionLevel.getTranscriptSpecificity(), otherTranscriptExpressionLevel.getTranscriptSpecificity());
+        int order = Ordering.natural().reverse().compare(firstTranscriptExpressionLevel.getSpecificity(), otherTranscriptExpressionLevel.getSpecificity());
         if (order != 0) {
             return order;
         }

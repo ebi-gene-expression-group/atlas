@@ -8,43 +8,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TranscriptExpressionLevel implements Comparable<TranscriptExpressionLevel> {
 
-    private static final String UNKNOWN_EXPERIMENT_RUN_ACCESSION = "UNKNOWN_EXPERIMENT_RUN";
-    private Transcript transcript;
+    private String transcriptId;
 
-    private final ExpressionLevel expressionLevel = new ExpressionLevel();
+    private ExpressionLevel expressionLevel;
+
+    private Integer specificity;
+
 
     public TranscriptExpressionLevel(String transcriptId, double rpkm, ExperimentRun experimentRun) {
-        this.transcript = new Transcript(checkNotNull(transcriptId));
-        if (experimentRun == null) {
-            experimentRun = new ExperimentRun(UNKNOWN_EXPERIMENT_RUN_ACCESSION);
-        }
-        this.expressionLevel.experimentRun = experimentRun;
-        if (Double.isNaN(rpkm)) {
-            this.expressionLevel.rpkm = Double.NEGATIVE_INFINITY;
-        } else {
-            this.expressionLevel.rpkm = rpkm;
-        }
-    }
-
-    public TranscriptExpressionLevel(Transcript transcript, double rpkm, ExperimentRun experimentRun) {
-        this.transcript = checkNotNull(transcript);
-        if (experimentRun == null) {
-            experimentRun = new ExperimentRun(UNKNOWN_EXPERIMENT_RUN_ACCESSION);
-        }
-        this.expressionLevel.experimentRun = experimentRun;
-        if (Double.isNaN(rpkm)) {
-            this.expressionLevel.rpkm = Double.NEGATIVE_INFINITY;
-        } else {
-            this.expressionLevel.rpkm = rpkm;
-        }
-    }
-
-    public TranscriptExpressionLevel(String transcriptId, double rpkm) {
-        this(transcriptId, rpkm, null);
+        this.transcriptId = transcriptId;
+        this.expressionLevel = new ExpressionLevel(checkNotNull(experimentRun), rpkm);
     }
 
     public String getTranscriptId() {
-        return transcript.getId();
+        return transcriptId;
     }
 
     public String getRunAccession() {
@@ -65,18 +42,25 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
         return this;
     }
 
-    public Integer getTranscriptSpecificity() {
-        return transcript.getSpecificityIndex();
+    public ExpressionLevel getExpressionLevel() {
+        return expressionLevel;
     }
 
-    public TranscriptExpressionLevel setSpecificity(int specificity) {
-        transcript.setSpecificityIndex(specificity);
-        return this;
+    public void setExpressionLevel(ExpressionLevel expressionLevel) {
+        this.expressionLevel = expressionLevel;
+    }
+
+    public Integer getSpecificity() {
+        return specificity;
+    }
+
+    public void setSpecificity(Integer specificity) {
+        this.specificity = specificity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transcript.getId(), expressionLevel.experimentRun, expressionLevel.getRpkm());
+        return Objects.hash(transcriptId, expressionLevel.getExperimentRun(), expressionLevel.getRpkm());
     }
 
     @Override
@@ -90,7 +74,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
         final TranscriptExpressionLevel other = (TranscriptExpressionLevel) obj;
 
         return Objects.equals(this.getTranscriptId(), other.getTranscriptId())
-                && Objects.equals(this.expressionLevel.experimentRun, other.expressionLevel.experimentRun)
+                && Objects.equals(this.expressionLevel.getExperimentRun(), other.expressionLevel.getExperimentRun())
                 && Objects.equals(this.expressionLevel.getRpkm(), other.expressionLevel.getRpkm());
     }
 
@@ -99,7 +83,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
         return toStringHelper(this)
                 .add("transcriptId", getTranscriptId())
                 .add("rpkm", expressionLevel.getRpkm())
-                .add("experimentRun", expressionLevel.experimentRun).toString();
+                .add("experimentRun", expressionLevel.getExperimentRun()).toString();
     }
 
     @Override
@@ -112,7 +96,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
         if (compareTo != 0) {
             return compareTo;
         }
-        return expressionLevel.experimentRun.compareTo(other.expressionLevel.experimentRun);
+        return expressionLevel.getExperimentRun().compareTo(other.expressionLevel.getExperimentRun());
 
     }
 }

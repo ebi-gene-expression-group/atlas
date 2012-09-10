@@ -3,10 +3,12 @@ package uk.ac.ebi.atlas.model;
 import java.util.Set;
 
 public class ExpressionLevel {
-    ExperimentRun experimentRun;
-    double rpkm;
+    private ExperimentRun experimentRun;
+    private double rpkm;
 
-    public ExpressionLevel() {
+    public ExpressionLevel(ExperimentRun experimentRun, double rpkm) {
+        this.experimentRun = experimentRun;
+        this.rpkm = rpkm;
     }
 
     public String getRunAccession() {
@@ -24,5 +26,9 @@ public class ExpressionLevel {
     public ExpressionLevel addFactorValue(String factor, String value) {
         experimentRun.addFactorValue(factor, value);
         return this;
+    }
+
+    public ExperimentRun getExperimentRun() {
+        return experimentRun;
     }
 }

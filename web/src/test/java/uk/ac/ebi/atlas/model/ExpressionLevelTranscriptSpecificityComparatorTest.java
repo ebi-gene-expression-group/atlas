@@ -32,15 +32,15 @@ public class ExpressionLevelTranscriptSpecificityComparatorTest {
 
     @Before
     public void initExpressionLevels() {
-        when(nullTranscriptSpecificity.getTranscriptSpecificity())
+        when(nullTranscriptSpecificity.getSpecificity())
                 .thenReturn(null);
-        when(highestTranscriptSpecificity.getTranscriptSpecificity())
+        when(highestTranscriptSpecificity.getSpecificity())
                 .thenReturn(1);
-        when(lowTranscriptSpecificity.getTranscriptSpecificity())
+        when(lowTranscriptSpecificity.getSpecificity())
                 .thenReturn(16);
         when(lowTranscriptSpecificity.getRpkm())
                 .thenReturn(10D);
-        when(lowTranscriptSpecificityWithSmallerRPKM.getTranscriptSpecificity())
+        when(lowTranscriptSpecificityWithSmallerRPKM.getSpecificity())
                 .thenReturn(16);
         when(lowTranscriptSpecificityWithSmallerRPKM.getRpkm())
                 .thenReturn(0D);

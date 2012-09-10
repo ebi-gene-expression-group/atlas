@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 
 public class ExpressionLevelCompareTest {
 
+    private ExperimentRun experimentRun = new ExperimentRun("RUN_ACCESSION");
     private TranscriptExpressionLevel subject;
 
     @Before
@@ -20,7 +21,7 @@ public class ExpressionLevelCompareTest {
     @Test
     public void compareToShouldReturn0WhenObjectsAreEquals() {
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 100, new ExperimentRun("RUN_ACCESSION"));
+        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 100, experimentRun);
         //given
         assertThat(subject.compareTo(other), is(0));
         //and
@@ -30,24 +31,16 @@ public class ExpressionLevelCompareTest {
     @Test
     public void compareToShouldReturnNegativeIntegerWhenRPKMIsLowerThanOther() {
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 100.000001);
+        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 100.000001, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(lessThan(0)));
-    }
-
-    @Test
-    public void compareToShouldReturnNegativeIntegerWhenOtherObjectRPKMIsNaN() {
-        //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", Double.NaN);
-        //then
-        assertThat(subject.compareTo(other), is(greaterThan(0)));
     }
 
 
     @Test
     public void compareToShouldReturnPositiveIntegerWhenRPKMIsGreaterThanOther() {
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 99.999999);
+        TranscriptExpressionLevel other = new TranscriptExpressionLevel("id", 99.999999, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(greaterThan(0)));
     }
@@ -57,12 +50,12 @@ public class ExpressionLevelCompareTest {
     public void givenEqualRpkmCompareToShouldBeCoherentWithAlphabeticOrderOfId() {
 
         //given
-        TranscriptExpressionLevel other = new TranscriptExpressionLevel("zzId", 100);
+        TranscriptExpressionLevel other = new TranscriptExpressionLevel("zzId", 100, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(lessThan(0)));
 
         //given
-        other = new TranscriptExpressionLevel("aaId", 100);
+        other = new TranscriptExpressionLevel("aaId", 100, experimentRun);
         //then
         assertThat(subject.compareTo(other), is(greaterThan(0)));
     }

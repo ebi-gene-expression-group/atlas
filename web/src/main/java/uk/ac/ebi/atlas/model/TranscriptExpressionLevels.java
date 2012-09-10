@@ -10,26 +10,46 @@ public class TranscriptExpressionLevels implements Iterable<ExpressionLevel> {
 
     private Set<ExpressionLevel> expressionLevels = new HashSet<>();
 
-    public TranscriptExpressionLevels(String transcriptId) {
+    private TranscriptExpressionLevels(String transcriptId) {
         this.transcriptId = transcriptId;
     }
 
-    public TranscriptExpressionLevels addExpressionLevel(ExpressionLevel expressionLevel) {
-        expressionLevels.add(expressionLevel);
-
-        return this;
-    }
-
-    public Set<ExpressionLevel> getExpressionLevels() {
-        return expressionLevels;
+    public static Builder forTranscriptId(String transcriptId) {
+        return new Builder(transcriptId);
     }
 
     public String getTranscriptId() {
         return transcriptId;
     }
 
+    public int getTranscriptSpecificity() {
+        return expressionLevels.size();
+    }
+
     @Override
     public Iterator<ExpressionLevel> iterator() {
         return expressionLevels.iterator();
+    }
+
+    public static class Builder {
+
+        private String transcriptId;
+        private TranscriptExpressionLevels transcriptExpressionLevels;
+
+        public Builder(String transcriptId) {
+            transcriptExpressionLevels = new TranscriptExpressionLevels(transcriptId);
+            this.transcriptId = transcriptId;
+        }
+
+        public Builder addExpressionLevel(ExpressionLevel expressionLevel) {
+            transcriptExpressionLevels.expressionLevels.add(expressionLevel);
+            return this;
+        }
+
+        public TranscriptExpressionLevels create() {
+            return transcriptExpressionLevels;
+        }
+
+
     }
 }
