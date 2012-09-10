@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.ExpressionLevel;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkState;
 class ExpressionLevelsBuffer {
 
     private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain transcript id and rpkm values for all experiment runs";
-    private String transcriptId;
+    //private String transcriptId;
     private Queue<String> rpkmValuesBuffer = new LinkedList<>();
 
     private Iterator<ExperimentRun> runsCircularQueue;
@@ -25,7 +25,7 @@ class ExpressionLevelsBuffer {
     }
 
 
-    public TranscriptExpression poll() {
+    public ExpressionLevel poll() {
         String rpkmStringValue = rpkmValuesBuffer.poll();
 
         if (rpkmStringValue == null) {
@@ -33,7 +33,7 @@ class ExpressionLevelsBuffer {
         }
         double rpkmValue = Double.parseDouble(rpkmStringValue);
 
-        return new TranscriptExpression(transcriptId, rpkmValue, runsCircularQueue.next());
+        return new ExpressionLevel(runsCircularQueue.next(), rpkmValue);
     }
 
 
@@ -46,7 +46,8 @@ class ExpressionLevelsBuffer {
 
         Collections.addAll(this.rpkmValuesBuffer, values);
 
-        transcriptId = rpkmValuesBuffer.poll();
+        //transcriptId = rpkmValuesBuffer.poll();
+        rpkmValuesBuffer.poll();
 
         return this;
     }

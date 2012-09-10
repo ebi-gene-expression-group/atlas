@@ -8,7 +8,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptProfile;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -17,7 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class TranscriptProfilesInputStream implements ObjectInputStream<TranscriptExpression> {
+public class TranscriptProfilesInputStream implements ObjectInputStream<TranscriptProfile> {
 
     private static final Logger logger = Logger.getLogger(TranscriptProfilesInputStream.class);
     public static final int TRANSCRIPT_ID_COLUMN = 0;
@@ -59,21 +60,33 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
 
 
     @Override
-    public TranscriptExpression readNext() {
-        TranscriptExpression transcriptExpression = expressionLevelBuffer.poll();
+    public TranscriptProfile readNext() {
+        return null; //ToDo
+    }
+
+    private ExpressionLevel readNextExpressionLevel(){
+        ExpressionLevel expressionLevel = expressionLevelBuffer.poll();
 
         if (transcriptExpression == null) {
 
             String[] values = readCsvLine();
+
+            //transcriptProfile;
+
+
             if (values == null) {
                 return null;
             }
+
             expressionLevelBuffer.reload(values);
             transcriptExpression = expressionLevelBuffer.poll();
         }
 
+
+
         return transcriptExpression;
     }
+
 
 
     String[] readCsvLine() {
