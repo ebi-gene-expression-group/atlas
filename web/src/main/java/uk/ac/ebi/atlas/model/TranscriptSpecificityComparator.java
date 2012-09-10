@@ -4,7 +4,7 @@ import com.google.common.collect.Ordering;
 
 import java.util.Comparator;
 
-public class ExpressionLevelTranscriptSpecificityComparator implements Comparator<TranscriptExpressionLevel> {
+public class TranscriptSpecificityComparator implements Comparator<TranscriptExpressionLevel> {
 
     @Override
     public int compare(TranscriptExpressionLevel firstTranscriptExpressionLevel, TranscriptExpressionLevel otherTranscriptExpressionLevel) {

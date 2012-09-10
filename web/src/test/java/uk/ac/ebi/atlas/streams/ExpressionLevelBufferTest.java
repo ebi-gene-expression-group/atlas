@@ -26,8 +26,6 @@ public class ExpressionLevelBufferTest {
 
     @Before
     public void initializeSubject() {
-        String[] orderedRunAccessions = new String[]{RUN_ACCESSION1,
-                RUN_ACCESSION2, RUN_ACCESSION3};
 
         EXPERIMENT_RUNS = new ExperimentRunsBuilder().buildExperimentRuns(RUN_ACCESSION1,
                 RUN_ACCESSION2, RUN_ACCESSION3);

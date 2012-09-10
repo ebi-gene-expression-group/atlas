@@ -13,9 +13,9 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExpressionLevelTranscriptSpecificityComparatorTest {
+public class TranscriptSpecificityComparatorTest {
 
-    private ExpressionLevelTranscriptSpecificityComparator subject;
+    private TranscriptSpecificityComparator subject;
 
     @Mock
     private TranscriptExpressionLevel nullTranscriptSpecificity;
@@ -44,12 +44,12 @@ public class ExpressionLevelTranscriptSpecificityComparatorTest {
                 .thenReturn(16);
         when(lowTranscriptSpecificityWithSmallerRPKM.getRpkm())
                 .thenReturn(0D);
-        subject = new ExpressionLevelTranscriptSpecificityComparator();
+        subject = new TranscriptSpecificityComparator();
     }
 
     @Before
     public void initSubject() {
-        subject = new ExpressionLevelTranscriptSpecificityComparator();
+        subject = new TranscriptSpecificityComparator();
     }
 
     @Test

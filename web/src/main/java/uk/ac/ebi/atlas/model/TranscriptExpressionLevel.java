@@ -16,7 +16,7 @@ public class TranscriptExpressionLevel implements Comparable<TranscriptExpressio
 
 
     public TranscriptExpressionLevel(String transcriptId, double rpkm, ExperimentRun experimentRun) {
-        this.transcriptId = transcriptId;
+        this.transcriptId = checkNotNull(transcriptId);
         this.expressionLevel = new ExpressionLevel(checkNotNull(experimentRun), rpkm);
     }
 
