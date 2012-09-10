@@ -61,33 +61,28 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
 
     @Override
     public TranscriptProfile readNext() {
-        return null; //ToDo
-    }
+        String[] values = readCsvLine();
 
-    private ExpressionLevel readNextExpressionLevel(){
-        ExpressionLevel expressionLevel = expressionLevelBuffer.poll();
+        if (values == null) {
+            return null;
+        }
 
-        if (transcriptExpression == null) {
+        TranscriptProfile.Builder builder = TranscriptProfile.forTranscriptId(values[TRANSCRIPT_ID_COLUMN]);
 
-            String[] values = readCsvLine();
+        expressionLevelBuffer.reload(values);
 
-            //transcriptProfile;
+        ExpressionLevel expressionLevel;
 
+        while ((expressionLevel = expressionLevelBuffer.poll()) != null) {
 
-            if (values == null) {
-                return null;
-            }
-
-            expressionLevelBuffer.reload(values);
-            transcriptExpression = expressionLevelBuffer.poll();
+            //ToDo: Filter comes here
+            builder.addExpressionLevel(expressionLevel);
         }
 
 
-
-        return transcriptExpression;
+        //ToDo: if no expression levels pass the filter, discard current TranscriptProfile and read next recursively
+        return builder.create();
     }
-
-
 
     String[] readCsvLine() {
         try {

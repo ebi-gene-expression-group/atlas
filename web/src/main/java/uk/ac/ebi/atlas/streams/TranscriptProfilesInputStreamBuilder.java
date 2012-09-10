@@ -44,10 +44,12 @@ public class TranscriptProfilesInputStreamBuilder {
 
         Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
 
-        ObjectInputStream<TranscriptExpression> objectInputStream = new TranscriptProfilesInputStream(dataFileReader, experimentRuns);
+        TranscriptProfilesInputStream objectInputStream = new TranscriptProfilesInputStream(dataFileReader, experimentRuns);
 
-        return new RpkmCutOffInputStreamFilter(objectInputStream).setRpkmCutOffValue(rpkmCutOffValue);
+//        return new RpkmCutOffInputStreamFilter(objectInputStream).setRpkmCutOffValue(rpkmCutOffValue);
 
+        //ToDo: fix me
+        return null;
     }
 
     URL buildURL(String location) {
