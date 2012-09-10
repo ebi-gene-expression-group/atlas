@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
-import uk.ac.ebi.atlas.model.RpkmCutOffInputStreamFilter;
+import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
 
 import javax.inject.Named;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class ExpressionLevelInputStreamBuilder {
 
     private Double rpkmCutOffValue;
 
-    public ObjectInputStream<ExpressionLevel> createFor(String experimentAccession) {
+    public ObjectInputStream<TranscriptExpressionLevel> createFor(String experimentAccession) throws IOException {
 
         String idfFileLocation = String.format(idfFileUrlTemplate, experimentAccession, experimentAccession);
 
@@ -43,22 +42,12 @@ public class ExpressionLevelInputStreamBuilder {
 
         URL dataFileURL = buildURL(this.dataFileURL);
 
-        try {
+        Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
 
-            Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
+        ObjectInputStream<TranscriptExpressionLevel> objectInputStream = new ExpressionLevelInputStream(dataFileReader, experimentRuns);
 
-            ObjectInputStream<ExpressionLevel> objectInputStream = new ExpressionLevelInputStream(dataFileReader, experimentRuns);
+        return new RpkmCutOffInputStreamFilter(objectInputStream).setRpkmCutOffValue(rpkmCutOffValue);
 
-            if (rpkmCutOffValue == null){
-                return objectInputStream;
-            }
-
-            return new RpkmCutOffInputStreamFilter(objectInputStream).setRpkmCutOffValue(rpkmCutOffValue);
-
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error while parsing dataFileURL stream: " + e.getMessage());
-        }
     }
 
     URL buildURL(String location) {

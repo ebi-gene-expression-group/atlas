@@ -11,16 +11,16 @@ public class ExpressionLevelEqualsHashCodeTest extends EqualsHashCodeTestCase {
 
     @Override
     protected Object createInstance() throws Exception {
-        ExpressionLevel expressionLevel = new ExpressionLevel("id", 100).addFactorValue("f1", "v1")
-                                                                        .addFactorValue("f2", "v2");
-        return expressionLevel;
+        TranscriptExpressionLevel transcriptExpressionLevel = new TranscriptExpressionLevel("id", 100).addFactorValue("f1", "v1")
+                .addFactorValue("f2", "v2");
+        return transcriptExpressionLevel;
     }
 
     @Override
     protected Object createNotEqualInstance() throws Exception {
-        ExpressionLevel expressionLevel = new ExpressionLevel("id", 200).addFactorValue("f1", "v1")
-                                                                        .addFactorValue("f2", "v2_2");
-        return expressionLevel;
+        TranscriptExpressionLevel transcriptExpressionLevel = new TranscriptExpressionLevel("id", 200).addFactorValue("f1", "v1")
+                .addFactorValue("f2", "v2_2");
+        return transcriptExpressionLevel;
     }
 
 }

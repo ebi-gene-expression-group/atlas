@@ -10,30 +10,28 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TranscriptSpecificityComparatorTest {
+public class ExpressionLevelTranscriptSpecificityComparatorTest {
 
-    private TranscriptSpecificityComparator subject;
-
-    @Mock
-    private ExpressionLevel nullTranscriptSpecificity;
+    private ExpressionLevelTranscriptSpecificityComparator subject;
 
     @Mock
-    private ExpressionLevel highestTranscriptSpecificity;
+    private TranscriptExpressionLevel nullTranscriptSpecificity;
 
     @Mock
-    private ExpressionLevel lowTranscriptSpecificity;
+    private TranscriptExpressionLevel highestTranscriptSpecificity;
 
     @Mock
-    private ExpressionLevel lowTranscriptSpecificityWithSmallerRPKM;
+    private TranscriptExpressionLevel lowTranscriptSpecificity;
+
+    @Mock
+    private TranscriptExpressionLevel lowTranscriptSpecificityWithSmallerRPKM;
 
 
     @Before
-    public void initExpressionLevels(){
+    public void initExpressionLevels() {
         when(nullTranscriptSpecificity.getTranscriptSpecificity())
                 .thenReturn(null);
         when(highestTranscriptSpecificity.getTranscriptSpecificity())
@@ -41,21 +39,21 @@ public class TranscriptSpecificityComparatorTest {
         when(lowTranscriptSpecificity.getTranscriptSpecificity())
                 .thenReturn(16);
         when(lowTranscriptSpecificity.getRpkm())
-            .thenReturn(10D);
+                .thenReturn(10D);
         when(lowTranscriptSpecificityWithSmallerRPKM.getTranscriptSpecificity())
-            .thenReturn(16);
+                .thenReturn(16);
         when(lowTranscriptSpecificityWithSmallerRPKM.getRpkm())
-            .thenReturn(0D);
-        subject = new TranscriptSpecificityComparator();
+                .thenReturn(0D);
+        subject = new ExpressionLevelTranscriptSpecificityComparator();
     }
 
     @Before
-    public void initSubject(){
-        subject = new TranscriptSpecificityComparator();
+    public void initSubject() {
+        subject = new ExpressionLevelTranscriptSpecificityComparator();
     }
 
     @Test
-    public void nullSpecificityShouldFollowLowerSpecificity(){
+    public void nullSpecificityShouldFollowLowerSpecificity() {
         //when
         int comparison = subject.compare(nullTranscriptSpecificity, lowTranscriptSpecificity);
 
@@ -65,7 +63,7 @@ public class TranscriptSpecificityComparatorTest {
     }
 
     @Test
-    public void lowSpecificityShouldFollowHigherSpecificity(){
+    public void lowSpecificityShouldFollowHigherSpecificity() {
         //when
         int comparison = subject.compare(lowTranscriptSpecificity, highestTranscriptSpecificity);
 
@@ -75,7 +73,7 @@ public class TranscriptSpecificityComparatorTest {
     }
 
     @Test
-    public void highSpecificityShouldPreceedLowSpecificity(){
+    public void highSpecificityShouldPreceedLowSpecificity() {
         //when
         int comparison = subject.compare(highestTranscriptSpecificity, lowTranscriptSpecificity);
 
@@ -85,7 +83,7 @@ public class TranscriptSpecificityComparatorTest {
     }
 
     @Test
-    public void differentSpecificityShouldNotTriggerExpressionLevelComparator(){
+    public void differentSpecificityShouldNotTriggerExpressionLevelComparator() {
         //when
         int comparison = subject.compare(highestTranscriptSpecificity, lowTranscriptSpecificity);
 
@@ -95,7 +93,7 @@ public class TranscriptSpecificityComparatorTest {
     }
 
     @Test
-    public void sameSpecificityWithSmallerRPKMShouldFollow(){
+    public void sameSpecificityWithSmallerRPKMShouldFollow() {
         //when
         int comparison = subject.compare(lowTranscriptSpecificityWithSmallerRPKM, lowTranscriptSpecificity);
 

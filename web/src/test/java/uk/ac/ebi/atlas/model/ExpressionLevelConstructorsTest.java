@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionLevelConstructorsTest {
 
-    private ExpressionLevel subject;
+    private TranscriptExpressionLevel subject;
 
     @Mock
     private FactorValue factorValue1;
@@ -25,7 +25,7 @@ public class ExpressionLevelConstructorsTest {
     private Set<FactorValue> factorValues = new HashSet<>();
 
     @Before
-    public void initializeFactorValues(){
+    public void initializeFactorValues() {
         factorValues.add(factorValue1);
         factorValues.add(factorValue2);
     }
@@ -34,7 +34,7 @@ public class ExpressionLevelConstructorsTest {
     public void constructorShouldHandleNonEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new ExpressionLevel("id1", 1, new ExperimentRun("RUN_ACCESSION", factorValues));
+        subject = new TranscriptExpressionLevel("id1", 1, new ExperimentRun("RUN_ACCESSION", factorValues));
 
         //then
         assertThat(subject.getFactorValues().size(), is(2));
@@ -45,7 +45,7 @@ public class ExpressionLevelConstructorsTest {
     public void constructorShouldHandleEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new ExpressionLevel("id1", 1, new ExperimentRun("RUN_ACCESSION"));
+        subject = new TranscriptExpressionLevel("id1", 1, new ExperimentRun("RUN_ACCESSION"));
 
         //then
         assertThat(subject.getFactorValues().size(), is(0));
@@ -56,13 +56,13 @@ public class ExpressionLevelConstructorsTest {
     public void constructorsShouldHandleNullFactorValuesCollection() throws Exception {
 
         //given
-        subject = new ExpressionLevel("id1", 1, null);
+        subject = new TranscriptExpressionLevel("id1", 1, null);
 
         //then
         assertThat(subject.getFactorValues().size(), is(0));
 
         //given
-        subject = new ExpressionLevel("id1", 1);
+        subject = new TranscriptExpressionLevel("id1", 1);
 
         //then
         assertThat(subject.getFactorValues().size(), is(0));

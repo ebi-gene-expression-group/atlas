@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.LoadExpressionLevelsCommand;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -40,15 +40,15 @@ public class ExpressionLevelController {
             loadExpressionLevelsCommand.setDataFileURL(dataFileURL);
         }
 
-        List<ExpressionLevel> expressionLevels;
+        List<TranscriptExpressionLevel> transcriptExpressionLevels;
 
         if (experimentAccession == null) {
             experimentAccession = DEMO_ACCESSION;
         }
 
-        expressionLevels = loadExpressionLevelsCommand.apply(experimentAccession);
+        transcriptExpressionLevels = loadExpressionLevelsCommand.apply(experimentAccession);
 
-        model.addAttribute("expressions", expressionLevels);
+        model.addAttribute("expressions", transcriptExpressionLevels);
 
         return "experiment";
     }

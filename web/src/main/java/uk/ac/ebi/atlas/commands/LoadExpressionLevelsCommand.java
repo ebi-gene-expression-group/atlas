@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
 import uk.ac.ebi.atlas.streams.ExpressionLevelInputStreamBuilder;
 
 import javax.inject.Inject;
@@ -14,36 +14,36 @@ import java.util.List;
 
 @Named("loadExpressionLevels")
 @Scope("prototype")
-public class LoadExpressionLevelsCommand implements Function<String, List<ExpressionLevel>> {
+public class LoadExpressionLevelsCommand implements Function<String, List<TranscriptExpressionLevel>> {
 
     private static final Logger logger = Logger.getLogger(LoadExpressionLevelsCommand.class);
 
     private ExpressionLevelInputStreamBuilder inputStreamBuilder;
-    RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommand;
+    RankTopObjectsCommand<TranscriptExpressionLevel> rankTopObjectsCommand;
 
     @Inject
-    public LoadExpressionLevelsCommand(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankTopObjectsCommand<ExpressionLevel> rankTopObjectsCommand) {
+    public LoadExpressionLevelsCommand(ExpressionLevelInputStreamBuilder inputStreamBuilder, RankTopObjectsCommand<TranscriptExpressionLevel> rankTopObjectsCommand) {
         this.inputStreamBuilder = inputStreamBuilder;
         this.rankTopObjectsCommand = rankTopObjectsCommand;
     }
 
     @Override
-    public List<ExpressionLevel> apply(String experimentAccession) throws IllegalStateException {
-        List<ExpressionLevel> topTenExpressionLevels = loadTopTenExpressionLevels(experimentAccession);
-        if (topTenExpressionLevels == null) {
+    public List<TranscriptExpressionLevel> apply(String experimentAccession) throws IllegalStateException {
+        List<TranscriptExpressionLevel> topTenTranscriptExpressionLevels = loadTopTenExpressionLevels(experimentAccession);
+        if (topTenTranscriptExpressionLevels == null) {
             throw new IllegalStateException("Data not found for experiment: " + experimentAccession);
         }
-        return topTenExpressionLevels;
+        return topTenTranscriptExpressionLevels;
     }
 
 
-    private List<ExpressionLevel> loadTopTenExpressionLevels(String experimentAccession) {
+    private List<TranscriptExpressionLevel> loadTopTenExpressionLevels(String experimentAccession) {
 
-        try (ObjectInputStream<ExpressionLevel> inputStream = inputStreamBuilder.createFor(experimentAccession)){
+        try (ObjectInputStream<TranscriptExpressionLevel> inputStream = inputStreamBuilder.createFor(experimentAccession)) {
 
-            List<ExpressionLevel> expressionLevelsRanking = rankTopObjectsCommand.apply(inputStream);
+            List<TranscriptExpressionLevel> transcriptExpressionLevelsRanking = rankTopObjectsCommand.apply(inputStream);
 
-            return expressionLevelsRanking;
+            return transcriptExpressionLevelsRanking;
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -51,7 +51,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Expres
         }
     }
 
-    public LoadExpressionLevelsCommand setRankingSize(int rankingSize){
+    public LoadExpressionLevelsCommand setRankingSize(int rankingSize) {
         rankTopObjectsCommand.setRankingSize(rankingSize);
         return this;
     }

@@ -9,7 +9,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,10 +65,10 @@ public class ExpressionLevelsInputStreamTest {
     @Test
     public void readNextShouldPollTheBuffer() throws Exception {
 
-        ExpressionLevel expressionLevelMock = mock(ExpressionLevel.class);
+        TranscriptExpressionLevel transcriptExpressionLevelMock = mock(TranscriptExpressionLevel.class);
 
         //given
-        given(expressionLevelsBufferMock.poll()).willReturn(expressionLevelMock);
+        given(expressionLevelsBufferMock.poll()).willReturn(transcriptExpressionLevelMock);
         //when
         subject.readNext();
         //then
@@ -98,11 +98,11 @@ public class ExpressionLevelsInputStreamTest {
         //and
         given(csvReaderMock.readNext()).willReturn(null);
         //when
-        ExpressionLevel expressionLevel = subject.readNext();
+        TranscriptExpressionLevel transcriptExpressionLevel = subject.readNext();
         //then
         String[] values = verify(csvReaderMock, times(2)).readNext();
         //and
-        assertThat(expressionLevel, is(nullValue()));
+        assertThat(transcriptExpressionLevel, is(nullValue()));
     }
 
     @Test

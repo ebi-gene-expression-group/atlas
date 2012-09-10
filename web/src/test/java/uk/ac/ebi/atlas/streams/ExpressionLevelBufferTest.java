@@ -4,7 +4,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.TranscriptExpressionLevel;
 import utils.ExperimentRunsBuilder;
 
 import java.util.List;
@@ -38,18 +38,18 @@ public class ExpressionLevelBufferTest {
     public void pollShouldReturnExpressionLevelsInTheRightOrder() throws Exception {
         subject.reload(RPKM_VALUES);
         //given the object was just initialized
-        ExpressionLevel expressionLevel = subject.poll();
-        //then we expect first expressionLevel
-        assertThat(expressionLevel.getTranscriptId(), is(TRANSCRIPT_ID));
-        assertThat(expressionLevel.getRpkm(), is(0d));
-        assertThat(expressionLevel.getFactorValues(), is(EXPERIMENT_RUNS.get(0).getFactorValues()));
+        TranscriptExpressionLevel transcriptExpressionLevel = subject.poll();
+        //then we expect first transcriptExpressionLevel
+        assertThat(transcriptExpressionLevel.getTranscriptId(), is(TRANSCRIPT_ID));
+        assertThat(transcriptExpressionLevel.getRpkm(), is(0d));
+        assertThat(transcriptExpressionLevel.getFactorValues(), is(EXPERIMENT_RUNS.get(0).getFactorValues()));
 
         //given we poll again
-        expressionLevel = subject.poll();
+        transcriptExpressionLevel = subject.poll();
         //then we expect secondExpressionLevel
-        assertThat(expressionLevel.getTranscriptId(), is(TRANSCRIPT_ID));
-        assertThat(expressionLevel.getRpkm(), is(42.9134d));
-        assertThat(expressionLevel.getFactorValues(), is(EXPERIMENT_RUNS.get(1).getFactorValues()));
+        assertThat(transcriptExpressionLevel.getTranscriptId(), is(TRANSCRIPT_ID));
+        assertThat(transcriptExpressionLevel.getRpkm(), is(42.9134d));
+        assertThat(transcriptExpressionLevel.getFactorValues(), is(EXPERIMENT_RUNS.get(1).getFactorValues()));
 
     }
 
@@ -70,18 +70,18 @@ public class ExpressionLevelBufferTest {
         //given we do first reload
         subject.reload(RPKM_VALUES);
         //and we poll until exhaustion
-        ExpressionLevel run;
+        TranscriptExpressionLevel run;
         do {
             run = subject.poll();
         } while (run != null);
         //when we reload again with new values
         subject.reload("T1", "1", "2", "3");
         //and we poll
-        ExpressionLevel expressionLevel = subject.poll();
+        TranscriptExpressionLevel transcriptExpressionLevel = subject.poll();
         //then we expect to find the new values
-        assertThat(expressionLevel.getTranscriptId(), is("T1"));
-        assertThat(expressionLevel.getRpkm(), is(1d));
-        assertThat(expressionLevel.getRunAccession(), is(EXPERIMENT_RUNS.get(0).getRunAccession()));
+        assertThat(transcriptExpressionLevel.getTranscriptId(), is("T1"));
+        assertThat(transcriptExpressionLevel.getRpkm(), is(1d));
+        assertThat(transcriptExpressionLevel.getRunAccession(), is(EXPERIMENT_RUNS.get(0).getRunAccession()));
     }
 
 
