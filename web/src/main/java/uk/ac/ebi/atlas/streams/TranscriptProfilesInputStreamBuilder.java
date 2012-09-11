@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.TranscriptProfile;
 
 import javax.inject.Named;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class TranscriptProfilesInputStreamBuilder {
 
     private Double rpkmCutOffValue;
 
-    public ObjectInputStream<TranscriptExpression> createFor(String experimentAccession) throws IOException {
+    public ObjectInputStream<TranscriptProfile> createFor(String experimentAccession) throws IOException {
 
         String idfFileLocation = String.format(idfFileUrlTemplate, experimentAccession, experimentAccession);
 
@@ -45,11 +45,9 @@ public class TranscriptProfilesInputStreamBuilder {
         Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
 
         TranscriptProfilesInputStream objectInputStream = new TranscriptProfilesInputStream(dataFileReader, experimentRuns);
+        objectInputStream.setRpkmCutOff(rpkmCutOffValue);
 
-//        return new RpkmCutOffInputStreamFilter(objectInputStream).setRpkmCutOffValue(rpkmCutOffValue);
-
-        //ToDo: fix me
-        return null;
+        return objectInputStream;
     }
 
     URL buildURL(String location) {

@@ -56,7 +56,9 @@ public class TranscriptProfilesInputStreamTest {
 
         given(csvReaderMock.readNext())
                 .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
-                .willReturn(rpkmLine);
+                .willReturn(rpkmLine)
+                .willReturn(null);
+
 
         subject = new TranscriptProfilesInputStream(csvReaderMock, experimentRunsMock);
 
@@ -69,13 +71,14 @@ public class TranscriptProfilesInputStreamTest {
         ExpressionLevel expressionLevel = mock(ExpressionLevel.class);
 
         //given
-        given(expressionLevelsBufferMock.poll()).willReturn(expressionLevel);
+        given(expressionLevelsBufferMock.poll())
+                .willReturn(expressionLevel)
+                .willReturn(null);
         //when
-        //ToDo: gets into infinite loop, need to mock just one call
-//        subject.readNext();
+        subject.readNext();
         //then
 
-        verify(expressionLevelsBufferMock).poll();
+        verify(expressionLevelsBufferMock, times(2)).poll();
     }
 
     @Test
@@ -86,7 +89,7 @@ public class TranscriptProfilesInputStreamTest {
         //when
         subject.readNext();
         //then
-        verify(csvReaderMock, times(2)).readNext();
+        verify(csvReaderMock, times(3)).readNext();
         //and
         inOrder.verify(expressionLevelsBufferMock).reload(rpkmLine);
         inOrder.verify(expressionLevelsBufferMock).poll();
@@ -103,7 +106,7 @@ public class TranscriptProfilesInputStreamTest {
         //when
         TranscriptProfile transcriptExpressionLevel = subject.readNext();
         //then
-        String[] values = verify(csvReaderMock, times(2)).readNext();
+        verify(csvReaderMock, times(2)).readNext();
         //and
         assertThat(transcriptExpressionLevel, is(nullValue()));
     }
@@ -113,7 +116,7 @@ public class TranscriptProfilesInputStreamTest {
         //given
         subject.readNext();
         //then
-        verify(csvReaderMock, times(2)).readNext();
+        verify(csvReaderMock, times(3)).readNext();
     }
 
     @Test(expected = IllegalStateException.class)

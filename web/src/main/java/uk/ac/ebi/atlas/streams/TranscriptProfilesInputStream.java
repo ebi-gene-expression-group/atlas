@@ -3,6 +3,9 @@ package uk.ac.ebi.atlas.streams;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
@@ -27,6 +30,8 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
 
     private ExpressionLevelsBuffer expressionLevelBuffer;
 
+    private Double rpkmCutOff;
+
     TranscriptProfilesInputStream(CSVReader csvReader, List<ExperimentRun> experimentRuns) {
         this.csvReader = csvReader;
         initializeBuffer(experimentRuns);
@@ -42,10 +47,21 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
         String[] firstLine = readCsvLine();
         final List<String> orderSpecification = Arrays.asList(ArrayUtils.remove(firstLine, TRANSCRIPT_ID_COLUMN));
 
-        Collections.sort(experimentRuns, buildExperimentRunComparator(orderSpecification));
-        expressionLevelBuffer = new ExpressionLevelsBuffer(experimentRuns);
+        List<ExperimentRun> filteredExperimentRuns = Lists.newArrayList(Collections2.filter(experimentRuns, new Predicate<ExperimentRun>() {
+            @Override
+            public boolean apply(ExperimentRun input) {
+                return orderSpecification.contains(input.getRunAccession());
+            }
+        }));
+
+        Collections.sort(filteredExperimentRuns, buildExperimentRunComparator(orderSpecification));
+        expressionLevelBuffer = new ExpressionLevelsBuffer(filteredExperimentRuns);
     }
 
+
+    void setRpkmCutOff(Double rpkmCutOff) {
+        this.rpkmCutOff = rpkmCutOff;
+    }
 
     Comparator<ExperimentRun> buildExperimentRunComparator(final List<String> orderSpecification) {
 
@@ -61,13 +77,29 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
 
     @Override
     public TranscriptProfile readNext() {
-        String[] values = readCsvLine();
+        TranscriptProfile transcriptProfile;
 
-        if (values == null) {
-            return null;
-        }
+        do {
+            String[] values = readCsvLine();
+
+            if (values == null) {
+                return null;
+            }
+            transcriptProfile = buildTranscriptProfile(values);
+        } while (transcriptProfile == null);
+
+        return transcriptProfile;
+
+    }
+
+    private TranscriptProfile buildTranscriptProfile(String[] values) {
+
 
         TranscriptProfile.Builder builder = TranscriptProfile.forTranscriptId(values[TRANSCRIPT_ID_COLUMN]);
+
+        if (rpkmCutOff != null) {
+            builder.withRpkmCutOff(rpkmCutOff);
+        }
 
         expressionLevelBuffer.reload(values);
 
@@ -75,14 +107,16 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
 
         while ((expressionLevel = expressionLevelBuffer.poll()) != null) {
 
-            //ToDo: Filter comes here
             builder.addExpressionLevel(expressionLevel);
         }
 
+        if (builder.containsExpressionLevels()) {
+            return builder.create();
+        }
+        return null;
 
-        //ToDo: if no expression levels pass the filter, discard current TranscriptProfile and read next recursively
-        return builder.create();
     }
+
 
     String[] readCsvLine() {
         try {

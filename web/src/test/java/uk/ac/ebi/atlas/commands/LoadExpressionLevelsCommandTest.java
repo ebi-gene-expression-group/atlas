@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.TranscriptProfile;
 import uk.ac.ebi.atlas.streams.TranscriptProfilesInputStreamBuilder;
 
 import java.util.List;
@@ -26,10 +27,10 @@ public class LoadExpressionLevelsCommandTest {
     TranscriptProfilesInputStreamBuilder inputStreamBuilder;
 
     @Mock
-    ObjectInputStream<TranscriptExpression> inputStream;
+    ObjectInputStream<TranscriptProfile> inputStream;
 
     @Mock
-    RankTopObjectsCommand<TranscriptExpression> rankObjectsCommandCommand;
+    RankAndConvertTopObjectsCommand rankObjectsCommand;
 
     private List<TranscriptExpression> top10LevelsMock = Lists.newArrayList(mock(TranscriptExpression.class));
 
@@ -37,11 +38,13 @@ public class LoadExpressionLevelsCommandTest {
 
     @Before
     public void init() throws Exception {
-        when(inputStreamBuilder.createFor(EXPERIMENT_ACCESSION)).thenReturn(inputStream);
-        when(rankObjectsCommandCommand.setRankingSize(anyInt())).thenReturn(rankObjectsCommandCommand);
-        when(rankObjectsCommandCommand.apply(inputStream)).thenReturn(top10LevelsMock);
 
-        subject = new LoadExpressionLevelsCommand(inputStreamBuilder, rankObjectsCommandCommand);
+        when(inputStreamBuilder.createFor(EXPERIMENT_ACCESSION)).thenReturn(inputStream);
+
+        when(rankObjectsCommand.setRankingSize(anyInt())).thenReturn(rankObjectsCommand);
+        when(rankObjectsCommand.apply(inputStream)).thenReturn(top10LevelsMock);
+
+        subject = new LoadExpressionLevelsCommand(inputStreamBuilder, rankObjectsCommand);
     }
 
     @Test
@@ -52,7 +55,7 @@ public class LoadExpressionLevelsCommandTest {
         //then
         verify(inputStreamBuilder).createFor(EXPERIMENT_ACCESSION);
         //and
-        verify(rankObjectsCommandCommand).apply(inputStream);
+        verify(rankObjectsCommand).apply(inputStream);
         //and
         assertThat(transcriptExpressionLevels, is(top10LevelsMock));
 

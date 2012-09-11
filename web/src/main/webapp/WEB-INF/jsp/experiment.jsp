@@ -17,16 +17,17 @@
 </head>
 
 <body>
-    <display:table name="${expressions}" htmlId="expressionTable" id="expression">
+<display:table name="${expressions}" htmlId="expressionTable" id="expression">
 
-        <display:column title="Transcript id" property="transcriptId"/>
-        <display:column title="Conditions">
-            <c:forEach var="factor" items="${expression.factorValues}">
-                <c:out value="${factor.displayString}"/><br/>
-            </c:forEach>
-        </display:column>
+    <display:column title="Transcript id" property="transcriptId"/>
+    <display:column title="Conditions">
+        <c:forEach var="factor" items="${expression.factorValues}">
+            <c:out value="${factor.displayString}"/><br/>
+        </c:forEach>
+    </display:column>
 
-        <display:column title="RPKM" property="rpkm"/>
-    </display:table>
+    <display:column title="RPKM" property="rpkm"/>
+    <display:column title="Specificity" property="specificity"/>
+</display:table>
 </body>
 </html>

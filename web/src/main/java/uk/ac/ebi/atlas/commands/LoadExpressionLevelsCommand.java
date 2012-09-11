@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.TranscriptProfile;
 import uk.ac.ebi.atlas.streams.TranscriptProfilesInputStreamBuilder;
 
 import javax.inject.Inject;
@@ -19,12 +20,14 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     private static final Logger logger = Logger.getLogger(LoadExpressionLevelsCommand.class);
 
     private TranscriptProfilesInputStreamBuilder inputStreamBuilder;
-    RankTopObjectsCommand<TranscriptExpression> rankTopObjectsCommand;
+    private RankAndConvertTopObjectsCommand rankAndConvertTopObjectsCommand;
 
     @Inject
-    public LoadExpressionLevelsCommand(TranscriptProfilesInputStreamBuilder inputStreamBuilder, RankTopObjectsCommand<TranscriptExpression> rankTopObjectsCommand) {
+    public LoadExpressionLevelsCommand(TranscriptProfilesInputStreamBuilder inputStreamBuilder,
+                                       RankAndConvertTopObjectsCommand rankAndConvertTopObjectsCommand) {
         this.inputStreamBuilder = inputStreamBuilder;
-        this.rankTopObjectsCommand = rankTopObjectsCommand;
+
+        this.rankAndConvertTopObjectsCommand = rankAndConvertTopObjectsCommand;
     }
 
     @Override
@@ -39,9 +42,9 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
 
     private List<TranscriptExpression> loadTopTenExpressions(String experimentAccession) {
 
-        try (ObjectInputStream<TranscriptExpression> inputStream = inputStreamBuilder.createFor(experimentAccession)) {
+        try (ObjectInputStream<TranscriptProfile> inputStream = inputStreamBuilder.createFor(experimentAccession)) {
 
-            List<TranscriptExpression> transcriptExpressionsRanking = rankTopObjectsCommand.apply(inputStream);
+            List<TranscriptExpression> transcriptExpressionsRanking = rankAndConvertTopObjectsCommand.apply(inputStream);
 
             return transcriptExpressionsRanking;
 
@@ -52,7 +55,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     }
 
     public LoadExpressionLevelsCommand setRankingSize(int rankingSize) {
-        rankTopObjectsCommand.setRankingSize(rankingSize);
+        rankAndConvertTopObjectsCommand.setRankingSize(rankingSize);
         return this;
     }
 

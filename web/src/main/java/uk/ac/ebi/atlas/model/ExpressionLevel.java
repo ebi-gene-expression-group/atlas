@@ -2,12 +2,14 @@ package uk.ac.ebi.atlas.model;
 
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class ExpressionLevel {
     private ExperimentRun experimentRun;
     private double rpkm;
 
     public ExpressionLevel(ExperimentRun experimentRun, double rpkm) {
-        this.experimentRun = experimentRun;
+        this.experimentRun = checkNotNull(experimentRun);
         this.rpkm = rpkm;
     }
 
@@ -30,5 +32,9 @@ public class ExpressionLevel {
 
     public ExperimentRun getExperimentRun() {
         return experimentRun;
+    }
+
+    public boolean isGreaterThan(double rpkm) {
+        return Double.compare(this.rpkm, rpkm) > 0;
     }
 }

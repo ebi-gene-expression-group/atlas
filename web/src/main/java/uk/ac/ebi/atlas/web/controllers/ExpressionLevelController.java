@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.web.controllers;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.LoadExpressionLevelsCommand;
@@ -25,28 +24,21 @@ public class ExpressionLevelController {
     }
 
     @RequestMapping("/experiment")
-    public String showExpressionLevels(@RequestParam(value = "dataFileURL", required = false) String dataFileURL, Model model) {
-
-        return showExpressionLevels(dataFileURL, DEMO_ACCESSION, model);
-
-    }
-
-    @RequestMapping("/experiment/{experimentAccession}")
     public String showExpressionLevels(@RequestParam(value = "dataFileURL", required = false) String dataFileURL,
-                                       @PathVariable("experimentAccession") String experimentAccession,
+                                       @RequestParam(value = "rpkmCutOff", required = false) Double rpkmCutOff,
                                        Model model) {
 
         if (dataFileURL != null) {
             loadExpressionLevelsCommand.setDataFileURL(dataFileURL);
         }
 
-        List<TranscriptExpression> transcriptExpressions;
-
-        if (experimentAccession == null) {
-            experimentAccession = DEMO_ACCESSION;
+        if (rpkmCutOff != null) {
+            loadExpressionLevelsCommand.setRpkmCutOff(Double.valueOf(rpkmCutOff));
         }
 
-        transcriptExpressions = loadExpressionLevelsCommand.apply(experimentAccession);
+        List<TranscriptExpression> transcriptExpressions;
+
+        transcriptExpressions = loadExpressionLevelsCommand.apply(DEMO_ACCESSION);
 
         model.addAttribute("expressions", transcriptExpressions);
 

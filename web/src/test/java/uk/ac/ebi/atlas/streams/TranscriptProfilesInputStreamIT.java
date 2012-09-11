@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class ExpressionLevelsCsvReaderIT {
+public class TranscriptProfilesInputStreamIT {
 
     private static final String RUN_ACCESSION1 = "ERR030872";
     private static final String RUN_ACCESSION2 = "ERR030873";
@@ -30,9 +30,11 @@ public class ExpressionLevelsCsvReaderIT {
 
     private TranscriptProfilesInputStream subject;
 
+    //ToDo: correct commented tests
+
     @Before
     public void initSubject() throws Exception {
-        URL dataFileURL = ExpressionLevelsCsvReaderIT.class.getResource("testCSVReader-data.tab");
+        URL dataFileURL = TranscriptProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
         Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
 
@@ -68,12 +70,14 @@ public class ExpressionLevelsCsvReaderIT {
 //    }
 
     @Test
-    public void readNextShouldReturnNextTranscriptProfile() throws Exception {
+    public void readNextInvokedOnceShouldReturnFirstTranscriptProfile() throws Exception {
         //given
         TranscriptProfile transcriptProfile = subject.readNext();
         //then
         assertThat(transcriptProfile.getTranscriptId(), is(TRANSCRIPT_ID_1));
-        assertThat(transcriptProfile.getTranscriptSpecificity(), is(3));
+        //and specificity will be one because two expression levels have rpkm = 0
+        assertThat(transcriptProfile.getTranscriptSpecificity(), is(1));
+        //and
         assertThat(transcriptProfile.iterator(), notNullValue());
 
 

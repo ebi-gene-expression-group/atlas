@@ -21,29 +21,23 @@ public class TranscriptSpecificityComparatorTest {
     private TranscriptExpression nullTranscriptSpecificity;
 
     @Mock
-    private TranscriptExpression highestTranscriptSpecificity;
+    private TranscriptExpression transcriptWithSpecificity1;
 
     @Mock
-    private TranscriptExpression lowTranscriptSpecificity;
+    private TranscriptExpression transcriptWithSpecificity16;
 
     @Mock
-    private TranscriptExpression lowTranscriptSpecificityWithSmallerRPKM;
+    private TranscriptExpression transcriptWithSpecificity16AndSmallerRPKM;
 
 
     @Before
     public void initExpressionLevels() {
-        when(nullTranscriptSpecificity.getSpecificity())
-                .thenReturn(null);
-        when(highestTranscriptSpecificity.getSpecificity())
-                .thenReturn(1);
-        when(lowTranscriptSpecificity.getSpecificity())
-                .thenReturn(16);
-        when(lowTranscriptSpecificity.getRpkm())
-                .thenReturn(10D);
-        when(lowTranscriptSpecificityWithSmallerRPKM.getSpecificity())
-                .thenReturn(16);
-        when(lowTranscriptSpecificityWithSmallerRPKM.getRpkm())
-                .thenReturn(0D);
+        when(nullTranscriptSpecificity.getSpecificity()).thenReturn(null);
+        when(transcriptWithSpecificity1.getSpecificity()).thenReturn(1);
+        when(transcriptWithSpecificity16.getSpecificity()).thenReturn(16);
+        when(transcriptWithSpecificity16.getRpkm()).thenReturn(10D);
+        when(transcriptWithSpecificity16AndSmallerRPKM.getSpecificity()).thenReturn(16);
+        when(transcriptWithSpecificity16AndSmallerRPKM.getRpkm()).thenReturn(0D);
         subject = new TranscriptSpecificityComparator();
     }
 
@@ -55,7 +49,7 @@ public class TranscriptSpecificityComparatorTest {
     @Test
     public void nullSpecificityShouldFollowLowerSpecificity() {
         //when
-        int comparison = subject.compare(nullTranscriptSpecificity, lowTranscriptSpecificity);
+        int comparison = subject.compare(nullTranscriptSpecificity, transcriptWithSpecificity16);
 
         //then
         assertThat(comparison, is(lessThan(0)));
@@ -65,7 +59,7 @@ public class TranscriptSpecificityComparatorTest {
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
         //when
-        int comparison = subject.compare(lowTranscriptSpecificity, highestTranscriptSpecificity);
+        int comparison = subject.compare(transcriptWithSpecificity16, transcriptWithSpecificity1);
 
         //then
         assertThat(comparison, is(lessThan(0)));
@@ -75,7 +69,7 @@ public class TranscriptSpecificityComparatorTest {
     @Test
     public void highSpecificityShouldPreceedLowSpecificity() {
         //when
-        int comparison = subject.compare(highestTranscriptSpecificity, lowTranscriptSpecificity);
+        int comparison = subject.compare(transcriptWithSpecificity1, transcriptWithSpecificity16);
 
         //then
         assertThat(comparison, is(greaterThan(0)));
@@ -85,20 +79,20 @@ public class TranscriptSpecificityComparatorTest {
     @Test
     public void differentSpecificityShouldNotTriggerExpressionLevelComparator() {
         //when
-        int comparison = subject.compare(highestTranscriptSpecificity, lowTranscriptSpecificity);
+        int comparison = subject.compare(transcriptWithSpecificity1, transcriptWithSpecificity16);
 
         //then
-        verify(lowTranscriptSpecificityWithSmallerRPKM, never()).compareTo(lowTranscriptSpecificity);
+        verify(transcriptWithSpecificity16AndSmallerRPKM, never()).compareTo(transcriptWithSpecificity16);
 
     }
 
     @Test
     public void sameSpecificityWithSmallerRPKMShouldFollow() {
         //when
-        int comparison = subject.compare(lowTranscriptSpecificityWithSmallerRPKM, lowTranscriptSpecificity);
+        int comparison = subject.compare(transcriptWithSpecificity16AndSmallerRPKM, transcriptWithSpecificity16);
 
         //then
-        verify(lowTranscriptSpecificityWithSmallerRPKM).compareTo(lowTranscriptSpecificity);
+        verify(transcriptWithSpecificity16AndSmallerRPKM).compareTo(transcriptWithSpecificity16);
 
     }
 
