@@ -24,12 +24,12 @@ public class ExpressionLevelController {
     }
 
     @RequestMapping("/experiment")
-    public String showExpressionLevels(@RequestParam(value = "dataFileURL", required = false) String dataFileURL,
+    public String showExpressionLevels(@RequestParam(value = "rankingSize", required = false) Integer rankingSize,
                                        @RequestParam(value = "rpkmCutOff", required = false) Double rpkmCutOff,
                                        Model model) {
 
-        if (dataFileURL != null) {
-            loadExpressionLevelsCommand.setDataFileURL(dataFileURL);
+        if (rankingSize != null) {
+            loadExpressionLevelsCommand.setRankingSize(rankingSize);
         }
 
         if (rpkmCutOff != null) {

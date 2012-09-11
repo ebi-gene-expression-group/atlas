@@ -59,11 +59,6 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
         return this;
     }
 
-    public LoadExpressionLevelsCommand setDataFileURL(String dataFileURL) {
-        this.inputStreamBuilder.setDataFileURL(dataFileURL);
-        return this;
-    }
-
     public LoadExpressionLevelsCommand setRpkmCutOff(double rpkmCutOffValue) {
         this.inputStreamBuilder.setRpkmCutOff(rpkmCutOffValue);
         return this;

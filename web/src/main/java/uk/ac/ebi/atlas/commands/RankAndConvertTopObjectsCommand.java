@@ -42,8 +42,6 @@ public class RankAndConvertTopObjectsCommand implements Function<ObjectInputStre
             }
         }
 
-//        return Ordering.from(new TranscriptSpecificityComparator()).sortedCopy(topTenObjects);
-
         return Ordering.from(new TranscriptSpecificityComparator()).reverse().sortedCopy(topTenObjects);
     }
 
