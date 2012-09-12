@@ -13,14 +13,21 @@ import static org.junit.Assert.assertThat;
 
 public class ExperimentPage extends AtlasPage {
 
-    private static final String PAGE_URI = "/atlas/experiment";
+    private static final String DEFAULT_PAGE_URI = "/atlas/experiment";
 
     @FindBy(id = "expressionTable")
     WebElement tableElement;
 
+    private String pageUri = DEFAULT_PAGE_URI;
 
     public ExperimentPage(WebDriver driver) {
         super(driver);
+    }
+
+    public ExperimentPage(WebDriver driver, String parameters) {
+        super(driver);
+
+        pageUri = pageUri.concat(parameters);
     }
 
     public int getTableRowCount() {
@@ -40,6 +47,10 @@ public class ExperimentPage extends AtlasPage {
         return tableElement.findElement(By.xpath("tbody/tr/td[2]")).getText();
     }
 
+    public String getSpecificityForGreatestRPKMValue() {
+        return tableElement.findElement(By.xpath("tbody/tr/td[4]")).getText();
+    }
+
     public String getTranscriptIdForSmallestRPKMValue() {
         return tableElement.findElement(By.xpath("tbody/tr[10]/td[1]")).getText();
     }
@@ -52,19 +63,24 @@ public class ExperimentPage extends AtlasPage {
         return tableElement.findElement(By.xpath("tbody/tr[10]/td[2]")).getText();
     }
 
+    public String getSpecificityForSmallestRPKMValue() {
+        return tableElement.findElement(By.xpath("tbody/tr[10]/td[4]")).getText();
+    }
+
+
     public String getTitle() {
         return driver.getTitle();
     }
 
     @Override
     protected String getPageURI() {
-        return PAGE_URI;
+        return pageUri;
     }
 
     @Override
     protected void isLoaded() throws Error {
         String url = driver.getCurrentUrl();
-        assertThat(url, endsWith(PAGE_URI));
+        assertThat(url, endsWith(pageUri));
     }
 
 }
