@@ -12,8 +12,7 @@ import java.net.URL;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 public class TranscriptProfilesInputStreamIT {
 
@@ -22,6 +21,7 @@ public class TranscriptProfilesInputStreamIT {
     private static final String RUN_ACCESSION3 = "ERR030874";
     private static final String TRANSCRIPT_ID_1 = "ENST00000000233";
     private static final String TRANSCRIPT_ID_2 = "ENST00000000412";
+    private static final String TRANSCRIPT_ID_3 = "ENST00000000442";
     private static final double RPKM_1_1 = 0d;
     private static final double RPKM_1_2 = 42.9134d;
     private static final double RPKM_2_1 = 29.0613d;
@@ -29,8 +29,6 @@ public class TranscriptProfilesInputStreamIT {
     private static List<ExperimentRun> EXPERIMENT_RUNS;
 
     private TranscriptProfilesInputStream subject;
-
-    //ToDo: correct commented tests
 
     @Before
     public void initSubject() throws Exception {
@@ -44,60 +42,61 @@ public class TranscriptProfilesInputStreamIT {
         subject = new TranscriptProfilesInputStream(dataFileReader, EXPERIMENT_RUNS);
     }
 
-//    @Test
-//    public void readNextShouldReturnNextExpressionLevel() throws Exception {
-//        //given
-//        TranscriptExpression transcriptExpressionLevel = subject.readNext();
-//        //then
-//        assertThat(transcriptExpressionLevel.getTranscriptId(), is(TRANSCRIPT_ID_1));
-//        assertThat(transcriptExpressionLevel.getRunAccession(), is(RUN_ACCESSION1));
-//        assertThat(transcriptExpressionLevel.getRpkm(), is(RPKM_1_1));
-//
-//        //given
-//        transcriptExpressionLevel = subject.readNext();
-//        //then
-//        assertThat(transcriptExpressionLevel.getTranscriptId(), is(TRANSCRIPT_ID_1));
-//        assertThat(transcriptExpressionLevel.getRunAccession(), is(RUN_ACCESSION2));
-//        assertThat(transcriptExpressionLevel.getRpkm(), is(RPKM_1_2));
-//
-//        //given we poll twice more
-//        subject.readNext();
-//        transcriptExpressionLevel = subject.readNext();
-//        //then we expect to be on the second line of expression levels
-//        assertThat(transcriptExpressionLevel.getTranscriptId(), is(TRANSCRIPT_ID_2));
-//        assertThat(transcriptExpressionLevel.getRunAccession(), is(RUN_ACCESSION1));
-//        assertThat(transcriptExpressionLevel.getRpkm(), is(RPKM_2_1));
-//    }
-
     @Test
-    public void readNextInvokedOnceShouldReturnFirstTranscriptProfile() throws Exception {
+    public void readNextShouldReturnNextExpressionLevel() throws Exception {
         //given
         TranscriptProfile transcriptProfile = subject.readNext();
         //then
         assertThat(transcriptProfile.getTranscriptId(), is(TRANSCRIPT_ID_1));
-        //and specificity will be one because two expression levels have rpkm = 0
         assertThat(transcriptProfile.getTranscriptSpecificity(), is(1));
-        //and
-        assertThat(transcriptProfile.iterator(), notNullValue());
+        assertThat(transcriptProfile.iterator().hasNext(), is(true));
+        //ToDo: TranscriptProfile needs a getter for expressionLevels
 
+        //given we poll twice more
+        transcriptProfile = subject.readNext();
+        //then
+        assertThat(transcriptProfile.getTranscriptId(), is(TRANSCRIPT_ID_2));
+        assertThat(transcriptProfile.getTranscriptSpecificity(), is(3));
 
+        transcriptProfile = subject.readNext();
+
+        assertThat(transcriptProfile.getTranscriptId(), is(TRANSCRIPT_ID_3));
+        assertThat(transcriptProfile.getTranscriptSpecificity(), is(2));
     }
 
-//
-//    @Test
-//    public void readNextShouldReturnNullGivenAllRpkmsHaveBeenRead() throws Exception {
-//        TranscriptExpression transcriptExpressionLevel;
-//        for (int i = 0; i < 9; i++) {
-//            //given
-//            transcriptExpressionLevel = subject.readNext();
-//            //then
-//            assertThat(transcriptExpressionLevel, is(notNullValue()));
-//        }
-//        //given
-//        transcriptExpressionLevel = subject.readNext();
-//        //then
-//        assertThat(transcriptExpressionLevel, is(nullValue()));
-//    }
+
+    @Test
+    public void readNextShouldReturnNullGivenAllRpkmsHaveBeenRead() throws Exception {
+        TranscriptProfile transcriptProfile;
+
+        for (int i = 0; i < 3; i++) {
+            //given
+            transcriptProfile = subject.readNext();
+            //then
+            assertThat(transcriptProfile, is(notNullValue()));
+        }
+        //given
+        transcriptProfile = subject.readNext();
+        //then
+        assertThat(transcriptProfile, is(nullValue()));
+    }
+
+    @Test
+    public void setRpkmCutOffChangesSpecificity() {
+
+        //given
+        subject.setRpkmCutOff(20d);
+
+        subject.readNext();
+        TranscriptProfile transcriptProfile = subject.readNext();
+
+        //then specificity of second transcript should change
+        assertThat(transcriptProfile.getTranscriptSpecificity(), is(2));
+
+        //then third transcript is not created since it has no expressions higher than cutoff.
+        assertThat(subject.readNext(), is(nullValue()));
+
+    }
 
     @Test(expected = IllegalStateException.class)
     public void givenTheReaderHasBeenClosedReadNextShouldThrowIllegalStateException() throws Exception {
