@@ -24,7 +24,6 @@ public class RankAndConvertTopObjectsCommand implements Function<ObjectInputStre
     private int rankingSize = DEFAULT_SIZE;
 
     public RankAndConvertTopObjectsCommand() {
-        this.rankingSize = rankingSize;
     }
 
     @Override
