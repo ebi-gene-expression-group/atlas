@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.streams;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
@@ -15,16 +14,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
+import static uk.ac.ebi.atlas.streams.ExpressionLevelsBuffer.TRANSCRIPT_ID_COLUMN;
 
 public class TranscriptProfilesInputStream implements ObjectInputStream<TranscriptProfile> {
 
     private static final Logger logger = Logger.getLogger(TranscriptProfilesInputStream.class);
-    public static final int TRANSCRIPT_ID_COLUMN = 0;
 
     private CSVReader csvReader;
 
@@ -33,9 +31,9 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
     private Double rpkmCutOff;
 
     public static Builder forFile(String dataFileURL) {
-        try{
+        try {
             return new Builder(dataFileURL);
-        }catch(MalformedURLException e){
+        } catch (MalformedURLException e) {
             logger.error(e.getMessage(), e);
             throw new IllegalArgumentException("Error while building URL for location " + dataFileURL + ". Error details: " + e.getMessage());
         } catch (IOException e) {
@@ -48,7 +46,7 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
         return new Builder(rpkmDataInputStream);
     }
 
-    private TranscriptProfilesInputStream(){
+    private TranscriptProfilesInputStream() {
     }
 
     private TranscriptProfilesInputStream setExpressionLevelsBuffer(ExpressionLevelsBuffer expressionLevelsBuffer) {
@@ -129,7 +127,7 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
 
         private TranscriptProfilesInputStream transcriptProfileInputStream;
 
-        private Builder(InputStream rpkmDataInputStream){
+        private Builder(InputStream rpkmDataInputStream) {
 
             Reader dataFileReader = new InputStreamReader(rpkmDataInputStream);
             CSVReader csvReader = new CSVReader(dataFileReader, '\t');
@@ -138,16 +136,17 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
 
         }
 
-        private Builder(String dataFileURL) throws IOException{
+        private Builder(String dataFileURL) throws IOException {
             this(new URL(checkNotNull(dataFileURL)).openStream());
         }
 
         public Builder withExperimentRuns(List<ExperimentRun> experimentRuns) {
 
-            String [] dataFileHeaders = transcriptProfileInputStream.readCsvLine();
-            List<String> orderSpecification = Arrays.asList(ArrayUtils.remove(dataFileHeaders, TRANSCRIPT_ID_COLUMN));
+            String[] dataFileHeaders = transcriptProfileInputStream.readCsvLine();
+
             ExpressionLevelsBuffer expressionLevelsBuffer = ExpressionLevelsBuffer.forExperimentRuns(experimentRuns)
-                                    .withOrderSpecification(orderSpecification).create();
+                    .withHeaders(dataFileHeaders).create();
+
             return withExpressionLevelsBuffer(expressionLevelsBuffer);
 
         }
@@ -176,10 +175,7 @@ public class TranscriptProfilesInputStream implements ObjectInputStream<Transcri
         }
 
 
-
     }
-
-
 
 
 }

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.streams;
 
-import com.google.common.collect.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +31,8 @@ public class ExpressionLevelBufferTest {
                 RUN_ACCESSION2, RUN_ACCESSION3);
 
         subject = ExpressionLevelsBuffer.forExperimentRuns(EXPERIMENT_RUNS)
-                    .withOrderSpecification(Lists.newArrayList(RUN_ACCESSION1,RUN_ACCESSION2, RUN_ACCESSION3))
-                    .create();
+                .withHeaders("", RUN_ACCESSION1, RUN_ACCESSION2, RUN_ACCESSION3)
+                .create();
     }
 
     @Test

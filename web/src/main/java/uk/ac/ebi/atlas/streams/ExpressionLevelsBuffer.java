@@ -6,6 +6,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
+import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
 
@@ -24,7 +25,9 @@ class ExpressionLevelsBuffer {
 
     private int expectedNumberOfValues;
 
-    public static Builder forExperimentRuns(List<ExperimentRun> experimentRuns){
+    public static final int TRANSCRIPT_ID_COLUMN = 0;
+
+    public static Builder forExperimentRuns(List<ExperimentRun> experimentRuns) {
 
         return new Builder(experimentRuns);
 
@@ -68,13 +71,15 @@ class ExpressionLevelsBuffer {
 
         private boolean readyToCreate;
 
-        private Builder(List<ExperimentRun> experimentRuns){
+        private Builder(List<ExperimentRun> experimentRuns) {
 
             this.experimentRuns = experimentRuns;
 
         }
 
-        public Builder withOrderSpecification(List<String> orderedAccessions){
+        public Builder withHeaders(String... dataFileHeaders) {
+
+            List<String> orderedAccessions = Arrays.asList(ArrayUtils.remove(dataFileHeaders, TRANSCRIPT_ID_COLUMN));
 
             experimentRuns = Lists.newArrayList(Collections2.filter(experimentRuns, getPredicate(orderedAccessions)));
 
@@ -85,7 +90,7 @@ class ExpressionLevelsBuffer {
             return this;
         }
 
-        public ExpressionLevelsBuffer create(){
+        public ExpressionLevelsBuffer create() {
 
             checkState(readyToCreate, "Please specify the order specification with withOrderRunsSpecification before invoking the create method.");
 
@@ -94,7 +99,7 @@ class ExpressionLevelsBuffer {
         }
 
 
-        Predicate getPredicate(final List<String> orderSpecification){
+        Predicate<ExperimentRun> getPredicate(final List<String> orderSpecification) {
             return new Predicate<ExperimentRun>() {
                 @Override
                 public boolean apply(ExperimentRun input) {
