@@ -33,7 +33,7 @@ public class LoadExpressionLevelsCommandTest {
     ObjectInputStream<TranscriptProfile> inputStream;
 
     @Mock
-    RankAndConvertTopObjectsCommand rankObjectsCommand;
+    RankBySpecificityAndRpkmCommand rankBySpecificityObjectsCommand;
 
     private List<TranscriptExpression> top10LevelsMock = Lists.newArrayList(mock(TranscriptExpression.class));
 
@@ -42,24 +42,25 @@ public class LoadExpressionLevelsCommandTest {
     @Before
     public void init() throws Exception {
 
-        when(rankObjectsCommand.setRankingSize(anyInt())).thenReturn(rankObjectsCommand);
-        when(rankObjectsCommand.apply(inputStream)).thenReturn(top10LevelsMock);
+        when(rankBySpecificityObjectsCommand.setRankingSize(anyInt())).thenReturn(rankBySpecificityObjectsCommand);
+        when(rankBySpecificityObjectsCommand.apply(inputStream)).thenReturn(top10LevelsMock);
 
-        subject = new LoadExpressionLevelsCommand(experimentRunsMock, rankObjectsCommand);
+        subject = new LoadExpressionLevelsCommand(experimentRunsMock, rankBySpecificityObjectsCommand);
     }
-/*  ToDo
-    @Test
-    public void rankingShouldBuildAnObjectInputStreamAndUseItWithARankObjectsCommand() throws Exception {
-        //when
-        List<TranscriptExpression> transcriptExpressionLevels = subject.apply(EXPERIMENT_ACCESSION);
 
-        //and
-        verify(rankObjectsCommand).apply(inputStream);
-        //and
-        assertThat(transcriptExpressionLevels, is(top10LevelsMock));
+    /*  ToDo
+        @Test
+        public void rankingShouldBuildAnObjectInputStreamAndUseItWithARankObjectsCommand() throws Exception {
+            //when
+            List<TranscriptExpression> transcriptExpressionLevels = subject.apply(EXPERIMENT_ACCESSION);
 
-    }
-*/
+            //and
+            verify(rankObjectsCommand).apply(inputStream);
+            //and
+            assertThat(transcriptExpressionLevels, is(top10LevelsMock));
+
+        }
+    */
     @Test
     public void testSetRankingSize() throws Exception {
 

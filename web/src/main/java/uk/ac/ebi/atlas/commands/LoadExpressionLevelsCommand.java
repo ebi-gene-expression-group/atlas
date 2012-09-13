@@ -25,15 +25,15 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     private String dataFileURL;
 
     private LoadingCache<String, List<ExperimentRun>> experiments;
-    private RankAndConvertTopObjectsCommand rankAndConvertTopObjectsCommand;
+    private RankBySpecificityAndRpkmCommand rankBySpecificityObjectsCommand;
     private Double rpkmCutOff;
 
     @Inject
-    public LoadExpressionLevelsCommand(LoadingCache<String, List<ExperimentRun>> experiments, RankAndConvertTopObjectsCommand rankAndConvertTopObjectsCommand) {
+    public LoadExpressionLevelsCommand(LoadingCache<String, List<ExperimentRun>> experiments, RankBySpecificityAndRpkmCommand rankBySpecificityObjectsCommand) {
 
         this.experiments = experiments;
 
-        this.rankAndConvertTopObjectsCommand = rankAndConvertTopObjectsCommand;
+        this.rankBySpecificityObjectsCommand = rankBySpecificityObjectsCommand;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     }
 
 
-    List<ExperimentRun> getExperimentRun(String experimentAccession){
+    List<ExperimentRun> getExperimentRun(String experimentAccession) {
 
         try {
 
@@ -67,10 +67,10 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
         List<ExperimentRun> experimentRuns = getExperimentRun(experimentAccession);
 
         try (TranscriptProfilesInputStream objectInputStream = TranscriptProfilesInputStream.forFile(dataFileURL)
-                                                                                .withExperimentRuns(experimentRuns)
-                                                                                .withRpkmCutOff(rpkmCutOff).create()) {
+                .withExperimentRuns(experimentRuns)
+                .withRpkmCutOff(rpkmCutOff).create()) {
 
-            List<TranscriptExpression> transcriptExpressionsRanking = rankAndConvertTopObjectsCommand.apply(objectInputStream);
+            List<TranscriptExpression> transcriptExpressionsRanking = rankBySpecificityObjectsCommand.apply(objectInputStream);
 
             return transcriptExpressionsRanking;
 
@@ -81,7 +81,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     }
 
     public LoadExpressionLevelsCommand setRankingSize(int rankingSize) {
-        rankAndConvertTopObjectsCommand.setRankingSize(rankingSize);
+        rankBySpecificityObjectsCommand.setRankingSize(rankingSize);
         return this;
     }
 

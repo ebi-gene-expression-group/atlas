@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
+//ToDo: remove it's not used anymore
 @Named("rankTopObjects")
 @Scope("prototype")
 public class RankTopObjectsCommand<E extends Comparable<E>> implements Function<ObjectInputStream<E>, List<E>> {

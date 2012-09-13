@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
@@ -15,15 +14,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
-@Named("rankAndConvertTopObjects")
+@Named("rankBySpecificityAndRpkm")
 @Scope("prototype")
-public class RankAndConvertTopObjectsCommand implements Function<ObjectInputStream<TranscriptProfile>, List<TranscriptExpression>> {
+public class RankBySpecificityAndRpkmCommand implements ProcessTranscriptProfileStreamCommand {
 
     private static final int DEFAULT_SIZE = 100;
 
     private int rankingSize = DEFAULT_SIZE;
 
-    public RankAndConvertTopObjectsCommand() {
+    public RankBySpecificityAndRpkmCommand() {
     }
 
     @Override
@@ -44,7 +43,7 @@ public class RankAndConvertTopObjectsCommand implements Function<ObjectInputStre
         return Ordering.from(new TranscriptSpecificityComparator()).reverse().sortedCopy(topTenObjects);
     }
 
-    public RankAndConvertTopObjectsCommand setRankingSize(int rankingSize) {
+    public RankBySpecificityAndRpkmCommand setRankingSize(int rankingSize) {
         this.rankingSize = rankingSize;
         return this;
     }
