@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.model.caches;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,9 +7,8 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.FactorValue;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,26 +18,29 @@ public class MageTabParserIT {
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
     private static final String RUN_ACCESSION_FIRST = "ERR030872";
 
-    private MageTabInvestigation subject;
+    private static final String MAGE_TAB_URL_TEMPLATE = "http://www.ebi.ac.uk/arrayexpress/files/%s/%s.idf.txt";
 
+
+    private MageTabInvestigationLoader subject;
 
     @Before
     public void initSubject() throws IOException, ParseException {
-        URL mageTabURL = MageTabParserIT.class.getResource("magetab/E-MTAB-513.idf.txt");
 
-        subject = MageTabInvestigation.parse(mageTabURL);
+        subject = new MageTabInvestigationLoader();
+
+        subject.setIdfFileUrlTemplate(MAGE_TAB_URL_TEMPLATE);
     }
 
     @Test
-    public void parseExperimentRunsReturnsMoreThanOneRun() {
-        Set<ExperimentRun> experimentRuns = subject.extractExperimentRuns();
+    public void parseExperimentRunsReturnsMoreThanOneRun() throws Exception{
+        List<ExperimentRun> experimentRuns = subject.load(EXPERIMENT_ACCESSION);
         assertThat(experimentRuns.size(), is(48));
     }
 
     @Test
-    public void RunsReturnsMoreThanOneRun() {
+    public void RunsReturnsMoreThanOneRun() throws Exception{
         //given
-        Set<ExperimentRun> experimentRuns = subject.extractExperimentRuns();
+        List<ExperimentRun> experimentRuns = subject.load(EXPERIMENT_ACCESSION);
         Iterator<ExperimentRun> experimentRunIterator = experimentRuns.iterator();
         ExperimentRun firstExperimentRun = experimentRunIterator.next();
         Iterator<FactorValue> factorValueIterator = firstExperimentRun.getFactorValues().iterator();

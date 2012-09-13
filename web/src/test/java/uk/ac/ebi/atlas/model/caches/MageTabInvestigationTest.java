@@ -1,25 +1,10 @@
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.model.caches;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
-
-import java.io.InputStream;
-import java.net.URL;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+/*
 @RunWith(MockitoJUnitRunner.class)
 public class MageTabInvestigationTest {
 
-    private MageTabInvestigation subject;
+    private MageTabInvestigationLoader subject;
 
     private URL urlFake;
 
@@ -41,7 +26,15 @@ public class MageTabInvestigationTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new MageTabInvestigation(MAGETABParserMock);
+
+        subject = new MageTabInvestigationLoader(){
+            @Override
+            MAGETABInvestigation parseInvestigation(URL idfFileURL) {
+                return investigationMock;
+            }
+
+        };
+
     }
 
     @Test
@@ -62,6 +55,20 @@ public class MageTabInvestigationTest {
         //then expect IllegalStateException
     }
 
+    @Test
+    public void buildFileUrlTest(){
+        //given
+        String experimentAccession = "exp-accession";
+        //when
+        String fileLocation = subject.buildIdfFileUrl(experimentAccession);
+        //then
+        assertThat(fileLocation, startsWith("http://"));
+        //and
+        assertThat(fileLocation, endsWith("fileName"));
+
+    }
+
     //The other methods can't be unit tested becouse they depend on limpopo APIs that are not testable nor can be stubbed,
     //because they expose public instance attributes (often even final) and not public methods, and they require clients to use static utility methods.
 }
+    */
