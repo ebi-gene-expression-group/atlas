@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.TranscriptProfile;
 import utils.ExperimentRunsBuilder;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
@@ -26,11 +27,14 @@ public class TranscriptProfilesInputStreamIT {
 
     private static List<ExperimentRun> EXPERIMENT_RUNS;
 
+    private URL dataFileURL;
+
     private TranscriptProfilesInputStream subject;
 
     @Before
     public void initSubject() throws Exception {
-        URL dataFileURL = TranscriptProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
+
+        dataFileURL = TranscriptProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
         EXPERIMENT_RUNS = new ExperimentRunsBuilder().buildExperimentRuns(RUN_ACCESSION2,
                 RUN_ACCESSION3, RUN_ACCESSION1);
@@ -42,7 +46,7 @@ public class TranscriptProfilesInputStreamIT {
     }
 
     @Test
-    public void readNextShouldReturnNextExpressionLevel() throws Exception {
+    public void readNextShouldReturnNextExpressionLevel() throws IOException {
         //given
         TranscriptProfile transcriptProfile = subject.readNext();
         //then
@@ -81,11 +85,14 @@ public class TranscriptProfilesInputStreamIT {
     }
 
     @Test
-    public void setRpkmCutOffChangesSpecificity() {
+    public void setRpkmCutOffChangesSpecificity() throws IOException {
 
         //given
-        subject.setRpkmCutOff(20d);
+        subject = TranscriptProfilesInputStream.forInputStream(dataFileURL.openStream())
+            .withExperimentRuns(EXPERIMENT_RUNS).withRpkmCutOff(20D)
+            .create();
 
+        //when
         subject.readNext();
         TranscriptProfile transcriptProfile = subject.readNext();
 
