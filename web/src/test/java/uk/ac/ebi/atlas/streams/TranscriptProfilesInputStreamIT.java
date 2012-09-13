@@ -6,8 +6,6 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.TranscriptProfile;
 import utils.ExperimentRunsBuilder;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.util.List;
 
@@ -36,12 +34,13 @@ public class TranscriptProfilesInputStreamIT {
     public void initSubject() throws Exception {
         URL dataFileURL = TranscriptProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
-        Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
-
         EXPERIMENT_RUNS = new ExperimentRunsBuilder().buildExperimentRuns(RUN_ACCESSION2,
                 RUN_ACCESSION3, RUN_ACCESSION1);
 
-        subject = new TranscriptProfilesInputStream(dataFileReader, EXPERIMENT_RUNS);
+        subject = TranscriptProfilesInputStream.forInputStream(dataFileURL.openStream())
+                        .withExperimentRuns(EXPERIMENT_RUNS)
+                        .create();
+
     }
 
 //    @Test

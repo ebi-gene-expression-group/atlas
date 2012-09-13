@@ -10,12 +10,8 @@ import uk.ac.ebi.atlas.model.TranscriptProfile;
 
 import javax.inject.Named;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named("experimentLoader")
 @Scope("prototype")
@@ -40,19 +36,15 @@ public class TranscriptProfilesInputStreamBuilder {
 
         List<ExperimentRun> experimentRuns = Lists.newArrayList(MageTabInvestigation.parse(mageTabURL).extractExperimentRuns());
 
-        URL dataFileURL = buildURL(this.dataFileURL);
-
-        Reader dataFileReader = new InputStreamReader(dataFileURL.openStream());
-
-        TranscriptProfilesInputStream objectInputStream = new TranscriptProfilesInputStream(dataFileReader, experimentRuns);
-        objectInputStream.setRpkmCutOff(rpkmCutOffValue);
+        TranscriptProfilesInputStream objectInputStream = TranscriptProfilesInputStream.forFile(dataFileURL)
+                                                            .withExperimentRuns(experimentRuns)
+                                                            .withRpkmCutOff(rpkmCutOffValue).create();
 
         return objectInputStream;
     }
 
     URL buildURL(String location) {
         try {
-            checkNotNull(location);
             return new URL(location);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -61,7 +53,7 @@ public class TranscriptProfilesInputStreamBuilder {
 
     }
 
-    public TranscriptProfilesInputStreamBuilder setDataFileURL(String dataFileURL) {
+    TranscriptProfilesInputStreamBuilder setDataFileURL(String dataFileURL) {
 
         this.dataFileURL = dataFileURL;
         return this;

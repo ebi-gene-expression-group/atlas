@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.model.ExpressionLevel;
 import uk.ac.ebi.atlas.model.TranscriptProfile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -55,14 +56,16 @@ public class TranscriptProfilesInputStreamTest {
         experimentRunsMock = Lists.newArrayList(experimentRuns1Mock, experimentRuns2Mock);
 
         given(csvReaderMock.readNext())
-                .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
-                .willReturn(rpkmLine)
-                .willReturn(null);
+            .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
+            .willReturn(rpkmLine)
+            .willReturn(null);
 
 
-        subject = new TranscriptProfilesInputStream(csvReaderMock, experimentRunsMock);
+        subject = TranscriptProfilesInputStream.forInputStream(mock(InputStream.class))
+            .withCsvReader(csvReaderMock)
+            .withExpressionLevelsBuffer(expressionLevelsBufferMock)
+            .create();
 
-        subject.setExpressionLevelBuffer(expressionLevelsBufferMock);
     }
 
     @Test
@@ -76,9 +79,9 @@ public class TranscriptProfilesInputStreamTest {
                 .willReturn(null);
         //when
         subject.readNext();
-        //then
+        //then poll will be invoked three times
 
-        verify(expressionLevelsBufferMock, times(2)).poll();
+        verify(expressionLevelsBufferMock, times(3)).poll();
     }
 
     @Test
@@ -106,7 +109,7 @@ public class TranscriptProfilesInputStreamTest {
         //when
         TranscriptProfile transcriptExpressionLevel = subject.readNext();
         //then
-        verify(csvReaderMock, times(2)).readNext();
+        verify(csvReaderMock, times(1)).readNext();
         //and
         assertThat(transcriptExpressionLevel, is(nullValue()));
     }

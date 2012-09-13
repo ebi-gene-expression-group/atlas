@@ -1,6 +1,11 @@
 package uk.ac.ebi.atlas.streams;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
 
@@ -19,7 +24,13 @@ class ExpressionLevelsBuffer {
 
     private int expectedNumberOfValues;
 
-    public ExpressionLevelsBuffer(List<ExperimentRun> orderedRuns) {
+    public static Builder forExperimentRuns(List<ExperimentRun> experimentRuns){
+
+        return new Builder(experimentRuns);
+
+    }
+
+    private ExpressionLevelsBuffer(List<ExperimentRun> orderedRuns) {
         expectedNumberOfValues = orderedRuns.size();
         this.runsCircularQueue = Iterables.cycle(orderedRuns).iterator();
     }
@@ -46,9 +57,63 @@ class ExpressionLevelsBuffer {
 
         Collections.addAll(this.rpkmValuesBuffer, values);
 
-        //transcriptId = rpkmValuesBuffer.poll();
         rpkmValuesBuffer.poll();
 
         return this;
+    }
+
+    public static class Builder {
+
+        private List<ExperimentRun> experimentRuns;
+
+        private boolean readyToCreate;
+
+        private Builder(List<ExperimentRun> experimentRuns){
+
+            this.experimentRuns = experimentRuns;
+
+        }
+
+        public Builder withOrderSpecification(List<String> orderedAccessions){
+
+            experimentRuns = Lists.newArrayList(Collections2.filter(experimentRuns, getPredicate(orderedAccessions)));
+
+            Collections.sort(experimentRuns, buildExperimentRunComparator(orderedAccessions));
+
+            readyToCreate = true;
+
+            return this;
+        }
+
+        public ExpressionLevelsBuffer create(){
+
+            checkState(readyToCreate, "Please specify the order specification with withOrderRunsSpecification before invoking the create method.");
+
+            return new ExpressionLevelsBuffer(experimentRuns);
+
+        }
+
+
+        Predicate getPredicate(final List<String> orderSpecification){
+            return new Predicate<ExperimentRun>() {
+                @Override
+                public boolean apply(ExperimentRun input) {
+                    return orderSpecification.contains(input.getRunAccession());
+                }
+            };
+        }
+
+
+        Comparator<ExperimentRun> buildExperimentRunComparator(final List<String> orderSpecification) {
+
+            return Ordering.natural().onResultOf(new Function<ExperimentRun, Integer>() {
+                @Override
+                public Integer apply(ExperimentRun experimentRun) {
+                    int orderIndexOfRun = orderSpecification.indexOf(experimentRun.getRunAccession());
+                    return orderIndexOfRun;
+                }
+            });
+        }
+
     }
 }

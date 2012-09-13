@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.streams;
 
+import com.google.common.collect.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class ExpressionLevelBufferTest {
     private static final String RUN_ACCESSION2 = "ERR030873";
     private static final String RUN_ACCESSION3 = "ERR030874";
     private static final String TRANSCRIPT_ID = "ENST00000000233";
-    private static final String[] RPKM_VALUES = new String[]{TRANSCRIPT_ID, "0", "42.9134", "0.0001"};
+    private static final String[] THREE_RPKM_VALUES = new String[]{TRANSCRIPT_ID, "0", "42.9134", "0.0001"};
 
     private ExpressionLevelsBuffer subject;
     private static List<ExperimentRun> EXPERIMENT_RUNS;
@@ -29,12 +30,15 @@ public class ExpressionLevelBufferTest {
 
         EXPERIMENT_RUNS = new ExperimentRunsBuilder().buildExperimentRuns(RUN_ACCESSION1,
                 RUN_ACCESSION2, RUN_ACCESSION3);
-        subject = new ExpressionLevelsBuffer(EXPERIMENT_RUNS);
+
+        subject = ExpressionLevelsBuffer.forExperimentRuns(EXPERIMENT_RUNS)
+                    .withOrderSpecification(Lists.newArrayList(RUN_ACCESSION1,RUN_ACCESSION2, RUN_ACCESSION3))
+                    .create();
     }
 
     @Test
     public void pollShouldReturnExpressionLevelsInTheRightOrder() throws Exception {
-        subject.reload(RPKM_VALUES);
+        subject.reload(THREE_RPKM_VALUES);
         //given the object was just initialized
         ExpressionLevel expressionLevel = subject.poll();
         //then we expect first expressionLevel
@@ -52,7 +56,7 @@ public class ExpressionLevelBufferTest {
     @Test
     public void bufferShouldBeExhaustedAfterThreePolls() throws Exception {
         //given we do first reload
-        subject.reload(RPKM_VALUES);
+        subject.reload(THREE_RPKM_VALUES);
         //and we poll three times
         subject.poll();
         subject.poll();
@@ -64,7 +68,7 @@ public class ExpressionLevelBufferTest {
     @Test
     public void reloadWhenBufferIsExhaustedShouldFillTheBufferAgain() throws Exception {
         //given we do first reload
-        subject.reload(RPKM_VALUES);
+        subject.reload(THREE_RPKM_VALUES);
         //and we poll until exhaustion
         ExpressionLevel run;
         do {
@@ -96,14 +100,14 @@ public class ExpressionLevelBufferTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void reloadShouldThrowIfBufferIsNotEmpty() throws Exception {
+    @Test(expected = IllegalStateException.class)
+    public void reloadShouldThrowExceptionIfBufferIsNotEmpty() throws Exception {
         //given
-        subject.reload(TRANSCRIPT_ID, "0", "42.9134");
+        subject.reload(THREE_RPKM_VALUES);
         //and
         subject.poll();
         //when we reload again
-        subject.reload(TRANSCRIPT_ID, "0", "42.9134");
+        subject.reload(THREE_RPKM_VALUES);
 
     }
 
