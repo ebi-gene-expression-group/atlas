@@ -1,52 +1,47 @@
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.model;
 
-import org.apache.log4j.Logger;
+import com.google.common.cache.CacheLoader;
+import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
-import uk.ac.ebi.atlas.model.ExperimentRun;
 
+import javax.inject.Named;
 import java.net.URL;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
-public class MageTabInvestigation {
-    private static final Logger logger = Logger.getLogger(MageTabInvestigation.class);
-
-    private MAGETABParser parser;
-
-    private MAGETABInvestigation investigation;
+@Named("investigationLoader")
+public class MageTabInvestigationLoader extends CacheLoader<String, List<ExperimentRun>> {
 
     private static final String ENA_RUN = "ENA_RUN";
 
-    public static MageTabInvestigation parse(URL url) {
-        MageTabInvestigation investigation = new MageTabInvestigation(new MAGETABParser());
-        return investigation.parseInvestigation(url);
-    }
+    @Value("#{webappProperties['magetab.idf.url.template']}")
+    private String idfFileUrlTemplate;
 
-    //Required for testing - mock injection
-    MageTabInvestigation(MAGETABParser parser) {
-        this.parser = parser;
-    }
+    @Override
+    public List<ExperimentRun> load(String experimentAccession) throws Exception {
 
-    MageTabInvestigation parseInvestigation(URL url) {
-        try {
-            investigation = parser.parse(url);
-            return this;
-        } catch (ParseException e) {
-            logger.error(e.getMessage(), e);
-            throw new IllegalStateException("ParseException thrown when parsing investigation file: " + e.getMessage());
-        }
+        String idfFileLocation = String.format(idfFileUrlTemplate, experimentAccession, experimentAccession);
+
+        URL idfFileURL = new URL(idfFileLocation);
+
+        MAGETABParser parser = new MAGETABParser();
+
+        MAGETABInvestigation investigation= parser.parse(idfFileURL);
+
+        return  Lists.newArrayList(extractExperimentRuns(investigation));
 
     }
 
 
-    public Set<ExperimentRun> extractExperimentRuns() {
+    public Set<ExperimentRun> extractExperimentRuns(MAGETABInvestigation investigation) {
         Set<ExperimentRun> experimentRuns = new LinkedHashSet<>();
 
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
@@ -79,5 +74,6 @@ public class MageTabInvestigation {
 
         return run;
     }
+
 
 }
