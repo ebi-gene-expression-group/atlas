@@ -81,13 +81,18 @@ class ExpressionLevelsBuffer {
 
             List<String> orderedAccessions = Arrays.asList(ArrayUtils.remove(dataFileHeaders, TRANSCRIPT_ID_COLUMN));
 
-            experimentRuns = Lists.newArrayList(Collections2.filter(experimentRuns, getPredicate(orderedAccessions)));
+            experimentRuns = removeUnrequiredExperimentRuns(orderedAccessions);
 
-            Collections.sort(experimentRuns, buildExperimentRunComparator(orderedAccessions));
+            Collections.sort(experimentRuns, experimentRunComparator(orderedAccessions));
 
             readyToCreate = true;
 
             return this;
+        }
+
+        List<ExperimentRun> removeUnrequiredExperimentRuns(List<String> orderedAccessions) {
+            Collection filteredExperimentRuns = Collections2.filter(experimentRuns, isExperimentRunRequired(orderedAccessions));
+            return Lists.newArrayList(filteredExperimentRuns);
         }
 
         public ExpressionLevelsBuffer create() {
@@ -99,22 +104,23 @@ class ExpressionLevelsBuffer {
         }
 
 
-        Predicate<ExperimentRun> getPredicate(final List<String> orderSpecification) {
+        Predicate<ExperimentRun> isExperimentRunRequired(final List<String> orderSpecification) {
             return new Predicate<ExperimentRun>() {
                 @Override
-                public boolean apply(ExperimentRun input) {
-                    return orderSpecification.contains(input.getRunAccession());
+                public boolean apply(ExperimentRun experimentRun) {
+                    return orderSpecification.contains(experimentRun.getRunAccession());
                 }
             };
         }
 
 
-        Comparator<ExperimentRun> buildExperimentRunComparator(final List<String> orderSpecification) {
+        Comparator<ExperimentRun> experimentRunComparator(final List<String> orderSpecification) {
 
             return Ordering.natural().onResultOf(new Function<ExperimentRun, Integer>() {
                 @Override
                 public Integer apply(ExperimentRun experimentRun) {
                     int orderIndexOfRun = orderSpecification.indexOf(experimentRun.getRunAccession());
+                    checkState(orderIndexOfRun >= 0, "Illegal state, experimentRun with accession = " + experimentRun.getRunAccession() + "is not included in orderSpecification = " + orderSpecification);
                     return orderIndexOfRun;
                 }
             });

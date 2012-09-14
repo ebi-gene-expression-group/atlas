@@ -23,8 +23,6 @@ public class MageTabInvestigationTest {
 
     private MageTabInvestigationLoader subject;
 
-    private URL urlFake;
-
     @Mock
     private InputStream inputStreamMock;
 
@@ -36,7 +34,6 @@ public class MageTabInvestigationTest {
 
     @Before
     public void initMAGETABParserMock() throws Exception {
-        urlFake = new URL("file://fakeURL");
         when(MAGETABParserMock.parse(inputStreamMock)).thenReturn(investigationMock);
     }
 
@@ -55,24 +52,6 @@ public class MageTabInvestigationTest {
         subject.setIdfFileUrlTemplate(MAGE_TAB_URL_TEMPLATE);
 
     }
-/*
-    @Test
-    public void parseInvestigationShouldUseMAGETABParser() throws Exception {
-        //given
-        subject.parseInvestigation(urlFake);
-        //then
-        verify(MAGETABParserMock).parse(urlFake);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void parseInvestigationShouldThrowIllegalStateExceptionOnMAGETABParserErrors() throws Exception {
-        //given
-        given(MAGETABParserMock.parse(urlFake)).willThrow(new ParseException("",0));
-        //when
-        subject.parseInvestigation(urlFake);
-        //then expect IllegalStateException
-    }
-*/
 
     @Test
     public void buildFileUrlTest(){
@@ -87,7 +66,21 @@ public class MageTabInvestigationTest {
 
     }
 
-    //The other methods can't be unit tested becouse they depend on limpopo APIs that are not testable nor can be stubbed,
+
+    @Test
+    public void extractExperimentRunsTest(){
+        //given
+        String experimentAccession = "exp-accession";
+        //when
+        String fileLocation = subject.buildIdfFileUrl(experimentAccession);
+        //then
+        assertThat(fileLocation, startsWith("http://"));
+        //and
+        assertThat(fileLocation, endsWith(experimentAccession + ".idf.txt"));
+
+    }
+
+    //The other methods can't be unit tested because they depend on limpopo APIs that are not testable nor can be stubbed,
     //because they expose public instance attributes (often even final) and not public methods, and they require clients to use static utility methods.
 }
 

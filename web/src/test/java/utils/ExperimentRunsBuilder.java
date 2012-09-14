@@ -2,36 +2,26 @@ package utils;
 
 import uk.ac.ebi.atlas.model.ExperimentRun;
 
-import java.util.*;
-
 public class ExperimentRunsBuilder {
 
-    private int factorValueIndex;
+    private ExperimentRun experimentRun;
 
-    public List<ExperimentRun> buildExperimentRuns(String... runAccessions) {
-
-        List<ExperimentRun> runs = new ArrayList<ExperimentRun>();
-
-        for (String runAccession: runAccessions) {
-            ExperimentRun run = buildExperimentRun(runAccession);
-
-            runs.add(run);
-        }
-
-        return runs;
+    public static ExperimentRunsBuilder forRunAccession(String runAccession) {
+        return new ExperimentRunsBuilder(runAccession);
 
     }
 
-    private ExperimentRun buildExperimentRun(String runAccession) {
-
-
-        ExperimentRun run = new ExperimentRun(runAccession);
-
-        run.addFactorValue("factor1", "value1_" + factorValueIndex)
-                .addFactorValue("factor2", "value2_" + factorValueIndex);
-
-        factorValueIndex++;
-
-        return run;
+    private ExperimentRunsBuilder(String runAccession){
+        this.experimentRun = new ExperimentRun(runAccession);
     }
+
+    public ExperimentRun create() {
+
+        experimentRun.addFactorValue("factor1", "value1")
+                .addFactorValue("factor2", "value2");
+
+        return experimentRun;
+    }
+
+
 }

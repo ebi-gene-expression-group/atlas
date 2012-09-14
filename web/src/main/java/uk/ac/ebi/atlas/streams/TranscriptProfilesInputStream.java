@@ -20,7 +20,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static uk.ac.ebi.atlas.streams.ExpressionLevelsBuffer.TRANSCRIPT_ID_COLUMN;
 
-public class TranscriptProfilesInputStream implements ObjectInputStream<TranscriptProfile> {
+public class
+    TranscriptProfilesInputStream implements ObjectInputStream<TranscriptProfile> {
 
     private static final Logger logger = Logger.getLogger(TranscriptProfilesInputStream.class);
 
