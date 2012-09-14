@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Before;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
@@ -24,7 +23,7 @@ public abstract class SeleniumFixture {
     }
 
     @Before
-    public void bootstrapTest(){
+    public void bootstrapTest() {
         FirefoxDriver driver = initializeFirefoxDriver();
         getStartingPage(driver);
     }

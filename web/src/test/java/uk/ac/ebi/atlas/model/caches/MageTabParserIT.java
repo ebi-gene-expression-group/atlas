@@ -10,13 +10,14 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
-    private static final String RUN_ACCESSION_FIRST = "ERR030872";
+    private static final String RUN_ACCESSION_FIRST = "ERR030880";
 
     private static final String MAGE_TAB_URL_TEMPLATE = "http://www.ebi.ac.uk/arrayexpress/files/%s/%s.idf.txt";
 
@@ -32,20 +33,20 @@ public class MageTabParserIT {
     }
 
     @Test
-    public void parseExperimentRunsReturnsMoreThanOneRun() throws Exception{
+    public void parseExperimentRunsReturnsMoreThanOneRun() throws Exception {
         List<ExperimentRun> experimentRuns = subject.load(EXPERIMENT_ACCESSION);
         assertThat(experimentRuns.size(), is(48));
     }
 
     @Test
-    public void RunsReturnsMoreThanOneRun() throws Exception{
+    public void firstRunIsCorrect() throws Exception {
         //given
         List<ExperimentRun> experimentRuns = subject.load(EXPERIMENT_ACCESSION);
         Iterator<ExperimentRun> experimentRunIterator = experimentRuns.iterator();
         ExperimentRun firstExperimentRun = experimentRunIterator.next();
         Iterator<FactorValue> factorValueIterator = firstExperimentRun.getFactorValues().iterator();
         //then
-        assertThat(firstExperimentRun.getRunAccession(), startsWith("ERR"));
+        assertThat(firstExperimentRun.getRunAccession(), is(RUN_ACCESSION_FIRST));
         assertThat(firstExperimentRun.getFactorValues().size(), is(3));
         assertThat(factorValueIterator.next(), is(equalTo(new FactorValue("ORGANISMPART", "adipose"))));
 
