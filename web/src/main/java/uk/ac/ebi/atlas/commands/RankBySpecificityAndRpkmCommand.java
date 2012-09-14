@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
@@ -16,7 +17,7 @@ import java.util.Queue;
 
 @Named("rankBySpecificityAndRpkm")
 @Scope("prototype")
-public class RankBySpecificityAndRpkmCommand implements ProcessTranscriptProfileStreamCommand {
+public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStream<TranscriptProfile>, List<TranscriptExpression>> {
 
     private static final int DEFAULT_SIZE = 100;
 
@@ -26,7 +27,7 @@ public class RankBySpecificityAndRpkmCommand implements ProcessTranscriptProfile
     }
 
     @Override
-    public List<TranscriptExpression> apply(ObjectInputStream<TranscriptProfile> objectStream) {
+    public List<TranscriptExpression>  apply(ObjectInputStream<TranscriptProfile> objectStream) {
         Queue<TranscriptExpression> topTenObjects = MinMaxPriorityQueue.orderedBy(new ReverseOrderComparator()).maximumSize(rankingSize).create();
 
         TranscriptProfile transcriptProfile;

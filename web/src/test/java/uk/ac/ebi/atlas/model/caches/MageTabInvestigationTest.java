@@ -1,8 +1,25 @@
 package uk.ac.ebi.atlas.model.caches;
 
-/*
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
+import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
+
+import java.io.InputStream;
+import java.net.URL;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.startsWith;
+import static org.mockito.Mockito.when;
+
 @RunWith(MockitoJUnitRunner.class)
 public class MageTabInvestigationTest {
+
+    private static final String MAGE_TAB_URL_TEMPLATE = "http://www.ebi.ac.uk/arrayexpress/files/%s/%s.idf.txt";
 
     private MageTabInvestigationLoader subject;
 
@@ -35,8 +52,10 @@ public class MageTabInvestigationTest {
 
         };
 
-    }
+        subject.setIdfFileUrlTemplate(MAGE_TAB_URL_TEMPLATE);
 
+    }
+/*
     @Test
     public void parseInvestigationShouldUseMAGETABParser() throws Exception {
         //given
@@ -45,15 +64,15 @@ public class MageTabInvestigationTest {
         verify(MAGETABParserMock).parse(urlFake);
     }
 
-
     @Test(expected = IllegalStateException.class)
     public void parseInvestigationShouldThrowIllegalStateExceptionOnMAGETABParserErrors() throws Exception {
         //given
-        given(MAGETABParserMock.parse(urlFake)).willThrow(new ParseException());
+        given(MAGETABParserMock.parse(urlFake)).willThrow(new ParseException("",0));
         //when
         subject.parseInvestigation(urlFake);
         //then expect IllegalStateException
     }
+*/
 
     @Test
     public void buildFileUrlTest(){
@@ -64,11 +83,11 @@ public class MageTabInvestigationTest {
         //then
         assertThat(fileLocation, startsWith("http://"));
         //and
-        assertThat(fileLocation, endsWith("fileName"));
+        assertThat(fileLocation, endsWith(experimentAccession + ".idf.txt"));
 
     }
 
     //The other methods can't be unit tested becouse they depend on limpopo APIs that are not testable nor can be stubbed,
     //because they expose public instance attributes (often even final) and not public methods, and they require clients to use static utility methods.
 }
-    */
+
