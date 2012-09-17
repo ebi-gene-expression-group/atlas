@@ -40,15 +40,13 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     public List<TranscriptExpression> apply(String experimentAccession) throws IllegalStateException {
 
         List<TranscriptExpression> topTenTranscriptExpressions = loadTopTenExpressions(experimentAccession);
-        if (topTenTranscriptExpressions == null) {
-            throw new IllegalStateException("Data not found for experiment: " + experimentAccession);
-        }
         return topTenTranscriptExpressions;
 
     }
 
-
-    List<ExperimentRun> getExperimentRun(String experimentAccession) {
+    //This is a bit smelly, this cache could be directly used by TranscriptProfilesInputStrea.Builder
+    //rather then being used here just to bounce the cached data back to TranscriptProfilesInputStrea.Builder
+    List<ExperimentRun> getExperimentRuns(String experimentAccession) {
 
         try {
 
@@ -56,7 +54,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
 
         } catch (ExecutionException e) {
             logger.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage());
+            throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
         }
 
     }
@@ -64,7 +62,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
 
     List<TranscriptExpression> loadTopTenExpressions(String experimentAccession) {
 
-        List<ExperimentRun> experimentRuns = getExperimentRun(experimentAccession);
+        List<ExperimentRun> experimentRuns = getExperimentRuns(experimentAccession);
 
         try (TranscriptProfilesInputStream objectInputStream = TranscriptProfilesInputStream.forFile(dataFileURL)
                 .withExperimentRuns(experimentRuns)

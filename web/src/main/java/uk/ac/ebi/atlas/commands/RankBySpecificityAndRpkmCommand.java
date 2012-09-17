@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
-import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
@@ -14,6 +13,9 @@ import javax.inject.Named;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.collect.Ordering.from;
 
 @Named("rankBySpecificityAndRpkm")
 @Scope("prototype")
@@ -28,7 +30,9 @@ public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStre
 
     @Override
     public List<TranscriptExpression>  apply(ObjectInputStream<TranscriptProfile> objectStream) {
-        Queue<TranscriptExpression> topTenObjects = MinMaxPriorityQueue.orderedBy(new ReverseOrderComparator()).maximumSize(rankingSize).create();
+        Comparator reverseSpecificityComparator = from(new TranscriptSpecificityComparator()).reverse();
+
+        Queue<TranscriptExpression> topTenObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
 
         TranscriptProfile transcriptProfile;
 
@@ -40,22 +44,13 @@ public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStre
 
             }
         }
-
-        return Ordering.from(new TranscriptSpecificityComparator()).reverse().sortedCopy(topTenObjects);
+        return from(reverseSpecificityComparator).sortedCopy(topTenObjects);
     }
 
     public RankBySpecificityAndRpkmCommand setRankingSize(int rankingSize) {
+        checkArgument(rankingSize > 0, "rankingSize must be greater then zero");
         this.rankingSize = rankingSize;
         return this;
     }
 
-    class ReverseOrderComparator implements Comparator<TranscriptExpression> {
-
-        private TranscriptSpecificityComparator transcriptSpecificityComparator = new TranscriptSpecificityComparator();
-
-        @Override
-        public int compare(TranscriptExpression object, TranscriptExpression other) {
-            return transcriptSpecificityComparator.compare(other, object);
-        }
-    }
 }
