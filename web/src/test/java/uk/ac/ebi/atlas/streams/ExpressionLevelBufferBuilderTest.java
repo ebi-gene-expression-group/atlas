@@ -19,8 +19,6 @@ public class ExpressionLevelBufferBuilderTest {
     private static final String RUN_ACCESSION_2 = "ERR030873";
     private static final String RUN_ACCESSION_3 = "ERR030874";
 
-    private List<ExperimentRun> experimentRuns;
-
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
     private ExperimentRun experimentRun3;
@@ -33,13 +31,13 @@ public class ExpressionLevelBufferBuilderTest {
         experimentRun2 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_2).create();
         experimentRun3 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_3).create();
 
-        experimentRuns = Lists.newArrayList( experimentRun1, experimentRun2, experimentRun3);
+        List<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 
         subject = ExpressionLevelsBuffer.forExperimentRuns(experimentRuns);
     }
 
     @Test(expected = IllegalStateException.class)
-    public void builderShouldThrowIllegalStateExceptionWhenOrderSpecificationIsNotSet(){
+    public void builderShouldThrowIllegalStateExceptionWhenOrderSpecificationIsNotSet() {
         //when
         subject.create();
 
@@ -47,26 +45,27 @@ public class ExpressionLevelBufferBuilderTest {
     }
 
     @Test
-    public void createShouldSucceedWhenSpecificationHasBeenSet(){
+    public void createShouldSucceedWhenSpecificationHasBeenSet() {
         //given
-        String[] headers = new String[] { "", RUN_ACCESSION_2, RUN_ACCESSION_3 };
+        String[] headers = new String[]{"", RUN_ACCESSION_2, RUN_ACCESSION_3};
         //then
         assertThat(subject.withHeaders(headers).create(), is(notNullValue()));
     }
 
     @Test
-    public void removeUnwantedExperimentRunsTest(){
+    public void removeUnwantedExperimentRunsTest() {
         //given
         List<String> wantedRunAccessions = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
         //when
         Collection<ExperimentRun> experimentRuns = subject.removeUnrequiredExperimentRuns(wantedRunAccessions);
         //then
-        assertThat(experimentRuns, allOf(hasItems(experimentRun2, experimentRun3), not(hasItem(experimentRun1))));
+        assertThat(experimentRuns, hasItems(experimentRun2, experimentRun3));
+        assertThat(experimentRuns, not(hasItem(experimentRun1)));
 
     }
 
     @Test
-    public void experimentRunIsRequiredWhenItIsIncludedInOrderSpecification(){
+    public void experimentRunIsRequiredWhenItIsIncludedInOrderSpecification() {
         //given
         List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
         //when
@@ -76,7 +75,7 @@ public class ExpressionLevelBufferBuilderTest {
     }
 
     @Test
-    public void experimentRunIsNotRequiredWhenItIsNotIncludedInOrderSpecification(){
+    public void experimentRunIsNotRequiredWhenItIsNotIncludedInOrderSpecification() {
         //given
         List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
         //when
@@ -86,22 +85,22 @@ public class ExpressionLevelBufferBuilderTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void experimentRunComparatorShouldThrowExceptionWhenExperimentRunIsNotIncludedInsOrderBySpecification(){
+    public void experimentRunComparatorShouldThrowExceptionWhenExperimentRunIsNotIncludedInsOrderBySpecification() {
         //given
         List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
         //and
-        Comparator experimentRunsComparator = subject.experimentRunComparator(orderSpecification);
+        Comparator<ExperimentRun> experimentRunsComparator = subject.experimentRunComparator(orderSpecification);
         //when
         experimentRunsComparator.compare(experimentRun2, experimentRun1);
         //then expect IllegalStateExceptionToBeThrown;
     }
 
     @Test
-    public void experimentRunComparatorShouldOrderByPositionInOrderSpecification(){
+    public void experimentRunComparatorShouldOrderByPositionInOrderSpecification() {
         //given
         List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_3, RUN_ACCESSION_2);
         //and
-        Comparator experimentRunsComparator = subject.experimentRunComparator(orderSpecification);
+        Comparator<ExperimentRun> experimentRunsComparator = subject.experimentRunComparator(orderSpecification);
         //then
         assertThat(experimentRunsComparator.compare(experimentRun2, experimentRun3), is(greaterThan(0)));
         //and
