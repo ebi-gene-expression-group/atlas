@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
+import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExpressionLevel;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.collect.Ordering.from;
 
 @Named("rankBySpecificityAndRpkm")
 @Scope("prototype")
@@ -29,8 +29,8 @@ public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStre
     }
 
     @Override
-    public List<TranscriptExpression>  apply(ObjectInputStream<TranscriptProfile> objectStream) {
-        Comparator reverseSpecificityComparator = from(new TranscriptSpecificityComparator()).reverse();
+    public List<TranscriptExpression> apply(ObjectInputStream<TranscriptProfile> objectStream) {
+        Comparator<TranscriptExpression> reverseSpecificityComparator = Ordering.from(new TranscriptSpecificityComparator()).reverse();
 
         Queue<TranscriptExpression> topTenObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
 
@@ -44,7 +44,7 @@ public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStre
 
             }
         }
-        return from(reverseSpecificityComparator).sortedCopy(topTenObjects);
+        return Ordering.from(reverseSpecificityComparator).sortedCopy(topTenObjects);
     }
 
     public RankBySpecificityAndRpkmCommand setRankingSize(int rankingSize) {
