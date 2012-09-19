@@ -15,7 +15,7 @@ public class ExperimentPage extends AtlasPage {
 
     private static final String DEFAULT_PAGE_URI = "/atlas/experiment";
 
-    @FindBy(id = "expressionTable")
+    @FindBy(id = "expressionsTable")
     WebElement tableElement;
 
     private String pageUri = DEFAULT_PAGE_URI;
@@ -43,7 +43,7 @@ public class ExperimentPage extends AtlasPage {
         return tableElement.findElement(By.xpath("tbody/tr/td[3]")).getText();
     }
 
-    public String getFactorValuesForGreatestRPKMValue() {
+    public String getOrganismPartForGreatestRPKMValue() {
         return tableElement.findElement(By.xpath("tbody/tr/td[2]")).getText();
     }
 
@@ -59,7 +59,7 @@ public class ExperimentPage extends AtlasPage {
         return tableElement.findElement(By.xpath("tbody/tr[10]/td[3]")).getText();
     }
 
-    public String getFactorValuesForSmallestRPKMValue() {
+    public String getOrganismPartForSmallestRPKMValue() {
         return tableElement.findElement(By.xpath("tbody/tr[10]/td[2]")).getText();
     }
 

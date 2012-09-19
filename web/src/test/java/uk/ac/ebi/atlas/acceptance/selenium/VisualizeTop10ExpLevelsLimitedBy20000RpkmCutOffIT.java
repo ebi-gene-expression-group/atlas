@@ -1,13 +1,11 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
-import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentPage;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.junit.Assert.assertThat;
 
 public class VisualizeTop10ExpLevelsLimitedBy20000RpkmCutOffIT extends SeleniumFixture {
@@ -30,7 +28,7 @@ public class VisualizeTop10ExpLevelsLimitedBy20000RpkmCutOffIT extends SeleniumF
 
     @Test
     public void verifyFactorValuesForMostExpressedTranscriptId() {
-        assertThat(subject.getFactorValuesForGreatestRPKMValue(), stringContainsInOrder(Lists.newArrayList("liver", "caucasian")));
+        assertThat(subject.getOrganismPartForGreatestRPKMValue(), is("liver"));
     }
 
     @Test
@@ -50,7 +48,7 @@ public class VisualizeTop10ExpLevelsLimitedBy20000RpkmCutOffIT extends SeleniumF
 
     @Test
     public void verifyFactorValuesForLeastExpressedTranscriptId() {
-        assertThat(subject.getFactorValuesForSmallestRPKMValue(), stringContainsInOrder(Lists.newArrayList("adipose", "caucasian")));
+        assertThat(subject.getOrganismPartForSmallestRPKMValue(), is("adipose"));
     }
 
     @Test
