@@ -4,11 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-public abstract class AtlasPage<T extends LoadableComponent<T>> extends LoadableComponent<T> {
+abstract class AtlasPage<T extends LoadableComponent<T>> extends LoadableComponent<T> {
 
     protected WebDriver driver;
 
-    public AtlasPage(WebDriver driver) {
+    AtlasPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
@@ -26,6 +26,7 @@ public abstract class AtlasPage<T extends LoadableComponent<T>> extends Loadable
         String URL = "http://" + hostname + ":" + portNumber + getPageURI();
         driver.get(URL);
     }
+
 
     protected abstract String getPageURI();
 

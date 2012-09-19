@@ -19,7 +19,7 @@
 <body>
 
 
-<display:table name="${heatmapOrganismParts}" htmlId="heatmapMatrix" id="organismPart">
+<display:table name="${heatmapOrganismParts}" htmlId="heatmapTable" id="organismPart">
 
         <c:forEach var="transcriptId" items="${heatmapTranscripts}">
 

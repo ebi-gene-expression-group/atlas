@@ -1,72 +1,71 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.List;
 
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 
 
-public class ExperimentPage extends AtlasPage {
+public class ExpressionsTablePage extends TablePage {
 
     private static final String DEFAULT_PAGE_URI = "/atlas/experiment";
 
+    public static final int RPKM_COLUMN_INDEX = 3;
+    public static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
+    public static final int ORGANISM_PART_INDEX = 2;
+    public static final int SPECIFICITY_COLUMN_INDEX = 4;
+
     @FindBy(id = "expressionsTable")
-    WebElement tableElement;
+    WebElement expressionsTable;
 
     private String pageUri = DEFAULT_PAGE_URI;
 
-    public ExperimentPage(WebDriver driver) {
+    ExpressionsTablePage(WebDriver driver) {
         super(driver);
     }
 
-    public ExperimentPage(WebDriver driver, String parameters) {
-        super(driver);
-
+    public ExpressionsTablePage(WebDriver driver, String parameters) {
+        this(driver);
         pageUri = pageUri.concat(parameters);
     }
 
-    public int getTableRowCount() {
-        List<WebElement> tableRows = tableElement.findElements(By.xpath("tbody/tr"));
-        return tableRows.size();
+    public int getExpressionsTableRowCount() {
+        return getTableRowCount(expressionsTable);
     }
 
     public String getTranscriptIdForGreatestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr/td[1]")).getText();
+        return getTableTopCellValue(expressionsTable, TRANSCRIPT_ID_COLUMN_INDEX);
     }
 
     public String getGreatestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr/td[3]")).getText();
+        return getTableTopCellValue(expressionsTable, RPKM_COLUMN_INDEX);
     }
 
     public String getOrganismPartForGreatestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr/td[2]")).getText();
+        return getTableTopCellValue(expressionsTable, ORGANISM_PART_INDEX);
     }
 
     public String getSpecificityForGreatestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr/td[4]")).getText();
+        return getTableTopCellValue(expressionsTable, SPECIFICITY_COLUMN_INDEX);
     }
 
     public String getTranscriptIdForSmallestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr[10]/td[1]")).getText();
+        return getTableBottomCellValue(expressionsTable, TRANSCRIPT_ID_COLUMN_INDEX);
     }
 
     public String getSmallestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr[10]/td[3]")).getText();
+        return getTableBottomCellValue(expressionsTable, RPKM_COLUMN_INDEX);
     }
 
     public String getOrganismPartForSmallestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr[10]/td[2]")).getText();
+        return getTableBottomCellValue(expressionsTable, ORGANISM_PART_INDEX);
     }
 
     public String getSpecificityForSmallestRPKMValue() {
-        return tableElement.findElement(By.xpath("tbody/tr[10]/td[4]")).getText();
+        return getTableBottomCellValue(expressionsTable, SPECIFICITY_COLUMN_INDEX);
     }
-
 
     public String getTitle() {
         return driver.getTitle();
