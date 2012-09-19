@@ -38,6 +38,15 @@ public class ExperimentRun implements Comparable<ExperimentRun>{
         return factorValues;
     }
 
+    public String getOrganismPart() {
+        for (FactorValue factorValue: factorValues) {
+            if ("ORGANISMPART".equalsIgnoreCase(factorValue.getFactor())){
+                return factorValue.getValue();
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

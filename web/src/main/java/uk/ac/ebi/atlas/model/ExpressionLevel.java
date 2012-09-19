@@ -21,6 +21,10 @@ public class ExpressionLevel {
         return experimentRun.getFactorValues();
     }
 
+    public String getOrganismPart() {
+        return experimentRun.getOrganismPart();
+    }
+
     public double getRpkm() {
         return rpkm;
     }

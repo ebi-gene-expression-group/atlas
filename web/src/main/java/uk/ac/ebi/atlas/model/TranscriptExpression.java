@@ -47,14 +47,14 @@ public class TranscriptExpression implements Comparable<TranscriptExpression> {
         return expressionLevel.getRpkm();
     }
 
+    public String getOrganismPart() {
+        return expressionLevel.getOrganismPart();
+    }
+
     public TranscriptExpression addFactorValue(String factor, String value) {
         expressionLevel.addFactorValue(factor, value);
 
         return this;
-    }
-
-    public ExpressionLevel getExpressionLevel() {
-        return expressionLevel;
     }
 
     public void setExpressionLevel(ExpressionLevel expressionLevel) {

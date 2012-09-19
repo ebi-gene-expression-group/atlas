@@ -17,17 +17,45 @@
 </head>
 
 <body>
-<display:table name="${expressions}" htmlId="expressionTable" id="expression">
 
-    <display:column title="Transcript id" property="transcriptId"/>
-    <display:column title="Conditions">
-        <c:forEach var="factor" items="${expression.factorValues}">
-            <c:out value="${factor.displayString}"/><br/>
+
+<display:table name="${heatmapExpressions}" htmlId="expressionTable" id="transcriptExpression">
+
+        <c:forEach var="transcriptId" items="${heatmapTranscripts}">
+
+            <display:column title="${transcriptId}">
+
+                    <c:choose>
+                        <c:when test="${transcriptExpression.transcriptId eq transcriptId}">
+                            <c:out value="${transcriptExpression.rpkm}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="☺"/>
+                        </c:otherwise>
+                    </c:choose>
+
+            </display:column>
+
         </c:forEach>
-    </display:column>
+        <display:column title="organism part" property="organismPart"/>
 
-    <display:column title="RPKM" property="rpkm"/>
-    <display:column title="Specificity" property="specificity"/>
-</display:table>
+    </display:table>
+
+
+
+
+    <display:table name="${expressions}" htmlId="expressionTable" id="expression">
+
+        <display:column title="Transcript id" property="transcriptId"/>
+
+        <display:column title="Organism part">
+                <c:out value="${expression.organismPart}"/><br/>
+        </display:column>
+
+        <display:column title="RPKM" property="rpkm"/>
+        <display:column title="Specificity" property="specificity"/>
+
+    </display:table>
+
 </body>
 </html>
