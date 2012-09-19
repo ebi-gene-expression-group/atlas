@@ -57,7 +57,7 @@ public class ExpressionLevelController {
 
         model.addAttribute("heatmapOrganismParts", getDistinctOrganismParts(transcriptsToBeHiglighted, transcriptExpressions));
 
-        model.addAttribute("expressions", transcriptExpressions);
+        model.addAttribute("transcriptExpressions", transcriptExpressions);
 
 
         return "experiment";

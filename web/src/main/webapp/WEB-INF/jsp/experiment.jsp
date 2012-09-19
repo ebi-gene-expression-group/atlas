@@ -8,7 +8,7 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<jsp:useBean id="expressions" type="java.util.List" scope="request"/>
+<jsp:useBean id="transcriptExpressions" type="java.util.List" scope="request"/>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
 <head>
@@ -19,13 +19,13 @@
 <body>
 
 
-<display:table name="${heatmapOrganismParts}" htmlId="expressionTable" id="organismPart">
+<display:table name="${heatmapOrganismParts}" htmlId="heatmapMatrix" id="organismPart">
 
         <c:forEach var="transcriptId" items="${heatmapTranscripts}">
 
             <display:column title="${transcriptId}">
 
-                <c:forEach items="${expressions}" var="transcriptExpression">
+                <c:forEach items="${transcriptExpressions}" var="transcriptExpression">
                     <c:if test="${transcriptExpression.organismPart eq organismPart}">
                         <c:if test="${transcriptExpression.transcriptId eq transcriptId}">
                             <c:out value="${transcriptExpression.rpkm}"/>
@@ -43,7 +43,7 @@
 
 
 
-    <display:table name="${expressions}" htmlId="expressionTable" id="transcriptExpression">
+    <display:table name="${transcriptExpressions}" htmlId="expressionsTable" id="transcriptExpression">
 
         <display:column title="Transcript id" property="transcriptId"/>
 
