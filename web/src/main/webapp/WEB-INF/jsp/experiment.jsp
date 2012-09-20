@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ taglib uri="http://ebi.ac.uk/atlas3/templates" prefix="grad" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -18,43 +19,46 @@
 
 <body>
 
+${grad:getColor('2', '0', '17')}
 
 <display:table name="${heatmapOrganismParts}" htmlId="heatmapTable" id="organismPart">
 
-        <c:forEach var="transcriptId" items="${heatmapTranscripts}">
+    <c:forEach var="transcriptId" items="${heatmapTranscripts}">
 
-            <display:column title="${transcriptId}">
+        <display:column title="${transcriptId}">
 
-                <c:forEach items="${transcriptExpressions}" var="transcriptExpression">
-                    <c:if test="${transcriptExpression.organismPart eq organismPart}">
-                        <c:if test="${transcriptExpression.transcriptId eq transcriptId}">
+            <c:forEach items="${transcriptExpressions}" var="transcriptExpression">
+                <c:if test="${transcriptExpression.organismPart eq organismPart}">
+                    <c:if test="${transcriptExpression.transcriptId eq transcriptId}">
+                        <div style="background-color:${grad:getColor(transcriptExpression.rpkm, '0', '17')}">
+
                             <c:out value="${transcriptExpression.rpkm}"/>
-                        </c:if>
+                        </div>
+
                     </c:if>
-                </c:forEach>
+                </c:if>
+            </c:forEach>
 
-            </display:column>
-
-        </c:forEach>
-        <display:column title="organism part" value="${organismPart}"/>
-
-    </display:table>
-
-
-
-
-    <display:table name="${transcriptExpressions}" htmlId="expressionsTable" id="transcriptExpression">
-
-        <display:column title="Transcript id" property="transcriptId"/>
-
-        <display:column title="Organism part">
-                <c:out value="${transcriptExpression.organismPart}"/><br/>
         </display:column>
 
-        <display:column title="RPKM" property="rpkm"/>
-        <display:column title="Specificity" property="specificity"/>
+    </c:forEach>
+    <display:column title="organism part" value="${organismPart}"/>
 
-    </display:table>
+</display:table>
+
+
+<display:table name="${transcriptExpressions}" htmlId="expressionsTable" id="transcriptExpression">
+
+    <display:column title="Transcript id" property="transcriptId"/>
+
+    <display:column title="Organism part">
+        <c:out value="${transcriptExpression.organismPart}"/><br/>
+    </display:column>
+
+    <display:column title="RPKM" property="rpkm"/>
+    <display:column title="Specificity" property="specificity"/>
+
+</display:table>
 
 </body>
 </html>

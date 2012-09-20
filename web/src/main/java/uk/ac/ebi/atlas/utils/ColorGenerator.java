@@ -29,9 +29,7 @@ public class ColorGenerator {
     private double colourScale;
 
     public ColorGenerator() {
-
         this(Color.BLACK, Color.WHITE, SCALE_LINEAR);
-
     }
 
     public ColorGenerator(Color highValueColour, Color lowValueColour, double scale) {
@@ -41,6 +39,19 @@ public class ColorGenerator {
         this.colourScale = SCALE_LINEAR;
 
         updateColourDistance();
+    }
+
+    /*
+    This method is used by functional tag.
+    //ToDo: maybe extract in a separate class
+     */
+    public static String getColor(String data, String min, String max) {
+        ColorGenerator colorGenerator = new ColorGenerator(Color.RED, Color.WHITE, SCALE_LOGARITHMIC);
+
+        Color cellColour = colorGenerator.getCellColour(Double.parseDouble(data), Double.parseDouble(min), Double.parseDouble(max));
+
+
+        return "#" + Integer.toHexString(cellColour.getRGB()).substring(2).toUpperCase();
     }
 
 
@@ -132,7 +143,6 @@ public class ColorGenerator {
         Color colour = colorGenerator.getCellColour(50, 1, 100);
 //        Color colour = colorGenerator.getCellColour(Double.parseDouble(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]));
         System.out.println("colour = " + colour);
-        System.out.println("colour.toString() = " + colour.toString());
     }
 }
 
