@@ -12,8 +12,7 @@ import java.util.Set;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -114,4 +113,46 @@ public class TranscriptExpressionsListTest {
         assertThat(organismParts, contains("banana", "berrywhite", "bomb"));
 
     }
+
+    @Test
+    public void getMaxRpkmShouldReturnNullForEmptyList(){
+        //when
+        subject = new TranscriptExpressionsList();
+        //then
+        assertThat(subject.getMaxRpkm(), is(nullValue()));
+    }
+
+    @Test
+    public void getMaxRpkmTest(){
+        //given
+        when(expression1.getRpkm()).thenReturn(55d);
+        when(expression2.getRpkm()).thenReturn(15d);
+        when(expression3.getRpkm()).thenReturn(25d);
+        when(expression4.getRpkm()).thenReturn(115d);
+        when(expression5.getRpkm()).thenReturn(35d);
+        //then
+        assertThat(subject.getMaxRpkm(), is(115d));
+    }
+
+    @Test
+    public void getMinRpkmShouldReturnNullForEmptyList(){
+        //when
+        subject = new TranscriptExpressionsList();
+        //then
+        assertThat(subject.getMinRpkm(), is(nullValue()));
+    }
+
+    @Test
+    public void getMinRpkmTest(){
+        //given
+        when(expression1.getRpkm()).thenReturn(55d);
+        when(expression2.getRpkm()).thenReturn(15d);
+        when(expression3.getRpkm()).thenReturn(25d);
+        when(expression4.getRpkm()).thenReturn(115d);
+        when(expression5.getRpkm()).thenReturn(35d);
+        //then
+        assertThat(subject.getMinRpkm(), is(15d));
+    }
+
+
 }

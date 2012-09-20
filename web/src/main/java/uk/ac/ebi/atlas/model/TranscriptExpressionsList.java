@@ -54,4 +54,27 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
         }
         return organismParts;
     }
+
+    public Double getMaxRpkm(){
+        Double maxRpkm = null;
+        for (TranscriptExpression expression: this){
+            if (maxRpkm == null || expression.getRpkm() > maxRpkm){
+                maxRpkm = expression.getRpkm();
+            }
+        }
+        return maxRpkm;
+    }
+
+    public Double getMinRpkm(){
+        Double minRpkm = null;
+        for (TranscriptExpression expression: this){
+            if (minRpkm == null || expression.getRpkm() < minRpkm){
+                minRpkm = expression.getRpkm();
+            }
+        }
+        return minRpkm;
+    }
+
+
+
 }
