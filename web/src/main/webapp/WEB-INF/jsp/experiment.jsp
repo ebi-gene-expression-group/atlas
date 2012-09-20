@@ -20,7 +20,6 @@
 
 
 <display:table name="${heatmapOrganismParts}" htmlId="heatmapTable" id="organismPart">
-
         <c:forEach var="transcriptId" items="${heatmapTranscripts}">
 
             <display:column title="${transcriptId}">
@@ -36,7 +35,7 @@
             </display:column>
 
         </c:forEach>
-        <display:column title="organism part" value="${organismPart}"/>
+        <display:column title="" value="${organismPart}"/>
 
     </display:table>
 

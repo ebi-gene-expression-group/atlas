@@ -36,6 +36,12 @@ public class HeatmapTablePage extends TablePage {
         return driver.getTitle();
     }
 
+    public List<String> getSelectedTranscripts() {
+        List<String> transcriptNames = getTableHeaders(heatmapTable);
+        //and we need to remove the last header value, because is related to the organism part column
+        return transcriptNames.subList(0, transcriptNames.size() - 1);
+    }
+
     @Override
     protected String getPageURI() {
         return pageUri;
@@ -46,5 +52,14 @@ public class HeatmapTablePage extends TablePage {
         String url = driver.getCurrentUrl();
         assertThat(url, endsWith(pageUri));
     }
+
+    public List<String> getFirstTranscriptProfile() {
+        return getFirstColumnValues(heatmapTable);
+    }
+
+    public List<String> getLastTranscriptProfile() {
+        return getColumnValues(heatmapTable, getTableColumnsCount(heatmapTable)-1);
+    }
+
 
 }
