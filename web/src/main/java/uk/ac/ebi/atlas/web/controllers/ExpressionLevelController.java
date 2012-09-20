@@ -6,10 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.LoadExpressionLevelsCommand;
-import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.TranscriptExpressionsList;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -47,15 +47,15 @@ public class ExpressionLevelController {
             this.heatmapMatrixSize = heatmapMatrixSize;
         }
 
-        List<TranscriptExpression> transcriptExpressions;
 
-        transcriptExpressions = loadExpressionLevelsCommand.apply(DEMO_ACCESSION);
+        TranscriptExpressionsList transcriptExpressions = loadExpressionLevelsCommand.apply(DEMO_ACCESSION);
 
-        Set<String> transcriptsToBeHiglighted = transcriptsToBeHighlighted(transcriptExpressions);
 
-        model.addAttribute("heatmapTranscripts", transcriptsToBeHiglighted);
+        Set<String> transcriptsToBeHighlighted = transcriptExpressions.getTop(this.heatmapMatrixSize).getDistinctTranscriptIds();
 
-        model.addAttribute("heatmapOrganismParts", getDistinctOrganismParts(transcriptsToBeHiglighted, transcriptExpressions));
+        model.addAttribute("heatmapTranscripts", transcriptsToBeHighlighted);
+
+        model.addAttribute("heatmapOrganismParts", transcriptExpressions.getDistinctOrganismParts(transcriptsToBeHighlighted));
 
         model.addAttribute("transcriptExpressions", transcriptExpressions);
 
@@ -63,24 +63,7 @@ public class ExpressionLevelController {
         return "experiment";
     }
 
-    private Set<String> getDistinctOrganismParts(Set<String> transcripts, List<TranscriptExpression> transcriptExpressions){
-        SortedSet<String> organismParts = new TreeSet<>();
 
-        for (TranscriptExpression transcriptExpression : transcriptExpressions) {
-            if (transcripts.contains(transcriptExpression.getTranscriptId())){
-                organismParts.add(transcriptExpression.getOrganismPart());
-            }
-        }
-        return organismParts;
-    }
-
-    private Set<String> transcriptsToBeHighlighted(List<TranscriptExpression> transcriptExpressions){
-        Set<String> transcriptIds = new LinkedHashSet<String>();
-        for (int i = 0; i < this.heatmapMatrixSize && i < transcriptExpressions.size(); i++){
-            transcriptIds.add(transcriptExpressions.get(i).getTranscriptId());
-        }
-        return transcriptIds;
-    }
 
 }
 

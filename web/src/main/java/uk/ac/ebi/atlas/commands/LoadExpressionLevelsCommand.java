@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.TranscriptExpressionsList;
 import uk.ac.ebi.atlas.streams.TranscriptProfilesInputStream;
 
 import javax.inject.Inject;
@@ -37,9 +38,9 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     }
 
     @Override
-    public List<TranscriptExpression> apply(String experimentAccession) throws IllegalStateException {
+    public TranscriptExpressionsList apply(String experimentAccession) throws IllegalStateException {
 
-        List<TranscriptExpression> topTenTranscriptExpressions = loadTopTenExpressions(experimentAccession);
+        TranscriptExpressionsList topTenTranscriptExpressions = loadTopTenExpressions(experimentAccession);
         return topTenTranscriptExpressions;
 
     }
@@ -60,7 +61,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
     }
 
 
-    List<TranscriptExpression> loadTopTenExpressions(String experimentAccession) {
+    TranscriptExpressionsList loadTopTenExpressions(String experimentAccession) {
 
         List<ExperimentRun> experimentRuns = getExperimentRuns(experimentAccession);
 
@@ -68,9 +69,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
                 .withExperimentRuns(experimentRuns)
                 .withRpkmCutOff(rpkmCutOff).create()) {
 
-            List<TranscriptExpression> transcriptExpressionsRanking = rankBySpecificityObjectsCommand.apply(objectInputStream);
-
-            return transcriptExpressionsRanking;
+            return rankBySpecificityObjectsCommand.apply(objectInputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);

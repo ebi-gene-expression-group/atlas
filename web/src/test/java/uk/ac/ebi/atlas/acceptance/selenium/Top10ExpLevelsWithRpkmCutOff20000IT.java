@@ -35,7 +35,7 @@ public class Top10ExpLevelsWithRpkmCutoff20000IT extends SeleniumFixture {
     public void verifyRPKMForMostExpressedTranscriptId() {
         assertThat(subject.getGreatestRPKMValue(), is("36872.6684888937"));
     }
-
+ 
     @Test
     public void verifySpecificityForMostExpressedTranscriptId() {
         assertThat(subject.getSpecificityForGreatestRPKMValue(), is("1"));

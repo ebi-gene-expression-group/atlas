@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.TranscriptExpression;
+import uk.ac.ebi.atlas.model.TranscriptExpressionsList;
 import uk.ac.ebi.atlas.model.TranscriptProfile;
 
 import java.net.MalformedURLException;
@@ -37,12 +37,15 @@ public class LoadExpressionLevelsCommandTest {
     @Mock
     RankBySpecificityAndRpkmCommand rankBySpecificityObjectsCommand;
 
-    private List<TranscriptExpression> top10LevelsMock = Lists.newArrayList(mock(TranscriptExpression.class));
+    private TranscriptExpressionsList top10LevelsMock;
 
     private LoadExpressionLevelsCommand subject;
 
     @Before
     public void init() throws Exception {
+
+        top10LevelsMock = new TranscriptExpressionsList();
+        top10LevelsMock.add(mock(TranscriptExpression.class));
 
         when(rankBySpecificityObjectsCommand.setRankingSize(anyInt())).thenReturn(rankBySpecificityObjectsCommand);
         when(rankBySpecificityObjectsCommand.apply(inputStream)).thenReturn(top10LevelsMock);
