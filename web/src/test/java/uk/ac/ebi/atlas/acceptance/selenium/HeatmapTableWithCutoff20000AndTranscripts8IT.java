@@ -9,12 +9,12 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableWithRpkmCutoff20000AndTranscripts8IT extends SeleniumFixture {
+public class HeatmapTableWithCutoff20000AndTranscripts8IT extends SeleniumFixture {
 
     private HeatmapTablePage subject;
 
     public LoadableComponent getStartingPage(FirefoxDriver firefoxDriver) {
-        subject = new HeatmapTablePage(firefoxDriver, "?rpkmCutOff=20000&heatmapMatrixSize=8");
+        subject = new HeatmapTablePage(firefoxDriver, "?cutoff=20000&heatmapMatrixSize=8");
         return subject.get();
     }
 

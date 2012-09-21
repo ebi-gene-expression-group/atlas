@@ -18,11 +18,11 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
         return subList(0, size);
     }
 
-    public Double getRpkmValue(String transcriptId, String organismPart){
+    public Double getExpressionLevel(String transcriptId, String organismPart){
         for (TranscriptExpression transcriptExpression: this) {
             if (checkNotNull(transcriptId).equalsIgnoreCase(transcriptExpression.getTranscriptId())
                 && checkNotNull(organismPart).equalsIgnoreCase(transcriptExpression.getOrganismPart())){
-                return transcriptExpression.getRpkm();
+                return transcriptExpression.getLevel();
             }
         }
         return null;
@@ -55,24 +55,24 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
         return organismParts;
     }
 
-    public Double getMaxFpkm(){
-        Double maxRpkm = null;
+    public Double getMaxExpressionLevel(){
+        Double maxExpressionLevel = null;
         for (TranscriptExpression expression: this){
-            if (maxRpkm == null || expression.getRpkm() > maxRpkm){
-                maxRpkm = expression.getRpkm();
+            if (maxExpressionLevel == null || expression.getLevel() > maxExpressionLevel){
+                maxExpressionLevel = expression.getLevel();
             }
         }
-        return maxRpkm;
+        return maxExpressionLevel;
     }
 
-    public Double getMinFpkm(){
-        Double minRpkm = null;
+    public Double getMinExpressionLevel(){
+        Double minExpressionLevel = null;
         for (TranscriptExpression expression: this){
-            if (minRpkm == null || expression.getRpkm() < minRpkm){
-                minRpkm = expression.getRpkm();
+            if (minExpressionLevel == null || expression.getLevel() < minExpressionLevel){
+                minExpressionLevel = expression.getLevel();
             }
         }
-        return minRpkm;
+        return minExpressionLevel;
     }
 
 

@@ -12,7 +12,7 @@ public class ExpressionsTablePage extends TablePage {
 
     private static final String DEFAULT_PAGE_URI = "/atlas/experiment";
 
-    public static final int RPKM_COLUMN_INDEX = 3;
+    public static final int EXPRESSION_LEVEL_COLUMN_INDEX = 3;
     public static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
     public static final int ORGANISM_PART_INDEX = 2;
     public static final int SPECIFICITY_COLUMN_INDEX = 4;
@@ -35,35 +35,35 @@ public class ExpressionsTablePage extends TablePage {
         return getTableRowCount(expressionsTable);
     }
 
-    public String getTranscriptIdForGreatestRPKMValue() {
+    public String getTranscriptIdForGreatestExpressionLevel() {
         return getTableTopCellValue(expressionsTable, TRANSCRIPT_ID_COLUMN_INDEX);
     }
 
-    public String getGreatestRPKMValue() {
-        return getTableTopCellValue(expressionsTable, RPKM_COLUMN_INDEX);
+    public String getGreatestExpressionLevel() {
+        return getTableTopCellValue(expressionsTable, EXPRESSION_LEVEL_COLUMN_INDEX);
     }
 
-    public String getOrganismPartForGreatestRPKMValue() {
+    public String getOrganismPartForGreatestExpressionLevel() {
         return getTableTopCellValue(expressionsTable, ORGANISM_PART_INDEX);
     }
 
-    public String getSpecificityForGreatestRPKMValue() {
+    public String getSpecificityForGreatestExpressionLevel() {
         return getTableTopCellValue(expressionsTable, SPECIFICITY_COLUMN_INDEX);
     }
 
-    public String getTranscriptIdForSmallestRPKMValue() {
+    public String getTranscriptIdForSmallestExpressionLevel() {
         return getTableBottomCellValue(expressionsTable, TRANSCRIPT_ID_COLUMN_INDEX);
     }
 
-    public String getSmallestRPKMValue() {
-        return getTableBottomCellValue(expressionsTable, RPKM_COLUMN_INDEX);
+    public String getSmallestExpressionLevel() {
+        return getTableBottomCellValue(expressionsTable, EXPRESSION_LEVEL_COLUMN_INDEX);
     }
 
-    public String getOrganismPartForSmallestRPKMValue() {
+    public String getOrganismPartForSmallestExpressionLevel() {
         return getTableBottomCellValue(expressionsTable, ORGANISM_PART_INDEX);
     }
 
-    public String getSpecificityForSmallestRPKMValue() {
+    public String getSpecificityForSmallestExpressionLevel() {
         return getTableBottomCellValue(expressionsTable, SPECIFICITY_COLUMN_INDEX);
     }
 

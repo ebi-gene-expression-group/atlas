@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExpressionLevelConstructorsTest {
+public class TranscriptExpressionConstructorsTest {
 
     public static final String RUN_ACCESSION = "RUN_ACCESSION";
 

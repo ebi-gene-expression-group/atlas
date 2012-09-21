@@ -10,9 +10,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExpressionLevelTest {
+public class ExpressionTest {
 
-    private ExpressionLevel subject;
+    private Expression subject;
 
     @Mock
     private ExperimentRun experimentRun;
@@ -20,7 +20,7 @@ public class ExpressionLevelTest {
     @Before
     public void initSubject() {
 
-        subject = new ExpressionLevel(experimentRun, 2.3);
+        subject = new Expression(experimentRun, 2.3);
     }
 
     @Test

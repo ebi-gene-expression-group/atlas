@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 
-public class ExpressionLevelCompareTest {
+public class TranscriptExpressionCompareTest {
 
     private ExperimentRun experimentRun = new ExperimentRun("RUN_ACCESSION");
     private TranscriptExpression subject;
@@ -29,7 +29,7 @@ public class ExpressionLevelCompareTest {
     }
 
     @Test
-    public void compareToShouldReturnNegativeIntegerWhenRPKMIsLowerThanOther() {
+    public void compareToShouldReturnNegativeIntegerWhenExpressionLevelIsLowerThanOther() {
         //given
         TranscriptExpression other = new TranscriptExpression("id", 100.000001, experimentRun);
         //then
@@ -38,7 +38,7 @@ public class ExpressionLevelCompareTest {
 
 
     @Test
-    public void compareToShouldReturnPositiveIntegerWhenRPKMIsGreaterThanOther() {
+    public void compareToShouldReturnPositiveIntegerWhenExpressionLevelIsGreaterThanOther() {
         //given
         TranscriptExpression other = new TranscriptExpression("id", 99.999999, experimentRun);
         //then
@@ -47,7 +47,7 @@ public class ExpressionLevelCompareTest {
 
 
     @Test
-    public void givenEqualRpkmCompareToShouldBeCoherentWithAlphabeticOrderOfId() {
+    public void givenEqualExpressionLevelCompareToShouldBeCoherentWithAlphabeticOrderOfId() {
 
         //given
         TranscriptExpression other = new TranscriptExpression("zzId", 100, experimentRun);
@@ -61,7 +61,7 @@ public class ExpressionLevelCompareTest {
     }
 
     @Test
-    public void givenEqualRpkmAndEqualTrasncriptIdCompareToShouldBeBasedOnExperimentRun() {
+    public void givenEqualExpressionLevelAndEqualTrasncriptIdCompareToShouldBeBasedOnExperimentRun() {
         //given
         TranscriptExpression other = new TranscriptExpression("id", 100, new ExperimentRun("RUN_ACCESSION_Z"));
         //then

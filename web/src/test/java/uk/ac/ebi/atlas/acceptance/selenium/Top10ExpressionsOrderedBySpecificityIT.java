@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.ExpressionsTablePage;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class Top10ExpressionLevelsOrderedBySpecificityIT extends SeleniumFixture {
+public class Top10ExpressionsOrderedBySpecificityIT extends SeleniumFixture {
 
     private ExpressionsTablePage subject;
 
@@ -24,41 +24,41 @@ public class Top10ExpressionLevelsOrderedBySpecificityIT extends SeleniumFixture
 
     @Test
     public void verifyMostExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForGreatestRPKMValue(), is("ENST00000390536"));
+        assertThat(subject.getTranscriptIdForGreatestExpressionLevel(), is("ENST00000390536"));
     }
 
     @Test
     public void verifyFactorValuesForMostExpressedTranscriptId() {
-        assertThat(subject.getOrganismPartForGreatestRPKMValue(), is("adrenal"));
+        assertThat(subject.getOrganismPartForGreatestExpressionLevel(), is("adrenal"));
     }
 
     @Test
-    public void verifyRPKMForMostExpressedTranscriptId() {
-        assertThat(subject.getGreatestRPKMValue(), is("2543.2410431147"));
+    public void verifyExpressionLevelForMostExpressedTranscriptId() {
+        assertThat(subject.getGreatestExpressionLevel(), is("2543.2410431147"));
     }
 
     @Test
     public void verifySpecificityForMostExpressedTranscriptId() {
-        assertThat(subject.getSpecificityForGreatestRPKMValue(), is("1"));
+        assertThat(subject.getSpecificityForGreatestExpressionLevel(), is("1"));
     }
 
     @Test
     public void verifyLeastExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForSmallestRPKMValue(), is("ENST00000401258"));
+        assertThat(subject.getTranscriptIdForSmallestExpressionLevel(), is("ENST00000401258"));
     }
 
     @Test
     public void verifyFactorValuesForLeastExpressedTranscriptId() {
-        assertThat(subject.getOrganismPartForSmallestRPKMValue(), is("brain"));
+        assertThat(subject.getOrganismPartForSmallestExpressionLevel(), is("brain"));
     }
 
     @Test
-    public void verifyRPKMForLeastExpressedTranscriptId() {
-        assertThat(subject.getSmallestRPKMValue(), is("687.2741888147"));
+    public void verifyExpressionLevelForLeastExpressedTranscriptId() {
+        assertThat(subject.getSmallestExpressionLevel(), is("687.2741888147"));
     }
 
     @Test
-    public void numberOfRowsInExpressionLevelsTableShallBeTen() {
+    public void numberOfRowsInExpressionsTableShallBeTen() {
         assertThat(subject.getExpressionsTableRowCount(), is(10));
     }
 }

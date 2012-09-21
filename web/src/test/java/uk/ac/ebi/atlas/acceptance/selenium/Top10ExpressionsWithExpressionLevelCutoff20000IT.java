@@ -8,11 +8,11 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.ExpressionsTablePage;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class Top10ExpressionLevelsWithRpkmCutoff20000IT extends SeleniumFixture {
+public class Top10ExpressionsWithExpressionLevelCutoff20000IT extends SeleniumFixture {
     private ExpressionsTablePage subject;
 
     public LoadableComponent getStartingPage(FirefoxDriver firefoxDriver) {
-        subject = new ExpressionsTablePage(firefoxDriver, "?rpkmCutOff=20000&rankingSize=10");
+        subject = new ExpressionsTablePage(firefoxDriver, "?cutoff=20000&rankingSize=10");
         return subject.get();
     }
 
@@ -23,46 +23,46 @@ public class Top10ExpressionLevelsWithRpkmCutoff20000IT extends SeleniumFixture 
 
     @Test
     public void verifyMostExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForGreatestRPKMValue(), is("ENST00000486939"));
+        assertThat(subject.getTranscriptIdForGreatestExpressionLevel(), is("ENST00000486939"));
     }
 
     @Test
     public void verifyFactorValuesForMostExpressedTranscriptId() {
-        assertThat(subject.getOrganismPartForGreatestRPKMValue(), is("liver"));
+        assertThat(subject.getOrganismPartForGreatestExpressionLevel(), is("liver"));
     }
 
     @Test
-    public void verifyRPKMForMostExpressedTranscriptId() {
-        assertThat(subject.getGreatestRPKMValue(), is("36872.6684888937"));
+    public void verifyExpressionLevelForMostExpressedTranscriptId() {
+        assertThat(subject.getGreatestExpressionLevel(), is("36872.6684888937"));
     }
  
     @Test
     public void verifySpecificityForMostExpressedTranscriptId() {
-        assertThat(subject.getSpecificityForGreatestRPKMValue(), is("1"));
+        assertThat(subject.getSpecificityForGreatestExpressionLevel(), is("1"));
     }
 
     @Test
     public void verifyLeastExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForSmallestRPKMValue(), is("ENST00000361789"));
+        assertThat(subject.getTranscriptIdForSmallestExpressionLevel(), is("ENST00000361789"));
     }
 
     @Test
     public void verifyFactorValuesForLeastExpressedTranscriptId() {
-        assertThat(subject.getOrganismPartForSmallestRPKMValue(), is("adipose"));
+        assertThat(subject.getOrganismPartForSmallestExpressionLevel(), is("adipose"));
     }
 
     @Test
-    public void verifyRPKMForLeastExpressedTranscriptId() {
-        assertThat(subject.getSmallestRPKMValue(), is("24566.6097632967"));
+    public void verifyExpressionLevelForLeastExpressedTranscriptId() {
+        assertThat(subject.getSmallestExpressionLevel(), is("24566.6097632967"));
     }
 
     @Test
     public void verifySpecificityForLeastExpressedTranscriptId() {
-        assertThat(subject.getSpecificityForSmallestRPKMValue(), is("5"));
+        assertThat(subject.getSpecificityForSmallestExpressionLevel(), is("5"));
     }
 
     @Test
-    public void numberOfRowsInExpressionLevelsTableShallBeTen() {
+    public void numberOfRowsInExpressionsTableShallBeTen() {
         assertThat(subject.getExpressionsTableRowCount(), is(10));
     }
 

@@ -22,9 +22,9 @@ public class TranscriptProfilesInputStreamIT {
     private static final String TRANSCRIPT_ID_1 = "ENST00000000233";
     private static final String TRANSCRIPT_ID_2 = "ENST00000000412";
     private static final String TRANSCRIPT_ID_3 = "ENST00000000442";
-    private static final double RPKM_1_1 = 0d;
-    private static final double RPKM_1_2 = 42.9134d;
-    private static final double RPKM_2_1 = 29.0613d;
+    private static final double EXPRESSION_LEVEL_1_1 = 0d;
+    private static final double EXPRESSION_LEVEL_1_2 = 42.9134d;
+    private static final double EXPRESSION_LEVEL_2_1 = 29.0613d;
 
     private List<ExperimentRun> experimentRuns;
 
@@ -50,14 +50,14 @@ public class TranscriptProfilesInputStreamIT {
     }
 
     @Test
-    public void readNextShouldReturnNextExpressionLevel() throws IOException {
+    public void readNextShouldReturnNextExpression() throws IOException {
         //given
         TranscriptProfile transcriptProfile = subject.readNext();
         //then
         assertThat(transcriptProfile.getTranscriptId(), is(TRANSCRIPT_ID_1));
         assertThat(transcriptProfile.getTranscriptSpecificity(), is(1));
         assertThat(transcriptProfile.iterator().hasNext(), is(true));
-        //ToDo: TranscriptProfile needs a getter for expressionLevels
+        //ToDo: TranscriptProfile needs a getter for Expressions
 
         //given we poll twice more
         transcriptProfile = subject.readNext();
@@ -73,7 +73,7 @@ public class TranscriptProfilesInputStreamIT {
 
 
     @Test
-    public void readNextShouldReturnNullGivenAllRpkmsHaveBeenRead() throws Exception {
+    public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
         TranscriptProfile transcriptProfile;
 
         for (int i = 0; i < 3; i++) {
@@ -89,11 +89,11 @@ public class TranscriptProfilesInputStreamIT {
     }
 
     @Test
-    public void setRpkmCutOffChangesSpecificity() throws IOException {
+    public void setCutoffChangesSpecificity() throws IOException {
 
         //given
         subject = TranscriptProfilesInputStream.forInputStream(dataFileURL.openStream())
-            .withExperimentRuns(experimentRuns).withRpkmCutOff(20D)
+            .withExperimentRuns(experimentRuns).withCutoff(20D)
             .create();
 
         //when

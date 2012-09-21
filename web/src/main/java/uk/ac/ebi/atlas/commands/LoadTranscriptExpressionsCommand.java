@@ -16,21 +16,21 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-@Named("loadExpressionLevels")
+@Named("loadTranscriptExpressions")
 @Scope("prototype")
-public class LoadExpressionLevelsCommand implements Function<String, List<TranscriptExpression>> {
+public class LoadTranscriptExpressionsCommand implements Function<String, List<TranscriptExpression>> {
 
-    private static final Logger logger = Logger.getLogger(LoadExpressionLevelsCommand.class);
+    private static final Logger logger = Logger.getLogger(LoadTranscriptExpressionsCommand.class);
 
     @Value("#{configuration['magetab.test.datafile.url']}")
     private String dataFileURL;
 
     private LoadingCache<String, List<ExperimentRun>> experiments;
-    private RankBySpecificityAndRpkmCommand rankBySpecificityObjectsCommand;
-    private Double rpkmCutOff;
+    private RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand;
+    private Double cutoff;
 
     @Inject
-    public LoadExpressionLevelsCommand(LoadingCache<String, List<ExperimentRun>> experiments, RankBySpecificityAndRpkmCommand rankBySpecificityObjectsCommand) {
+    public LoadTranscriptExpressionsCommand(LoadingCache<String, List<ExperimentRun>> experiments, RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand) {
 
         this.experiments = experiments;
 
@@ -67,7 +67,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
 
         try (TranscriptProfilesInputStream objectInputStream = TranscriptProfilesInputStream.forFile(dataFileURL)
                 .withExperimentRuns(experimentRuns)
-                .withRpkmCutOff(rpkmCutOff).create()) {
+                .withCutoff(cutoff).create()) {
 
             return rankBySpecificityObjectsCommand.apply(objectInputStream);
 
@@ -77,13 +77,13 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
         }
     }
 
-    public LoadExpressionLevelsCommand setRankingSize(int rankingSize) {
+    public LoadTranscriptExpressionsCommand setRankingSize(int rankingSize) {
         rankBySpecificityObjectsCommand.setRankingSize(rankingSize);
         return this;
     }
 
-    public LoadExpressionLevelsCommand setRpkmCutOff(double rpkmCutOff) {
-        this.rpkmCutOff = rpkmCutOff;
+    public LoadTranscriptExpressionsCommand setCutoff(double cutoff) {
+        this.cutoff = cutoff;
         return this;
     }
 }

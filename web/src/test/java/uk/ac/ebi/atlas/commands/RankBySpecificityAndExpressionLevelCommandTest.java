@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankBySpecificityAndRpkmCommandTest {
+public class RankBySpecificityAndExpressionLevelCommandTest {
 
     private static final int QUEUE_SIZE = 3;
 
@@ -22,26 +22,26 @@ public class RankBySpecificityAndRpkmCommandTest {
 
     private ObjectInputStream<TranscriptProfile> smallInputStream;
 
-    private RankBySpecificityAndRpkmCommand subject;
+    private RankBySpecificityAndExpressionLevelCommand subject;
 
-    public RankBySpecificityAndRpkmCommandTest() {
+    public RankBySpecificityAndExpressionLevelCommandTest() {
     }
 
     @Before
     public void initializeSubject() throws Exception {
 
-        //a stream with 5 profile of 2 expression levels
+        //a stream with 5 profile of 2 expressions
         largeInputStream = new TranscriptProfileInputStreamMock(5);
 
-        //a stream with 1 profile of 2 expression levels
+        //a stream with 1 profile of 2 expressions
         smallInputStream = new TranscriptProfileInputStreamMock(1);
 
 
-        subject = new RankBySpecificityAndRpkmCommand().setRankingSize(QUEUE_SIZE);
+        subject = new RankBySpecificityAndExpressionLevelCommand().setRankingSize(QUEUE_SIZE);
     }
 
     @Test
-    public void givenAStreamWithLessLevelsThanRankSizeTheCommandShouldReturnAllTheLevels() throws Exception {
+    public void givenAStreamWithLessExpressionsThanRankSizeTheCommandShouldReturnAllTheExpressions() throws Exception {
         //when
         List<TranscriptExpression> top3Objects = subject.apply(smallInputStream);
 
@@ -51,7 +51,7 @@ public class RankBySpecificityAndRpkmCommandTest {
     }
 
     @Test
-    public void givenAStreamWithManyLevelsTheCommandShouldReturnThreeExpressionLevels() throws Exception {
+    public void givenAStreamWithManyExpressionsTheCommandShouldReturnThreeExpressionExpressions() throws Exception {
         //when
         List<TranscriptExpression> top3Objects = subject.apply(largeInputStream);
 
@@ -68,14 +68,14 @@ public class RankBySpecificityAndRpkmCommandTest {
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(1));
         //and
-        assertThat(top3Objects.get(0).getRpkm(), is(1D));
+        assertThat(top3Objects.get(0).getLevel(), is(1D));
         //then
         assertThat(top3Objects.get(0).getTranscriptId(), is("1"));
 
         //and
         assertThat(top3Objects.get(2).getSpecificity(), is(2));
         //and
-        assertThat(top3Objects.get(2).getRpkm(), is(1D));
+        assertThat(top3Objects.get(2).getLevel(), is(1D));
         //and
         assertThat(top3Objects.get(2).getTranscriptId(), is("2"));
 

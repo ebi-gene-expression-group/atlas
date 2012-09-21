@@ -6,11 +6,11 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class TranscriptProfile implements Iterable<ExpressionLevel> {
+public class TranscriptProfile implements Iterable<Expression> {
 
     private String transcriptId;
 
-    private Set<ExpressionLevel> expressionLevels = new HashSet<>();
+    private Set<Expression> expressions = new HashSet<>();
 
     private TranscriptProfile(String transcriptId) {
         this.transcriptId = transcriptId;
@@ -25,38 +25,38 @@ public class TranscriptProfile implements Iterable<ExpressionLevel> {
     }
 
     public int getTranscriptSpecificity() {
-        return expressionLevels.size();
+        return expressions.size();
     }
 
     @Override
-    public Iterator<ExpressionLevel> iterator() {
-        return expressionLevels.iterator();
+    public Iterator<Expression> iterator() {
+        return expressions.iterator();
     }
 
     public static class Builder {
 
         private TranscriptProfile transcriptProfile;
 
-        private static double DEFAULT_RPKM_CUT_OFF_VALUE = 0D;
+        private static double DEFAULT_CUTOFF_VALUE = 0D;
 
-        private double rpkmCutOffValue = DEFAULT_RPKM_CUT_OFF_VALUE;
+        private double cutoffValue = DEFAULT_CUTOFF_VALUE;
 
         public Builder(String transcriptId) {
             transcriptProfile = new TranscriptProfile(transcriptId);
         }
 
-        public Builder addExpressionLevel(ExpressionLevel expressionLevel) {
+        public Builder addExpression(Expression expression) {
 
-            if (expressionLevel.isGreaterThan(rpkmCutOffValue)) {
-                transcriptProfile.expressionLevels.add(expressionLevel);
+            if (expression.isGreaterThan(cutoffValue)) {
+                transcriptProfile.expressions.add(expression);
             }
 
             return this;
         }
 
-        public Builder withRpkmCutOff(double cutOff) {
-            checkState(transcriptProfile.expressionLevels.size() == 0, "Set RPKM cutOff should be invoked before adding any Expression Levels!");
-            this.rpkmCutOffValue = cutOff;
+        public Builder withCutoff(double cutoff) {
+            checkState(transcriptProfile.expressions.size() == 0, "withCutoff should be invoked before adding any Expression!");
+            this.cutoffValue = cutoff;
 
             return this;
         }
@@ -65,8 +65,8 @@ public class TranscriptProfile implements Iterable<ExpressionLevel> {
             return transcriptProfile;
         }
 
-        public boolean containsExpressionLevels() {
-            return !transcriptProfile.expressionLevels.isEmpty();
+        public boolean containsExpressions() {
+            return !transcriptProfile.expressions.isEmpty();
         }
 
     }

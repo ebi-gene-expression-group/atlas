@@ -21,7 +21,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoadExpressionLevelsCommandTest {
+public class LoadTranscriptExpressionsCommandTest {
 
     public static final String EXPERIMENT_ACCESSION = "ACCESSION_VALUE";
 
@@ -35,22 +35,22 @@ public class LoadExpressionLevelsCommandTest {
     ObjectInputStream<TranscriptProfile> inputStream;
 
     @Mock
-    RankBySpecificityAndRpkmCommand rankBySpecificityObjectsCommand;
+    RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand;
 
-    private TranscriptExpressionsList top10LevelsMock;
+    private TranscriptExpressionsList top10ExpressionsMock;
 
-    private LoadExpressionLevelsCommand subject;
+    private LoadTranscriptExpressionsCommand subject;
 
     @Before
     public void init() throws Exception {
 
-        top10LevelsMock = new TranscriptExpressionsList();
-        top10LevelsMock.add(mock(TranscriptExpression.class));
+        top10ExpressionsMock = new TranscriptExpressionsList();
+        top10ExpressionsMock.add(mock(TranscriptExpression.class));
 
         when(rankBySpecificityObjectsCommand.setRankingSize(anyInt())).thenReturn(rankBySpecificityObjectsCommand);
-        when(rankBySpecificityObjectsCommand.apply(inputStream)).thenReturn(top10LevelsMock);
+        when(rankBySpecificityObjectsCommand.apply(inputStream)).thenReturn(top10ExpressionsMock);
 
-        subject = new LoadExpressionLevelsCommand(experimentsMock, rankBySpecificityObjectsCommand);
+        subject = new LoadTranscriptExpressionsCommand(experimentsMock, rankBySpecificityObjectsCommand);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -67,7 +67,7 @@ public class LoadExpressionLevelsCommandTest {
     @Test
     public void rankingShouldBuildAnInputStreamAndUseItWithARankCommand() throws Exception {
         //when
-        List<TranscriptExpression> transcriptExpressionLevels = subject.apply(EXPERIMENT_ACCESSION);
+        List<TranscriptExpression> transcriptExpressions = subject.apply(EXPERIMENT_ACCESSION);
 
         //then
         verify(experimentsMock).get(EXPERIMENT_ACCESSION);

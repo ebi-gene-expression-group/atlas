@@ -22,7 +22,7 @@
 
                 <display:column title="${transcriptId}">
 
-                    <c:out value="${transcriptExpressions.getRpkmValue(transcriptId, organismPart)}" />
+                    <c:out value="${transcriptExpressions.getExpressionLevel(transcriptId, organismPart)}" />
 
                 </display:column>
 
@@ -42,7 +42,7 @@
             <display:column title="${organismpart}" property="organismPart"/>
 
             <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
-            <display:column title="${measurement}" property="rpkm"/>
+            <display:column title="${measurement}" property="level"/>
 
             <display:column title="Specificity" property="specificity"/>
 

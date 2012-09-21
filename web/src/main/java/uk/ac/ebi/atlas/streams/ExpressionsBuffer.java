@@ -8,18 +8,18 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.Expression;
 
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-class ExpressionLevelsBuffer {
+class ExpressionsBuffer {
 
-    private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain transcript id and rpkm values for all experiment runs";
+    private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain transcript id and expression levels for all experiment runs";
     //private String transcriptId;
-    private Queue<String> rpkmValuesBuffer = new LinkedList<>();
+    private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
     private Iterator<ExperimentRun> runsCircularQueue;
 
@@ -33,34 +33,34 @@ class ExpressionLevelsBuffer {
 
     }
 
-    private ExpressionLevelsBuffer(List<ExperimentRun> orderedRuns) {
+    private ExpressionsBuffer(List<ExperimentRun> orderedRuns) {
         expectedNumberOfValues = orderedRuns.size();
         this.runsCircularQueue = Iterables.cycle(orderedRuns).iterator();
     }
 
 
-    public ExpressionLevel poll() {
-        String rpkmStringValue = rpkmValuesBuffer.poll();
+    public Expression poll() {
+        String expressionLevelString = expressionLevelsBuffer.poll();
 
-        if (rpkmStringValue == null) {
+        if (expressionLevelString == null) {
             return null;
         }
-        double rpkmValue = Double.parseDouble(rpkmStringValue);
+        double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new ExpressionLevel(runsCircularQueue.next(), rpkmValue);
+        return new Expression(runsCircularQueue.next(), expressionLevel);
     }
 
 
-    public ExpressionLevelsBuffer reload(String... values) {
-        checkState(this.rpkmValuesBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
+    public ExpressionsBuffer reload(String... values) {
+        checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         checkArgument(values.length == expectedNumberOfValues + 1, DATA_FILE_RECORD_VALIDATION_MESSAGE);
 
-        rpkmValuesBuffer.clear();
+        expressionLevelsBuffer.clear();
 
-        Collections.addAll(this.rpkmValuesBuffer, values);
+        Collections.addAll(this.expressionLevelsBuffer, values);
 
-        rpkmValuesBuffer.poll();
+        expressionLevelsBuffer.poll();
 
         return this;
     }
@@ -95,11 +95,11 @@ class ExpressionLevelsBuffer {
             return Lists.newArrayList(filteredExperimentRuns);
         }
 
-        public ExpressionLevelsBuffer create() {
+        public ExpressionsBuffer create() {
 
             checkState(readyToCreate, "Please specify the order specification with withOrderRunsSpecification before invoking the create method.");
 
-            return new ExpressionLevelsBuffer(experimentRuns);
+            return new ExpressionsBuffer(experimentRuns);
 
         }
 

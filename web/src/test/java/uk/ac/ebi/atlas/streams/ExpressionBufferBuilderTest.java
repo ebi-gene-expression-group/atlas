@@ -13,7 +13,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ExpressionLevelBufferBuilderTest {
+public class ExpressionBufferBuilderTest {
 
     private static final String RUN_ACCESSION_1 = "ERR030872";
     private static final String RUN_ACCESSION_2 = "ERR030873";
@@ -23,7 +23,7 @@ public class ExpressionLevelBufferBuilderTest {
     private ExperimentRun experimentRun2;
     private ExperimentRun experimentRun3;
 
-    private ExpressionLevelsBuffer.Builder subject;
+    private ExpressionsBuffer.Builder subject;
 
     @Before
     public void initializeSubject() {
@@ -33,7 +33,7 @@ public class ExpressionLevelBufferBuilderTest {
 
         List<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 
-        subject = ExpressionLevelsBuffer.forExperimentRuns(experimentRuns);
+        subject = ExpressionsBuffer.forExperimentRuns(experimentRuns);
     }
 
     @Test(expected = IllegalStateException.class)

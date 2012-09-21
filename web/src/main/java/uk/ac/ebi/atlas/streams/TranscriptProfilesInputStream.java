@@ -5,7 +5,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.TranscriptProfile;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static uk.ac.ebi.atlas.streams.ExpressionLevelsBuffer.TRANSCRIPT_ID_COLUMN;
+import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.TRANSCRIPT_ID_COLUMN;
 
 public class
     TranscriptProfilesInputStream implements ObjectInputStream<TranscriptProfile> {
@@ -27,9 +27,9 @@ public class
 
     private CSVReader csvReader;
 
-    private ExpressionLevelsBuffer expressionLevelsBuffer;
+    private ExpressionsBuffer expressionBuffer;
 
-    private Double rpkmCutOff;
+    private Double cutoff;
 
     public static Builder forFile(String dataFileURL) {
         try {
@@ -43,15 +43,15 @@ public class
         }
     }
 
-    public static Builder forInputStream(InputStream rpkmDataInputStream) {
-        return new Builder(rpkmDataInputStream);
+    public static Builder forInputStream(InputStream expressionLevelsInputStream) {
+        return new Builder(expressionLevelsInputStream);
     }
 
     private TranscriptProfilesInputStream() {
     }
 
-    private TranscriptProfilesInputStream setExpressionLevelsBuffer(ExpressionLevelsBuffer expressionLevelsBuffer) {
-        this.expressionLevelsBuffer = expressionLevelsBuffer;
+    private TranscriptProfilesInputStream setExpressionBuffer(ExpressionsBuffer expressionBuffer) {
+        this.expressionBuffer = expressionBuffer;
         return this;
     }
 
@@ -60,8 +60,8 @@ public class
         return this;
     }
 
-    private TranscriptProfilesInputStream setRpkmCutOff(Double rpkmCutOff) {
-        this.rpkmCutOff = rpkmCutOff;
+    private TranscriptProfilesInputStream setCutoff(Double cutoff) {
+        this.cutoff = cutoff;
         return this;
     }
 
@@ -87,20 +87,20 @@ public class
 
         TranscriptProfile.Builder builder = TranscriptProfile.forTranscriptId(values[TRANSCRIPT_ID_COLUMN]);
 
-        if (rpkmCutOff != null) {
-            builder.withRpkmCutOff(rpkmCutOff);
+        if (cutoff != null) {
+            builder.withCutoff(cutoff);
         }
 
-        expressionLevelsBuffer.reload(values);
+        expressionBuffer.reload(values);
 
-        ExpressionLevel expressionLevel;
+        Expression expression;
 
-        while ((expressionLevel = expressionLevelsBuffer.poll()) != null) {
+        while ((expression = expressionBuffer.poll()) != null) {
 
-            builder.addExpressionLevel(expressionLevel);
+            builder.addExpression(expression);
         }
 
-        if (builder.containsExpressionLevels()) {
+        if (builder.containsExpressions()) {
             return builder.create();
         }
         return null;
@@ -128,9 +128,9 @@ public class
 
         private TranscriptProfilesInputStream transcriptProfileInputStream;
 
-        private Builder(InputStream rpkmDataInputStream) {
+        private Builder(InputStream expressionLevelsInputStream) {
 
-            Reader dataFileReader = new InputStreamReader(rpkmDataInputStream);
+            Reader dataFileReader = new InputStreamReader(expressionLevelsInputStream);
             CSVReader csvReader = new CSVReader(dataFileReader, '\t');
 
             this.transcriptProfileInputStream = new TranscriptProfilesInputStream().setCsvReader(csvReader);
@@ -145,16 +145,16 @@ public class
 
             String[] dataFileHeaders = transcriptProfileInputStream.readCsvLine();
 
-            ExpressionLevelsBuffer expressionLevelsBuffer = ExpressionLevelsBuffer.forExperimentRuns(experimentRuns)
+            ExpressionsBuffer expressionsBuffer = ExpressionsBuffer.forExperimentRuns(experimentRuns)
                     .withHeaders(dataFileHeaders).create();
 
-            return withExpressionLevelsBuffer(expressionLevelsBuffer);
+            return withExpressionsBuffer(expressionsBuffer);
 
         }
 
         //required for testability - mock injection
-        Builder withExpressionLevelsBuffer(ExpressionLevelsBuffer expressionLevelsBuffer) {
-            transcriptProfileInputStream.setExpressionLevelsBuffer(expressionLevelsBuffer);
+        Builder withExpressionsBuffer(ExpressionsBuffer expressionsBuffer) {
+            transcriptProfileInputStream.setExpressionBuffer(expressionsBuffer);
 
             return this;
         }
@@ -165,13 +165,13 @@ public class
             return this;
         }
 
-        public Builder withRpkmCutOff(Double cutOff) {
-            transcriptProfileInputStream.rpkmCutOff = cutOff;
+        public Builder withCutoff(Double cutoff) {
+            transcriptProfileInputStream.cutoff = cutoff;
             return this;
         }
 
         public TranscriptProfilesInputStream create() {
-            checkState(transcriptProfileInputStream.expressionLevelsBuffer != null, "Please assign the experimentRun list using the withExperimentRuns method before invoking create!");
+            checkState(transcriptProfileInputStream.expressionBuffer != null, "Please assign the experimentRun list using the withExperimentRuns method before invoking create!");
             return transcriptProfileInputStream;
         }
 

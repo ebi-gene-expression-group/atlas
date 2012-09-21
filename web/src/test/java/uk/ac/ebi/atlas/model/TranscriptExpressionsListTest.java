@@ -53,7 +53,7 @@ public class TranscriptExpressionsListTest {
     }
 
     @Test
-    public void testGetTopWhenListIsSmallerThanRequestedAmountOfLevels() throws Exception {
+    public void testGetTopWhenListIsSmallerThanRequestedAmountOfExpressions() throws Exception {
         //when
         TranscriptExpressionsList topExpressions = subject.getTop(6);
         //then
@@ -63,7 +63,7 @@ public class TranscriptExpressionsListTest {
     }
 
     @Test
-    public void testGetTopWhenListIsEqualToRequestedAmountOfLevels() throws Exception {
+    public void testGetTopWhenListIsEqualToRequestedAmountOfExpressions() throws Exception {
         //when
         TranscriptExpressionsList topExpressions = subject.getTop(5);
         //then
@@ -73,7 +73,7 @@ public class TranscriptExpressionsListTest {
     }
 
     @Test
-    public void testGetRpkmValue() throws Exception {
+    public void testGetExpressionLevel() throws Exception {
 
     }
 
@@ -115,43 +115,43 @@ public class TranscriptExpressionsListTest {
     }
 
     @Test
-    public void getMaxRpkmShouldReturnNullForEmptyList(){
+    public void getMaxExpressionLevelShouldReturnNullForEmptyList(){
         //when
         subject = new TranscriptExpressionsList();
         //then
-        assertThat(subject.getMaxFpkm(), is(nullValue()));
+        assertThat(subject.getMaxExpressionLevel(), is(nullValue()));
     }
 
     @Test
-    public void getMaxRpkmTest(){
+    public void getMaxExpressionLevelTest(){
         //given
-        when(expression1.getRpkm()).thenReturn(55d);
-        when(expression2.getRpkm()).thenReturn(15d);
-        when(expression3.getRpkm()).thenReturn(25d);
-        when(expression4.getRpkm()).thenReturn(115d);
-        when(expression5.getRpkm()).thenReturn(35d);
+        when(expression1.getLevel()).thenReturn(55d);
+        when(expression2.getLevel()).thenReturn(15d);
+        when(expression3.getLevel()).thenReturn(25d);
+        when(expression4.getLevel()).thenReturn(115d);
+        when(expression5.getLevel()).thenReturn(35d);
         //then
-        assertThat(subject.getMaxFpkm(), is(115d));
+        assertThat(subject.getMaxExpressionLevel(), is(115d));
     }
 
     @Test
-    public void getMinRpkmShouldReturnNullForEmptyList(){
+    public void getMinExpressionLevelShouldReturnNullForEmptyList(){
         //when
         subject = new TranscriptExpressionsList();
         //then
-        assertThat(subject.getMinFpkm(), is(nullValue()));
+        assertThat(subject.getMinExpressionLevel(), is(nullValue()));
     }
 
     @Test
-    public void getMinRpkmTest(){
+    public void getMinExpressionLevelTest(){
         //given
-        when(expression1.getRpkm()).thenReturn(55d);
-        when(expression2.getRpkm()).thenReturn(15d);
-        when(expression3.getRpkm()).thenReturn(25d);
-        when(expression4.getRpkm()).thenReturn(115d);
-        when(expression5.getRpkm()).thenReturn(35d);
+        when(expression1.getLevel()).thenReturn(55d);
+        when(expression2.getLevel()).thenReturn(15d);
+        when(expression3.getLevel()).thenReturn(25d);
+        when(expression4.getLevel()).thenReturn(115d);
+        when(expression5.getLevel()).thenReturn(35d);
         //then
-        assertThat(subject.getMinFpkm(), is(15d));
+        assertThat(subject.getMinExpressionLevel(), is(15d));
     }
 
 

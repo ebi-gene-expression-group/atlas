@@ -9,7 +9,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.ExpressionLevel;
+import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.TranscriptProfile;
 
 import java.io.IOException;
@@ -33,10 +33,10 @@ public class TranscriptProfilesInputStreamTest {
     private CSVReader csvReaderMock;
 
     @Mock
-    private ExpressionLevelsBuffer expressionLevelsBufferMock;
+    private ExpressionsBuffer expressionsBufferMock;
 
 
-    private String[] rpkmLine = new String[]{"TRANSCRIPT_ID", "2.22222", "0.11111"};
+    private String[] expressionLevels = new String[]{"TRANSCRIPT_ID", "2.22222", "0.11111"};
 
     private List<ExperimentRun> experimentRunsMock;
 
@@ -57,13 +57,13 @@ public class TranscriptProfilesInputStreamTest {
 
         given(csvReaderMock.readNext())
             .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
-            .willReturn(rpkmLine)
+            .willReturn(expressionLevels)
             .willReturn(null);
 
 
         subject = TranscriptProfilesInputStream.forInputStream(mock(InputStream.class))
             .withCsvReader(csvReaderMock)
-            .withExpressionLevelsBuffer(expressionLevelsBufferMock)
+            .withExpressionsBuffer(expressionsBufferMock)
             .create();
 
     }
@@ -71,47 +71,47 @@ public class TranscriptProfilesInputStreamTest {
     @Test
     public void readNextShouldPollTheBuffer() throws Exception {
 
-        ExpressionLevel expressionLevel = mock(ExpressionLevel.class);
+        Expression expression = mock(Expression.class);
 
         //given
-        given(expressionLevelsBufferMock.poll())
-                .willReturn(expressionLevel)
+        given(expressionsBufferMock.poll())
+                .willReturn(expression)
                 .willReturn(null);
         //when
         subject.readNext();
         //then poll will be invoked three times
 
-        verify(expressionLevelsBufferMock, times(3)).poll();
+        verify(expressionsBufferMock, times(3)).poll();
     }
 
     @Test
     public void givenBufferIsEmptyReadNextShouldReadANewLineAndReloadTheBuffer() throws Exception {
-        InOrder inOrder = inOrder(expressionLevelsBufferMock);
+        InOrder inOrder = inOrder(expressionsBufferMock);
         //given
-        given(expressionLevelsBufferMock.poll()).willReturn(null);
+        given(expressionsBufferMock.poll()).willReturn(null);
         //when
         subject.readNext();
         //then
         verify(csvReaderMock, times(3)).readNext();
         //and
-        inOrder.verify(expressionLevelsBufferMock).reload(rpkmLine);
-        inOrder.verify(expressionLevelsBufferMock).poll();
+        inOrder.verify(expressionsBufferMock).reload(expressionLevels);
+        inOrder.verify(expressionsBufferMock).poll();
     }
 
 
     @Test
     public void givenAllDataHasBeenRead_ReadNextShouldReturnNull() throws Exception {
-        InOrder inOrder = inOrder(expressionLevelsBufferMock);
+        InOrder inOrder = inOrder(expressionsBufferMock);
         //given
-        given(expressionLevelsBufferMock.poll()).willReturn(null);
+        given(expressionsBufferMock.poll()).willReturn(null);
         //and
         given(csvReaderMock.readNext()).willReturn(null);
         //when
-        TranscriptProfile transcriptExpressionLevel = subject.readNext();
+        TranscriptProfile transcriptProfile = subject.readNext();
         //then
         verify(csvReaderMock, times(1)).readNext();
         //and
-        assertThat(transcriptExpressionLevel, is(nullValue()));
+        assertThat(transcriptProfile, is(nullValue()));
     }
 
     @Test

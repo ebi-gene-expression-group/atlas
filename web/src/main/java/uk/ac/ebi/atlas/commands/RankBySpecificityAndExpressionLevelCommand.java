@@ -14,15 +14,15 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-@Named("rankBySpecificityAndRpkm")
+@Named("rankBySpecificityAndExpressionLevel")
 @Scope("prototype")
-public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStream<TranscriptProfile>, TranscriptExpressionsList> {
+public class RankBySpecificityAndExpressionLevelCommand implements Function<ObjectInputStream<TranscriptProfile>, TranscriptExpressionsList> {
 
     private static final int DEFAULT_SIZE = 100;
 
     private int rankingSize = DEFAULT_SIZE;
 
-    public RankBySpecificityAndRpkmCommand() {
+    public RankBySpecificityAndExpressionLevelCommand() {
     }
 
     @Override
@@ -35,9 +35,9 @@ public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStre
         TranscriptProfile transcriptProfile;
 
         while ((transcriptProfile = objectStream.readNext()) != null) {
-            for (ExpressionLevel expressionLevel : transcriptProfile) {
+            for (Expression expression : transcriptProfile) {
                 TranscriptExpression transcriptExpression =
-                        new TranscriptExpression(transcriptProfile.getTranscriptId(), expressionLevel, transcriptProfile.getTranscriptSpecificity());
+                        new TranscriptExpression(transcriptProfile.getTranscriptId(), expression, transcriptProfile.getTranscriptSpecificity());
                 topTenObjects.add(transcriptExpression);
 
             }
@@ -50,7 +50,7 @@ public class RankBySpecificityAndRpkmCommand implements Function<ObjectInputStre
         return list;
     }
 
-    public RankBySpecificityAndRpkmCommand setRankingSize(int rankingSize) {
+    public RankBySpecificityAndExpressionLevelCommand setRankingSize(int rankingSize) {
         checkArgument(rankingSize > 0, "rankingSize must be greater then zero");
         this.rankingSize = rankingSize;
         return this;

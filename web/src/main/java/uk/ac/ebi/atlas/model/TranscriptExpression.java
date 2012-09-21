@@ -10,25 +10,25 @@ public class TranscriptExpression implements Comparable<TranscriptExpression> {
 
     private String transcriptId;
 
-    private ExpressionLevel expressionLevel;
+    private Expression expression;
 
     private Integer specificity;
 
 
-    public TranscriptExpression(String transcriptId, double rpkm, ExperimentRun experimentRun) {
+    public TranscriptExpression(String transcriptId, double expressionLevel, ExperimentRun experimentRun) {
         this.transcriptId = checkNotNull(transcriptId);
-        this.expressionLevel = new ExpressionLevel(checkNotNull(experimentRun), rpkm);
+        this.expression = new Expression(checkNotNull(experimentRun), expressionLevel);
     }
 
-    public TranscriptExpression(String transcriptId, ExpressionLevel expressionLevel, Integer specificity) {
+    public TranscriptExpression(String transcriptId, Expression expression, Integer specificity) {
         this.transcriptId = transcriptId;
-        this.expressionLevel = expressionLevel;
+        this.expression = expression;
         this.specificity = specificity;
     }
 
-    public TranscriptExpression(String transcriptId, ExpressionLevel expressionLevel) {
+    public TranscriptExpression(String transcriptId, Expression expression) {
         this.transcriptId = transcriptId;
-        this.expressionLevel = expressionLevel;
+        this.expression = expression;
     }
 
     public String getTranscriptId() {
@@ -36,29 +36,29 @@ public class TranscriptExpression implements Comparable<TranscriptExpression> {
     }
 
     public String getRunAccession() {
-        return expressionLevel.getRunAccession();
+        return expression.getRunAccession();
     }
 
     public Set<FactorValue> getFactorValues() {
-        return expressionLevel.getFactorValues();
+        return expression.getFactorValues();
     }
 
-    public double getRpkm() {
-        return expressionLevel.getRpkm();
+    public double getLevel() {
+        return expression.getLevel();
     }
 
     public String getOrganismPart() {
-        return expressionLevel.getOrganismPart();
+        return expression.getOrganismPart();
     }
 
     public TranscriptExpression addFactorValue(String factor, String value) {
-        expressionLevel.addFactorValue(factor, value);
+        expression.addFactorValue(factor, value);
 
         return this;
     }
 
-    public void setExpressionLevel(ExpressionLevel expressionLevel) {
-        this.expressionLevel = expressionLevel;
+    public void setExpression(Expression expression) {
+        this.expression = expression;
     }
 
     public Integer getSpecificity() {
@@ -71,7 +71,7 @@ public class TranscriptExpression implements Comparable<TranscriptExpression> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(transcriptId, expressionLevel.getExperimentRun(), expressionLevel.getRpkm());
+        return Objects.hash(transcriptId, expression.getExperimentRun(), expression.getLevel());
     }
 
     @Override
@@ -85,21 +85,21 @@ public class TranscriptExpression implements Comparable<TranscriptExpression> {
         final TranscriptExpression other = (TranscriptExpression) obj;
 
         return Objects.equals(this.getTranscriptId(), other.getTranscriptId())
-                && Objects.equals(this.expressionLevel.getExperimentRun(), other.expressionLevel.getExperimentRun())
-                && Objects.equals(this.expressionLevel.getRpkm(), other.expressionLevel.getRpkm());
+                && Objects.equals(this.expression.getExperimentRun(), other.expression.getExperimentRun())
+                && Objects.equals(this.expression.getLevel(), other.expression.getLevel());
     }
 
     @Override
     public String toString() {
         return toStringHelper(this)
                 .add("transcriptId", getTranscriptId())
-                .add("rpkm", expressionLevel.getRpkm())
-                .add("experimentRun", expressionLevel.getExperimentRun()).toString();
+                .add("level", expression.getLevel())
+                .add("experimentRun", expression.getExperimentRun()).toString();
     }
 
     @Override
     public int compareTo(TranscriptExpression other) {
-        int compareTo = Double.compare(expressionLevel.getRpkm(), other.expressionLevel.getRpkm());
+        int compareTo = Double.compare(expression.getLevel(), other.expression.getLevel());
         if (compareTo != 0) {
             return compareTo;
         }
@@ -107,7 +107,7 @@ public class TranscriptExpression implements Comparable<TranscriptExpression> {
         if (compareTo != 0) {
             return compareTo;
         }
-        return expressionLevel.getExperimentRun().compareTo(other.expressionLevel.getExperimentRun());
+        return expression.getExperimentRun().compareTo(other.expression.getExperimentRun());
 
     }
 }

@@ -4,13 +4,13 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ExpressionLevel {
+public class Expression {
     private ExperimentRun experimentRun;
-    private double rpkm;
+    private double level;
 
-    public ExpressionLevel(ExperimentRun experimentRun, double rpkm) {
+    public Expression(ExperimentRun experimentRun, double level) {
         this.experimentRun = checkNotNull(experimentRun);
-        this.rpkm = rpkm;
+        this.level = level;
     }
 
     public String getRunAccession() {
@@ -25,11 +25,11 @@ public class ExpressionLevel {
         return experimentRun.getOrganismPart();
     }
 
-    public double getRpkm() {
-        return rpkm;
+    public double getLevel() {
+        return level;
     }
 
-    public ExpressionLevel addFactorValue(String factor, String value) {
+    public Expression addFactorValue(String factor, String value) {
         experimentRun.addFactorValue(factor, value);
         return this;
     }
@@ -38,7 +38,7 @@ public class ExpressionLevel {
         return experimentRun;
     }
 
-    public boolean isGreaterThan(double rpkm) {
-        return Double.compare(this.rpkm, rpkm) > 0;
+    public boolean isGreaterThan(double level) {
+        return Double.compare(this.level, level) > 0;
     }
 }
