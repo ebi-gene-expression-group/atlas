@@ -6,7 +6,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<fmt:setBundle basename="bundles.I18n" var="i18n"/>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
@@ -38,12 +38,16 @@
 
             <display:column title="Transcript id" property="transcriptId"/>
 
-            <display:column title="Organism part" property="organismPart"/>
+            <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
+            <display:column title="${organismpart}" property="organismPart"/>
 
-            <display:column title="RPKM" property="rpkm"/>
+            <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
+            <display:column title="${measurement}" property="rpkm"/>
+
             <display:column title="Specificity" property="specificity"/>
 
         </display:table>
 
     </body>
+
 </html>

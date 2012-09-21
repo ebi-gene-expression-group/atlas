@@ -7,7 +7,6 @@ import java.util.Set;
 import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//This class will probably be renamed or refactored when we will want to represent runs as a factor values + expression levels
 public class ExperimentRun implements Comparable<ExperimentRun>{
 
     private String runAccession;

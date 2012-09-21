@@ -55,7 +55,7 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
         return organismParts;
     }
 
-    public Double getMaxRpkm(){
+    public Double getMaxFpkm(){
         Double maxRpkm = null;
         for (TranscriptExpression expression: this){
             if (maxRpkm == null || expression.getRpkm() > maxRpkm){
@@ -65,7 +65,7 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
         return maxRpkm;
     }
 
-    public Double getMinRpkm(){
+    public Double getMinFpkm(){
         Double minRpkm = null;
         for (TranscriptExpression expression: this){
             if (minRpkm == null || expression.getRpkm() < minRpkm){

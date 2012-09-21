@@ -22,7 +22,7 @@ public class LoadExpressionLevelsCommand implements Function<String, List<Transc
 
     private static final Logger logger = Logger.getLogger(LoadExpressionLevelsCommand.class);
 
-    @Value("#{webappProperties['magetab.test.datafile.url']}")
+    @Value("#{configuration['magetab.test.datafile.url']}")
     private String dataFileURL;
 
     private LoadingCache<String, List<ExperimentRun>> experiments;
