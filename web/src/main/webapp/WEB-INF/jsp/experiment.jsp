@@ -9,7 +9,6 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<jsp:useBean id="transcriptExpressions" type="java.util.List" scope="request"/>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
 <head>
@@ -19,30 +18,32 @@
 
 <body>
 
-${grad:getColor('2', '0', '17')}
+<div style="background-color:${grad:getColor(maxRpkm, minRpkm, maxRpkm)}">
+    Heatmap values max = <c:out value="${maxRpkm}"/>
+</div>
+<br>
 
-<display:table name="${heatmapOrganismParts}" htmlId="heatmapTable" id="organismPart">
+<div style="background-color:${grad:getColor(minRpkm, minRpkm, maxRpkm)}">
+    Heatmap values min = <c:out value="${minRpkm}"/>
+</div>
 
+<display:table name="${heatmapOrganismParts}" htmlId="heatmapTable" id="organismPart" style="heatmapTable">
     <c:forEach var="transcriptId" items="${heatmapTranscripts}">
 
         <display:column title="${transcriptId}">
 
-            <c:forEach items="${transcriptExpressions}" var="transcriptExpression">
-                <c:if test="${transcriptExpression.organismPart eq organismPart}">
-                    <c:if test="${transcriptExpression.transcriptId eq transcriptId}">
-                        <div style="background-color:${grad:getColor(transcriptExpression.rpkm, '0', '17')}">
+            <div id="heatmapCell"
+                 style="background-color:${grad:getColor(
+                        transcriptExpressions.getRpkmValue(transcriptId, organismPart),
+                                minRpkm, maxRpkm)}">
 
-                            <c:out value="${transcriptExpression.rpkm}"/>
-                        </div>
-
-                    </c:if>
-                </c:if>
-            </c:forEach>
+                <c:out value="${transcriptExpressions.getRpkmValue(transcriptId, organismPart)}"/>
+            </div>
 
         </display:column>
 
     </c:forEach>
-    <display:column title="organism part" value="${organismPart}"/>
+    <display:column title="" value="${organismPart}"/>
 
 </display:table>
 
@@ -51,9 +52,7 @@ ${grad:getColor('2', '0', '17')}
 
     <display:column title="Transcript id" property="transcriptId"/>
 
-    <display:column title="Organism part">
-        <c:out value="${transcriptExpression.organismPart}"/><br/>
-    </display:column>
+    <display:column title="Organism part" property="organismPart"/>
 
     <display:column title="RPKM" property="rpkm"/>
     <display:column title="Specificity" property="specificity"/>

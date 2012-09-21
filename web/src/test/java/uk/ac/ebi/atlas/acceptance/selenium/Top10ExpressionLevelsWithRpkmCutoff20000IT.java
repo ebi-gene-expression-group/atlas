@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.ExpressionsTablePage;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class Top10ExpLevelsWithRpkmCutoff20000IT extends SeleniumFixture {
+public class Top10ExpressionLevelsWithRpkmCutoff20000IT extends SeleniumFixture {
     private ExpressionsTablePage subject;
 
     public LoadableComponent getStartingPage(FirefoxDriver firefoxDriver) {

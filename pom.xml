@@ -39,7 +39,7 @@
         <!-- default values for configuration properties,
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
-        <data.files.location>${user.home}/data</data.files.location>
+        <data.files.location>${user.home}/Data</data.files.location>
         <!-- default values for integration testing properties -->
         <integration.test.host>localhost</integration.test.host>
         <integration.test.portnumber>9090</integration.test.portnumber>
@@ -69,7 +69,7 @@
                     <excludes>
                         <exclude>${test.acceptance.pattern}</exclude>
                     </excludes>
-               </configuration>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>

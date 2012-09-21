@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.awt.*;
 
 public class ColorGenerator {
@@ -48,12 +50,23 @@ public class ColorGenerator {
     public static String getColor(String data, String min, String max) {
         ColorGenerator colorGenerator = new ColorGenerator(Color.RED, Color.WHITE, SCALE_LOGARITHMIC);
 
+        if (StringUtils.isEmpty(data)) {
+            return "#" + Integer.toHexString(Color.WHITE.getRGB()).substring(2).toUpperCase();
+        }
         Color cellColour = colorGenerator.getCellColour(Double.parseDouble(data), Double.parseDouble(min), Double.parseDouble(max));
 
 
         return "#" + Integer.toHexString(cellColour.getRGB()).substring(2).toUpperCase();
     }
 
+    public static String getColor(Double data, Double min, Double max) {
+        ColorGenerator colorGenerator = new ColorGenerator(Color.RED, Color.WHITE, SCALE_LOGARITHMIC);
+
+        Color cellColour = colorGenerator.getCellColour(data, min, max);
+
+
+        return "#" + Integer.toHexString(cellColour.getRGB()).substring(2).toUpperCase();
+    }
 
     /*
     * Determines what colour a heat map cell should be based upon the cell
