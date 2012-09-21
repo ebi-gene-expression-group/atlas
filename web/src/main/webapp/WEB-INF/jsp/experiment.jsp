@@ -9,6 +9,8 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+<jsp:useBean id="colorGenerator" class="uk.ac.ebi.atlas.utils.HeatMapTableColorGenerator" scope="page"/>
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
 <head>

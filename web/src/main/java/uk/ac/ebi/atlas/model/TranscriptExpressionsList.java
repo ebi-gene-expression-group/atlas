@@ -10,7 +10,7 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression> {
         super();
     }
 
-    public TranscriptExpressionsList(Collection collection) {
+    public TranscriptExpressionsList(Collection<TranscriptExpression> collection) {
         super(collection);
     }
 

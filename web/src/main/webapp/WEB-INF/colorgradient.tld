@@ -14,7 +14,7 @@
     <function>
         <description>Generates color for value</description>
         <name>getColor</name>
-        <function-class>uk.ac.ebi.atlas.utils.ColorGenerator</function-class>
+        <function-class>uk.ac.ebi.atlas.utils.HeatMapTableColorGenerator</function-class>
         <function-signature>
             java.lang.String getColor(java.lang.String,java.lang.String,java.lang.String)
         </function-signature>
