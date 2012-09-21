@@ -15,9 +15,9 @@
     <context:annotation-config/>
 
     <!-- enables scanning for annotation-based injection -->
-    <context:component-scan base-package="uk.ac.ebi.atlas" />
+    <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
-    <util:properties id="webappProperties" location="classpath:webapp.properties" />
+    <util:properties id="configuration" location="classpath:configuration.properties"/>
 
 
 </beans>

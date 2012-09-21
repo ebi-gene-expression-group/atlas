@@ -119,7 +119,7 @@ public class TranscriptExpressionsListTest {
         //when
         subject = new TranscriptExpressionsList();
         //then
-        assertThat(subject.getMaxRpkm(), is(nullValue()));
+        assertThat(subject.getMaxFpkm(), is(nullValue()));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class TranscriptExpressionsListTest {
         when(expression4.getRpkm()).thenReturn(115d);
         when(expression5.getRpkm()).thenReturn(35d);
         //then
-        assertThat(subject.getMaxRpkm(), is(115d));
+        assertThat(subject.getMaxFpkm(), is(115d));
     }
 
     @Test
@@ -139,7 +139,7 @@ public class TranscriptExpressionsListTest {
         //when
         subject = new TranscriptExpressionsList();
         //then
-        assertThat(subject.getMinRpkm(), is(nullValue()));
+        assertThat(subject.getMinFpkm(), is(nullValue()));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class TranscriptExpressionsListTest {
         when(expression4.getRpkm()).thenReturn(115d);
         when(expression5.getRpkm()).thenReturn(35d);
         //then
-        assertThat(subject.getMinRpkm(), is(15d));
+        assertThat(subject.getMinFpkm(), is(15d));
     }
 
 

@@ -27,8 +27,8 @@ public class MageTabInvestigationLoader extends CacheLoader<String, List<Experim
 
     private String idfFileUrlTemplate;
 
-    @Value("#{webappProperties['magetab.idf.url.template']}")
-    void setIdfFileUrlTemplate(String idfFileUrlTemplate){
+    @Value("#{configuration['magetab.idf.url.template']}")
+    void setIdfFileUrlTemplate(String idfFileUrlTemplate) {
         this.idfFileUrlTemplate = idfFileUrlTemplate;
     }
 
@@ -40,7 +40,7 @@ public class MageTabInvestigationLoader extends CacheLoader<String, List<Experim
         URL idfFileURL = new URL(idfFileLocation);
 
 
-        return  extractExperimentRuns(idfFileURL);
+        return extractExperimentRuns(idfFileURL);
 
     }
 

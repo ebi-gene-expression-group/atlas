@@ -61,9 +61,9 @@ public class ExpressionLevelController {
 
         model.addAttribute("transcriptExpressions", transcriptExpressions);
 
-        model.addAttribute("minRpkm", heatmapExpressions.getMinRpkm());
+        model.addAttribute("minFpkm", heatmapExpressions.getMinFpkm());
 
-        model.addAttribute("maxRpkm", heatmapExpressions.getMaxRpkm());
+        model.addAttribute("maxFpkm", heatmapExpressions.getMaxFpkm());
 
         return "experiment";
     }

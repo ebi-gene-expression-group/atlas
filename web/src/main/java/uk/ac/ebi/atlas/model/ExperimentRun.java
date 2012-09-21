@@ -7,8 +7,7 @@ import java.util.Set;
 import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//This class will probably be renamed or refactored when we will want to represent runs as a factor values + expression levels
-public class ExperimentRun implements Comparable<ExperimentRun>{
+public class ExperimentRun implements Comparable<ExperimentRun> {
 
     private String runAccession;
 
@@ -39,8 +38,8 @@ public class ExperimentRun implements Comparable<ExperimentRun>{
     }
 
     public String getOrganismPart() {
-        for (FactorValue factorValue: factorValues) {
-            if ("ORGANISMPART".equalsIgnoreCase(factorValue.getFactor())){
+        for (FactorValue factorValue : factorValues) {
+            if ("ORGANISMPART".equalsIgnoreCase(factorValue.getFactor())) {
                 return factorValue.getValue();
             }
         }
