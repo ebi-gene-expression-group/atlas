@@ -37,7 +37,7 @@ public class HeatmapTableWithCutoff20000AndTranscripts8IT extends SeleniumFixtur
 
     @Test
     public void verifyLastTranscriptProfile() {
-        assertThat(subject.getLastTranscriptProfile(), contains("24566.6097632967", "", "20171.8025101343", "30178.2443854876", "", "21488.0555149394","", "32640.5435071735", ""));
+        assertThat(subject.getLastTranscriptProfile(), contains("24566.6097632967", "", "20171.8025101343", "30178.2443854876", "", "21488.0555149394", "", "32640.5435071735", ""));
     }
 
 }

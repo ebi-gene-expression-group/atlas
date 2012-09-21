@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.utils;
 
 import java.awt.*;
 
-public class ColorGenerator {
+public class GradientColorGenerator {
 
     /**
      * A basic logarithmic scale value of 0.3.
@@ -26,23 +26,33 @@ public class ColorGenerator {
 
     // How many RGB steps there are between the high and low colours.
     private int colourValueDistance;
-    private double colourScale;
 
-    public ColorGenerator() {
+    private double colourScale = SCALE_LOGARITHMIC;
 
-        this(Color.BLACK, Color.WHITE, SCALE_LINEAR);
-
+    public GradientColorGenerator() {
+        this(Color.BLACK, Color.WHITE);
     }
 
-    public ColorGenerator(Color highValueColour, Color lowValueColour, double scale) {
+    public GradientColorGenerator(Color highValueColour, Color lowValueColour) {
         this.highValueColour = highValueColour;
         this.lowValueColour = lowValueColour;
-
-        this.colourScale = SCALE_LINEAR;
 
         updateColourDistance();
     }
 
+    public void setColourScale(double colourScale) {
+        this.colourScale = colourScale;
+    }
+
+//    public String getCellColourString(String data, String min, String max) {
+//
+//        if (StringUtils.isEmpty(data)) {
+//            return colorToHexString(Color.WHITE);
+//        }
+//        Color cellColour = getCellColour(Double.parseDouble(data), Double.parseDouble(min), Double.parseDouble(max));
+//
+//        return colorToHexString(cellColour);
+//    }
 
     /*
     * Determines what colour a heat map cell should be based upon the cell
@@ -124,15 +134,6 @@ public class ColorGenerator {
         colourValueDistance = Math.abs(r1 - r2);
         colourValueDistance += Math.abs(g1 - g2);
         colourValueDistance += Math.abs(b1 - b2);
-    }
-
-    public static void main(String[] args) {
-        ColorGenerator colorGenerator = new ColorGenerator(Color.RED, Color.WHITE, SCALE_LOGARITHMIC);
-
-        Color colour = colorGenerator.getCellColour(50, 1, 100);
-//        Color colour = colorGenerator.getCellColour(Double.parseDouble(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]));
-        System.out.println("colour = " + colour);
-        System.out.println("colour.toString() = " + colour.toString());
     }
 }
 

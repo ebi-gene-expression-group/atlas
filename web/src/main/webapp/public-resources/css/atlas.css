@@ -1,9 +1,18 @@
-.error{
-    color:#8a2be2;
+.error {
+    color: #8a2be2;
 }
 
-.errorMessage{
-    color:red;
+.errorMessage {
+    color: red;
+}
+
+.heatmapTable {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 0.5em;
+    width: 50%;
+    text-align: left;
+    border-collapse: collapse;
+    margin: 1em;
 }
 
 table {

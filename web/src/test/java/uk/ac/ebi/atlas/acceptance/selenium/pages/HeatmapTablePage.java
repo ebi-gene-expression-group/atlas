@@ -58,7 +58,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getLastTranscriptProfile() {
-        return getColumnValues(heatmapTable, getTableColumnsCount(heatmapTable)-1);
+        return getColumnValues(heatmapTable, getTableColumnsCount(heatmapTable) - 1);
     }
 
 

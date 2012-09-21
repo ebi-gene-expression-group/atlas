@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-abstract class TablePage extends AtlasPage{
+abstract class TablePage extends AtlasPage {
 
     private static final String TABLE_CELL_XPATH_TEMPLATE = "tbody/tr[%d]/td[%d]";
     private static final String TABLE_BOTTOM_CELL_XPATH_TEMPLATE = "tbody/tr[last()]/td[%d]";
@@ -62,7 +62,7 @@ abstract class TablePage extends AtlasPage{
         return Lists.transform(tableCells, getText);
     }
 
-    int getTableColumnsCount(WebElement table){
+    int getTableColumnsCount(WebElement table) {
         return getTableHeaders(table).size();
     }
 

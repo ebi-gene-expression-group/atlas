@@ -54,7 +54,7 @@ public class LoadTranscriptExpressionsCommandTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void whenGetFromCacheFailsCacheShallThrowIllegalStateException() throws ExecutionException{
+    public void whenGetFromCacheFailsCacheShallThrowIllegalStateException() throws ExecutionException {
         //given
         given(experimentsMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
         //when

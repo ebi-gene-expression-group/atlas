@@ -36,7 +36,18 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
         return new TranscriptExpressionsList(super.subList(fromIndex, toIndex));
     }
 
-    public Set<String> getDistinctTranscriptIds(){
+    public TranscriptExpressionsList subList(Set<String> transcriptIds) {
+        TranscriptExpressionsList subList = new TranscriptExpressionsList();
+        for (TranscriptExpression expression : this) {
+            if (transcriptIds.contains(expression.getTranscriptId())) {
+                subList.add(expression);
+            }
+        }
+        return subList;
+    }
+
+
+    public Set<String> getDistinctTranscriptIds() {
         Set<String> transcriptIds = new LinkedHashSet<String>();
         for (TranscriptExpression transcriptExpression: this){
             transcriptIds.add(transcriptExpression.getTranscriptId());

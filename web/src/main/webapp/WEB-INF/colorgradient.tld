@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>Custom template tags</description>
+    <display-name>Custom template tags</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>tmpl</short-name>
+    <uri>http://ebi.ac.uk/atlas3/templates</uri>
+
+    <function>
+        <description>Generates color for value</description>
+        <name>getColor</name>
+        <function-class>uk.ac.ebi.atlas.utils.HeatMapTableColorGenerator</function-class>
+        <function-signature>
+            java.lang.String getColor(java.lang.String,java.lang.String,java.lang.String)
+        </function-signature>
+    </function>
+
+
+</taglib>
+

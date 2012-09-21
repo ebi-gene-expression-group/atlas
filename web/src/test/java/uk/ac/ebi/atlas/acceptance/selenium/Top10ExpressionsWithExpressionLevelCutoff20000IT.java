@@ -35,7 +35,7 @@ public class Top10ExpressionsWithExpressionLevelCutoff20000IT extends SeleniumFi
     public void verifyExpressionLevelForMostExpressedTranscriptId() {
         assertThat(subject.getGreatestExpressionLevel(), is("36872.6684888937"));
     }
- 
+
     @Test
     public void verifySpecificityForMostExpressedTranscriptId() {
         assertThat(subject.getSpecificityForGreatestExpressionLevel(), is("1"));

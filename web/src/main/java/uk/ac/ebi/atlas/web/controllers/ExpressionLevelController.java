@@ -53,15 +53,21 @@ public class ExpressionLevelController {
 
         Set<String> transcriptsToBeHighlighted = transcriptExpressions.getTop(this.heatmapMatrixSize).getDistinctTranscriptIds();
 
+        TranscriptExpressionsList heatmapExpressions = transcriptExpressions.subList(transcriptsToBeHighlighted);
+
         model.addAttribute("heatmapTranscripts", transcriptsToBeHighlighted);
 
         model.addAttribute("heatmapOrganismParts", transcriptExpressions.getDistinctOrganismParts(transcriptsToBeHighlighted));
 
         model.addAttribute("transcriptExpressions", transcriptExpressions);
 
+        model.addAttribute("minExpressionLevel", heatmapExpressions.getMinExpressionLevel());
+
+        model.addAttribute("maxExpressionLevel", heatmapExpressions.getMaxExpressionLevel());
 
         return "experiment";
     }
+
 
 }
 
