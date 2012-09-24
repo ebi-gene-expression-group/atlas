@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
@@ -34,14 +35,14 @@ public class GradientColorGenerator {
     private double colourScale = SCALE_LOGARITHMIC;
 
     public GradientColorGenerator() {
-        this(Color.BLUE, Color.WHITE);
+        this(Color.WHITE, Color.BLUE);
     }
 
-    public GradientColorGenerator(Color highValueColour, Color lowValueColour) {
+    public GradientColorGenerator(Color lowValueColour, Color highValueColour) {
         this.highValueColour = highValueColour;
         this.lowValueColour = lowValueColour;
 
-        updateColourDistance();
+        this.colourValueDistance = calculateColourDistance(lowValueColour, highValueColour);
     }
 
     public void setColourScale(double colourScale) {
@@ -51,7 +52,7 @@ public class GradientColorGenerator {
     public String getCellColourString(String data, String min, String max) {
 
         if (StringUtils.isEmpty(data)) {
-            return colorToHexString(Color.WHITE);
+            return colorToHexString(lowValueColour);
         }
         Color cellColour = getCellColour(parseDouble(data), parseDouble(min), parseDouble(max));
 
@@ -63,16 +64,32 @@ public class GradientColorGenerator {
     * values.
     */
 
-    public Color getCellColour(double data, double min, double max) {
+    protected Color getCellColour(double data, double min, double max) {
+
+        double percentPosition = calculatePercentPosition(data, min, max);
+
+        // Which colour group does that put us in.
+        int colourPosition = getColourPosition(percentPosition, colourValueDistance);
+
+        return calculateColorForPosition(colourPosition, lowValueColour, highValueColour);
+    }
+
+    /**
+     * Calculates what proportion of the way through the possible values is that.
+     *
+     * @param data
+     * @param min
+     * @param max
+     * @return values in range [0..1]
+     */
+    protected double calculatePercentPosition(double data, double min, double max) {
         double range = max - min;
         double position = data - min;
 
-        // What proportion of the way through the possible values is that.
-        double percentPosition = position / range;
+        return position / range;
+    }
 
-        // Which colour group does that put us in.
-        int colourPosition = getColourPosition(percentPosition);
-
+    protected Color calculateColorForPosition(int colourPosition, Color lowValueColour, Color highValueColour) {
         int r = lowValueColour.getRed();
         int g = lowValueColour.getGreen();
         int b = lowValueColour.getBlue();
@@ -86,13 +103,13 @@ public class GradientColorGenerator {
             if ((Math.abs(rDistance) >= Math.abs(gDistance))
                     && (Math.abs(rDistance) >= Math.abs(bDistance))) {
                 // Red must be the largest.
-                r = changeColourValue(r, rDistance);
+                r = updateColourValue(r, rDistance);
             } else if (Math.abs(gDistance) >= Math.abs(bDistance)) {
                 // Green must be the largest.
-                g = changeColourValue(g, gDistance);
+                g = updateColourValue(g, gDistance);
             } else {
                 // Blue must be the largest.
-                b = changeColourValue(b, bDistance);
+                b = updateColourValue(b, bDistance);
             }
         }
 
@@ -105,11 +122,14 @@ public class GradientColorGenerator {
     * depending on the colour scale used: LINEAR, LOGARITHMIC, EXPONENTIAL.
     */
 
-    private int getColourPosition(double percentPosition) {
+    protected int getColourPosition(double percentPosition, int colourValueDistance) {
+        Preconditions.checkArgument(percentPosition >= 0 && percentPosition <= 1);
+
         return (int) Math.round(colourValueDistance * Math.pow(percentPosition, colourScale));
     }
 
-    private int changeColourValue(int colourValue, int colourDistance) {
+    protected int updateColourValue(int colourValue, int colourDistance) {
+
         if (colourDistance < 0) {
             return colourValue + 1;
         } else if (colourDistance > 0) {
@@ -127,7 +147,7 @@ public class GradientColorGenerator {
     * green and blue. So the maximum colour distance is 255 + 255 + 255.
     */
 
-    private void updateColourDistance() {
+    protected int calculateColourDistance(Color lowValueColour, Color highValueColour) {
         int r1 = lowValueColour.getRed();
         int g1 = lowValueColour.getGreen();
         int b1 = lowValueColour.getBlue();
@@ -138,9 +158,11 @@ public class GradientColorGenerator {
         colourValueDistance = Math.abs(r1 - r2);
         colourValueDistance += Math.abs(g1 - g2);
         colourValueDistance += Math.abs(b1 - b2);
+
+        return colourValueDistance;
     }
 
-    private String colorToHexString(Color colour) {
+    protected String colorToHexString(Color colour) {
         return "#" + Integer.toHexString(colour.getRGB()).substring(2).toUpperCase();
     }
 }

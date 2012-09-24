@@ -1,0 +1,97 @@
+package uk.ac.ebi.atlas.utils;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class GradientColorGeneratorTest {
+
+    GradientColorGenerator subject;
+
+    @Before
+    public void initSubject() {
+        this.subject = new GradientColorGenerator();
+    }
+
+    @Test
+    public void testCalculateColourDistance() throws Exception {
+
+        assertThat(subject.calculateColourDistance(new Color(255, 255, 255), new Color(255, 0, 0)), is(510));
+        assertThat(subject.calculateColourDistance(new Color(255, 255, 255), new Color(0, 0, 0)), is(765));
+        assertThat(subject.calculateColourDistance(new Color(255, 255, 255), new Color(255, 255, 255)), is(0));
+
+        assertThat(subject.calculateColourDistance(new Color(0, 0, 0), new Color(255, 255, 255)), is(765));
+    }
+
+    @Test
+    public void testCalculatePercentPosition() throws Exception {
+        assertThat(subject.calculatePercentPosition(1, 0, 2), is(0.5));
+        assertThat(subject.calculatePercentPosition(0, 0, 2), is(0.0));
+        assertThat(subject.calculatePercentPosition(2, 0, 2), is(1.0));
+    }
+
+    @Test
+    public void testGetColourPositionLogScale() throws Exception {
+
+        //given
+        subject.setColourScale(GradientColorGenerator.SCALE_LOGARITHMIC);
+
+        assertThat(subject.getColourPosition(0.5, 510), is(414));
+        assertThat(subject.getColourPosition(0.0, 510), is(0));
+        assertThat(subject.getColourPosition(1.0, 510), is(510));
+    }
+
+    @Test
+    public void testGetColourPositionLinearScale() throws Exception {
+        //given
+        subject.setColourScale(GradientColorGenerator.SCALE_LINEAR);
+
+        assertThat(subject.getColourPosition(0.5, 510), is(255));
+        assertThat(subject.getColourPosition(0.0, 510), is(0));
+        assertThat(subject.getColourPosition(1.0, 510), is(510));
+    }
+
+    @Test
+    public void testCalculateColorForPosition() throws Exception {
+
+        Color color = subject.calculateColorForPosition(1, new Color(255, 255, 255), new Color(255, 0, 0));
+        assertThat(color.getRed(), is(255));
+        assertThat(color.getGreen(), is(254));
+        assertThat(color.getBlue(), is(255));
+
+        color = subject.calculateColorForPosition(2, new Color(255, 255, 255), new Color(255, 0, 0));
+        assertThat(color.getRed(), is(255));
+        assertThat(color.getGreen(), is(254));
+        assertThat(color.getBlue(), is(254));
+
+        color = subject.calculateColorForPosition(509, new Color(255, 255, 255), new Color(255, 0, 0));
+        assertThat(color.getRed(), is(255));
+        assertThat(color.getGreen(), is(0));
+        assertThat(color.getBlue(), is(1));
+    }
+
+    @Test
+    public void testUpdateColourValue() throws Exception {
+
+        assertThat(subject.updateColourValue(3, 255), is(2));
+        assertThat(subject.updateColourValue(3, -255), is(4));
+        assertThat(subject.updateColourValue(3, 0), is(3));
+    }
+
+    @Test
+    public void testColorToHexString() throws Exception {
+        assertThat(subject.colorToHexString(Color.RED), is("#FF0000"));
+        assertThat(subject.colorToHexString(Color.BLUE), is("#0000FF"));
+    }
+
+    @Test
+    public void testGetCellColourStringWithEmptyData() throws Exception {
+        subject = new GradientColorGenerator(Color.WHITE, Color.RED);
+        subject.getCellColourString(null, "1", "5");
+        assertThat(subject.getCellColourString(null, "1", "5"), is("#FFFFFF"));
+    }
+}
