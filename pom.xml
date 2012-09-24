@@ -304,12 +304,12 @@
             <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo</url>
         </repository>
 <!--
-    <snapshotRepository>
+        <snapshotRepository>
             <id>ebi-repo-snapshots</id>
             <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots</url>
         </snapshotRepository>
-    </distributionManagement>
 -->
+    </distributionManagement>
     <licenses>
         <license>
             <name>Apache Software License 2.0</name>
