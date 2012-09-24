@@ -1,6 +1,10 @@
 package uk.ac.ebi.atlas.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.awt.*;
+
+import static java.lang.Double.parseDouble;
 
 public class GradientColorGenerator {
 
@@ -30,7 +34,7 @@ public class GradientColorGenerator {
     private double colourScale = SCALE_LOGARITHMIC;
 
     public GradientColorGenerator() {
-        this(Color.BLACK, Color.WHITE);
+        this(Color.BLUE, Color.WHITE);
     }
 
     public GradientColorGenerator(Color highValueColour, Color lowValueColour) {
@@ -44,15 +48,15 @@ public class GradientColorGenerator {
         this.colourScale = colourScale;
     }
 
-//    public String getCellColourString(String data, String min, String max) {
-//
-//        if (StringUtils.isEmpty(data)) {
-//            return colorToHexString(Color.WHITE);
-//        }
-//        Color cellColour = getCellColour(Double.parseDouble(data), Double.parseDouble(min), Double.parseDouble(max));
-//
-//        return colorToHexString(cellColour);
-//    }
+    public String getCellColourString(String data, String min, String max) {
+
+        if (StringUtils.isEmpty(data)) {
+            return colorToHexString(Color.WHITE);
+        }
+        Color cellColour = getCellColour(parseDouble(data), parseDouble(min), parseDouble(max));
+
+        return colorToHexString(cellColour);
+    }
 
     /*
     * Determines what colour a heat map cell should be based upon the cell
@@ -134,6 +138,10 @@ public class GradientColorGenerator {
         colourValueDistance = Math.abs(r1 - r2);
         colourValueDistance += Math.abs(g1 - g2);
         colourValueDistance += Math.abs(b1 - b2);
+    }
+
+    private String colorToHexString(Color colour) {
+        return "#" + Integer.toHexString(colour.getRGB()).substring(2).toUpperCase();
     }
 }
 

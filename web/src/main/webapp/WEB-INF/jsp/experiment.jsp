@@ -8,46 +8,77 @@
 
 <fmt:setBundle basename="bundles.I18n" var="i18n"/>
 
+<jsp:useBean id="colorGenerator" class="uk.ac.ebi.atlas.utils.GradientColorGenerator" scope="page"/>
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
-    <head>
-        <title>Experiment</title>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
-    </head>
+<head>
+    <title>Experiment</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
+</head>
 
-    <body>
+<body>
 
-        <display:table name="${heatmapOrganismParts}" htmlId="heatmapTable" id="organismPart">
-            <c:forEach var="transcriptId" items="${heatmapTranscripts}">
+<%--Gradient color legent--%>
+<table>
+    <thead>
+    <tr>
+        <th>Max</th>
+        <th>Min</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+        <td>
+            <div style="background-color:${colorGenerator.getCellColourString(maxExpressionLevel,
+                 minExpressionLevel, maxExpressionLevel)}">
+                <c:out value="${maxExpressionLevel}"/>
+            </div>
+        </td>
+        <td>
+            <div style="background-color:${colorGenerator.getCellColourString(minExpressionLevel,
+                             minExpressionLevel, maxExpressionLevel)}">
+                <c:out value="${minExpressionLevel}"/>
+            </div>
+        </td>
+    </tr>
+</table>
 
-                <display:column title="${transcriptId}">
+<display:table name="${heatmapOrganismParts}" htmlId="heatmapTable" id="organismPart">
+    <c:forEach var="transcriptId" items="${heatmapTranscripts}">
 
-                    <c:out value="${transcriptExpressions.getExpressionLevel(transcriptId, organismPart)}" />
+        <display:column title="${transcriptId}">
 
-                </display:column>
+            <div id="heatmapCell"
+                 style="background-color:${colorGenerator.getCellColourString(
+                        transcriptExpressions.getExpressionLevel(transcriptId, organismPart),
+                                minExpressionLevel, maxExpressionLevel)}">
 
-            </c:forEach>
-            <display:column title="" value="${organismPart}"/>
+                <c:out value="${transcriptExpressions.getExpressionLevel(transcriptId, organismPart)}"/>
+            </div>
 
-        </display:table>
+        </display:column>
+
+    </c:forEach>
+    <display:column title="" value="${organismPart}"/>
+
+</display:table>
 
 
+<display:table name="${transcriptExpressions}" htmlId="expressionsTable" id="transcriptExpression">
 
+    <display:column title="Transcript id" property="transcriptId"/>
 
-        <display:table name="${transcriptExpressions}" htmlId="expressionsTable" id="transcriptExpression">
+    <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
+    <display:column title="${organismpart}" property="organismPart"/>
 
-            <display:column title="Transcript id" property="transcriptId"/>
+    <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
+    <display:column title="${measurement}" property="level"/>
 
-            <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
-            <display:column title="${organismpart}" property="organismPart"/>
+    <display:column title="Specificity" property="specificity"/>
 
-            <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
-            <display:column title="${measurement}" property="level"/>
+</display:table>
 
-            <display:column title="Specificity" property="specificity"/>
-
-        </display:table>
-
-    </body>
+</body>
 
 </html>
