@@ -6,19 +6,9 @@
     color: red;
 }
 
-.heatmapTable {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-    font-size: 0.5em;
-    width: 50%;
-    text-align: left;
-    border-collapse: collapse;
-    margin: 1em;
-}
-
 table {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 0.9em;
-    width: 50%;
     text-align: left;
     border-collapse: collapse;
     margin: 1em;
@@ -37,4 +27,24 @@ td {
     border-top: 0.3em solid white;
     color: #669;
     padding: 0.5em;
+}
+
+#heatmap-legenda {
+    font-size: 0.6em;
+}
+
+#heatmap-table {
+    font-size: 0.6em;
+}
+
+#expressions-table{
+    width: 50%;
+}
+
+#reload-form-table {
+    width: 30%;
+}
+
+#reload-form-table.td {
+    background: #f5f5f5;
 }

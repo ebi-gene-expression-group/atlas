@@ -188,12 +188,18 @@
             </exclusions>
         </dependency>
 
+        <!-- JSR 303 validator implementation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.0.Final</version>
+        </dependency>
+
         <!-- JSTL -->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
-            <scope>runtime</scope>
         </dependency>
 
         <!--

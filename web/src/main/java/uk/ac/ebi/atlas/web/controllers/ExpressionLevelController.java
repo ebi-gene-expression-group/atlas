@@ -3,17 +3,19 @@ package uk.ac.ebi.atlas.web.controllers;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.LoadTranscriptExpressionsCommand;
 import uk.ac.ebi.atlas.model.TranscriptExpressionsList;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.Set;
 
 @Controller
 @Scope("request")
-public class ExpressionLevelController {
+public class ExpressionLevelController{
 
     public static final String DEMO_ACCESSION = "E-MTAB-513";
 
@@ -30,21 +32,18 @@ public class ExpressionLevelController {
 
 
     @RequestMapping("/experiment")
-    public String showTranscriptExpressions(@RequestParam(value = "rankingSize", required = false) Integer rankingSize,
-                                       @RequestParam(value = "cutoff", required = false) Double cutoff,
-                                       @RequestParam(value = "heatmapMatrixSize", required = false) Integer heatmapMatrixSize,
-                                       Model model) {
+    public String showTranscriptExpressions(@ModelAttribute("preferences") @Valid Preferences preferences, BindingResult result, Model model){
 
-        if (rankingSize != null) {
-            loadTranscriptExpressionsCommand.setRankingSize(rankingSize);
+        if (preferences.getRankingSize() != null) {
+            loadTranscriptExpressionsCommand.setRankingSize(preferences.getRankingSize());
         }
 
-        if (cutoff != null) {
-            loadTranscriptExpressionsCommand.setCutoff(cutoff);
+        if (preferences.getCutoff() != null) {
+            loadTranscriptExpressionsCommand.setCutoff(preferences.getCutoff());
         }
 
-        if (heatmapMatrixSize != null) {
-            this.heatmapMatrixSize = heatmapMatrixSize;
+        if (preferences.getHeatmapMatrixSize() != null) {
+            this.heatmapMatrixSize = preferences.getHeatmapMatrixSize();
         }
 
 

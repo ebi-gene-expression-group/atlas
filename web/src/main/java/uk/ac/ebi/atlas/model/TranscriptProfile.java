@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 public class TranscriptProfile implements Iterable<Expression> {
@@ -56,6 +57,7 @@ public class TranscriptProfile implements Iterable<Expression> {
 
         public Builder withCutoff(double cutoff) {
             checkState(transcriptProfile.expressions.size() == 0, "withCutoff should be invoked before adding any Expression!");
+            checkArgument(cutoff>=0, "cutoff must be >= 0");
             this.cutoffValue = cutoff;
 
             return this;

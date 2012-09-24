@@ -17,7 +17,7 @@ public class ExpressionsTablePage extends TablePage {
     public static final int ORGANISM_PART_INDEX = 2;
     public static final int SPECIFICITY_COLUMN_INDEX = 4;
 
-    @FindBy(id = "expressionsTable")
+    @FindBy(id = "expressions-table")
     WebElement expressionsTable;
 
     private String pageUri = DEFAULT_PAGE_URI;

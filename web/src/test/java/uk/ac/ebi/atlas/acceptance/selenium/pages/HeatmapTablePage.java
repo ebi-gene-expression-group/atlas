@@ -14,7 +14,7 @@ public class HeatmapTablePage extends TablePage {
 
     private static final String DEFAULT_PAGE_URI = "/atlas/experiment";
 
-    @FindBy(id = "heatmapTable")
+    @FindBy(id = "heatmap-table")
     WebElement heatmapTable;
 
     private String pageUri = DEFAULT_PAGE_URI;
