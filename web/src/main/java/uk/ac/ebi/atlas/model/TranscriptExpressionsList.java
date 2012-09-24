@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model;
 
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
@@ -30,6 +31,7 @@ public class TranscriptExpressionsList extends ArrayList<TranscriptExpression>{
 
     @Override
     public TranscriptExpressionsList subList(int fromIndex, int toIndex){
+        checkArgument(toIndex >= 0, "Upper index value must be larger than 0" );
         if (toIndex > this.size()){
             return this;
         }

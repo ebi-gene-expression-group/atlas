@@ -1,41 +1,43 @@
 package uk.ac.ebi.atlas.web.controllers;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
+import org.hibernate.validator.constraints.Range;
+
 import javax.validation.constraints.Min;
 
 public class Preferences {
 
-    @DecimalMax("10")
-    @Min(1)
-    private Integer heatmapMatrixSize;
+    private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 3;
+    private static final int DEFAULT_RANKING_SIZE = 100;
+    private static final double DEFAULT_CUTOFF = 0d;
 
-    @DecimalMax("1000")
+    @Range(min = 0, max = 1000)
+    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED;
+
+    @Range(min = 1, max = 1000)
+    private Integer rankingSize = DEFAULT_RANKING_SIZE;
+
     @Min(0)
-    private Integer rankingSize;
-
-    @DecimalMin("0")
-    private Integer cutoff;
+    private Double cutoff = DEFAULT_CUTOFF;
 
 
     public Integer getHeatmapMatrixSize() {
-        return heatmapMatrixSize;
+        return this.heatmapMatrixSize;
     }
 
     public void setHeatmapMatrixSize(Integer heatmapMatrixSize) {
         this.heatmapMatrixSize = heatmapMatrixSize;
     }
 
-    public Integer getCutoff() {
-        return cutoff;
+    public Double getCutoff() {
+        return this.cutoff;
     }
 
-    public void setCutoff(Integer cutoff) {
+    public void setCutoff(Double cutoff) {
         this.cutoff = cutoff;
     }
 
     public Integer getRankingSize() {
-        return rankingSize;
+        return this.rankingSize;
     }
 
     public void setRankingSize(Integer rankingSize) {

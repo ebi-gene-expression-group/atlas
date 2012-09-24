@@ -26,43 +26,31 @@ public class ExpressionLevelController{
         this.loadTranscriptExpressionsCommand = loadTranscriptExpressionsCommand;
     }
 
-    private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 3;
-
-    private int heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED;
-
-
     @RequestMapping("/experiment")
     public String showTranscriptExpressions(@ModelAttribute("preferences") @Valid Preferences preferences, BindingResult result, Model model){
 
-        if (preferences.getRankingSize() != null) {
+        if (!result.hasErrors()){
+
             loadTranscriptExpressionsCommand.setRankingSize(preferences.getRankingSize());
-        }
 
-        if (preferences.getCutoff() != null) {
             loadTranscriptExpressionsCommand.setCutoff(preferences.getCutoff());
+
+            TranscriptExpressionsList transcriptExpressions = loadTranscriptExpressionsCommand.apply(DEMO_ACCESSION);
+
+            Set<String> transcriptsToBeHighlighted = transcriptExpressions.getTop(preferences.getHeatmapMatrixSize()).getDistinctTranscriptIds();
+
+            TranscriptExpressionsList heatmapExpressions = transcriptExpressions.subList(transcriptsToBeHighlighted);
+
+            model.addAttribute("heatmapTranscripts", transcriptsToBeHighlighted);
+
+            model.addAttribute("heatmapOrganismParts", transcriptExpressions.getDistinctOrganismParts(transcriptsToBeHighlighted));
+
+            model.addAttribute("transcriptExpressions", transcriptExpressions);
+
+            model.addAttribute("minExpressionLevel", heatmapExpressions.getMinExpressionLevel());
+
+            model.addAttribute("maxExpressionLevel", heatmapExpressions.getMaxExpressionLevel());
         }
-
-        if (preferences.getHeatmapMatrixSize() != null) {
-            this.heatmapMatrixSize = preferences.getHeatmapMatrixSize();
-        }
-
-
-        TranscriptExpressionsList transcriptExpressions = loadTranscriptExpressionsCommand.apply(DEMO_ACCESSION);
-
-
-        Set<String> transcriptsToBeHighlighted = transcriptExpressions.getTop(this.heatmapMatrixSize).getDistinctTranscriptIds();
-
-        TranscriptExpressionsList heatmapExpressions = transcriptExpressions.subList(transcriptsToBeHighlighted);
-
-        model.addAttribute("heatmapTranscripts", transcriptsToBeHighlighted);
-
-        model.addAttribute("heatmapOrganismParts", transcriptExpressions.getDistinctOrganismParts(transcriptsToBeHighlighted));
-
-        model.addAttribute("transcriptExpressions", transcriptExpressions);
-
-        model.addAttribute("minExpressionLevel", heatmapExpressions.getMinExpressionLevel());
-
-        model.addAttribute("maxExpressionLevel", heatmapExpressions.getMaxExpressionLevel());
 
         return "experiment";
     }

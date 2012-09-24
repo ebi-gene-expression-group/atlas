@@ -72,9 +72,25 @@ public class TranscriptExpressionsListTest {
         assertThat(topExpressions, contains(expression5, expression3, expression4, expression1, expression2));
     }
 
-    @Test
-    public void testGetExpressionLevel() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void sublistShouldThrowIllegalArguemntExceptionWhenUpperIndexIsLessThanZero() throws Exception {
+        //when
+        TranscriptExpressionsList e = subject.subList(0, -1);
+        assertThat(e, is(nullValue()));
+    }
 
+    public void sublistTest() throws Exception {
+        //when
+        TranscriptExpressionsList transcriptExpressions = subject.subList(0, 3);
+        //then
+        assertThat(transcriptExpressions, contains(expression5, expression3, expression4));
+    }
+
+    public void sublistShouldReturnEntireListWhenTopIndexLargerThanListSize() throws Exception {
+        //when
+        TranscriptExpressionsList transcriptExpressions = subject.subList(0, 7);
+        //then
+        assertThat(transcriptExpressions, hasSize(5));
     }
 
     @Test

@@ -22,88 +22,98 @@
 
         <div id="reload">
             <form:form method="get"  commandName="preferences">
+                <form:hidden path="heatmapMatrixSize"/>
+                <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize" cssClass="errorMessage" />
                 <table id="reload-form-table">
                     <tr>
                         <td><form:label path="cutoff">Expression Level Cutoff</form:label></td>
-                        <td><form:input path="cutoff" type="integer"  id="cutoff"/></td>
-                        <td><form:errors path="cutoff" /></td>
+                        <td><form:input path="cutoff" id="cutoff"/></td>
+                        <td><form:errors path="cutoff" cssClass="errorMessage" /></td>
                     </tr>
                     <tr>
                         <td><form:label path="rankingSize">Ranking Size</form:label></td>
-                        <td><form:input path="rankingSize" type="text" id="rankingSize"/></td>
-                        <td><form:errors path="rankingSize" /></td>
+                        <td><form:input path="rankingSize" id="rankingSize"/></td>
+                        <td><form:errors path="rankingSize" cssClass="errorMessage" /></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="submit" value="Reload Page"/></td>
+                        <td colspan="3">
+                            <input type="submit" value="Reload Page"/>
+                        </td>
                     </tr>
                 </table>
             </form:form>
         </div>
 
 
-        <div id="gradientLegenda">
-            <table id="heatmap-legenda">
-                <thead>
-                <tr>
-                    <th>Max</th>
-                    <th>Min</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="odd">
-                    <td>
-                        <div style="background-color:${colorGenerator.getCellColourString(maxExpressionLevel,
-                             minExpressionLevel, maxExpressionLevel)}">
-                            <c:out value="${maxExpressionLevel}"/>
-                        </div>
-                    </td>
-                    <td>
-                        <div style="background-color:${colorGenerator.getCellColourString(minExpressionLevel,
-                                         minExpressionLevel, maxExpressionLevel)}">
-                            <c:out value="${minExpressionLevel}"/>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <c:if test="${not empty heatmapTranscripts}">
 
-        <div id="heatmap">
-            <display:table name="${heatmapOrganismParts}" id="organismPart" htmlId="heatmap-table">
-                <c:forEach var="transcriptId" items="${heatmapTranscripts}">
+            <div id="gradientLegenda">
+                <table id="heatmap-legenda">
+                    <thead>
+                    <tr>
+                        <th>Max</th>
+                        <th>Min</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="odd">
+                        <td>
+                            <div style="background-color:${colorGenerator.getCellColourString(maxExpressionLevel,
+                                 minExpressionLevel, maxExpressionLevel)}">
+                                <c:out value="${maxExpressionLevel}"/>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="background-color:${colorGenerator.getCellColourString(minExpressionLevel,
+                                             minExpressionLevel, maxExpressionLevel)}">
+                                <c:out value="${minExpressionLevel}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-                    <display:column title="${transcriptId}">
-                        <c:set var="expressionLevel" value="${transcriptExpressions.getExpressionLevel(transcriptId, organismPart)}"/>
-                        <div id="heatmapCell"
-                             style="background-color:${colorGenerator.getCellColourString(expressionLevel,
-                                                         minExpressionLevel, maxExpressionLevel)}">
-                            <c:out value="${expressionLevel}" />
-                        </div>
+            <div id="heatmap">
+                <display:table name="${heatmapOrganismParts}" id="organismPart" htmlId="heatmap-table">
+                    <c:forEach var="transcriptId" items="${heatmapTranscripts}">
 
-                    </display:column>
+                        <display:column title="${transcriptId}">
+                            <c:set var="expressionLevel" value="${transcriptExpressions.getExpressionLevel(transcriptId, organismPart)}"/>
+                            <div id="heatmapCell"
+                                 style="background-color:${colorGenerator.getCellColourString(expressionLevel,
+                                                             minExpressionLevel, maxExpressionLevel)}">
+                                <c:out value="${expressionLevel}" />
+                            </div>
 
-                </c:forEach>
-                <display:column title="" value="${organismPart}"/>
+                        </display:column>
 
-            </display:table>
-        </div>
+                    </c:forEach>
+                    <display:column title="" value="${organismPart}"/>
 
+                </display:table>
+            </div>
 
-        <div id="expressions">
-            <display:table name="${transcriptExpressions}" htmlId="expressions-table" id="transcriptExpression">
-        
-                <display:column title="Transcript id" property="transcriptId"/>
-        
-                <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
-                <display:column title="${organismpart}" property="organismPart"/>
-        
-                <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
-                <display:column title="${measurement}" property="level"/>
-        
-                <display:column title="Specificity" property="specificity"/>
-        
-            </display:table>
-        </div>
+        </c:if>
 
+        <c:if test="${not empty transcriptExpressions}">
+
+            <div id="expressions">
+                <display:table name="${transcriptExpressions}" htmlId="expressions-table" id="transcriptExpression">
+
+                    <display:column title="Transcript id" property="transcriptId"/>
+
+                    <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
+                    <display:column title="${organismpart}" property="organismPart"/>
+
+                    <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
+                    <display:column title="${measurement}" property="level"/>
+
+                    <display:column title="Specificity" property="specificity"/>
+
+                </display:table>
+            </div>
+
+        </c:if>
 
     </body>
 
