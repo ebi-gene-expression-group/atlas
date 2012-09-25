@@ -41,13 +41,13 @@
                         <div id="reload" class="block">
                             <form:form method="get"  commandName="preferences">
                                 <form:hidden path="heatmapMatrixSize"/>
-                                <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize" cssClass="errorMessage" />
+                                <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize" cssClass="error" />
                                 <table id="reload-form-table" class="atlas-grid">
                                     <tr>
                                         <td width="30%"><form:label path="cutoff">Expression Level Cutoff</form:label></td>
                                         <td>
                                             <form:input size="10" path="cutoff" id="cutoff"/>
-                                            <form:errors path="cutoff" cssClass="errorMessage" />
+                                            <form:errors path="cutoff" cssClass="error" />
                                         </td>
                                         <td rowspan="2" width="15%">
                                             <input type="submit" value="Reload Page"/>
@@ -57,7 +57,7 @@
                                         <td><form:label path="rankingSize">Ranking Size</form:label></td>
                                         <td>
                                             <form:input size="10" path="rankingSize" id="rankingSize"/>
-                                            <form:errors path="rankingSize" cssClass="errorMessage"/>
+                                            <form:errors path="rankingSize" cssClass="error"/>
                                         </td>
                                     </tr>
                                 </table>
