@@ -293,7 +293,7 @@
                 <enabled>false</enabled>
             </releases>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
@@ -308,6 +308,7 @@
                 <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots</url>
             </snapshotRepository>
     </distributionManagement>
+
     <licenses>
         <license>
             <name>Apache Software License 2.0</name>

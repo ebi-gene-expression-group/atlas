@@ -130,7 +130,7 @@
                         <goals>
                             <goal>deploy</goal>
                         </goals>
-                        <phase>deploy</phase>
+                        <phase>install</phase>
                         <configuration>
                             <url>http://lime:14092/manager/html</url>
                             <username>tomcat</username>
