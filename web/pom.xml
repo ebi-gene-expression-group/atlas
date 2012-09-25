@@ -153,6 +153,13 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-maven-plugin</artifactId>
+                <version>1.6.0</version>
+            </plugin>
+
         </plugins>
     </build>
 
