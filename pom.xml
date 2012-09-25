@@ -293,7 +293,7 @@
                 <enabled>false</enabled>
             </releases>
             <snapshots>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
@@ -303,12 +303,10 @@
                 <id>ebi-repo</id>
                 <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo</url>
             </repository>
-    <!--
             <snapshotRepository>
                 <id>ebi-repo-snapshots</id>
                 <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots</url>
             </snapshotRepository>
-    -->
     </distributionManagement>
     <licenses>
         <license>
