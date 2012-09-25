@@ -5,7 +5,7 @@
 .errorMessage {
     color: red;
 }
-
+/*
 table {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 0.9em;
@@ -36,13 +36,25 @@ td {
 #heatmap-table {
     font-size: 0.6em;
 }
+*/
+
+.page-contents{
+    padding-top: 7em;
+    padding-bottom: 2em;
+}
+
+.block{
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
 
 #expressions-table{
     width: 50%;
 }
 
 #reload-form-table {
-    width: 30%;
+    width: 40%;
 }
 
 #reload-form-table td {

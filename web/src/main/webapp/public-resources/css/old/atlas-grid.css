@@ -1,0 +1,286 @@
+/*
+ * Copyright 2008-2011 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+.atlas-grid {
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: #404040;
+    background-color: #fafafa;
+    border: 1px solid #cdcdcd;
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+}
+
+.atlas-grid tr.odd {
+    background-color: #fafafa;
+}
+
+.atlas-grid tr.even {
+    background-color: #ffffff;
+}
+
+.atlas-grid th {
+    font-weight: bold;
+    background: #eef5f5 no-repeat right 5px;
+    color: #005555;
+    border: 1px solid #cdcdcd;
+    vertical-align: top;
+    text-align: center;
+    padding: 0;
+}
+
+.atlas-grid td {
+    color: #3D3D3D;
+    vertical-align: middle;
+    border: 1px solid #cdcdcd;
+    padding: 0;
+}
+
+.atlas-grid td.number {
+    text-align: right;
+}
+
+.noborder, .noborder td, .noborder th {
+    border: none;
+}
+
+.hoverable tr:hover {
+    background-color: #deebeb;
+    color: #404040;
+    cursor: pointer;
+}
+
+.sortable th {
+    text-align: left;
+    padding-left: 5px;
+}
+
+.sortable th.sortable {
+    background-image: url(images/bg.gif);
+    padding-right: 21px;
+    cursor: pointer;
+}
+
+.sortable th.sortable.order1 {
+    background-image: url(images/asc.gif);
+}
+
+.sortable th.sortable.order2 {
+    background-image: url(images/desc.gif);
+}
+
+/* Heatmap numbers */
+
+td.counter, td.acounter {
+    width: 26px;
+    min-width: 26px;
+    max-width: 26px;
+    color: white;
+}
+
+td.acounter:hover {
+    cursor: pointer;
+}
+
+.downback {
+    background: #0000ff;
+    color: white;
+}
+
+.upback {
+    background: #ff0000;
+    color: white;
+}
+
+.osq {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    line-height: 26px;
+    text-align: center;
+}
+
+.sq {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    background: white;
+}
+
+
+.udduo {
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0%;
+    border-top: 26px solid #ff0000;
+    border-right: 26px solid #0000ff;
+    border-bottom-style: none;
+}
+
+.udupval {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+}
+
+.uddnval {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+}
+
+.nuduo {
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0%;
+    border-top: 26px solid #ff0000;
+    border-right: 26px solid #ffffff;
+    border-bottom-style: none;
+}
+
+.nuupval {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+}
+
+.nunoval {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    color: black;
+}
+
+.ndduo {
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0%;
+    border-top: 26px solid #0000ff;
+    border-right: 26px solid #ffffff;
+    border-bottom-style: none;
+}
+
+.nddnval {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+}
+
+.ndnoval {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    color: black;
+}
+
+.tri {
+    width: 0;
+    font-size: 0;
+    line-height: 0%;
+    border-top: 0;
+    border-right: 13px solid #0000ff;
+    border-bottom: 13px solid #ffffff;
+    border-left: 13px solid #ff0000;
+    height: 10px;
+    margin-bottom: 3px;
+}
+
+.tupval {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 9px;
+    color: #ffffff;
+}
+
+.tdnval {
+    position: absolute;
+    top: 0;
+    right: -1px;
+    z-index: 0;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 9px;
+    color: #ffffff;
+}
+
+.tnoval {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    z-index: 0;
+    width: 26px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    color: black;
+    text-align: center;
+}
+
+
+
+
+
+

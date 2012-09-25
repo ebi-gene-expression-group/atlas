@@ -1,0 +1,359 @@
+/*
+ * Copyright 2008-2010 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+.logo {
+	font: bold 330%/100% "Lucida Grande", Arial, sans-serif;
+	position: relative;
+	color: #E33E3E;
+}
+
+input.value, textarea.value {
+    border: solid 1px #5E9E9E;
+    margin:0; padding:1px;
+}
+
+body {
+    font-family: Verdana, helvetica, arial, sans-serif;
+    font-size: 12px;
+}
+
+td {
+    font-size: 12px;
+}
+
+.ae_pagecontainer {
+	padding-left: 20px;
+	padding-top: 0;
+	padding-right: 20px;
+	margin-bottom: 50px;
+}
+
+.ae_pagecontainer, .ae_pagecontainer input, .ae_pagecontainer select, .ae_pagecontainer td, .ae_pagecontainer th {
+    font-family: Verdana, helvetica, arial, sans-serif;
+}
+
+a:link, a:visited, .ae_pagecontainer a:link, .ae_pagecontainer a:visited {
+	text-decoration: none;
+	color: #006666;
+	cursor: pointer;
+    font-family: Verdana, helvetica, arial, sans-serif;
+}
+
+a:hover, .ae_pagecontainer a:hover {
+	text-decoration: underline;
+	color: #e33e3e;
+	cursor: pointer;
+	font-family: Verdana, helvetica, arial, sans-serif;
+}
+
+a.external {
+    padding-right: 13px;
+    background: url(images/ext-link.gif) right 0 repeat-y;
+}
+
+/* page */
+
+.page-title {
+    margin: 0;
+    padding: 0 10px 0 0;
+    color: #005555;
+	text-align: left;
+	font-size: 20pt;
+	font-weight: bold;
+    vertical-align: text-bottom;
+}
+
+.section-header-1 {
+    font-family: Verdana, helvetica, arial, sans-serif;
+    font-size: 11pt;
+    font-weight: bold;
+	color: #005555;
+}
+
+.section-header-2 {
+    font-family: Verdana, helvetica, arial, sans-serif;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #005555;
+}
+
+/* EF pagination */
+
+.pagination_ef {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination_ef div {
+    float: left;
+    padding: 1px 2px;
+    margin: 2px 3px;
+    border: 1px solid #066;
+    font-weight: bold;
+    font-size: 75%;
+    color: #006666;
+    white-space: nowrap;
+}
+
+.pagination_ef a, .pagination_ef a:hover, .pagination_ef a:link, .pagination_ef a:visited {
+    white-space: nowrap;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #006666;
+    text-decoration: none;
+}
+
+.pagination_ef .current {
+    background: #006666;
+    color: #fff;
+}
+
+/* pagination styles */
+
+.pagination_ie {
+    font-size: 80%;
+    margin: 1em 0;
+}
+
+.pagination_ie a:link, .pagination_ie a:visited,.pagination_ie a {
+    text-decoration: none;
+	border: solid 1px #5E9E9E;
+	color: #006666;
+	cursor: pointer;
+}
+
+.pagination_ie a:hover, .pagination_ie a:active {
+    text-decoration: underline;
+	border: solid 1px #5E9E9E;
+	color: #e33e3e;
+	cursor: pointer;
+}
+
+.pagination_ie a, .pagination_ie span {
+    white-space: nowrap;
+    padding: 0.1em 0.3em;
+    margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.pagination_ie .current {
+    background: #006666;
+    color: #fff;
+	border: solid 1px #5E9E9E;
+}
+
+.pagination_ie .current.prev, .pagination_ie .current.next{
+	color:#999;
+	border-color:#999;
+	background:#fff;
+}
+
+.pagination_ie a.prev, .pagination_ie a.next {
+    color: #408c8c;
+    border: solid 1px #5E9E9E;
+    background:#fff;
+    float: none;
+    height: auto;
+    padding: 0.1em 0.3em;
+    margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+td.atlastable {
+		padding: 0px;
+}
+
+td.legendLabel {
+    vertical-align: bottom;
+    white-space: nowrap;
+}
+
+td.legendColorBox {
+    vertical-align: bottom;
+}
+
+.hrClear hr {
+width: 100%;
+height: 0;
+margin: 0;
+padding: 0;
+}
+
+.errorMessage {
+    color:red;
+    visibility:hidden;
+}
+
+/* api links styles */
+
+#apilinks  {
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+    position:relative;
+    display:none;
+    line-height:normal;
+    z-index:10;
+}
+
+#apilinks div.abs {
+    position:absolute;
+    padding: 10px;
+    margin:0;
+    z-index:1000;
+    width: 600px;
+    border: 1px solid #5E9E9E;
+    background-color: #EEF5F5;
+}
+
+#apilinks p {
+    margin-bottom: 5px;
+}
+
+#apilinks table {
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#apilinks td {
+    padding: 0;
+    border: none;
+    margin: 0;
+}
+
+.closebox {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: bold;
+    font-size: 10px;
+    background-color:white;
+    padding: 4px 8px 4px 8px;
+    text-align: center;
+    border-left: 1px solid #5E9E9E;
+    border-bottom: 1px solid #5E9E9E;
+    cursor: pointer;
+    z-index: 2500;
+    color: #006666;
+}
+
+.closebox:hover {
+    color: #e33e3e;
+    text-decoration: underline;
+}
+
+/* tooltips */
+
+.tooltip {
+    position: absolute;
+    z-index: 3001;
+    padding: 10px;
+    max-width: 800px;
+    border: 1px solid #5E9E9E;
+    background-color: #EEF5F5;
+}
+
+.tooltip em {
+    font: inherit;
+    background-color: yellow;
+}
+
+.tooltip .genename {
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+
+.tooltip .genename b {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.tooltip div {
+    margin-bottom: 5px;
+}
+
+/* unsorted */
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.clean {
+    clear: left;
+    height: 1%;
+}
+
+.loading {
+    background: transparent url(images/indicator.gif) no-repeat;
+    padding-left: 16px;
+    display: inline-block;
+}
+
+.waiter2 {
+    border: none;
+    position: absolute;
+    opacity: 0.5;
+    text-align: center;
+    z-index: 2000;
+    background-color: #F0F0F0;
+}
+
+.waiter2 span {
+    background: url(images/indicator.gif) no-repeat;
+    padding-left: 16px;
+    display: inline-block;
+}
+
+.qMarkTip {
+    font-size: 11px;
+    font-weight: normal;
+    text-decoration: underline;
+    padding-left: 3px;
+    cursor: pointer;
+    color: red;
+}
+
+/* animated progress bar */
+
+.progressBar.anim {
+    background-image: url(images/pbar-ani.gif);
+}
+
+/*icons*/
+
+.cancel-icon {
+    padding-left:16px;
+    padding-top:16px;
+    background: url(images/cancel.png) no-repeat;
+    cursor: pointer;
+}

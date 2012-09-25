@@ -1,0 +1,13 @@
+/**
+ * Note: These styles are specific for EBI design only. Please use it only with EBI header & footer templates;
+ * see the corresponding templates.stg file.
+ */
+
+/* makes not absolute position of the EBI "contents" div; otherwise the document.body.offsetHeight
+   in IE and FF will return not actual numbers (to verify use overlay in jquery.lightbox plugin);
+*/
+.contents {
+    position: relative !important;
+    top: 57px !important;
+}
+
