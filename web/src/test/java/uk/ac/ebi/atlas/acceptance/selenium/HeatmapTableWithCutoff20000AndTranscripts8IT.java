@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Test;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
@@ -13,7 +12,7 @@ public class HeatmapTableWithCutoff20000AndTranscripts8IT extends SeleniumFixtur
 
     private HeatmapTablePage subject;
 
-    public LoadableComponent getStartingPage(FirefoxDriver firefoxDriver) {
+    public LoadableComponent getStartingPage() {
         subject = new HeatmapTablePage(firefoxDriver, "?cutoff=20000&heatmapMatrixSize=8");
         return subject.get();
     }

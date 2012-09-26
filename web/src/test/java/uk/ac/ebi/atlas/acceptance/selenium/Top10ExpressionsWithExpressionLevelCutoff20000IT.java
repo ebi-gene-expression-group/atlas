@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Test;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExpressionsTablePage;
 
@@ -11,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class Top10ExpressionsWithExpressionLevelCutoff20000IT extends SeleniumFixture {
     private ExpressionsTablePage subject;
 
-    public LoadableComponent getStartingPage(FirefoxDriver firefoxDriver) {
+    public LoadableComponent getStartingPage() {
         subject = new ExpressionsTablePage(firefoxDriver, "?cutoff=20000&rankingSize=10");
         return subject.get();
     }
