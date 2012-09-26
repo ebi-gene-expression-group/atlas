@@ -94,7 +94,7 @@
                     <!-- http port -->
                     <port>9090</port>
                     <!-- application path always starts with /-->
-                    <path>/atlas</path>
+                    <path>/gxa</path>
                     <!-- optionnal path to a context file -->
                     <contextFile></contextFile>
                     <!-- optionnal system propoerties you want to add -->
