@@ -5,7 +5,7 @@
                     marginheight="0px" scrolling="no" height="22px" width="100%" style="z-index:2;"></iframe>
         </td>
         <td style="text-align:right;width:10%;white-space:nowrap;padding-right:10px;" id="divFooter">
-            What should we write here?
+            <!-- This space can be used to write additional information... a la old style taskbar -->
         </td>
     </tr>
 </table>
