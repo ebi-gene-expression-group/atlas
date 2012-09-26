@@ -14,21 +14,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
     <head>
-        <title>Experiment</title>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
+
         <!-- old style start -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta content="en-GB" http-equiv="Content-Language">
+        <meta content="_top" http-equiv="Window-target">
+        <meta content="IE=7" http-equiv="X-UA-Compatible">
+        <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
+
         <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
         <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-ebi.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-grid.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-searchform.css">
+        <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
+        <link rel="SHORTCUT ICON" href="http://www.ebi.ac.uk/bookmark.ico"/>
+
+        <style type="text/css">
+            @media print {
+                body, .contents, .header, .contentsarea, .head {
+                    position: relative;
+                }
+            }
+        </style>
+
         <!-- old style end -->
+
+        <title>Experiment</title>
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
+
     </head>
 
     <body>
 
         <!-- old style start -->
+
         <%@ include file="layout/old/header.jsp" %>
 
         <div id="centeredMain">
