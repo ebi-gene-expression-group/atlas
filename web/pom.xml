@@ -135,7 +135,7 @@
                             <url>http://lime:14092/manager/html</url>
                             <username>tomcat</username>
                             <password>tomcat</password>
-                            <path>/atlas</path>
+                            <path>/gxa</path>
                             <update>true</update>
                             <!--
                             <path>foo</path>
