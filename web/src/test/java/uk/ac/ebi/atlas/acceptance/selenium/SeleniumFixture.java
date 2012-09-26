@@ -19,7 +19,6 @@ public abstract class SeleniumFixture {
 
     @After
     public void closeDriver() {
-        System.out.println("Closing = " + firefoxDriver);
         firefoxDriver.quit();
     }
 
