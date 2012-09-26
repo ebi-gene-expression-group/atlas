@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Test;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExpressionsTablePage;
 
 import static org.hamcrest.Matchers.is;
@@ -11,9 +10,9 @@ public class Top10ExpressionsOrderedBySpecificityIT extends SeleniumFixture {
 
     private ExpressionsTablePage subject;
 
-    public LoadableComponent getStartingPage() {
+    public void getStartingPage() {
         subject = new ExpressionsTablePage(firefoxDriver, "?rankingSize=10");
-        return subject.get();
+        subject.get();
     }
 
     @Test
