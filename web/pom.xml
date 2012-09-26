@@ -40,7 +40,7 @@
     </properties>
 
     <build>
-        <finalName>atlas</finalName>
+        <finalName>gxa</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -94,7 +94,7 @@
                     <!-- http port -->
                     <port>9090</port>
                     <!-- application path always starts with /-->
-                    <path>/atlas</path>
+                    <path>/gxa</path>
                     <!-- optionnal path to a context file -->
                     <contextFile></contextFile>
                     <!-- optionnal system propoerties you want to add -->
@@ -135,7 +135,7 @@
                             <url>http://lime:14092/manager/html</url>
                             <username>tomcat</username>
                             <password>tomcat</password>
-                            <path>/atlas</path>
+                            <path>/gxa</path>
                             <update>true</update>
                             <!--
                             <path>foo</path>

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 
 public class HeatmapTablePage extends TablePage {
 
-    private static final String DEFAULT_PAGE_URI = "/atlas/experiment";
+    private static final String DEFAULT_PAGE_URI = "/gxa/experiment";
 
     @FindBy(id = "heatmap-table")
     WebElement heatmapTable;

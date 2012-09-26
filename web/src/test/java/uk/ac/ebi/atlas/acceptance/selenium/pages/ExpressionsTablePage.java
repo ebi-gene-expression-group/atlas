@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class ExpressionsTablePage extends TablePage {
 
-    private static final String DEFAULT_PAGE_URI = "/atlas/experiment";
+    private static final String DEFAULT_PAGE_URI = "/gxa/experiment";
 
     public static final int EXPRESSION_LEVEL_COLUMN_INDEX = 3;
     public static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
