@@ -32,10 +32,10 @@ public class GradientColorGenerator {
     // How many RGB steps there are between the high and low colours.
     private int colourValueDistance;
 
-    private double colourScale = SCALE_LOGARITHMIC;
+    private double colourScale = SCALE_LINEAR;
 
     public GradientColorGenerator() {
-        this(Color.WHITE, Color.BLUE);
+        this(Color.WHITE, Color.RED);
     }
 
     public GradientColorGenerator(Color lowValueColour, Color highValueColour) {

@@ -3,9 +3,6 @@ package uk.ac.ebi.atlas.acceptance.selenium;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.LoadableComponent;
-
-import java.util.concurrent.TimeUnit;
 
 public abstract class SeleniumFixture {
 
@@ -26,6 +23,6 @@ public abstract class SeleniumFixture {
         this.firefoxDriver = new FirefoxDriver();
     }
 
-    protected abstract LoadableComponent getStartingPage();
+    protected abstract void getStartingPage();
 
 }
