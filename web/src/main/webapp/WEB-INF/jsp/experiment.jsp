@@ -7,7 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<fmt:setBundle basename="bundles.I18n" var="i18n"/>
+<fmt:setBundle basename="bundles.labels" var="i18n"/>
 
 <jsp:useBean id="colorGenerator" class="uk.ac.ebi.atlas.utils.GradientColorGenerator" scope="page"/>
 
@@ -142,7 +142,8 @@
                             <div id="expressions" class="block">
                                 <display:table name="${transcriptExpressions}" htmlId="expressions-table" id="transcriptExpression" class="atlas-grid">
 
-                                    <display:column title="Transcript id" property="transcriptId"/>
+                                    <fmt:message key="gene.id" bundle="${i18n}" var="bioentityLabel"/>
+                                    <display:column title="${bioentityLabel}" property="transcriptId"/>
 
                                     <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
                                     <display:column title="${organismpart}" property="organismPart"/>

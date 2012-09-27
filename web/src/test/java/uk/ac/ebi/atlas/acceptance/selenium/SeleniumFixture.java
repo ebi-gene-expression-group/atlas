@@ -24,7 +24,6 @@ public abstract class SeleniumFixture {
 
     private void initializeFirefoxDriver() {
         this.firefoxDriver = new FirefoxDriver();
-        firefoxDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
 
     protected abstract LoadableComponent getStartingPage();
