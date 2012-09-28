@@ -26,6 +26,7 @@
     -o-transform-origin: top left;
     position: relative;
     top: 20px;
+    width:30px;
 }
 
 .heatmap td {

@@ -123,12 +123,13 @@
                                    htmlId="heatmap-table" class="heatmap">
                         <c:forEach var="geneId" items="${heatmapGenes}">
 
+                            <c:set var="expressionLevel" value="${geneExpressions.getExpressionLevel(geneId, organismPart)}"/>
+                            <c:set var="cellColour" value="${colorGenerator.getCellColourString(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
+
                             <display:column title="<div class='rotate_text'>${geneId}</div>"
                                             headerClass='rotated_cell'
-                                            style="background-color:${colorGenerator.getCellColourString(
-                                                        geneExpressions.getExpressionLevel(geneId, organismPart),
-                                                                             minExpressionLevel, maxExpressionLevel)}">
-
+                                            style="background-color:${cellColour};color:${cellColour};font-size:1px">
+                                <c:out value="${expressionLevel}" />
                             </display:column>
 
                         </c:forEach>
