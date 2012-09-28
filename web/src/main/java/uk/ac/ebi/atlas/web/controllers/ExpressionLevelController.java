@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.LoadTranscriptExpressionsCommand;
-import uk.ac.ebi.atlas.model.TranscriptExpressionsList;
+import uk.ac.ebi.atlas.commands.LoadGeneExpressionsCommand;
+import uk.ac.ebi.atlas.model.GeneExpressionsList;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -19,33 +19,33 @@ public class ExpressionLevelController{
 
     public static final String DEMO_ACCESSION = "E-MTAB-513";
 
-    private LoadTranscriptExpressionsCommand loadTranscriptExpressionsCommand;
+    private LoadGeneExpressionsCommand loadGeneExpressionsCommand;
 
     @Inject
-    public ExpressionLevelController(LoadTranscriptExpressionsCommand loadTranscriptExpressionsCommand) {
-        this.loadTranscriptExpressionsCommand = loadTranscriptExpressionsCommand;
+    public ExpressionLevelController(LoadGeneExpressionsCommand loadGeneExpressionsCommand) {
+        this.loadGeneExpressionsCommand = loadGeneExpressionsCommand;
     }
 
     @RequestMapping("/experiment")
-    public String showTranscriptExpressions(@ModelAttribute("preferences") @Valid Preferences preferences, BindingResult result, Model model){
+    public String showGeneExpressions(@ModelAttribute("preferences") @Valid Preferences preferences, BindingResult result, Model model){
 
         if (!result.hasErrors()){
 
-            loadTranscriptExpressionsCommand.setRankingSize(preferences.getRankingSize());
+            loadGeneExpressionsCommand.setRankingSize(preferences.getRankingSize());
 
-            loadTranscriptExpressionsCommand.setCutoff(preferences.getCutoff());
+            loadGeneExpressionsCommand.setCutoff(preferences.getCutoff());
 
-            TranscriptExpressionsList transcriptExpressions = loadTranscriptExpressionsCommand.apply(DEMO_ACCESSION);
+            GeneExpressionsList geneExpressions = loadGeneExpressionsCommand.apply(DEMO_ACCESSION);
 
-            Set<String> transcriptsToBeHighlighted = transcriptExpressions.getTop(preferences.getHeatmapMatrixSize()).getDistinctTranscriptIds();
+            Set<String> genesToBeHighlighted = geneExpressions.getTop(preferences.getHeatmapMatrixSize()).getDistinctGeneIds();
 
-            TranscriptExpressionsList heatmapExpressions = transcriptExpressions.subList(transcriptsToBeHighlighted);
+            GeneExpressionsList heatmapExpressions = geneExpressions.subList(genesToBeHighlighted);
 
-            model.addAttribute("heatmapTranscripts", transcriptsToBeHighlighted);
+            model.addAttribute("heatmapGenes", genesToBeHighlighted);
 
-            model.addAttribute("heatmapOrganismParts", transcriptExpressions.getDistinctOrganismParts(transcriptsToBeHighlighted));
+            model.addAttribute("heatmapOrganismParts", geneExpressions.getDistinctOrganismParts(genesToBeHighlighted));
 
-            model.addAttribute("transcriptExpressions", transcriptExpressions);
+            model.addAttribute("geneExpressions", geneExpressions);
 
             model.addAttribute("minExpressionLevel", heatmapExpressions.getMinExpressionLevel());
 

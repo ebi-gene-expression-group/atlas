@@ -8,9 +8,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpression;
-import uk.ac.ebi.atlas.model.TranscriptExpressionsList;
-import uk.ac.ebi.atlas.model.TranscriptProfile;
+import uk.ac.ebi.atlas.model.GeneExpression;
+import uk.ac.ebi.atlas.model.GeneExpressionsList;
+import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -21,36 +21,36 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoadTranscriptExpressionsCommandTest {
+public class LoadGeneExpressionsCommandTest {
 
     public static final String EXPERIMENT_ACCESSION = "ACCESSION_VALUE";
 
 //    @Mock
-//    private TranscriptProfilesInputStreamBuilder inputStreamBuilderMock;
+//    private GeneProfilesInputStreamBuilder inputStreamBuilderMock;
 
     @Mock
     private LoadingCache<String, List<ExperimentRun>> experimentsMock;
 
     @Mock
-    ObjectInputStream<TranscriptProfile> inputStream;
+    ObjectInputStream<GeneProfile> inputStream;
 
     @Mock
     RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand;
 
-    private TranscriptExpressionsList top10ExpressionsMock;
+    private GeneExpressionsList top10ExpressionsMock;
 
-    private LoadTranscriptExpressionsCommand subject;
+    private LoadGeneExpressionsCommand subject;
 
     @Before
     public void init() throws Exception {
 
-        top10ExpressionsMock = new TranscriptExpressionsList();
-        top10ExpressionsMock.add(mock(TranscriptExpression.class));
+        top10ExpressionsMock = new GeneExpressionsList();
+        top10ExpressionsMock.add(mock(GeneExpression.class));
 
         when(rankBySpecificityObjectsCommand.setRankingSize(anyInt())).thenReturn(rankBySpecificityObjectsCommand);
         when(rankBySpecificityObjectsCommand.apply(inputStream)).thenReturn(top10ExpressionsMock);
 
-        subject = new LoadTranscriptExpressionsCommand(experimentsMock, rankBySpecificityObjectsCommand);
+        subject = new LoadGeneExpressionsCommand(experimentsMock, rankBySpecificityObjectsCommand);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -63,16 +63,16 @@ public class LoadTranscriptExpressionsCommandTest {
 
     }
 
-/*  ToDo: this can't be tested because actually TranscriptProfileInputStream nor its Builder can be mocked. We should inject Builder
+/*  ToDo: this can't be tested because actually GeneProfileInputStream nor its Builder can be mocked. We should inject Builder
     @Test
     public void rankingShouldBuildAnInputStreamAndUseItWithARankCommand() throws Exception {
         //when
-        List<TranscriptExpression> transcriptExpressions = subject.apply(EXPERIMENT_ACCESSION);
+        List<GeneExpression> geneExpressions = subject.apply(EXPERIMENT_ACCESSION);
 
         //then
         verify(experimentsMock).get(EXPERIMENT_ACCESSION);
         //and
-        verify(rankBySpecificityObjectsCommand).apply(any(TranscriptProfilesInputStream.class));
+        verify(rankBySpecificityObjectsCommand).apply(any(GeneProfilesInputStream.class));
 
     }
 */

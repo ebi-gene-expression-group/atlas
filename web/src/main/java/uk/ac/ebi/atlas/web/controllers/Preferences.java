@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.web.controllers;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class Preferences {
 
@@ -13,9 +14,11 @@ public class Preferences {
     @Range(min = 0, max = 1000)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED;
 
+    @NotNull
     @Range(min = 1, max = 1000)
     private Integer rankingSize = DEFAULT_RANKING_SIZE;
 
+    @NotNull
     @Min(0)
     private Double cutoff = DEFAULT_CUTOFF;
 

@@ -16,36 +16,36 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TranscriptExpressionsListTest {
+public class GeneExpressionsListTest {
 
-    private static final String TRANSCRIPT_ID_1 = "T1";
-    private static final String TRANSCRIPT_ID_3 = "T3";
-    private static final String TRANSCRIPT_ID_4 = "T4";
+    private static final String GENE_ID_1 = "T1";
+    private static final String GENE_ID_3 = "T3";
+    private static final String GENE_ID_4 = "T4";
 
     @Mock
-    TranscriptExpression expression1;
+    GeneExpression expression1;
     @Mock
-    TranscriptExpression expression2;
+    GeneExpression expression2;
     @Mock
-    TranscriptExpression expression3;
+    GeneExpression expression3;
     @Mock
-    TranscriptExpression expression4;
+    GeneExpression expression4;
     @Mock
-    TranscriptExpression expression5;
+    GeneExpression expression5;
 
-    private TranscriptExpressionsList subject;
+    private GeneExpressionsList subject;
 
     @Before
     public void setUp() throws Exception {
 
-        subject = new TranscriptExpressionsList(Lists.newArrayList(expression5, expression3, expression4, expression1, expression2));
+        subject = new GeneExpressionsList(Lists.newArrayList(expression5, expression3, expression4, expression1, expression2));
 
     }
 
     @Test
     public void testGetTop() throws Exception {
         //when
-        TranscriptExpressionsList topExpressions = subject.getTop(3);
+        GeneExpressionsList topExpressions = subject.getTop(3);
         //then
         assertThat(topExpressions, hasSize(3));
         //and
@@ -55,7 +55,7 @@ public class TranscriptExpressionsListTest {
     @Test
     public void testGetTopWhenListIsSmallerThanRequestedAmountOfExpressions() throws Exception {
         //when
-        TranscriptExpressionsList topExpressions = subject.getTop(6);
+        GeneExpressionsList topExpressions = subject.getTop(6);
         //then
         assertThat(topExpressions, hasSize(5));
         //and
@@ -65,7 +65,7 @@ public class TranscriptExpressionsListTest {
     @Test
     public void testGetTopWhenListIsEqualToRequestedAmountOfExpressions() throws Exception {
         //when
-        TranscriptExpressionsList topExpressions = subject.getTop(5);
+        GeneExpressionsList topExpressions = subject.getTop(5);
         //then
         assertThat(topExpressions, hasSize(5));
         //and
@@ -75,46 +75,46 @@ public class TranscriptExpressionsListTest {
     @Test(expected = IllegalArgumentException.class)
     public void sublistShouldThrowIllegalArguemntExceptionWhenUpperIndexIsLessThanZero() throws Exception {
         //when
-        TranscriptExpressionsList e = subject.subList(0, -1);
+        GeneExpressionsList e = subject.subList(0, -1);
         assertThat(e, is(nullValue()));
     }
 
     public void sublistTest() throws Exception {
         //when
-        TranscriptExpressionsList transcriptExpressions = subject.subList(0, 3);
+        GeneExpressionsList geneExpressions = subject.subList(0, 3);
         //then
-        assertThat(transcriptExpressions, contains(expression5, expression3, expression4));
+        assertThat(geneExpressions, contains(expression5, expression3, expression4));
     }
 
     public void sublistShouldReturnEntireListWhenTopIndexLargerThanListSize() throws Exception {
         //when
-        TranscriptExpressionsList transcriptExpressions = subject.subList(0, 7);
+        GeneExpressionsList geneExpressions = subject.subList(0, 7);
         //then
-        assertThat(transcriptExpressions, hasSize(5));
+        assertThat(geneExpressions, hasSize(5));
     }
 
     @Test
-    public void testGetDistinctTranscriptIds() throws Exception {
-        when(expression1.getTranscriptId()).thenReturn(TRANSCRIPT_ID_1);
-        when(expression2.getTranscriptId()).thenReturn(TRANSCRIPT_ID_1);
-        when(expression3.getTranscriptId()).thenReturn(TRANSCRIPT_ID_4);
-        when(expression4.getTranscriptId()).thenReturn(TRANSCRIPT_ID_3);
-        when(expression5.getTranscriptId()).thenReturn(TRANSCRIPT_ID_4);
+    public void testGetDistinctGeneIds() throws Exception {
+        when(expression1.getGeneId()).thenReturn(GENE_ID_1);
+        when(expression2.getGeneId()).thenReturn(GENE_ID_1);
+        when(expression3.getGeneId()).thenReturn(GENE_ID_4);
+        when(expression4.getGeneId()).thenReturn(GENE_ID_3);
+        when(expression5.getGeneId()).thenReturn(GENE_ID_4);
 
         //when
-        Set<String> transcriptIds = subject.getDistinctTranscriptIds();
+        Set<String> geneIds = subject.getDistinctGeneIds();
         //then
-        assertThat(transcriptIds, contains("T4", "T3", "T1"));
+        assertThat(geneIds, contains("T4", "T3", "T1"));
     }
 
     @Test
     public void testGetDistinctOrganismParts() throws Exception {
         //given
-        when(expression1.getTranscriptId()).thenReturn(TRANSCRIPT_ID_1);
-        when(expression2.getTranscriptId()).thenReturn(TRANSCRIPT_ID_1);
-        when(expression3.getTranscriptId()).thenReturn(TRANSCRIPT_ID_4);
-        when(expression4.getTranscriptId()).thenReturn(TRANSCRIPT_ID_3);
-        when(expression5.getTranscriptId()).thenReturn(TRANSCRIPT_ID_4);
+        when(expression1.getGeneId()).thenReturn(GENE_ID_1);
+        when(expression2.getGeneId()).thenReturn(GENE_ID_1);
+        when(expression3.getGeneId()).thenReturn(GENE_ID_4);
+        when(expression4.getGeneId()).thenReturn(GENE_ID_3);
+        when(expression5.getGeneId()).thenReturn(GENE_ID_4);
         //and
         when(expression1.getOrganismPart()).thenReturn("brain");
         when(expression2.getOrganismPart()).thenReturn("blood");
@@ -133,7 +133,7 @@ public class TranscriptExpressionsListTest {
     @Test
     public void getMaxExpressionLevelShouldReturnNullForEmptyList(){
         //when
-        subject = new TranscriptExpressionsList();
+        subject = new GeneExpressionsList();
         //then
         assertThat(subject.getMaxExpressionLevel(), is(nullValue()));
     }
@@ -153,7 +153,7 @@ public class TranscriptExpressionsListTest {
     @Test
     public void getMinExpressionLevelShouldReturnNullForEmptyList(){
         //when
-        subject = new TranscriptExpressionsList();
+        subject = new GeneExpressionsList();
         //then
         assertThat(subject.getMinExpressionLevel(), is(nullValue()));
     }

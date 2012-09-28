@@ -17,15 +17,15 @@ import static com.google.common.base.Preconditions.checkState;
 
 class ExpressionsBuffer {
 
-    private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain transcript id and expression levels for all experiment runs";
-    //private String transcriptId;
+    private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain gene id and expression levels for all experiment runs";
+    //private String geneId;
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
     private Iterator<ExperimentRun> runsCircularQueue;
 
     private int expectedNumberOfValues;
 
-    public static final int TRANSCRIPT_ID_COLUMN = 0;
+    public static final int GENE_ID_COLUMN = 0;
 
     public static Builder forExperimentRuns(List<ExperimentRun> experimentRuns) {
 
@@ -79,7 +79,7 @@ class ExpressionsBuffer {
 
         public Builder withHeaders(String... dataFileHeaders) {
 
-            List<String> orderedAccessions = Arrays.asList(ArrayUtils.remove(dataFileHeaders, TRANSCRIPT_ID_COLUMN));
+            List<String> orderedAccessions = Arrays.asList(ArrayUtils.remove(dataFileHeaders, GENE_ID_COLUMN));
 
             experimentRuns = removeUnrequiredExperimentRuns(orderedAccessions);
 

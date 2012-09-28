@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TranscriptProfileInputStreamBuilderTest {
+public class GeneProfileInputStreamBuilderTest {
 
     @Mock
     private CSVReader csvReaderMock;
@@ -26,7 +26,7 @@ public class TranscriptProfileInputStreamBuilderTest {
     @Mock
     private InputStream inputStreamMock;
 
-    private TranscriptProfilesInputStream.Builder subject;
+    private GeneProfilesInputStream.Builder subject;
 
     @Before
     public void initMocks() throws IOException{
@@ -35,7 +35,7 @@ public class TranscriptProfileInputStreamBuilderTest {
 
     @Before
     public void initSubject(){
-        subject = TranscriptProfilesInputStream.forInputStream(inputStreamMock)
+        subject = GeneProfilesInputStream.forInputStream(inputStreamMock)
                 .withCsvReader(csvReaderMock);
     }
 

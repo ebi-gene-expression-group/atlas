@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.TranscriptProfile;
+import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TranscriptProfilesInputStreamTest {
+public class GeneProfilesInputStreamTest {
 
     public static final String RUN_ACCESSION_1 = "RUN_ACCESSION_1";
     public static final String RUN_ACCESSION_2 = "RUN_ACCESSION_2";
@@ -36,11 +36,11 @@ public class TranscriptProfilesInputStreamTest {
     private ExpressionsBuffer expressionsBufferMock;
 
 
-    private String[] expressionLevels = new String[]{"TRANSCRIPT_ID", "2.22222", "0.11111"};
+    private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
 
     private List<ExperimentRun> experimentRunsMock;
 
-    private TranscriptProfilesInputStream subject;
+    private GeneProfilesInputStream subject;
 
 
     @Before
@@ -61,7 +61,7 @@ public class TranscriptProfilesInputStreamTest {
             .willReturn(null);
 
 
-        subject = TranscriptProfilesInputStream.forInputStream(mock(InputStream.class))
+        subject = GeneProfilesInputStream.forInputStream(mock(InputStream.class))
             .withCsvReader(csvReaderMock)
             .withExpressionsBuffer(expressionsBufferMock)
             .create();
@@ -107,11 +107,11 @@ public class TranscriptProfilesInputStreamTest {
         //and
         given(csvReaderMock.readNext()).willReturn(null);
         //when
-        TranscriptProfile transcriptProfile = subject.readNext();
+        GeneProfile geneProfile = subject.readNext();
         //then
         verify(csvReaderMock, times(1)).readNext();
         //and
-        assertThat(transcriptProfile, is(nullValue()));
+        assertThat(geneProfile, is(nullValue()));
     }
 
     @Test
