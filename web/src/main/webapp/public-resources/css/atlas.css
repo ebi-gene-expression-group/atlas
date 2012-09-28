@@ -1,7 +1,7 @@
-
 .error {
     color: red;
 }
+
 /*
 table {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -35,18 +35,17 @@ td {
 }
 */
 
-.page-contents{
+.page-contents {
     padding-top: 7em;
     padding-bottom: 2em;
 }
 
-.block{
+.block {
     padding-top: 1em;
     padding-bottom: 1em;
 }
 
-
-#expressions-table{
+#expressions-table {
     width: 50%;
 }
 

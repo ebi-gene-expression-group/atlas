@@ -1,0 +1,50 @@
+.heatmap {
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: #404040;
+    background-color: #fafafa;
+    border: 1px solid #cdcdcd;
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+
+}
+
+.rotated_cell {
+    height: 120px;
+    border: 1px solid #cdcdcd;
+    vertical-align: bottom;
+    padding-bottom: 10px
+}
+
+.rotate_text {
+    -moz-transform: rotate(-90deg);
+    -moz-transform-origin: top left;
+    -webkit-transform: rotate(-90deg);
+    -webkit-transform-origin: top left;
+    -o-transform: rotate(-90deg);
+    -o-transform-origin: top left;
+    position: relative;
+    top: 20px;
+}
+
+.heatmap td {
+    color: #3D3D3D;
+    vertical-align: middle;
+    border: 1px solid #cdcdcd;
+    padding: 0;
+    height: 30px
+}
+
+.hoverable tr:hover {
+    background-color: #deebeb;
+    color: #404040;
+    cursor: pointer;
+}
+
+.sortable th {
+    text-align: left;
+    padding-left: 5px;
+}
+
+
