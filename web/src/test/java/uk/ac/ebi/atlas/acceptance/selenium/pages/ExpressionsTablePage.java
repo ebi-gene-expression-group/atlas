@@ -13,7 +13,7 @@ public class ExpressionsTablePage extends TablePage {
     private static final String DEFAULT_PAGE_URI = "/gxa/experiment";
 
     public static final int EXPRESSION_LEVEL_COLUMN_INDEX = 3;
-    public static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
+    public static final int GENE_ID_COLUMN_INDEX = 1;
     public static final int ORGANISM_PART_INDEX = 2;
     public static final int SPECIFICITY_COLUMN_INDEX = 4;
 
@@ -35,8 +35,8 @@ public class ExpressionsTablePage extends TablePage {
         return getTableRowCount(expressionsTable);
     }
 
-    public String getTranscriptIdForGreatestExpressionLevel() {
-        return getTableTopCellValue(expressionsTable, TRANSCRIPT_ID_COLUMN_INDEX);
+    public String getGeneIdForGreatestExpressionLevel() {
+        return getTableTopCellValue(expressionsTable, GENE_ID_COLUMN_INDEX);
     }
 
     public String getGreatestExpressionLevel() {
@@ -51,8 +51,8 @@ public class ExpressionsTablePage extends TablePage {
         return getTableTopCellValue(expressionsTable, SPECIFICITY_COLUMN_INDEX);
     }
 
-    public String getTranscriptIdForSmallestExpressionLevel() {
-        return getTableBottomCellValue(expressionsTable, TRANSCRIPT_ID_COLUMN_INDEX);
+    public String getGeneIdForSmallestExpressionLevel() {
+        return getTableBottomCellValue(expressionsTable, GENE_ID_COLUMN_INDEX);
     }
 
     public String getSmallestExpressionLevel() {

@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 @Named("rankBySpecificityAndExpressionLevel")
 @Scope("prototype")
-public class RankBySpecificityAndExpressionLevelCommand implements Function<ObjectInputStream<TranscriptProfile>, TranscriptExpressionsList> {
+public class RankBySpecificityAndExpressionLevelCommand implements Function<ObjectInputStream<GeneProfile>, GeneExpressionsList> {
 
     private static final int DEFAULT_SIZE = 100;
 
@@ -26,24 +26,24 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
     }
 
     @Override
-    public TranscriptExpressionsList apply(ObjectInputStream<TranscriptProfile> objectStream) {
+    public GeneExpressionsList apply(ObjectInputStream<GeneProfile> objectStream) {
 
-        Comparator<TranscriptExpression> reverseSpecificityComparator = Ordering.from(new TranscriptSpecificityComparator()).reverse();
+        Comparator<GeneExpression> reverseSpecificityComparator = Ordering.from(new GeneSpecificityComparator()).reverse();
 
-        Queue<TranscriptExpression> topTenObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
+        Queue<GeneExpression> topTenObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
 
-        TranscriptProfile transcriptProfile;
+        GeneProfile geneProfile;
 
-        while ((transcriptProfile = objectStream.readNext()) != null) {
-            for (Expression expression : transcriptProfile) {
-                TranscriptExpression transcriptExpression =
-                        new TranscriptExpression(transcriptProfile.getTranscriptId(), expression, transcriptProfile.getTranscriptSpecificity());
-                topTenObjects.add(transcriptExpression);
+        while ((geneProfile = objectStream.readNext()) != null) {
+            for (Expression expression : geneProfile) {
+                GeneExpression geneExpression =
+                        new GeneExpression(geneProfile.getGeneId(), expression, geneProfile.getGeneSpecificity());
+                topTenObjects.add(geneExpression);
 
             }
         }
 
-        TranscriptExpressionsList list = new TranscriptExpressionsList(topTenObjects);
+        GeneExpressionsList list = new GeneExpressionsList(topTenObjects);
 
         Collections.sort(list, reverseSpecificityComparator);
 

@@ -6,9 +6,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.TranscriptExpression;
-import uk.ac.ebi.atlas.model.TranscriptExpressionsList;
-import uk.ac.ebi.atlas.streams.TranscriptProfilesInputStream;
+import uk.ac.ebi.atlas.model.GeneExpression;
+import uk.ac.ebi.atlas.model.GeneExpressionsList;
+import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,11 +16,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-@Named("loadTranscriptExpressions")
+@Named("loadGeneExpressions")
 @Scope("prototype")
-public class LoadTranscriptExpressionsCommand implements Function<String, List<TranscriptExpression>> {
+public class LoadGeneExpressionsCommand implements Function<String, List<GeneExpression>> {
 
-    private static final Logger logger = Logger.getLogger(LoadTranscriptExpressionsCommand.class);
+    private static final Logger logger = Logger.getLogger(LoadGeneExpressionsCommand.class);
 
     @Value("#{configuration['magetab.test.datafile.url']}")
     private String dataFileURL;
@@ -30,7 +30,7 @@ public class LoadTranscriptExpressionsCommand implements Function<String, List<T
     private Double cutoff;
 
     @Inject
-    public LoadTranscriptExpressionsCommand(LoadingCache<String, List<ExperimentRun>> experiments, RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand) {
+    public LoadGeneExpressionsCommand(LoadingCache<String, List<ExperimentRun>> experiments, RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand) {
 
         this.experiments = experiments;
 
@@ -38,15 +38,15 @@ public class LoadTranscriptExpressionsCommand implements Function<String, List<T
     }
 
     @Override
-    public TranscriptExpressionsList apply(String experimentAccession) throws IllegalStateException {
+    public GeneExpressionsList apply(String experimentAccession) throws IllegalStateException {
 
-        TranscriptExpressionsList topTenTranscriptExpressions = loadTopTenExpressions(experimentAccession);
-        return topTenTranscriptExpressions;
+        GeneExpressionsList topTenGeneExpressions = loadTopTenExpressions(experimentAccession);
+        return topTenGeneExpressions;
 
     }
 
-    //This is a bit smelly, this cache could be directly used by TranscriptProfilesInputStrea.Builder
-    //rather then being used here just to bounce the cached data back to TranscriptProfilesInputStrea.Builder
+    //This is a bit smelly, this cache could be directly used by GeneProfilesInputStrea.Builder
+    //rather then being used here just to bounce the cached data back to GeneProfilesInputStrea.Builder
     List<ExperimentRun> getExperimentRuns(String experimentAccession) {
 
         try {
@@ -61,11 +61,11 @@ public class LoadTranscriptExpressionsCommand implements Function<String, List<T
     }
 
 
-    TranscriptExpressionsList loadTopTenExpressions(String experimentAccession) {
+    GeneExpressionsList loadTopTenExpressions(String experimentAccession) {
 
         List<ExperimentRun> experimentRuns = getExperimentRuns(experimentAccession);
 
-        try (TranscriptProfilesInputStream objectInputStream = TranscriptProfilesInputStream.forFile(dataFileURL)
+        try (GeneProfilesInputStream objectInputStream = GeneProfilesInputStream.forFile(dataFileURL)
                 .withExperimentRuns(experimentRuns)
                 .withCutoff(cutoff).create()) {
 
@@ -77,12 +77,12 @@ public class LoadTranscriptExpressionsCommand implements Function<String, List<T
         }
     }
 
-    public LoadTranscriptExpressionsCommand setRankingSize(int rankingSize) {
+    public LoadGeneExpressionsCommand setRankingSize(int rankingSize) {
         rankBySpecificityObjectsCommand.setRankingSize(rankingSize);
         return this;
     }
 
-    public LoadTranscriptExpressionsCommand setCutoff(double cutoff) {
+    public LoadGeneExpressionsCommand setCutoff(double cutoff) {
         this.cutoff = cutoff;
         return this;
     }

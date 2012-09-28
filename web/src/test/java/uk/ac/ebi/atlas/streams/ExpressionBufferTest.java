@@ -19,8 +19,8 @@ public class ExpressionBufferTest {
     private static final String RUN_ACCESSION_1 = "ERR030872";
     private static final String RUN_ACCESSION_2 = "ERR030873";
     private static final String RUN_ACCESSION_3 = "ERR030874";
-    private static final String TRANSCRIPT_ID = "ENST00000000233";
-    private static final String[] THREE_EXPRESSION_LEVELS = new String[]{TRANSCRIPT_ID, "0", "42.9134", "0.0001"};
+    private static final String GENE_ID = "ENST00000000233";
+    private static final String[] THREE_EXPRESSION_LEVELS = new String[]{GENE_ID, "0", "42.9134", "0.0001"};
 
     private ExpressionsBuffer subject;
     private static List<ExperimentRun> experimentRuns;
@@ -34,12 +34,12 @@ public class ExpressionBufferTest {
         experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 
         subject = ExpressionsBuffer.forExperimentRuns(experimentRuns)
-            .withHeaders("", RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3)
-            .create();
+                .withHeaders("", RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3)
+                .create();
     }
 
     @Test(expected = IllegalStateException.class)
-    public void builderShouldThrowIllegalStateExceptionWhenOrderSpecificationIsNotSet(){
+    public void builderShouldThrowIllegalStateExceptionWhenOrderSpecificationIsNotSet() {
         ExpressionsBuffer.forExperimentRuns(experimentRuns).create();
     }
 
@@ -95,7 +95,7 @@ public class ExpressionBufferTest {
     public void reloadShouldThrowExceptionIfMoreValuesThanRuns() throws Exception {
         //given that we initialized subject with three runs
         //when
-        subject.reload(TRANSCRIPT_ID, "0", "42.9134", "0.0001", "666");
+        subject.reload(GENE_ID, "0", "42.9134", "0.0001", "666");
 
     }
 
@@ -103,7 +103,7 @@ public class ExpressionBufferTest {
     public void reloadShouldThrowExceptionIfLessValuesThanRuns() throws Exception {
         //given that we initialized subject with three runs
         //when
-        subject.reload(TRANSCRIPT_ID, "0", "42.9134");
+        subject.reload(GENE_ID, "0", "42.9134");
 
     }
 

@@ -20,43 +20,43 @@ public class Top10ExpressionsWithExpressionLevelCutoff20000IT extends SeleniumFi
     }
 
     @Test
-    public void verifyMostExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForGreatestExpressionLevel(), is("ENST00000486939"));
+    public void verifyMostExpressedGeneId() {
+        assertThat(subject.getGeneIdForGreatestExpressionLevel(), is("ENSG00000163631"));
     }
 
     @Test
-    public void verifyFactorValuesForMostExpressedTranscriptId() {
+    public void verifyFactorValuesForMostExpressedGeneId() {
         assertThat(subject.getOrganismPartForGreatestExpressionLevel(), is("liver"));
     }
 
     @Test
-    public void verifyExpressionLevelForMostExpressedTranscriptId() {
-        assertThat(subject.getGreatestExpressionLevel(), is("36872.6684888937"));
+    public void verifyExpressionLevelForMostExpressedGeneId() {
+        assertThat(subject.getGreatestExpressionLevel(), is("48053.1"));
     }
 
     @Test
-    public void verifySpecificityForMostExpressedTranscriptId() {
+    public void verifySpecificityForMostExpressedGeneId() {
         assertThat(subject.getSpecificityForGreatestExpressionLevel(), is("1"));
     }
 
     @Test
-    public void verifyLeastExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForSmallestExpressionLevel(), is("ENST00000361789"));
+    public void verifyLeastExpressedGeneId() {
+        assertThat(subject.getGeneIdForSmallestExpressionLevel(), is("ENSG00000198888"));
     }
 
     @Test
-    public void verifyFactorValuesForLeastExpressedTranscriptId() {
-        assertThat(subject.getOrganismPartForSmallestExpressionLevel(), is("adipose"));
+    public void verifyFactorValuesForLeastExpressedGeneId() {
+        assertThat(subject.getOrganismPartForSmallestExpressionLevel(), is("heart"));
     }
 
     @Test
-    public void verifyExpressionLevelForLeastExpressedTranscriptId() {
-        assertThat(subject.getSmallestExpressionLevel(), is("24566.6097632967"));
+    public void verifyExpressionLevelForLeastExpressedGeneId() {
+        assertThat(subject.getSmallestExpressionLevel(), is("27288.0"));
     }
 
     @Test
-    public void verifySpecificityForLeastExpressedTranscriptId() {
-        assertThat(subject.getSpecificityForSmallestExpressionLevel(), is("5"));
+    public void verifySpecificityForLeastExpressedGeneId() {
+        assertThat(subject.getSpecificityForSmallestExpressionLevel(), is("3"));
     }
 
     @Test

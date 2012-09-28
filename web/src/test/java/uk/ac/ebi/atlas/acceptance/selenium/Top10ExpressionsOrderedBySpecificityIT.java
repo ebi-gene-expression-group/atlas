@@ -21,38 +21,38 @@ public class Top10ExpressionsOrderedBySpecificityIT extends SeleniumFixture {
     }
 
     @Test
-    public void verifyMostExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForGreatestExpressionLevel(), is("ENST00000390536"));
+    public void verifyMostExpressedGeneId() {
+        assertThat(subject.getGeneIdForGreatestExpressionLevel(), is("ENSG00000211888"));
     }
 
     @Test
-    public void verifyFactorValuesForMostExpressedTranscriptId() {
+    public void verifyFactorValuesForMostExpressedGeneId() {
         assertThat(subject.getOrganismPartForGreatestExpressionLevel(), is("adrenal"));
     }
 
     @Test
-    public void verifyExpressionLevelForMostExpressedTranscriptId() {
-        assertThat(subject.getGreatestExpressionLevel(), is("2543.2410431147"));
+    public void verifyExpressionLevelForMostExpressedGeneId() {
+        assertThat(subject.getGreatestExpressionLevel(), is("2543.24"));
     }
 
     @Test
-    public void verifySpecificityForMostExpressedTranscriptId() {
+    public void verifySpecificityForMostExpressedGeneId() {
         assertThat(subject.getSpecificityForGreatestExpressionLevel(), is("1"));
     }
 
     @Test
-    public void verifyLeastExpressedTranscriptId() {
-        assertThat(subject.getTranscriptIdForSmallestExpressionLevel(), is("ENST00000401258"));
+    public void verifyLeastExpressedGeneId() {
+        assertThat(subject.getGeneIdForSmallestExpressionLevel(), is("ENSG00000200769"));
     }
 
     @Test
-    public void verifyFactorValuesForLeastExpressedTranscriptId() {
-        assertThat(subject.getOrganismPartForSmallestExpressionLevel(), is("brain"));
+    public void verifyFactorValuesForLeastExpressedGeneId() {
+        assertThat(subject.getOrganismPartForSmallestExpressionLevel(), is("ovary"));
     }
 
     @Test
-    public void verifyExpressionLevelForLeastExpressedTranscriptId() {
-        assertThat(subject.getSmallestExpressionLevel(), is("687.2741888147"));
+    public void verifyExpressionLevelForLeastExpressedGeneId() {
+        assertThat(subject.getSmallestExpressionLevel(), is("651.968"));
     }
 
     @Test

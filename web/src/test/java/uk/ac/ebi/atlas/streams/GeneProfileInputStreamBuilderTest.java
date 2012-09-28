@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TranscriptProfileInputStreamBuilderTest {
+public class GeneProfileInputStreamBuilderTest {
 
     @Mock
     private CSVReader csvReaderMock;
@@ -26,27 +26,27 @@ public class TranscriptProfileInputStreamBuilderTest {
     @Mock
     private InputStream inputStreamMock;
 
-    private TranscriptProfilesInputStream.Builder subject;
+    private GeneProfilesInputStream.Builder subject;
 
     @Before
-    public void initMocks() throws IOException{
+    public void initMocks() throws IOException {
         when(csvReaderMock.readNext()).thenReturn(new String[]{"", "header_value_1", "header_value_2"});
     }
 
     @Before
-    public void initSubject(){
-        subject = TranscriptProfilesInputStream.forInputStream(inputStreamMock)
+    public void initSubject() {
+        subject = GeneProfilesInputStream.forInputStream(inputStreamMock)
                 .withCsvReader(csvReaderMock);
     }
 
     @Test(expected = IllegalStateException.class)
-    public void shouldThrowExceptionWhenExperimentRunsHaventBeenSet(){
+    public void shouldThrowExceptionWhenExperimentRunsHaventBeenSet() {
         //when
         subject.create();
     }
 
     @Test
-    public void shouldBeOkWhenExperimentRunsHaventBeenSet(){
+    public void shouldBeOkWhenExperimentRunsHaventBeenSet() {
         //when
         subject.withExperimentRuns(new ArrayList<ExperimentRun>());
         //then
@@ -54,13 +54,12 @@ public class TranscriptProfileInputStreamBuilderTest {
     }
 
     @Test
-    public void shouldHaveReadHeaderLineOnCreate() throws IOException{
+    public void shouldHaveReadHeaderLineOnCreate() throws IOException {
         //when
         subject.withExperimentRuns(new ArrayList<ExperimentRun>());
         //then
         verify(csvReaderMock).readNext();
     }
-
 
 
 }

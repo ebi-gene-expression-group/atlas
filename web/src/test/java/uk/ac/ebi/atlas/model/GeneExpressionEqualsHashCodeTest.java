@@ -2,29 +2,29 @@ package uk.ac.ebi.atlas.model;
 
 import junitx.extensions.EqualsHashCodeTestCase;
 
-public class TranscriptExpressionEqualsHashCodeTest extends EqualsHashCodeTestCase {
+public class GeneExpressionEqualsHashCodeTest extends EqualsHashCodeTestCase {
 
     private ExperimentRun experimentRun = new ExperimentRun("RUN_ACCESSION");
 
 
-    public TranscriptExpressionEqualsHashCodeTest(String name) {
+    public GeneExpressionEqualsHashCodeTest(String name) {
         super(name);
     }
 
     @Override
     protected Object createInstance() throws Exception {
-        TranscriptExpression transcriptExpression = new TranscriptExpression("id", 100, experimentRun)
+        GeneExpression geneExpression = new GeneExpression("id", 100, experimentRun)
                 .addFactorValue("f1", "v1")
                 .addFactorValue("f2", "v2");
-        return transcriptExpression;
+        return geneExpression;
     }
 
     @Override
     protected Object createNotEqualInstance() throws Exception {
-        TranscriptExpression transcriptExpression = new TranscriptExpression("id", 200, experimentRun)
+        GeneExpression geneExpression = new GeneExpression("id", 200, experimentRun)
                 .addFactorValue("f1", "v1")
                 .addFactorValue("f2", "v2_2");
-        return transcriptExpression;
+        return geneExpression;
     }
 
 }

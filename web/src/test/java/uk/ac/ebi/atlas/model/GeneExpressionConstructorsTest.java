@@ -13,11 +13,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TranscriptExpressionConstructorsTest {
+public class GeneExpressionConstructorsTest {
 
     public static final String RUN_ACCESSION = "RUN_ACCESSION";
 
-    private TranscriptExpression subject;
+    private GeneExpression subject;
 
     @Mock
     private FactorValue factorValue1;
@@ -36,7 +36,7 @@ public class TranscriptExpressionConstructorsTest {
     public void constructorShouldHandleNonEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new TranscriptExpression("id1", 1, new ExperimentRun(RUN_ACCESSION, factorValues));
+        subject = new GeneExpression("id1", 1, new ExperimentRun(RUN_ACCESSION, factorValues));
 
         //then
         assertThat(subject.getFactorValues().size(), is(2));
@@ -47,7 +47,7 @@ public class TranscriptExpressionConstructorsTest {
     public void constructorShouldHandleEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new TranscriptExpression("id1", 1, new ExperimentRun(RUN_ACCESSION));
+        subject = new GeneExpression("id1", 1, new ExperimentRun(RUN_ACCESSION));
 
         //then
         assertThat(subject.getFactorValues().size(), is(0));

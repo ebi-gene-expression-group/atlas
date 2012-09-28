@@ -7,7 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<fmt:setBundle basename="bundles.I18n" var="i18n"/>
+<fmt:setBundle basename="bundles.labels" var="i18n"/>
 
 <jsp:useBean id="colorGenerator" class="uk.ac.ebi.atlas.utils.GradientColorGenerator" scope="page"/>
 
@@ -90,7 +90,7 @@
             </div>
 
 
-            <c:if test="${not empty heatmapTranscripts}">
+            <c:if test="${not empty heatmapGenes}">
 
                 <div id="gradientLegenda" class="block">
                     <table id="heatmap-legenda" class="atlas-grid">
@@ -121,13 +121,13 @@
                 <div id="heatmap" class="block">
                     <display:table name="${heatmapOrganismParts}" id="organismPart"
                                    htmlId="heatmap-table" class="heatmap">
-                        <c:forEach var="transcriptId" items="${heatmapTranscripts}">
+                        <c:forEach var="geneId" items="${heatmapGenes}">
 
-                            <display:column title="<div class='rotate_text'>${transcriptId}</div>"
+                            <display:column title="<div class='rotate_text'>${geneId}</div>"
                                             headerClass='rotated_cell'
                                             style="background-color:${colorGenerator.getCellColourString(
-                                                        transcriptExpressions.getExpressionLevel(transcriptId, organismPart),
-                                                        minExpressionLevel, maxExpressionLevel)}">
+                                                        geneExpressions.getExpressionLevel(geneId, organismPart),
+                                                                             minExpressionLevel, maxExpressionLevel)}">
 
                             </display:column>
 
@@ -139,13 +139,14 @@
 
             </c:if>
 
-            <c:if test="${not empty transcriptExpressions}">
+            <c:if test="${not empty geneExpressions}">
 
                 <div id="expressions" class="block">
-                    <display:table name="${transcriptExpressions}" htmlId="expressions-table" id="transcriptExpression"
+                    <display:table name="${geneExpressions}" htmlId="expressions-table" id="geneExpressions"
                                    class="atlas-grid">
 
-                        <display:column title="Transcript id" property="transcriptId"/>
+                        <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
+                        <display:column title="${geneIdLabel}" property="geneId"/>
 
                         <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
                         <display:column title="${organismpart}" property="organismPart"/>
