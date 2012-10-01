@@ -82,6 +82,17 @@
                 path.attributes["style"].value="fill:none"
             });
         });
+
+        //mouseover event
+        $('#heatmap-table>tbody').mouseover(function (evt) {
+            var row = $(evt.target).parent('tr');  // Get the parent row
+            if (row.text()) {
+                var trimmed = row.text().replace(/^\s+|\s+$/g, '');
+                var arr = trimmed.split(" ");
+                var organism_part = arr[arr.length - 1];
+//                alert('Organism: ' + arr[arr.length -1]);
+            }
+        });
     </script>
 
 </head>
