@@ -49,6 +49,7 @@
 
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.8.2.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svgdom.js"></script>
 
     <script>
         function resetSize(svg, width, height) {
@@ -60,7 +61,7 @@
             $('#anatomogram').svg();
 
             var svg = $('#anatomogram').svg('get');
-            svg.load("${pageContext.request.contextPath}/resources/svg/fly_web.svg");
+            svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg");
 
             svg = $('#anatomogram').svg('get');
             $('#svgOne').click(function() {
@@ -71,6 +72,15 @@
                 svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg");
             });
 
+            $('#highlightPart').click(function() {
+                var path = svg.getElementById($('#partToBeHighlighted').val());
+                path.attributes["style"].value="fill:green"
+            });
+
+            $('#clearPart').click(function() {
+                var path = svg.getElementById($('#partToBeHighlighted').val());
+                path.attributes["style"].value="fill:none"
+            });
         });
     </script>
 
@@ -104,9 +114,12 @@
                                     <form:errors path="cutoff" cssClass="error"/>
                                 </td>
                                 <td rowspan="2" width="15%">
-                                    <input type="submit" value="Reload Page"/>
-                                    <input id="svgOne" type="button" value="Reload svg"/>
-                                    <input id="svgTwo" type="button" value="Unload svg"/>
+                                    <input type="submit" value="Reload Page"/><br/>
+                                    <input id="svgOne" type="button" value="fly svg"/><br/>
+                                    <input id="svgTwo" type="button" value="human svg"/><br/>
+                                    <input type="text" id="partToBeHighlighted" value="" length="15"/>
+                                    <input id="highlightPart" type="button" value="highlight part"/>
+                                    <input id="clearPart" type="button" value="clear part"/>
                                 </td>
                             </tr>
                             <tr>
