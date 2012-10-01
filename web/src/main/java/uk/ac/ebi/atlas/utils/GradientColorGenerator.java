@@ -32,10 +32,10 @@ public class GradientColorGenerator {
     // How many RGB steps there are between the high and low colours.
     private int colourValueDistance;
 
-    private double colourScale = SCALE_LINEAR;
+    private double colourScale = SCALE_LOGARITHMIC;
 
     public GradientColorGenerator() {
-        this(Color.WHITE, Color.RED);
+        this(Color.BLUE, Color.RED);
     }
 
     public GradientColorGenerator(Color lowValueColour, Color highValueColour) {
@@ -52,7 +52,7 @@ public class GradientColorGenerator {
     public String getCellColourString(String data, String min, String max) {
 
         if (StringUtils.isEmpty(data)) {
-            return colorToHexString(lowValueColour);
+            return colorToHexString(Color.WHITE);
         }
         Color cellColour = getCellColour(parseDouble(data), parseDouble(min), parseDouble(max));
 
