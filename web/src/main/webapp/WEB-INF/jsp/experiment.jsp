@@ -9,8 +9,6 @@
 
 <fmt:setBundle basename="bundles.labels" var="i18n"/>
 
-<!--jsp:useBean id="colourGradient" class="uk.ac.ebi.atlas.utils.ColourGradient" scope="page"/-->
-
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
 <head>
@@ -54,10 +52,6 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svgdom.js"></script>
 
-    <style type="text/css">
-        .fillGreen {fill:green;}
-
-    </style>
     <script>
         function resetSize(svg, width, height) {
             svg.configure({width:width || $(svg._container).width(),
@@ -68,7 +62,6 @@
             $('#anatomogram').svg();
 
             var svg = $('#anatomogram').svg('get');
-
             svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg");
 
             $('#svgOne').click(function () {
@@ -89,19 +82,26 @@
                 path.attributes["style"].value = "fill:none"
             });
 
-            $('#heatmap-table>tbody').mouseover(function (evt) {
+            $('.heatmaprow').mouseover(function (evt) {
+                setOrganismPartColor(evt, "green")
+            });
+
+            $('.heatmaprow').mouseout(function (evt) {
+                setOrganismPartColor(evt, "none")
+            });
+
+            function setOrganismPartColor(evt, color) {
                 var row = $(evt.target).parent('tr');  // Get the parent row
                 if (row.text()) {
-
                     var organism_part = row.find("td:last").html();
-                    var path = $($("#"+organism_part), svg.root());
-
+                    var path = svg.getElementById(organism_part);
                     if (path) {
-                        //ToDo: need to clear highlighting from previous organism part
-                        path.toggleClass("fillGreen");
+                        path.attributes["style"].value = "fill:" + color
                     }
                 }
-            });
+            }
+
+
         });
 
     </script>
@@ -198,12 +198,14 @@
 
                                 <display:column title="<div class='rotate_text'>${geneId}</div>"
                                                 headerClass='rotated_cell'
-                                                style="background-color:${cellColour};color:${cellColour};font-size:1px">
+                                                style="background-color:${cellColour};color:${cellColour};font-size:1px"
+                                                class="heatmaprow">
                                     <c:out value="${expressionLevel}"/>
                                 </display:column>
 
                             </c:forEach>
-                            <display:column title="" value="${organismPart}" style="font-weight: bold;"/>
+                            <display:column title="" value="${organismPart}" style="font-weight: bold;"
+                                            class="heatmaprow"/>
 
                         </display:table>
                     </div>
