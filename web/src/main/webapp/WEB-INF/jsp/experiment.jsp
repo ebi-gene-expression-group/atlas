@@ -85,19 +85,26 @@
                 path.attributes["style"].value = "fill:none"
             });
 
-            $('#heatmap-table>tbody').mouseover(function (evt) {
+            $('.heatmaprow').mouseover(function (evt) {
+                setOrganismPartColor(evt, "green")
+            });
+
+            $('.heatmaprow').mouseout(function (evt) {
+                setOrganismPartColor(evt, "none")
+            });
+
+            function setOrganismPartColor(evt, color) {
                 var row = $(evt.target).parent('tr');  // Get the parent row
                 if (row.text()) {
-
-                    var organism_part = row.find("td:last").html()
+                    var organism_part = row.find("td:last").html();
                     var path = svg.getElementById(organism_part);
-
                     if (path) {
-                        //ToDo: need to clear highlighting from previous organism part
-                        path.attributes["style"].value = "fill:green"
+                        path.attributes["style"].value = "fill:" + color
                     }
                 }
-            });
+            }
+
+
         });
 
     </script>
@@ -196,12 +203,14 @@
 
                                 <display:column title="<div class='rotate_text'>${geneId}</div>"
                                                 headerClass='rotated_cell'
-                                                style="background-color:${cellColour};color:${cellColour};font-size:1px">
+                                                style="background-color:${cellColour};color:${cellColour};font-size:1px"
+                                                class="heatmaprow">
                                     <c:out value="${expressionLevel}"/>
                                 </display:column>
 
                             </c:forEach>
-                            <display:column title="" value="${organismPart}" style="font-weight: bold;"/>
+                            <display:column title="" value="${organismPart}" style="font-weight: bold;"
+                                            class="heatmaprow"/>
 
                         </display:table>
                     </div>
