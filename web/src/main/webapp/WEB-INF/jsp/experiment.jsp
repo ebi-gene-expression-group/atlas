@@ -83,25 +83,38 @@
             });
 
             $('.heatmaprow').mouseover(function (evt) {
-                setOrganismPartColor(evt, "green")
+                changeOrganismPartColor(evt, "green")
             });
 
             $('.heatmaprow').mouseout(function (evt) {
-                setOrganismPartColor(evt, "none")
+                changeOrganismPartColor(evt, "grey")
             });
 
-            function setOrganismPartColor(evt, color) {
+            function changeOrganismPartColor(evt, color) {
                 var row = $(evt.target).parent('tr');  // Get the parent row
+
                 if (row.text()) {
-                    var organism_part = row.find("td:last").html();
-                    var path = svg.getElementById(organism_part);
-                    if (path) {
-                        path.attributes["style"].value = "fill:" + color
-                    }
+                    setOragnismPartColor(row.find("td:last").html(), color);
                 }
             }
 
+            function setOragnismPartColor(organism_part, color) {
+                var path = svg.getElementById(organism_part);
+                if (path) {
+                    path.attributes["style"].value = "fill:" + color
+                }
+            }
 
+            function showOrganismParts(arr) {
+                var substring = arr.substring(1, arr.length - 1);
+                var parts = arr.substring(1, arr.length - 1).split(", ");
+                for (var i = 0; i < parts.length; i++) {
+                    var part = parts[i];
+                    setOragnismPartColor(part, "grey")
+                }
+            }
+
+            showOrganismParts('${heatmapOrganismParts}');
         });
 
     </script>
@@ -168,7 +181,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="odd" >
+                            <tr class="odd">
                                 <td>
                                     <div style="color:white;background-color:${colourGradient.maxColourString}">
                                         <c:out value="${maxExpressionLevel}"/>
