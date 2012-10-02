@@ -58,23 +58,50 @@
                 height:height || $(svg._container).height()});
         }
 
+        function setOrganismPartColor(svg, organism_part, color) {
+            var path = svg.getElementById(organism_part);
+            if (path) {
+                path.attributes["style"].value = "fill:" + color
+            }
+        }
+
+        function changeOrganismPartColorByHeatmapRowSelection(svg, evt, color) {
+            var row = $(evt.target).parent('tr');  // Get the parent row
+
+            if (row.text()) {
+                setOrganismPartColor(svg, row.find("td:last").html(), color);
+            }
+        }
+
+        function showOrganismPart(svg, organismPart) {
+            setOrganismPartColor(svg, organismPart, "grey")
+        }
+
+        function showOrganismParts(svg){
+        <c:forEach var="organismPart" items="${heatmapOrganismParts}">
+            showOrganismPart(svg, '${organismPart}');
+        </c:forEach>
+        }
+
+
         $(document).ready(function () {
             $('#anatomogram').svg();
 
             var svg = $('#anatomogram').svg('get');
-            svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg");
+
+            svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg", {onLoad:showOrganismParts});
 
             $('#svgOne').click(function () {
-                svg.load("${pageContext.request.contextPath}/resources/svg/fly_web.svg");
+                svg.load("${pageContext.request.contextPath}/resources/svg/fly_web.svg", {onLoad:showOrganismParts});
             });
 
             $('#svgTwo').click(function () {
-                svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg");
+                svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg", {onLoad:showOrganismParts});
             });
 
             $('#highlightPart').click(function () {
                 var path = svg.getElementById($('#partToBeHighlighted').val());
-                path.attributes["style"].value = "fill:green"
+                path.attributes["style"].value = "fill:red"
             });
 
             $('#clearPart').click(function () {
@@ -83,38 +110,14 @@
             });
 
             $('.heatmaprow').mouseover(function (evt) {
-                changeOrganismPartColor(evt, "green")
+                changeOrganismPartColorByHeatmapRowSelection(svg, evt, "red")
             });
 
             $('.heatmaprow').mouseout(function (evt) {
-                changeOrganismPartColor(evt, "grey")
+                changeOrganismPartColorByHeatmapRowSelection(svg, evt, "grey")
             });
 
-            function changeOrganismPartColor(evt, color) {
-                var row = $(evt.target).parent('tr');  // Get the parent row
 
-                if (row.text()) {
-                    setOragnismPartColor(row.find("td:last").html(), color);
-                }
-            }
-
-            function setOragnismPartColor(organism_part, color) {
-                var path = svg.getElementById(organism_part);
-                if (path) {
-                    path.attributes["style"].value = "fill:" + color
-                }
-            }
-
-            function showOrganismParts(arr) {
-                var substring = arr.substring(1, arr.length - 1);
-                var parts = arr.substring(1, arr.length - 1).split(", ");
-                for (var i = 0; i < parts.length; i++) {
-                    var part = parts[i];
-                    setOragnismPartColor(part, "grey")
-                }
-            }
-
-            showOrganismParts('${heatmapOrganismParts}');
         });
 
     </script>
@@ -127,6 +130,7 @@
 <!-- old style start -->
 
 <%@ include file="layout/old/header.jsp" %>
+
 
 <div id="centeredMain">
     <div class="ae_pagecontainer">
@@ -166,7 +170,6 @@
                     </table>
                 </form:form>
             </div>
-
 
             <c:if test="${not empty heatmapGenes}">
 
