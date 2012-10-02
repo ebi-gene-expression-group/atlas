@@ -175,26 +175,38 @@
                     <div id="gradientLegenda" class="block">
                         <table id="heatmap-legenda" class="atlas-grid">
                             <thead>
-                            <tr>
-                                <th>Max</th>
-                                <th>Min</th>
-                            </tr>
+                                <tr>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr class="odd">
-                                <td>
-                                    <div style="color:white;background-color:${colourGradient.maxColourString}">
-                                        <c:out value="${maxExpressionLevel}"/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="color:white;background-color:${colourGradient.minColourString}">
-                                        <c:out value="${minExpressionLevel}"/>
-                                    </div>
-                                </td>
-                            </tr>
+                                <tr class="odd">
+                                    <td>
+                                        <div style="color:white;background-color:${colourGradient.minColourString}">
+                                            <c:out value="${minExpressionLevel}"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="color:white;background-color:${colourGradient.maxColourString}">
+                                            <c:out value="${maxExpressionLevel}"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr><td colspan="2">
+                                        <div style="height:30;
+
+                                            background-image: -webkit-gradient(linear, left top, right top,color-stop(0, blue), color-stop(1, red));
+
+                                            background-image: -moz-linear-gradient(left, blue, red);
+
+                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=#FF0000,endColorstr=#0000FF);">&nbsp;</div>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
+
 
                     <div id="anatomogram" style="width: 400px; height: 300px;float:left">
                     </div>
