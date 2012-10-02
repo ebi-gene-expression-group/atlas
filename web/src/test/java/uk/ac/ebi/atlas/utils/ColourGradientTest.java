@@ -8,23 +8,34 @@ import java.awt.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class GradientColorGeneratorTest {
+public class ColourGradientTest {
 
-    GradientColorGenerator subject;
+    ColourGradient subject;
 
     @Before
     public void initSubject() {
-        this.subject = new GradientColorGenerator();
+        this.subject = new ColourGradient(Color.WHITE, Color.RED, Color.WHITE, 0.3d);
+        //subject.setColourValueDistance(510);
+
     }
 
     @Test
     public void testCalculateColourDistance() throws Exception {
+        subject.setLowValueColour(new Color(255, 0, 0));
+        subject.setHighValueColour(new Color(255, 255, 255));
+        assertThat(subject.getColourDistance(), is(510));
 
-        assertThat(subject.calculateColourDistance(new Color(255, 255, 255), new Color(255, 0, 0)), is(510));
-        assertThat(subject.calculateColourDistance(new Color(255, 255, 255), new Color(0, 0, 0)), is(765));
-        assertThat(subject.calculateColourDistance(new Color(255, 255, 255), new Color(255, 255, 255)), is(0));
+        subject.setLowValueColour(new Color(0, 0, 0));
+        subject.setHighValueColour(new Color(255, 255, 255));
+        assertThat(subject.getColourDistance(), is(765));
 
-        assertThat(subject.calculateColourDistance(new Color(0, 0, 0), new Color(255, 255, 255)), is(765));
+        subject.setLowValueColour(new Color(255, 255, 255));
+        subject.setHighValueColour(new Color(255, 255, 255));
+        assertThat(subject.getColourDistance(), is(0));
+
+        subject.setLowValueColour(new Color(255, 255, 255));
+        subject.setHighValueColour(new Color(0, 0, 0));
+        assertThat(subject.calculateColourDistance(), is(765));
     }
 
     @Test
@@ -38,21 +49,23 @@ public class GradientColorGeneratorTest {
     public void testGetColourPositionLogScale() throws Exception {
 
         //given
-        subject.setColourScale(GradientColorGenerator.SCALE_LOGARITHMIC);
+        subject.setColourScale(ColourGradient.SCALE_LOGARITHMIC);
 
-        assertThat(subject.getColourPosition(0.5, 510), is(414));
-        assertThat(subject.getColourPosition(0.0, 510), is(0));
-        assertThat(subject.getColourPosition(1.0, 510), is(510));
+
+
+        assertThat(subject.getColourPosition(0.5), is(414));
+        assertThat(subject.getColourPosition(0.0), is(0));
+        assertThat(subject.getColourPosition(1.0), is(510));
     }
 
     @Test
     public void testGetColourPositionLinearScale() throws Exception {
         //given
-        subject.setColourScale(GradientColorGenerator.SCALE_LINEAR);
+        subject.setColourScale(ColourGradient.SCALE_LINEAR);
 
-        assertThat(subject.getColourPosition(0.5, 510), is(255));
-        assertThat(subject.getColourPosition(0.0, 510), is(0));
-        assertThat(subject.getColourPosition(1.0, 510), is(510));
+        assertThat(subject.getColourPosition(0.5), is(255));
+        assertThat(subject.getColourPosition(0.0), is(0));
+        assertThat(subject.getColourPosition(1.0), is(510));
     }
 
     @Test
@@ -90,7 +103,8 @@ public class GradientColorGeneratorTest {
 
     @Test
     public void testGetCellColourStringWithEmptyData() throws Exception {
-        subject = new GradientColorGenerator(Color.WHITE, Color.RED);
+        subject.setLowValueColour(Color.white);
+        subject.setHighValueColour(Color.red);
         subject.getCellColourString(null, "1", "5");
         assertThat(subject.getCellColourString(null, "1", "5"), is("#FFFFFF"));
     }

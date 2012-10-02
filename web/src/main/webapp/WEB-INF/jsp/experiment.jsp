@@ -9,7 +9,7 @@
 
 <fmt:setBundle basename="bundles.labels" var="i18n"/>
 
-<jsp:useBean id="colorGenerator" class="uk.ac.ebi.atlas.utils.GradientColorGenerator" scope="page"/>
+<!--jsp:useBean id="colourGradient" class="uk.ac.ebi.atlas.utils.ColourGradient" scope="page"/-->
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
@@ -54,6 +54,10 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svgdom.js"></script>
 
+    <style type="text/css">
+        .fillGreen {fill:green;}
+
+    </style>
     <script>
         function resetSize(svg, width, height) {
             svg.configure({width:width || $(svg._container).width(),
@@ -64,9 +68,9 @@
             $('#anatomogram').svg();
 
             var svg = $('#anatomogram').svg('get');
+
             svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg");
 
-            svg = $('#anatomogram').svg('get');
             $('#svgOne').click(function () {
                 svg.load("${pageContext.request.contextPath}/resources/svg/fly_web.svg");
             });
@@ -89,12 +93,12 @@
                 var row = $(evt.target).parent('tr');  // Get the parent row
                 if (row.text()) {
 
-                    var organism_part = row.find("td:last").html()
-                    var path = svg.getElementById(organism_part);
+                    var organism_part = row.find("td:last").html();
+                    var path = $($("#"+organism_part), svg.root());
 
                     if (path) {
                         //ToDo: need to clear highlighting from previous organism part
-                        path.attributes["style"].value = "fill:green"
+                        path.toggleClass("fillGreen");
                     }
                 }
             });
@@ -164,16 +168,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="odd">
+                            <tr class="odd" >
                                 <td>
-                                    <div style="background-color:${colorGenerator.getCellColourString(maxExpressionLevel,
-                                                         minExpressionLevel, maxExpressionLevel)}">
+                                    <div style="color:white;background-color:${colourGradient.maxColourString}">
                                         <c:out value="${maxExpressionLevel}"/>
                                     </div>
                                 </td>
                                 <td>
-                                    <div style="background-color:${colorGenerator.getCellColourString(minExpressionLevel,
-                                                                     minExpressionLevel, maxExpressionLevel)}">
+                                    <div style="color:white;background-color:${colourGradient.minColourString}">
                                         <c:out value="${minExpressionLevel}"/>
                                     </div>
                                 </td>
@@ -192,7 +194,7 @@
                                 <c:set var="expressionLevel"
                                        value="${geneExpressions.getExpressionLevel(geneId, organismPart)}"/>
                                 <c:set var="cellColour"
-                                       value="${colorGenerator.getCellColourString(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
+                                       value="${colourGradient.getCellColourString(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
 
                                 <display:column title="<div class='rotate_text'>${geneId}</div>"
                                                 headerClass='rotated_cell'

@@ -2,62 +2,90 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.awt.*;
 
 import static java.lang.Double.parseDouble;
 
-public class GradientColorGenerator {
+@Named("colourGradient")
+@Scope("prototype")
+public class ColourGradient {
 
-    /**
-     * A basic logarithmic scale value of 0.3.
-     */
-    public static final double SCALE_LOGARITHMIC = 0.3;
+    protected static final double SCALE_LOGARITHMIC = 0.3;
 
-    /**
-     * The linear scale value of 1.0.
-     */
-    public static final double SCALE_LINEAR = 1.0;
+    protected static final double SCALE_LINEAR = 1.0;
 
-    /**
-     * A basic exponential scale value of 3.0.
-     */
-    public static final double SCALE_EXPONENTIAL = 3;
+    protected static final double SCALE_EXPONENTIAL = 3;
 
     // Heat map colour settings.
     private Color highValueColour;
     private Color lowValueColour;
+    private Color blankValueColour;
 
+    private double colourScale;
 
     // How many RGB steps there are between the high and low colours.
-    private int colourValueDistance;
+    private int colourDistance;
 
-    private double colourScale = SCALE_LOGARITHMIC;
+    @Inject
+    public ColourGradient(@Value("#{configuration['gradient.startColour']}") Color startColour,
+                          @Value("#{configuration['gradient.endColour']}") Color endColour,
+                          @Value("#{configuration['gradient.blankColour']}") Color blankColour,
+                          @Value("#{configuration['gradient.colourScale']}") double colourScale) {
 
-    public GradientColorGenerator() {
-        this(Color.BLUE, Color.RED);
-    }
-
-    public GradientColorGenerator(Color lowValueColour, Color highValueColour) {
-        this.highValueColour = highValueColour;
-        this.lowValueColour = lowValueColour;
-
-        this.colourValueDistance = calculateColourDistance(lowValueColour, highValueColour);
-    }
-
-    public void setColourScale(double colourScale) {
+        this.lowValueColour = startColour;
+        this.highValueColour = endColour;
+        this.blankValueColour = blankColour;
         this.colourScale = colourScale;
+        this.colourDistance = calculateColourDistance();
+
+    }
+
+    protected int getColourDistance(){
+        return colourDistance;
+    }
+
+    protected void setColourScale(double colourScale){
+        this.colourScale = colourScale;
+
+    }
+
+    public void setLowValueColour(Color colour){
+        this.lowValueColour = colour;
+        this.colourDistance = calculateColourDistance();
+    }
+
+    public void setHighValueColour(Color colour){
+        this.highValueColour = colour;
+        this.colourDistance = calculateColourDistance();
+    }
+
+    public void setBlankValueColour(Color colour){
+        this.blankValueColour = colour;
     }
 
     public String getCellColourString(String data, String min, String max) {
 
         if (StringUtils.isEmpty(data)) {
-            return colorToHexString(Color.WHITE);
+            return colorToHexString(blankValueColour);
         }
         Color cellColour = getCellColour(parseDouble(data), parseDouble(min), parseDouble(max));
 
         return colorToHexString(cellColour);
     }
+
+    public String getMaxColourString() {
+        return colorToHexString(highValueColour);
+    }
+
+    public String getMinColourString() {
+        return colorToHexString(lowValueColour);
+    }
+
 
     /*
     * Determines what colour a heat map cell should be based upon the cell
@@ -69,10 +97,12 @@ public class GradientColorGenerator {
         double percentPosition = calculatePercentPosition(data, min, max);
 
         // Which colour group does that put us in.
-        int colourPosition = getColourPosition(percentPosition, colourValueDistance);
+        int colourPosition = getColourPosition(percentPosition);
 
         return calculateColorForPosition(colourPosition, lowValueColour, highValueColour);
     }
+
+
 
     /**
      * Calculates what proportion of the way through the possible values is that.
@@ -122,10 +152,10 @@ public class GradientColorGenerator {
     * depending on the colour scale used: LINEAR, LOGARITHMIC, EXPONENTIAL.
     */
 
-    protected int getColourPosition(double percentPosition, int colourValueDistance) {
+    protected int getColourPosition(double percentPosition) {
         Preconditions.checkArgument(percentPosition >= 0 && percentPosition <= 1);
 
-        return (int) Math.round(colourValueDistance * Math.pow(percentPosition, colourScale));
+        return (int) Math.round(colourDistance * Math.pow(percentPosition, colourScale));
     }
 
     protected int updateColourValue(int colourValue, int colourDistance) {
@@ -147,7 +177,7 @@ public class GradientColorGenerator {
     * green and blue. So the maximum colour distance is 255 + 255 + 255.
     */
 
-    protected int calculateColourDistance(Color lowValueColour, Color highValueColour) {
+    protected int calculateColourDistance() {
         int r1 = lowValueColour.getRed();
         int g1 = lowValueColour.getGreen();
         int b1 = lowValueColour.getBlue();
@@ -155,11 +185,11 @@ public class GradientColorGenerator {
         int g2 = highValueColour.getGreen();
         int b2 = highValueColour.getBlue();
 
-        colourValueDistance = Math.abs(r1 - r2);
-        colourValueDistance += Math.abs(g1 - g2);
-        colourValueDistance += Math.abs(b1 - b2);
+        colourDistance = Math.abs(r1 - r2);
+        colourDistance += Math.abs(g1 - g2);
+        colourDistance += Math.abs(b1 - b2);
 
-        return colourValueDistance;
+        return colourDistance;
     }
 
     protected String colorToHexString(Color colour) {
