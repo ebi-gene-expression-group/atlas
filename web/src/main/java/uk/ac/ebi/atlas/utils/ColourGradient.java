@@ -68,21 +68,21 @@ public class ColourGradient {
         this.blankValueColour = colour;
     }
 
-    public String getCellColourString(String data, String min, String max) {
+    public String getGradientColour(String data, String min, String max) {
 
         if (StringUtils.isEmpty(data)) {
             return colorToHexString(blankValueColour);
         }
-        Color cellColour = getCellColour(parseDouble(data), parseDouble(min), parseDouble(max));
+        Color cellColour = getGradientColour(parseDouble(data), parseDouble(min), parseDouble(max));
 
         return colorToHexString(cellColour);
     }
 
-    public String getMaxColourString() {
+    public String getMaxColour() {
         return colorToHexString(highValueColour);
     }
 
-    public String getMinColourString() {
+    public String getMinColour() {
         return colorToHexString(lowValueColour);
     }
 
@@ -92,7 +92,7 @@ public class ColourGradient {
     * values.
     */
 
-    protected Color getCellColour(double data, double min, double max) {
+    protected Color getGradientColour(double data, double min, double max) {
 
         double percentPosition = calculatePercentPosition(data, min, max);
 

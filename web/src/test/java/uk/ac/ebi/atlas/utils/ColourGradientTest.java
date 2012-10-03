@@ -105,7 +105,7 @@ public class ColourGradientTest {
     public void testGetCellColourStringWithEmptyData() throws Exception {
         subject.setLowValueColour(Color.white);
         subject.setHighValueColour(Color.red);
-        subject.getCellColourString(null, "1", "5");
-        assertThat(subject.getCellColourString(null, "1", "5"), is("#FFFFFF"));
+        subject.getGradientColour(null, "1", "5");
+        assertThat(subject.getGradientColour(null, "1", "5"), is("#FFFFFF"));
     }
 }

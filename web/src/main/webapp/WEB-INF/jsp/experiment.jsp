@@ -121,7 +121,7 @@
                 <div id="anatomogramAndMatrix" class="block">
 
                     <div id="gradientLegenda" class="block">
-                        <table id="heatmap-legenda" class="atlas-grid">
+                        <table id="heatmap-legenda" class="atlas-grid" style="width:100">
                             <thead>
                             <tr>
                                 <th>Min</th>
@@ -131,12 +131,12 @@
                             <tbody>
                             <tr class="odd">
                                 <td>
-                                    <div style="color:white;background-color:${colourGradient.minColourString}">
+                                    <div style="color:white;background-color:${colourGradient.minColour}">
                                         <c:out value="${minExpressionLevel}"/>
                                     </div>
                                 </td>
                                 <td>
-                                    <div style="color:white;background-color:${colourGradient.maxColourString}">
+                                    <div style="color:white;background-color:${colourGradient.maxColour}">
                                         <c:out value="${maxExpressionLevel}"/>
                                     </div>
                                 </td>
@@ -144,11 +144,11 @@
                             <tr><td colspan="2">
                                 <div style="height:30;
 
-                                            background-image: -webkit-gradient(linear, left top, right top,color-stop(0, blue), color-stop(1, red));
+                                            background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
-                                            background-image: -moz-linear-gradient(left, blue, red);
+                                            background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=#FF0000,endColorstr=#0000FF);">&nbsp;</div>
+                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">&nbsp;</div>
                             </td>
                             </tr>
                             </tbody>
@@ -167,7 +167,7 @@
                                 <c:set var="expressionLevel"
                                        value="${geneExpressions.getExpressionLevel(geneId, organismPart)}"/>
                                 <c:set var="cellColour"
-                                       value="${colourGradient.getCellColourString(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
+                                       value="${colourGradient.getGradientColour(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
 
                                 <display:column title="<div class='rotate_text'>${geneId}</div>"
                                                 headerClass='rotated_cell'
