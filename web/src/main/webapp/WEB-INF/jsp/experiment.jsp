@@ -103,9 +103,6 @@
                                 <input type="submit" value="Reload Page"/><br/>
                                 <input id="svgOne" type="button" value="fly svg"/><br/>
                                 <input id="svgTwo" type="button" value="human svg"/><br/>
-                                <input type="text" id="partToBeHighlighted" value="" length="15"/>
-                                <input id="highlightPart" type="button" value="highlight part"/>
-                                <input id="clearPart" type="button" value="clear part"/>
                             </td>
                         </tr>
                         <tr>

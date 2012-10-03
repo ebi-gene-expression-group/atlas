@@ -14,34 +14,18 @@ function changeOrganismPartColorByHeatmapRowSelection(svg, evt, color) {
 
 function initAnatomogram(organismParts){
 
-    function showOrganismParts(){
-        $.each(organismParts, function() {
-            setOrganismPartColor(svg, this, "grey");
-        });
-    }
-
     $('#anatomogram').svg();
 
     var svg = $('#anatomogram').svg('get');
 
-    svg.load("resources/svg/Human_web.svg", {onLoad:showOrganismParts});
+    loadAnatomogram("resources/svg/Human_web.svg");
 
     $('#svgOne').click(function () {
-        svg.load("resources/svg/fly_web.svg", {onLoad:showOrganismParts});
+        loadAnatomogram("resources/svg/fly_web.svg");
     });
 
     $('#svgTwo').click(function () {
-        svg.load("resources/svg/Human_web.svg", {onLoad:showOrganismParts});
-    });
-
-    $('#highlightPart').click(function () {
-        var path = svg.getElementById($('#partToBeHighlighted').val());
-        path.attributes["style"].value = "fill:red"
-    });
-
-    $('#clearPart').click(function () {
-        var path = svg.getElementById($('#partToBeHighlighted').val());
-        path.attributes["style"].value = "fill:none"
+        loadAnatomogram("resources/svg/Human_web.svg");
     });
 
     $('.heatmaprow').mouseover(function (evt) {
@@ -51,5 +35,17 @@ function initAnatomogram(organismParts){
     $('.heatmaprow').mouseout(function (evt) {
         changeOrganismPartColorByHeatmapRowSelection(svg, evt, "grey")
     });
+
+    //load anatomogram from given location and display given organism parts
+    function displayOrganismParts(){
+        $.each(organismParts, function() {
+            setOrganismPartColor(svg, this, "grey");
+        });
+    }
+
+    //load anatomogram from given location and display given organism parts
+    function loadAnatomogram(location){
+        svg.load(location, {onLoad:displayOrganismParts});
+    }
 
 }
