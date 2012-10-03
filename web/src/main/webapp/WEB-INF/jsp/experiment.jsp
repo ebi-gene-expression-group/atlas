@@ -159,7 +159,7 @@
                     </div>
 
 
-                    <div id="anatomogram" style="width: 400px; height: 300px;float:left">
+                    <div id="anatomogram" style="width: 300px; height: 300px;float:left">
                     </div>
 
                     <div id="heatmap" class="block">
