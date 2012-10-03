@@ -51,72 +51,20 @@
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svgdom.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
 
     <script>
-        function resetSize(svg, width, height) {
-            svg.configure({width:width || $(svg._container).width(),
-                height:height || $(svg._container).height()});
-        }
-
-        function setOrganismPartColor(svg, organism_part, color) {
-            var path = svg.getElementById(organism_part);
-            if (path) {
-                path.attributes["style"].value = "fill:" + color
-            }
-        }
-
-        function changeOrganismPartColorByHeatmapRowSelection(svg, evt, color) {
-            var row = $(evt.target).parent('tr');  // Get the parent row
-
-            if (row.text()) {
-                setOrganismPartColor(svg, row.find("td:last").html(), color);
-            }
-        }
-
-        function showOrganismPart(svg, organismPart) {
-            setOrganismPartColor(svg, organismPart, "grey")
-        }
-
-        function showOrganismParts(svg){
-        <c:forEach var="organismPart" items="${heatmapOrganismParts}">
-            showOrganismPart(svg, '${organismPart}');
-        </c:forEach>
-        }
-
 
         $(document).ready(function () {
-            $('#anatomogram').svg();
 
-            var svg = $('#anatomogram').svg('get');
+            var organismParts= [${heatmapOrganismParts.size()}];
 
-            svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg", {onLoad:showOrganismParts});
+            <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
+            organismParts[${i.index}]='${organismPart}';
+            </c:forEach>
 
-            $('#svgOne').click(function () {
-                svg.load("${pageContext.request.contextPath}/resources/svg/fly_web.svg", {onLoad:showOrganismParts});
-            });
-
-            $('#svgTwo').click(function () {
-                svg.load("${pageContext.request.contextPath}/resources/svg/Human_web.svg", {onLoad:showOrganismParts});
-            });
-
-            $('#highlightPart').click(function () {
-                var path = svg.getElementById($('#partToBeHighlighted').val());
-                path.attributes["style"].value = "fill:red"
-            });
-
-            $('#clearPart').click(function () {
-                var path = svg.getElementById($('#partToBeHighlighted').val());
-                path.attributes["style"].value = "fill:none"
-            });
-
-            $('.heatmaprow').mouseover(function (evt) {
-                changeOrganismPartColorByHeatmapRowSelection(svg, evt, "red")
-            });
-
-            $('.heatmaprow').mouseout(function (evt) {
-                changeOrganismPartColorByHeatmapRowSelection(svg, evt, "grey")
-            });
-
+            initAnatomogram(organismParts);
 
         });
 
@@ -178,34 +126,34 @@
                     <div id="gradientLegenda" class="block">
                         <table id="heatmap-legenda" class="atlas-grid">
                             <thead>
-                                <tr>
-                                    <th>Min</th>
-                                    <th>Max</th>
-                                </tr>
+                            <tr>
+                                <th>Min</th>
+                                <th>Max</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd">
-                                    <td>
-                                        <div style="color:white;background-color:${colourGradient.minColourString}">
-                                            <c:out value="${minExpressionLevel}"/>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div style="color:white;background-color:${colourGradient.maxColourString}">
-                                            <c:out value="${maxExpressionLevel}"/>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr><td colspan="2">
-                                        <div style="height:30;
+                            <tr class="odd">
+                                <td>
+                                    <div style="color:white;background-color:${colourGradient.minColourString}">
+                                        <c:out value="${minExpressionLevel}"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="color:white;background-color:${colourGradient.maxColourString}">
+                                        <c:out value="${maxExpressionLevel}"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><td colspan="2">
+                                <div style="height:30;
 
                                             background-image: -webkit-gradient(linear, left top, right top,color-stop(0, blue), color-stop(1, red));
 
                                             background-image: -moz-linear-gradient(left, blue, red);
 
                                             filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=#FF0000,endColorstr=#0000FF);">&nbsp;</div>
-                                    </td>
-                                </tr>
+                            </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
