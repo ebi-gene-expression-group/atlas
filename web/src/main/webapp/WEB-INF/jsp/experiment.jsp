@@ -56,17 +56,22 @@
 
     <script>
 
-        $(document).ready(function () {
+        (function($) { //self invoking wrapper function that prevents $ namespace conflicts
 
-            var organismParts= [${heatmapOrganismParts.size()}];
+            $(document).ready(function () {
 
-            <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
-            organismParts[${i.index}]='${organismPart}';
-            </c:forEach>
+                var organismParts= [${heatmapOrganismParts.size()}];
 
-            initAnatomogram(organismParts);
+                <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
+                organismParts[${i.index}]='${organismPart}';
+                </c:forEach>
 
-        });
+                initAnatomogram(organismParts);
+
+            });
+
+        })(jQuery);
+
 
     </script>
 
