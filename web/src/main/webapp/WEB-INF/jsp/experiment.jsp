@@ -50,9 +50,41 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svgdom.js"></script>
-    <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.8.24.custom.css">
+
+
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.24.custom.min.js"></script>
+
+
+    <style>
+        #demo-frame > div.demo { padding: 10px !important; }
+    </style>
+
+    <script>
+        (function($){
+            $(function() {
+                $( "#slider-range-max" ).slider({
+                    range: "max",
+                    min: 0,
+                    max: ${maxExpressionLevel},
+                    value: ${preferences.cutoff},
+                    slide: function( event, ui ) {
+                        $( "#amount" ).val( ui.value );
+                        $( "#cutoff" ).val(ui.value);
+                    },
+                    change: function(event, ui) {
+                        location.replace('${pageContext.request.contextPath}/experiment?cutoff='
+                                            +ui.value+'&rankingSize=${preferences.rankingSize}&heatmapMatrixSize=${preferences.heatmapMatrixSize}');
+                    }
+                });
+                $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+
+            });
+        })(jQuery);
+    </script>
 
     <script>
 
@@ -199,24 +231,44 @@
                 </div>
             </c:if>
 
+
             <c:if test="${not empty geneExpressions}">
 
-                <div id="expressions" class="block" style="clear:both">
-                    <display:table name="${geneExpressions}" htmlId="expressions-table" id="geneExpressions"
-                                   class="atlas-grid">
+                <div id="expressions" class="block" style="width:50%;clear:both">
 
-                        <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
-                        <display:column title="${geneIdLabel}" property="geneId"/>
 
-                        <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
-                        <display:column title="${organismpart}" property="organismPart"/>
+                    <div class="demo">
 
-                        <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
-                        <display:column title="${measurement}" property="level"/>
+                        <p>
+                            <label for="amount">Expression Level Cutoff:</label>
+                            <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+                        </p>
+                        <div id="slider-range-max"></div>
 
-                        <display:column title="Specificity" property="specificity"/>
+                    </div>
 
-                    </display:table>
+                    <br/>
+                    <br/>
+
+                    <div>
+
+                        <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table" id="geneExpressions"
+                                       class="atlas-grid">
+
+                            <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
+                            <display:column title="${geneIdLabel}" property="geneId"/>
+
+                            <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
+                            <display:column title="${organismpart}" property="organismPart"/>
+
+                            <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
+                            <display:column title="${measurement}" property="level"/>
+
+                            <display:column title="Specificity" property="specificity"/>
+
+                        </display:table>
+
+                    </div>
                 </div>
 
             </c:if>

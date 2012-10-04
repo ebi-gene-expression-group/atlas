@@ -12,7 +12,6 @@ function changeOrganismPartColorByHeatmapRowSelection(svg, evt, color) {
 }
 
 function initAnatomogram(organismParts) {
-
     var svg = $('#anatomogram').svg().svg('get');
 
     loadAnatomogram("resources/svg/Human_web.svg");
