@@ -72,7 +72,7 @@
                 $( "#slider-range-max" ).slider({
                     range: "max",
                     min: 0,
-                    max: ${maxExpressionLevel},
+                    max: 71047.7,
                     value: ${preferences.cutoff},
                     slide: function( event, ui ) {
                         $( "#amount" ).val( ui.value );
