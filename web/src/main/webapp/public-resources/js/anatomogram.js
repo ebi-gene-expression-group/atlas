@@ -1,4 +1,3 @@
-
 function setOrganismPartColor(svg, organism_part, color) {
     var path = svg.getElementById(organism_part);
     if (path != null) {
@@ -12,7 +11,7 @@ function changeOrganismPartColorByHeatmapRowSelection(svg, evt, color) {
     setOrganismPartColor(svg, row.find("td:last").html(), color);
 }
 
-function initAnatomogram(organismParts){
+function initAnatomogram(organismParts) {
 
     var svg = $('#anatomogram').svg().svg('get');
 
@@ -35,14 +34,14 @@ function initAnatomogram(organismParts){
     });
 
     //load anatomogram from given location and display given organism parts
-    function displayOrganismParts(){
-        $.each(organismParts, function() {
+    function displayOrganismParts() {
+        $.each(organismParts, function () {
             setOrganismPartColor(svg, this, "grey");
         });
     }
 
     //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(location){
+    function loadAnatomogram(location) {
         svg.load(location, {onLoad:displayOrganismParts});
     }
 
