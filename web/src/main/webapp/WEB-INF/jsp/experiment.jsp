@@ -66,12 +66,14 @@
                 organismParts[${i.index}] = '${organismPart}';
                 </c:forEach>
 
-                initAnatomogram(organismParts);
-
+                //disable vertical header and anatomogram in IE
                 if ($.browser.msie) {
                     $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
                     $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
                     $("#anatomogram").hide();
+
+                } else {
+                    initAnatomogram(organismParts);
                 }
 
 
