@@ -45,7 +45,6 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
 
-
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.2.min.js"></script>
     <script language="JavaScript" type="text/javascript"
@@ -57,26 +56,28 @@
 
     <script>
 
-        $(document).ready(function () {
+        (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
-            var organismParts = [${heatmapOrganismParts.size()}];
+            $(document).ready(function () {
 
-            <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
-            organismParts[${i.index}] = '${organismPart}';
-            </c:forEach>
+                var organismParts = [${heatmapOrganismParts.size()}];
 
-            initAnatomogram(organismParts);
+                <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
+                organismParts[${i.index}] = '${organismPart}';
+                </c:forEach>
 
-        });
+                initAnatomogram(organismParts);
 
-    </script>
+                if ($.browser.msie) {
+                    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+                    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
+                    $("#anatomogram").hide();
+                }
 
-    <script type="text/javascript">
-        if ($.browser.msie) {
-            $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
-            $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
-            $("#anatomogram").hide();
-        }
+
+            });
+
+        })(jQuery);
 
     </script>
 
@@ -131,7 +132,7 @@
                 <div id="anatomogramAndMatrix" class="block">
 
                     <div id="gradientLegenda" class="block">
-                        <table id="heatmap-legenda" class="atlas-grid" style="width:100">
+                        <table id="heatmap-legenda" class="atlas-grid" style="width:250px">
                             <thead>
                             <tr>
                                 <th>Min</th>
