@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 public class Preferences {
 
-    private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 3;
+    private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 10;
     private static final int DEFAULT_RANKING_SIZE = 100;
     private static final double DEFAULT_CUTOFF = 0d;
 
