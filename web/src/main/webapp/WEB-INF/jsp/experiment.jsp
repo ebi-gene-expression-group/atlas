@@ -126,7 +126,7 @@
                 <div id="anatomogramAndMatrix" class="block">
 
                     <div id="gradientLegenda" class="block">
-                        <table id="heatmap-legenda" class="atlas-grid" style="width:100">
+                        <table id="heatmap-legenda" class="atlas-grid" style="width:250px">
                             <thead>
                             <tr>
                                 <th>Min</th>
