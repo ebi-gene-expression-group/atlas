@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -18,8 +20,9 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="en-GB" http-equiv="Content-Language">
     <meta content="_top" http-equiv="Window-target">
-    <meta content="IE=7" http-equiv="X-UA-Compatible">
+    <%--<meta content="IE=7" http-equiv="X-UA-Compatible">--%>
     <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
+    <meta content="IE=9" http-equiv="X-UA-Compatible"/>
 
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
@@ -98,12 +101,16 @@
                 organismParts[${i.index}] = '${organismPart}';
                 </c:forEach>
 
-                initAnatomogram(organismParts);
-
+                //disable vertical header and anatomogram in IE
                 if ($.browser.msie) {
+                    if ($.browser.version <= 8.0) {
+                        $("#anatomogram").hide();
+                    }
                     $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
                     $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
-                    $("#anatomogram").hide();
+
+                } else {
+                    initAnatomogram(organismParts);
                 }
 
 
