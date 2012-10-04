@@ -45,6 +45,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
 
+
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.2.min.js"></script>
     <script language="JavaScript" type="text/javascript"
@@ -58,15 +59,24 @@
 
         $(document).ready(function () {
 
-            var organismParts= [${heatmapOrganismParts.size()}];
+            var organismParts = [${heatmapOrganismParts.size()}];
 
             <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
-            organismParts[${i.index}]='${organismPart}';
+            organismParts[${i.index}] = '${organismPart}';
             </c:forEach>
 
             initAnatomogram(organismParts);
 
         });
+
+    </script>
+
+    <script type="text/javascript">
+        if ($.browser.msie) {
+            $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+            $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
+            $("#anatomogram").hide();
+        }
 
     </script>
 
@@ -141,15 +151,17 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr><td colspan="2">
-                                <div style="height:30;
+                            <tr>
+                                <td colspan="2">
+                                    <div style="height:30;
 
                                             background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
                                             background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">&nbsp;</div>
-                            </td>
+                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                        &nbsp;</div>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
