@@ -29,8 +29,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-ebi.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-grid.css">
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/old/atlas-searchform.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-searchform.css">
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
     <link rel="SHORTCUT ICON" href="http://www.ebi.ac.uk/bookmark.ico"/>
 
@@ -47,6 +46,7 @@
     <title>Experiment</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/anatomogram.css">
 
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.2.min.js"></script>
@@ -66,28 +66,6 @@
         #demo-frame > div.demo { padding: 10px !important; }
     </style>
 
-    <script>
-        (function($){
-            $(function() {
-                $( "#slider-range-max" ).slider({
-                    range: "max",
-                    min: 0,
-                    max: 71047.7,
-                    value: ${preferences.cutoff},
-                    slide: function( event, ui ) {
-                        $( "#amount" ).val( ui.value );
-                        $( "#cutoff" ).val(ui.value);
-                    },
-                    change: function(event, ui) {
-                        location.replace('${pageContext.request.contextPath}/experiment?cutoff='
-                                            +ui.value+'&rankingSize=${preferences.rankingSize}&heatmapMatrixSize=${preferences.heatmapMatrixSize}');
-                    }
-                });
-                $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
-
-            });
-        })(jQuery);
-    </script>
 
     <script>
 
@@ -120,6 +98,28 @@
 
     </script>
 
+    <script>
+        (function($){
+            $(function() {
+                $( "#slider-range-max" ).slider({
+                    range: "max",
+                    min: 0,
+                    max: 71047.7,
+                    value: ${preferences.cutoff},
+                    slide: function( event, ui ) {
+                        $( "#amount" ).val( ui.value );
+                        $( "#cutoff" ).val(ui.value);
+                    },
+                    change: function(event, ui) {
+                        location.replace('${pageContext.request.contextPath}/experiment?cutoff='
+                                +ui.value+'&rankingSize=${preferences.rankingSize}&heatmapMatrixSize=${preferences.heatmapMatrixSize}');
+                    }
+                });
+                $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+
+            });
+        })(jQuery);
+    </script>
 </head>
 
 <body>
@@ -151,8 +151,6 @@
                             </td>
                             <td rowspan="2" width="15%">
                                 <input type="submit" value="Reload Page"/><br/>
-                                <input id="svgOne" type="button" value="fly svg"/><br/>
-                                <input id="svgTwo" type="button" value="human svg"/><br/>
                             </td>
                         </tr>
                         <tr>
@@ -207,11 +205,24 @@
                         </table>
                     </div>
 
+                   <div id="heatmap" class="block">
 
-                    <div id="anatomogram" style="width: 300px; height: 300px;float:left">
-                    </div>
+                        <div id="anatomogram" style="float:left">
 
-                    <div id="heatmap" class="block">
+                            <table>
+                                <tr>
+                                    <td style="vertical-align:top">
+                                        <div id="sexToggle" class="male"></div>
+                                    </td>
+                                    <td rowspan="2">
+                                        <div id="anatomogramBody" style="width: 300px; height: 300px">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
                         <display:table name="${heatmapOrganismParts}" id="organismPart"
                                        htmlId="heatmap-table" class="heatmap">
                             <c:forEach var="geneId" items="${heatmapGenes}">

@@ -12,7 +12,7 @@ function changeOrganismPartColorByHeatmapRowSelection(svg, evt, color) {
 }
 
 function initAnatomogram(organismParts) {
-    var svg = $('#anatomogram').svg().svg('get');
+    var svg = $('#anatomogramBody').svg().svg('get');
 
     loadAnatomogram("resources/svg/Human_web.svg");
 
@@ -43,5 +43,17 @@ function initAnatomogram(organismParts) {
     function loadAnatomogram(location) {
         svg.load(location, {onLoad:displayOrganismParts});
     }
+
+    //switch sex toggle button
+    $('#sexToggle').click( function() {
+        if ($(this).attr("class") == "female"){
+            $(this).attr("class", "male");
+            loadAnatomogram("resources/svg/Human_web.svg");
+        }
+        else{
+            $(this).attr("class", "female");
+            loadAnatomogram("resources/svg/fly_web.svg");
+        }
+    });
 
 }
