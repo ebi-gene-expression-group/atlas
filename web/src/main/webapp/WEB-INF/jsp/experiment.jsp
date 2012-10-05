@@ -47,6 +47,7 @@
     <title>Experiment</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/anatomogram.css">
 
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.2.min.js"></script>
@@ -116,9 +117,6 @@
 
             });
         })(jQuery);
-    </script>
-
-    <script>
 
         (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
@@ -180,8 +178,6 @@
                             </td>
                             <td rowspan="2" width="15%">
                                 <input type="submit" value="Reload Page"/><br/>
-                                <input id="svgOne" type="button" value="fly svg"/><br/>
-                                <input id="svgTwo" type="button" value="human svg"/><br/>
                             </td>
                         </tr>
                         <tr>
@@ -228,6 +224,8 @@
 
                                             background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
+                                            background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+
                                             filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
                                         &nbsp;</div>
                                 </td>
@@ -236,11 +234,24 @@
                         </table>
                     </div>
 
-
-                    <div id="anatomogram" style="width: 300px; height: 300px;float:left">
-                    </div>
-
                     <div id="heatmap" class="block">
+
+                        <div id="anatomogram" style="float:left">
+
+                            <table>
+                                <tr>
+                                    <td style="vertical-align:top">
+                                        <div id="sexToggle" class="male"></div>
+                                    </td>
+                                    <td rowspan="2">
+                                        <div id="anatomogramBody" style="width: 300px; height: 300px">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
                         <display:table name="${heatmapOrganismParts}" id="organismPart"
                                        htmlId="heatmap-table" class="heatmap">
                             <c:forEach var="geneId" items="${heatmapGenes}">

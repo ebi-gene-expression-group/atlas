@@ -1,0 +1,14 @@
+.female, .male {
+    width: 81px;
+    height: 158px;
+    background-repeat: no-repeat;
+    float: left;
+}
+
+.female {
+    background-image: url('../images/female_selected.png');
+}
+
+.male {
+    background-image: url('../images/male_selected.png');
+}
