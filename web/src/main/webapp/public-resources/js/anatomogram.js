@@ -1,15 +1,16 @@
-function fillOrganismPart(svg, organism_part, color) {
-    var path = svg.getElementById(organism_part);
-    if (path != null) {
-        path.style.fill = color;
-    }
-}
-
 function toggleOrganismPartColor(svg, organism_part) {
+
     var path = svg.getElementById(organism_part);
     if (path != null) {
-        path.style.fill = ("red" === path.style.fill ? "grey" : "red");
+        if (path.highlighted === undefined) {
+            path.style.fill = "gray";
+            path.highlighted = false;
+        } else {
+            path.style.fill = (path.highlighted === false ? "red" : "gray");
+            path.highlighted = !path.highlighted;
+        }
     }
+
 }
 
 function toggleOrganismPartColorByHeatmapRowSelection(svg, evt) {
@@ -24,13 +25,13 @@ function initAnatomogram(organismParts) {
     loadAnatomogram("resources/svg/Human_web.svg");
 
     $('.heatmaprow').hover(function (evt) {
-        changeOrganismPartColorByHeatmapRowSelection(svg, evt)
+        toggleOrganismPartColorByHeatmapRowSelection(svg, evt)
     });
 
     //load anatomogram from given location and display given organism parts
     function displayOrganismParts() {
         $.each(organismParts, function () {
-            fillOrganismPart(svg, this, "gray");
+            toggleOrganismPartColor(svg, this);
         });
     }
 
