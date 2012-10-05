@@ -56,34 +56,63 @@
             src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.8.24.custom.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.8.24.custom.css">
 
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.24.custom.min.js"></script>
 
 
     <style>
-        #demo-frame > div.demo { padding: 10px !important; }
+        #demo-frame > div.demo {
+            padding: 10px !important;
+        }
     </style>
 
     <script>
-        (function($){
-            $(function() {
-                $( "#slider-range-max" ).slider({
-                    range: "max",
-                    min: 0,
-                    max: 71047.7,
-                    value: ${preferences.cutoff},
-                    slide: function( event, ui ) {
-                        $( "#amount" ).val( ui.value );
-                        $( "#cutoff" ).val(ui.value);
+        (function ($) {
+            $(function () {
+                // The result should be between 0 (but log(0) is NaN) and max FPKM
+                var minv = Math.log(0.001);
+                var maxv = Math.log(71047.7);
+
+                // position will be between 0 and 100
+                var minp = 0;
+                var maxp = 100;
+
+                $("#slider-range-max").slider({
+                    range:"max",
+                    min:minp,
+                    max:maxp,
+
+                    value:logposition(${preferences.cutoff}),
+
+                    slide:function (event, ui) {
+                        $("#amount").val(logslider(ui.value));
+                        $("#cutoff").val(logslider(ui.value));
                     },
-                    change: function(event, ui) {
+                    change:function (event, ui) {
                         location.replace('${pageContext.request.contextPath}/experiment?cutoff='
-                                            +ui.value+'&rankingSize=${preferences.rankingSize}&heatmapMatrixSize=${preferences.heatmapMatrixSize}');
+                                + logslider(ui.value) +
+                                '&rankingSize=${preferences.rankingSize}&heatmapMatrixSize=${preferences.heatmapMatrixSize}');
+
                     }
                 });
-                $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+                $("#amount").val(logslider($("#slider-range-max").slider("value")));
+
+                function logslider(position) {
+
+                    // calculate adjustment factor
+                    var scale = (maxv - minv) / (maxp - minp);
+
+                    return Number(Math.exp(minv + scale * (position - minp))).toFixed(3);
+                }
+
+                function logposition(value) {
+                    var scale = (maxv - minv) / (maxp - minp);
+                    return (Math.log(value) - minv) / scale + minp;
+                }
+
 
             });
         })(jQuery);
@@ -248,8 +277,9 @@
 
                         <p>
                             <label for="amount">Expression Level Cutoff:</label>
-                            <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+                            <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;"/>
                         </p>
+
                         <div id="slider-range-max"></div>
 
                     </div>
@@ -259,7 +289,8 @@
 
                     <div>
 
-                        <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table" id="geneExpressions"
+                        <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table"
+                                       id="geneExpressions"
                                        class="atlas-grid">
 
                             <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
