@@ -197,6 +197,8 @@
 
                                             background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
+                                            background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+
                                             filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
                                         &nbsp;</div>
                                 </td>
