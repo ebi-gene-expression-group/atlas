@@ -99,7 +99,7 @@
 
                     }
                 });
-                $("#amount").val(logslider($("#slider-range-max").slider("value")));
+                $("#amount").val($("#cutoff").val());
 
                 function logslider(position) {
 
