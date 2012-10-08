@@ -1,7 +1,6 @@
 function toggleOrganismPartColor(svg, organism_part) {
 
-    var path = svg.getElementById(organism_part);
-    if (path != null) {
+    function togglePathColor(path) {
         if (path.highlighted === undefined) {
             path.style.fill = "gray";
             path.highlighted = false;
@@ -9,6 +8,19 @@ function toggleOrganismPartColor(svg, organism_part) {
             path.style.fill = (path.highlighted === false ? "red" : "gray");
             path.highlighted = !path.highlighted;
         }
+    }
+
+    var element = svg.getElementById(organism_part);
+
+    if (element != null) {
+        if (element.nodeName === 'g') {
+            $.each(element.getElementsByTagName('path'), function () {
+                togglePathColor(this);
+            });
+        } else {
+            togglePathColor(element);
+        }
+
     }
 
 }
@@ -22,7 +34,7 @@ function toggleOrganismPartColorByHeatmapRowSelection(svg, evt) {
 function initAnatomogram(organismParts) {
     var svg = $('#anatomogramBody').svg().svg('get');
 
-    loadAnatomogram("resources/svg/Human_web.svg");
+    loadAnatomogram("resources/svg/human_male.svg");
 
     $('.heatmaprow').hover(function (evt) {
         toggleOrganismPartColorByHeatmapRowSelection(svg, evt)
@@ -44,10 +56,10 @@ function initAnatomogram(organismParts) {
     $('#sexToggle').click(function () {
         if ($(this).attr("class") == "female") {
             $(this).attr("class", "male");
-            loadAnatomogram("resources/svg/Human_web.svg");
+            loadAnatomogram("resources/svg/human_male.svg");
         } else {
             $(this).attr("class", "female");
-            loadAnatomogram("resources/svg/fly_web.svg");
+            loadAnatomogram("resources/svg/female_template.svg");
         }
     });
 
