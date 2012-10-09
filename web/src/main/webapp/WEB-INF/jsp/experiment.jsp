@@ -244,7 +244,7 @@
                                         <div id="sexToggle" class="male"></div>
                                     </td>
                                     <td rowspan="2">
-                                        <div id="anatomogramBody" style="width: 300px; height: 300px">
+                                        <div id="anatomogramBody" style="width: 250px; height: 400px">
                                         </div>
                                     </td>
                                 </tr>

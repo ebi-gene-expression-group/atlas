@@ -73,9 +73,9 @@
      showgrid="false"
      inkscape:zoom="11.313708"
      inkscape:cx="43.290493"
-     inkscape:cy="107.49757"
-     inkscape:window-x="76"
-     inkscape:window-y="0"
+     inkscape:cy="171.13718"
+     inkscape:window-x="136"
+     inkscape:window-y="506"
      inkscape:current-layer="layer4"
      showborder="true"
      inkscape:window-maximized="0"
@@ -607,6 +607,7 @@
        inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
        id="perspective4703-61" />
   </defs>
+  <g id="group_all">
   <g
      inkscape:groupmode="layer"
      id="layer4"
@@ -950,7 +951,7 @@
        inkscape:connector-curvature="0" />
     <g
        id="heart"
-       transform="matrix(0.31848989,0,0,0.3036462,-109.40587,38.635204)"
+       transform="matrix(0.31336118,0,0,0.29719645,-111.34449,39.918703)"
        inkscape:label="heart">
       <path
          style="fill:none;stroke:none"
@@ -1243,5 +1244,6 @@
          d="m 25.110792,185.00063 c -0.661504,-0.22801 -0.782897,-0.30077 -0.837901,-0.50228 -0.113321,-0.41514 -0.07652,-7.12494 0.04637,-8.45576 0.06285,-0.68059 0.127877,-1.39653 0.144505,-1.59099 0.01663,-0.19445 0.212719,-1.04961 0.435758,-1.90035 1.002059,-3.82215 1.51347,-7.57922 1.654318,-12.15339 0.01272,-0.4132 0.220401,0.53266 0.611321,2.78423 0.827835,4.76807 1.10037,7.89451 1.032457,11.84404 -0.05005,2.91063 -0.175045,4.21079 -0.590581,6.14299 -0.374494,1.74137 -1.270386,4.04089 -1.59009,4.08136 -0.07292,0.009 -0.480692,-0.10321 -0.90616,-0.24985 z"
          style="fill:none;fill-opacity:1;stroke:none" />
     </g>
+  </g>
   </g>
 </svg>

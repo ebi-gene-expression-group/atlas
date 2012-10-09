@@ -31,6 +31,11 @@ function toggleOrganismPartColorByHeatmapRowSelection(svg, evt) {
     toggleOrganismPartColor(svg, row.find("td:last").text());
 }
 
+function scaleAnatomogram(svg) {
+    var elementById = svg.getElementById('group_all');
+    elementById.setAttribute('transform', 'scale(1.6)');
+}
+
 function initAnatomogram(organismParts) {
     var svg = $('#anatomogramBody').svg().svg('get');
 
@@ -45,6 +50,8 @@ function initAnatomogram(organismParts) {
         $.each(organismParts, function () {
             toggleOrganismPartColor(svg, this);
         });
+
+        scaleAnatomogram(svg);
     }
 
     //load anatomogram from given location and display given organism parts
@@ -59,8 +66,9 @@ function initAnatomogram(organismParts) {
             loadAnatomogram("resources/svg/human_male.svg");
         } else {
             $(this).attr("class", "female");
-            loadAnatomogram("resources/svg/female_template.svg");
+            loadAnatomogram("resources/svg/human_female.svg");
         }
     });
 
 }
+
