@@ -1,11 +1,17 @@
 function toggleOrganismPartColor(svg, organism_part) {
 
     function togglePathColor(path) {
+
+        function setHilighting(color, opacity) {
+            path.style.fill = color;
+            path.style.fillOpacity = opacity;
+        }
+
         if (path.highlighted === undefined) {
-            path.style.fill = "gray";
+            setHilighting("gray", 0.5);
             path.highlighted = false;
         } else {
-            path.style.fill = (path.highlighted === false ? "red" : "gray");
+            path.highlighted ? setHilighting("gray", 0.5) : setHilighting("red", 0.9);
             path.highlighted = !path.highlighted;
         }
     }
@@ -50,13 +56,16 @@ function initAnatomogram(organismParts) {
         $.each(organismParts, function () {
             toggleOrganismPartColor(svg, this);
         });
+    }
 
+    function prepareAnatomogram() {
+        displayOrganismParts();
         scaleAnatomogram(svg);
     }
 
     //load anatomogram from given location and display given organism parts
     function loadAnatomogram(location) {
-        svg.load(location, {onLoad:displayOrganismParts});
+        svg.load(location, {onLoad:prepareAnatomogram});
     }
 
     //switch sex toggle button
