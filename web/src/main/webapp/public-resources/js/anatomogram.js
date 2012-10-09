@@ -1,4 +1,4 @@
-function toggleOrganismPartColor(svg, organism_part) {
+function toggleOrganismPartColor(svg, organism_part, evt) {
 
     function togglePathColor(path) {
 
@@ -7,12 +7,10 @@ function toggleOrganismPartColor(svg, organism_part) {
             path.style.fillOpacity = opacity;
         }
 
-        if (path.highlighted === undefined) {
+        if (evt == undefined || evt.type != 'mouseenter') {
             setHilighting("gray", 0.5);
-            path.highlighted = false;
         } else {
-            path.highlighted ? setHilighting("gray", 0.5) : setHilighting("red", 0.9);
-            path.highlighted = !path.highlighted;
+            setHilighting("red", 0.9);
         }
     }
 
@@ -34,7 +32,7 @@ function toggleOrganismPartColor(svg, organism_part) {
 function toggleOrganismPartColorByHeatmapRowSelection(svg, evt) {
     var row = $(evt.target).parent('tr');  // Get the parent row
 
-    toggleOrganismPartColor(svg, row.find("td:first").text());
+    toggleOrganismPartColor(svg, row.find("td:first").text(), evt);
 }
 
 function scaleAnatomogram(svg) {
