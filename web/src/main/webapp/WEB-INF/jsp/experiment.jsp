@@ -63,13 +63,6 @@
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.24.custom.min.js"></script>
 
-
-    <style>
-        #demo-frame > div.demo {
-            padding: 10px !important;
-        }
-    </style>
-
     <script>
         (function ($) {
             $(function () {
@@ -82,6 +75,7 @@
                 var maxp = 100;
 
                 $("#slider-range-max").slider({
+                    backgroundColor:"#0000ff",
                     range:"max",
                     min:minp,
                     max:maxp,
@@ -89,7 +83,6 @@
                     value:logposition(${preferences.cutoff}),
 
                     slide:function (event, ui) {
-                        $("#amount").val(logslider(ui.value));
                         $("#cutoff").val(logslider(ui.value));
                     },
                     change:function (event, ui) {
@@ -99,7 +92,6 @@
 
                     }
                 });
-                $("#amount").val($("#cutoff").val());
 
                 function logslider(position) {
 
@@ -167,27 +159,28 @@
             <div id="reload" class="block">
                 <form:form method="get" commandName="preferences">
                     <form:hidden path="heatmapMatrixSize"/>
+                    <form:hidden path="rankingSize"/>
                     <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
                                  cssClass="error"/>
-                    <table id="reload-form-table" class="atlas-grid">
-                        <tr>
-                            <td width="30%"><form:label path="cutoff">Expression Level Cutoff</form:label></td>
-                            <td>
-                                <form:input size="10" path="cutoff" id="cutoff"/>
-                                <form:errors path="cutoff" cssClass="error"/>
-                            </td>
-                            <td rowspan="2" width="15%">
-                                <input type="submit" value="Reload Page"/><br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><form:label path="rankingSize">Ranking Size</form:label></td>
-                            <td>
-                                <form:input size="10" path="rankingSize" id="rankingSize"/>
-                                <form:errors path="rankingSize" cssClass="error"/>
-                            </td>
-                        </tr>
-                    </table>
+
+                    <div class="slider">
+                        <table>
+                            <tr>
+                                <td>
+                                    <form:label path="cutoff">Expression Level Cutoff</form:label>
+                                    <form:input size="10" path="cutoff" id="cutoff"
+                                                style="border:1; font-weight:bold;"/>
+                                    <form:errors path="cutoff" cssClass="error"/>
+                                </td>
+                                <td>
+                                    <input type="submit" value="Reload Page"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <div></div>
+                        <div id="slider-range-max" style="width:700px;"></div>
+
+                    </div>
                 </form:form>
             </div>
 
@@ -195,44 +188,44 @@
 
                 <div id="anatomogramAndMatrix" class="block">
 
-                    <div id="gradientLegenda" class="block">
-                        <table id="heatmap-legenda" class="atlas-grid" style="width:250px">
-                            <thead>
-                            <tr>
-                                <th>Min</th>
-                                <th>Max</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="odd">
-                                <td>
-                                    <div style="color:white;background-color:${colourGradient.minColour}">
-                                        <c:out value="${minExpressionLevel}"/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="color:white;background-color:${colourGradient.maxColour}">
-                                        <c:out value="${maxExpressionLevel}"/>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <div style="height:30;
+                        <%--<div id="gradientLegenda" class="block">--%>
+                        <%--<table id="heatmap-legenda" class="atlas-grid" style="width:250px">--%>
+                        <%--<thead>--%>
+                        <%--<tr>--%>
+                        <%--<th>Min</th>--%>
+                        <%--<th>Max</th>--%>
+                        <%--</tr>--%>
+                        <%--</thead>--%>
+                        <%--<tbody>--%>
+                        <%--<tr class="odd">--%>
+                        <%--<td>--%>
+                        <%--<div style="color:white;background-color:${colourGradient.minColour}">--%>
+                        <%--<c:out value="${minExpressionLevel}"/>--%>
+                        <%--</div>--%>
+                        <%--</td>--%>
+                        <%--<td>--%>
+                        <%--<div style="color:white;background-color:${colourGradient.maxColour}">--%>
+                        <%--<c:out value="${maxExpressionLevel}"/>--%>
+                        <%--</div>--%>
+                        <%--</td>--%>
+                        <%--</tr>--%>
+                        <%--<tr>--%>
+                        <%--<td colspan="2">--%>
+                        <%--<div style="height:30;--%>
 
-                                            background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+                        <%--background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));--%>
 
-                                            background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                        <%--background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});--%>
 
-                                            background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                        <%--background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});--%>
 
-                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
-                                        &nbsp;</div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <%--filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">--%>
+                        <%--&nbsp;</div>--%>
+                        <%--</td>--%>
+                        <%--</tr>--%>
+                        <%--</tbody>--%>
+                        <%--</table>--%>
+                        <%--</div>--%>
 
                     <div id="heatmap" class="block">
 
@@ -240,10 +233,10 @@
 
                             <table>
                                 <tr>
-                                    <td style="vertical-align:top">
+                                    <td style="padding-top: 55px; vertical-align:top">
                                         <div id="sexToggle" class="male"></div>
                                     </td>
-                                    <td rowspan="2">
+                                    <td>
                                         <div id="anatomogramBody" style="width: 250px; height: 400px">
                                         </div>
                                     </td>
@@ -274,6 +267,39 @@
                             </c:forEach>
 
                         </display:table>
+
+                        </br>
+                        <div></div>
+                        <table id="heatmap-legenda" class="atlas-grid" style="width:300px">
+                            <tr>
+                                <td>
+                                    <div style="color:white;background-color:${colourGradient.minColour}; float:left;">
+                                        <c:out value="${minExpressionLevel}"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="height:30; width: 80;
+                                            background-size: 100%;
+
+                                            background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+
+                                            background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+
+                                            background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+
+                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                        &nbsp;</div>
+                                </td>
+                                <td>
+                                    <div
+                                            style="color:white;background-color:${colourGradient.maxColour};
+                                                    float:right; ">
+                                        <c:out value="${maxExpressionLevel}"/>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
                     </div>
 
                 </div>
@@ -283,21 +309,6 @@
             <c:if test="${not empty geneExpressions}">
 
                 <div id="expressions" class="block" style="width:50%;clear:both">
-
-
-                    <div class="demo">
-
-                        <p>
-                            <label for="amount">Expression Level Cutoff:</label>
-                            <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;"/>
-                        </p>
-
-                        <div id="slider-range-max"></div>
-
-                    </div>
-
-                    <br/>
-                    <br/>
 
                     <div>
 
