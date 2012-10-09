@@ -254,6 +254,9 @@
 
                         <display:table name="${heatmapOrganismParts}" id="organismPart"
                                        htmlId="heatmap-table" class="heatmap">
+                            <display:column title="" value="${organismPart}" style="font-weight: bold;"
+                                            class="heatmaprow"/>
+
                             <c:forEach var="geneId" items="${heatmapGenes}">
 
                                 <c:set var="expressionLevel"
@@ -269,8 +272,6 @@
                                 </display:column>
 
                             </c:forEach>
-                            <display:column title="" value="${organismPart}" style="font-weight: bold;"
-                                            class="heatmaprow"/>
 
                         </display:table>
                     </div>

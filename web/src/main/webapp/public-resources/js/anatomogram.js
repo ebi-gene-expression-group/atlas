@@ -28,7 +28,7 @@ function toggleOrganismPartColor(svg, organism_part) {
 function toggleOrganismPartColorByHeatmapRowSelection(svg, evt) {
     var row = $(evt.target).parent('tr');  // Get the parent row
 
-    toggleOrganismPartColor(svg, row.find("td:last").text());
+    toggleOrganismPartColor(svg, row.find("td:first").text());
 }
 
 function scaleAnatomogram(svg) {
