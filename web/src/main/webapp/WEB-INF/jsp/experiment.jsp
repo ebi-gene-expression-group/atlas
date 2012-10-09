@@ -75,7 +75,6 @@
                 var maxp = 100;
 
                 $("#slider-range-max").slider({
-                    backgroundColor:"#0000ff",
                     range:"max",
                     min:minp,
                     max:maxp,
@@ -187,45 +186,6 @@
             <c:if test="${not empty heatmapGenes}">
 
                 <div id="anatomogramAndMatrix" class="block">
-
-                        <%--<div id="gradientLegenda" class="block">--%>
-                        <%--<table id="heatmap-legenda" class="atlas-grid" style="width:250px">--%>
-                        <%--<thead>--%>
-                        <%--<tr>--%>
-                        <%--<th>Min</th>--%>
-                        <%--<th>Max</th>--%>
-                        <%--</tr>--%>
-                        <%--</thead>--%>
-                        <%--<tbody>--%>
-                        <%--<tr class="odd">--%>
-                        <%--<td>--%>
-                        <%--<div style="color:white;background-color:${colourGradient.minColour}">--%>
-                        <%--<c:out value="${minExpressionLevel}"/>--%>
-                        <%--</div>--%>
-                        <%--</td>--%>
-                        <%--<td>--%>
-                        <%--<div style="color:white;background-color:${colourGradient.maxColour}">--%>
-                        <%--<c:out value="${maxExpressionLevel}"/>--%>
-                        <%--</div>--%>
-                        <%--</td>--%>
-                        <%--</tr>--%>
-                        <%--<tr>--%>
-                        <%--<td colspan="2">--%>
-                        <%--<div style="height:30;--%>
-
-                        <%--background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));--%>
-
-                        <%--background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});--%>
-
-                        <%--background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});--%>
-
-                        <%--filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">--%>
-                        <%--&nbsp;</div>--%>
-                        <%--</td>--%>
-                        <%--</tr>--%>
-                        <%--</tbody>--%>
-                        <%--</table>--%>
-                        <%--</div>--%>
 
                     <div id="heatmap" class="block">
 
