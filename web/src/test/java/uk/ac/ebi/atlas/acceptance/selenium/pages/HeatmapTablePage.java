@@ -29,7 +29,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getOrganismParts() {
-        return getLastColumnValues(heatmapTable);
+        return getFirstColumnValues(heatmapTable);
     }
 
     public String getTitle() {
@@ -39,7 +39,7 @@ public class HeatmapTablePage extends TablePage {
     public List<String> getSelectedGenes() {
         List<String> geneNames = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
-        return geneNames.subList(0, geneNames.size() - 1);
+        return geneNames.subList(1, geneNames.size());
     }
 
     @Override
@@ -54,11 +54,11 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getFirstGeneProfile() {
-        return getFirstColumnValues(heatmapTable);
+        return getSecondColumnValues(heatmapTable);
     }
 
     public List<String> getLastGeneProfile() {
-        return getColumnValues(heatmapTable, getTableColumnsCount(heatmapTable) - 1);
+        return getLastColumnValues(heatmapTable);
     }
 
 

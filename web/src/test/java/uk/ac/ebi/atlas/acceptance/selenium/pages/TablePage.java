@@ -15,6 +15,7 @@ abstract class TablePage extends AtlasPage {
     public static final String ALL_TABLE_ROWS_XPATH = "tbody/tr";
     public static final String LAST_COLUMN_CELLS_XPATH = "tbody//td[last()]";
     public static final String FIRST_COLUMN_CELLS_XPATH = "tbody//td[1]";
+    public static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
     public static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
     public static final String TABLE_HEADERS_XPATH = "thead/tr/th";
 
@@ -29,6 +30,11 @@ abstract class TablePage extends AtlasPage {
 
     List<String> getFirstColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(FIRST_COLUMN_CELLS_XPATH));
+        return Lists.transform(tableCells, getText);
+    }
+
+    List<String> getSecondColumnValues(WebElement table) {
+        List<WebElement> tableCells = table.findElements(By.xpath(SECOND_COLUMN_CELLS_XPATH));
         return Lists.transform(tableCells, getText);
     }
 
