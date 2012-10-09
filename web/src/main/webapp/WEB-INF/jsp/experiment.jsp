@@ -177,7 +177,7 @@
                             </tr>
                         </table>
                         <div></div>
-                        <div id="slider-range-max" style="width:700px;"></div>
+                        <div id="slider-range-max" style="width:600px;"></div>
 
                     </div>
                 </form:form>
@@ -230,24 +230,21 @@
 
                         </br>
                         <div></div>
-                        <table id="heatmap-legenda" class="atlas-grid" style="width:300px">
+                        <table id="heatmap-legenda" class="atlas-grid" width="300px">
                             <tr>
                                 <td>
                                     <div style="color:white;background-color:${colourGradient.minColour}; float:left;">
                                         <c:out value="${minExpressionLevel}"/>
                                     </div>
                                 </td>
-                                <td>
-                                    <div style="height:30; width: 80;
-                                            background-size: 100%;
+                                <td width="100%">
+                                    <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
-                                            background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+                                                background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                            background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                                background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                            background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
-
-                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
                                         &nbsp;</div>
                                 </td>
                                 <td>
@@ -268,7 +265,7 @@
 
             <c:if test="${not empty geneExpressions}">
 
-                <div id="expressions" class="block" style="width:50%;clear:both">
+                <div id="expressions" class="block" style="width:600px;clear:both">
 
                     <div>
 
