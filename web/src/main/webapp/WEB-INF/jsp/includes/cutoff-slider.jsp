@@ -7,6 +7,8 @@
         <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
                      cssClass="error"/>
 
+        <form:select path="organismParts" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:400px"/>
+
         <div class="slider">
             <table>
                 <tr>
@@ -71,6 +73,7 @@
                 return (Math.log(value) - minv) / scale + minp;
             }
 
+            $(".chzn-select").chosen();
 
         });
     })(jQuery);

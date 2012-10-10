@@ -27,7 +27,7 @@ public class ExpressionLevelController {
     }
 
     @RequestMapping("/experiment")
-    public String showGeneExpressions(@ModelAttribute("preferences") @Valid Preferences preferences, BindingResult result, Model model) {
+    public String showGeneExpressions(@ModelAttribute("preferences") @Valid RequestPreferences preferences, BindingResult result, Model model) {
 
         if (!result.hasErrors()) {
 
