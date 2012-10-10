@@ -1,13 +1,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div id="reload" class="block">
-    <form:form method="get" commandName="preferences">
+    <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden path="rankingSize"/>
         <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
                      cssClass="error"/>
         <div>
-            <form:select path="organismParts" data-placeholder="Select expressions specific to ..." tabindex="-1" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:400px;display:none"/>
+            <form:select path="organismParts" data-placeholder="Select expressions specific to ..." tabindex="-1"
+                         items="${applicationProperties.organismParts}" cssClass="chzn-select"
+                         cssStyle="width:400px;display:none"/>
         </div>
         <div class="slider">
             <table>
@@ -53,10 +55,7 @@
                     $("#cutoff").val(logslider(ui.value));
                 },
                 change:function (event, ui) {
-                    location.replace('${pageContext.request.contextPath}/experiment?cutoff='
-                            + logslider(ui.value) +
-                            '&rankingSize=${preferences.rankingSize}&heatmapMatrixSize=${preferences.heatmapMatrixSize}');
-
+                    $("form#prefForm").submit();
                 }
             });
 
