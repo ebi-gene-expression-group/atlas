@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.web.controllers;
 
+import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Scope("prototype")
 public class RequestPreferences {
@@ -14,6 +16,7 @@ public class RequestPreferences {
     private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 10;
     private static final int DEFAULT_RANKING_SIZE = 100;
     private static final double DEFAULT_CUTOFF = 0d;
+    private static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
 
     @Range(min = 0, max = 1000)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED;
@@ -27,6 +30,10 @@ public class RequestPreferences {
     private Double cutoff = DEFAULT_CUTOFF;
 
     private Set<String> organismParts;
+
+    private String geneIDsString;
+
+    private Set<String> geneIDs =  new HashSet<String>();
 
     public Set<String> getOrganismParts(){
         return organismParts;
@@ -58,5 +65,24 @@ public class RequestPreferences {
 
     public void setOrganismParts(Set<String> organismParts) {
         this.organismParts = organismParts;
+    }
+
+    public String getGeneIDsString() {
+        return this.geneIDsString;
+    }
+
+    public void setGeneIDsString(String geneIDsString) {
+        this.geneIDsString = geneIDsString;
+        updateGeneIDs();
+    }
+
+    private void updateGeneIDs(){
+        if (geneIDsString != null){
+            this.geneIDs = Sets.newHashSet(commaOrSpaceSeparatorPattern.split(geneIDsString));
+        }
+    }
+
+    public Set<String> getGeneIDs(){
+        return geneIDs;
     }
 }

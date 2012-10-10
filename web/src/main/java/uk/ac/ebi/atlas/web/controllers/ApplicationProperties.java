@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.web.controllers;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import sun.tools.tree.NewArrayExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -7,6 +7,10 @@
         <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
                      cssClass="error"/>
         <div>
+            <form:label path="geneIDsString">Gene IDs (max 10)</form:label>
+            <form:textarea path="geneIDsString" rows="3" size="30"></form:textarea>
+        </div>
+        <div>
             <form:select path="organismParts" data-placeholder="Select expressions specific to ..." tabindex="-1" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:400px;display:none"/>
         </div>
         <div class="slider">
