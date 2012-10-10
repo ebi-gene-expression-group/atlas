@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div id="reload" class="block">
-    <form:form method="get" commandName="preferences">
+    <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden path="rankingSize"/>
         <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
@@ -57,10 +57,7 @@
                     $("#cutoff").val(logslider(ui.value));
                 },
                 change:function (event, ui) {
-                    location.replace('${pageContext.request.contextPath}/experiment?cutoff='
-                            + logslider(ui.value) +
-                            '&rankingSize=${preferences.rankingSize}&heatmapMatrixSize=${preferences.heatmapMatrixSize}');
-
+                    $("form#prefForm").submit();
                 }
             });
 
