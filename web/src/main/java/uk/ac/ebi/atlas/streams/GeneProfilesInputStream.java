@@ -20,8 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
 
-public class
-        GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
+public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
     private static final Logger logger = Logger.getLogger(GeneProfilesInputStream.class);
 

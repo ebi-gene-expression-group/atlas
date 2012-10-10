@@ -34,6 +34,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
                 Expression expressionMock = mock(Expression.class);
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
+                when(expressionMock.getOrganismPart()).thenReturn("org" + (j + 1));
                 geneProfileBuilder.addExpression(expressionMock);
 
             }

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -81,4 +82,85 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
 
     }
 
+    @Test
+    public void givenFilterByFirstOrganism() throws Exception {
+        //when
+        subject.setOrganismPartQuery(Sets.newHashSet("org1"));
+        List<GeneExpression> top3Objects = subject.apply(largeInputStream);
+
+        //then
+        assertThat(top3Objects.size(), is(3));
+
+    }
+
+    @Test
+    public void givenFilterByLastOrganism() throws Exception {
+        //when
+        subject.setOrganismPartQuery(Sets.newHashSet("org5"));
+        List<GeneExpression> top3Objects = subject.apply(largeInputStream);
+
+        //then
+        assertThat(top3Objects.size(), is(1));
+
+    }
+
+    @Test
+    public void givenFilterByNotOverlappingOrganismAndGeneNameShouldReturnNoResult() throws
+            Exception {
+        //when
+        subject.setOrganismPartQuery(Sets.newHashSet("org5"));
+        subject.setGeneQuery(Sets.newHashSet("1"));
+        List<GeneExpression> top3Objects = subject.apply(largeInputStream);
+
+        //then
+        assertThat(top3Objects.size(), is(0));
+    }
+
+    @Test
+    public void givenFilterByLastOrganismAndLastGenes() throws Exception {
+        //when
+        subject.setOrganismPartQuery(Sets.newHashSet("org4"));
+        subject.setGeneQuery(Sets.newHashSet("4", "5"));
+
+        List<GeneExpression> top3Objects = subject.apply(largeInputStream);
+
+        //then
+        assertThat(top3Objects.size(), is(2));
+
+    }
+
+    @Test
+    public void givenFilterByTwoOrganismAndTwoGenes() throws Exception {
+        //when
+        subject.setOrganismPartQuery(Sets.newHashSet("org3", "org4"));
+        subject.setGeneQuery(Sets.newHashSet("3", "5"));
+        subject.setRankingSize(5);
+
+        List<GeneExpression> top3Objects = subject.apply(largeInputStream);
+
+        //then
+        assertThat(top3Objects.size(), is(3));
+
+        //and
+        assertThat(top3Objects.get(0).getSpecificity(), is(3));
+        //and
+        assertThat(top3Objects.get(0).getLevel(), is(3D));
+        //then
+        assertThat(top3Objects.get(0).getGeneId(), is("3"));
+
+        //and
+        assertThat(top3Objects.get(1).getSpecificity(), is(5));
+        //and
+        assertThat(top3Objects.get(1).getLevel(), is(4D));
+        //and
+        assertThat(top3Objects.get(1).getGeneId(), is("5"));
+
+        //and
+        assertThat(top3Objects.get(2).getSpecificity(), is(5));
+        //and
+        assertThat(top3Objects.get(2).getLevel(), is(3D));
+        //and
+        assertThat(top3Objects.get(2).getGeneId(), is("5"));
+
+    }
 }

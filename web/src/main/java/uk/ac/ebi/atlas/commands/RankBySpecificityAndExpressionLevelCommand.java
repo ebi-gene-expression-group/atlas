@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 
@@ -11,6 +12,7 @@ import javax.inject.Named;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -21,6 +23,10 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
     private static final int DEFAULT_SIZE = 100;
 
     private int rankingSize = DEFAULT_SIZE;
+
+    private Set<String> geneQuery;
+
+    private Set<String> organismPartQuery;
 
     public RankBySpecificityAndExpressionLevelCommand() {
     }
@@ -35,11 +41,13 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
         GeneProfile geneProfile;
 
         while ((geneProfile = objectStream.readNext()) != null) {
-            for (Expression expression : geneProfile) {
-                GeneExpression geneExpression =
-                        new GeneExpression(geneProfile.getGeneId(), expression, geneProfile.getGeneSpecificity());
-                topTenObjects.add(geneExpression);
+            if (isGeneInQuery(geneProfile)) {
+                for (Expression expression : geneProfile) {
+                    if (isExpressionForOrganismPart(expression)) {
+                        addExpressionInQueue(topTenObjects, geneProfile, expression);
+                    }
 
+                }
             }
         }
 
@@ -50,10 +58,31 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
         return list;
     }
 
+    private void addExpressionInQueue(Queue<GeneExpression> topTenObjects, GeneProfile geneProfile, Expression expression) {
+        GeneExpression geneExpression =
+                new GeneExpression(geneProfile.getGeneId(), expression, geneProfile.getGeneSpecificity());
+        topTenObjects.add(geneExpression);
+    }
+
+    private boolean isExpressionForOrganismPart(Expression expression) {
+        return CollectionUtils.isEmpty(organismPartQuery) || organismPartQuery.contains(expression.getOrganismPart());
+    }
+
+    private boolean isGeneInQuery(GeneProfile geneProfile) {
+        return CollectionUtils.isEmpty(geneQuery) || geneQuery.contains(geneProfile.getGeneId());
+    }
+
     public RankBySpecificityAndExpressionLevelCommand setRankingSize(int rankingSize) {
         checkArgument(rankingSize > 0, "rankingSize must be greater then zero");
         this.rankingSize = rankingSize;
         return this;
     }
 
+    public void setGeneQuery(Set<String> geneQuery) {
+        this.geneQuery = geneQuery;
+    }
+
+    public void setOrganismPartQuery(Set<String> organismPartQuery) {
+        this.organismPartQuery = organismPartQuery;
+    }
 }
