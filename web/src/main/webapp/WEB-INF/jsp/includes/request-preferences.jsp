@@ -6,9 +6,9 @@
         <form:hidden path="rankingSize"/>
         <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
                      cssClass="error"/>
-
-        <form:select path="organismParts" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:400px"/>
-
+        <div>
+            <form:select path="organismParts" data-placeholder="Select expressions specific to ..." tabindex="-1" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:400px;display:none"/>
+        </div>
         <div class="slider">
             <table>
                 <tr>

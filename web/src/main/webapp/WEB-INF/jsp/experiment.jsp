@@ -115,7 +115,7 @@
         <div id="contents" class="page-contents">
 
 
-            <jsp:include page="includes/cutoff-slider.jsp" />
+            <jsp:include page="includes/request-preferences.jsp" />
 
 
             <c:if test="${not empty heatmapGenes}">
