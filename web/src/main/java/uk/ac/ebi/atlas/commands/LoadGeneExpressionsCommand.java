@@ -100,12 +100,12 @@ public class LoadGeneExpressionsCommand implements Function<String, List<GeneExp
 
     //ToDo: refactor to set these parameters directly to command
     public LoadGeneExpressionsCommand setOrganismParts(Set<String> organismParts) {
-        rankBySpecificityObjectsCommand.setOrganismPartQuery(organismParts);
+        rankBySpecificityObjectsCommand.setOrganismParts(organismParts);
         return this;
     }
 
     public LoadGeneExpressionsCommand setGeneIds(Set<String> geneIds) {
-        rankBySpecificityObjectsCommand.setGeneQuery(geneIds);
+        rankBySpecificityObjectsCommand.setGeneIDs(geneIds);
         return this;
     }
 }

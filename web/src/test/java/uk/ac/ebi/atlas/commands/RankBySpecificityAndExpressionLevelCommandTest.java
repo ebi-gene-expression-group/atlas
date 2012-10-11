@@ -85,7 +85,7 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
     @Test
     public void givenFilterByFirstOrganism() throws Exception {
         //when
-        subject.setOrganismPartQuery(Sets.newHashSet("org1"));
+        subject.setOrganismParts(Sets.newHashSet("org1"));
         List<GeneExpression> top3Objects = subject.apply(largeInputStream);
 
         //then
@@ -96,7 +96,7 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
     @Test
     public void givenFilterByLastOrganism() throws Exception {
         //when
-        subject.setOrganismPartQuery(Sets.newHashSet("org5"));
+        subject.setOrganismParts(Sets.newHashSet("org5"));
         List<GeneExpression> top3Objects = subject.apply(largeInputStream);
 
         //then
@@ -108,8 +108,8 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
     public void givenFilterByNotOverlappingOrganismAndGeneNameShouldReturnNoResult() throws
             Exception {
         //when
-        subject.setOrganismPartQuery(Sets.newHashSet("org5"));
-        subject.setGeneQuery(Sets.newHashSet("1"));
+        subject.setOrganismParts(Sets.newHashSet("org5"));
+        subject.setGeneIDs(Sets.newHashSet("1"));
         List<GeneExpression> top3Objects = subject.apply(largeInputStream);
 
         //then
@@ -119,8 +119,8 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
     @Test
     public void givenFilterByLastOrganismAndLastGenes() throws Exception {
         //when
-        subject.setOrganismPartQuery(Sets.newHashSet("org4"));
-        subject.setGeneQuery(Sets.newHashSet("4", "5"));
+        subject.setOrganismParts(Sets.newHashSet("org4"));
+        subject.setGeneIDs(Sets.newHashSet("4", "5"));
 
         List<GeneExpression> top3Objects = subject.apply(largeInputStream);
 
@@ -132,8 +132,8 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
     @Test
     public void givenFilterByTwoOrganismAndTwoGenes() throws Exception {
         //when
-        subject.setOrganismPartQuery(Sets.newHashSet("org3", "org4"));
-        subject.setGeneQuery(Sets.newHashSet("3", "5"));
+        subject.setOrganismParts(Sets.newHashSet("org3", "org4"));
+        subject.setGeneIDs(Sets.newHashSet("3", "5"));
         subject.setRankingSize(5);
 
         List<GeneExpression> top3Objects = subject.apply(largeInputStream);

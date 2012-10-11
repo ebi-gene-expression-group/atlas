@@ -24,9 +24,11 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
 
     private int rankingSize = DEFAULT_SIZE;
 
-    private Set<String> geneQuery;
+    private Queue<GeneExpression> topTenObjects;
 
-    private Set<String> organismPartQuery;
+    private Set<String> geneIDs;
+
+    private Set<String> organismParts;
 
     public RankBySpecificityAndExpressionLevelCommand() {
     }
@@ -36,19 +38,12 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
 
         Comparator<GeneExpression> reverseSpecificityComparator = Ordering.from(new GeneSpecificityComparator()).reverse();
 
-        Queue<GeneExpression> topTenObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
+        topTenObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
 
         GeneProfile geneProfile;
 
         while ((geneProfile = objectStream.readNext()) != null) {
-            if (isGeneInQuery(geneProfile)) {
-                for (Expression expression : geneProfile) {
-                    if (isExpressionForOrganismPart(expression)) {
-                        addExpressionInQueue(topTenObjects, geneProfile, expression);
-                    }
-
-                }
-            }
+            addGeneProfileToQueue(geneProfile);
         }
 
         GeneExpressionsList list = new GeneExpressionsList(topTenObjects);
@@ -58,18 +53,29 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
         return list;
     }
 
-    private void addExpressionInQueue(Queue<GeneExpression> topTenObjects, GeneProfile geneProfile, Expression expression) {
+    protected void setTopTenObjects(Queue<GeneExpression> topTenObjects) {
+        this.topTenObjects = topTenObjects;
+    }
+
+    protected void addGeneProfileToQueue(GeneProfile geneProfile) {
+        if (isInQuery(geneIDs, geneProfile.getGeneId())) {
+            for (Expression expression : geneProfile) {
+                if (isInQuery(organismParts, expression.getOrganismPart())) {
+                    addExpressionInQueue(geneProfile, expression);
+                }
+
+            }
+        }
+    }
+
+    private void addExpressionInQueue(GeneProfile geneProfile, Expression expression) {
         GeneExpression geneExpression =
                 new GeneExpression(geneProfile.getGeneId(), expression, geneProfile.getGeneSpecificity());
         topTenObjects.add(geneExpression);
     }
 
-    private boolean isExpressionForOrganismPart(Expression expression) {
-        return CollectionUtils.isEmpty(organismPartQuery) || organismPartQuery.contains(expression.getOrganismPart());
-    }
-
-    private boolean isGeneInQuery(GeneProfile geneProfile) {
-        return CollectionUtils.isEmpty(geneQuery) || geneQuery.contains(geneProfile.getGeneId());
+    private boolean isInQuery(Set<String> query, String value) {
+        return CollectionUtils.isEmpty(query) || geneIDs.contains(value);
     }
 
     public RankBySpecificityAndExpressionLevelCommand setRankingSize(int rankingSize) {
@@ -78,11 +84,11 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
         return this;
     }
 
-    public void setGeneQuery(Set<String> geneQuery) {
-        this.geneQuery = geneQuery;
+    public void setGeneIDs(Set<String> geneIDs) {
+        this.geneIDs = geneIDs;
     }
 
-    public void setOrganismPartQuery(Set<String> organismPartQuery) {
-        this.organismPartQuery = organismPartQuery;
+    public void setOrganismParts(Set<String> organismParts) {
+        this.organismParts = organismParts;
     }
 }
