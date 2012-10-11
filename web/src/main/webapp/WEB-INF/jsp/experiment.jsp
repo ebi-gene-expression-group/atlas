@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-ebi.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-grid.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/old/atlas-searchform.css">
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
@@ -44,7 +43,7 @@
     <!-- old style end -->
 
     <title>Experiment</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/anatomogram.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
@@ -141,9 +140,9 @@
                         </div>
 
                         <display:table name="${heatmapOrganismParts}" id="organismPart"
-                                       htmlId="heatmap-table" class="heatmap">
-                            <display:column title="" value="${organismPart}" style="font-weight: bold;"
-                                            class="heatmaprow"/>
+                                       htmlId="heatmap-table" class="table-grid">
+                            <display:column title="" value="${organismPart}"
+                                            class=".header-cell"/>
 
                             <c:forEach var="geneId" items="${heatmapGenes}">
 
@@ -154,8 +153,7 @@
 
                                 <display:column title="<div class='rotate_text'>${geneId}</div>"
                                                 headerClass='rotated_cell'
-                                                style="background-color:${cellColour};color:${cellColour};font-size:1px"
-                                                class="heatmaprow">
+                                                style="background-color:${cellColour};color:${cellColour};font-size:1px">
                                     <c:out value="${expressionLevel}"/>
                                 </display:column>
 
@@ -165,28 +163,26 @@
 
                         </br>
 
-                        <table id="heatmap-legenda" class="atlas-grid" width="300px">
+                        <table id="heatmap-legenda" width="400px">
                             <tr>
                                 <td>
-                                    <div style="color:white;background-color:${colourGradient.minColour}; float:left;">
-                                        <c:out value="${minExpressionLevel}"/>
+                                    <div>
+                                        <c:out value="${maxExpressionLevel}"/>
                                     </div>
                                 </td>
                                 <td width="100%">
-                                    <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+                                    <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
 
-                                                background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                                background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
 
-                                                background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                                background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
 
-                                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
                                         &nbsp;</div>
                                 </td>
                                 <td>
-                                    <div
-                                            style="color:white;background-color:${colourGradient.maxColour};
-                                                    float:right; ">
-                                        <c:out value="${maxExpressionLevel}"/>
+                                    <div>
+                                        <c:out value="${minExpressionLevel}"/>
                                     </div>
                                 </td>
 
@@ -200,13 +196,13 @@
 
             <c:if test="${not empty geneExpressions}">
 
-                <div id="expressions" class="block" style="width:600px;clear:both">
+                <div id="expressions" class="block" style="clear:both">
 
                     <div>
 
                         <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table"
                                        id="geneExpressions"
-                                       class="atlas-grid">
+                                       class="table-grid">
 
                             <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
                             <display:column title="${geneIdLabel}" property="geneId"/>

@@ -1,13 +1,37 @@
-.heatmap {
+.form-grid, .table-grid {
     font-family: Verdana, Helvetica, Arial, sans-serif;
-    font-size: 10px;
     color: #404040;
     background-color: #fafafa;
     border: 1px solid #cdcdcd;
-    border-collapse: collapse;
     border-spacing: 0;
     empty-cells: show;
+}
 
+.table-grid {
+    border-collapse: collapse;
+}
+
+.form-grid label{
+    border: 0px;
+    font-weight: bold;
+}
+
+.table-grid td {
+    color: #3D3D3D;
+    vertical-align: middle;
+    border: 1px solid #cdcdcd;
+    padding: 0;
+    height: 25px
+}
+
+.table-grid tr:hover {
+    background-color: #deebeb;
+    color: #404040;
+    cursor: default;
+}
+
+.header-cell {
+    font-weight: bold;
 }
 
 .rotated_cell {
@@ -18,33 +42,19 @@
 }
 
 .rotate_text {
+    font-size: 10px;
+    position: relative;
+    top: 20px;
+    width: 25px;
     -moz-transform: rotate(-90deg);
     -moz-transform-origin: top left;
     -webkit-transform: rotate(-90deg);
     -webkit-transform-origin: top left;
     -o-transform: rotate(-90deg);
     -o-transform-origin: top left;
-    position: relative;
-    top: 20px;
-    width: 25px;
 }
 
 .rotate_text_IE {
 }
-
-.heatmap td {
-    color: #3D3D3D;
-    vertical-align: middle;
-    border: 1px solid #cdcdcd;
-    padding: 0;
-    height: 25px
-}
-
-.heatmap tr:hover {
-    background-color: #deebeb;
-    color: #404040;
-    cursor: default;
-}
-
 
 

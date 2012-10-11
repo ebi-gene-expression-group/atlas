@@ -1,36 +1,42 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div id="reload" class="block">
+<div id="preferencesFormBlock" class="block">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden path="rankingSize"/>
         <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
                      cssClass="error"/>
-        <div>
-            <form:label path="geneIDsString">Gene IDs (max 10)</form:label>
-            <form:textarea path="geneIDsString" rows="3" size="30"></form:textarea>
-        </div>
-        <div>
-            <form:select path="organismParts" data-placeholder="Select expressions specific to ..." tabindex="-1" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:400px;display:none"/>
-        </div>
-        <div class="slider">
-            <table>
-                <tr>
-                    <td>
-                        <form:label path="cutoff">Expression Level Cutoff</form:label>
-                        <form:input size="10" path="cutoff" id="cutoff"
-                                    style="border:1; font-weight:bold;"/>
-                        <form:errors path="cutoff" cssClass="error"/>
-                    </td>
-                    <td>
-                        <input type="submit" value="Reload Page"/>
-                    </td>
-                </tr>
-            </table>
-            <div></div>
-            <div id="slider-range-max" style="width:600px;"></div>
+        <table class="form-grid">
+            <tr>
+                <td>
+                    <form:label path="geneIDsString">Gene IDs (max 10)</form:label>
+                </td>
+                <td>
+                    <form:label path="organismParts">Organism parts</form:label>
+                </td>
+                <td>
+                    <form:label path="cutoff">Expression level cutoff</form:label>
+                </td>
+                <td rowspan="4">
+                    <input type="submit" value="Reload Page"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:textarea path="geneIDsString" rows="3" size="30"></form:textarea>
+                </td>
+                <td>
+                    <form:select path="organismParts" data-placeholder="" tabindex="-1" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:300px;display:none"/>
+                </td>
+                <td>
+                    <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
+                    <form:errors path="cutoff" cssClass="error"/>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <div id="slider-range-max"></div>
 
-        </div>
     </form:form>
 </div>
 

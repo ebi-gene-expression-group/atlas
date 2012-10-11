@@ -45,7 +45,7 @@ function initAnatomogram(organismParts) {
 
     loadAnatomogram("resources/svg/human_male.svg");
 
-    $('.heatmaprow').hover(function (evt) {
+    $('tr','#heatmap-table').hover(function (evt) {
         toggleOrganismPartColorByHeatmapRowSelection(svg, evt)
     });
 
