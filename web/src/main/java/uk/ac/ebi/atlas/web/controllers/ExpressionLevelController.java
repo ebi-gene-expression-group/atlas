@@ -31,9 +31,8 @@ public class ExpressionLevelController {
 
         if (!result.hasErrors()) {
 
-            loadGeneExpressionsCommand.setRankingSize(preferences.getRankingSize());
 
-            loadGeneExpressionsCommand.setCutoff(preferences.getCutoff());
+            loadGeneExpressionsCommand.setPreferences(preferences);
 
             GeneExpressionsList geneExpressions = loadGeneExpressionsCommand.apply(DEMO_ACCESSION);
 

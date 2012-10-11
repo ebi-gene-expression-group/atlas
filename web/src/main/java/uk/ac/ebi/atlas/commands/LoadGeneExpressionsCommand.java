@@ -9,11 +9,13 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneExpressionsList;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
+import uk.ac.ebi.atlas.web.controllers.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 @Named("loadGeneExpressions")
@@ -77,6 +79,15 @@ public class LoadGeneExpressionsCommand implements Function<String, List<GeneExp
         }
     }
 
+    public LoadGeneExpressionsCommand setPreferences(RequestPreferences preferences) {
+        setRankingSize(preferences.getRankingSize());
+        setCutoff(preferences.getCutoff());
+        setOrganismParts(preferences.getOrganismParts());
+        setGeneIds(preferences.getGeneIDs());
+
+        return this;
+    }
+
     public LoadGeneExpressionsCommand setRankingSize(int rankingSize) {
         rankBySpecificityObjectsCommand.setRankingSize(rankingSize);
         return this;
@@ -84,6 +95,17 @@ public class LoadGeneExpressionsCommand implements Function<String, List<GeneExp
 
     public LoadGeneExpressionsCommand setCutoff(double cutoff) {
         this.cutoff = cutoff;
+        return this;
+    }
+
+    //ToDo: refactor to set these parameters directly to command
+    public LoadGeneExpressionsCommand setOrganismParts(Set<String> organismParts) {
+        rankBySpecificityObjectsCommand.setOrganismPartQuery(organismParts);
+        return this;
+    }
+
+    public LoadGeneExpressionsCommand setGeneIds(Set<String> geneIds) {
+        rankBySpecificityObjectsCommand.setGeneQuery(geneIds);
         return this;
     }
 }
