@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.web.controllers;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -33,9 +33,9 @@ public class RequestPreferences {
 
     private String geneIDsString;
 
-    private Set<String> geneIDs =  new HashSet<String>();
+    private Set<String> geneIDs;
 
-    public Set<String> getOrganismParts(){
+    public Set<String> getOrganismParts() {
         return organismParts;
     }
 
@@ -76,13 +76,13 @@ public class RequestPreferences {
         updateGeneIDs();
     }
 
-    private void updateGeneIDs(){
-        if (geneIDsString != null){
+    private void updateGeneIDs() {
+        if (!Strings.isNullOrEmpty(geneIDsString)) {
             this.geneIDs = Sets.newHashSet(commaOrSpaceSeparatorPattern.split(geneIDsString));
         }
     }
 
-    public Set<String> getGeneIDs(){
+    public Set<String> getGeneIDs() {
         return geneIDs;
     }
 }
