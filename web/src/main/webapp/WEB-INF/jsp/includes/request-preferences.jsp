@@ -24,9 +24,11 @@
             <tr>
                 <td>
                     <form:textarea path="geneIDsString" rows="3" size="30"></form:textarea>
+                    <form:errors id="geneIDsString" title="geneIDsString" path="geneIDsString" cssClass="error"/>
                 </td>
                 <td>
                     <form:select path="organismParts" data-placeholder="" tabindex="-1" items="${applicationProperties.organismParts}" cssClass="chzn-select" cssStyle="width:300px;display:none"/>
+                    <form:errors id="organismParts" title="organismParts" path="organismParts" cssClass="error"/>
                 </td>
                 <td>
                     <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>

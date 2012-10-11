@@ -41,6 +41,11 @@ function scaleAnatomogram(svg) {
 }
 
 function initAnatomogram(organismParts) {
+
+    if ($('#anatomogramBody').length == 0) {
+        return;
+    }
+
     var svg = $('#anatomogramBody').svg().svg('get');
 
     loadAnatomogram("resources/svg/human_male.svg");
@@ -76,6 +81,5 @@ function initAnatomogram(organismParts) {
             loadAnatomogram("resources/svg/human_female.svg");
         }
     });
-
 }
 
