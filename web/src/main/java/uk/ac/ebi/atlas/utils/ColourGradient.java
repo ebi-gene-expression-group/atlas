@@ -45,26 +45,26 @@ public class ColourGradient {
 
     }
 
-    protected int getColourDistance(){
+    protected int getColourDistance() {
         return colourDistance;
     }
 
-    protected void setColourScale(double colourScale){
+    protected void setColourScale(double colourScale) {
         this.colourScale = colourScale;
 
     }
 
-    public void setLowValueColour(Color colour){
+    public void setLowValueColour(Color colour) {
         this.lowValueColour = colour;
         this.colourDistance = calculateColourDistance();
     }
 
-    public void setHighValueColour(Color colour){
+    public void setHighValueColour(Color colour) {
         this.highValueColour = colour;
         this.colourDistance = calculateColourDistance();
     }
 
-    public void setBlankValueColour(Color colour){
+    public void setBlankValueColour(Color colour) {
         this.blankValueColour = colour;
     }
 
@@ -96,12 +96,15 @@ public class ColourGradient {
 
         double percentPosition = calculatePercentPosition(data, min, max);
 
+        if (Double.isNaN(percentPosition) || Double.isInfinite(percentPosition)) {
+            return blankValueColour;
+        }
+
         // Which colour group does that put us in.
         int colourPosition = getColourPosition(percentPosition);
 
         return calculateColorForPosition(colourPosition, lowValueColour, highValueColour);
     }
-
 
 
     /**
