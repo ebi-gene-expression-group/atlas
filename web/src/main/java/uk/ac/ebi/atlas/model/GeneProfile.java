@@ -1,5 +1,9 @@
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.HashSet;
@@ -9,7 +13,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-public class GeneProfile implements Iterable<Expression> {
+public class GeneProfile implements Iterable<GeneExpression> {
 
     private String geneId;
 
@@ -33,19 +37,26 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     @Override
-    public Iterator<Expression> iterator() {
-        return expressions.iterator();
+    public Iterator<GeneExpression> iterator() {
+        return Iterators.transform(expressions.iterator(),
+                new Function<Expression, GeneExpression>() {
+                    public GeneExpression apply(Expression expression) {
+                        return new GeneExpression(geneId, expression, getGeneSpecificity());
+                    }
+                });
     }
 
-    public Iterable<GeneExpression> organismPartExpressions(Set<String> organismParts){
-
-        Set<GeneExpression> filteredExpressions = new HashSet<GeneExpression>();
-        for (Expression expression: this){
-            if (CollectionUtils.isEmpty(organismParts) || organismParts.contains(expression.getOrganismPart())){
-                filteredExpressions.add(new GeneExpression(geneId, expression, getGeneSpecificity()));
-            }
+    public Iterable<GeneExpression> filterByOrganismParts(final Set<String> organismParts) {
+        if (CollectionUtils.isEmpty(organismParts)) {
+            return this;
         }
-        return filteredExpressions;
+
+        return Iterables.filter(this, new Predicate<GeneExpression>() {
+            public boolean apply(GeneExpression geneExpression) {
+                return organismParts.contains(geneExpression.getOrganismPart());
+            }
+        });
+
     }
 
     public static class Builder {

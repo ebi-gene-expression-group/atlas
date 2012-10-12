@@ -26,11 +26,6 @@ public class GeneExpression implements Comparable<GeneExpression> {
         this.specificity = specificity;
     }
 
-    public GeneExpression(String geneId, Expression expression) {
-        this.geneId = geneId;
-        this.expression = expression;
-    }
-
     public String getGeneId() {
         return geneId;
     }
