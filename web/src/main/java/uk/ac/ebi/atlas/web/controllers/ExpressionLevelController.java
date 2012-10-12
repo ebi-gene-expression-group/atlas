@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.LoadGeneExpressionsCommand;
+import uk.ac.ebi.atlas.commands.RankBySpecificityAndExpressionLevelCommand;
 import uk.ac.ebi.atlas.model.GeneExpressionsList;
 
 import javax.inject.Inject;
@@ -19,11 +19,11 @@ public class ExpressionLevelController {
 
     public static final String DEMO_ACCESSION = "E-MTAB-513";
 
-    private LoadGeneExpressionsCommand loadGeneExpressionsCommand;
+    private RankBySpecificityAndExpressionLevelCommand rankCommand;
 
     @Inject
-    public ExpressionLevelController(LoadGeneExpressionsCommand loadGeneExpressionsCommand) {
-        this.loadGeneExpressionsCommand = loadGeneExpressionsCommand;
+    public ExpressionLevelController(RankBySpecificityAndExpressionLevelCommand rankCommand) {
+        this.rankCommand = rankCommand;
     }
 
     @RequestMapping("/experiment")
@@ -32,9 +32,9 @@ public class ExpressionLevelController {
         if (!result.hasErrors()) {
 
 
-            loadGeneExpressionsCommand.setRequestPreferences(preferences);
+            rankCommand.setRequestPreferences(preferences);
 
-            GeneExpressionsList geneExpressions = loadGeneExpressionsCommand.apply(DEMO_ACCESSION);
+            GeneExpressionsList geneExpressions = rankCommand.apply(DEMO_ACCESSION);
 
             Set<String> genesToBeHighlighted = geneExpressions.getTop(preferences.getHeatmapMatrixSize()).getDistinctGeneIds();
 
