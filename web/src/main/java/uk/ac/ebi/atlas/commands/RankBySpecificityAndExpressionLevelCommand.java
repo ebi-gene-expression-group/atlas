@@ -54,9 +54,16 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
             GeneProfile geneProfile;
 
+            int geneCount = 0;
+
             while ((geneProfile = inputStream.readNext()) != null) {
+                boolean expressionAdded = false;
                 for (GeneExpression geneExpression : geneProfile.filterByOrganismParts(requestPreferences.getOrganismParts())) {
                     rankingQueue.add(geneExpression);
+                    expressionAdded = true;
+                }
+                if (expressionAdded) {
+                    geneCount++;
                 }
             }
 
@@ -64,6 +71,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
             Collections.sort(list, reverseSpecificityComparator);
 
+            list.setTotalResultCount(geneCount);
 
             return list;
 

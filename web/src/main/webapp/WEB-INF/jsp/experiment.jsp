@@ -195,7 +195,7 @@
 
             <p>
 
-            <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> gene expressions.</div>
+            <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
             </p>
             <c:if test="${not empty geneExpressions}">
 
