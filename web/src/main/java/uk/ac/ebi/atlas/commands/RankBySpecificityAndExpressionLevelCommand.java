@@ -40,9 +40,13 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
 
         GeneProfile geneProfile;
 
+        int geneCount = 0;
+
         while ((geneProfile = geneProfileInputStream.readNext()) != null) {
-            for (GeneExpression geneExpression: geneProfile.organismPartExpressions(organismParts)){
+
+            for (GeneExpression geneExpression : geneProfile.organismPartExpressions(organismParts)) {
                 rankedObjects.add(geneExpression);
+                geneCount++;
             }
         }
 
@@ -50,6 +54,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
 
         Collections.sort(list, reverseSpecificityComparator);
 
+        list.setTotalResultCount(geneCount);
         return list;
     }
 
