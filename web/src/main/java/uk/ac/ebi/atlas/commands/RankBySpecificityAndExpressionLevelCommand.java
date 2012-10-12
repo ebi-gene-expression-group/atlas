@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 
@@ -24,9 +24,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
 
     private int rankingSize = DEFAULT_SIZE;
 
-    private Queue<GeneExpression> topTenObjects;
-
-    private Set<String> geneIDs;
+    private Queue<GeneExpression> rankedObjects;
 
     private Set<String> organismParts;
 
@@ -34,58 +32,43 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
     }
 
     @Override
-    public GeneExpressionsList apply(ObjectInputStream<GeneProfile> objectStream) {
+    public GeneExpressionsList apply(ObjectInputStream<GeneProfile> geneProfileInputStream) {
 
         Comparator<GeneExpression> reverseSpecificityComparator = Ordering.from(new GeneSpecificityComparator()).reverse();
 
-        topTenObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
+        rankedObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
 
         GeneProfile geneProfile;
 
-        while ((geneProfile = objectStream.readNext()) != null) {
-            addGeneProfileToQueue(geneProfile);
+        while ((geneProfile = geneProfileInputStream.readNext()) != null) {
+            for (GeneExpression geneExpression: geneProfile.organismPartExpressions(organismParts)){
+                rankedObjects.add(geneExpression);
+            }
         }
 
-        GeneExpressionsList list = new GeneExpressionsList(topTenObjects);
+        GeneExpressionsList list = new GeneExpressionsList(rankedObjects);
 
         Collections.sort(list, reverseSpecificityComparator);
 
         return list;
     }
 
-    protected void setTopTenObjects(Queue<GeneExpression> topTenObjects) {
-        this.topTenObjects = topTenObjects;
-    }
-
-    protected void addGeneProfileToQueue(GeneProfile geneProfile) {
-        if (isInQuery(geneIDs, geneProfile.getGeneId())) {
-            for (Expression expression : geneProfile) {
-                if (isInQuery(organismParts, expression.getOrganismPart())) {
-                    addExpressionInQueue(geneProfile, expression);
-                }
-
-            }
-        }
+    protected void setRankedObjects(Queue<GeneExpression> rankedObjects) {
+        this.rankedObjects = rankedObjects;
     }
 
     private void addExpressionInQueue(GeneProfile geneProfile, Expression expression) {
-        GeneExpression geneExpression =
-                new GeneExpression(geneProfile.getGeneId(), expression, geneProfile.getGeneSpecificity());
-        topTenObjects.add(geneExpression);
+
     }
 
-    private boolean isInQuery(Set<String> query, String value) {
-        return CollectionUtils.isEmpty(query) || geneIDs.contains(value);
+    private boolean isSearched(Set<String> searchedStrings, String value) {
+        return CollectionUtils.isEmpty(searchedStrings) || searchedStrings.contains(value);
     }
 
     public RankBySpecificityAndExpressionLevelCommand setRankingSize(int rankingSize) {
         checkArgument(rankingSize > 0, "rankingSize must be greater then zero");
         this.rankingSize = rankingSize;
         return this;
-    }
-
-    public void setGeneIDs(Set<String> geneIDs) {
-        this.geneIDs = geneIDs;
     }
 
     public void setOrganismParts(Set<String> organismParts) {

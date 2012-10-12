@@ -18,7 +18,8 @@ import java.util.concurrent.ExecutionException;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoadGeneExpressionsCommandTest {
@@ -76,14 +77,5 @@ public class LoadGeneExpressionsCommandTest {
 
     }
 */
-
-    @Test
-    public void testSetRankingSize() throws Exception {
-        //when
-        subject.setRankingSize(1);
-        //then
-        verify(rankBySpecificityObjectsCommand).setRankingSize(1);
-    }
-
 
 }

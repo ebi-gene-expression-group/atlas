@@ -14,14 +14,18 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
 
     @Override
     public T readNext() {
-        if (inputStream.readNext() == null) {
-            return null;
+
+        T object;
+        while ((object = inputStream.readNext())!=null){
+            if (getAcceptanceCriteria().apply(object)) {
+                return object;
+            }
         }
-        T object = inputStream.readNext();
-        if (getAcceptanceCriteria().apply(object)) {
-            return object;
-        }
-        return readNext();
+        return null;
+    }
+
+    private Object findNextAcceptableObject(){
+        return null;
     }
 
     @Override
@@ -30,5 +34,7 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
     }
 
     protected abstract Predicate<T> getAcceptanceCriteria();
+
+
 }
 

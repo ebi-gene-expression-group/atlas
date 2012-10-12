@@ -32,7 +32,7 @@ public class ExpressionLevelController {
         if (!result.hasErrors()) {
 
 
-            loadGeneExpressionsCommand.setPreferences(preferences);
+            loadGeneExpressionsCommand.setRequestPreferences(preferences);
 
             GeneExpressionsList geneExpressions = loadGeneExpressionsCommand.apply(DEMO_ACCESSION);
 

@@ -2,12 +2,16 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
 import com.google.common.cache.LoadingCache;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneExpressionsList;
+import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import uk.ac.ebi.atlas.web.controllers.RequestPreferences;
 
@@ -15,7 +19,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 @Named("loadGeneExpressions")
@@ -29,7 +32,8 @@ public class LoadGeneExpressionsCommand implements Function<String, List<GeneExp
 
     private LoadingCache<String, List<ExperimentRun>> experiments;
     private RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand;
-    private Double cutoff;
+    private RequestPreferences requestPreferences;
+
 
     @Inject
     public LoadGeneExpressionsCommand(LoadingCache<String, List<ExperimentRun>> experiments, RankBySpecificityAndExpressionLevelCommand rankBySpecificityObjectsCommand) {
@@ -37,6 +41,7 @@ public class LoadGeneExpressionsCommand implements Function<String, List<GeneExp
         this.experiments = experiments;
 
         this.rankBySpecificityObjectsCommand = rankBySpecificityObjectsCommand;
+
     }
 
     @Override
@@ -47,8 +52,10 @@ public class LoadGeneExpressionsCommand implements Function<String, List<GeneExp
 
     }
 
-    //This is a bit smelly, this cache could be directly used by GeneProfilesInputStrea.Builder
-    //rather then being used here just to bounce the cached data back to GeneProfilesInputStrea.Builder
+    //ToDo: should be refactored, this cache could be directly used by GeneProfilesInputStream.Builder.
+    //The cached data is being extracted here with the only goal of bouncing it to GeneProfilesInputStrea.Builder.
+    //Then why not having the Builder take it from the cache itself.
+    //So the Builder should be injected via spring and cache should be injected into Builder.
     List<ExperimentRun> getExperimentRuns(String experimentAccession) {
 
         try {
@@ -67,45 +74,42 @@ public class LoadGeneExpressionsCommand implements Function<String, List<GeneExp
 
         List<ExperimentRun> experimentRuns = getExperimentRuns(experimentAccession);
 
-        try (GeneProfilesInputStream objectInputStream = GeneProfilesInputStream.forFile(dataFileURL)
-                .withExperimentRuns(experimentRuns)
-                .withCutoff(cutoff).create()) {
+        ObjectInputStream<GeneProfile> geneProfileInputStream = null;
 
-            return rankBySpecificityObjectsCommand.apply(objectInputStream);
+        try {
 
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
+            geneProfileInputStream = GeneProfilesInputStream.forFile(dataFileURL)
+                                .withExperimentRuns(experimentRuns)
+                                .withCutoff(requestPreferences.getCutoff()).create();
+
+
+            if (!CollectionUtils.isEmpty(requestPreferences.getGeneIDs())){
+
+                geneProfileInputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs());
+
+            }
+
+            rankBySpecificityObjectsCommand.setRankingSize(requestPreferences.getRankingSize());
+            rankBySpecificityObjectsCommand.setOrganismParts(requestPreferences.getOrganismParts());
+
+            return rankBySpecificityObjectsCommand.apply(geneProfileInputStream);
+
+        } finally {
+
+            try{
+                geneProfileInputStream.close();
+            }catch (IOException e) {
+                logger.error(e.getMessage(), e);
+                throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
+            }
         }
+
     }
 
-    public LoadGeneExpressionsCommand setPreferences(RequestPreferences preferences) {
-        setRankingSize(preferences.getRankingSize());
-        setCutoff(preferences.getCutoff());
-        setOrganismParts(preferences.getOrganismParts());
-        setGeneIds(preferences.getGeneIDs());
-
+    public LoadGeneExpressionsCommand setRequestPreferences(RequestPreferences requestPreferences){
+        this.requestPreferences = requestPreferences;
         return this;
     }
 
-    public LoadGeneExpressionsCommand setRankingSize(int rankingSize) {
-        rankBySpecificityObjectsCommand.setRankingSize(rankingSize);
-        return this;
-    }
 
-    public LoadGeneExpressionsCommand setCutoff(double cutoff) {
-        this.cutoff = cutoff;
-        return this;
-    }
-
-    //ToDo: refactor to set these parameters directly to command
-    public LoadGeneExpressionsCommand setOrganismParts(Set<String> organismParts) {
-        rankBySpecificityObjectsCommand.setOrganismParts(organismParts);
-        return this;
-    }
-
-    public LoadGeneExpressionsCommand setGeneIds(Set<String> geneIds) {
-        rankBySpecificityObjectsCommand.setGeneIDs(geneIds);
-        return this;
-    }
 }

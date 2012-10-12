@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.model;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,6 +13,7 @@ public class GeneProfile implements Iterable<Expression> {
 
     private String geneId;
 
+    //ToDo: ...Expression is not implementing equality and hashcode but here we are using it in a Set...
     private Set<Expression> expressions = new HashSet<>();
 
     private GeneProfile(String geneId) {
@@ -32,6 +35,17 @@ public class GeneProfile implements Iterable<Expression> {
     @Override
     public Iterator<Expression> iterator() {
         return expressions.iterator();
+    }
+
+    public Iterable<GeneExpression> organismPartExpressions(Set<String> organismParts){
+
+        Set<GeneExpression> filteredExpressions = new HashSet<GeneExpression>();
+        for (Expression expression: this){
+            if (CollectionUtils.isEmpty(organismParts) || organismParts.contains(expression.getOrganismPart())){
+                filteredExpressions.add(new GeneExpression(geneId, expression, getGeneSpecificity()));
+            }
+        }
+        return filteredExpressions;
     }
 
     public static class Builder {
