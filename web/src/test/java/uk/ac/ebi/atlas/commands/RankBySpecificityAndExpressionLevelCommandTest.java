@@ -6,17 +6,26 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import uk.ac.ebi.atlas.web.controllers.RequestPreferences;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyDouble;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RankBySpecificityAndExpressionLevelCommandTest {
 
-    private static final int QUEUE_SIZE = 3;
-
     @Mock
-    private ExperimentsCache experimentsCacheMock;
+    private GeneProfilesInputStream.Builder geneProfileInputStreamBuilderMock;
 
     @Mock
     private RequestPreferences requestPreferencesMock;
@@ -33,14 +42,20 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
     @Before
     public void initializeSubject() throws Exception {
 
+        when(geneProfileInputStreamBuilderMock.forDataFileURL(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
+        when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
+        when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
+
+
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
 
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
+        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock);
 
-        subject = new RankBySpecificityAndExpressionLevelCommand(experimentsCacheMock);
+        subject.setRequestPreferences(requestPreferencesMock);
     }
 
     @Test
@@ -54,12 +69,20 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
     }
 
     @Test
-    public void givenAStreamWithManyExpressionsTheCommandShouldReturnThreeExpressionExpressions() throws Exception {
+    public void givenRankingSizeOf3TheCommandWillAlwaysReturnAtMax3Expressions() throws Exception {
+
+
+        //given
+        given(requestPreferencesMock.getRankingSize()).willReturn(3);
+        //and
+        when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
+
+
         //when
-//        List<GeneExpression> top3Objects = subject.apply(largeInputStream);
+        List<GeneExpression> top3Objects = subject.apply("AN_ACCESSION");
 
         //then
-//        assertThat(top3Objects.size(), is(3));
+        assertThat(top3Objects.size(), is(3));
 
     }
 /*

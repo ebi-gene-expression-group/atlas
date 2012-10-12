@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import utils.ExperimentRunsBuilder;
 
 import java.util.List;
@@ -13,6 +14,9 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ExpressionBufferTest {
 
@@ -24,6 +28,8 @@ public class ExpressionBufferTest {
 
     private ExpressionsBuffer subject;
     private static List<ExperimentRun> experimentRuns;
+    private ExperimentsCache experimentsCache = mock(ExperimentsCache.class);
+
 
     @Before
     public void initializeSubject() {
@@ -33,14 +39,17 @@ public class ExpressionBufferTest {
 
         experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 
-        subject = ExpressionsBuffer.forExperimentRuns(experimentRuns)
+        when(experimentsCache.getExperimentRuns(anyString())).thenReturn(experimentRuns);
+
+        subject = new ExpressionsBuffer.Builder(experimentsCache)
+                .forExperiment("FAKE_EXPERIMENT_ACCESSION")
                 .withHeaders("", RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3)
                 .create();
     }
 
     @Test(expected = IllegalStateException.class)
     public void builderShouldThrowIllegalStateExceptionWhenOrderSpecificationIsNotSet() {
-        ExpressionsBuffer.forExperimentRuns(experimentRuns).create();
+        new ExpressionsBuffer.Builder(experimentsCache).create();
     }
 
     @Test

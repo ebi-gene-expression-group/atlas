@@ -7,9 +7,13 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -26,13 +30,13 @@ class ExpressionsBuffer {
     private int expectedNumberOfValues;
 
     public static final int GENE_ID_COLUMN = 0;
-
+/*
     public static Builder forExperimentRuns(List<ExperimentRun> experimentRuns) {
 
         return new Builder(experimentRuns);
 
     }
-
+*/
     private ExpressionsBuffer(List<ExperimentRun> orderedRuns) {
         expectedNumberOfValues = orderedRuns.size();
         this.runsCircularQueue = Iterables.cycle(orderedRuns).iterator();
@@ -65,25 +69,40 @@ class ExpressionsBuffer {
         return this;
     }
 
+    @Named("expressionsBufferBuilder")
+    @Scope("singleton")
     public static class Builder {
+
+        private ExperimentsCache experimentsCache;
 
         private List<ExperimentRun> experimentRuns;
 
         private boolean readyToCreate;
 
-        private Builder(List<ExperimentRun> experimentRuns) {
+        @Inject
+        public Builder(ExperimentsCache experimentsCache) {
 
-            this.experimentRuns = experimentRuns;
+            this.experimentsCache = experimentsCache;
+
+        }
+
+        public Builder forExperiment(String experimentAccession) {
+
+            this.experimentRuns = experimentsCache.getExperimentRuns(experimentAccession);
+
+            return this;
 
         }
 
         public Builder withHeaders(String... dataFileHeaders) {
 
-            List<String> orderedAccessions = Arrays.asList(ArrayUtils.remove(dataFileHeaders, GENE_ID_COLUMN));
+            checkState(experimentRuns != null, "Builder not properly initialized!");
 
-            experimentRuns = removeUnrequiredExperimentRuns(orderedAccessions);
+            List<String> orderedRunAccessions = Arrays.asList(ArrayUtils.remove(dataFileHeaders, GENE_ID_COLUMN));
 
-            Collections.sort(experimentRuns, experimentRunComparator(orderedAccessions));
+            experimentRuns = removeUnrequiredExperimentRuns(orderedRunAccessions);
+
+            Collections.sort(experimentRuns, experimentRunComparator(orderedRunAccessions));
 
             readyToCreate = true;
 
@@ -97,7 +116,7 @@ class ExpressionsBuffer {
 
         public ExpressionsBuffer create() {
 
-            checkState(readyToCreate, "Please specify the order specification with withOrderRunsSpecification before invoking the create method.");
+            checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
 
             return new ExpressionsBuffer(experimentRuns);
 

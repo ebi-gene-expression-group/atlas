@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
@@ -33,14 +34,16 @@ public class GeneProfilesInputStreamTest {
     private CSVReader csvReaderMock;
 
     @Mock
-    private ExpressionsBuffer expressionsBufferMock;
+    private ExpressionsBuffer.Builder expressionsBufferBuilderMock;
 
+    @Mock
+    private ExpressionsBuffer expressionsBufferMock;
 
     private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
 
     private List<ExperimentRun> experimentRunsMock;
 
-    private GeneProfilesInputStream subject;
+    private ObjectInputStream<GeneProfile> subject;
 
 
     @Before
@@ -55,15 +58,20 @@ public class GeneProfilesInputStreamTest {
 
         experimentRunsMock = Lists.newArrayList(experimentRuns1Mock, experimentRuns2Mock);
 
+        String [] headers = new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2};
+
         given(csvReaderMock.readNext())
-                .willReturn(new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2})
+                .willReturn(headers)
                 .willReturn(expressionLevels)
                 .willReturn(null);
 
+        given(expressionsBufferBuilderMock.forExperiment(anyString())).willReturn(expressionsBufferBuilderMock);
+        given(expressionsBufferBuilderMock.withHeaders(headers)).willReturn(expressionsBufferBuilderMock);
+        given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
-        subject = GeneProfilesInputStream.forInputStream(mock(InputStream.class))
-                .withCsvReader(csvReaderMock)
-                .withExpressionsBuffer(expressionsBufferMock)
+        subject = new GeneProfilesInputStream.Builder(expressionsBufferBuilderMock).forDataFileInputStream(mock(InputStream.class))
+                .injectCsvReader(csvReaderMock)
+                .withExperimentAccession("AN_ACCESSION")
                 .create();
 
     }
@@ -81,7 +89,7 @@ public class GeneProfilesInputStreamTest {
         subject.readNext();
         //then poll will be invoked three times
 
-        verify(expressionsBufferMock, times(3)).poll();
+        verify(expressionsBufferMock, times(2)).poll();
     }
 
     @Test
@@ -109,7 +117,7 @@ public class GeneProfilesInputStreamTest {
         //when
         GeneProfile geneProfile = subject.readNext();
         //then
-        verify(csvReaderMock, times(1)).readNext();
+        verify(csvReaderMock, times(2)).readNext();
         //and
         assertThat(geneProfile, is(nullValue()));
     }

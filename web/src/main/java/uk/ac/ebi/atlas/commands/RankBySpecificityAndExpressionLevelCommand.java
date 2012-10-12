@@ -35,11 +35,11 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     private RequestPreferences requestPreferences;
 
-    private ExperimentsCache experimentsCache;
+    GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
     @Inject
-    public RankBySpecificityAndExpressionLevelCommand(ExperimentsCache experimentsCache) {
-        this.experimentsCache = experimentsCache;
+    public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
+        this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
     }
 
     @Override
@@ -76,8 +76,8 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession){
 
-        ObjectInputStream<GeneProfile> geneProfileInputStream = GeneProfilesInputStream.forFile(dataFileURL)
-            .withExperimentRuns(experimentsCache.getExperimentRuns(experimentAccession))
+        ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forDataFileURL(dataFileURL)
+            .withExperimentAccession(experimentAccession)
             .withCutoff(requestPreferences.getCutoff()).create();
 
         if (CollectionUtils.isEmpty(requestPreferences.getGeneIDs())){

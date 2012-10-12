@@ -3,8 +3,10 @@ package uk.ac.ebi.atlas.streams;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
+import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import utils.ExperimentRunsBuilder;
 
 import java.io.IOException;
@@ -13,6 +15,9 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GeneProfilesInputStreamIT {
 
@@ -30,7 +35,9 @@ public class GeneProfilesInputStreamIT {
 
     private URL dataFileURL;
 
-    private GeneProfilesInputStream subject;
+    private ObjectInputStream<GeneProfile> subject;
+
+    private ExpressionsBuffer.Builder expressionsBufferBuilder;
 
     @Before
     public void initSubject() throws Exception {
@@ -43,8 +50,14 @@ public class GeneProfilesInputStreamIT {
 
         experimentRuns = Lists.newArrayList(experimentRun2, experimentRun3, experimentRun1);
 
-        subject = GeneProfilesInputStream.forInputStream(dataFileURL.openStream())
-                .withExperimentRuns(experimentRuns)
+        ExperimentsCache cache = mock(ExperimentsCache.class);
+
+        when(cache.getExperimentRuns(anyString())).thenReturn(experimentRuns);
+
+        expressionsBufferBuilder = new ExpressionsBuffer.Builder(cache);
+
+        subject = new GeneProfilesInputStream.Builder(expressionsBufferBuilder).forDataFileInputStream(dataFileURL.openStream())
+                .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
                 .create();
 
     }
@@ -92,9 +105,10 @@ public class GeneProfilesInputStreamIT {
     public void setCutoffChangesSpecificity() throws IOException {
 
         //given
-        subject = GeneProfilesInputStream.forInputStream(dataFileURL.openStream())
-                .withExperimentRuns(experimentRuns).withCutoff(20D)
-                .create();
+        subject = new GeneProfilesInputStream.Builder(expressionsBufferBuilder).forDataFileInputStream(dataFileURL.openStream())
+            .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
+            .withCutoff(20D)
+            .create();
 
         //when
         subject.readNext();

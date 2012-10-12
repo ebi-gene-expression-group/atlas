@@ -3,11 +3,14 @@ package uk.ac.ebi.atlas.streams;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +32,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     private ExpressionsBuffer expressionBuffer;
 
     private Double cutoff;
-
+/*
     public static Builder forFile(String dataFileURL) {
         try {
             return new Builder(dataFileURL);
@@ -45,7 +48,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     public static Builder forInputStream(InputStream expressionLevelsInputStream) {
         return new Builder(expressionLevelsInputStream);
     }
-
+*/
     private GeneProfilesInputStream() {
     }
 
@@ -124,43 +127,56 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     }
 
 
+    @Named("GeneProfilesInputStreamBuilder")
+    @Scope("prototype")
     public static class Builder {
 
         private GeneProfilesInputStream geneProfileInputStream;
 
-        private Builder(InputStream expressionLevelsInputStream) {
+        private ExpressionsBuffer.Builder expressionsBufferBuilder;
+
+        @Inject
+        public Builder(ExpressionsBuffer.Builder expressionsBufferBuilder){
+            this.expressionsBufferBuilder = expressionsBufferBuilder;
+        }
+
+        protected Builder forDataFileInputStream(InputStream expressionLevelsInputStream) {
 
             Reader dataFileReader = new InputStreamReader(expressionLevelsInputStream);
             CSVReader csvReader = new CSVReader(dataFileReader, '\t');
 
             this.geneProfileInputStream = new GeneProfilesInputStream().setCsvReader(csvReader);
 
-        }
-
-        private Builder(String dataFileURL) throws IOException {
-            this(new URL(checkNotNull(dataFileURL)).openStream());
-        }
-
-        public Builder withExperimentRuns(List<ExperimentRun> experimentRuns) {
-
-            String[] dataFileHeaders = geneProfileInputStream.readCsvLine();
-
-            ExpressionsBuffer expressionsBuffer = ExpressionsBuffer.forExperimentRuns(experimentRuns)
-                    .withHeaders(dataFileHeaders).create();
-
-            return withExpressionsBuffer(expressionsBuffer);
-
-        }
-
-        //required for testability - mock injection
-        Builder withExpressionsBuffer(ExpressionsBuffer expressionsBuffer) {
-            geneProfileInputStream.setExpressionBuffer(expressionsBuffer);
-
             return this;
         }
 
+        public Builder forDataFileURL(String dataFileURL) {
+            try{
+                return forDataFileInputStream(new URL(checkNotNull(dataFileURL)).openStream());
+            } catch (MalformedURLException e) {
+                logger.error(e.getMessage(), e);
+                throw new IllegalArgumentException("Error while building URL for location " + dataFileURL + ". Error details: " + e.getMessage());
+            } catch (IOException e) {
+                logger.error(e.getMessage(), e);
+                throw new IllegalArgumentException("Error while building GeneProfileInputStream. Error details: " + e.getMessage());
+            }
+        }
+
+        public Builder withExperimentAccession(String experimentAccession) {
+
+            String[] dataFileHeaders = geneProfileInputStream.readCsvLine();
+
+            ExpressionsBuffer expressionsBuffer = expressionsBufferBuilder.forExperiment(experimentAccession)
+                    .withHeaders(dataFileHeaders).create();
+
+            geneProfileInputStream.setExpressionBuffer(expressionsBuffer);
+
+            return this;
+
+        }
+
         //required for testability - mock injection
-        Builder withCsvReader(CSVReader csvReader) {
+        Builder injectCsvReader(CSVReader csvReader) {
             geneProfileInputStream.setCsvReader(csvReader);
             return this;
         }
@@ -170,8 +186,8 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             return this;
         }
 
-        public GeneProfilesInputStream create() {
-            checkState(geneProfileInputStream.expressionBuffer != null, "Please assign the experimentRun list using the withExperimentRuns method before invoking create!");
+        public ObjectInputStream<GeneProfile> create() {
+            checkState(geneProfileInputStream.expressionBuffer != null, "Builder not in the right state for GeneProfilesInputStream creation.");
             return geneProfileInputStream;
         }
 

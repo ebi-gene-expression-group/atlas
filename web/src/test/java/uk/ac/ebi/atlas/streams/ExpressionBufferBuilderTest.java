@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import utils.ExperimentRunsBuilder;
 
 import java.util.Collection;
@@ -12,6 +13,9 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ExpressionBufferBuilderTest {
 
@@ -33,7 +37,11 @@ public class ExpressionBufferBuilderTest {
 
         List<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 
-        subject = ExpressionsBuffer.forExperimentRuns(experimentRuns);
+        ExperimentsCache experimentsCache = mock(ExperimentsCache.class);
+
+        when(experimentsCache.getExperimentRuns(anyString())).thenReturn(experimentRuns);
+
+        subject = new ExpressionsBuffer.Builder(experimentsCache).forExperiment("FAKE_EXPERIMENT_ACCESSION");
     }
 
     @Test(expected = IllegalStateException.class)

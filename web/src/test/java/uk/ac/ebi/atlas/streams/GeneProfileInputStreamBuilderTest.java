@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -26,17 +28,27 @@ public class GeneProfileInputStreamBuilderTest {
     @Mock
     private InputStream inputStreamMock;
 
+    @Mock
+    private ExpressionsBuffer.Builder expressionsBufferBuilderMock;
+
+    @Mock
+    private ExpressionsBuffer expressionsBufferMock;
+
     private GeneProfilesInputStream.Builder subject;
 
     @Before
     public void initMocks() throws IOException {
-        when(csvReaderMock.readNext()).thenReturn(new String[]{"", "header_value_1", "header_value_2"});
+        String[] headers = new String[]{"", "header_value_1", "header_value_2"};
+        when(csvReaderMock.readNext()).thenReturn(headers);
+        when(expressionsBufferBuilderMock.forExperiment(anyString())).thenReturn(expressionsBufferBuilderMock);
+        when(expressionsBufferBuilderMock.withHeaders(headers)).thenReturn(expressionsBufferBuilderMock);
+        when(expressionsBufferBuilderMock.create()).thenReturn(expressionsBufferMock);
     }
 
     @Before
     public void initSubject() {
-        subject = GeneProfilesInputStream.forInputStream(inputStreamMock)
-                .withCsvReader(csvReaderMock);
+        subject = new GeneProfilesInputStream.Builder(expressionsBufferBuilderMock).forDataFileInputStream(inputStreamMock)
+                .injectCsvReader(csvReaderMock);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -47,8 +59,10 @@ public class GeneProfileInputStreamBuilderTest {
 
     @Test
     public void shouldBeOkWhenExperimentRunsHaventBeenSet() {
+        //given
+        //geneProfileInputStream.expressionBuffer
         //when
-        subject.withExperimentRuns(new ArrayList<ExperimentRun>());
+        subject.withExperimentAccession("AN_EXPERIMENT_ACCESSION");
         //then
         assertThat(subject.create(), is(not(nullValue())));
     }
@@ -56,7 +70,7 @@ public class GeneProfileInputStreamBuilderTest {
     @Test
     public void shouldHaveReadHeaderLineOnCreate() throws IOException {
         //when
-        subject.withExperimentRuns(new ArrayList<ExperimentRun>());
+        subject.withExperimentAccession("AN_EXPERIMENT_ACCESSION");
         //then
         verify(csvReaderMock).readNext();
     }
