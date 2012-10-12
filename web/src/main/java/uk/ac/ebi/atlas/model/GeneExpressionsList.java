@@ -7,6 +7,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GeneExpressionsList extends ArrayList<GeneExpression> {
 
+    private Integer totalResultCount = 0;
+
     public GeneExpressionsList() {
         super();
     }
@@ -88,5 +90,11 @@ public class GeneExpressionsList extends ArrayList<GeneExpression> {
         return minExpressionLevel;
     }
 
+    public Integer getTotalResultCount() {
+        return totalResultCount;
+    }
 
+    public void setTotalResultCount(int totalResultCount) {
+        this.totalResultCount = totalResultCount;
+    }
 }

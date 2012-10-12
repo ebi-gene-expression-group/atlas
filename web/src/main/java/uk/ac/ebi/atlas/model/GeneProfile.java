@@ -39,23 +39,23 @@ public class GeneProfile implements Iterable<GeneExpression> {
     @Override
     public Iterator<GeneExpression> iterator() {
         return Iterators.transform(expressions.iterator(),
-                                    new Function<Expression, GeneExpression>() {
-                                        public GeneExpression apply(Expression expression){
-                                            return new GeneExpression(geneId,expression,getGeneSpecificity());
-                                        }
-                                    });
+                new Function<Expression, GeneExpression>() {
+                    public GeneExpression apply(Expression expression) {
+                        return new GeneExpression(geneId, expression, getGeneSpecificity());
+                    }
+                });
     }
 
-    public Iterable<GeneExpression> filterByOrganismParts (final Set<String> organismParts){
-        if (CollectionUtils.isEmpty(organismParts)){
+    public Iterable<GeneExpression> filterByOrganismParts(final Set<String> organismParts) {
+        if (CollectionUtils.isEmpty(organismParts)) {
             return this;
         }
 
         return Iterables.filter(this, new Predicate<GeneExpression>() {
-                public boolean apply(GeneExpression geneExpression){
-                    return organismParts.contains(geneExpression.getOrganismPart());
-                }
-            });
+            public boolean apply(GeneExpression geneExpression) {
+                return organismParts.contains(geneExpression.getOrganismPart());
+            }
+        });
 
     }
 

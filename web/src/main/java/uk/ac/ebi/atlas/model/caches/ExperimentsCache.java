@@ -12,19 +12,19 @@ import java.util.concurrent.ExecutionException;
 
 @Named("experimentsCache")
 @Scope("singleton")
-public class ExperimentsCache{
+public class ExperimentsCache {
 
     private static final Logger logger = Logger.getLogger(ExperimentsCache.class);
 
     private LoadingCache<String, List<ExperimentRun>> experiments;
 
     @Inject
-    public ExperimentsCache(LoadingCache<String, List<ExperimentRun>> experiments){
+    public ExperimentsCache(LoadingCache<String, List<ExperimentRun>> experiments) {
         this.experiments = experiments;
     }
 
-    public List<ExperimentRun> getExperimentRuns(String experimentAccession){
-        try{
+    public List<ExperimentRun> getExperimentRuns(String experimentAccession) {
+        try {
 
             return experiments.get(experimentAccession);
 

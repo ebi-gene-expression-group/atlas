@@ -49,6 +49,7 @@ public class ExpressionLevelController {
             model.addAttribute("minExpressionLevel", heatmapExpressions.getMinExpressionLevel());
 
             model.addAttribute("maxExpressionLevel", heatmapExpressions.getMaxExpressionLevel());
+            model.addAttribute("totalResultCount", geneExpressions.getTotalResultCount());
         }
 
         return "experiment";

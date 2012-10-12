@@ -114,7 +114,7 @@
         <div id="contents" class="page-contents">
 
 
-            <jsp:include page="includes/request-preferences.jsp" />
+            <jsp:include page="includes/request-preferences.jsp"/>
 
 
             <c:if test="${not empty heatmapGenes}">
@@ -173,11 +173,11 @@
                                 <td width="100%">
                                     <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
 
-                                                background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+                                            background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
 
-                                                background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+                                            background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
 
-                                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
+                                            filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
                                         &nbsp;</div>
                                 </td>
                                 <td>
@@ -193,7 +193,10 @@
                 </div>
             </c:if>
 
+            <p>
 
+            <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
+            </p>
             <c:if test="${not empty geneExpressions}">
 
                 <div id="expressions" class="block" style="clear:both">

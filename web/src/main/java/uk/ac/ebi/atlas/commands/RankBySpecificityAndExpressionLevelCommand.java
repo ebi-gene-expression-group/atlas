@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneExpressionsList;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneSpecificityComparator;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import uk.ac.ebi.atlas.web.controllers.RequestPreferences;
@@ -50,13 +49,20 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
         Queue<GeneExpression> rankingQueue = buildRankingQueue(reverseSpecificityComparator);
 
 
-        try(ObjectInputStream<GeneProfile> inputStream =  buildGeneProfilesInputStream(experimentAccession)){
+        try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession)) {
 
             GeneProfile geneProfile;
 
+            int geneCount = 0;
+
             while ((geneProfile = inputStream.readNext()) != null) {
-                for (GeneExpression geneExpression: geneProfile.filterByOrganismParts(requestPreferences.getOrganismParts())){
+                boolean expressionAdded = false;
+                for (GeneExpression geneExpression : geneProfile.filterByOrganismParts(requestPreferences.getOrganismParts())) {
                     rankingQueue.add(geneExpression);
+                    expressionAdded = true;
+                }
+                if (expressionAdded) {
+                    geneCount++;
                 }
             }
 
@@ -64,23 +70,24 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
             Collections.sort(list, reverseSpecificityComparator);
 
+            list.setTotalResultCount(geneCount);
 
             return list;
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
 
     }
 
-    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession){
+    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forDataFileURL(dataFileURL)
             .withExperimentAccession(experimentAccession)
             .withCutoff(requestPreferences.getCutoff()).create();
 
-        if (CollectionUtils.isEmpty(requestPreferences.getGeneIDs())){
+        if (CollectionUtils.isEmpty(requestPreferences.getGeneIDs())) {
 
             return geneProfileInputStream;
 
