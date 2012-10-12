@@ -120,6 +120,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     @Override
     public void close() throws IOException {
         csvReader.close();
+        logger.info("<close> close invoked on GeneProfilesInputStream");
     }
 
 

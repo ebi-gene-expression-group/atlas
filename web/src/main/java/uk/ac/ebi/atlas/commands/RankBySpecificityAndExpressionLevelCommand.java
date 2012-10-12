@@ -4,74 +4,103 @@ import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.GeneExpression;
+import uk.ac.ebi.atlas.model.GeneExpressionsList;
+import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneSpecificityComparator;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
+import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
+import uk.ac.ebi.atlas.web.controllers.RequestPreferences;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
-import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 @Named("rankBySpecificityAndExpressionLevel")
 @Scope("prototype")
-public class RankBySpecificityAndExpressionLevelCommand implements Function<ObjectInputStream<GeneProfile>, GeneExpressionsList> {
+public class RankBySpecificityAndExpressionLevelCommand implements Function<String, GeneExpressionsList> {
 
-    private static final int DEFAULT_SIZE = 100;
+    private static final Logger logger = Logger.getLogger(RankBySpecificityAndExpressionLevelCommand.class);
 
-    private int rankingSize = DEFAULT_SIZE;
+    @Value("#{configuration['magetab.test.datafile.url']}")
+    private String dataFileURL;
 
-    private Queue<GeneExpression> rankedObjects;
+    private RequestPreferences requestPreferences;
 
-    private Set<String> organismParts;
+    private ExperimentsCache experimentsCache;
 
-    public RankBySpecificityAndExpressionLevelCommand() {
+    @Inject
+    public RankBySpecificityAndExpressionLevelCommand(ExperimentsCache experimentsCache) {
+        this.experimentsCache = experimentsCache;
     }
 
     @Override
-    public GeneExpressionsList apply(ObjectInputStream<GeneProfile> geneProfileInputStream) {
+    public GeneExpressionsList apply(String experimentAccession) {
 
-        Comparator<GeneExpression> reverseSpecificityComparator = Ordering.from(new GeneSpecificityComparator()).reverse();
+        Comparator<GeneExpression> reverseSpecificityComparator = buildReverseSpecificityComparator();
 
-        rankedObjects = MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(rankingSize).create();
+        Queue<GeneExpression> rankingQueue = buildRankingQueue(reverseSpecificityComparator);
 
-        GeneProfile geneProfile;
 
-        while ((geneProfile = geneProfileInputStream.readNext()) != null) {
-            for (GeneExpression geneExpression: geneProfile.filterByOrganismParts(organismParts)){
-                rankedObjects.add(geneExpression);
+        try(ObjectInputStream<GeneProfile> inputStream =  buildGeneProfilesInputStream(experimentAccession)){
+
+            GeneProfile geneProfile;
+
+            while ((geneProfile = inputStream.readNext()) != null) {
+                for (GeneExpression geneExpression: geneProfile.filterByOrganismParts(requestPreferences.getOrganismParts())){
+                    rankingQueue.add(geneExpression);
+                }
             }
+
+            GeneExpressionsList list = new GeneExpressionsList(rankingQueue);
+
+            Collections.sort(list, reverseSpecificityComparator);
+
+
+            return list;
+
+        }catch (IOException e) {
+            logger.error(e.getMessage(), e);
+            throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
 
-        GeneExpressionsList list = new GeneExpressionsList(rankedObjects);
-
-        Collections.sort(list, reverseSpecificityComparator);
-
-        return list;
     }
 
-    protected void setRankedObjects(Queue<GeneExpression> rankedObjects) {
-        this.rankedObjects = rankedObjects;
+    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession){
+
+        ObjectInputStream<GeneProfile> geneProfileInputStream = GeneProfilesInputStream.forFile(dataFileURL)
+            .withExperimentRuns(experimentsCache.getExperimentRuns(experimentAccession))
+            .withCutoff(requestPreferences.getCutoff()).create();
+
+        if (CollectionUtils.isEmpty(requestPreferences.getGeneIDs())){
+
+            return geneProfileInputStream;
+
+        }
+
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs());
+
     }
 
-    private void addExpressionInQueue(GeneProfile geneProfile, Expression expression) {
-
+    protected Ordering<GeneExpression> buildReverseSpecificityComparator() {
+        return Ordering.from(new GeneSpecificityComparator()).reverse();
     }
 
-    private boolean isSearched(Set<String> searchedStrings, String value) {
-        return CollectionUtils.isEmpty(searchedStrings) || searchedStrings.contains(value);
+    protected Queue<GeneExpression> buildRankingQueue(Comparator<GeneExpression> reverseSpecificityComparator) {
+        return MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(requestPreferences.getRankingSize()).create();
     }
 
-    public RankBySpecificityAndExpressionLevelCommand setRankingSize(int rankingSize) {
-        checkArgument(rankingSize > 0, "rankingSize must be greater then zero");
-        this.rankingSize = rankingSize;
-        return this;
+    public void setRequestPreferences(RequestPreferences requestPreferences) {
+        this.requestPreferences = requestPreferences;
     }
 
-    public void setOrganismParts(Set<String> organismParts) {
-        this.organismParts = organismParts;
-    }
+
 }

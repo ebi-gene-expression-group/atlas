@@ -18,7 +18,9 @@
                     <form:label path="cutoff">Expression level cutoff</form:label>
                 </td>
                 <td rowspan="4">
-                    <input type="submit" value="Reload Page"/>
+                    <input type="submit" value="Update"/>
+                    <br/>
+                    <input id="reset-button" type="button" value="Reset"/>
                 </td>
             </tr>
             <tr>
@@ -84,6 +86,9 @@
 
             $(".chzn-select").chosen();
 
+            $("#reset-button").click(function (event) {
+                        location.replace('${pageContext.request.contextPath}/experiment');
+            })
         });
     })(jQuery);
 
