@@ -41,7 +41,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Obje
         GeneProfile geneProfile;
 
         while ((geneProfile = geneProfileInputStream.readNext()) != null) {
-            for (GeneExpression geneExpression: geneProfile.organismPartExpressions(organismParts)){
+            for (GeneExpression geneExpression: geneProfile.filterByOrganismParts(organismParts)){
                 rankedObjects.add(geneExpression);
             }
         }
