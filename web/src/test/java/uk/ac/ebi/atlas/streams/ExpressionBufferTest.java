@@ -23,13 +23,18 @@ public class ExpressionBufferTest {
     private static final String RUN_ACCESSION_1 = "ERR030872";
     private static final String RUN_ACCESSION_2 = "ERR030873";
     private static final String RUN_ACCESSION_3 = "ERR030874";
+
     private static final String GENE_ID = "ENST00000000233";
-    private static final String[] THREE_EXPRESSION_LEVELS = new String[]{GENE_ID, "0", "42.9134", "0.0001"};
+
+    public static final String EXPRESSION_LEVEL_1 = "0";
+
+    public static final String EXPRESSION_LEVEL_2 = "42.9134";
+    public static final String EXPRESSION_LEVEL_3 = "0.0001";
+    private static final String[] THREE_EXPRESSION_LEVELS = new String[]{GENE_ID, EXPRESSION_LEVEL_1, EXPRESSION_LEVEL_2, EXPRESSION_LEVEL_3};
 
     private ExpressionsBuffer subject;
-    private static List<ExperimentRun> experimentRuns;
-    private ExperimentsCache experimentsCache = mock(ExperimentsCache.class);
 
+    private static List<ExperimentRun> experimentRuns;
 
     @Before
     public void initializeSubject() {
@@ -39,41 +44,41 @@ public class ExpressionBufferTest {
 
         experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 
-        when(experimentsCache.getExperimentRuns(anyString())).thenReturn(experimentRuns);
+        subject = new ExpressionsBuffer(experimentRuns);
 
-        subject = new ExpressionsBuffer.Builder(experimentsCache)
-                .forExperiment("FAKE_EXPERIMENT_ACCESSION")
-                .withHeaders("", RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3)
-                .create();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void builderShouldThrowIllegalStateExceptionWhenOrderSpecificationIsNotSet() {
-        new ExpressionsBuffer.Builder(experimentsCache).create();
     }
 
     @Test
     public void pollShouldReturnExpressionsInTheRightOrder() throws Exception {
+        //given we load the buffer with three expressions
         subject.reload(THREE_EXPRESSION_LEVELS);
-        //given the object was just initialized
+
+        //when
         Expression expression = subject.poll();
         //then we expect first expression
-        assertThat(expression.getLevel(), is(0d));
+        assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
         assertThat(expression.getFactorValues(), is(experimentRuns.get(0).getFactorValues()));
 
         //given we poll again
         expression = subject.poll();
         //then we expect second Expression
-        assertThat(expression.getLevel(), is(42.9134d));
+        assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_2)));
         assertThat(expression.getFactorValues(), is(experimentRuns.get(1).getFactorValues()));
+
+        //given we poll again
+        expression = subject.poll();
+        //then we expect second Expression
+        assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_3)));
+        assertThat(expression.getFactorValues(), is(experimentRuns.get(2).getFactorValues()));
 
     }
 
     @Test
-    public void bufferShouldBeExhaustedAfterThreePolls() throws Exception {
-        //given we do first reload
+    public void bufferShouldReturnNullWhenExhausted() throws Exception {
+        //given we load the buffer with three expressions
         subject.reload(THREE_EXPRESSION_LEVELS);
-        //and we poll three times
+
+        //when
         subject.poll();
         subject.poll();
         subject.poll();
@@ -82,15 +87,16 @@ public class ExpressionBufferTest {
     }
 
     @Test
-    public void reloadWhenBufferIsExhaustedShouldFillTheBufferAgain() throws Exception {
-        //given we do first reload
+    public void reloadShouldRefillAnExhaustedBuffer() throws Exception {
+        //given we load the buffer with three expressions
         subject.reload(THREE_EXPRESSION_LEVELS);
-        //and we poll until exhaustion
+
+        //when we poll until exhaustion
         Expression run;
         do {
             run = subject.poll();
         } while (run != null);
-        //when we reload again with new values
+        //and we reload again with new values
         subject.reload("T1", "1", "2", "3");
         //and we poll
         Expression expression = subject.poll();
@@ -99,32 +105,37 @@ public class ExpressionBufferTest {
         assertThat(expression.getRunAccession(), is(experimentRuns.get(0).getRunAccession()));
     }
 
-
-    @Test(expected = IllegalArgumentException.class)
-    public void reloadShouldThrowExceptionIfMoreValuesThanRuns() throws Exception {
-        //given that we initialized subject with three runs
-        //when
-        subject.reload(GENE_ID, "0", "42.9134", "0.0001", "666");
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void reloadShouldThrowExceptionIfLessValuesThanRuns() throws Exception {
-        //given that we initialized subject with three runs
-        //when
-        subject.reload(GENE_ID, "0", "42.9134");
-
-    }
-
     @Test(expected = IllegalStateException.class)
     public void reloadShouldThrowExceptionIfBufferIsNotEmpty() throws Exception {
-        //given
+        //given we load the buffer with three expressions
         subject.reload(THREE_EXPRESSION_LEVELS);
-        //and
+        //and we poll only a single expression
         subject.poll();
+
         //when we reload again
         subject.reload(THREE_EXPRESSION_LEVELS);
 
+        //then we expect an IllegalArgumentException
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void reloadShouldThrowExceptionIfWeProvideMoreValuesThanRuns() throws Exception {
+        //given that we built a buffer suitable for three experiment runs
+
+        //when we reload with 4 expressions per line
+        subject.reload(GENE_ID, "0", "42.9134", "0.0001", "666");
+
+        //then we expect an IllegalArgumentException
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void reloadShouldThrowExceptionIfWeProvideLessValuesThanRuns() throws Exception {
+        //given that we built a buffer suitable for three experiment runs
+
+        //when we reload with 2 expressions per line
+        subject.reload(GENE_ID, "0", "42.9134");
+
+        //then we expect an IllegalArgumentException
     }
 
 

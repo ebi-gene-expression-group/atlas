@@ -1,5 +1,6 @@
 package utils;
 
+import org.apache.commons.lang.RandomStringUtils;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 
 public class ExperimentRunsBuilder {
@@ -17,8 +18,8 @@ public class ExperimentRunsBuilder {
 
     public ExperimentRun create() {
 
-        experimentRun.addFactorValue("factor1", "value1")
-                .addFactorValue("factor2", "value2");
+        experimentRun.addFactorValue("factor1", RandomStringUtils.random(4))
+                     .addFactorValue("factor2", RandomStringUtils.random(4));
 
         return experimentRun;
     }

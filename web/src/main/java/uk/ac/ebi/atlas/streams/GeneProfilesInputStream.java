@@ -5,7 +5,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
@@ -17,52 +16,37 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
 
+@Named("geneProfilesInputStream")
+@Scope("prototype")
 public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
     private static final Logger logger = Logger.getLogger(GeneProfilesInputStream.class);
 
     private CSVReader csvReader;
 
-    private ExpressionsBuffer expressionBuffer;
+    private ExpressionsBuffer expressionsBuffer;
 
     private Double cutoff;
-/*
-    public static Builder forFile(String dataFileURL) {
-        try {
-            return new Builder(dataFileURL);
-        } catch (MalformedURLException e) {
-            logger.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error while building URL for location " + dataFileURL + ". Error details: " + e.getMessage());
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error while building GeneProfileInputStream. Error details: " + e.getMessage());
-        }
+
+    protected GeneProfilesInputStream() {
     }
 
-    public static Builder forInputStream(InputStream expressionLevelsInputStream) {
-        return new Builder(expressionLevelsInputStream);
-    }
-*/
-    private GeneProfilesInputStream() {
-    }
-
-    private GeneProfilesInputStream setExpressionBuffer(ExpressionsBuffer expressionBuffer) {
-        this.expressionBuffer = expressionBuffer;
+    protected GeneProfilesInputStream setExpressionBuffer(ExpressionsBuffer expressionsBuffer) {
+        this.expressionsBuffer = expressionsBuffer;
         return this;
     }
 
-    private GeneProfilesInputStream setCsvReader(CSVReader csvReader) {
+    protected GeneProfilesInputStream setCsvReader(CSVReader csvReader) {
         this.csvReader = csvReader;
         return this;
     }
 
-    private GeneProfilesInputStream setCutoff(Double cutoff) {
+    protected GeneProfilesInputStream setCutoff(Double cutoff) {
         this.cutoff = cutoff;
         return this;
     }
@@ -93,11 +77,11 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             builder.withCutoff(cutoff);
         }
 
-        expressionBuffer.reload(values);
+        expressionsBuffer.reload(values);
 
         Expression expression;
 
-        while ((expression = expressionBuffer.poll()) != null) {
+        while ((expression = expressionsBuffer.poll()) != null) {
 
             builder.addExpression(expression);
         }
@@ -127,17 +111,20 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     }
 
 
-    @Named("GeneProfilesInputStreamBuilder")
+    @Named("geneProfilesInputStreamBuilder")
     @Scope("prototype")
     public static class Builder {
 
-        private GeneProfilesInputStream geneProfileInputStream;
+        private GeneProfilesInputStream geneProfilesInputStream;
 
         private ExpressionsBuffer.Builder expressionsBufferBuilder;
 
+        private ExpressionsBuffer expressionsBuffer;
+
         @Inject
-        public Builder(ExpressionsBuffer.Builder expressionsBufferBuilder){
+        public Builder(GeneProfilesInputStream geneProfilesInputStream, ExpressionsBuffer.Builder expressionsBufferBuilder){
             this.expressionsBufferBuilder = expressionsBufferBuilder;
+            this.geneProfilesInputStream = geneProfilesInputStream;
         }
 
         protected Builder forDataFileInputStream(InputStream expressionLevelsInputStream) {
@@ -145,7 +132,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             Reader dataFileReader = new InputStreamReader(expressionLevelsInputStream);
             CSVReader csvReader = new CSVReader(dataFileReader, '\t');
 
-            this.geneProfileInputStream = new GeneProfilesInputStream().setCsvReader(csvReader);
+            geneProfilesInputStream.setCsvReader(csvReader);
 
             return this;
         }
@@ -164,12 +151,10 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         public Builder withExperimentAccession(String experimentAccession) {
 
-            String[] dataFileHeaders = geneProfileInputStream.readCsvLine();
+            String[] dataFileHeaders = geneProfilesInputStream.readCsvLine();
 
-            ExpressionsBuffer expressionsBuffer = expressionsBufferBuilder.forExperiment(experimentAccession)
-                    .withHeaders(dataFileHeaders).create();
-
-            geneProfileInputStream.setExpressionBuffer(expressionsBuffer);
+            expressionsBuffer = expressionsBufferBuilder.forExperiment(experimentAccession)
+                                .withHeaders(dataFileHeaders).create();
 
             return this;
 
@@ -177,18 +162,19 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         //required for testability - mock injection
         Builder injectCsvReader(CSVReader csvReader) {
-            geneProfileInputStream.setCsvReader(csvReader);
+            geneProfilesInputStream.setCsvReader(csvReader);
             return this;
         }
 
         public Builder withCutoff(Double cutoff) {
-            geneProfileInputStream.cutoff = cutoff;
+            geneProfilesInputStream.cutoff = cutoff;
             return this;
         }
 
         public ObjectInputStream<GeneProfile> create() {
-            checkState(geneProfileInputStream.expressionBuffer != null, "Builder not in the right state for GeneProfilesInputStream creation.");
-            return geneProfileInputStream;
+            checkState(expressionsBuffer != null, "Builder not in the right state for GeneProfilesInputStream creation.");
+            geneProfilesInputStream.setExpressionBuffer(expressionsBuffer);
+            return geneProfilesInputStream;
         }
 
 

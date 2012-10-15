@@ -3,6 +3,9 @@ package uk.ac.ebi.atlas.streams;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import utils.ExperimentRunsBuilder;
@@ -15,8 +18,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ExpressionBufferBuilderTest {
 
     private static final String RUN_ACCESSION_1 = "ERR030872";
@@ -26,6 +31,11 @@ public class ExpressionBufferBuilderTest {
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
     private ExperimentRun experimentRun3;
+
+    private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
+
+    @Mock
+    private ExperimentsCache experimentsCacheMock;
 
     private ExpressionsBuffer.Builder subject;
 
@@ -37,35 +47,59 @@ public class ExpressionBufferBuilderTest {
 
         List<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 
-        ExperimentsCache experimentsCache = mock(ExperimentsCache.class);
+        when(experimentsCacheMock.getExperimentRuns(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentRuns);
 
-        when(experimentsCache.getExperimentRuns(anyString())).thenReturn(experimentRuns);
+        subject = new ExpressionsBuffer.Builder(experimentsCacheMock);
+    }
 
-        subject = new ExpressionsBuffer.Builder(experimentsCache).forExperiment("FAKE_EXPERIMENT_ACCESSION");
+    @Test
+    public void builderShouldFetchExperimentRunsFromACache(){
+
+        //when
+        subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
+        //then
+        verify(experimentsCacheMock).getExperimentRuns(MOCK_EXPERIMENT_ACCESSION);
+
     }
 
     @Test(expected = IllegalStateException.class)
-    public void builderShouldThrowIllegalStateExceptionWhenOrderSpecificationIsNotSet() {
+    public void createThrowsExceptionGivenThatExperimentAccessionHasNotBeenProvided() {
         //when
         subject.create();
+    }
 
-        //then an exception should be thrown because run accession headers haven't been assigned
+    @Test(expected = IllegalStateException.class)
+    public void createThrowsExceptionGivenThatOrderedHeadersHaveNotBeenProvided() {
+        //when
+        subject.create();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void withHeadersThrowsExceptionWhenExperimentAccessionIsNotSet() {
+        //when
+        subject.create();
     }
 
     @Test
     public void createShouldSucceedWhenSpecificationHasBeenSet() {
         //given
         String[] headers = new String[]{"", RUN_ACCESSION_2, RUN_ACCESSION_3};
+        //when
+        subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
         //then
         assertThat(subject.withHeaders(headers).create(), is(notNullValue()));
     }
 
     @Test
-    public void removeUnwantedExperimentRunsTest() {
+    public void removeUnrequiredExperimentRunsTest() {
         //given
         List<String> wantedRunAccessions = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
+        //and
+        subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
+
         //when
         Collection<ExperimentRun> experimentRuns = subject.removeUnrequiredExperimentRuns(wantedRunAccessions);
+
         //then
         assertThat(experimentRuns, hasItems(experimentRun2, experimentRun3));
         assertThat(experimentRuns, not(hasItem(experimentRun1)));
@@ -73,7 +107,7 @@ public class ExpressionBufferBuilderTest {
     }
 
     @Test
-    public void experimentRunIsRequiredWhenItIsIncludedInOrderSpecification() {
+    public void experimentRunIsRequiredWhenItsAccessionIsIncludedInTheProvidedOrderedRunAccessions() {
         //given
         List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
         //when
@@ -83,7 +117,7 @@ public class ExpressionBufferBuilderTest {
     }
 
     @Test
-    public void experimentRunIsNotRequiredWhenItIsNotIncludedInOrderSpecification() {
+    public void experimentRunIsNotRequiredWhenItsAccessionIsNotIncludedInTheProvidedOrderedRunAccessions() {
         //given
         List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
         //when
@@ -93,18 +127,18 @@ public class ExpressionBufferBuilderTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void experimentRunComparatorShouldThrowExceptionWhenExperimentRunIsNotIncludedInsOrderBySpecification() {
+    public void experimentRunComparatorThrowsExceptionWhenExperimentRunAccessionIsNotInTheOrderedListOfKnownAccessions() {
         //given
-        List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
+        List<String> orderedRunAccessions = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
         //and
-        Comparator<ExperimentRun> experimentRunsComparator = subject.experimentRunComparator(orderSpecification);
+        Comparator<ExperimentRun> experimentRunsComparator = subject.experimentRunComparator(orderedRunAccessions);
         //when
         experimentRunsComparator.compare(experimentRun2, experimentRun1);
         //then expect IllegalStateExceptionToBeThrown;
     }
 
     @Test
-    public void experimentRunComparatorShouldOrderByPositionInOrderSpecification() {
+    public void experimentRunComparatorShouldOrderByPositionInTheListOfOrderedRunAccessions() {
         //given
         List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_3, RUN_ACCESSION_2);
         //and

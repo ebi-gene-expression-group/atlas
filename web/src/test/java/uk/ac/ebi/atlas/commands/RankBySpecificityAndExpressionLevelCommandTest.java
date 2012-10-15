@@ -19,10 +19,13 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RankBySpecificityAndExpressionLevelCommandTest {
+
+    private static final String DATA_FILE_URL = "ANY_URL";
 
     @Mock
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilderMock;
@@ -46,6 +49,7 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
         when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
         when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 
+        when(requestPreferencesMock.getRankingSize()).thenReturn(100);
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -53,10 +57,25 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
-        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock);
+        when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
+
+        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock, DATA_FILE_URL);
 
         subject.setRequestPreferences(requestPreferencesMock);
     }
+
+    @Test
+    public void commandBuildsGeneProfileInputStream(){
+        //when
+        subject.apply("ANY_EXPERIMENT_ACCESSION");
+        //then
+        verify(geneProfileInputStreamBuilderMock).forDataFileURL(DATA_FILE_URL);
+
+    }
+
+
+
+
 
     @Test
     public void givenAStreamWithLessExpressionsThanRankSizeTheCommandShouldReturnAllTheExpressions() throws Exception {

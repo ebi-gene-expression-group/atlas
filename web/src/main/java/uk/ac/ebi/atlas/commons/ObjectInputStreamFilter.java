@@ -26,10 +26,6 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
         return null;
     }
 
-    private Object findNextAcceptableObject() {
-        return null;
-    }
-
     @Override
     public void close() throws IOException {
         inputStream.close();

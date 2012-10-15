@@ -56,7 +56,8 @@ public class GeneProfilesInputStreamIT {
 
         expressionsBufferBuilder = new ExpressionsBuffer.Builder(cache);
 
-        subject = new GeneProfilesInputStream.Builder(expressionsBufferBuilder).forDataFileInputStream(dataFileURL.openStream())
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(), expressionsBufferBuilder)
+                                                .forDataFileInputStream(dataFileURL.openStream())
                 .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
                 .create();
 
@@ -105,7 +106,8 @@ public class GeneProfilesInputStreamIT {
     public void setCutoffChangesSpecificity() throws IOException {
 
         //given
-        subject = new GeneProfilesInputStream.Builder(expressionsBufferBuilder).forDataFileInputStream(dataFileURL.openStream())
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(), expressionsBufferBuilder)
+                                                .forDataFileInputStream(dataFileURL.openStream())
             .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
             .withCutoff(20D)
             .create();

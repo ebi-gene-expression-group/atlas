@@ -29,7 +29,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     private static final Logger logger = Logger.getLogger(RankBySpecificityAndExpressionLevelCommand.class);
 
-    @Value("#{configuration['magetab.test.datafile.url']}")
+//    @Value("#{configuration['magetab.test.datafile.url']}")
     private String dataFileURL;
 
     private RequestPreferences requestPreferences;
@@ -37,8 +37,9 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
     GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
     @Inject
-    public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
+    public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder, @Value("#{configuration['magetab.test.datafile.url']}") String dataFileURL) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
+        this.dataFileURL = dataFileURL;
     }
 
     @Override

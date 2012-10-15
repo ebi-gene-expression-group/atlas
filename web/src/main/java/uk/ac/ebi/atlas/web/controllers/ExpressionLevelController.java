@@ -31,7 +31,6 @@ public class ExpressionLevelController {
 
         if (!result.hasErrors()) {
 
-
             rankCommand.setRequestPreferences(preferences);
 
             GeneExpressionsList geneExpressions = rankCommand.apply(DEMO_ACCESSION);
@@ -49,6 +48,7 @@ public class ExpressionLevelController {
             model.addAttribute("minExpressionLevel", heatmapExpressions.getMinExpressionLevel());
 
             model.addAttribute("maxExpressionLevel", heatmapExpressions.getMaxExpressionLevel());
+
             model.addAttribute("totalResultCount", geneExpressions.getTotalResultCount());
         }
 

@@ -69,7 +69,8 @@ public class GeneProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headers)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
-        subject = new GeneProfilesInputStream.Builder(expressionsBufferBuilderMock).forDataFileInputStream(mock(InputStream.class))
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(),expressionsBufferBuilderMock)
+                                                   .forDataFileInputStream(mock(InputStream.class))
                 .injectCsvReader(csvReaderMock)
                 .withExperimentAccession("AN_ACCESSION")
                 .create();

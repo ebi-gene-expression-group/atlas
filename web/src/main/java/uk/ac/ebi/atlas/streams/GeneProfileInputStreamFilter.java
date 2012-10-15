@@ -13,9 +13,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GeneProfile> {
 
     private Set<String> geneIDs;
-    private Set<String> organismParts;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream geneProfileInputStream, Set<String> geneIDs){
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs){
         super(geneProfileInputStream);
         this.geneIDs = checkNotNull(geneIDs);
     }
@@ -26,10 +25,8 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         return new Predicate<GeneProfile>() {
             @Override
             public boolean apply(GeneProfile profile) {
-                if(CollectionUtils.isEmpty(geneIDs)){
-                    return true;
-                }
-                return geneIDs.contains(profile.getGeneId());
+                return CollectionUtils.isEmpty(geneIDs)
+                        || geneIDs.contains(profile.getGeneId());
             }
         };
 

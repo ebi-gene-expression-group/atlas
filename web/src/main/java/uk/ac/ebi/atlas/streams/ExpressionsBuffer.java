@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkState;
 class ExpressionsBuffer {
 
     private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain gene id and expression levels for all experiment runs";
-    //private String geneId;
+
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
     private Iterator<ExperimentRun> runsCircularQueue;
@@ -30,14 +30,8 @@ class ExpressionsBuffer {
     private int expectedNumberOfValues;
 
     public static final int GENE_ID_COLUMN = 0;
-/*
-    public static Builder forExperimentRuns(List<ExperimentRun> experimentRuns) {
 
-        return new Builder(experimentRuns);
-
-    }
-*/
-    private ExpressionsBuffer(List<ExperimentRun> orderedRuns) {
+    protected ExpressionsBuffer(List<ExperimentRun> orderedRuns) {
         expectedNumberOfValues = orderedRuns.size();
         this.runsCircularQueue = Iterables.cycle(orderedRuns).iterator();
     }
@@ -109,8 +103,8 @@ class ExpressionsBuffer {
             return this;
         }
 
-        List<ExperimentRun> removeUnrequiredExperimentRuns(List<String> orderedAccessions) {
-            Collection filteredExperimentRuns = Collections2.filter(experimentRuns, isExperimentRunRequired(orderedAccessions));
+        List<ExperimentRun> removeUnrequiredExperimentRuns(List<String> orderedRunAccessions) {
+            Collection filteredExperimentRuns = Collections2.filter(experimentRuns, isExperimentRunRequired(orderedRunAccessions));
             return Lists.newArrayList(filteredExperimentRuns);
         }
 
@@ -123,23 +117,23 @@ class ExpressionsBuffer {
         }
 
 
-        Predicate<ExperimentRun> isExperimentRunRequired(final List<String> orderSpecification) {
+        Predicate<ExperimentRun> isExperimentRunRequired(final List<String> orderedRunAccessions) {
             return new Predicate<ExperimentRun>() {
                 @Override
                 public boolean apply(ExperimentRun experimentRun) {
-                    return orderSpecification.contains(experimentRun.getRunAccession());
+                    return orderedRunAccessions.contains(experimentRun.getRunAccession());
                 }
             };
         }
 
 
-        Comparator<ExperimentRun> experimentRunComparator(final List<String> orderSpecification) {
+        Comparator<ExperimentRun> experimentRunComparator(final List<String> orderedRunAccessions) {
 
             return Ordering.natural().onResultOf(new Function<ExperimentRun, Integer>() {
                 @Override
                 public Integer apply(ExperimentRun experimentRun) {
-                    int orderIndexOfRun = orderSpecification.indexOf(experimentRun.getRunAccession());
-                    checkState(orderIndexOfRun >= 0, "Illegal state, experimentRun with accession = " + experimentRun.getRunAccession() + "is not included in orderSpecification = " + orderSpecification);
+                    int orderIndexOfRun = orderedRunAccessions.indexOf(experimentRun.getRunAccession());
+                    checkState(orderIndexOfRun >= 0, "Illegal state, experimentRun with accession = " + experimentRun.getRunAccession() + "is not included in ordered run accessions : " + orderedRunAccessions);
                     return orderIndexOfRun;
                 }
             });
