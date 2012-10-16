@@ -120,7 +120,7 @@
 
         <div id="heatmap" class="block">
 
-            <div id="anatomogram" style="float:left">
+            <div id="anatomogram" style="float:left;position:fixed">
 
                 <table>
                     <tr>
@@ -136,73 +136,75 @@
 
             </div>
 
-            <c:choose>
-                <c:when test="${param.organismOriented!=null}">
-                    <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
-                </c:when>
-                <c:otherwise>
-                    <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
-                </c:otherwise>
-            </c:choose>
+            <div style="margin-left:300px">
+                <c:choose>
+                    <c:when test="${param.organismOriented!=null}">
+                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
+                    </c:otherwise>
+                </c:choose>
 
-            </br>
+                </br>
 
-            <table id="heatmap-legenda" width="400px">
-                <tr>
-                    <td>
-                        <div>
-                            <c:out value="${maxExpressionLevel}"/>
-                        </div>
-                    </td>
-                    <td width="100%">
-                        <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
+                <table id="heatmap-legenda" width="400px">
+                    <tr>
+                        <td>
+                            <div>
+                                <c:out value="${maxExpressionLevel}"/>
+                            </div>
+                        </td>
+                        <td width="100%">
+                            <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
 
-                                background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+                                    background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
 
-                                background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+                                    background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
 
-                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
-                            &nbsp;</div>
-                    </td>
-                    <td>
-                        <div>
-                            <c:out value="${minExpressionLevel}"/>
-                        </div>
-                    </td>
+                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
+                                &nbsp;</div>
+                        </td>
+                        <td>
+                            <div>
+                                <c:out value="${minExpressionLevel}"/>
+                            </div>
+                        </td>
 
-                </tr>
-            </table>
-        </div>
+                    </tr>
+                </table>
 
-    </c:if>
+                <br/>
 
-    <c:if test="${not empty geneExpressions}">
+                <div>
 
-        <div id="expressions" class="block" style="clear:both">
+                    <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table"
+                                   id="geneExpressions"
+                                   class="table-grid">
 
-            <div>
+                        <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
+                        <display:column title="${geneIdLabel}" property="geneId"/>
 
-                <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table"
-                               id="geneExpressions"
-                               class="table-grid">
+                        <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
+                        <display:column title="${organismpart}" property="organismPart"/>
 
-                    <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
-                    <display:column title="${geneIdLabel}" property="geneId"/>
+                        <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
+                        <display:column title="${measurement}" property="level"/>
 
-                    <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
-                    <display:column title="${organismpart}" property="organismPart"/>
+                        <display:column title="Specificity" property="specificity"/>
 
-                    <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
-                    <display:column title="${measurement}" property="level"/>
+                    </display:table>
 
-                    <display:column title="Specificity" property="specificity"/>
-
-                </display:table>
+                </div>
 
             </div>
         </div>
 
+
+
+
     </c:if>
+
 
 </div>
 

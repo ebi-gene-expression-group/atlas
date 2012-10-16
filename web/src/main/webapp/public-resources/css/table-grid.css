@@ -12,8 +12,11 @@
     border-collapse: collapse;
 }
 
-.form-grid label{
+.form-grid{
     width: 100%;
+}
+
+.form-grid label{
     border: 0px;
     font-weight: bold;
 }
