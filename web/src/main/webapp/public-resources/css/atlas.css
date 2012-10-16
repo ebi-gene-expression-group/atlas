@@ -3,14 +3,15 @@
 }
 
 .page-contents {
-    padding-top: 7em;
-    padding-bottom: 2em;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-top: 6em;
+    padding-bottom: 3em;
 }
 
 .block {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    width:700px;
+    padding: 1em;
+    width:900px;
 }
 
 

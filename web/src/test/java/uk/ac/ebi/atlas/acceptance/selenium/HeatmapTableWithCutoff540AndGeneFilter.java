@@ -14,7 +14,7 @@ public class HeatmapTableWithCutoff540AndGeneFilter extends SeleniumFixture {
     private HeatmapTablePageWithFilters subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePageWithFilters(firefoxDriver, "?geneIDsString=ENSG00000175084+ENSG00000210195&cutoff=540");
+        subject = new HeatmapTablePageWithFilters(firefoxDriver, "?geneIDsString=ENSG00000175084+ENSG00000210195&cutoff=540&organismOriented");
         subject.get();
     }
 

@@ -12,7 +12,7 @@ public class HeatmapTableWithCutoff20000AndMatrixSize8IT extends SeleniumFixture
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(firefoxDriver, "?cutoff=20000&heatmapMatrixSize=8");
+        subject = new HeatmapTablePage(firefoxDriver, "?cutoff=20000&heatmapMatrixSize=8&organismOriented");
         subject.get();
     }
 

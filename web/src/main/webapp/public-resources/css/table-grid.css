@@ -1,4 +1,5 @@
 .form-grid, .table-grid {
+    font-size: 10px;
     font-family: Verdana, Helvetica, Arial, sans-serif;
     color: #404040;
     background-color: #fafafa;
@@ -12,6 +13,7 @@
 }
 
 .form-grid label{
+    width: 100%;
     border: 0px;
     font-weight: bold;
 }
@@ -20,8 +22,15 @@
     color: #3D3D3D;
     vertical-align: middle;
     border: 1px solid #cdcdcd;
-    padding: 0;
-    height: 25px
+    height: 25px;
+    width: 25px;
+}
+
+.header-cell{
+    font-weight: bold;
+    width:auto !important;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .table-grid tr:hover {
@@ -30,22 +39,20 @@
     cursor: default;
 }
 
-.header-cell {
-    font-weight: bold;
-}
 
 .rotated_cell {
-    height: 120px;
+    height: 110px;
     border: 1px solid #cdcdcd;
     vertical-align: bottom;
     padding-bottom: 10px
 }
 
 .rotate_text {
-    font-size: 10px;
     position: relative;
     top: 20px;
     width: 25px;
+    padding-top: 5px;
+    white-space: nowrap;
     -moz-transform: rotate(-90deg);
     -moz-transform-origin: top left;
     -webkit-transform: rotate(-90deg);

@@ -15,7 +15,7 @@ public class HeatmapTableWithCutoff540AndOrganismPartFilter extends SeleniumFixt
 
     public void getStartingPage() {
         subject = new HeatmapTablePageWithFilters(firefoxDriver,
-                "?heatmapMatrixSize=5&organismParts=heart&_organismParts=1&cutoff=20");
+                "?heatmapMatrixSize=5&organismParts=heart&_organismParts=1&cutoff=20&organismOriented");
         subject.get();
     }
 
