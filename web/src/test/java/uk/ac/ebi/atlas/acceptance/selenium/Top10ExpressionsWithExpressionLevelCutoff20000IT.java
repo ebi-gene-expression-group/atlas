@@ -10,7 +10,7 @@ public class Top10ExpressionsWithExpressionLevelCutoff20000IT extends SeleniumFi
     private ExpressionsTablePage subject;
 
     public void getStartingPage() {
-        subject = new ExpressionsTablePage(firefoxDriver, "?cutoff=20000&rankingSize=10");
+        subject = new ExpressionsTablePage(firefoxDriver, "cutoff=20000&rankingSize=10");
         subject.get();
     }
 

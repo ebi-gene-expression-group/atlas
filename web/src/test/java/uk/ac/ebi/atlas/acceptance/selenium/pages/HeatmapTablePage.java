@@ -14,52 +14,36 @@ public class HeatmapTablePage extends TablePage {
 
     private static final String DEFAULT_PAGE_URI = "/gxa/experiment";
 
+    public HeatmapTablePage(WebDriver driver, String httpParameters) {
+        super(driver, httpParameters);
+    }
+
     @FindBy(id = "heatmap-table")
     WebElement heatmapTable;
 
-    private String pageUri = DEFAULT_PAGE_URI;
-
-    HeatmapTablePage(WebDriver driver) {
-        super(driver);
-    }
-
-    public HeatmapTablePage(WebDriver driver, String parameters) {
-        this(driver);
-        pageUri = pageUri.concat(parameters);
-    }
-
     public List<String> getOrganismParts() {
-        return getFirstColumnValues(heatmapTable);
-    }
-
-    public String getTitle() {
-        return driver.getTitle();
+        List<String> organismParts = getTableHeaders(heatmapTable);
+        //and we need to remove the last header value, because is related to the organism part column
+        return organismParts.subList(1, organismParts.size());
     }
 
     public List<String> getSelectedGenes() {
-        List<String> geneNames = getTableHeaders(heatmapTable);
-        //and we need to remove the last header value, because is related to the organism part column
-        return geneNames.subList(1, geneNames.size());
+        return getFirstColumnValues(heatmapTable);
     }
 
     @Override
     protected String getPageURI() {
-        return pageUri;
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        String url = driver.getCurrentUrl();
-        assertThat(url, endsWith(pageUri));
+        return DEFAULT_PAGE_URI;
     }
 
     public List<String> getFirstGeneProfile() {
-        return getSecondColumnValues(heatmapTable);
+        List<String> firstTableRow = getRowValues(heatmapTable,1);
+        return firstTableRow.subList(1, firstTableRow.size());
     }
 
     public List<String> getLastGeneProfile() {
-        return getLastColumnValues(heatmapTable);
+        List<String> firstTableRow = getLastRowValues(heatmapTable);
+        return firstTableRow.subList(1, firstTableRow.size());
     }
-
 
 }

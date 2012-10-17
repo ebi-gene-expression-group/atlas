@@ -20,15 +20,12 @@ public class ExpressionsTablePage extends TablePage {
     @FindBy(id = "expressions-table")
     WebElement expressionsTable;
 
-    private String pageUri = DEFAULT_PAGE_URI;
-
     ExpressionsTablePage(WebDriver driver) {
         super(driver);
     }
 
     public ExpressionsTablePage(WebDriver driver, String parameters) {
-        this(driver);
-        pageUri = pageUri.concat(parameters);
+        super(driver, parameters);
     }
 
     public int getExpressionsTableRowCount() {
@@ -67,19 +64,9 @@ public class ExpressionsTablePage extends TablePage {
         return getTableBottomCellValue(expressionsTable, SPECIFICITY_COLUMN_INDEX);
     }
 
-    public String getTitle() {
-        return driver.getTitle();
-    }
-
     @Override
     protected String getPageURI() {
-        return pageUri;
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        String url = driver.getCurrentUrl();
-        assertThat(url, endsWith(pageUri));
+        return DEFAULT_PAGE_URI;
     }
 
 }

@@ -10,19 +10,24 @@ import java.util.List;
 
 abstract class TablePage extends AtlasPage {
 
-    private static final String TABLE_CELL_XPATH_TEMPLATE = "tbody/tr[%d]/td[%d]";
-    private static final String TABLE_BOTTOM_CELL_XPATH_TEMPLATE = "tbody/tr[last()]/td[%d]";
-    public static final String ALL_TABLE_ROWS_XPATH = "tbody/tr";
-    public static final String LAST_COLUMN_CELLS_XPATH = "tbody//td[last()]";
-    public static final String FIRST_COLUMN_CELLS_XPATH = "tbody//td[1]";
-    public static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
-    public static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
-    public static final String TABLE_HEADERS_XPATH = "thead/tr/th";
+    private static final String CELL_XPATH_TEMPLATE = "tbody/tr[%d]/td[%d]";
+    private static final String BOTTOM_CELL_XPATH_TEMPLATE = "tbody/tr[last()]/td[%d]";
+    private static final String ALL_TABLE_ROWS_XPATH = "tbody/tr";
+    private static final String ROW_CELLS_XPATH_TEMPLATE = "tbody/tr[%d]/td";
+    private static final String LAST_ROW_CELLS_XPATH = "tbody/tr[last()]/td";
+    private static final String LAST_COLUMN_CELLS_XPATH = "tbody//td[last()]";
+    private static final String FIRST_COLUMN_CELLS_XPATH = "tbody//td[1]";
+    private static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
+    private static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
+    private static final String TABLE_HEADERS_XPATH = "thead/tr/th";
 
     TablePage(WebDriver driver) {
         super(driver);
     }
 
+    public TablePage(WebDriver driver, String httpParameters) {
+        super(driver, httpParameters);
+    }
 
     int getTableRowCount(WebElement table) {
         return table.findElements(By.xpath(ALL_TABLE_ROWS_XPATH)).size();
@@ -35,6 +40,17 @@ abstract class TablePage extends AtlasPage {
 
     List<String> getSecondColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(SECOND_COLUMN_CELLS_XPATH));
+        return Lists.transform(tableCells, getText);
+    }
+
+    List<String> getRowValues(WebElement table, int index) {
+        String xPath = String.format(ROW_CELLS_XPATH_TEMPLATE, index);
+        List<WebElement> tableCells = table.findElements(By.xpath(xPath));
+        return Lists.transform(tableCells, getText);
+    }
+
+    List<String> getLastRowValues(WebElement table) {
+        List<WebElement> tableCells = table.findElements(By.xpath(LAST_ROW_CELLS_XPATH));
         return Lists.transform(tableCells, getText);
     }
 
@@ -54,12 +70,12 @@ abstract class TablePage extends AtlasPage {
     }
 
     String getTableBottomCellValue(WebElement table, int columnIndex) {
-        String xPath = String.format(TABLE_BOTTOM_CELL_XPATH_TEMPLATE, columnIndex);
+        String xPath = String.format(BOTTOM_CELL_XPATH_TEMPLATE, columnIndex);
         return getCellValue(table, xPath);
     }
 
     String getCellValue(WebElement table, int rowIndex, int columnIndex) {
-        String xPath = String.format(TABLE_CELL_XPATH_TEMPLATE, rowIndex, columnIndex);
+        String xPath = String.format(CELL_XPATH_TEMPLATE, rowIndex, columnIndex);
         return getCellValue(table, xPath);
     }
 

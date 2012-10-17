@@ -9,10 +9,10 @@ import static org.junit.Assert.assertThat;
 
 public class HeatmapTableWithCutoff20000AndMatrixSize8IT extends SeleniumFixture {
 
-    private HeatmapTablePage subject;
+    protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(firefoxDriver, "?cutoff=20000&heatmapMatrixSize=8&organismOriented");
+        subject = new HeatmapTablePage(firefoxDriver, "cutoff=20000&heatmapMatrixSize=8");
         subject.get();
     }
 

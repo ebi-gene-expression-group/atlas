@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePageWithFilters;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableWithCutoff540AndOrganismPartFilter extends SeleniumFixture {
+public class HeatmapTableWithCutoff540AndOrganismPartFilterIT extends SeleniumFixture {
 
-    private HeatmapTablePageWithFilters subject;
+    private HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePageWithFilters(firefoxDriver,
-                "?heatmapMatrixSize=5&organismParts=heart&_organismParts=1&cutoff=20&organismOriented");
+        subject = new HeatmapTablePage(firefoxDriver,
+                "heatmapMatrixSize=5&organismParts=heart&_organismParts=1&cutoff=20");
         subject.get();
     }
 
@@ -44,8 +44,4 @@ public class HeatmapTableWithCutoff540AndOrganismPartFilter extends SeleniumFixt
         assertThat(subject.getLastGeneProfile(), contains("378.219"));
     }
 
-    @Test
-    public void verifyGeneIdsText() {
-        assertThat(subject.getGeneIDsString(), is(""));
-    }
 }

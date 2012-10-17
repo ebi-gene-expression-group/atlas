@@ -11,7 +11,7 @@ public class Top10ExpressionsOrderedBySpecificityIT extends SeleniumFixture {
     private ExpressionsTablePage subject;
 
     public void getStartingPage() {
-        subject = new ExpressionsTablePage(firefoxDriver, "?rankingSize=10");
+        subject = new ExpressionsTablePage(firefoxDriver, "rankingSize=10");
         subject.get();
     }
 
