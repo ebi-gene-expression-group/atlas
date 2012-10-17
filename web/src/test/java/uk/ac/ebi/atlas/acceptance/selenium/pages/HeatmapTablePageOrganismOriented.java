@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import clover.org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
