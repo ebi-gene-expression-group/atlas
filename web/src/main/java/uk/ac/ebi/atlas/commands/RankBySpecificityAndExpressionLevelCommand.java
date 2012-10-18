@@ -29,7 +29,6 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     private static final Logger logger = Logger.getLogger(RankBySpecificityAndExpressionLevelCommand.class);
 
-//    @Value("#{configuration['magetab.test.datafile.url']}")
     private String dataFileURL;
 
     private RequestPreferences requestPreferences;
@@ -103,7 +102,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
     }
 
     protected Queue<GeneExpression> buildRankingQueue(Comparator<GeneExpression> reverseSpecificityComparator) {
-        return MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(requestPreferences.getRankingSize()).create();
+        return MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(requestPreferences.getHeatmapMatrixSize()).create();
     }
 
     public void setRequestPreferences(RequestPreferences requestPreferences) {

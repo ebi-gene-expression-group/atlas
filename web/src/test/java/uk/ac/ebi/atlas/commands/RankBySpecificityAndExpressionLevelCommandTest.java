@@ -8,7 +8,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import uk.ac.ebi.atlas.web.controllers.RequestPreferences;
 
@@ -49,7 +48,7 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
         when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
         when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 
-        when(requestPreferencesMock.getRankingSize()).thenReturn(100);
+        when(requestPreferencesMock.getHeatmapMatrixSize()).thenReturn(100);
         when(requestPreferencesMock.getCutoff()).thenReturn(0.1);
 
         //a stream with 5 profile of 2 expressions
@@ -97,7 +96,7 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
 
 
         //given
-        given(requestPreferencesMock.getRankingSize()).willReturn(3);
+        given(requestPreferencesMock.getHeatmapMatrixSize()).willReturn(3);
         //and
         when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
 

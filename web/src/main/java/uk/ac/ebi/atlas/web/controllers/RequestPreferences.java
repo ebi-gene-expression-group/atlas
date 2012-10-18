@@ -13,17 +13,18 @@ import java.util.regex.Pattern;
 @Scope("prototype")
 public class RequestPreferences {
 
-    private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 50;
-    private static final int DEFAULT_RANKING_SIZE = 100;
+    private static final int DEFAULT_NUMBER_OF_TOP_RANKED_GENES = 50;
+//    private static final int DEFAULT_RANKING_SIZE = 100;
     private static final double DEFAULT_CUTOFF = 0d;
     private static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
 
-    @Range(min = 0, max = 1000)
-    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED;
-
     @NotNull
-    @Range(min = 1, max = 1000)
-    private Integer rankingSize = DEFAULT_RANKING_SIZE;
+    @Range(min = 0, max = 1000)
+    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_RANKED_GENES;
+
+//    @NotNull
+//    @Range(min = 1, max = 1000)
+//    private Integer rankingSize = DEFAULT_RANKING_SIZE;
 
     @NotNull
     @Min(0)
@@ -54,7 +55,7 @@ public class RequestPreferences {
     public void setCutoff(Double cutoff) {
         this.cutoff = cutoff;
     }
-
+/*
     public Integer getRankingSize() {
         return this.rankingSize;
     }
@@ -62,7 +63,7 @@ public class RequestPreferences {
     public void setRankingSize(Integer rankingSize) {
         this.rankingSize = rankingSize;
     }
-
+*/
     public void setOrganismParts(Set<String> organismParts) {
         this.organismParts = organismParts;
     }
