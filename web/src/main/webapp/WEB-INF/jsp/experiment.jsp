@@ -2,7 +2,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
@@ -132,33 +131,7 @@
 
             <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
 
-                <table>
-                    <tr>
-                        <td style="padding-top: 20px; vertical-align:top">
-                            <div id="sexToggle" class="male"></div>
-                        </td>
-                        <td>
-                            <div id="anatomogramBody" style="width: 250px; height: 400px">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-
-            </div>
-
-            <div style="margin-left:300px">
-                <c:choose>
-                    <c:when test="${param.organismOriented!=null}">
-                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
-                    </c:when>
-                    <c:otherwise>
-                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
-                    </c:otherwise>
-                </c:choose>
-
-                </br>
-
-                <table id="heatmap-legenda" width="400px">
+                <table style="font-size:10px" id="heatmap-legenda" width="280px">
                     <tr>
                         <td>
                             <div>
@@ -184,28 +157,30 @@
                     </tr>
                 </table>
 
-                <br/>
 
-                <div>
+                <table>
+                    <tr>
+                        <td style="padding-top: 20px; vertical-align:top">
+                            <div id="sexToggle" class="male"></div>
+                        </td>
+                        <td>
+                            <div id="anatomogramBody" style="width: 250px; height: 400px">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
 
-                    <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table"
-                                   id="geneExpressions"
-                                   class="table-grid">
+            </div>
 
-                        <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
-                        <display:column title="${geneIdLabel}" property="geneId"/>
-
-                        <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
-                        <display:column title="${organismpart}" property="organismPart"/>
-
-                        <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
-                        <display:column title="${measurement}" property="level"/>
-
-                        <display:column title="Specificity" property="specificity"/>
-
-                    </display:table>
-
-                </div>
+            <div style="margin-left:300px">
+                <c:choose>
+                    <c:when test="${param.organismOriented!=null}">
+                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
+                    </c:otherwise>
+                </c:choose>
 
             </div>
         </div>
