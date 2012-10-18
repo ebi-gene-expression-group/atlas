@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 @Scope("prototype")
 public class RequestPreferences {
 
-    private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 100;
+    private static final int DEFAULT_NUMBER_OF_TOP_EXPRESSIONS_TO_BE_HIGHLIGHTED = 50;
     private static final int DEFAULT_RANKING_SIZE = 100;
     private static final double DEFAULT_CUTOFF = 0d;
     private static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
