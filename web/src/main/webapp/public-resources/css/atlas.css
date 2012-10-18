@@ -22,3 +22,10 @@
 #reload-form-table td {
     background: #f5f5f5;
 }
+
+.double-click-noselection{
+    -webkit-user-select: none; // webkit (safari, chrome) browsers
+    -moz-user-select: none; // mozilla browsers
+    -khtml-user-select: none;
+    -ms-user-select: none; // IE 10
+}

@@ -52,16 +52,23 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.0.custom.min.js"></script>
+
+    <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.js"></script>
-
+            src="${pageContext.request.contextPath}/resources/js/searchForm.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/slider.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.8.24.custom.css">
+            href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.0.custom.min.css">
 
 
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.24.custom.min.js"></script>
 
     <script>
 
@@ -86,6 +93,9 @@
 
                 } else {
                     initAnatomogram(organismParts);
+                    initSlider(${preferences.cutoff});
+                    initSearchForm('experiment');
+                    initHeatmapDisplayValueToggle();
                 }
 
 
@@ -120,7 +130,7 @@
 
         <div id="heatmap" class="block">
 
-            <div id="anatomogram" style="float:left;position:fixed">
+            <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
 
                 <table>
                     <tr>

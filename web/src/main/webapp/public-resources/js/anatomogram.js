@@ -69,14 +69,13 @@ function initAnatomogram(organismParts) {
     }
 
     //switch sex toggle button
-    $('#sexToggle').click(function () {
-        if ($(this).attr("class") == "female") {
-            $(this).attr("class", "male");
-            loadAnatomogram("resources/svg/human_male.svg");
-        } else {
-            $(this).attr("class", "female");
-            loadAnatomogram("resources/svg/human_female.svg");
-        }
+    $('#sexToggle').toggle(function () {
+        $(this).attr("class", "female");
+        loadAnatomogram("resources/svg/human_female.svg");
+    },function() {
+        $(this).attr("class", "male");
+        loadAnatomogram("resources/svg/human_male.svg");
     });
+
 }
 

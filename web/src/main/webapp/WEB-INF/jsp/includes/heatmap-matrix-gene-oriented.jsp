@@ -3,7 +3,8 @@
 
 <display:table name="${heatmapGenes}" id="geneId"
                htmlId="heatmap-table" class="table-grid">
-    <display:column title="" value="${geneId}"
+    <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
+                    value="${geneId}"
                     class="header-cell"/>
 
     <c:forEach var="organismPart" items="${heatmapOrganismParts}">
@@ -16,7 +17,7 @@
         <display:column title="<div data-organism-part='${organismPart}' class='rotate_text'>${organismPart}</div>"
                         headerClass='rotated_cell'
                         style="background-color:${cellColour};color:${cellColour};font-size:1px">
-            <div data-organism-part="${organismPart}">
+            <div data-organism-part="${organismPart}" data-color="${cellColour}" >
                 <c:out value="${expressionLevel}"/>
             </div>
         </display:column>
@@ -24,3 +25,4 @@
     </c:forEach>
 
 </display:table>
+
