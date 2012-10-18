@@ -23,6 +23,11 @@
     background: #f5f5f5;
 }
 
+a:link {text-decoration:none;color:black}    /* unvisited link */
+a:visited {text-decoration:none;color:black} /* visited link */
+a:hover {text-decoration:underline;color: brown}   /* mouse over link */
+a:active {text-decoration:underline;}  /* selected link */
+
 .double-click-noselection{
     -webkit-user-select: none; // webkit (safari, chrome) browsers
     -moz-user-select: none; // mozilla browsers

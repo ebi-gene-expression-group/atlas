@@ -1,11 +1,18 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<fmt:setBundle basename="configuration" var="configuration"/>
 
 <display:table name="${heatmapGenes}" id="geneId"
                htmlId="heatmap-table" class="table-grid">
     <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
-                    value="${geneId}"
-                    class="header-cell"/>
+                    class="header-cell">
+        <fmt:message bundle="${configuration}" key="gxa.gene.url.template" var="genePageURL">
+            <fmt:param value="${geneId}"/>
+        </fmt:message>
+        <a href='${genePageURL}' target='_blank'>${geneId}</a>
+    </display:column>
 
     <c:forEach var="organismPart" items="${heatmapOrganismParts}">
 
