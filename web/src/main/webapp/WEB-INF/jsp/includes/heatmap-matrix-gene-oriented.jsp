@@ -24,7 +24,7 @@
         <display:column title="<div data-organism-part='${organismPart}' class='rotate_text'>${organismPart}</div>"
                         headerClass='rotated_cell'
                         style="background-color:${cellColour};color:${cellColour};font-size:1px">
-            <div data-organism-part="${organismPart}" data-color="${cellColour}" >
+            <div style="font-size:1px" data-organism-part="${organismPart}" data-color="${cellColour}" >
                 <c:out value="${expressionLevel}"/>
             </div>
         </display:column>
