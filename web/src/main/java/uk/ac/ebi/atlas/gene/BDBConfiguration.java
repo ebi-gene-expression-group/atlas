@@ -6,6 +6,7 @@ import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseConfig;
 import com.sleepycat.je.Environment;
 import com.sleepycat.je.EnvironmentConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,14 +28,23 @@ public class BDBConfiguration {
         return environment.openDatabase(null, "genes.db", dbConfig);
     }
 
-    @Bean(/*initMethod = "init",*/ destroyMethod = "close")
-    public Environment environment() {
-        EnvironmentConfig envConfig = new EnvironmentConfig();
-        envConfig.setTransactional(true);
 
+    @Bean(/*initMethod = "init",*/ destroyMethod = "close")
+    @Value("#{configuration['genename.bdb.location']}")
+    public Environment environment(String location) {
+
+        return new Environment(new File(location), environmentConfig());
+    }
+
+    @Bean
+    public EnvironmentConfig environmentConfig() {
+        EnvironmentConfig envConfig = new EnvironmentConfig();
+
+        envConfig.setTransactional(true);
         envConfig.setAllowCreate(true);
 
-        return new Environment(new File("/Users/nsklyar/Data/bdb"), envConfig);
+        return envConfig;
+
     }
 
     @Bean

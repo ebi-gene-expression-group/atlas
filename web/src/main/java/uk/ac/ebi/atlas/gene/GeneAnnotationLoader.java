@@ -19,7 +19,7 @@ public class GeneAnnotationLoader {
         Reader dataFileReader = new InputStreamReader(annotationsInputStream);
         CSVReader csvReader = new CSVReader(dataFileReader, '\t');
 
-        Environment environment = configuration.environment();
+        Environment environment = configuration.environment("/Users/nsklyar/Data/bdb");
         Database database = configuration.geneDatabase(environment);
         final StoredMap<String, String> map = configuration.geneNames(database);
 
@@ -54,7 +54,6 @@ public class GeneAnnotationLoader {
 
 
             }
-
 
             csvReader.close();
             database.close();
