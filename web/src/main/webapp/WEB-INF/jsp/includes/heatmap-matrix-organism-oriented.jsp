@@ -5,7 +5,7 @@
                htmlId="heatmap-table" class="table-grid">
     <display:column class="header-cell">
         <div data-organism-part="${organismPart}">
-            ${organismPart}
+                ${organismPart}
         </div>
     </display:column>
 
@@ -16,7 +16,7 @@
         <c:set var="cellColour"
                value="${colourGradient.getGradientColour(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
 
-        <display:column title="<div class='rotate_text'>${geneId}</div>"
+        <display:column title="<div class='rotate_text'>${geneService.getGeneName(geneId)}</div>"
                         headerClass='rotated_cell'
                         style="background-color:${cellColour};color:${cellColour};font-size:1px">
             <div data-organism-part="${organismPart}">

@@ -3,6 +3,9 @@
 
 <display:table name="${heatmapGenes}" id="geneId"
                htmlId="heatmap-table" class="table-grid">
+    <display:column title="" value="${geneService.getGeneName(geneId)}"
+                    class="header-cell"/>
+
     <display:column title="" value="${geneId}"
                     class="header-cell"/>
 
