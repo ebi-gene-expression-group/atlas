@@ -17,7 +17,7 @@
                     <form:label path="cutoff">Expression level cutoff</form:label>
                 </td>
                 <td rowspan="4">
-                    <input type="submit" value="Update"/>
+                    <input id="submit-button" type="submit" value="Update"/>
                     <br/>
                     <input id="reset-button" type="button" value="Reset"/>
                 </td>

@@ -6,4 +6,8 @@ function initSearchForm(homePageURL){
         location.replace(homePageURL);
     })
 
+    $("#reset-button").button();
+
+    $("#submit-button").button();
+
 }
