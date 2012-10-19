@@ -36,12 +36,12 @@ public class HeatmapTableWithCutoff540AndOrganismPartFilterIT extends SeleniumFi
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("978.915"));
+        assertThat(subject.getFirstGeneProfile(), contains("979"));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("378.219"));
+        assertThat(subject.getLastGeneProfile(), contains("378"));
     }
 
 }

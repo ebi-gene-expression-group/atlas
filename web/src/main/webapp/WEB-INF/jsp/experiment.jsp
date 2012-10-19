@@ -96,6 +96,7 @@
                     initHeatmapDisplayValueToggle();
                 }
 
+                $(".gradient-level").hide();
 
             });
 
@@ -120,7 +121,7 @@
     <c:import url="includes/request-preferences.jsp" />
 
     <p>
-    <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
+        <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
     </p>
 
     <c:if test="${not empty heatmapGenes}">
@@ -133,8 +134,8 @@
                 <table style="font-size:10px" id="heatmap-legenda" width="280px">
                     <tr>
                         <td>
-                            <div>
-                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${maxExpressionLevel}" groupingUsed="false" />
+                            <div class="gradient-level">
+                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMaxExpressionLevel >= 1 ? 0 : 1}" value="${roundedMaxExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
                         <td width="100%">
@@ -149,8 +150,8 @@
                             </div>
                         </td>
                         <td>
-                            <div>
-                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${minExpressionLevel}" groupingUsed="false" />
+                            <div class="gradient-level">
+                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMinExpressionLevel >= 1 ? 0 : 1}" value="${roundedMinExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
 
