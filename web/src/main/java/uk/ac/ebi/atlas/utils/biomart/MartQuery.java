@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Arrays.asList;
 
 public class MartQuery {
     private final List<String> attributes = new ArrayList<String>();
@@ -88,4 +89,12 @@ public class MartQuery {
         }
         return sb.append("</Dataset></Query>").toString();
     }
+
+    public static MartQuery buildGeneNameQuery() {
+        return new MartQuery(
+                "default",
+                "hsapiens_gene_ensembl")
+                .addAttributes(asList("ensembl_gene_id", "external_gene_id"));
+    }
 }
+

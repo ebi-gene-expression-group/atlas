@@ -12,11 +12,11 @@
     border-collapse: collapse;
 }
 
-.form-grid{
+.form-grid {
     width: 100%;
 }
 
-.form-grid label{
+.form-grid label {
     border: 0px;
     font-weight: bold;
 }
@@ -29,19 +29,18 @@
     width: 25px;
 }
 
-.header-cell{
+.header-cell {
     font-weight: bold;
-    width:auto !important;
+    width: auto !important;
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.table-grid tr:hover {
+.table-grid tr:not(:first-child):hover, th:hover {
     background-color: #deebeb;
     color: #404040;
     cursor: default;
 }
-
 
 .rotated_cell {
     height: 110px;

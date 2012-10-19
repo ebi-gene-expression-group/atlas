@@ -10,7 +10,7 @@ function toggleOrganismPartColor(svg, organism_part, evt) {
         if (evt == undefined || evt.type != 'mouseenter') {
             setHilighting("gray", 0.5);
         } else {
-            setHilighting("red", 0.9);
+            setHilighting("red", 0.7);
         }
     }
 
@@ -44,10 +44,25 @@ function initAnatomogram(organismParts) {
 
     loadAnatomogram("resources/svg/human_male.svg");
 
+    //hover on first column, to show all organism parts involved on a single gene profile
+    $("td:first-child", "#heatmap-table").hover(function (evt) { //hover on cells of the first table column
+        var geneExpressions = $(this).parents("tr").find("div[data-organism-part!='']");
+
+        var organismParts = geneExpressions.map(function () {
+            return $(this).attr('data-organism-part')
+        }).get();
+
+        organismParts.forEach(function (entry) {
+            toggleOrganismPartColor(svg, entry, evt);
+        })
+
+    });
+
+
     $('#heatmap-table td, #heatmap-table th').hover(function (evt) {
         var organismPart = $(this).find('div').attr("data-organism-part");
-        if (organismPart != undefined){
-            toggleOrganismPartColor(svg, organismPart , evt);
+        if (organismPart != undefined) {
+            toggleOrganismPartColor(svg, organismPart, evt);
         }
     });
 
@@ -69,14 +84,13 @@ function initAnatomogram(organismParts) {
     }
 
     //switch sex toggle button
-    $('#sexToggle').click(function () {
-        if ($(this).attr("class") == "female") {
-            $(this).attr("class", "male");
-            loadAnatomogram("resources/svg/human_male.svg");
-        } else {
-            $(this).attr("class", "female");
-            loadAnatomogram("resources/svg/human_female.svg");
-        }
+    $('#sexToggle').toggle(function () {
+        $(this).attr("class", "female");
+        loadAnatomogram("resources/svg/human_female.svg");
+    }, function () {
+        $(this).attr("class", "male");
+        loadAnatomogram("resources/svg/human_male.svg");
     });
+
 }
 

@@ -20,4 +20,13 @@
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
 
+    <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
+        <constructor-arg ref="httpClientConnectionManager"/>
+    </bean>
+
+    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+          destroy-method="shutdown">
+    </bean>
+
+
 </beans>

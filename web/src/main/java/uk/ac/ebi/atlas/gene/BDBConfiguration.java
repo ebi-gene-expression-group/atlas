@@ -18,7 +18,7 @@ import java.io.File;
 public class BDBConfiguration {
 
 
-    @Bean(/*initMethod = "init",*/ destroyMethod = "close")
+    @Bean(destroyMethod = "close")
     @Inject
     public Database geneDatabase(Environment environment) {
 
@@ -33,7 +33,12 @@ public class BDBConfiguration {
     @Value("#{configuration['genename.bdb.location']}")
     public Environment environment(String location) {
 
-        return new Environment(new File(location), environmentConfig());
+
+        File envHome = new File(location);
+        if (!envHome.exists()) {
+            envHome.mkdirs();
+        }
+        return new Environment(envHome, environmentConfig());
     }
 
     @Bean

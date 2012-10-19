@@ -16,6 +16,7 @@ public class GeneService {
     }
 
     public String getGeneName(String ensGeneId) {
-        return geneNames.get(ensGeneId);
+        String value = geneNames.get(ensGeneId);
+        return value == null ? ensGeneId : value;
     }
 }

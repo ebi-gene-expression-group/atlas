@@ -2,13 +2,11 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<fmt:setBundle basename="bundles.labels" var="i18n"/>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
@@ -52,16 +50,22 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.0.custom.min.js"></script>
+
+    <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.js"></script>
-
+            src="${pageContext.request.contextPath}/resources/js/searchForm.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/slider.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.8.24.custom.css">
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.0.custom.min.css">
 
-
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.24.custom.min.js"></script>
 
     <script>
 
@@ -86,6 +90,9 @@
 
                 } else {
                     initAnatomogram(organismParts);
+                    initSlider(${preferences.cutoff});
+                    initSearchForm('experiment');
+                    initHeatmapDisplayValueToggle();
                 }
 
 
@@ -105,13 +112,14 @@
 <%@ include file="layout/old/header.jsp" %>
 
 
-    <!-- old style end -->
+<!-- old style end -->
 
 <div id="contents" class="page-contents">
 
-    <c:import url="includes/request-preferences.jsp" />
+    <c:import url="includes/request-preferences.jsp"/>
 
     <p>
+
     <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
     </p>
 
@@ -120,7 +128,37 @@
 
         <div id="heatmap" class="block">
 
-            <div id="anatomogram" style="float:left;position:fixed">
+            <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
+
+                <table style="font-size:10px" id="heatmap-legenda" width="280px">
+                    <tr>
+                        <td>
+                            <div>
+                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${maxExpressionLevel}"
+                                                  groupingUsed="false"/>
+                            </div>
+                        </td>
+                        <td width="100%">
+                            <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
+
+                                    background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+
+                                    background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+
+                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${minExpressionLevel}"
+                                                  groupingUsed="false"/>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+
 
                 <table>
                     <tr>
@@ -139,68 +177,15 @@
             <div style="margin-left:300px">
                 <c:choose>
                     <c:when test="${param.organismOriented!=null}">
-                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
+                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp"/>
                     </c:when>
                     <c:otherwise>
-                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
+                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
                     </c:otherwise>
                 </c:choose>
 
-                </br>
-
-                <table id="heatmap-legenda" width="400px">
-                    <tr>
-                        <td>
-                            <div>
-                                <c:out value="${maxExpressionLevel}"/>
-                            </div>
-                        </td>
-                        <td width="100%">
-                            <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
-
-                                    background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
-
-                                    background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
-
-                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
-                                &nbsp;</div>
-                        </td>
-                        <td>
-                            <div>
-                                <c:out value="${minExpressionLevel}"/>
-                            </div>
-                        </td>
-
-                    </tr>
-                </table>
-
-                <br/>
-
-                <div>
-
-                    <display:table style="width:100%" name="${geneExpressions}" htmlId="expressions-table"
-                                   id="geneExpressions"
-                                   class="table-grid">
-
-                        <fmt:message key="gene.id" bundle="${i18n}" var="geneIdLabel"/>
-                        <display:column title="${geneIdLabel}" property="geneId"/>
-
-                        <fmt:message key="factor.name.ORGANISMPART" bundle="${i18n}" var="organismpart"/>
-                        <display:column title="${organismpart}" property="organismPart"/>
-
-                        <fmt:message key="expression.level.metric" bundle="${i18n}" var="measurement"/>
-                        <display:column title="${measurement}" property="level"/>
-
-                        <display:column title="Specificity" property="specificity"/>
-
-                    </display:table>
-
-                </div>
-
             </div>
         </div>
-
-
 
 
     </c:if>
@@ -208,7 +193,7 @@
 
 </div>
 
-    <!-- old style start -->
+<!-- old style start -->
 
 <%@ include file="layout/old/footer.jsp" %>
 <!-- old style end -->
