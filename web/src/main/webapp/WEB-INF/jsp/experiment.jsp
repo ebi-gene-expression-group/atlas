@@ -2,8 +2,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
-
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -134,7 +134,7 @@
                     <tr>
                         <td>
                             <div>
-                                <c:out value="${maxExpressionLevel}"/>
+                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${maxExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
                         <td width="100%">
@@ -145,11 +145,12 @@
                                     background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
 
                                     filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
-                                &nbsp;</div>
+                                &nbsp;
+                            </div>
                         </td>
                         <td>
                             <div>
-                                <c:out value="${minExpressionLevel}"/>
+                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${minExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
 
