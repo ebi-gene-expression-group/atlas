@@ -4,7 +4,7 @@ function initHeatmapDisplayValueToggle(){
 
     $("#display-levels").button()
                .toggle(function() {
-                            $(this).button('option', 'label','display colours');
+                            $(this).button('option', 'label','hide levels');
                             $("div[data-color]").each(function(){
                                 $(this).attr('style','font-size:9px;background-color:white;margin:4px;padding:2px;');
                             });
