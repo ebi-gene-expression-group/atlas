@@ -27,7 +27,7 @@ public class MageTabInvestigationTest {
     private InputStream inputStreamMock;
 
     @Mock
-    private MAGETABParser MAGETABParserMock;
+    private MAGETABParser<MAGETABInvestigation> MAGETABParserMock;
 
     @Mock
     private MAGETABInvestigation investigationMock;

@@ -1,24 +1,23 @@
 package uk.ac.ebi.atlas.streams;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Sets;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.isNotNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GeneProfileInputStreamFilterTest {
@@ -53,7 +52,7 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestShouldBeBasedOnGeneIDsSet(){
         //given
-        Predicate acceptancePredicate = subject.getAcceptanceCriteria();
+        Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
         assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));
@@ -66,7 +65,7 @@ public class GeneProfileInputStreamFilterTest {
         //given
         subject = new GeneProfileInputStreamFilter(inputStreamMock, new HashSet<String>());
         //and
-        Predicate acceptancePredicate = subject.getAcceptanceCriteria();
+        Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
         assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));

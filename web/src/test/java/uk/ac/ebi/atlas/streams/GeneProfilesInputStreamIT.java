@@ -1,21 +1,27 @@
 package uk.ac.ebi.atlas.streams;
 
-import com.google.common.collect.Lists;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import utils.ExperimentRunsBuilder;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
+import com.google.common.collect.Lists;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+
 import static org.mockito.Matchers.anyString;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -27,9 +33,6 @@ public class GeneProfilesInputStreamIT {
     private static final String GENE_ID_1 = "ENST00000000233";
     private static final String GENE_ID_2 = "ENST00000000412";
     private static final String GENE_ID_3 = "ENST00000000442";
-    private static final double EXPRESSION_LEVEL_1_1 = 0d;
-    private static final double EXPRESSION_LEVEL_1_2 = 42.9134d;
-    private static final double EXPRESSION_LEVEL_2_1 = 29.0613d;
 
     private List<ExperimentRun> experimentRuns;
 

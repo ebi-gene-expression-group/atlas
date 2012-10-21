@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.web.controllers;
 
-import com.google.common.collect.Sets;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+
+import com.google.common.collect.Sets;
 
 @Named("applicationProperties")
 @Scope("singleton")

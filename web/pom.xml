@@ -28,7 +28,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>uk.ac.ebi.gxa</groupId>
     <artifactId>web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>

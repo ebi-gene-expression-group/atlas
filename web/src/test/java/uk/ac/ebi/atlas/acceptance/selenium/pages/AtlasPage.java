@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 
-abstract class AtlasPage<T extends LoadableComponent<T>> extends LoadableComponent<T> {
+abstract class AtlasPage extends LoadableComponent<AtlasPage> {
 
     protected WebDriver driver;
 

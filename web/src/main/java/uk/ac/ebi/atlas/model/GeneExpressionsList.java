@@ -7,13 +7,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GeneExpressionsList extends ArrayList<GeneExpression> {
 
-    private Integer totalResultCount = 0;
+	private static final long serialVersionUID = -1678371004778942235L;
+
+	private Integer totalResultCount = 0;
 
     public GeneExpressionsList() {
         super();
     }
 
-    public GeneExpressionsList(Collection collection) {
+    public GeneExpressionsList(Collection<GeneExpression> collection) {
         super(collection);
     }
 
