@@ -16,7 +16,7 @@ function initHeatmapDisplayValueToggle(){
                             $(".gradient-level").attr("style",'color:white');
                         });
 
-    $("div[data-color]").parents("td").toggle(function() {
+    $("#heatmap-table td:has(div[data-color])").toggle(function() {
             $(this).find("div").attr('style','font-size:9px;background-color:white;margin:4px;padding:2px;');
         },
         function() {
