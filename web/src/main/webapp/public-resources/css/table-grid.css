@@ -36,7 +36,6 @@
 
 .table-grid tr:not(:first-child):hover, th:hover {
     background-color: #deebeb;
-    color: #404040;
     cursor: default;
 }
 
