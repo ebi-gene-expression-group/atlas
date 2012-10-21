@@ -1,3 +1,8 @@
+body {
+    font-size: 10px;
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
 .error {
     color: red;
 }
@@ -34,3 +39,4 @@ a:active {text-decoration:underline;}  /* selected link */
     -khtml-user-select: none;
     -ms-user-select: none; // IE 10
 }
+

@@ -96,6 +96,7 @@
                     initHeatmapDisplayValueToggle();
                 }
 
+                $(".gradient-level").attr('style','color:white');
 
             });
 
@@ -120,7 +121,7 @@
     <c:import url="includes/request-preferences.jsp" />
 
     <p>
-    <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
+        <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
     </p>
 
     <c:if test="${not empty heatmapGenes}">
@@ -130,14 +131,14 @@
 
             <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
 
-                <table style="font-size:10px" id="heatmap-legenda" width="280px">
+                <table style="font-size:10px" id="heatmap-legenda" >
                     <tr>
                         <td>
-                            <div>
-                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${maxExpressionLevel}" groupingUsed="false" />
+                            <div style="text-align:right;width: 30px" class="gradient-level">
+                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMaxExpressionLevel >= 1 ? 0 : 1}" value="${roundedMaxExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
-                        <td width="100%">
+                        <td width="220px">
                             <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
 
                                     background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
@@ -149,8 +150,8 @@
                             </div>
                         </td>
                         <td>
-                            <div>
-                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${minExpressionLevel}" groupingUsed="false" />
+                            <div style="text-align:left;width: 30px" class="gradient-level">
+                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMinExpressionLevel >= 1 ? 0 : 1}" value="${roundedMinExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
 

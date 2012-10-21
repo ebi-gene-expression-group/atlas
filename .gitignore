@@ -5,3 +5,8 @@ target
 _idea
 .idea
 .idea-files
+.project
+.settings/
+web/.classpath
+web/.project
+web/.settings/
