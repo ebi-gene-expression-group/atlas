@@ -32,7 +32,6 @@ public class AnnotationEnvironment {
     private void setupEnvironment() {
         EnvironmentConfig envConfig = new EnvironmentConfig();
 
-        envConfig.setTransactional(true);
         envConfig.setAllowCreate(true);
         //ToDo: find better solution to allow testing on lime
         envConfig.setLocking(false);
