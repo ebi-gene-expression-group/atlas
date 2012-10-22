@@ -30,8 +30,7 @@ public class HeatmapTableWithCutoff540AndOrganismPartFilterIT extends SeleniumFi
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("ENSG00000210049", "ENSG00000118194", "ENSG00000129991",
-                "ENSG00000175206", "ENSG00000205678"));
+        assertThat(selectedGenes, contains("J01415.2", "TNNT2", "TNNI3", "NPPA", "TECRL"));
     }
 
     @Test

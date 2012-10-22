@@ -25,7 +25,8 @@ public class HeatmapTableWithCutoff20000AndMatrixSize8IT extends SeleniumFixture
 
     @Test
     public void verifySelectedGenes() {
-        assertThat(subject.getSelectedGenes(), contains("ENSG00000163631", "ENSG00000198938", "ENSG00000211592", "ENSG00000132693", "ENSG00000171564", "ENSG00000257764", "ENSG00000166710"));
+        assertThat(subject.getSelectedGenes(), contains("ALB", "MT-CO3", "IGKC", "CRP", "FGB", "RP11-1143G9.4",
+                "B2M"));
     }
 
     @Test

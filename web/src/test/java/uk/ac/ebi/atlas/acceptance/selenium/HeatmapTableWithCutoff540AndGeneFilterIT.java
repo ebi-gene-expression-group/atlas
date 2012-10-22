@@ -29,7 +29,7 @@ public class HeatmapTableWithCutoff540AndGeneFilterIT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(2));
-        assertThat(selectedGenes, contains("ENSG00000210195", "ENSG00000175084"));
+        assertThat(selectedGenes, contains("J01415.22", "DES"));
     }
 
     @Test
