@@ -378,6 +378,12 @@
                 <data.files.location>/nfs/ma/home/atlas-production/ATLAS3/data</data.files.location>
             </properties>
         </profile>
+        <profile>
+            <id>environment.integration.test</id>
+            <properties>
+                <data.files.location>/nfs/ma/home/atlas-production/ATLAS3/test-data</data.files.location>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
