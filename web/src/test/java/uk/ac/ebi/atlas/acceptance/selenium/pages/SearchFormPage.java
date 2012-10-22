@@ -8,9 +8,6 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.endsWith;
-import static org.junit.Assert.assertThat;
-
 public class SearchFormPage extends AtlasPage {
 
     protected static final String DEFAULT_PAGE_URI = "/gxa/experiment";

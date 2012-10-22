@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import utils.ExperimentRunsBuilder;
 
 import java.util.List;
@@ -14,9 +13,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ExpressionBufferTest {
 

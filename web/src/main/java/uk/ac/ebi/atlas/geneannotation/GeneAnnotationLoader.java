@@ -95,7 +95,7 @@ public class GeneAnnotationLoader {
                 if (!map.containsKey(getKey()))
                     map.put(getKey(), getValue());
                 else
-                    logger.info("Key " + line[0] + " already exists.");
+                    map.replace(getKey(), getValue());
             } catch (Exception e) {
                 throw new IllegalStateException("Error while writing gene annotations DB: " + e.getMessage());
             }

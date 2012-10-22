@@ -2,13 +2,8 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-
-import static org.hamcrest.Matchers.endsWith;
-import static org.junit.Assert.assertThat;
 
 public class HeatmapTablePageOrganismOriented extends HeatmapTablePage {
 

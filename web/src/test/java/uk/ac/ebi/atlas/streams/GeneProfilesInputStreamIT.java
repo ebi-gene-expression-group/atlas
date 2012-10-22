@@ -27,9 +27,6 @@ public class GeneProfilesInputStreamIT {
     private static final String GENE_ID_1 = "ENST00000000233";
     private static final String GENE_ID_2 = "ENST00000000412";
     private static final String GENE_ID_3 = "ENST00000000442";
-    private static final double EXPRESSION_LEVEL_1_1 = 0d;
-    private static final double EXPRESSION_LEVEL_1_2 = 42.9134d;
-    private static final double EXPRESSION_LEVEL_2_1 = 29.0613d;
 
     private List<ExperimentRun> experimentRuns;
 

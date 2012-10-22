@@ -1,19 +1,25 @@
 package uk.ac.ebi.atlas.model;
 
+import org.apache.commons.math.util.MathUtils;
+
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GeneExpressionsList extends ArrayList<GeneExpression> {
+    
+    private static final long serialVersionUID = -1678371004778942235L;
 
+    public static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
+    public static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
     private Integer totalResultCount = 0;
 
     public GeneExpressionsList() {
         super();
     }
 
-    public GeneExpressionsList(Collection collection) {
+    public GeneExpressionsList(Collection<GeneExpression> collection) {
         super(collection);
     }
 
@@ -29,6 +35,10 @@ public class GeneExpressionsList extends ArrayList<GeneExpression> {
             }
         }
         return null;
+    }
+
+    public Double getRoundedExpressionLevel(String geneId, String organismPart){
+        return roundedValue(getExpressionLevel(geneId, organismPart));
     }
 
     @Override
@@ -80,6 +90,10 @@ public class GeneExpressionsList extends ArrayList<GeneExpression> {
         return maxExpressionLevel;
     }
 
+    public Double getRoundedMaxExpressionLevel(){
+        return roundedValue(getMaxExpressionLevel());
+    }
+
     public Double getMinExpressionLevel() {
         Double minExpressionLevel = null;
         for (GeneExpression expression : this) {
@@ -90,6 +104,10 @@ public class GeneExpressionsList extends ArrayList<GeneExpression> {
         return minExpressionLevel;
     }
 
+    public Double getRoundedMinExpressionLevel(){
+        return roundedValue(getMinExpressionLevel());
+    }
+
     public Integer getTotalResultCount() {
         return totalResultCount;
     }
@@ -97,4 +115,13 @@ public class GeneExpressionsList extends ArrayList<GeneExpression> {
     public void setTotalResultCount(int totalResultCount) {
         this.totalResultCount = totalResultCount;
     }
+
+    private Double roundedValue(Double value){
+        if (value == null){
+            return null;
+        }
+        return MathUtils.round(value, value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
+                                                : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE);
+    }
+
 }

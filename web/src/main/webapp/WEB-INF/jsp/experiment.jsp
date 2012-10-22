@@ -64,7 +64,8 @@
             src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.0.custom.min.css">
+            href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.0.custom.min.css">
+
 
 
     <script>
@@ -95,6 +96,7 @@
                     initHeatmapDisplayValueToggle();
                 }
 
+                $(".gradient-level").attr('style','color:white');
 
             });
 
@@ -112,15 +114,14 @@
 <%@ include file="layout/old/header.jsp" %>
 
 
-<!-- old style end -->
+    <!-- old style end -->
 
 <div id="contents" class="page-contents">
 
-    <c:import url="includes/request-preferences.jsp"/>
+    <c:import url="includes/request-preferences.jsp" />
 
     <p>
-
-    <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
+        <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
     </p>
 
     <c:if test="${not empty heatmapGenes}">
@@ -130,15 +131,14 @@
 
             <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
 
-                <table style="font-size:10px" id="heatmap-legenda" width="280px">
+                <table style="font-size:10px" id="heatmap-legenda" >
                     <tr>
                         <td>
-                            <div>
-                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${maxExpressionLevel}"
-                                                  groupingUsed="false"/>
+                            <div style="text-align:right;width: 30px" class="gradient-level">
+                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMaxExpressionLevel >= 1 ? 0 : 1}" value="${roundedMaxExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
-                        <td width="100%">
+                        <td width="220px">
                             <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
 
                                     background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
@@ -150,9 +150,8 @@
                             </div>
                         </td>
                         <td>
-                            <div>
-                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${minExpressionLevel}"
-                                                  groupingUsed="false"/>
+                            <div style="text-align:left;width: 30px" class="gradient-level">
+                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMinExpressionLevel >= 1 ? 0 : 1}" value="${roundedMinExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
 
@@ -177,10 +176,10 @@
             <div style="margin-left:300px">
                 <c:choose>
                     <c:when test="${param.organismOriented!=null}">
-                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp"/>
+                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
                     </c:when>
                     <c:otherwise>
-                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
+                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
                     </c:otherwise>
                 </c:choose>
 
@@ -188,12 +187,14 @@
         </div>
 
 
+
+
     </c:if>
 
 
 </div>
 
-<!-- old style start -->
+    <!-- old style start -->
 
 <%@ include file="layout/old/footer.jsp" %>
 <!-- old style end -->

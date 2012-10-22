@@ -1,6 +1,4 @@
 .form-grid, .table-grid {
-    font-size: 10px;
-    font-family: Verdana, Helvetica, Arial, sans-serif;
     color: #404040;
     background-color: #fafafa;
     border: 1px solid #cdcdcd;
@@ -38,7 +36,6 @@
 
 .table-grid tr:not(:first-child):hover, th:hover {
     background-color: #deebeb;
-    color: #404040;
     cursor: default;
 }
 

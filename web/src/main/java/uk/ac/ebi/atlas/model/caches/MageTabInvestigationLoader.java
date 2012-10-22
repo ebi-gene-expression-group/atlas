@@ -68,7 +68,7 @@ public class MageTabInvestigationLoader extends CacheLoader<String, List<Experim
 
     //Required for testability - will be overridden to inject mock
     MAGETABInvestigation parseInvestigation(URL idfFileURL) throws ParseException {
-        MAGETABParser mageTabParser = new MAGETABParser();
+        MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
 
         return mageTabParser.parse(idfFileURL);
 

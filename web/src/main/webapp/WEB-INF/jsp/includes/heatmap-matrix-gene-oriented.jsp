@@ -14,21 +14,32 @@
         <a href='${genePageURL}' target='_blank'>${geneService.getGeneName(geneId)}</a>
     </display:column>
 
-
     <c:forEach var="organismPart" items="${heatmapOrganismParts}">
 
-        <c:set var="expressionLevel"
-               value="${geneExpressions.getExpressionLevel(geneId, organismPart)}"/>
-        <c:set var="cellColour"
-               value="${colourGradient.getGradientColour(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
+       <c:set var="roundedExpressionLevel"
+               value="${geneExpressions.getRoundedExpressionLevel(geneId, organismPart)}"/>
+
+        <c:if test="${not empty roundedExpressionLevel}">
+
+            <c:set var="cellColour"
+                   value="${colourGradient.getGradientColour(roundedExpressionLevel, roundedMinExpressionLevel, roundedMaxExpressionLevel)}"/>
+
+            <c:set var="style" value="background-color:${cellColour};color:${cellColour};font-size:1px"/>
+
+        </c:if>
 
         <display:column title="<div data-organism-part='${organismPart}' class='rotate_text'>${organismPart}</div>"
                         headerClass='rotated_cell'
-                        style="background-color:${cellColour};color:${cellColour};font-size:1px">
-            <div style="font-size:1px" data-organism-part="${!empty expressionLevel ? organismPart :''}"
-                 data-color="${cellColour}">
-                <c:out value="${expressionLevel}"/>
-            </div>
+                        style="${not empty roundedExpressionLevel? style : ''}">
+
+            <c:if test="${not empty roundedExpressionLevel}">
+
+                <div style="font-size:1px" data-organism-part="${organismPart}" data-color="${cellColour}" >
+                    <fmt:formatNumber type="number" maxFractionDigits="${roundedExpressionLevel >= 1 ? 0 : 1}" value="${roundedExpressionLevel}" groupingUsed="false" />
+                </div>
+
+            </c:if>
+
         </display:column>
 
     </c:forEach>

@@ -30,12 +30,12 @@ public class HeatmapTableWithCutoff20000AndMatrixSize8IT extends SeleniumFixture
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("", "", "48053.1", "", ""));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "48053", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("", "", "", "27520.9", "41998.5"));
+        assertThat(subject.getLastGeneProfile(), contains("", "", "", "27521", "41999"));
     }
 
 }

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.streams;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +14,13 @@ import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,8 +40,6 @@ public class GeneProfilesInputStreamTest {
 
     private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
 
-    private List<ExperimentRun> experimentRunsMock;
-
     private ObjectInputStream<GeneProfile> subject;
 
 
@@ -55,8 +52,6 @@ public class GeneProfilesInputStreamTest {
 
         given(experimentRuns1Mock.getRunAccession()).willReturn(RUN_ACCESSION_1);
         given(experimentRuns2Mock.getRunAccession()).willReturn(RUN_ACCESSION_2);
-
-        experimentRunsMock = Lists.newArrayList(experimentRuns1Mock, experimentRuns2Mock);
 
         String [] headers = new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2};
 
@@ -110,7 +105,6 @@ public class GeneProfilesInputStreamTest {
 
     @Test
     public void givenAllDataHasBeenRead_ReadNextShouldReturnNull() throws Exception {
-        InOrder inOrder = inOrder(expressionsBufferMock);
         //given
         given(expressionsBufferMock.poll()).willReturn(null);
         //and

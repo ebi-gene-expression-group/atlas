@@ -79,7 +79,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void differentSpecificityShouldNotTriggerExpressionComparator() {
         //when
-        int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
+        subject.compare(geneWithSpecificity1, geneWithSpecificity16);
 
         //then
         verify(geneWithSpecificity16AndSmallerExpressionLevel, never()).compareTo(geneWithSpecificity16);
@@ -89,7 +89,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void sameSpecificityWithSmallerExpressionLevelShouldFollow() {
         //when
-        int comparison = subject.compare(geneWithSpecificity16AndSmallerExpressionLevel, geneWithSpecificity16);
+        subject.compare(geneWithSpecificity16AndSmallerExpressionLevel, geneWithSpecificity16);
 
         //then
         verify(geneWithSpecificity16AndSmallerExpressionLevel).compareTo(geneWithSpecificity16);

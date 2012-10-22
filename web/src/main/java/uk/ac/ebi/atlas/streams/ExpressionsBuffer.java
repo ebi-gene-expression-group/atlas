@@ -104,7 +104,7 @@ class ExpressionsBuffer {
         }
 
         List<ExperimentRun> removeUnrequiredExperimentRuns(List<String> orderedRunAccessions) {
-            Collection filteredExperimentRuns = Collections2.filter(experimentRuns, isExperimentRunRequired(orderedRunAccessions));
+            Collection<ExperimentRun> filteredExperimentRuns = Collections2.filter(experimentRuns, isExperimentRunRequired(orderedRunAccessions));
             return Lists.newArrayList(filteredExperimentRuns);
         }
 

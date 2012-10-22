@@ -6,10 +6,9 @@
 
 <display:table name="${heatmapOrganismParts}" id="organismPart"
                htmlId="heatmap-table" class="table-grid">
-    <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
-                    class="header-cell">
+    <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>" class="header-cell">
         <div data-organism-part="${organismPart}">
-                ${organismPart}
+            ${organismPart}
         </div>
     </display:column>
 
@@ -19,18 +18,29 @@
             <fmt:param value="${geneId}"/>
         </fmt:message>
 
-        <c:set var="expressionLevel"
-               value="${geneExpressions.getExpressionLevel(geneId, organismPart)}"/>
-        <c:set var="cellColour"
-               value="${colourGradient.getGradientColour(expressionLevel,minExpressionLevel, maxExpressionLevel)}"/>
+        <c:set var="roundedExpressionLevel"
+               value="${geneExpressions.getRoundedExpressionLevel(geneId, organismPart)}"/>
 
-        <display:column
-                title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneService.getGeneName(geneId)}</a></div>"
-                headerClass='rotated_cell'
-                style="background-color:${cellColour};color:${cellColour};font-size:1px">
-            <div data-organism-part="${organismPart}" data-color="${cellColour}">
-                <c:out value="${expressionLevel}"/>
-            </div>
+        <c:if test="${not empty roundedExpressionLevel}">
+
+            <c:set var="cellColour"
+                   value="${colourGradient.getGradientColour(roundedExpressionLevel, roundedMinExpressionLevel, roundedMaxExpressionLevel)}"/>
+
+            <c:set var="style" value="background-color:${cellColour};color:${cellColour};font-size:1px"/>
+
+        </c:if>
+
+        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneService.getGeneName(geneId)}</a></div>"
+                        headerClass='rotated_cell'
+                        style="${not empty roundedExpressionLevel? style : ''}">
+
+            <c:if test="${not empty roundedExpressionLevel}">
+
+                <div data-organism-part="${organismPart}" data-color="${cellColour}" >
+                    <fmt:formatNumber type="number" maxFractionDigits="${roundedExpressionLevel >= 1 ? 0 : 1}" value="${roundedExpressionLevel}" groupingUsed="false" />
+                </div>
+
+            </c:if>
         </display:column>
 
     </c:forEach>

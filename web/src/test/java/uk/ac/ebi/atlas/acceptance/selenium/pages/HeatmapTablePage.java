@@ -6,9 +6,6 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.endsWith;
-import static org.junit.Assert.assertThat;
-
 
 public class HeatmapTablePage extends TablePage {
 
