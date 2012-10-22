@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.commands;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.gene.GeneAnnotationLoader;
+import uk.ac.ebi.atlas.geneannotation.GeneAnnotationLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;

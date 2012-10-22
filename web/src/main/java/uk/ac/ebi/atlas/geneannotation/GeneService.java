@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.gene;
+package uk.ac.ebi.atlas.geneannotation;
 
 import com.sleepycat.collections.StoredMap;
 

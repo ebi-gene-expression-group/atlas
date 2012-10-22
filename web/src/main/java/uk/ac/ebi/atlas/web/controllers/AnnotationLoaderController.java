@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.commands.GeneNameUpdateCommand;
 
 import javax.inject.Inject;
@@ -24,11 +25,13 @@ public class AnnotationLoaderController {
     }
 
     @RequestMapping("/updateAnnotations")
-    public String showGeneExpressions(@ModelAttribute("preferences") @Valid RequestPreferences preferences, BindingResult result, Model model) {
+    @ResponseBody
+    public String showGeneExpressions(@ModelAttribute("preferences") @Valid RequestPreferences preferences,
+                                 BindingResult result, Model model) {
 
         geneNameUpdateCommand.loadGeneNames();
 
-        return "experiment";
+        return "Updated";
     }
 
 
