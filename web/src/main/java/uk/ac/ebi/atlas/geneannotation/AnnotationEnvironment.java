@@ -34,6 +34,8 @@ public class AnnotationEnvironment {
 
         envConfig.setTransactional(true);
         envConfig.setAllowCreate(true);
+        //ToDo: find better solution to allow testing on lime
+        envConfig.setLocking(false);
 
         File envHome = new File(environmentLocation);
         if (!envHome.exists()) {
