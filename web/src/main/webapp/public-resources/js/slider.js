@@ -69,16 +69,45 @@ function initSlider(defaultCutoff) {
     $.getJSON("json/gene-by-cutoff/specificity-one.txt", function(data){
 
         var genesByCutoffPlot = plotCutoffBarChart(data);
-/*
-        $("#gene-distribution").bind("plothover", function (event, pos, item) {
-            alert("You clicked at " + pos.x + ", " + pos.y);
+
+        function showTooltip(x, y, contents) {
+            $('<div id="tooltip">' + contents + '</div>').css({
+                position: 'absolute',
+                display: 'none',
+                top: y - 25,
+                left: x - 13,
+                border: '2px solid rgb(238,195,46)',
+                padding: '2px',
+                'font-family': 'Verdana, Helvetica, Arial, sans-serif',
+                'font-size': 'smaller',
+                'background-color': 'rgb(249,232,176)',
+                opacity: 1
+            }).appendTo("body").fadeIn(150);
+        }
+
+        var previousPoint = null;
+        $("#gene-distribution").bind("plothover", function(event, pos, item) {
+            $("#x").text(pos.x.toFixed(2));
+            $("#y").text(pos.y.toFixed(2));
 
             if (item) {
-                highlight(item.series, item.datapoint);
-                alert("You clicked a point!");
+                if (previousPoint != item.datapoint) {
+                    previousPoint = item.datapoint;
+
+                    $("#tooltip").remove();
+                    var content = item.datapoint[1].toFixed(0);
+
+                    //now show tooltip
+                    showTooltip(item.pageX, item.pageY, content);
+                }
             }
+            else {
+                $("#tooltip").remove();
+                previousPoint = null;
+            }
+
         });
-*/
+
         genesByCutoffPlot.highlight(0,0);
 
         $("#slider-range-max").slider({

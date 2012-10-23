@@ -41,7 +41,7 @@
         </table>
         <br/>
 
-        <div id="gene-distribution" class="block" style="height:100px"></div>
+        <div id="gene-distribution" class="block" style="margin-bottom:4px;height:100px"></div>
         <div id="slider-range-max" style="font-size:65%;margin-left:33px;margin-right:10px"></div>
 
     </form:form>
