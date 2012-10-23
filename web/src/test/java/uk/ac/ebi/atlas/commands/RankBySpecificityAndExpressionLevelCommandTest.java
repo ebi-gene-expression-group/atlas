@@ -59,7 +59,7 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
 
         when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
 
-        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock, DATA_FILE_URL);
+        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock, DATA_FILE_URL, null);
 
         subject.setRequestPreferences(requestPreferencesMock);
     }
