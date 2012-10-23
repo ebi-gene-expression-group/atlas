@@ -1,27 +1,21 @@
 package uk.ac.ebi.atlas.streams;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
-
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import utils.ExperimentRunsBuilder;
 
-import com.google.common.collect.Lists;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.anyString;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

@@ -1,4 +1,4 @@
-function initSearchForm(homePageURL){
+function initSearchForm(homePageURL) {
 
     $(".chzn-select").chosen();
 

@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchFormPage extends AtlasPage {
 

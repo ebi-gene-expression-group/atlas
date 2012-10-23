@@ -59,13 +59,13 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
 
         when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
 
-        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock, DATA_FILE_URL);
+        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock, DATA_FILE_URL, null);
 
         subject.setRequestPreferences(requestPreferencesMock);
     }
 
     @Test
-    public void commandBuildsGeneProfileInputStream(){
+    public void commandBuildsGeneProfileInputStream() {
         //when
         subject.apply("ANY_EXPERIMENT_ACCESSION");
         //then
@@ -74,9 +74,6 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
         verify(geneProfileInputStreamBuilderMock).withCutoff(requestPreferencesMock.getCutoff());
         verify(geneProfileInputStreamBuilderMock).create();
     }
-
-
-
 
 
     @Test

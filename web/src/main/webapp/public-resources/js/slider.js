@@ -1,4 +1,4 @@
-function initSlider(defaultCutoff){
+function initSlider(defaultCutoff) {
 
     function getTickValue(indexValue) {
         if (indexValue == 0) {

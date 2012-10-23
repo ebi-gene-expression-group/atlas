@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
+
+import java.util.List;
 
 public class HeatmapTablePageOrganismOriented extends HeatmapTablePage {
 

@@ -1,11 +1,10 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
+import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.SearchFormPage;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-import org.junit.Test;
-
-import uk.ac.ebi.atlas.acceptance.selenium.pages.SearchFormPage;
 
 public class EmptySearchFormIT extends SeleniumFixture {
 

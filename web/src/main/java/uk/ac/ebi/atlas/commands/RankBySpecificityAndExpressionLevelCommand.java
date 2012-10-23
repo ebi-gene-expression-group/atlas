@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneService;
 import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneExpressionsList;
 import uk.ac.ebi.atlas.model.GeneProfile;
@@ -35,10 +36,15 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
+    private GeneService geneService;
+
     @Inject
-    public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder, @Value("#{configuration['magetab.test.datafile.url']}") String dataFileURL) {
+    public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder
+            , @Value("#{configuration['magetab.test.datafile.url']}") String dataFileURL
+            , GeneService geneService) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
         this.dataFileURL = dataFileURL;
+        this.geneService = geneService;
     }
 
     @Override
@@ -84,8 +90,8 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forDataFileURL(dataFileURL)
-            .withExperimentAccession(experimentAccession)
-            .withCutoff(requestPreferences.getCutoff()).create();
+                .withExperimentAccession(experimentAccession)
+                .withCutoff(requestPreferences.getCutoff()).create();
 
         if (CollectionUtils.isEmpty(requestPreferences.getGeneIDs())) {
 
@@ -93,7 +99,9 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
         }
 
-        return new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs());
+        GeneProfileInputStreamFilter geneProfileInputStreamFilter = new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs());
+        geneProfileInputStreamFilter.setGeneService(geneService);
+        return geneProfileInputStreamFilter;
 
     }
 

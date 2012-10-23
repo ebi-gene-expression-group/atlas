@@ -287,6 +287,17 @@
             <name>The EBI internal snapshot repository</name>
             <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
         </repository>
+
+        <repository>
+            <id>oracleReleases</id>
+            <name>Oracle Released Java Packages</name>
+            <url>http://download.oracle.com/maven</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots/>
+        </repository>
+
         <!--
         * Oracle Drivers: http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html
 
@@ -365,6 +376,12 @@
             <id>environment.test</id>
             <properties>
                 <data.files.location>/nfs/ma/home/atlas-production/ATLAS3/data</data.files.location>
+            </properties>
+        </profile>
+        <profile>
+            <id>environment.integration.test</id>
+            <properties>
+                <data.files.location>/nfs/ma/home/atlas-production/ATLAS3/test-data</data.files.location>
             </properties>
         </profile>
     </profiles>

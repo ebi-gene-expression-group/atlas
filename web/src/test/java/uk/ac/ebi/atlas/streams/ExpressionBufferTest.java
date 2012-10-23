@@ -1,20 +1,18 @@
 package uk.ac.ebi.atlas.streams;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import utils.ExperimentRunsBuilder;
 
-import com.google.common.collect.Lists;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class ExpressionBufferTest {
 

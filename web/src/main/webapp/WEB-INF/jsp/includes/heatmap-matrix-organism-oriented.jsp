@@ -30,7 +30,7 @@
 
         </c:if>
 
-        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneId}</a></div>"
+        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneService.getGeneName(geneId)}</a></div>"
                         headerClass='rotated_cell'
                         style="${not empty roundedExpressionLevel? style : ''}">
 

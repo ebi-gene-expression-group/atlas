@@ -11,7 +11,7 @@
         <fmt:message bundle="${configuration}" key="gxa.gene.url.template" var="genePageURL">
             <fmt:param value="${geneId}"/>
         </fmt:message>
-        <a href='${genePageURL}' target='_blank'>${geneId}</a>
+        <a href='${genePageURL}' target='_blank'>${geneService.getGeneName(geneId)}</a>
     </display:column>
 
     <c:forEach var="organismPart" items="${heatmapOrganismParts}">
