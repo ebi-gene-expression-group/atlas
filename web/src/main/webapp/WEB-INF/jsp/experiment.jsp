@@ -53,6 +53,10 @@
             src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.0.custom.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.threshold.js"></script>
 
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
@@ -70,7 +74,7 @@
 
     <script>
 
-
+        var x;
         (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
             $(document).ready(function () {
@@ -186,6 +190,7 @@
             </div>
         </div>
 
+        <br/>
 
 
 

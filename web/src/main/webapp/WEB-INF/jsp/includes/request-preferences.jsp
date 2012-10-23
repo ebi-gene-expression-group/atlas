@@ -41,7 +41,8 @@
         </table>
         <br/>
 
-        <div id="slider-range-max"></div>
+        <div id="gene-distribution" class="block" style="height:100px"></div>
+        <div id="slider-range-max" style="font-size:65%;margin-left:33px;margin-right:10px"></div>
 
     </form:form>
 </div>

@@ -1,40 +1,104 @@
 function initSlider(defaultCutoff){
 
-    // The result should be between 0 (but log(0) is NaN) and max FPKM
-
-    var minv = Math.log(0.001);
-    var maxv = Math.log(71047.7);
-
-    // position will be between 0 and 100
-    var minp = 0;
-    var maxp = 100;
-
-    $("#slider-range-max").slider({
-        range:"max",
-        min:minp,
-        max:maxp,
-
-        value:logposition(defaultCutoff),
-
-        slide:function (event, ui) {
-            $("#cutoff").val(logslider(ui.value));
-        },
-        change:function (event, ui) {
-            $("form#prefForm").submit();
+    function getTickValue(indexValue) {
+        if (indexValue == 0) {
+            return "0";
         }
+
+        var remainder = indexValue % 9;
+
+        //The next if - else is fine for a starting step of 0.1.
+        //For a starting step of 0.01 the subtracted values must change to -2 and -3
+        if (remainder != 0) {
+            var power = Math.floor(indexValue / 9) - 1;
+            var retVal = Math.pow(10, power) * remainder;
+        } else {
+            var power = Math.floor(indexValue / 9) - 2;
+            var retVal = Math.pow(10, power) * 9;
+        }
+
+        if (retVal < 1) {
+            retVal = retVal.toFixed(1)
+        }
+        return retVal;
+    }
+
+    function tickValues(axis) {
+        var ticks = [];
+        for (var i = 0; i < axis.max; i++) {
+            if(i%2 == 0){
+                var tick = magnifiedValue(getTickValue(i));
+            } else {
+                tick="";
+            }
+            ticks.push([i, tick]);
+        }
+        return ticks;
+    }
+
+    function magnifiedValue(value){
+        if(value >= 1000){
+            return value/1000 + "K";
+        }
+        return value;
+    }
+
+    function plotCutoffBarChart(data){
+        return $.plot($("#gene-distribution"), [ data ], {
+            series:{
+                highlightColor:"red",
+
+                label: "y = nr of genes with specificity 1 above cutoff",
+
+                bars: { show: true,barWidth:.8,align:"center"}
+            },
+            xaxis: {
+                tickLength:3,
+                ticks:tickValues
+            },
+            yaxis: {
+            },
+            grid: {
+                borderColor:"#CDCDCD",
+                borderWidth: 1,
+                hoverable: true
+            }
+        });
+    }
+
+    $.getJSON("json/gene-by-cutoff/specificity-one.txt", function(data){
+
+        var genesByCutoffPlot = plotCutoffBarChart(data);
+/*
+        $("#gene-distribution").bind("plothover", function (event, pos, item) {
+            alert("You clicked at " + pos.x + ", " + pos.y);
+
+            if (item) {
+                highlight(item.series, item.datapoint);
+                alert("You clicked a point!");
+            }
+        });
+*/
+        genesByCutoffPlot.highlight(0,0);
+
+        $("#slider-range-max").slider({
+            range:"max",
+            min:0,
+            max:data.length-1,
+
+            value:0,
+
+            slide:function (event, ui) {
+                genesByCutoffPlot.unhighlight();
+                genesByCutoffPlot.highlight(0,ui.value);
+                $("#cutoff").val(getTickValue(ui.value));
+            },
+            change:function (event, ui) {
+                $("form#prefForm").submit();
+            }
+        });
+
     });
 
-    function logslider(position) {
-
-        // calculate adjustment factor
-        var scale = (maxv - minv) / (maxp - minp);
-
-        return Number(Math.exp(minv + scale * (position - minp))).toFixed(3);
-    }
-
-    function logposition(value) {
-        var scale = (maxv - minv) / (maxp - minp);
-        return (Math.log(value) - minv) / scale + minp;
-    }
 
 }

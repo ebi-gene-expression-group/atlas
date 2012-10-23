@@ -10,3 +10,4 @@ _idea
 web/.classpath
 web/.project
 web/.settings/
+.DS_Store
