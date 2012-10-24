@@ -19,7 +19,7 @@ public class SearchFormIT extends SeleniumFixture {
     @Test
     public void searchFormContentShouldReflectRequestParameters() {
         assertThat(subject.getGeneIDsString(), is("ENSG00000175084 ENSG00000210195"));
-        assertThat(subject.getCutoff(), is("540.0"));
+        assertThat(subject.getCutoff(), is("540"));
         assertThat(subject.getOrganismParts(), contains("heart", "liver"));
     }
 

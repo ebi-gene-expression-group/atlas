@@ -45,12 +45,8 @@ function initSlider(cutoff) {
     function scaledCutoffs(maxValue) {
         var scaledCutoffs = [];
         for (var i = 0; i < maxValue; i++) {
-//            if(i%2 == 0){
-                var scaledCutoff = getNthScaledCutoff(i, 1);
-//            } else {
-//                tick="";
-//            }
-            scaledCutoffs.push([/*i,*/ scaledCutoff]);
+            var scaledCutoff = getNthScaledCutoff(i, 1);
+            scaledCutoffs.push([scaledCutoff]);
         }
         return scaledCutoffs;
     }

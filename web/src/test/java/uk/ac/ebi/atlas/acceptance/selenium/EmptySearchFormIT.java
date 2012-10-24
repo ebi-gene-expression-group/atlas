@@ -18,7 +18,7 @@ public class EmptySearchFormIT extends SeleniumFixture {
     @Test
     public void searchFormContentShouldReflectRequestParameters() {
         assertThat(subject.getGeneIDsString(), is(""));
-        assertThat(subject.getCutoff(), is("0.0"));
+        assertThat(subject.getCutoff(), is("0"));
         assertThat(subject.getOrganismParts().size(), is(0));
     }
 
