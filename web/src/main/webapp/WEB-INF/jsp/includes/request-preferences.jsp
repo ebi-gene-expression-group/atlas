@@ -24,7 +24,7 @@
             </tr>
             <tr>
                 <td>
-                    <form:textarea path="geneIDsString" rows="3" cols="35"></form:textarea>
+                    <form:textarea path="geneIDsString" rows="2" cols="35"></form:textarea>
                     <form:errors id="geneIDsString" title="geneIDsString" path="geneIDsString" cssClass="error"/>
                 </td>
                 <td>

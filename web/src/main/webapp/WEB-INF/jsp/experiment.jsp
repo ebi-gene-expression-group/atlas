@@ -124,9 +124,7 @@
 
     <c:import url="includes/request-preferences.jsp" />
 
-    <p>
-        <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
-    </p>
+    <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
 
     <c:if test="${not empty heatmapGenes}">
 
