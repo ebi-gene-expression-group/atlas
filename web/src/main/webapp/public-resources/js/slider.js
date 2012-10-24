@@ -1,4 +1,61 @@
-function initSlider(defaultCutoff) {
+function initSlider(cutoff) {
+
+    function getTickIndex(val){
+
+        if(val < 0.1) {
+            return 0;
+        }
+
+        if(val >= 1) {
+
+            // Remove decimal places and replace all but first digit with zeros.
+            val = Math.floor(val);
+            var x = Math.pow(10, val.toString().length-1);
+            val = Math.floor(val / x) * x;
+
+        } else {
+
+            // val is somewhere from 0.1 to 0.9999...
+            val = Math.floor(val * 10) * 0.1;
+        }
+
+
+        // value after zero in the sequence is 0.1
+        var start = 0.1;
+
+
+// define our own log10() function because JavaScript doesn't have one(?)
+        function log10(x) {
+            return Math.log(x) / Math.log(10);
+        }
+
+
+        if((10*val) % 9 != 0) {
+
+            // The sequence is in rows of 9, e.g. 0.1-0.9, 1-9, 10-90, 100-900, ...
+            // The first part gets the index of the top value in the row we need, e.g. 9, 18, 27, ...
+            var num1 = 9 * (Math.floor( log10( val/start ) ) + 1);
+
+            // The second part works out the index in that row
+            var num2 = 9 - ((10*val) % 9);
+
+            // The third part gives the index in the whole sequence
+            var position = num1 - num2;
+
+            return position;
+        }
+
+// Special case for multiples of 9
+        else {
+
+            var position = 9 * (Math.floor( log10( val/start ) ) + 1);
+
+            return position;
+        }
+
+
+    }
+
 
     function getTickValue(indexValue) {
         if (indexValue == 0) {
@@ -108,14 +165,16 @@ function initSlider(defaultCutoff) {
 
         });
 
-        genesByCutoffPlot.highlight(0,0);
+        var tickIndex = getTickIndex(cutoff);
+
+        genesByCutoffPlot.highlight(0,tickIndex);
 
         $("#slider-range-max").slider({
             range:"max",
             min:0,
             max:data.length-1,
 
-            value:0,
+            value:tickIndex,
 
             slide:function (event, ui) {
                 genesByCutoffPlot.unhighlight();
