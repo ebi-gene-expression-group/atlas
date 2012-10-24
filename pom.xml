@@ -381,7 +381,7 @@
         <profile>
             <id>environment.integration.test</id>
             <properties>
-                <data.files.location>/nfs/ma/home/atlas-production/ATLAS3/test-data</data.files.location>
+                <data.files.location>/net/isilon5/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
             </properties>
         </profile>
     </profiles>
