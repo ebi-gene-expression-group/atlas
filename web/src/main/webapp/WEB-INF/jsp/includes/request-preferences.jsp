@@ -1,5 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div id="preferencesFormBlock" class="block">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="heatmapMatrixSize"/>
@@ -34,7 +36,20 @@
                     <form:errors id="organismParts" title="organismParts" path="organismParts" cssClass="error"/>
                 </td>
                 <td>
-                    <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
+                    <c:choose>
+                        <c:when  test="${fn:endsWith('' + preferences.cutoff, '.0')}" >
+                            <fmt:formatNumber value="${preferences.cutoff}"
+                                              type="number"
+                                              maxFractionDigits="0"
+                                              var="formattedCutoff" />
+                            <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff" style="border:1; font-weight:bold;"/>
+                        </c:when>
+                        <c:otherwise>
+                            <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
+                        </c:otherwise>
+                     </c:choose>
+
+
                     <form:errors path="cutoff" cssClass="error"/>
                 </td>
             </tr>
@@ -42,7 +57,7 @@
         <br/>
 
         <div id="gene-distribution" class="block" style="margin-bottom:4px;height:100px"></div>
-        <div id="slider-range-max" style="font-size:65%;margin-left:33px;margin-right:10px"></div>
+        <div id="slider-range-max" style="font-size:65%;margin-left:25px;margin-right:17px"></div>
 
     </form:form>
 </div>

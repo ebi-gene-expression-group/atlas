@@ -1,96 +1,58 @@
 function initSlider(cutoff) {
 
-    function getTickIndex(val){
-
-        if(val < 0.1) {
-            return 0;
-        }
-
-        if(val >= 1) {
-
+    function nearestScaledCutoff(cutoff){
+        if(cutoff >= 1) {
             // Remove decimal places and replace all but first digit with zeros.
-            val = Math.floor(val);
-            var x = Math.pow(10, val.toString().length-1);
-            val = Math.floor(val / x) * x;
+            cutoff = Math.floor(cutoff);
+
+            var x = Math.pow(10, cutoff.toString().length-1);
+            return (Math.floor(cutoff / x) * x).toFixed(0);
 
         } else {
 
             // val is somewhere from 0.1 to 0.9999...
-            val = Math.floor(val * 10) * 0.1;
+            return cutoff == 0 ? "0" : cutoff.toFixed(1);
         }
-
-
-        // value after zero in the sequence is 0.1
-        var start = 0.1;
-
-
-// define our own log10() function because JavaScript doesn't have one(?)
-        function log10(x) {
-            return Math.log(x) / Math.log(10);
-        }
-
-
-        if((10*val) % 9 != 0) {
-
-            // The sequence is in rows of 9, e.g. 0.1-0.9, 1-9, 10-90, 100-900, ...
-            // The first part gets the index of the top value in the row we need, e.g. 9, 18, 27, ...
-            var num1 = 9 * (Math.floor( log10( val/start ) ) + 1);
-
-            // The second part works out the index in that row
-            var num2 = 9 - ((10*val) % 9);
-
-            // The third part gives the index in the whole sequence
-            var position = num1 - num2;
-
-            return position;
-        }
-
-// Special case for multiples of 9
-        else {
-
-            var position = 9 * (Math.floor( log10( val/start ) ) + 1);
-
-            return position;
-        }
-
-
     }
 
 
-    function getTickValue(indexValue) {
-        if (indexValue == 0) {
+    function getNthScaledCutoff(position, fractionalDigits) {
+
+        if (position == 0) {
             return "0";
         }
 
-        var remainder = indexValue % 9;
+        var remainder = position % 9;
 
         //The next if - else is fine for a starting step of 0.1.
         //For a starting step of 0.01 the subtracted values must change to -2 and -3
         if (remainder != 0) {
-            var power = Math.floor(indexValue / 9) - 1;
+            var power = Math.floor(position / 9) - fractionalDigits;
             var retVal = Math.pow(10, power) * remainder;
         } else {
-            var power = Math.floor(indexValue / 9) - 2;
+            var power = Math.floor(position / 9) - (fractionalDigits+1);
             var retVal = Math.pow(10, power) * 9;
         }
 
         if (retVal < 1) {
-            retVal = retVal.toFixed(1)
+            retVal = retVal.toFixed(fractionalDigits);
+        } else {
+            retVal = retVal.toFixed(fractionalDigits-1);
         }
         return retVal;
     }
 
-    function tickValues(axis) {
-        var ticks = [];
-        for (var i = 0; i < axis.max; i++) {
-            if(i%2 == 0){
-                var tick = magnifiedValue(getTickValue(i));
-            } else {
-                tick="";
-            }
-            ticks.push([i, tick]);
+    function scaledCutoffs(maxValue) {
+        var scaledCutoffs = [];
+        for (var i = 0; i < maxValue; i++) {
+//            if(i%2 == 0){
+                var scaledCutoff = getNthScaledCutoff(i, 1);
+//            } else {
+//                tick="";
+//            }
+            scaledCutoffs.push([/*i,*/ scaledCutoff]);
         }
-        return ticks;
+        return scaledCutoffs;
     }
 
     function magnifiedValue(value){
@@ -100,20 +62,21 @@ function initSlider(cutoff) {
         return value;
     }
 
-    function plotCutoffBarChart(data){
+    function plotCutoffBarChart(data, magnifiedScaledCutoffs){
         return $.plot($("#gene-distribution"), [ data ], {
             series:{
                 highlightColor:"red",
 
-                label: "y = nr of genes with specificity 1 above cutoff",
+                label: "Y = number of genes expressed above the selected FPKM cutoff in one organism part only",
 
-                bars: { show: true,barWidth:.8,align:"center"}
+                bars: {
+                    show: true,
+                    barWidth:.8
+                }
             },
             xaxis: {
                 tickLength:3,
-                ticks:tickValues
-            },
-            yaxis: {
+                ticks: magnifiedScaledCutoffs
             },
             grid: {
                 borderColor:"#CDCDCD",
@@ -125,7 +88,15 @@ function initSlider(cutoff) {
 
     $.getJSON("json/gene-by-cutoff/specificity-one.txt", function(data){
 
-        var genesByCutoffPlot = plotCutoffBarChart(data);
+        var scaledCutoffTicks = scaledCutoffs(data.length);
+
+        var ticksMap = [];
+
+        $.each(scaledCutoffTicks,function(index, scaledCutoff){
+            ticksMap.push([index, index%2 === 0 ? magnifiedValue(scaledCutoff) : ""]);
+        })
+
+        var genesByCutoffPlot = plotCutoffBarChart(data, ticksMap);
 
         function showTooltip(x, y, contents) {
             $('<div id="tooltip">' + contents + '</div>').css({
@@ -165,21 +136,29 @@ function initSlider(cutoff) {
 
         });
 
-        var tickIndex = getTickIndex(cutoff);
+        var scaledCutoff = nearestScaledCutoff(cutoff);
 
-        genesByCutoffPlot.highlight(0,tickIndex);
+        var scaledCutoffPosition = function (){ for (var i=0; i<scaledCutoffTicks.length; i++){
+                if (scaledCutoffTicks[i] == scaledCutoff){
+                     return i;
+                }
+            }
+        }();
+
+        genesByCutoffPlot.highlight(0,scaledCutoffPosition);
 
         $("#slider-range-max").slider({
             range:"max",
             min:0,
             max:data.length-1,
 
-            value:tickIndex,
+            value:scaledCutoffPosition,
 
             slide:function (event, ui) {
                 genesByCutoffPlot.unhighlight();
                 genesByCutoffPlot.highlight(0,ui.value);
-                $("#cutoff").val(getTickValue(ui.value));
+                var scaledCutoff = getNthScaledCutoff(ui.value,1);
+                $("#cutoff").val(scaledCutoff);
             },
             change:function (event, ui) {
                 $("form#prefForm").submit();
