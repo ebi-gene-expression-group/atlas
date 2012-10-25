@@ -63,7 +63,7 @@ function initSlider(cutoff) {
             series:{
                 highlightColor:"red",
 
-                label: "Y = number of genes expressed above the selected FPKM cutoff in one organism part only",
+                label: "Y = number of genes expressed above the selected FPKM cutoff for any organism part",
 
                 bars: {
                     show: true,
