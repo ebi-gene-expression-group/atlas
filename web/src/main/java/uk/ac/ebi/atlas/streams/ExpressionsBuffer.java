@@ -65,7 +65,7 @@ class ExpressionsBuffer {
     }
 
     @Named("expressionsBufferBuilder")
-    @Scope("singleton")
+    @Scope("prototype")
     public static class Builder {
 
         private ExperimentsCache experimentsCache;
