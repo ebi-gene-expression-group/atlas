@@ -52,7 +52,8 @@ class ExpressionsBuffer {
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
-        checkArgument(values.length == expectedNumberOfValues, "Expected " +expectedNumberOfValues + " values but found: " + values);
+        checkArgument(values.length == expectedNumberOfValues, "Expected " +expectedNumberOfValues + " values but " +
+                "found: " + Arrays.toString(values));
 
         expressionLevelsBuffer.clear();
 
