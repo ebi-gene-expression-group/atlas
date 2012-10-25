@@ -3,14 +3,14 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneService;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.GeneExpression;
-import uk.ac.ebi.atlas.model.GeneExpressionsList;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneSpecificityComparator;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
@@ -26,7 +26,7 @@ import java.util.Queue;
 
 @Named("rankBySpecificityAndExpressionLevel")
 @Scope("prototype")
-public class RankBySpecificityAndExpressionLevelCommand implements Function<String, GeneExpressionsList> {
+public class RankBySpecificityAndExpressionLevelCommand implements Function<String, GeneProfilesList> {
 
     private static final Logger logger = Logger.getLogger(RankBySpecificityAndExpressionLevelCommand.class);
 
@@ -36,23 +36,23 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
-    private GeneService geneService;
+    private GeneNamesProvider geneNamesProvider;
 
     @Inject
     public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder
             , @Value("#{configuration['magetab.test.datafile.url']}") String dataFileURL
-            , GeneService geneService) {
+            , GeneNamesProvider geneNamesProvider) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
         this.dataFileURL = dataFileURL;
-        this.geneService = geneService;
+        this.geneNamesProvider = geneNamesProvider;
     }
 
     @Override
-    public GeneExpressionsList apply(String experimentAccession) {
+    public GeneProfilesList apply(String experimentAccession) {
 
-        Comparator<GeneExpression> reverseSpecificityComparator = buildReverseSpecificityComparator();
+        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator();
 
-        Queue<GeneExpression> rankingQueue = buildRankingQueue(reverseSpecificityComparator);
+        Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator);
 
 
         try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession)) {
@@ -62,17 +62,11 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
             int geneCount = 0;
 
             while ((geneProfile = inputStream.readNext()) != null) {
-                boolean expressionAdded = false;
-                for (GeneExpression geneExpression : geneProfile.filterByOrganismParts(requestPreferences.getOrganismParts())) {
-                    rankingQueue.add(geneExpression);
-                    expressionAdded = true;
-                }
-                if (expressionAdded) {
-                    geneCount++;
-                }
+                rankingQueue.add(geneProfile);
+                geneCount++;
             }
 
-            GeneExpressionsList list = new GeneExpressionsList(rankingQueue);
+            GeneProfilesList list = new GeneProfilesList(rankingQueue);
 
             Collections.sort(list, reverseSpecificityComparator);
 
@@ -93,23 +87,18 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
                 .withExperimentAccession(experimentAccession)
                 .withCutoff(requestPreferences.getCutoff()).create();
 
-        if (CollectionUtils.isEmpty(requestPreferences.getGeneIDs())) {
-
-            return geneProfileInputStream;
-
-        }
-
-        GeneProfileInputStreamFilter geneProfileInputStreamFilter = new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs());
-        geneProfileInputStreamFilter.setGeneService(geneService);
+        GeneProfileInputStreamFilter geneProfileInputStreamFilter = new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs(), requestPreferences.getOrganismParts());
+        geneProfileInputStreamFilter.setGeneNamesProvider(geneNamesProvider);
         return geneProfileInputStreamFilter;
 
     }
 
-    protected Ordering<GeneExpression> buildReverseSpecificityComparator() {
-        return Ordering.from(new GeneSpecificityComparator()).reverse();
+    protected Ordering<GeneProfile> buildReverseSpecificityComparator() {
+        boolean orderBySpecificity = CollectionUtils.isEmpty(requestPreferences.getOrganismParts());
+        return Ordering.from(new GeneSpecificityComparator(orderBySpecificity)).reverse();
     }
 
-    protected Queue<GeneExpression> buildRankingQueue(Comparator<GeneExpression> reverseSpecificityComparator) {
+    protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> reverseSpecificityComparator) {
         return MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(requestPreferences.getHeatmapMatrixSize()).create();
     }
 

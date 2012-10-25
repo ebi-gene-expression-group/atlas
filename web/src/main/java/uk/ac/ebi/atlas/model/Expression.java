@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -40,5 +41,24 @@ public class Expression {
 
     public boolean isGreaterThan(double level) {
         return Double.compare(this.level, level) > 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(experimentRun, level);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Expression other = (Expression) obj;
+
+        return Objects.equals(experimentRun, other.experimentRun)
+                && Objects.equals(level, level);
     }
 }

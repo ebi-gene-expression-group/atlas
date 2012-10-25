@@ -12,14 +12,14 @@
         </div>
     </display:column>
 
-    <c:forEach var="geneId" items="${heatmapGenes}">
+    <c:forEach var="geneProfile" items="${geneProfiles}">
 
         <fmt:message bundle="${configuration}" key="gxa.gene.url.template" var="genePageURL">
-            <fmt:param value="${geneId}"/>
+            <fmt:param value="${geneProfile}"/>
         </fmt:message>
 
         <c:set var="roundedExpressionLevel"
-               value="${geneExpressions.getRoundedExpressionLevel(geneId, organismPart)}"/>
+               value="${geneProfile.getRoundedExpressionLevel(organismPart)}"/>
 
         <c:if test="${not empty roundedExpressionLevel}">
 
@@ -30,7 +30,7 @@
 
         </c:if>
 
-        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneService.getGeneName(geneId)}</a></div>"
+        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile)}</a></div>"
                         headerClass='rotated_cell'
                         style="${not empty roundedExpressionLevel? style : ''}">
 

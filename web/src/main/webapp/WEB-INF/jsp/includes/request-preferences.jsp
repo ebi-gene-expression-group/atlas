@@ -38,7 +38,7 @@
                 <td>
                     <c:choose>
                         <c:when  test="${fn:endsWith('' + preferences.cutoff, '.0')}" >
-                            <fmt:formatNumber value="${preferences.cutoff}"
+                            <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
                                               type="number"
                                               maxFractionDigits="0"
                                               var="formattedCutoff" />

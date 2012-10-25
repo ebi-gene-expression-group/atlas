@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.ObjectInputStreamFilter;
-import uk.ac.ebi.atlas.geneannotation.GeneService;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.HashSet;
@@ -16,16 +16,22 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> geneIDs;
 
-    private GeneService geneService;
+    private Set<String> organismParts;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs){
+    private int cutoff;
+
+    private GeneNamesProvider geneNamesProvider;
+
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs, Set<String> organismParts){
         super(geneProfileInputStream);
-        checkNotNull(geneIDs);
-        this.geneIDs = toUpperCase(geneIDs);
+        if (geneIDs != null) {
+            this.geneIDs = toUpperCase(geneIDs);
+        }
+        this.organismParts = organismParts;
     }
 
-    public void setGeneService(GeneService geneService) {
-        this.geneService = geneService;
+    public void setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
+        this.geneNamesProvider = geneNamesProvider;
     }
 
     @Override
@@ -34,12 +40,19 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         return new Predicate<GeneProfile>() {
             @Override
             public boolean apply(GeneProfile profile) {
-                return CollectionUtils.isEmpty(geneIDs)
-                        || geneIDs.contains(profile.getGeneId().toUpperCase())
-                || (geneService!=null && geneIDs.contains(geneService.getGeneName(profile.getGeneId()).toUpperCase()));
+                return checkGeneId(profile.getGeneId()) && profile.isExpressedAtMostOn(organismParts);
             }
         };
 
+    }
+
+    private boolean checkGeneId(String geneId){
+        geneId = geneId.toUpperCase();
+        return CollectionUtils.isEmpty(geneIDs)
+                || geneIDs.contains(geneId)
+                //ToDo: move gene name resolution into gene profile,
+                // when gene profile is built if the provider is available the name will be set
+                || (geneNamesProvider !=null && geneIDs.contains(geneNamesProvider.getGeneName(geneId)));
     }
 
     private Set<String> toUpperCase(Set<String> geneIDs) {

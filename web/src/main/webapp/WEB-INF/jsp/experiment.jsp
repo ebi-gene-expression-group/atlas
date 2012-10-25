@@ -127,7 +127,7 @@
 
     <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
 
-    <c:if test="${not empty heatmapGenes}">
+    <c:if test="${not empty geneProfiles}">
 
 
         <div id="heatmap" class="block">

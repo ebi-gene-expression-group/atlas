@@ -5,13 +5,13 @@ import com.sleepycat.collections.StoredMap;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("geneService")
-public class GeneService {
+@Named("geneNamesProvider")
+public class GeneNamesProvider {
 
     StoredMap<String, String> geneNames;
 
     @Inject
-    public GeneService(StoredMap<String, String> geneNames) {
+    public GeneNamesProvider(StoredMap<String, String> geneNames) {
         this.geneNames = geneNames;
     }
 

@@ -4,20 +4,20 @@
 
 <fmt:setBundle basename="configuration" var="configuration"/>
 
-<display:table name="${heatmapGenes}" id="geneId"
+<display:table name="${geneProfiles}" id="geneProfile"
                htmlId="heatmap-table" class="table-grid">
     <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
                     class="header-cell">
         <fmt:message bundle="${configuration}" key="gxa.gene.url.template" var="genePageURL">
-            <fmt:param value="${geneId}"/>
+            <fmt:param value="${geneProfile.geneId}"/>
         </fmt:message>
-        <a href='${genePageURL}' target='_blank'>${geneService.getGeneName(geneId)}</a>
+        <a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile.geneId)}</a>
     </display:column>
 
     <c:forEach var="organismPart" items="${heatmapOrganismParts}">
 
        <c:set var="roundedExpressionLevel"
-               value="${geneExpressions.getRoundedExpressionLevel(geneId, organismPart)}"/>
+               value="${geneProfile.getRoundedExpressionLevel(organismPart)}"/>
 
         <c:if test="${not empty roundedExpressionLevel}">
 

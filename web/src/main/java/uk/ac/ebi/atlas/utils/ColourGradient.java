@@ -92,11 +92,11 @@ public class ColourGradient {
     * values.
     */
 
-    protected Color getGradientColour(double data, double min, double max) {
+    protected Color getGradientColour(double value, double min, double max) {
 
-        double percentPosition = calculatePercentPosition(data, min, max);
+        double percentPosition = calculatePercentPosition(value, min, max);
 
-        if (Double.isNaN(percentPosition) || Double.isInfinite(percentPosition)) {
+        if (value == 0 || Double.isNaN(percentPosition) || Double.isInfinite(percentPosition)) {
             return blankValueColour;
         }
 

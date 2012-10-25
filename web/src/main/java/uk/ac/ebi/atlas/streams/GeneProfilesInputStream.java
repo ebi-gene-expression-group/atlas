@@ -46,11 +46,6 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
         return this;
     }
 
-    protected GeneProfilesInputStream setCutoff(Double cutoff) {
-        this.cutoff = cutoff;
-        return this;
-    }
-
     @Override
     public GeneProfile readNext() {
         GeneProfile geneProfile;
@@ -63,6 +58,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
                 return null;
             }
             geneProfile = buildGeneProfile(values);
+
         } while (geneProfile == null);
 
         return geneProfile;
@@ -110,7 +106,6 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
         csvReader.close();
         logger.info("<close> close invoked on GeneProfilesInputStream");
     }
-
 
     @Named("geneProfilesInputStreamBuilder")
     @Scope("prototype")

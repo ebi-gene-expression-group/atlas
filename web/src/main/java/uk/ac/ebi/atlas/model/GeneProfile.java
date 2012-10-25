@@ -4,24 +4,37 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.math.util.MathUtils;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-public class GeneProfile implements Iterable<GeneExpression> {
+public class GeneProfile implements Iterable<Expression> {
+
+    public static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
+    public static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
 
     private String geneId;
 
-    //ToDo: ...Expression is not implementing equality and hashcode but here we are using it in a Set...
-    private Set<Expression> expressions = new HashSet<>();
+    private double maxExpressionLevel = 0;
+    private double minExpressionLevel = Double.MAX_VALUE;
+
+    private SortedMap<String, Expression> expressions = new TreeMap<>();
 
     private GeneProfile(String geneId) {
         this.geneId = geneId;
+    }
+
+    public GeneProfile add(Expression expression){
+        this.expressions.put(expression.getOrganismPart(), expression);
+        updateProfileExpression(expression.getLevel());
+        return this;
     }
 
     public static Builder forGeneId(String geneId) {
@@ -32,31 +45,62 @@ public class GeneProfile implements Iterable<GeneExpression> {
         return geneId;
     }
 
-    public int getGeneSpecificity() {
+    public int getSpecificity() {
         return expressions.size();
     }
 
-    @Override
-    public Iterator<GeneExpression> iterator() {
-        return Iterators.transform(expressions.iterator(),
-                new Function<Expression, GeneExpression>() {
-                    public GeneExpression apply(Expression expression) {
-                        return new GeneExpression(geneId, expression, getGeneSpecificity());
-                    }
-                });
+    public Iterator<Expression> iterator(){
+        return expressions.values().iterator();
     }
 
-    public Iterable<GeneExpression> filterByOrganismParts(final Set<String> organismParts) {
-        if (CollectionUtils.isEmpty(organismParts)) {
-            return this;
+    public double getMaxExpressionLevel(){
+        return maxExpressionLevel;
+    }
+
+    public double getMinExpressionLevel(){
+        return minExpressionLevel;
+    }
+
+    private void updateProfileExpression(double level){
+        if (maxExpressionLevel < level) {
+            maxExpressionLevel = level;
         }
+        if (level < minExpressionLevel) {
+            minExpressionLevel = level;
+        }
+    }
 
-        return Iterables.filter(this, new Predicate<GeneExpression>() {
-            public boolean apply(GeneExpression geneExpression) {
-                return organismParts.contains(geneExpression.getOrganismPart());
-            }
-        });
+    public boolean isExpressedAtMostOn(Set<String> selectedOrganismParts){
+        if (CollectionUtils.isEmpty(selectedOrganismParts)){
+            return true;
+        }
+        return selectedOrganismParts.containsAll(getOrganismParts());
+    }
 
+    public Set<String> getOrganismParts() {
+        return this.expressions.keySet();
+    }
+
+    public double getExpressionLevel(String organismPart) {
+        Expression expression = expressions.get(organismPart);
+        return expression == null ? 0 : expression.getLevel() ;
+    }
+
+    public double getRoundedExpressionLevel(String organismPart){
+        return roundedValue(getExpressionLevel(organismPart));
+    }
+
+    public Double getRoundedMaxExpressionLevel(){
+        return roundedValue(getMaxExpressionLevel());
+    }
+
+    public Double getRoundedMinExpressionLevel(){
+        return roundedValue(getMinExpressionLevel());
+    }
+
+    private double roundedValue(double value){
+        return MathUtils.round(value, value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
+                : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE);
     }
 
     public static class Builder {
@@ -74,7 +118,7 @@ public class GeneProfile implements Iterable<GeneExpression> {
         public Builder addExpression(Expression expression) {
 
             if (expression.isGreaterThan(cutoffValue)) {
-                geneProfile.expressions.add(expression);
+                geneProfile.add(expression);
             }
 
             return this;

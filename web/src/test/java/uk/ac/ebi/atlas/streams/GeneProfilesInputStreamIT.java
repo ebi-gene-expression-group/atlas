@@ -66,7 +66,7 @@ public class GeneProfilesInputStreamIT {
         GeneProfile geneProfile = subject.readNext();
         //then
         assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
-        assertThat(geneProfile.getGeneSpecificity(), is(1));
+        assertThat(geneProfile.getSpecificity(), is(1));
         assertThat(geneProfile.iterator().hasNext(), is(true));
         //ToDo: GeneProfile needs a getter for Expressions
 
@@ -74,12 +74,12 @@ public class GeneProfilesInputStreamIT {
         geneProfile = subject.readNext();
         //then
         assertThat(geneProfile.getGeneId(), is(GENE_ID_2));
-        assertThat(geneProfile.getGeneSpecificity(), is(3));
+        assertThat(geneProfile.getSpecificity(), is(3));
 
         geneProfile = subject.readNext();
 
         assertThat(geneProfile.getGeneId(), is(GENE_ID_3));
-        assertThat(geneProfile.getGeneSpecificity(), is(2));
+        assertThat(geneProfile.getSpecificity(), is(2));
     }
 
 
@@ -114,7 +114,7 @@ public class GeneProfilesInputStreamIT {
         GeneProfile geneProfile = subject.readNext();
 
         //then specificity of second gene should change
-        assertThat(geneProfile.getGeneSpecificity(), is(2));
+        assertThat(geneProfile.getSpecificity(), is(2));
 
         //then third gene is not created since it has no expressions higher than cutoff.
         assertThat(subject.readNext(), is(nullValue()));

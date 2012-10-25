@@ -4,21 +4,22 @@ import com.google.common.collect.Ordering;
 
 import java.util.Comparator;
 
-public class GeneSpecificityComparator implements Comparator<GeneExpression> {
+public class GeneSpecificityComparator implements Comparator<GeneProfile> {
+
+    boolean orderBySpecificity;
+
+    public GeneSpecificityComparator(boolean orderBySpecificity){
+        this.orderBySpecificity = orderBySpecificity;
+    }
 
     @Override
-    public int compare(GeneExpression firstGeneExpression, GeneExpression otherGeneExpression) {
-        if (firstGeneExpression.getSpecificity() == null) {
-            return -1;
-        }
-        if (otherGeneExpression.getSpecificity() == null) {
-            return +1;
-        }
-        int order = Ordering.natural().reverse().compare(firstGeneExpression.getSpecificity(), otherGeneExpression.getSpecificity());
+    public int compare(GeneProfile firstGeneProfile, GeneProfile otherGeneProfile) {
+        Ordering specificityOrdering = orderBySpecificity ? Ordering.natural().reverse() : Ordering.natural(); //reverse because specificity 1 is highest
+        int order = specificityOrdering.compare(firstGeneProfile.getSpecificity(), otherGeneProfile.getSpecificity());
         if (order != 0) {
             return order;
         }
-        return firstGeneExpression.compareTo(otherGeneExpression);
+        return Ordering.natural().compare(firstGeneProfile.getMaxExpressionLevel(),otherGeneProfile.getMaxExpressionLevel());
 
     }
 

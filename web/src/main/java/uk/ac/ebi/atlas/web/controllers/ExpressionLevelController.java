@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankBySpecificityAndExpressionLevelCommand;
-import uk.ac.ebi.atlas.model.GeneExpressionsList;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -33,23 +33,19 @@ public class ExpressionLevelController {
 
             rankCommand.setRequestPreferences(preferences);
 
-            GeneExpressionsList geneExpressions = rankCommand.apply(DEMO_ACCESSION);
+            GeneProfilesList geneProfiles = rankCommand.apply(DEMO_ACCESSION);
 
-            Set<String> genesToBeHighlighted = geneExpressions.getTop(preferences.getHeatmapMatrixSize()).getDistinctGeneIds();
+            //Set<String> genesToBeHighlighted = geneProfiles.getTop(preferences.getHeatmapMatrixSize()).getDistinctGeneIds();
 
-            GeneExpressionsList heatmapExpressions = geneExpressions.subList(genesToBeHighlighted);
+            model.addAttribute("heatmapOrganismParts", geneProfiles.getAllOrganismParts());
 
-            model.addAttribute("heatmapGenes", genesToBeHighlighted);
+            model.addAttribute("geneProfiles", geneProfiles);
 
-            model.addAttribute("heatmapOrganismParts", geneExpressions.getDistinctOrganismParts(genesToBeHighlighted));
+            model.addAttribute("roundedMinExpressionLevel", geneProfiles.getRoundedMinExpressionLevel());
 
-            model.addAttribute("geneExpressions", geneExpressions);
+            model.addAttribute("roundedMaxExpressionLevel", geneProfiles.getRoundedMaxExpressionLevel());
 
-            model.addAttribute("roundedMinExpressionLevel", heatmapExpressions.getRoundedMinExpressionLevel());
-
-            model.addAttribute("roundedMaxExpressionLevel", heatmapExpressions.getRoundedMaxExpressionLevel());
-
-            model.addAttribute("totalResultCount", geneExpressions.getTotalResultCount());
+            model.addAttribute("totalResultCount", geneProfiles.getTotalResultCount());
         }
 
         return "experiment";
