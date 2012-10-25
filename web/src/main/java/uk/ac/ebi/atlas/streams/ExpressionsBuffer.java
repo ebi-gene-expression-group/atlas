@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 class ExpressionsBuffer {
 
-    private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain gene id and expression levels for all experiment runs";
+    //private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain gene id and expression levels for all experiment runs";
 
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
@@ -32,7 +32,7 @@ class ExpressionsBuffer {
     public static final int GENE_ID_COLUMN = 0;
 
     protected ExpressionsBuffer(List<ExperimentRun> orderedRuns) {
-        expectedNumberOfValues = orderedRuns.size();
+        expectedNumberOfValues = orderedRuns.size() + 1;
         this.runsCircularQueue = Iterables.cycle(orderedRuns).iterator();
     }
 
@@ -52,7 +52,7 @@ class ExpressionsBuffer {
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
-        checkArgument(values.length == expectedNumberOfValues + 1, DATA_FILE_RECORD_VALIDATION_MESSAGE);
+        checkArgument(values.length == expectedNumberOfValues, "Expected " +expectedNumberOfValues + " values but found: " + values);
 
         expressionLevelsBuffer.clear();
 

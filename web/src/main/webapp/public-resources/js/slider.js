@@ -99,7 +99,7 @@ function initSlider(cutoff) {
                 position: 'absolute',
                 display: 'none',
                 top: y - 25,
-                left: x - 13,
+                left: x - 6,
                 border: '2px solid rgb(238,195,46)',
                 padding: '2px',
                 'font-family': 'Verdana, Helvetica, Arial, sans-serif',

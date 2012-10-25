@@ -57,7 +57,7 @@
         <br/>
 
         <div id="gene-distribution" class="block" style="margin-bottom:4px;height:100px"></div>
-        <div id="slider-range-max" style="font-size:65%;margin-left:25px;margin-right:17px"></div>
+        <div id="slider-range-max" style="font-size:65%;margin-left:27px;margin-right:17px"></div>
 
     </form:form>
 </div>

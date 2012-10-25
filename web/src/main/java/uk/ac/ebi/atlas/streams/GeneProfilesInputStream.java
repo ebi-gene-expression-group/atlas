@@ -57,6 +57,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         do {
             String[] values = readCsvLine();
+            logger.debug("<readNext> processing values: " + values);
 
             if (values == null) {
                 return null;
