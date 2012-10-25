@@ -40,6 +40,7 @@
                         <c:when  test="${fn:endsWith('' + preferences.cutoff, '.0')}" >
                             <fmt:formatNumber value="${preferences.cutoff}"
                                               type="number"
+                                              groupingUsed="false"
                                               maxFractionDigits="0"
                                               var="formattedCutoff" />
                             <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff" style="border:1; font-weight:bold;"/>
