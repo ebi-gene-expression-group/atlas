@@ -20,8 +20,10 @@
 
         <c:set var="roundedExpressionLevel"
                value="${geneProfile.getRoundedExpressionLevel(organismPart)}"/>
+        <c:set var="expressionLevel"
+               value="${geneProfile.getExpressionLevel(organismPart)}"/>
 
-        <c:if test="${not empty roundedExpressionLevel}">
+        <c:if test="${expressionLevel != 0}">
 
             <c:set var="cellColour"
                    value="${colourGradient.getGradientColour(roundedExpressionLevel, roundedMinExpressionLevel, roundedMaxExpressionLevel)}"/>
@@ -30,11 +32,11 @@
 
         </c:if>
 
-        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile)}</a></div>"
+        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile.geneId)}</a></div>"
                         headerClass='rotated_cell'
-                        style="${not empty roundedExpressionLevel? style : ''}">
+                        style="${expressionLevel != 0? style : ''}">
 
-            <c:if test="${not empty roundedExpressionLevel}">
+            <c:if test="${expressionLevel != 0}">
 
                 <div data-organism-part="${organismPart}" data-color="${cellColour}" >
                     <fmt:formatNumber type="number" maxFractionDigits="${roundedExpressionLevel >= 1 ? 0 : 1}" value="${roundedExpressionLevel}" groupingUsed="false" />

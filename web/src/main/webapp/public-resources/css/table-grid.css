@@ -21,20 +21,22 @@
 
 .table-grid td {
     color: #3D3D3D;
+    background-color: white;
     vertical-align: middle;
     border: 1px solid #cdcdcd;
     height: 25px;
     width: 25px;
 }
 
-.header-cell {
+.table-grid .header-cell {
+    background-color: #FAFAFA;
     font-weight: bold;
     width: auto !important;
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.table-grid tr:not(:first-child):hover, th:hover {
+.table-grid .header-cell:hover,.table-grid th:hover {
     background-color: #deebeb;
     cursor: default;
 }
