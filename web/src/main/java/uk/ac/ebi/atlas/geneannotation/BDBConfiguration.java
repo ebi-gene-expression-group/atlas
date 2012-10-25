@@ -18,7 +18,7 @@ public class BDBConfiguration {
 
     }
 
-    @Bean
+    @Bean(name="geneNames")
     @Inject
     public StoredMap<String, String> geneNames(AnnotationEnvironment annotationEnvironment) {
 

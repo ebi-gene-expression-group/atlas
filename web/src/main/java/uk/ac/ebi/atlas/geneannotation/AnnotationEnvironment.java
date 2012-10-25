@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.geneannotation;
 
 import com.sleepycat.bind.tuple.TupleBinding;
 import com.sleepycat.collections.StoredMap;
+import com.sleepycat.collections.TransactionRunner;
 import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseConfig;
 import com.sleepycat.je.Environment;
@@ -33,9 +34,7 @@ public class AnnotationEnvironment {
         EnvironmentConfig envConfig = new EnvironmentConfig();
 
         envConfig.setAllowCreate(true);
-        //ToDo: find better solution to allow testing on lime
-        envConfig.setLocking(false);
-
+        envConfig.setTransactional(true);
         File envHome = new File(environmentLocation);
         if (!envHome.exists()) {
             envHome.mkdirs();
@@ -58,6 +57,10 @@ public class AnnotationEnvironment {
                 (geneNameDatabase, keyBinding, dataBinding, true);
 
         return storedMap;
+    }
+
+    public TransactionRunner getTransactionRunner() {
+        return new TransactionRunner(environment);
     }
 
     public Environment getEnvironment() {

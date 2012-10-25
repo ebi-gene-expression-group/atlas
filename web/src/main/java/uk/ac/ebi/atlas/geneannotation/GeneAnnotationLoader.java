@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.utils.biomart.BioMartGeneNameStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.concurrent.ConcurrentMap;
 
 @Named("geneAnnotationLoader")
 @Scope("prototype")
@@ -27,11 +28,11 @@ public class GeneAnnotationLoader {
     public GeneAnnotationLoader(AnnotationEnvironment annotationEnvironment, BioMartGeneNameStream.Builder geneNameStreamBuilder) {
         this.annotationEnvironment = annotationEnvironment;
         this.geneNameStreamBuilder = geneNameStreamBuilder;
-        transactionRunner = new TransactionRunner(annotationEnvironment.getEnvironment());
+        transactionRunner = annotationEnvironment.getTransactionRunner();
     }
 
 
-    public void loadAnnotations(ObjectInputStream<String[]> annotationsInputStream,
+    protected void loadAnnotations(ObjectInputStream<String[]> annotationsInputStream,
                                 GeneAnnotationTransactionWorker transactionWorker) throws Exception {
 
         String[] line;
@@ -40,7 +41,6 @@ public class GeneAnnotationLoader {
             transactionRunner.run(transactionWorker.setLine(line));
 
         }
-
     }
 
     public void loadGeneNames() {
@@ -77,9 +77,9 @@ public class GeneAnnotationLoader {
 
         protected String[] line;
 
-        private StoredMap<String, V> map;
+        private ConcurrentMap<String, V> map;
 
-        protected GeneAnnotationTransactionWorker(StoredMap<String, V> map) {
+        protected GeneAnnotationTransactionWorker(ConcurrentMap<String, V> map) {
             this.map = map;
         }
 

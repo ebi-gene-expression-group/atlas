@@ -1,22 +1,25 @@
 package uk.ac.ebi.atlas.geneannotation;
 
-import com.sleepycat.collections.StoredMap;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import javax.inject.Named;
+import java.util.concurrent.ConcurrentMap;
 
 @Named("geneService")
 public class GeneService {
 
-    StoredMap<String, String> geneNames;
+    ConcurrentMap<String, String> geneNames;
 
-    @Inject
-    public GeneService(StoredMap<String, String> geneNames) {
-        this.geneNames = geneNames;
+    public GeneService() {
     }
 
     public String getGeneName(String ensGeneId) {
         String value = geneNames.get(ensGeneId);
         return value == null ? ensGeneId : value;
+    }
+
+    @Resource(name = "geneNames")
+    public void setGeneNames(ConcurrentMap<String, String> geneNames) {
+        this.geneNames = geneNames;
     }
 }
