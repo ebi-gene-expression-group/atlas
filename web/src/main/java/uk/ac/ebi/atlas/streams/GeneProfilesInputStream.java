@@ -57,7 +57,6 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         do {
             String[] values = readCsvLine();
-            logger.debug("<readNext> processing values: " + values);
 
             if (values == null) {
                 return null;
@@ -108,7 +107,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     @Override
     public void close() throws IOException {
         csvReader.close();
-        logger.info("<close> close invoked on GeneProfilesInputStream");
+        logger.debug("<close> close invoked on GeneProfilesInputStream");
     }
 
 
