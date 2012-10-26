@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -53,7 +54,7 @@ public class RequestPreferences {
     }
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = cutoff;
+        this.cutoff = NumberUtils.round(cutoff);
     }
 
     /*
@@ -87,4 +88,5 @@ public class RequestPreferences {
     public Set<String> getGeneIDs() {
         return geneIDs;
     }
+
 }
