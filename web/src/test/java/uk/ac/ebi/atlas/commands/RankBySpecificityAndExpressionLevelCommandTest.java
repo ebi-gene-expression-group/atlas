@@ -44,7 +44,7 @@
 //    @Before
 //    public void initializeSubject() throws Exception {
 //
-//        when(geneProfileInputStreamBuilderMock.forDataFileURL(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
+//        when(geneProfileInputStreamBuilderMock.forTsvFileURL(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
 //        when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
 //        when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 //
@@ -69,7 +69,7 @@
 //        //when
 //        subject.apply("ANY_EXPERIMENT_ACCESSION");
 //        //then
-//        verify(geneProfileInputStreamBuilderMock).forDataFileURL(DATA_FILE_URL);
+//        verify(geneProfileInputStreamBuilderMock).forTsvFileURL(DATA_FILE_URL);
 //        verify(geneProfileInputStreamBuilderMock).withExperimentAccession("ANY_EXPERIMENT_ACCESSION");
 //        verify(geneProfileInputStreamBuilderMock).withCutoff(requestPreferencesMock.getCutoff());
 //        verify(geneProfileInputStreamBuilderMock).create();

@@ -133,7 +133,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             return this;
         }
 
-        public Builder forDataFileURL(String dataFileURL) {
+        public Builder forTsvFileURL(String dataFileURL) {
             try{
                 return forDataFileInputStream(new URL(checkNotNull(dataFileURL)).openStream());
             } catch (MalformedURLException e) {

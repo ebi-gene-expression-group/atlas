@@ -14,7 +14,7 @@ public class GeneSpecificityComparator implements Comparator<GeneProfile> {
 
     @Override
     public int compare(GeneProfile firstGeneProfile, GeneProfile otherGeneProfile) {
-        Ordering specificityOrdering = orderBySpecificity ? Ordering.natural().reverse() : Ordering.natural(); //reverse because specificity 1 is highest
+        Ordering<Comparable> specificityOrdering = orderBySpecificity ? Ordering.natural().reverse() : Ordering.natural(); //reverse because specificity 1 is highest
         int order = specificityOrdering.compare(firstGeneProfile.getSpecificity(), otherGeneProfile.getSpecificity());
         if (order != 0) {
             return order;

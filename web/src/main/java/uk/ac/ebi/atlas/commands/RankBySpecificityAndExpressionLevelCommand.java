@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneSpecificityComparator;
@@ -30,7 +29,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     private static final Logger logger = Logger.getLogger(RankBySpecificityAndExpressionLevelCommand.class);
 
-    private String dataFileURL;
+    private String tsvFileUrlTemplate;
 
     private RequestPreferences requestPreferences;
 
@@ -40,10 +39,10 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     @Inject
     public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder
-            , @Value("#{configuration['magetab.test.datafile.url']}") String dataFileURL
+            , @Value("#{configuration['magetab.tsvfile.url.template']}") String tsvFileUrlTemplate
             , GeneNamesProvider geneNamesProvider) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
-        this.dataFileURL = dataFileURL;
+        this.tsvFileUrlTemplate = tsvFileUrlTemplate;
         this.geneNamesProvider = geneNamesProvider;
     }
 
@@ -83,7 +82,9 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
-        ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forDataFileURL(dataFileURL)
+        String tsvFileUrl = String.format(tsvFileUrlTemplate, experimentAccession);
+
+        ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forTsvFileURL(tsvFileUrl)
                 .withExperimentAccession(experimentAccession)
                 .withCutoff(requestPreferences.getCutoff()).create();
 
