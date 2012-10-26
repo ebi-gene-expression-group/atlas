@@ -7,6 +7,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
@@ -21,7 +22,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 class ExpressionsBuffer {
 
-    //private static final String DATA_FILE_RECORD_VALIDATION_MESSAGE = "Data file record should contain gene id and expression levels for all experiment runs";
+    private static final Logger logger = Logger.getLogger(ExpressionsBuffer.class);
 
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
@@ -53,7 +54,7 @@ class ExpressionsBuffer {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         checkArgument(values.length == expectedNumberOfValues, "Expected " +expectedNumberOfValues + " values but " +
-                "found: " + Arrays.toString(values));
+                "found: " + values.length);
 
         expressionLevelsBuffer.clear();
 
@@ -90,6 +91,8 @@ class ExpressionsBuffer {
         }
 
         public Builder withHeaders(String... tsvFileHeaders) {
+
+            logger.debug("<withHeaders> data file headers: " + dataFileHeaders);
 
             checkState(experimentRuns != null, "Builder not properly initialized!");
 

@@ -27,29 +27,15 @@ import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URIUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HttpClientHelper {
-    public static InputStream httpGet(HttpClient httpClient, URI uri) throws IOException {
-        HttpGet httpget = new HttpGet(uri);
-        HttpResponse response = httpClient.execute(httpget);
-        int statusCode = response.getStatusLine().getStatusCode();
-        if (statusCode != HttpStatus.SC_OK) {
-            throw new IOException("Server returned invalid response: [status_code = " + statusCode + "; url = " + uri + "]");
-        }
-        return response.getEntity().getContent();
-    }
 
     public static InputStream httpPost(HttpClient httpClient, URI uri, List<? extends NameValuePair> params) throws IOException {
         HttpPost httppost = new HttpPost(uri);
@@ -62,21 +48,4 @@ public class HttpClientHelper {
         return response.getEntity().getContent();
     }
 
-    public static URI concatUri(URI url, final List<? extends NameValuePair> params) {
-        List<NameValuePair> q = new ArrayList<NameValuePair>();
-        q.addAll(URLEncodedUtils.parse(url, HTTP.UTF_8));
-        q.addAll(params);
-
-        try {
-            return URIUtils.createURI(
-                    url.getScheme(),
-                    url.getHost(),
-                    url.getPort(),
-                    url.getPath(),
-                    URLEncodedUtils.format(q, HTTP.UTF_8),
-                    "");
-        } catch (URISyntaxException e) {
-            throw new IllegalArgumentException("Failed to re-assemble BioMart url: origin = " + url + ", params = " + params, e);
-        }
-    }
 }
