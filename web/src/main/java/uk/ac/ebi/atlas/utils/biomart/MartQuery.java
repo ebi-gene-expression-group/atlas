@@ -33,7 +33,6 @@ public class MartQuery {
     private final List<String> attributes = new ArrayList<String>();
     private final String virtualSchema;
     private final String dataset;
-    private boolean count;
 
     /**
      * Constructs mart query object by giving mart location params.
@@ -60,18 +59,6 @@ public class MartQuery {
         return this;
     }
 
-    /**
-     * Sets "count" flag; if it's "true" query response is a total number of results; otherwise all requested
-     * results are returned.
-     *
-     * @param count a boolean flag to force query return just a total number of results
-     * @return the original mart query object
-     */
-    public MartQuery setCount(boolean count) {
-        this.count = count;
-        return this;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder()
@@ -81,7 +68,7 @@ public class MartQuery {
                 .append(" formatter = \"TSV\"")
                 .append(" header = \"0\"")
                 .append(" uniqueRows = \"1\"")
-                .append(" count = \"").append(count ? "1" : "0").append("\" >")
+                .append(" count = \"0\"")
                 .append("<Dataset name = \"").append(dataset).append("\" interface = \"default\" >");
 
         for (String attr : attributes) {
