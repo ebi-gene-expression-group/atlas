@@ -87,7 +87,7 @@ public class MageTabInvestigationLoader extends CacheLoader<String, List<Experim
         AssayNode assayNode = assayNodes.iterator().next();
 
         for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
-            run.addFactorValue(factorValueAttribute.type, factorValueAttribute.getAttributeValue());
+            run.addFactorValue(factorValueAttribute.type, factorValueAttribute.getAttributeValue().toLowerCase());
         }
 
         return run;

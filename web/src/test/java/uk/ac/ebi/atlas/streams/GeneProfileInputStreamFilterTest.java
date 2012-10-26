@@ -20,8 +20,11 @@
 //@RunWith(MockitoJUnitRunner.class)
 //public class GeneProfileInputStreamFilterTest {
 //
-//    public static final String GENE1 = "Gene1";
-//    public static final String GENE2 = "Gene2";
+//    public static final String GENE_1 = "Gene1";
+//    public static final String GENE_2 = "Gene2";
+//
+//    public static final String ORGANISM_PART_1 = "nose";
+//    public static final String ORGANISM_PART_2 = "hair";
 //
 //    @Mock
 //    private ObjectInputStream<GeneProfile> inputStreamMock;
@@ -32,19 +35,21 @@
 //    @Mock
 //    private GeneProfile gene3ProfileMock;
 //
-//    private Set<String> geneIDs = Sets.newHashSet(GENE1, GENE2);
+//    private Set<String> geneIDs = Sets.newHashSet(GENE_1, GENE_2);
+//
+//    private Set<String> organismParts = Sets.newHashSet(ORGANISM_PART_1, ORGANISM_PART_2);
 //
 //    private GeneProfileInputStreamFilter subject;
 //
 //    @Before
 //    public void initMocks(){
-//        when(gene1ProfileMock.getGeneId()).thenReturn(GENE2);
+//        when(gene1ProfileMock.getGeneId()).thenReturn(GENE_2);
 //        when(gene3ProfileMock.getGeneId()).thenReturn("UNACCEPTABLE_GENE");
 //    }
 //
 //    @Before
 //    public void initSubject(){
-//        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs);
+//        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, organismParts);
 //    }
 //
 //    @Test

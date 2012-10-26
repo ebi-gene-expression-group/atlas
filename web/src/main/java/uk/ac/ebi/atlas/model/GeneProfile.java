@@ -7,6 +7,7 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math.util.MathUtils;
 
 import java.util.*;
@@ -32,7 +33,10 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public GeneProfile add(Expression expression){
-        this.expressions.put(expression.getOrganismPart(), expression);
+        String organismPart = expression.getOrganismPart();
+        if (!StringUtils.isEmpty(organismPart)){
+            this.expressions.put(organismPart, expression);
+        }
         updateProfileExpression(expression.getLevel());
         return this;
     }

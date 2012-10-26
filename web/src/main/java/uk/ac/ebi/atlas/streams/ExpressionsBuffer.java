@@ -89,11 +89,11 @@ class ExpressionsBuffer {
 
         }
 
-        public Builder withHeaders(String... dataFileHeaders) {
+        public Builder withHeaders(String... tsvFileHeaders) {
 
             checkState(experimentRuns != null, "Builder not properly initialized!");
 
-            List<String> orderedRunAccessions = Arrays.asList(ArrayUtils.remove(dataFileHeaders, GENE_ID_COLUMN));
+            List<String> orderedRunAccessions = Arrays.asList(ArrayUtils.remove(tsvFileHeaders, GENE_ID_COLUMN));
 
             experimentRuns = removeUnrequiredExperimentRuns(orderedRunAccessions);
 

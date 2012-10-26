@@ -24,19 +24,13 @@ public class GeneExpressionConstructorsTest {
     @Mock
     private FactorValue factorValue2;
 
-    private Set<FactorValue> factorValues = new HashSet<>();
-
-    @Before
-    public void initializeFactorValues() {
-        factorValues.add(factorValue1);
-        factorValues.add(factorValue2);
-    }
-
     @Test
     public void constructorShouldHandleNonEmptyFactorValuesCollection() throws Exception {
 
         //given
-        subject = new GeneExpression("id1", 1, new ExperimentRun(RUN_ACCESSION, factorValues));
+        subject = new GeneExpression("id1", 1, new ExperimentRun(RUN_ACCESSION)
+                                                    .addFactorValue("NAME_1", "VALUE_1")
+                                                    .addFactorValue("NAME_2", "VALUE_2"));
 
         //then
         assertThat(subject.getFactorValues().size(), is(2));

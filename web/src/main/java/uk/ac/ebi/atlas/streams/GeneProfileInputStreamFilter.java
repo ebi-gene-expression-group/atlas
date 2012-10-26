@@ -18,15 +18,11 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> organismParts;
 
-    private int cutoff;
-
     private GeneNamesProvider geneNamesProvider;
 
     public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs, Set<String> organismParts){
         super(geneProfileInputStream);
-        if (geneIDs != null) {
-            this.geneIDs = toUpperCase(geneIDs);
-        }
+        this.geneIDs = toUpperCase(geneIDs);
         this.organismParts = organismParts;
     }
 
@@ -47,7 +43,6 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
     }
 
     private boolean checkGeneId(String geneId){
-        geneId = geneId.toUpperCase();
         return CollectionUtils.isEmpty(geneIDs)
                 || geneIDs.contains(geneId)
                 //ToDo: move gene name resolution into gene profile,
@@ -55,11 +50,13 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                 || (geneNamesProvider !=null && geneIDs.contains(geneNamesProvider.getGeneName(geneId)));
     }
 
-    private Set<String> toUpperCase(Set<String> geneIDs) {
-        Set<String> result = new HashSet<>(geneIDs.size());
-        for (String s : geneIDs) {
-            result.add(s.toUpperCase());
+    private Set<String> toUpperCase(Set<String> strings) {
+        Set<String> capitalizedStrings = new HashSet<>();
+        if (strings != null) {
+            for (String s : geneIDs) {
+                capitalizedStrings.add(s.toUpperCase());
+            }
         }
-        return  result;
+        return  capitalizedStrings;
     }
 }

@@ -15,7 +15,6 @@ public class ColourGradientTest {
     @Before
     public void initSubject() {
         this.subject = new ColourGradient(Color.WHITE, Color.RED, Color.WHITE, 0.3d);
-        //subject.setColourValueDistance(510);
 
     }
 
