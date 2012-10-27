@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -41,9 +40,9 @@ public class ExpressionLevelController {
 
             model.addAttribute("geneProfiles", geneProfiles);
 
-            model.addAttribute("roundedMinExpressionLevel", geneProfiles.getRoundedMinExpressionLevel());
+            model.addAttribute("minExpressionLevel", geneProfiles.getMinExpressionLevel());
 
-            model.addAttribute("roundedMaxExpressionLevel", geneProfiles.getRoundedMaxExpressionLevel());
+            model.addAttribute("maxExpressionLevel", geneProfiles.getMaxExpressionLevel());
 
             model.addAttribute("totalResultCount", geneProfiles.getTotalResultCount());
         }

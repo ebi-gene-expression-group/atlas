@@ -1,14 +1,7 @@
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
@@ -22,16 +15,12 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class GeneProfile implements Iterable<Expression> {
 
-    private static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
-    private static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
+    private String geneId;
 
     private GeneNamesProvider geneNamesProvider;
 
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
-
-    private String geneId;
-
 
     private SortedMap<String, Expression> expressions = new TreeMap<>();
 
@@ -86,10 +75,8 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public boolean isExpressedAtMostOn(Set<String> selectedOrganismParts){
-        if (CollectionUtils.isEmpty(selectedOrganismParts)){
-            return true;
-        }
-        return selectedOrganismParts.containsAll(getOrganismParts());
+        return CollectionUtils.isEmpty(selectedOrganismParts)
+                || selectedOrganismParts.containsAll(getOrganismParts());
     }
 
     public Set<String> getOrganismParts() {
@@ -99,23 +86,6 @@ public class GeneProfile implements Iterable<Expression> {
     public double getExpressionLevel(String organismPart) {
         Expression expression = expressions.get(organismPart);
         return expression == null ? 0 : expression.getLevel() ;
-    }
-
-    public double getRoundedExpressionLevel(String organismPart){
-        return roundedValue(getExpressionLevel(organismPart));
-    }
-
-    public Double getRoundedMaxExpressionLevel(){
-        return roundedValue(getMaxExpressionLevel());
-    }
-
-    public Double getRoundedMinExpressionLevel(){
-        return roundedValue(getMinExpressionLevel());
-    }
-
-    private double roundedValue(double value){
-        return MathUtils.round(value, value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
-                : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE);
     }
 
     //we decided to lazy load rather then have an attribute because

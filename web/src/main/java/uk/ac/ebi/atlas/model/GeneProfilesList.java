@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.model;
 
-import org.apache.commons.math.util.MathUtils;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GeneProfilesList extends ArrayList<GeneProfile> {
     
@@ -43,10 +43,10 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         return new GeneProfilesList(super.subList(fromIndex, toIndex));
     }
 
-    public double getRoundedMaxExpressionLevel() {
+    public double getMaxExpressionLevel() {
         double maxExpressionLevel = 0;
         for (GeneProfile geneProfile : this) {
-            Double roundedMaxExpressionLevel = geneProfile.getRoundedMaxExpressionLevel();
+            Double roundedMaxExpressionLevel = geneProfile.getMaxExpressionLevel();
             if (maxExpressionLevel < roundedMaxExpressionLevel) {
                 maxExpressionLevel = roundedMaxExpressionLevel;
             }
@@ -54,10 +54,10 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         return maxExpressionLevel;
     }
 
-    public double getRoundedMinExpressionLevel() {
+    public double getMinExpressionLevel() {
         double minExpressionLevel = Double.MAX_VALUE;
         for (GeneProfile geneProfile : this) {
-            double geneProfileRoundedMinExpressionLevel = geneProfile.getRoundedMinExpressionLevel();
+            double geneProfileRoundedMinExpressionLevel = geneProfile.getMinExpressionLevel();
             if (geneProfileRoundedMinExpressionLevel < minExpressionLevel) {
                 minExpressionLevel = geneProfileRoundedMinExpressionLevel;
             }

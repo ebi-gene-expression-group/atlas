@@ -138,10 +138,10 @@
                     <tr>
                         <td>
                             <div style="text-align:right;width: 30px" class="gradient-level">
-                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMaxExpressionLevel >= 1 ? 0 : 1}" value="${roundedMaxExpressionLevel}" groupingUsed="false" />
+                                <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
-                        <td width="220px">
+                        <td width="200px">
                             <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
 
                                     background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
@@ -154,7 +154,7 @@
                         </td>
                         <td>
                             <div style="text-align:left;width: 30px" class="gradient-level">
-                                <fmt:formatNumber type="number" maxFractionDigits="${roundedMinExpressionLevel >= 1 ? 0 : 1}" value="${roundedMinExpressionLevel}" groupingUsed="false" />
+                                <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
 
@@ -176,7 +176,7 @@
 
             </div>
 
-            <div style="margin-left:300px">
+            <div style="margin-left:310px">
                 <c:choose>
                     <c:when test="${param.organismOriented!=null}">
                         <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />

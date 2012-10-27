@@ -16,15 +16,13 @@
 
     <c:forEach var="organismPart" items="${heatmapOrganismParts}">
 
-       <c:set var="roundedExpressionLevel"
-               value="${geneProfile.getRoundedExpressionLevel(organismPart)}"/>
         <c:set var="expressionLevel"
                value="${geneProfile.getExpressionLevel(organismPart)}"/>
 
         <c:if test="${expressionLevel != 0}">
 
             <c:set var="cellColour"
-                   value="${colourGradient.getGradientColour(roundedExpressionLevel, roundedMinExpressionLevel, roundedMaxExpressionLevel)}"/>
+                   value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)}"/>
 
             <c:set var="style" value="background-color:${cellColour};color:${cellColour};font-size:1px"/>
 
@@ -36,8 +34,9 @@
 
             <c:if test="${expressionLevel != 0}">
 
-                <div style="font-size:1px" data-organism-part="${organismPart}" data-color="${cellColour}" >
-                    <fmt:formatNumber type="number" maxFractionDigits="${roundedExpressionLevel >= 1 ? 0 : 1}" value="${roundedExpressionLevel}" groupingUsed="false" />
+                <div style="font-size:1px" data-organism-part="${organismPart}" data-color="${cellColour}">
+                    <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
+                                      value="${expressionLevel}" groupingUsed="false"/>
                 </div>
 
             </c:if>
