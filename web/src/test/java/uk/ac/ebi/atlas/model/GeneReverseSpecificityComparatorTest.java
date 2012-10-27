@@ -10,10 +10,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneSpecificityComparatorTest {
+public class GeneReverseSpecificityComparatorTest {
 
     private GeneSpecificityComparator subject;
 
@@ -38,26 +38,26 @@ public class GeneSpecificityComparatorTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneSpecificityComparator(true);
+        subject = new GeneSpecificityComparator(false);
     }
 
     @Test
-    public void lowSpecificityShouldFollowHigherSpecificity() {
+    public void highSpecificityShouldFollowLowSpecificity() {
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
 
         //then
-        assertThat(comparison, is(lessThan(0)));
+        assertThat(comparison, is(greaterThan(0)));
 
     }
 
     @Test
-    public void highSpecificityShouldPreceedLowSpecificity() {
+    public void lowSpecificityShouldPreceedHighSpecificity() {
         //when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
 
         //then
-        assertThat(comparison, is(greaterThan(0)));
+        assertThat(comparison, is(lessThan(0)));
 
     }
 

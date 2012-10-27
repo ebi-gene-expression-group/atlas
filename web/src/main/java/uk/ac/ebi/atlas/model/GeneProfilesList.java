@@ -11,10 +11,6 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
     
     private static final long serialVersionUID = -1678371004778942235L;
 
-    public GeneProfilesList() {
-        super();
-    }
-
     public GeneProfilesList(Collection<GeneProfile> collection) {
         super(collection);
     }

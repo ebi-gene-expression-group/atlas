@@ -70,7 +70,7 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty(){
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, new HashSet<String>(),null);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, new HashSet<String>(),organismParts);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
