@@ -30,7 +30,7 @@
                     <form:errors id="geneIDsString" title="geneIDsString" path="geneIDsString" cssClass="error"/>
                 </td>
                 <td>
-                    <form:select path="organismParts" data-placeholder="" tabindex="-1"
+                    <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
                                  items="${applicationProperties.organismParts}" cssClass="chzn-select"
                                  cssStyle="width:350px;display:none"/>
                     <form:errors id="organismParts" title="organismParts" path="organismParts" cssClass="error"/>

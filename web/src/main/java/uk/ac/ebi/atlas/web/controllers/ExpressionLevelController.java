@@ -34,8 +34,6 @@ public class ExpressionLevelController {
 
             GeneProfilesList geneProfiles = rankCommand.apply(DEMO_ACCESSION);
 
-            //Set<String> genesToBeHighlighted = geneProfiles.getTop(preferences.getHeatmapMatrixSize()).getDistinctGeneIds();
-
             model.addAttribute("heatmapOrganismParts", geneProfiles.getAllOrganismParts());
 
             model.addAttribute("geneProfiles", geneProfiles);

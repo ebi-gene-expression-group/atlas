@@ -44,9 +44,8 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
     public double getMaxExpressionLevel() {
         double maxExpressionLevel = 0;
         for (GeneProfile geneProfile : this) {
-            Double roundedMaxExpressionLevel = geneProfile.getMaxExpressionLevel();
-            if (maxExpressionLevel < roundedMaxExpressionLevel) {
-                maxExpressionLevel = roundedMaxExpressionLevel;
+            if (maxExpressionLevel < geneProfile.getMaxExpressionLevel()) {
+                maxExpressionLevel = geneProfile.getMaxExpressionLevel();
             }
         }
         return maxExpressionLevel;
@@ -55,9 +54,8 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
     public double getMinExpressionLevel() {
         double minExpressionLevel = Double.MAX_VALUE;
         for (GeneProfile geneProfile : this) {
-            double geneProfileRoundedMinExpressionLevel = geneProfile.getMinExpressionLevel();
-            if (geneProfileRoundedMinExpressionLevel < minExpressionLevel) {
-                minExpressionLevel = geneProfileRoundedMinExpressionLevel;
+            if (geneProfile.getMinExpressionLevel() < minExpressionLevel) {
+                minExpressionLevel = geneProfile.getMinExpressionLevel();
             }
         }
         return minExpressionLevel;
