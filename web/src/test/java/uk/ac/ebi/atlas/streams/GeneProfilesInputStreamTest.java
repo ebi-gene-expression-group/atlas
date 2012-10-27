@@ -8,9 +8,11 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,8 +66,8 @@ public class GeneProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headers)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(),expressionsBufferBuilderMock)
-                                                   .forDataFileInputStream(mock(InputStream.class))
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(new GeneProfileBuilderConcreteFactory()), expressionsBufferBuilderMock)
+                                                   .forTsvFileInputStream(mock(InputStream.class))
                 .injectCsvReader(csvReaderMock)
                 .withExperimentAccession("AN_ACCESSION")
                 .create();

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,13 +28,17 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
     private static final Logger logger = Logger.getLogger(GeneProfilesInputStream.class);
 
+    private GeneProfileBuilderFactory geneProfileBuilderFactory;
+
     private CSVReader csvReader;
 
     private ExpressionsBuffer expressionsBuffer;
 
-    private Double cutoff;
+    private double cutoff;
 
-    protected GeneProfilesInputStream() {
+    @Inject
+    protected GeneProfilesInputStream(GeneProfileBuilderFactory geneProfileBuilderFactory) {
+        this.geneProfileBuilderFactory = geneProfileBuilderFactory;
     }
 
     protected GeneProfilesInputStream setExpressionBuffer(ExpressionsBuffer expressionsBuffer) {
@@ -67,11 +72,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     private GeneProfile buildGeneProfile(String[] values) {
 
 
-        GeneProfile.Builder builder = GeneProfile.forGeneId(values[GENE_ID_COLUMN]);
-
-        if (cutoff != null) {
-            builder.withCutoff(cutoff);
-        }
+        GeneProfile.Builder geneProfileBuilder = geneProfileBuilderFactory.with(values[GENE_ID_COLUMN], cutoff);
 
         expressionsBuffer.reload(values);
 
@@ -79,11 +80,11 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         while ((expression = expressionsBuffer.poll()) != null) {
 
-            builder.addExpression(expression);
+            geneProfileBuilder.addExpression(expression);
         }
 
-        if (builder.containsExpressions()) {
-            return builder.create();
+        if (geneProfileBuilder.containsExpressions()) {
+            return geneProfileBuilder.create();
         }
         return null;
 
@@ -122,7 +123,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             this.geneProfilesInputStream = geneProfilesInputStream;
         }
 
-        protected Builder forDataFileInputStream(InputStream expressionLevelsInputStream) {
+        protected Builder forTsvFileInputStream(InputStream expressionLevelsInputStream) {
 
             Reader dataFileReader = new InputStreamReader(expressionLevelsInputStream);
             CSVReader csvReader = new CSVReader(dataFileReader, '\t');
@@ -134,7 +135,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         public Builder forTsvFileURL(String dataFileURL) {
             try{
-                return forDataFileInputStream(new URL(checkNotNull(dataFileURL)).openStream());
+                return forTsvFileInputStream(new URL(checkNotNull(dataFileURL)).openStream());
             } catch (MalformedURLException e) {
                 logger.error(e.getMessage(), e);
                 throw new IllegalArgumentException("Error while building URL for location " + dataFileURL + ". Error details: " + e.getMessage());
@@ -161,7 +162,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             return this;
         }
 
-        public Builder withCutoff(Double cutoff) {
+        public Builder withCutoff(double cutoff) {
             geneProfilesInputStream.cutoff = cutoff;
             return this;
         }

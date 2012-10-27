@@ -4,10 +4,12 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import utils.ExperimentRunsBuilder;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,14 +38,16 @@ public class GeneProfilesInputStreamIT {
 
     private ExpressionsBuffer.Builder expressionsBufferBuilder;
 
+    private GeneProfileBuilderFactory geneProfileBuilderFactory;
+
     @Before
     public void initSubject() throws Exception {
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
-        ExperimentRun experimentRun1 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_1).create();
-        ExperimentRun experimentRun2 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_2).create();
-        ExperimentRun experimentRun3 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_3).create();
+        ExperimentRun experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addOrganismPartFactorValue("heart");
+        ExperimentRun experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addOrganismPartFactorValue("liver");
+        ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addOrganismPartFactorValue("lung");
 
         experimentRuns = Lists.newArrayList(experimentRun2, experimentRun3, experimentRun1);
 
@@ -53,10 +57,12 @@ public class GeneProfilesInputStreamIT {
 
         expressionsBufferBuilder = new ExpressionsBuffer.Builder(cache);
 
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(), expressionsBufferBuilder)
-                                                .forDataFileInputStream(dataFileURL.openStream())
-                .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
-                .create();
+        geneProfileBuilderFactory = new GeneProfileBuilderConcreteFactory();
+
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), expressionsBufferBuilder)
+                                                .forTsvFileInputStream(dataFileURL.openStream())
+                                                .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
+                                                .create();
 
     }
 
@@ -103,8 +109,8 @@ public class GeneProfilesInputStreamIT {
     public void setCutoffChangesSpecificity() throws IOException {
 
         //given
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(), expressionsBufferBuilder)
-                                                .forDataFileInputStream(dataFileURL.openStream())
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), expressionsBufferBuilder)
+                                                .forTsvFileInputStream(dataFileURL.openStream())
             .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
             .withCutoff(20D)
             .create();

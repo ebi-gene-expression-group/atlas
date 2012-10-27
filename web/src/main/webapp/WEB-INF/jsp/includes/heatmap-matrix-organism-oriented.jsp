@@ -32,7 +32,7 @@
 
         </c:if>
 
-        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile.geneId)}</a></div>"
+        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a></div>"
                         headerClass='rotated_cell'
                         style="${expressionLevel != 0? style : ''}">
 

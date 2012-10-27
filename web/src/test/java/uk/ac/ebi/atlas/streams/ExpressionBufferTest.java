@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
-import utils.ExperimentRunsBuilder;
 
 import java.util.List;
 
@@ -34,9 +33,9 @@ public class ExpressionBufferTest {
 
     @Before
     public void initializeSubject() {
-        ExperimentRun experimentRun1 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_1).create();
-        ExperimentRun experimentRun2 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_2).create();
-        ExperimentRun experimentRun3 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_3).create();
+        ExperimentRun experimentRun1 = new ExperimentRun(RUN_ACCESSION_1);
+        ExperimentRun experimentRun2 = new ExperimentRun(RUN_ACCESSION_2);
+        ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3);
 
         experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 

@@ -6,7 +6,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,8 +50,9 @@ public class GeneProfileInputStreamBuilderTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneProfilesInputStream.Builder(geneProfilesInputStreamMock, expressionsBufferBuilderMock)
-                        .forDataFileInputStream(inputStreamMock);
+        subject = new GeneProfilesInputStream
+                        .Builder(geneProfilesInputStreamMock, expressionsBufferBuilderMock)
+                        .forTsvFileInputStream(inputStreamMock);
     }
 
     @Test(expected = IllegalStateException.class)

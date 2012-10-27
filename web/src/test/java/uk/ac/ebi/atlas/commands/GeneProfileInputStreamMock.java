@@ -1,8 +1,10 @@
 package uk.ac.ebi.atlas.commands;
 
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,11 +25,13 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
     //of the final order required by the user stories, profiles with higher selectivity will be streamed last.
     public GeneProfileInputStreamMock(int streamSize) {
 
+        GeneProfileBuilderConcreteFactory geneProfileBuilderConcreteFactory = new GeneProfileBuilderConcreteFactory();
+
         List<GeneProfile> geneProfiles = new ArrayList<GeneProfile>();
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = GeneProfile.forGeneId("" + i);
+            GeneProfile.Builder geneProfileBuilder = geneProfileBuilderConcreteFactory.with("" + i,0);
 
             for (int j = 0; j < i; j++) {
 

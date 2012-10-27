@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import utils.ExperimentRunsBuilder;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -39,9 +38,9 @@ public class ExpressionBufferBuilderTest {
 
     @Before
     public void initializeSubject() {
-        experimentRun1 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_1).create();
-        experimentRun2 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_2).create();
-        experimentRun3 = ExperimentRunsBuilder.forRunAccession(RUN_ACCESSION_3).create();
+        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1);
+        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2);
+        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3);
 
         List<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
 

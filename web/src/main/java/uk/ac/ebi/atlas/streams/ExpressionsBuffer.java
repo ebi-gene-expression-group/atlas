@@ -49,7 +49,7 @@ class ExpressionsBuffer {
         return new Expression(runsCircularQueue.next(), expressionLevel);
     }
 
-
+private String gene;
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
@@ -60,7 +60,7 @@ class ExpressionsBuffer {
 
         Collections.addAll(this.expressionLevelsBuffer, values);
 
-        expressionLevelsBuffer.poll();
+        gene = expressionLevelsBuffer.poll();
 
         return this;
     }
@@ -92,7 +92,7 @@ class ExpressionsBuffer {
 
         public Builder withHeaders(String... tsvFileHeaders) {
 
-            logger.debug("<withHeaders> data file headers: " + dataFileHeaders);
+            logger.debug("<withHeaders> data file headers: " + tsvFileHeaders);
 
             checkState(experimentRuns != null, "Builder not properly initialized!");
 

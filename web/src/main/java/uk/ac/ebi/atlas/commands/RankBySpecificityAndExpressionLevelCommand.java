@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneSpecificityComparator;
@@ -35,15 +34,11 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
 
     GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
-    private GeneNamesProvider geneNamesProvider;
-
     @Inject
     public RankBySpecificityAndExpressionLevelCommand(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder
-            , @Value("#{configuration['magetab.tsvfile.url.template']}") String tsvFileUrlTemplate
-            , GeneNamesProvider geneNamesProvider) {
+            , @Value("#{configuration['magetab.tsvfile.url.template']}") String tsvFileUrlTemplate) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
         this.tsvFileUrlTemplate = tsvFileUrlTemplate;
-        this.geneNamesProvider = geneNamesProvider;
     }
 
     @Override
@@ -88,9 +83,7 @@ public class RankBySpecificityAndExpressionLevelCommand implements Function<Stri
                 .withExperimentAccession(experimentAccession)
                 .withCutoff(requestPreferences.getCutoff()).create();
 
-        GeneProfileInputStreamFilter geneProfileInputStreamFilter = new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs(), requestPreferences.getOrganismParts());
-        geneProfileInputStreamFilter.setGeneNamesProvider(geneNamesProvider);
-        return geneProfileInputStreamFilter;
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs(), requestPreferences.getOrganismParts());
 
     }
 

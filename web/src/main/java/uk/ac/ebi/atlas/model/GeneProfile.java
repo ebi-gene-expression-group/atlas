@@ -9,7 +9,11 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math.util.MathUtils;
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -18,18 +22,20 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class GeneProfile implements Iterable<Expression> {
 
-    public static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
-    public static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
+    private static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
+    private static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
 
-    private String geneId;
+    private GeneNamesProvider geneNamesProvider;
 
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
+    private String geneId;
+
+
     private SortedMap<String, Expression> expressions = new TreeMap<>();
 
-    private GeneProfile(String geneId) {
-        this.geneId = geneId;
+    private GeneProfile() {
     }
 
     public GeneProfile add(Expression expression){
@@ -41,12 +47,17 @@ public class GeneProfile implements Iterable<Expression> {
         return this;
     }
 
-    public static Builder forGeneId(String geneId) {
-        return new Builder(geneId);
+    public GeneProfile setGeneNamesProvider(GeneNamesProvider geneNamesProvider){
+        this.geneNamesProvider = geneNamesProvider;
+        return this;
     }
 
     public String getGeneId() {
         return geneId;
+    }
+
+    public void setGeneId(String geneId) {
+        this.geneId = geneId;
     }
 
     public int getSpecificity() {
@@ -107,7 +118,20 @@ public class GeneProfile implements Iterable<Expression> {
                 : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE);
     }
 
+    //we decided to lazy load rather then have an attribute because
+    // not always the name is used
+    public String getGeneName(){
+        if (geneNamesProvider != null) {
+            return geneNamesProvider.getGeneName(geneId);
+        }
+        return null;
+    }
+
+    @Named("geneProfileBuilder")
+    @Scope("prototype")
     public static class Builder {
+
+        private GeneNamesProvider geneNamesProvider;
 
         private GeneProfile geneProfile;
 
@@ -115,8 +139,26 @@ public class GeneProfile implements Iterable<Expression> {
 
         private double cutoffValue = DEFAULT_CUTOFF_VALUE;
 
-        public Builder(String geneId) {
-            geneProfile = new GeneProfile(geneId);
+        //This constructor is only available to allow instantiation of a Builder
+        //in the Integration Tests. It will return a builder that has no GeneNamesProvider binding!
+        //This should be removed as soon as we start using Spring injection in Integration Tests
+//        protected Builder(){
+//            this.geneProfile = new GeneProfile();
+//        }
+
+        protected Builder() {
+        }
+
+        @Inject
+        protected void setGeneNamesProvider(GeneNamesProvider geneNamesProvider){
+            this.geneNamesProvider = geneNamesProvider;
+        }
+
+        public Builder forGeneId(String geneId) {
+            this.geneProfile = new GeneProfile();
+            geneProfile.setGeneNamesProvider(geneNamesProvider);
+            geneProfile.setGeneId(geneId);
+            return this;
         }
 
         public Builder addExpression(Expression expression) {
@@ -129,8 +171,6 @@ public class GeneProfile implements Iterable<Expression> {
         }
 
         public Builder withCutoff(double cutoff) {
-            checkState(geneProfile.expressions.size() == 0, "withCutoff should be invoked before adding any Expression!");
-            checkArgument(cutoff >= 0, "cutoff must be >= 0");
             this.cutoffValue = cutoff;
 
             return this;

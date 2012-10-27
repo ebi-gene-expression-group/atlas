@@ -3,27 +3,44 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class GeneProfileTest {
 
-    private GeneProfile subject;
+    @Mock
+    private GeneNamesProvider geneNamesProviderMock;
+
+    private static String GENE_ID = "geneId_1";
+    private static String GENE_NAME = "geneName_1";
 
     private Expression expression_1 = new Expression(new ExperimentRun("RUN_ACCESSION_1").addOrganismPartFactorValue("nose"), 2.2D);
     private Expression expression_2 = new Expression(new ExperimentRun("RUN_ACCESSION_2").addOrganismPartFactorValue("trunk"), 3D);
     private Expression expression_3 = new Expression(new ExperimentRun("RUN_ACCESSION_3").addOrganismPartFactorValue("head"), 3.001D);
 
+    private GeneProfile subject;
+
     @Before
     public void setUp() throws Exception {
-        subject = GeneProfile.forGeneId("EMBL-1")
+        when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
+
+        subject = new GeneProfileBuilderConcreteFactory()
+                    .with(GENE_ID, 0)
                     .addExpression(expression_1)
                     .addExpression(expression_2)
                     .addExpression(expression_3)
                     .create();
+        subject.setGeneNamesProvider(geneNamesProviderMock);
     }
 
     @Test
@@ -47,8 +64,8 @@ public class GeneProfileTest {
     @Test
     public void builderAddExpressionTest() {
         //given
-        GeneProfile.Builder builder = GeneProfile.forGeneId("ENS1");
-        builder.withCutoff(3D);
+        GeneProfile.Builder builder = new GeneProfileBuilderConcreteFactory()
+                                        .with(GENE_ID, 3D);
 
         builder.addExpression(expression_1);
 
