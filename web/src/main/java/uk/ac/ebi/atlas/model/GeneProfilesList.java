@@ -11,6 +11,8 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
     
     private static final long serialVersionUID = -1678371004778942235L;
 
+    private Integer totalResultCount = 0;
+
     public GeneProfilesList(Collection<GeneProfile> collection) {
         super(collection);
     }
@@ -58,7 +60,11 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
     }
 
     public Integer getTotalResultCount() {
-        return size();
+        return totalResultCount;
+    }
+
+    public void setTotalResultCount(int totalResultCount) {
+        this.totalResultCount = totalResultCount;
     }
 
     public SortedSet<String> getAllOrganismParts() {
