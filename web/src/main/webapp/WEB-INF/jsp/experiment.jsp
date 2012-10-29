@@ -52,7 +52,7 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.0.custom.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.1.custom.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
     <!--[if lte IE 8]>
@@ -70,7 +70,7 @@
             src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
     <link rel="stylesheet" type="text/css"
-            href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.0.custom.min.css">
+            href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
 
 
     <script>
