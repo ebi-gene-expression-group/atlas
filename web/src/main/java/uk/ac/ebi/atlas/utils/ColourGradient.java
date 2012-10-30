@@ -94,6 +94,10 @@ public class ColourGradient {
 
     protected Color getGradientColour(double value, double min, double max) {
 
+        if (value == max){
+            return highValueColour;
+        }
+
         double percentPosition = calculatePercentPosition(value, min, max);
 
         if (value == 0 || Double.isNaN(percentPosition) || Double.isInfinite(percentPosition)) {
