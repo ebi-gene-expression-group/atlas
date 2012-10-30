@@ -18,6 +18,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "heatmap-table")
     WebElement heatmapTable;
 
+    @FindBy(id="geneCount")
+    WebElement geneFound;
+
     public List<String> getOrganismParts() {
         List<String> organismParts = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
@@ -43,4 +46,7 @@ public class HeatmapTablePage extends TablePage {
         return firstTableRow.subList(1, firstTableRow.size());
     }
 
+    public String getGeneCount() {
+        return geneFound.getText();
+    }
 }

@@ -125,7 +125,7 @@
 
     <c:import url="includes/request-preferences.jsp" />
 
-    <div style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
+    <div id="geneCount" style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
 
     <c:if test="${not empty geneProfiles}">
 

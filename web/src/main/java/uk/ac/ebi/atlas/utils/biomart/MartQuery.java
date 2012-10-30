@@ -68,7 +68,7 @@ public class MartQuery {
                 .append(" formatter = \"TSV\"")
                 .append(" header = \"0\"")
                 .append(" uniqueRows = \"1\"")
-                .append(" count = \"0\"")
+                .append(" count = \"0\">")
                 .append("<Dataset name = \"").append(dataset).append("\" interface = \"default\" >");
 
         for (String attr : attributes) {

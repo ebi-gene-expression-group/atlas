@@ -9,38 +9,43 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableWithCutoff540AndOrganismPartFilterIT extends SeleniumFixture {
+public class HeatmapTableWithTwoOrganismPartFilterIT extends SeleniumFixture {
 
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
         subject = new HeatmapTablePage(firefoxDriver,
-                "heatmapMatrixSize=5&organismParts=heart&_organismParts=1&cutoff=20");
+                "organismParts=adipose&organismParts=heart&_organismParts=1&cutoff=9");
         subject.get();
     }
 
     @Test
     public void verifyOrganismParts() {
-        assertThat(subject.getOrganismParts().size(), is(1));
+        assertThat(subject.getOrganismParts().size(), is(2));
         //and
-        assertThat(subject.getOrganismParts(), contains("heart"));
+        assertThat(subject.getOrganismParts(), contains("adipose", "heart"));
     }
 
     @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
-        assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("J01415.2", "TNNT2", "TNNI3", "NPPA", "TECRL"));
+        assertThat(selectedGenes.size(), is(3));
+        assertThat(selectedGenes, contains("AL031284.1", "AL162853.1", "CU463998.3"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("979"));
+        assertThat(subject.getFirstGeneProfile(), contains("228", "579"));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("378"));
+        assertThat(subject.getLastGeneProfile(), contains("", "57"));
+    }
+
+    @Test
+    public void verifyGeneCount() {
+        assertThat(subject.getGeneCount().contains("3"), is(true));
     }
 
 }
