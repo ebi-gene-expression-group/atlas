@@ -141,7 +141,8 @@ function initSlider(cutoff) {
                 if (scaledCutoffTicks[i] == scaledCutoff){
                      return i;
                 }
-            }
+            }//otherwise we are out of scale... and we position the slider on the last tick
+            return scaledCutoffTicks.length - 1;
         }();
 
         genesByCutoffPlot.highlight(0,scaledCutoffPosition);
