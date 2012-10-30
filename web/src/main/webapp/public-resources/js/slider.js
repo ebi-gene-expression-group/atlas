@@ -52,6 +52,9 @@ function initSlider(cutoff) {
     }
 
     function magnifiedValue(value){
+        if(value >= 1000000){
+            return value/1000000 + "M";
+        }
         if(value >= 1000){
             return value/1000 + "K";
         }
@@ -138,7 +141,8 @@ function initSlider(cutoff) {
                 if (scaledCutoffTicks[i] == scaledCutoff){
                      return i;
                 }
-            }
+            }//otherwise we are out of scale... and we position the slider on the last tick
+            return scaledCutoffTicks.length - 1;
         }();
 
         genesByCutoffPlot.highlight(0,scaledCutoffPosition);

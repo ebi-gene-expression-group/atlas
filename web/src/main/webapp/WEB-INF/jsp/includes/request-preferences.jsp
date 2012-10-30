@@ -5,6 +5,7 @@
 <div id="preferencesFormBlock" class="block">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="heatmapMatrixSize"/>
+        <form:hidden id="displayLevels" path="displayLevels"/>
         <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
                      cssClass="error"/>
         <table class="form-grid">

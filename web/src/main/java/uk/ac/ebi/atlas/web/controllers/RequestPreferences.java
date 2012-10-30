@@ -37,6 +37,8 @@ public class RequestPreferences {
 
     private Set<String> geneIDs;
 
+    private boolean displayLevels;
+
     public Set<String> getOrganismParts() {
         return organismParts;
     }
@@ -57,15 +59,14 @@ public class RequestPreferences {
         this.cutoff = NumberUtils.round(cutoff);
     }
 
-    /*
-        public Integer getRankingSize() {
-            return this.rankingSize;
-        }
+    public void setDisplayLevels(boolean displayLevels){
+        this.displayLevels = displayLevels;
+    }
 
-        public void setRankingSize(Integer rankingSize) {
-            this.rankingSize = rankingSize;
-        }
-    */
+    public boolean getDisplayLevels(){
+        return displayLevels;
+    }
+
     public void setOrganismParts(Set<String> organismParts) {
         this.organismParts = organismParts;
     }
