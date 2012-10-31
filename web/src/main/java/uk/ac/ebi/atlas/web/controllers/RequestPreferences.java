@@ -15,17 +15,12 @@ import java.util.regex.Pattern;
 public class RequestPreferences {
 
     private static final int DEFAULT_NUMBER_OF_TOP_RANKED_GENES = 50;
-    //    private static final int DEFAULT_RANKING_SIZE = 100;
-    private static final double DEFAULT_CUTOFF = 0d;
+    private static final double DEFAULT_CUTOFF = 0.5d;
     private static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
 
     @NotNull
     @Range(min = 0, max = 1000)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_RANKED_GENES;
-
-//    @NotNull
-//    @Range(min = 1, max = 1000)
-//    private Integer rankingSize = DEFAULT_RANKING_SIZE;
 
     @NotNull
     @Min(0)

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class ExpressionsTablePage extends TablePage {
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiment";
+    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
 
     public static final int EXPRESSION_LEVEL_COLUMN_INDEX = 3;
     public static final int GENE_ID_COLUMN_INDEX = 1;

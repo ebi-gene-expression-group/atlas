@@ -9,7 +9,7 @@ import java.util.List;
 
 public class HeatmapTablePage extends TablePage {
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiment";
+    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
 
     public HeatmapTablePage(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);

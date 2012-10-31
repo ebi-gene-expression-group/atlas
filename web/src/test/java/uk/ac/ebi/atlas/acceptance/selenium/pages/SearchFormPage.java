@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SearchFormPage extends AtlasPage {
 
-    protected static final String DEFAULT_PAGE_URI = "/gxa/experiment";
+    protected static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
 
     @FindBy(id = "geneIDsString")
     WebElement geneIDsString;
