@@ -40,6 +40,7 @@
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
         <data.files.location>${user.home}/Data</data.files.location>
+        <berkeley.schema.name>bdb</berkeley.schema.name>
         <!-- default values for integration testing properties -->
         <integration.test.host>localhost</integration.test.host>
         <integration.test.portnumber>9090</integration.test.portnumber>
@@ -373,21 +374,31 @@
 
     <profiles>
         <profile>
-            <id>environment.test</id>
+            <id>lime</id>
             <properties>
-                <data.files.location>/net/isilon5/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
+                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
+                <berkeley.schema.name>bdb-lime</berkeley.schema.name>
             </properties>
         </profile>
         <profile>
-            <id>environment.integration.test</id>
+            <id>www-test</id>
             <properties>
-                <data.files.location>/nfs/ma/home/atlas-production/ATLAS3/test-data</data.files.location>
+                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
+                <berkeley.schema.name>bdb-www-test</berkeley.schema.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>integration.test</id>
+            <properties>
+                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
+                <berkeley.schema.name>bdb-integration</berkeley.schema.name>
             </properties>
         </profile>
         <profile>
             <id>local.integration.test</id>
             <properties>
                 <data.files.location>${user.home}/Data/test-data</data.files.location>
+                <berkeley.schema.name>bdb</berkeley.schema.name>
             </properties>
         </profile>
     </profiles>

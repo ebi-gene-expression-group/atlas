@@ -12,8 +12,7 @@ import javax.inject.Inject;
 public class BDBConfiguration {
 
     @Bean(initMethod = "setup", destroyMethod = "close")
-    @Value("#{configuration['genename.bdb.location']}")
-    AnnotationEnvironment AnnotationEnvironment(String environmentLocation) {
+    AnnotationEnvironment AnnotationEnvironment(@Value("#{configuration['genename.bdb.location']}") String environmentLocation) {
         return new AnnotationEnvironment(environmentLocation);
 
     }
