@@ -47,7 +47,7 @@ abstract class AtlasPage extends LoadableComponent<AtlasPage> {
         if (!Strings.isNullOrEmpty(httpParameters)){
             stringBuilder.append("?").append(httpParameters);
         }
-
+        System.out.println("<buildURL> Running on page: " + stringBuilder.toString());
         return stringBuilder.toString();
 
     }
