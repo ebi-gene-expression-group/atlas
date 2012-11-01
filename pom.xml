@@ -42,6 +42,8 @@
         <data.files.location>${user.home}/Data</data.files.location>
         <berkeley.schema.name>bdb</berkeley.schema.name>
         <!-- default values for integration testing properties -->
+        <deploy.host>lime</deploy.host>
+        <deploy.port>14092</deploy.port>
         <integration.test.host>localhost</integration.test.host>
         <integration.test.portnumber>9090</integration.test.portnumber>
     </properties>
@@ -376,6 +378,8 @@
         <profile>
             <id>lime</id>
             <properties>
+                <deploy.host>lime</deploy.host>
+                <deploy.port>14092</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
                 <berkeley.schema.name>bdb-lime</berkeley.schema.name>
             </properties>
@@ -383,6 +387,8 @@
         <profile>
             <id>www-test</id>
             <properties>
+                <deploy.host>ves-hx-75</deploy.host>
+                <deploy.port>8080</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
                 <berkeley.schema.name>bdb-www-test</berkeley.schema.name>
             </properties>

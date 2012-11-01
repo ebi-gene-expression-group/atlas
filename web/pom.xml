@@ -131,7 +131,7 @@
                         </goals>
                         <phase>install</phase>
                         <configuration>
-                            <url>http://lime:14092/manager/html</url>
+                            <url>http://${deploy.host}:${deploy.port}/manager/html</url>
                             <username>tomcat</username>
                             <password>tomcat</password>
                             <path>/gxa</path>
