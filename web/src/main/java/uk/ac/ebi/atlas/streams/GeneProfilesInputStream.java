@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.streams;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Expression;
@@ -111,6 +112,9 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     @Scope("prototype")
     public static class Builder {
 
+        @Value("#{configuration['magetab.tsvfile.url.template']}")
+        private String tsvFileUrlTemplate;
+
         private GeneProfilesInputStream geneProfilesInputStream;
 
         private ExpressionsBuffer.Builder expressionsBufferBuilder;
@@ -133,12 +137,13 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             return this;
         }
 
-        public Builder forTsvFileURL(String dataFileURL) {
+        public Builder forExperiment(String experimentAccession) {
+            String tsvFileUrl = String.format(tsvFileUrlTemplate, experimentAccession);
             try{
-                return forTsvFileInputStream(new URL(checkNotNull(dataFileURL)).openStream());
+                return forTsvFileInputStream(new URL(checkNotNull(tsvFileUrl)).openStream());
             } catch (MalformedURLException e) {
                 logger.error(e.getMessage(), e);
-                throw new IllegalArgumentException("Error while building URL for location " + dataFileURL + ". Error details: " + e.getMessage());
+                throw new IllegalArgumentException("Error while building URL for location " + tsvFileUrl + ". Error details: " + e.getMessage());
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
                 throw new IllegalArgumentException("Error while building GeneProfileInputStream. Error details: " + e.getMessage());

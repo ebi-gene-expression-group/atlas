@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;

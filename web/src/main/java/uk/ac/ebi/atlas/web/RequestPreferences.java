@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.utils.NumberUtils;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.regex.Pattern;
 
 @Scope("prototype")
@@ -26,7 +27,7 @@ public class RequestPreferences {
     @Min(0)
     private Double cutoff = DEFAULT_CUTOFF;
 
-    private Set<String> organismParts;
+    private SortedSet<String> organismParts;
 
     private String geneIDsString;
 
@@ -34,7 +35,7 @@ public class RequestPreferences {
 
     private boolean displayLevels;
 
-    public Set<String> getOrganismParts() {
+    public SortedSet<String> getOrganismParts() {
         return organismParts;
     }
 
@@ -62,7 +63,7 @@ public class RequestPreferences {
         return displayLevels;
     }
 
-    public void setOrganismParts(Set<String> organismParts) {
+    public void setOrganismParts(SortedSet<String> organismParts) {
         this.organismParts = organismParts;
     }
 

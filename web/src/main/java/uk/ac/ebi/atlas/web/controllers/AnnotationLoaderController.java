@@ -7,7 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.commands.GeneNameUpdateCommand;
+import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -17,11 +18,11 @@ import javax.validation.Valid;
 public class AnnotationLoaderController {
 
 
-    private GeneNameUpdateCommand geneNameUpdateCommand;
+    private GeneNamesImportCommand geneNamesImportCommand;
 
     @Inject
-    public AnnotationLoaderController(GeneNameUpdateCommand geneNameUpdateCommand) {
-        this.geneNameUpdateCommand = geneNameUpdateCommand;
+    public AnnotationLoaderController(GeneNamesImportCommand geneNamesImportCommand) {
+        this.geneNamesImportCommand = geneNamesImportCommand;
     }
 
     @RequestMapping("/updateAnnotations")
@@ -29,7 +30,7 @@ public class AnnotationLoaderController {
     public String showGeneExpressions(@ModelAttribute("preferences") @Valid RequestPreferences preferences,
                                  BindingResult result, Model model) {
 
-        geneNameUpdateCommand.loadGeneNames();
+        geneNamesImportCommand.loadGeneNames();
 
         return "Updated";
     }

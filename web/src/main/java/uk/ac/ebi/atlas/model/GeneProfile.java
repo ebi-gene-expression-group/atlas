@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -95,6 +96,17 @@ public class GeneProfile implements Iterable<Expression> {
             return geneNamesProvider.getGeneName(geneId);
         }
         return null;
+    }
+
+    public String[] toCsv() {
+        String [] csvValues = new String[expressions.size() + 2];
+        csvValues[0] = getGeneName();
+        csvValues[1] = getGeneId();
+        int i = 2;
+        for (Expression expression : expressions.values()){
+            csvValues[i++] = "" + expression.getLevel();
+        }
+        return csvValues;
     }
 
     @Named("geneProfileBuilder")

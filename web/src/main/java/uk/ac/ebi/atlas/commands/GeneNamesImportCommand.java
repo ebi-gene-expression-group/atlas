@@ -8,12 +8,12 @@ import javax.inject.Named;
 
 @Named("geneNameUpdateCommand")
 @Scope("prototype")
-public class GeneNameUpdateCommand {
+public class GeneNamesImportCommand {
 
     private GeneAnnotationLoader geneAnnotationLoader;
 
     @Inject
-    public GeneNameUpdateCommand(GeneAnnotationLoader geneAnnotationLoader) {
+    public GeneNamesImportCommand(GeneAnnotationLoader geneAnnotationLoader) {
         this.geneAnnotationLoader = geneAnnotationLoader;
     }
 

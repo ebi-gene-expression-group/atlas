@@ -6,10 +6,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
-import uk.ac.ebi.atlas.web.controllers.RequestPreferences;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import java.util.List;
 
@@ -22,9 +21,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankBySpecificityAndExpressionLevelCommandTest {
+public class RankGeneProfilesCommandTest {
 
-    private static final String DATA_FILE_URL = "ANY_URL";
+    private static final String TSV_FILE_URL_TEMPLATE = "ANY_URL";
 
     @Mock
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilderMock;
@@ -36,15 +35,15 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
 
     private ObjectInputStream<GeneProfile> smallInputStream;
 
-    private RankBySpecificityAndExpressionLevelCommand subject;
+    private RankGeneProfilesCommand subject;
 
-    public RankBySpecificityAndExpressionLevelCommandTest() {
+    public RankGeneProfilesCommandTest() {
     }
 
     @Before
     public void initializeSubject() throws Exception {
 
-        when(geneProfileInputStreamBuilderMock.forTsvFileURL(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
+        when(geneProfileInputStreamBuilderMock.forExperiment(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
         when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
         when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 
@@ -59,9 +58,14 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
 
         when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
 
-        subject = new RankBySpecificityAndExpressionLevelCommand(geneProfileInputStreamBuilderMock, DATA_FILE_URL);
+        subject = new RankGeneProfilesCommand();
+
+        subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
         subject.setRequestPreferences(requestPreferencesMock);
+
+        //subject.setTsvFileUrlTemplate(TSV_FILE_URL_TEMPLATE);
+
     }
 
     @Test
@@ -69,7 +73,7 @@ public class RankBySpecificityAndExpressionLevelCommandTest {
         //when
         subject.apply("ANY_EXPERIMENT_ACCESSION");
         //then
-        verify(geneProfileInputStreamBuilderMock).forTsvFileURL(DATA_FILE_URL);
+        verify(geneProfileInputStreamBuilderMock).forExperiment(TSV_FILE_URL_TEMPLATE);
         verify(geneProfileInputStreamBuilderMock).withExperimentAccession("ANY_EXPERIMENT_ACCESSION");
         verify(geneProfileInputStreamBuilderMock).withCutoff(requestPreferencesMock.getCutoff());
         verify(geneProfileInputStreamBuilderMock).create();

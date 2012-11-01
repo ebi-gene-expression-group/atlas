@@ -7,27 +7,29 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.RankBySpecificityAndExpressionLevelCommand;
+import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class ExpressionLevelController {
+public class GeneProfilesPageController {
 
-    private RankBySpecificityAndExpressionLevelCommand rankCommand;
+    private RankGeneProfilesCommand rankCommand;
 
     @Inject
-    public ExpressionLevelController(RankBySpecificityAndExpressionLevelCommand rankCommand) {
+    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand) {
         this.rankCommand = rankCommand;
     }
 
     @RequestMapping("/experiments/{experimentAccession}")
-    public String showGeneExpressions(@PathVariable String experimentAccession
+    public String showGeneProfiles(@PathVariable String experimentAccession
                                     , @ModelAttribute("preferences") @Valid RequestPreferences preferences
-                                    , BindingResult result, Model model) {
+                                    , BindingResult result, Model model, HttpServletRequest request) {
 
         if (!result.hasErrors()) {
 
@@ -44,6 +46,11 @@ public class ExpressionLevelController {
             model.addAttribute("maxExpressionLevel", geneProfiles.getMaxExpressionLevel());
 
             model.addAttribute("totalResultCount", geneProfiles.getTotalResultCount());
+
+            model.addAttribute("requestURI", request.getRequestURI());
+
+            model.addAttribute("downloadUrl", request.getRequestURI() + ".tsv"
+                    + (request.getQueryString() != null ? "?" + request.getQueryString() : ""));
         }
 
         return "experiment";

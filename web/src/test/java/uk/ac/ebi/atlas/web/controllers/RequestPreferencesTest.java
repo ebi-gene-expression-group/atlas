@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.web.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;

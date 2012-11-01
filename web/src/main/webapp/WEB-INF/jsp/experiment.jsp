@@ -97,7 +97,7 @@
                 } else {
                     initAnatomogram(organismParts);
                     initSlider(${preferences.cutoff});
-                    initSearchForm('experiment');
+                    initSearchForm('${requestURI}');
                     initHeatmapDisplayValueToggle();
                 }
 
@@ -175,8 +175,13 @@
                 </table>
 
             </div>
-
             <div style="margin-left:310px">
+
+
+                <a href="<c:out value='${downloadUrl}'/>" target="_blank"> Download Gene Expression Profiles </a>
+                <br/>
+                <br/>
+
                 <c:choose>
                     <c:when test="${param.organismOriented!=null}">
                         <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
@@ -190,8 +195,6 @@
         </div>
 
         <br/>
-
-
 
     </c:if>
 
