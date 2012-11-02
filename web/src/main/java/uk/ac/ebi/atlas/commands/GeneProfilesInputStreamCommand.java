@@ -26,7 +26,6 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
-                .withExperimentAccession(experimentAccession)
                 .withCutoff(requestPreferences.getCutoff()).create();
 
         return new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getGeneIDs(), requestPreferences.getOrganismParts());

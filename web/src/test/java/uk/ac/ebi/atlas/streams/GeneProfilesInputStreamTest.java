@@ -8,7 +8,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
@@ -51,7 +50,6 @@ public class GeneProfilesInputStreamTest {
         ExperimentRun experimentRuns1Mock = mock(ExperimentRun.class);
         ExperimentRun experimentRuns2Mock = mock(ExperimentRun.class);
 
-
         given(experimentRuns1Mock.getRunAccession()).willReturn(RUN_ACCESSION_1);
         given(experimentRuns2Mock.getRunAccession()).willReturn(RUN_ACCESSION_2);
 
@@ -66,10 +64,14 @@ public class GeneProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headers)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(new GeneProfileBuilderConcreteFactory()), expressionsBufferBuilderMock)
-                                                   .forTsvFileInputStream(mock(InputStream.class))
-                .injectCsvReader(csvReaderMock)
-                .withExperimentAccession("AN_ACCESSION")
+        GeneProfilesInputStream geneProfileInputStream = new GeneProfilesInputStream(new GeneProfileBuilderConcreteFactory());
+        GeneProfilesInputStream.Builder builder = new GeneProfilesInputStream.Builder(geneProfileInputStream, expressionsBufferBuilderMock){
+            @Override
+            protected CSVReader buildCsvReader(InputStream inputStream){
+                return csvReaderMock;
+            }
+        };
+        subject = builder.forExperiment("AN_ACCESSION", mock(InputStream.class))
                 .create();
 
     }

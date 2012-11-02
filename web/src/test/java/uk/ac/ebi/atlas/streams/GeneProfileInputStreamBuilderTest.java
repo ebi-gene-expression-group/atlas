@@ -6,9 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +14,6 @@ import java.io.InputStream;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,30 +38,23 @@ public class GeneProfileInputStreamBuilderTest {
     private GeneProfilesInputStream.Builder subject;
 
     @Before
-    public void initMocks() throws IOException {
+    public void initSubject() {
         when(geneProfilesInputStreamMock.readCsvLine()).thenReturn(headersMock);
         when(expressionsBufferBuilderMock.forExperiment(anyString())).thenReturn(expressionsBufferBuilderMock);
         when(expressionsBufferBuilderMock.withHeaders(headersMock)).thenReturn(expressionsBufferBuilderMock);
         when(expressionsBufferBuilderMock.create()).thenReturn(expressionsBufferMock);
-    }
 
-    @Before
-    public void initSubject() {
         subject = new GeneProfilesInputStream
                         .Builder(geneProfilesInputStreamMock, expressionsBufferBuilderMock)
-                        .forTsvFileInputStream(inputStreamMock);
+                        .forExperiment("AN_EXPERIMENT", inputStreamMock);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void shouldThrowExceptionWhenExperimentAccessionHasntBeenSet() {
-        //when
-        subject.create();
-    }
+
 
     @Test
     public void createShouldSucceedAfterExperimentAccessionHasBeenSet() {
         //when
-        subject.withExperimentAccession("AN_EXPERIMENT_ACCESSION");
+        subject.forExperiment("AN_EXPERIMENT_ACCESSION", inputStreamMock);
 
         ObjectInputStream<GeneProfile> geneProfilesInputStream = subject.create();
         //then
@@ -75,23 +65,19 @@ public class GeneProfileInputStreamBuilderTest {
     }
 
     @Test
-    public void shouldReadTheHeaderLineFromTheDataFileWhenWeSetTheExperimentAccession() throws IOException {
-        //when
-        subject.withExperimentAccession("AN_EXPERIMENT_ACCESSION");
+    public void shouldReadTheHeaderLineFromTheDataFile() throws IOException {
         //then
         verify(geneProfilesInputStreamMock).readCsvLine();
     }
 
     @Test
     public void shouldInitializeTheExpressionBufferWhenWeSetTheExperimentAccession() throws IOException {
-        //when
-        subject.withExperimentAccession("AN_EXPERIMENT_ACCESSION");
 
         //then
-        verify(expressionsBufferBuilderMock).forExperiment("AN_EXPERIMENT_ACCESSION");
         verify(expressionsBufferBuilderMock).withHeaders(headersMock);
         verify(expressionsBufferBuilderMock).create();
     }
+
 
 
 }

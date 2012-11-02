@@ -20,7 +20,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
 
 @Named("geneProfilesInputStream")
@@ -127,20 +126,29 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             this.geneProfilesInputStream = geneProfilesInputStream;
         }
 
-        protected Builder forTsvFileInputStream(InputStream expressionLevelsInputStream) {
+        protected Builder forExperiment(String experimentAccession, InputStream expressionLevelsInputStream) {
 
-            Reader dataFileReader = new InputStreamReader(expressionLevelsInputStream);
-            CSVReader csvReader = new CSVReader(dataFileReader, '\t');
+            CSVReader csvReader = buildCsvReader(expressionLevelsInputStream);
 
             geneProfilesInputStream.setCsvReader(csvReader);
 
+            String[] dataFileHeaders = geneProfilesInputStream.readCsvLine();
+
+            expressionsBuffer = expressionsBufferBuilder.forExperiment(experimentAccession)
+                    .withHeaders(dataFileHeaders).create();
+
             return this;
+        }
+
+        protected CSVReader buildCsvReader(InputStream expressionLevelsInputStream) {
+            Reader dataFileReader = new InputStreamReader(expressionLevelsInputStream);
+            return new CSVReader(dataFileReader, '\t');
         }
 
         public Builder forExperiment(String experimentAccession) {
             String tsvFileUrl = String.format(tsvFileUrlTemplate, experimentAccession);
             try{
-                return forTsvFileInputStream(new URL(checkNotNull(tsvFileUrl)).openStream());
+                return forExperiment(experimentAccession, new URL(checkNotNull(tsvFileUrl)).openStream());
             } catch (MalformedURLException e) {
                 logger.error(e.getMessage(), e);
                 throw new IllegalArgumentException("Error while building URL for location " + tsvFileUrl + ". Error details: " + e.getMessage());
@@ -150,30 +158,12 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             }
         }
 
-        public Builder withExperimentAccession(String experimentAccession) {
-
-            String[] dataFileHeaders = geneProfilesInputStream.readCsvLine();
-
-            expressionsBuffer = expressionsBufferBuilder.forExperiment(experimentAccession)
-                                .withHeaders(dataFileHeaders).create();
-
-            return this;
-
-        }
-
-        //required for testability - mock injection
-        Builder injectCsvReader(CSVReader csvReader) {
-            geneProfilesInputStream.setCsvReader(csvReader);
-            return this;
-        }
-
         public Builder withCutoff(double cutoff) {
             geneProfilesInputStream.cutoff = cutoff;
             return this;
         }
 
         public ObjectInputStream<GeneProfile> create() {
-            checkState(expressionsBuffer != null, "Builder not in the right state for GeneProfilesInputStream creation.");
             geneProfilesInputStream.setExpressionBuffer(expressionsBuffer);
             return geneProfilesInputStream;
         }

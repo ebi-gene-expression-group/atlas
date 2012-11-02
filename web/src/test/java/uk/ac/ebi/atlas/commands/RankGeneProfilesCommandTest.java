@@ -23,8 +23,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RankGeneProfilesCommandTest {
 
-    private static final String TSV_FILE_URL_TEMPLATE = "ANY_URL";
-
     @Mock
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilderMock;
 
@@ -44,7 +42,7 @@ public class RankGeneProfilesCommandTest {
     public void initializeSubject() throws Exception {
 
         when(geneProfileInputStreamBuilderMock.forExperiment(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
-        when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
+        //when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
         when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 
         when(requestPreferencesMock.getHeatmapMatrixSize()).thenReturn(100);
@@ -73,8 +71,8 @@ public class RankGeneProfilesCommandTest {
         //when
         subject.apply("ANY_EXPERIMENT_ACCESSION");
         //then
-        verify(geneProfileInputStreamBuilderMock).forExperiment(TSV_FILE_URL_TEMPLATE);
-        verify(geneProfileInputStreamBuilderMock).withExperimentAccession("ANY_EXPERIMENT_ACCESSION");
+        verify(geneProfileInputStreamBuilderMock).forExperiment("ANY_EXPERIMENT_ACCESSION");
+        //verify(geneProfileInputStreamBuilderMock).withExperimentAccession("ANY_EXPERIMENT_ACCESSION");
         verify(geneProfileInputStreamBuilderMock).withCutoff(requestPreferencesMock.getCutoff());
         verify(geneProfileInputStreamBuilderMock).create();
     }

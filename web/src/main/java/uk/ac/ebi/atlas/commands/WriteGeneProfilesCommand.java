@@ -1,34 +1,31 @@
 package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Collections;
 import java.util.Set;
 import java.util.SortedSet;
 
+import static java.lang.System.arraycopy;
+
 @Named("streamGeneProfiles")
 @Scope("prototype")
-public class StreamGeneProfilesCommand extends GeneProfilesInputStreamCommand<Long> {
+public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Long> {
 
-    private OutputStreamWriter outputStreamWriter;
+    private CSVWriter csvWriter;
 
     private ApplicationProperties applicationProperties;
 
     @Inject
-    protected StreamGeneProfilesCommand(ApplicationProperties applicationProperties){
+    protected WriteGeneProfilesCommand(ApplicationProperties applicationProperties){
         this.applicationProperties = applicationProperties;
     }
 
@@ -37,8 +34,6 @@ public class StreamGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lo
                                                 , ObjectInputStream<GeneProfile> inputStream) throws IOException {
 
         long count = 0;
-
-        CSVWriter csvWriter = new CSVWriter(outputStreamWriter, '\t'/*, CSVWriter.NO_QUOTE_CHARACTER*/);
 
         SortedSet<String> organismParts = requestPreferences.getOrganismParts();
         if (organismParts == null || organismParts.isEmpty()){
@@ -52,8 +47,6 @@ public class StreamGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lo
             ++count;
             csvWriter.writeNext(buildCsvRow(geneProfile, organismParts));
         }
-        csvWriter.flush();
-        csvWriter.close();
         return count;
     }
 
@@ -65,7 +58,7 @@ public class StreamGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lo
         String [] expressionLevels = new String[organismParts.size()];
         int i = 0;
         for (String organismPart : organismParts){
-            expressionLevels[i++] = "" + geneProfile.getExpressionLevel(organismPart);
+            expressionLevels[i++] = NumberUtils.roundToString(geneProfile.getExpressionLevel(organismPart));
         }
         return buildCsvRow(new String[]{geneProfile.getGeneName(), geneProfile.getGeneId()}, expressionLevels);
     }
@@ -75,18 +68,14 @@ public class StreamGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lo
         int rowHeadersCount = rowHeaders.length;
         String [] csvRow = new String[rowHeadersCount + values.length];
 
-        for (int i = 0; i < rowHeadersCount; i++){
-            csvRow[i] = rowHeaders[i];
-        }
-        for (int i = 0; i < values.length; i++){
-            csvRow[i + rowHeadersCount] = values[i];
-        }
+        arraycopy(rowHeaders, 0, csvRow, 0, rowHeadersCount);
+        arraycopy(values, 0, csvRow, 0 + rowHeadersCount, values.length);
         return csvRow;
     }
 
 
-    public void setOutputStreamWriter(OutputStreamWriter outputStreamWriter){
-        this.outputStreamWriter = outputStreamWriter;
+    public void setCsvWriter(CSVWriter csvWriter){
+        this.csvWriter = csvWriter;
     }
 
 }

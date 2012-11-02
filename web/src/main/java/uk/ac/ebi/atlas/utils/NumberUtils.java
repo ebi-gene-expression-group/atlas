@@ -2,12 +2,17 @@ package uk.ac.ebi.atlas.utils;
 
 import org.apache.commons.math.util.MathUtils;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class NumberUtils {
 
-    public static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
-    public static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
+    private static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
+    private static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
 
-    public NumberUtils() {
+    public static String roundToString(double value) {
+        NumberFormat format = new DecimalFormat("0.####");
+        return format.format(value);
     }
 
     public static double round(double value) {

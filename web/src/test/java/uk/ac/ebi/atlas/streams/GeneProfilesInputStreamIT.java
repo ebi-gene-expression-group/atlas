@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
@@ -60,8 +59,7 @@ public class GeneProfilesInputStreamIT {
         geneProfileBuilderFactory = new GeneProfileBuilderConcreteFactory();
 
         subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), expressionsBufferBuilder)
-                                                .forTsvFileInputStream(dataFileURL.openStream())
-                                                .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
+                                                .forExperiment("EXPERIMENT_ACCESSION", dataFileURL.openStream())
                                                 .create();
 
     }
@@ -110,8 +108,7 @@ public class GeneProfilesInputStreamIT {
 
         //given
         subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), expressionsBufferBuilder)
-                                                .forTsvFileInputStream(dataFileURL.openStream())
-            .withExperimentAccession("FAKE_ACCESSION") //we injected expressionsBufferBuilder containing a mock ExperimentsCache, so experiment accession is not relevant
+                                                .forExperiment("AN_ACCESSION", dataFileURL.openStream())
             .withCutoff(20D)
             .create();
 

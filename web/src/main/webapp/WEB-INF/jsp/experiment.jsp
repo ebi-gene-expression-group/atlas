@@ -125,8 +125,6 @@
 
     <c:import url="includes/request-preferences.jsp" />
 
-    <div id="geneCount" style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
-
     <c:if test="${not empty geneProfiles}">
 
 
@@ -177,9 +175,10 @@
             </div>
             <div style="margin-left:310px">
 
-
-                <a href="<c:out value='${downloadUrl}'/>" target="_blank"> Download Gene Expression Profiles </a>
-                <br/>
+                <div id="geneCount" style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
+                <div>
+                    <a href="<c:out value='${downloadUrl}'/>" target="_blank"> Download Gene Expression Profiles </a>
+                </div>
                 <br/>
 
                 <c:choose>
