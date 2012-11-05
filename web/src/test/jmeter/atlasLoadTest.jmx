@@ -282,7 +282,8 @@
           </ResponseAssertion>
           <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
-            <stringProp name="DurationAssertion.duration">3000</stringProp>
+            <stringProp name="DurationAssertion.duration">5000</stringProp>
+            <stringProp name="TestPlan.comments">downloding the entire file can takes some time, it can be larger than 2 MB</stringProp>
           </DurationAssertion>
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
@@ -295,8 +296,9 @@
           </ResponseAssertion>
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
+            <stringProp name="TestPlan.comments">let&apos;s check that size is larger than 1 MB (actually it is 2.5 MB)</stringProp>
             <stringProp name="Assertion.test_field">SizeAssertion.response_data</stringProp>
-            <stringProp name="SizeAssertion.size">1000</stringProp>
+            <stringProp name="SizeAssertion.size">1000000</stringProp>
             <intProp name="SizeAssertion.operator">3</intProp>
           </SizeAssertion>
           <hashTree/>
