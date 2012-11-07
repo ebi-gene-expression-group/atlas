@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.utils.score;
 
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public class HistogramCounter {
 
     public static final int GENE_COUNT = 45000;
@@ -22,9 +24,9 @@ public class HistogramCounter {
     }
 
     private void initEmptyMap() {
-        scoreMap = new HashMap<Double, List<BitSet>>(scores.size());
+        scoreMap = new HashMap<>(scores.size());
         for (Double score : scores) {
-            List<BitSet> tissueSets = new ArrayList<BitSet>(organismParts.size());
+            List<BitSet> tissueSets = new ArrayList<>(organismParts.size());
 
             for (String organismPart : organismParts) {
                 BitSet bitSet = new BitSet(GENE_COUNT);
@@ -35,10 +37,8 @@ public class HistogramCounter {
     }
 
     public void addValues(List<Double> values, int lineNumber) {
-        if (values.size() != organismParts.size()) {
-            System.out.println("wrong input size");
-            return;
-        }
+        checkArgument(values.size() == organismParts.size(), "Number of values should be equal to number of " +
+                "organism parts");
 
         for (Map.Entry<Double, List<BitSet>> entry : scoreMap.entrySet()) {
 
@@ -51,13 +51,14 @@ public class HistogramCounter {
         }
     }
 
-    public Map<Double, Integer> countAll(List<Integer> selected) {
+    public Map<Double, Integer> countAll(List<String> selectedOrganismParts) {
+        List<Integer> selected = getOrganismPartIndexes(selectedOrganismParts);
         Map<Double, Integer> result = new TreeMap<>();
 
         for (Double mark : scoreMap.keySet()) {
             if (selected == null || selected.isEmpty()) {
                 //ToDo: confirm requirements
-//                result.put(mark, countSingleSpecificity(scoreMap.get(mark)));
+                //                result.put(mark, countSingleSpecificity(scoreMap.get(mark)));
                 result.put(mark, countAllGenes(scoreMap.get(mark)));
             } else {
                 result.put(mark, countPerMark(scoreMap.get(mark), selected));
@@ -66,6 +67,22 @@ public class HistogramCounter {
 
         return result;
     }
+
+//    public Map<Double, Integer> countAll(List<Integer> selected) {
+//        Map<Double, Integer> result = new TreeMap<>();
+//
+//        for (Double mark : scoreMap.keySet()) {
+//            if (selected == null || selected.isEmpty()) {
+//                //ToDo: confirm requirements
+////                result.put(mark, countSingleSpecificity(scoreMap.get(mark)));
+//                result.put(mark, countAllGenes(scoreMap.get(mark)));
+//            } else {
+//                result.put(mark, countPerMark(scoreMap.get(mark), selected));
+//            }
+//        }
+//
+//        return result;
+//    }
 
     protected int countPerMark(List<BitSet> tissueSets, List<Integer> selected) {
         BitSet andSet = new BitSet(GENE_COUNT);
@@ -84,6 +101,14 @@ public class HistogramCounter {
         return andSet.cardinality();
     }
 
+    protected List<Integer> getOrganismPartIndexes(List<String> selected) {
+        List<Integer> result = new ArrayList<>(selected.size());
+        for (String s : selected) {
+            result.add(organismParts.indexOf(s));
+        }
+
+        return result;
+    }
 
     protected int countSingleSpecificity(List<BitSet> tissueSets) {
         BitSet result = new BitSet(GENE_COUNT);
@@ -103,7 +128,7 @@ public class HistogramCounter {
         return result.cardinality();
     }
 
-    public Map<Double, List<BitSet>> getScoreMap() {
+    protected Map<Double, List<BitSet>> getScoreMap() {
         return scoreMap;
     }
 
