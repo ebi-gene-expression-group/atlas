@@ -36,22 +36,11 @@
 
     <properties>
         <selenium.version>2.25.0</selenium.version>
+
     </properties>
 
     <build>
-        <finalName>gxa</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>false</filtering>
-            </testResource>
-        </testResources>
+
 
         <plugins>
 

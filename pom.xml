@@ -49,6 +49,21 @@
     </properties>
 
     <build>
+
+        <finalName>gxa</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -372,6 +387,7 @@
 
     <modules>
         <module>web</module>
+        <!--<module>index-service</module>-->
     </modules>
 
     <profiles>
