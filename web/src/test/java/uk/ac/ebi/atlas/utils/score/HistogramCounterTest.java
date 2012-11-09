@@ -10,8 +10,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.*;
 
 public class HistogramCounterTest {
 
@@ -42,10 +41,16 @@ public class HistogramCounterTest {
     }
 
 
+    /* Generated map looks like:
+
+key: 0      0.5      10
+    1 1 0   1 1 0   0 0 0
+    0 1 1   0 0 1   0 0 1
+     */
     @Test
     public void testAddValues() {
-        subject.addValues(Arrays.asList(1.1, 0.5, 0d), 0);
-        subject.addValues(Arrays.asList(0d, 0.6, 100d), 1);
+        subject.addValues(Arrays.asList(1.1, 8d, 0d), 0);
+        subject.addValues(Arrays.asList(0d, 0.3, 100d), 1);
 
         Map<Double, List<BitSet>> scoreMap = subject.getScoreMap();
 
@@ -74,7 +79,7 @@ public class HistogramCounterTest {
         //for op2
         assertThat(scoreMap.get(0.5).get(1).cardinality(), is(1));
         //Bit set true on the position 0
-        assertThat(scoreMap.get(0.5).get(1).toString(), is("{1}"));
+        assertThat(scoreMap.get(0.5).get(1).toString(), is("{0}"));
 
         //for op3
         assertThat(scoreMap.get(0.5).get(2).cardinality(), is(1));
@@ -98,5 +103,9 @@ public class HistogramCounterTest {
         assertThat(scoreMap.get(10d).get(2).toString(), is("{1}"));
     }
 
+    public void testGetOrganismPartIndexes() throws Exception {
+        List<Integer> organismPartIndexes = subject.getOrganismPartIndexes(Arrays.asList("op1", "op3"));
+        assertThat(organismPartIndexes, contains(0, 3));
+    }
 
 }
