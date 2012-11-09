@@ -6,8 +6,7 @@
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
-        <form:errors id="heatmapMatrixSize" title="HeatmapMatrixSize" path="heatmapMatrixSize"
-                     cssClass="error"/>
+        <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
                 <td>
@@ -28,13 +27,11 @@
             <tr>
                 <td>
                     <form:textarea path="geneIDsString" rows="2" cols="35"></form:textarea>
-                    <form:errors id="geneIDsString" title="geneIDsString" path="geneIDsString" cssClass="error"/>
                 </td>
                 <td>
                     <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
                                  items="${applicationProperties.organismParts}" cssClass="chzn-select"
                                  cssStyle="width:350px;display:none"/>
-                    <form:errors id="organismParts" title="organismParts" path="organismParts" cssClass="error"/>
                 </td>
                 <td>
                     <c:choose>
@@ -49,9 +46,6 @@
                             <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
                         </c:otherwise>
                      </c:choose>
-
-
-                    <form:errors path="cutoff" cssClass="error"/>
                 </td>
             </tr>
         </table>

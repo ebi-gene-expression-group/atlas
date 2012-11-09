@@ -15,13 +15,13 @@ import java.util.regex.Pattern;
 @Scope("prototype")
 public class RequestPreferences {
 
-    private static final int DEFAULT_NUMBER_OF_TOP_RANKED_GENES = 50;
+    private static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
     private static final double DEFAULT_CUTOFF = 0.5d;
     private static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
 
     @NotNull
     @Range(min = 0, max = 1000)
-    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_TOP_RANKED_GENES;
+    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
 
     @NotNull
     @Min(0)
@@ -44,7 +44,7 @@ public class RequestPreferences {
     }
 
     public void setHeatmapMatrixSize(Integer heatmapMatrixSize) {
-        this.heatmapMatrixSize = heatmapMatrixSize;
+        this.heatmapMatrixSize = heatmapMatrixSize != null ? heatmapMatrixSize : DEFAULT_NUMBER_OF_RANKED_GENES;
     }
 
     public Double getCutoff() {
@@ -52,7 +52,7 @@ public class RequestPreferences {
     }
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = NumberUtils.round(cutoff);
+        this.cutoff = cutoff !=null ? NumberUtils.round(cutoff) : DEFAULT_CUTOFF;
     }
 
     public void setDisplayLevels(boolean displayLevels){

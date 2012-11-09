@@ -177,7 +177,7 @@
 
                 <div id="geneCount" style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
                 <div>
-                    <a href="<c:out value='${downloadUrl}'/>" target="_blank"> Download Gene Expression Profiles </a>
+                    <a id="download-profiles" href="<c:out value='${downloadUrl}'/>" target="_blank"> Download Gene Expression Profiles </a>
                 </div>
                 <br/>
 

@@ -80,10 +80,13 @@ function initSlider(cutoff) {
             grid: {
                 borderColor:"#CDCDCD",
                 borderWidth: 1,
-                hoverable: true
+                hoverable: true,
+                clickable: true
             }
         });
     }
+
+
 
     $.getJSON("json/gene-by-cutoff/notissues_histogram.txt", function(data){
 
@@ -113,27 +116,35 @@ function initSlider(cutoff) {
         }
 
         var previousPoint = null;
-        $("#gene-distribution").bind("plothover", function(event, pos, item) {
-            $("#x").text(pos.x.toFixed(2));
-            $("#y").text(pos.y.toFixed(2));
+        $("#gene-distribution")
+            .bind("plothover", function(event, pos, item) {
+                $("#x").text(pos.x.toFixed(2));
+                $("#y").text(pos.y.toFixed(2));
 
-            if (item) {
-                if (previousPoint != item.datapoint) {
-                    previousPoint = item.datapoint;
+                if (item) {
+                    if (previousPoint != item.datapoint) {
+                        previousPoint = item.datapoint;
 
-                    $("#tooltip").remove();
-                    var content = item.datapoint[1].toFixed(0);
+                        $("#tooltip").remove();
+                        var content = item.datapoint[1].toFixed(0);
 
-                    //now show tooltip
-                    showTooltip(item.pageX, item.pageY, content);
+                        //now show tooltip
+                        showTooltip(item.pageX, item.pageY, content);
+                    }
                 }
-            }
-            else {
-                $("#tooltip").remove();
-                previousPoint = null;
-            }
+                else {
+                    $("#tooltip").remove();
+                    previousPoint = null;
+                }
 
-        });
+            }).bind("plotclick", function (event, pos, item) {
+
+                    if (item) {
+                        $("#cutoff").val(getNthScaledCutoff(item.datapoint[0],1));
+                        $("form#prefForm").submit();
+                    }
+                });
+            ;
 
         var scaledCutoff = nearestScaledCutoff(cutoff);
 

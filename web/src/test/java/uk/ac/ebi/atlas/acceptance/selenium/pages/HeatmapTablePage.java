@@ -9,7 +9,13 @@ import java.util.List;
 
 public class HeatmapTablePage extends TablePage {
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
+    public static String EXPERIMENT_ACCESSION = "E-MTAB-513";
+
+    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION;
+
+    public HeatmapTablePage(WebDriver driver) {
+        super(driver);
+    }
 
     public HeatmapTablePage(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);
@@ -21,6 +27,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id="geneCount")
     WebElement geneFound;
 
+    @FindBy(id = "download-profiles")
+    WebElement downloadExpressionProfilesLink;
+
     public List<String> getOrganismParts() {
         List<String> organismParts = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
@@ -29,6 +38,10 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getSelectedGenes() {
         return getFirstColumnValues(heatmapTable);
+    }
+
+    public String getDownloadExpressionProfilesLink(){
+        return downloadExpressionProfilesLink.getAttribute("href");
     }
 
     @Override
