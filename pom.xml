@@ -419,9 +419,8 @@
 
     <modules>
         <module>web</module>
-     <!--
-        <module>index-service</module>
-    -->
+        <!--<module>index-service</module>-->
+
     </modules>
 
     <profiles>

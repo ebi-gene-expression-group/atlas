@@ -21,12 +21,12 @@
     <bean id="geneProfileBuilderFactory" class="uk.ac.ebi.atlas.model.GeneProfileBuilderFactory">
         <lookup-method name="createNew" bean="geneProfileBuilder"/>
     </bean>
-<!--
-    <bean id="geneProfileBuilder" class="uk.ac.ebi.atlas.model.GeneProfileBuilder"
-          factory-method="forGeneId">
-        <constructor-arg value="efede"></constructor-arg>
-    </bean>
--->
+    <!--
+        <bean id="geneProfileBuilder" class="uk.ac.ebi.atlas.model.GeneProfileBuilder"
+              factory-method="forGeneId">
+            <constructor-arg value="efede"></constructor-arg>
+        </bean>
+    -->
 
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
         <constructor-arg ref="httpClientConnectionManager"/>
@@ -36,5 +36,12 @@
           destroy-method="shutdown">
     </bean>
 
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    </bean>
 
 </beans>
