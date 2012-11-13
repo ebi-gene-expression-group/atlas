@@ -6,10 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.Experiment;
 
 import java.net.MalformedURLException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static org.mockito.BDDMockito.given;
@@ -18,7 +17,7 @@ import static org.mockito.BDDMockito.given;
 public class ExperimentsCacheTest {
 
     @Mock
-    private LoadingCache<String, List<ExperimentRun>> loadingCacheMock;
+    private LoadingCache<String, Experiment> loadingCacheMock;
 
     private ExperimentsCache subject;
 
@@ -34,7 +33,7 @@ public class ExperimentsCacheTest {
         //given
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
         //when
-        subject.getExperimentRuns("");
+        subject.getExperiment("");
         //then should throw IllegalStateException
 
     }

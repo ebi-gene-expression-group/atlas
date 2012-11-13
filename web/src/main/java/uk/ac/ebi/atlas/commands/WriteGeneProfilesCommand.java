@@ -37,7 +37,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         SortedSet<String> organismParts = requestPreferences.getOrganismParts();
         if (organismParts == null || organismParts.isEmpty()){
-            organismParts = applicationProperties.getOrganismParts();
+            organismParts = applicationProperties.getAllOrganismParts();
         }
 
         csvWriter.writeNext(buildCsvHeaders(organismParts));

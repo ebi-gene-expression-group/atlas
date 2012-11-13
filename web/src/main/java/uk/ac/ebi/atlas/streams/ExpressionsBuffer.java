@@ -2,23 +2,23 @@ package uk.ac.ebi.atlas.streams;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.*;
 
 class ExpressionsBuffer {
 
@@ -26,15 +26,15 @@ class ExpressionsBuffer {
 
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
-    private Iterator<ExperimentRun> runsCircularQueue;
+    private Iterator<FactorValue> expectedFactorValues;
 
     private int expectedNumberOfValues;
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected ExpressionsBuffer(List<ExperimentRun> orderedRuns) {
-        expectedNumberOfValues = orderedRuns.size() + 1;
-        this.runsCircularQueue = Iterables.cycle(orderedRuns).iterator();
+    protected ExpressionsBuffer(List<FactorValue> orderedFactorValues) {
+        expectedNumberOfValues = orderedFactorValues.size() + 1;
+        this.expectedFactorValues = Iterables.cycle(orderedFactorValues).iterator();
     }
 
 
@@ -46,7 +46,7 @@ class ExpressionsBuffer {
         }
         double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new Expression(runsCircularQueue.next(), expressionLevel);
+        return new Expression(expectedFactorValues.next(),expressionLevel);
     }
 
 private String gene;
@@ -54,7 +54,7 @@ private String gene;
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         checkArgument(values.length == expectedNumberOfValues, "Expected " +expectedNumberOfValues + " values but " +
-                "found: " + values.length);
+                                            "found: " + values.length);
 
         expressionLevelsBuffer.clear();
 
@@ -69,11 +69,15 @@ private String gene;
     @Scope("prototype")
     public static class Builder {
 
+        String experimentAccession;
+
         private ExperimentsCache experimentsCache;
 
-        private List<ExperimentRun> experimentRuns;
+        private List<FactorValue> orderedFactorValues = new LinkedList<FactorValue>();
 
         private boolean readyToCreate;
+        private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
+        private static final String ORGANISM_PART_NOT_FOUND = "Organism part not found for Run Accessions {0} and Experiment Accession {1}";
 
         @Inject
         public Builder(ExperimentsCache experimentsCache) {
@@ -84,7 +88,7 @@ private String gene;
 
         public Builder forExperiment(String experimentAccession) {
 
-            this.experimentRuns = experimentsCache.getExperimentRuns(experimentAccession);
+            this.experimentAccession = experimentAccession;
 
             return this;
 
@@ -94,29 +98,45 @@ private String gene;
 
             logger.debug("<withHeaders> data file headers: " + tsvFileHeaders);
 
-            checkState(experimentRuns != null, "Builder not properly initialized!");
+            checkState(experimentAccession != null, "Builder not properly initialized!");
 
-            List<String> orderedRunAccessions = Arrays.asList(ArrayUtils.remove(tsvFileHeaders, GENE_ID_COLUMN));
+            List<String> columnHeaders = Arrays.asList(ArrayUtils.remove(tsvFileHeaders, GENE_ID_COLUMN));
 
-            experimentRuns = removeUnrequiredExperimentRuns(orderedRunAccessions);
+            for (String columnHeader : columnHeaders){
 
-            Collections.sort(experimentRuns, experimentRunComparator(orderedRunAccessions));
+                orderedFactorValues.add(getOrganismPart(columnHeader, experimentAccession));
 
+            }
             readyToCreate = true;
 
             return this;
         }
 
-        List<ExperimentRun> removeUnrequiredExperimentRuns(List<String> orderedRunAccessions) {
-            Collection<ExperimentRun> filteredExperimentRuns = Collections2.filter(experimentRuns, isExperimentRunRequired(orderedRunAccessions));
-            return Lists.newArrayList(filteredExperimentRuns);
+        private FactorValue getOrganismPart(String columnHeader, String experimentAccession){
+
+            String[] columnRuns = columnHeader.split(",");
+
+            for (String columnRun : columnRuns){
+                columnRun = columnRun.trim();
+
+                Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+                checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+
+                ExperimentRun experimentRun = experiment.getExperimentRun(columnRun);
+                if (experimentRun.getOrganismPart() != null) {
+                    return experimentRun.getOrganismPart();
+                }
+            }
+
+            throw new IllegalStateException(MessageFormat.format(ORGANISM_PART_NOT_FOUND, columnHeader, experimentAccession));
         }
 
         public ExpressionsBuffer create() {
 
             checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
 
-            return new ExpressionsBuffer(experimentRuns);
+            return new ExpressionsBuffer(orderedFactorValues);
 
         }
 

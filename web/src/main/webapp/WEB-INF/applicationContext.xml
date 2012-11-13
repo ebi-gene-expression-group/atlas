@@ -18,6 +18,7 @@
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
+
     <bean id="geneProfileBuilderFactory" class="uk.ac.ebi.atlas.model.GeneProfileBuilderFactory">
         <lookup-method name="createNew" bean="geneProfileBuilder"/>
     </bean>

@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.model;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,13 +13,10 @@ public class ExpressionTest {
 
     private Expression subject;
 
-    @Mock
-    private ExperimentRun experimentRun;
-
     @Before
     public void initSubject() {
 
-        subject = new Expression(experimentRun, 2.3);
+        subject = new Expression(new FactorValue("aType","organ", "heart"), 2.3);
     }
 
     @Test

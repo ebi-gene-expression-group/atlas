@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
@@ -146,7 +147,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
         }
 
         public Builder forExperiment(String experimentAccession) {
-            String tsvFileUrl = String.format(tsvFileUrlTemplate, experimentAccession);
+            String tsvFileUrl = MessageFormat.format(tsvFileUrlTemplate, experimentAccession);
             try{
                 return forExperiment(experimentAccession, new URL(checkNotNull(tsvFileUrl)).openStream());
             } catch (MalformedURLException e) {

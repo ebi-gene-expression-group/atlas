@@ -12,7 +12,7 @@ public class FactorValueDisplayStringTest {
 
     @Before
     public void initFactorValue(){
-        factorValue = new FactorValue("organ", "liver");
+        factorValue = new FactorValue("or_gan_type", "organ", "liver");
     }
 
     @Test

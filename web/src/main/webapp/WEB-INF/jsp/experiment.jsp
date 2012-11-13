@@ -95,8 +95,8 @@
                     $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
 
                 } else {
-                    initAnatomogram(organismParts);
-                    initSlider(${preferences.cutoff});
+                    initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    initSlider(${preferences.cutoff}, '${experimentAccession}');
                     initSearchForm('${requestURI}');
                     initHeatmapDisplayValueToggle();
                 }
@@ -159,19 +159,17 @@
                     </tr>
                 </table>
 
-
-                <table>
-                    <tr>
-                        <td style="padding-top: 20px; vertical-align:top">
-                            <div id="sexToggle" class="male"></div>
-                        </td>
-                        <td>
-                            <div id="anatomogramBody" style="width: 250px; height: 400px">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-
+                    <table>
+                        <tr>
+                            <td style="padding-top: 20px; vertical-align:top">
+                                <div id="sexToggle" class="male" ${maleAnatomogramFile == femaleAnatomogramFile ? 'style="background-size:0%"':''}></div>
+                            </td>
+                            <td>
+                                <div id="anatomogramBody" style="width: 250px; height: 400px">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
             </div>
             <div style="margin-left:310px">
 

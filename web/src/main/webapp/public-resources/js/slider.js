@@ -1,4 +1,4 @@
-function initSlider(cutoff) {
+function initSlider(cutoff, experimentAccession) {
 
     function nearestScaledCutoff(cutoff){
         if(cutoff >= 1) {
@@ -88,7 +88,7 @@ function initSlider(cutoff) {
 
 
 
-    $.getJSON("json/gene-by-cutoff/notissues_histogram.txt", function(data){
+    $.getJSON("json/gene-by-cutoff/" + experimentAccession + ".all.txt", function(data){
 
         var scaledCutoffTicks = scaledCutoffs(data.length);
 

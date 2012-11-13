@@ -30,7 +30,7 @@
                 </td>
                 <td>
                     <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
-                                 items="${applicationProperties.organismParts}" cssClass="chzn-select"
+                                 items="${allOrganismParts}" cssClass="chzn-select"
                                  cssStyle="width:350px;display:none"/>
                 </td>
                 <td>

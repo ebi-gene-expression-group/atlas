@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
@@ -21,8 +22,11 @@ public class GeneProfilesPageController {
 
     private RankGeneProfilesCommand rankCommand;
 
+    private ApplicationProperties applicationProperties;
+
     @Inject
-    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand) {
+    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
     }
 
@@ -48,6 +52,14 @@ public class GeneProfilesPageController {
             model.addAttribute("totalResultCount", geneProfiles.getTotalResultCount());
 
             model.addAttribute("requestURI", request.getRequestURI());
+
+            model.addAttribute("experimentAccession", experimentAccession);
+
+            model.addAttribute("allOrganismParts", applicationProperties.getAllOrganismParts());
+
+            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(experimentAccession, true));
+
+            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(experimentAccession, false));
 
             model.addAttribute("downloadUrl", request.getRequestURI() + ".tsv"
                     + (request.getQueryString() != null ? "?" + request.getQueryString() : ""));
