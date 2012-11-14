@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Strings;
@@ -6,18 +28,20 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
+import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.regex.Pattern;
 
+@Named("requestPreferences")
 @Scope("prototype")
 public class RequestPreferences {
 
-    private static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
-    private static final double DEFAULT_CUTOFF = 0.5d;
-    private static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
+    static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
+    static final double DEFAULT_CUTOFF = 0.5d;
+    static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
 
     @NotNull
     @Range(min = 0, max = 1000)
@@ -34,6 +58,8 @@ public class RequestPreferences {
     private Set<String> geneIDs;
 
     private boolean displayLevels;
+
+    private NumberUtils numberUtils = new NumberUtils();
 
     public SortedSet<String> getOrganismParts() {
         return organismParts;
@@ -52,7 +78,7 @@ public class RequestPreferences {
     }
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = cutoff !=null ? NumberUtils.round(cutoff) : DEFAULT_CUTOFF;
+        this.cutoff = cutoff !=null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
     }
 
     public void setDisplayLevels(boolean displayLevels){
@@ -73,13 +99,13 @@ public class RequestPreferences {
 
     public void setGeneIDsString(String geneIDsString) {
         this.geneIDsString = geneIDsString;
-        updateGeneIDs();
+        if (!Strings.isNullOrEmpty(geneIDsString)) {
+            setGeneIDs(commaOrSpaceSeparatorPattern.split(geneIDsString));
+        }
     }
 
-    private void updateGeneIDs() {
-        if (!Strings.isNullOrEmpty(geneIDsString)) {
-            this.geneIDs = Sets.newHashSet(commaOrSpaceSeparatorPattern.split(geneIDsString));
-        }
+    private void setGeneIDs(String[] geneIDs){
+        this.geneIDs = Sets.newHashSet(geneIDs);
     }
 
     public Set<String> getGeneIDs() {
