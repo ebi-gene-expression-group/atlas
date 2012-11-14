@@ -24,7 +24,7 @@
             <c:set var="cellColour"
                    value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)}"/>
 
-            <c:set var="style" value="background-color:${cellColour};color:${cellColour};font-size:1px"/>
+            <c:set var="style" value="background-color:${cellColour}"/>
 
         </c:if>
 

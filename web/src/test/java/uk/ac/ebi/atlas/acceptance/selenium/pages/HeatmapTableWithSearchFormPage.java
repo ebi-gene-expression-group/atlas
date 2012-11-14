@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
@@ -63,4 +64,5 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
         cutoff.clear();
         cutoff.sendKeys("" + value);
     }
+
 }

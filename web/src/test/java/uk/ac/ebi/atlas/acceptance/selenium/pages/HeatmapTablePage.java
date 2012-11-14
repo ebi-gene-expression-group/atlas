@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,6 +33,9 @@ public class HeatmapTablePage extends TablePage {
 
     @FindBy(id = "display-levels")
     WebElement displayLevelsButton;
+
+    @FindBy(className = "gradient-level")
+    List<WebElement> gradientLevels;
 
     public List<String> getOrganismParts() {
         List<String> organismParts = getTableHeaders(heatmapTable);
@@ -72,5 +76,18 @@ public class HeatmapTablePage extends TablePage {
 
     public String getDisplayLevelsButtonValue() {
         return displayLevelsButton.getText();
+    }
+
+
+    public boolean areGradientLevelsHidden() {
+        String style = gradientLevels.get(0).getAttribute("style");
+        return style.contains("color") && style.contains("white");
+    }
+
+    public Boolean areExpressionLevelsHidden() {
+        //we get the cell at index 1 because at index 0 we have the gene name
+        WebElement firstExpressionLevelCell = this.getNonEmptyCellsFromFirstTableRow(heatmapTable).get(1);
+        WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
+        return !div.getAttribute("style").contains("white");
     }
 }

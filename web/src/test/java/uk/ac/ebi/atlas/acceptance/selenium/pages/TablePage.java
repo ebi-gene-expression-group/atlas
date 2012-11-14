@@ -2,10 +2,13 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
+import org.jboss.netty.util.internal.StringUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 abstract class TablePage extends AtlasPage {
@@ -29,70 +32,92 @@ abstract class TablePage extends AtlasPage {
         super(driver, httpParameters);
     }
 
-    int getTableRowCount(WebElement table) {
+    protected int getTableRowCount(WebElement table) {
         return table.findElements(By.xpath(ALL_TABLE_ROWS_XPATH)).size();
     }
 
-    List<String> getFirstColumnValues(WebElement table) {
+    protected List<String> getFirstColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(FIRST_COLUMN_CELLS_XPATH));
         return Lists.transform(tableCells, getText);
     }
 
-    List<String> getSecondColumnValues(WebElement table) {
+    protected List<String> getSecondColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(SECOND_COLUMN_CELLS_XPATH));
         return Lists.transform(tableCells, getText);
     }
 
-    List<String> getRowValues(WebElement table, int index) {
-        String xPath = String.format(ROW_CELLS_XPATH_TEMPLATE, index);
-        List<WebElement> tableCells = table.findElements(By.xpath(xPath));
+    protected List<String> getRowValues(WebElement table, int index) {
+        List<WebElement> tableCells = getTableRow(table, index);
         return Lists.transform(tableCells, getText);
     }
 
-    List<String> getLastRowValues(WebElement table) {
+    protected List<WebElement> getTableRow(WebElement table, int index) {
+        String xPath = String.format(ROW_CELLS_XPATH_TEMPLATE, index);
+        return table.findElements(By.xpath(xPath));
+    }
+
+    protected List<WebElement> getFirstTableRow(WebElement table) {
+        return getTableRow(table, 1);
+    }
+
+    protected List<String> getLastRowValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(LAST_ROW_CELLS_XPATH));
         return Lists.transform(tableCells, getText);
     }
 
-    List<String> getLastColumnValues(WebElement table) {
+    protected List<String> getLastColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(LAST_COLUMN_CELLS_XPATH));
         return Lists.transform(tableCells, getText);
     }
 
-    String getTableTopCellValue(WebElement table, int columnIndex) {
-        return getCellValue(table, 1, columnIndex);
+    protected WebElement getCellFromFirstTableRow(WebElement table, int columnIndex) {
+        return getCell(table, 1, columnIndex);
     }
 
-    List<String> getColumnValues(WebElement table, int columnIndex) {
+    protected List<WebElement> getNonEmptyCellsFromFirstTableRow(WebElement table) {
+        List<WebElement> nonEmptyCells = new ArrayList<>();
+        for (WebElement cell: getFirstTableRow(table)){
+            if (! StringUtils.isBlank(cell.getText())){
+                nonEmptyCells.add(cell);
+            }
+        }
+        return nonEmptyCells;
+    }
+
+    protected List<String> getColumnValues(WebElement table, int columnIndex) {
         String xPath = String.format(COLUMN_CELLS_XPATH, columnIndex);
         List<WebElement> tableCells = table.findElements(By.xpath(xPath));
         return Lists.transform(tableCells, getText);
     }
 
-    String getTableBottomCellValue(WebElement table, int columnIndex) {
+    protected String getTableBottomCellValue(WebElement table, int columnIndex) {
         String xPath = String.format(BOTTOM_CELL_XPATH_TEMPLATE, columnIndex);
         return getCellValue(table, xPath);
     }
 
-    String getCellValue(WebElement table, int rowIndex, int columnIndex) {
+    protected WebElement getCell(WebElement table, int rowIndex, int columnIndex) {
         String xPath = String.format(CELL_XPATH_TEMPLATE, rowIndex, columnIndex);
-        return getCellValue(table, xPath);
+        return getCell(table, xPath);
     }
 
-    List<String> getTableHeaders(WebElement table) {
+    protected List<String> getTableHeaders(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(TABLE_HEADERS_XPATH));
         return Lists.transform(tableCells, getText);
     }
 
-    int getTableColumnsCount(WebElement table) {
+    protected int getTableColumnsCount(WebElement table) {
         return getTableHeaders(table).size();
     }
 
     private String getCellValue(WebElement table, String xPath) {
-        return table.findElement(By.xpath(xPath)).getText();
+        return getCell(table, xPath).getText();
     }
 
-    Function<WebElement, String> getText = new Function<WebElement, String>() {
+    private WebElement getCell(WebElement table, String xPath) {
+        return table.findElement(By.xpath(xPath));
+    }
+
+    private Function<WebElement, String> getText = new Function<WebElement, String>() {
         public String apply(WebElement tableCell) {
             return tableCell.getText();
         }
