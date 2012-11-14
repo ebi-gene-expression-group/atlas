@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFormPage extends AtlasPage {
+public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
 
     protected static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
 
@@ -21,11 +21,14 @@ public class SearchFormPage extends AtlasPage {
     @FindBy(id = "cutoff")
     WebElement cutoff;
 
-    public SearchFormPage(WebDriver driver) {
+    @FindBy(id = "submit-button")
+    WebElement submitButton;
+
+    public HeatmapTableWithSearchFormPage(WebDriver driver) {
         super(driver);
     }
 
-    public SearchFormPage(WebDriver driver, String parameters) {
+    public HeatmapTableWithSearchFormPage(WebDriver driver, String parameters) {
         super(driver, parameters);
     }
 
@@ -51,4 +54,13 @@ public class SearchFormPage extends AtlasPage {
         return selectedValues;
     }
 
+    public HeatmapTableWithSearchFormPage submit(){
+        submitButton.click();
+        return new HeatmapTableWithSearchFormPage(driver);
+    }
+
+    public void setCutoff(double value) {
+        cutoff.clear();
+        cutoff.sendKeys("" + value);
+    }
 }

@@ -30,6 +30,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "download-profiles")
     WebElement downloadExpressionProfilesLink;
 
+    @FindBy(id = "display-levels")
+    WebElement displayLevelsButton;
+
     public List<String> getOrganismParts() {
         List<String> organismParts = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
@@ -61,5 +64,13 @@ public class HeatmapTablePage extends TablePage {
 
     public String getGeneCount() {
         return geneFound.getText();
+    }
+
+    public void clickDisplayLevelsButton() {
+        displayLevelsButton.click();
+    }
+
+    public String getDisplayLevelsButtonValue() {
+        return displayLevelsButton.getText();
     }
 }
