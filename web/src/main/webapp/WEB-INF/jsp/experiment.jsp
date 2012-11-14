@@ -101,7 +101,7 @@
                     initHeatmapDisplayValueToggle();
                 }
 
-                $(".gradient-level").attr('style','color:white');
+                //$(".gradient-level").attr('style','color:white');
 
             });
 
@@ -135,7 +135,7 @@
                 <table style="font-size:10px" id="heatmap-legenda" >
                     <tr>
                         <td>
-                            <div style="text-align:right;width: 30px" class="gradient-level">
+                            <div style="color:white" class="gradient-level">
                                 <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
@@ -151,7 +151,7 @@
                             </div>
                         </td>
                         <td>
-                            <div style="text-align:left;width: 30px" class="gradient-level">
+                            <div style="color:white" class="gradient-level">
                                 <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
