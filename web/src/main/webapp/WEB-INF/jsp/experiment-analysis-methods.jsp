@@ -80,11 +80,10 @@
 <div id="contents" class="page-contents">
 
     <br/>
-    <br/>
 
     <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="form-grid">
         <display:caption>
-            <div>
+            <div style="padding:10px">
                 <label>
                     Processing steps for ${experimentAccession} are as follows (in the order in which they were applied)
                 </label>

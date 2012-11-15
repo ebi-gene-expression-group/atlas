@@ -23,6 +23,10 @@
 package uk.ac.ebi.atlas.web.controllers;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.sun.istack.internal.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -46,6 +50,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -67,7 +72,7 @@ public class AnalysisMethodsPageController {
 
         CSVReader csvReader = new CSVReader(dataFileReader, '\t');
 
-        List<String[]> csvLines = csvReader.readAll();
+        Collection<String[]> csvLines = Collections2.filter(csvReader.readAll(), new IsCommented());
 
         model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("csvLines", csvLines);
@@ -76,7 +81,13 @@ public class AnalysisMethodsPageController {
     }
 
 
+    private class IsCommented implements Predicate<String[]> {
 
+        @Override
+        public boolean apply(@Nullable String[] columns) {
+            return ! columns[0].trim().startsWith("#");
+        }
+    }
 }
 
 
