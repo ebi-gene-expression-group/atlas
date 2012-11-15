@@ -85,7 +85,7 @@
         <display:caption>
             <div style="padding:10px">
                 <label>
-                    Processing steps for ${experimentAccession} are as follows (in the order in which they were applied)
+                    Processing steps for ${experimentAccession} are as follows (in the order in which they were applied):
                 </label>
             </div>
         </display:caption>
