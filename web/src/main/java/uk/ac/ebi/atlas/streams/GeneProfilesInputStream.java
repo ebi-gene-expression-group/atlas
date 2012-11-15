@@ -12,12 +12,12 @@ import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -112,7 +112,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     @Scope("prototype")
     public static class Builder {
 
-        @Value("#{configuration['magetab.tsvfile.url.template']}")
+        @Value("#{configuration['experiment.magetab.path.template']}")
         private String tsvFileUrlTemplate;
 
         private GeneProfilesInputStream geneProfilesInputStream;
@@ -149,10 +149,8 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
         public Builder forExperiment(String experimentAccession) {
             String tsvFileUrl = MessageFormat.format(tsvFileUrlTemplate, experimentAccession);
             try{
-                return forExperiment(experimentAccession, new URL(checkNotNull(tsvFileUrl)).openStream());
-            } catch (MalformedURLException e) {
-                logger.error(e.getMessage(), e);
-                throw new IllegalArgumentException("Error while building URL for location " + tsvFileUrl + ". Error details: " + e.getMessage());
+                Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileUrl));
+                return forExperiment(experimentAccession, Files.newInputStream(filePath));
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
                 throw new IllegalArgumentException("Error while building GeneProfileInputStream. Error details: " + e.getMessage());
