@@ -26,7 +26,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import com.sun.istack.internal.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -84,7 +83,7 @@ public class AnalysisMethodsPageController {
     private class IsCommented implements Predicate<String[]> {
 
         @Override
-        public boolean apply(@Nullable String[] columns) {
+        public boolean apply(String[] columns) {
             return ! columns[0].trim().startsWith("#");
         }
     }
