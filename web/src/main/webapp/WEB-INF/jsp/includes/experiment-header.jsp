@@ -4,7 +4,7 @@
         <tr>
             <td>
                 <div class="experiment-accession">
-                    <a href="${requestURI}">${experimentAccession}</a>
+                    <a href="experiments/${experimentAccession}">${experimentAccession}</a>
                 </div>
             </td>
             <td>
