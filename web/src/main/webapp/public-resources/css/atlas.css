@@ -42,6 +42,7 @@ body {
 }
 
 .experiment-accession {
+    text-align: left;
     padding-right:5px;
     font-size:18px;
     font-weight:bold;
@@ -89,10 +90,10 @@ a:active {
 
 /* JQuery UI*/
 .ui-tooltip {
-    background: rgb(249,232,176);
+    background: #fafafa;
     border: 2px solid white;
     padding: 2px 4px;
-    color: black;
+    color: #1C94C4;
     border-radius: 4px;
     font: bold 10px Verdana, Helvetica, Arial, sans-serif;
     box-shadow: 0 0 7px black;

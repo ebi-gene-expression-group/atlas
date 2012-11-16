@@ -79,26 +79,27 @@
 
 <div id="contents" class="page-contents">
 
-    <br/>
+    <c:import url="includes/experiment-header.jsp"/>
 
-    <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="form-grid">
-        <display:caption>
-            <div style="padding:10px">
+    <div class="block">
+        <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="form-grid">
+            <display:caption>
+                <div style="text-align:left;padding-top:10px; padding-bottom:5px">
+                    <label>
+                        Analysis Methods:
+                    </label>
+                </div>
+            </display:caption>
+            <display:column class="header-cell">
                 <label>
-                    Processing steps for ${experimentAccession} are as follows (in the order in which they were applied):
+                    ${csvLine[0]}
                 </label>
-            </div>
-        </display:caption>
-        <display:column class="header-cell">
-            <label>
-                ${csvLine[0]}
-            </label>
-        </display:column>
-        <display:column>
-            ${csvLine[1]}
-        </display:column>
-    </display:table>
-
+            </display:column>
+            <display:column>
+                ${csvLine[1]}
+            </display:column>
+        </display:table>
+    </div>
 </div>
 
     <!-- old style start -->

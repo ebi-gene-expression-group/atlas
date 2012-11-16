@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -59,13 +60,19 @@ public class AnalysisMethodsPageController {
 
     private static final String ANALYSIS_METHODS_FILE_SUFFIX = "-analysis-methods.tsv";
 
-    @Value("#{configuration['experiment.analysis-method.path.template']}")
-    private String pathTemplate;
+    private ApplicationProperties applicationProperties;
+    private ExperimentsCache experimentsCache;
+
+    @Inject
+    public AnalysisMethodsPageController(ApplicationProperties applicationProperties, ExperimentsCache experimentsCache) {
+        this.applicationProperties = applicationProperties;
+        this.experimentsCache = experimentsCache;
+    }
 
     @RequestMapping("/experiments/{experimentAccession}-analysis-methods")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
-        Path filePath = FileSystems.getDefault().getPath(MessageFormat.format(pathTemplate, experimentAccession));
+        Path filePath = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodCsvFilePath(experimentAccession));
 
         Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
 
@@ -75,6 +82,8 @@ public class AnalysisMethodsPageController {
 
         model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("csvLines", csvLines);
+        String specie = experimentsCache.getExperiment(experimentAccession).getSpecie();
+        model.addAttribute("specie", specie);
 
         return "experiment-analysis-methods";
     }

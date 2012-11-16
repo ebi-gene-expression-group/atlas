@@ -28,6 +28,7 @@
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
+        <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
         <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
@@ -73,8 +74,10 @@
         </table>
         <br/>
 
-        <div id="gene-distribution" class="block" style="margin-bottom:4px;height:100px"></div>
-        <div id="slider-range-max" style="font-size:65%;margin-left:27px;margin-right:17px"></div>
+        <div id="gene-distribution" class="block" style="margin-bottom:0px;height:100px"></div>
+        <div style="float:left"><a id="display-chart" href="#"><img title="Display gene distribution" src="resources/images/yellow-chart-icon.png" id="chart-button"/></a></div>
+        <div id="slider-range-max" style="font-size:65%;margin-left:27px;margin-right:17px; margin-top:13px">
+        </div>
 
     </form:form>
 </div>

@@ -111,6 +111,7 @@
                 if ($.browser.msie) {
                     if ($.browser.version <= 8.0) {
                         $("#anatomogram").hide();
+                        $("#heatmap-div").attr('style','');//reset the style attribuet to remove the margin left
                     }
                     $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
                     $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
@@ -121,8 +122,6 @@
                     initSearchForm('${requestURI}');
                     initHeatmapDisplayValueToggle();
                 }
-
-                $('#download-profiles').tooltip({content: "Download query results"});
 
             });
 
@@ -143,28 +142,8 @@
     <!-- old style end -->
 
 <div id="contents" class="page-contents">
-    <div class="block">
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <div class="experiment-accession">
-                        <a href="${requestURI}">${experimentAccession}</a>
-                    </div>
-                </td>
-                <td>
-                    <div style="font-weight: bold;">
-                        Transcription profiling by high throughput sequencing of individual and mixture of 16 human tissues RNA
-                    </div>
-                    <div>Organism: ${specie} - <a href="${requestURI}-analysis-methods" target="_blank">Analysis methods</a> - <a href="${arrayExpressURL}" target="_blank">ArrayExpress</a>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
 
-        </table>
-    </div>
-
+    <c:import url="includes/experiment-header.jsp"/>
 
     <c:import url="includes/request-preferences.jsp" />
 
@@ -214,7 +193,7 @@
                         </tr>
                     </table>
             </div>
-            <div style="margin-left:310px">
+            <div id="heatmap-div" style="margin-left:310px">
 
                 <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
 

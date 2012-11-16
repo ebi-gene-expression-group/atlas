@@ -62,5 +62,7 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
-
+    public String getAnalisysMethodCsvFilePath(String experimentAccession){
+        return MessageFormat.format(configurationProperties.getProperty("experiment.analysis-method.path.template"), experimentAccession);
+    }
 }

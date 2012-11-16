@@ -59,10 +59,20 @@ public class RequestPreferences {
 
     private boolean displayLevels;
 
+    private boolean displayGeneDistribution;
+
     private NumberUtils numberUtils = new NumberUtils();
 
     public SortedSet<String> getOrganismParts() {
         return organismParts;
+    }
+
+    public boolean isDisplayGeneDistribution() {
+        return displayGeneDistribution;
+    }
+
+    public void setDisplayGeneDistribution(boolean displayGeneDistribution) {
+        this.displayGeneDistribution = displayGeneDistribution;
     }
 
     public Integer getHeatmapMatrixSize() {
