@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -84,9 +85,13 @@ public class GeneProfilesPageController {
 
             model.addAttribute("allOrganismParts", applicationProperties.getAllOrganismParts());
 
-            String specie = experimentsCache.getExperiment(experimentAccession).getSpecie();
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+            String specie = experiment.getSpecie();
 
             model.addAttribute("specie", specie);
+
+            model.addAttribute("experimentDescription", experiment.getDescription());
 
             model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, true));
 

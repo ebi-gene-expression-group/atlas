@@ -9,7 +9,7 @@
             </td>
             <td>
                 <div style="font-weight: bold;">
-                    Transcription profiling by high throughput sequencing of individual and mixture of 16 human tissues RNA
+                    ${experimentDescription}
                 </div>
                 <div>Organism: ${specie} - <a href="experiments/${experimentAccession}-analysis-methods">Analysis Methods</a> - <a href="${arrayExpressURL}" target="_blank">ArrayExpress</a>
                 </div>
