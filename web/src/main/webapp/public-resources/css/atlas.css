@@ -41,6 +41,13 @@ body {
     width:950px;
 }
 
+.experiment-accession {
+    padding-right:5px;
+    font-size:18px;
+    font-weight:bold;
+    font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif
+}
+
 #reload-form-table {
     width: 40%;
 }

@@ -93,6 +93,9 @@ public class GeneProfilesPageController {
             model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, false));
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
+
+            model.addAttribute("arrayExpressURL", applicationProperties.getArrayExpressURL(experimentAccession));
+
         }
 
         return "experiment";

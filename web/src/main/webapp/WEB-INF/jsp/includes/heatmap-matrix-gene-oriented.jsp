@@ -36,7 +36,7 @@
                                    htmlId="heatmap-table" class="table-grid">
                         <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
                                         class="header-cell">
-                            <fmt:message bundle="${configuration}" key="gxa.gene.url.template" var="genePageURL">
+                            <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                                 <fmt:param value="${geneProfile.geneId}"/>
                             </fmt:message>
                             <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>

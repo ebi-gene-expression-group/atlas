@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -40,7 +41,7 @@ public class ApplicationProperties {
     private SortedSet<String> organismParts;
 
     @Inject
-    public ApplicationProperties(@Named("configuration") Properties configurationProperties){
+    ApplicationProperties(@Named("configuration") Properties configurationProperties){
         this.configurationProperties = configurationProperties;
         String organismPartsCSV = this.configurationProperties.getProperty("organism.parts");
         this.organismParts = new TreeSet<String>(Sets.newHashSet(organismPartsCSV.split(",")));
@@ -54,7 +55,12 @@ public class ApplicationProperties {
         String key = "organism.anatomogram." + specie.toLowerCase();
         String fileName = configurationProperties.getProperty( key + (isMale ? ".male" : ".female"));
         return fileName != null ? fileName : configurationProperties.getProperty(key);
-
     }
+
+    public String getArrayExpressURL(String experimentAccession){
+        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.url.template");
+        return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
+    }
+
 
 }

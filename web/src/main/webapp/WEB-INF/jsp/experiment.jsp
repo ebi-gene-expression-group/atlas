@@ -148,7 +148,7 @@
             <tbody>
             <tr>
                 <td>
-                    <div style="padding-right:5px;font-size:18px;font-weight:bold;font-family:Helvetica Narrow,Arial Narrow,Tahoma,Arial,Helvetica,sans-serif">
+                    <div class="experiment-accession">
                         <a href="${requestURI}">${experimentAccession}</a>
                     </div>
                 </td>
@@ -156,7 +156,7 @@
                     <div style="font-weight: bold;">
                         Transcription profiling by high throughput sequencing of individual and mixture of 16 human tissues RNA
                     </div>
-                    <div>Organism: ${specie} - <a href="${experimentAccession}-analysis-methods">Analysis methods</a> - <a href="#">ArrayExpress</a>
+                    <div>Organism: ${specie} - <a href="${requestURI}-analysis-methods" target="_blank">Analysis methods</a> - <a href="${arrayExpressURL}" target="_blank">ArrayExpress</a>
                     </div>
                 </td>
             </tr>
