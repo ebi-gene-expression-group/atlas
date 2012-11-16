@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,15 +35,12 @@ import java.util.TreeSet;
 @Scope("singleton")
 public class ApplicationProperties {
 
-    private ExperimentsCache experimentsCache;
-
     private Properties configurationProperties;
 
     private SortedSet<String> organismParts;
 
     @Inject
-    public ApplicationProperties(ExperimentsCache experimentsCache, @Named("configuration") Properties configurationProperties){
-        this.experimentsCache = experimentsCache;
+    public ApplicationProperties(@Named("configuration") Properties configurationProperties){
         this.configurationProperties = configurationProperties;
         String organismPartsCSV = this.configurationProperties.getProperty("organism.parts");
         this.organismParts = new TreeSet<String>(Sets.newHashSet(organismPartsCSV.split(",")));
@@ -54,8 +50,7 @@ public class ApplicationProperties {
         return organismParts;
     }
 
-    public String getAnatomogramFileName(String experimentAccession, boolean isMale){
-        String specie = experimentsCache.getExperiment(experimentAccession).getSpecie();
+    public String getAnatomogramFileName(String specie, boolean isMale){
         String key = "organism.anatomogram." + specie.toLowerCase();
         String fileName = configurationProperties.getProperty( key + (isMale ? ".male" : ".female"));
         return fileName != null ? fileName : configurationProperties.getProperty(key);

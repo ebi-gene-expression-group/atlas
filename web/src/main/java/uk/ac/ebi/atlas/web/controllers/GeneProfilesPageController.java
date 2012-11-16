@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -47,10 +48,13 @@ public class GeneProfilesPageController {
 
     private ApplicationProperties applicationProperties;
 
+    private ExperimentsCache experimentsCache;
+
     @Inject
-    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties) {
+    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties, ExperimentsCache experimentsCache) {
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
+        this.experimentsCache = experimentsCache;
     }
 
     @RequestMapping("/experiments/{experimentAccession}")
@@ -80,9 +84,13 @@ public class GeneProfilesPageController {
 
             model.addAttribute("allOrganismParts", applicationProperties.getAllOrganismParts());
 
-            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(experimentAccession, true));
+            String specie = experimentsCache.getExperiment(experimentAccession).getSpecie();
 
-            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(experimentAccession, false));
+            model.addAttribute("specie", specie);
+
+            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, true));
+
+            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, false));
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
         }

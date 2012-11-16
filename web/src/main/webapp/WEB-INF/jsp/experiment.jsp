@@ -61,6 +61,10 @@
     <!-- old style end -->
 
     <title>Experiment</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
+
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/anatomogram.css">
@@ -73,7 +77,7 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.1.custom.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui/jquery-ui-1.9.1.custom.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
     <!--[if lte IE 8]>
@@ -89,10 +93,6 @@
             src="${pageContext.request.contextPath}/resources/js/slider.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
-
-    <link rel="stylesheet" type="text/css"
-            href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
-
 
     <script>
 
@@ -122,7 +122,7 @@
                     initHeatmapDisplayValueToggle();
                 }
 
-                //$(".gradient-level").attr('style','color:white');
+                $('#download-profiles').tooltip({content: "Download query results"});
 
             });
 
@@ -143,6 +143,28 @@
     <!-- old style end -->
 
 <div id="contents" class="page-contents">
+    <div class="block">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <div style="padding-right:5px;font-size:18px;font-weight:bold;font-family:Helvetica Narrow,Arial Narrow,Tahoma,Arial,Helvetica,sans-serif">
+                        <a href="${requestURI}">${experimentAccession}</a>
+                    </div>
+                </td>
+                <td>
+                    <div style="font-weight: bold;">
+                        Transcription profiling by high throughput sequencing of individual and mixture of 16 human tissues RNA
+                    </div>
+                    <div>Organism: ${specie} - <a href="${experimentAccession}-analysis-methods">Analysis methods</a> - <a href="#">ArrayExpress</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
 
     <c:import url="includes/request-preferences.jsp" />
 
@@ -194,20 +216,7 @@
             </div>
             <div style="margin-left:310px">
 
-                <div id="geneCount" style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
-                <div>
-                    <a id="download-profiles" href="<c:out value='${downloadUrl}'/>" target="_blank"> Download Gene Expression Profiles </a>
-                </div>
-                <br/>
-
-                <c:choose>
-                    <c:when test="${param.organismOriented!=null}">
-                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
-                    </c:when>
-                    <c:otherwise>
-                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
-                    </c:otherwise>
-                </c:choose>
+                <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
 
             </div>
         </div>

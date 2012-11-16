@@ -40,10 +40,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationPropertiesTest {
-
-    private static final String HOMO_SAPIENS_EXPERIMENT_ACCESSION = "AN_ACCESSION_1";
-    private static final String MOUSE_EXPERIMENT_ACCESSION = "AN_ACCESSION_2";
-
     private static final String HOMO_SAPIENS_SPECIE = "homo sapiens";
     private static final String MOUSE_SPECIE = "mousy";
 
@@ -70,9 +66,6 @@ public class ApplicationPropertiesTest {
 
     @Before
     public void setUp() throws Exception {
-        when(experimentCacheMock.getExperiment(HOMO_SAPIENS_EXPERIMENT_ACCESSION)).thenReturn(homoSapiensExperimentMock);
-        when(experimentCacheMock.getExperiment(MOUSE_EXPERIMENT_ACCESSION)).thenReturn(mouseExperimentMock);
-
         when(configurationMock.getProperty(ORGANISM_PARTS_PROPERTY_KEY)).thenReturn("heart,wind,fire");
         when(configurationMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".male")).thenReturn(HOMO_SAPIENS_FILE_NAME);
         when(configurationMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".female")).thenReturn(FEMALE_SAPIENS_FILE_NAME);
@@ -81,7 +74,7 @@ public class ApplicationPropertiesTest {
         when(homoSapiensExperimentMock.getSpecie()).thenReturn(HOMO_SAPIENS_SPECIE);
         when(mouseExperimentMock.getSpecie()).thenReturn(MOUSE_SPECIE);
 
-        subject = new ApplicationProperties(experimentCacheMock, configurationMock);
+        subject = new ApplicationProperties(configurationMock);
     }
 
     @Test
@@ -92,10 +85,10 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void testGetAnatomogramFileName() throws Exception {
-        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_EXPERIMENT_ACCESSION, true);
-        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_EXPERIMENT_ACCESSION, false);
-        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_EXPERIMENT_ACCESSION, true);
-        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_EXPERIMENT_ACCESSION, false);
+        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, true);
+        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, false);
+        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIE, true);
+        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIE, false);
 
         assertThat(fileNameMale, is(HOMO_SAPIENS_FILE_NAME));
         assertThat(fileNameFemale, is(FEMALE_SAPIENS_FILE_NAME));
