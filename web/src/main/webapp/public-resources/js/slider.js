@@ -113,7 +113,7 @@ function initSlider(cutoff, experimentAccession) {
             $("#prefForm #displayGeneDistribution").val("true");
         }
 
-        $("#chart-button").toggle(
+        $("#chart-button").button().toggle(
             function(event, fast){
                 hideGeneDistribution(this, fast == true ? true : false);
             }
