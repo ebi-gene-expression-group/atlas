@@ -42,7 +42,7 @@ function initHeatmapDisplayValueToggle(){
     $("#heatmap-table td:has(div[data-color])").click(function() {
         var div = $(this).find("div");
         var style = div.attr("style");
-        if (style.indexOf("font-size:1px") != -1){
+        if (style.search("font-size:\\s*1px") != -1){
             showCellValue(div)
         }else{
             hideCellValue(div);
