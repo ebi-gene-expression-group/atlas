@@ -50,6 +50,10 @@ body {
     font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif
 }
 
+.button-image{
+    padding:3px;
+}
+
 #reload-form-table {
     width: 40%;
 }
