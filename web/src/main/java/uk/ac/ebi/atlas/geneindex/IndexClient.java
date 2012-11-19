@@ -6,9 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.net.URISyntaxException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Named
 public class IndexClient {
@@ -21,7 +19,7 @@ public class IndexClient {
 
     }
 
-    public String findGeneIds(Collection<String> queryValues, String organism) throws URISyntaxException {
+    public String findGeneIdJson(Collection<String> queryValues, String organism) throws URISyntaxException {
 
         Map<String, String> variables = new HashMap<>(2);
         variables.put("query", buildQueryString(queryValues));
@@ -33,6 +31,14 @@ public class IndexClient {
         System.out.println("object = " + object);
 
         return object;
+    }
+
+    public Set<String> findGeneIds(Set<String> queryValues, String organism) {
+        Set<String> result = new HashSet<>();
+
+        //ToDo: get gene Ids from solr
+
+        return queryValues;
     }
 
     protected String buildQueryString(Collection<String> queryValues) {
