@@ -35,7 +35,7 @@ public class IndexClientTest {
     public void  testGetGeneIds() throws URISyntaxException {
         String result = subject.findGeneIdJson(Lists.newArrayList("binding", "GO:3A0016881"), "homo sapiens");
 
-        assertThat(result, containsString("\"numFound\":15060"));
+        assertThat(result, containsString("\"numFound\":"));
 //        String enzyme = subject.findGeneIdJson(Lists.newArrayList("cancer", "GO:3A0016881"), "homo sapiens");
 //        String enzyme = subject.findGeneIdJson(Lists.newArrayList("enzyme"), "homo sapiens");
 
