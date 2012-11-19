@@ -77,7 +77,7 @@
                 </td>
                 <td style="vertical-align: top">
                     <div style="float:left">
-                        <a id="download-profiles-link" title="Download query results" href="/gxa/experiments/${experimentAccession}.tsv" target="_blank">
+                        <a id="download-profiles-link" title="Download query results" href="${downloadUrl}" target="_blank">
 
                             <img id="download-profiles" alt="Download query results" style="width:20px" class="button-image" src="resources/images/download_blue_small.png">
                         </a>
