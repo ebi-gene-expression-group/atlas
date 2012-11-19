@@ -45,6 +45,7 @@ body {
     text-align: left;
     padding-right:5px;
     font-size:18px;
+    white-space: nowrap;
     font-weight:bold;
     font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif
 }

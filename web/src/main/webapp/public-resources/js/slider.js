@@ -135,6 +135,7 @@ function initSlider(cutoff, experimentAccession) {
                 top:y - 25,
                 left:x - 6,
                 border:'2px solid rgb(238,195,46)',
+                'border-radius': '4px',
                 padding:'2px',
                 'font-family':'Verdana, Helvetica, Arial, sans-serif',
                 'font-size':'smaller',
