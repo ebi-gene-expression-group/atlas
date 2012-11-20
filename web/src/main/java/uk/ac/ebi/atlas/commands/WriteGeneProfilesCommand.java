@@ -75,6 +75,11 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         return count;
     }
 
+    @Override
+    protected Long returnEmpty() {
+        return 0L;
+    }
+
     protected String[] buildCsvHeaders(Set<String> organismParts){
         return buildCsvRow(new String[]{"Gene name", "Gene Id"}, organismParts.toArray(new String[organismParts.size()]));
     }

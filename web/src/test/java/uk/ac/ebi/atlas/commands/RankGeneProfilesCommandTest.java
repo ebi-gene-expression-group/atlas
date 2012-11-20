@@ -1,15 +1,11 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.Sets;
-import org.hibernate.validator.constraints.ModCheck;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -18,15 +14,12 @@ import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyDouble;
-import static org.mockito.Matchers.anySet;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,7 +55,7 @@ public class RankGeneProfilesCommandTest {
     public void initializeSubject() throws Exception {
 
         // no filtering should be done here
-        when(indexClient.findGeneIds(anySet(),anyString())).thenReturn(Sets.<String>newHashSet());
+        when(indexClient.findGeneIds(anyString(), anyString())).thenReturn(Sets.<String>newHashSet());
 
         when(experiment.getSpecie()).thenReturn("SPECIE");
 

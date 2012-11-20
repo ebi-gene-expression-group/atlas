@@ -22,8 +22,6 @@
 
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -33,7 +31,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.regex.Pattern;
 
 @Named("requestPreferences")
 @Scope("prototype")
@@ -41,7 +38,6 @@ public class RequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
     static final double DEFAULT_CUTOFF = 0.5d;
-    static final Pattern commaOrSpaceSeparatorPattern = Pattern.compile("\\s*(,+|\\s)+\\s*");
 
     @NotNull
     @Range(min = 0, max = 1000)
@@ -88,14 +84,14 @@ public class RequestPreferences {
     }
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = cutoff !=null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
+        this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
     }
 
-    public void setDisplayLevels(boolean displayLevels){
+    public void setDisplayLevels(boolean displayLevels) {
         this.displayLevels = displayLevels;
     }
 
-    public boolean getDisplayLevels(){
+    public boolean getDisplayLevels() {
         return displayLevels;
     }
 
@@ -109,13 +105,6 @@ public class RequestPreferences {
 
     public void setGeneIDsString(String geneIDsString) {
         this.geneIDsString = geneIDsString;
-        if (!Strings.isNullOrEmpty(geneIDsString)) {
-            setGeneIDs(commaOrSpaceSeparatorPattern.split(geneIDsString));
-        }
-    }
-
-    private void setGeneIDs(String[] geneIDs){
-        this.geneIDs = Sets.newHashSet(geneIDs);
     }
 
     public Set<String> getGeneIDs() {

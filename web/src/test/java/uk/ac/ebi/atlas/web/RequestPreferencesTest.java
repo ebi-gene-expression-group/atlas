@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Splitter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,7 +62,29 @@ public class RequestPreferencesTest {
 
     }
 
-    public void cutoffShouldBeRoundedToNoFractionalDigitForValuesLargerThanOne(){
+    @Test
+    public void testGetQueryValuesIDs() throws Exception {
+
+        //given
+        subject.setGeneIDsString("\"g1 g2\"   g3 , g4 ,, g5 , , g6");
+
+        //then
+        assertThat(subject.getGeneIDs().size(), is(5));
+
+        //and
+        assertThat(subject.getGeneIDs(), hasItems("\"g1 g2\"", "g3", "g4", "g5", "g6"));
+
+    }
+
+    @Test
+    public void geneQuerySplit() {
+        //"aa 1 bb" cc, dd
+        String s = "\"aa 1 bb\" cc, dd";
+        Iterable<String> strings = Splitter.on(CharMatcher.anyOf(", ")).omitEmptyStrings().split(s);
+        System.out.println("strings = " + strings);
+    }
+
+    public void cutoffShouldBeRoundedToNoFractionalDigitForValuesLargerThanOne() {
         //given
         subject.setCutoff(2.1211);
         //then
@@ -68,14 +92,14 @@ public class RequestPreferencesTest {
     }
 
 
-    public void cutoffShouldBeRoundedTo1FractionalDigitForValuesSmallerThanOne(){
+    public void cutoffShouldBeRoundedTo1FractionalDigitForValuesSmallerThanOne() {
         //given
         subject.setCutoff(0.1211);
         //then
         assertThat(subject.getCutoff(), is(0.1d));
     }
 
-    public void heatmapMatrixSizeIsSetToTheDefaultRankingSizeIfRequestDoesntSpecifyAnyValue(){
+    public void heatmapMatrixSizeIsSetToTheDefaultRankingSizeIfRequestDoesntSpecifyAnyValue() {
         //given
         subject.setHeatmapMatrixSize(null);
         //then

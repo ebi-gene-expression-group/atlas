@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
@@ -40,15 +42,18 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.experimentsCache = experimentsCache;
     }
 
-    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
+    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession, Set<String> geneIDs) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .withCutoff(requestPreferences.getCutoff()).create();
 
-        Set<String> geneIDs = indexClient.findGeneIds(requestPreferences.getGeneIDs(),
-                experimentsCache.getExperiment(experimentAccession).getSpecie());
 
         return new GeneProfileInputStreamFilter(geneProfileInputStream, geneIDs, requestPreferences.getOrganismParts());
+
+    }
+
+    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
+        return buildGeneProfilesInputStream(experimentAccession, null);
 
     }
 
@@ -56,8 +61,23 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.requestPreferences = requestPreferences;
     }
 
-    public T apply(String experimentAccession){
-        try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession)){
+    public T apply(String experimentAccession) {
+
+        Set<String> geneIDs = new HashSet<>();
+
+        String geneProperties = requestPreferences.getGeneIDsString();
+
+        if (!StringUtils.isEmpty(geneProperties)) {
+
+            String organism = experimentsCache.getExperiment(experimentAccession).getSpecie();
+            geneIDs.addAll(indexClient.findGeneIds(geneProperties, organism));
+
+            if (geneIDs.isEmpty()) {
+                return returnEmpty();
+            }
+        }
+
+        try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession, geneIDs)) {
 
             return apply(requestPreferences, inputStream);
 
@@ -68,7 +88,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     }
 
     protected abstract T apply(RequestPreferences requestPreferences
-                                , ObjectInputStream<GeneProfile> inputStream) throws IOException;
+            , ObjectInputStream<GeneProfile> inputStream) throws IOException;
 
-
+    protected abstract T returnEmpty();
 }
