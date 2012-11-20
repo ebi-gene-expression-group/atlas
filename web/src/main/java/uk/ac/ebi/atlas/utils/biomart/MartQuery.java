@@ -41,11 +41,8 @@ public class MartQuery {
      * @param dataset       a name of a dataset within a virtualSchema (mart) to query data from
      */
     public MartQuery(String virtualSchema, String dataset) {
-        checkNotNull(virtualSchema);
-        checkNotNull(dataset);
-
-        this.virtualSchema = virtualSchema;
-        this.dataset = dataset;
+        this.virtualSchema = checkNotNull(virtualSchema);
+        this.dataset = checkNotNull(dataset);
     }
 
     /**
