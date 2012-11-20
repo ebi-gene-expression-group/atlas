@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
@@ -45,10 +47,10 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .withCutoff(requestPreferences.getCutoff()).create();
 
-        Set<String> geneIDs = indexClient.findGeneIds(requestPreferences.getGeneIDs(),
+        List<String> geneIDs = indexClient.findGeneIds(requestPreferences.getGeneIDs(),
                 experimentsCache.getExperiment(experimentAccession).getSpecie());
 
-        return new GeneProfileInputStreamFilter(geneProfileInputStream, geneIDs, requestPreferences.getOrganismParts());
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, Sets.newHashSet(geneIDs), requestPreferences.getOrganismParts());
 
     }
 

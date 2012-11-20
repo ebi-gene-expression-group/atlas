@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.ModCheck;
 import org.junit.Before;
@@ -62,7 +63,7 @@ public class RankGeneProfilesCommandTest {
     public void initializeSubject() throws Exception {
 
         // no filtering should be done here
-        when(indexClient.findGeneIds(anySet(),anyString())).thenReturn(Sets.<String>newHashSet());
+        when(indexClient.findGeneIds(anySet(),anyString())).thenReturn(Lists.<String>newArrayList());
 
         when(experiment.getSpecie()).thenReturn("SPECIE");
 
