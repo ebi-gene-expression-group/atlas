@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -44,6 +45,7 @@ public class RequestPreferencesTest {
         subject = new RequestPreferences();
     }
 
+    @Test
     public void cutoffShouldBeRoundedToNoFractionalDigitForValuesLargerThanOne() {
         //given
         subject.setCutoff(2.1211);
@@ -51,7 +53,7 @@ public class RequestPreferencesTest {
         assertThat(subject.getCutoff(), is(2d));
     }
 
-
+    @Test
     public void cutoffShouldBeRoundedTo1FractionalDigitForValuesSmallerThanOne() {
         //given
         subject.setCutoff(0.1211);
@@ -59,6 +61,7 @@ public class RequestPreferencesTest {
         assertThat(subject.getCutoff(), is(0.1d));
     }
 
+    @Test
     public void heatmapMatrixSizeIsSetToTheDefaultRankingSizeIfRequestDoesntSpecifyAnyValue() {
         //given
         subject.setHeatmapMatrixSize(null);
