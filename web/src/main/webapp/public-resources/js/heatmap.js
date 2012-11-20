@@ -1,9 +1,17 @@
 function initHeatmapDisplayValueToggle(){
 
+    function showCellValue(div){
+        $(div).attr('style','font-size:9px;background-color:white;margin:4px;padding:2px;');
+    }
+
+    function hideCellValue(div){
+        $(div).attr('style','font-size:1px;color:'+$(div).attr("data-color"));
+    }
+
     function showValues(button){
         $(button).button('option','label','Hide levels');
         $("div[data-color]").each(function(){
-            $(this).attr('style','font-size:9px;background-color:white;margin:4px;padding:2px;');
+            showCellValue(this);
         });
         $(".gradient-level").attr("style",'');
     }
@@ -11,7 +19,7 @@ function initHeatmapDisplayValueToggle(){
     function hideValues(button){
         $(button).button('option','label','Display levels');
         $("div[data-color]").each(function(){
-            $(this).attr('style','font-size:1px');
+            hideCellValue(this);
         });
         $(".gradient-level").attr("style",'color:white');
     }
@@ -34,10 +42,16 @@ function initHeatmapDisplayValueToggle(){
     $("#heatmap-table td:has(div[data-color])").click(function() {
         var div = $(this).find("div");
         var style = div.attr("style");
-        $(div).attr('style',style == "font-size:1px"?"font-size:9px;background-color:white;margin:4px;padding:2px;":"font-size:1px");
+        if (style.search("font-size:\\s*1px") != -1){
+            showCellValue(div)
+        }else{
+            hideCellValue(div);
+        }
     });
 
-    $('#download-profiles').button().tooltip({content: "Download query results"});
+    $('#download-profiles').button();
+
+    $('#download-profiles').tooltip({content: "Download query results"});
 
 
 

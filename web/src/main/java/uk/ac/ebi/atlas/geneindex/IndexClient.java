@@ -1,20 +1,22 @@
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.base.Joiner;
-import com.google.gson.stream.JsonReader;
+import com.jayway.jsonpath.JsonPath;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.*;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.List;
 
 @Named
+@Scope("prototype")
 public class IndexClient {
+
+    private static final String JSON_PATH_EXPRESSION = "$.response.docs[*].identifier";
+
+    private static final String SOLR_REST_QUERY_TEMPLATE = "select?q={query} " +
+                                                "AND species{organism}&start=0&rows=100000&fl=identifier&wt=json";
 
     private RestTemplate restTemplate;
 
@@ -33,71 +35,23 @@ public class IndexClient {
         this.serverURL = serverURL;
     }
 
-    public String findGeneIdJson(String searchText, String organism) {
+    protected String findGeneIdJson(String searchText, String organism) {
 
-        Map<String, String> variables = new HashMap<>(2);
-        variables.put("query", queryBuilder.buildQueryString(searchText));
-        variables.put("organism", ":\"" + organism.toLowerCase() + "\"");
+        String geneProperty = queryBuilder.buildQueryString(searchText);
+        String organismQuery = ":\"" + organism.toLowerCase() + "\"";
 
-        String object = restTemplate.getForObject(serverURL + "select?q={query} " +
-                "AND species{organism}&start=0&rows=100000&fl=identifier&wt=json", String.class, variables);
-
-        System.out.println("object = " + object);
+        String object = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
 
         return object;
     }
 
-    public Set<String> findGeneIds(String searchText, String organism) {
-
-        return parseJson(findGeneIdJson(checkNotNull(searchText), organism));
-
+    public List<String> findGeneIds(String searchText, String organism) {
+        String jsonString = findGeneIdJson(searchText,  organism);
+        return extractGeneIds(jsonString);
     }
 
-
-
-    protected String buildQueryString(Collection<String> queryValues) {
-        StringBuilder stringBuilder = new StringBuilder("(alltext:\"");
-        return Joiner.on("\" OR alltext:\"").appendTo(stringBuilder, queryValues).append("\")").toString();
+    protected List<String> extractGeneIds(String jsonString){
+        return JsonPath.read(jsonString, JSON_PATH_EXPRESSION);
     }
 
-    protected Set<String> parseJson(String text) {
-        Set<String> result = new HashSet<>();
-        try (JsonReader reader = new JsonReader(new StringReader(text))) {
-            reader.beginObject();
-            while (reader.hasNext()) {
-                String name = reader.nextName();
-                if (name.equals("response")) {
-                    reader.beginObject();
-                    while (reader.hasNext()) {
-                        name = reader.nextName();
-                        if (name.equals("docs")) {
-                            reader.beginArray();
-                            while (reader.hasNext()) {
-                                reader.beginObject();
-                                name = reader.nextName();
-                                if (name.equals("identifier")) {
-                                    result.add(reader.nextString());
-                                } else {
-                                    reader.skipValue();
-                                }
-                                reader.endObject();
-                            }
-                            reader.endArray();
-
-                        } else {
-                            reader.skipValue();
-                        }
-                    }
-                    reader.endObject();
-                } else {
-                    reader.skipValue();
-                }
-            }
-            reader.endObject();
-            return result;
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-
-    }
 }

@@ -28,7 +28,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id="geneCount")
     WebElement geneFound;
 
-    @FindBy(id = "download-profiles")
+    @FindBy(id = "download-profiles-link")
     WebElement downloadExpressionProfilesLink;
 
     @FindBy(id = "display-levels")

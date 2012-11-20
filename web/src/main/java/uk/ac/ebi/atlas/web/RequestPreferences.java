@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.utils.NumberUtils;
 import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 import java.util.SortedSet;
 
 @Named("requestPreferences")
@@ -50,8 +49,6 @@ public class RequestPreferences {
     private SortedSet<String> organismParts;
 
     private String geneIDsString;
-
-    private Set<String> geneIDs;
 
     private boolean displayLevels;
 
@@ -107,8 +104,5 @@ public class RequestPreferences {
         this.geneIDsString = geneIDsString;
     }
 
-    public Set<String> getGeneIDs() {
-        return geneIDs;
-    }
 
 }

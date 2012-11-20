@@ -32,13 +32,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
 <head>
-    <base href="${pageContext.request.contextPath}/" />
+    <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
     <!-- old style start -->
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="en-GB" http-equiv="Content-Language">
     <meta content="_top" http-equiv="Window-target">
-    <%--<meta content="IE=7" http-equiv="X-UA-Compatible">--%>
     <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
     <meta content="IE=9" http-equiv="X-UA-Compatible"/>
 
@@ -71,7 +70,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
 
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-1.8.2.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript"
@@ -111,7 +110,10 @@
                 if ($.browser.msie) {
                     if ($.browser.version <= 8.0) {
                         $("#anatomogram").hide();
-                        $("#heatmap-div").attr('style','');//reset the style attribuet to remove the margin left
+                        $("#gene-distribution-button").hide();//hide the bar chart button
+                        $("#gene-distribution").hide();//hide the bar chart
+                        $("#slider-range-max").hide();//hide the cutoff slider
+                        $("#heatmap-div").attr('style','');//reset the style attribute to remove the margin left
                     }
                     $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
                     $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
@@ -119,9 +121,9 @@
                 } else {
                     initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                     initSlider(${preferences.cutoff}, '${experimentAccession}');
-                    initSearchForm('${requestURI}');
-                    initHeatmapDisplayValueToggle();
                 }
+                initSearchForm('${requestURI}');
+                initHeatmapDisplayValueToggle();
 
             });
 
@@ -183,8 +185,10 @@
 
                     <table>
                         <tr>
-                            <td style="padding-top: 20px; vertical-align:top">
-                                <div id="sexToggle" class="male" ${maleAnatomogramFile == femaleAnatomogramFile ? 'style="background-size:0%"':''}></div>
+                            <td style="width:25px;padding-top: 15px; vertical-align:top">
+                                <div id="sex-toggle" ${maleAnatomogramFile == femaleAnatomogramFile ? 'style="background-size:0%"':''}>
+                                    <img id="sex-toggle-image" title="Switch anatomogram" class="button-image" style="width:20px" src="resources/images/male_selected.png"/>
+                                </div>
                             </td>
                             <td>
                                 <div id="anatomogramBody" style="width: 250px; height: 400px">

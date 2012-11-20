@@ -62,7 +62,7 @@
 
                                 <c:if test="${expressionLevel != 0}">
 
-                                    <div style="font-size:1px" data-organism-part="${organismPart}" data-color="${cellColour}">
+                                    <div style="font-size:1px;color:${cellColour}" data-organism-part="${organismPart}" data-color="${cellColour}">
                                         <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                           value="${expressionLevel}" groupingUsed="false"/>
                                     </div>
@@ -76,10 +76,10 @@
                     </display:table>
                 </td>
                 <td style="vertical-align: top">
-                    <div>
-                        <a id="download-profiles" title="Download query results" href="/gxa/experiments/${experimentAccession}.tsv" target="_blank">
+                    <div style="float:left">
+                        <a id="download-profiles-link" title="Download query results" href="${downloadUrl}" target="_blank">
 
-                            <img  alt="Download query results" src="resources/images/download_blue_small.png">
+                            <img id="download-profiles" alt="Download query results" style="width:20px" class="button-image" src="resources/images/download_blue_small.png">
                         </a>
                     </div>
                 </td>
