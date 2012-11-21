@@ -20,30 +20,31 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.utils.biomart;
+package uk.ac.ebi.atlas.commons;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.protocol.HTTP;
 
+import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.List;
 
-public class HttpClientHelper {
+@Named("httpRequest")
+public class HttpRequest {
 
-    public static InputStream httpPost(HttpClient httpClient, URI uri, List<? extends NameValuePair> params) throws IOException {
-        HttpPost httppost = new HttpPost(uri);
+    public static InputStream httpPost(org.apache.http.client.HttpClient httpClient, String url, List<? extends NameValuePair> params) throws IOException {
+        HttpPost httppost = new HttpPost(url);
         httppost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
         HttpResponse response = httpClient.execute(httppost);
+
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != HttpStatus.SC_OK) {
-            throw new IOException("Server returned invalid response: [status_code = " + statusCode + "; url = " + uri + "]");
+            throw new IOException("Server returned invalid response: [status_code = " + statusCode + "; url = " + url + "]");
         }
         return response.getEntity().getContent();
     }

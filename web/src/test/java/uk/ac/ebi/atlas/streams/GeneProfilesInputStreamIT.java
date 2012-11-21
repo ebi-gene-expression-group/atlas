@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
@@ -97,7 +97,6 @@ public class GeneProfilesInputStreamIT {
         assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
         assertThat(geneProfile.getSpecificity(), is(1));
         assertThat(geneProfile.iterator().hasNext(), is(true));
-        //ToDo: GeneProfile needs a getter for Expressions
 
         //given we poll twice more
         geneProfile = subject.readNext();

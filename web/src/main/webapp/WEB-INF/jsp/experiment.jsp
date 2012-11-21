@@ -186,7 +186,7 @@
                     <table>
                         <tr>
                             <td style="width:25px;padding-top: 15px; vertical-align:top">
-                                <div id="sex-toggle" ${maleAnatomogramFile == femaleAnatomogramFile ? 'style="background-size:0%"':''}>
+                                <div id="sex-toggle">
                                     <img id="sex-toggle-image" title="Switch anatomogram" class="button-image" style="width:20px" src="resources/images/male_selected.png"/>
                                 </div>
                             </td>
