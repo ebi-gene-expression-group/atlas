@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 import uk.ac.ebi.atlas.web.ApplicationProperties;

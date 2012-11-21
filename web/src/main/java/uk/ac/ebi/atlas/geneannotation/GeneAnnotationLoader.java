@@ -1,16 +1,37 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.geneannotation;
 
-import com.sleepycat.collections.StoredMap;
 import com.sleepycat.collections.TransactionRunner;
-import com.sleepycat.collections.TransactionWorker;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.utils.biomart.BioMartGeneNameStream;
+import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
+import uk.ac.ebi.atlas.commons.berkeley.StringValueTransactionWorker;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.biomart.BioMartGeneNameStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ConcurrentMap;
 
 @Named("geneAnnotationLoader")
 @Scope("prototype")
@@ -33,77 +54,29 @@ public class GeneAnnotationLoader {
 
 
     protected void loadAnnotations(ObjectInputStream<String[]> annotationsInputStream,
-                                GeneAnnotationTransactionWorker transactionWorker) throws Exception {
+                                ObjectValueTransactionWorker transactionWorker) throws Exception {
 
-        String[] line;
+        String[] row;
 
-        while ((line = annotationsInputStream.readNext()) != null) {
-            transactionRunner.run(transactionWorker.setLine(line));
+        while ((row = annotationsInputStream.readNext()) != null) {
+            transactionRunner.run(transactionWorker.setRow(row));
 
         }
     }
 
-    public void loadGeneNames() {
+    public void loadGeneNames(String organism) {
 
-        GeneAnnotationTransactionWorker<String> transactionWorker = new GeneNameTransactionWorker
-                (annotationEnvironment.geneNames());
+        ObjectValueTransactionWorker<String> transactionWorker =
+                new StringValueTransactionWorker(annotationEnvironment.geneNames());
 
-        try (ObjectInputStream<String[]> annotationsInputStream = geneNameStreamBuilder.create()) {
+        try (ObjectInputStream<String[]> annotationsInputStream = geneNameStreamBuilder.create(organism)) {
+
             loadAnnotations(annotationsInputStream, transactionWorker);
+
         } catch (Exception e) {
             throw new IllegalStateException("Error while writing gene name DB: " + e.getMessage());
         }
     }
 
-    static class GeneNameTransactionWorker extends GeneAnnotationTransactionWorker<String> {
-
-        protected GeneNameTransactionWorker(StoredMap<String, String> map) {
-            super(map);
-        }
-
-        @Override
-        protected String getValue() {
-            return line[1];
-        }
-
-        @Override
-        protected String getKey() {
-            return line[0];
-        }
-
-    }
-
-    static abstract class GeneAnnotationTransactionWorker<V> implements TransactionWorker {
-
-        protected String[] line;
-
-        private ConcurrentMap<String, V> map;
-
-        protected GeneAnnotationTransactionWorker(ConcurrentMap<String, V> map) {
-            this.map = map;
-        }
-
-        public GeneAnnotationTransactionWorker setLine(String[] line) {
-            this.line = line;
-            return this;
-        }
-
-        @Override
-        public void doWork() throws Exception {
-
-            try {
-                if (!map.containsKey(getKey()))
-                    map.put(getKey(), getValue());
-                else
-                    map.replace(getKey(), getValue());
-            } catch (Exception e) {
-                throw new IllegalStateException("Error while writing gene annotations DB: " + e.getMessage());
-            }
-        }
-
-        protected abstract V getValue();
-
-        protected abstract String getKey();
-    }
 
 }

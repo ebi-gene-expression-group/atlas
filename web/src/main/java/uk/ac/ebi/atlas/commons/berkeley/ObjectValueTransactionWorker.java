@@ -20,31 +20,37 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.geneannotation;
+package uk.ac.ebi.atlas.commons.berkeley;
 
+import com.sleepycat.collections.TransactionWorker;
 
-import javax.annotation.Resource;
-import javax.inject.Named;
-import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
-@Named("geneNamesProvider")
-public class GeneNamesProvider {
+public abstract class ObjectValueTransactionWorker<V> implements TransactionWorker {
 
-    Map<String, String> geneNames;
+    protected String[] row;
 
-    public GeneNamesProvider() {
+    private ConcurrentMap<String, V> map;
+
+    protected ObjectValueTransactionWorker(ConcurrentMap<String, V> map) {
+        this.map = map;
     }
 
-
-    @Resource(name = "geneNames")
-    public void setGeneNames(ConcurrentMap<String, String> geneNames) {
-        this.geneNames = geneNames;
+    public ObjectValueTransactionWorker setRow(String[] row) {
+        this.row = row;
+        return this;
     }
 
-    public String getGeneName(String ensGeneId) {
-        String value = geneNames.get(ensGeneId);
-        return value == null ? ensGeneId : value;
+    @Override
+    public void doWork() throws Exception {
+        try {
+            map.put(getKey(), getValue());
+        } catch (Exception e) {
+            throw new IllegalStateException("Error while writing gene annotations DB: " + e.getMessage());
+        }
     }
 
+    protected abstract V getValue();
+
+    protected abstract String getKey();
 }

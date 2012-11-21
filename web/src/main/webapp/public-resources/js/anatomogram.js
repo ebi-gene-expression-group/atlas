@@ -114,6 +114,8 @@ function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
             $(this).attr("src","resources/images/male_selected.png")
             loadAnatomogram("resources/svg/" + fileNameMale);
         }).tooltip();
+    } else {
+        $("#sex-toggle").hide();
     }
 }
 
