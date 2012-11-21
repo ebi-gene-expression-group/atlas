@@ -34,7 +34,7 @@ public class GenePropertyQueryBuilder {
             }
 
             // this is used as a delimiter
-            else if (cur == ' ') {
+            else if (cur == ' ' || cur == '\n' || cur == '\r') {
                 if (sb.length() > 0)
                     result.add(sb.toString());
                 // clear StringBuffer

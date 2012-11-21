@@ -48,6 +48,10 @@ public class GenePropertyQueryBuilderTest {
         strings = subject.parseSearchText("LINC00402, RP11-192H23.4");
         System.out.println(strings);
         assertThat(strings, hasItems("LINC00402","RP11-192H23.4"));
+
+        strings = subject.parseSearchText("TRAJ34\r\nTRAJ13");
+        System.out.println(strings);
+        assertThat(strings, hasItems("TRAJ34","TRAJ13"));
     }
 
 
