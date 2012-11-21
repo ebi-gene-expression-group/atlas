@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
 
 import javax.inject.Named;
 import java.util.Collection;
@@ -20,39 +18,49 @@ public class GenePropertyQueryBuilder {
         return Joiner.on("\" OR alltext:\"").appendTo(stringBuilder, queryValues).append("\")").toString();
     }
 
-    private boolean endsWithQuote(String value) {
-        return value.lastIndexOf("\"") == value.length() - 1;
-    }
-
-    private boolean startsFromQuote(String value) {
-        return value.indexOf("\"") == 0;
-    }
-
-    private Collection<String> parseSearchText(String searchText) {
+    protected Collection<String> parseSearchText(String searchText) {
         HashSet<String> result = new HashSet<>();
 
-        Iterable<String> values = Splitter.on(CharMatcher.anyOf(", ")).omitEmptyStrings().split(searchText);
-
         StringBuilder sb = new StringBuilder();
-        boolean building = false;
-        for (String value : values) {
-            if (building) {
-                sb.append(value);
-                if (endsWithQuote(value)) {
-                    building = false;
-                    String s = sb.toString().trim();
-                    result.add(s.substring(1, s.length() - 1));
+        for (int i = 0; i < searchText.length(); i++) {
+            char cur = searchText.charAt(i);
+
+            // this is used as a delimiter
+            if (cur == ',') {
+                if (sb.length() > 0)
+                    result.add(sb.toString());
+                // clear StringBuffer
+                sb.delete(0, sb.length());
+            }
+
+            // this is used as a delimiter
+            else if (cur == ' ') {
+                if (sb.length() > 0)
+                    result.add(sb.toString());
+                // clear StringBuffer
+                sb.delete(0, sb.length());
+            }
+
+            // this is used to specify a String
+            else if (cur == '"') {
+                // find closing double quote
+                while (i < searchText.length() && (cur = searchText.charAt(++i)) != '"') {
+                    sb.append(cur);
                 }
-            } else {
-                if (startsFromQuote(value) && !endsWithQuote(value)) {
-                    building = true;
-                    sb = new StringBuilder();
-                    sb.append(value).append(" ");
-                } else {
-                    result.add(value);
-                }
+                result.add(sb.toString());
+                // clear StringBuffer
+                sb.delete(0, sb.length());
+            }
+
+            // extend current entity
+            else {
+                sb.append(cur);
             }
         }
+        // don't forget the last entity
+        if (sb.length() > 0)
+            result.add(sb.toString());
+
         return result;
     }
 
