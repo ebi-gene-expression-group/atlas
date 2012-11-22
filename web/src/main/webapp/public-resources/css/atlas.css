@@ -25,6 +25,11 @@ body {
     font-family: Verdana, Helvetica, Arial, sans-serif;
 }
 
+textarea, .chzn-container {
+    font-family: inherit !important;
+    font-size: inherit !important;
+}
+
 .error {
     color: red;
 }
