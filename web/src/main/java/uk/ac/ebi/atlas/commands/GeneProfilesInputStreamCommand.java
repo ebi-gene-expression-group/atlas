@@ -87,7 +87,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
         Set<String> geneIDs = new HashSet<>();
 
-        String geneProperties = requestPreferences.getGeneIDsString();
+        String geneProperties = requestPreferences.getGeneQuery();
 
         if (!StringUtils.isEmpty(geneProperties)) {
 

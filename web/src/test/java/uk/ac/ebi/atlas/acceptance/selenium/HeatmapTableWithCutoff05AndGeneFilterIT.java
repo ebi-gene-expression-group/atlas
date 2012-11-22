@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
 
-    private static final String HTTP_PARAMETERS = "geneIDsString=LINC00402%2C+RP11-192H23.4&cutoff=0.5";
+    private static final String HTTP_PARAMETERS = "geneQuery=LINC00402%2C+RP11-192H23.4&cutoff=0.5";
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
@@ -49,6 +49,6 @@ public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
 
     @Test
     public void verifyDownloadExpressionProfilesLink() {
-        assertThat(subject.getDownloadExpressionProfilesLink(), endsWith(HeatmapTablePage.EXPERIMENT_ACCESSION + ".tsv?" +HTTP_PARAMETERS));
+        assertThat(subject.getDownloadExpressionProfilesLink(), endsWith(HeatmapTablePage.EXPERIMENT_ACCESSION + ".tsv?" + HTTP_PARAMETERS));
     }
 }

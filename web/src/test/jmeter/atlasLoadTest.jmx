@@ -302,15 +302,15 @@
           </SizeAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (geneIDsString=LINC00402%2C+RP11-192H23.4)" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (geneQuery=LINC00402%2C+RP11-192H23.4)" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
-              <elementProp name="geneIDsString" elementType="HTTPArgument">
+              <elementProp name="geneQuery" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
                 <stringProp name="Argument.value">LINC00402, RP11-192H23.4</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">geneIDsString</stringProp>
+                <stringProp name="Argument.name">geneQuery</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
@@ -355,15 +355,15 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (geneIDsString=protein binding)" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (geneQuery=protein binding)" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
-              <elementProp name="geneIDsString" elementType="HTTPArgument">
+              <elementProp name="geneQuery" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
                 <stringProp name="Argument.value">protein binding</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">geneIDsString</stringProp>
+                <stringProp name="Argument.name">geneQuery</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>

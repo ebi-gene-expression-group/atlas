@@ -33,7 +33,7 @@
         <table class="form-grid">
             <tr>
                 <td>
-                    <form:label path="geneIDsString">Gene IDs (max 10)</form:label>
+                    <form:label path="geneQuery">Gene Query</form:label>
                 </td>
                 <td>
                     <form:label path="organismParts">Organism parts</form:label>
@@ -49,7 +49,7 @@
             </tr>
             <tr>
                 <td>
-                    <form:textarea path="geneIDsString" rows="2" cols="35"></form:textarea>
+                    <form:textarea path="geneQuery" rows="2" cols="35"></form:textarea>
                 </td>
                 <td>
                     <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
@@ -58,24 +58,29 @@
                 </td>
                 <td>
                     <c:choose>
-                        <c:when  test="${fn:endsWith('' + preferences.cutoff, '.0')}" >
+                        <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
                             <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
                                               type="number"
                                               maxFractionDigits="0"
-                                              var="formattedCutoff" />
-                            <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff" style="border:1; font-weight:bold;"/>
+                                              var="formattedCutoff"/>
+                            <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"
+                                        style="border:1; font-weight:bold;"/>
                         </c:when>
                         <c:otherwise>
                             <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
                         </c:otherwise>
-                     </c:choose>
+                    </c:choose>
                 </td>
             </tr>
         </table>
         <br/>
-            <div id="gene-distribution" class="block" style="margin-bottom:0px;height:100px"></div>
-            <div id="gene-distribution-button" style="float:left"><a id="display-chart" href="#"><img class="button-image" title="Display gene distribution" src="resources/images/yellow-chart-icon-16.png" id="chart-button"/></a></div>
-            <div id="slider-range-max" style="font-size:65%;margin-left:27px;margin-right:17px; margin-top:10px"></div>
+
+        <div id="gene-distribution" class="block" style="margin-bottom:0px;height:100px"></div>
+        <div id="gene-distribution-button" style="float:left"><a id="display-chart" href="#">
+            <img class="button-image" title="Display gene distribution"
+                 src="resources/images/yellow-chart-icon-16.png" id="chart-button"/></a>
+        </div>
+        <div id="slider-range-max" style="font-size:65%;margin-left:27px;margin-right:17px; margin-top:10px"></div>
 
     </form:form>
 </div>

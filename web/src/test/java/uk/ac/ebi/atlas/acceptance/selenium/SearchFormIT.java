@@ -12,13 +12,13 @@ public class SearchFormIT extends SeleniumFixture {
     private HeatmapTableWithSearchFormPage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTableWithSearchFormPage(firefoxDriver, "geneIDsString=ENSG00000175084+ENSG00000210195&cutoff=540&organismParts=heart&organismParts=liver");
+        subject = new HeatmapTableWithSearchFormPage(firefoxDriver, "geneQuery=ENSG00000175084+ENSG00000210195&cutoff=540&organismParts=heart&organismParts=liver");
         subject.get();
     }
 
     @Test
     public void searchFormContentShouldReflectRequestParameters() {
-        assertThat(subject.getGeneIDsString(), is("ENSG00000175084 ENSG00000210195"));
+        assertThat(subject.getGeneQuery(), is("ENSG00000175084 ENSG00000210195"));
         assertThat(subject.getCutoff(), is("540"));
         assertThat(subject.getOrganismParts(), contains("heart", "liver"));
     }

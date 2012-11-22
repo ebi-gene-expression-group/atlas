@@ -48,7 +48,7 @@ public class RequestPreferences {
 
     private SortedSet<String> organismParts;
 
-    private String geneIDsString;
+    private String geneQuery;
 
     private boolean displayLevels;
 
@@ -96,12 +96,12 @@ public class RequestPreferences {
         this.organismParts = organismParts;
     }
 
-    public String getGeneIDsString() {
-        return this.geneIDsString;
+    public String getGeneQuery() {
+        return this.geneQuery;
     }
 
-    public void setGeneIDsString(String geneIDsString) {
-        this.geneIDsString = geneIDsString;
+    public void setGeneQuery(String geneQuery) {
+        this.geneQuery = geneQuery;
     }
 
 
