@@ -15,4 +15,8 @@ function initSearchForm(homePageURL) {
         location.replace(homePageURL);
     })
 
+    $("#geneQuery").watermark("(all genes)");
+
+    $("#cutoff").watermark("(default 0.5)");
+
 }

@@ -79,6 +79,8 @@
             src="${pageContext.request.contextPath}/resources/js/jquery-ui/jquery-ui-1.9.1.custom.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
     <!--[if lte IE 8]>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"></script>
@@ -191,13 +193,13 @@
                                 </div>
                             </td>
                             <td>
-                                <div id="anatomogramBody" style="width: 250px; height: 400px">
+                                <div id="anatomogramBody" style="width: 230px; height: 400px">
                                 </div>
                             </td>
                         </tr>
                     </table>
             </div>
-            <div id="heatmap-div" style="margin-left:310px">
+            <div id="heatmap-div" style="margin-left:300px">
 
                 <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
 
