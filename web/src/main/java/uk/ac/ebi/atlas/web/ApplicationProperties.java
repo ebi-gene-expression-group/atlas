@@ -41,28 +41,32 @@ public class ApplicationProperties {
     private SortedSet<String> organismParts;
 
     @Inject
-    ApplicationProperties(@Named("configuration") Properties configurationProperties){
+    ApplicationProperties(@Named("configuration") Properties configurationProperties) {
         this.configurationProperties = configurationProperties;
         String organismPartsCSV = this.configurationProperties.getProperty("organism.parts");
-        this.organismParts = new TreeSet<String>(Sets.newHashSet(organismPartsCSV.split(",")));
+        this.organismParts = new TreeSet<>(Sets.newHashSet(organismPartsCSV.split(",")));
     }
 
-    public SortedSet<String> getAllOrganismParts(){
+    public SortedSet<String> getAllOrganismParts() {
         return organismParts;
     }
 
-    public String getAnatomogramFileName(String specie, boolean isMale){
+    public String getAnatomogramFileName(String specie, boolean isMale) {
         String key = "organism.anatomogram." + specie.toLowerCase();
-        String fileName = configurationProperties.getProperty( key + (isMale ? ".male" : ".female"));
+        String fileName = configurationProperties.getProperty(key + (isMale ? ".male" : ".female"));
         return fileName != null ? fileName : configurationProperties.getProperty(key);
     }
 
-    public String getArrayExpressURL(String experimentAccession){
+    public String getArrayExpressURL(String experimentAccession) {
         String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.url.template");
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
-    public String getAnalisysMethodCsvFilePath(String experimentAccession){
+    public String getAnalisysMethodCsvFilePath(String experimentAccession) {
         return MessageFormat.format(configurationProperties.getProperty("experiment.analysis-method.path.template"), experimentAccession);
+    }
+
+    public String getExperimentDesignCsvFilePath(String experimentAccession) {
+        return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
     }
 }
