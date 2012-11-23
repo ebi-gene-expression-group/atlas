@@ -65,6 +65,37 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
 
+    <style type="text/css" title="currentStyle">
+        @import "${pageContext.request.contextPath}/resources/datatables/css/demo_page.css";
+        @import "/datatables/css/header.ccss";
+        @import "${pageContext.request.contextPath}/resources/datatables/css/demo_table.css";
+    </style>
+    <script type="text/javascript" language="javascript"
+            src="${pageContext.request.contextPath}/resources/datatables/js/jquery.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="${pageContext.request.contextPath}/resources/datatables/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        /* Data set - can contain whatever information you want */
+        var aDataSet = ${tableData};
+
+        $(document).ready(function () {
+            $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>');
+            $('#example').dataTable({
+                "aaData":aDataSet,
+                "aoColumns":[
+                    { "sTitle":"Assay" },
+                    { "sTitle":"Characteristics[organism]", "sClass":"center" },
+                    { "sTitle":"Characteristics[age]", "sClass":"center" },
+                    { "sTitle":"Characteristics[sex]", "sClass":"center" },
+                    { "sTitle":"Characteristics[biosource_provider]", "sClass":"center" },
+                    { "sTitle":"Factor[organism_part]", "sClass":"center" },
+                    { "sTitle":"Factor[library_preparation_method]", "sClass":"center" },
+                    { "sTitle":"Factor Value[phenotype]", "sClass":"center" }
+                ]
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -82,40 +113,17 @@
     <c:import url="includes/experiment-header.jsp"/>
 
     <div class="block">
-        <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="form-grid">
-            <display:caption>
-                <div style="text-align:left;padding-top:10px; padding-bottom:5px">
-                    <label>
-                        Experiment Design:
-                    </label>
-                </div>
-            </display:caption>
-            <display:column class="header-cell">
-                ${csvLine[0]}
-            </display:column>
-            <display:column>
-                ${csvLine[1]}
-            </display:column>
-            <display:column>
-                ${csvLine[2]}
-            </display:column>
-            <display:column>
-                ${csvLine[3]}
-            </display:column>
-            <display:column>
-                ${csvLine[4]}
-            </display:column>
-            <display:column>
-                ${csvLine[5]}
-            </display:column>
-            <display:column>
-                ${csvLine[6]}
-            </display:column>
-            <display:column>
-                ${csvLine[7]}
-            </display:column>
-        </display:table>
+
+        <div style="text-align:left;padding-top:10px; padding-bottom:5px">
+            <label>
+                Experiment Design:
+            </label>
+        </div>
+
+
+        <div id="dynamic"></div>
     </div>
+
 </div>
 
 <!-- old style start -->
