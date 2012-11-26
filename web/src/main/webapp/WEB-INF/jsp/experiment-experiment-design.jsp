@@ -77,13 +77,15 @@
     <script type="text/javascript" charset="utf-8"
             src="${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/js/TableTools.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-        /* Data set - can contain whatever information you want */
+        /* Data set - loaded from experiment tsv file */
         var aDataSet = ${tableData};
         var aHeader = ${tableHeader};
+        var aRunAccessions = ${runAccessions};
+        var bShow = 1;
 
         $(document).ready(function () {
             $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>');
-            $('#example').dataTable({
+            var oTable = $('#example').dataTable({
                 "aaData":aDataSet,
                 "aoColumns":aHeader,
                 "aLengthMenu":[
@@ -91,13 +93,28 @@
                     [10, 25, 50, "All"]
                 ],
                 /*"sPaginationType": "full_numbers",*/
-                "sDom":'<"toolbar">Tlfr<"clear">tip',
+                "sDom":'<"toolbar">Tlfr<"button"><"clear">tip',
                 "oTableTools":{
                     "sSwfPath":"${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/swf/copy_csv_xls_pdf.swf",
                     "aButtons":[ "copy", "xls", "print" ]
+                },
+                "fnRowCallback":function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // Bold selected run accessions
+                    if (bShow && jQuery.inArray(aData[0], aRunAccessions) > -1) {
+                        $(nRow).addClass("gradeX");
+                    } else {
+                        $(nRow).removeClass("gradeX");
+                    }
+                    return nRow;
                 }
             });
             $("div.toolbar").html('<b>Experiment Design</b>');
+            $("div.button").html('<a id="togglebutton" class="button"><span style="display:none">Highlight runs</span><span>De-hightlight runs</span></a>');
+            $('a#togglebutton').click(function () {
+                $('span', this).toggle();
+                bShow = 1 - bShow;
+                oTable.fnDraw();
+            });
         });
     </script>
 

@@ -46,9 +46,9 @@ public class Experiment {
         this.experimentRunAccessions = experimentRunAccessions;
     }
 
-    public Experiment addAll(Collection<ExperimentRun> experimentRuns){
-        for (ExperimentRun experimentRun: experimentRuns){
-            if (experimentRunAccessions.contains(experimentRun.getRunAccession())){
+    public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
+        for (ExperimentRun experimentRun : experimentRuns) {
+            if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
                 runs.put(experimentRun.getRunAccession(), experimentRun);
                 organismParts.add(experimentRun.getOrganismPart().getValue());
             }
@@ -56,21 +56,23 @@ public class Experiment {
         return this;
     }
 
-    public ExperimentRun getExperimentRun(String runAccession){
-
-        return runs.get(runAccession);
-
+    public Set<String> getExperimentRunAccessions() {
+        return experimentRunAccessions;
     }
 
-    public int getNumberOfRuns(){
+    public ExperimentRun getExperimentRun(String runAccession) {
+        return runs.get(runAccession);
+    }
+
+    public int getNumberOfRuns() {
         return runs.size();
     }
 
-    public String getSpecie(){
+    public String getSpecie() {
         return specie;
     }
 
-    public String getExperimentAccession(){
+    public String getExperimentAccession() {
         return experimentAccession;
     }
 
@@ -79,7 +81,7 @@ public class Experiment {
         return this;
     }
 
-    public SortedSet<String> getAllOrganismParts(){
+    public SortedSet<String> getAllOrganismParts() {
         return organismParts;
     }
 

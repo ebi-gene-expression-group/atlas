@@ -85,6 +85,8 @@ public class ExperimentDesignPageController {
         model.addAttribute("tableData", data);
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        String runAccessions = gson.toJson(experiment.getExperimentRunAccessions());
+        model.addAttribute("runAccessions", runAccessions);
 
         String specie = experiment.getSpecie();
         model.addAttribute("specie", specie);
