@@ -1,10 +1,32 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.utils.score;
 
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class HistogramCounter {
+public class BarChartIndexes {
 
     public static final int GENE_COUNT = 45000;
 
@@ -13,13 +35,13 @@ public class HistogramCounter {
     private List<Double> scores;
     private List<String> organismParts;
 
-    public HistogramCounter(List<Double> marks, List<String> organismParts) {
+    public BarChartIndexes(List<Double> marks, List<String> organismParts) {
         this.scores = marks;
         this.organismParts = organismParts;
         initEmptyMap();
     }
 
-    public HistogramCounter(Map<Double, List<BitSet>> scoreMap) {
+    public BarChartIndexes(Map<Double, List<BitSet>> scoreMap) {
         this.scoreMap = scoreMap;
     }
 
@@ -36,7 +58,7 @@ public class HistogramCounter {
         }
     }
 
-    public void addValues(List<Double> values, int lineNumber) {
+    protected void addValues(List<Double> values, int lineNumber) {
         checkArgument(values.size() == organismParts.size(), "Number of values should be equal to number of " +
                 "organism parts");
 
@@ -51,7 +73,11 @@ public class HistogramCounter {
         }
     }
 
-    public Map<Double, Integer> countAll(List<String> selectedOrganismParts) {
+    public List<Integer> getChartValues(Set<String> organismParts){
+        return null;
+    }
+
+    protected Map<Double, Integer> countAll(List<String> selectedOrganismParts) {
         List<Integer> selected = getOrganismPartIndexes(selectedOrganismParts);
         Map<Double, Integer> result = new TreeMap<>();
 

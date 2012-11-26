@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.model.caches;
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.utils.score.HistogramCounter;
+import uk.ac.ebi.atlas.utils.score.BarChartGenerator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,15 +37,15 @@ public class HistogramCountersCache {
 
     private static final Logger logger = Logger.getLogger(HistogramCountersCache.class);
 
-    private LoadingCache<String, HistogramCounter> histogramCounters;
+    private LoadingCache<String, BarChartGenerator> histogramCounters;
 
     @Inject
     @Named("histogramCountersCache")
-    public HistogramCountersCache(LoadingCache<String, HistogramCounter> histogramCounters) {
+    public HistogramCountersCache(LoadingCache<String, BarChartGenerator> histogramCounters) {
         this.histogramCounters = histogramCounters;
     }
 
-    public HistogramCounter getExperimentRuns(String experimentAccession) {
+    public BarChartGenerator getExperimentRuns(String experimentAccession) {
         try {
 
             return histogramCounters.get(experimentAccession);

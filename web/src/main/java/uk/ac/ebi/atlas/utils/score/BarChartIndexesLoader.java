@@ -6,8 +6,6 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import javax.inject.Inject;
@@ -16,13 +14,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.SortedSet;
 
 @Named("histogramCountLoader")
-public class HistogramCountLoader  extends CacheLoader<String, HistogramCounter> {
+public class BarChartIndexesLoader extends CacheLoader<String, BarChartIndexes> {
 
     private ExperimentsCache experimentsCache;
 
@@ -31,34 +27,34 @@ public class HistogramCountLoader  extends CacheLoader<String, HistogramCounter>
     private String tsvFileUrlTemplate;
 
     @Inject
-    public HistogramCountLoader(ExperimentsCache experimentsCache) {
+    public BarChartIndexesLoader(ExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
 
     @Override
-    public HistogramCounter load(String experimentAccession) {
+    public BarChartIndexes load(String experimentAccession) {
         String tsvFileUrl = String.format(tsvFileUrlTemplate, experimentAccession);
         return generateScoreMap(tsvFileUrl, experimentAccession);
     }
 
-    public HistogramCounter generateScoreMap(String file, String experimentAccession)  {
+    public BarChartIndexes generateScoreMap(String file, String experimentAccession)  {
 
         try ( Reader dataFileReader = new InputStreamReader(new FileInputStream(file));
                 CSVReader csvReader = new CSVReader(dataFileReader, '\t')) {
             List<String> organismParts = Lists.newArrayList(experimentsCache.getExperiment(experimentAccession).getAllOrganismParts());
 
-            HistogramCounter histogramCounter = new HistogramCounter(generateCutoffs(), organismParts);
+            BarChartIndexes barChartGenerator = new BarChartIndexes(generateCutoffs(), organismParts);
 
 
             String[] values;
             int count = 0;
             while ((values = csvReader.readNext()) != null) {
-                histogramCounter.addValues(convertToDoubles(values), count);
+                barChartGenerator.addValues(convertToDoubles(values), count);
                 count++;
             }
 
-            return histogramCounter;
+            return barChartGenerator;
         } catch (IOException e) {
             throw new IllegalStateException("Cannot read data file from " + file, e);
         }

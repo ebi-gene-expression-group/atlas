@@ -5,11 +5,10 @@ import com.google.common.cache.LoadingCache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.utils.score.HistogramCountLoader;
-import uk.ac.ebi.atlas.utils.score.HistogramCounter;
+import uk.ac.ebi.atlas.utils.score.BarChartGenerator;
+import uk.ac.ebi.atlas.utils.score.BarChartIndexesLoader;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 @Configuration
 public class CacheConfiguration {
@@ -27,9 +26,9 @@ public class CacheConfiguration {
 
     @Bean(name="histogramCountersCache")
     @Inject
-    public LoadingCache<String, HistogramCounter> histogramCounterCache(HistogramCountLoader histogramCountLoader) {
+    public LoadingCache<String, BarChartGenerator> histogramCounterCache(BarChartIndexesLoader barChartIndexesLoader) {
         return CacheBuilder.newBuilder().maximumSize(EXPERIMENTS_CACHE_MAX_SIZE)
-                .build(histogramCountLoader);
+                .build(barChartIndexesLoader);
 
     }
 
