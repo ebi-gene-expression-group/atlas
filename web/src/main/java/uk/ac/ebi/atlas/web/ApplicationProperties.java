@@ -38,17 +38,10 @@ public class ApplicationProperties {
 
     private Properties configurationProperties;
 
-    private SortedSet<String> organismParts;
-
     @Inject
     ApplicationProperties(@Named("configuration") Properties configurationProperties){
         this.configurationProperties = configurationProperties;
         String organismPartsCSV = this.configurationProperties.getProperty("organism.parts");
-        this.organismParts = new TreeSet<String>(Sets.newHashSet(organismPartsCSV.split(",")));
-    }
-
-    public SortedSet<String> getAllOrganismParts(){
-        return organismParts;
     }
 
     public String getAnatomogramFileName(String specie, boolean isMale){

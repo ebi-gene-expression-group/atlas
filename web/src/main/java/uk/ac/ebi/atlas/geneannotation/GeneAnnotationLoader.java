@@ -30,11 +30,12 @@ import uk.ac.ebi.atlas.commons.berkeley.StringValueTransactionWorker;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.biomart.BioMartGeneNameStream;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("geneAnnotationLoader")
-@Scope("prototype")
 public class GeneAnnotationLoader {
 
     private static final Logger logger = Logger.getLogger(GeneAnnotationLoader.class);
@@ -49,7 +50,18 @@ public class GeneAnnotationLoader {
     public GeneAnnotationLoader(AnnotationEnvironment annotationEnvironment, BioMartGeneNameStream.Builder geneNameStreamBuilder) {
         this.annotationEnvironment = annotationEnvironment;
         this.geneNameStreamBuilder = geneNameStreamBuilder;
-        transactionRunner = annotationEnvironment.getTransactionRunner();
+    }
+
+    @PostConstruct
+    public void turnOffReadonly(){
+        this.annotationEnvironment.close();
+        this.annotationEnvironment.initBerkeley(false);
+    }
+
+    @PreDestroy
+    public void turnOnReadOnly(){
+        this.annotationEnvironment.close();
+        this.annotationEnvironment.initBerkeleyReadonly();
     }
 
 
@@ -57,6 +69,8 @@ public class GeneAnnotationLoader {
                                 ObjectValueTransactionWorker transactionWorker) throws Exception {
 
         String[] row;
+
+        transactionRunner = annotationEnvironment.getTransactionRunner();
 
         while ((row = annotationsInputStream.readNext()) != null) {
             transactionRunner.run(transactionWorker.setRow(row));

@@ -83,9 +83,9 @@ public class GeneProfilesPageController {
 
             model.addAttribute("experimentAccession", experimentAccession);
 
-            model.addAttribute("allOrganismParts", applicationProperties.getAllOrganismParts());
-
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+            model.addAttribute("allOrganismParts", experiment.getAllOrganismParts());
 
             String specie = experiment.getSpecie();
 

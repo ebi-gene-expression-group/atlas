@@ -23,9 +23,12 @@
 package uk.ac.ebi.atlas.geneindex;
 
 import com.jayway.jsonpath.JsonPath;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +37,7 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class IndexClient {
+    private static final Logger logger = Logger.getLogger(IndexClient.class);
 
     private static final String JSON_PATH_EXPRESSION = "$.response.docs[*].identifier";
 
@@ -64,12 +68,19 @@ public class IndexClient {
 
     protected String findGeneIdJson(String searchText, String organism) {
 
-        String geneProperty = queryBuilder.buildQueryString(searchText);
-        String organismQuery = "\"" + organism.toLowerCase() + "\"";
+        try{
 
-        String object = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
+            String geneProperty = queryBuilder.buildQueryString(searchText);
+            String organismQuery = "\"" + organism.toLowerCase() + "\"";
 
-        return object;
+            String object = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
+
+            return object;
+        }catch(Throwable e){
+            logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL);
+            logger.error(e.getMessage(), e);
+            throw e;
+        }
     }
 
     protected List<String> extractGeneIds(String jsonString) {

@@ -15,7 +15,7 @@ public class CacheConfiguration {
 
     @Bean
     @Inject
-    public LoadingCache<String, Experiment> experimentRunsCache(MageTabInvestigationLoader cacheLoader){
+    public LoadingCache<String, Experiment> experimentRunsCache(ExperimentMetadataLoader cacheLoader){
 
         return CacheBuilder.newBuilder().maximumSize(EXPERIMENTS_CACHE_MAX_SIZE)
                                         .build(cacheLoader);

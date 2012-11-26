@@ -78,12 +78,6 @@ public class ApplicationPropertiesTest {
     }
 
     @Test
-    public void testGetAllOrganismParts() throws Exception {
-        SortedSet<String> allOrganismParts = subject.getAllOrganismParts();
-        assertThat(allOrganismParts, hasItem("heart"));
-    }
-
-    @Test
     public void testGetAnatomogramFileName() throws Exception {
         String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, true);
         String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, false);

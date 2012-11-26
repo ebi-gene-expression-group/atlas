@@ -27,6 +27,7 @@ import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.GeneSpecificityComparator;
@@ -44,7 +45,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
 
     @Override
-    public GeneProfilesList apply(RequestPreferences requestPreferences, ObjectInputStream<GeneProfile> inputStream) {
+    public GeneProfilesList apply(RequestPreferences requestPreferences, Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
         Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.getOrganismParts());
 

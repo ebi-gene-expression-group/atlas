@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -48,8 +49,6 @@ public class WriteGeneProfilesCommandTest {
     @Mock
     private ObjectInputStream<GeneProfile> inputStreamMock;
     @Mock
-    private ApplicationProperties applicationPropertiesMock;
-    @Mock
     private RequestPreferences requestPreferencesMock;
     @Mock
     private CSVWriter csvWriterMock;
@@ -57,6 +56,8 @@ public class WriteGeneProfilesCommandTest {
     private GeneProfile geneProfileMock1;
     @Mock
     private GeneProfile geneProfileMock2;
+    @Mock
+    private Experiment experimentMock;
 
     private WriteGeneProfilesCommand subject;
 
@@ -82,7 +83,7 @@ public class WriteGeneProfilesCommandTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new WriteGeneProfilesCommand(applicationPropertiesMock, new NumberUtils());
+        subject = new WriteGeneProfilesCommand(new NumberUtils());
         subject.setRequestPreferences(requestPreferencesMock);
         subject.setCsvWriter(csvWriterMock);
     }
@@ -90,7 +91,7 @@ public class WriteGeneProfilesCommandTest {
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(requestPreferencesMock, inputStreamMock);
+        long count = subject.apply(requestPreferencesMock, experimentMock, inputStreamMock);
 
         verify(csvWriterMock).writeNext(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"});
 

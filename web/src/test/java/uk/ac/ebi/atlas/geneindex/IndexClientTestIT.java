@@ -34,6 +34,8 @@ public class IndexClientTestIT {
         queryBuilder = mock(GenePropertyQueryBuilder.class);
 
         subject = new IndexClient(restTemplate, queryBuilder);
+
+        //ToDo ...this is bad, requires connection to lime to run... Should we configure it like we did in selenium, setting localhost as default and a target server to be used when running integration profile (bamboo)
         subject.setServerURL("http://lime:8983/solr/");
     }
 

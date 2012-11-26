@@ -36,28 +36,33 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
+import javax.inject.Inject;
 import javax.inject.Named;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Named("investigationLoader")
-public class MageTabInvestigationLoader extends CacheLoader<String, Experiment> {
+public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private static final String ENA_RUN = "ENA_RUN";
 
     private String idfFileUrlTemplate;
 
-    @Value("#{configuration['experiment.magetab.idf.url.template']}")
-    void setIdfFileUrlTemplate(String idfFileUrlTemplate) {
+    private AnalysisMethodsTsvReader analysisMethodsTsvReader;
+
+    @Inject
+    public ExperimentMetadataLoader(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfFileUrlTemplate
+            , AnalysisMethodsTsvReader analysisMethodsTsvReader){
         this.idfFileUrlTemplate = idfFileUrlTemplate;
+        this.analysisMethodsTsvReader = analysisMethodsTsvReader;
+
     }
 
     @Override
-    public Experiment load(String experimentAccession) throws ParseException, MalformedURLException {
+    public Experiment load(String experimentAccession) throws ParseException, IOException {
 
         String idfFileLocation = buildIdfFileUrl(experimentAccession);
 
@@ -67,7 +72,8 @@ public class MageTabInvestigationLoader extends CacheLoader<String, Experiment> 
 
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
-        Experiment experiment = new Experiment(experimentAccession, investigation.IDF.experimentDescription);
+        Experiment experiment = new Experiment(experimentAccession, investigation.IDF.experimentDescription
+                                            ,getExperimentRunAccessions(experimentAccession));
 
         ScanNode firstNode = scanNodes.iterator().next();
 
@@ -77,6 +83,20 @@ public class MageTabInvestigationLoader extends CacheLoader<String, Experiment> 
 
         return experiment;
 
+    }
+
+    private Set<String> getExperimentRunAccessions(String experimentAccession) throws IOException{
+        Map<String, String> analysisMethodsRows = analysisMethodsTsvReader.readAsMap(experimentAccession);
+
+        String[] processedLibraries = analysisMethodsRows.get("Processed libraries").split(",");
+
+        Set<String> experimentRunAccessions = new HashSet<>();
+
+        for(String processedLibrary: processedLibraries){
+            experimentRunAccessions.add(processedLibrary.trim());
+        }
+
+        return experimentRunAccessions;
     }
 
     private String extractSpecie(ScanNode firstScanNode) {

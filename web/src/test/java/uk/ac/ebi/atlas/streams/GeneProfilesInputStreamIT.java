@@ -31,11 +31,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -48,6 +50,9 @@ public class GeneProfilesInputStreamIT {
     public static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     @Mock
     ExperimentsCache cacheMock;
+
+    @Mock
+    Set<String> experimentRunsAccessionsMock;
 
     private static final String RUN_ACCESSION_1 = "ERR030872";
     private static final String RUN_ACCESSION_2 = "ERR030873";
@@ -76,7 +81,8 @@ public class GeneProfilesInputStreamIT {
         ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3)
                 .addFactorValue("ORGANISM_PART", "org", "lung");
 
-        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null)
+        when(experimentRunsAccessionsMock.contains(anyString())).thenReturn(true);
+        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock)
                 .addAll(Lists.newArrayList(experimentRun1,experimentRun2,experimentRun3));
 
         when(cacheMock.getExperiment(anyString())).thenReturn(experiment);
@@ -97,6 +103,7 @@ public class GeneProfilesInputStreamIT {
         assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
         assertThat(geneProfile.getSpecificity(), is(1));
         assertThat(geneProfile.iterator().hasNext(), is(true));
+        //ToDo: GeneProfile needs a getter for Expressions
 
         //given we poll twice more
         geneProfile = subject.readNext();

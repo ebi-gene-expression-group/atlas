@@ -40,6 +40,8 @@ import javax.inject.Named;
 import java.io.File;
 import java.util.concurrent.ConcurrentMap;
 
+//ToDo Separate database creation and update from database readonly access.
+
 @Named("annotationEnvironment")
 public class AnnotationEnvironment {
 
@@ -58,17 +60,24 @@ public class AnnotationEnvironment {
     }
 
     @PostConstruct
-    public void setup() {
-        setupEnvironment();
-        setupGeneNameDatabase();
+    public void initBerkeleyReadonly() {
+        initBerkeley(true);
 
     }
 
-    private void setupEnvironment() {
+    public void initBerkeley(boolean readonly) {
+        setupEnvironment(readonly);
+        setupGeneNameDatabase(readonly);
+
+    }
+
+    private void setupEnvironment(boolean readonly) {
         EnvironmentConfig envConfig = new EnvironmentConfig();
 
-        envConfig.setAllowCreate(true);
         envConfig.setTransactional(true);
+        envConfig.setAllowCreate(readonly ? false: true);
+        envConfig.setReadOnly(readonly ? true : false);
+
         File envHome = new File(environmentLocation);
         if (!envHome.exists()) {
             envHome.mkdirs();
@@ -76,10 +85,10 @@ public class AnnotationEnvironment {
         environment = new Environment(envHome, envConfig);
     }
 
-    public void setupGeneNameDatabase() {
+    public void setupGeneNameDatabase(boolean readonly) {
         DatabaseConfig dbConfig = new DatabaseConfig();
-        dbConfig.setAllowCreate(true);
-
+        dbConfig.setAllowCreate(readonly ? false : true);
+        dbConfig.setReadOnly(readonly ? true : false);
         geneNameDatabase = environment.openDatabase(null, GENES_DB, dbConfig);
     }
 
@@ -87,8 +96,8 @@ public class AnnotationEnvironment {
     public ConcurrentMap<String, String> geneNames() {
         TupleBinding<String> keyBinding = TupleBinding.getPrimitiveBinding(String.class);
         TupleBinding<String> dataBinding = TupleBinding.getPrimitiveBinding(String.class);
-
-        return new StoredMap<String, String>(geneNameDatabase, keyBinding, dataBinding, true);
+        ConcurrentMap<String,String> geneNames = new StoredMap<String, String>(geneNameDatabase, keyBinding, dataBinding, true);
+        return geneNames;
     }
 
     public TransactionRunner getTransactionRunner() {
