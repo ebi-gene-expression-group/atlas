@@ -17,6 +17,9 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         super(collection);
     }
 
+    public GeneProfilesList() {
+    }
+
     public GeneProfilesList getTop(int size) {
         return subList(0, size);
     }

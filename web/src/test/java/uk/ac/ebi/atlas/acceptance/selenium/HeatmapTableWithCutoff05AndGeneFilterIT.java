@@ -5,16 +5,16 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
 
+    private static final String HTTP_PARAMETERS = "geneQuery=LINC00402%2C+RP11-192H23.4&cutoff=0.5";
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(firefoxDriver, "geneIDsString=LINC00402%2C+RP11-192H23.4&cutoff=0.5");
+        subject = new HeatmapTablePage(firefoxDriver, HTTP_PARAMETERS);
         subject.get();
     }
 
@@ -45,5 +45,10 @@ public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
     @Test
     public void verifyGeneCount() {
         assertThat(subject.getGeneCount().contains("2"), is(true));
+    }
+
+    @Test
+    public void verifyDownloadExpressionProfilesLink() {
+        assertThat(subject.getDownloadExpressionProfilesLink(), endsWith(HeatmapTablePage.EXPERIMENT_ACCESSION + ".tsv?" + HTTP_PARAMETERS));
     }
 }

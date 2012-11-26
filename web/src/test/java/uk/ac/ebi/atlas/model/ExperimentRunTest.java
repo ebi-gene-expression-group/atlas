@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,20 +10,19 @@ public class ExperimentRunTest {
 
     private ExperimentRun subject;
 
-    private String organismPart = "finger";
+    private static final String organismPart = "finger";
 
     @Before
     public void setUp() throws Exception {
         subject = new ExperimentRun("RUN_ACCESSION")
-                                .addFactorValue("factor1","value1")
-                                .addFactorValue("factor2","value2")
-                                .addOrganismPartFactorValue(organismPart);
+                                .addFactorValue("A_TYPE", "factor1","value1")
+                                .addFactorValue("ORGANISM_PART", "org", organismPart);
     }
 
     @Test
     public void testGetOrganismPart() throws Exception {
 
-        assertThat(subject.getOrganismPart(), is(organismPart));
+        assertThat(subject.getOrganismPart().getValue(), is(organismPart));
 
     }
 

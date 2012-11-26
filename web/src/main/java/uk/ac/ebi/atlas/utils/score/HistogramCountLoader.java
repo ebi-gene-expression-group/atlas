@@ -6,6 +6,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
@@ -18,6 +19,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.SortedSet;
 
 @Named("histogramCountLoader")
 public class HistogramCountLoader  extends CacheLoader<String, HistogramCounter> {
@@ -31,7 +33,6 @@ public class HistogramCountLoader  extends CacheLoader<String, HistogramCounter>
     @Inject
     public HistogramCountLoader(ExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
-
     }
 
 
@@ -41,12 +42,11 @@ public class HistogramCountLoader  extends CacheLoader<String, HistogramCounter>
         return generateScoreMap(tsvFileUrl, experimentAccession);
     }
 
-    public HistogramCounter generateScoreMap(String file, String accession)  {
+    public HistogramCounter generateScoreMap(String file, String experimentAccession)  {
 
         try ( Reader dataFileReader = new InputStreamReader(new FileInputStream(file));
                 CSVReader csvReader = new CSVReader(dataFileReader, '\t')) {
-
-            List<String> organismParts = processHeader(csvReader.readNext(), accession);
+            List<String> organismParts = Lists.newArrayList(experimentsCache.getExperiment(experimentAccession).getAllOrganismParts());
 
             HistogramCounter histogramCounter = new HistogramCounter(generateCutoffs(), organismParts);
 
@@ -73,23 +73,6 @@ public class HistogramCountLoader  extends CacheLoader<String, HistogramCounter>
                 return Double.valueOf(input);
             }
         });
-
-    }
-
-    private List<String> processHeader(String[] values, String accession) {
-        List<String> organismParts = new ArrayList<>(values.length - 1);
-
-        List<ExperimentRun> experimentRuns = experimentsCache.getExperimentRuns(accession);
-        List<String> runAccessions = Arrays.asList(ArrayUtils.remove(values, 0));
-
-        for (ExperimentRun experimentRun : experimentRuns) {
-            int index = runAccessions.indexOf(experimentRun.getRunAccession());
-            if (index > 0) {
-                organismParts.add(experimentRun.getOrganismPart());
-            }
-        }
-
-        return organismParts;
 
     }
 

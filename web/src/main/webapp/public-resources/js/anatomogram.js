@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 function toggleOrganismPartColor(svg, organism_part, evt) {
 
     function togglePathColor(path) {
@@ -34,7 +56,7 @@ function scaleAnatomogram(svg) {
     elementById.setAttribute('transform', 'scale(1.6)');
 }
 
-function initAnatomogram(organismParts) {
+function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
 
     if ($('#anatomogramBody').length == 0) {
         return;
@@ -42,11 +64,11 @@ function initAnatomogram(organismParts) {
 
     var svg = $('#anatomogramBody').svg().svg('get');
 
-    loadAnatomogram("resources/svg/human_male.svg");
+    loadAnatomogram("resources/svg/" + fileNameMale);
 
     //hover on first column, to show all organism parts involved on a single gene profile
     $("#heatmap-table").delegate("td:first-child","hover", function(evt){ //hover on cells of the first table column
-        var geneExpressions = $(this).parents("tr").find("div[data-organism-part!='']");
+        var geneExpressions = $(this).parents("tr .even,.odd").find("div[data-organism-part!='']");
 
         var organismParts = geneExpressions.map(function(){return $(this).attr('data-organism-part')}).get();
 
@@ -81,14 +103,19 @@ function initAnatomogram(organismParts) {
         svg.load(location, {onLoad:prepareAnatomogram});
     }
 
-    //switch sex toggle button
-    $('#sexToggle').toggle(function () {
-        $(this).attr("class", "female");
-        loadAnatomogram("resources/svg/human_female.svg");
-    },function() {
-        $(this).attr("class", "male");
-        loadAnatomogram("resources/svg/human_male.svg");
-    });
-
+    if (fileNameMale != fileNameFemale){
+        //switch sex toggle button
+        $("#sex-toggle-image").button().toggle(function () {
+            //$(this).button().attr("class", "female");
+            $(this).attr("src","resources/images/female_selected.png")
+            loadAnatomogram("resources/svg/" + fileNameFemale);
+        },function() {
+            //$(this).button().attr("class", "male");
+            $(this).attr("src","resources/images/male_selected.png")
+            loadAnatomogram("resources/svg/" + fileNameMale);
+        }).tooltip();
+    } else {
+        $("#sex-toggle").hide();
+    }
 }
 

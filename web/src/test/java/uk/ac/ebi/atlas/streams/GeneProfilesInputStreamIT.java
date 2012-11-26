@@ -1,26 +1,58 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.commons.ObjectInputStream;
-import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
-import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class GeneProfilesInputStreamIT {
+
+    public static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
+    @Mock
+    ExperimentsCache cacheMock;
+
+    @Mock
+    Set<String> experimentRunsAccessionsMock;
 
     private static final String RUN_ACCESSION_1 = "ERR030872";
     private static final String RUN_ACCESSION_2 = "ERR030873";
@@ -29,13 +61,11 @@ public class GeneProfilesInputStreamIT {
     private static final String GENE_ID_2 = "ENST00000000412";
     private static final String GENE_ID_3 = "ENST00000000442";
 
-    private List<ExperimentRun> experimentRuns;
+    private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private URL dataFileURL;
 
     private ObjectInputStream<GeneProfile> subject;
-
-    private ExpressionsBuffer.Builder expressionsBufferBuilder;
 
     private GeneProfileBuilderFactory geneProfileBuilderFactory;
 
@@ -44,22 +74,23 @@ public class GeneProfilesInputStreamIT {
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
-        ExperimentRun experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addOrganismPartFactorValue("heart");
-        ExperimentRun experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addOrganismPartFactorValue("liver");
-        ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addOrganismPartFactorValue("lung");
+        ExperimentRun experimentRun1 = new ExperimentRun(RUN_ACCESSION_1)
+                .addFactorValue("ORGANISM_PART", "org", "heart");
+        ExperimentRun experimentRun2 = new ExperimentRun(RUN_ACCESSION_2)
+                .addFactorValue("ORGANISM_PART", "org", "liver");
+        ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3)
+                .addFactorValue("ORGANISM_PART", "org", "lung");
 
-        experimentRuns = Lists.newArrayList(experimentRun2, experimentRun3, experimentRun1);
+        when(experimentRunsAccessionsMock.contains(anyString())).thenReturn(true);
+        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock)
+                .addAll(Lists.newArrayList(experimentRun1,experimentRun2,experimentRun3));
 
-        ExperimentsCache cache = mock(ExperimentsCache.class);
-
-        when(cache.getExperimentRuns(anyString())).thenReturn(experimentRuns);
-
-        expressionsBufferBuilder = new ExpressionsBuffer.Builder(cache);
+        when(cacheMock.getExperiment(anyString())).thenReturn(experiment);
 
         geneProfileBuilderFactory = new GeneProfileBuilderConcreteFactory();
 
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), expressionsBufferBuilder)
-                                                .forExperiment("EXPERIMENT_ACCESSION", dataFileURL.openStream())
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(cacheMock))
+                                                .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
                                                 .create();
 
     }
@@ -107,7 +138,7 @@ public class GeneProfilesInputStreamIT {
     public void setCutoffChangesSpecificity() throws IOException {
 
         //given
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), expressionsBufferBuilder)
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(cacheMock))
                                                 .forExperiment("AN_ACCESSION", dataFileURL.openStream())
             .withCutoff(20D)
             .create();

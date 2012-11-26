@@ -4,8 +4,8 @@ import com.google.common.collect.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.FactorValue;
 
 import java.util.List;
 
@@ -14,10 +14,6 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class ExpressionBufferTest {
-
-    private static final String RUN_ACCESSION_1 = "ERR030872";
-    private static final String RUN_ACCESSION_2 = "ERR030873";
-    private static final String RUN_ACCESSION_3 = "ERR030874";
 
     private static final String GENE_ID = "ENST00000000233";
 
@@ -29,17 +25,16 @@ public class ExpressionBufferTest {
 
     private ExpressionsBuffer subject;
 
-    private static List<ExperimentRun> experimentRuns;
+    private List<FactorValue> orderedFactorValues = Lists.newLinkedList();
 
     @Before
     public void initializeSubject() {
-        ExperimentRun experimentRun1 = new ExperimentRun(RUN_ACCESSION_1);
-        ExperimentRun experimentRun2 = new ExperimentRun(RUN_ACCESSION_2);
-        ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3);
 
-        experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
+        orderedFactorValues.add(new FactorValue("ORGANISM_PART","org","lung"));
+        orderedFactorValues.add(new FactorValue("ORGANISM_PART","org","liver"));
+        orderedFactorValues.add(new FactorValue("ORGANISM_PART","org","longue"));
 
-        subject = new ExpressionsBuffer(experimentRuns);
+        subject = new ExpressionsBuffer(orderedFactorValues);
 
     }
 
@@ -52,19 +47,19 @@ public class ExpressionBufferTest {
         Expression expression = subject.poll();
         //then we expect first expression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
-        assertThat(expression.getFactorValues(), is(experimentRuns.get(0).getFactorValues()));
+        assertThat(expression.getOrganismPart(), is("lung"));
 
         //given we poll again
         expression = subject.poll();
         //then we expect second Expression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_2)));
-        assertThat(expression.getFactorValues(), is(experimentRuns.get(1).getFactorValues()));
+        assertThat(expression.getOrganismPart(), is("liver"));
 
         //given we poll again
         expression = subject.poll();
         //then we expect second Expression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_3)));
-        assertThat(expression.getFactorValues(), is(experimentRuns.get(2).getFactorValues()));
+        assertThat(expression.getOrganismPart(), is("longue"));
 
     }
 
@@ -97,7 +92,7 @@ public class ExpressionBufferTest {
         Expression expression = subject.poll();
         //then we expect to find the new values
         assertThat(expression.getLevel(), is(1d));
-        assertThat(expression.getRunAccession(), is(experimentRuns.get(0).getRunAccession()));
+        assertThat(expression.getOrganismPart(), is("lung"));
     }
 
     @Test(expected = IllegalStateException.class)

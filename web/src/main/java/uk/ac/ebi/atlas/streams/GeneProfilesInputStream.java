@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.streams;
 
 
@@ -5,7 +27,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
@@ -16,8 +38,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.MessageFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
@@ -111,7 +135,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     @Scope("prototype")
     public static class Builder {
 
-        @Value("#{configuration['magetab.tsvfile.url.template']}")
+        @Value("#{configuration['experiment.magetab.path.template']}")
         private String tsvFileUrlTemplate;
 
         private GeneProfilesInputStream geneProfilesInputStream;
@@ -146,12 +170,10 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
         }
 
         public Builder forExperiment(String experimentAccession) {
-            String tsvFileUrl = String.format(tsvFileUrlTemplate, experimentAccession);
+            String tsvFileUrl = MessageFormat.format(tsvFileUrlTemplate, experimentAccession);
             try{
-                return forExperiment(experimentAccession, new URL(checkNotNull(tsvFileUrl)).openStream());
-            } catch (MalformedURLException e) {
-                logger.error(e.getMessage(), e);
-                throw new IllegalArgumentException("Error while building URL for location " + tsvFileUrl + ". Error details: " + e.getMessage());
+                Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileUrl));
+                return forExperiment(experimentAccession, Files.newInputStream(filePath));
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
                 throw new IllegalArgumentException("Error while building GeneProfileInputStream. Error details: " + e.getMessage());

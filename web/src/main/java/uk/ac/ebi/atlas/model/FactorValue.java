@@ -7,33 +7,48 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorValue implements Comparable<FactorValue> {
 
+    public static enum FactorType{
+        ORGANISM_PART
+    };
+
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
-    private String factor;
+    private String type;
+
+    private String name;
 
     private String value;
 
-    public FactorValue(String factor, String value) {
-        this.factor = checkNotNull(factor);
+    public FactorValue(String type, String name, String value) {
+        this.type = checkNotNull(type);
+        this.name = checkNotNull(name);
         this.value = checkNotNull(value);
     }
 
-    public String getFactor() {
-        return factor;
+    public String getName() {
+        return name;
     }
 
     public String getValue() {
         return value;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public String getDisplayString() {
-        return factor.concat(FACTOR_VALUE_SEPARATOR)
+        return name.concat(FACTOR_VALUE_SEPARATOR)
                      .concat(value);
+    }
+
+    public boolean isOrganismPart(){
+        return FactorType.ORGANISM_PART.toString().equalsIgnoreCase(this.getType());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(factor, value);
+        return Objects.hash(type, name, value);
     }
 
     @Override
@@ -45,7 +60,7 @@ public class FactorValue implements Comparable<FactorValue> {
             return false;
         }
         final FactorValue other = (FactorValue) obj;
-        return Objects.equals(this.factor, other.factor) && Objects.equals(this.value, other.value);
+        return Objects.equals(this.type, other.type) && Objects.equals(this.name, other.name) && Objects.equals(this.value, other.value);
     }
 
     @Override
@@ -55,7 +70,7 @@ public class FactorValue implements Comparable<FactorValue> {
 
     @Override
     public int compareTo(FactorValue factorValue) {
-        int factorCompare = factor.compareTo(factorValue.factor);
+        int factorCompare = name.compareTo(factorValue.name);
         if (factorCompare != 0) {
             return factorCompare;
         }

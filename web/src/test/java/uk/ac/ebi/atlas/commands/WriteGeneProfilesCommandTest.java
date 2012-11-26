@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -7,8 +29,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -25,8 +49,6 @@ public class WriteGeneProfilesCommandTest {
     @Mock
     private ObjectInputStream<GeneProfile> inputStreamMock;
     @Mock
-    private ApplicationProperties applicationPropertiesMock;
-    @Mock
     private RequestPreferences requestPreferencesMock;
     @Mock
     private CSVWriter csvWriterMock;
@@ -34,6 +56,8 @@ public class WriteGeneProfilesCommandTest {
     private GeneProfile geneProfileMock1;
     @Mock
     private GeneProfile geneProfileMock2;
+    @Mock
+    private Experiment experimentMock;
 
     private WriteGeneProfilesCommand subject;
 
@@ -59,7 +83,7 @@ public class WriteGeneProfilesCommandTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new WriteGeneProfilesCommand(applicationPropertiesMock);
+        subject = new WriteGeneProfilesCommand(new NumberUtils());
         subject.setRequestPreferences(requestPreferencesMock);
         subject.setCsvWriter(csvWriterMock);
     }
@@ -67,7 +91,7 @@ public class WriteGeneProfilesCommandTest {
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(requestPreferencesMock, inputStreamMock);
+        long count = subject.apply(requestPreferencesMock, experimentMock, inputStreamMock);
 
         verify(csvWriterMock).writeNext(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"});
 

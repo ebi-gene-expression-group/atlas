@@ -32,13 +32,13 @@ public class GeneProfilesDownloadController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" +experimentAccession + "-gene-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" +experimentAccession + "-gene-expression-profiles.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
         writeGeneProfilesCommand.setRequestPreferences(preferences);
 
-        CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t'/*, CSVWriter.NO_QUOTE_CHARACTER*/);
+        CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', CSVWriter.NO_QUOTE_CHARACTER);
 
         writeGeneProfilesCommand.setCsvWriter(csvWriter);
 

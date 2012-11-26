@@ -8,11 +8,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
-import java.util.*;
+import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.mock;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,9 +23,9 @@ public class GeneProfileTest {
     private static String GENE_ID = "geneId_1";
     private static String GENE_NAME = "geneName_1";
 
-    private Expression expression_1 = new Expression(new ExperimentRun("RUN_ACCESSION_1").addOrganismPartFactorValue("nose"), 2.2D);
-    private Expression expression_2 = new Expression(new ExperimentRun("RUN_ACCESSION_2").addOrganismPartFactorValue("trunk"), 3D);
-    private Expression expression_3 = new Expression(new ExperimentRun("RUN_ACCESSION_3").addOrganismPartFactorValue("head"), 3.001D);
+    private Expression expression_1 = new Expression(new FactorValue("ORGANISM_PART", "org", "nose"), 2.2D);
+    private Expression expression_2 = new Expression(new FactorValue("ORGANISM_PART", "org", "trunk"), 3D);
+    private Expression expression_3 = new Expression(new FactorValue("ORGANISM_PART", "org", "head"), 3.001D);
 
     private GeneProfile subject;
 

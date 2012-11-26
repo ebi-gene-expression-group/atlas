@@ -14,7 +14,7 @@
 
     <c:forEach var="geneProfile" items="${geneProfiles}">
 
-        <fmt:message bundle="${configuration}" key="gxa.gene.url.template" var="genePageURL">
+        <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
             <fmt:param value="${geneProfile}"/>
         </fmt:message>
 

@@ -3,27 +3,27 @@ package uk.ac.ebi.atlas.model.caches;
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.Experiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-@Named("experimentsCache")
+@Named("experiments")
 @Scope("singleton")
 public class ExperimentsCache {
 
     private static final Logger logger = Logger.getLogger(ExperimentsCache.class);
 
-    private LoadingCache<String, List<ExperimentRun>> experiments;
+    private LoadingCache<String, Experiment> experiments;
 
     @Inject
-    public ExperimentsCache(LoadingCache<String, List<ExperimentRun>> experiments) {
+    @Named("experimentRunsCache")
+    public ExperimentsCache(LoadingCache<String, Experiment> experiments) {
         this.experiments = experiments;
     }
 
-    public List<ExperimentRun> getExperimentRuns(String experimentAccession) {
+    public Experiment getExperiment(String experimentAccession) {
         try {
 
             return experiments.get(experimentAccession);

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,13 @@ import java.util.List;
 
 public class HeatmapTablePage extends TablePage {
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
+    public static String EXPERIMENT_ACCESSION = "E-MTAB-513";
+
+    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION;
+
+    public HeatmapTablePage(WebDriver driver) {
+        super(driver);
+    }
 
     public HeatmapTablePage(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);
@@ -21,6 +28,15 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id="geneCount")
     WebElement geneFound;
 
+    @FindBy(id = "download-profiles-link")
+    WebElement downloadExpressionProfilesLink;
+
+    @FindBy(id = "display-levels")
+    WebElement displayLevelsButton;
+
+    @FindBy(className = "gradient-level")
+    List<WebElement> gradientLevels;
+
     public List<String> getOrganismParts() {
         List<String> organismParts = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
@@ -29,6 +45,10 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getSelectedGenes() {
         return getFirstColumnValues(heatmapTable);
+    }
+
+    public String getDownloadExpressionProfilesLink(){
+        return downloadExpressionProfilesLink.getAttribute("href");
     }
 
     @Override
@@ -48,5 +68,26 @@ public class HeatmapTablePage extends TablePage {
 
     public String getGeneCount() {
         return geneFound.getText();
+    }
+
+    public void clickDisplayLevelsButton() {
+        displayLevelsButton.click();
+    }
+
+    public String getDisplayLevelsButtonValue() {
+        return displayLevelsButton.getText();
+    }
+
+
+    public boolean areGradientLevelsHidden() {
+        String style = gradientLevels.get(0).getAttribute("style");
+        return style.contains("color") && style.contains("white");
+    }
+
+    public Boolean areExpressionLevelsHidden() {
+        //we get the cell at index 1 because at index 0 we have the gene name
+        WebElement firstExpressionLevelCell = this.getNonEmptyCellsFromFirstTableRow(heatmapTable).get(1);
+        WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
+        return !div.getAttribute("style").contains("white");
     }
 }

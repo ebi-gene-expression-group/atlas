@@ -9,7 +9,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ExperimentRun implements Comparable<ExperimentRun> {
 
-    public static final String ORGANISM_PART_FACTOR_NAME = "ORGANISMPART";
     private String runAccession;
 
     private Set<FactorValue> factorValues = new LinkedHashSet<>();
@@ -18,13 +17,9 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         this.runAccession = checkNotNull(accession);
     }
 
-    public ExperimentRun addFactorValue(String factor, String value) {
-        factorValues.add(new FactorValue(factor, value));
+    public ExperimentRun addFactorValue(String type, String name, String value) {
+        factorValues.add(new FactorValue(type, name, value));
         return this;
-    }
-
-    public ExperimentRun addOrganismPartFactorValue(String value) {
-        return addFactorValue(ORGANISM_PART_FACTOR_NAME, value);
     }
 
     public String getRunAccession() {
@@ -35,10 +30,10 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         return factorValues;
     }
 
-    public String getOrganismPart() {
+    public FactorValue getOrganismPart() {
         for (FactorValue factorValue : factorValues) {
-            if (ORGANISM_PART_FACTOR_NAME.equalsIgnoreCase(factorValue.getFactor())) {
-                return factorValue.getValue();
+            if (factorValue.isOrganismPart()) {
+                return factorValue;
             }
         }
         return null;

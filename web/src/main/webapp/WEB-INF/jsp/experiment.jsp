@@ -1,5 +1,26 @@
-<!DOCTYPE html>
+<%--
+  ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  ~
+  ~ For further details of the Gene Expression Atlas project, including source code,
+  ~ downloads and documentation, please see:
+  ~
+  ~ http://gxa.github.com/gxa
+  --%>
 
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
@@ -11,13 +32,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
 <head>
-    <base href="${pageContext.request.contextPath}/" />
+    <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
     <!-- old style start -->
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="en-GB" http-equiv="Content-Language">
     <meta content="_top" http-equiv="Window-target">
-    <%--<meta content="IE=7" http-equiv="X-UA-Compatible">--%>
     <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
     <meta content="IE=9" http-equiv="X-UA-Compatible"/>
 
@@ -40,21 +60,27 @@
     <!-- old style end -->
 
     <title>Experiment</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
+
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/anatomogram.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
 
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-1.8.2.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.1.custom.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui/jquery-ui-1.9.1.custom.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
     <!--[if lte IE 8]>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"></script>
@@ -68,10 +94,6 @@
             src="${pageContext.request.contextPath}/resources/js/slider.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
-
-    <link rel="stylesheet" type="text/css"
-            href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
-
 
     <script>
 
@@ -90,18 +112,20 @@
                 if ($.browser.msie) {
                     if ($.browser.version <= 8.0) {
                         $("#anatomogram").hide();
+                        $("#gene-distribution-button").hide();//hide the bar chart button
+                        $("#gene-distribution").hide();//hide the bar chart
+                        $("#slider-range-max").hide();//hide the cutoff slider
+                        $("#heatmap-div").attr('style','');//reset the style attribute to remove the margin left
                     }
                     $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
                     $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
 
                 } else {
-                    initAnatomogram(organismParts);
-                    initSlider(${preferences.cutoff});
-                    initSearchForm('${requestURI}');
-                    initHeatmapDisplayValueToggle();
+                    initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    initSlider(${preferences.cutoff}, '${experimentAccession}');
                 }
-
-                $(".gradient-level").attr('style','color:white');
+                initSearchForm('${requestURI}');
+                initHeatmapDisplayValueToggle();
 
             });
 
@@ -123,6 +147,8 @@
 
 <div id="contents" class="page-contents">
 
+    <c:import url="includes/experiment-header.jsp"/>
+
     <c:import url="includes/request-preferences.jsp" />
 
     <c:if test="${not empty geneProfiles}">
@@ -135,7 +161,7 @@
                 <table style="font-size:10px" id="heatmap-legenda" >
                     <tr>
                         <td>
-                            <div style="text-align:right;width: 30px" class="gradient-level">
+                            <div style="color:white" class="gradient-level">
                                 <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
@@ -151,7 +177,7 @@
                             </div>
                         </td>
                         <td>
-                            <div style="text-align:left;width: 30px" class="gradient-level">
+                            <div style="color:white" class="gradient-level">
                                 <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false" />
                             </div>
                         </td>
@@ -159,36 +185,23 @@
                     </tr>
                 </table>
 
-
-                <table>
-                    <tr>
-                        <td style="padding-top: 20px; vertical-align:top">
-                            <div id="sexToggle" class="male"></div>
-                        </td>
-                        <td>
-                            <div id="anatomogramBody" style="width: 250px; height: 400px">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-
+                    <table>
+                        <tr>
+                            <td style="width:25px;padding-top: 15px; vertical-align:top">
+                                <div id="sex-toggle">
+                                    <img id="sex-toggle-image" title="Switch anatomogram" class="button-image" style="width:20px" src="resources/images/male_selected.png"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div id="anatomogramBody" style="width: 230px; height: 400px">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
             </div>
-            <div style="margin-left:310px">
+            <div id="heatmap-div" style="margin-left:300px">
 
-                <div id="geneCount" style="font-weight:bold">Found <c:out value="${totalResultCount}"/> genes.</div>
-                <div>
-                    <a href="<c:out value='${downloadUrl}'/>" target="_blank"> Download Gene Expression Profiles </a>
-                </div>
-                <br/>
-
-                <c:choose>
-                    <c:when test="${param.organismOriented!=null}">
-                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp" />
-                    </c:when>
-                    <c:otherwise>
-                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
-                    </c:otherwise>
-                </c:choose>
+                <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
 
             </div>
         </div>

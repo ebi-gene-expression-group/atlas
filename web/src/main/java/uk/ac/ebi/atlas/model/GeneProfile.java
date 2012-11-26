@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -8,11 +7,10 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class GeneProfile implements Iterable<Expression> {
 
@@ -120,13 +118,6 @@ public class GeneProfile implements Iterable<Expression> {
         private static double DEFAULT_CUTOFF_VALUE = 0D;
 
         private double cutoffValue = DEFAULT_CUTOFF_VALUE;
-
-        //This constructor is only available to allow instantiation of a Builder
-        //in the Integration Tests. It will return a builder that has no GeneNamesProvider binding!
-        //This should be removed as soon as we start using Spring injection in Integration Tests
-//        protected Builder(){
-//            this.geneProfile = new GeneProfile();
-//        }
 
         protected Builder() {
         }

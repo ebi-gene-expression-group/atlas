@@ -1,12 +1,38 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.IndexClient;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -29,6 +55,15 @@ public class RankGeneProfilesCommandTest {
     @Mock
     private RequestPreferences requestPreferencesMock;
 
+    @Mock
+    private IndexClient indexClient;
+
+    @Mock
+    private ExperimentsCache experimentsCache;
+
+    @Mock
+    private Experiment experiment;
+
     private ObjectInputStream<GeneProfile> largeInputStream;
 
     private ObjectInputStream<GeneProfile> smallInputStream;
@@ -40,6 +75,13 @@ public class RankGeneProfilesCommandTest {
 
     @Before
     public void initializeSubject() throws Exception {
+
+        // no filtering should be done here
+        when(indexClient.findGeneIds(anyString(), anyString())).thenReturn(Lists.<String>newArrayList());
+
+        when(experiment.getSpecie()).thenReturn("SPECIE");
+
+        when(experimentsCache.getExperiment(anyString())).thenReturn(experiment);
 
         when(geneProfileInputStreamBuilderMock.forExperiment(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
         //when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
@@ -61,6 +103,10 @@ public class RankGeneProfilesCommandTest {
         subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
         subject.setRequestPreferences(requestPreferencesMock);
+
+        subject.setIndexClient(indexClient);
+
+        subject.setExperimentsCache(experimentsCache);
 
         //subject.setTsvFileUrlTemplate(TSV_FILE_URL_TEMPLATE);
 

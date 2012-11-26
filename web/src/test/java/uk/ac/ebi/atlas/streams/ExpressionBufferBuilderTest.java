@@ -1,29 +1,51 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionBufferBuilderTest {
 
-    private static final String RUN_ACCESSION_1 = "ERR030872";
-    private static final String RUN_ACCESSION_2 = "ERR030873";
-    private static final String RUN_ACCESSION_3 = "ERR030874";
+    private static final String RUN_ACCESSION_1 = "ENS0";
+    private static final String RUN_ACCESSION_2 = "ENS1";
+    private static final String RUN_ACCESSION_3 = "ENS2";
 
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
@@ -38,13 +60,14 @@ public class ExpressionBufferBuilderTest {
 
     @Before
     public void initializeSubject() {
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1);
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2);
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3);
+        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "heart");
+        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "liver");
+        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "lung");
 
-        List<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3);
+        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1,RUN_ACCESSION_2,RUN_ACCESSION_3))
+                .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
-        when(experimentsCacheMock.getExperimentRuns(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentRuns);
+        when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
 
         subject = new ExpressionsBuffer.Builder(experimentsCacheMock);
     }
@@ -54,8 +77,9 @@ public class ExpressionBufferBuilderTest {
 
         //when
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
+        subject.withHeaders("G1","ENS1","ENS2");
         //then
-        verify(experimentsCacheMock).getExperimentRuns(MOCK_EXPERIMENT_ACCESSION);
+        verify(experimentsCacheMock,times(2)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
 
     }
 
@@ -85,22 +109,6 @@ public class ExpressionBufferBuilderTest {
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
         //then
         assertThat(subject.withHeaders(headers).create(), is(notNullValue()));
-    }
-
-    @Test
-    public void removeUnrequiredExperimentRunsTest() {
-        //given
-        List<String> wantedRunAccessions = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
-        //and
-        subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
-
-        //when
-        Collection<ExperimentRun> experimentRuns = subject.removeUnrequiredExperimentRuns(wantedRunAccessions);
-
-        //then
-        assertThat(experimentRuns, hasItems(experimentRun2, experimentRun3));
-        assertThat(experimentRuns, not(hasItem(experimentRun1)));
-
     }
 
     @Test
