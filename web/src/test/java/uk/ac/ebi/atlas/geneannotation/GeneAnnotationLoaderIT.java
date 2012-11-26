@@ -22,30 +22,23 @@
 
 package uk.ac.ebi.atlas.geneannotation;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.biomart.BioMartGeneNameStream;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.util.concurrent.ConcurrentMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations="classpath:applicationContext.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class GeneAnnotationLoaderIT {
 
     private static final String HOMO_SAPIENS_DATASET = "hsapiens_gene_ensembl";
@@ -65,10 +58,10 @@ public class GeneAnnotationLoaderIT {
 
         //given
         subject.loadGeneNames(HOMO_SAPIENS_DATASET);
-        ConcurrentMap<String,String> map = annotationEnvironment.geneNames();
+        ConcurrentMap<String, String> map = annotationEnvironment.geneNames();
 
         //then
-        assertThat(map.size(), is(greaterThan(90000)));
+        assertThat(map.size(), is(greaterThan(20000)));
         assertThat(map.get("ENSG00000211855"), is("TRAJ34"));
     }
 
