@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.zeroturnaround.com"
         >
   <classpath>
     <dir name="${project.root}/atlas/web/target/classes"/>
-    <dir name="${project.root}/atlas/src/main/resources"/>
+    <dir name="${project.root}/atlas/web/src/main/resources"/>
   </classpath>
   <web>
     <link target="/">
