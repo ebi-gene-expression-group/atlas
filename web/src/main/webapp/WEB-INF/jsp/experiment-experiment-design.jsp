@@ -92,6 +92,7 @@
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
+                "iDisplayLength":25,
                 /*"sPaginationType": "full_numbers",*/
                 "sDom":'<"toolbar">Tlfr<"button"><"clear">tip',
                 "oTableTools":{
@@ -135,6 +136,8 @@
     <c:import url="includes/experiment-header.jsp"/>
 
     <div id="dynamic"></div>
+
+    <p/>
 
 </div>
 
