@@ -66,14 +66,16 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
 
     <style type="text/css" title="currentStyle">
-        @import "${pageContext.request.contextPath}/resources/datatables/css/demo_page.css";
-        @import "/datatables/css/header.ccss";
-        @import "${pageContext.request.contextPath}/resources/datatables/css/demo_table.css";
+        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/demo_page.css";
+        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/demo_table.css";
+        @import "${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/css/TableTools.css";
     </style>
     <script type="text/javascript" language="javascript"
-            src="${pageContext.request.contextPath}/resources/datatables/js/jquery.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" language="javascript"
-            src="${pageContext.request.contextPath}/resources/datatables/js/jquery.dataTables.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/js/TableTools.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         /* Data set - can contain whatever information you want */
         var aDataSet = ${tableData};
@@ -91,8 +93,19 @@
                     { "sTitle":"Factor[organism_part]", "sClass":"center" },
                     { "sTitle":"Factor[library_preparation_method]", "sClass":"center" },
                     { "sTitle":"Factor Value[phenotype]", "sClass":"center" }
-                ]
+                ],
+                "aLengthMenu":[
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                /*"sPaginationType": "full_numbers",*/
+                "sDom":'<"toolbar">lfr<"clear">Ttip',
+                "oTableTools":{
+                    "sSwfPath":"${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/swf/copy_csv_xls_pdf.swf",
+                    "aButtons":[ "copy", "xls", "print" ]
+                }
             });
+            $("div.toolbar").html('<b>Experiment Design</b>');
         });
     </script>
 
@@ -112,17 +125,7 @@
 
     <c:import url="includes/experiment-header.jsp"/>
 
-    <div class="block">
-
-        <div style="text-align:left;padding-top:10px; padding-bottom:5px">
-            <label>
-                Experiment Design:
-            </label>
-        </div>
-
-
-        <div id="dynamic"></div>
-    </div>
+    <div id="dynamic"></div>
 
 </div>
 
