@@ -50,8 +50,6 @@ public class GeneAnnotationLoaderIT {
 
     private static final String HOMO_SAPIENS_DATASET = "hsapiens_gene_ensembl";
 
-    private final static String TEST_ENV_PATH = "test-env";
-
     @Inject
     private GeneAnnotationLoader subject;
 
@@ -72,13 +70,6 @@ public class GeneAnnotationLoaderIT {
         //then
         assertThat(map.size(), is(greaterThan(90000)));
         assertThat(map.get("ENSG00000211855"), is("TRAJ34"));
-    }
-
-    @After
-    public void cleanup() throws Exception {
-        annotationEnvironment.close();
-        FileUtils.deleteDirectory(new File(TEST_ENV_PATH));
-
     }
 
 

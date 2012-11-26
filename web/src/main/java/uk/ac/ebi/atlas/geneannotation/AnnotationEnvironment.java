@@ -74,9 +74,10 @@ public class AnnotationEnvironment {
     private void setupEnvironment(boolean readonly) {
         EnvironmentConfig envConfig = new EnvironmentConfig();
 
-        envConfig.setTransactional(true);
-        envConfig.setAllowCreate(readonly ? false: true);
+        envConfig.setTransactional(readonly ? false : true);
+        envConfig.setAllowCreate(readonly ? false : true);
         envConfig.setReadOnly(readonly ? true : false);
+        envConfig.setLocking(readonly? false : true);
 
         File envHome = new File(environmentLocation);
         if (!envHome.exists()) {

@@ -52,13 +52,11 @@ public class GeneAnnotationLoader {
         this.geneNameStreamBuilder = geneNameStreamBuilder;
     }
 
-    @PostConstruct
     public void turnOffReadonly(){
         this.annotationEnvironment.close();
         this.annotationEnvironment.initBerkeley(false);
     }
 
-    @PreDestroy
     public void turnOnReadOnly(){
         this.annotationEnvironment.close();
         this.annotationEnvironment.initBerkeleyReadonly();
@@ -80,15 +78,22 @@ public class GeneAnnotationLoader {
 
     public void loadGeneNames(String organism) {
 
-        ObjectValueTransactionWorker<String> transactionWorker =
+        try (ObjectInputStream<String[]> annotationsInputStream = geneNameStreamBuilder.create(organism)) {
+
+            turnOffReadonly();
+
+            ObjectValueTransactionWorker<String> transactionWorker =
                 new StringValueTransactionWorker(annotationEnvironment.geneNames());
 
-        try (ObjectInputStream<String[]> annotationsInputStream = geneNameStreamBuilder.create(organism)) {
 
             loadAnnotations(annotationsInputStream, transactionWorker);
 
         } catch (Exception e) {
+
             throw new IllegalStateException("Error while writing gene name DB: " + e.getMessage());
+
+        } finally {
+            turnOnReadOnly();
         }
     }
 
