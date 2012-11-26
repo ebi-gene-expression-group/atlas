@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
+import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -21,10 +22,13 @@ public class MageTabInvestigationTest {
 
     private static final String MAGE_TAB_URL_TEMPLATE = "http://www.ebi.ac.uk/arrayexpress/files/%s/%s.idf.txt";
 
-    private MageTabInvestigationLoader subject;
+    private ExperimentMetadataLoader subject;
 
     @Mock
     private InputStream inputStreamMock;
+
+    @Mock
+    private AnalysisMethodsTsvReader analysisMethodsTsvReaderMock;
 
     @Mock
     private MAGETABParser<MAGETABInvestigation> MAGETABParserMock;
@@ -41,15 +45,13 @@ public class MageTabInvestigationTest {
     @Before
     public void initSubject() throws Exception {
 
-        subject = new MageTabInvestigationLoader(){
+        subject = new ExperimentMetadataLoader(MAGE_TAB_URL_TEMPLATE, analysisMethodsTsvReaderMock){
             @Override
             MAGETABInvestigation parseInvestigation(URL idfFileURL) {
                 return investigationMock;
             }
 
         };
-
-        subject.setIdfFileUrlTemplate(MAGE_TAB_URL_TEMPLATE);
 
     }
 

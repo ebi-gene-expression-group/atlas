@@ -34,6 +34,8 @@
         <java-version>1.7</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
+        <org.springframework.rc.version>3.2.0.RC1</org.springframework.rc.version>
+        <json-path.version>0.8.1</json-path.version>
         <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
         <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
         <!-- default values for configuration properties,
@@ -41,6 +43,7 @@
         and are overridden in profiles for specific deployment environments-->
         <data.files.location>${user.home}/Data</data.files.location>
         <berkeley.schema.name>bdb</berkeley.schema.name>
+        <solr.host>lime</solr.host>
         <!-- default values for integration testing properties -->
         <deploy.host>lime</deploy.host>
         <deploy.port>14092</deploy.port>
@@ -173,6 +176,12 @@
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json-path.version}</version>
         </dependency>
 
         <!-- Guava -->
@@ -315,15 +324,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>0.8.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path-assert</artifactId>
-            <version>0.8.1</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.rc.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -463,6 +466,7 @@
         <profile>
             <id>local.integration.test</id>
             <properties>
+                <solr.host>localhost</solr.host>
                 <data.files.location>${user.home}/Data/test-data</data.files.location>
                 <berkeley.schema.name>bdb</berkeley.schema.name>
             </properties>

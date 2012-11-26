@@ -22,28 +22,36 @@
 
 package uk.ac.ebi.atlas.model;
 
+import org.apache.log4j.Logger;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Experiment {
 
+    private static final Logger logger = Logger.getLogger(Experiment.class);
+
     private String experimentAccession;
     private String description;
+    private SortedSet<String> organismParts = new TreeSet<>();
 
     private Map<String, ExperimentRun> runs = new HashMap<>();
 
     private String specie;
 
-    public Experiment(String experimentAccession, String description) {
+    private Set<String> experimentRunAccessions;
+
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions) {
         this.experimentAccession = experimentAccession;
         this.description = description;
+        this.experimentRunAccessions = experimentRunAccessions;
     }
 
     public Experiment addAll(Collection<ExperimentRun> experimentRuns){
         for (ExperimentRun experimentRun: experimentRuns){
-            runs.put(experimentRun.getRunAccession(), experimentRun);
+            if (experimentRunAccessions.contains(experimentRun.getRunAccession())){
+                runs.put(experimentRun.getRunAccession(), experimentRun);
+                organismParts.add(experimentRun.getOrganismPart().getValue());
+            }
         }
         return this;
     }
@@ -69,6 +77,10 @@ public class Experiment {
     public Experiment setSpecie(String specie) {
         this.specie = specie;
         return this;
+    }
+
+    public SortedSet<String> getAllOrganismParts(){
+        return organismParts;
     }
 
     public String getDescription() {

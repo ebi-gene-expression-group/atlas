@@ -38,6 +38,7 @@ import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -61,28 +62,21 @@ public class AnalysisMethodsPageController {
 
     private static final String ANALYSIS_METHODS_FILE_SUFFIX = "-analysis-methods.tsv";
 
-    private ApplicationProperties applicationProperties;
+    private AnalysisMethodsTsvReader analysisMethodsTsvReader;
     private ExperimentsCache experimentsCache;
 
     @Inject
-    public AnalysisMethodsPageController(ApplicationProperties applicationProperties, ExperimentsCache experimentsCache) {
-        this.applicationProperties = applicationProperties;
+    public AnalysisMethodsPageController(AnalysisMethodsTsvReader analysisMethodsTsvReader, ExperimentsCache experimentsCache) {
+        this.analysisMethodsTsvReader = analysisMethodsTsvReader;
         this.experimentsCache = experimentsCache;
     }
 
     @RequestMapping("/experiments/{experimentAccession}-analysis-methods")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
-        Path filePath = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodCsvFilePath(experimentAccession));
-
-        Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
-
-        CSVReader csvReader = new CSVReader(dataFileReader, '\t');
-
-        Collection<String[]> csvLines = Collections2.filter(csvReader.readAll(), new IsCommented());
+        model.addAttribute("csvLines", analysisMethodsTsvReader.readAll(experimentAccession));
 
         model.addAttribute("experimentAccession", experimentAccession);
-        model.addAttribute("csvLines", csvLines);
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -96,13 +90,6 @@ public class AnalysisMethodsPageController {
     }
 
 
-    private class IsCommented implements Predicate<String[]> {
-
-        @Override
-        public boolean apply(String[] columns) {
-            return ! columns[0].trim().startsWith("#");
-        }
-    }
 }
 
 

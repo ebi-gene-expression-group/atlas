@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,7 +64,7 @@ public class ExpressionBufferBuilderTest {
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "liver");
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "lung");
 
-        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null)
+        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1,RUN_ACCESSION_2,RUN_ACCESSION_3))
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);

@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
@@ -64,6 +65,33 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.experimentsCache = experimentsCache;
     }
 
+    public T apply(String experimentAccession) {
+
+        Set<String> geneIDs = new HashSet<>();
+
+        String geneProperties = requestPreferences.getGeneQuery();
+
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+        if (!StringUtils.isEmpty(geneProperties)) {
+
+            geneIDs.addAll(indexClient.findGeneIds(geneProperties, experiment.getSpecie()));
+
+            if (geneIDs.isEmpty()) {
+                return returnEmpty();
+            }
+        }
+
+        try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession, geneIDs)) {
+
+            return apply(requestPreferences, experiment, inputStream);
+
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+            throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
+        }
+    }
+
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession, Set<String> geneIDs) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
@@ -83,33 +111,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.requestPreferences = requestPreferences;
     }
 
-    public T apply(String experimentAccession) {
-
-        Set<String> geneIDs = new HashSet<>();
-
-        String geneProperties = requestPreferences.getGeneQuery();
-
-        if (!StringUtils.isEmpty(geneProperties)) {
-
-            String organism = experimentsCache.getExperiment(experimentAccession).getSpecie();
-            geneIDs.addAll(indexClient.findGeneIds(geneProperties, organism));
-
-            if (geneIDs.isEmpty()) {
-                return returnEmpty();
-            }
-        }
-
-        try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession, geneIDs)) {
-
-            return apply(requestPreferences, inputStream);
-
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
-        }
-    }
-
-    protected abstract T apply(RequestPreferences requestPreferences
+    protected abstract T apply(RequestPreferences requestPreferences, Experiment experiment
             , ObjectInputStream<GeneProfile> inputStream) throws IOException;
 
     protected abstract T returnEmpty();

@@ -1,39 +1,44 @@
+//ToDo ... this is impossible to test without bootstrapping spring, as most other IT tests
+
+
 package uk.ac.ebi.atlas.model.caches;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations="classpath:applicationContext.xml")
 public class MageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
     private static final String RUN_ACCESSION = "ERR030880";
 
-    private static final String MAGE_TAB_URL_TEMPLATE = "http://www.ebi.ac.uk/arrayexpress/files/%s/%s.idf.txt";
-
-
-    private MageTabInvestigationLoader subject;
+    @Inject
+    private ExperimentMetadataLoader subject;
 
     @Before
     public void initSubject() throws IOException, ParseException {
-
-        subject = new MageTabInvestigationLoader();
-
-        subject.setIdfFileUrlTemplate(MAGE_TAB_URL_TEMPLATE);
     }
 
     @Test
     public void parseExperimentRunsReturnsMoreThanOneRun() throws Exception {
         Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
-        assertThat(experiment.getNumberOfRuns(), is(48));
+        assertThat(experiment.getNumberOfRuns(), is(16));
     }
 
     @Test
@@ -46,5 +51,8 @@ public class MageTabParserIT {
         assertThat(experimentRun.getFactorValues().size(), is(3));
         assertThat(experimentRun.getOrganismPart().getValue(), is(equalTo("adipose")));
     }
+
+    //ToDo berkeley was killing me... I killed it
+    //ToDo show how to implement integration tests now... integration -> no mocks , unit -> mocks
 
 }

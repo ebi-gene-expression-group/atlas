@@ -27,6 +27,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 public class HeatmapTableWithCutoff05AndGenePropertyFilterIT extends SeleniumFixture {
@@ -49,7 +50,7 @@ public class HeatmapTableWithCutoff05AndGenePropertyFilterIT extends SeleniumFix
     public void verifyResultOnMultiplePropertyQuery() {
         subject = new HeatmapTablePage(firefoxDriver, "geneQuery=regulation+%22protein+binding%22&cutoff=0.5");
         subject.get();
-        assertThat(subject.getGeneCount().contains("82"), is(true));
+        assertThat(subject.getGeneCount(), containsString("82"));
 
     }
 
