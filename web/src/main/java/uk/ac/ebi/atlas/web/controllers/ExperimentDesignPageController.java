@@ -64,25 +64,48 @@ public class ExperimentDesignPageController {
 
         List<String[]> csvLines = csvReader.readAll();
         // delete first line with table headers
-        csvLines.remove(0);
+        String[] headerLine = csvLines.remove(0);
+
+        // convert table header into right data structure
+        HeaderHelper[] headers = new HeaderHelper[headerLine.length];
+        for (int i = 0; i < headerLine.length; i++) {
+            if (i == 0)
+                headers[i] = new HeaderHelper(headerLine[i], "");
+            else
+                headers[i] = new HeaderHelper(headerLine[i], "center");
+        }
 
         // does the serialisation to JSON
         Gson gson = new Gson();
+        String header = gson.toJson(headers);
         String data = gson.toJson(csvLines);
 
         model.addAttribute("experimentAccession", experimentAccession);
-        model.addAttribute("csvLines", csvLines);
+        model.addAttribute("tableHeader", header);
         model.addAttribute("tableData", data);
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         String specie = experiment.getSpecie();
-
         model.addAttribute("specie", specie);
-
         model.addAttribute("experimentDescription", experiment.getDescription());
 
         return "experiment-experiment-design";
+    }
+
+    /**
+     * Helper class for dynamic loading of table headers from file, gets serialized to JSON
+     */
+    private class HeaderHelper {
+
+        public String sTitle;
+
+        public String sClass;
+
+        public HeaderHelper(String t, String c) {
+            this.sTitle = t;
+            this.sClass = c;
+        }
     }
 
 }

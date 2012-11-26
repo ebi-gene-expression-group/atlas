@@ -79,27 +79,19 @@
     <script type="text/javascript" charset="utf-8">
         /* Data set - can contain whatever information you want */
         var aDataSet = ${tableData};
+        var aHeader = ${tableHeader};
 
         $(document).ready(function () {
             $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>');
             $('#example').dataTable({
                 "aaData":aDataSet,
-                "aoColumns":[
-                    { "sTitle":"Assay" },
-                    { "sTitle":"Characteristics[organism]", "sClass":"center" },
-                    { "sTitle":"Characteristics[age]", "sClass":"center" },
-                    { "sTitle":"Characteristics[sex]", "sClass":"center" },
-                    { "sTitle":"Characteristics[biosource_provider]", "sClass":"center" },
-                    { "sTitle":"Factor[organism_part]", "sClass":"center" },
-                    { "sTitle":"Factor[library_preparation_method]", "sClass":"center" },
-                    { "sTitle":"Factor Value[phenotype]", "sClass":"center" }
-                ],
+                "aoColumns":aHeader,
                 "aLengthMenu":[
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
                 /*"sPaginationType": "full_numbers",*/
-                "sDom":'<"toolbar">lfr<"clear">Ttip',
+                "sDom":'<"toolbar">Tlfr<"clear">tip',
                 "oTableTools":{
                     "sSwfPath":"${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/swf/copy_csv_xls_pdf.swf",
                     "aButtons":[ "copy", "xls", "print" ]
