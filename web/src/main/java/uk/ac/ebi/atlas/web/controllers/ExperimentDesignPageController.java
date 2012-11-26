@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,10 +64,15 @@ public class ExperimentDesignPageController {
 
         List<String[]> csvLines = csvReader.readAll();
         // delete first line with table headers
-        //csvLines.remove(0);
+        csvLines.remove(0);
+
+        // does the serialisation to JSON
+        Gson gson = new Gson();
+        String data = gson.toJson(csvLines);
 
         model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("csvLines", csvLines);
+        model.addAttribute("tableData", data);
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
