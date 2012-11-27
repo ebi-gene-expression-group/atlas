@@ -65,9 +65,23 @@ public class ExperimentDesignTablePage extends TablePage {
     @FindBy(xpath = "//div[@id='experiment-design-table_filter']/label/input")
     WebElement searchField;
 
+    @FindBy(xpath = "//thead/tr[1]/th[1]")
+    WebElement firstColumnHeader;
+
+    @FindBy(xpath = "//thead/tr[1]/th[3]")
+    WebElement thirdColumnHeader;
+
     @Override
     protected String getPageURI() {
         return DEFAULT_PAGE_URI;
+    }
+
+    public void clickFirstColumnHeader() {
+        firstColumnHeader.click();
+    }
+
+    public void clickThirdColumnHeader() {
+        thirdColumnHeader.click();
     }
 
     public String getSearchFieldValue() {

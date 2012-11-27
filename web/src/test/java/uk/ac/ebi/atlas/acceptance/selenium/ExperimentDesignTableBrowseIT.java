@@ -93,4 +93,28 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
         assertThat(subject.getFirstExperimentDesign(), hasItem("female"));
         assertThat(subject.getLastExperimentDesign(), hasItem("female"));
     }
+
+    @Test
+    public void sortOnFirstColumn() {
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
+        subject.clickFirstColumnHeader();
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030903"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030883"));
+        subject.clickFirstColumnHeader();
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
+    }
+
+    @Test
+    public void sortOnThirdColumn() {
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
+        subject.clickThirdColumnHeader();
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030895"));
+        subject.clickThirdColumnHeader();
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030878"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030872"));
+    }
 }
