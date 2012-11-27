@@ -91,8 +91,8 @@
         var bShow = 1;
 
         $(document).ready(function () {
-            $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>');
-            var oTable = $('#example').dataTable({
+            $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table"></table>');
+            var oTable = $('#experiment-design-table').dataTable({
                 "aaData":aDataSet,
                 "aoColumns":aHeader,
                 "aLengthMenu":[
@@ -102,7 +102,7 @@
                 "iDisplayLength":25,
                 "bJQueryUI":true,
                 /*"sPaginationType": "full_numbers",*/
-                "sDom":'<"toolbar">Tlfr<"clear">t<"button">ip',
+                "sDom":'<"table-caption">Tlfr<"clear">t<"highlight-button">ip',
                 "oTableTools":{
                     "sSwfPath":"${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/swf/copy_csv_xls_pdf.swf",
                     "aButtons":[ "copy", "xls", "print" ]
@@ -117,8 +117,8 @@
                     return nRow;
                 }
             });
-            $("div.toolbar").html('<b>Experiment Design</b>');
-            $("div.button").html('<a id="togglebutton" class="button"><span style="display:none">Highlight Analysed</span><span>De-hightlight Analysed</span></a>');
+            $("div.table-caption").html('<b>Experiment Design</b>');
+            $("div.highlight-button").html('<a id="togglebutton" class="button"><span style="display:none">Highlight Analysed</span><span>De-hightlight Analysed</span></a>');
             $('a#togglebutton').click(function () {
                 $('span', this).toggle();
                 bShow = 1 - bShow;
