@@ -87,10 +87,10 @@ function initSlider(cutoff, experimentAccession) {
     }
 
 
-    $.getJSON("json/gene-by-cutoff/" + experimentAccession + ".all.txt", function (data) {
-//    $.getJSON("json/gene-by-cutoff/expMap.json", function (data) {
+//    $.getJSON("json/gene-by-cutoff/" + experimentAccession + ".all.txt", function (data) {
+    $.getJSON("json/gene-by-cutoff/expMap.json", function (data) {
 
-        var scaledCutoffTicks = scaledCutoffs(data.length);
+        var scaledCutoffTicks = Object.keys(data);
 
         var ticksMap = [];
 
@@ -98,7 +98,14 @@ function initSlider(cutoff, experimentAccession) {
             ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff) : ""]);
         })
 
-        var genesByCutoffPlot = plotCutoffBarChart(data, ticksMap);
+        var array = Object.keys(data).map(function(key) {
+            var dataArray = new Array(2);
+            dataArray[0] = key;
+            dataArray[1] = data[key];
+            return dataArray;
+        })
+
+        var genesByCutoffPlot = plotCutoffBarChart(array, ticksMap);
 
         function hideGeneDistribution(img, isFast){
             $('#gene-distribution').hide(isFast? null:'slow');
