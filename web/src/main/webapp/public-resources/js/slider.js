@@ -88,7 +88,7 @@ function initSlider(cutoff, experimentAccession) {
 
 
     $.getJSON("json/gene-by-cutoff/" + experimentAccession + ".all.txt", function (data) {
-//    $.getJSON("/json/gene-by-cutoff/exp.json", function (data) {
+//    $.getJSON("json/gene-by-cutoff/expMap.json", function (data) {
 
         var scaledCutoffTicks = scaledCutoffs(data.length);
 

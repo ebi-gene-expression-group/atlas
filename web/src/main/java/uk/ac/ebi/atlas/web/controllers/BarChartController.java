@@ -1,10 +1,12 @@
 package uk.ac.ebi.atlas.web.controllers;
 
+import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.*;
@@ -13,8 +15,9 @@ import java.util.*;
 @Scope("request")
 public class BarChartController {
 
-    @RequestMapping(value = "/json/gene-by-cutoff/exp.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/json/gene-by-cutoff/exp.json", method = RequestMethod.GET, produces="application/json")
     @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     public List<String[]> getAll() {
         List<String[]> result = new ArrayList<>();
 
@@ -37,16 +40,18 @@ public class BarChartController {
     }
 
 
-    @RequestMapping(value = "/json/gene-by-cutoff/expMap.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/json/gene-by-cutoff/expMap.json", method = RequestMethod.GET, produces="application/json")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, String> getMap() {
+    @ResponseBody
+    public String getMap() {
         Map<String, String> result = new HashMap<>();
 
         result.put("0", "40851");
         result.put("1", "37809");
 
+        Gson gson = new Gson();
 
-        return result;
+        return gson.toJson(result, Map.class);
 
     }
 
