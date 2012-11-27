@@ -57,19 +57,26 @@
                 position: relative;
             }
         }
+
+        .analysed {
+            font-weight: bold
+        }
     </style>
 
     <!-- old style end -->
 
     <title>Experiment - experiment design</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
 
     <style type="text/css" title="currentStyle">
-        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/demo_page.css";
-        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/demo_table.css";
+        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/jquery.dataTables_themeroller.css";
         @import "${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/css/TableTools.css";
     </style>
+
     <script type="text/javascript" language="javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" language="javascript"
@@ -93,8 +100,9 @@
                     [10, 25, 50, "All"]
                 ],
                 "iDisplayLength":25,
+                "bJQueryUI":true,
                 /*"sPaginationType": "full_numbers",*/
-                "sDom":'<"toolbar">Tlfr<"button"><"clear">tip',
+                "sDom":'<"toolbar">Tlfr<"clear">t<"button">ip',
                 "oTableTools":{
                     "sSwfPath":"${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/swf/copy_csv_xls_pdf.swf",
                     "aButtons":[ "copy", "xls", "print" ]
@@ -102,15 +110,15 @@
                 "fnRowCallback":function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // Bold selected run accessions
                     if (bShow && jQuery.inArray(aData[0], aRunAccessions) > -1) {
-                        $(nRow).addClass("gradeX");
+                        $(nRow).addClass("analysed");
                     } else {
-                        $(nRow).removeClass("gradeX");
+                        $(nRow).removeClass("analysed");
                     }
                     return nRow;
                 }
             });
             $("div.toolbar").html('<b>Experiment Design</b>');
-            $("div.button").html('<a id="togglebutton" class="button"><span style="display:none">Highlight runs</span><span>De-hightlight runs</span></a>');
+            $("div.button").html('<a id="togglebutton" class="button"><span style="display:none">Highlight Analysed</span><span>De-hightlight Analysed</span></a>');
             $('a#togglebutton').click(function () {
                 $('span', this).toggle();
                 bShow = 1 - bShow;
