@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,14 +22,15 @@ import java.util.List;
 public class BarChartIndexesLoader extends CacheLoader<String, BarChartIndexes> {
 
     private ExperimentsCache experimentsCache;
-
+    private CutoffScale cutoffScale;
 
     @Value("#{configuration['magetab.tsvfile.url.template']}")
     private String tsvFileUrlTemplate;
 
     @Inject
-    public BarChartIndexesLoader(ExperimentsCache experimentsCache) {
+    public BarChartIndexesLoader(ExperimentsCache experimentsCache, CutoffScale cutoffScale) {
         this.experimentsCache = experimentsCache;
+        this.cutoffScale = cutoffScale;
     }
 
 
@@ -44,17 +46,17 @@ public class BarChartIndexesLoader extends CacheLoader<String, BarChartIndexes> 
                 CSVReader csvReader = new CSVReader(dataFileReader, '\t')) {
             List<String> organismParts = Lists.newArrayList(experimentsCache.getExperiment(experimentAccession).getAllOrganismParts());
 
-            BarChartIndexes barChartGenerator = new BarChartIndexes(generateCutoffs(), organismParts);
+            BarChartIndexes barChartIndexes = new BarChartIndexes(generateCutoffs(), organismParts);
 
 
             String[] values;
             int count = 0;
             while ((values = csvReader.readNext()) != null) {
-                barChartGenerator.addValues(convertToDoubles(values), count);
+                barChartIndexes.addValues(convertToDoubles(values), count);
                 count++;
             }
 
-            return barChartGenerator;
+            return barChartIndexes;
         } catch (IOException e) {
             throw new IllegalStateException("Cannot read data file from " + file, e);
         }
@@ -72,23 +74,7 @@ public class BarChartIndexesLoader extends CacheLoader<String, BarChartIndexes> 
 
     }
 
-//    public Map<Double, Integer> countAll(List<Integer> selected) {
-//        return scoreBuilder.countAll(selected);
-//    }
 
-//    public static void main(String[] args) throws FileNotFoundException {
-//        HistogramCountLoader histogramCountLoader = new HistogramCountLoader(null);
-//
-//        long timeStart = System.currentTimeMillis();
-//        Map<Double, List<BitSet>> doubleListMap = histogramCountLoader.generateScoreMap("/Users/nsklyar/Data/magetab/E-MTAB-513.tsv");
-//        long timeFinished = System.currentTimeMillis();
-//        System.out.println("init = " + (timeFinished - timeStart));
-//
-//        Map<Double, Integer> singleSpecificity = histogramCountLoader.countAll(Arrays.asList(0, 1));
-////        Map<Double, Integer> singleSpecificity = histogramCountLoader.countAll(Arrays.asList("adipose", "adrenal"));
-//        System.out.println("singleSpecificity = " + singleSpecificity);
-//
-//    }
 
 
     private List<Double> generateCutoffs() {
