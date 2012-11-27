@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
-import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -32,18 +31,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -53,12 +47,12 @@ import java.util.Set;
 public class ExperimentDesignDownloadController {
     private static final Logger logger = Logger.getLogger(ExperimentDesignDownloadController.class);
 
-    private ApplicationProperties applicationProperties;
+    private ExperimentDesignTsvReader experimentDesignTsvReader;
     private ExperimentsCache experimentsCache;
 
     @Inject
-    public ExperimentDesignDownloadController(ApplicationProperties applicationProperties, ExperimentsCache experimentsCache) {
-        this.applicationProperties = applicationProperties;
+    public ExperimentDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader, ExperimentsCache experimentsCache) {
+        this.experimentDesignTsvReader = experimentDesignTsvReader;
         this.experimentsCache = experimentsCache;
     }
 
@@ -68,24 +62,18 @@ public class ExperimentDesignDownloadController {
             , HttpServletResponse response) throws IOException {
 
         // read contents from file
-        Path filePath = FileSystems.getDefault().getPath(applicationProperties.getExperimentDesignCsvFilePath(experimentAccession));
-
-        Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
-
-        CSVReader csvReader = new CSVReader(dataFileReader, '\t');
+        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
+        List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
         // get used runs from experiment
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
         Set<String> used = experiment.getExperimentRunAccessions();
 
-        List<String[]> csvLines = csvReader.readAll();
-        List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
-
         // modify header by adding new column
         String[] header = csvLines.remove(0);
         String[] newHeader = new String[header.length + 1];
         System.arraycopy(header, 0, newHeader, 0, header.length);
-        newHeader[header.length] = "Used";
+        newHeader[header.length] = "Analysed";
         newCsvLines.add(newHeader);
 
         // copy content and add used field
