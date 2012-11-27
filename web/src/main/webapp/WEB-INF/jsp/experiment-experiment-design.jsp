@@ -57,6 +57,10 @@
                 position: relative;
             }
         }
+
+        .analysed {
+            font-weight: bold
+        }
     </style>
 
     <!-- old style end -->
@@ -102,9 +106,9 @@
                 "fnRowCallback":function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // Bold selected run accessions
                     if (bShow && jQuery.inArray(aData[0], aRunAccessions) > -1) {
-                        $(nRow).addClass("gradeX");
+                        $(nRow).addClass("analysed");
                     } else {
-                        $(nRow).removeClass("gradeX");
+                        $(nRow).removeClass("analysed");
                     }
                     return nRow;
                 }
