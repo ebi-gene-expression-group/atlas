@@ -70,7 +70,7 @@ public class ExperimentDesignPageController {
         String header = gson.toJson(headers);
         String data = gson.toJson(csvLines);
 
-        model.addAttribute("experimentAccession", experimentAccession);
+        // add table data to model
         model.addAttribute("tableHeader", header);
         model.addAttribute("tableData", data);
 
@@ -79,9 +79,10 @@ public class ExperimentDesignPageController {
         String runAccessions = gson.toJson(experiment.getExperimentRunAccessions());
         model.addAttribute("runAccessions", runAccessions);
 
-        String specie = experiment.getSpecie();
-        model.addAttribute("specie", specie);
+        // add general experiment attributes to model
+        model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("experimentDescription", experiment.getDescription());
+        model.addAttribute("specie", experiment.getSpecie());
 
         return "experiment-experiment-design";
     }

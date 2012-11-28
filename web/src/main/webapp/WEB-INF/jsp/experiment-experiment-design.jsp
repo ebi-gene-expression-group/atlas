@@ -67,64 +67,71 @@
 
     <title>Experiment - experiment design</title>
 
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
 
     <style type="text/css" title="currentStyle">
+        @import "${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css";
         @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/jquery.dataTables_themeroller.css";
-        @import "${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/css/TableTools.css";
     </style>
 
     <script type="text/javascript" language="javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" language="javascript"
             src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf-8"
-            src="${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/js/TableTools.min.js"></script>
+
     <script type="text/javascript" charset="utf-8">
-        /* Data set - loaded from experiment tsv file */
+
+        /* this is for dynamically resizing table */
+        var $window = $(window);
+        var calcDataTableHeight = function () {
+            return Math.round($window.height() * 0.75);
+        };
+
+        /* Data set - loaded from experiment design tsv file */
         var aDataSet = ${tableData};
         var aHeader = ${tableHeader};
         var aRunAccessions = ${runAccessions};
-        var bShow = 1;
 
+        /* configuring actual table */
         $(document).ready(function () {
+            /* Custom filtering function which will filter analysed runs */
+            $.fn.dataTableExt.afnFiltering.push(
+                    function (oSettings, aData, iDataIndex) {
+                        var only = $('#isOnlyAnalysed').is(':checked');
+                        if (!only || jQuery.inArray(aData[0], aRunAccessions) > -1) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+            );
+
             $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table"></table>');
             var oTable = $('#experiment-design-table').dataTable({
                 "aaData":aDataSet,
                 "aoColumns":aHeader,
-                "aLengthMenu":[
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                "iDisplayLength":25,
+                "bPaginate":false,
+                "bScrollCollapse":true,
+                "sScrollY":calcDataTableHeight(),
                 "bJQueryUI":true,
-                /*"sPaginationType": "full_numbers",*/
-                "sDom":'<"table-caption">Tlfr<"clear">t<"highlight-button">ip',
-                "oTableTools":{
-                    "sSwfPath":"${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/swf/copy_csv_xls_pdf.swf",
-                    "aButtons":[ "copy", "xls", "print" ]
-                },
-                "fnRowCallback":function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    // Bold selected run accessions
-                    if (bShow && jQuery.inArray(aData[0], aRunAccessions) > -1) {
-                        $(nRow).addClass("analysed");
-                    } else {
-                        $(nRow).removeClass("analysed");
-                    }
-                    return nRow;
-                }
+                "sDom":'fr<"download">ti'
             });
-            $("div.table-caption").html('<b>Experiment Design</b>');
-            $("div.highlight-button").html('<a id="togglebutton" class="button"><span style="display:none">Highlight Analysed</span><span>De-hightlight Analysed</span></a>');
-            $('a#togglebutton').click(function () {
-                $('span', this).toggle();
-                bShow = 1 - bShow;
+
+            $("div.download").html('<a id="download-experiment-design-link" href="experiments/${experimentAccession}-experiment-design.tsv">Download Experiment Design</a>');
+            $('#isOnlyAnalysed').click(function () {
                 oTable.fnDraw();
             });
+
+            $window.resize(function () {
+                var oSettings = oTable.fnSettings();
+                oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
+
+                // maybe you need to redraw the table (not sure about this)
+                oTable.fnDraw(false);
+            });
         });
+
     </script>
 
 </head>
@@ -142,6 +149,10 @@
 <div id="contents" class="page-contents">
 
     <c:import url="includes/experiment-header.jsp"/>
+
+    <div id="table-caption"><b>Experiment Design</b></div>
+
+    <div id="toolbar">Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" checked="yes"/></div>
 
     <div id="dynamic"></div>
 

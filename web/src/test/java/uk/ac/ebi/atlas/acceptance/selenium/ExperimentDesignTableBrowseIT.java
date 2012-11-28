@@ -22,12 +22,12 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium;
 
+import org.junit.Assert;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
 
@@ -41,47 +41,21 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
     @Test
     public void defaultLandingPage() {
         assertThat(subject.getExperimentDesignTableHeader().size(), is(8));
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 25 of 64 entries"));
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
-        assertThat(subject.getToggleButtonValue(), is("De-hightlight Analysed"));
-        assertThat(subject.isTextInBoldFace(), is(true));
-    }
-
-    @Test
-    public void toggleHighlight() {
-        subject.clickToggleButton();
-        assertThat(subject.getToggleButtonValue(), is("Highlight Analysed"));
+        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 32 of 32 entries (filtered from 64 total entries)"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
+        assertThat(subject.isSelectedOnlyAnalysedBox(), is(true));
         assertThat(subject.isTextInBoldFace(), is(false));
     }
 
     @Test
-    public void clickNextButton() {
-        subject.clickNextButton();
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 26 to 50 of 64 entries"));
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030876"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030889"));
-        assertThat(subject.isTextInBoldFace(), is(true));
-    }
-
-    @Test
-    public void clickPreviousButton() {
-        clickNextButton();
-        subject.clickPreviousButton();
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 25 of 64 entries"));
+    public void showNotOnlyAnalysed() {
+        subject.clickOnlyAnalysedBox();
+        assertThat(subject.isSelectedOnlyAnalysedBox(), is(false));
+        assertThat(subject.isTextInBoldFace(), is(false));
+        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 64 of 64 entries"));
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
-        assertThat(subject.isTextInBoldFace(), is(true));
-    }
-
-    @Test
-    public void changeTableLength() {
-        assertThat(subject.getLenghtValue(), is("25"));
-        subject.setLengthValue("50");
-        assertThat(subject.getLenghtValue(), is("50"));
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 50 of 64 entries"));
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030889"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030903"));
     }
 
     @Test
@@ -89,32 +63,37 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
         assertThat(subject.getSearchFieldValue(), is(""));
         subject.setSearchFieldValue("female");
         assertThat(subject.getSearchFieldValue(), is("female"));
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 24 of 24 entries (filtered from 64 total entries)"));
+        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 16 of 16 entries (filtered from 64 total entries)"));
         assertThat(subject.getFirstExperimentDesign(), hasItem("female"));
         assertThat(subject.getLastExperimentDesign(), hasItem("female"));
     }
 
     @Test
     public void sortOnFirstColumn() {
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
         subject.clickFirstColumnHeader();
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030903"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030883"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030887"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030872"));
         subject.clickFirstColumnHeader();
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
     }
 
     @Test
     public void sortOnThirdColumn() {
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030876"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
         subject.clickThirdColumnHeader();
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030895"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030873"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030878"));
         subject.clickThirdColumnHeader();
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030878"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030872"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030873"));
+    }
+
+    @Test
+    public void verifyDownloadExpressionProfilesLink() {
+        Assert.assertThat(subject.getDownloadExperimentDesignLink(), endsWith(ExperimentDesignTablePage.EXPERIMENT_ACCESSION + "-experiment-design.tsv"));
     }
 }

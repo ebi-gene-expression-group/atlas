@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -50,17 +49,11 @@ public class ExperimentDesignTablePage extends TablePage {
     @FindBy(id = "experiment-design-table_info")
     WebElement experimentDesignTableInfo;
 
-    @FindBy(id = "togglebutton")
-    WebElement toggleButton;
+    @FindBy(id = "isOnlyAnalysed")
+    WebElement onlyAnalysedBox;
 
-    @FindBy(id = "experiment-design-table_next")
-    WebElement experimentDesignTableNext;
-
-    @FindBy(id = "experiment-design-table_previous")
-    WebElement experimentDesignTablePrevious;
-
-    @FindBy(name = "experiment-design-table_length")
-    WebElement experimentDesignTableLength;
+    @FindBy(id = "download-experiment-design-link")
+    WebElement downloadExperimentDesignLink;
 
     @FindBy(xpath = "//div[@id='experiment-design-table_filter']/label/input")
     WebElement searchField;
@@ -74,6 +67,10 @@ public class ExperimentDesignTablePage extends TablePage {
     @Override
     protected String getPageURI() {
         return DEFAULT_PAGE_URI;
+    }
+
+    public String getDownloadExperimentDesignLink() {
+        return downloadExperimentDesignLink.getAttribute("href");
     }
 
     public void clickFirstColumnHeader() {
@@ -93,18 +90,6 @@ public class ExperimentDesignTablePage extends TablePage {
         searchField.sendKeys(value);
     }
 
-    public String getLenghtValue() {
-        experimentDesignTableLength.click();
-        Select select = new Select(experimentDesignTableLength);
-        return select.getFirstSelectedOption().getText();
-    }
-
-    public void setLengthValue(String value) {
-        experimentDesignTableLength.click();
-        Select select = new Select(experimentDesignTableLength);
-        select.selectByValue(value);
-    }
-
     public List<String> getExperimentDesignTableHeader() {
         return getTableHeaders(experimentDesignTable);
     }
@@ -121,20 +106,12 @@ public class ExperimentDesignTablePage extends TablePage {
         return experimentDesignTableInfo.getText();
     }
 
-    public void clickToggleButton() {
-        toggleButton.click();
+    public void clickOnlyAnalysedBox() {
+        onlyAnalysedBox.click();
     }
 
-    public String getToggleButtonValue() {
-        return toggleButton.getText();
-    }
-
-    public void clickPreviousButton() {
-        experimentDesignTablePrevious.click();
-    }
-
-    public void clickNextButton() {
-        experimentDesignTableNext.click();
+    public boolean isSelectedOnlyAnalysedBox() {
+        return onlyAnalysedBox.isSelected();
     }
 
     public boolean isTextInBoldFace() {
