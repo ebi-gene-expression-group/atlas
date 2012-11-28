@@ -1,0 +1,103 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.model.barcharts;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
+import java.util.SortedSet;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+
+public class CutoffScaleTest {
+
+    private CutoffScale subject;
+
+    @Before
+    public void setUp() throws Exception {
+        this.subject = new CutoffScale();
+    }
+
+    @Test
+    public void floorTest(){
+        assertThat(subject.floorToScale(0.01), is(0d));
+        assertThat(subject.floorToScale(0.11), is(0.1d));
+        assertThat(subject.floorToScale(0.199), is(0.1d));
+        assertThat(subject.floorToScale(0.96), is(0.9d));
+        assertThat(subject.floorToScale(3543.51), is(3000d));
+        assertThat(subject.floorToScale(99.99), is(90d));
+        assertThat(subject.floorToScale(234252.99), is(200000d));
+
+    }
+
+    @Test
+    public void getScaledValuesTest(){
+
+        List<Double> expectedValues = Lists.newArrayList(0d, 0.1d, 0.2d, 0.3d, 0.4d, 0.5d, 0.6d, 0.7d, 0.8d, 0.9d
+                , 1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 9d
+                , 10d, 20d, 30d, 40d, 50d, 60d, 70d, 80d, 90d
+                , 100d);
+
+        SortedSet expectedSet = Sets.newTreeSet(expectedValues);
+
+        assertThat(subject.getValuesSmallerThan(132.33), is(expectedSet));
+
+        assertThat(subject.getValuesSmallerThan(0), is(empty()));
+
+        assertThat(subject.getValuesSmallerThan(0.001), contains(0d));
+
+
+    }
+
+    @Test
+    public void cutoffStringValuesShouldBeMagnified(){
+
+        assertThat(subject.getNthValue(0), is(0d));
+        assertThat(subject.getNthValue(1), is(0.1d));
+        assertThat(subject.getNthValue(2), is(0.2d));
+        assertThat(subject.getNthValue(3), is(0.3d));
+        assertThat(subject.getNthValue(4), is(0.4d));
+        assertThat(subject.getNthValue(5), is(0.5d));
+        assertThat(subject.getNthValue(6), is(0.6d));
+
+        assertThat(subject.getNthValue(10), is(1d));
+        assertThat(subject.getNthValue(11), is(2d));
+        assertThat(subject.getNthValue(14), is(5d));
+
+        assertThat(subject.getNthValue(30), is(300d));
+        assertThat(subject.getNthValue(33), is(600d));
+        assertThat(subject.getNthValue(34), is(700d));
+
+        assertThat(subject.getNthValue(50), is(50000d));
+        assertThat(subject.getNthValue(53), is(80000d));
+        assertThat(subject.getNthValue(54), is(90000d));
+
+    }
+
+}

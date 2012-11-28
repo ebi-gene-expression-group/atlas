@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.utils.score;
+package uk.ac.ebi.atlas.model.barcharts;
 
 import java.util.*;
 
@@ -6,8 +6,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public interface BarChartGenerator {
 
-
-    public List<Integer> getChartValues(Set<String> organismParts);
-
+    public Map<Double, Integer> getChart(Set<String> selectedOrganismParts);
 
 }

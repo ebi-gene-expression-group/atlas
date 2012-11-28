@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.utils.score;
+package uk.ac.ebi.atlas.model.barcharts;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +10,10 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 public class HistogramCounterTest {
-
-    private BarChartIndexes subject;
+/*
+    private BarChartTrader subject;
 
     private List<Double> marks;
     List<String> organismParts;
@@ -24,7 +23,7 @@ public class HistogramCounterTest {
         marks = Arrays.asList(0d, 0.5, 10d);
         organismParts = Arrays.asList("op1", "op2", "op3");
 
-        subject = new BarChartIndexes(marks, organismParts);
+        subject = new BarChartTrader(marks, organismParts);
     }
 
 
@@ -36,17 +35,17 @@ public class HistogramCounterTest {
         assertThat(scoreMap, hasKey(0.5));
 
         assertThat(scoreMap.get(0.5).size(), is(3));
-        assertThat(scoreMap.get(0.5).get(0).size(), greaterThanOrEqualTo(BarChartIndexes.GENE_COUNT));
+        assertThat(scoreMap.get(0.5).get(0).size(), greaterThanOrEqualTo(BarChartTrader.GENE_COUNT));
         assertThat(scoreMap.get(0.5).get(0).cardinality(), is(0));
     }
 
 
-    /* Generated map looks like:
+    // Generated map looks like:
 
-key: 0      0.5      10
-    1 1 0   1 1 0   0 0 0
-    0 1 1   0 0 1   0 0 1
-     */
+    //key: 0      0.5      10
+    //1 1 0   1 1 0   0 0 0
+    //0 1 1   0 0 1   0 0 1
+
     @Test
     public void testAddValues() {
         subject.addValues(Arrays.asList(1.1, 8d, 0d), 0);
@@ -107,5 +106,5 @@ key: 0      0.5      10
         List<Integer> organismPartIndexes = subject.getOrganismPartIndexes(Arrays.asList("op1", "op3"));
         assertThat(organismPartIndexes, contains(0, 3));
     }
-
+*/
 }

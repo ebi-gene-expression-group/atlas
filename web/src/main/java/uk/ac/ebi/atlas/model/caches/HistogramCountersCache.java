@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.model.caches;
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.utils.score.BarChartGenerator;
+import uk.ac.ebi.atlas.model.barcharts.BarChartGenerator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
