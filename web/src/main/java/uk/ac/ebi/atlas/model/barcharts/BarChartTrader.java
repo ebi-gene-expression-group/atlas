@@ -22,16 +22,10 @@
 
 package uk.ac.ebi.atlas.model.barcharts;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.gson.Gson;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import sun.rmi.server.InactiveGroupException;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -40,7 +34,6 @@ import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -49,7 +42,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named("barChartTrader")
 @Scope("prototype")
-public class BarChartTrader implements BarChartGenerator{
+public class BarChartTrader implements BarChartGenerator {
 
     public static final int AVERAGE_GENES_IN_EXPERIMENT = 45000;
 
@@ -97,7 +90,7 @@ public class BarChartTrader implements BarChartGenerator{
     }
 
 
-    @Named("barChartTraderBuilder")
+    @Named("barchartTraderBuilder")
     @Scope("prototype")
     public static class Builder {
 

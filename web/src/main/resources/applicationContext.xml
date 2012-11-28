@@ -19,15 +19,13 @@
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
+    <bean id="barchartTraderBuilderFactory" class="uk.ac.ebi.atlas.model.barcharts.BarChartTraderBuilderFactory">
+        <lookup-method name="createNew" bean="barchartTraderBuilder"/>
+    </bean>
+
     <bean id="geneProfileBuilderFactory" class="uk.ac.ebi.atlas.model.GeneProfileBuilderFactory">
         <lookup-method name="createNew" bean="geneProfileBuilder"/>
     </bean>
-    <!--
-        <bean id="geneProfileBuilder" class="uk.ac.ebi.atlas.model.GeneProfileBuilder"
-              factory-method="forGeneId">
-            <constructor-arg value="efede"></constructor-arg>
-        </bean>
-    -->
 
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
         <constructor-arg ref="httpClientConnectionManager"/>

@@ -29,10 +29,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 
 import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.SortedMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -44,13 +43,13 @@ import static org.hamcrest.Matchers.*;
 public class BarChartTraderIT {
 
     @Inject
-    private BarChartTrader.Builder barChartTraderBuilder;
+    private BarChartTradersCache barChartTradersCache;
 
     private BarChartTrader subject;
 
     @Before
     public void initSubject(){
-        this.subject = barChartTraderBuilder.forExperiment("E-MTAB-599").create();
+        this.subject = barChartTradersCache.getBarchartTrader("E-MTAB-599");
     }
 
     @Test

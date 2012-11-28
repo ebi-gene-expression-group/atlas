@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.model.caches;
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.barcharts.BarChartGenerator;
+import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,18 +37,18 @@ public class BarChartTradersCache {
 
     private static final Logger logger = Logger.getLogger(BarChartTradersCache.class);
 
-    private LoadingCache<String, BarChartGenerator> barChartTraders;
+    private LoadingCache<String, BarChartTrader> barchartTraders;
 
     @Inject
     @Named("barChartTradersCache")
-    public BarChartTradersCache(LoadingCache<String, BarChartGenerator> barChartTraders) {
-        this.barChartTraders = barChartTraders;
+    public BarChartTradersCache(LoadingCache<String, BarChartTrader> barchartTraders) {
+        this.barchartTraders = barchartTraders;
     }
 
-    public BarChartGenerator getExperimentRuns(String experimentAccession) {
+    public BarChartTrader getBarchartTrader(String experimentAccession) {
         try {
 
-            return barChartTraders.get(experimentAccession);
+            return barchartTraders.get(experimentAccession);
 
         } catch (ExecutionException e) {
             logger.error(e.getMessage(), e);
