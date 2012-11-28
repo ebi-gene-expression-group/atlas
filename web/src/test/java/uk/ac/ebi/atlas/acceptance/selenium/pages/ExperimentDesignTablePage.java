@@ -61,7 +61,10 @@ public class ExperimentDesignTablePage extends TablePage {
     @FindBy(xpath = "//thead/tr[1]/th[1]")
     WebElement firstColumnHeader;
 
-    @FindBy(xpath = "//thead/tr[1]/th[3]")
+    @FindBy(xpath = "//thead/tr[2]/th[1]")
+    WebElement secondColumnHeader;
+
+    @FindBy(xpath = "//thead/tr[2]/th[2]")
     WebElement thirdColumnHeader;
 
     @Override
@@ -75,6 +78,10 @@ public class ExperimentDesignTablePage extends TablePage {
 
     public void clickFirstColumnHeader() {
         firstColumnHeader.click();
+    }
+
+    public void clickSecondColumnHeader() {
+        secondColumnHeader.click();
     }
 
     public void clickThirdColumnHeader() {

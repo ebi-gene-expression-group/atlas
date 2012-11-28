@@ -57,10 +57,6 @@
                 position: relative;
             }
         }
-
-        .analysed {
-            font-weight: bold
-        }
     </style>
 
     <!-- old style end -->
@@ -73,6 +69,34 @@
     <style type="text/css" title="currentStyle">
         @import "${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css";
         @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/jquery.dataTables_themeroller.css";
+
+        .bt {
+            border-top: 1px solid black;
+        }
+
+        .br {
+            border-right: 1px solid black;
+        }
+
+        .bb {
+            border-bottom: 1px solid black;
+        }
+
+        .bl {
+            border-left: 1px solid black;
+        }
+
+        .samples {
+            background-color: #b0c4de;
+        }
+
+        .factors {
+            background-color: #c4deb0;
+        }
+
+        .assays {
+            background-color: #FAFAFA;
+        }
     </style>
 
     <script type="text/javascript" language="javascript"
@@ -90,7 +114,7 @@
 
         /* Data set - loaded from experiment design tsv file */
         var aDataSet = ${tableData};
-        var aHeader = ${tableHeader};
+        var aColumnDefs = ${columnDefs};
         var aRunAccessions = ${runAccessions};
 
         /* configuring actual table */
@@ -107,10 +131,10 @@
                     }
             );
 
-            $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table"></table>');
+            $('#dynamic').html(${tableHeader});
             var oTable = $('#experiment-design-table').dataTable({
                 "aaData":aDataSet,
-                "aoColumns":aHeader,
+                "aoColumnDefs":aColumnDefs,
                 "bPaginate":false,
                 "bScrollCollapse":true,
                 "sScrollY":calcDataTableHeight(),
