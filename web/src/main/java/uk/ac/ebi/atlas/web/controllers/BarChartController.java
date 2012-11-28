@@ -9,112 +9,70 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.*;
+import java.util.TreeMap;
 
 @Controller
 @Scope("request")
 public class BarChartController {
 
-    @RequestMapping(value = "/json/gene-by-cutoff/exp.json", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<String[]> getAll() {
-        List<String[]> result = new ArrayList<>();
-
-        String[] strings1 = {"0", "40851"};
-        String[] strings2 = {"1", "37809"};
-        result = Arrays.asList(strings1, strings2
-//                ,
-//                {"2", "35643"},
-//                {"3", "34032"},
-//                {"4", "32669"},
-//                {"5", "31466"},
-//                {"6", "30606"}
-        );
-
-        return result;
-
-
-//        [2, 35643], [3, 34032], [4, 32669], [5, 31466], [6, 30606],
-//        [7, 29825], [8, 29172], [9, 28563], [10, 26115], [11, 23493], [12, 21861], [13, 20602], [14, 19557], [15, 18730], [16, 17940], [17, 17242], [18, 16573], [19, 15969], [20, 11584], [21, 9074], [22, 7482], [23, 6334], [24, 5520], [25, 4908], [26, 4471], [27, 4058], [28, 3739], [29, 2134], [30, 1556], [31, 1209], [32, 992], [33, 854], [34, 742], [35, 657], [36, 589], [37, 548], [38, 304], [39, 201], [40, 158], [41, 137], [42, 117], [43, 98], [44, 83], [45, 75], [46, 66];
-    }
-
-
     @RequestMapping(value = "/json/gene-by-cutoff/expMap.json", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getMap() {
-        Map<String, String> result = new HashMap<>();
+        TreeMap<Double, String> chartData = new TreeMap<>();
 
-        result.put("1", "24908");
-        result.put("2", "23690");
-        result.put("3", "23014");
-        result.put("4", "22478");
-        result.put("5", "22094");
-        result.put("6", "21790");
-        result.put("7", "21504");
-        result.put("8", "21280");
-        result.put("9", "21070");
-        result.put("10", "20267");
-        result.put("11", "19147");
-        result.put("12", "18297");
-        result.put("13", "17559");
-        result.put("14", "16934");
-        result.put("15", "16311");
-        result.put("16", "15763");
-        result.put("17", "15252");
-        result.put("18", "14756");
-        result.put("19", "14261");
-        result.put("20", "10555");
-        result.put("21", "8283");
-        result.put("22", "6793");
-        result.put("23", "5830");
-        result.put("24", "5068");
-        result.put("25", "4521");
-        result.put("26", "4074");
-        result.put("27", "3724");
-        result.put("28", "3451");
-        result.put("29", "2038");
-        result.put("30", "1493");
-        result.put("31", "1204");
-        result.put("32", "985");
-        result.put("33", "844");
-        result.put("34", "751");
-        result.put("35", "681");
-        result.put("36", "627");
-        result.put("37", "568");
-        result.put("38", "315");
-        result.put("39", "229");
-        result.put("40", "195");
-        result.put("41", "166");
-        result.put("42", "144");
-        result.put("43", "129");
-        result.put("44", "120");
-        result.put("45", "115");
-        result.put("46", "107");
-        result.put("47", "76");
-        result.put("48", "63");
-        result.put("49", "54");
+        chartData.put(0d, "24908");
+        chartData.put(0.1, "23690");
+        chartData.put(0.2, "23014");
+        chartData.put(0.3, "22478");
+        chartData.put(0.4, "22094");
+        chartData.put(0.5, "21790");
+        chartData.put(0.6, "21504");
+        chartData.put(0.7, "21280");
+        chartData.put(0.8, "21070");
+        chartData.put(0.9, "20267");
+        chartData.put(1d, "19147");
+        chartData.put(2d, "18297");
+        chartData.put(3d, "17559");
+        chartData.put(4d, "16934");
+        chartData.put(5d, "16311");
+        chartData.put(6d, "15763");
+        chartData.put(7d, "15252");
+        chartData.put(8d, "14756");
+        chartData.put(9d, "14261");
+        chartData.put(10d, "10555");
+        chartData.put(20d, "8283");
+        chartData.put(30d, "6793");
+        chartData.put(40d, "5830");
+        chartData.put(50d, "5068");
+        chartData.put(60d, "4521");
+        chartData.put(70d, "4074");
+        chartData.put(80d, "3724");
+        chartData.put(90d, "3451");
+        chartData.put(100d, "2038");
+        chartData.put(200d, "1493");
+        chartData.put(300d, "1204");
+        chartData.put(400d, "985");
+        chartData.put(500d, "844");
+        chartData.put(600d, "751");
+        chartData.put(700d, "681");
+        chartData.put(800d, "627");
+        chartData.put(900d, "568");
+        chartData.put(1000d, "315");
+        chartData.put(2000d, "229");
+        chartData.put(3000d, "195");
+        chartData.put(4000d, "166");
+        chartData.put(5000d, "144");
+        chartData.put(6000d, "129");
+        chartData.put(7000d, "120");
+        chartData.put(8000d, "115");
+        chartData.put(9000d, "107");
+        chartData.put(10000d, "76");
+
         Gson gson = new Gson();
 
-        return gson.toJson(result, Map.class);
+        return gson.toJson(chartData, TreeMap.class);
 
     }
 
-//    @RequestMapping(value = "/json/gene-by-cutoff/exp.json", method = RequestMethod.GET)
-//       @ResponseStatus(HttpStatus.OK)
-//      public String[][] getAll() {
-//           String[][] result = {{"0", "40851"}, {"1", "37809"},
-//                   {"2", "35643"},
-//                   {"3", "34032"},
-//                   {"4", "32669"},
-//                   {"5", "31466"},
-//                   {"6", "30606"}
-//           };
-//           return result;
-//
-//
-//   //        [2, 35643], [3, 34032], [4, 32669], [5, 31466], [6, 30606],
-//   //        [7, 29825], [8, 29172], [9, 28563], [10, 26115], [11, 23493], [12, 21861], [13, 20602], [14, 19557], [15, 18730], [16, 17940], [17, 17242], [18, 16573], [19, 15969], [20, 11584], [21, 9074], [22, 7482], [23, 6334], [24, 5520], [25, 4908], [26, 4471], [27, 4058], [28, 3739], [29, 2134], [30, 1556], [31, 1209], [32, 992], [33, 854], [34, 742], [35, 657], [36, 589], [37, 548], [38, 304], [39, 201], [40, 158], [41, 137], [42, 117], [43, 98], [44, 83], [45, 75], [46, 66];
-//       }
 }

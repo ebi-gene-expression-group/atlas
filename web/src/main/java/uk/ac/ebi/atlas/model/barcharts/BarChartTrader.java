@@ -22,13 +22,10 @@
 
 package uk.ac.ebi.atlas.model.barcharts;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import sun.rmi.server.InactiveGroupException;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -37,11 +34,8 @@ import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 @Named("barChartTrader")
@@ -63,17 +57,7 @@ public class BarChartTrader implements BarChartGenerator{
         return getChart(null);
     }
 
-    public SortedMap<String, String> getJSonChart(Set<String> organismParts){
-        SortedMap<Double, Integer> chartData = getChart(organismParts);
 
-        DecimalFormat decimalFormat = new DecimalFormat();
-
-        SortedMap<String, String> jsonData = new TreeMap<>();
-        for (Map.Entry entry: chartData.entrySet()){
-            jsonData.put(entry.getKey().toString(), entry.getValue().toString());
-        }
-
-    }
 
     public SortedMap<Double, Integer> getChart(Set<String> selectedOrganismParts) {
 
@@ -84,7 +68,6 @@ public class BarChartTrader implements BarChartGenerator{
             barChartPoints.put(scaledCutoff, countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), selectedOrganismParts));
 
         }
-
         return barChartPoints;
     }
 

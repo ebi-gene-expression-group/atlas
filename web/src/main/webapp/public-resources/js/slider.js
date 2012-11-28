@@ -90,7 +90,19 @@ function initSlider(cutoff, experimentAccession) {
 //    $.getJSON("json/gene-by-cutoff/" + experimentAccession + ".all.txt", function (data) {
     $.getJSON("json/gene-by-cutoff/expMap.json", function (data) {
 
-        var scaledCutoffTicks = Object.keys(data);
+        var keys = Object.keys(data);
+        var scaledCutoffTicks = [];
+        var dataArray = [];
+
+        for (var i = 0; i < keys.length; i++) {
+            if (keys[i] < 1) {
+                scaledCutoffTicks.push(keys[i]);
+            } else {
+                scaledCutoffTicks.push(Math.round(keys[i]));
+            }
+            dataArray.push([i, data[keys[i]]]);
+        }
+
 
         var ticksMap = [];
 
@@ -98,40 +110,33 @@ function initSlider(cutoff, experimentAccession) {
             ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff) : ""]);
         })
 
-        var array = Object.keys(data).map(function(key) {
-            var dataArray = new Array(2);
-            dataArray[0] = key;
-            dataArray[1] = data[key];
-            return dataArray;
-        })
+        var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
 
-        var genesByCutoffPlot = plotCutoffBarChart(array, ticksMap);
-
-        function hideGeneDistribution(img, isFast){
-            $('#gene-distribution').hide(isFast? null:'slow');
+        function hideGeneDistribution(img, isFast) {
+            $('#gene-distribution').hide(isFast ? null : 'slow');
 //            $(img).attr('src', 'resources/images/chart-bar-add-icon.png');
             $("#display-chart").tooltip({content:"Display gene distribution"});
             $("#prefForm #displayGeneDistribution").val("false");
         }
 
-        function displayGeneDistribution(img, isFast){
-            $('#gene-distribution').show(isFast?null:'slow');
+        function displayGeneDistribution(img, isFast) {
+            $('#gene-distribution').show(isFast ? null : 'slow');
 //            $(img).attr('src', 'resources/images/chart-bar-delete-icon.png');
             $("#display-chart").tooltip({content:"Hide gene distribution"});
             $("#prefForm #displayGeneDistribution").val("true");
         }
 
         $("#chart-button").button().toggle(
-            function(event, fast){
+            function (event, fast) {
                 hideGeneDistribution(this, fast == true ? true : false);
             }
-            , function(event, fast){
+            ,function (event, fast) {
                 displayGeneDistribution(this, fast == true ? true : false);
             }
         ).tooltip();
 
 
-        if ($("#prefForm #displayGeneDistribution").val() == "false"){
+        if ($("#prefForm #displayGeneDistribution").val() == "false") {
             $("#chart-button").trigger('click', [true]);
         }
 
@@ -143,7 +148,7 @@ function initSlider(cutoff, experimentAccession) {
                 top:y - 25,
                 left:x - 6,
                 border:'2px solid rgb(238,195,46)',
-                'border-radius': '4px',
+                'border-radius':'4px',
                 padding:'2px',
                 'font-family':'Verdana, Helvetica, Arial, sans-serif',
                 'font-size':'smaller',
@@ -200,7 +205,7 @@ function initSlider(cutoff, experimentAccession) {
         $("#slider-range-max").slider({
             range:"max",
             min:0,
-            max:data.length - 1,
+            max:scaledCutoffTicks.length - 1,
 
             value:scaledCutoffPosition,
 
