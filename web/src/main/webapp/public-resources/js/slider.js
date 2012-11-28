@@ -1,4 +1,4 @@
-function initSlider(cutoff, experimentAccession) {
+function initSlider(cutoff, experimentAccession, organismParts) {
 
     function nearestScaledCutoff(cutoff) {
         if (cutoff >= 1) {
@@ -86,9 +86,11 @@ function initSlider(cutoff, experimentAccession) {
         });
     }
 
-
-//    $.getJSON("json/gene-by-cutoff/" + experimentAccession + ".all.txt", function (data) {
-    $.getJSON("json/gene-by-cutoff/expMap.json", function (data) {
+        var op = "";
+        if(organismParts) {
+            op ="?" + $.param({ 'organismParts': organismParts }) ;
+        }
+        $.getJSON("json/barchart/" + experimentAccession + op, function (data) {
 
         var keys = Object.keys(data);
         var scaledCutoffTicks = [];
