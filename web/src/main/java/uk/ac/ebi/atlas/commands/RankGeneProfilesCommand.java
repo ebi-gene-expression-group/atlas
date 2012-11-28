@@ -51,7 +51,6 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, requestPreferences.getHeatmapMatrixSize());
 
-
         GeneProfile geneProfile;
 
         int geneCount = 0;

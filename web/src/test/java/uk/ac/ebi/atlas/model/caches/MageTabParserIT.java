@@ -52,7 +52,4 @@ public class MageTabParserIT {
         assertThat(experimentRun.getOrganismPart().getValue(), is(equalTo("adipose")));
     }
 
-    //ToDo berkeley was killing me... I killed it
-    //ToDo show how to implement integration tests now... integration -> no mocks , unit -> mocks
-
 }
