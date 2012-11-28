@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
-import org.jboss.netty.util.internal.StringUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,6 +33,10 @@ abstract class TablePage extends AtlasPage {
 
     protected int getTableRowCount(WebElement table) {
         return table.findElements(By.xpath(ALL_TABLE_ROWS_XPATH)).size();
+    }
+
+    protected WebElement getTableRowElement(WebElement table, int index) {
+        return table.findElements(By.xpath(ALL_TABLE_ROWS_XPATH)).get(index);
     }
 
     protected List<String> getFirstColumnValues(WebElement table) {
@@ -76,8 +79,8 @@ abstract class TablePage extends AtlasPage {
 
     protected List<WebElement> getNonEmptyCellsFromFirstTableRow(WebElement table) {
         List<WebElement> nonEmptyCells = new ArrayList<>();
-        for (WebElement cell: getFirstTableRow(table)){
-            if (! StringUtils.isBlank(cell.getText())){
+        for (WebElement cell : getFirstTableRow(table)) {
+            if (!StringUtils.isBlank(cell.getText())) {
                 nonEmptyCells.add(cell);
             }
         }

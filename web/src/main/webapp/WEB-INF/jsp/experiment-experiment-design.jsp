@@ -57,19 +57,26 @@
                 position: relative;
             }
         }
+
+        .analysed {
+            font-weight: bold
+        }
     </style>
 
     <!-- old style end -->
 
     <title>Experiment - experiment design</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
 
     <style type="text/css" title="currentStyle">
-        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/demo_page.css";
-        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/demo_table.css";
+        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/jquery.dataTables_themeroller.css";
         @import "${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/css/TableTools.css";
     </style>
+
     <script type="text/javascript" language="javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" language="javascript"
@@ -77,35 +84,46 @@
     <script type="text/javascript" charset="utf-8"
             src="${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/js/TableTools.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-        /* Data set - can contain whatever information you want */
+        /* Data set - loaded from experiment tsv file */
         var aDataSet = ${tableData};
+        var aHeader = ${tableHeader};
+        var aRunAccessions = ${runAccessions};
+        var bShow = 1;
 
         $(document).ready(function () {
-            $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>');
-            $('#example').dataTable({
+            $('#dynamic').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table"></table>');
+            var oTable = $('#experiment-design-table').dataTable({
                 "aaData":aDataSet,
-                "aoColumns":[
-                    { "sTitle":"Assay" },
-                    { "sTitle":"Characteristics[organism]", "sClass":"center" },
-                    { "sTitle":"Characteristics[age]", "sClass":"center" },
-                    { "sTitle":"Characteristics[sex]", "sClass":"center" },
-                    { "sTitle":"Characteristics[biosource_provider]", "sClass":"center" },
-                    { "sTitle":"Factor[organism_part]", "sClass":"center" },
-                    { "sTitle":"Factor[library_preparation_method]", "sClass":"center" },
-                    { "sTitle":"Factor Value[phenotype]", "sClass":"center" }
-                ],
+                "aoColumns":aHeader,
                 "aLengthMenu":[
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
+                "iDisplayLength":25,
+                "bJQueryUI":true,
                 /*"sPaginationType": "full_numbers",*/
-                "sDom":'<"toolbar">lfr<"clear">Ttip',
+                "sDom":'<"table-caption">Tlfr<"clear">t<"highlight-button">ip',
                 "oTableTools":{
                     "sSwfPath":"${pageContext.request.contextPath}/resources/js/tabletools-2.1.4/swf/copy_csv_xls_pdf.swf",
                     "aButtons":[ "copy", "xls", "print" ]
+                },
+                "fnRowCallback":function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // Bold selected run accessions
+                    if (bShow && jQuery.inArray(aData[0], aRunAccessions) > -1) {
+                        $(nRow).addClass("analysed");
+                    } else {
+                        $(nRow).removeClass("analysed");
+                    }
+                    return nRow;
                 }
             });
-            $("div.toolbar").html('<b>Experiment Design</b>');
+            $("div.table-caption").html('<b>Experiment Design</b>');
+            $("div.highlight-button").html('<a id="togglebutton" class="button"><span style="display:none">Highlight Analysed</span><span>De-hightlight Analysed</span></a>');
+            $('a#togglebutton').click(function () {
+                $('span', this).toggle();
+                bShow = 1 - bShow;
+                oTable.fnDraw();
+            });
         });
     </script>
 
@@ -126,6 +144,8 @@
     <c:import url="includes/experiment-header.jsp"/>
 
     <div id="dynamic"></div>
+
+    <p/>
 
 </div>
 

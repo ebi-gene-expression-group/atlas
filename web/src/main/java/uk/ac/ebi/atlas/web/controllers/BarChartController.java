@@ -1,10 +1,12 @@
 package uk.ac.ebi.atlas.web.controllers;
 
+import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.*;
@@ -13,8 +15,9 @@ import java.util.*;
 @Scope("request")
 public class BarChartController {
 
-    @RequestMapping(value = "/json/gene-by-cutoff/exp.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/json/gene-by-cutoff/exp.json", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     public List<String[]> getAll() {
         List<String[]> result = new ArrayList<>();
 
@@ -37,16 +40,64 @@ public class BarChartController {
     }
 
 
-    @RequestMapping(value = "/json/gene-by-cutoff/expMap.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/json/gene-by-cutoff/expMap.json", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, String> getMap() {
+    @ResponseBody
+    public String getMap() {
         Map<String, String> result = new HashMap<>();
 
-        result.put("0", "40851");
-        result.put("1", "37809");
+        result.put("1", "24908");
+        result.put("2", "23690");
+        result.put("3", "23014");
+        result.put("4", "22478");
+        result.put("5", "22094");
+        result.put("6", "21790");
+        result.put("7", "21504");
+        result.put("8", "21280");
+        result.put("9", "21070");
+        result.put("10", "20267");
+        result.put("11", "19147");
+        result.put("12", "18297");
+        result.put("13", "17559");
+        result.put("14", "16934");
+        result.put("15", "16311");
+        result.put("16", "15763");
+        result.put("17", "15252");
+        result.put("18", "14756");
+        result.put("19", "14261");
+        result.put("20", "10555");
+        result.put("21", "8283");
+        result.put("22", "6793");
+        result.put("23", "5830");
+        result.put("24", "5068");
+        result.put("25", "4521");
+        result.put("26", "4074");
+        result.put("27", "3724");
+        result.put("28", "3451");
+        result.put("29", "2038");
+        result.put("30", "1493");
+        result.put("31", "1204");
+        result.put("32", "985");
+        result.put("33", "844");
+        result.put("34", "751");
+        result.put("35", "681");
+        result.put("36", "627");
+        result.put("37", "568");
+        result.put("38", "315");
+        result.put("39", "229");
+        result.put("40", "195");
+        result.put("41", "166");
+        result.put("42", "144");
+        result.put("43", "129");
+        result.put("44", "120");
+        result.put("45", "115");
+        result.put("46", "107");
+        result.put("47", "76");
+        result.put("48", "63");
+        result.put("49", "54");
+        Gson gson = new Gson();
 
-
-        return result;
+        return gson.toJson(result, Map.class);
 
     }
 

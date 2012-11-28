@@ -19,39 +19,20 @@
     <!--
     view resolver specialized for page with JSTL tag libraries
     -->
-
-    <bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
-        <property name="basename" value="bundles.messages"/>
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="mediaTypes">
-            <map>
-                <entry key="json" value="application/json"/>
-                <entry key="html" value="text/html"/>
-            </map>
-        </property>
-        <property name="defaultContentType" value="text/html"/>
-        <property name="favorPathExtension" value="true"/>
-        <property name="favorParameter" value="true"/>
-        <property name="ignoreAcceptHeader" value="false"/>
-        <property name="viewResolvers">
-            <list>
-                <bean id="viewResolver"
-                      class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
                     <property name="order" value="0"/>
                     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
                     <property name="prefix" value="/WEB-INF/jsp/"/>
                     <property name="suffix" value=".jsp"/>
                     <property name="exposeContextBeansAsAttributes" value="true"/>
                 </bean>
-            </list>
-        </property>
-        <property name="defaultViews">
-            <list>
-
-                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
-            </list>
-        </property>
+<!--
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="exposeContextBeansAsAttributes" value="true"/>
     </bean>
+-->
+    <bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
+        <property name="basename" value="bundles.messages" />
+    </bean>
+
 </beans>
