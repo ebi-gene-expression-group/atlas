@@ -41,7 +41,7 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
     @Test
     public void defaultLandingPage() {
         assertThat(subject.getExperimentDesignTableHeader().size(), is(8));
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 32 of 32 entries (filtered from 64 total entries)"));
+        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 16 of 16 entries (filtered from 48 total entries)"));
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
         assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
         assertThat(subject.isSelectedOnlyAnalysedBox(), is(true));
@@ -53,7 +53,7 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
         subject.clickOnlyAnalysedBox();
         assertThat(subject.isSelectedOnlyAnalysedBox(), is(false));
         assertThat(subject.isTextInBoldFace(), is(false));
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 64 of 64 entries"));
+        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 48 of 48 entries"));
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030856"));
         assertThat(subject.getLastExperimentDesign(), hasItem("ERR030903"));
     }
@@ -63,7 +63,7 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
         assertThat(subject.getSearchFieldValue(), is(""));
         subject.setSearchFieldValue("female");
         assertThat(subject.getSearchFieldValue(), is("female"));
-        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 16 of 16 entries (filtered from 64 total entries)"));
+        assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 8 of 8 entries (filtered from 48 total entries)"));
         assertThat(subject.getFirstExperimentDesign(), hasItem("female"));
         assertThat(subject.getLastExperimentDesign(), hasItem("female"));
     }
