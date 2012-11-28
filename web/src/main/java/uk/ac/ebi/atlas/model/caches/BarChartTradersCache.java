@@ -31,24 +31,24 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
-@Named("histogramCounters")
+@Named("barChartTraders")
 @Scope("singleton")
-public class HistogramCountersCache {
+public class BarChartTradersCache {
 
-    private static final Logger logger = Logger.getLogger(HistogramCountersCache.class);
+    private static final Logger logger = Logger.getLogger(BarChartTradersCache.class);
 
-    private LoadingCache<String, BarChartGenerator> histogramCounters;
+    private LoadingCache<String, BarChartGenerator> barChartTraders;
 
     @Inject
-    @Named("histogramCountersCache")
-    public HistogramCountersCache(LoadingCache<String, BarChartGenerator> histogramCounters) {
-        this.histogramCounters = histogramCounters;
+    @Named("barChartTradersCache")
+    public BarChartTradersCache(LoadingCache<String, BarChartGenerator> barChartTraders) {
+        this.barChartTraders = barChartTraders;
     }
 
     public BarChartGenerator getExperimentRuns(String experimentAccession) {
         try {
 
-            return histogramCounters.get(experimentAccession);
+            return barChartTraders.get(experimentAccession);
 
         } catch (ExecutionException e) {
             logger.error(e.getMessage(), e);

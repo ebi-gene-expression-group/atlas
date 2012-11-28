@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.model.barcharts;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.apache.commons.collections.CollectionUtils;
@@ -59,14 +61,14 @@ public class BarChartTrader implements BarChartGenerator{
     protected BarChartTrader() {
     }
 
-    public SortedMap<Double, Integer> getChart() {
+    public NavigableMap<Double, Integer> getChart() {
 
         return getChart(null);
     }
 
-    public SortedMap<Double, Integer> getChart(Set<String> selectedOrganismParts) {
+    public NavigableMap<Double, Integer> getChart(Set<String> selectedOrganismParts) {
 
-        SortedMap<Double, Integer> barChartPoints = new TreeMap<>();
+        NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
 
         for (Double scaledCutoff : geneExpressionIndexes.navigableKeySet()) {
 
@@ -179,13 +181,21 @@ public class BarChartTrader implements BarChartGenerator{
         public BarChartTrader create() {
             checkState(organismParts != null, "Did you set the experimentAccession ?");
 
-            //ToDo
-            //to shrink the index, removing entries related to less then 50 genes... we may:
-            //SortedMap<Double, Integer> chartData = barChartTrader.getChart();
-            //then we should trim indexes based on the chart...
+            return trimIndexes();
+        }
+
+        protected BarChartTrader trimIndexes(){
+
+            NavigableMap<Double, Integer> chart = barChartTrader.getChart();
+
+            while (chart.get(barChartTrader.geneExpressionIndexes.lastKey()) < 50) {
+                barChartTrader.geneExpressionIndexes.pollLastEntry();
+            }
 
             return barChartTrader;
         }
+
+
 
     }
 
