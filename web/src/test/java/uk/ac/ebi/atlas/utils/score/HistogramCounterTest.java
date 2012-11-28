@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 
 public class HistogramCounterTest {
 
-    private BarChartGenerator subject;
+    private BarChartIndexes subject;
 
     private List<Double> marks;
     List<String> organismParts;
@@ -24,7 +24,7 @@ public class HistogramCounterTest {
         marks = Arrays.asList(0d, 0.5, 10d);
         organismParts = Arrays.asList("op1", "op2", "op3");
 
-        subject = new BarChartGenerator(marks, organismParts);
+        subject = new BarChartIndexes(marks, organismParts);
     }
 
 
@@ -36,7 +36,7 @@ public class HistogramCounterTest {
         assertThat(scoreMap, hasKey(0.5));
 
         assertThat(scoreMap.get(0.5).size(), is(3));
-        assertThat(scoreMap.get(0.5).get(0).size(), greaterThanOrEqualTo(BarChartGenerator.GENE_COUNT));
+        assertThat(scoreMap.get(0.5).get(0).size(), greaterThanOrEqualTo(BarChartIndexes.GENE_COUNT));
         assertThat(scoreMap.get(0.5).get(0).cardinality(), is(0));
     }
 
