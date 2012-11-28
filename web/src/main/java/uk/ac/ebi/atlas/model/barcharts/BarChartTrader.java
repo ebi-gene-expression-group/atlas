@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.barcharts;
 
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -61,18 +62,6 @@ public class BarChartTrader implements BarChartGenerator{
     public SortedMap<Double, Integer> getChart() {
 
         return getChart(null);
-    }
-
-    public SortedMap<String, String> getJSonChart(Set<String> organismParts){
-        SortedMap<Double, Integer> chartData = getChart(organismParts);
-
-        DecimalFormat decimalFormat = new DecimalFormat();
-
-        SortedMap<String, String> jsonData = new TreeMap<>();
-        for (Map.Entry entry: chartData.entrySet()){
-            jsonData.put(entry.getKey().toString(), entry.getValue().toString());
-        }
-
     }
 
     public SortedMap<Double, Integer> getChart(Set<String> selectedOrganismParts) {
