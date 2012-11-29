@@ -63,14 +63,16 @@
 
     <title>Experiment - experiment design</title>
 
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
 
-    <script type="text/javascript" language="javascript"
+    <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui/jquery-ui-1.9.1.custom.min.js"></script>
     <script type="text/javascript" language="javascript"
             src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
 
@@ -105,17 +107,19 @@
 
             /* populate all sub categories */
             var aoColumnDefs = new Array();
-            aoColumnDefs[0] = { "sClass":"assays bb", "aTargets":[ 0 ] };
-            var i = 1;
+            var i = 0;
+            aoColumnDefs[i] = { "sClass":"assays bb br bl", "aTargets":[ i ] };
             for (var sample in aSamples) {
                 $('#headerStub').append("<th class=\"header-cell bb\">" + sample + "</th>");
-                aoColumnDefs[i++] = { "sClass":"center bb", "aTargets":[ aSamples[sample] ] };
+                aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
             }
+            aoColumnDefs[i]["sClass"] = "center bb br";
             $('#headerStub th:last()').attr("class", "header-cell bb br");
             for (var factor in aFactors) {
                 $('#headerStub').append("<th class=\"header-cell bb\">" + factor + "</th>");
-                aoColumnDefs[i++] = { "sClass":"center bb", "aTargets":[ aFactors[factor] ] };
+                aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
             }
+            aoColumnDefs[i]["sClass"] = "center bb br";
             $('#headerStub th:last()').attr("class", "header-cell bb br");
 
             /* Custom filtering function which will filter analysed runs */
@@ -136,10 +140,12 @@
                 "bPaginate":false,
                 "bScrollCollapse":true,
                 "sScrollY":calcDataTableHeight(),
-                "sDom":'fr<"download">ti'
+                "sDom":'frti<"download">'
             });
 
-            $("div.download").html('<a id="download-experiment-design-link" href="experiments/${experimentAccession}-experiment-design.tsv">Download Experiment Design</a>');
+            $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" href="experiments/${experimentAccession}-experiment-design.tsv" target="_blank">' +
+                    '<img id="download-experiment-design" alt="Download experiment design" style="width:20px" class="button-image" src="resources/images/download_blue_small.png"></a>');
+            $('div.download').attr('style', 'float: right');
             $('#isOnlyAnalysed').click(function () {
                 oTable.fnDraw();
             });
@@ -151,6 +157,10 @@
                 // maybe you need to redraw the table (not sure about this)
                 oTable.fnDraw(false);
             });
+
+            $('#download-experiment-design').button();
+
+            $('#download-experiment-design').tooltip({content:"Download experiment design"});
         });
 
     </script>
@@ -175,7 +185,7 @@
 
     <div id="toolbar">Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" checked="yes"/></div>
 
-    <table cellpadding="0" cellspacing="0" border="0" class="experiment-design-table" id="experiment-design-table">
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
         <thead>
         <tr>
             <th id="assaysHeader" class="header-cell bl br bt bb" rowspan="2">${assayHeader}</th>
@@ -188,7 +198,6 @@
     </table>
 
     <p/>
-
 </div>
 
 <!-- old style start -->
