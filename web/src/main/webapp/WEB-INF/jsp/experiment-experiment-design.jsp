@@ -81,7 +81,7 @@
         /* this is for dynamically resizing table */
         var $window = $(window);
         var calcDataTableHeight = function () {
-            return Math.round($window.height() * 0.75);
+            return $window.height() - 270;
         };
 
         /* Data set - loaded from experiment design tsv file */
@@ -140,7 +140,7 @@
                 "bPaginate":false,
                 "bScrollCollapse":true,
                 "sScrollY":calcDataTableHeight(),
-                "sDom":'frti<"download">'
+                "sDom":'i<"download">f<"clear">t'
             });
 
             $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" href="experiments/${experimentAccession}-experiment-design.tsv" target="_blank">' +
