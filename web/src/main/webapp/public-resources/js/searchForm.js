@@ -1,4 +1,4 @@
-function initSearchForm(homePageURL) {
+function initSearchForm(homePageURL, cutoff, experimentAccession) {
 
     $(".chzn-select").chosen().change(function() {
             if ($(this).val()){
@@ -7,6 +7,7 @@ function initSearchForm(homePageURL) {
                 $(this).data("chosen").default_text = "(all organism parts)";
                 $(this).trigger("liszt:updated");
             }
+        initSlider(cutoff, experimentAccession, $(".chzn-select").serialize());
         });
 
     $("#submit-button").button();
@@ -19,4 +20,5 @@ function initSearchForm(homePageURL) {
 
     $("#cutoff").watermark("(default 0.5)");
 
+    initSlider(cutoff, experimentAccession, $(".chzn-select").serialize());
 }

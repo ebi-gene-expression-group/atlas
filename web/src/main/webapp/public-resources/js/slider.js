@@ -1,5 +1,10 @@
 function initSlider(cutoff, experimentAccession, organismParts) {
 
+    var op = "";
+    if (organismParts) {
+        op = "?" + organismParts;
+    }
+
     function nearestScaledCutoff(cutoff) {
         if (cutoff >= 1) {
             // Remove decimal places and replace all but first digit with zeros.
@@ -86,11 +91,8 @@ function initSlider(cutoff, experimentAccession, organismParts) {
         });
     }
 
-        var op = "";
-        if(organismParts) {
-            op ="?" + $.param({ 'organismParts': organismParts }) ;
-        }
-        $.getJSON("json/barchart/" + experimentAccession + op, function (data) {
+
+    $.getJSON("json/barchart/" + experimentAccession + op, function (data) {
 
         var keys = Object.keys(data);
         var scaledCutoffTicks = [];
