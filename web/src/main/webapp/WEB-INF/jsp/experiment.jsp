@@ -122,7 +122,7 @@
 
                 } else {
                     initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
-                    initSlider(${preferences.cutoff}, '${experimentAccession}');
+                    initSlider(${preferences.cutoff}, '${experimentAccession}', ["spleen"]);
                 }
                 initSearchForm('${requestURI}');
                 initHeatmapDisplayValueToggle();
