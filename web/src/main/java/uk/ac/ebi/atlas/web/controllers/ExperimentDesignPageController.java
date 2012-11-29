@@ -38,32 +38,6 @@ import java.util.*;
 @Controller
 public class ExperimentDesignPageController {
 
-    private class HeaderOrder {
-        String html;
-        List<ColumnHelper> columnDefs;
-        Map<Integer, Integer> mapping;
-
-        public HeaderOrder(String s, List<ColumnHelper> d, Map<Integer, Integer> m) {
-            this.html = s;
-            this.columnDefs = d;
-            this.mapping = m;
-        }
-    }
-
-    private class ColumnHelper {
-        String sClass;
-        List<Integer> aTargets = new ArrayList<>();
-
-        public ColumnHelper(String s) {
-            this.sClass = s;
-        }
-
-        public void addTargets(Integer... t) {
-            for (Integer i : t)
-                aTargets.add(i);
-        }
-    }
-
     private ExperimentDesignTsvReader experimentDesignTsvReader;
     private ExperimentsCache experimentsCache;
 
@@ -74,84 +48,21 @@ public class ExperimentDesignPageController {
     }
 
     /**
-     * Build html code for table header taking categories from file into account
+     * Extracts subcategories for a given category within the header line
      *
      * @param headerLine
+     * @param category
      * @return
      */
-    public HeaderOrder buildTableHeader(String[] headerLine) {
-
-        // split header line into samples and factors
-        List<String> samples = new ArrayList<>();
-        List<String> factors = new ArrayList<>();
-
+    private TreeMap<String, Integer> extractSubcategories(String[] headerLine, String category) {
+        TreeMap<String, Integer> map = new TreeMap<>();
         for (int i = 1; i < headerLine.length; i++) {
-            if (headerLine[i].startsWith("Sample Characteristics")) {
-                samples.add(headerLine[i].substring(23, headerLine[i].length() - 1));
-            } else if (headerLine[i].startsWith("Factor Values")) {
-                factors.add(headerLine[i].substring(14, headerLine[i].length() - 1));
-            } else {
-                System.err.println("Found wrong header: " + headerLine[i]);
+            if (headerLine[i].startsWith(category)) {
+                String subcategory = headerLine[i].substring(category.length() + 1, headerLine[i].length() - 1);
+                map.put(subcategory, i);
             }
         }
-
-        // sort within each category
-        Collections.sort(samples);
-        Collections.sort(factors);
-
-        // track change in order of columns
-        Map<Integer, Integer> mapping = new HashMap<>();
-        mapping.put(0, 0);
-        for (int i = 1; i < headerLine.length; i++) {
-            if (headerLine[i].startsWith("Sample Characteristics")) {
-                mapping.put(i, 1 + samples.indexOf(headerLine[i].substring(23, headerLine[i].length() - 1)));
-            } else if (headerLine[i].startsWith("Factor Values")) {
-                mapping.put(i, 1 + samples.size() + factors.indexOf(headerLine[i].substring(14, headerLine[i].length() - 1)));
-            }
-        }
-
-        // CSS class for each column
-        List<ColumnHelper> columnDefs = new ArrayList<>();
-        ColumnHelper helper = new ColumnHelper("assays");
-        helper.addTargets(0);
-        columnDefs.add(helper);
-        for (int i = 1; i < headerLine.length; i++) {
-            if (headerLine[i].startsWith("Sample Characteristics")) {
-                helper = new ColumnHelper("samples");
-                helper.addTargets(mapping.get(i));
-                columnDefs.add(helper);
-            } else if (headerLine[i].startsWith("Factor Values")) {
-                helper = new ColumnHelper("factors");
-                helper.addTargets(mapping.get(i));
-                columnDefs.add(helper);
-            }
-        }
-
-        // build html representation of table template
-        StringBuilder header = new StringBuilder("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\" id=\"experiment-design-table\">");
-        header.append("<thead><tr>");
-        header.append("<th rowspan=\"2\">");
-        header.append(headerLine[0]);
-        header.append("</th>");
-        header.append("<th class=\"samples\" colspan=\"");
-        header.append(samples.size());
-        header.append("\">Sample Characteristics</th>");
-        header.append("<th class=\"factors\" colspan=\"");
-        header.append(factors.size());
-        header.append("\">Factor Values</th>");
-        header.append("</tr><tr>");
-        for (String sample : samples) {
-            header.append("<th class=\"samples\">");
-            header.append(sample);
-            header.append("</th>");
-        }
-        for (String factor : factors) {
-            header.append("<th class=\"factors\">");
-            header.append(factor);
-            header.append("</th>");
-        }
-        header.append("</tr></thead><tbody></tbody></table>");
-        return new HeaderOrder(header.toString(), columnDefs, mapping);
+        return map;
     }
 
     @RequestMapping("/experiments/{experimentAccession}-experiment-design")
@@ -161,29 +72,40 @@ public class ExperimentDesignPageController {
         List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
         // delete first line with table headers
         String[] headerLine = csvLines.remove(0);
-        HeaderOrder headerOrder = buildTableHeader(headerLine);
+
+        // split header line into samples and factors
+        TreeMap<String, Integer> samples = extractSubcategories(headerLine, "Sample Characteristics");
+        TreeMap<String, Integer> factors = extractSubcategories(headerLine, "Factor Values");
 
         // reorder lines according to new header
-        Map<Integer, Integer> mapping = headerOrder.mapping;
-        for (int i = 0; i < csvLines.size(); i++) {
+        Map<Integer, Integer> mapping = new HashMap<>();
+        mapping.put(0, 0);
+        int i = 1;
+        for (Integer value : samples.values()) {
+            mapping.put(i, value);
+            i++;
+        }
+        for (Integer value : factors.values()) {
+            mapping.put(i, value);
+            i++;
+        }
+        for (i = 0; i < csvLines.size(); i++) {
             String[] line = csvLines.get(i);
             String[] newLine = new String[line.length];
-            for (Integer src : mapping.keySet()) {
-                newLine[mapping.get(src)] = line[src];
+            for (int j = 0; j < line.length; j++) {
+                newLine[j] = line[mapping.get(j)];
             }
             csvLines.set(i, newLine);
         }
 
         // does the serialisation to JSON
         Gson gson = new Gson();
-        String header = gson.toJson(headerOrder.html);
-        String data = gson.toJson(csvLines);
-        String columnDefs = gson.toJson(headerOrder.columnDefs);
 
         // add table data to model
-        model.addAttribute("tableHeader", header);
-        model.addAttribute("tableData", data);
-        model.addAttribute("columnDefs", columnDefs);
+        model.addAttribute("assayHeader", headerLine[0]);
+        model.addAttribute("samples", gson.toJson(samples));
+        model.addAttribute("factors", gson.toJson(factors));
+        model.addAttribute("tableData", gson.toJson(csvLines));
 
         // run accessions are used for highlighting
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);

@@ -1,0 +1,107 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+.bt {
+    border-top: 1px solid black;
+}
+
+.br {
+    border-right: 1px solid black;
+}
+
+.bb {
+    border-bottom: 1px solid black;
+}
+
+.bl {
+    border-left: 1px solid black;
+}
+
+.samples {
+    background-color: #FAFAFA;
+}
+
+.factors {
+    background-color: #FAFAFA;
+}
+
+.assays {
+    background-color: #FAFAFA;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.clear {
+    clear: both;
+}
+
+.dataTables_empty {
+    text-align: center;
+}
+
+.experiment-design-table td.center,
+.experiment-design-table td.dataTables_empty {
+    text-align: center;
+}
+
+.experiment-design-table .header-cell {
+    background-color: #FAFAFA;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.experiment-design-table .header-cell:hover {
+    background-color: #deebeb;
+    cursor: default;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* DataTables sorting
+*/
+
+.sorting_asc {
+    background: url('../images/sort_asc.png') no-repeat center right;
+}
+
+.sorting_desc {
+    background: url('../images/sort_desc.png') no-repeat center right;
+}
+
+.sorting {
+    background: url('../images/sort_both.png') no-repeat center right;
+}
+
+.sorting_asc_disabled {
+    background: url('../images/sort_asc_disabled.png') no-repeat center right;
+}
+
+.sorting_desc_disabled {
+    background: url('../images/sort_desc_disabled.png') no-repeat center right;
+}
+
+.experiment-design-table thead th:active,
+.experiment-design-table thead td:active {
+    outline: none;
+}
+

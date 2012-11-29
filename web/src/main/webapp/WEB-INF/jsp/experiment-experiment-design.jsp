@@ -63,41 +63,11 @@
 
     <title>Experiment - experiment design</title>
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
-
-    <style type="text/css" title="currentStyle">
-        @import "${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css";
-        @import "${pageContext.request.contextPath}/resources/js/datatables-1.9.4/css/jquery.dataTables_themeroller.css";
-
-        .bt {
-            border-top: 1px solid black;
-        }
-
-        .br {
-            border-right: 1px solid black;
-        }
-
-        .bb {
-            border-bottom: 1px solid black;
-        }
-
-        .bl {
-            border-left: 1px solid black;
-        }
-
-        .samples {
-            background-color: #b0c4de;
-        }
-
-        .factors {
-            background-color: #c4deb0;
-        }
-
-        .assays {
-            background-color: #FAFAFA;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
 
     <script type="text/javascript" language="javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
@@ -114,11 +84,40 @@
 
         /* Data set - loaded from experiment design tsv file */
         var aDataSet = ${tableData};
-        var aColumnDefs = ${columnDefs};
         var aRunAccessions = ${runAccessions};
+        var aSamples = ${samples};
+        var aFactors = ${factors};
 
         /* configuring actual table */
         $(document).ready(function () {
+
+            $.assocArraySize = function (obj) {
+                var size = 0, key;
+                for (key in obj) {
+                    if (obj.hasOwnProperty(key)) size++;
+                }
+                return size;
+            };
+
+            /* Set colspan for each category */
+            $('#samplesHeader').attr('colspan', $.assocArraySize(aSamples));
+            $('#factorsHeader').attr('colspan', $.assocArraySize(aFactors));
+
+            /* populate all sub categories */
+            var aoColumnDefs = new Array();
+            aoColumnDefs[0] = { "sClass":"assays bb", "aTargets":[ 0 ] };
+            var i = 1;
+            for (var sample in aSamples) {
+                $('#headerStub').append("<th class=\"header-cell bb\">" + sample + "</th>");
+                aoColumnDefs[i++] = { "sClass":"center bb", "aTargets":[ aSamples[sample] ] };
+            }
+            $('#headerStub th:last()').attr("class", "header-cell bb br");
+            for (var factor in aFactors) {
+                $('#headerStub').append("<th class=\"header-cell bb\">" + factor + "</th>");
+                aoColumnDefs[i++] = { "sClass":"center bb", "aTargets":[ aFactors[factor] ] };
+            }
+            $('#headerStub th:last()').attr("class", "header-cell bb br");
+
             /* Custom filtering function which will filter analysed runs */
             $.fn.dataTableExt.afnFiltering.push(
                     function (oSettings, aData, iDataIndex) {
@@ -131,14 +130,12 @@
                     }
             );
 
-            $('#dynamic').html(${tableHeader});
             var oTable = $('#experiment-design-table').dataTable({
                 "aaData":aDataSet,
-                "aoColumnDefs":aColumnDefs,
+                "aoColumnDefs":aoColumnDefs,
                 "bPaginate":false,
                 "bScrollCollapse":true,
                 "sScrollY":calcDataTableHeight(),
-                "bJQueryUI":true,
                 "sDom":'fr<"download">ti'
             });
 
@@ -178,7 +175,17 @@
 
     <div id="toolbar">Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" checked="yes"/></div>
 
-    <div id="dynamic"></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="experiment-design-table" id="experiment-design-table">
+        <thead>
+        <tr>
+            <th id="assaysHeader" class="header-cell bl br bt bb" rowspan="2">${assayHeader}</th>
+            <th id="samplesHeader" class="samples br bt">Sample Characteristics</th>
+            <th id="factorsHeader" class="factors br bt">Factor Values</th>
+        </tr>
+        <tr id="headerStub"></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
     <p/>
 
