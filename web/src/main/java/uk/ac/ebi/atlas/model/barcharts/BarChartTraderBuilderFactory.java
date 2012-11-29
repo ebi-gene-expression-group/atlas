@@ -23,9 +23,9 @@
 package uk.ac.ebi.atlas.model.barcharts;
 
 /**
- * This class is a factory of BarChartTrader Builders, required to create new instances of builder from within a singleton class like a CacheLoader.
+ * This class is a factory of BarChartTrader Builders, to be used only in cases where new instances of builder need to be created from within a "singleton" object, like a CacheLoader.
  * It is injected using spring lookup-method (application-context.xml). In Spring 3.0 no equivalent annotation has yet been implemented for this feature.
- * If you need to build a new GeneProfile in the context of another class that has scope "prototype" you should directly inject BarChartTrader.Builder and not use this factory.
+ * If you need to build a new BarChartTrader in the context of another class that has scope "prototype" you should directly inject BarChartTrader.Builder and not use this factory.
  */
 public abstract class BarChartTraderBuilderFactory {
 
