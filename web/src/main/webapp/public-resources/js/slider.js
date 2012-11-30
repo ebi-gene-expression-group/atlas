@@ -219,7 +219,7 @@ function initSlider(cutoff, experimentAccession, organismParts) {
                 var scaledCutoff = getNthScaledCutoff(ui.value, 1);
                 $("#cutoff").val(scaledCutoff);
             },
-            change:function (event, ui) {
+            stop:function (event, ui) {
                 $("form#prefForm").submit();
             }
         });
