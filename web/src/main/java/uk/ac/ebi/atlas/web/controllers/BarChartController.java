@@ -32,9 +32,6 @@ public class BarChartController {
     public String getMap(@PathVariable String experimentAccession,
                          @RequestParam(required = false) Set<String> organismParts) {
 
-        System.out.println("experimentAccession = " + experimentAccession);
-        System.out.println("organismParts = " + organismParts);
-
 
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
