@@ -34,6 +34,4 @@ function hideOrDisplayBarChart(){
         return false;
     }).tooltip();
 
-    hideOrDisplayGeneDistribution(true);
-
 }
