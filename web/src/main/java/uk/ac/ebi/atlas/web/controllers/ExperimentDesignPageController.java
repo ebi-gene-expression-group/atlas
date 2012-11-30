@@ -33,8 +33,7 @@ import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ExperimentDesignPageController {
@@ -48,6 +47,24 @@ public class ExperimentDesignPageController {
         this.experimentsCache = experimentsCache;
     }
 
+    /**
+     * Extracts subcategories for a given category within the header line
+     *
+     * @param headerLine
+     * @param category
+     * @return
+     */
+    private TreeMap<String, Integer> extractSubcategories(String[] headerLine, String category) {
+        TreeMap<String, Integer> map = new TreeMap<>();
+        for (int i = 1; i < headerLine.length; i++) {
+            if (headerLine[i].startsWith(category)) {
+                String subcategory = headerLine[i].substring(category.length() + 1, headerLine[i].length() - 1);
+                map.put(subcategory, i);
+            }
+        }
+        return map;
+    }
+
     @RequestMapping("/experiments/{experimentAccession}-experiment-design")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
@@ -56,49 +73,51 @@ public class ExperimentDesignPageController {
         // delete first line with table headers
         String[] headerLine = csvLines.remove(0);
 
-        // convert table header into right data structure
-        HeaderHelper[] headers = new HeaderHelper[headerLine.length];
-        for (int i = 0; i < headerLine.length; i++) {
-            if (i == 0)
-                headers[i] = new HeaderHelper(headerLine[i], "");
-            else
-                headers[i] = new HeaderHelper(headerLine[i], "center");
+        // split header line into samples and factors
+        TreeMap<String, Integer> samples = extractSubcategories(headerLine, "Sample Characteristics");
+        TreeMap<String, Integer> factors = extractSubcategories(headerLine, "Factor Values");
+
+        // reorder lines according to new header
+        Map<Integer, Integer> mapping = new HashMap<>();
+        mapping.put(0, 0);
+        int i = 1;
+        for (Integer value : samples.values()) {
+            mapping.put(i, value);
+            i++;
+        }
+        for (Integer value : factors.values()) {
+            mapping.put(i, value);
+            i++;
+        }
+        for (i = 0; i < csvLines.size(); i++) {
+            String[] line = csvLines.get(i);
+            String[] newLine = new String[line.length];
+            for (int j = 0; j < line.length; j++) {
+                newLine[j] = line[mapping.get(j)];
+            }
+            csvLines.set(i, newLine);
         }
 
         // does the serialisation to JSON
         Gson gson = new Gson();
-        String header = gson.toJson(headers);
-        String data = gson.toJson(csvLines);
 
-        model.addAttribute("experimentAccession", experimentAccession);
-        model.addAttribute("tableHeader", header);
-        model.addAttribute("tableData", data);
+        // add table data to model
+        model.addAttribute("assayHeader", headerLine[0]);
+        model.addAttribute("samples", gson.toJson(samples));
+        model.addAttribute("factors", gson.toJson(factors));
+        model.addAttribute("tableData", gson.toJson(csvLines));
 
         // run accessions are used for highlighting
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
         String runAccessions = gson.toJson(experiment.getExperimentRunAccessions());
         model.addAttribute("runAccessions", runAccessions);
 
-        String specie = experiment.getSpecie();
-        model.addAttribute("specie", specie);
+        // add general experiment attributes to model
+        model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("experimentDescription", experiment.getDescription());
+        model.addAttribute("specie", experiment.getSpecie());
 
         return "experiment-experiment-design";
-    }
-
-    /**
-     * Helper class for dynamic loading of table headers from file, gets serialized to JSON
-     */
-    private class HeaderHelper {
-
-        public String sTitle;
-
-        public String sClass;
-
-        public HeaderHelper(String t, String c) {
-            this.sTitle = t;
-            this.sClass = c;
-        }
     }
 
 }

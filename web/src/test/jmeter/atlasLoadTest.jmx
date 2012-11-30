@@ -574,9 +574,9 @@
           </ResponseAssertion>
           <hashTree/>
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
-            <stringProp name="TestPlan.comments">let&apos;s check that size is larger than 6 KB</stringProp>
+            <stringProp name="TestPlan.comments">let&apos;s check that size is larger than 4 KB</stringProp>
             <stringProp name="Assertion.test_field">SizeAssertion.response_data</stringProp>
-            <stringProp name="SizeAssertion.size">6000</stringProp>
+            <stringProp name="SizeAssertion.size">4000</stringProp>
             <intProp name="SizeAssertion.operator">3</intProp>
           </SizeAssertion>
           <hashTree/>
