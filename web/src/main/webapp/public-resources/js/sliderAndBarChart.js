@@ -1,4 +1,42 @@
-function initSlider(cutoff, experimentAccession, organismParts) {
+function hideGeneDistribution(img, isFast) {
+    $('#gene-distribution').hide(isFast ? null : 'slow');
+    $("#display-chart").tooltip({content:"Display gene distribution"});
+}
+
+function displayGeneDistribution(img, isFast) {
+    $('#gene-distribution').show(isFast ? null : 'slow');
+    $("#display-chart").tooltip({content:"Hide gene distribution"});
+}
+
+function hideOrDisplayGeneDistribution(isFast) {
+    var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
+    if (isDisplayEnabled == "true") {
+        displayGeneDistribution(this, isFast);
+    } else {
+        hideGeneDistribution(this, isFast);
+    }
+
+}
+
+function initBarChartButton(){
+
+    $("#chart-button").button().click(function () {
+
+        var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
+        if (isDisplayEnabled == "true") {
+            $("#prefForm #displayGeneDistribution").val("false");
+        } else {
+            $("#prefForm #displayGeneDistribution").val("true");
+        }
+
+        hideOrDisplayGeneDistribution(false);
+
+        return false;
+    }).tooltip();
+
+}
+
+function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
 
     var op = "";
     if (organismParts) {
@@ -91,29 +129,10 @@ function initSlider(cutoff, experimentAccession, organismParts) {
         });
     }
 
-
-    function hideGeneDistribution(img, isFast) {
-        $('#gene-distribution').hide(isFast ? null : 'slow');
-        $("#display-chart").tooltip({content:"Display gene distribution"});
-    }
-
-    function displayGeneDistribution(img, isFast) {
-        $('#gene-distribution').show(isFast ? null : 'slow');
-        $("#display-chart").tooltip({content:"Hide gene distribution"});
-    }
-
-    function hideOrDisplayGeneDistribution(isFast) {
-        var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
-        if (isDisplayEnabled == "true") {
-            displayGeneDistribution(this, isFast);
-        } else {
-            hideGeneDistribution(this, isFast);
-        }
-
-    }
-
     $.getJSON("json/barchart/" + experimentAccession + op, function (data) {
 
+        //this is required because if you load the plot when the div is hidden
+        //and then you display the div later the plot Y axis will be overlapping the Y ticks
         displayGeneDistribution(this,true);
 
         var keys = Object.keys(data);

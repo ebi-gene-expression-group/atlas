@@ -91,9 +91,7 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/searchForm.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/slider.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/hideOrDisplayBarChart.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
@@ -125,7 +123,7 @@
 
                 } else {
                     initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
-                    hideOrDisplayBarChart();
+                    initBarChartButton();
                 }
                 initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}');
                 initHeatmapDisplayValueToggle();

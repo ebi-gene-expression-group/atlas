@@ -7,7 +7,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession) {
                 $(this).data("chosen").default_text = "(all organism parts)";
                 $(this).trigger("liszt:updated");
             }
-        initSlider(cutoff, experimentAccession, $(".chzn-select").serialize());
+        loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
         });
 
     $("#submit-button").button();
@@ -20,5 +20,5 @@ function initSearchForm(homePageURL, cutoff, experimentAccession) {
 
     $("#cutoff").watermark("(default 0.5)");
 
-    initSlider(cutoff, experimentAccession, $(".chzn-select").serialize());
+    loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
 }
