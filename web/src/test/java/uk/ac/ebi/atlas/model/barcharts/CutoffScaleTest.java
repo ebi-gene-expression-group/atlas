@@ -31,9 +31,7 @@ import java.util.List;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class CutoffScaleTest {
 
@@ -42,18 +40,6 @@ public class CutoffScaleTest {
     @Before
     public void setUp() throws Exception {
         this.subject = new CutoffScale();
-    }
-
-    @Test
-    public void floorTest(){
-        assertThat(subject.floorToScale(0.01), is(0d));
-        assertThat(subject.floorToScale(0.11), is(0.1d));
-        assertThat(subject.floorToScale(0.199), is(0.1d));
-        assertThat(subject.floorToScale(0.96), is(0.9d));
-        assertThat(subject.floorToScale(3543.51), is(3000d));
-        assertThat(subject.floorToScale(99.99), is(90d));
-        assertThat(subject.floorToScale(234252.99), is(200000d));
-
     }
 
     @Test

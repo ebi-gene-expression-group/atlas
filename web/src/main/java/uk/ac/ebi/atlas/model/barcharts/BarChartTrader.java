@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.barcharts;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -36,13 +37,11 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 @Named("barChartTrader")
 @Scope("prototype")
-public class BarChartTrader implements BarChartGenerator {
+public class BarChartTrader {
 
     public static final int AVERAGE_GENES_IN_EXPERIMENT = 45000;
 
@@ -50,8 +49,11 @@ public class BarChartTrader implements BarChartGenerator {
     //value: Map<organism part, gene expression bitset index>
     private NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = new TreeMap<>();
 
-    @Inject
     protected BarChartTrader() {
+    }
+
+    protected BarChartTrader(NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes) {
+        this.geneExpressionIndexes = geneExpressionIndexes;
     }
 
     public NavigableMap<Double, Integer> getChart() {
@@ -73,11 +75,11 @@ public class BarChartTrader implements BarChartGenerator {
     }
 
 
-    protected int countGenesAboveCutoff(Map<String,BitSet> geneBitSets, Set<String> selectedOrganismParts) {
+    protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedOrganismParts) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
         BitSet notExpressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
-        for (String organismPart : geneBitSets.keySet()){
+        for (String organismPart : geneBitSets.keySet()) {
             if (CollectionUtils.isEmpty(selectedOrganismParts) || selectedOrganismParts.contains(organismPart)) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(organismPart));
@@ -96,7 +98,7 @@ public class BarChartTrader implements BarChartGenerator {
 
         private static final Logger logger = Logger.getLogger(Builder.class);
 
-        private BarChartTrader barChartTrader = new BarChartTrader();
+        private NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = new TreeMap<>();
 
         private ExperimentsCache experimentsCache;
 
@@ -107,7 +109,7 @@ public class BarChartTrader implements BarChartGenerator {
         private Set<String> organismParts;
 
         @Inject
-        public Builder(ExperimentsCache experimentsCache, GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder, CutoffScale cutoffScale){
+        public Builder(ExperimentsCache experimentsCache, GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder, CutoffScale cutoffScale) {
             this.experimentsCache = experimentsCache;
             this.cutoffScale = cutoffScale;
             this.geneProfilesInputStreamBuilder = geneProfilesInputStreamBuilder;
@@ -137,17 +139,18 @@ public class BarChartTrader implements BarChartGenerator {
 
         protected void addGeneToIndexes(GeneProfile geneProfile, int geneIndexPosition) {
 
-            for (Expression expression : geneProfile){
+            for (Expression expression : geneProfile) {
 
                 SortedSet<Double> cutoffsSmallerThanExpression = cutoffScale.getValuesSmallerThan(expression.getLevel());
 
-                for (Double cutoff: cutoffsSmallerThanExpression){
+                for (Double cutoff : cutoffsSmallerThanExpression) {
 
-                    Map<String, BitSet> geneBitSets = barChartTrader.geneExpressionIndexes.get(cutoff);
+                    Map<String, BitSet> geneBitSets = geneExpressionIndexes.get(cutoff);
 
                     if (geneBitSets == null) {
 
-                        geneBitSets = initGenesBitSets(cutoff);
+                        geneBitSets = initGenesBitSets();
+                        geneExpressionIndexes.put(cutoff, geneBitSets);
 
                     }
                     geneBitSets.get(expression.getOrganismPart()).set(geneIndexPosition);
@@ -157,15 +160,13 @@ public class BarChartTrader implements BarChartGenerator {
 
         }
 
-        protected Map<String, BitSet> initGenesBitSets(Double cutoff) {
+        protected Map<String, BitSet> initGenesBitSets() {
 
             Map<String, BitSet> geneBitSets = new HashMap<>();
 
-            for(String organismPart: organismParts){
+            for (String organismPart : organismParts) {
                 geneBitSets.put(organismPart, new BitSet(AVERAGE_GENES_IN_EXPERIMENT));
             }
-
-            barChartTrader.geneExpressionIndexes.put(cutoff, geneBitSets);
 
             return geneBitSets;
         }
@@ -173,22 +174,23 @@ public class BarChartTrader implements BarChartGenerator {
 
         public BarChartTrader create() {
             checkState(organismParts != null, "Did you set the experimentAccession ?");
-
-            return trimIndexes();
+            trimIndexes();
+            return new BarChartTrader(geneExpressionIndexes);
         }
 
-        protected BarChartTrader trimIndexes(){
 
-            NavigableMap<Double, Integer> chart = barChartTrader.getChart();
+       protected void trimIndexes() {
 
-            while (chart.get(barChartTrader.geneExpressionIndexes.lastKey()) < 50) {
-                barChartTrader.geneExpressionIndexes.pollLastEntry();
+            Set<Double> doubles = Sets.newHashSet(geneExpressionIndexes.keySet());
+            for (Double scaledCutoff : doubles) {
+
+                if (countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), null) < 50){
+                    geneExpressionIndexes.remove(scaledCutoff);
+                }
+
             }
 
-            return barChartTrader;
         }
-
-
 
     }
 
