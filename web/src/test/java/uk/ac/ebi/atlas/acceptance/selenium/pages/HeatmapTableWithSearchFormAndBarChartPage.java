@@ -66,7 +66,7 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
     }
 
     private void waitForAjaxDataToLoad(){
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
