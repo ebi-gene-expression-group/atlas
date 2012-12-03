@@ -51,7 +51,7 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
 
     @Test
     public void checkBarChartAxisForAllOrganismParts() {
-        assertThat(subject.getXAxisValue(0), is("0.0"));
+        assertThat(subject.getXAxisValue(0), is("0"));
         assertThat(subject.getXAxisValue(1), is("0.2"));
         assertThat(subject.getMaxXAxisValue(), is("40"));
 
