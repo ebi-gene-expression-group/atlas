@@ -35,6 +35,30 @@ public class ExperimentDesignTablePage extends TablePage {
 
     private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION + "-experiment-design";
 
+    @FindBy(id = "experiment-design-table")
+    private WebElement experimentDesignTable;
+
+    @FindBy(id = "experiment-design-table_info")
+    private WebElement experimentDesignTableInfo;
+
+    @FindBy(id = "isOnlyAnalysed")
+    private WebElement onlyAnalysedBox;
+
+    @FindBy(id = "download-experiment-design-link")
+    private WebElement downloadExperimentDesignLink;
+
+    @FindBy(xpath = "//div[@id='experiment-design-table_filter']/label/input")
+    private WebElement searchField;
+
+    @FindBy(xpath = "//thead/tr[1]/th[1]")
+    private WebElement firstColumnHeader;
+
+    @FindBy(xpath = "//thead/tr[2]/th[1]")
+    private WebElement secondColumnHeader;
+
+    @FindBy(xpath = "//thead/tr[2]/th[2]")
+    private WebElement thirdColumnHeader;
+
     public ExperimentDesignTablePage(WebDriver driver) {
         super(driver);
     }
@@ -42,30 +66,6 @@ public class ExperimentDesignTablePage extends TablePage {
     public ExperimentDesignTablePage(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);
     }
-
-    @FindBy(id = "experiment-design-table")
-    WebElement experimentDesignTable;
-
-    @FindBy(id = "experiment-design-table_info")
-    WebElement experimentDesignTableInfo;
-
-    @FindBy(id = "isOnlyAnalysed")
-    WebElement onlyAnalysedBox;
-
-    @FindBy(id = "download-experiment-design-link")
-    WebElement downloadExperimentDesignLink;
-
-    @FindBy(xpath = "//div[@id='experiment-design-table_filter']/label/input")
-    WebElement searchField;
-
-    @FindBy(xpath = "//thead/tr[1]/th[1]")
-    WebElement firstColumnHeader;
-
-    @FindBy(xpath = "//thead/tr[2]/th[1]")
-    WebElement secondColumnHeader;
-
-    @FindBy(xpath = "//thead/tr[2]/th[2]")
-    WebElement thirdColumnHeader;
 
     @Override
     protected String getPageURI() {
