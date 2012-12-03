@@ -26,6 +26,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -41,6 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Named("analysisMethodsTsvReader")
+@Scope("singleton")
 public class AnalysisMethodsTsvReader {
 
     private static final Logger logger = Logger.getLogger(AnalysisMethodsTsvReader.class);

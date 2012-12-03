@@ -20,6 +20,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
@@ -27,124 +28,196 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:import url="includes/request-preferences.jsp"/>
 
-<c:if test="${not empty geneProfiles}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
 
+<head>
+    <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
+    <!-- old style start -->
 
-    <div id="heatmap" class="block">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="en-GB" http-equiv="Content-Language">
+    <meta content="_top" http-equiv="Window-target">
+    <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
+    <meta content="IE=9" http-equiv="X-UA-Compatible"/>
 
-        <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-ebi.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/old/atlas-searchform.css">
+    <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
+    <link rel="SHORTCUT ICON" href="http://www.ebi.ac.uk/bookmark.ico"/>
 
-            <table style="font-size:10px" id="heatmap-legenda">
-                <tr>
-                    <td>
-                        <div style="color:white" class="gradient-level">
-                            <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false"/>
-                        </div>
-                    </td>
-                    <td width="200px">
-                        <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
-
-                                background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
-
-                                background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
-
-                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
-                            &nbsp;
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:white" class="gradient-level">
-                            <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false"/>
-                        </div>
-                    </td>
-
-                </tr>
-            </table>
-
-            <table>
-                <tr>
-                    <td style="width:25px;padding-top: 15px; vertical-align:top">
-                        <div id="sex-toggle">
-                            <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                                 style="width:20px" src="resources/images/male_selected.png"/>
-                        </div>
-                    </td>
-                    <td>
-                        <div id="anatomogramBody" style="width: 230px; height: 400px">
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="heatmap-div" style="margin-left:300px">
-
-            <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
-
-        </div>
-    </div>
-
-    <br/>
-
-</c:if>
-
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
-<!--[if lte IE 8]>
-<script language="JavaScript" type="text/javascript"
-src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"></script>
-<![endif]-->
-
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/searchForm.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/slider.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
-
-<script>
-
-    var x;
-    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
-
-        $(document).ready(function () {
-
-            var organismParts = [${heatmapOrganismParts.size()}];
-
-            <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
-            organismParts[${i.index}] = '${organismPart}';
-            </c:forEach>
-
-            //disable vertical header and anatomogram in IE
-            if ($.browser.msie) {
-                if ($.browser.version <= 8.0) {
-                    $("#anatomogram").hide();
-                    $("#gene-distribution-button").hide();//hide the bar chart button
-                    $("#gene-distribution").hide();//hide the bar chart
-                    $("#slider-range-max").hide();//hide the cutoff slider
-                    $("#heatmap-div").attr('style', '');//reset the style attribute to remove the margin left
-                }
-                $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
-                $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
-
-            } else {
-                initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
-                initSlider(${preferences.cutoff}, '${experimentAccession}');
+    <style type="text/css">
+        @media print {
+            body, .contents, .header, .contentsarea, .head {
+                position: relative;
             }
-            initSearchForm('${requestURI}');
-            initHeatmapDisplayValueToggle();
+        }
+    </style>
 
-        });
+    <!-- old style end -->
 
-    })(jQuery);
+    <title>Experiment</title>
 
-</script>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/ui-lightness/jquery-ui-1.9.1.custom.min.css">
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/anatomogram.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
+
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui/jquery-ui-1.9.1.custom.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
+    <!--[if lte IE 8]>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"></script>
+    <![endif]-->
+
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/searchForm.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/slider.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
+
+    <script>
+
+        var x;
+        (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+
+            $(document).ready(function () {
+
+                var organismParts = [${heatmapOrganismParts.size()}];
+
+                <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
+                organismParts[${i.index}] = '${organismPart}';
+                </c:forEach>
+
+                //disable vertical header and anatomogram in IE
+                if ($.browser.msie) {
+                    if ($.browser.version <= 8.0) {
+                        $("#anatomogram").hide();
+                        $("#gene-distribution-button").hide();//hide the bar chart button
+                        $("#gene-distribution").hide();//hide the bar chart
+                        $("#slider-range-max").hide();//hide the cutoff slider
+                        $("#heatmap-div").attr('style','');//reset the style attribute to remove the margin left
+                    }
+                    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+                    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
+
+                } else {
+                    initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    initSlider(${preferences.cutoff}, '${experimentAccession}');
+                }
+                initSearchForm('${requestURI}');
+                initHeatmapDisplayValueToggle();
+
+            });
+
+        })(jQuery);
+
+    </script>
+
+</head>
+
+<body>
+
+
+<!-- old style start -->
+
+<%@ include file="layout/old/header.jsp" %>
+
+
+    <!-- old style end -->
+
+<div id="contents" class="page-contents">
+
+    <c:import url="includes/experiment-header.jsp"/>
+
+    <c:import url="includes/request-preferences.jsp" />
+
+    <c:if test="${not empty geneProfiles}">
+
+
+        <div id="heatmap" class="block">
+
+            <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
+
+                <table style="font-size:10px" id="heatmap-legenda" >
+                    <tr>
+                        <td>
+                            <div style="color:white" class="gradient-level">
+                                <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false" />
+                            </div>
+                        </td>
+                        <td width="200px">
+                            <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
+
+                                    background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+
+                                    background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+
+                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white" class="gradient-level">
+                                <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false" />
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+
+                    <table>
+                        <tr>
+                            <td style="width:25px;padding-top: 15px; vertical-align:top">
+                                <div id="sex-toggle">
+                                    <img id="sex-toggle-image" title="Switch anatomogram" class="button-image" style="width:20px" src="resources/images/male_selected.png"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div id="anatomogramBody" style="width: 230px; height: 400px">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+            <div id="heatmap-div" style="margin-left:300px">
+
+                <c:import url="includes/heatmap-matrix-gene-oriented.jsp" />
+
+            </div>
+        </div>
+
+        <br/>
+
+    </c:if>
+
+
+</div>
+
+    <!-- old style start -->
+
+<%@ include file="layout/old/footer.jsp" %>
+<!-- old style end -->
+
+</body>
+
+</html>

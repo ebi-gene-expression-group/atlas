@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
-@Named("experimentsCache")
+@Named("experiments")
 @Scope("singleton")
 public class ExperimentsCache {
 
@@ -18,6 +18,7 @@ public class ExperimentsCache {
     private LoadingCache<String, Experiment> experiments;
 
     @Inject
+    @Named("experimentRunsCache")
     public ExperimentsCache(LoadingCache<String, Experiment> experiments) {
         this.experiments = experiments;
     }

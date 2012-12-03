@@ -44,7 +44,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-@Named("investigationLoader")
+@Named("experimentMetadataLoader")
 public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private static final String ENA_RUN = "ENA_RUN";

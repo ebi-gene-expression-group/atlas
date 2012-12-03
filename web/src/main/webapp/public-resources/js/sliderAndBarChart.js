@@ -1,4 +1,47 @@
-function initSlider(cutoff, experimentAccession) {
+function hideGeneDistribution(img, isFast) {
+    $('#gene-distribution').hide(isFast ? null : 'slow');
+    $("#display-chart").tooltip({content:"Display gene distribution"});
+}
+
+function displayGeneDistribution(img, isFast) {
+    $('#gene-distribution').show(isFast ? null : 'slow');
+    $("#display-chart").tooltip({content:"Hide gene distribution"});
+}
+
+function hideOrDisplayGeneDistribution(isFast) {
+    var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
+    if (isDisplayEnabled == "true") {
+        displayGeneDistribution(this, isFast);
+    } else {
+        hideGeneDistribution(this, isFast);
+    }
+
+}
+
+function initBarChartButton(){
+
+    $("#chart-button").button().click(function () {
+
+        var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
+        if (isDisplayEnabled == "true") {
+            $("#prefForm #displayGeneDistribution").val("false");
+        } else {
+            $("#prefForm #displayGeneDistribution").val("true");
+        }
+
+        hideOrDisplayGeneDistribution(false);
+
+        return false;
+    }).tooltip();
+
+}
+
+function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
+
+    var op = "";
+    if (organismParts) {
+        op = "?" + organismParts;
+    }
 
     function nearestScaledCutoff(cutoff) {
         if (cutoff >= 1) {
@@ -86,11 +129,25 @@ function initSlider(cutoff, experimentAccession) {
         });
     }
 
+    $.getJSON("json/barchart/" + experimentAccession + op, function (data) {
 
-    $.getJSON("json/gene-by-cutoff/" + experimentAccession + ".all.txt", function (data) {
-//    $.getJSON("json/gene-by-cutoff/expMap.json", function (data) {
+        //this is required because if you load the plot when the div is hidden
+        //and then you display the div later the plot Y axis will be overlapping the Y ticks
+        displayGeneDistribution(this,true);
 
-        var scaledCutoffTicks = scaledCutoffs(data.length);
+        var keys = Object.keys(data);
+        var scaledCutoffTicks = [];
+        var dataArray = [];
+
+        for (var i = 0; i < keys.length; i++) {
+            if (keys[i] > 0 && keys[i] < 1) {
+                scaledCutoffTicks.push(keys[i]);
+            } else {
+                scaledCutoffTicks.push(Math.round(keys[i]));
+            }
+            dataArray.push([i, data[keys[i]]]);
+        }
+
 
         var ticksMap = [];
 
@@ -98,36 +155,9 @@ function initSlider(cutoff, experimentAccession) {
             ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff) : ""]);
         })
 
-        var genesByCutoffPlot = plotCutoffBarChart(data, ticksMap);
+        var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
 
-        function hideGeneDistribution(img, isFast){
-            $('#gene-distribution').hide(isFast? null:'slow');
-//            $(img).attr('src', 'resources/images/chart-bar-add-icon.png');
-            $("#display-chart").tooltip({content:"Display gene distribution"});
-            $("#prefForm #displayGeneDistribution").val("false");
-        }
-
-        function displayGeneDistribution(img, isFast){
-            $('#gene-distribution').show(isFast?null:'slow');
-//            $(img).attr('src', 'resources/images/chart-bar-delete-icon.png');
-            $("#display-chart").tooltip({content:"Hide gene distribution"});
-            $("#prefForm #displayGeneDistribution").val("true");
-        }
-
-        $("#chart-button").button().toggle(
-            function(event, fast){
-                hideGeneDistribution(this, fast == true ? true : false);
-            }
-            , function(event, fast){
-                displayGeneDistribution(this, fast == true ? true : false);
-            }
-        ).tooltip();
-
-
-        if ($("#prefForm #displayGeneDistribution").val() == "false"){
-            $("#chart-button").trigger('click', [true]);
-        }
-
+        hideOrDisplayGeneDistribution(true);
 
         function showTooltip(x, y, contents) {
             $('<div id="tooltip">' + contents + '</div>').css({
@@ -136,7 +166,7 @@ function initSlider(cutoff, experimentAccession) {
                 top:y - 25,
                 left:x - 6,
                 border:'2px solid rgb(238,195,46)',
-                'border-radius': '4px',
+                'border-radius':'4px',
                 padding:'2px',
                 'font-family':'Verdana, Helvetica, Arial, sans-serif',
                 'font-size':'smaller',
@@ -175,7 +205,7 @@ function initSlider(cutoff, experimentAccession) {
                     $("form#prefForm").submit();
                 }
             });
-        ;
+
 
         var scaledCutoff = nearestScaledCutoff(cutoff);
 
@@ -193,7 +223,7 @@ function initSlider(cutoff, experimentAccession) {
         $("#slider-range-max").slider({
             range:"max",
             min:0,
-            max:data.length - 1,
+            max:scaledCutoffTicks.length - 1,
 
             value:scaledCutoffPosition,
 
@@ -203,12 +233,18 @@ function initSlider(cutoff, experimentAccession) {
                 var scaledCutoff = getNthScaledCutoff(ui.value, 1);
                 $("#cutoff").val(scaledCutoff);
             },
-            change:function (event, ui) {
+            stop:function (event, ui) {
                 $("form#prefForm").submit();
             }
         });
 
+
+
+
+
+
     });
+
 
 
 }

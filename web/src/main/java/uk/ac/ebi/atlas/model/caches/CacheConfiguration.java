@@ -5,6 +5,7 @@ import com.google.common.cache.LoadingCache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 
 import javax.inject.Inject;
 
@@ -13,7 +14,7 @@ public class CacheConfiguration {
 
     private static final int EXPERIMENTS_CACHE_MAX_SIZE = 10;
 
-    @Bean
+    @Bean(name="experimentRunsCache")
     @Inject
     public LoadingCache<String, Experiment> experimentRunsCache(ExperimentMetadataLoader cacheLoader){
 
@@ -22,5 +23,12 @@ public class CacheConfiguration {
 
     }
 
+    @Bean(name="barChartTradersCache")
+    @Inject
+    public LoadingCache<String, BarChartTrader> barChartTradersCache(BarChartTraderLoader barChartTraderLoader) {
+        return CacheBuilder.newBuilder().maximumSize(EXPERIMENTS_CACHE_MAX_SIZE)
+                .build(barChartTraderLoader);
+
+    }
 
 }
