@@ -13,24 +13,24 @@ public class HeatmapTablePageOrganismOriented extends HeatmapTablePage {
 
     @Override
     public List<String> getOrganismParts() {
-        return getFirstColumnValues(heatmapTable);
+        return getFirstColumnValues(getHeatmapTable());
     }
 
     @Override
     public List<String> getSelectedGenes() {
-        List<String> geneNames = getTableHeaders(heatmapTable);
+        List<String> geneNames = getTableHeaders(getHeatmapTable());
         //and we need to remove the last header value, because is related to the organism part column
         return geneNames.subList(1, geneNames.size());
     }
 
     @Override
     public List<String> getFirstGeneProfile() {
-        return getSecondColumnValues(heatmapTable);
+        return getSecondColumnValues(getHeatmapTable());
     }
 
     @Override
     public List<String> getLastGeneProfile() {
-        return getLastColumnValues(heatmapTable);
+        return getLastColumnValues(getHeatmapTable());
     }
 
 }

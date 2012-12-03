@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="base.definition"
+                template="/WEB-INF/jsp/layout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/jsp/layout/old/header.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/jsp/includes/experiment-header.jsp"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/layout/old/footer.jsp"/>
+    </definition>
+
+    <definition name="experiment" extends="base.definition">
+        <put-attribute name="title" value="Experiment"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/experiment.jsp"/>
+    </definition>
+
+    <definition name="experiment-analysis-methods" extends="base.definition">
+        <put-attribute name="title" value="Experiment - analysis methods"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/experiment-analysis-methods.jsp"/>
+    </definition>
+
+    <definition name="experiment-experiment-design" extends="base.definition">
+        <put-attribute name="title" value="Experiment - experiment design"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/experiment-experiment-design.jsp"/>
+    </definition>
+
+</tiles-definitions>
