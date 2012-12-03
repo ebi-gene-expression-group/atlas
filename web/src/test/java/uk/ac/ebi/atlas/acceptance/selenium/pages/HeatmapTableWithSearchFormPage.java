@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,16 +14,16 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
     protected static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
 
     @FindBy(id = "geneQuery")
-    WebElement geneQuery;
+    private WebElement geneQuery;
 
     @FindBy(id = "organismParts")
-    WebElement organismParts;
+     WebElement organismParts;
 
     @FindBy(id = "cutoff")
-    WebElement cutoff;
+    private WebElement cutoff;
 
     @FindBy(id = "submit-button")
-    WebElement submitButton;
+    private WebElement submitButton;
 
     public HeatmapTableWithSearchFormPage(WebDriver driver) {
         super(driver);
@@ -64,4 +65,19 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
         cutoff.sendKeys("" + value);
     }
 
+    private String selectOptionScript(String option){
+        return "$('#organismParts option').each(function() {\n" +
+               "            if ($(this).text() == '" + option + "') {\n" +
+               "                $(this).attr('selected',true);\n" +
+               "            }" +
+               "        });" +
+               "$('#organismParts').trigger('liszt:updated').trigger('change')";
+    }
+
+    public void selectOrganismPart(String ... organismParts) {
+
+        for (String organismPart : organismParts){
+            ((JavascriptExecutor) driver).executeScript(selectOptionScript(organismPart));
+        }
+    }
 }

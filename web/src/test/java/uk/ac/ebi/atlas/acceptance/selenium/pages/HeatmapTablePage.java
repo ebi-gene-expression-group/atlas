@@ -14,6 +14,21 @@ public class HeatmapTablePage extends TablePage {
 
     private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION;
 
+    @FindBy(id = "heatmap-table")
+    private WebElement heatmapTable;
+
+    @FindBy(id="geneCount")
+    private WebElement geneFound;
+
+    @FindBy(id = "download-profiles-link")
+    private WebElement downloadExpressionProfilesLink;
+
+    @FindBy(id = "display-levels")
+    private WebElement displayLevelsButton;
+
+    @FindBy(className = "gradient-level")
+    private List<WebElement> gradientLevels;
+
     public HeatmapTablePage(WebDriver driver) {
         super(driver);
     }
@@ -22,20 +37,9 @@ public class HeatmapTablePage extends TablePage {
         super(driver, httpParameters);
     }
 
-    @FindBy(id = "heatmap-table")
-    WebElement heatmapTable;
-
-    @FindBy(id="geneCount")
-    WebElement geneFound;
-
-    @FindBy(id = "download-profiles-link")
-    WebElement downloadExpressionProfilesLink;
-
-    @FindBy(id = "display-levels")
-    WebElement displayLevelsButton;
-
-    @FindBy(className = "gradient-level")
-    List<WebElement> gradientLevels;
+    protected WebElement getHeatmapTable(){
+        return heatmapTable;
+    }
 
     public List<String> getOrganismParts() {
         List<String> organismParts = getTableHeaders(heatmapTable);
