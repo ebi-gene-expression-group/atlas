@@ -43,7 +43,7 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
         subject = new HeatmapTableWithSearchFormAndBarChartPage(firefoxDriver);
         subject.get();
     }
-
+/*
     @Before
     public void displayBarChart(){
         subject.clickDisplayChartButton();
@@ -68,4 +68,5 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
         assertThat(subject.getMaxYAxisValue(), is("4"));
     }
 
+*/
 }
