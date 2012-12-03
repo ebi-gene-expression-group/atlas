@@ -85,15 +85,6 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         return retVal;
     }
 
-    function scaledCutoffs(maxValue) {
-        var scaledCutoffs = [];
-        for (var i = 0; i < maxValue; i++) {
-            var scaledCutoff = getNthScaledCutoff(i, 1);
-            scaledCutoffs.push([scaledCutoff]);
-        }
-        return scaledCutoffs;
-    }
-
     function magnifiedValue(value) {
         if (value >= 1000000) {
             return value / 1000000 + "M";
@@ -152,7 +143,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         var ticksMap = [];
 
         $.each(scaledCutoffTicks, function (index, scaledCutoff) {
-            ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff) : ""]);
+            ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
         })
 
         var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
