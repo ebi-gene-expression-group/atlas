@@ -35,6 +35,8 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Controller
 public class ExperimentDesignPageController {
 
@@ -93,7 +95,8 @@ public class ExperimentDesignPageController {
             String[] line = csvLines.get(i);
             String[] newLine = new String[line.length];
             for (int j = 0; j < line.length; j++) {
-                newLine[j] = line[mapping.get(j)];
+                Integer value = checkNotNull(mapping.get(j), "No mapping found for ExpDesign column.");
+                newLine[j] = line[value];
             }
             csvLines.set(i, newLine);
         }
