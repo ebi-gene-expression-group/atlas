@@ -43,6 +43,11 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         op = "?" + organismParts;
     }
 
+    function buildLegendaText(){
+        return "Y = number of genes expressed above the given FPKM cutoff "
+            + (organismParts? "for the selected organism parts" : "in any organism part");
+    }
+
     function nearestScaledCutoff(cutoff) {
         if (cutoff >= 1) {
             // Remove decimal places and replace all but first digit with zeros.
@@ -109,7 +114,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
             series:{
                 highlightColor:"red",
 
-                label:"Y = number of genes expressed above the selected FPKM cutoff in any organism part",
+                label:buildLegendaText(),
 
                 bars:{
                     show:true,

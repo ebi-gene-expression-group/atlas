@@ -37,6 +37,7 @@ public class RequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
     static final double DEFAULT_CUTOFF = 0.5d;
+    private static final String DEFAULT_GENE_QUERY_STRING = "protein_coding";
 
     @NotNull
     @Range(min = 0, max = 1000)
@@ -48,7 +49,7 @@ public class RequestPreferences {
 
     private SortedSet<String> organismParts;
 
-    private String geneQuery;
+    private String geneQuery = DEFAULT_GENE_QUERY_STRING;
 
     private boolean displayLevels;
 
