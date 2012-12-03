@@ -36,7 +36,7 @@
 
     <properties>
         <selenium.version>2.25.0</selenium.version>
-
+        <tiles.version>2.2.2</tiles.version>
     </properties>
 
     <build>
@@ -208,9 +208,9 @@
         </dependency>
 
         <dependency>
-        	<groupId>com.google.code.gson</groupId>
-        	<artifactId>gson</artifactId>
-        	<version>2.2.2</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
         </dependency>
 
         <!--
@@ -275,6 +275,15 @@
             <scope>test</scope>
         </dependency>
 
+        <!--
+            Apache Tiles
+        -->
+
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-extras</artifactId>
+            <version>${tiles.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
