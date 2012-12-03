@@ -140,7 +140,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         var dataArray = [];
 
         for (var i = 0; i < keys.length; i++) {
-            if (keys[i] < 1) {
+            if (keys[i] > 0 && keys[i] < 1) {
                 scaledCutoffTicks.push(keys[i]);
             } else {
                 scaledCutoffTicks.push(Math.round(keys[i]));
