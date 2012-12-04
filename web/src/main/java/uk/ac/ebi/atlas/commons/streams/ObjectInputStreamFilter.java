@@ -51,7 +51,7 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
     @Override
     public void close() throws IOException {
         inputStream.close();
-        logger.info("<close> close invoked on ObjectInputStreamFilter");
+        logger.debug("<close> close invoked on ObjectInputStreamFilter");
     }
 
     protected abstract Predicate<T> getAcceptanceCriteria();
