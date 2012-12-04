@@ -27,4 +27,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/experiment-experiment-design.jsp"/>
     </definition>
 
+    <definition name="home" extends="base.definition">
+        <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/home.jsp"/>
+    </definition>
+
 </tiles-definitions>

@@ -77,7 +77,7 @@
 
 <div id="contents" class="page-contents">
 
-    <tiles:insertAttribute name="menu"/>
+    <tiles:insertAttribute name="menu" ignore="true"/>
 
     <tiles:insertAttribute name="body"/>
 
