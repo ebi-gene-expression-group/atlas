@@ -130,50 +130,7 @@
     /*!
      * Create an array of word objects, each representing a word in the cloud
      */
-    var word_list = new Array(
-            {text:"Homo sapiens", weight:13, link:"experiments/E-MTAB-513"},
-            {text:"Mus musculus", weight:10.5, link:"experiments/E-MTAB-599"},
-            {text:"Dolor", weight:9.4},
-            {text:"Sit", weight:8},
-            {text:"Amet", weight:6.2},
-            {text:"Consectetur", weight:5},
-            {text:"Adipiscing", weight:5},
-            {text:"Elit", weight:5},
-            {text:"Nam et", weight:5},
-            {text:"Leo", weight:4},
-            {text:"ArrayExpress", weight:4, link:"http://www.ebi.ac.uk/arrayexpress"},
-            {text:"Pellentesque", weight:3},
-            {text:"habitant", weight:3},
-            {text:"morbi", weight:3},
-            {text:"tristisque", weight:3},
-            {text:"senectus", weight:3},
-            {text:"et netus", weight:3},
-            {text:"et malesuada", weight:3},
-            {text:"fames", weight:2},
-            {text:"ac turpis", weight:2},
-            {text:"egestas", weight:2},
-            {text:"Aenean", weight:2},
-            {text:"vestibulum", weight:2},
-            {text:"elit", weight:2},
-            {text:"sit amet", weight:2},
-            {text:"metus", weight:2},
-            {text:"adipiscing", weight:2},
-            {text:"ut ultrices", weight:2},
-            {text:"justo", weight:1},
-            {text:"dictum", weight:1},
-            {text:"Ut et leo", weight:1},
-            {text:"metus", weight:1},
-            {text:"at molestie", weight:1},
-            {text:"purus", weight:1},
-            {text:"Curabitur", weight:1},
-            {text:"diam", weight:1},
-            {text:"dui", weight:1},
-            {text:"ullamcorper", weight:1},
-            {text:"id vuluptate ut", weight:1},
-            {text:"mattis", weight:1},
-            {text:"et nulla", weight:1},
-            {text:"Sed", weight:1}
-    );
+    var word_list = ${wordlist};
 
     $(function () {
         // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
