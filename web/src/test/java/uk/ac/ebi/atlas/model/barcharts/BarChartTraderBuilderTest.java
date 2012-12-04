@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model.barcharts;
 
 import com.google.common.collect.Iterators;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -100,4 +101,13 @@ public class BarChartTraderBuilderTest {
 //        subject = new BarChartTrader.Builder(experimentsCacheMock);
     }
 
+    @Test
+    public void testAddGeneToIndexes() {
+
+    }
+
+    @Test
+    public void testTrimIndexes() {
+
+    }
 }
