@@ -79,7 +79,7 @@
 
 <div id="error-content" class="block">
     <div class="error">
-        Unexpected error
+        Hello...
     </div>
 </div>
 
