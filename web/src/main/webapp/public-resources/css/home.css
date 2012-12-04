@@ -1,0 +1,118 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+.navigation {
+    margin: 0px auto;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.navigation .item {
+    position: absolute;
+}
+
+.human {
+    top: 135px;
+    left: 110px;
+}
+
+.mouse {
+    top: 60px;
+    left: 360px;
+}
+
+.rat {
+    top: 100px;
+    left: 625px;
+}
+
+.fly {
+    top: 240px;
+    left: 835px;
+}
+
+.fish {
+    top: 430px;
+    left: 950px;
+}
+
+a.icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+}
+
+.item img.circle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.item h2 {
+    position: absolute;
+    color: #222;
+    font-size: 16px;
+    top: 0px;
+    left: 75px;
+    text-shadow: 1px 1px 1px #fff;
+    text-transform: uppercase;
+}
+
+.item h2.active {
+    color: #fff;
+    text-shadow: 1px 0px 1px #555;
+}
+
+.item ul {
+    list-style: none;
+    position: absolute;
+    top: 40px;
+    left: 25px;
+    display: none;
+}
+
+.item ul li a {
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #222;
+    padding: 3px;
+    float: left;
+    clear: both;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.item ul li a:hover {
+    background-color: #fff;
+    color: #444;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 1px 1px 4px #666;
+    -webkit-box-shadow: 1px 1px 4px #666;
+    box-shadow: 1px 1px 4px #666;
+}
+

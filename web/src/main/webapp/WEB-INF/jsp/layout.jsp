@@ -63,6 +63,10 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">
+    <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css"
+          rel="stylesheet">
+    <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/jqcloud.css"
+          rel="stylesheet">
 
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>

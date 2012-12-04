@@ -20,9 +20,121 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<img src="${pageContext.request.contextPath}/resources/images/atlas_logo.png" alt="Atlas logo"/>
+<h2>Baseline Gene Expression Atlas</h2>
 
-<ul>
-    <li><a href="experiments/E-MTAB-513">E-MTAB-513</a></li>
-    <li><a href="experiments/E-MTAB-599">E-MTAB-599</a></li>
-</ul>
+<div id="wordcloud" style="width: 550px; height: 350px; position:absolute; top: 250px; left:250px;"></div>
+
+<div class="navigation" id="nav">
+    <div class="item human">
+        <img src="${pageContext.request.contextPath}/resources/images/human.png" alt="" width="75" height="75"
+             class="circle"/>
+        <a href="#" class="icon"></a>
+
+        <h2>Homo Sapiens</h2>
+        <ul>
+            <li><a href="experiments/E-MTAB-513">E-MTAB-513</a></li>
+            <li><a href="#">Test2</a></li>
+            <li><a href="#">Test3</a></li>
+        </ul>
+    </div>
+    <div class="item mouse">
+        <img src="${pageContext.request.contextPath}/resources/images/mouse.png" alt="" width="75" height="75"
+             class="circle"/>
+        <a href="#" class="icon"></a>
+
+        <h2>Mus Musculus</h2>
+        <ul>
+            <li><a href="experiments/E-MTAB-599">E-MTAB-599</a></li>
+            <li><a href="#">Test2</a></li>
+            <li><a href="#">Test3</a></li>
+        </ul>
+    </div>
+    <div class="item rat">
+        <img src="${pageContext.request.contextPath}/resources/images/rat.png" alt="" width="75" height="75"
+             class="circle"/>
+        <a href="#" class="icon"></a>
+
+        <h2>Rattus Norvegicus</h2>
+        <ul>
+            <li><a href="#">Test1</a></li>
+            <li><a href="#">Test2</a></li>
+            <li><a href="#">Test3</a></li>
+        </ul>
+    </div>
+    <div class="item fly">
+        <img src="${pageContext.request.contextPath}/resources/images/fly.png" alt="" width="75" height="75"
+             class="circle"/>
+        <a href="#" class="icon"></a>
+
+        <h2>Drosophila Melanogaster</h2>
+        <ul>
+            <li><a href="#">Test1</a></li>
+            <li><a href="#">Test2</a></li>
+            <li><a href="#">Test3</a></li>
+        </ul>
+    </div>
+    <div class="item fish">
+        <img src="${pageContext.request.contextPath}/resources/images/fish.png" alt="" width="75" height="75"
+             class="circle"/>
+        <a href="#" class="icon"></a>
+
+        <h2>Danio Rerio</h2>
+        <ul>
+            <li><a href="#">Test1</a></li>
+            <li><a href="#">Test2</a></li>
+            <li><a href="#">Test3</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- The JavaScript -->
+<script type="text/javascript" language="javascript"
+        src="${pageContext.request.contextPath}/resources/js/jquery.easing.1.3.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#nav > div').hover(
+                function () {
+                    var $this = $(this);
+                    $this.find('img').stop().animate({
+                        'width':'200px',
+                        'height':'200px',
+                        'top':'0px',
+                        'left':'0px',
+                        'opacity':'1.0'
+                    }, 500, 'easeOutBack', function () {
+                        $(this).parent().find('ul').fadeIn(500);
+                    });
+
+                    $this.find('a:first,h2').addClass('active');
+                },
+                function () {
+                    var $this = $(this);
+                    $this.find('ul').fadeOut(500);
+                    $this.find('img').stop().animate({
+                        'width':'75px',
+                        'height':'75px',
+                        'top':'0px',
+                        'left':'0px',
+                        'opacity':'1.0'
+                    }, 5000, 'easeOutBack');
+
+                    $this.find('a:first,h2').removeClass('active');
+                }
+        );
+    });
+</script>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jqcloud-1.0.2.js"></script>
+<script type="text/javascript">
+    /*!
+     * Create an array of word objects, each representing a word in the cloud
+     */
+    var word_list = ${wordlist};
+
+    $(function () {
+        // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
+        $("#wordcloud").jQCloud(word_list);
+    });
+</script>
+
