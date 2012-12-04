@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +31,6 @@ public class ArrayExpressClientTestIT {
     @Test
     public void testFetchExperimentName() throws Exception {
         String result = subject.fetchExperimentName(EXPERIMENT_ACC);
-        System.out.println("result = " + result);
+        assertThat(result, is("RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map) (48 assays)"));
     }
 }
