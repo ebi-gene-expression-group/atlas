@@ -25,13 +25,14 @@ package uk.ac.ebi.atlas.model.barcharts;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @Named("cutoffScale")
 @Scope("singleton")
-public class CutoffScale {
+class CutoffScale {
 
     private static final int DEFAULT_NUMBER_OF_FRACTIONAL_DIGITS = 1;
     private static final int MAX_NUMBER_OF_VALUES = 100;
@@ -39,19 +40,6 @@ public class CutoffScale {
     private static final ConcurrentMap<Integer, Double> magnifiedScale = new ConcurrentHashMap<>();
 
     protected CutoffScale(){
-
-    }
-
-    public double floorToScale(double expressionLevel){
-        if (expressionLevel >= 1) {
-            // Remove decimal places and replace all but first digit with zeros.
-            expressionLevel = Math.floor(expressionLevel);
-
-            double tenths = Math.pow(10, (int)Math.log10(expressionLevel));
-            return ((int)(expressionLevel / tenths)) * tenths;
-        } else {
-            return (Math.floor(expressionLevel * 10))/ 10;
-        }
 
     }
 
@@ -73,7 +61,7 @@ public class CutoffScale {
         return scaledValues;
     }
 
-    public double getNthValue(int position) {
+    protected double getNthValue(int position) {
 
         if (position > 0) {
 

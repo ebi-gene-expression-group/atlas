@@ -43,6 +43,11 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         op = "?" + organismParts;
     }
 
+    function buildLegendaText(){
+        return "Y = number of genes expressed above the given FPKM cutoff "
+            + (organismParts? "for the selected organism parts" : "in any organism part");
+    }
+
     function nearestScaledCutoff(cutoff) {
         if (cutoff >= 1) {
             // Remove decimal places and replace all but first digit with zeros.
@@ -85,15 +90,6 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         return retVal;
     }
 
-    function scaledCutoffs(maxValue) {
-        var scaledCutoffs = [];
-        for (var i = 0; i < maxValue; i++) {
-            var scaledCutoff = getNthScaledCutoff(i, 1);
-            scaledCutoffs.push([scaledCutoff]);
-        }
-        return scaledCutoffs;
-    }
-
     function magnifiedValue(value) {
         if (value >= 1000000) {
             return value / 1000000 + "M";
@@ -109,7 +105,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
             series:{
                 highlightColor:"red",
 
-                label:"Y = number of genes expressed above the selected FPKM cutoff in any organism part",
+                label:buildLegendaText(),
 
                 bars:{
                     show:true,
@@ -152,7 +148,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         var ticksMap = [];
 
         $.each(scaledCutoffTicks, function (index, scaledCutoff) {
-            ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff) : ""]);
+            ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
         })
 
         var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
