@@ -73,7 +73,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
         Experiment experiment = new Experiment(experimentAccession, investigation.IDF.experimentDescription
-                                            ,getExperimentRunAccessions(experimentAccession));
+                , getExperimentRunAccessions(experimentAccession));
 
         ScanNode firstNode = scanNodes.iterator().next();
 
@@ -85,14 +85,14 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     }
 
-    private Set<String> getExperimentRunAccessions(String experimentAccession) throws IOException{
+    private Set<String> getExperimentRunAccessions(String experimentAccession) throws IOException {
         Map<String, String> analysisMethodsRows = analysisMethodsTsvReader.readAsMap(experimentAccession);
 
         String[] processedLibraries = analysisMethodsRows.get("Processed libraries").split(",");
 
         Set<String> experimentRunAccessions = new HashSet<>();
 
-        for(String processedLibrary: processedLibraries){
+        for (String processedLibrary : processedLibraries) {
             experimentRunAccessions.add(processedLibrary.trim());
         }
 
@@ -101,8 +101,8 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private String extractSpecie(ScanNode firstScanNode) {
         SourceNode firstSourceNode = GraphUtils.findUpstreamNodes(firstScanNode, SourceNode.class).iterator().next();
-        for (CharacteristicsAttribute characteristic : firstSourceNode.characteristics){
-            if (characteristic.type.equalsIgnoreCase("ORGANISM")){
+        for (CharacteristicsAttribute characteristic : firstSourceNode.characteristics) {
+            if (characteristic.type.equalsIgnoreCase("ORGANISM")) {
                 return characteristic.getAttributeValue();
             }
         }
@@ -162,7 +162,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
                     }
                 }
             }
-            if (factorType == null){
+            if (factorType == null) {
                 factorType = factorName;
             }
 

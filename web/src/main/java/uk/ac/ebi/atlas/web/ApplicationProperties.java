@@ -22,15 +22,12 @@
 
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Properties;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 @Named("applicationProperties")
 @Scope("singleton")
@@ -54,6 +51,11 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
+    public String getArrayExpressRestURL(String experimentAccession) {
+        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.rest.url.template");
+        return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
+    }
+
     public String getAnalisysMethodCsvFilePath(String experimentAccession) {
         return MessageFormat.format(configurationProperties.getProperty("experiment.analysis-method.path.template"), experimentAccession);
     }
@@ -61,4 +63,5 @@ public class ApplicationProperties {
     public String getExperimentDesignCsvFilePath(String experimentAccession) {
         return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
     }
+
 }
