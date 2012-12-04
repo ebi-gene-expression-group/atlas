@@ -78,6 +78,7 @@ public class BarChartTraderBuilderTest {
         when(geneProfilesInputStreamBuilder.create()).thenReturn(inputStream);
 
         subject = new BarChartTrader.Builder(experimentsCacheMock, geneProfilesInputStreamBuilder, cutoffScale);
+
     }
 
 
