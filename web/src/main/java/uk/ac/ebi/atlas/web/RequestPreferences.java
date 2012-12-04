@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -105,5 +106,12 @@ public class RequestPreferences {
         this.geneQuery = geneQuery;
     }
 
+    public String toString(){
+        return Objects.toStringHelper(this.getClass())
+                .add("geneQuery", geneQuery)
+                .add("organismParts", organismParts)
+                .add("cutoff", cutoff)
+                .toString();
+    }
 
 }

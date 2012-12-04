@@ -73,12 +73,15 @@ public class IndexClient {
             String geneProperty = queryBuilder.buildQueryString(searchText);
             String organismQuery = "\"" + organism.toLowerCase() + "\"";
 
+            logger.info("<findGeneIdJson> sending solr request for geneQuery: " + geneProperty + " - organismQuery: " + organismQuery);
+
             String object = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
+
+            logger.info("<findGeneIdJson> got solr response: " + geneProperty + " - organismQuery: " + organismQuery);
 
             return object;
         }catch(Throwable e){
-            logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL);
-            logger.error(e.getMessage(), e);
+            logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL, e);
             throw e;
         }
     }
