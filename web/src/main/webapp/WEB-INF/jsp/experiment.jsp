@@ -129,21 +129,34 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
             </c:forEach>
 
             //disable vertical header and anatomogram in IE
-            if ($.browser.msie) {
-                if ($.browser.version <= 8.0) {
-                    $("#anatomogram").hide();
-                    $("#gene-distribution-button").hide();//hide the bar chart button
-                    $("#gene-distribution").hide();//hide the bar chart
-                    $("#slider-range-max").hide();//hide the cutoff slider
-                    $("#heatmap-div").attr('style', '');//reset the style attribute to remove the margin left
-                }
+            if ($.browser.msie){
+
+                //configuration required for any IE browser
+
                 $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
                 $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
 
-            } else {
-                initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
-                initBarChartButton();
             }
+
+            if ($.browser.msie && $.browser.version <= 8.0) {
+
+                //configurations required for any IE 8 or lower browser
+
+                $("#anatomogram").hide();
+                $("#gene-distribution-button").hide();//hide the bar chart button
+                $("#gene-distribution").hide();//hide the bar chart
+                $("#slider-range-max").hide();//hide the cutoff slider
+                $("#heatmap-div").attr('style', '');//reset the style attribute to remove the margin left
+
+            } else {
+
+                //configurations required for any browser excepted IE version 8 or lower
+                initBarChartButton();
+                initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+            }
+
+            //configurations required for any browser...
+
             initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}');
             initHeatmapDisplayValueToggle();
         });
