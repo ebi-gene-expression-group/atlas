@@ -95,8 +95,6 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery-ui/jquery-ui-1.9.1.custom.min.js"></script>
-<script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>

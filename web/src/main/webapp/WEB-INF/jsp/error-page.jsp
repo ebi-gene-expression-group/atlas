@@ -1,0 +1,24 @@
+<%@ page isErrorPage="true" %>
+
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set value="${requestScope['javax.servlet.error.status_code']}" var="statusCode"/>
+
+
+<div id="error-content" class="block">
+    <div class="error">
+        <c:choose>
+            <c:when test="${statusCode == '404'}">
+                Resource not found.
+            </c:when>
+            <c:otherwise>
+                We are sorry - an unexpected error occurred. If it persists, please contact <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</div>
+
+<div id="content" class="block">
+<a href="/gxa">Go to Baseline Atlas home page</a>
+</div>
