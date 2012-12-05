@@ -20,13 +20,23 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<h2>Baseline Gene Expression Atlas</h2>
+<table>
+    <tr>
+        <td>
+            <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
+                 alt="Expression Atlas Logo"/>
+        </td>
+        <td>
+            <h2>Baseline Gene Expression Atlas</h2>
+        </td>
+    </tr>
+</table>
 
-<div id="wordcloud" style="width: 550px; height: 350px; position:absolute; top: 250px; left:250px;"></div>
+<div id="wordcloud" style="width: 550px; height: 350px; position:absolute; top: 230px; left:160px;"></div>
 
 <div class="navigation" id="nav">
     <div class="item human">
-        <img src="${pageContext.request.contextPath}/resources/images/human.png" alt="" width="75" height="75"
+        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_man.png" alt="" width="40" height="40"
              class="circle"/>
         <a href="#" class="icon"></a>
 
@@ -38,7 +48,7 @@
         </ul>
     </div>
     <div class="item mouse">
-        <img src="${pageContext.request.contextPath}/resources/images/mouse.png" alt="" width="75" height="75"
+        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_mouse2.png" alt="" width="40" height="40"
              class="circle"/>
         <a href="#" class="icon"></a>
 
@@ -50,7 +60,7 @@
         </ul>
     </div>
     <div class="item rat">
-        <img src="${pageContext.request.contextPath}/resources/images/rat.png" alt="" width="75" height="75"
+        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_rat.png" alt="" width="40" height="40"
              class="circle"/>
         <a href="#" class="icon"></a>
 
@@ -62,7 +72,7 @@
         </ul>
     </div>
     <div class="item fly">
-        <img src="${pageContext.request.contextPath}/resources/images/fly.png" alt="" width="75" height="75"
+        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_fly3.png" alt="" width="40" height="40"
              class="circle"/>
         <a href="#" class="icon"></a>
 
@@ -74,8 +84,8 @@
         </ul>
     </div>
     <div class="item fish">
-        <img src="${pageContext.request.contextPath}/resources/images/fish.png" alt="" width="75" height="75"
-             class="circle"/>
+        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_zebrafish.png" alt="" width="40"
+             height="40" class="circle"/>
         <a href="#" class="icon"></a>
 
         <h2>Danio Rerio</h2>
@@ -97,8 +107,8 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width':'200px',
-                        'height':'200px',
+                        'width':'80px',
+                        'height':'80px',
                         'top':'0px',
                         'left':'0px',
                         'opacity':'1.0'
@@ -112,8 +122,8 @@
                     var $this = $(this);
                     $this.find('ul').fadeOut(500);
                     $this.find('img').stop().animate({
-                        'width':'75px',
-                        'height':'75px',
+                        'width':'40px',
+                        'height':'40px',
                         'top':'0px',
                         'left':'0px',
                         'opacity':'1.0'

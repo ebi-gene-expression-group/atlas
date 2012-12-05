@@ -27,9 +27,23 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
+import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Properties;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Controller
-@Scope("request")
+@Scope("singleton")
 public class HomePageController {
 
     private class WordWrapper {
@@ -48,6 +62,55 @@ public class HomePageController {
             this.link = l;
         }
 
+    }
+
+    private ExperimentsCache experimentsCache;
+
+    private BarChartTradersCache barChartTradersCache;
+
+    @Inject
+    public HomePageController(@Named("configuration") Properties configurationProperties, ExperimentsCache experimentsCache, BarChartTradersCache barChartTradersCache) {
+        this.experimentsCache = experimentsCache;
+        this.barChartTradersCache = barChartTradersCache;
+        String dirTemplate = configurationProperties.getProperty("experiment.magetab.path.template");
+        File dataDir = new File(dirTemplate.substring(0, dirTemplate.indexOf("{0}")));
+        extractOrganismPartCounts(dataDir);
+    }
+
+    /**
+     * Gets all experiments in data directory and collates organism part counts into map
+     */
+    private Map<String, Integer> extractOrganismPartCounts(File dataDir) {
+
+        Map<String, Integer> counts = new HashMap<>();
+
+        // check mage-tab directory for its children
+        for (File file : dataDir.listFiles()) {
+            if (file.isDirectory() && !file.getName().startsWith(".")) {
+
+                // get experiment for directory name
+                Experiment experiment = checkNotNull(experimentsCache.getExperiment(file.getName()),
+                        "Experiment with identifier " + file.getName() + " not found.");
+
+                BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experiment.getExperimentAccession());
+
+                NavigableMap<Double, Integer> chartData = barchartTrader.getChart(experiment.getAllOrganismParts());
+
+                System.out.println(chartData);
+                /*
+               for (String organismPart : experiment.getAllOrganismParts()) {
+                   double expressionLevel = profile.getExpressionLevel(organismPart);
+                   if (expressionLevel > 0) {
+                       if (!counts.containsKey(organismPart))
+                           counts.put(organismPart, 0);
+                       counts.put(organismPart, counts.get(organismPart) + 1);
+                   }
+               } */
+
+            }
+        }
+
+        return counts;
     }
 
     @RequestMapping("/home")

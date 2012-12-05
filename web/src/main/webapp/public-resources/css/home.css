@@ -34,28 +34,28 @@
 }
 
 .human {
-    top: 135px;
-    left: 110px;
+    top: 185px;
+    left: 70px;
 }
 
 .mouse {
-    top: 60px;
-    left: 360px;
+    top: 110px;
+    left: 320px;
 }
 
 .rat {
-    top: 100px;
-    left: 625px;
+    top: 150px;
+    left: 585px;
 }
 
 .fly {
-    top: 240px;
-    left: 835px;
+    top: 290px;
+    left: 790px;
 }
 
 .fish {
-    top: 430px;
-    left: 950px;
+    top: 480px;
+    left: 900px;
 }
 
 a.icon {
@@ -75,8 +75,8 @@ a.icon {
     position: absolute;
     color: #222;
     font-size: 16px;
-    top: 0px;
-    left: 75px;
+    top: -10px;
+    left: 45px;
     text-shadow: 1px 1px 1px #fff;
     text-transform: uppercase;
 }
@@ -89,8 +89,8 @@ a.icon {
 .item ul {
     list-style: none;
     position: absolute;
-    top: 40px;
-    left: 25px;
+    top: 30px;
+    left: 20px;
     display: none;
 }
 
@@ -98,6 +98,7 @@ a.icon {
     font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
+    width: 100px;
     color: #222;
     padding: 3px;
     float: left;
