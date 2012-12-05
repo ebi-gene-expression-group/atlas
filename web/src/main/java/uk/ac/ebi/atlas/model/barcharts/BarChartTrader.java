@@ -121,13 +121,7 @@ public class BarChartTrader {
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 
-                int geneIndexPosition = 0;
-
-                GeneProfile geneProfile;
-
-                while((geneProfile = inputStream.readNext()) != null){
-                    addGeneToIndexes(geneProfile, geneIndexPosition++);
-                }
+                populateGeneExpressionIndexes(inputStream);
 
                 return this;
             } catch (IOException e) {
@@ -135,6 +129,16 @@ public class BarChartTrader {
                 throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
             }
 
+        }
+
+        protected void populateGeneExpressionIndexes(ObjectInputStream<GeneProfile> inputStream) {
+            int geneIndexPosition = 0;
+
+            GeneProfile geneProfile;
+
+            while ((geneProfile = inputStream.readNext()) != null) {
+                addGeneToIndexes(geneProfile, geneIndexPosition++);
+            }
         }
 
         protected void addGeneToIndexes(GeneProfile geneProfile, int geneIndexPosition) {
@@ -179,12 +183,12 @@ public class BarChartTrader {
         }
 
 
-       protected void trimIndexes() {
+        protected void trimIndexes() {
 
             Set<Double> doubles = Sets.newHashSet(geneExpressionIndexes.keySet());
             for (Double scaledCutoff : doubles) {
 
-                if (countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), null) < 50){
+                if (countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), null) < 50) {
                     geneExpressionIndexes.remove(scaledCutoff);
                 }
 
@@ -192,6 +196,13 @@ public class BarChartTrader {
 
         }
 
+        protected void setOrganismParts(Set<String> organismParts) {
+            this.organismParts = organismParts;
+        }
+
+        protected NavigableMap<Double, Map<String, BitSet>> getGeneExpressionIndexes() {
+            return geneExpressionIndexes;
+        }
     }
 
 }
