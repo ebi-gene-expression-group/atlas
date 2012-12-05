@@ -27,6 +27,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Min;
@@ -62,8 +63,12 @@ public class RequestPreferences {
     private NumberUtils numberUtils = new NumberUtils();
 
     @Inject
-    public RequestPreferences(ApplicationProperties properties) {
+    public void setApplicationProperties(ApplicationProperties properties) {
         this.properties = properties;
+    }
+
+    @PostConstruct
+    public void init() {
         cutoff = properties.getDefaultCutoff();
     }
 

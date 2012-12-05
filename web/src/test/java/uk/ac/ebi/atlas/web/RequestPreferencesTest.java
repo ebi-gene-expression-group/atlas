@@ -47,7 +47,8 @@ public class RequestPreferencesTest {
     @Before
     public void setUp() throws Exception {
         when(properties.getDefaultCutoff()).thenReturn(0.5);
-        subject = new RequestPreferences(properties);
+        subject = new RequestPreferences();
+        subject.setApplicationProperties(properties);
     }
 
     @Test
