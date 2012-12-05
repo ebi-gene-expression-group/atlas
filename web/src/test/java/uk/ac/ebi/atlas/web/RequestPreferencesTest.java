@@ -31,7 +31,6 @@ import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RequestPreferencesTest {
@@ -41,14 +40,9 @@ public class RequestPreferencesTest {
     @Mock
     private NumberUtils numberUtilsMock;
 
-    @Mock
-    private ApplicationProperties properties;
-
     @Before
     public void setUp() throws Exception {
-        when(properties.getDefaultCutoff()).thenReturn(0.5);
         subject = new RequestPreferences();
-        subject.setApplicationProperties(properties);
     }
 
     @Test

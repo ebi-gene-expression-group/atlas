@@ -27,8 +27,6 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -39,10 +37,8 @@ import java.util.SortedSet;
 public class RequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
-
+    static final double DEFAULT_CUTOFF = 0.5d;
     private static final String DEFAULT_GENE_QUERY_STRING = "protein_coding";
-
-    private ApplicationProperties properties;
 
     @NotNull
     @Range(min = 0, max = 1000)
@@ -50,7 +46,7 @@ public class RequestPreferences {
 
     @NotNull
     @Min(0)
-    private Double cutoff = 0.0;
+    private Double cutoff = DEFAULT_CUTOFF;
 
     private SortedSet<String> organismParts;
 
@@ -61,16 +57,6 @@ public class RequestPreferences {
     private boolean displayGeneDistribution;
 
     private NumberUtils numberUtils = new NumberUtils();
-
-    @Inject
-    public void setApplicationProperties(ApplicationProperties properties) {
-        this.properties = properties;
-    }
-
-    @PostConstruct
-    public void init() {
-        cutoff = properties.getDefaultCutoff();
-    }
 
     public SortedSet<String> getOrganismParts() {
         return organismParts;
@@ -97,7 +83,7 @@ public class RequestPreferences {
     }
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = cutoff != null ? numberUtils.round(cutoff) : properties.getDefaultCutoff();
+        this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
     }
 
     public void setDisplayLevels(boolean displayLevels) {
