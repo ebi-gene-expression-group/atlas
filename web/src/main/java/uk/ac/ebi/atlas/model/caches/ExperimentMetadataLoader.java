@@ -37,6 +37,7 @@ import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
+import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,12 +54,15 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private AnalysisMethodsTsvReader analysisMethodsTsvReader;
 
+    private ArrayExpressClient arrayExpressClient;
+
     @Inject
     public ExperimentMetadataLoader(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfFileUrlTemplate
-            , AnalysisMethodsTsvReader analysisMethodsTsvReader){
+            , AnalysisMethodsTsvReader analysisMethodsTsvReader, ArrayExpressClient arrayExpressClient){
+
         this.idfFileUrlTemplate = idfFileUrlTemplate;
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
-
+        this.arrayExpressClient = arrayExpressClient;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
-        Experiment experiment = new Experiment(experimentAccession, investigation.IDF.experimentDescription
+        Experiment experiment = new Experiment(experimentAccession, arrayExpressClient.fetchExperimentName(experimentAccession)
                 , getExperimentRunAccessions(experimentAccession));
 
         ScanNode firstNode = scanNodes.iterator().next();

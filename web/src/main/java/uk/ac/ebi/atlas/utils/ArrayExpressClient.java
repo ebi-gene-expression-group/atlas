@@ -20,7 +20,6 @@ import java.io.StringReader;
 public class ArrayExpressClient {
     private static final Logger logger = Logger.getLogger(ArrayExpressClient.class);
     private static final String EXPERIMENT_NAME_XPATH = "//experiment/name/text()";
-    private static final String EXPERIMENT_ASSAYS_XPATH = "//experiment/assays/text()";
 
     private RestTemplate restTemplate;
 
@@ -44,7 +43,7 @@ public class ArrayExpressClient {
         try {
             Builder parser = new Builder();
             Document doc = parser.build(new StringReader(experimentXML));
-            return buildFullName(parseValue(doc, EXPERIMENT_NAME_XPATH), parseValue(doc, EXPERIMENT_ASSAYS_XPATH));
+            return parseValue(doc, EXPERIMENT_NAME_XPATH);
 
         } catch (ParsingException | IOException ex) {
             throw new IllegalStateException("Cannot access ArrayExpress", ex);
@@ -58,13 +57,4 @@ public class ArrayExpressClient {
         return nodes.get(0).getValue();
     }
 
-    private String buildFullName(String name, String assayNumber) {
-        StringBuilder sb = new StringBuilder();
-        return sb.append(name)
-                .append(" (")
-                .append(assayNumber)
-                .append(" assays)")
-                .toString();
-
-    }
 }

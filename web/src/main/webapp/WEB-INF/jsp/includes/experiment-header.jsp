@@ -8,7 +8,7 @@
                 </div>
             </td>
             <td>
-                <div style="font-weight: bold;">
+                <div id="experimentDescription" style="font-weight: bold;">
                     ${experimentDescription}
                 </div>
                 <div>Organism: ${specie} - <a href="experiments/${experimentAccession}-analysis-methods">Analysis

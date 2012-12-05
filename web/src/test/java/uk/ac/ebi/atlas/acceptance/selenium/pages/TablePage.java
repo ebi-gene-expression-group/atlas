@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,9 @@ abstract class TablePage extends AtlasPage {
     private static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
     private static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
     private static final String TABLE_HEADERS_XPATH = "thead/tr/th";
+
+    @FindBy(id = "experimentDescription")
+    private WebElement experimentDescription;
 
     TablePage(WebDriver driver) {
         super(driver);
@@ -125,4 +129,8 @@ abstract class TablePage extends AtlasPage {
             return tableCell.getText();
         }
     };
+
+    public String getExperimentDescription() {
+        return experimentDescription.getText();
+    }
 }
