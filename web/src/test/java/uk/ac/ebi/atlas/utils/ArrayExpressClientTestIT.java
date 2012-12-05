@@ -31,6 +31,6 @@ public class ArrayExpressClientTestIT {
     @Test
     public void testFetchExperimentName() throws Exception {
         String result = subject.fetchExperimentName(EXPERIMENT_ACC);
-        assertThat(result, is("RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map) (48 assays)"));
+        assertThat(result, is("RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)"));
     }
 }

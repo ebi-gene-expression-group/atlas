@@ -45,7 +45,7 @@ public class MageTabInvestigationTest {
     @Before
     public void initSubject() throws Exception {
 
-        subject = new ExperimentMetadataLoader(MAGE_TAB_URL_TEMPLATE, analysisMethodsTsvReaderMock){
+        subject = new ExperimentMetadataLoader(MAGE_TAB_URL_TEMPLATE, analysisMethodsTsvReaderMock, null){
             @Override
             MAGETABInvestigation parseInvestigation(URL idfFileURL) {
                 return investigationMock;
