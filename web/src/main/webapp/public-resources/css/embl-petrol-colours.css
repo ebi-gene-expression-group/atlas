@@ -1,0 +1,255 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+/*
+
+	Colour palette: EMBL Petrol
+	Details: Accented Analogic from ColourSchemeDesigner
+	         http://colorschemedesigner.com/#3i61TnBpxw0w0
+
+*/
+
+/* Color
+===================================================*/
+
+div#topbar {
+    background-color: #207a7a;
+    border-bottom: 1px solid #222;
+}
+
+div#headerdiv a:link,
+div#footerdiv a:link {
+    color: #0f2559;
+}
+
+div#headerdiv a:hover,
+div#footerdiv a:hover,
+div#headerdiv a:focus,
+div#footerdiv a:focus,
+div#headerdiv a:active,
+div#footerdiv a:active {
+    color: #0e6a0e;
+}
+
+div#headerdiv h1,
+div#footerdiv h1,
+div#headerdiv h2,
+div#footerdiv h2,
+div#headerdiv h3,
+div#footerdiv h3,
+div#headerdiv h4,
+div#footerdiv h4,
+div#headerdiv h5,
+div#footerdiv h5,
+div#headerdiv h6,
+div#footerdiv h6 {
+    color: #222222;
+}
+
+div#headerdiv h1,
+div#footerdiv h1 {
+    color: #f7f7f7;
+}
+
+div#headerdiv h2,
+div#footerdiv h2 {
+    color: #207a7a;
+}
+
+div#headerdiv h3,
+div#footerdiv h3 {
+    color: #996a44;
+}
+
+div#headerdiv th,
+div#footerdiv th {
+    background-color: #70BDBD; /* #2ba32b; */
+    background-color: rgba(112, 189, 189, 0.5);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#70BDBD', EndColorStr = '#70BDBD');
+}
+
+div#headerdiv a.special,
+div#footerdiv a.special {
+    background-color: #7cd17c;
+}
+
+div#headerdiv form input.submit,
+div#footerdiv form input.submit {
+    border-color: #295c5c; /* P2 */
+
+    background-color: #207a7a; /* colour P1 */
+    background-image: -moz-linear-gradient(top, #54bdbd, #207a7a);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #54bdbd), color-stop(1, #207a7a));
+    background-image: -webkit-linear-gradient(#54bdbd, #207a7a);
+    background-image: linear-gradient(top, #54bdbd, #207a7a);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#54bdbd', EndColorStr = '#207a7a');
+
+    color: #f8f8f8;
+    text-shadow: #145251 0 1px 1px;
+}
+
+div#headerdiv form input.submit:hover,
+div#footerdiv form input.submit:hover,
+div#headerdiv form input.submit:focus,
+div#footerdiv form input.submit:focus,
+div#headerdiv form input.submit:active,
+div#footerdiv form input.submit:active {
+    background: #207a7a;
+}
+
+div#headerdiv div.box,
+div#footerdiv div.box {
+    border: 10px solid #7cd17c;
+}
+
+div#local-masthead {
+    background-color: #70BDBD;
+}
+
+/* For use on the EBI homepage... */
+div#local-masthead.gradient {
+    background-color: #70bdbd;
+    background-image: -moz-linear-gradient(top, #70bdbd, #9adede);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #70bdbd), color-stop(1, #9adede));
+    background-image: -webkit-linear-gradient(#70bdbd, #9adede);
+    background-image: linear-gradient(top, #70bdbd, #9adede);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#70bdbd', EndColorStr = '#9adede');
+
+}
+
+/* Colour the faux-underline for local menu items */
+div#local-masthead ul li a:hover,
+div#local-masthead ul li a:focus,
+div#local-masthead ul li a:active {
+    border-bottom: 3px solid #207A7A;
+}
+
+/* testing masthead combos */
+/* div#local { background-color: #70bdbd; } */
+
+div#mastheads div#local h1 {
+    color: #222;
+}
+
+/* Palette color codes */
+
+div#headerdiv .primary-1,
+div#footerdiv .primary-1 {
+    background-color: #207A7A
+}
+
+div#headerdiv .primary-2,
+div#footerdiv .primary-2 {
+    background-color: #295C5C
+}
+
+div#headerdiv .primary-3,
+div#footerdiv .primary-3 {
+    background-color: #0A4F4F
+}
+
+div#headerdiv .primary-4,
+div#footerdiv .primary-4 {
+    background-color: #54BDBD
+}
+
+div#headerdiv .primary-5,
+div#footerdiv .primary-5 {
+    background-color: #70BDBD
+}
+
+div#headerdiv .secondary-a-1,
+div#footerdiv .secondary-a-1 {
+    background-color: #2E4988
+}
+
+div#headerdiv .secondary-a-2,
+div#footerdiv .secondary-a-2 {
+    background-color: #344366
+}
+
+div#headerdiv .secondary-a-3,
+div#footerdiv .secondary-a-3 {
+    background-color: #0F2559
+}
+
+div#headerdiv .secondary-a-4,
+div#footerdiv .secondary-a-4 {
+    background-color: #6380C4
+}
+
+div#headerdiv .secondary-a-5,
+div#footerdiv .secondary-a-5 {
+    background-color: #7D92C4
+}
+
+div#headerdiv .secondary-b-1,
+div#footerdiv .secondary-b-1 {
+    background-color: #2BA32B
+}
+
+div#headerdiv .secondary-b-2,
+div#footerdiv .secondary-b-2 {
+    background-color: #377A37
+}
+
+div#headerdiv .secondary-b-3,
+div#footerdiv .secondary-b-3 {
+    background-color: #0E6A0E
+}
+
+div#headerdiv .secondary-b-4,
+div#footerdiv .secondary-b-4 {
+    background-color: #5DD15D
+}
+
+div#headerdiv .secondary-b-5,
+div#footerdiv .secondary-b-5 {
+    background-color: #7CD17C
+}
+
+div#headerdiv .complement-1,
+div#footerdiv .complement-1 {
+    background-color: #CB7935
+}
+
+div#headerdiv .complement-2,
+div#footerdiv .complement-2 {
+    background-color: #996A44
+}
+
+div#headerdiv .complement-3,
+div#footerdiv .complement-3 {
+    background-color: #844511
+}
+
+div#headerdiv .complement-4,
+div#footerdiv .complement-4 {
+    background-color: #E5A066
+}
+
+div#headerdiv .complement-5,
+div#footerdiv .complement-5 {
+    background-color: #E5B288
+}
+
+/* end */
