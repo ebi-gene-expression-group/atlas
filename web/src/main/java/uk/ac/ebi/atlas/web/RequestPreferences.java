@@ -27,6 +27,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -37,8 +38,10 @@ import java.util.SortedSet;
 public class RequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
-    static final double DEFAULT_CUTOFF = 0.5d;
+
     private static final String DEFAULT_GENE_QUERY_STRING = "protein_coding";
+
+    private ApplicationProperties properties;
 
     @NotNull
     @Range(min = 0, max = 1000)
@@ -46,7 +49,7 @@ public class RequestPreferences {
 
     @NotNull
     @Min(0)
-    private Double cutoff = DEFAULT_CUTOFF;
+    private Double cutoff = 0.0;
 
     private SortedSet<String> organismParts;
 
@@ -57,6 +60,12 @@ public class RequestPreferences {
     private boolean displayGeneDistribution;
 
     private NumberUtils numberUtils = new NumberUtils();
+
+    @Inject
+    public RequestPreferences(ApplicationProperties properties) {
+        this.properties = properties;
+        cutoff = properties.getDefaultCutoff();
+    }
 
     public SortedSet<String> getOrganismParts() {
         return organismParts;
@@ -83,7 +92,7 @@ public class RequestPreferences {
     }
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
+        this.cutoff = cutoff != null ? numberUtils.round(cutoff) : properties.getDefaultCutoff();
     }
 
     public void setDisplayLevels(boolean displayLevels) {
@@ -106,7 +115,7 @@ public class RequestPreferences {
         this.geneQuery = geneQuery;
     }
 
-    public String toString(){
+    public String toString() {
         return Objects.toStringHelper(this.getClass())
                 .add("geneQuery", geneQuery)
                 .add("organismParts", organismParts)

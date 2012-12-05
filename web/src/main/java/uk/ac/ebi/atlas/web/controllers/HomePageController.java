@@ -31,14 +31,12 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -64,6 +62,8 @@ public class HomePageController {
 
     }
 
+    private ApplicationProperties properties;
+
     private ExperimentsCache experimentsCache;
 
     private BarChartTradersCache barChartTradersCache;
@@ -71,51 +71,48 @@ public class HomePageController {
     private Map<String, Double> counts;
 
     @Inject
-    public HomePageController(@Named("configuration") Properties configurationProperties, ExperimentsCache experimentsCache, BarChartTradersCache barChartTradersCache) {
+    public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache, BarChartTradersCache barChartTradersCache) {
+        this.properties = properties;
         this.experimentsCache = experimentsCache;
         this.barChartTradersCache = barChartTradersCache;
-        String dirTemplate = configurationProperties.getProperty("experiment.magetab.path.template");
-        File dataDir = new File(dirTemplate.substring(0, dirTemplate.indexOf("{0}")));
-        extractOrganismPartCounts(dataDir);
+        extractOrganismPartCounts();
     }
 
     /**
      * Gets all experiments in data directory and collates organism part percentage into map
      */
-    private void extractOrganismPartCounts(File dataDir) {
+    private void extractOrganismPartCounts() {
 
         counts = new HashMap<>();
 
         int totalNumberExperiments = 0;
 
         // check mage-tab directory for its children
-        for (File file : dataDir.listFiles()) {
-            if (file.isDirectory() && !file.getName().startsWith(".")) {
+        for (String expAcc : properties.getExperimentIdentifiers()) {
 
-                // get experiment for directory name
-                Experiment experiment = checkNotNull(experimentsCache.getExperiment(file.getName()),
-                        "Experiment with identifier " + file.getName() + " not found.");
-                totalNumberExperiments++;
+            // get experiment for directory name
+            Experiment experiment = checkNotNull(experimentsCache.getExperiment(expAcc),
+                    "Experiment with identifier " + expAcc + " not found.");
+            totalNumberExperiments++;
 
-                BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experiment.getExperimentAccession());
+            BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experiment.getExperimentAccession());
 
-                int totalNumberGenes = 0;
-                Map<String, Integer> genesPerOrganismPart = new HashMap<>();
-                for (String organismPart : experiment.getAllOrganismParts()) {
-                    int count = barchartTrader.getGeneCountsForOrganismPart(organismPart, 0.5);
-                    totalNumberGenes += count;
-                    if (!genesPerOrganismPart.containsKey(organismPart))
-                        genesPerOrganismPart.put(organismPart, 0);
-                    genesPerOrganismPart.put(organismPart, genesPerOrganismPart.get(organismPart) + count);
-                }
+            int totalNumberGenes = 0;
+            Map<String, Integer> genesPerOrganismPart = new HashMap<>();
+            for (String organismPart : experiment.getAllOrganismParts()) {
+                int count = barchartTrader.getGeneCountsForOrganismPart(organismPart, properties.getDefaultCutoff());
+                totalNumberGenes += count;
+                if (!genesPerOrganismPart.containsKey(organismPart))
+                    genesPerOrganismPart.put(organismPart, 0);
+                genesPerOrganismPart.put(organismPart, genesPerOrganismPart.get(organismPart) + count);
+            }
 
-                // normalise counts as percentage per experiment and sum across all experiments
-                for (String organismPart : genesPerOrganismPart.keySet()) {
-                    if (!counts.containsKey(organismPart))
-                        counts.put(organismPart, 0.0);
-                    counts.put(organismPart, counts.get(organismPart) +
-                            (double) genesPerOrganismPart.get(organismPart) / totalNumberGenes);
-                }
+            // normalise counts as percentage per experiment and sum across all experiments
+            for (String organismPart : genesPerOrganismPart.keySet()) {
+                if (!counts.containsKey(organismPart))
+                    counts.put(organismPart, 0.0);
+                counts.put(organismPart, counts.get(organismPart) +
+                        (double) genesPerOrganismPart.get(organismPart) / totalNumberGenes);
             }
         }
 
