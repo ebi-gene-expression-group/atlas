@@ -28,8 +28,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
@@ -66,15 +64,12 @@ public class HomePageController {
 
     private ExperimentsCache experimentsCache;
 
-    private BarChartTradersCache barChartTradersCache;
-
     private Map<String, Double> counts;
 
     @Inject
-    public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache, BarChartTradersCache barChartTradersCache) {
+    public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
         this.properties = properties;
         this.experimentsCache = experimentsCache;
-        this.barChartTradersCache = barChartTradersCache;
         extractOrganismPartCounts();
     }
 
@@ -95,24 +90,12 @@ public class HomePageController {
                     "Experiment with identifier " + expAcc + " not found.");
             totalNumberExperiments++;
 
-            BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experiment.getExperimentAccession());
-
-            int totalNumberGenes = 0;
-            Map<String, Integer> genesPerOrganismPart = new HashMap<>();
+            // count per experiment and sum across all experiments
             for (String organismPart : experiment.getAllOrganismParts()) {
-                int count = barchartTrader.getGeneCountsForOrganismPart(organismPart, properties.getDefaultCutoff());
-                totalNumberGenes += count;
-                if (!genesPerOrganismPart.containsKey(organismPart))
-                    genesPerOrganismPart.put(organismPart, 0);
-                genesPerOrganismPart.put(organismPart, genesPerOrganismPart.get(organismPart) + count);
-            }
-
-            // normalise counts as percentage per experiment and sum across all experiments
-            for (String organismPart : genesPerOrganismPart.keySet()) {
                 if (!counts.containsKey(organismPart))
                     counts.put(organismPart, 0.0);
                 counts.put(organismPart, counts.get(organismPart) +
-                        (double) genesPerOrganismPart.get(organismPart) / totalNumberGenes);
+                        1.0);
             }
         }
 

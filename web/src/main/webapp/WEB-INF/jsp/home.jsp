@@ -20,19 +20,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<table>
-    <tr>
-        <td>
-            <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
-                 alt="Expression Atlas Logo"/>
-        </td>
-        <td>
-            <h2>Baseline Gene Expression Atlas</h2>
-        </td>
-    </tr>
-</table>
-
-<div id="wordcloud" style="width: 550px; height: 350px; position:absolute; top: 230px; left:160px;"></div>
+<div id="wordcloud" style="width: 550px; height: 350px; position:absolute; top: 180px; left:130px;"></div>
 
 <div class="navigation" id="nav">
     <div class="item human">
@@ -43,8 +31,6 @@
         <h2>Homo Sapiens</h2>
         <ul>
             <li><a href="experiments/E-MTAB-513">E-MTAB-513</a></li>
-            <li><a href="#">Test2</a></li>
-            <li><a href="#">Test3</a></li>
         </ul>
     </div>
     <div class="item mouse">
@@ -55,11 +41,9 @@
         <h2>Mus Musculus</h2>
         <ul>
             <li><a href="experiments/E-MTAB-599">E-MTAB-599</a></li>
-            <li><a href="#">Test2</a></li>
-            <li><a href="#">Test3</a></li>
         </ul>
     </div>
-    <div class="item rat">
+    <!--<div class="item rat">
         <img src="${pageContext.request.contextPath}/resources/images/SPECIES_rat.png" alt="" width="40" height="40"
              class="circle"/>
         <a href="#" class="icon"></a>
@@ -94,7 +78,7 @@
             <li><a href="#">Test2</a></li>
             <li><a href="#">Test3</a></li>
         </ul>
-    </div>
+    </div>-->
 </div>
 </div>
 
@@ -107,8 +91,8 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width':'80px',
-                        'height':'80px',
+                        'width':'60px',
+                        'height':'60px',
                         'top':'0px',
                         'left':'0px',
                         'opacity':'1.0'
