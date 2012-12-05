@@ -74,6 +74,15 @@ public class BarChartTrader {
         return barChartPoints;
     }
 
+    /**
+     * Returns number of genes expressed for a given organism part above a cutoff
+     */
+    public int getGeneCountsForOrganismPart(String organismPart, double scaledCutoff) {
+        Map<String, BitSet> geneBitSets = geneExpressionIndexes.get(scaledCutoff);
+        if (geneBitSets != null && geneBitSets.containsKey(organismPart))
+            return geneBitSets.get(organismPart).cardinality();
+        return 0;
+    }
 
     protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedOrganismParts) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);

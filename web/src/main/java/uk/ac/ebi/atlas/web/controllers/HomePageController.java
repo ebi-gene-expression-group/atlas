@@ -35,9 +35,9 @@ import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Properties;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -68,6 +68,8 @@ public class HomePageController {
 
     private BarChartTradersCache barChartTradersCache;
 
+    private Map<String, Double> counts;
+
     @Inject
     public HomePageController(@Named("configuration") Properties configurationProperties, ExperimentsCache experimentsCache, BarChartTradersCache barChartTradersCache) {
         this.experimentsCache = experimentsCache;
@@ -78,11 +80,13 @@ public class HomePageController {
     }
 
     /**
-     * Gets all experiments in data directory and collates organism part counts into map
+     * Gets all experiments in data directory and collates organism part percentage into map
      */
-    private Map<String, Integer> extractOrganismPartCounts(File dataDir) {
+    private void extractOrganismPartCounts(File dataDir) {
 
-        Map<String, Integer> counts = new HashMap<>();
+        counts = new HashMap<>();
+
+        int totalNumberExperiments = 0;
 
         // check mage-tab directory for its children
         for (File file : dataDir.listFiles()) {
@@ -91,84 +95,50 @@ public class HomePageController {
                 // get experiment for directory name
                 Experiment experiment = checkNotNull(experimentsCache.getExperiment(file.getName()),
                         "Experiment with identifier " + file.getName() + " not found.");
+                totalNumberExperiments++;
 
                 BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experiment.getExperimentAccession());
 
-                NavigableMap<Double, Integer> chartData = barchartTrader.getChart(experiment.getAllOrganismParts());
+                int totalNumberGenes = 0;
+                Map<String, Integer> genesPerOrganismPart = new HashMap<>();
+                for (String organismPart : experiment.getAllOrganismParts()) {
+                    int count = barchartTrader.getGeneCountsForOrganismPart(organismPart, 0.5);
+                    totalNumberGenes += count;
+                    if (!genesPerOrganismPart.containsKey(organismPart))
+                        genesPerOrganismPart.put(organismPart, 0);
+                    genesPerOrganismPart.put(organismPart, genesPerOrganismPart.get(organismPart) + count);
+                }
 
-                System.out.println(chartData);
-                /*
-               for (String organismPart : experiment.getAllOrganismParts()) {
-                   double expressionLevel = profile.getExpressionLevel(organismPart);
-                   if (expressionLevel > 0) {
-                       if (!counts.containsKey(organismPart))
-                           counts.put(organismPart, 0);
-                       counts.put(organismPart, counts.get(organismPart) + 1);
-                   }
-               } */
-
+                // normalise counts as percentage per experiment and sum across all experiments
+                for (String organismPart : genesPerOrganismPart.keySet()) {
+                    if (!counts.containsKey(organismPart))
+                        counts.put(organismPart, 0.0);
+                    counts.put(organismPart, counts.get(organismPart) +
+                            (double) genesPerOrganismPart.get(organismPart) / totalNumberGenes);
+                }
             }
         }
 
-        return counts;
+        // normalise for total number of experiments
+        for (String organismPart : counts.keySet()) {
+            counts.put(organismPart, counts.get(organismPart) / totalNumberExperiments);
+        }
     }
 
     @RequestMapping("/home")
     public String get(Model model) {
 
-        // this could be extracted from database
-        WordWrapper[] array = new WordWrapper[]{
+        ArrayList<WordWrapper> wordList = new ArrayList<>();
 
-                new WordWrapper("Homo sapiens", 13, "experiments/E-MTAB-513"),
-                new WordWrapper("Mus musculus", 10.5, "experiments/E-MTAB-599"),
-                new WordWrapper("Dolor", 9.4),
-                new WordWrapper("Sit", 8),
-                new WordWrapper("Amet", 6.2),
-                new WordWrapper("Consectetur", 5),
-                new WordWrapper("Adipiscing", 5),
-                new WordWrapper("Elit", 5),
-                new WordWrapper("Nam et", 5),
-                new WordWrapper("Leo", 4),
-                new WordWrapper("ArrayExpress", 4, "http://www.ebi.ac.uk/arrayexpress"),
-                new WordWrapper("Pellentesque", 3),
-                new WordWrapper("habitant", 3),
-                new WordWrapper("morbi", 3),
-                new WordWrapper("tristisque", 3),
-                new WordWrapper("senectus", 3),
-                new WordWrapper("et netus", 3),
-                new WordWrapper("et malesuada", 3),
-                new WordWrapper("fames", 2),
-                new WordWrapper("ac turpis", 2),
-                new WordWrapper("egestas", 2),
-                new WordWrapper("Aenean", 2),
-                new WordWrapper("vestibulum", 2),
-                new WordWrapper("elit", 2),
-                new WordWrapper("sit amet", 2),
-                new WordWrapper("metus", 2),
-                new WordWrapper("adipiscing", 2),
-                new WordWrapper("ut ultrices", 2),
-                new WordWrapper("justo", 1),
-                new WordWrapper("dictum", 1),
-                new WordWrapper("Ut et leo", 1),
-                new WordWrapper("metus", 1),
-                new WordWrapper("at molestie", 1),
-                new WordWrapper("purus", 1),
-                new WordWrapper("Curabitur", 1),
-                new WordWrapper("diam", 1),
-                new WordWrapper("dui", 1),
-                new WordWrapper("ullamcorper", 1),
-                new WordWrapper("id vuluptate ut", 1),
-                new WordWrapper("mattis", 1),
-                new WordWrapper("et nulla", 1),
-                new WordWrapper("Sed", 1)
-
-        };
+        for (String organismPart : counts.keySet()) {
+            wordList.add(new WordWrapper(organismPart, counts.get(organismPart)));
+        }
 
         // does the serialisation to JSON
         Gson gson = new Gson();
 
         // add data to model
-        model.addAttribute("wordlist", gson.toJson(array));
+        model.addAttribute("wordlist", gson.toJson(wordList));
 
         return "home";
     }
