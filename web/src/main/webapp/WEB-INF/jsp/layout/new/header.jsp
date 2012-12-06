@@ -19,94 +19,41 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="headerdiv" id="headerdiv">
-    <header>
+    <div class="header">
         <div id="global-masthead" class="masthead grid_24">
-            <!-- <p>EMBL-EBI &diams;</p> -->
-            <p id="logo">
-                <!--This has to be one line and no newline characters-->
-                <a href="" title="Go to the EMBL-EBI homepage">
-                    <img src="${pageContext.request.contextPath}/resources/images/logo.png"
-                         alt="European Bioinformatics Institute">
-                </a>
-            </p>
+            <!--This has to be one line and no newline characters-->
+            <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img
+                    src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"
+                    alt="EMBL European Bioinformatics Institute"/></a>
 
-            <nav>
+            <div class="nav">
                 <ul id="global-nav">
-                    <li class="first" id="services">
-                        <a href="/services" title="">Services</a>
-                    </li>
-                    <li id="research">
-                        <a href="/research" title="">Research</a>
-                    </li>
-                    <li id="training">
-                        <a href="/training" title="">Training</a>
-                    </li>
-                    <li id="funding">
-                        <a href="/funding" title="">Funding</a>
-                    </li>
-                    <li id="about" class="last">
-                        <a href="/about-us" title="">About us</a>
-                    </li>
+                    <!-- set active class as appropriate -->
+                    <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
+                    <li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
+                    <li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
+                    <li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
+                    <li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
                 </ul>
-            </nav>
+            </div>
         </div>
 
-        <div id="local-masthead" class="masthead grid_24 _nomenu">
+        <div id="local-masthead" class="masthead grid_24">
 
-            <!-- CHOOSE -->
+            <!-- local-title -->
+            <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
 
-            <div class="grid_12 alpha" id="local-title-logo">
-
-                <h1>[Title]</h1>
-
-                <p class="grid_">
-                    <a href="${pageContext.request.contextPath}" title="Home" style="border:none">
-                        <img src="${pageContext.request.contextPath}/resources/images/ATLAS_web.png"
-                             alt="Gene Expression Atlas" class="logo">
-                    </a>
-                    <!--
-                    <span class="strapline">[Strapline]</span>
-                    -->
-                </p>
-
+            <div class="logo-title" id="local-title">
+                <a href="/gxa" title="Back to Expression Atlas homepage">
+                    <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
+                         alt="Expression Atlas logo" width="64" height="64">
+                </a><span><h1>Expression Atlas</h1></span>
             </div>
 
+            <!-- /local-title -->
 
-            <!-- OR... -->
-
-            <!--
-                <div class="grid_12 alpha" id="local-title">
-                    <h1>[Title]</h1>
-                </div>
-            -->
-            <!-- -->
-            <!--
-            <div class="grid_12 omega">
-                <form id="local-search" name="local-search" action="#" method="post">
-
-                    <fieldset>
-
-                        <label>
-                            <input type="text" name="first" id="local-searchbox">
-                        </label>
-
-                        <input type="submit" name="submit" value="Search" class="submit">
-                    </fieldset>
-
-                </form>
-            </div>
-            -->
-            <nav>
-                <ul class="grid_24" id="local-nav">
-                    <li class="first"><a href="${pageContext.request.contextPath}" title="">Home</a></li>
-                    <li class="last"><a id="feedback-link" href="#">Feedback</a></li>
-                </ul>
-
-            </nav>
         </div>
-    </header>
+    </div>
 </div>

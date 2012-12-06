@@ -20,9 +20,9 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<div id="wordcloud" style="width: 550px; height: 350px; position:absolute; top: 180px; left:130px;"></div>
+<div id="wordcloud" style="width: 550px; height: 350px; position:relative; top: 180px; left:130px;"></div>
 
-<div class="navigation" id="nav">
+<div class="navigation" id="nav" style="width: 550px; height: 200px;">
     <div class="item human">
         <img src="${pageContext.request.contextPath}/resources/images/SPECIES_man.png" alt="" width="40" height="40"
              class="circle"/>

@@ -21,98 +21,50 @@
   --%>
 
 <div class="footerdiv" id="footerdiv">
-    <footer>
+    <div class="footer">
         <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
         <!--
         <div id="local-footer" class="grid_24 clearfix">
-
         </div>
         -->
         <!-- End optional local footer -->
 
         <div id="global-footer" class="grid_24 clearfix">
+            <div class="nav" id="global-nav-expanded">
+                <div class="grid_4 alpha">
+                    <h3 class="embl-ebi"><a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage">EMBL-EBI</a>
+                    </h3>
+                </div>
 
-            <section id="global-nav-expanded">
-                <div class="grid_4 alpha"><h3 class="explore">Explore</h3>
-                    <ul>
-                        <li class="first"><a href="#" title="">News</a></li>
-                        <li><a href="#">Publications</a></li>
-                        <li><a href="#">Blogs</a></li>
-                        <li><a href="#">RSS feeds</a></li>
-                        <li class="last"><a href="#">Stories</a></li>
-                    </ul>
+                <div class="grid_4">
+                    <h3 class="services"><a href="//www.ebi.ac.uk/services">Services</a></h3>
                 </div>
-                <div class="grid_4"><h3 class="services"><a href="#" title="">Services</a></h3>
-                    <ul>
-                        <li class="first"><a href="#" title="">By topic</a></li>
-                        <li><a href="#">By name (A-Z)</a></li>
-                        <li class="last"><a href="#">Get help</a></li>
-                    </ul>
+
+                <div class="grid_4">
+                    <h3 class="research"><a href="//www.ebi.ac.uk/research">Research</a></h3>
                 </div>
-                <div class="grid_4"><h3 class="research"><a href="#" title="">Research</a></h3>
-                    <ul>
-                        <li class="first"><a href="#">Overview</a></li>
-                        <li><a href="#">Research groups</a></li>
-                        <li><a href="#">Publications</a></li>
-                        <li class="last"><a href="#">Postdocs &amp; PhDs</a></li>
-                    </ul>
+
+                <div class="grid_4">
+                    <h3 class="training"><a href="//www.ebi.ac.uk/training">Training</a></h3>
                 </div>
-                <div class="grid_4"><h3 class="training"><a href="#" title="">Training</a></h3>
-                    <ul>
-                        <li class="first"><a href="#">Train online</a></li>
-                        <li><a href="#">Hands-on courses</a></li>
-                        <li><a href="#">Events on campus</a></li>
-                        <li><a href="#">Bioinformatics Roadshow</a></li>
-                        <li class="last"><a href="#">Contact organisers</a></li>
-                    </ul>
+
+                <div class="grid_4">
+                    <h3 class="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></h3>
                 </div>
-                <div class="grid_4"><h3 class="funding"><a href="#" title="">Funding</a></h3>
-                    <ul>
-                        <li class="first"><a href="#">How we are funded</a></li>
-                        <li><a href="#">How money is spent</a></li>
-                        <li class="last"><a href="#">Fund our work</a></li>
-                    </ul>
+
+                <div class="grid_4 omega">
+                    <h3 class="about"><a href="//www.ebi.ac.uk/about">About us</a></h3>
                 </div>
-                <div class="grid_4 omega"><h3 class="about"><a href="#" title="">About us</a></h3>
-                    <ul>
-                        <li class="first"><a href="#">Overview</a></li>
-                        <li><a href="#">History</a></li>
-                        <li><a href="#">People</a></li>
-                        <li><a href="#">Funding</a></li>
-                        <li><a href="#" title="">News</a></li>
-                        <li id="jobs"><a href="#" title="Jobs, postdocs, PhDs...">Jobs</a></li>
-                        <li><a href="#" title="e.g. EBI Open Day; exhibitions...">Events</a></li>
-                        <li><a href="#">Visit us</a></li>
-                        <li class="last"><a href="#">Intranet</a></li>
-                    </ul>
-                </div>
-            </section>
-            <script src="/web_guidelines/js/foot.js"></script>
+            </div>
+
+            <div class="section" id="ebi-footer-meta">
+                <p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp;
+                    &nbsp; +44 (0)1223 49 44 44</p>
+
+                <p>Copyright &copy; EMBL-EBI 2012 | EBI is an Outstation of the <a href="http://www.embl.org">European
+                    Molecular Biology Laboratory​</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a>
+                    | <a href="/about/terms-of-use">Terms of use</a></p>
+            </div>
         </div>
-
-        <div class="grid_24">
-            <section id="ebi-footer-meta">
-                <p> © EMBL-EBI European Bioinformatics Institute | <a href="#" title="">Privacy</a> | <a href="#"
-                                                                                                         title="">Cookies</a>
-                    | <a href="#" title="">Terms of use</a></p>
-            </section>
-        </div>
-
-    </footer>
-
+    </div>
 </div>
-
-<script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '$atlasProperties.googleAnalyticsAccount$']);
-    _gaq.push(['_trackPageview']);
-
-    (function () {
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-    })();
-</script>

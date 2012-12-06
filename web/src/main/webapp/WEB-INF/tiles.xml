@@ -4,12 +4,12 @@
         "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
     <definition name="base.definition"
-                template="/WEB-INF/jsp/layout.jsp">
+                template="/WEB-INF/jsp/newlayout.jsp">
         <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
-        <put-attribute name="header" value="/WEB-INF/jsp/layout/old/header.jsp"/>
+        <put-attribute name="header" value="/WEB-INF/jsp/layout/new/header.jsp"/>
         <put-attribute name="menu" value="/WEB-INF/jsp/includes/experiment-header.jsp"/>
         <put-attribute name="body" value=""/>
-        <put-attribute name="footer" value="/WEB-INF/jsp/layout/old/footer.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/layout/new/footer.jsp"/>
     </definition>
 
     <definition name="experiment" extends="base.definition">
@@ -36,13 +36,13 @@
     <!-- error pages -->
     <definition name="error-page" extends="base.definition">
         <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp"/>
     </definition>
 
     <!-- feedback page -->
     <definition name="feedback-form" extends="base.definition">
         <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/feedback-form.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/feedback-form.jsp"/>
     </definition>
 
 </tiles-definitions>
