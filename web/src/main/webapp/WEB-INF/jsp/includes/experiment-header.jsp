@@ -13,8 +13,7 @@
                 </div>
                 <div>Organism: ${specie} - <a href="experiments/${experimentAccession}-analysis-methods">Analysis
                     Methods</a> - <a href="experiments/${experimentAccession}-experiment-design">Experiment Design</a> -
-                    <a href="${arrayExpressURL}" target="_blank">ArrayExpress</a> -
-                    <a href="home">Home</a>
+                    <a href="${arrayExpressURL}" target="_blank">ArrayExpress</a>
                 </div>
             </td>
         </tr>
