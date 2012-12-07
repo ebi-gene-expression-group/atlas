@@ -41,23 +41,24 @@
                 <tr>
                     <td>
                         <div style="color:white" class="gradient-level">
-                            <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false"/>
+                            <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false"/>
                         </div>
                     </td>
                     <td width="200px">
-                        <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.maxColour}), color-stop(1, ${colourGradient.minColour}));
+                        <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
-                                background-image: -moz-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+                                background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                background-image: -o-linear-gradient(left, ${colourGradient.maxColour}, ${colourGradient.minColour});
+                                background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${colourGradient.maxColour},endColorstr=${colourGradient.minColour});">
+                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
+                                startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
                             &nbsp;
                         </div>
                     </td>
                     <td>
                         <div style="color:white" class="gradient-level">
-                            <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false"/>
+                            <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false"/>
                         </div>
                     </td>
 
