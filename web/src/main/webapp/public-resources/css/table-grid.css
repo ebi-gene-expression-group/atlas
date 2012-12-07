@@ -38,17 +38,16 @@
 }
 
 .form-grid, .analysis-grid label {
-    border: 0px;
     font-weight: bold;
 }
 
 .analysis-grid thead {
-        display:none;
+    display: none;
 }
 
 .analysis-grid td {
     border: 1px solid #cdcdcd;
-    padding:5px;
+    padding: 5px;
 }
 
 .table-grid td {
@@ -68,7 +67,7 @@
     padding-right: 5px;
 }
 
-.table-grid .header-cell:hover,.table-grid th:hover {
+.table-grid .header-cell:hover, .table-grid th:hover {
     background-color: #deebeb;
     cursor: default;
 }
@@ -97,8 +96,8 @@
 .rotate_text_IE {
 }
 
-.form-grid .ui-button.ui-widget{
-    width:70px
+.form-grid .ui-button.ui-widget {
+    width: 70px
 }
 
 

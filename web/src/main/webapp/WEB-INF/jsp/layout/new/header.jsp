@@ -20,6 +20,10 @@
   ~ http://gxa.github.com/gxa
   --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:import url="feedback-form.jsp"/>
+
 <div class="headerdiv" id="headerdiv">
     <div class="header">
         <div id="global-masthead" class="masthead grid_24">
@@ -59,7 +63,7 @@
                     <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
                     add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
                     whichever one will show up last... For example: -->
-                    <li class="functional last"><a href="feedback-form" class="icon icon-static"
+                    <li class="functional last"><a id="feedback-link" href="feedback-form" class="icon icon-static"
                                                    data-icon="\">Feedback</a></li>
                 </ul>
             </nav>
