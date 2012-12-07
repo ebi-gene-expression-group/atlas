@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-.navigation {
+.species-navigation {
     margin: 0px auto;
     font-family: "Trebuchet MS", sans-serif;
     font-size: 18px;
@@ -29,7 +29,7 @@
     letter-spacing: 1px;
 }
 
-.navigation .item {
+.species-navigation .item {
     position: absolute;
 }
 
@@ -58,7 +58,7 @@
     left: 900px;
 }
 
-a.icon {
+a.species-icon {
     position: absolute;
     top: 0px;
     left: 0px;

@@ -53,7 +53,16 @@
             </div>
 
             <!-- /local-title -->
-
+            <nav>
+                <ul class="grid_24" id="local-nav">
+                    <li class="first last"><a href="/gxa" title="Go to the Expression Atlas homepage">Home</a></li>
+                    <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+                    add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+                    whichever one will show up last... For example: -->
+                    <li class="functional last"><a href="feedback-form" class="icon icon-static"
+                                                   data-icon="\">Feedback</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

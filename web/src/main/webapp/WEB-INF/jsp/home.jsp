@@ -22,11 +22,11 @@
 
 <div id="wordcloud" style="width: 550px; height: 350px; position:relative; top: 180px; left:130px;"></div>
 
-<div class="navigation" id="nav" style="width: 550px; height: 200px;">
+<div class="species-navigation" id="species-nav" style="width: 550px; height: 200px;">
     <div class="item human">
         <img src="${pageContext.request.contextPath}/resources/images/SPECIES_man.png" alt="" width="40" height="40"
              class="circle"/>
-        <a href="#" class="icon"></a>
+        <a href="#" class="species-icon"></a>
 
         <h2>Homo Sapiens</h2>
         <ul>
@@ -36,7 +36,7 @@
     <div class="item mouse">
         <img src="${pageContext.request.contextPath}/resources/images/SPECIES_mouse2.png" alt="" width="40" height="40"
              class="circle"/>
-        <a href="#" class="icon"></a>
+        <a href="#" class="species-icon"></a>
 
         <h2>Mus Musculus</h2>
         <ul>
@@ -46,7 +46,7 @@
     <!--<div class="item rat">
         <img src="${pageContext.request.contextPath}/resources/images/SPECIES_rat.png" alt="" width="40" height="40"
              class="circle"/>
-        <a href="#" class="icon"></a>
+        <a href="#" class="species-icon"></a>
 
         <h2>Rattus Norvegicus</h2>
         <ul>
@@ -58,7 +58,7 @@
     <div class="item fly">
         <img src="${pageContext.request.contextPath}/resources/images/SPECIES_fly3.png" alt="" width="40" height="40"
              class="circle"/>
-        <a href="#" class="icon"></a>
+        <a href="#" class="species-icon"></a>
 
         <h2>Drosophila Melanogaster</h2>
         <ul>
@@ -70,7 +70,7 @@
     <div class="item fish">
         <img src="${pageContext.request.contextPath}/resources/images/SPECIES_zebrafish.png" alt="" width="40"
              height="40" class="circle"/>
-        <a href="#" class="icon"></a>
+        <a href="#" class="species-icon"></a>
 
         <h2>Danio Rerio</h2>
         <ul>
@@ -80,14 +80,13 @@
         </ul>
     </div>-->
 </div>
-</div>
 
 <!-- The JavaScript -->
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery.easing.1.3.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {
-        $('#nav > div').hover(
+        $('#species-nav > div').hover(
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({

@@ -551,7 +551,7 @@
             <collectionProp name="Asserion.test_strings">
               <stringProp name="88775">Yes</stringProp>
               <stringProp name="2529">No</stringProp>
-              <stringProp name="63568473">Assay</stringProp>
+              <stringProp name="1316389074">organism</stringProp>
               <stringProp name="-959801743">Analysed</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
