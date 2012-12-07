@@ -20,15 +20,16 @@
  * http://gxa.github.com/gxa
  */
 
-.form-grid, .table-grid {
+.form-grid, .table-grid, .analysis-grid {
     color: #404040;
     background-color: #fafafa;
     border: 1px solid #cdcdcd;
     border-spacing: 0;
     empty-cells: show;
+    width: 100%;
 }
 
-.table-grid {
+.table-grid, .analysis-grid {
     border-collapse: collapse;
 }
 
@@ -39,6 +40,15 @@
 .form-grid label {
     border: 0px;
     font-weight: bold;
+}
+
+.analysis-grid thead {
+        display:none;
+}
+
+.analysis-grid td {
+    border: 1px solid #cdcdcd;
+    padding:5px;
 }
 
 .table-grid td {

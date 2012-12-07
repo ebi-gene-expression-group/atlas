@@ -22,40 +22,16 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
-import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.List;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Controller
 public class AnalysisMethodsPageController {
@@ -74,7 +50,7 @@ public class AnalysisMethodsPageController {
     @RequestMapping("/experiments/{experimentAccession}-analysis-methods")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
-        model.addAttribute("csvLines", analysisMethodsTsvReader.readAll(experimentAccession));
+        model.addAttribute("csvLines", analysisMethodsTsvReader.readAllWithoutLibraries(experimentAccession));
 
         model.addAttribute("experimentAccession", experimentAccession);
 

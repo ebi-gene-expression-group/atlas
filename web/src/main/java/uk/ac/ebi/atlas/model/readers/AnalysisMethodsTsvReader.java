@@ -49,12 +49,30 @@ public class AnalysisMethodsTsvReader {
 
     private ApplicationProperties applicationProperties;
 
+    public static final String LIBRARIES_TITLE = "Processed libraries";
+
     @Inject
-    public AnalysisMethodsTsvReader(ApplicationProperties applicationProperties){
+    public AnalysisMethodsTsvReader(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 
-    public Collection<String[]> readAll(String experimentAccession) throws IllegalStateException{
+    public Collection<String[]> readAll(String experimentAccession) throws IllegalStateException {
+        return readAndFilter(experimentAccession, new IsCommented());
+    }
+
+    public Collection<String[]> readAllWithoutLibraries(String experimentAccession) throws IllegalStateException {
+        Predicate<String[]> predicate = new Predicate<String[]>() {
+            @Override
+            public boolean apply(String[] columns) {
+                String firstColumn = columns[0].trim();
+                return !(firstColumn.startsWith("#") || firstColumn.equals(LIBRARIES_TITLE));
+            }
+        };
+        return readAndFilter(experimentAccession, predicate);
+    }
+
+    protected Collection<String[]> readAndFilter(String experimentAccession,
+                                              Predicate<String[]> filter) throws IllegalStateException {
         try {
             Path filePath = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodCsvFilePath(experimentAccession));
 
@@ -62,7 +80,7 @@ public class AnalysisMethodsTsvReader {
 
             CSVReader csvReader = new CSVReader(dataFileReader, '\t');
 
-            return Collections2.filter(csvReader.readAll(), new IsCommented());
+            return Collections2.filter(csvReader.readAll(), filter);
         } catch (IOException e) {
 
             logger.error(e.getMessage(), e);
@@ -74,7 +92,7 @@ public class AnalysisMethodsTsvReader {
     public Map<String, String> readAsMap(String experimentAccession) {
         Collection<String[]> rows = readAll(experimentAccession);
         Map<String, String> keyValuePairs = new HashMap<>();
-        for(String[] row: rows){
+        for (String[] row : rows) {
             keyValuePairs.put(row[0], row[1]);
         }
         return keyValuePairs;
@@ -84,7 +102,7 @@ public class AnalysisMethodsTsvReader {
 
         @Override
         public boolean apply(String[] columns) {
-            return ! columns[0].trim().startsWith("#");
+            return !columns[0].trim().startsWith("#");
         }
     }
 

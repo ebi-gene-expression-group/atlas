@@ -28,7 +28,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="block">
-    <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="form-grid">
+    <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="analysis-grid">
         <display:caption>
             <div style="text-align:left;padding-top:10px; padding-bottom:5px">
                 <label>
