@@ -116,7 +116,6 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 <script>
 
     var x;
-    //ToDo: this function is called even when ajax call to refresh barchart
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
         $(document).ready(function () {

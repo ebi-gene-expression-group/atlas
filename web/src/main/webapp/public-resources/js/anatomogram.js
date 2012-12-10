@@ -106,11 +106,9 @@ function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
     if (fileNameMale != fileNameFemale){
         //switch sex toggle button
         $("#sex-toggle-image").button().toggle(function () {
-            //$(this).button().attr("class", "female");
             $(this).attr("src","resources/images/female_selected.png")
             loadAnatomogram("resources/svg/" + fileNameFemale);
         },function() {
-            //$(this).button().attr("class", "male");
             $(this).attr("src","resources/images/male_selected.png")
             loadAnatomogram("resources/svg/" + fileNameMale);
         }).tooltip();
