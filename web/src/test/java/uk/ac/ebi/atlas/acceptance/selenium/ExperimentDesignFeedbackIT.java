@@ -60,6 +60,7 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
         assertThat(subject.getFeedbackTipsText(), is("Please fill this form and click the Send button."));
         assertThat(subject.getFeedbackText(), is(""));
         subject.clickCancelButton();
+        assertThat(subject.getFeedbackText(), is(""));
         assertThat(subject.isFeedbackTipsShown(), is(false));
     }
 
