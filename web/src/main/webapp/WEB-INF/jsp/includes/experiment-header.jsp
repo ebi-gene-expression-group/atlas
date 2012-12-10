@@ -24,7 +24,7 @@
                         <img class="button-image" alt="Experiment Design"
                              src="resources/images/experiment_design_icon.png" id="experiment-design-button"/></a>
 
-                    <a id="goto-ae" href="${arrayExpressURL}" title="ArrayExpress" target="_blank">
+                    <a id="goto-ae" href="${applicationProperties.getArrayExpressURL(experimentAccession)}" title="ArrayExpress" target="_blank">
                         <img class="button-image" alt="ArrayExpress"
                              src="resources/images/ae2_icon.png" id="ae2-button"/></a>
 

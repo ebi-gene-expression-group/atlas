@@ -99,8 +99,6 @@ public class GeneProfilesPageController {
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            model.addAttribute("arrayExpressURL", applicationProperties.getArrayExpressURL(experimentAccession));
-
         }
 
         return "experiment";
