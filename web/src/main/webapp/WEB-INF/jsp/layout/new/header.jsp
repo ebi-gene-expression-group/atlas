@@ -90,7 +90,7 @@
 
 <div id="dialog-form" title="Send us feedback - we really appreciate it !">
 
-    <div class="validateTips">Please fill this form and click the Send button.</div>
+    <div id="feedback-tips" class="validateTips">Please fill this form and click the Send button.</div>
 
     <form>
         <fieldset id="form-fields">
