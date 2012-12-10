@@ -40,22 +40,24 @@
             </div>
         </div>
 
-        <div id="local-masthead" class="masthead grid_24">
+        <div id="local-masthead" class="masthead grid_24" style="background-color: #C7DDD5">
 
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
 
             <div class="logo-title" id="local-title">
-                <a href="/gxa" title="Back to Expression Atlas homepage">
+                <a href="${pageContext.request.contextPath}" title="Back to Expression Atlas homepage">
                     <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
                          alt="Expression Atlas logo" width="64" height="64">
-                </a><span><h1>Expression Atlas</h1></span>
+                </a><span style="padding-top: 5px"><h1 style="color: #000000; text-shadow: 0px 0px #C7DDD5">Expression
+                Atlas</h1></span>
             </div>
 
             <!-- /local-title -->
             <nav>
                 <ul class="grid_24" id="local-nav">
-                    <li class="first last"><a href="/gxa" title="Go to the Expression Atlas homepage">Home</a></li>
+                    <li class="first last"><a href="${pageContext.request.contextPath}"
+                                              title="Go to the Expression Atlas homepage">Home</a></li>
                     <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
                     add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
                     whichever one will show up last... For example: -->
@@ -90,7 +92,7 @@
 
 <div id="dialog-form" title="Send us feedback - we really appreciate it !">
 
-    <div class="validateTips">Please fill this form and click the Send button.</div>
+    <div id="feedback-tips" class="validateTips">Please fill this form and click the Send button.</div>
 
     <form>
         <fieldset id="form-fields">

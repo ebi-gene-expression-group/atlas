@@ -1,20 +1,3 @@
-.female, .male {
-    width: 34px;
-    height: 60px;
-    background-repeat: no-repeat;
-    float: left;
-}
-
-.female {
-    background-image: url('../images/female_selected.png');
-    background-size: 80%
-}
-
-.male {
-    background-image: url('../images/male_selected.png');
-    background-size: 80%
-}
-
 /* start of sticky things */
 
 .container {
