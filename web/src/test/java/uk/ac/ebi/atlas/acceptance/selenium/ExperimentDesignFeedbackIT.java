@@ -51,6 +51,7 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
         assertThat(subject.getFeedbackTipsText(), is("Please fill this form and click the Send button."));
         assertThat(subject.getFeedbackText(), is(""));
         subject.clickSendButton();
+        assertThat(subject.getFeedbackText(), is(""));
         assertThat(subject.getFeedbackTipsText(), is("Length of the feedback field must be between 3 and 10000 characters."));
     }
 
