@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,6 +78,8 @@ abstract class FeedbackPage extends AtlasPage {
     }
 
     public void clickSendButton() {
+        // to prevent spamming the feedback email
+        ((JavascriptExecutor) driver).executeScript("$('#sendemail').val('false')");
         send.click();
     }
 

@@ -22,21 +22,110 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.WebRequest;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 
+import javax.inject.Inject;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Properties;
 
 @Controller
-@Scope("singleton")
 public class FeedbackEmailController {
 
-    @RequestMapping(value = {"/email/"}, method = {RequestMethod.POST})
-    public void sendMessage(@RequestBody String email, HttpServletResponse httpResponse_p, WebRequest request_p) {
-        System.out.println(email);
+    class EmailMessage {
+        public String sender;
+        public String addressee;
+        public String subject;
+        public String body;
+
+        public EmailMessage
+                (
+                        String sender,
+                        String addressee,
+                        String subject,
+                        String body
+                ) {
+            this.sender = sender;
+            this.addressee = addressee;
+            this.subject = subject;
+            this.body = body;
+        }
+
+        public void send() {
+            Properties mailServerProperties = new Properties();
+            mailServerProperties.put
+                    (
+                            "mail.smtp.host",
+                            "smtp.ebi.ac.uk"
+                    );
+            mailServerProperties.put
+                    (
+                            "mail.smtp.port",
+                            "25"
+                    );
+
+            Session session = Session.getDefaultInstance
+                    (
+                            mailServerProperties
+                    );
+
+            MimeMessage messageToSend = new MimeMessage(session);
+
+            try {
+                messageToSend.setFrom
+                        (
+                                new InternetAddress(this.sender)
+                        );
+                messageToSend.addRecipient
+                        (
+                                Message.RecipientType.TO,
+                                new InternetAddress(this.addressee)
+                        );
+                messageToSend.setSubject(this.subject);
+                messageToSend.setText(this.body);
+
+                Transport.send(messageToSend);
+            } catch (MessagingException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
+    private ApplicationProperties properties;
+
+
+    @Inject
+    public FeedbackEmailController(ApplicationProperties properties) {
+        this.properties = properties;
+    }
+
+    @RequestMapping(value = "/email", method = RequestMethod.PUT)
+    public void put(@RequestBody MultiValueMap<String, String> body, HttpServletResponse response) throws IOException {
+
+        // capture input data
+        String feedback = body.get("feedback").get(0);
+        String email = body.get("email").get(0);
+        boolean sendemail = Boolean.parseBoolean(body.get("sendemail").get(0));
+
+        // compose email
+        EmailMessage message;
+        if (email.length() == 0)
+            message = new EmailMessage(properties.getFeedbackEmail(), properties.getFeedbackEmail(), "Atlas Feedback", feedback);
+        else
+            message = new EmailMessage(email, properties.getFeedbackEmail(), "Atlas Feedback", feedback);
+        if (sendemail)
+            message.send();
     }
 }

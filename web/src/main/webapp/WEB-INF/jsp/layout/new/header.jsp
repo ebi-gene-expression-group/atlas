@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div id="local-masthead" class="masthead grid_24" style="background-color: #C7DDD5">
+        <div id="local-masthead" class="masthead grid_24" style="background-color: #E1EEE9">
 
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
@@ -49,7 +49,7 @@
                 <a href="${pageContext.request.contextPath}" title="Back to Expression Atlas homepage">
                     <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
                          alt="Expression Atlas logo" width="64" height="64">
-                </a><span style="padding-top: 5px"><h1 style="color: #000000; text-shadow: 0px 0px #C7DDD5">Expression
+                </a><span style="padding-top: 5px"><h1 style="color: #000000; text-shadow: 0px 0px #E1EEE9">Expression
                 Atlas</h1></span>
             </div>
 
@@ -113,6 +113,7 @@
                     <div>
                         <input type="input" size="50" maxlength="80" name="email" id="email" value=""
                                class="text ui-widget-content ui-corner-all"/>
+                        <input type="hidden" name="sendemail" id="sendemail" value="true"/>
                     </div>
                 </li>
             </ul>
@@ -173,9 +174,13 @@
                     bValid = bValid && checkLength(feedback, "feedback", 3, 10000);
 
                     if (bValid) {
-                        /*
-                         do something here....
-                         */
+                        var jsonStr = $("#form-fields").serializeArray();
+                        $.ajax({
+                            dataType:'json',
+                            type:"PUT",
+                            url:"email",
+                            data:jsonStr
+                        });
                         updateTips("Thank you for your feedback.");
                         $("#send-button").hide();
                         $("#form-fields").hide();

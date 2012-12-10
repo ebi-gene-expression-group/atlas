@@ -73,7 +73,7 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
         subject.setFeedbackText("Test Feedback");
         assertThat(subject.getFeedbackText(), is("Test Feedback"));
         subject.clickSendButton();
-          //ToDo: fix for bamboo and uncomment
+        //ToDo: fix for bamboo and uncomment
 //        assertThat(subject.getCancelButtonText(), is("Close"));
         subject.clickCancelButton();
         assertThat(subject.isFeedbackTipsShown(), is(false));
@@ -85,10 +85,10 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
         assertThat(subject.getFeedbackText(), is(""));
         subject.setFeedbackText("Test Feedback");
         assertThat(subject.getFeedbackText(), is("Test Feedback"));
-        subject.setEmailText("atlastest@ebi.ac.uk");
-        assertThat(subject.getEmailText(), is("atlastest@ebi.ac.uk"));
+        subject.setEmailText("atlas-feedback@ebi.ac.uk");
+        assertThat(subject.getEmailText(), is("atlas-feedback@ebi.ac.uk"));
         subject.clickSendButton();
-          //ToDo: fix for bamboo and uncomment
+        //ToDo: fix for bamboo and uncomment
 //        assertThat(subject.getCancelButtonText(), is("Close"));
         subject.clickCancelButton();
         assertThat(subject.isFeedbackTipsShown(), is(false));
