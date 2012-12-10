@@ -20,25 +20,15 @@
                              title="Analysis Methods"
                              src="resources/images/analysis_icon.png" id="analysis-button"/></a>
 
-                    <a id="display-experiment-design" href="experiments/${experimentAccession}-experiment-design">
-                        <img class="button-image" title="Experiment Design"
+                    <a id="display-experiment-design" title="Experiment Design" href="experiments/${experimentAccession}-experiment-design">
+                        <img class="button-image" alt="Experiment Design"
                              src="resources/images/experiment_design_icon.png" id="experiment-design-button"/></a>
 
-                    <a id="goto-ae" href="${arrayExpressURL}" target="_blank">
-                        <img class="button-image" title="ArrayExpress"
+                    <a id="goto-ae" href="${arrayExpressURL}" title="ArrayExpress" target="_blank">
+                        <img class="button-image" alt="ArrayExpress"
                              src="resources/images/ae2_icon.png" id="ae2-button"/></a>
 
                 </div>
-                <script type="text/javascript">
-                    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
-                        $(document).ready(function () {
-                            $('#analysis-button').button();
-                            $('#experiment-design-button').button();
-                            $('#ae2-button').button();
-                        });
-
-                    })(jQuery);
-                </script>
             </td>
         </tr>
         </tbody>
