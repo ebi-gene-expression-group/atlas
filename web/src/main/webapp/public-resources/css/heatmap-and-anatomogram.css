@@ -1,0 +1,68 @@
+.female, .male {
+    width: 34px;
+    height: 60px;
+    background-repeat: no-repeat;
+    float: left;
+}
+
+.female {
+    background-image: url('../images/female_selected.png');
+    background-size: 80%
+}
+
+.male {
+    background-image: url('../images/male_selected.png');
+    background-size: 80%
+}
+
+/* start of sticky things */
+
+.container {
+    margin: 20px auto;
+    /*width: 960px;*/
+}
+
+.row {
+    /*
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    */
+    position: relative;
+}
+
+.row:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.content {
+    margin-left:300px;
+}
+
+.aside {
+    float: left;
+    padding: 0 20px;
+}
+
+.stickit {
+    margin-left: 0px;
+    position: fixed;
+    top: 0;
+}
+
+.stickit-end {
+    bottom: 40px;
+    position: absolute;
+    /*right: 0;*/
+}
+
+/* end of sticky things */
+
+.gradient-level {
+    text-align:right;
+    width: 30px;
+}

@@ -39,10 +39,4 @@
         <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp"/>
     </definition>
 
-    <!-- feedback page -->
-    <definition name="feedback-form" extends="base.definition">
-        <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/feedback-form.jsp"/>
-    </definition>
-
 </tiles-definitions>

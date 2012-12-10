@@ -27,64 +27,67 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
 <c:import url="includes/request-preferences.jsp"/>
 
 <c:if test="${not empty geneProfiles}">
 
+    <div class="container">
 
-    <div id="heatmap" class="block">
+        <div id="heatmap" class="row stickem-container">
 
-        <div id="anatomogram" style="float:left;position:fixed" class="double-click-noselection">
+            <div id="anatomogram" class="aside stickem double-click-noselection">
 
-            <table style="font-size:10px" id="heatmap-legenda">
-                <tr>
-                    <td>
-                        <div style="color:white" class="gradient-level">
-                            <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false"/>
-                        </div>
-                    </td>
-                    <td width="200px">
-                        <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+                <table style="font-size:10px" id="heatmap-legenda">
+                    <tr>
+                        <td>
+                            <div style="color:white" class="gradient-level">
+                                <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false"/>
+                            </div>
+                        </td>
+                        <td width="200px">
+                            <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
-                                background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                    background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                    background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
-                                startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
-                            &nbsp;
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:white" class="gradient-level">
-                            <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false"/>
-                        </div>
-                    </td>
+                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
+                                    startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white" class="gradient-level">
+                                <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false"/>
+                            </div>
+                        </td>
 
-                </tr>
-            </table>
+                    </tr>
+                </table>
 
-            <table>
-                <tr>
-                    <td style="width:25px;padding-top: 15px; vertical-align:top">
-                        <div id="sex-toggle">
-                            <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                                 style="width:20px" src="resources/images/male_selected.png"/>
-                        </div>
-                    </td>
-                    <td>
-                        <div id="anatomogramBody" style="width: 230px; height: 400px">
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <td style="width:25px;padding-top: 15px; vertical-align:top">
+                            <div id="sex-toggle">
+                                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
+                                     style="width:20px" src="resources/images/male_selected.png"/>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="anatomogramBody" style="width: 230px; height: 360px">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="heatmap-div"  class="content">
+
+                <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
+
+            </div>
         </div>
-        <div id="heatmap-div" style="margin-left:300px">
 
-            <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
-
-        </div>
     </div>
 
     <br/>
@@ -103,6 +106,9 @@
 <script language="JavaScript" type="text/javascript"
 src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"></script>
 <![endif]-->
+
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/jquery.stickem.js"></script>
 
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
@@ -127,7 +133,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
             </c:forEach>
 
             //disable vertical header and anatomogram in IE
-            if ($.browser.msie){
+            if ($.browser.msie) {
 
                 //configuration required for any IE browser
 
@@ -157,6 +163,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}');
             initHeatmapDisplayValueToggle();
+
+            $('.container').stickem();
         });
 
     })(jQuery);
