@@ -27,51 +27,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<style type="text/css">
-    .container {
-        margin: 20px auto;
-        /*width: 960px;*/
-    }
-
-    .row {
-        border-bottom: 1px solid #ccc;
-        margin-bottom: 40px;
-        padding-bottom: 40px;
-        position: relative;
-    }
-
-    .row:after {
-        clear: both;
-        content: ".";
-        display: block;
-        height: 0;
-        visibility: hidden;
-    }
-
-    .content {
-
-    }
-
-    .aside {
-        float: left;
-        /*padding: 20px;*/
-        padding: 0 20px;
-        /*width: 260px;*/
-    }
-
-    .stickit {
-        margin-left: 0px;
-        position: fixed;
-        top: 0;
-    }
-
-    .stickit-end {
-        bottom: 40px;
-        position: absolute;
-        right: 0;
-    }
-</style>
-
 <c:import url="includes/request-preferences.jsp"/>
 
 <c:if test="${not empty geneProfiles}">
@@ -119,14 +74,14 @@
                             </div>
                         </td>
                         <td>
-                            <div id="anatomogramBody" style="width: 230px; height: 400px">
+                            <div id="anatomogramBody" style="width: 230px; height: 360px">
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
 
-            <div id="heatmap-div" style="margin-left:300px" class="content">
+            <div id="heatmap-div"  class="content">
 
                 <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
 
