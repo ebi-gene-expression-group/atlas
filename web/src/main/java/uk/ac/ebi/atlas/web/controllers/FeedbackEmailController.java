@@ -91,7 +91,7 @@ public class FeedbackEmailController {
         logger.info("<put> email = " + email);
         boolean sendemail = Boolean.parseBoolean(body.get("sendemail").get(0));
         logger.info("<put> mail sent = " + sendemail);
-        sendemail = false;
+        // sendemail = false;
 
         Gson gson = new Gson();
 
