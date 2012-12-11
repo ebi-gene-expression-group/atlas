@@ -7,7 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public abstract class SeleniumFixture {
 
-    private static final String SELENIUM_SERVER_URL = "http://localhost:4444/wd/hub";
+    //private static final String SELENIUM_SERVER_URL = "http://localhost:4444/wd/hub";
 
     protected FirefoxDriver driver;
 

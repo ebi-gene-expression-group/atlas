@@ -35,7 +35,7 @@
     <url>http://www.ebi.ac.uk/gxa</url>
 
     <properties>
-        <selenium.version>2.27.0</selenium.version>
+        <selenium.version>2.25.0</selenium.version>
         <tiles.version>2.2.2</tiles.version>
     </properties>
 
