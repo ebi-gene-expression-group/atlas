@@ -94,7 +94,7 @@
 
     <div id="feedback-tips" class="validateTips">Please fill this form and click the Send button.</div>
 
-    <form>
+    <form id="form">
         <fieldset id="form-fields">
             <ul>
                 <li>
@@ -176,14 +176,20 @@
                     bValid = bValid && checkLength(feedback, "feedback", 3, 10000);
 
                     if (bValid) {
-                        var jsonStr = $("#form-fields").serializeArray();
+                        var jsonStr = $("#form").serializeArray();
                         $.ajax({
-                            dataType:'json',
                             type:"PUT",
                             url:"email",
-                            data:jsonStr
+                            dataType:'json',
+                            data:jsonStr,
+                            success:function (data) {
+                                updateTips(data);
+                            },
+                            error:function (data, statusCode) {
+                                alert("ERROR: " + statusCode);
+                            }
                         });
-                        updateTips("Thank you for your feedback.");
+
                         $("#send-button").hide();
                         $("#form-fields").hide();
                         $("#cancel-button").button('option', 'label', 'Close');
