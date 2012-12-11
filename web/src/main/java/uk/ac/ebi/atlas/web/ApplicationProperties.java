@@ -64,12 +64,11 @@ public class ApplicationProperties {
         return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
     }
 
-    public double getDefaultCutoff() {
-        return Double.parseDouble(configurationProperties.getProperty("experiment.default.cutoff"));
-    }
-
     public String[] getExperimentIdentifiers() {
         return configurationProperties.getProperty("experiment.identifiers").trim().split(",");
     }
 
+    public String getFeedbackEmail() {
+        return configurationProperties.getProperty("feedback.email");
+    }
 }
