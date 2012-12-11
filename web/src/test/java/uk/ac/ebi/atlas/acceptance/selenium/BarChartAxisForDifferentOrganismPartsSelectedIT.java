@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Before;
@@ -68,4 +68,4 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
         assertThat(subject.getMaxYAxisValue(), is("4"));
     }
 
-}
+}*/

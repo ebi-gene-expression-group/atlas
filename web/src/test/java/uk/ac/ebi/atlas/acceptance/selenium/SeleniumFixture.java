@@ -15,9 +15,9 @@ public abstract class SeleniumFixture {
 
     private static final String SELENIUM_SERVER_URL = "http://localhost:4444/wd/hub";
 
-    //protected FirefoxDriver driver;
+    protected FirefoxDriver driver;
 
-    protected WebDriver driver;
+    //protected WebDriver driver;
 
 
     @Before
