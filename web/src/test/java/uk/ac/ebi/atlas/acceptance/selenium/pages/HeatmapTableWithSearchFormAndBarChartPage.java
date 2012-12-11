@@ -49,7 +49,7 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
     @FindBy(className = "y1Axis")
     private WebElement yAxisDiv;
 
-    @FindBy(id = "chart-button")
+    @FindBy(id = "display-chart")
     private WebElement displayChartButton;
 
     public HeatmapTableWithSearchFormAndBarChartPage(WebDriver driver){

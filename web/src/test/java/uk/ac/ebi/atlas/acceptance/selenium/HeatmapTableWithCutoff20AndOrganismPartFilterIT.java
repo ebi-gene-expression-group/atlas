@@ -14,7 +14,7 @@ public class HeatmapTableWithCutoff20AndOrganismPartFilterIT extends SeleniumFix
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(firefoxDriver,
+        subject = new HeatmapTablePage(driver,
                 "heatmapMatrixSize=5&geneQuery=&organismParts=adrenal&_organismParts=1&cutoff=20");
         subject.get();
     }

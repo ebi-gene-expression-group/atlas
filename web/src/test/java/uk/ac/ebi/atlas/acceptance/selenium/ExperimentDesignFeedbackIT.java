@@ -33,7 +33,7 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
     private ExperimentDesignFeedbackPage subject;
 
     public void getStartingPage() {
-        subject = new ExperimentDesignFeedbackPage(firefoxDriver);
+        subject = new ExperimentDesignFeedbackPage(driver);
         subject.get();
     }
 
