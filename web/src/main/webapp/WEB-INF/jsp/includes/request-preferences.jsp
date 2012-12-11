@@ -78,9 +78,10 @@
     </form:form>
 
     <div id="gene-distribution" style="margin-bottom:0px;width:960px;height:100px"></div>
-    <div id="gene-distribution-button" style="float:left"><a id="display-chart" href="#">
-        <img class="button-image" title="Display gene distribution"
-             src="resources/images/yellow-chart-icon-16.png" id="chart-button"/></a>
+    <div id="gene-distribution-button" style="float:left">
+        <a id="display-chart" title="Display gene distribution" class="button-image"  href="#">
+        <img alt="Display gene distribution"
+             src="resources/images/yellow-chart-icon-16.png"/></a>
     </div>
     <div id="slider-range-max" style="font-size:65%;width:920px;margin-left:27px;margin-right:17px; margin-top:10px"></div>
 

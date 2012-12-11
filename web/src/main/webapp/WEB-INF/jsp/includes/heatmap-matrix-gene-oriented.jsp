@@ -77,9 +77,12 @@
                 </td>
                 <td style="vertical-align: top">
                     <div style="float:left">
-                        <a id="download-profiles-link" title="Download query results" href="${downloadUrl}" target="_blank">
+                        <!--
+                         <button id="download-profiles" class="button-image" value="D"></button>
 
-                            <img id="download-profiles" alt="Download query results" style="width:20px" class="button-image" src="resources/images/download_blue_small.png">
+                        -->
+                        <a id="download-profiles-link" title="Download query results" href="${downloadUrl}" class="button-image" target="_blank">
+                            <img id="download-profiles" alt="Download query results" style="width:20px" src="resources/images/download_blue_small.png">
                         </a>
                     </div>
                 </td>

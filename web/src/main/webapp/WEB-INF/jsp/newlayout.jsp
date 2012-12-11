@@ -69,7 +69,7 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.min.custom.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/experiment-header-buttons.js"></script>
 
@@ -78,6 +78,7 @@
             $(document).ready(function () {
 
                 initExperimentHeaderButtons();
+
             });
         })(jQuery);
     </script>

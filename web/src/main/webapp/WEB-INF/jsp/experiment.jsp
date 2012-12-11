@@ -70,7 +70,7 @@
                         <td style="width:25px;padding-top: 15px; vertical-align:top">
                             <div id="sex-toggle">
                                 <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                                     style="width:20px" src="resources/images/male_selected.png"/>
+                                     style="width:20px;height:38px;padding:2px" src="resources/images/male_selected.png"/>
                             </div>
                         </td>
                         <td>
@@ -147,11 +147,11 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //configurations required for any IE 8 or lower browser
 
-                $("#anatomogram").hide();
+                $("#anatomogram").remove();
+                $("#heatmap-div").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
                 $("#gene-distribution").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
-                $("#heatmap-div").attr('style', '');//reset the style attribute to remove the margin left
                 isIE8 = true;
             } else {
 
