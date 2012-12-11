@@ -2,14 +2,8 @@ package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.After;
 import org.junit.Before;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public abstract class SeleniumFixture {
 
