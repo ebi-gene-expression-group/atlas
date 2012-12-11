@@ -178,12 +178,18 @@
                     if (bValid) {
                         var jsonStr = $("#form-fields").serializeArray();
                         $.ajax({
-                            dataType:'json',
                             type:"PUT",
                             url:"email",
-                            data:jsonStr
+                            dataType:'json',
+                            data:jsonStr,
+                            success:function (data) {
+                                updateTips(data);
+                            },
+                            error:function (data, statusCode) {
+                                alert("ERROR: " + data)
+                            }
                         });
-                        updateTips("Thank you for your feedback.");
+
                         $("#send-button").hide();
                         $("#form-fields").hide();
                         $("#cancel-button").button('option', 'label', 'Close');
