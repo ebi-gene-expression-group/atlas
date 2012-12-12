@@ -28,9 +28,15 @@
                              src="resources/images/experiment_design_icon.png"/></a>
 
                     <a id="goto-ae" class="button-image"
-                       href="${applicationProperties.getArrayExpressURL(experimentAccession)}" title="ArrayExpress" target="_blank">
+                       href="${applicationProperties.getArrayExpressURL(experimentAccession)}" title="ArrayExpress"
+                       target="_blank">
                         <img alt="ArrayExpress"
                              src="resources/images/ae2_icon.png"/></a>
+
+                    <a id="display-help" class="button-image"
+                        title="Show help">
+                        <img alt="ArrayExpress"
+                             src="resources/images/sort_asc.png"/></a>
 
                 </div>
             </td>

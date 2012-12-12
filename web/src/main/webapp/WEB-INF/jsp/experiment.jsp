@@ -168,7 +168,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8);
             initHeatmapDisplayValueToggle();
-//            initHelpTooltip();
+            initHelpTooltip();
 
             $('.container').stickem();
         });
