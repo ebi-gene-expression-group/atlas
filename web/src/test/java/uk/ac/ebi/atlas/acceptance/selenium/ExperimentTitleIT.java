@@ -11,7 +11,7 @@ public class ExperimentTitleIT extends SeleniumFixture {
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(firefoxDriver);
+        subject = new HeatmapTablePage(driver);
         subject.get();
     }
 

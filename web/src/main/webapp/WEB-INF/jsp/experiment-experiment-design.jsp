@@ -115,8 +115,8 @@
             "sDom":'i<"download">f<"clear">t'
         });
 
-        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" href="experiments/${experimentAccession}-experiment-design.tsv" target="_blank">' +
-                '<img id="download-experiment-design" alt="Download experiment design" style="width:20px" class="button-image" src="resources/images/download_blue_small.png"></a>');
+        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/${experimentAccession}-experiment-design.tsv" target="_blank">' +
+                '<img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>');
         $('div.download').attr('style', 'float: right');
         $('#isOnlyAnalysed').click(function () {
             oTable.fnDraw();
@@ -130,9 +130,7 @@
             oTable.fnDraw(false);
         });
 
-        $('#download-experiment-design').button();
-
-        $('#download-experiment-design').tooltip({content:"Download experiment design"});
+        $('#download-experiment-design-link').button().tooltip();
     });
 
 </script>

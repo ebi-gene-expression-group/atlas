@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Before;
@@ -40,10 +40,10 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
     private HeatmapTableWithSearchFormAndBarChartPage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTableWithSearchFormAndBarChartPage(firefoxDriver);
+        subject = new HeatmapTableWithSearchFormAndBarChartPage(driver);
         subject.get();
     }
-/*
+
     @Before
     public void displayBarChart(){
         subject.clickDisplayChartButton();
@@ -68,5 +68,4 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
         assertThat(subject.getMaxYAxisValue(), is("4"));
     }
 
-*/
-}
+}*/

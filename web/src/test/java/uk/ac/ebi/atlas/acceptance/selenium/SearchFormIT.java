@@ -12,7 +12,7 @@ public class SearchFormIT extends SeleniumFixture {
     private HeatmapTableWithSearchFormPage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTableWithSearchFormPage(firefoxDriver, "geneQuery=ENSG00000175084+ENSG00000210195&cutoff=540&organismParts=heart&organismParts=liver");
+        subject = new HeatmapTableWithSearchFormPage(driver, "geneQuery=ENSG00000175084+ENSG00000210195&cutoff=540&organismParts=heart&organismParts=liver");
         subject.get();
     }
 

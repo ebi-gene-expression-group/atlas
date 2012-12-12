@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -51,7 +52,7 @@
             </tr>
             <tr>
                 <td>
-                    <form:textarea path="geneQuery" rows="2" cols="35"></form:textarea>
+                    <form:textarea  path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
                 </td>
                 <td>
                     <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
@@ -79,11 +80,12 @@
 
     </form:form>
 
-    <div id="gene-distribution" class="block" style="margin-bottom:0px;height:100px"></div>
-    <div id="gene-distribution-button" style="float:left"><a id="display-chart" href="#">
-        <img class="button-image" title="Display gene distribution"
-             src="resources/images/yellow-chart-icon-16.png" id="chart-button"/></a>
+    <div id="gene-distribution" style="margin-bottom:0px;width:960px;height:100px"></div>
+    <div id="gene-distribution-button" style="float:left">
+        <a id="display-chart" title="Display gene distribution" class="button-image"  href="#">
+        <img alt="Display gene distribution"
+             src="resources/images/yellow-chart-icon-16.png"/></a>
     </div>
-    <div id="slider-range-max" style="font-size:65%;margin-left:27px;margin-right:17px; margin-top:10px"></div>
+    <div id="slider-range-max" style="font-size:65%;width:920px;margin-left:27px;margin-right:17px; margin-top:10px"></div>
 
 </div>

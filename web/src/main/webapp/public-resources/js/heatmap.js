@@ -49,9 +49,8 @@ function initHeatmapDisplayValueToggle(){
         }
     });
 
-    $('#download-profiles').button();
+    $('#download-profiles-link').button().tooltip();
 
-    $('#download-profiles').tooltip({content: "Download query results"});
 
 
 

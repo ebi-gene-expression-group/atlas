@@ -14,7 +14,7 @@ public class HeatmapTableWithTwoOrganismPartFilterIT extends SeleniumFixture {
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(firefoxDriver,
+        subject = new HeatmapTablePage(driver,
                 "organismParts=adipose&geneQuery=&organismParts=heart&_organismParts=1&cutoff=9");
         subject.get();
     }

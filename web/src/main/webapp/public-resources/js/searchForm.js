@@ -1,4 +1,4 @@
-function initSearchForm(homePageURL, cutoff, experimentAccession) {
+function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8) {
 
     $(".chzn-select").chosen().change(function() {
             if ($(this).val()){
@@ -7,7 +7,9 @@ function initSearchForm(homePageURL, cutoff, experimentAccession) {
                 $(this).data("chosen").default_text = "(all organism parts)";
                 $(this).trigger("liszt:updated");
             }
-        loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
+        if (!isIE8){
+            loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
+        }
         });
 
     $("#submit-button").button();
@@ -19,6 +21,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession) {
     $("#geneQuery").watermark("(all genes)");
 
     $("#cutoff").watermark("(default 0.5)");
-
-    loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
+    if (!isIE8){
+       loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
+    }
 }

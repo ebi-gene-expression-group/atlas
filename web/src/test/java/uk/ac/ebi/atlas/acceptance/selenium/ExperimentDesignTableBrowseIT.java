@@ -34,7 +34,7 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
     private ExperimentDesignTablePage subject;
 
     public void getStartingPage() {
-        subject = new ExperimentDesignTablePage(firefoxDriver);
+        subject = new ExperimentDesignTablePage(driver);
         subject.get();
     }
 

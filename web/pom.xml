@@ -258,7 +258,7 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <scope>compile</scope>
-            <version>4.1.2</version>
+            <version>4.2.2</version>
         </dependency>
 
         <dependency>
@@ -280,7 +280,21 @@
             <version>${selenium.version}</version>
             <scope>test</scope>
         </dependency>
+<!--
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-remote-driver</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+-->
         <!--
             Apache Tiles
         -->
@@ -289,6 +303,16 @@
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-extras</artifactId>
             <version>${tiles.version}</version>
+        </dependency>
+
+        <!--
+            Java Mail
+        -->
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.5</version>
         </dependency>
     </dependencies>
 

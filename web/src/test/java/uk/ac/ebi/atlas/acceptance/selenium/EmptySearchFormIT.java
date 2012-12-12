@@ -11,7 +11,7 @@ public class EmptySearchFormIT extends SeleniumFixture {
     private HeatmapTableWithSearchFormPage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTableWithSearchFormPage(firefoxDriver);
+        subject = new HeatmapTableWithSearchFormPage(driver);
         subject.get();
     }
 

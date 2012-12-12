@@ -21,6 +21,7 @@
   --%>
 
 <!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
@@ -70,6 +71,18 @@
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/experiment-header-buttons.js"></script>
+
+    <script>
+        (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+            $(document).ready(function () {
+
+                initExperimentHeaderButtons();
+
+            });
+        })(jQuery);
+    </script>
 
 </head>
 

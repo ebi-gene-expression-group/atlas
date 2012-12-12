@@ -14,7 +14,7 @@ public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(firefoxDriver, HTTP_PARAMETERS);
+        subject = new HeatmapTablePage(driver, HTTP_PARAMETERS);
         subject.get();
     }
 

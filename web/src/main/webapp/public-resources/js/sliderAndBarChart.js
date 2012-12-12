@@ -20,7 +20,7 @@ function hideOrDisplayGeneDistribution(isFast) {
 
 function initBarChartButton(){
 
-    $("#chart-button").button().click(function () {
+    $("#display-chart").button().click(function () {
 
         var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
         if (isDisplayEnabled == "true") {

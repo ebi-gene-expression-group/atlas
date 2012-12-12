@@ -64,12 +64,18 @@ public class ApplicationProperties {
         return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
     }
 
-    public double getDefaultCutoff() {
-        return Double.parseDouble(configurationProperties.getProperty("experiment.default.cutoff"));
-    }
-
     public String[] getExperimentIdentifiers() {
         return configurationProperties.getProperty("experiment.identifiers").trim().split(",");
     }
 
+    public String getFeedbackEmail() {
+        return configurationProperties.getProperty("feedback.email");
+    }
+
+    public Properties getMailServerProperties() {
+        Properties mailServerProperties = new Properties();
+        mailServerProperties.put("mail.smtp.host", configurationProperties.getProperty("mail.smtp.host"));
+        mailServerProperties.put("mail.smtp.port", configurationProperties.getProperty("mail.smtp.port"));
+        return mailServerProperties;
+    }
 }

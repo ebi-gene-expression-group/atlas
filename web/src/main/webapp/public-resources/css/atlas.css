@@ -20,6 +20,23 @@
  * http://gxa.github.com/gxa
  */
 
+#download-profiles {
+    background:transparent url('../images/download_blue_small.png');
+}​
+
+.button-image{
+     background-repeat: no-repeat;
+     background-position: center;
+     cursor: pointer;
+     width: 22px;
+     height: 24px;
+     padding:3px;
+ }
+
+.button-image .ui-button-text{
+    padding:2px;
+}
+
 body {
     font-size: 10px;
     font-family: Verdana, Helvetica, Arial, sans-serif;
@@ -53,10 +70,6 @@ textarea, .chzn-container {
     white-space: nowrap;
     font-weight:bold;
     font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif
-}
-
-.button-image{
-    padding:3px;
 }
 
 #reload-form-table {

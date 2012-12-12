@@ -4,9 +4,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+
 public abstract class SeleniumFixture {
 
-    protected FirefoxDriver firefoxDriver;
+    //private static final String SELENIUM_SERVER_URL = "http://localhost:4444/wd/hub";
+
+    protected FirefoxDriver driver;
+
+    //protected WebDriver driver;
+
 
     @Before
     public void bootstrapTest() {
@@ -16,11 +22,26 @@ public abstract class SeleniumFixture {
 
     @After
     public void closeDriver() {
-        firefoxDriver.quit();
+        driver.quit();
     }
 
     private void initializeFirefoxDriver() {
-        this.firefoxDriver = new FirefoxDriver();
+
+        this.driver = new FirefoxDriver();
+
+        /*
+        try {
+            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            capabilities.setJavascriptEnabled(true);
+            capabilities.setBrowserName("firefox");
+            this.driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
+
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+
+        }
+        */
     }
 
     protected abstract void getStartingPage();
