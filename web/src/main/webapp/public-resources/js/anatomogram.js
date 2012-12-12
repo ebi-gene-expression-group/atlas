@@ -20,35 +20,82 @@
  * http://gxa.github.com/gxa
  */
 
+function togglePathColor(path, evtType) {
+
+    function setHilighting(color, opacity) {
+        path.style.fill = color;
+        path.style.fillOpacity = opacity;
+    }
+
+    if (evtType == undefined || evtType != 'mouseenter') {
+        setHilighting("gray", 0.5);
+    } else {
+        setHilighting("red", 0.7);
+    }
+}
+
 function toggleOrganismPartColor(svg, organism_part, evt) {
 
-    function togglePathColor(path) {
+    var element = svg.getElementById(organism_part);
+    var evtType = (typeof evt === 'undefined') ? evt : evt.type;
 
-        function setHilighting(color, opacity) {
-            path.style.fill = color;
-            path.style.fillOpacity = opacity;
-        }
-
-        if (evt == undefined || evt.type != 'mouseenter') {
-            setHilighting("gray", 0.5);
+    if (element != null) {
+        if (element.nodeName === 'g') {
+            $.each(element.getElementsByTagName('path'), function () {
+                togglePathColor(this, evtType);
+            });
         } else {
-            setHilighting("red", 0.7);
+            togglePathColor(element, evtType);
         }
+
+    }
+
+}
+
+function hoverOrganismPart(svg, organism_part) {
+
+    var tableHeaderDivs = $('#heatmap-table th').find("div[data-organism-part='" + organism_part + "']");
+
+    function mouseHover(domElem) {
+
+        function toggleClass(elem, evtType) {
+            var headerCell = elem.parent();
+            var colIndex = headerCell.parent("tr").children().index(headerCell) + 1;
+            var dataCells = $('#heatmap-table').find('tr>td:nth-child(' + colIndex + ')');
+            if (evtType != "mouseenter") {
+                headerCell.removeClass("highlight");
+                dataCells.removeClass("highlight");
+            } else {
+                headerCell.addClass("highlight");
+                dataCells.addClass("highlight");
+            }
+        }
+
+        domElem.addEventListener("mouseenter", function () {
+            $.each(tableHeaderDivs, function () {
+                toggleClass($(this), "mouseenter");
+            });
+            togglePathColor(domElem, "mouseenter");
+        }, false);
+        domElem.addEventListener("mouseout", function () {
+            $.each(tableHeaderDivs, function () {
+                toggleClass($(this), "mouseout")
+            });
+            togglePathColor(domElem, "mouseout");
+        }, false);
     }
 
     var element = svg.getElementById(organism_part);
 
     if (element != null) {
         if (element.nodeName === 'g') {
-            $.each(element.getElementsByTagName('path'), function () {
-                togglePathColor(this);
+            $.each(element.getElementsByTagName('path'), function (index, domEle) {
+                mouseHover(domEle)
             });
         } else {
-            togglePathColor(element);
+            mouseHover(element);
         }
-
     }
-
 }
 
 function scaleAnatomogram(svg) {
@@ -67,22 +114,24 @@ function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
     loadAnatomogram("resources/svg/" + fileNameMale);
 
     //hover on first column, to show all organism parts involved on a single gene profile
-    $("#heatmap-table").delegate("td:first-child","hover", function(evt){ //hover on cells of the first table column
+    $("#heatmap-table").delegate("td:first-child", "hover", function (evt) { //hover on cells of the first table column
         var geneExpressions = $(this).parents("tr .even,.odd").find("div[data-organism-part!='']");
 
-        var organismParts = geneExpressions.map(function(){return $(this).attr('data-organism-part')}).get();
+        var organismParts = geneExpressions.map(function () {
+            return $(this).attr('data-organism-part')
+        }).get();
 
-        organismParts.forEach(function(entry) {
-            toggleOrganismPartColor(svg, entry , evt);
+        organismParts.forEach(function (entry) {
+            toggleOrganismPartColor(svg, entry, evt);
         });
 
     });
 
 
-    $('#heatmap-table').delegate("td,th","hover", function (evt) {
+    $('#heatmap-table').delegate("td,th", "hover", function (evt) {
         var organismPart = $(this).find('div').attr("data-organism-part");
-        if (organismPart != undefined){
-            toggleOrganismPartColor(svg, organismPart , evt);
+        if (organismPart != undefined) {
+            toggleOrganismPartColor(svg, organismPart, evt);
         }
     });
 
@@ -90,6 +139,7 @@ function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
     function displayOrganismParts() {
         $.each(organismParts, function () {
             toggleOrganismPartColor(svg, this);
+            hoverOrganismPart(svg, this);
         });
     }
 
@@ -103,13 +153,13 @@ function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
         svg.load(location, {onLoad:prepareAnatomogram});
     }
 
-    if (fileNameMale != fileNameFemale){
+    if (fileNameMale != fileNameFemale) {
         //switch sex toggle button
         $("#sex-toggle-image").button().toggle(function () {
-            $(this).attr("src","resources/images/female_selected.png")
+            $(this).attr("src", "resources/images/female_selected.png")
             loadAnatomogram("resources/svg/" + fileNameFemale);
-        },function() {
-            $(this).attr("src","resources/images/male_selected.png")
+        },function () {
+            $(this).attr("src", "resources/images/male_selected.png")
             loadAnatomogram("resources/svg/" + fileNameMale);
         }).tooltip();
     } else {

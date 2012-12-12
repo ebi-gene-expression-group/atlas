@@ -31,63 +31,68 @@
 <div class="block">
     <table>
         <tbody>
-            <tr>
-                <td>
-                    <display:table name="${geneProfiles}" id="geneProfile"
-                                   htmlId="heatmap-table" class="table-grid">
-                        <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
-                                        class="header-cell">
-                            <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
-                                <fmt:param value="${geneProfile.geneId}"/>
-                            </fmt:message>
-                            <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
-                        </display:column>
+        <tr>
+            <td>
+                <display:table name="${geneProfiles}" id="geneProfile"
+                               htmlId="heatmap-table" class="table-grid">
+                    <display:column
+                            title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
+                            class="header-cell">
+                        <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
+                            <fmt:param value="${geneProfile.geneId}"/>
+                        </fmt:message>
+                        <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
+                    </display:column>
 
-                        <c:forEach var="organismPart" items="${heatmapOrganismParts}">
+                    <c:forEach var="organismPart" items="${heatmapOrganismParts}">
 
-                            <c:set var="expressionLevel"
-                                   value="${geneProfile.getExpressionLevel(organismPart)}"/>
+                        <c:set var="expressionLevel"
+                               value="${geneProfile.getExpressionLevel(organismPart)}"/>
+
+                        <c:if test="${expressionLevel != 0}">
+
+                            <c:set var="cellColour"
+                                   value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)}"/>
+
+                            <c:set var="style" value="background-color:${cellColour}"/>
+
+                        </c:if>
+
+                        <display:column
+                                title="<div data-organism-part='${organismPart}' class='rotate_text'>${organismPart}</div>"
+                                headerClass='rotated_cell'
+                                style="${expressionLevel !=0 ? style : ''}">
 
                             <c:if test="${expressionLevel != 0}">
 
-                                <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)}"/>
-
-                                <c:set var="style" value="background-color:${cellColour}"/>
+                                <div style="font-size:1px;color:${cellColour};background-color:${cellColour};height:100%;width:100%"
+                                     data-organism-part="${organismPart}" data-color="${cellColour}">
+                                    <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
+                                                      value="${expressionLevel}" groupingUsed="false"/>
+                                </div>
 
                             </c:if>
 
-                            <display:column title="<div data-organism-part='${organismPart}' class='rotate_text'>${organismPart}</div>"
-                                            headerClass='rotated_cell'
-                                            style="${expressionLevel !=0 ? style : ''}">
+                        </display:column>
 
-                                <c:if test="${expressionLevel != 0}">
+                    </c:forEach>
 
-                                    <div style="font-size:1px;color:${cellColour}" data-organism-part="${organismPart}" data-color="${cellColour}">
-                                        <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
-                                                          value="${expressionLevel}" groupingUsed="false"/>
-                                    </div>
+                </display:table>
+            </td>
+            <td style="vertical-align: top">
+                <div style="float:left">
+                    <!--
+                     <button id="download-profiles" class="button-image" value="D"></button>
 
-                                </c:if>
-
-                            </display:column>
-
-                        </c:forEach>
-
-                    </display:table>
-                </td>
-                <td style="vertical-align: top">
-                    <div style="float:left">
-                        <!--
-                         <button id="download-profiles" class="button-image" value="D"></button>
-
-                        -->
-                        <a id="download-profiles-link" title="Download query results" href="${downloadUrl}" class="button-image" target="_blank">
-                            <img id="download-profiles" alt="Download query results" style="width:20px" src="resources/images/download_blue_small.png">
-                        </a>
-                    </div>
-                </td>
-            </tr>
+                    -->
+                    <a id="download-profiles-link" title="Download query results" href="${downloadUrl}"
+                       class="button-image" target="_blank">
+                        <img id="download-profiles" alt="Download query results" style="width:20px"
+                             src="resources/images/download_blue_small.png">
+                    </a>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
