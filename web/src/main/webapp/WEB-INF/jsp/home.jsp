@@ -19,6 +19,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="wordcloud" style="width: 550px; height: 350px; position:relative; top: 180px; left:130px;"></div>
 

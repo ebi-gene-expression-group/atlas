@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -49,7 +50,7 @@
             </tr>
             <tr>
                 <td>
-                    <form:textarea path="geneQuery" rows="2" cols="35"></form:textarea>
+                    <form:textarea  path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
                 </td>
                 <td>
                     <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
