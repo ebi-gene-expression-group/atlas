@@ -39,7 +39,9 @@
                     <form:label path="organismParts">Organism parts</form:label>
                 </td>
                 <td>
-                    <form:label path="cutoff">Expression level cutoff</form:label>
+                   <div title="." data-help-loc="#cutoff">
+                        <form:label path="cutoff">Expression level cutoff</form:label>
+                   </div>
                 </td>
                 <td rowspan="4">
                     <input id="submit-button" type="submit" value="Search"/>

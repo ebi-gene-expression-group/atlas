@@ -29,6 +29,8 @@
 
 <c:import url="includes/request-preferences.jsp"/>
 
+<div id="tooltip" style='display:none'></div>
+
 <c:if test="${not empty geneProfiles}">
 
     <div class="container">
@@ -118,6 +120,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/helpTooltip.js"></script>
 
 <script>
 
@@ -163,6 +167,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}');
             initHeatmapDisplayValueToggle();
+//            initHelpTooltip();
 
             $('.container').stickem();
         });
