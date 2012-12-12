@@ -7,9 +7,10 @@
 
 <display:table name="${heatmapOrganismParts}" id="organismPart"
                htmlId="heatmap-table" class="table-grid">
-    <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>" class="header-cell">
+    <display:column title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
+                    class="header-cell">
         <div data-organism-part="${organismPart}">
-            ${organismPart}
+                ${organismPart}
         </div>
     </display:column>
 
@@ -28,19 +29,21 @@
                    value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)
                    }"/>
 
-            <c:set var="style" value="background-color:${cellColour};color:${cellColour};font-size:1px"/>
+            <c:set var="style"
+                   value="background-color:${cellColour};color:${cellColour};font-size:1px;height:100%;width:100%"/>
 
         </c:if>
 
-        <display:column title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a></div>"
-                        headerClass='rotated_cell'
-                        style="${expressionLevel != 0? style : ''}">
+        <display:column
+                title="<div class='rotate_text'><a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a></div>"
+                headerClass='rotated_cell'
+                style="${expressionLevel != 0? style : ''}">
 
             <c:if test="${expressionLevel != 0}">
 
-                <div data-organism-part="${organismPart}" data-color="${cellColour}" >
+                <div data-organism-part="${organismPart}" data-color="${cellColour}">
                     <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}" value="
-                    ${expressionLevel}" groupingUsed="false" />
+                    ${expressionLevel}" groupingUsed="false"/>
                 </div>
 
             </c:if>

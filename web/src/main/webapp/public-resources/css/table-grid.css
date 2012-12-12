@@ -72,11 +72,11 @@
     cursor: default;
 }
 
-th.highlight {
+.table-grid th.highlight {
     background-color: #deebeb;
 }
 
-td.highlight {
+.table-grid td.highlight {
     background-color: #deebeb;
     opacity: .75;
     filter: alpha(opacity = 75);
