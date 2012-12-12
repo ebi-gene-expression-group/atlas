@@ -25,11 +25,13 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.NumberFormat;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.SortedSet;
 
 @Named("requestPreferences")
@@ -44,12 +46,13 @@ public class RequestPreferences {
     @Range(min = 0, max = 1000)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
 
-    @NotNull
-    @Min(0)
+    @Min(value = 0, message = "The expression level cutoff must be greater than 0")
     private Double cutoff = DEFAULT_CUTOFF;
 
     private SortedSet<String> organismParts;
 
+    @Size(max=900,
+          message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
     private String geneQuery = DEFAULT_GENE_QUERY_STRING;
 
     private boolean displayLevels;
