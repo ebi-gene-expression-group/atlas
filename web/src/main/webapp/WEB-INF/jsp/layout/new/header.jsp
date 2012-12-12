@@ -19,6 +19,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="headerdiv" id="headerdiv">
     <div class="header">
