@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.geneannotation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,19 +33,23 @@ import java.util.concurrent.ConcurrentMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GeneNamesProviderTest {
 
     private GeneNamesProvider subject;
 
+    @Mock
+    private AnnotationEnvironment annotationEnvironmentMock;
+
     private ConcurrentMap<String, String> map = new ConcurrentHashMap();
 
     @Before
     public void initializeSubject() {
         map.put("e1", "g1");
-        subject = new GeneNamesProvider();
-        subject.setGeneNames(map);
+        when(annotationEnvironmentMock.geneNames()).thenReturn(map);
+        subject = new GeneNamesProvider(annotationEnvironmentMock);
     }
 
     @Test

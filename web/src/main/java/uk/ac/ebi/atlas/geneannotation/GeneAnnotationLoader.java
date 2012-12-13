@@ -52,12 +52,12 @@ public class GeneAnnotationLoader {
         this.geneNameStreamBuilder = geneNameStreamBuilder;
     }
 
-    public void turnOffReadonly(){
+    private void turnOffReadonly(){
         this.annotationEnvironment.close();
-        this.annotationEnvironment.initBerkeley(false);
+        this.annotationEnvironment.initBerkeleyDatabase(false);
     }
 
-    public void turnOnReadOnly(){
+    private void turnOnReadOnly(){
         this.annotationEnvironment.close();
         this.annotationEnvironment.initBerkeleyReadonly();
     }
