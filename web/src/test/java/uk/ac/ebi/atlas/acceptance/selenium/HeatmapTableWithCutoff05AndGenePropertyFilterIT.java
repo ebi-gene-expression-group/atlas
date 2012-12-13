@@ -60,7 +60,8 @@ public class HeatmapTableWithCutoff05AndGenePropertyFilterIT extends SeleniumFix
                 "organismParts=skeletal+muscle&organismParts=thyroid&_organismParts=1&cutoff=0.5");
         subject.get();
         assertThat(subject.getGeneCount().contains("1"), is(true));
-        assertThat(subject.getFirstGeneProfile(), contains("2", "0.7"));
+        assertThat(subject.getFirstGeneProfile(), contains("","","","","","","",""
+                                                           ,"","","","","2","", "0.7",""));
 
 
     }

@@ -20,13 +20,6 @@ public class HeatmapTableWithCutoff20AndOrganismPartFilterIT extends SeleniumFix
     }
 
     @Test
-    public void verifyOrganismParts() {
-        assertThat(subject.getOrganismParts().size(), is(1));
-        //and
-        assertThat(subject.getOrganismParts(), contains("adrenal"));
-    }
-
-    @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(2));
@@ -35,12 +28,14 @@ public class HeatmapTableWithCutoff20AndOrganismPartFilterIT extends SeleniumFix
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("776"));
+        assertThat(subject.getFirstGeneProfile(), contains("","776","","","","","",""
+                                                           ,"","","","","","","",""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("36"));
+        assertThat(subject.getLastGeneProfile(), contains("","36","","","","","",""
+                                                        ,"","","","","","","",""));
     }
 
     @Test

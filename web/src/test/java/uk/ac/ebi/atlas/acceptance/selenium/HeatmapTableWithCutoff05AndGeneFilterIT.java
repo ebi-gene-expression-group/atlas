@@ -20,9 +20,7 @@ public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
 
     @Test
     public void verifyOrganismParts() {
-        assertThat(subject.getOrganismParts().size(), is(4));
-        //and
-        assertThat(subject.getOrganismParts(), contains("adrenal", "brain", "lymph node", "white blood cells"));
+        assertThat(subject.getOrganismParts().size(), is(16));
     }
 
     @Test
@@ -34,12 +32,14 @@ public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("7", "6", "", ""));
+        assertThat(subject.getFirstGeneProfile(), contains("","7", "6","","","","",""
+                                                            ,"","", "","","","","",""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("2", "", "0.8", "3"));
+        assertThat(subject.getLastGeneProfile(), contains("","2", "","","","","",""
+                                                            ,"","0.8","","","","","","3"));
     }
 
     @Test

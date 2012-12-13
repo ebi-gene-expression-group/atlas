@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.geneannotation;
 
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
@@ -31,19 +32,23 @@ import java.util.concurrent.ConcurrentMap;
 @Named("geneNamesProvider")
 public class GeneNamesProvider {
 
-    Map<String, String> geneNames;
+    private AnnotationEnvironment annotationEnvironment;
 
-    public GeneNamesProvider() {
+    @Inject
+    public GeneNamesProvider(AnnotationEnvironment annotationEnvironment) {
+        this.annotationEnvironment = annotationEnvironment;
     }
 
-
+/*  We can't just inject the StoredMap, it would be like caching a DB cursor rather than a Connection.
+    For example it fails if you refresh the annotation environment by closing the database and reopening, thing that now we do in order to
+    keep the database in readonly mode and only open it in write mode when an annotation update is requested.
     @Resource(name = "geneNames")
     public void setGeneNames(ConcurrentMap<String, String> geneNames) {
         this.geneNames = geneNames;
     }
-
+*/
     public String getGeneName(String ensGeneId) {
-        String value = geneNames.get(ensGeneId);
+        String value = annotationEnvironment.geneNames().get(ensGeneId);
         return value == null ? ensGeneId : value;
     }
 
