@@ -65,7 +65,7 @@
 
                             <c:if test="${expressionLevel != 0}">
 
-                                <div style="font-size:1px;color:${cellColour};background-color:${cellColour};height:100%;width:100%"
+                                <div class="hide_cell" style="color:${cellColour};background-color:${cellColour}"
                                      data-organism-part="${organismPart}" data-color="${cellColour}">
                                     <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                       value="${expressionLevel}" groupingUsed="false"/>

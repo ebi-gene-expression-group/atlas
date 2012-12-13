@@ -83,6 +83,19 @@
     -moz-opacity: .75;
 }
 
+.show_cell {
+    font-size: 9px;
+    background-color: white;
+    margin: 4px;
+    padding: 2px;
+}
+
+.hide_cell {
+    font-size: 1px;
+    min-height: 25px;
+    min-width: 25px;
+}
+
 .rotated_cell {
     height: 110px;
     border: 1px solid #cdcdcd;

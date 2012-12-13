@@ -1,11 +1,15 @@
 function initHeatmapDisplayValueToggle() {
 
     function showCellValue(div) {
-        $(div).attr('style', 'font-size:9px;background-color:white;margin:4px;padding:2px;');
+        $(div).attr('style', '');
+        $(div).removeClass("hide_cell");
+        $(div).addClass("show_cell");
     }
 
     function hideCellValue(div) {
-        $(div).attr('style', 'font-size:1px;color:' + $(div).attr("data-color") + ';background-colour:' + $(div).attr("data-color") + ';height:100%;width:100%');
+        $(div).attr('style', 'color:' + $(div).attr("data-color") + ';background-colour:' + $(div).attr("data-color"));
+        $(div).removeClass("show_cell");
+        $(div).addClass("hide_cell");
     }
 
     function showValues(button) {
@@ -41,11 +45,12 @@ function initHeatmapDisplayValueToggle() {
 
     $("#heatmap-table td:has(div[data-color])").click(function () {
         var div = $(this).find("div");
-        var style = div.attr("style");
-        if (style.search("font-size:\\s*1px") != -1) {
-            showCellValue(div)
-        } else {
+        if (div.hasClass("hide_cell")) {
+            showCellValue(div);
+        } else if (div.hasClass("show_cell")) {
             hideCellValue(div);
+        } else {
+            alert('The cell clicked is incorrect.')
         }
     });
 

@@ -17,7 +17,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "heatmap-table")
     private WebElement heatmapTable;
 
-    @FindBy(id="geneCount")
+    @FindBy(id = "geneCount")
     private WebElement geneFound;
 
     @FindBy(id = "download-profiles-link")
@@ -37,7 +37,7 @@ public class HeatmapTablePage extends TablePage {
         super(driver, httpParameters);
     }
 
-    protected WebElement getHeatmapTable(){
+    protected WebElement getHeatmapTable() {
         return heatmapTable;
     }
 
@@ -51,7 +51,7 @@ public class HeatmapTablePage extends TablePage {
         return getFirstColumnValues(heatmapTable);
     }
 
-    public String getDownloadExpressionProfilesLink(){
+    public String getDownloadExpressionProfilesLink() {
         return downloadExpressionProfilesLink.getAttribute("href");
     }
 
@@ -61,7 +61,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getFirstGeneProfile() {
-        List<String> firstTableRow = getRowValues(heatmapTable,1);
+        List<String> firstTableRow = getRowValues(heatmapTable, 1);
         return firstTableRow.subList(1, firstTableRow.size());
     }
 
@@ -92,6 +92,6 @@ public class HeatmapTablePage extends TablePage {
         //we get the cell at index 1 because at index 0 we have the gene name
         WebElement firstExpressionLevelCell = this.getNonEmptyCellsFromFirstTableRow(heatmapTable).get(1);
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
-        return !div.getAttribute("style").contains("white");
+        return div.getAttribute("class").contains("hide_cell");
     }
 }
