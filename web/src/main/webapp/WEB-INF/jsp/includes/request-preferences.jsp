@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <td>
-                    <form:textarea  path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
+                    <form:textarea  path="geneQuery" rows="3" cols="35"></form:textarea>
                 </td>
                 <td>
                     <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
