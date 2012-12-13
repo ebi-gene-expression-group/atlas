@@ -2,6 +2,11 @@ package uk.ac.ebi.atlas.geneindex;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.utils.Files;
 
@@ -14,6 +19,9 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class IndexClientTestIT {
 
     private IndexClient subject;
@@ -21,6 +29,9 @@ public class IndexClientTestIT {
     private GenePropertyQueryBuilder queryBuilder;
 
     private String jsonData;
+
+    @Value("#{configuration['index.server.url']}")
+    private String solrURL;
 
     @Before
     public void loadTestData() throws IOException {
@@ -35,8 +46,7 @@ public class IndexClientTestIT {
 
         subject = new IndexClient(restTemplate, queryBuilder);
 
-        //ToDo ...this is bad, requires connection to lime to run... Should we configure it like we did in selenium, setting localhost as default and a target server to be used when running integration profile (bamboo)
-        subject.setServerURL("http://lime:8983/solr/");
+        subject.setServerURL(solrURL);
     }
 
     @Test
