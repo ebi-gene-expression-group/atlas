@@ -91,10 +91,8 @@
 }
 
 .hide_cell {
-    font-size: 1px;
-    opacity: .0;
-    filter: alpha(opacity = 0);
-    -moz-opacity: .0;
+    display: none;
+    visibility: hidden;
 }
 
 .rotated_cell {
