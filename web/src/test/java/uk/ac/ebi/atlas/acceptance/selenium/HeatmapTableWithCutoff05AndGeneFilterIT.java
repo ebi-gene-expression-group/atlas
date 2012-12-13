@@ -32,14 +32,16 @@ public class HeatmapTableWithCutoff05AndGeneFilterIT extends SeleniumFixture {
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("","7", "6","","","","",""
-                                                            ,"","", "","","","","",""));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("", "7", "6", "", "", "", "", ""
+                , "", "", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("","2", "","","","","",""
-                                                            ,"","0.8","","","","","","3"));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getLastGeneProfile(), contains("", "2", "", "", "", "", "", ""
+                , "", "0.8", "", "", "", "", "", "3"));
     }
 
     @Test

@@ -28,14 +28,16 @@ public class HeatmapTableWithCutoff20AndOrganismPartFilterIT extends SeleniumFix
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("","776","","","","","",""
-                                                           ,"","","","","","","",""));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("", "776", "", "", "", "", "", ""
+                , "", "", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("","36","","","","","",""
-                                                        ,"","","","","","","",""));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getLastGeneProfile(), contains("", "36", "", "", "", "", "", ""
+                , "", "", "", "", "", "", "", ""));
     }
 
     @Test

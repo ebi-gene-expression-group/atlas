@@ -28,14 +28,16 @@ public class HeatmapTableWithTwoOrganismPartFilterIT extends SeleniumFixture {
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("228", "","","","", "579","",""
-                                                            ,"","","","","","","",""));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("228", "", "", "", "", "579", "", ""
+                , "", "", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("","","","","", "57","",""
-                                                          ,"","","","","","","",""));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getLastGeneProfile(), contains("", "", "", "", "", "57", "", ""
+                , "", "", "", "", "", "", "", ""));
     }
 
     @Test
