@@ -23,6 +23,9 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignFeedbackPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -48,12 +51,18 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
     @Test
     public void sendEmptyFeedback() throws InterruptedException {
         subject.clickFeedbackLink();
+        final String before = subject.getFeedbackTipsText();
         assertThat(subject.getFeedbackTipsText(), is("Please fill this form and click the Send button."));
         assertThat(subject.getFeedbackText(), is(""));
         subject.clickSendButton();
         assertThat(subject.getFeedbackText(), is(""));
-        // wait a bit here for email processing
-        Thread.sleep(1000);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !subject.getFeedbackTipsText().equals(before);
+            }
+        });
         assertThat(subject.getFeedbackTipsText(), is("Length of the feedback field must be between 3 and 10000 characters."));
     }
 
@@ -70,12 +79,18 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
     @Test
     public void sendTestFeedback() throws InterruptedException {
         subject.clickFeedbackLink();
+        final String before = subject.getCancelButtonText();
         assertThat(subject.getFeedbackText(), is(""));
         subject.setFeedbackText("Test Feedback");
         assertThat(subject.getFeedbackText(), is("Test Feedback"));
         subject.clickSendButton();
-        // wait a bit here for email processing
-        Thread.sleep(1000);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !subject.getCancelButtonText().equals(before);
+            }
+        });
         assertThat(subject.getCancelButtonText(), is("Close"));
         subject.clickCancelButton();
         assertThat(subject.isFeedbackTipsShown(), is(false));
@@ -84,14 +99,20 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
     @Test
     public void sendTestFeedbackAndEmail() throws InterruptedException {
         subject.clickFeedbackLink();
+        final String before = subject.getCancelButtonText();
         assertThat(subject.getFeedbackText(), is(""));
         subject.setFeedbackText("Test Feedback");
         assertThat(subject.getFeedbackText(), is("Test Feedback"));
         subject.setEmailText("atlas-feedback@ebi.ac.uk");
         assertThat(subject.getEmailText(), is("atlas-feedback@ebi.ac.uk"));
         subject.clickSendButton();
-        // wait a bit here for email processing
-        Thread.sleep(1000);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !subject.getCancelButtonText().equals(before);
+            }
+        });
         assertThat(subject.getCancelButtonText(), is("Close"));
         subject.clickCancelButton();
         assertThat(subject.isFeedbackTipsShown(), is(false));
