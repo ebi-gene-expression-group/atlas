@@ -46,14 +46,15 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
     }
 
     @Test
-    public void sendEmptyFeedback() {
+    public void sendEmptyFeedback() throws InterruptedException {
         subject.clickFeedbackLink();
         assertThat(subject.getFeedbackTipsText(), is("Please fill this form and click the Send button."));
         assertThat(subject.getFeedbackText(), is(""));
         subject.clickSendButton();
         assertThat(subject.getFeedbackText(), is(""));
-        //ToDo: fix for bamboo and uncomment
-//        assertThat(subject.getFeedbackTipsText(), is("Length of the feedback field must be between 3 and 10000 characters."));
+        // wait a bit here for email processing
+        Thread.sleep(1000);
+        assertThat(subject.getFeedbackTipsText(), is("Length of the feedback field must be between 3 and 10000 characters."));
     }
 
     @Test
@@ -67,20 +68,21 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
     }
 
     @Test
-    public void sendTestFeedback() {
+    public void sendTestFeedback() throws InterruptedException {
         subject.clickFeedbackLink();
         assertThat(subject.getFeedbackText(), is(""));
         subject.setFeedbackText("Test Feedback");
         assertThat(subject.getFeedbackText(), is("Test Feedback"));
         subject.clickSendButton();
-        //ToDo: fix for bamboo and uncomment
-//        assertThat(subject.getCancelButtonText(), is("Close"));
+        // wait a bit here for email processing
+        Thread.sleep(1000);
+        assertThat(subject.getCancelButtonText(), is("Close"));
         subject.clickCancelButton();
         assertThat(subject.isFeedbackTipsShown(), is(false));
     }
 
     @Test
-    public void sendTestFeedbackAndEmail() {
+    public void sendTestFeedbackAndEmail() throws InterruptedException {
         subject.clickFeedbackLink();
         assertThat(subject.getFeedbackText(), is(""));
         subject.setFeedbackText("Test Feedback");
@@ -88,8 +90,9 @@ public class ExperimentDesignFeedbackIT extends SeleniumFixture {
         subject.setEmailText("atlas-feedback@ebi.ac.uk");
         assertThat(subject.getEmailText(), is("atlas-feedback@ebi.ac.uk"));
         subject.clickSendButton();
-        //ToDo: fix for bamboo and uncomment
-//        assertThat(subject.getCancelButtonText(), is("Close"));
+        // wait a bit here for email processing
+        Thread.sleep(1000);
+        assertThat(subject.getCancelButtonText(), is("Close"));
         subject.clickCancelButton();
         assertThat(subject.isFeedbackTipsShown(), is(false));
     }
