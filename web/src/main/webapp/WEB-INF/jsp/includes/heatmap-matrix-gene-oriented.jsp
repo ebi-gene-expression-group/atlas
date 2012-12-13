@@ -44,7 +44,7 @@
                         <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
                     </display:column>
 
-                        <c:forEach var="organismPart" items="${allOrganismParts}">
+                    <c:forEach var="organismPart" items="${allOrganismParts}">
 
                         <c:set var="expressionLevel"
                                value="${geneProfile.getExpressionLevel(organismPart)}"/>
@@ -65,8 +65,7 @@
 
                             <c:if test="${expressionLevel != 0}">
 
-                                <div class="hide_cell" style="color:${cellColour};background-color:${cellColour}"
-                                     data-organism-part="${organismPart}" data-color="${cellColour}">
+                                <div class="hide_cell" data-organism-part="${organismPart}" data-color="${cellColour}">
                                     <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                       value="${expressionLevel}" groupingUsed="false"/>
                                 </div>

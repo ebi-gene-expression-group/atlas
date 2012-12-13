@@ -1,13 +1,11 @@
 function initHeatmapDisplayValueToggle() {
 
     function showCellValue(div) {
-        $(div).attr('style', '');
         $(div).removeClass("hide_cell");
         $(div).addClass("show_cell");
     }
 
     function hideCellValue(div) {
-        $(div).attr('style', 'color:' + $(div).attr("data-color") + ';background-colour:' + $(div).attr("data-color"));
         $(div).removeClass("show_cell");
         $(div).addClass("hide_cell");
     }

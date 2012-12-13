@@ -29,7 +29,6 @@
                    value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)
                    }"/>
             <c:set var="class" value="hide_cell"/>
-            <c:set var="style" value="background-color:${cellColour};color:${cellColour}"/>
 
         </c:if>
 

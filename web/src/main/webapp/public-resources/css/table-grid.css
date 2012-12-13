@@ -92,8 +92,9 @@
 
 .hide_cell {
     font-size: 1px;
-    min-height: 25px;
-    min-width: 25px;
+    opacity: .0;
+    filter: alpha(opacity = 0);
+    -moz-opacity: .0;
 }
 
 .rotated_cell {
