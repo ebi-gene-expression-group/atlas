@@ -44,7 +44,7 @@
                         <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
                     </display:column>
 
-                    <c:forEach var="organismPart" items="${heatmapOrganismParts}">
+                        <c:forEach var="organismPart" items="${allOrganismParts}">
 
                         <c:set var="expressionLevel"
                                value="${geneProfile.getExpressionLevel(organismPart)}"/>
