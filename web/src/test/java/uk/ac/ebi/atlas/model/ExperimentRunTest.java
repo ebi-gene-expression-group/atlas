@@ -15,14 +15,14 @@ public class ExperimentRunTest {
     @Before
     public void setUp() throws Exception {
         subject = new ExperimentRun("RUN_ACCESSION")
-                                .addFactorValue("A_TYPE", "factor1","value1")
-                                .addFactorValue("ORGANISM_PART", "org", organismPart);
+                .addFactorValue("A_TYPE", "factor1", "value1")
+                .addFactorValue("ORGANISM_PART", "org", organismPart);
     }
 
     @Test
     public void testGetOrganismPart() throws Exception {
 
-        assertThat(subject.getOrganismPart().getValue(), is(organismPart));
+        assertThat(subject.getExperimentalFactor(FactorValue.FactorType.ORGANISM_PART).getValue(), is(organismPart));
 
     }
 

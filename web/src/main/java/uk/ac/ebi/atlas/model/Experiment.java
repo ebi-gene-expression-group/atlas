@@ -32,7 +32,8 @@ public class Experiment {
 
     private String experimentAccession;
     private String description;
-    private SortedSet<String> organismParts = new TreeSet<>();
+    private FactorValue.FactorType type;
+    private SortedSet<String> experimentalFactors = new TreeSet<>();
 
     private Map<String, ExperimentRun> runs = new HashMap<>();
 
@@ -40,9 +41,10 @@ public class Experiment {
 
     private Set<String> experimentRunAccessions;
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, FactorValue.FactorType type) {
         this.experimentAccession = experimentAccession;
         this.description = description;
+        this.type = type;
         this.experimentRunAccessions = experimentRunAccessions;
     }
 
@@ -50,7 +52,7 @@ public class Experiment {
         for (ExperimentRun experimentRun : experimentRuns) {
             if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
                 runs.put(experimentRun.getRunAccession(), experimentRun);
-                organismParts.add(experimentRun.getOrganismPart().getValue());
+                experimentalFactors.add(experimentRun.getExperimentalFactor(type).getValue());
             }
         }
         return this;
@@ -82,7 +84,7 @@ public class Experiment {
     }
 
     public SortedSet<String> getAllOrganismParts() {
-        return organismParts;
+        return experimentalFactors;
     }
 
     public String getDescription() {

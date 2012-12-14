@@ -20,6 +20,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="wordcloud" style="width: 550px; height: 350px; position:relative; top: 180px; left:130px;"></div>
 
@@ -31,7 +32,9 @@
 
         <h2>Homo Sapiens</h2>
         <ul>
-            <li><a href="experiments/E-MTAB-513">E-MTAB-513</a></li>
+            <c:forEach items="${organismToExperiments['Homo sapiens']}" var="entry">
+                <li><a href="experiments/${entry}">${entry}</a></li>
+            </c:forEach>
         </ul>
     </div>
     <div class="item mouse">
@@ -41,7 +44,9 @@
 
         <h2>Mus Musculus</h2>
         <ul>
-            <li><a href="experiments/E-MTAB-599">E-MTAB-599</a></li>
+            <c:forEach items="${organismToExperiments['Mus musculus']}" var="entry">
+                <li><a href="experiments/${entry}">${entry}</a></li>
+            </c:forEach>
         </ul>
     </div>
     <!--<div class="item rat">
