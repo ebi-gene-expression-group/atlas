@@ -75,28 +75,12 @@
                                  items="${allOrganismParts}" cssClass="chzn-select"
                                  cssStyle="width:350px;display:none"/>
                 </td>
-                    <%--<td>--%>
-                    <%--<c:choose>--%>
-                    <%--<c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">--%>
-                    <%--<fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"--%>
-                    <%--type="number"--%>
-                    <%--maxFractionDigits="0"--%>
-                    <%--var="formattedCutoff"/>--%>
-                    <%--<form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"--%>
-                    <%--style="border:1; font-weight:bold;"/>--%>
-                    <%--</c:when>--%>
-                    <%--<c:otherwise>--%>
-                    <%--<form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>--%>
-                    <%--</c:otherwise>--%>
-                    <%--</c:choose>--%>
-                    <%--</td>--%>
-            </tr>
         </table>
         <br/>
 
     </form:form>
 
-    <div id="gene-distribution" style="margin-bottom:0px;width:960px;height:100px"></div>
+    <div data-help-loc="#gene-distribution" id="gene-distribution" style="margin-bottom:0px;width:960px;height:100px"></div>
     <div id="gene-distribution-button" style="float:left">
         <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
             <img alt="Display gene distribution"
