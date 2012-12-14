@@ -22,7 +22,9 @@
 
 function initHelpTooltip() {
 
-    $("div[data-help-loc]").tooltip({disabled:true});
+    $("div[data-help-loc]")
+            .attr("title","")
+            .tooltip({disabled:true});
 
     $("#display-help").button()
         .toggle(function () {

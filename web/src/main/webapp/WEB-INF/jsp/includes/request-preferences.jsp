@@ -37,12 +37,12 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                 </td>
                 <td>
-                    <div title=" " data-help-loc="#factors">
+                    <div data-help-loc="#factors">
                         <form:label path="organismParts">Organism parts</form:label>
                     </div>
                 </td>
                 <td>
-                   <div title=" " data-help-loc="#cutoff">
+                   <div data-help-loc="#cutoff">
                         <form:label path="cutoff">Expression level cutoff</form:label>
                    </div>
                 </td>
