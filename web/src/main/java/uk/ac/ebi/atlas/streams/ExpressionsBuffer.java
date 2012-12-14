@@ -121,10 +121,11 @@ class ExpressionsBuffer {
                 columnRun = columnRun.trim();
 
                 Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
                 ExperimentRun experimentRun = experiment.getExperimentRun(columnRun);
+                checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+
                 if (experimentRun.getExperimentalFactor(FactorValue.FactorType.ORGANISM_PART) != null) {
                     return experimentRun.getExperimentalFactor(FactorValue.FactorType.ORGANISM_PART);
                 }
