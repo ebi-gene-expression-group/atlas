@@ -79,18 +79,18 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         // TODO: takes first experimental factor type as default
         String experimentalFactor = investigation.IDF.experimentalFactorType.get(0).replaceAll(" ", "_");
-        FactorValue.FactorType type = null;
+        FactorValue.FactorType factorType = null;
         if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.ORGANISM_PART.toString()))
-            type = FactorValue.FactorType.ORGANISM_PART;
+            factorType = FactorValue.FactorType.ORGANISM_PART;
         else if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.CELL_LINE.toString()))
-            type = FactorValue.FactorType.CELL_LINE;
+            factorType = FactorValue.FactorType.CELL_LINE;
         else if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.CELLULAR_COMPONENT.toString()))
-            type = FactorValue.FactorType.CELLULAR_COMPONENT;
+            factorType = FactorValue.FactorType.CELLULAR_COMPONENT;
         else if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.MATERIAL_TYPE.toString()))
-            type = FactorValue.FactorType.MATERIAL_TYPE;
+            factorType = FactorValue.FactorType.MATERIAL_TYPE;
 
         Experiment experiment = new Experiment(experimentAccession, arrayExpressClient.fetchExperimentName(experimentAccession)
-                , getExperimentRunAccessions(experimentAccession), type);
+                , getExperimentRunAccessions(experimentAccession), factorType);
 
         ScanNode firstNode = scanNodes.iterator().next();
 

@@ -18,7 +18,8 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 class ExpressionsBuffer {
 
@@ -54,8 +55,9 @@ class ExpressionsBuffer {
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
-        checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
-                "found: " + values.length);
+
+        //checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
+        //        "found: " + values.length);
 
         expressionLevelsBuffer.clear();
 
@@ -105,7 +107,9 @@ class ExpressionsBuffer {
 
             for (String columnHeader : columnHeaders) {
 
-                orderedFactorValues.add(getOrganismPart(columnHeader, experimentAccession));
+                FactorValue factorValue = getExperimentalFactor(columnHeader, experimentAccession);
+                if (factorValue != null)
+                    orderedFactorValues.add(factorValue);
 
             }
             readyToCreate = true;
@@ -113,7 +117,7 @@ class ExpressionsBuffer {
             return this;
         }
 
-        private FactorValue getOrganismPart(String columnHeader, String experimentAccession) {
+        private FactorValue getExperimentalFactor(String columnHeader, String experimentAccession) {
 
             String[] columnRuns = columnHeader.split(",");
 
@@ -124,10 +128,14 @@ class ExpressionsBuffer {
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
                 ExperimentRun experimentRun = experiment.getExperimentRun(columnRun);
-                checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+                if (experimentRun == null) {
+                    logger.warn(MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+                    return null;
+                }
+                //checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
-                if (experimentRun.getExperimentalFactor(FactorValue.FactorType.ORGANISM_PART) != null) {
-                    return experimentRun.getExperimentalFactor(FactorValue.FactorType.ORGANISM_PART);
+                if (experimentRun.getExperimentalFactor(experiment.getFactorType()) != null) {
+                    return experimentRun.getExperimentalFactor(experiment.getFactorType());
                 }
             }
 
