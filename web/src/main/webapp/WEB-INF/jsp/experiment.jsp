@@ -70,7 +70,8 @@
                         <td style="width:25px;padding-top: 15px; vertical-align:top">
                             <div id="sex-toggle">
                                 <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                                     style="width:20px;height:38px;padding:2px" src="resources/images/male_selected.png"/>
+                                     style="width:20px;height:38px;padding:2px"
+                                     src="resources/images/male_selected.png"/>
                             </div>
                         </td>
                         <td>
@@ -81,7 +82,7 @@
                 </table>
             </div>
 
-            <div id="heatmap-div"  class="content">
+            <div id="heatmap-div" class="content">
 
                 <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
 
@@ -125,9 +126,9 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
         $(document).ready(function () {
 
-            var organismParts = [${heatmapOrganismParts.size()}];
+            var organismParts = [${allOrganismParts.size()}];
 
-            <c:forEach varStatus="i" var="organismPart" items="${heatmapOrganismParts}">
+            <c:forEach varStatus="i" var="organismPart" items="${allOrganismParts}">
             organismParts[${i.index}] = '${organismPart}';
             </c:forEach>
 
