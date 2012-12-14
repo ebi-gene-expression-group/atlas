@@ -4,5 +4,4 @@ function initExperimentHeaderButtons(){
     $('#display-experiment-design').button().tooltip();
     $('#goto-ae').button().tooltip();
 
-
 }

@@ -120,8 +120,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/helpTooltip.js"></script>
+<%--<script language="JavaScript" type="text/javascript"--%>
+        <%--src="${pageContext.request.contextPath}/resources/js/helpTooltip.js"></script>--%>
 
 <script>
 
@@ -168,7 +168,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8);
             initHeatmapDisplayValueToggle();
-            initHelpTooltip();
+//            initHelpTooltip();
 
             $('.container').stickem();
         });

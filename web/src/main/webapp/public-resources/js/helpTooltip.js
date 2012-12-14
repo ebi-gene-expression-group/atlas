@@ -23,31 +23,35 @@
 function initHelpTooltip() {
 
     $("div[data-help-loc]")
-            .attr("title","")
-            .tooltip({disabled:true});
+        .attr("title", "")
+        .tooltip({disabled: true});
 
-    $("#display-help").button()
-        .toggle(function () {
+
+    $("#display-help-image").button().
+        toggle(function () {
+            $(this).attr("src", "resources/images/helpPressed.png");
+            $(this).tooltip("option", "content", "Hide help");
             enableTooltip();
-        },
-        function () {
+        },function () {
+            $(this).attr("src", "resources/images/help.png");
+            $(this).tooltip("option", "content", "Show help");
             disableTooltip();
-        });
+        }).tooltip();
 
     function enableTooltip() {
         $("div[data-help-loc]")
-            .tooltip( "option", "disabled", false )
+            .tooltip("option", "disabled", false)
             .on('mouseover.loadContent', function () {
                 var selectedElement = this;
                 $('#tooltip').load('resources/html/atlas-help.html ' + $(selectedElement).attr('data-help-loc'), function () {
-                    $(selectedElement).tooltip("option", "content",  $('#tooltip').text());
+                    $(selectedElement).tooltip("option", "content", $('#tooltip').text());
                 });
             })
     }
 
     function disableTooltip() {
         $("div[data-help-loc]")
-            .tooltip( "option", "disabled", true )
+            .tooltip("option", "disabled", true)
             .off('mouseover.loadContent');
     }
 }
