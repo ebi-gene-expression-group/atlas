@@ -395,7 +395,7 @@
           </ResponseAssertion>
           <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
-            <stringProp name="DurationAssertion.duration">5000</stringProp>
+            <stringProp name="DurationAssertion.duration">9000</stringProp>
           </DurationAssertion>
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
@@ -479,7 +479,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="geneQuery" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">ENSG00000127720, ENSG00000244656, ENSG00000224440, ENSG00000261140, ENSG00000221200, ENSG00000266468, ENSG00000237787, ENSG00000051596, ENSG00000250532, ENSG00000236211, ENSG00000228738, ENSG00000252559, ENSG00000214684, ENSG00000236118, ENSG00000213697, ENSG00000135541, ENSG00000252927, ENSG00000143376, ENSG00000212066, ENSG00000256006, ENSG00000258324, ENSG00000206917, ENSG00000172172, ENSG00000100218, ENSG00000262864, ENSG00000199273, ENSG00000225937, ENSG00000132604, ENSG00000111218, ENSG00000254025, ENSG00000142185, ENSG00000228682, ENSG00000162676, ENSG00000131724, ENSG00000259444, ENSG00000224647, ENSG00000258527, ENSG00000213417, ENSG00000232842, ENSG00000257711, ENSG00000235293, ENSG00000263587, ENSG00000112812, ENSG00000263861, ENSG00000258050, ENSG00000128595, ENSG00000136531, ENSG00000260658, ENSG00000175220, ENSG00000176115, ENSG00000186479, ENSG00000168283, ENSG00000225469, ENSG00000228175, ENSG00000264950, ENSG00000257244, ENSG00000249474, ENSG00000034510, ENSG00000231351, ENSG00000100652, ENSG00000256404, ENSG00000258472, ENSG00000174684, ENSG00000206283, ENSG00000226356, ENSG00000230283, ENSG00000258081, ENSG00000237472, ENSG00000251152, ENSG00000222460, ENSG00000201292, ENSG00000263509, ENSG00000131652, ENSG00000107185, ENSG00000224995, ENSG00000256967, ENSG00000248449, ENSG00000264183, ENSG00000119314, ENSG00000232952, ENSG00000225877, ENSG00000230830, ENSG00000196652, ENSG00000100568, ENSG00000265156, ENSG00000263538, ENSG00000201231, ENSG00000249913, ENSG00000108468, ENSG00000176566, ENSG00000236377, ENSG00000265161, ENSG00000235430, ENSG00000253634, ENSG00000248165, ENSG00000259464, ENSG00000189132, ENSG00000264788, ENSG00000252268</stringProp>
+                <stringProp name="Argument.value">ENSG00000127720, ENSG00000244656, ENSG00000224440, ENSG00000261140, ENSG00000221200, ENSG00000266468, ENSG00000237787, ENSG00000051596, ENSG00000250532, ENSG00000236211, ENSG00000228738, ENSG00000252559, ENSG00000214684, ENSG00000236118, ENSG00000213697, ENSG00000135541, ENSG00000252927, ENSG00000143376, ENSG00000212066, ENSG00000256006, ENSG00000258324, ENSG00000206917, ENSG00000172172, ENSG00000100218, ENSG00000262864, ENSG00000199273, ENSG00000225937, ENSG00000132604, ENSG00000111218, ENSG00000254025, ENSG00000142185, ENSG00000228682, ENSG00000162676, ENSG00000131724, ENSG00000259444, ENSG00000224647, ENSG00000258527, ENSG00000213417, ENSG00000232842, ENSG00000257711, ENSG00000235293, ENSG00000263587, ENSG00000112812, ENSG00000263861, ENSG00000258050, ENSG00000128595, ENSG00000136531, ENSG00000260658, ENSG00000175220, ENSG00000176115</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">geneQuery</stringProp>
@@ -505,8 +505,8 @@
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
               <stringProp name="3213227">html</stringProp>
-              <stringProp name="-2093939402">DCAF4L2</stringProp>
-              <stringProp name="2066415085">FAM47B</stringProp>
+              <stringProp name="2449733">PCA3</stringProp>
+              <stringProp name="-964413442">CU463998.3</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -514,7 +514,7 @@
           </ResponseAssertion>
           <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
-            <stringProp name="DurationAssertion.duration">4000</stringProp>
+            <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
@@ -764,11 +764,12 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">_organismParts</stringProp>
               </elementProp>
-              <elementProp name="" elementType="HTTPArgument">
+              <elementProp name="geneQuery" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.value">protein_coding</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">geneQuery</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>

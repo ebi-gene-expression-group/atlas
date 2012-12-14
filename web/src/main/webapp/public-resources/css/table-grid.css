@@ -79,7 +79,6 @@
 .table-grid td.highlight {
     background-color: #deebeb;
     opacity: .75;
-    filter: alpha(opacity = 75);
     -moz-opacity: .75;
 }
 

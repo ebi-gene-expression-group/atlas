@@ -27,10 +27,12 @@ function togglePathColor(path, evtType) {
         path.style.fillOpacity = opacity;
     }
 
-    if (evtType == undefined || evtType != 'mouseenter') {
+    if (evtType == undefined) {
         setHilighting("gray", 0.5);
-    } else {
+    } else if (evtType == 'mouseenter' || evtType == 'mouseover') {
         setHilighting("red", 0.7);
+    } else {
+        setHilighting("gray", 0.5);
     }
 }
 
@@ -62,7 +64,7 @@ function hoverOrganismPart(svg, organism_part) {
             var headerCell = elem.parent();
             var colIndex = headerCell.parent("tr").children().index(headerCell) + 1;
             var dataCells = $('#heatmap-table').find('tr>td:nth-child(' + colIndex + ')');
-            if (evtType != "mouseenter") {
+            if (evtType != "mouseover") {
                 headerCell.removeClass("highlight");
                 dataCells.removeClass("highlight");
             } else {
@@ -71,11 +73,11 @@ function hoverOrganismPart(svg, organism_part) {
             }
         }
 
-        domElem.addEventListener("mouseenter", function () {
+        domElem.addEventListener("mouseover", function () {
             $.each(tableHeaderDivs, function () {
-                toggleClass($(this), "mouseenter");
+                toggleClass($(this), "mouseover");
             });
-            togglePathColor(domElem, "mouseenter");
+            togglePathColor(domElem, "mouseover");
         }, false);
         domElem.addEventListener("mouseout", function () {
             $.each(tableHeaderDivs, function () {
