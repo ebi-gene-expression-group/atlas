@@ -33,7 +33,7 @@
 
     <div class="container">
 
-        <div id="heatmap" class="row stickem-container">
+        <div id="heatmap" style="overflow: auto; padding:15px;" class="row stickem-container">
 
             <div id="anatomogram" class="aside stickem double-click-noselection">
 
