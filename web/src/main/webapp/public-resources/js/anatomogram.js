@@ -20,31 +20,34 @@
  * http://gxa.github.com/gxa
  */
 
-function toggleOrganismPartColor(svg, organism_part, evt) {
+function togglePathColor(path, evtType) {
 
-    function togglePathColor(path) {
-
-        function setHilighting(color, opacity) {
-            path.style.fill = color;
-            path.style.fillOpacity = opacity;
-        }
-
-        if (evt == undefined || evt.type != 'mouseenter') {
-            setHilighting("gray", 0.5);
-        } else {
-            setHilighting("red", 0.7);
-        }
+    function setHilighting(color, opacity) {
+        path.style.fill = color;
+        path.style.fillOpacity = opacity;
     }
 
+    if (evtType == undefined) {
+        setHilighting("gray", 0.5);
+    } else if (evtType == 'mouseenter' || evtType == 'mouseover') {
+        setHilighting("red", 0.7);
+    } else {
+        setHilighting("gray", 0.5);
+    }
+}
+
+function toggleOrganismPartColor(svg, organism_part, evt) {
+
     var element = svg.getElementById(organism_part);
+    var evtType = (typeof evt === 'undefined') ? evt : evt.type;
 
     if (element != null) {
         if (element.nodeName === 'g') {
             $.each(element.getElementsByTagName('path'), function () {
-                togglePathColor(this);
+                togglePathColor(this, evtType);
             });
         } else {
-            togglePathColor(element);
+            togglePathColor(element, evtType);
         }
 
     }
@@ -53,55 +56,46 @@ function toggleOrganismPartColor(svg, organism_part, evt) {
 
 function hoverOrganismPart(svg, organism_part) {
 
+    var tableHeaderDivs = $('#heatmap-table th').find("div[data-organism-part='" + organism_part + "']");
+
+    function mouseHover(domElem) {
+
+        function toggleClass(elem, evtType) {
+            var headerCell = elem.parent();
+            var colIndex = headerCell.parent("tr").children().index(headerCell) + 1;
+            var dataCells = $('#heatmap-table').find('tr>td:nth-child(' + colIndex + ')');
+            if (evtType != "mouseover") {
+                headerCell.removeClass("highlight");
+                dataCells.removeClass("highlight");
+            } else {
+                headerCell.addClass("highlight");
+                dataCells.addClass("highlight");
+            }
+        }
+
+        domElem.addEventListener("mouseover", function () {
+            $.each(tableHeaderDivs, function () {
+                toggleClass($(this), "mouseover");
+            });
+            togglePathColor(domElem, "mouseover");
+        }, false);
+        domElem.addEventListener("mouseout", function () {
+            $.each(tableHeaderDivs, function () {
+                toggleClass($(this), "mouseout")
+            });
+            togglePathColor(domElem, "mouseout");
+        }, false);
+    }
+
     var element = svg.getElementById(organism_part);
-    var tableCells = $('#heatmap-table th').find("div[data-organism-part='" + organism_part + "']");
 
     if (element != null) {
         if (element.nodeName === 'g') {
             $.each(element.getElementsByTagName('path'), function (index, domEle) {
-                domEle.addEventListener("mouseover", function () {
-                    $.each(tableCells, function (i, d) {
-                        var cell = $(this).parent();
-                        cell.addClass("highlight");
-                        var colIndex = cell.parent("tr").children().index(cell) + 1;
-                        $('#heatmap-table tr>td:nth-child(' + colIndex + ')').addClass("highlight");
-                    });
-                    domEle.style.fill = "red";
-                    domEle.style.fillOpacity = 0.7;
-                }, false);
-                domEle.addEventListener("mouseout", function () {
-                    $.each(tableCells, function (i, d) {
-                        var cell = $(this).parent();
-                        cell.removeClass("highlight");
-                        var colIndex = cell.parent("tr").children().index(cell) + 1;
-                        $('#heatmap-table tr>td:nth-child(' + colIndex + ')').removeClass("highlight");
-                    });
-                    domEle.style.fill = "grey";
-                    domEle.style.fillOpacity = 0.5;
-                }, false);
+                mouseHover(domEle)
             });
         } else {
-            element.addEventListener("mouseover", function () {
-                $.each(tableCells, function (index, domEle) {
-                    var cell = $(this).parent();
-                    cell.addClass("highlight");
-                    var colIndex = cell.parent("tr").children().index(cell) + 1;
-                    $('#heatmap-table tr>td:nth-child(' + colIndex + ')').addClass("highlight");
-                });
-                element.style.fill = "red";
-                element.style.fillOpacity = 0.7;
-            }, false);
-            element.addEventListener("mouseout", function () {
-                $.each(tableCells, function (index, domEle) {
-                    var cell = $(this).parent();
-                    cell.removeClass("highlight");
-                    var colIndex = cell.parent("tr").children().index(cell) + 1;
-                    $('#heatmap-table tr>td:nth-child(' + colIndex + ')').removeClass("highlight");
-                });
-                element.style.fill = "grey";
-                element.style.fillOpacity = 0.5;
-            }, false);
-
+            mouseHover(element);
         }
     }
 }

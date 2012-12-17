@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.page;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -69,8 +69,6 @@ public class GeneProfilesPageController {
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
 
-            model.addAttribute("heatmapOrganismParts", geneProfiles.getAllOrganismParts());
-
             model.addAttribute("geneProfiles", geneProfiles);
 
             model.addAttribute("minExpressionLevel", geneProfiles.getMinExpressionLevel());
@@ -88,10 +86,6 @@ public class GeneProfilesPageController {
             model.addAttribute("allOrganismParts", experiment.getAllOrganismParts());
 
             String specie = experiment.getSpecie();
-
-            model.addAttribute("specie", specie);
-
-            model.addAttribute("experimentDescription", experiment.getDescription());
 
             model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, true));
 

@@ -30,9 +30,9 @@ public class ExpressionBufferTest {
     @Before
     public void initializeSubject() {
 
-        orderedFactorValues.add(new FactorValue("ORGANISM_PART","org","lung"));
-        orderedFactorValues.add(new FactorValue("ORGANISM_PART","org","liver"));
-        orderedFactorValues.add(new FactorValue("ORGANISM_PART","org","longue"));
+        orderedFactorValues.add(new FactorValue("ORGANISM_PART", "org", "lung"));
+        orderedFactorValues.add(new FactorValue("ORGANISM_PART", "org", "liver"));
+        orderedFactorValues.add(new FactorValue("ORGANISM_PART", "org", "longue"));
 
         subject = new ExpressionsBuffer(orderedFactorValues);
 

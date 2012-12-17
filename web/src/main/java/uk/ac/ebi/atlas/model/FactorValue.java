@@ -7,9 +7,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorValue implements Comparable<FactorValue> {
 
-    public static enum FactorType{
-        ORGANISM_PART
-    };
+    public static enum FactorType {
+        ORGANISM_PART, CELL_LINE, CELLULAR_COMPONENT, MATERIAL_TYPE
+    }
+
+    ;
 
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
@@ -20,7 +22,7 @@ public class FactorValue implements Comparable<FactorValue> {
     private String value;
 
     public FactorValue(String type, String name, String value) {
-        this.type = checkNotNull(type);
+        this.type = checkNotNull(type).replaceAll(" ", "_");
         this.name = checkNotNull(name);
         this.value = checkNotNull(value);
     }
@@ -39,11 +41,7 @@ public class FactorValue implements Comparable<FactorValue> {
 
     public String getDisplayString() {
         return name.concat(FACTOR_VALUE_SEPARATOR)
-                     .concat(value);
-    }
-
-    public boolean isOrganismPart(){
-        return FactorType.ORGANISM_PART.toString().equalsIgnoreCase(this.getType());
+                .concat(value);
     }
 
     @Override
@@ -64,7 +62,7 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return toStringHelper(this).addValue(getDisplayString()).toString();
     }
 

@@ -106,6 +106,6 @@ public class ExperimentDesignTableBrowseIT extends SeleniumFixture {
 
     @Test
     public void verifyDownloadExpressionProfilesLink() {
-        Assert.assertThat(subject.getDownloadExperimentDesignLink(), endsWith(ExperimentDesignTablePage.EXPERIMENT_ACCESSION + "-experiment-design.tsv"));
+        Assert.assertThat(subject.getDownloadExperimentDesignLink(), endsWith(ExperimentDesignTablePage.EXPERIMENT_ACCESSION + "/experiment-design.tsv"));
     }
 }

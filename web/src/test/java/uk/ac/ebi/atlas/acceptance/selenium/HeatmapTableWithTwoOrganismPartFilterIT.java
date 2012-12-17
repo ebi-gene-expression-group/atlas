@@ -20,13 +20,6 @@ public class HeatmapTableWithTwoOrganismPartFilterIT extends SeleniumFixture {
     }
 
     @Test
-    public void verifyOrganismParts() {
-        assertThat(subject.getOrganismParts().size(), is(2));
-        //and
-        assertThat(subject.getOrganismParts(), contains("adipose", "heart"));
-    }
-
-    @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(3));
@@ -35,12 +28,16 @@ public class HeatmapTableWithTwoOrganismPartFilterIT extends SeleniumFixture {
 
     @Test
     public void verifyFirstGeneProfile() {
-        assertThat(subject.getFirstGeneProfile(), contains("228", "579"));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("228", "", "", "", "", "579", "", ""
+                , "", "", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
-        assertThat(subject.getLastGeneProfile(), contains("", "57"));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getLastGeneProfile(), contains("", "", "", "", "", "57", "", ""
+                , "", "", "", "", "", "", "", ""));
     }
 
     @Test

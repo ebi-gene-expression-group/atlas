@@ -72,15 +72,26 @@
     cursor: default;
 }
 
-th.highlight {
+.table-grid th.highlight {
     background-color: #deebeb;
 }
 
-td.highlight {
+.table-grid td.highlight {
     background-color: #deebeb;
     opacity: .75;
-    filter: alpha(opacity = 75);
     -moz-opacity: .75;
+}
+
+.show_cell {
+    font-size: 9px;
+    background-color: white;
+    margin: 4px;
+    padding: 2px;
+}
+
+.hide_cell {
+    display: none;
+    visibility: hidden;
 }
 
 .rotated_cell {

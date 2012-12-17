@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;

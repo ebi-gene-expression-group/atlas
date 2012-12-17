@@ -22,12 +22,14 @@
 
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Properties;
+import java.util.Set;
 
 @Named("applicationProperties")
 @Scope("singleton")
@@ -64,8 +66,8 @@ public class ApplicationProperties {
         return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
     }
 
-    public String[] getExperimentIdentifiers() {
-        return configurationProperties.getProperty("experiment.identifiers").trim().split(",");
+    public Set<String> getExperimentIdentifiers() {
+        return Sets.newHashSet(configurationProperties.getProperty("experiment.identifiers").trim().split(","));
     }
 
     public String getFeedbackEmail() {

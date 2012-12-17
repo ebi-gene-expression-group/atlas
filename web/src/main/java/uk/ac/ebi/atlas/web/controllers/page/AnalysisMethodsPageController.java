@@ -20,8 +20,9 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.page;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 @Controller
+@Scope("request")
 public class AnalysisMethodsPageController {
 
     private static final String ANALYSIS_METHODS_FILE_SUFFIX = "-analysis-methods.tsv";
@@ -47,20 +49,12 @@ public class AnalysisMethodsPageController {
         this.experimentsCache = experimentsCache;
     }
 
-    @RequestMapping("/experiments/{experimentAccession}-analysis-methods")
+    @RequestMapping("/experiments/{experimentAccession}/analysis-methods")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
         model.addAttribute("csvLines", analysisMethodsTsvReader.readAllWithoutLibraries(experimentAccession));
 
         model.addAttribute("experimentAccession", experimentAccession);
-
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-        String specie = experiment.getSpecie();
-
-        model.addAttribute("specie", specie);
-
-        model.addAttribute("experimentDescription", experiment.getDescription());
 
         return "experiment-analysis-methods";
     }

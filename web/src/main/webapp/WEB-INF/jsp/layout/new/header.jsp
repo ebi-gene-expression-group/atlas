@@ -91,7 +91,7 @@
     }
 </style>
 
-<div id="dialog-form" title="Send us feedback - we really appreciate it !">
+<div style="display: none;" id="dialog-form" title="Send us feedback - we really appreciate it !">
 
     <div id="feedback-tips" class="validateTips">Please fill this form and click the Send button.</div>
 

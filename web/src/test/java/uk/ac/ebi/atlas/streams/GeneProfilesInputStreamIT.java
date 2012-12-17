@@ -31,7 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
 import java.io.IOException;
 import java.net.URL;
@@ -82,16 +81,16 @@ public class GeneProfilesInputStreamIT {
                 .addFactorValue("ORGANISM_PART", "org", "lung");
 
         when(experimentRunsAccessionsMock.contains(anyString())).thenReturn(true);
-        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock)
-                .addAll(Lists.newArrayList(experimentRun1,experimentRun2,experimentRun3));
+        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock, FactorValue.FactorType.ORGANISM_PART)
+                .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(cacheMock.getExperiment(anyString())).thenReturn(experiment);
 
         geneProfileBuilderFactory = new GeneProfileBuilderConcreteFactory();
 
         subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(cacheMock))
-                                                .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
-                                                .create();
+                .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
+                .create();
 
     }
 
@@ -139,9 +138,9 @@ public class GeneProfilesInputStreamIT {
 
         //given
         subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(cacheMock))
-                                                .forExperiment("AN_ACCESSION", dataFileURL.openStream())
-            .withCutoff(20D)
-            .create();
+                .forExperiment("AN_ACCESSION", dataFileURL.openStream())
+                .withCutoff(20D)
+                .create();
 
         //when
         subject.readNext();

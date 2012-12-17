@@ -31,6 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import java.util.Comparator;
@@ -64,7 +65,7 @@ public class ExpressionBufferBuilderTest {
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "liver");
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "lung");
 
-        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1,RUN_ACCESSION_2,RUN_ACCESSION_3))
+        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), FactorValue.FactorType.ORGANISM_PART)
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
@@ -73,13 +74,13 @@ public class ExpressionBufferBuilderTest {
     }
 
     @Test
-    public void builderShouldFetchExperimentRunsFromACache(){
+    public void builderShouldFetchExperimentRunsFromACache() {
 
         //when
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
-        subject.withHeaders("G1","ENS1","ENS2");
+        subject.withHeaders("G1", "ENS1", "ENS2");
         //then
-        verify(experimentsCacheMock,times(2)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
+        verify(experimentsCacheMock, times(2)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
 
     }
 

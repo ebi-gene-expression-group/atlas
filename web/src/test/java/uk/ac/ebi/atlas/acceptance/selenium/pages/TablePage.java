@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -84,7 +83,7 @@ abstract class TablePage extends AtlasPage {
     protected List<WebElement> getNonEmptyCellsFromFirstTableRow(WebElement table) {
         List<WebElement> nonEmptyCells = new ArrayList<>();
         for (WebElement cell : getFirstTableRow(table)) {
-            if (!StringUtils.isBlank(cell.getText())) {
+            if (!cell.getCssValue("background-color").equals("rgba(255, 255, 255, 1)")) {
                 nonEmptyCells.add(cell);
             }
         }

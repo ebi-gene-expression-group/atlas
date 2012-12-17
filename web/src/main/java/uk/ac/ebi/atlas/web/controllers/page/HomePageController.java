@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -66,6 +67,8 @@ public class HomePageController {
 
     private Map<String, Double> counts;
 
+    private Map<String, List<String>> organismToExperiments;
+
     @Inject
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
         this.properties = properties;
@@ -80,6 +83,8 @@ public class HomePageController {
 
         counts = new HashMap<>();
 
+        organismToExperiments = new HashMap<>();
+
         int totalNumberExperiments = 0;
 
         // check mage-tab directory for its children
@@ -89,6 +94,10 @@ public class HomePageController {
             Experiment experiment = checkNotNull(experimentsCache.getExperiment(expAcc),
                     "Experiment with identifier " + expAcc + " not found.");
             totalNumberExperiments++;
+
+            if (!organismToExperiments.containsKey(experiment.getSpecie()))
+                organismToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
+            organismToExperiments.get(experiment.getSpecie()).add(expAcc);
 
             // count per experiment and sum across all experiments
             for (String organismPart : experiment.getAllOrganismParts()) {
@@ -119,6 +128,7 @@ public class HomePageController {
 
         // add data to model
         model.addAttribute("wordlist", gson.toJson(wordList));
+        model.addAttribute("organismToExperiments", organismToExperiments);
 
         return "home";
     }

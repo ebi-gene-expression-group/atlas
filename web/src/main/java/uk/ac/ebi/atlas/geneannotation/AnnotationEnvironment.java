@@ -25,13 +25,11 @@ package uk.ac.ebi.atlas.geneannotation;
 import com.sleepycat.bind.tuple.TupleBinding;
 import com.sleepycat.collections.StoredMap;
 import com.sleepycat.collections.TransactionRunner;
-import com.sleepycat.je.Database;
-import com.sleepycat.je.DatabaseConfig;
-import com.sleepycat.je.Environment;
-import com.sleepycat.je.EnvironmentConfig;
+import com.sleepycat.je.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -43,47 +41,61 @@ import java.util.concurrent.ConcurrentMap;
 //ToDo Separate database creation and update from database readonly access.
 
 @Named("annotationEnvironment")
+@Scope("singleton")
 public class AnnotationEnvironment {
+
+    private boolean databaseCreationAttempted;
 
     private static final Logger logger = Logger.getLogger(AnnotationEnvironment.class);
 
     private static final String GENES_DB = "genes.db";
+
+    private File environmentDirectory;
+
     private Environment environment;
 
     private Database geneNameDatabase;
 
-    private String environmentLocation;
-
     @Inject
     public AnnotationEnvironment(@Value("#{configuration['genename.bdb.location']}") String environmentLocation) {
-        this.environmentLocation = environmentLocation;
+        environmentDirectory = new File(environmentLocation);
+        if(!environmentDirectory.exists()){
+            environmentDirectory.mkdirs();
+        }
     }
 
     @PostConstruct
     public void initBerkeleyReadonly() {
-        initBerkeley(true);
+        initBerkeleyDatabase(true);
+    }
+
+    public void initBerkeleyDatabase(boolean readonly) {
+        try{
+            setupEnvironment(readonly);
+            setupGeneNameDatabase(readonly);
+        } catch(EnvironmentNotFoundException e){
+            if(databaseCreationAttempted){
+                throw e;
+            }
+            initBerkeleyDatabase(false);
+            close();
+            initBerkeleyDatabase(readonly);
+        }
 
     }
 
-    public void initBerkeley(boolean readonly) {
-        setupEnvironment(readonly);
-        setupGeneNameDatabase(readonly);
+    private EnvironmentConfig createEnvironmentConfig(boolean readOnly){
+        EnvironmentConfig envConfig = new EnvironmentConfig();
 
+        envConfig.setTransactional(readOnly ? false : true);
+        envConfig.setAllowCreate(readOnly ? false : true);
+        envConfig.setReadOnly(readOnly ? true : false);
+        envConfig.setLocking(readOnly? false : true);
+        return envConfig;
     }
 
     private void setupEnvironment(boolean readonly) {
-        EnvironmentConfig envConfig = new EnvironmentConfig();
-
-        envConfig.setTransactional(readonly ? false : true);
-        envConfig.setAllowCreate(readonly ? false : true);
-        envConfig.setReadOnly(readonly ? true : false);
-        envConfig.setLocking(readonly? false : true);
-
-        File envHome = new File(environmentLocation);
-        if (!envHome.exists()) {
-            envHome.mkdirs();
-        }
-        environment = new Environment(envHome, envConfig);
+        environment = new Environment(environmentDirectory, createEnvironmentConfig(readonly));
     }
 
     public void setupGeneNameDatabase(boolean readonly) {
@@ -93,7 +105,7 @@ public class AnnotationEnvironment {
         geneNameDatabase = environment.openDatabase(null, GENES_DB, dbConfig);
     }
 
-    @Bean(name="geneNames")
+    //@Bean(name="geneNames") injecting StoredMap is too fragile, clients may cache it and it may become invalid if underlying database is closed and reopen at runtime
     public ConcurrentMap<String, String> geneNames() {
         TupleBinding<String> keyBinding = TupleBinding.getPrimitiveBinding(String.class);
         TupleBinding<String> dataBinding = TupleBinding.getPrimitiveBinding(String.class);

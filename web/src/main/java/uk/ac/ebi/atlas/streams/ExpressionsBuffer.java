@@ -46,15 +46,16 @@ class ExpressionsBuffer {
         }
         double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new Expression(expectedFactorValues.next(),expressionLevel);
+        return new Expression(expectedFactorValues.next(), expressionLevel);
     }
 
-private String gene;
+    private String gene;
+
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
-        checkArgument(values.length == expectedNumberOfValues, "Expected " +expectedNumberOfValues + " values but " +
-                                            "found: " + values.length);
+        checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
+                "found: " + values.length);
 
         expressionLevelsBuffer.clear();
 
@@ -102,9 +103,11 @@ private String gene;
 
             List<String> columnHeaders = Arrays.asList(ArrayUtils.remove(tsvFileHeaders, GENE_ID_COLUMN));
 
-            for (String columnHeader : columnHeaders){
+            for (String columnHeader : columnHeaders) {
 
-                orderedFactorValues.add(getOrganismPart(columnHeader, experimentAccession));
+                FactorValue factorValue = getExperimentalFactor(columnHeader, experimentAccession);
+                if (factorValue != null)
+                    orderedFactorValues.add(factorValue);
 
             }
             readyToCreate = true;
@@ -112,20 +115,21 @@ private String gene;
             return this;
         }
 
-        private FactorValue getOrganismPart(String columnHeader, String experimentAccession){
+        private FactorValue getExperimentalFactor(String columnHeader, String experimentAccession) {
 
             String[] columnRuns = columnHeader.split(",");
 
-            for (String columnRun : columnRuns){
+            for (String columnRun : columnRuns) {
                 columnRun = columnRun.trim();
 
                 Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
                 ExperimentRun experimentRun = experiment.getExperimentRun(columnRun);
-                if (experimentRun.getOrganismPart() != null) {
-                    return experimentRun.getOrganismPart();
+                checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+
+                if (experimentRun.getExperimentalFactor(experiment.getFactorType()) != null) {
+                    return experimentRun.getExperimentalFactor(experiment.getFactorType());
                 }
             }
 

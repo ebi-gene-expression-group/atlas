@@ -112,10 +112,12 @@
             "bPaginate":false,
             "bScrollCollapse":true,
             "sScrollY":calcDataTableHeight(),
+            "sScrollX":"100%",
+            "sScrollXInner":"100%",
             "sDom":'i<"download">f<"clear">t'
         });
 
-        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/${experimentAccession}-experiment-design.tsv" target="_blank">' +
+        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/${experimentAccession}/experiment-design.tsv" target="_blank">' +
                 '<img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>');
         $('div.download').attr('style', 'float: right');
         $('#isOnlyAnalysed').click(function () {
@@ -127,6 +129,7 @@
             oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
 
             // maybe you need to redraw the table (not sure about this)
+            oTable.fnAdjustColumnSizing();
             oTable.fnDraw(false);
         });
 
