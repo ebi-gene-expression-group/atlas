@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;

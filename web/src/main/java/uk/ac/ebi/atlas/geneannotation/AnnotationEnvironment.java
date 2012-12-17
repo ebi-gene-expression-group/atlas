@@ -28,7 +28,6 @@ import com.sleepycat.collections.TransactionRunner;
 import com.sleepycat.je.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
