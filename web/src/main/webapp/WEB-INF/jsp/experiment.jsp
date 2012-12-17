@@ -84,7 +84,7 @@
                 </table>
             </div>
 
-            <div id="heatmap-div" data-help-loc="#heatmapTable" class="content">
+            <div id="heatmap-div" class="content">
 
                 <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
 
