@@ -32,7 +32,7 @@ public class Experiment {
 
     private String experimentAccession;
     private String description;
-    private FactorValue.FactorType factorType;
+    private Factor.FactorType factorType;
     private SortedSet<String> experimentalFactors = new TreeSet<>();
 
     private Map<String, ExperimentRun> runs = new HashMap<>();
@@ -41,7 +41,7 @@ public class Experiment {
 
     private Set<String> experimentRunAccessions;
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, FactorValue.FactorType factorType) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, Factor.FactorType factorType) {
         this.experimentAccession = experimentAccession;
         this.description = description;
         this.factorType = factorType;
@@ -58,7 +58,7 @@ public class Experiment {
         return this;
     }
 
-    public FactorValue.FactorType getFactorType() {
+    public Factor.FactorType getFactorType() {
         return factorType;
     }
 

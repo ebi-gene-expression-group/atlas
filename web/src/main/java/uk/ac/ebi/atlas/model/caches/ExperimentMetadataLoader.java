@@ -36,7 +36,7 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
@@ -79,15 +79,15 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         // TODO: takes first experimental factor type as default
         String experimentalFactor = investigation.IDF.experimentalFactorType.get(0).replaceAll(" ", "_");
-        FactorValue.FactorType factorType = null;
-        if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.ORGANISM_PART.toString()))
-            factorType = FactorValue.FactorType.ORGANISM_PART;
-        else if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.CELL_LINE.toString()))
-            factorType = FactorValue.FactorType.CELL_LINE;
-        else if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.CELLULAR_COMPONENT.toString()))
-            factorType = FactorValue.FactorType.CELLULAR_COMPONENT;
-        else if (experimentalFactor.equalsIgnoreCase(FactorValue.FactorType.MATERIAL_TYPE.toString()))
-            factorType = FactorValue.FactorType.MATERIAL_TYPE;
+        Factor.FactorType factorType = null;
+        if (experimentalFactor.equalsIgnoreCase(Factor.FactorType.ORGANISM_PART.toString()))
+            factorType = Factor.FactorType.ORGANISM_PART;
+        else if (experimentalFactor.equalsIgnoreCase(Factor.FactorType.CELL_LINE.toString()))
+            factorType = Factor.FactorType.CELL_LINE;
+        else if (experimentalFactor.equalsIgnoreCase(Factor.FactorType.CELLULAR_COMPONENT.toString()))
+            factorType = Factor.FactorType.CELLULAR_COMPONENT;
+        else if (experimentalFactor.equalsIgnoreCase(Factor.FactorType.MATERIAL_TYPE.toString()))
+            factorType = Factor.FactorType.MATERIAL_TYPE;
 
         Experiment experiment = new Experiment(experimentAccession, arrayExpressClient.fetchExperimentName(experimentAccession)
                 , getExperimentRunAccessions(experimentAccession), factorType);

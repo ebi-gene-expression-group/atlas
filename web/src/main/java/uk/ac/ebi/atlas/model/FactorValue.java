@@ -7,46 +7,33 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorValue implements Comparable<FactorValue> {
 
-    public static enum FactorType {
-        ORGANISM_PART, CELL_LINE, CELLULAR_COMPONENT, MATERIAL_TYPE
-    }
-
-    ;
-
     public static final String FACTOR_VALUE_SEPARATOR = ":";
-
-    private String type;
-
-    private String name;
 
     private String value;
 
+    private Factor factor;
+
     public FactorValue(String type, String name, String value) {
-        this.type = checkNotNull(type).replaceAll(" ", "_");
-        this.name = checkNotNull(name);
+        this.factor = new Factor(type, name);
         this.value = checkNotNull(value);
     }
 
-    public String getName() {
-        return name;
+    public Factor getFactor() {
+        return factor;
     }
 
     public String getValue() {
         return value;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public String getDisplayString() {
-        return name.concat(FACTOR_VALUE_SEPARATOR)
+        return factor.getName().concat(FACTOR_VALUE_SEPARATOR)
                 .concat(value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, name, value);
+        return Objects.hash(factor, value);
     }
 
     @Override
@@ -58,7 +45,7 @@ public class FactorValue implements Comparable<FactorValue> {
             return false;
         }
         final FactorValue other = (FactorValue) obj;
-        return Objects.equals(this.type, other.type) && Objects.equals(this.name, other.name) && Objects.equals(this.value, other.value);
+        return Objects.equals(this.factor, other.factor) && Objects.equals(this.value, other.value);
     }
 
     @Override
@@ -68,7 +55,7 @@ public class FactorValue implements Comparable<FactorValue> {
 
     @Override
     public int compareTo(FactorValue factorValue) {
-        int factorCompare = name.compareTo(factorValue.name);
+        int factorCompare = factor.compareTo(factorValue.factor);
         if (factorCompare != 0) {
             return factorCompare;
         }

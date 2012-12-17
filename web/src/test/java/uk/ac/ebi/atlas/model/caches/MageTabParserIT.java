@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class MageTabParserIT {
         //then
         assertThat(experimentRun.getRunAccession(), is(RUN_ACCESSION));
         assertThat(experimentRun.getFactorValues().size(), is(3));
-        assertThat(experimentRun.getExperimentalFactor(FactorValue.FactorType.ORGANISM_PART).getValue(), is(equalTo("adipose")));
+        assertThat(experimentRun.getExperimentalFactor(Factor.FactorType.ORGANISM_PART).getValue(), is(equalTo("adipose")));
     }
 
 }
