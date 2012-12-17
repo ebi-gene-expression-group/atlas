@@ -112,6 +112,8 @@
             "bPaginate":false,
             "bScrollCollapse":true,
             "sScrollY":calcDataTableHeight(),
+            "sScrollX":"100%",
+            "sScrollXInner":"100%",
             "sDom":'i<"download">f<"clear">t'
         });
 
@@ -127,6 +129,7 @@
             oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
 
             // maybe you need to redraw the table (not sure about this)
+            oTable.fnAdjustColumnSizing();
             oTable.fnDraw(false);
         });
 
