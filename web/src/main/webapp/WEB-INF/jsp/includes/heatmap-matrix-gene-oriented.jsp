@@ -27,7 +27,9 @@
 
 <fmt:setBundle basename="configuration" var="configuration"/>
 
-<div id="geneCount" style="">Showing ${geneProfiles.size()} of ${totalResultCount} genes found:</div>
+<div id="geneCount" style="" data-help-loc="#resultInfo">Showing ${geneProfiles.size()} of ${totalResultCount} genes
+    found:</div>
+
 <div class="block">
     <table>
         <tbody>
@@ -63,7 +65,9 @@
 
                                 <c:if test="${expressionLevel != 0}">
 
-                                    <div style="font-size:1px;color:${cellColour}" data-organism-part="${organismPart}" data-color="${cellColour}">
+                                    <div data-help-loc="#heatMapTableCellInfo"
+                                         style="font-size:1px;color:${cellColour}"
+                                         data-organism-part="${organismPart}" data-color="${cellColour}">
                                         <fmt:formatNumber type="number" maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                           value="${expressionLevel}" groupingUsed="false"/>
                                     </div>

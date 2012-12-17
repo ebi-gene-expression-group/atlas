@@ -1,16 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<div id="helpContentTooltip" style='display:none'></div>
+
 <div class="block">
     <table width="100%">
         <tbody>
         <tr>
             <td>
-                <div class="experiment-accession">
+                <div class="experiment-accession" data-help-loc="#experimentAcc">
                     <a href="experiments/${experimentAccession}">${experimentAccession}</a>
                 </div>
             </td>
             <td>
-                <div id="experimentDescription" style="font-weight: bold;">
+                <div id="experimentDescription" style="font-weight: bold;" data-help-loc="#experimentTitle">
                     ${experimentDescription}
                 </div>
                 <div>Organism: ${specie}</div>

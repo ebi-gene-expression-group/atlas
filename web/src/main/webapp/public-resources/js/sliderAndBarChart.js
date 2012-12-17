@@ -156,7 +156,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         hideOrDisplayGeneDistribution(true);
 
         function showTooltip(x, y, contents) {
-            $('<div id="tooltip">' + contents + '</div>').css({
+            $('<div id="barChartTooltip">' + contents + '</div>').css({
                 position:'absolute',
                 display:'none',
                 top:y - 25,
@@ -181,7 +181,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
                     if (previousPoint != item.datapoint) {
                         previousPoint = item.datapoint;
 
-                        $("#tooltip").remove();
+                        $("#barChartTooltip").remove();
                         var content = item.datapoint[1].toFixed(0);
 
                         //now show tooltip
@@ -189,7 +189,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
                     }
                 }
                 else {
-                    $("#tooltip").remove();
+                    $("#barChartTooltip").remove();
                     previousPoint = null;
                 }
 

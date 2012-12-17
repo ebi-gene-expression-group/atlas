@@ -43,8 +43,21 @@ function initHelpTooltip() {
             .tooltip("option", "disabled", false)
             .on('mouseover.loadContent', function () {
                 var selectedElement = this;
-                $('#tooltip').load('resources/html/atlas-help.html ' + $(selectedElement).attr('data-help-loc'), function () {
-                    $(selectedElement).tooltip("option", "content", $('#tooltip').text());
+                $('#helpContentTooltip').load('resources/html/atlas-help.html ' + $(selectedElement).attr('data-help-loc'), function () {
+                    $(selectedElement).tooltip("option", "content", $('#helpContentTooltip').text());
+                    $(selectedElement).tooltip("option", "position", {
+                                    my: "center bottom-20",
+                                    at: "center top",
+                                    using: function( position, feedback ) {
+                                        $( this ).css( position );
+                                        $( "<div>" )
+                                            .addClass( "arrow" )
+                                            .addClass( feedback.vertical )
+                                            .addClass( feedback.horizontal )
+                                            .appendTo( this );
+                                    }
+                                });
+                    $(selectedElement).tooltip("option", "tooltipClass", "help-tooltip");
                 });
             })
     }
@@ -54,4 +67,5 @@ function initHelpTooltip() {
             .tooltip("option", "disabled", true)
             .off('mouseover.loadContent');
     }
+
 }

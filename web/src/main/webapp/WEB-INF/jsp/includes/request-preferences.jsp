@@ -34,17 +34,26 @@
         <table class="form-grid">
             <tr>
                 <td>
-                    <form:label path="geneQuery">Gene Query</form:label>
-                </td>
-                <td>
-                    <div data-help-loc="#factors">
-                        <form:label path="organismParts">Organism parts</form:label>
+                    <div data-help-loc="#geneSearch">
+                        <form:label path="geneQuery">Gene Query</form:label>
+                        <div style="padding-bottom:4px"></div>
+                        <form:textarea path="geneQuery" maxlength="900"
+                                       rows="3" cols="35"></form:textarea>
                     </div>
                 </td>
-                <td rowspan="2">
+                <td>
+                    <div data-help-loc="#factorSearch">
+                        <form:label path="organismParts">Organism parts</form:label>
+                        <div style="padding-bottom:4px"></div>
+                        <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
+                                     items="${allOrganismParts}" cssClass="chzn-select"
+                                     cssStyle="width:350px;display:none"/>
+                    </div>
+                </td>
+                <td>
                     <div data-help-loc="#cutoff">
-                        <form:label path="cutoff" cssStyle="padding-bottom:3px">Expression level cutoff</form:label>
-                        <div style="padding-bottom:3px"></div>
+                        <form:label path="cutoff">Expression level cutoff</form:label>
+                        <div style="padding-bottom:4px"></div>
                         <c:choose>
                             <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
                                 <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
@@ -66,27 +75,21 @@
                     <input id="reset-button" type="button" value="Reset"/>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <form:textarea path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
-                </td>
-                <td>
-                    <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
-                                 items="${allOrganismParts}" cssClass="chzn-select"
-                                 cssStyle="width:350px;display:none"/>
-                </td>
         </table>
         <br/>
 
     </form:form>
 
-    <div data-help-loc="#gene-distribution" id="gene-distribution" style="margin-bottom:0px;width:960px;height:100px"></div>
+    <div id="gene-distribution"
+         data-help-loc="#gene-distribution" style="margin-bottom:0px;width:960px;height:100px"></div>
+
     <div id="gene-distribution-button" style="float:left">
-        <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
+        <a id="display-chart" data-help-loc="#toggleHistogramButton" title="Display gene distribution"
+           class="button-image" href="#">
             <img alt="Display gene distribution"
                  src="resources/images/yellow-chart-icon-16.png"/></a>
     </div>
-    <div id="slider-range-max"
+    <div id="slider-range-max" data-help-loc="#slider"
          style="font-size:65%;width:920px;margin-left:27px;margin-right:17px; margin-top:10px"></div>
 
 </div>
