@@ -42,6 +42,8 @@
           href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/embl-petrol-colours.css"/>
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/helpTooltip.js"></script>
 
     <style type="text/css">
             /* You have the option of setting a maximum width for your page, and making sure everything is centered */
@@ -79,6 +81,7 @@
             $(document).ready(function () {
 
                 initExperimentHeaderButtons();
+                initHelpTooltip();
 
             });
         })(jQuery);

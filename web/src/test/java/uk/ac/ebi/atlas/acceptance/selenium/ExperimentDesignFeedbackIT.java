@@ -23,9 +23,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium;
 
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignFeedbackPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;

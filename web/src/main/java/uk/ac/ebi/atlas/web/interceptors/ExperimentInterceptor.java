@@ -24,8 +24,6 @@ package uk.ac.ebi.atlas.web.interceptors;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -37,7 +35,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URL;
 
 @Named("experimentInterceptor")
 public class ExperimentInterceptor extends HandlerInterceptorAdapter {
