@@ -166,7 +166,7 @@ public class BarChartTrader {
                         geneExpressionIndexes.put(cutoff, geneBitSets);
 
                     }
-                    geneBitSets.get(expression.getOrganismPart()).set(geneIndexPosition);
+                    geneBitSets.get(expression.getFactorValue()).set(geneIndexPosition);
 
                 }
             }

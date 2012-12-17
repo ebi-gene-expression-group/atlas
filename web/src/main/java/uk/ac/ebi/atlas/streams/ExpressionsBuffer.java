@@ -78,7 +78,6 @@ class ExpressionsBuffer {
 
         private boolean readyToCreate;
         private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
-        private static final String ORGANISM_PART_NOT_FOUND = "Organism part not found for Run Accessions {0} and Experiment Accession {1}";
 
         @Inject
         public Builder(ExperimentsCache experimentsCache) {
@@ -105,7 +104,7 @@ class ExpressionsBuffer {
 
             for (String columnHeader : columnHeaders) {
 
-                FactorValue factorValue = getExperimentalFactor(columnHeader, experimentAccession);
+                FactorValue factorValue = getFactorValue(columnHeader, experimentAccession);
                 if (factorValue != null)
                     orderedFactorValues.add(factorValue);
 
@@ -115,7 +114,7 @@ class ExpressionsBuffer {
             return this;
         }
 
-        private FactorValue getExperimentalFactor(String columnHeader, String experimentAccession) {
+        private FactorValue getFactorValue(String columnHeader, String experimentAccession) {
 
             String[] columnRuns = columnHeader.split(",");
 
@@ -128,7 +127,7 @@ class ExpressionsBuffer {
                 return experiment.getFactorValue(columnRun);
             }
 
-            throw new IllegalStateException(MessageFormat.format(ORGANISM_PART_NOT_FOUND, columnHeader, experimentAccession));
+            return null;
         }
 
         public ExpressionsBuffer create() {

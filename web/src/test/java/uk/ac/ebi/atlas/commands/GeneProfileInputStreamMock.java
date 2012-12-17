@@ -52,14 +52,14 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = geneProfileBuilderConcreteFactory.with("" + i,0);
+            GeneProfile.Builder geneProfileBuilder = geneProfileBuilderConcreteFactory.with("" + i, 0);
 
             for (int j = 0; j < i; j++) {
 
                 Expression expressionMock = mock(Expression.class);
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
-                when(expressionMock.getOrganismPart()).thenReturn("org" + (j + 1));
+                when(expressionMock.getFactorValue()).thenReturn("org" + (j + 1));
                 geneProfileBuilder.addExpression(expressionMock);
 
             }

@@ -57,7 +57,7 @@ public class Experiment {
         for (ExperimentRun experimentRun : experimentRuns) {
             if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
                 runs.put(experimentRun.getRunAccession(), experimentRun);
-                experimentalFactors.add(experimentRun.getExperimentalFactor(factorType).getValue());
+                experimentalFactors.add(experimentRun.getFactorValue(factorType).getValue());
             }
         }
         return this;
@@ -67,7 +67,7 @@ public class Experiment {
         ExperimentRun experimentRun = getExperimentRun(columnRun);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
-        return experimentRun.getExperimentalFactor(factorType);
+        return experimentRun.getFactorValue(factorType);
     }
 
     public Set<String> getExperimentRunAccessions() {

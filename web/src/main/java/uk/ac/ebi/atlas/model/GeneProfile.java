@@ -26,16 +26,16 @@ public class GeneProfile implements Iterable<Expression> {
     private GeneProfile() {
     }
 
-    public GeneProfile add(Expression expression){
-        String organismPart = expression.getOrganismPart();
-        if (!StringUtils.isEmpty(organismPart)){
+    public GeneProfile add(Expression expression) {
+        String organismPart = expression.getFactorValue();
+        if (!StringUtils.isEmpty(organismPart)) {
             this.expressions.put(organismPart, expression);
         }
         updateProfileExpression(expression.getLevel());
         return this;
     }
 
-    public GeneProfile setGeneNamesProvider(GeneNamesProvider geneNamesProvider){
+    public GeneProfile setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
         this.geneNamesProvider = geneNamesProvider;
         return this;
     }
@@ -52,19 +52,19 @@ public class GeneProfile implements Iterable<Expression> {
         return expressions.size();
     }
 
-    public Iterator<Expression> iterator(){
+    public Iterator<Expression> iterator() {
         return expressions.values().iterator();
     }
 
-    public double getMaxExpressionLevel(){
+    public double getMaxExpressionLevel() {
         return maxExpressionLevel;
     }
 
-    public double getMinExpressionLevel(){
+    public double getMinExpressionLevel() {
         return minExpressionLevel;
     }
 
-    private void updateProfileExpression(double level){
+    private void updateProfileExpression(double level) {
         if (maxExpressionLevel < level) {
             maxExpressionLevel = level;
         }
@@ -73,7 +73,7 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedAtMostOn(Set<String> selectedOrganismParts){
+    public boolean isExpressedAtMostOn(Set<String> selectedOrganismParts) {
         return CollectionUtils.isEmpty(selectedOrganismParts)
                 || selectedOrganismParts.containsAll(getOrganismParts());
     }
@@ -84,12 +84,12 @@ public class GeneProfile implements Iterable<Expression> {
 
     public double getExpressionLevel(String organismPart) {
         Expression expression = expressions.get(organismPart);
-        return expression == null ? 0 : expression.getLevel() ;
+        return expression == null ? 0 : expression.getLevel();
     }
 
     //we decided to lazy load rather then have an attribute because
     // not always the name is used
-    public String getGeneName(){
+    public String getGeneName() {
         if (geneNamesProvider != null) {
             return geneNamesProvider.getGeneName(geneId);
         }
@@ -97,11 +97,11 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public String[] toCsv() {
-        String [] csvValues = new String[expressions.size() + 2];
+        String[] csvValues = new String[expressions.size() + 2];
         csvValues[0] = getGeneName();
         csvValues[1] = getGeneId();
         int i = 2;
-        for (Expression expression : expressions.values()){
+        for (Expression expression : expressions.values()) {
             csvValues[i++] = "" + expression.getLevel();
         }
         return csvValues;
@@ -123,7 +123,7 @@ public class GeneProfile implements Iterable<Expression> {
         }
 
         @Inject
-        protected void setGeneNamesProvider(GeneNamesProvider geneNamesProvider){
+        protected void setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
             this.geneNamesProvider = geneNamesProvider;
         }
 

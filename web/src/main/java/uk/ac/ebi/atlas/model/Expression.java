@@ -5,15 +5,15 @@ import java.util.Objects;
 public class Expression {
     private double level;
 
-    private FactorValue organismPart;
+    private FactorValue factorValue;
 
-    public Expression(FactorValue organismPart, double level) {
-        this.organismPart = organismPart;
+    public Expression(FactorValue factorValue, double level) {
+        this.factorValue = factorValue;
         this.level = level;
     }
 
-    public String getOrganismPart() {
-        return organismPart.getValue();
+    public String getFactorValue() {
+        return factorValue.getValue();
     }
 
     public double getLevel() {
@@ -26,7 +26,7 @@ public class Expression {
 
     @Override
     public int hashCode() {
-        return Objects.hash(organismPart, level);
+        return Objects.hash(factorValue, level);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Expression {
         }
         final Expression other = (Expression) obj;
 
-        return Objects.equals(organismPart, other.organismPart)
+        return Objects.equals(factorValue, other.factorValue)
                 && Objects.equals(level, level);
     }
 }
