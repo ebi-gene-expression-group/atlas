@@ -46,7 +46,7 @@
                         <form:label path="organismParts">Organism parts</form:label>
                         <div style="padding-bottom:4px"></div>
                         <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
-                                     items="${allOrganismParts}" cssClass="chzn-select"
+                                     items="${allExperimentalFactors}" cssClass="chzn-select"
                                      cssStyle="width:350px;display:none"/>
                     </div>
                 </td>

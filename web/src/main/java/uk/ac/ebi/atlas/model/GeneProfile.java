@@ -75,10 +75,10 @@ public class GeneProfile implements Iterable<Expression> {
 
     public boolean isExpressedAtMostOn(Set<String> selectedOrganismParts) {
         return CollectionUtils.isEmpty(selectedOrganismParts)
-                || selectedOrganismParts.containsAll(getOrganismParts());
+                || selectedOrganismParts.containsAll(getExperimentalFactors());
     }
 
-    public Set<String> getOrganismParts() {
+    public Set<String> getExperimentalFactors() {
         return this.expressions.keySet();
     }
 

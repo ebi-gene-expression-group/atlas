@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Set;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,7 +37,7 @@ public class GeneProfilesListTest {
     @Before
     public void setUp() throws Exception {
 
-        subject = new GeneProfilesList(Lists.newArrayList(profile_5,profile_3,profile_4,profile_1,profile_2));
+        subject = new GeneProfilesList(Lists.newArrayList(profile_5, profile_3, profile_4, profile_1, profile_2));
 
     }
 
@@ -94,7 +93,7 @@ public class GeneProfilesListTest {
     }
 
     @Test
-    public void testGetAllOrganismParts() throws Exception {
+    public void testGetAllExperimentalFactors() throws Exception {
         //given
         when(profile_1.getGeneId()).thenReturn(GENE_ID_1);
         when(profile_2.getGeneId()).thenReturn(GENE_ID_1);
@@ -102,14 +101,14 @@ public class GeneProfilesListTest {
         when(profile_4.getGeneId()).thenReturn(GENE_ID_3);
         when(profile_5.getGeneId()).thenReturn(GENE_ID_4);
         //and
-        when(profile_1.getOrganismParts()).thenReturn(Sets.newHashSet("brain"));
-        when(profile_2.getOrganismParts()).thenReturn(Sets.newHashSet("blood"));
-        when(profile_3.getOrganismParts()).thenReturn(Sets.newHashSet("bomb"));
-        when(profile_4.getOrganismParts()).thenReturn(Sets.newHashSet("banana"));
-        when(profile_5.getOrganismParts()).thenReturn(Sets.newHashSet("berrywhite"));
+        when(profile_1.getExperimentalFactors()).thenReturn(Sets.newHashSet("brain"));
+        when(profile_2.getExperimentalFactors()).thenReturn(Sets.newHashSet("blood"));
+        when(profile_3.getExperimentalFactors()).thenReturn(Sets.newHashSet("bomb"));
+        when(profile_4.getExperimentalFactors()).thenReturn(Sets.newHashSet("banana"));
+        when(profile_5.getExperimentalFactors()).thenReturn(Sets.newHashSet("berrywhite"));
 
         //when
-        SortedSet<String> organismParts = subject.getAllOrganismParts();
+        SortedSet<String> organismParts = subject.getAllExperimentalFactors();
 
         //then
         assertThat(organismParts, contains("banana", "berrywhite", "blood", "bomb", "brain"));
