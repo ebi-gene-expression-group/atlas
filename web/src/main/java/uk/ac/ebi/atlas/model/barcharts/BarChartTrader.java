@@ -126,7 +126,7 @@ public class BarChartTrader {
 
         public Builder forExperiment(String experimentAccession) {
 
-            organismParts = experimentsCache.getExperiment(experimentAccession).getAllOrganismParts();
+            organismParts = experimentsCache.getExperiment(experimentAccession).getAllExperimentalFactors();
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 

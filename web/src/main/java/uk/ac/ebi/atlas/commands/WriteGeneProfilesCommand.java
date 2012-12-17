@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.utils.NumberUtils;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
@@ -51,18 +50,18 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     private NumberUtils numberUtils;
 
     @Inject
-    protected WriteGeneProfilesCommand(NumberUtils numberUtils){
+    protected WriteGeneProfilesCommand(NumberUtils numberUtils) {
         this.experimentsCache = experimentsCache;
         this.numberUtils = numberUtils;
     }
 
     @Override
     protected Long apply(RequestPreferences requestPreferences, Experiment experiment
-                                                , ObjectInputStream<GeneProfile> inputStream) throws IOException {
+            , ObjectInputStream<GeneProfile> inputStream) throws IOException {
 
         long count = 0;
 
-        SortedSet<String> organismParts = experiment.getAllOrganismParts();
+        SortedSet<String> organismParts = experiment.getAllExperimentalFactors();
 
         csvWriter.writeNext(buildCsvHeaders(organismParts));
 
@@ -79,23 +78,23 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         return 0L;
     }
 
-    protected String[] buildCsvHeaders(Set<String> organismParts){
+    protected String[] buildCsvHeaders(Set<String> organismParts) {
         return buildCsvRow(new String[]{"Gene name", "Gene Id"}, organismParts.toArray(new String[organismParts.size()]));
     }
 
-    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<String> organismParts){
-        String [] expressionLevels = new String[organismParts.size()];
+    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<String> organismParts) {
+        String[] expressionLevels = new String[organismParts.size()];
         int i = 0;
-        for (String organismPart : organismParts){
+        for (String organismPart : organismParts) {
             expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(organismPart));
         }
         return buildCsvRow(new String[]{geneProfile.getGeneName(), geneProfile.getGeneId()}, expressionLevels);
     }
 
-    protected String[] buildCsvRow(String[] rowHeaders, String[] values){
+    protected String[] buildCsvRow(String[] rowHeaders, String[] values) {
 
         int rowHeadersCount = rowHeaders.length;
-        String [] csvRow = new String[rowHeadersCount + values.length];
+        String[] csvRow = new String[rowHeadersCount + values.length];
 
         arraycopy(rowHeaders, 0, csvRow, 0, rowHeadersCount);
         arraycopy(values, 0, csvRow, 0 + rowHeadersCount, values.length);
@@ -103,7 +102,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     }
 
 
-    public void setCsvWriter(CSVWriter csvWriter){
+    public void setCsvWriter(CSVWriter csvWriter) {
         this.csvWriter = csvWriter;
     }
 

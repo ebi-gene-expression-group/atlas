@@ -30,9 +30,9 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         return factorValues;
     }
 
-    public FactorValue getExperimentalFactor(Factor.FactorType type) {
+    public FactorValue getExperimentalFactor(String type) {
         for (FactorValue factorValue : factorValues) {
-            if (factorValue.getFactor().getType().equalsIgnoreCase(type.toString())) {
+            if (factorValue.getType().equalsIgnoreCase(type)) {
                 return factorValue;
             }
         }

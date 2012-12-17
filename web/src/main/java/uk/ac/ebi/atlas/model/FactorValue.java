@@ -9,31 +9,38 @@ public class FactorValue implements Comparable<FactorValue> {
 
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
+    private String type;
+
+    private String name;
+
     private String value;
 
-    private Factor factor;
-
     public FactorValue(String type, String name, String value) {
-        this.factor = new Factor(type, name);
+        this.type = checkNotNull(type).replaceAll(" ", "_");
+        this.name = checkNotNull(name);
         this.value = checkNotNull(value);
     }
 
-    public Factor getFactor() {
-        return factor;
+    public String getName() {
+        return name;
     }
 
     public String getValue() {
         return value;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public String getDisplayString() {
-        return factor.getName().concat(FACTOR_VALUE_SEPARATOR)
+        return name.concat(FACTOR_VALUE_SEPARATOR)
                 .concat(value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(factor, value);
+        return Objects.hash(type, name, value);
     }
 
     @Override
@@ -45,7 +52,7 @@ public class FactorValue implements Comparable<FactorValue> {
             return false;
         }
         final FactorValue other = (FactorValue) obj;
-        return Objects.equals(this.factor, other.factor) && Objects.equals(this.value, other.value);
+        return Objects.equals(this.type, other.type) && Objects.equals(this.name, other.name) && Objects.equals(this.value, other.value);
     }
 
     @Override
@@ -55,7 +62,7 @@ public class FactorValue implements Comparable<FactorValue> {
 
     @Override
     public int compareTo(FactorValue factorValue) {
-        int factorCompare = factor.compareTo(factorValue.factor);
+        int factorCompare = name.compareTo(factorValue.name);
         if (factorCompare != 0) {
             return factorCompare;
         }

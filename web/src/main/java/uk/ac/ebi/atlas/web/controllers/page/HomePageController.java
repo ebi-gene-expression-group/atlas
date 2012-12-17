@@ -71,13 +71,13 @@ public class HomePageController {
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
         this.properties = properties;
         this.experimentsCache = experimentsCache;
-        extractOrganismPartCounts();
+        extractFactorValueCounts();
     }
 
     /**
      * Gets all experiments in data directory and collates experimental factor occurrences into map
      */
-    private void extractOrganismPartCounts() {
+    private void extractFactorValueCounts() {
 
         counts = new HashMap<>();
 
@@ -98,7 +98,7 @@ public class HomePageController {
                 speciesToExperiments.get(experiment.getSpecie()).add(expAcc);
 
                 // count per experiment and sum across all experiments
-                for (String factor : experiment.getAllOrganismParts()) {
+                for (String factor : experiment.getAllExperimentalFactors()) {
                     if (!counts.containsKey(factor))
                         counts.put(factor, 0.0);
                     counts.put(factor, counts.get(factor) +

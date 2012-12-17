@@ -33,7 +33,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import java.util.SortedSet;
@@ -62,14 +61,14 @@ public class WriteGeneProfilesCommandTest {
     private WriteGeneProfilesCommand subject;
 
     @Before
-    public void initMocks(){
+    public void initMocks() {
         SortedSet<String> organismParts = Sets.newTreeSet(Sets.newHashSet("adipose", "brain", "breast", "liver", "lung"));
 
         when(requestPreferencesMock.getOrganismParts()).thenReturn(organismParts);
 
         when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
-                                        .thenReturn(geneProfileMock2)
-                                        .thenReturn(null);
+                .thenReturn(geneProfileMock2)
+                .thenReturn(null);
 
         when(geneProfileMock1.getGeneName()).thenReturn("GN1");
         when(geneProfileMock1.getGeneId()).thenReturn("GI1");
@@ -80,7 +79,7 @@ public class WriteGeneProfilesCommandTest {
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
         when(geneProfileMock2.getExpressionLevel("liver")).thenReturn(21.12d);
 
-        when(experimentMock.getAllOrganismParts()).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentMock.getAllExperimentalFactors()).thenReturn(Sets.newTreeSet(organismParts));
     }
 
     @Before
@@ -97,9 +96,9 @@ public class WriteGeneProfilesCommandTest {
 
         verify(csvWriterMock).writeNext(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"});
 
-        verify(csvWriterMock).writeNext(new String[]{"GN1","GI1","0","0.11","0","0","9"});
+        verify(csvWriterMock).writeNext(new String[]{"GN1", "GI1", "0", "0.11", "0", "0", "9"});
 
-        verify(csvWriterMock).writeNext(new String[]{"GN2","GI2","0","0","0","21.12","0"});
+        verify(csvWriterMock).writeNext(new String[]{"GN2", "GI2", "0", "0", "0", "21.12", "0"});
 
         assertThat(count, is(2L));
 

@@ -24,7 +24,10 @@ package uk.ac.ebi.atlas.model;
 
 import org.apache.log4j.Logger;
 
+import java.text.MessageFormat;
 import java.util.*;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Experiment {
 
@@ -32,7 +35,7 @@ public class Experiment {
 
     private String experimentAccession;
     private String description;
-    private Factor.FactorType factorType;
+    private String factorType;
     private SortedSet<String> experimentalFactors = new TreeSet<>();
 
     private Map<String, ExperimentRun> runs = new HashMap<>();
@@ -41,7 +44,9 @@ public class Experiment {
 
     private Set<String> experimentRunAccessions;
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, Factor.FactorType factorType) {
+    private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
+
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String factorType) {
         this.experimentAccession = experimentAccession;
         this.description = description;
         this.factorType = factorType;
@@ -58,8 +63,11 @@ public class Experiment {
         return this;
     }
 
-    public Factor.FactorType getFactorType() {
-        return factorType;
+    public FactorValue getFactorValue(String columnRun) {
+        ExperimentRun experimentRun = getExperimentRun(columnRun);
+        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+
+        return experimentRun.getExperimentalFactor(factorType);
     }
 
     public Set<String> getExperimentRunAccessions() {
@@ -87,7 +95,7 @@ public class Experiment {
         return this;
     }
 
-    public SortedSet<String> getAllOrganismParts() {
+    public SortedSet<String> getAllExperimentalFactors() {
         return experimentalFactors;
     }
 

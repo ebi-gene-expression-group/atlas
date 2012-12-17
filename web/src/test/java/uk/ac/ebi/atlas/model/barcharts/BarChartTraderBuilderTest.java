@@ -53,7 +53,7 @@ public class BarChartTraderBuilderTest {
         ORGANISM_PARTS.add(ORGANISM_PART_1);
         ORGANISM_PARTS.add(ORGANISM_PART_2);
         ORGANISM_PARTS.add(ORGANISM_PART_3);
-        when(experiment.getAllOrganismParts()).thenReturn(ORGANISM_PARTS);
+        when(experiment.getAllExperimentalFactors()).thenReturn(ORGANISM_PARTS);
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
 
@@ -127,9 +127,9 @@ public class BarChartTraderBuilderTest {
         //given
         subject.setOrganismParts(ORGANISM_PARTS);
 
-        for (int i = 0; i < 50; i=i+2) {
+        for (int i = 0; i < 50; i = i + 2) {
             subject.addGeneToIndexes(initGeneProfile1(), i);
-            subject.addGeneToIndexes(initGeneProfile2(), i+1);
+            subject.addGeneToIndexes(initGeneProfile2(), i + 1);
         }
         NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
 

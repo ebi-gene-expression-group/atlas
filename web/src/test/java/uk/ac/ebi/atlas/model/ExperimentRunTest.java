@@ -22,7 +22,7 @@ public class ExperimentRunTest {
     @Test
     public void testGetOrganismPart() throws Exception {
 
-        assertThat(subject.getExperimentalFactor(Factor.FactorType.ORGANISM_PART).getValue(), is(organismPart));
+        assertThat(subject.getExperimentalFactor("ORGANISM_PART").getValue(), is(organismPart));
 
     }
 

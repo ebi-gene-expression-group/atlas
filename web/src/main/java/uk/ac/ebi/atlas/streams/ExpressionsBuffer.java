@@ -125,12 +125,7 @@ class ExpressionsBuffer {
                 Experiment experiment = experimentsCache.getExperiment(experimentAccession);
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
-                ExperimentRun experimentRun = experiment.getExperimentRun(columnRun);
-                checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
-
-                if (experimentRun.getExperimentalFactor(experiment.getFactorType()) != null) {
-                    return experimentRun.getExperimentalFactor(experiment.getFactorType());
-                }
+                return experiment.getFactorValue(columnRun);
             }
 
             throw new IllegalStateException(MessageFormat.format(ORGANISM_PART_NOT_FOUND, columnHeader, experimentAccession));

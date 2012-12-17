@@ -60,8 +60,8 @@ public class GeneProfilesPageController {
 
     @RequestMapping("/experiments/{experimentAccession}")
     public String showGeneProfiles(@PathVariable String experimentAccession
-                                    , @ModelAttribute("preferences") @Valid RequestPreferences preferences
-                                    , BindingResult result, Model model, HttpServletRequest request) {
+            , @ModelAttribute("preferences") @Valid RequestPreferences preferences
+            , BindingResult result, Model model, HttpServletRequest request) {
 
         if (!result.hasErrors()) {
 
@@ -83,7 +83,7 @@ public class GeneProfilesPageController {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            model.addAttribute("allOrganismParts", experiment.getAllOrganismParts());
+            model.addAttribute("allOrganismParts", experiment.getAllExperimentalFactors());
 
             String specie = experiment.getSpecie();
 
