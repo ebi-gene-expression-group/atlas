@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;

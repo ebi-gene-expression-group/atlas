@@ -20,10 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
@@ -39,6 +40,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 @Controller
+@Scope("request")
 public class FeedbackEmailController {
 
     private static final Logger logger = Logger.getLogger(FeedbackEmailController.class);

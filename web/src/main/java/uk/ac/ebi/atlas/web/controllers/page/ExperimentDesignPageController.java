@@ -20,9 +20,10 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.gson.Gson;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Controller
+@Scope("request")
 public class ExperimentDesignPageController {
 
     private ExperimentDesignTsvReader experimentDesignTsvReader;
@@ -67,7 +69,7 @@ public class ExperimentDesignPageController {
         return map;
     }
 
-    @RequestMapping("/experiments/{experimentAccession}-experiment-design")
+    @RequestMapping("/experiments/{experimentAccession}/experiment-design")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
         // read contents from file
@@ -117,8 +119,6 @@ public class ExperimentDesignPageController {
 
         // add general experiment attributes to model
         model.addAttribute("experimentAccession", experimentAccession);
-        model.addAttribute("experimentDescription", experiment.getDescription());
-        model.addAttribute("specie", experiment.getSpecie());
 
         return "experiment-experiment-design";
     }

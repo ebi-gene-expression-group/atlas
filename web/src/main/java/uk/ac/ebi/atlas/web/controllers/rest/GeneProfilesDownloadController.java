@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;

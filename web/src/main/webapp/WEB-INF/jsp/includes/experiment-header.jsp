@@ -18,12 +18,12 @@
             <td style="float:right">
                 <div>
                     <a id="display-analysis-methods" class="button-image"
-                       href="experiments/${experimentAccession}-analysis-methods">
+                       href="experiments/${experimentAccession}/analysis-methods">
                         <img style="width:23px;height:23px" title="Analysis Methods"
                              src="resources/images/analysis_icon.png"/></a>
 
                     <a id="display-experiment-design" class="button-image"
-                       title="Experiment Design" href="experiments/${experimentAccession}-experiment-design">
+                       title="Experiment Design" href="experiments/${experimentAccession}/experiment-design">
                         <img alt="Experiment Design"
                              src="resources/images/experiment_design_icon.png"/></a>
 

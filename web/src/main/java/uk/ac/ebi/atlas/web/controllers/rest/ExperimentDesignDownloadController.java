@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers;
+package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
@@ -56,7 +56,7 @@ public class ExperimentDesignDownloadController {
         this.experimentsCache = experimentsCache;
     }
 
-    @RequestMapping("/experiments/{experimentAccession}-experiment-design.tsv")
+    @RequestMapping("/experiments/{experimentAccession}/experiment-design.tsv")
     public void downloadGeneProfiles(@PathVariable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException {
