@@ -69,6 +69,10 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         String experimentAccession = StringUtils.substringBefore(experimentPath, "/");
 
+        //we want to remove jsessionid stuff eventually added by the server
+        experimentAccession = StringUtils.substringBefore(experimentAccession, ";");
+
+        //we want to remove file type extensions
         experimentAccession = StringUtils.substringBeforeLast(experimentAccession, ".");
 
         if (applicationProperties.getExperimentIdentifiers().contains(experimentAccession)) {
