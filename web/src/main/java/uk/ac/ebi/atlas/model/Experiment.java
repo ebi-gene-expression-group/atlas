@@ -53,6 +53,10 @@ public class Experiment {
         this.experimentRunAccessions = experimentRunAccessions;
     }
 
+    public String getDefaultFactorType() {
+        return factorType;
+    }
+
     public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
         for (ExperimentRun experimentRun : experimentRuns) {
             if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {

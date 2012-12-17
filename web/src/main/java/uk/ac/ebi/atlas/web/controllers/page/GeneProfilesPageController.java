@@ -83,6 +83,8 @@ public class GeneProfilesPageController {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
+            model.addAttribute("experimentalFactor", experiment.getDefaultFactorType());
+
             model.addAttribute("allExperimentalFactors", experiment.getAllExperimentalFactors());
 
             String specie = experiment.getSpecie();

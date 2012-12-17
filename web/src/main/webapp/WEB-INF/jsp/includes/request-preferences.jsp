@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     <div data-help-loc="#factorSearch">
-                        <form:label path="organismParts">Organism parts</form:label>
+                        <form:label path="organismParts">${experimentalFactor}</form:label>
                         <div style="padding-bottom:4px"></div>
                         <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
                                      items="${allExperimentalFactors}" cssClass="chzn-select"
