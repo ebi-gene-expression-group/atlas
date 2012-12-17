@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<!--
+  ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  ~
+  ~ For further details of the Gene Expression Atlas project, including source code,
+  ~ downloads and documentation, please see:
+  ~
+  ~ http://gxa.github.com/gxa
+  -->
+
+<html>
+<head>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <title></title>
+</head>
+<body>
+
+<!--experiment header-->
+<div id="experimentAcc">ArrayExpress experiment accession number</div>
+
+<div id="experimentTitle">Experiment title</div>
+
+<!-- request preferences -->
+<div id="geneSearch">Enter Ensembl gene ID(s) or gene symbol(s) to search with genes of interest. Separate them
+    with new lines or spaces. Leave blank to search all annotated
+    genes in this data set.
+</div>
+
+<div id="factorSearch">Select tissue(s) to see gene expression profiles for. Leave blank to see expressions in all of
+    them.
+</div>
+
+<div id="cutoff">Enter a <b>minimum expression level</b> (FPKM) cut-off. Only genes with expression
+    above this level will be displayed. The default cut-off is 0.5; if you would like to
+    see results for the entire data set, change this to 0.
+    FPKM stands for "fragments per kilobase of transcript per million mapped reads", and
+    is a normalized measure of expression used in RNA-sequencing analysis.
+    For more details, see http://www.nature.com/nbt/journal/v28/n5/full/nbt.1621.html.
+</div>
+
+<div id="gene-distribution">The histogram shows the number of genes (y-axis) expressed above expression
+    level cutoffs (x-axis) for the chosen tissues. You can use it to help you choose a minimum cut-off. Click on a
+    bar to select its expression level as the minimum cut-off.
+</div>
+
+<div id="toggleHistogramButton">Click this button to toggle display of the histogram showing the distribution of
+    expression
+    levels.
+</div>
+
+<div id="slider">Choose a minimum expression level (FPKM) cut-off using the slider. Only genes with
+    expression above this level will be displayed
+</div>
+
+<!--experiment -->
+<div id="gradient">The colour gradient represents relative expression level: the more saturated the colour, the
+    higher the expression level is.
+</div>
+
+<div id="anatomogram">Tissues studied in this data set are displayed on the figure. Mouseover a gene in the table
+    to highlight the tissue(s) in which it is expressed above the selected minimum expression level. Mouseover tissues
+    in the table to highlight them on the figure.
+</div>
+
+<div id="heatmapTable">How are the results sorted?
+Genes are sorted in order of expression level, from highest to lowest.
+* If you did not select any tissues, results are ordered so that genes with expression above the
+chosen cut-off in any one tissue are shown first (with highest expression level first), and then genes
+with expression above the cutoff in any two tissues, and so on.
+* If you selected a set of tissues, results are ordered so that genes with expression above the chosen
+cut-off in all your chosen tissues are shown first (with highest expression level first), followed by
+genes with expression above the cut-off in all but one of your chosen tissues, followed by genes with
+expression in all but two of your tissues, and so on.</div>
+
+<div id="resultInfo">Only the top 50 genes are displayed on this page; please download your results to see them
+    all.</div>
+
+<div id="heatMapTableCellInfo">A coloured box indicates the gene is expressed in the
+corresponding tissue(s). The colour saturation of the box
+indicates the expression level. To see the exact expression level
+(FPKM), click on the box, or click the "Display levels" button in
+the top-left of the table to see them all. Expression levels greater
+than or equal to 1 are rounded to the nearest whole value.
+Expression levels less than 1 are rounded to 1 decimal place.</div>
+
+<div id="exp">this is experiment help</div>
+</body>
+</html>

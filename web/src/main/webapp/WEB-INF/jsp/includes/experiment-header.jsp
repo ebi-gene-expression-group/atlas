@@ -1,16 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<div id="helpContentTooltip" style='display:none'></div>
+
 <div class="block">
     <table width="100%">
         <tbody>
         <tr>
             <td>
-                <div class="experiment-accession">
+                <div class="experiment-accession" data-help-loc="#experimentAcc">
                     <a href="experiments/${experimentAccession}">${experimentAccession}</a>
                 </div>
             </td>
             <td>
-                <div id="experimentDescription" style="font-weight: bold;">
+                <div id="experimentDescription" style="font-weight: bold;" data-help-loc="#experimentTitle">
                     ${experimentDescription}
                 </div>
                 <div>Organism: ${specie}</div>
@@ -28,9 +30,15 @@
                              src="resources/images/experiment_design_icon.png"/></a>
 
                     <a id="goto-ae" class="button-image"
-                       href="${applicationProperties.getArrayExpressURL(experimentAccession)}" title="ArrayExpress" target="_blank">
+                       href="${applicationProperties.getArrayExpressURL(experimentAccession)}" title="ArrayExpress"
+                       target="_blank">
                         <img alt="ArrayExpress"
                              src="resources/images/ae2_icon.png"/></a>
+
+                    <%--<div id="display-help-toggle">--%>
+                        <img id="display-help-image" title="Show help" class="button-image"
+                             style="width:23px;height:23px" src="resources/images/help.png"/>
+                    <%--</div>--%>
 
                 </div>
             </td>

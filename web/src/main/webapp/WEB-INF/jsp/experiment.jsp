@@ -45,7 +45,8 @@
                             </div>
                         </td>
                         <td width="200px">
-                            <div style="background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+                            <div data-help-loc="#gradient" style="background-image:
+                                    -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
                                     background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
@@ -75,7 +76,8 @@
                             </div>
                         </td>
                         <td>
-                            <div id="anatomogramBody" style="width: 230px; height: 360px">
+                            <div id="anatomogramBody"  data-help-loc="#anatomogram"  style="width: 230px; height:
+                             360px">
                             </div>
                         </td>
                     </tr>

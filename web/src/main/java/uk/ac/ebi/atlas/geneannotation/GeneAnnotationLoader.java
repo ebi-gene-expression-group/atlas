@@ -24,14 +24,11 @@ package uk.ac.ebi.atlas.geneannotation;
 
 import com.sleepycat.collections.TransactionRunner;
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
 import uk.ac.ebi.atlas.commons.berkeley.StringValueTransactionWorker;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.biomart.BioMartGeneNameStream;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 

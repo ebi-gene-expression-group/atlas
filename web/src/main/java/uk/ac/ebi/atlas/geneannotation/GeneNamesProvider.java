@@ -23,11 +23,8 @@
 package uk.ac.ebi.atlas.geneannotation;
 
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 @Named("geneNamesProvider")
 public class GeneNamesProvider {
