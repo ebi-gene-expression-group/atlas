@@ -466,7 +466,7 @@
         <profile>
             <id>local.integration.test</id>
             <properties>
-                <solr.host>lime.ebi.ec.uk</solr.host>
+                <solr.host>localhost</solr.host>
                 <data.files.location>${user.home}/Data/test-data</data.files.location>
                 <berkeley.schema.name>bdb</berkeley.schema.name>
             </properties>
