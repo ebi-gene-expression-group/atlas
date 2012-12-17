@@ -83,7 +83,10 @@ public class GeneProfilesPageController {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            model.addAttribute("experimentalFactor", experiment.getDefaultFactorType());
+            // this formats the experimental factor type for display on web page
+            String experimentalFactor = experiment.getDefaultFactorType().replaceAll("_", " ").toLowerCase();
+            experimentalFactor = experimentalFactor.substring(0, 1).toUpperCase() + experimentalFactor.substring(1);
+            model.addAttribute("experimentalFactor", experimentalFactor);
 
             model.addAttribute("allExperimentalFactors", experiment.getAllExperimentalFactors());
 
