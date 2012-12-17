@@ -62,10 +62,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         long count = 0;
 
-        SortedSet<String> organismParts = requestPreferences.getOrganismParts();
-        if (organismParts == null || organismParts.isEmpty()){
-            organismParts = experiment.getAllOrganismParts();
-        }
+        SortedSet<String> organismParts = experiment.getAllOrganismParts();
 
         csvWriter.writeNext(buildCsvHeaders(organismParts));
 
