@@ -33,7 +33,7 @@ public class ExperimentDesignTablePage extends TablePage {
 
     public static String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION + "-experiment-design";
+    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design";
 
     @FindBy(id = "experiment-design-table")
     private WebElement experimentDesignTable;

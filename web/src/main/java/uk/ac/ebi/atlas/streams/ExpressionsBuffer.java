@@ -18,8 +18,7 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.*;
 
 class ExpressionsBuffer {
 
@@ -55,9 +54,8 @@ class ExpressionsBuffer {
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
-
-        //checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
-        //        "found: " + values.length);
+        checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
+                "found: " + values.length);
 
         expressionLevelsBuffer.clear();
 
@@ -128,11 +126,7 @@ class ExpressionsBuffer {
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
                 ExperimentRun experimentRun = experiment.getExperimentRun(columnRun);
-                if (experimentRun == null) {
-                    logger.warn(MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
-                    return null;
-                }
-                //checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+                checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
                 if (experimentRun.getExperimentalFactor(experiment.getFactorType()) != null) {
                     return experimentRun.getExperimentalFactor(experiment.getFactorType());
