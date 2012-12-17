@@ -30,9 +30,9 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         return factorValues;
     }
 
-    public FactorValue getOrganismPart() {
+    public FactorValue getExperimentalFactor(FactorValue.FactorType type) {
         for (FactorValue factorValue : factorValues) {
-            if (factorValue.isOrganismPart()) {
+            if (factorValue.getType().equalsIgnoreCase(type.toString())) {
                 return factorValue;
             }
         }
@@ -66,8 +66,6 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
 
     @Override
     public int compareTo(ExperimentRun other) {
-
         return runAccession.compareTo(other.runAccession);
-
     }
 }
