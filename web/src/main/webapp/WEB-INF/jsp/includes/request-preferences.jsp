@@ -54,7 +54,7 @@
                                      cssStyle="width:350px;display:none"/>
                         </span>
                         <span>
-                            <form:checkbox path="includeNonSelectedFactorValues" label="Include genes expressed in non-selected organism parts"></form:checkbox>
+                            <form:checkbox id="includeNonSelectedFactorValues" path="includeNonSelectedFactorValues" label="Include genes expressed in non-selected organism parts"></form:checkbox>
                         </span>
                     </div>
                 </td>
