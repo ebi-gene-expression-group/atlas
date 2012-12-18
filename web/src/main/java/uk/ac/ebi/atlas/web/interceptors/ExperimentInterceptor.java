@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.interceptors;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -77,6 +78,11 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         if (applicationProperties.getExperimentIdentifiers().contains(experimentAccession)) {
             request.setAttribute("experimentAccession", experimentAccession);
+
+            StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+            stopWatch.start();
+            request.setAttribute("stopWatch", stopWatch);
+
             return true;
         }
 
@@ -101,6 +107,15 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
         modelAndView.getModel().put("specie", specie);
 
         modelAndView.getModel().put("experimentDescription", experiment.getDescription());
+
+        StopWatch stopWatch = (StopWatch)request.getAttribute("stopWatch");
+
+        stopWatch.stop();
+
+        logger.info("<postHandle> time taken " + stopWatch.getTotalTimeSeconds()
+                + " s - geneQuery = " + request.getParameter("geneQuery")
+                + ", organism parts = " + request.getParameter("organismParts")
+                + ", cutoff = " + request.getParameter("cutoff"));
 
     }
 }
