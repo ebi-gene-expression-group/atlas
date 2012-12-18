@@ -26,6 +26,7 @@ import com.jayway.jsonpath.JsonPath;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
@@ -73,13 +74,17 @@ public class IndexClient {
             String geneProperty = queryBuilder.buildQueryString(searchText);
             String organismQuery = "\"" + organism.toLowerCase() + "\"";
 
-            logger.info("<findGeneIdJson> sending solr request for geneQuery: " + geneProperty + " - organismQuery: " + organismQuery);
+            StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
 
-            String object = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
+            stopWatch.start();
 
-            logger.info("<findGeneIdJson> got solr response: " + geneProperty + " - organismQuery: " + organismQuery);
+            String jsonResponse = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
 
-            return object;
+            stopWatch.stop();
+
+            logger.info("<findGeneIdJson> time taken " + stopWatch.getTotalTimeSeconds() + " s - solr response for geneQuery: " + geneProperty + " - organismQuery: " + organismQuery);
+
+            return jsonResponse;
         }catch(Throwable e){
             logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL, e);
             throw e;
