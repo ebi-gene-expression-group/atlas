@@ -38,7 +38,9 @@
 }
 
 body {
-    font-size: 10px;
+    min-width:1000px;
+    max-width:1000px;
+    font-size:10px;
     font-family: Verdana, Helvetica, Arial, sans-serif;
 }
 
