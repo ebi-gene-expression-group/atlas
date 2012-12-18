@@ -27,13 +27,13 @@ function initHelpTooltip() {
         .tooltip({disabled: true});
 
 
-    $("#display-help-image").button().
+    $("#display-help").button().
         toggle(function () {
-            $(this).attr("src", "resources/images/helpPressed.png");
+            $("#display-help-image").attr("src", "resources/images/helpPressed.png");
             $(this).tooltip("option", "content", "Hide help");
             enableTooltip();
         },function () {
-            $(this).attr("src", "resources/images/help.png");
+            $("#display-help-image").attr("src", "resources/images/help.png");
             $(this).tooltip("option", "content", "Show help");
             disableTooltip();
         }).tooltip();
