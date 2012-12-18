@@ -51,6 +51,8 @@ public class RequestPreferences {
 
     private SortedSet<String> organismParts;
 
+    private boolean includeNonSelectedFactorValues = true;
+
     @Size(max=900,
           message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
     private String geneQuery = DEFAULT_GENE_QUERY_STRING;
@@ -87,6 +89,14 @@ public class RequestPreferences {
 
     public void setCutoff(Double cutoff) {
         this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
+    }
+
+    public boolean isIncludeNonSelectedFactorValues() {
+        return this.includeNonSelectedFactorValues;
+    }
+
+    public boolean getIncludeNonSelectedFactorValues() {
+        return this.includeNonSelectedFactorValues;
     }
 
     public void setDisplayLevels(boolean displayLevels) {

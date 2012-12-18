@@ -37,6 +37,15 @@
     padding:2px;
 }
 
+form td{
+    vertical-align: top;
+}
+
+form td span {
+    padding: 2px;
+    display:block;
+}
+
 body {
     min-width:1000px;
     max-width:1000px;
