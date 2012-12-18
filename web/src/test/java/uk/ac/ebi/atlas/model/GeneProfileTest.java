@@ -103,7 +103,7 @@ public class GeneProfileTest {
 
     @Test
     public void getAllFactorValuesTest() {
-        assertThat(subject.getAllFactorValues(), hasItems("head", "trunk", "nose"));
+        assertThat(subject.getAllFactorValues(), hasItems(factorValue1, factorValue2, factorValue3));
     }
 
 }

@@ -25,12 +25,15 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 
 @Named("requestPreferences")
@@ -66,8 +69,25 @@ public class RequestPreferences {
         return organismParts;
     }
 
-    public SortedSet<String> getFilterFactorValues() {
-        return filterFactorValues;
+    /**
+     * Turns a factor specification string into a FactorValue list.
+     * <p/>
+     * Splits at : between type and value
+     *
+     * @return
+     */
+    public Set<FactorValue> getFilterFactorValues() {
+        Set<FactorValue> results = new HashSet<>();
+        if (filterFactorValues != null) {
+            for (String filter : filterFactorValues) {
+                String[] split = filter.split(":");
+                if (split.length == 2) {
+                    FactorValue factorValue = new FactorValue(split[0], "", split[1]);
+                    results.add(factorValue);
+                }
+            }
+        }
+        return results;
     }
 
     public boolean isDisplayGeneDistribution() {

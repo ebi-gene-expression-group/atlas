@@ -20,7 +20,7 @@ public class GeneProfile implements Iterable<Expression> {
 
     private SortedMap<String, Expression> expressions = new TreeMap<>();
 
-    private Set<String> allFactorValues = new HashSet<>();
+    private Set<FactorValue> allFactorValues = new HashSet<>();
 
     private GeneProfile() {
     }
@@ -82,7 +82,7 @@ public class GeneProfile implements Iterable<Expression> {
         return this.expressions.keySet();
     }
 
-    public Set<String> getAllFactorValues() {
+    public Set<FactorValue> getAllFactorValues() {
         return this.allFactorValues;
     }
 

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,12 +20,8 @@ public class Expression {
         return factorValue.getValue();
     }
 
-    public Set<String> getAllFactorValues() {
-        Set<String> results = new HashSet<>();
-        for (FactorValue factorValue : allFactorValues) {
-            results.add(factorValue.getValue());
-        }
-        return results;
+    public Set<FactorValue> getAllFactorValues() {
+        return allFactorValues;
     }
 
     public double getLevel() {

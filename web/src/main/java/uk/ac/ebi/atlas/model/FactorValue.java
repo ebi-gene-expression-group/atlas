@@ -16,7 +16,7 @@ public class FactorValue implements Comparable<FactorValue> {
     private String value;
 
     public FactorValue(String type, String name, String value) {
-        this.type = checkNotNull(type).replaceAll(" ", "_");
+        this.type = checkNotNull(type).replaceAll(" ", "_").toUpperCase();
         this.name = checkNotNull(name);
         this.value = checkNotNull(value);
     }
@@ -40,7 +40,7 @@ public class FactorValue implements Comparable<FactorValue> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, name, value);
+        return Objects.hash(type, value);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class FactorValue implements Comparable<FactorValue> {
             return false;
         }
         final FactorValue other = (FactorValue) obj;
-        return Objects.equals(this.type, other.type) && Objects.equals(this.name, other.name) && Objects.equals(this.value, other.value);
+        return Objects.equals(this.type, other.type) && Objects.equals(this.value, other.value);
     }
 
     @Override

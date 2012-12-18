@@ -26,6 +26,7 @@ import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.HashSet;
@@ -37,9 +38,9 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> factorValues;
 
-    private Set<String> filterFactorValues;
+    private Set<FactorValue> filterFactorValues;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> filterFactorValues, Set<String> geneIDs, Set<String> factorValues) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<FactorValue> filterFactorValues, Set<String> geneIDs, Set<String> factorValues) {
         super(geneProfileInputStream);
         this.filterFactorValues = filterFactorValues;
         this.geneIDs = toUpperCase(geneIDs);
@@ -56,7 +57,6 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                 boolean isExpressed = profile.isExpressedAtMostOn(factorValues);
                 boolean hasFactor = CollectionUtils.isEmpty(filterFactorValues);
                 hasFactor = hasFactor || profile.getAllFactorValues().containsAll(filterFactorValues);
-                ;
                 return checkGene && isExpressed && hasFactor;
             }
         };
