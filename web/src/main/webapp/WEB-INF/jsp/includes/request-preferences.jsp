@@ -27,6 +27,7 @@
 
 <div id="preferencesFormBlock" class="block">
     <form:form method="get" commandName="preferences" id="prefForm">
+        <form:hidden path="filterFactorValues"/>
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
