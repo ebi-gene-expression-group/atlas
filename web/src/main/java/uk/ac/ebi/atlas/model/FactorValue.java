@@ -34,8 +34,8 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     public String getDisplayString() {
-        return name.concat(FACTOR_VALUE_SEPARATOR)
-                .concat(value);
+        return type.concat(FACTOR_VALUE_SEPARATOR).concat(name.concat(FACTOR_VALUE_SEPARATOR)
+                .concat(value));
     }
 
     @Override

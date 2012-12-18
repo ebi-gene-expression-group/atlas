@@ -38,11 +38,21 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> factorValues;
 
-    private Set<FactorValue> filterFactorValues;
+    private Set<FactorValue> filterFactorValues = new HashSet<>();
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<FactorValue> filterFactorValues, Set<String> geneIDs, Set<String> factorValues) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> filterFactorValues, Set<String> geneIDs, Set<String> factorValues) {
         super(geneProfileInputStream);
-        this.filterFactorValues = filterFactorValues;
+
+        // Turns a factor specification string into a FactorValue list.
+        // Splits at : between type and value
+        for (String filter : filterFactorValues) {
+            String[] split = filter.split(":");
+            if (split.length == 2) {
+                FactorValue factorValue = new FactorValue(split[0], "", split[1]);
+                this.filterFactorValues.add(factorValue);
+            }
+        }
+
         this.geneIDs = toUpperCase(geneIDs);
         this.factorValues = factorValues;
     }

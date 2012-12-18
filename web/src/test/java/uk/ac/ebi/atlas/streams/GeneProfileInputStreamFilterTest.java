@@ -33,7 +33,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.is;
@@ -79,7 +78,7 @@ public class GeneProfileInputStreamFilterTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, new HashSet<FactorValue>(), geneIDs, factorValues);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_SET, geneIDs, factorValues);
     }
 
     @Test
@@ -97,7 +96,7 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, new HashSet<FactorValue>(), EMPTY_SET, factorValues);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_SET, EMPTY_SET, factorValues);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
@@ -111,7 +110,7 @@ public class GeneProfileInputStreamFilterTest {
     public void acceptanceCriteriaTestWithFilterFactorValueAndGeneIDsSetIsEmpty() {
         //given
         subject = new GeneProfileInputStreamFilter(inputStreamMock,
-                Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_1)), EMPTY_SET, factorValues);
+                Sets.newHashSet("ORGANISM_PART:" + ORGANISM_PART_1), EMPTY_SET, factorValues);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
