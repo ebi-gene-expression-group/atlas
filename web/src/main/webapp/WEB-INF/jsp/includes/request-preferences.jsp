@@ -81,7 +81,7 @@
     </form:form>
 
     <div id="gene-distribution"
-         data-help-loc="#gene-distribution" style="margin-bottom:0px;width:960px;height:100px"></div>
+         data-help-loc="#gene-distribution" style="margin-bottom:0px;height:100px"></div>
 
     <div id="gene-distribution-button" style="float:left">
         <a id="display-chart" data-help-loc="#toggleHistogramButton" title="Display gene distribution"
