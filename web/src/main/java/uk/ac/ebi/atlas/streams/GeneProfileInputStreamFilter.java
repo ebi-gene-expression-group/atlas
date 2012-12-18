@@ -55,7 +55,8 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                 boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
                 boolean isExpressed = profile.isExpressedAtMostOn(factorValues);
                 boolean hasFactor = CollectionUtils.isEmpty(filterFactorValues);
-                hasFactor = hasFactor || profile.getFactorValues().containsAll(filterFactorValues);
+                hasFactor = hasFactor || profile.getAllFactorValues().containsAll(filterFactorValues);
+                ;
                 return checkGene && isExpressed && hasFactor;
             }
         };

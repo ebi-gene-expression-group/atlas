@@ -49,7 +49,7 @@ class ExpressionsBuffer {
         }
         double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new Expression(expectedFactorValues.next(), expressionLevel);
+        return new Expression(expectedFactorValues.next(), expressionLevel, expectedAllFactorValues.next());
     }
 
     private String gene;

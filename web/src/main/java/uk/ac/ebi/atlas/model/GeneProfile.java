@@ -7,10 +7,7 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class GeneProfile implements Iterable<Expression> {
 
@@ -23,6 +20,8 @@ public class GeneProfile implements Iterable<Expression> {
 
     private SortedMap<String, Expression> expressions = new TreeMap<>();
 
+    private Set<String> allFactorValues = new HashSet<>();
+
     private GeneProfile() {
     }
 
@@ -30,6 +29,7 @@ public class GeneProfile implements Iterable<Expression> {
         String factorValue = expression.getFactorValue();
         if (!StringUtils.isEmpty(factorValue)) {
             this.expressions.put(factorValue, expression);
+            this.allFactorValues.addAll(expression.getAllFactorValues());
         }
         updateProfileExpression(expression.getLevel());
         return this;
@@ -80,6 +80,10 @@ public class GeneProfile implements Iterable<Expression> {
 
     public Set<String> getFactorValues() {
         return this.expressions.keySet();
+    }
+
+    public Set<String> getAllFactorValues() {
+        return this.allFactorValues;
     }
 
     public double getExpressionLevel(String factorValue) {

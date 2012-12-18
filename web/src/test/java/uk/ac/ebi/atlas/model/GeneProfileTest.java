@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
@@ -23,9 +24,13 @@ public class GeneProfileTest {
     private static String GENE_ID = "geneId_1";
     private static String GENE_NAME = "geneName_1";
 
-    private Expression expression_1 = new Expression(new FactorValue("ORGANISM_PART", "org", "nose"), 2.2D);
-    private Expression expression_2 = new Expression(new FactorValue("ORGANISM_PART", "org", "trunk"), 3D);
-    private Expression expression_3 = new Expression(new FactorValue("ORGANISM_PART", "org", "head"), 3.001D);
+    private FactorValue factorValue1 = new FactorValue("ORGANISM_PART", "org", "nose");
+    private FactorValue factorValue2 = new FactorValue("ORGANISM_PART", "org", "trunk");
+    private FactorValue factorValue3 = new FactorValue("ORGANISM_PART", "org", "head");
+
+    private Expression expression_1 = new Expression(factorValue1, 2.2D, Sets.newHashSet(factorValue1));
+    private Expression expression_2 = new Expression(factorValue2, 3D, Sets.newHashSet(factorValue2));
+    private Expression expression_3 = new Expression(factorValue3, 3.001D, Sets.newHashSet(factorValue3));
 
     private GeneProfile subject;
 
@@ -34,11 +39,11 @@ public class GeneProfileTest {
         when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
 
         subject = new GeneProfileBuilderConcreteFactory()
-                    .with(GENE_ID, 0)
-                    .addExpression(expression_1)
-                    .addExpression(expression_2)
-                    .addExpression(expression_3)
-                    .create();
+                .with(GENE_ID, 0)
+                .addExpression(expression_1)
+                .addExpression(expression_2)
+                .addExpression(expression_3)
+                .create();
         subject.setGeneNamesProvider(geneNamesProviderMock);
     }
 
@@ -64,7 +69,7 @@ public class GeneProfileTest {
     public void builderAddExpressionTest() {
         //given
         GeneProfile.Builder builder = new GeneProfileBuilderConcreteFactory()
-                                        .with(GENE_ID, 3D);
+                .with(GENE_ID, 3D);
 
         builder.addExpression(expression_1);
 
@@ -83,7 +88,7 @@ public class GeneProfileTest {
     }
 
     @Test
-    public void isExpressedAtMostOnTest(){
+    public void isExpressedAtMostOnTest() {
         assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("nose", "trunk")), is(false));
 
         assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("nose", "head", "trunk")), is(true));
@@ -92,8 +97,13 @@ public class GeneProfileTest {
     }
 
     @Test
-    public void isExpressedAtMostOnShouldNotBeCaseInsensitiveTest(){
+    public void isExpressedAtMostOnShouldNotBeCaseInsensitiveTest() {
         assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("noSe", "Head", "trUnK")), is(false));
+    }
+
+    @Test
+    public void getAllFactorValuesTest() {
+        assertThat(subject.getAllFactorValues(), hasItems("head", "trunk", "nose"));
     }
 
 }

@@ -68,8 +68,10 @@ public class GeneProfileInputStreamFilterTest {
     public void initMocks() {
         when(gene1ProfileMock.getGeneId()).thenReturn(GENE_2);
         when(gene1ProfileMock.isExpressedAtMostOn(factorValues)).thenReturn(true);
+        when(gene1ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(ORGANISM_PART_1));
         when(gene3ProfileMock.getGeneId()).thenReturn("UNACCEPTABLE_GENE");
         when(gene3ProfileMock.isExpressedAtMostOn(factorValues)).thenReturn(true);
+        when(gene3ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(ORGANISM_PART_2));
 
     }
 
@@ -103,5 +105,16 @@ public class GeneProfileInputStreamFilterTest {
         assertThat(acceptancePredicate.apply(gene3ProfileMock), is(true));
     }
 
+    @Test
+    public void acceptanceCriteriaTestWithFilterFactorValueAndGeneIDsSetIsEmpty() {
+        //given
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, Sets.newHashSet(ORGANISM_PART_1), EMPTY_SET, factorValues);
+        //and
+        Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
+        //then
+        assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));
+        //and
+        assertThat(acceptancePredicate.apply(gene3ProfileMock), is(false));
+    }
 }

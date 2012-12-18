@@ -1,19 +1,32 @@
 package uk.ac.ebi.atlas.model;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Expression {
     private double level;
 
     private FactorValue factorValue;
 
-    public Expression(FactorValue factorValue, double level) {
+    private Set<FactorValue> allFactorValues;
+
+    public Expression(FactorValue factorValue, double level, Set<FactorValue> allFactorValues) {
         this.factorValue = factorValue;
         this.level = level;
+        this.allFactorValues = allFactorValues;
     }
 
     public String getFactorValue() {
         return factorValue.getValue();
+    }
+
+    public Set<String> getAllFactorValues() {
+        Set<String> results = new HashSet<>();
+        for (FactorValue factorValue : allFactorValues) {
+            results.add(factorValue.getValue());
+        }
+        return results;
     }
 
     public double getLevel() {
