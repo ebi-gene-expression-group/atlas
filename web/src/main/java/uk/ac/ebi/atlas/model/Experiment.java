@@ -74,6 +74,13 @@ public class Experiment {
         return experimentRun.getFactorValue(factorType);
     }
 
+    public Set<FactorValue> getAllFactorValues(String columnRun) {
+        ExperimentRun experimentRun = getExperimentRun(columnRun);
+        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+
+        return experimentRun.getFactorValues();
+    }
+
     public Set<String> getExperimentRunAccessions() {
         return experimentRunAccessions;
     }

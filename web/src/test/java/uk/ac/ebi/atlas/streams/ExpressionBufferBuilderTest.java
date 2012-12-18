@@ -79,7 +79,7 @@ public class ExpressionBufferBuilderTest {
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
         subject.withHeaders("G1", "ENS1", "ENS2");
         //then
-        verify(experimentsCacheMock, times(2)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
+        verify(experimentsCacheMock, times(4)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
 
     }
 

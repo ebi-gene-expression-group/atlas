@@ -1,13 +1,16 @@
 package uk.ac.ebi.atlas.streams;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.FactorValue;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -30,11 +33,21 @@ public class ExpressionBufferTest {
     @Before
     public void initializeSubject() {
 
-        orderedFactorValues.add(new FactorValue("ORGANISM_PART", "org", "lung"));
-        orderedFactorValues.add(new FactorValue("ORGANISM_PART", "org", "liver"));
-        orderedFactorValues.add(new FactorValue("ORGANISM_PART", "org", "longue"));
+        FactorValue factorValue1 = new FactorValue("ORGANISM_PART", "org", "lung");
+        FactorValue factorValue2 = new FactorValue("ORGANISM_PART", "org", "liver");
+        FactorValue factorValue3 = new FactorValue("ORGANISM_PART", "org", "longue");
 
-        subject = new ExpressionsBuffer(orderedFactorValues);
+        // the only possible factor values here are the default ones
+        List<Set<FactorValue>> orderedAllFactorValues = new LinkedList<>();
+        orderedAllFactorValues.add(Sets.newHashSet(factorValue1));
+        orderedAllFactorValues.add(Sets.newHashSet(factorValue2));
+        orderedAllFactorValues.add(Sets.newHashSet(factorValue3));
+
+        orderedFactorValues.add(factorValue1);
+        orderedFactorValues.add(factorValue2);
+        orderedFactorValues.add(factorValue3);
+
+        subject = new ExpressionsBuffer(orderedFactorValues, orderedAllFactorValues);
 
     }
 

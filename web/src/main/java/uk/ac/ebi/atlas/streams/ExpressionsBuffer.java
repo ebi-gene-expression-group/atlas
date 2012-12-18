@@ -28,13 +28,16 @@ class ExpressionsBuffer {
 
     private Iterator<FactorValue> expectedFactorValues;
 
+    private Iterator<Set<FactorValue>> expectedAllFactorValues;
+
     private int expectedNumberOfValues;
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected ExpressionsBuffer(List<FactorValue> orderedFactorValues) {
+    protected ExpressionsBuffer(List<FactorValue> orderedFactorValues, List<Set<FactorValue>> orderedAllFactorValues) {
         expectedNumberOfValues = orderedFactorValues.size() + 1;
         this.expectedFactorValues = Iterables.cycle(orderedFactorValues).iterator();
+        this.expectedAllFactorValues = Iterables.cycle(orderedAllFactorValues).iterator();
     }
 
 
@@ -74,7 +77,9 @@ class ExpressionsBuffer {
 
         private ExperimentsCache experimentsCache;
 
-        private List<FactorValue> orderedFactorValues = new LinkedList<FactorValue>();
+        private List<FactorValue> orderedFactorValues = new LinkedList<>();
+
+        private List<Set<FactorValue>> orderedAllFactorValues = new LinkedList<>();
 
         private boolean readyToCreate;
         private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
@@ -108,6 +113,10 @@ class ExpressionsBuffer {
                 if (factorValue != null)
                     orderedFactorValues.add(factorValue);
 
+                Set<FactorValue> allFactorValues = getAllFactorValues(columnHeader, experimentAccession);
+                if (allFactorValues != null)
+                    orderedAllFactorValues.add(allFactorValues);
+
             }
             readyToCreate = true;
 
@@ -130,11 +139,27 @@ class ExpressionsBuffer {
             return null;
         }
 
+        private Set<FactorValue> getAllFactorValues(String columnHeader, String experimentAccession) {
+
+            String[] columnRuns = columnHeader.split(",");
+
+            for (String columnRun : columnRuns) {
+                columnRun = columnRun.trim();
+
+                Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+                checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+
+                return experiment.getAllFactorValues(columnRun);
+            }
+
+            return null;
+        }
+
         public ExpressionsBuffer create() {
 
             checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
 
-            return new ExpressionsBuffer(orderedFactorValues);
+            return new ExpressionsBuffer(orderedFactorValues, orderedAllFactorValues);
 
         }
 
