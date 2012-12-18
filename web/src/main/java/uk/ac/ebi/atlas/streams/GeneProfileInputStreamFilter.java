@@ -35,12 +35,15 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> geneIDs;
 
-    private Set<String> organismParts;
+    private Set<String> factorValues;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs, Set<String> organismParts){
+    private Set<String> filterFactorValues;
+
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> filterFactorValues, Set<String> geneIDs, Set<String> factorValues) {
         super(geneProfileInputStream);
+        this.filterFactorValues = filterFactorValues;
         this.geneIDs = toUpperCase(geneIDs);
-        this.organismParts = organismParts;
+        this.factorValues = factorValues;
     }
 
     @Override
@@ -49,15 +52,17 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         return new Predicate<GeneProfile>() {
             @Override
             public boolean apply(GeneProfile profile) {
-                boolean b = checkGeneId(profile.getGeneId(), profile.getGeneName());
-                return b
-                        && profile.isExpressedAtMostOn(organismParts);
+                boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
+                boolean isExpressed = profile.isExpressedAtMostOn(factorValues);
+                boolean hasFactor = CollectionUtils.isEmpty(filterFactorValues);
+                hasFactor = hasFactor || profile.getFactorValues().containsAll(filterFactorValues);
+                return checkGene && isExpressed && hasFactor;
             }
         };
 
     }
 
-    private boolean checkGeneId(String geneId, String geneName){
+    private boolean checkGeneId(String geneId, String geneName) {
         return CollectionUtils.isEmpty(geneIDs)
                 || geneIDs.contains(geneId.toUpperCase())
                 || (geneName != null && geneIDs.contains(geneName.toUpperCase()));
@@ -70,6 +75,6 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                 capitalizedStrings.add(s.toUpperCase());
             }
         }
-        return  capitalizedStrings;
+        return capitalizedStrings;
     }
 }

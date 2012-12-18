@@ -97,8 +97,8 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .withCutoff(requestPreferences.getCutoff()).create();
 
-
-        return new GeneProfileInputStreamFilter(geneProfileInputStream, geneIDs, requestPreferences.getOrganismParts());
+        // TODO: get real filter factor values in here
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, new HashSet<String>(), geneIDs, requestPreferences.getOrganismParts());
 
     }
 

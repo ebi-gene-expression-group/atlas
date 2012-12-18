@@ -27,9 +27,9 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public GeneProfile add(Expression expression) {
-        String organismPart = expression.getFactorValue();
-        if (!StringUtils.isEmpty(organismPart)) {
-            this.expressions.put(organismPart, expression);
+        String factorValue = expression.getFactorValue();
+        if (!StringUtils.isEmpty(factorValue)) {
+            this.expressions.put(factorValue, expression);
         }
         updateProfileExpression(expression.getLevel());
         return this;
@@ -73,17 +73,17 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedAtMostOn(Set<String> selectedOrganismParts) {
-        return CollectionUtils.isEmpty(selectedOrganismParts)
-                || selectedOrganismParts.containsAll(getExperimentalFactors());
+    public boolean isExpressedAtMostOn(Set<String> selectedFactorValues) {
+        return CollectionUtils.isEmpty(selectedFactorValues)
+                || selectedFactorValues.containsAll(getFactorValues());
     }
 
-    public Set<String> getExperimentalFactors() {
+    public Set<String> getFactorValues() {
         return this.expressions.keySet();
     }
 
-    public double getExpressionLevel(String organismPart) {
-        Expression expression = expressions.get(organismPart);
+    public double getExpressionLevel(String factorValue) {
+        Expression expression = expressions.get(factorValue);
         return expression == null ? 0 : expression.getLevel();
     }
 
