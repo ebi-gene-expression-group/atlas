@@ -45,11 +45,13 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
         // Turns a factor specification string into a FactorValue list.
         // Splits at : between type and value
-        for (String filter : filterFactorValues) {
-            String[] split = filter.split(":");
-            if (split.length == 2) {
-                FactorValue factorValue = new FactorValue(split[0], "", split[1]);
-                this.filterFactorValues.add(factorValue);
+        if (filterFactorValues != null) {
+            for (String filter : filterFactorValues) {
+                String[] split = filter.split(":");
+                if (split.length == 2) {
+                    FactorValue factorValue = new FactorValue(split[0], "", split[1]);
+                    this.filterFactorValues.add(factorValue);
+                }
             }
         }
 

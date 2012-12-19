@@ -62,8 +62,10 @@
 
                             </c:if>
 
+                            <c:set var="organismPartName" value="${nameUtils.restrictSize(organismPart, 17)}"/>
+
                             <display:column
-                                    title="<div data-organism-part='${organismPart}' class='rotate_text'>${organismPart}</div>"
+                                    title="<div data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'>${organismPartName}</div>"
                                     headerClass='rotated_cell'
                                     style="${expressionLevel !=0 ? style : ''}">
 
@@ -102,3 +104,7 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    $("[title]").tooltip();
+</script>
