@@ -37,10 +37,14 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> organismParts;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs, Set<String> organismParts){
+    private boolean includeGenesExpressedInNonSelectedFactorValues;
+
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs
+                                , Set<String> organismParts, boolean includeGenesExpressedInNonSelectedFactorValues){
         super(geneProfileInputStream);
         this.geneIDs = toUpperCase(geneIDs);
         this.organismParts = organismParts;
+        this.includeGenesExpressedInNonSelectedFactorValues = includeGenesExpressedInNonSelectedFactorValues;
     }
 
     @Override
@@ -51,7 +55,14 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
             public boolean apply(GeneProfile profile) {
                 boolean b = checkGeneId(profile.getGeneId(), profile.getGeneName());
                 return b
-                        && profile.isExpressedAtMostOn(organismParts);
+                        && (CollectionUtils.isEmpty(organismParts) || hasTheRightExpressionProfile(profile));
+            }
+
+            private boolean hasTheRightExpressionProfile(GeneProfile geneProfile){
+                if (includeGenesExpressedInNonSelectedFactorValues){
+                    return geneProfile.isExpressedAtLeastOn(organismParts);
+                }
+                return geneProfile.isExpressedAtMostOn(organismParts);
             }
         };
 

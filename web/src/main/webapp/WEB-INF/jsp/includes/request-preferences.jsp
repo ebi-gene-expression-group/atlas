@@ -30,6 +30,7 @@
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
+        <form:hidden id="includeGenesExpressedInNonSelectedFactorValues" path="includeGenesExpressedInNonSelectedFactorValues"/>
         <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
@@ -54,7 +55,13 @@
                                      cssStyle="width:350px;display:none"/>
                         </span>
                         <span>
-                            <form:checkbox id="includeNonSelectedFactorValues" path="includeNonSelectedFactorValues" label="Include genes expressed in non-selected organism parts"></form:checkbox>
+                            <input type="checkbox" id="includeGenesExpressedInNonSelectedFactorValuesCheckbox"/>
+                            <label for="includeGenesExpressedInNonSelectedFactorValuesCheckbox">
+                                Include genes expressed in non-selected organism parts
+                            </label>
+                         </span>
+                        <span>
+                            <form:checkbox id="rankGenesExpressedOnMostFactorsLast" path="rankGenesExpressedOnMostFactorsLast" label="Report genes expressed in the most organism parts last"></form:checkbox>
                         </span>
                     </div>
                 </td>

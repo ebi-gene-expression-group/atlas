@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public class GeneProfile implements Iterable<Expression> {
 
     private String geneId;
@@ -73,9 +75,23 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedAtMostOn(Set<String> selectedOrganismParts){
-        return CollectionUtils.isEmpty(selectedOrganismParts)
-                || selectedOrganismParts.containsAll(getOrganismParts());
+    public boolean isExpressedAtMostOn(Set<String> organismParts){
+        checkArgument(CollectionUtils.isNotEmpty(organismParts));
+        return organismParts.containsAll(getOrganismParts());
+    }
+
+    public boolean isExpressedAtLeastOn(Set<String> organismParts){
+        checkArgument(CollectionUtils.isNotEmpty(organismParts));
+        return getOrganismParts().containsAll(organismParts);
+    }
+
+    public double getAverageExpressionLevelOn(Set<String> organismParts){
+        checkArgument(CollectionUtils.isNotEmpty(organismParts));
+        double expressionLevel = 0D;
+        for (String organismPart: organismParts) {
+            expressionLevel += getExpressionLevel(organismPart);
+        }
+        return expressionLevel / organismParts.size();
     }
 
     public Set<String> getOrganismParts() {

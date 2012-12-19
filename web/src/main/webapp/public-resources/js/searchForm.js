@@ -1,18 +1,26 @@
 function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8) {
 
     function enableIncludeNonSelectedFactorValues(){
-        $("#includeNonSelectedFactorValues").removeAttr("disabled");
-        $("label[for='includeNonSelectedFactorValues']").attr('style', 'color:black')
+        $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").removeAttr("disabled");
+        $("label[for='includeGenesExpressedInNonSelectedFactorValuesCheckbox']").attr('style', 'color:black')
+        //$("#rankGenesExpressedOnMostFactorsLast").removeAttr("disabled");
+        //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:black')
     }
 
     function disableIncludeNonSelectedFactorValues(){
-        $("#includeNonSelectedFactorValues").attr("disabled", true);
-        $("label[for='includeNonSelectedFactorValues']").attr('style', 'color:gray')
+        $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").attr("disabled", true);
+        $("label[for='includeGenesExpressedInNonSelectedFactorValuesCheckbox']").attr('style', 'color:lightgray')
+        //$("#rankGenesExpressedOnMostFactorsLast").attr("disabled", true);
+        //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:gray')
     }
 
-    disableIncludeNonSelectedFactorValues();
+    $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").attr("checked", $("#includeGenesExpressedInNonSelectedFactorValues").val()=="true")
 
-    $(".chzn-select").chosen().change(function() {
+    $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").change(function(){
+        $("#includeGenesExpressedInNonSelectedFactorValues").attr("value", $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").is(":checked"))
+    });
+
+    var selectedFactorValues = $(".chzn-select").chosen().change(function() {
             if ($(this).val()){
                 $(this).data("chosen").default_text = "";
                 enableIncludeNonSelectedFactorValues();
@@ -21,10 +29,16 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8) {
                 $(this).trigger("liszt:updated");
                 disableIncludeNonSelectedFactorValues();
             }
-        if (!isIE8){
-            loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
-        }
-        });
+            if (!isIE8){
+                loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
+            }
+        }).val();
+
+    if (selectedFactorValues){
+        enableIncludeNonSelectedFactorValues();
+    }else {
+        disableIncludeNonSelectedFactorValues();
+    }
 
     $("#submit-button").button();
 

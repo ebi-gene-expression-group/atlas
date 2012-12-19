@@ -74,7 +74,7 @@ public class GeneProfileInputStreamFilterTest {
 
     @Before
     public void initSubject(){
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, organismParts);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, organismParts, false);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty(){
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, new HashSet<String>(),organismParts);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, new HashSet<String>(),organismParts, false);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 

@@ -96,5 +96,26 @@ public class GeneProfileTest {
         assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("noSe", "Head", "trUnK")), is(false));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void averageExpressionLevelOnNullCollection(){
+        subject.getAverageExpressionLevelOn(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void averageExpressionLevelOnEmptyCollection(){
+        subject.getAverageExpressionLevelOn(null);
+    }
+
+    @Test
+    public void averageExpressionLevel(){
+        double averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet("nose", "head"));
+        assertThat(averageExpressionLevel, is(2.6005000000000003D));
+
+        averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet("nose", "head", "panz"));
+        assertThat(averageExpressionLevel, is(1.733666666666667D));
+    }
+
+
+
 }
 

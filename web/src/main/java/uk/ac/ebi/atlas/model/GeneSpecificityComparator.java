@@ -3,13 +3,18 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.collect.Ordering;
 
 import java.util.Comparator;
+import java.util.Set;
 
 public class GeneSpecificityComparator implements Comparator<GeneProfile> {
 
-    boolean orderBySpecificity;
+    private boolean orderBySpecificity;
+    private Set<String> selectedOrganismParts;
+    private Set<String> allOrganismParts;
 
-    public GeneSpecificityComparator(boolean orderBySpecificity){
+    public GeneSpecificityComparator(boolean orderBySpecificity, Set<String> selectedOrganismParts, Set<String> allOrganismParts){
         this.orderBySpecificity = orderBySpecificity;
+        this.selectedOrganismParts = selectedOrganismParts;
+        this.allOrganismParts = allOrganismParts;
     }
 
     @Override
@@ -19,7 +24,8 @@ public class GeneSpecificityComparator implements Comparator<GeneProfile> {
         if (order != 0) {
             return order;
         }
-        return Ordering.natural().compare(firstGeneProfile.getMaxExpressionLevel(),otherGeneProfile.getMaxExpressionLevel());
+        return Ordering.natural().compare(firstGeneProfile.getAverageExpressionLevelOn(selectedOrganismParts)
+                                            ,otherGeneProfile.getAverageExpressionLevelOn(selectedOrganismParts));
 
     }
 

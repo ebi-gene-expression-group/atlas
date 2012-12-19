@@ -38,6 +38,7 @@
                     <a id="display-help" class="button-image" title="Show help" class="button-image">
                         <img id="display-help-image"
                              style="width:23px;height:23px" src="resources/images/help.png"/>
+                    </a>
 
                 </div>
             </td>

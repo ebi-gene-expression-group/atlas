@@ -47,7 +47,13 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     @Override
     public GeneProfilesList apply(RequestPreferences requestPreferences, Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
-        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.getOrganismParts());
+        Set<String> selectedOrganismParts = CollectionUtils.isEmpty(requestPreferences.getOrganismParts())?
+                                                                experiment.getAllOrganismParts():
+                                                                requestPreferences.getOrganismParts();
+
+        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.isRankGenesExpressedOnMostFactorsLast()
+                                                                                                ,selectedOrganismParts
+                                                                                                ,experiment.getAllOrganismParts());
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, requestPreferences.getHeatmapMatrixSize());
 
@@ -75,9 +81,8 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildReverseSpecificityComparator(Set<String> organismParts) {
-        boolean orderBySpecificity = CollectionUtils.isEmpty(organismParts);
-        return Ordering.from(new GeneSpecificityComparator(orderBySpecificity)).reverse();
+    protected Ordering<GeneProfile> buildReverseSpecificityComparator(boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
+        return Ordering.from(new GeneSpecificityComparator(rankGenesExpressedOnMostFactorsLast, selectedOrganismParts, allOrganismParts)).reverse();
     }
 
     protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> reverseSpecificityComparator, int heatmapMatrixSize) {

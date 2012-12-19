@@ -46,13 +46,10 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
     private CSVWriter csvWriter;
 
-    private ExperimentsCache experimentsCache;
-
     private NumberUtils numberUtils;
 
     @Inject
     protected WriteGeneProfilesCommand(NumberUtils numberUtils){
-        this.experimentsCache = experimentsCache;
         this.numberUtils = numberUtils;
     }
 

@@ -54,5 +54,15 @@ function initHeatmapDisplayValueToggle() {
 
     $('#download-profiles-link').button().tooltip();
 
+    $("#sort-toggle").button().
+        toggle(function () {
+            $("#sort-toggle-image").attr("src", "resources/images/sort-least-on-top.png");
+            $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts last'");
+        },function () {
+            $("#sort-toggle-image").attr("src", "resources/images/sort-most-on-top.png");
+            $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts first");
+        }).attr("title"," ").tooltip();
+
+
 
 }

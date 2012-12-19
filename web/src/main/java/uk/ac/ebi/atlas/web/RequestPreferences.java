@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
-import org.springframework.format.annotation.NumberFormat;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Named;
@@ -51,7 +50,9 @@ public class RequestPreferences {
 
     private SortedSet<String> organismParts;
 
-    private boolean includeNonSelectedFactorValues = true;
+    private boolean includeGenesExpressedInNonSelectedFactorValues = true;
+
+    private boolean rankGenesExpressedOnMostFactorsLast = true;
 
     @Size(max=900,
           message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
@@ -91,14 +92,21 @@ public class RequestPreferences {
         this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
     }
 
-    public boolean isIncludeNonSelectedFactorValues() {
-        return this.includeNonSelectedFactorValues;
+    public boolean isIncludeGenesExpressedInNonSelectedFactorValues() {
+        return this.includeGenesExpressedInNonSelectedFactorValues;
     }
 
-    public boolean getIncludeNonSelectedFactorValues() {
-        return this.includeNonSelectedFactorValues;
+    public void setIncludeGenesExpressedInNonSelectedFactorValues(boolean includeGenesExpressedInNonSelectedFactorValues) {
+        this.includeGenesExpressedInNonSelectedFactorValues = includeGenesExpressedInNonSelectedFactorValues;
     }
 
+    public boolean isRankGenesExpressedOnMostFactorsLast() {
+        return this.rankGenesExpressedOnMostFactorsLast;
+    }
+
+    public void setRankGenesExpressedOnMostFactorsLast(boolean rankGenesExpressedOnMostFactorsLast) {
+        this.rankGenesExpressedOnMostFactorsLast = rankGenesExpressedOnMostFactorsLast;
+    }
     public void setDisplayLevels(boolean displayLevels) {
         this.displayLevels = displayLevels;
     }
