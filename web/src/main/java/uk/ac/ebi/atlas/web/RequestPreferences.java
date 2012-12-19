@@ -51,6 +51,10 @@ public class RequestPreferences {
 
     private SortedSet<String> organismParts;
 
+    //ToDo: find a better name for this, find it very confusing...
+    private SortedSet<String> filterFactorValues;
+
+
     private boolean includeGenesExpressedInNonSelectedFactorValues = true;
 
     private boolean rankGenesExpressedOnMostFactorsLast = true;
@@ -65,6 +69,7 @@ public class RequestPreferences {
 
     private NumberUtils numberUtils = new NumberUtils();
 
+    //ToDo: to be renamed in ...getFactorValues????
     public SortedSet<String> getOrganismParts() {
         return organismParts;
     }

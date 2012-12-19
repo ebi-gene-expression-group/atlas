@@ -106,6 +106,7 @@ public class Experiment {
         return this;
     }
 
+    //ToDo: this is confusing now... we are calling these things: "factor values"... elsewhere
     public SortedSet<String> getAllExperimentalFactors() {
         return experimentalFactors;
     }

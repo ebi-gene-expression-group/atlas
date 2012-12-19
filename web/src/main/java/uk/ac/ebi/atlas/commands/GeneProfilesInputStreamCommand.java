@@ -99,7 +99,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
 
         return new GeneProfileInputStreamFilter(geneProfileInputStream, geneIDs, requestPreferences.getFilterFactorValues()
-                                                ,requestPreferences.isIncludeGenesExpressedInNonSelectedFactorValues());
+                                                ,requestPreferences.getOrganismParts(),requestPreferences.isIncludeGenesExpressedInNonSelectedFactorValues());
 
     }
 
