@@ -11,12 +11,12 @@ public class FactorValueDisplayStringTest {
     private FactorValue factorValue;
 
     @Before
-    public void initFactorValue(){
+    public void initFactorValue() {
         factorValue = new FactorValue("or_gan_type", "organ", "liver");
     }
 
     @Test
     public void displayStringShouldBeFactorColonValue() {
-    	assertThat(factorValue.getDisplayString(), is("organ:liver"));
+        assertThat(factorValue.getDisplayString(), is("OR_GAN_TYPE:organ:liver"));
     }
 }

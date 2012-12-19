@@ -165,7 +165,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             //configurations required for any browser...
 
-            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8);
+            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${experimentalFactor}s)");
             initHeatmapDisplayValueToggle();
 
             $('.container').stickem();
