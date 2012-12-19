@@ -76,7 +76,7 @@
                             </div>
                         </td>
                         <td>
-                            <div id="anatomogramBody"  data-help-loc="#anatomogram"  style="width: 230px; height:
+                            <div id="anatomogramBody" data-help-loc="#anatomogram" style="width: 230px; height:
                              360px">
                             </div>
                         </td>
@@ -128,10 +128,10 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
         $(document).ready(function () {
 
-            var organismParts = [${allOrganismParts.size()}];
+            var experimentalFactors = [${allExperimentalFactors.size()}];
 
-            <c:forEach varStatus="i" var="organismPart" items="${allOrganismParts}">
-            organismParts[${i.index}] = '${organismPart}';
+            <c:forEach varStatus="i" var="organismPart" items="${allExperimentalFactors}">
+            experimentalFactors[${i.index}] = '${organismPart}';
             </c:forEach>
 
             var isIE8 = false;
@@ -160,12 +160,12 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
-                initAnatomogram(organismParts, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                initAnatomogram(experimentalFactors, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
             }
 
             //configurations required for any browser...
 
-            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8);
+            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${experimentalFactor}s)");
             initHeatmapDisplayValueToggle();
 
             $('.container').stickem();

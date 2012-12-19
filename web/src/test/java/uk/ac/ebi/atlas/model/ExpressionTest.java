@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,9 @@ public class ExpressionTest {
     @Before
     public void initSubject() {
 
-        subject = new Expression(new FactorValue("aType","organ", "heart"), 2.3);
+        FactorValue factorValue = new FactorValue("aType", "organ", "heart");
+
+        subject = new Expression(factorValue, 2.3, Sets.newHashSet(factorValue));
     }
 
     @Test

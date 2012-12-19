@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class GeneProfilesList extends ArrayList<GeneProfile> {
-    
+
     private static final long serialVersionUID = -1678371004778942235L;
 
     private Integer totalResultCount = 0;
@@ -26,7 +26,7 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
 
     public Double getExpressionLevel(String geneId, String organismPart) {
         for (GeneProfile geneProfile : this) {
-            if (geneId.equalsIgnoreCase(geneProfile.getGeneId())){
+            if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
                 return geneProfile.getExpressionLevel(organismPart);
             }
         }
@@ -70,11 +70,11 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         this.totalResultCount = totalResultCount;
     }
 
-    public SortedSet<String> getAllOrganismParts() {
-        SortedSet<String> allOrganismParts = new TreeSet<>();
+    public SortedSet<String> getAllExperimentalFactors() {
+        SortedSet<String> allExperimentalFactors = new TreeSet<>();
         for (GeneProfile geneProfile : this) {
-            allOrganismParts.addAll(geneProfile.getOrganismParts());
+            allExperimentalFactors.addAll(geneProfile.getFactorValues());
         }
-        return allOrganismParts;
+        return allExperimentalFactors;
     }
 }

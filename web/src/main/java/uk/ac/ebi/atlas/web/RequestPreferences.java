@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.NumberFormat;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Named;
@@ -66,6 +67,10 @@ public class RequestPreferences {
 
     public SortedSet<String> getOrganismParts() {
         return organismParts;
+    }
+
+    public SortedSet<String> getFilterFactorValues() {
+        return filterFactorValues;
     }
 
     public boolean isDisplayGeneDistribution() {
@@ -117,6 +122,10 @@ public class RequestPreferences {
 
     public void setOrganismParts(SortedSet<String> organismParts) {
         this.organismParts = organismParts;
+    }
+
+    public void setFilterFactorValues(SortedSet<String> filterFactorValues) {
+        this.filterFactorValues = filterFactorValues;
     }
 
     public String getGeneQuery() {

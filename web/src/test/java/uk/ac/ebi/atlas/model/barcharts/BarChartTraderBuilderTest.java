@@ -53,7 +53,7 @@ public class BarChartTraderBuilderTest {
         ORGANISM_PARTS.add(ORGANISM_PART_1);
         ORGANISM_PARTS.add(ORGANISM_PART_2);
         ORGANISM_PARTS.add(ORGANISM_PART_3);
-        when(experiment.getAllOrganismParts()).thenReturn(ORGANISM_PARTS);
+        when(experiment.getAllExperimentalFactors()).thenReturn(ORGANISM_PARTS);
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
 
@@ -127,9 +127,9 @@ public class BarChartTraderBuilderTest {
         //given
         subject.setOrganismParts(ORGANISM_PARTS);
 
-        for (int i = 0; i < 50; i=i+2) {
+        for (int i = 0; i < 50; i = i + 2) {
             subject.addGeneToIndexes(initGeneProfile1(), i);
-            subject.addGeneToIndexes(initGeneProfile2(), i+1);
+            subject.addGeneToIndexes(initGeneProfile2(), i + 1);
         }
         NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
 
@@ -147,15 +147,15 @@ public class BarChartTraderBuilderTest {
 
     private GeneProfile initGeneProfile2() {
         Expression expression21 = mock(Expression.class);
-        when(expression21.getOrganismPart()).thenReturn(ORGANISM_PART_1);
+        when(expression21.getFactorValue()).thenReturn(ORGANISM_PART_1);
         when(expression21.getLevel()).thenReturn(3d);
 
         Expression expression22 = mock(Expression.class);
-        when(expression22.getOrganismPart()).thenReturn(ORGANISM_PART_2);
+        when(expression22.getFactorValue()).thenReturn(ORGANISM_PART_2);
         when(expression22.getLevel()).thenReturn(2d);
 
         Expression expression23 = mock(Expression.class);
-        when(expression23.getOrganismPart()).thenReturn(ORGANISM_PART_3);
+        when(expression23.getFactorValue()).thenReturn(ORGANISM_PART_3);
         when(expression23.getLevel()).thenReturn(1d);
 
         Iterator<Expression> iterator2 = Iterators.forArray(expression21, expression22, expression23);
@@ -165,15 +165,15 @@ public class BarChartTraderBuilderTest {
 
     private GeneProfile initGeneProfile1() {
         Expression expression1 = mock(Expression.class);
-        when(expression1.getOrganismPart()).thenReturn(ORGANISM_PART_1);
+        when(expression1.getFactorValue()).thenReturn(ORGANISM_PART_1);
         when(expression1.getLevel()).thenReturn(1d);
 
         Expression expression2 = mock(Expression.class);
-        when(expression2.getOrganismPart()).thenReturn(ORGANISM_PART_2);
+        when(expression2.getFactorValue()).thenReturn(ORGANISM_PART_2);
         when(expression2.getLevel()).thenReturn(2d);
 
         Expression expression3 = mock(Expression.class);
-        when(expression3.getOrganismPart()).thenReturn(ORGANISM_PART_3);
+        when(expression3.getFactorValue()).thenReturn(ORGANISM_PART_3);
         when(expression3.getLevel()).thenReturn(0d);
 
         Iterator<Expression> iterator = Iterators.forArray(expression1, expression2, expression3);

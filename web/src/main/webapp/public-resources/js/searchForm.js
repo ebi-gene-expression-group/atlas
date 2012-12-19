@@ -1,4 +1,4 @@
-function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8) {
+function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, defaultText) {
 
     function enableIncludeNonSelectedFactorValues(){
         $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").removeAttr("disabled");
@@ -25,7 +25,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8) {
                 $(this).data("chosen").default_text = "";
                 enableIncludeNonSelectedFactorValues();
             } else {
-                $(this).data("chosen").default_text = "(all organism parts)";
+                $(this).data("chosen").default_text = defaultText ;
                 $(this).trigger("liszt:updated");
                 disableIncludeNonSelectedFactorValues();
             }
@@ -49,7 +49,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8) {
     $("#geneQuery").watermark("(all genes)");
 
     $("#cutoff").watermark("(default 0.5)");
-    if (!isIE8){
-       loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
+    if (!isIE8) {
+        loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
     }
 }

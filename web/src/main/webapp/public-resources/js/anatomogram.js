@@ -105,7 +105,7 @@ function scaleAnatomogram(svg) {
     elementById.setAttribute('transform', 'scale(1.6)');
 }
 
-function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
+function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
 
     if ($('#anatomogramBody').length == 0) {
         return;
@@ -119,11 +119,11 @@ function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
     $("#heatmap-table").delegate("td:first-child", "hover", function (evt) { //hover on cells of the first table column
         var geneExpressions = $(this).parents("tr .even,.odd").find("div[data-organism-part!='']");
 
-        var organismParts = geneExpressions.map(function () {
+        var experimentalFactors = geneExpressions.map(function () {
             return $(this).attr('data-organism-part')
         }).get();
 
-        organismParts.forEach(function (entry) {
+        experimentalFactors.forEach(function (entry) {
             toggleOrganismPartColor(svg, entry, evt);
         });
 
@@ -138,15 +138,15 @@ function initAnatomogram(organismParts, fileNameMale, fileNameFemale) {
     });
 
     //load anatomogram from given location and display given organism parts
-    function displayOrganismParts() {
-        $.each(organismParts, function () {
+    function displayExperimentalFactors() {
+        $.each(experimentalFactors, function () {
             toggleOrganismPartColor(svg, this);
             hoverOrganismPart(svg, this);
         });
     }
 
     function prepareAnatomogram() {
-        displayOrganismParts();
+        displayExperimentalFactors();
         scaleAnatomogram(svg);
     }
 

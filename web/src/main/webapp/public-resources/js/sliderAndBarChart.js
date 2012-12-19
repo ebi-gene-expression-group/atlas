@@ -18,7 +18,7 @@ function hideOrDisplayGeneDistribution(isFast) {
 
 }
 
-function initBarChartButton(){
+function initBarChartButton() {
 
     $("#display-chart").button().click(function () {
 
@@ -36,16 +36,16 @@ function initBarChartButton(){
 
 }
 
-function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
+function loadSliderAndPlot(cutoff, experimentAccession, experimentalFactors) {
 
     var op = "";
-    if (organismParts) {
-        op = "?" + organismParts;
+    if (experimentalFactors) {
+        op = "?" + experimentalFactors;
     }
 
-    function buildLegendaText(){
+    function buildLegendaText() {
         return "Y = number of genes expressed above the given FPKM cutoff "
-            + (organismParts? "for the selected organism parts" : "in any organism part");
+            + (experimentalFactors ? "for the selected experimental factors" : "in any experimental factor");
     }
 
     function nearestScaledCutoff(cutoff) {
@@ -129,7 +129,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
 
         //this is required because if you load the plot when the div is hidden
         //and then you display the div later the plot Y axis will be overlapping the Y ticks
-        displayGeneDistribution(this,true);
+        displayGeneDistribution(this, true);
 
         var keys = Object.keys(data);
         var scaledCutoffTicks = [];
@@ -235,12 +235,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, organismParts) {
         });
 
 
-
-
-
-
     });
-
 
 
 }

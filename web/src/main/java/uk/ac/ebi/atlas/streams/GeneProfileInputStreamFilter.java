@@ -26,6 +26,7 @@ import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.HashSet;
@@ -35,15 +36,32 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> geneIDs;
 
-    private Set<String> organismParts;
+    private Set<String> factorValues;
 
     private boolean includeGenesExpressedInNonSelectedFactorValues;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> geneIDs
-                                , Set<String> organismParts, boolean includeGenesExpressedInNonSelectedFactorValues){
+    private Set<FactorValue> filterFactorValues = new HashSet<>();
+
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> filterFactorValues
+            , Set<String> geneIDs, Set<String> factorValues, boolean includeGenesExpressedInNonSelectedFactorValues) {
         super(geneProfileInputStream);
+
+        //ToDo: this looks very bad!
+        
+        // Turns a factor specification string into a FactorValue list.
+        // Splits at : between type and value
+        if (filterFactorValues != null) {
+            for (String filter : filterFactorValues) {
+                String[] split = filter.split(":");
+                if (split.length == 2) {
+                    FactorValue factorValue = new FactorValue(split[0], "", split[1]);
+                    this.filterFactorValues.add(factorValue);
+                }
+            }
+        }
+
         this.geneIDs = toUpperCase(geneIDs);
-        this.organismParts = organismParts;
+        this.factorValues = factorValues;
         this.includeGenesExpressedInNonSelectedFactorValues = includeGenesExpressedInNonSelectedFactorValues;
     }
 
@@ -53,22 +71,27 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         return new Predicate<GeneProfile>() {
             @Override
             public boolean apply(GeneProfile profile) {
-                boolean b = checkGeneId(profile.getGeneId(), profile.getGeneName());
-                return b
-                        && (CollectionUtils.isEmpty(organismParts) || hasTheRightExpressionProfile(profile));
+                //ToDo: understand what is going on in here...
+                /*
+                hasFactor = hasFactor || profile.getAllFactorValues().containsAll(filterFactorValues);
+                return checkGene && isExpressed && hasFactor;
+                */
+                boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
+                return checkGene
+                        && (CollectionUtils.isEmpty(factorValues) || hasTheRightExpressionProfile(profile));
             }
 
             private boolean hasTheRightExpressionProfile(GeneProfile geneProfile){
                 if (includeGenesExpressedInNonSelectedFactorValues){
-                    return geneProfile.isExpressedAtLeastOn(organismParts);
+                    return geneProfile.isExpressedAtLeastOn(factorValues);
                 }
-                return geneProfile.isExpressedAtMostOn(organismParts);
+                return geneProfile.isExpressedAtMostOn(factorValues);
             }
         };
 
     }
 
-    private boolean checkGeneId(String geneId, String geneName){
+    private boolean checkGeneId(String geneId, String geneName) {
         return CollectionUtils.isEmpty(geneIDs)
                 || geneIDs.contains(geneId.toUpperCase())
                 || (geneName != null && geneIDs.contains(geneName.toUpperCase()));
@@ -81,6 +104,6 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                 capitalizedStrings.add(s.toUpperCase());
             }
         }
-        return  capitalizedStrings;
+        return capitalizedStrings;
     }
 }

@@ -7,12 +7,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorValue implements Comparable<FactorValue> {
 
-    public static enum FactorType {
-        ORGANISM_PART, CELL_LINE, CELLULAR_COMPONENT, MATERIAL_TYPE
-    }
-
-    ;
-
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private String type;
@@ -22,7 +16,7 @@ public class FactorValue implements Comparable<FactorValue> {
     private String value;
 
     public FactorValue(String type, String name, String value) {
-        this.type = checkNotNull(type).replaceAll(" ", "_");
+        this.type = checkNotNull(type).replaceAll(" ", "_").toUpperCase();
         this.name = checkNotNull(name);
         this.value = checkNotNull(value);
     }
@@ -40,13 +34,13 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     public String getDisplayString() {
-        return name.concat(FACTOR_VALUE_SEPARATOR)
-                .concat(value);
+        return type.concat(FACTOR_VALUE_SEPARATOR).concat(name.concat(FACTOR_VALUE_SEPARATOR)
+                .concat(value));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, name, value);
+        return Objects.hash(type, value);
     }
 
     @Override
@@ -58,7 +52,7 @@ public class FactorValue implements Comparable<FactorValue> {
             return false;
         }
         final FactorValue other = (FactorValue) obj;
-        return Objects.equals(this.type, other.type) && Objects.equals(this.name, other.name) && Objects.equals(this.value, other.value);
+        return Objects.equals(this.type, other.type) && Objects.equals(this.value, other.value);
     }
 
     @Override

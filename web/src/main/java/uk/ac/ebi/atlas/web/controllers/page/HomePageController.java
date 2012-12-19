@@ -37,8 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 @Controller
 @Scope("singleton")
 public class HomePageController {
@@ -67,23 +65,23 @@ public class HomePageController {
 
     private Map<String, Double> counts;
 
-    private Map<String, List<String>> organismToExperiments;
+    private Map<String, List<String>> speciesToExperiments;
 
     @Inject
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
         this.properties = properties;
         this.experimentsCache = experimentsCache;
-        extractOrganismPartCounts();
+        extractFactorValueCounts();
     }
 
     /**
-     * Gets all experiments in data directory and collates organism part percentage into map
+     * Gets all experiments in data directory and collates experimental factor occurrences into map
      */
-    private void extractOrganismPartCounts() {
+    private void extractFactorValueCounts() {
 
         counts = new HashMap<>();
 
-        organismToExperiments = new HashMap<>();
+        speciesToExperiments = new HashMap<>();
 
         int totalNumberExperiments = 0;
 
@@ -91,26 +89,27 @@ public class HomePageController {
         for (String expAcc : properties.getExperimentIdentifiers()) {
 
             // get experiment for directory name
-            Experiment experiment = checkNotNull(experimentsCache.getExperiment(expAcc),
-                    "Experiment with identifier " + expAcc + " not found.");
-            totalNumberExperiments++;
+            Experiment experiment = experimentsCache.getExperiment(expAcc);
+            if (experiment != null) {
+                totalNumberExperiments++;
 
-            if (!organismToExperiments.containsKey(experiment.getSpecie()))
-                organismToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
-            organismToExperiments.get(experiment.getSpecie()).add(expAcc);
+                if (!speciesToExperiments.containsKey(experiment.getSpecie()))
+                    speciesToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
+                speciesToExperiments.get(experiment.getSpecie()).add(expAcc);
 
-            // count per experiment and sum across all experiments
-            for (String organismPart : experiment.getAllOrganismParts()) {
-                if (!counts.containsKey(organismPart))
-                    counts.put(organismPart, 0.0);
-                counts.put(organismPart, counts.get(organismPart) +
-                        1.0);
+                // count per experiment and sum across all experiments
+                for (String factor : experiment.getAllExperimentalFactors()) {
+                    if (!counts.containsKey(factor))
+                        counts.put(factor, 0.0);
+                    counts.put(factor, counts.get(factor) +
+                            1.0);
+                }
             }
         }
 
         // normalise for total number of experiments
-        for (String organismPart : counts.keySet()) {
-            counts.put(organismPart, counts.get(organismPart) / totalNumberExperiments);
+        for (String factor : counts.keySet()) {
+            counts.put(factor, counts.get(factor) / totalNumberExperiments);
         }
     }
 
@@ -119,8 +118,8 @@ public class HomePageController {
 
         ArrayList<WordWrapper> wordList = new ArrayList<>();
 
-        for (String organismPart : counts.keySet()) {
-            wordList.add(new WordWrapper(organismPart, counts.get(organismPart)));
+        for (String factor : counts.keySet()) {
+            wordList.add(new WordWrapper(factor, counts.get(factor)));
         }
 
         // does the serialisation to JSON
@@ -128,7 +127,7 @@ public class HomePageController {
 
         // add data to model
         model.addAttribute("wordlist", gson.toJson(wordList));
-        model.addAttribute("organismToExperiments", organismToExperiments);
+        model.addAttribute("speciesToExperiments", speciesToExperiments);
 
         return "home";
     }

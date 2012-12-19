@@ -27,6 +27,7 @@
 
 <div id="preferencesFormBlock" class="block">
     <form:form method="get" commandName="preferences" id="prefForm">
+        <form:hidden path="filterFactorValues"/>
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
@@ -47,11 +48,11 @@
                 <td>
                     <div data-help-loc="#factorSearch">
                         <span>
-                            <form:label path="organismParts">Organism parts</form:label>
+                            <form:label path="organismParts">${experimentalFactor}</form:label>
                         </span>
                         <span>
-                            <form:select path="organismParts" data-placeholder="(all organism parts)" tabindex="-1"
-                                     items="${allOrganismParts}" cssClass="chzn-select"
+                            <form:select path="organismParts" data-placeholder="(all ${experimentalFactor}s)" tabindex="-1"
+                                     items="${allExperimentalFactors}" cssClass="chzn-select"
                                      cssStyle="width:350px;display:none"/>
                         </span>
                         <span>

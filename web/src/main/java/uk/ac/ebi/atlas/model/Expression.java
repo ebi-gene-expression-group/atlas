@@ -1,19 +1,27 @@
 package uk.ac.ebi.atlas.model;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Expression {
     private double level;
 
-    private FactorValue organismPart;
+    private FactorValue factorValue;
 
-    public Expression(FactorValue organismPart, double level) {
-        this.organismPart = organismPart;
+    private Set<FactorValue> allFactorValues;
+
+    public Expression(FactorValue factorValue, double level, Set<FactorValue> allFactorValues) {
+        this.factorValue = factorValue;
         this.level = level;
+        this.allFactorValues = allFactorValues;
     }
 
-    public String getOrganismPart() {
-        return organismPart.getValue();
+    public String getFactorValue() {
+        return factorValue.getValue();
+    }
+
+    public Set<FactorValue> getAllFactorValues() {
+        return allFactorValues;
     }
 
     public double getLevel() {
@@ -26,7 +34,7 @@ public class Expression {
 
     @Override
     public int hashCode() {
-        return Objects.hash(organismPart, level);
+        return Objects.hash(factorValue, level);
     }
 
     @Override
@@ -39,7 +47,7 @@ public class Expression {
         }
         final Expression other = (Expression) obj;
 
-        return Objects.equals(organismPart, other.organismPart)
+        return Objects.equals(factorValue, other.factorValue)
                 && Objects.equals(level, level);
     }
 }
