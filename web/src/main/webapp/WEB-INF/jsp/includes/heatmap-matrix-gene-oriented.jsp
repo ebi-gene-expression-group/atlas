@@ -63,9 +63,6 @@
                             </c:if>
 
                             <c:set var="organismPartName" value="${nameUtils.restrictSize(organismPart, 17)}"/>
-                            <c:if test="${fn:contains(header['User-Agent'],'MSIE')}">
-                                <c:set var="organismPartName" value="${organismPart}"/>
-                            </c:if>
 
                             <display:column
                                     title="<div data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'>${organismPartName}</div>"
@@ -107,3 +104,7 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    $("[data-organism-part]").tooltip();
+</script>
