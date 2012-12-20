@@ -31,49 +31,70 @@
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
+        <form:hidden id="includeGenesExpressedInNonSelectedFactorValues" path="includeGenesExpressedInNonSelectedFactorValues"/>
         <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
                 <td>
                     <div data-help-loc="#geneSearch">
-                        <form:label path="geneQuery">Gene Query</form:label>
-                        <div style="padding-bottom:4px"></div>
-                        <form:textarea path="geneQuery" maxlength="900"
-                                       rows="3" cols="35"></form:textarea>
+                        <span>
+                            <form:label path="geneQuery">Gene Query</form:label>
+                        </span>
+                        <span>
+                            <form:textarea path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
+                        </span>
                     </div>
                 </td>
                 <td>
                     <div data-help-loc="#factorSearch">
-                        <form:label path="organismParts">${experimentalFactor}</form:label>
-                        <div style="padding-bottom:4px"></div>
-                        <form:select path="organismParts" data-placeholder="(all ${experimentalFactor}s)" tabindex="-1"
+                        <span>
+                            <form:label path="organismParts">${experimentalFactor}</form:label>
+                        </span>
+                        <span>
+                            <form:select path="organismParts" data-placeholder="(all ${experimentalFactor}s)" tabindex="-1"
                                      items="${allExperimentalFactors}" cssClass="chzn-select"
                                      cssStyle="width:350px;display:none"/>
+                        </span>
+                        <span>
+                            <input type="checkbox" id="includeGenesExpressedInNonSelectedFactorValuesCheckbox"/>
+                            <label for="includeGenesExpressedInNonSelectedFactorValuesCheckbox">
+                                Include genes expressed in non-selected organism parts
+                            </label>
+                         </span>
+                        <span>
+                            <form:checkbox id="rankGenesExpressedOnMostFactorsLast" path="rankGenesExpressedOnMostFactorsLast" label="Report genes expressed in the most organism parts last"></form:checkbox>
+                        </span>
                     </div>
                 </td>
                 <td>
                     <div data-help-loc="#cutoff">
-                        <form:label path="cutoff">Expression level cutoff</form:label>
-                        <div style="padding-bottom:4px"></div>
-                        <c:choose>
-                            <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
-                                <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
-                                                  type="number"
-                                                  maxFractionDigits="0"
-                                                  var="formattedCutoff"/>
-                                <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"
-                                            style="border:1; font-weight:bold;"/>
-                            </c:when>
-                            <c:otherwise>
-                                <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <span>
+                            <form:label path="cutoff">Expression level cutoff</form:label>
+                        </span>
+                        <span>
+                            <c:choose>
+                                <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
+                                    <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
+                                                      type="number"
+                                                      maxFractionDigits="0"
+                                                      var="formattedCutoff"/>
+                                    <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"
+                                                style="border:1; font-weight:bold;"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
                     </div>
                 </td>
                 <td rowspan="4">
-                    <input id="submit-button" type="submit" value="Search"/>
-                    <br/>
-                    <input id="reset-button" type="button" value="Reset"/>
+                    <span>
+                        <input id="submit-button" type="submit" value="Search"/>
+                    </span>
+                    <span>
+                        <input id="reset-button" type="button" value="Reset"/>
+                    </span>
                 </td>
             </tr>
         </table>

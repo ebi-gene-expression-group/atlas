@@ -24,6 +24,8 @@ class ExpressionsBuffer {
 
     private static final Logger logger = Logger.getLogger(ExpressionsBuffer.class);
 
+    private static final String FACTOR_VALUE_NOT_FOUND = "Factor value not found for Run Accessions {0} and Experiment Accession {1}";
+
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
     private Iterator<FactorValue> expectedFactorValues;
@@ -109,13 +111,12 @@ class ExpressionsBuffer {
 
             for (String columnHeader : columnHeaders) {
 
+                //ToDo: will be refactored soon as we remove organism parts
                 FactorValue factorValue = getFactorValue(columnHeader, experimentAccession);
-                if (factorValue != null)
-                    orderedFactorValues.add(factorValue);
+                orderedFactorValues.add(factorValue);
 
                 Set<FactorValue> allFactorValues = getAllFactorValues(columnHeader, experimentAccession);
-                if (allFactorValues != null)
-                    orderedAllFactorValues.add(allFactorValues);
+                orderedAllFactorValues.add(allFactorValues);
 
             }
             readyToCreate = true;
@@ -136,7 +137,7 @@ class ExpressionsBuffer {
                 return experiment.getFactorValue(columnRun);
             }
 
-            return null;
+            throw new IllegalStateException(MessageFormat.format(FACTOR_VALUE_NOT_FOUND, columnHeader, experimentAccession));
         }
 
         private Set<FactorValue> getAllFactorValues(String columnHeader, String experimentAccession) {
@@ -152,7 +153,7 @@ class ExpressionsBuffer {
                 return experiment.getAllFactorValues(columnRun);
             }
 
-            return null;
+            throw new IllegalStateException(MessageFormat.format(FACTOR_VALUE_NOT_FOUND, columnHeader, experimentAccession));
         }
 
         public ExpressionsBuffer create() {

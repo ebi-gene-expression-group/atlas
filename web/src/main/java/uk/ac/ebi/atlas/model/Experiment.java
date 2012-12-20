@@ -36,6 +36,8 @@ public class Experiment {
     private String experimentAccession;
     private String description;
     private String factorType;
+
+    //ToDo: "factor values" and "experimental factors" what is the difference if any? PLease resolve inconsistencies asap!!!
     private SortedSet<String> experimentalFactors = new TreeSet<>();
 
     private Map<String, ExperimentRun> runs = new HashMap<>();
@@ -67,12 +69,17 @@ public class Experiment {
         return this;
     }
 
+    //ToDo: redundant, will be removed when we remove organism parts
+    //ToDo: cryptic signature, what is a column run? Find better name for parameter to express the method intent
+
     public FactorValue getFactorValue(String columnRun) {
         ExperimentRun experimentRun = getExperimentRun(columnRun);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
         return experimentRun.getFactorValue(factorType);
     }
+
+    //ToDo: cryptic signature, what is a column run? Find better name for parameter to express the method intent
 
     public Set<FactorValue> getAllFactorValues(String columnRun) {
         ExperimentRun experimentRun = getExperimentRun(columnRun);
@@ -106,6 +113,7 @@ public class Experiment {
         return this;
     }
 
+    //ToDo: this is confusing now... we are calling these things: "factor values"... elsewhere
     public SortedSet<String> getAllExperimentalFactors() {
         return experimentalFactors;
     }

@@ -29,6 +29,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.utils.NumberUtils;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
@@ -45,13 +46,10 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
     private CSVWriter csvWriter;
 
-    private ExperimentsCache experimentsCache;
-
     private NumberUtils numberUtils;
 
     @Inject
-    protected WriteGeneProfilesCommand(NumberUtils numberUtils) {
-        this.experimentsCache = experimentsCache;
+    protected WriteGeneProfilesCommand(NumberUtils numberUtils){
         this.numberUtils = numberUtils;
     }
 

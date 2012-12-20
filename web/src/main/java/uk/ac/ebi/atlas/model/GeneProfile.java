@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public class GeneProfile implements Iterable<Expression> {
 
     private String geneId;
@@ -18,8 +20,9 @@ public class GeneProfile implements Iterable<Expression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
+    //ToDo: key will become FactorValue when we will remove organism parts
     private SortedMap<String, Expression> expressions = new TreeMap<>();
-
+    //ToDo: and this will not be required anymore...
     private Set<FactorValue> allFactorValues = new HashSet<>();
 
     private GeneProfile() {
@@ -73,9 +76,23 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedAtMostOn(Set<String> selectedFactorValues) {
-        return CollectionUtils.isEmpty(selectedFactorValues)
-                || selectedFactorValues.containsAll(getFactorValues());
+    public boolean isExpressedAtMostOn(Set<String> factorValues){
+        checkArgument(CollectionUtils.isNotEmpty(factorValues));
+        return factorValues.containsAll(getFactorValues());
+    }
+
+    public boolean isExpressedAtLeastOn(Set<String> organismParts){
+        checkArgument(CollectionUtils.isNotEmpty(organismParts));
+        return getFactorValues().containsAll(organismParts);
+    }
+
+    public double getAverageExpressionLevelOn(Set<String> organismParts){
+        checkArgument(CollectionUtils.isNotEmpty(organismParts));
+        double expressionLevel = 0D;
+        for (String organismPart: organismParts) {
+            expressionLevel += getExpressionLevel(organismPart);
+        }
+        return expressionLevel / organismParts.size();
     }
 
     public Set<String> getFactorValues() {

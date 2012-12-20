@@ -38,11 +38,16 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> factorValues;
 
+    private boolean includeGenesExpressedInNonSelectedFactorValues;
+
     private Set<FactorValue> filterFactorValues = new HashSet<>();
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> filterFactorValues, Set<String> geneIDs, Set<String> factorValues) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> filterFactorValues
+            , Set<String> geneIDs, Set<String> factorValues, boolean includeGenesExpressedInNonSelectedFactorValues) {
         super(geneProfileInputStream);
 
+        //ToDo: move to RequestPreferences...
+        
         // Turns a factor specification string into a FactorValue list.
         // Splits at : between type and value
         if (filterFactorValues != null) {
@@ -57,6 +62,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
         this.geneIDs = toUpperCase(geneIDs);
         this.factorValues = factorValues;
+        this.includeGenesExpressedInNonSelectedFactorValues = includeGenesExpressedInNonSelectedFactorValues;
     }
 
     @Override
@@ -65,11 +71,19 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         return new Predicate<GeneProfile>() {
             @Override
             public boolean apply(GeneProfile profile) {
+                //ToDo: this need to be simplified when we remove organismParts....
+                boolean hasAllFactorValues = CollectionUtils.isEmpty(filterFactorValues);
+                hasAllFactorValues = hasAllFactorValues || profile.getAllFactorValues().containsAll(filterFactorValues);
                 boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
-                boolean isExpressed = profile.isExpressedAtMostOn(factorValues);
-                boolean hasFactor = CollectionUtils.isEmpty(filterFactorValues);
-                hasFactor = hasFactor || profile.getAllFactorValues().containsAll(filterFactorValues);
-                return checkGene && isExpressed && hasFactor;
+                return hasAllFactorValues && checkGene
+                        && (CollectionUtils.isEmpty(factorValues) || hasTheRightExpressionProfile(profile));
+            }
+
+            private boolean hasTheRightExpressionProfile(GeneProfile geneProfile){
+                if (includeGenesExpressedInNonSelectedFactorValues){
+                    return geneProfile.isExpressedAtLeastOn(factorValues);
+                }
+                return geneProfile.isExpressedAtMostOn(factorValues);
             }
         };
 

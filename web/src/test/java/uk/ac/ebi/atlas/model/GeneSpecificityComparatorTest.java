@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,19 +29,20 @@ public class GeneSpecificityComparatorTest {
     @Mock
     private GeneProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
+    private Set<String> selectedOrganismParts = Sets.newHashSet("heart", "nose");
 
     @Before
     public void initGeneExpressions() {
         when(geneWithSpecificity1.getSpecificity()).thenReturn(1);
         when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
-        when(geneWithSpecificity16.getMaxExpressionLevel()).thenReturn(10D);
+        when(geneWithSpecificity16.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(10D);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
-        when(geneWithSpecificity16AndSmallerExpressionLevel.getMaxExpressionLevel()).thenReturn(0D);
+        when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(0D);
     }
 
     @Before
     public void initSubject() {
-        subject = new GeneSpecificityComparator(true);
+        subject = new GeneSpecificityComparator(true, selectedOrganismParts, null);
     }
 
     @Test

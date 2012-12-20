@@ -10,6 +10,8 @@ public class Expression {
 
     private Set<FactorValue> allFactorValues;
 
+    //ToDo: verify what is going on here
+
     public Expression(FactorValue factorValue, double level, Set<FactorValue> allFactorValues) {
         this.factorValue = factorValue;
         this.level = level;

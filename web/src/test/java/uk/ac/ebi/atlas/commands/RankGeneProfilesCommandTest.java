@@ -84,11 +84,12 @@ public class RankGeneProfilesCommandTest {
         when(experimentsCache.getExperiment(anyString())).thenReturn(experiment);
 
         when(geneProfileInputStreamBuilderMock.forExperiment(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
-        //when(geneProfileInputStreamBuilderMock.withExperimentAccession(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
+
         when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 
         when(requestPreferencesMock.getHeatmapMatrixSize()).thenReturn(100);
         when(requestPreferencesMock.getCutoff()).thenReturn(0.1);
+        when(requestPreferencesMock.isRankGenesExpressedOnMostFactorsLast()).thenReturn(true);
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -107,8 +108,6 @@ public class RankGeneProfilesCommandTest {
         subject.setIndexClient(indexClient);
 
         subject.setExperimentsCache(experimentsCache);
-
-        //subject.setTsvFileUrlTemplate(TSV_FILE_URL_TEMPLATE);
 
     }
 
@@ -155,7 +154,33 @@ public class RankGeneProfilesCommandTest {
     }
 
     @Test
+    public void rankedObjectsShouldBeInAscendingOrder() throws Exception {
+
+        //given
+        when(requestPreferencesMock.isRankGenesExpressedOnMostFactorsLast()).thenReturn(false);
+
+        //when
+        List<GeneProfile> top3Objects = subject.apply("ANY_ACCESSION");
+
+        //and
+        assertThat(top3Objects.get(0).getSpecificity(), is(5));
+        //and
+        assertThat(top3Objects.get(0).getMaxExpressionLevel(), is(5D));
+        //then
+        assertThat(top3Objects.get(0).getGeneId(), is("5"));
+
+        //and
+        assertThat(top3Objects.get(2).getSpecificity(), is(3));
+        //and
+        assertThat(top3Objects.get(2).getMaxExpressionLevel(), is(3D));
+        //and
+        assertThat(top3Objects.get(2).getGeneId(), is("3"));
+
+    }
+
+    @Test
     public void rankedObjectsShouldBeInDescendingOrder() throws Exception {
+
         //when
         List<GeneProfile> top3Objects = subject.apply("ANY_ACCESSION");
 
