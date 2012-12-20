@@ -28,14 +28,20 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Named("experimentInterceptor")
 public class ExperimentInterceptor extends HandlerInterceptorAdapter {
@@ -45,28 +51,28 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
     private ExperimentsCache experimentsCache;
     private ApplicationProperties applicationProperties;
 
-    public ExperimentInterceptor(){
+    public ExperimentInterceptor() {
     }
 
 
     @Inject
-    public void setApplicationProperties(ApplicationProperties applicationProperties){
+    public void setApplicationProperties(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 
     @Inject
-    public void setExperimentsCache(ExperimentsCache experimentsCache){
+    public void setExperimentsCache(ExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException{
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
         String requestURI = request.getRequestURI();
 
         String contextPath = request.getContextPath();
 
-        String experimentPath = StringUtils.difference(contextPath+"/experiments/",requestURI);
+        String experimentPath = StringUtils.difference(contextPath + "/experiments/", requestURI);
 
         String experimentAccession = StringUtils.substringBefore(experimentPath, "/");
 
@@ -77,6 +83,17 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
         experimentAccession = StringUtils.substringBeforeLast(experimentAccession, ".");
 
         if (applicationProperties.getExperimentIdentifiers().contains(experimentAccession)) {
+
+            if (request.getParameterValues("filterFactorValues") != null) {
+                Set<FactorValue> offendingFilterFactorValues = validateFilterFactorValues(experimentAccession,
+                        request.getParameterValues("filterFactorValues"));
+                if (offendingFilterFactorValues.size() > 0) {
+                    logger.warn("Offending filterFactorValues found: " + offendingFilterFactorValues);
+                    response.sendError(404);
+                    return false;
+                }
+            }
+
             request.setAttribute("experimentAccession", experimentAccession);
 
             StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
@@ -86,19 +103,51 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+
         response.sendError(404);
         return false;
     }
 
+    /**
+     * Checks FactorValue objects against all FactorValue object of an experiment.
+     * If an illegal FactorValue has been found, it will be collected in the result set.
+     */
+    private Set<FactorValue> validateFilterFactorValues(String experimentAccession, String[] requestFilterFactorValues) {
+
+        // a SortedSet is required for RequestPreferences
+        TreeSet<String> sortedSet = new TreeSet<>();
+        for (String s : requestFilterFactorValues) {
+            sortedSet.add(s);
+        }
+
+        // use RequestPreferences to convert to FactorValues
+        RequestPreferences preferences = new RequestPreferences();
+        preferences.setFilterFactorValues(sortedSet);
+        Set<FactorValue> filterFactorValues = preferences.getFilterFactorValuesAsObjects();
+
+        // collect all factorValues from experiment
+        Set<FactorValue> allFactorValues = new HashSet<>();
+
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        for (String run : experiment.getExperimentRunAccessions()) {
+            ExperimentRun experimentRun = experiment.getExperimentRun(run);
+            // ToDo: this is necessary because of an error in supplied analysis-methods file
+            if (experimentRun != null)
+                allFactorValues.addAll(experiment.getAllFactorValues(run));
+        }
+
+        filterFactorValues.removeAll(allFactorValues);
+        return filterFactorValues;
+    }
 
 
     @Override
     public void postHandle(HttpServletRequest request,
-                              HttpServletResponse response,
-                              Object handler,
-                              ModelAndView modelAndView) throws IOException{
+                           HttpServletResponse response,
+                           Object handler,
+                           ModelAndView modelAndView) throws IOException {
 
-        String experimentAccession = (String)request.getAttribute("experimentAccession");
+        String experimentAccession = (String) request.getAttribute("experimentAccession");
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -108,7 +157,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         modelAndView.getModel().put("experimentDescription", experiment.getDescription());
 
-        StopWatch stopWatch = (StopWatch)request.getAttribute("stopWatch");
+        StopWatch stopWatch = (StopWatch) request.getAttribute("stopWatch");
 
         stopWatch.stop();
 
