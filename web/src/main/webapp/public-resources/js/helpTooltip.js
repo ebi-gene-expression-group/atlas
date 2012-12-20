@@ -22,9 +22,9 @@
 
 function initHelpTooltip() {
 
-    $("div[data-help-loc]")
+    $("[data-help-loc]")
         .attr("title", "")
-        .tooltip({disabled: true});
+        .tooltip({disabled:true});
 
 
     $("#display-help").button().
@@ -39,7 +39,7 @@ function initHelpTooltip() {
         }).tooltip();
 
     function enableTooltip() {
-        $("div[data-help-loc]")
+        $("[data-help-loc]")
             .tooltip("option", "disabled", false)
             .on('mouseover.loadContent', function () {
                 var selectedElement = this;
@@ -63,7 +63,7 @@ function initHelpTooltip() {
     }
 
     function disableTooltip() {
-        $("div[data-help-loc]")
+        $("[data-help-loc]")
             .tooltip("option", "disabled", true)
             .off('mouseover.loadContent');
     }

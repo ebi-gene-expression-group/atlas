@@ -36,54 +36,52 @@
         <tbody>
         <tr>
             <td>
-                <div data-help-loc="#heatMapTableCellInfo">
-                    <display:table name="${geneProfiles}" id="geneProfile"
-                                   htmlId="heatmap-table" class="table-grid">
+                <display:table name="${geneProfiles}" id="geneProfile"
+                               htmlId="heatmap-table" class="table-grid">
+                    <display:column
+                            title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
+                            class="header-cell">
+                        <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
+                            <fmt:param value="${geneProfile.geneId}"/>
+                        </fmt:message>
+                        <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
+                    </display:column>
+
+                    <c:forEach var="organismPart" items="${allExperimentalFactors}">
+
+                        <c:set var="expressionLevel"
+                               value="${geneProfile.getExpressionLevel(organismPart)}"/>
+
+                        <c:if test="${expressionLevel != 0}">
+
+                            <c:set var="cellColour"
+                                   value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)}"/>
+
+                            <c:set var="style" value="background-color:${cellColour}"/>
+
+                        </c:if>
+
                         <display:column
-                                title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
-                                class="header-cell">
-                            <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
-                                <fmt:param value="${geneProfile.geneId}"/>
-                            </fmt:message>
-                            <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
-                        </display:column>
-
-                        <c:forEach var="organismPart" items="${allExperimentalFactors}">
-
-                            <c:set var="expressionLevel"
-                                   value="${geneProfile.getExpressionLevel(organismPart)}"/>
+                                title="<div data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'></div>"
+                                headerClass='rotated_cell'
+                                style="${expressionLevel !=0 ? style : ''}">
 
                             <c:if test="${expressionLevel != 0}">
 
-                                <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)}"/>
-
-                                <c:set var="style" value="background-color:${cellColour}"/>
+                                <div class="hide_cell"
+                                     data-organism-part="${organismPart}" data-color="${cellColour}">
+                                    <fmt:formatNumber type="number"
+                                                      maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
+                                                      value="${expressionLevel}" groupingUsed="false"/>
+                                </div>
 
                             </c:if>
 
-                            <display:column
-                                    title="<div data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'></div>"
-                                    headerClass='rotated_cell'
-                                    style="${expressionLevel !=0 ? style : ''}">
+                        </display:column>
 
-                                <c:if test="${expressionLevel != 0}">
+                    </c:forEach>
 
-                                    <div class="hide_cell"
-                                         data-organism-part="${organismPart}" data-color="${cellColour}">
-                                        <fmt:formatNumber type="number"
-                                                          maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
-                                                          value="${expressionLevel}" groupingUsed="false"/>
-                                    </div>
-
-                                </c:if>
-
-                            </display:column>
-
-                        </c:forEach>
-
-                    </display:table>
-                </div>
+                </display:table>
             </td>
             <td style="vertical-align: top">
                 <div style="float:left">
@@ -106,6 +104,7 @@
 <script type="text/javascript">
 
     var tableHeaderDivs = $("[data-organism-part]");
+    tableHeaderDivs.tooltip();
 
     $.each(tableHeaderDivs, function () {
         if ($.browser.msie) {
@@ -128,5 +127,7 @@
         }
         return result;
     }
+
+    $("#heatmap-table tbody").attr("data-help-loc", "#heatMapTableCellInfo");
 
 </script>
