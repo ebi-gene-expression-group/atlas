@@ -62,10 +62,8 @@
 
                             </c:if>
 
-                            <c:set var="organismPartName" value="${nameUtils.restrictSize(organismPart, 17)}"/>
-
                             <display:column
-                                    title="<div data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'>${organismPartName}</div>"
+                                    title="<div data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'></div>"
                                     headerClass='rotated_cell'
                                     style="${expressionLevel !=0 ? style : ''}">
 
@@ -106,5 +104,29 @@
 </div>
 
 <script type="text/javascript">
-    $("[data-organism-part]").tooltip();
+
+    var tableHeaderDivs = $("[data-organism-part]");
+
+    $.each(tableHeaderDivs, function () {
+        if ($.browser.msie) {
+            $(this).append($(this).attr("data-organism-part"));
+        } else {
+            var organismPartName = $(this).attr("data-organism-part");
+            organismPartName = restrictSize(organismPartName, 17);
+            $(this).append(organismPartName);
+        }
+    });
+
+    function restrictSize(s, maxSize) {
+        var result = s;
+        if (result.length > maxSize) {
+            result = result.substring(0, maxSize);
+            if (result.lastIndexOf(" ") > maxSize - 5) {
+                result = result.substring(0, result.lastIndexOf(" "));
+            }
+            result = result + "...";
+        }
+        return result;
+    }
+
 </script>
