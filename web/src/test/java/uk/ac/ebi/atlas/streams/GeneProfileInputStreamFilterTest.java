@@ -61,7 +61,9 @@ public class GeneProfileInputStreamFilterTest {
 
     private Set<String> factorValues = Sets.newHashSet(ORGANISM_PART_1, ORGANISM_PART_2);
 
-    private Set<String> EMPTY_SET = Sets.newHashSet();
+    private Set<String> EMPTY_GENE_IDS = Sets.newHashSet();
+
+    private Set<FactorValue> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
 
     private GeneProfileInputStreamFilter subject;
 
@@ -78,7 +80,7 @@ public class GeneProfileInputStreamFilterTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_SET, geneIDs, factorValues, false);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_FILTER_FACTOR_VALUES, geneIDs, factorValues, false);
     }
 
     @Test
@@ -96,7 +98,7 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_SET, EMPTY_SET, factorValues, false);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_FILTER_FACTOR_VALUES, EMPTY_GENE_IDS, factorValues, false);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
@@ -110,7 +112,7 @@ public class GeneProfileInputStreamFilterTest {
     public void acceptanceCriteriaTestWithFilterFactorValueAndGeneIDsSetIsEmpty() {
         //given
         subject = new GeneProfileInputStreamFilter(inputStreamMock,
-                Sets.newHashSet("ORGANISM_PART:" + ORGANISM_PART_1), EMPTY_SET, factorValues, false);
+                Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_1)), EMPTY_GENE_IDS, factorValues, false);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 

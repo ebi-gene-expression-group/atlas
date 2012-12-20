@@ -40,26 +40,13 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private boolean includeGenesExpressedInNonSelectedFactorValues;
 
-    private Set<FactorValue> filterFactorValues = new HashSet<>();
+    private Set<FactorValue> filterFactorValues;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> filterFactorValues
-            , Set<String> geneIDs, Set<String> factorValues, boolean includeGenesExpressedInNonSelectedFactorValues) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<FactorValue> filterFactorValues,
+                                        Set<String> geneIDs, Set<String> factorValues, boolean includeGenesExpressedInNonSelectedFactorValues) {
         super(geneProfileInputStream);
 
-        //ToDo: move to RequestPreferences...
-        
-        // Turns a factor specification string into a FactorValue list.
-        // Splits at : between type and value
-        if (filterFactorValues != null) {
-            for (String filter : filterFactorValues) {
-                String[] split = filter.split(":");
-                if (split.length == 2) {
-                    FactorValue factorValue = new FactorValue(split[0], "", split[1]);
-                    this.filterFactorValues.add(factorValue);
-                }
-            }
-        }
-
+        this.filterFactorValues = filterFactorValues;
         this.geneIDs = toUpperCase(geneIDs);
         this.factorValues = factorValues;
         this.includeGenesExpressedInNonSelectedFactorValues = includeGenesExpressedInNonSelectedFactorValues;
@@ -79,8 +66,8 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                         && (CollectionUtils.isEmpty(factorValues) || hasTheRightExpressionProfile(profile));
             }
 
-            private boolean hasTheRightExpressionProfile(GeneProfile geneProfile){
-                if (includeGenesExpressedInNonSelectedFactorValues){
+            private boolean hasTheRightExpressionProfile(GeneProfile geneProfile) {
+                if (includeGenesExpressedInNonSelectedFactorValues) {
                     return geneProfile.isExpressedAtLeastOn(factorValues);
                 }
                 return geneProfile.isExpressedAtMostOn(factorValues);

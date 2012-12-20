@@ -98,8 +98,8 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
                 .withCutoff(requestPreferences.getCutoff()).create();
 
 
-        return new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getFilterFactorValues(), geneIDs
-                                                ,requestPreferences.getOrganismParts(),requestPreferences.isIncludeGenesExpressedInNonSelectedFactorValues());
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getFilterFactorValuesAsObjects(), geneIDs
+                , requestPreferences.getOrganismParts(), requestPreferences.isIncludeGenesExpressedInNonSelectedFactorValues());
 
     }
 

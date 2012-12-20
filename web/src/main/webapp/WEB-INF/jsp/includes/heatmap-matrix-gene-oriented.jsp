@@ -62,7 +62,7 @@
                         </c:if>
 
                         <display:column
-                                title="<div data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'></div>"
+                                title="<div tableHeaderCell data-organism-part='${organismPart}' class='rotate_text' title='${organismPart}'></div>"
                                 headerClass='rotated_cell'
                                 style="${expressionLevel !=0 ? style : ''}">
 
@@ -103,7 +103,7 @@
 
 <script type="text/javascript">
 
-    var tableHeaderDivs = $("[data-organism-part]");
+    var tableHeaderDivs = $("[tableHeaderCell]");
     tableHeaderDivs.tooltip();
 
     $.each(tableHeaderDivs, function () {

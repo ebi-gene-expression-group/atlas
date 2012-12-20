@@ -25,13 +25,15 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Scope;
-import org.springframework.format.annotation.NumberFormat;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 
 @Named("requestPreferences")
@@ -59,8 +61,8 @@ public class RequestPreferences {
 
     private boolean rankGenesExpressedOnMostFactorsLast = true;
 
-    @Size(max=900,
-          message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
+    @Size(max = 900,
+            message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
     private String geneQuery = DEFAULT_GENE_QUERY_STRING;
 
     private boolean displayLevels;
@@ -76,6 +78,24 @@ public class RequestPreferences {
 
     public SortedSet<String> getFilterFactorValues() {
         return filterFactorValues;
+    }
+
+    public Set<FactorValue> getFilterFactorValuesAsObjects() {
+        Set<FactorValue> results = new HashSet<>();
+
+        // Turns a factor specification string into a FactorValue list.
+        // Splits at : between type and value
+        if (filterFactorValues != null) {
+            for (String filter : filterFactorValues) {
+                String[] split = filter.split(":");
+                if (split.length == 2) {
+                    FactorValue factorValue = new FactorValue(split[0], "", split[1]);
+                    results.add(factorValue);
+                }
+            }
+        }
+
+        return results;
     }
 
     public boolean isDisplayGeneDistribution() {
@@ -117,6 +137,7 @@ public class RequestPreferences {
     public void setRankGenesExpressedOnMostFactorsLast(boolean rankGenesExpressedOnMostFactorsLast) {
         this.rankGenesExpressedOnMostFactorsLast = rankGenesExpressedOnMostFactorsLast;
     }
+
     public void setDisplayLevels(boolean displayLevels) {
         this.displayLevels = displayLevels;
     }
