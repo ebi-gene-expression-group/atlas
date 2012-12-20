@@ -46,7 +46,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
             , Set<String> geneIDs, Set<String> factorValues, boolean includeGenesExpressedInNonSelectedFactorValues) {
         super(geneProfileInputStream);
 
-        //ToDo: this looks very bad!
+        //ToDo: move to RequestPreferences...
         
         // Turns a factor specification string into a FactorValue list.
         // Splits at : between type and value
@@ -71,13 +71,11 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         return new Predicate<GeneProfile>() {
             @Override
             public boolean apply(GeneProfile profile) {
-                //ToDo: understand what is going on in here...
-                /*
-                hasFactor = hasFactor || profile.getAllFactorValues().containsAll(filterFactorValues);
-                return checkGene && isExpressed && hasFactor;
-                */
+                //ToDo: this need to be simplified when we remove organismParts....
+                boolean hasAllFactorValues = CollectionUtils.isEmpty(filterFactorValues);
+                hasAllFactorValues = hasAllFactorValues || profile.getAllFactorValues().containsAll(filterFactorValues);
                 boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
-                return checkGene
+                return hasAllFactorValues && checkGene
                         && (CollectionUtils.isEmpty(factorValues) || hasTheRightExpressionProfile(profile));
             }
 

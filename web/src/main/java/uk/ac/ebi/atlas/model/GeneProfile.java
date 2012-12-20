@@ -20,15 +20,19 @@ public class GeneProfile implements Iterable<Expression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
+    //ToDo: key will become FactorValue when we will remove organism parts
     private SortedMap<String, Expression> expressions = new TreeMap<>();
+    //ToDo: and this will not be required anymore...
+    private Set<FactorValue> allFactorValues = new HashSet<>();
 
     private GeneProfile() {
     }
 
-    public GeneProfile add(Expression expression){
-        String organismPart = expression.getFactorValue();
-        if (!StringUtils.isEmpty(organismPart)){
-            this.expressions.put(organismPart, expression);
+    public GeneProfile add(Expression expression) {
+        String factorValue = expression.getFactorValue();
+        if (!StringUtils.isEmpty(factorValue)) {
+            this.expressions.put(factorValue, expression);
+            this.allFactorValues.addAll(expression.getAllFactorValues());
         }
         updateProfileExpression(expression.getLevel());
         return this;
@@ -72,9 +76,9 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedAtMostOn(Set<String> organismParts){
-        checkArgument(CollectionUtils.isNotEmpty(organismParts));
-        return organismParts.containsAll(getFactorValues());
+    public boolean isExpressedAtMostOn(Set<String> factorValues){
+        checkArgument(CollectionUtils.isNotEmpty(factorValues));
+        return factorValues.containsAll(getFactorValues());
     }
 
     public boolean isExpressedAtLeastOn(Set<String> organismParts){
@@ -93,6 +97,10 @@ public class GeneProfile implements Iterable<Expression> {
 
     public Set<String> getFactorValues() {
         return this.expressions.keySet();
+    }
+
+    public Set<FactorValue> getAllFactorValues() {
+        return this.allFactorValues;
     }
 
     public double getExpressionLevel(String factorValue) {

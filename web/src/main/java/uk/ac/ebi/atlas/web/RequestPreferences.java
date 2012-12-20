@@ -51,7 +51,7 @@ public class RequestPreferences {
 
     private SortedSet<String> organismParts;
 
-    //ToDo: find a better name for this, find it very confusing...
+    //ToDo: this will become factorValues when we remove organismParts
     private SortedSet<String> filterFactorValues;
 
 
@@ -69,7 +69,7 @@ public class RequestPreferences {
 
     private NumberUtils numberUtils = new NumberUtils();
 
-    //ToDo: to be renamed in ...getFactorValues????
+    //ToDo: this will be removed
     public SortedSet<String> getOrganismParts() {
         return organismParts;
     }
