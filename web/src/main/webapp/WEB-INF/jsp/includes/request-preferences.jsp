@@ -25,13 +25,14 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<div id="preferencesFormBlock" class="block">
+<div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="filterFactorValues"/>
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
-        <form:hidden id="includeGenesExpressedInNonSelectedFactorValues" path="includeGenesExpressedInNonSelectedFactorValues"/>
+        <form:hidden id="includeGenesExpressedInNonSelectedFactorValues"
+                     path="includeGenesExpressedInNonSelectedFactorValues"/>
         <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
@@ -51,9 +52,10 @@
                             <form:label path="organismParts">${experimentalFactor}</form:label>
                         </span>
                         <span>
-                            <form:select path="organismParts" data-placeholder="(all ${experimentalFactor}s)" tabindex="-1"
-                                     items="${allExperimentalFactors}" cssClass="chzn-select"
-                                     cssStyle="width:350px;display:none"/>
+                            <form:select path="organismParts" data-placeholder="(all ${experimentalFactor}s)"
+                                         tabindex="-1"
+                                         items="${allExperimentalFactors}" cssClass="chzn-select"
+                                         cssStyle="width:350px;display:none"/>
                         </span>
                         <span>
                             <input type="checkbox" id="includeGenesExpressedInNonSelectedFactorValuesCheckbox"/>
@@ -62,7 +64,9 @@
                             </label>
                          </span>
                         <span>
-                            <form:checkbox id="rankGenesExpressedOnMostFactorsLast" path="rankGenesExpressedOnMostFactorsLast" label="Report genes expressed in the most organism parts last"></form:checkbox>
+                            <form:checkbox id="rankGenesExpressedOnMostFactorsLast"
+                                           path="rankGenesExpressedOnMostFactorsLast"
+                                           label="Report genes expressed in the most organism parts last"></form:checkbox>
                         </span>
                     </div>
                 </td>
@@ -82,7 +86,8 @@
                                                 style="border:1; font-weight:bold;"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <form:input size="10" path="cutoff" id="cutoff" style="border:1; font-weight:bold;"/>
+                                    <form:input size="10" path="cutoff" id="cutoff"
+                                                style="border:1; font-weight:bold;"/>
                                 </c:otherwise>
                             </c:choose>
                         </span>

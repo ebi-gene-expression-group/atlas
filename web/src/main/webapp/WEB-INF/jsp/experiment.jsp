@@ -168,6 +168,12 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
             initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${experimentalFactor}s)");
             initHeatmapDisplayValueToggle();
 
+            var experimentalFactor = "${experimentalFactor}";
+            if (experimentalFactor !== "Organism part") {
+                $("#anatomogram").remove();//remove the anatomogram
+                $("#heatmap-div").removeClass();
+            }
+
             $('.container').stickem();
         });
 

@@ -56,6 +56,10 @@
     var calcDataTableHeight = function () {
         return $window.height() - 270;
     };
+    var calcDataTableWidth = function () {
+        return $window.width() - 100;
+    };
+
 
     /* Data set - loaded from experiment design tsv file */
     var aDataSet = ${tableData};
@@ -112,8 +116,7 @@
             "bPaginate":false,
             "bScrollCollapse":true,
             "sScrollY":calcDataTableHeight(),
-            "sScrollX":"100%",
-            "sScrollXInner":"100%",
+            "sScrollX":calcDataTableWidth(),
             "sDom":'i<"download">f<"clear">t'
         });
 
@@ -127,9 +130,10 @@
         $window.resize(function () {
             var oSettings = oTable.fnSettings();
             oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
+            //oSettings.oScroll.sX = calcDataTableWidth();
 
             // maybe you need to redraw the table (not sure about this)
-            oTable.fnAdjustColumnSizing();
+            oTable.fnAdjustColumnSizing(false);
             oTable.fnDraw(false);
         });
 

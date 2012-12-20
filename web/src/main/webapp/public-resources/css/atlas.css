@@ -21,35 +21,36 @@
  */
 
 #download-profiles {
-    background:transparent url('../images/download_blue_small.png');
-}​
-
-.button-image{
-     background-repeat: no-repeat;
-     background-position: center;
-     cursor: pointer;
-     width: 22px;
-     height: 24px;
-     padding:3px;
- }
-
-.button-image .ui-button-text{
-    padding:2px;
+    background: transparent url('../images/download_blue_small.png');
 }
 
-form td{
+​
+
+.button-image {
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    width: 22px;
+    height: 24px;
+    padding: 3px;
+}
+
+.button-image .ui-button-text {
+    padding: 2px;
+}
+
+form td {
     vertical-align: top;
 }
 
 form td span {
     padding: 2px;
-    display:block;
+    display: block;
 }
 
 body {
-    min-width:1000px;
-    max-width:1000px;
-    font-size:10px;
+    min-width: 1100px;
+    font-size: 10px;
     font-family: Verdana, Helvetica, Arial, sans-serif;
 }
 
@@ -71,16 +72,20 @@ textarea, .chzn-container {
 
 .block {
     padding-top: 1em;
-    /*width:950px;*/
+}
+
+.block-max-width {
+    padding-top: 1em;
+    max-width: 950px;
 }
 
 .experiment-accession {
     text-align: left;
-    padding-right:5px;
-    font-size:18px;
+    padding-right: 5px;
+    font-size: 18px;
     white-space: nowrap;
-    font-weight:bold;
-    font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif
+    font-weight: bold;
+    font-family: "Helvetica Narrow", "Arial Narrow", Tahoma, Arial, Helvetica, sans-serif
 }
 
 #reload-form-table {
@@ -115,11 +120,12 @@ a:active {
 
 /* selected link */
 
-.double-click-noselection{
-    -webkit-user-select: none; // webkit (safari, chrome) browsers
-    -moz-user-select: none; // mozilla browsers
-    -khtml-user-select: none;
-    -ms-user-select: none; // IE 10
+.double-click-noselection {
+    -webkit-user-select: none;
+/ / webkit ( safari, chrome ) browsers -moz-user-select : none;
+/ / mozilla browsers -khtml-user-select : none;
+    -ms-user-select: none;
+/ / IE 10
 }
 
 /* JQuery UI*/
