@@ -52,4 +52,5 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
     if (!isIE8) {
         loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
     }
+
 }

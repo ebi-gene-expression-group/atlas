@@ -37,7 +37,7 @@
         <table class="form-grid">
             <tr>
                 <td>
-                    <div data-help-loc="#geneSearch">
+                    <div class="tooltip-div" data-help-loc="#geneSearch">
                         <span>
                             <form:label path="geneQuery">Gene Query</form:label>
                         </span>
@@ -47,7 +47,7 @@
                     </div>
                 </td>
                 <td>
-                    <div data-help-loc="#factorSearch">
+                    <div class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
                             <form:label path="organismParts">${experimentalFactor}</form:label>
                         </span>
@@ -57,21 +57,21 @@
                                          items="${allExperimentalFactors}" cssClass="chzn-select"
                                          cssStyle="width:350px;display:none"/>
                         </span>
-                        <span>
-                            <input type="checkbox" id="includeGenesExpressedInNonSelectedFactorValuesCheckbox"/>
-                            <label for="includeGenesExpressedInNonSelectedFactorValuesCheckbox">
-                                Include genes expressed in non-selected organism parts
-                            </label>
-                         </span>
-                        <span>
-                            <form:checkbox id="rankGenesExpressedOnMostFactorsLast"
-                                           path="rankGenesExpressedOnMostFactorsLast"
-                                           label="Report genes expressed in the most organism parts last"></form:checkbox>
-                        </span>
                     </div>
+                    <span>
+                        <input type="checkbox" id="includeGenesExpressedInNonSelectedFactorValuesCheckbox"/>
+                        <label for="includeGenesExpressedInNonSelectedFactorValuesCheckbox">
+                            Include genes expressed in non-selected organism parts
+                        </label>
+                     </span>
+                    <span>
+                        <form:checkbox id="rankGenesExpressedOnMostFactorsLast"
+                                       path="rankGenesExpressedOnMostFactorsLast"
+                                       label="Report genes expressed in the most organism parts last"></form:checkbox>
+                    </span>
                 </td>
                 <td>
-                    <div data-help-loc="#cutoff">
+                    <div class="tooltip-div" data-help-loc="#cutoff">
                         <span>
                             <form:label path="cutoff">Expression level cutoff</form:label>
                         </span>

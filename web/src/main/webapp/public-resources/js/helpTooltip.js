@@ -24,7 +24,7 @@ function initHelpTooltip() {
 
     $("[data-help-loc]")
         .attr("title", "")
-        .tooltip({disabled:true});
+        .tooltip({disabled:true, hide:false, show:false});
 
 
     $("#display-help").button().
@@ -67,5 +67,7 @@ function initHelpTooltip() {
             .tooltip("option", "disabled", true)
             .off('mouseover.loadContent');
     }
+
+    $("#organismParts_chzn").mouseleave(function(){$("[data-help-loc]").tooltip("option","disabled","true")})
 
 }

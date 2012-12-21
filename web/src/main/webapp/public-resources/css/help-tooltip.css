@@ -9,6 +9,10 @@
     box-shadow: 0 0 7px black;
 }
 
+.tooltip-div {
+    display: inline-block;
+}
+
 .arrow:after {
         background: black;
         border: 2px solid white;
