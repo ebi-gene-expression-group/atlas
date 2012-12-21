@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class HeatmapTablePage extends TablePage {
@@ -127,4 +129,25 @@ public class HeatmapTablePage extends TablePage {
         return maxFpkm;
     }
 
+    public String getGeneThatRanksAt(int rowIndex) {
+        return getSelectedGenes().get(rowIndex-1);
+    }
+
+    public double getAverageFpkm(int rowIndex, String ... factors) {
+
+        List<String> tableHeaders = getTableHeaders(heatmapTable);
+        tableHeaders.remove(0); //because this is the display button cell
+
+        List<String> stringValues = this.getGeneProfile(rowIndex);
+
+        double averageFpkm = 0D;
+        for (String factor : factors){
+            int columnIndex = tableHeaders.indexOf(factor);
+            String stringValue = stringValues.get(columnIndex);
+            if (StringUtils.isNotBlank(stringValue)){
+                averageFpkm += Double.parseDouble(stringValue);
+            }
+        }
+        return averageFpkm/factors.length;
+    }
 }

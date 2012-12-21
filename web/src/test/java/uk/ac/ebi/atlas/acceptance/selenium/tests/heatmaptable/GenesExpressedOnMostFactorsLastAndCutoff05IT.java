@@ -12,7 +12,7 @@ public class GenesExpressedOnMostFactorsLastAndCutoff05IT extends SeleniumFixtur
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             +"&includeGenesExpressedInNonSelectedFactorValues=false"
-            +"&_rankGenesExpressedOnMostFactorsLast=true";
+            +"&rankGenesExpressedOnMostFactorsLast=false";
 
     private static final String HIGHER_RANKING_GENE = "VTI1B";
     private static final String LOWER_RANKING_GENE = "S1PR1";
@@ -40,8 +40,8 @@ public class GenesExpressedOnMostFactorsLastAndCutoff05IT extends SeleniumFixtur
         assertThat(subject.getMaxFpkm(11), is(greaterThan(subject.getMaxFpkm(10))));
 
         //gene at row 11 follows gene at row 10 because has higher average!
-        assertThat(subject.getSelectedGenes().get(9), is(HIGHER_RANKING_GENE));
-        assertThat(subject.getSelectedGenes().get(10), is(LOWER_RANKING_GENE));
+        assertThat(subject.getGeneThatRanksAt(10), is(HIGHER_RANKING_GENE));
+        assertThat(subject.getGeneThatRanksAt(11), is(LOWER_RANKING_GENE));
 
     }
 
