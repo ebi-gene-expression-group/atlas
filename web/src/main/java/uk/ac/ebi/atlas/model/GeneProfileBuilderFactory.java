@@ -1,12 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-
-import javax.inject.Named;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
-
 /**
  * This class is a factory of GeneProfile Builders, required to create instances of sequences of profiles in a streaming process fashion.
  * It is injected using spring lookup-method (application-context.xml). In Spring 3.0 no equivalent annotation has yet been implemented for this feature.

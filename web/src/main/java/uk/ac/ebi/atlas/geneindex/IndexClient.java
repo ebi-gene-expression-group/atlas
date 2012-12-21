@@ -27,9 +27,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 
 import javax.inject.Inject;
 import javax.inject.Named;
