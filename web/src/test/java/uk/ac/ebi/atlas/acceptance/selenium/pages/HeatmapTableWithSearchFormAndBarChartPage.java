@@ -22,15 +22,11 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import com.thoughtworks.selenium.condition.Text;
-import org.apache.commons.lang.StringUtils;
-import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;

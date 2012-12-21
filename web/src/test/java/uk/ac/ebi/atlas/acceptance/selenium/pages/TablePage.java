@@ -52,18 +52,18 @@ abstract class TablePage extends AtlasPage {
         return Lists.transform(tableCells, getText);
     }
 
-    protected List<String> getRowValues(WebElement table, int index) {
-        List<WebElement> tableCells = getTableRow(table, index);
+    protected List<String> getRowValues(WebElement table, int rowIndex) {
+        List<WebElement> tableCells = getRow(table, rowIndex);
         return Lists.transform(tableCells, getText);
     }
 
-    protected List<WebElement> getTableRow(WebElement table, int index) {
-        String xPath = String.format(ROW_CELLS_XPATH_TEMPLATE, index);
+    protected List<WebElement> getRow(WebElement table, int rowIndex) {
+        String xPath = String.format(ROW_CELLS_XPATH_TEMPLATE, rowIndex);
         return table.findElements(By.xpath(xPath));
     }
 
     protected List<WebElement> getFirstTableRow(WebElement table) {
-        return getTableRow(table, 1);
+        return getRow(table, 1);
     }
 
     protected List<String> getLastRowValues(WebElement table) {

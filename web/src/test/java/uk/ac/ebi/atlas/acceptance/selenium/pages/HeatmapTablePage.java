@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -65,6 +66,12 @@ public class HeatmapTablePage extends TablePage {
         return firstTableRow.subList(1, firstTableRow.size());
     }
 
+    public List<String> getGeneProfile(int rowIndex) {
+        List<String> rowValues = getRowValues(heatmapTable, rowIndex);
+        return rowValues.subList(1, rowValues.size());
+    }
+
+
     public List<String> getLastGeneProfile() {
         List<String> firstTableRow = getLastRowValues(heatmapTable);
         return firstTableRow.subList(1, firstTableRow.size());
@@ -94,4 +101,30 @@ public class HeatmapTablePage extends TablePage {
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
         return div.getAttribute("class").contains("hide_cell");
     }
+
+    public double getAverageFpkm(int rowIndex){
+        List<String> stringValues = this.getGeneProfile(rowIndex);
+        double averageFpkm = 0D;
+        for (String stringValue : stringValues){
+            if (StringUtils.isNotBlank(stringValue)){
+                averageFpkm += Double.parseDouble(stringValue);
+            }
+        }
+        return averageFpkm/stringValues.size();
+    }
+
+    public double getMaxFpkm(int rowIndex){
+        List<String> stringValues = this.getGeneProfile(rowIndex);
+        double maxFpkm = 0D;
+        for (String stringValue : stringValues){
+            if (StringUtils.isNotBlank(stringValue)){
+                double fpkmValue = Double.parseDouble(stringValue);
+                if (fpkmValue > maxFpkm){
+                    maxFpkm = fpkmValue;
+                }
+            }
+        }
+        return maxFpkm;
+    }
+
 }

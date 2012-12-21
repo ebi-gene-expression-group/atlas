@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
