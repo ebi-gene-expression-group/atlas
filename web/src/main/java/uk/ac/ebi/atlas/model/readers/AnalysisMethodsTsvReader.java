@@ -33,7 +33,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -72,15 +71,14 @@ public class AnalysisMethodsTsvReader {
     }
 
     protected Collection<String[]> readAndFilter(String experimentAccession,
-                                              Predicate<String[]> filter) throws IllegalStateException {
-        try {
-            Path filePath = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodCsvFilePath(experimentAccession));
+                                                 Predicate<String[]> filter) throws IllegalStateException {
 
-            Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
+        Path filePath = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodCsvFilePath(experimentAccession));
 
-            CSVReader csvReader = new CSVReader(dataFileReader, '\t');
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Files.newInputStream(filePath)), '\t')) {
 
             return Collections2.filter(csvReader.readAll(), filter);
+
         } catch (IOException e) {
 
             logger.error(e.getMessage(), e);

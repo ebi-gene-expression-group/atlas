@@ -32,7 +32,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,14 +52,13 @@ public class ExperimentDesignTsvReader {
     }
 
     public Collection<String[]> readAll(String experimentAccession) throws IllegalStateException {
-        try {
-            Path filePath = FileSystems.getDefault().getPath(applicationProperties.getExperimentDesignCsvFilePath(experimentAccession));
 
-            Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
+        Path filePath = FileSystems.getDefault().getPath(applicationProperties.getExperimentDesignCsvFilePath(experimentAccession));
 
-            CSVReader csvReader = new CSVReader(dataFileReader, '\t');
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Files.newInputStream(filePath)), '\t')) {
 
             return Collections2.filter(csvReader.readAll(), new IsCommented());
+
         } catch (IOException e) {
 
             logger.error(e.getMessage(), e);
