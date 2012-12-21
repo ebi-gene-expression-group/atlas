@@ -42,7 +42,7 @@ public class GeneReverseSpecificityComparatorTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneSpecificityComparator(false, selectedOrganismParts, null);
+        subject = new GeneSpecificityComparator(false,false, selectedOrganismParts, null);
     }
 
     @Test

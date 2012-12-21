@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -126,6 +127,13 @@ public class GeneProfile implements Iterable<Expression> {
             csvValues[i++] = "" + expression.getLevel();
         }
         return csvValues;
+    }
+
+    public Comparable getWeightedExpressionLevelOn(Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
+        if (allOrganismParts.isEmpty()){
+            return getAverageExpressionLevelOn(selectedOrganismParts);
+        }
+        return getAverageExpressionLevelOn(selectedOrganismParts) - getAverageExpressionLevelOn(Sets.difference(allOrganismParts, selectedOrganismParts));
     }
 
     @Named("geneProfileBuilder")

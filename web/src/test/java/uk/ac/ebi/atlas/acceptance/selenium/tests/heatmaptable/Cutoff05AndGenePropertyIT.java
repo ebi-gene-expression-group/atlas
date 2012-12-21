@@ -20,9 +20,10 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
 
 import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import static org.hamcrest.Matchers.contains;
@@ -30,7 +31,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableWithCutoff05AndGenePropertyFilterIT extends SeleniumFixture {
+public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
 
     protected HeatmapTablePage subject;
 

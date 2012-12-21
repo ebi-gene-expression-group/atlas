@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.selenium;
+package uk.ac.ebi.atlas.acceptance.selenium.utils;
 
 import org.junit.After;
 import org.junit.Before;
