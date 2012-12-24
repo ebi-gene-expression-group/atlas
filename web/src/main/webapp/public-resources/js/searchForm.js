@@ -1,23 +1,29 @@
 function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, defaultText) {
 
     function enableIncludeNonSelectedFactorValues(){
-        $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").removeAttr("disabled");
-        $("label[for='includeGenesExpressedInNonSelectedFactorValuesCheckbox']").attr('style', 'color:black')
+        $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").removeAttr("disabled");
+        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:black')
         //$("#rankGenesExpressedOnMostFactorsLast").removeAttr("disabled");
         //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:black')
     }
 
     function disableIncludeNonSelectedFactorValues(){
-        $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").attr("disabled", true);
-        $("label[for='includeGenesExpressedInNonSelectedFactorValuesCheckbox']").attr('style', 'color:lightgray')
+        $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("disabled", true);
+        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:lightgray')
         //$("#rankGenesExpressedOnMostFactorsLast").attr("disabled", true);
         //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:gray')
     }
 
-    $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").attr("checked", $("#includeGenesExpressedInNonSelectedFactorValues").val()=="true")
+    function updatePlot(selectedFactorValues){
+        loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues
+            ,$("#includeGenesExpressedOnNonSelectedFactorValues").attr("value"));
+    }
 
-    $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").change(function(){
-        $("#includeGenesExpressedInNonSelectedFactorValues").attr("value", $("#includeGenesExpressedInNonSelectedFactorValuesCheckbox").is(":checked"))
+    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("checked", $("#includeGenesExpressedOnNonSelectedFactorValues").val()=="true")
+
+    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").change(function(){
+        $("#includeGenesExpressedOnNonSelectedFactorValues").attr("value", $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").is(":checked"))
+        updatePlot($(".chzn-select").val());
     });
 
     var selectedFactorValues = $(".chzn-select").chosen().change(function() {
@@ -30,7 +36,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
                 disableIncludeNonSelectedFactorValues();
             }
             if (!isIE8){
-                loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
+                updatePlot($(this).val());
             }
         }).val();
 
@@ -50,7 +56,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
 
     $("#cutoff").watermark("(default 0.5)");
     if (!isIE8) {
-        loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
+        loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").val(), $("#includeGenesExpressedOnNonSelectedFactorValues").val());
     }
 
 }

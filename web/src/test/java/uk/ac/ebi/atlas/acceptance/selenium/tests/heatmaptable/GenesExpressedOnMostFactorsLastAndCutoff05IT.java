@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 public class GenesExpressedOnMostFactorsLastAndCutoff05IT extends SeleniumFixture {
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
-            +"&includeGenesExpressedInNonSelectedFactorValues=false"
+            +"&includeGenesExpressedOnNonSelectedFactorValues=false"
             +"&rankGenesExpressedOnMostFactorsLast=false";
 
     private static final String HIGHER_RANKING_GENE = "VTI1B";

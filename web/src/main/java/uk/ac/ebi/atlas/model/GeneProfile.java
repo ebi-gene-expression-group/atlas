@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.SetUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
@@ -79,12 +80,12 @@ public class GeneProfile implements Iterable<Expression> {
 
     public boolean isExpressedAtMostOn(Set<String> factorValues){
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
-        return factorValues.containsAll(getFactorValues());
+        return factorValues.containsAll(this.getFactorValues());
     }
 
-    public boolean isExpressedAtLeastOn(Set<String> organismParts){
-        checkArgument(CollectionUtils.isNotEmpty(organismParts));
-        return getFactorValues().containsAll(organismParts);
+    public boolean isExpressedOnAnyOf(Set<String> factorValues){
+        checkArgument(CollectionUtils.isNotEmpty(factorValues));
+        return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
     }
 
     public double getAverageExpressionLevelOn(Set<String> organismParts){

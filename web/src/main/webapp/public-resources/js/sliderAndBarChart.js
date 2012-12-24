@@ -36,16 +36,11 @@ function initBarChartButton() {
 
 }
 
-function loadSliderAndPlot(cutoff, experimentAccession, experimentalFactors) {
-
-    var op = "";
-    if (experimentalFactors) {
-        op = "?" + experimentalFactors;
-    }
+function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues, includeGenesExpressedOnNonSelectedFactorsValues) {
 
     function buildLegendaText() {
         return "Y = number of genes expressed above the given FPKM cutoff "
-            + (experimentalFactors ? "for the selected experimental factors" : "in any experimental factor");
+            + (selectedFactorValues ? "for the selected experimental factors" : "in any experimental factor");
     }
 
     function nearestScaledCutoff(cutoff) {
@@ -125,31 +120,37 @@ function loadSliderAndPlot(cutoff, experimentAccession, experimentalFactors) {
         });
     }
 
-    $.getJSON("json/barchart/" + experimentAccession + op, function (data) {
+    $.getJSON("json/barchart/" + experimentAccession
+                , {
+                    includeGenesExpressedOnNonSelectedFactorsValues: includeGenesExpressedOnNonSelectedFactorsValues,
+                    organismParts:selectedFactorValues
+                  }
+                , function (data) {
 
-        //this is required because if you load the plot when the div is hidden
-        //and then you display the div later the plot Y axis will be overlapping the Y ticks
-        displayGeneDistribution(this, true);
+                    //this is required because if you load the plot when the div is hidden
+                    //and then you display the div later the plot Y axis will be overlapping the Y ticks
+                    displayGeneDistribution(this, true);
 
-        var keys = Object.keys(data);
-        var scaledCutoffTicks = [];
-        var dataArray = [];
+                    var keys = Object.keys(data);
+                    var scaledCutoffTicks = [];
+                    var dataArray = [];
 
-        for (var i = 0; i < keys.length; i++) {
-            if (keys[i] > 0 && keys[i] < 1) {
-                scaledCutoffTicks.push(keys[i]);
-            } else {
-                scaledCutoffTicks.push(Math.round(keys[i]));
-            }
-            dataArray.push([i, data[keys[i]]]);
-        }
+                    for (var i = 0; i < keys.length; i++) {
+                        if (keys[i] > 0 && keys[i] < 1) {
+                            scaledCutoffTicks.push(keys[i]);
+                        } else {
+                            scaledCutoffTicks.push(Math.round(keys[i]));
+                        }
+                        dataArray.push([i, data[keys[i]]]);
+                    }
 
 
-        var ticksMap = [];
+                    var ticksMap = [];
 
-        $.each(scaledCutoffTicks, function (index, scaledCutoff) {
-            ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
-        })
+                    $.each(scaledCutoffTicks, function (index, scaledCutoff) {
+                        ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
+                    }
+        )
 
         var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
 

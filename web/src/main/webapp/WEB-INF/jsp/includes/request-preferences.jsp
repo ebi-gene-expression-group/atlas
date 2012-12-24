@@ -31,8 +31,8 @@
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
-        <form:hidden id="includeGenesExpressedInNonSelectedFactorValues"
-                     path="includeGenesExpressedInNonSelectedFactorValues"/>
+        <form:hidden id="includeGenesExpressedOnNonSelectedFactorValues"
+                     path="includeGenesExpressedOnNonSelectedFactorValues"/>
         <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
@@ -59,8 +59,8 @@
                         </span>
                     </div>
                     <span>
-                        <input type="checkbox" id="includeGenesExpressedInNonSelectedFactorValuesCheckbox"/>
-                        <label for="includeGenesExpressedInNonSelectedFactorValuesCheckbox">
+                        <input type="checkbox" id="includeGenesExpressedOnNonSelectedFactorValuesCheckbox"/>
+                        <label for="includeGenesExpressedOnNonSelectedFactorValuesCheckbox">
                             Include genes expressed in non-selected organism parts
                         </label>
                      </span>

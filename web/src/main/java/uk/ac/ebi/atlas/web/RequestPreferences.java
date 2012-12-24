@@ -57,7 +57,7 @@ public class RequestPreferences {
     private SortedSet<String> filterFactorValues;
 
 
-    private boolean includeGenesExpressedInNonSelectedFactorValues = true;
+    private boolean includeGenesExpressedOnNonSelectedFactorValues = true;
 
     private boolean rankGenesExpressedOnMostFactorsLast = true;
 
@@ -122,12 +122,12 @@ public class RequestPreferences {
         this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
     }
 
-    public boolean isIncludeGenesExpressedInNonSelectedFactorValues() {
-        return this.includeGenesExpressedInNonSelectedFactorValues;
+    public boolean isIncludeGenesExpressedOnNonSelectedFactorValues() {
+        return this.includeGenesExpressedOnNonSelectedFactorValues;
     }
 
-    public void setIncludeGenesExpressedInNonSelectedFactorValues(boolean includeGenesExpressedInNonSelectedFactorValues) {
-        this.includeGenesExpressedInNonSelectedFactorValues = includeGenesExpressedInNonSelectedFactorValues;
+    public void setIncludeGenesExpressedOnNonSelectedFactorValues(boolean includeGenesExpressedOnNonSelectedFactorValues) {
+        this.includeGenesExpressedOnNonSelectedFactorValues = includeGenesExpressedOnNonSelectedFactorValues;
     }
 
     public boolean isRankGenesExpressedOnMostFactorsLast() {

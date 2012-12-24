@@ -17,7 +17,7 @@ public class TwoOrganismPartsIT extends SeleniumFixture {
     public void getStartingPage() {
         subject = new HeatmapTablePage(driver,
                 "organismParts=adipose&geneQuery=&organismParts=heart&_organismParts=1&cutoff=9"
-                        +"&includeGenesExpressedInNonSelectedFactorValues=false");
+                        +"&includeGenesExpressedOnNonSelectedFactorValues=false");
 
         subject.get();
     }

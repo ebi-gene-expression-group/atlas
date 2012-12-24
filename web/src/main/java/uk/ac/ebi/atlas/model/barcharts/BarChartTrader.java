@@ -39,6 +39,7 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
+//ToDo: to be continued in order to handle the includeGenesExpressedAlsoOnNonSelectedFactorValue parameter...
 @Named("barChartTrader")
 @Scope("prototype")
 public class BarChartTrader {
@@ -58,16 +59,16 @@ public class BarChartTrader {
 
     public NavigableMap<Double, Integer> getChart() {
 
-        return getChart(null);
+        return getChart(null,false);
     }
 
-    public NavigableMap<Double, Integer> getChart(Set<String> selectedOrganismParts) {
+    public NavigableMap<Double, Integer> getChart(Set<String> selectedOrganismParts, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
 
         NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
 
         for (Double scaledCutoff : geneExpressionIndexes.navigableKeySet()) {
 
-            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), selectedOrganismParts));
+            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), selectedOrganismParts, includeGenesExpressedAlsoOnNonSelectedFactorValue));
 
         }
 
@@ -79,20 +80,20 @@ public class BarChartTrader {
      */
     public int getGeneCountsForOrganismPart(String organismPart, double scaledCutoff) {
         Map<String, BitSet> geneBitSets = geneExpressionIndexes.get(scaledCutoff);
-        if (geneBitSets != null && geneBitSets.containsKey(organismPart))
-            return geneBitSets.get(organismPart).cardinality();
-        return 0;
+        checkState(geneBitSets.containsKey(organismPart) != false, "BarChartTrader: factor value not recognized: "+ organismPart);
+        return geneBitSets.get(organismPart).cardinality();
     }
 
-    protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedOrganismParts) {
+    protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedOrganismParts, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
         BitSet notExpressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
+        //ToDo:... this should work, but now that we also added the includeGenesExpressedAlsoOnNonSelectedFactorValue parameter it is harder to read...
         for (String organismPart : geneBitSets.keySet()) {
             if (CollectionUtils.isEmpty(selectedOrganismParts) || selectedOrganismParts.contains(organismPart)) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(organismPart));
-            } else {
+            } else if (!includeGenesExpressedAlsoOnNonSelectedFactorValue){
                 notExpressedGenesBitSet.or(geneBitSets.get(organismPart));
             }
         }
@@ -192,12 +193,13 @@ public class BarChartTrader {
         }
 
 
+        //ToDo:... Huston... we (may) have a problem... will the max cutoff be a lot higher now that we include also genes expressed on non selected factor values?
         protected void trimIndexes() {
 
             Set<Double> doubles = Sets.newHashSet(geneExpressionIndexes.keySet());
             for (Double scaledCutoff : doubles) {
 
-                if (countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), null) < 50) {
+                if (countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), null, true) < 50) {
                     geneExpressionIndexes.remove(scaledCutoff);
                 }
 

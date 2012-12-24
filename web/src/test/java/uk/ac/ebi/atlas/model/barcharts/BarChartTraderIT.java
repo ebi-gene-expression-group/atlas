@@ -42,6 +42,7 @@ import static org.hamcrest.Matchers.hasEntry;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class BarChartTraderIT {
 
+    private static final boolean INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE = false;
     @Inject
     private BarChartTradersCache barChartTradersCache;
 
@@ -66,7 +67,7 @@ public class BarChartTraderIT {
 
     @Test
     public void chartDataForSomeExperimentalFactorsTest() {
-        SortedMap<Double, Integer> chartData = subject.getChart(Sets.newHashSet("liver", "lung"));
+        SortedMap<Double, Integer> chartData = subject.getChart(Sets.newHashSet("liver", "lung"), INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE);
         //returns
         //[<0.0=605>, <0.1=777>, <0.2=835>, <0.3=921>, <0.4=986>, <0.5=1029>, <0.6=1064>, <0.7=1104>, <0.8=1122>, <0.9=1145>, <1.0=1298>, <2.0=1420>, <3.0=1457>, <4.0=1544>, <5.0=1597>, <6.0=1634>, <7.0=1667>, <8.0=1678>, <9.0=1705>, <10.0=1709>, <20.0=1649>, <30.0=1530>, <40.0=1385>, <50.0=1256>, <60.0=1123>, <70.0=1037>, <80.0=964>, <90.0=872>, <100.0=826>, <200.0=506>, <300.0=351>, <400.0=273>, <500.0=212>, <600.0=185>, <700.0=169>, <800.0=148>, <900.0=131>, <1000.0=116>, <2000.0=59>, <3000.0=43>, <4000.0=36>, <5000.0=26>, <6000.0=23>, <7000.0=20>, <8000.0=16>, <9000.0=15>, <10000.0=12>, <20000.0=9>, <30000.0=5>, <40000.0=5>, <50000.0=5>, <60000.0=5>, <70000.0=4>, <80000.0=3>, <90000.0=4>, <100000.0=4>, <200000.0=3>, <300000.0=3>, <400000.0=1>, <500000.0=1>, <600000.0=1>, <700000.0=1>, <800000.0=1>, <900000.0=1>, <1000000.0=1>, <2000000.0=0>]
 

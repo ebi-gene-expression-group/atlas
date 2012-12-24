@@ -14,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BarChartTraderTest {
 
+    private static final boolean INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE = false;
     private BarChartTrader subject;
 
     private NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = new TreeMap<>();
@@ -40,7 +41,7 @@ public class BarChartTraderTest {
     @Test
     public void testGetChartWithOrganismParts() throws Exception {
 
-        NavigableMap<Double, Integer> chart = subject.getChart(Sets.newHashSet("op1", "op2"));
+        NavigableMap<Double, Integer> chart = subject.getChart(Sets.newHashSet("op1", "op2"), INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE);
 
         assertThat(chart.size(), is(2));
         assertThat(chart.get(0d), is(2));
@@ -49,9 +50,9 @@ public class BarChartTraderTest {
 
     @Test
     public void testCountGenesAboveCutoff() {
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null), is(5));
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet("op1")), is(1));
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet("op1", "op3")), is(3));
+        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null,INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE), is(5));
+        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet("op1"),INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE), is(1));
+        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet("op1", "op3"),INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE), is(3));
     }
 
 }

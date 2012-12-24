@@ -30,14 +30,15 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class IncludingNonSelectedGenesAndExpressedOnMostFactorsLastAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
+public class IncludingNonSelectedGenesAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             +"&organismParts=brain&organismParts=breast"
             +"&includeGenesExpressedOnNonSelectedFactorValues=true"
-            +"&rankGenesExpressedOnMostFactorsLast=true";
-    private static final String HIGHER_RANKING_GENE = "NAIP";
-    private static final String LOWER_RANKING_GENE = "RANBP17";
+            +"&rankGenesExpressedOnMostFactorsLast=false";
+
+    private static final String HIGHER_RANKING_GENE = "TMSB10";
+    private static final String LOWER_RANKING_GENE = "RTN4";
 
     protected HeatmapTablePage subject;
 
@@ -47,27 +48,25 @@ public class IncludingNonSelectedGenesAndExpressedOnMostFactorsLastAndCutoff05An
     }
 
     @Test
-    public void averageFpkmAndRankingShouldBePenalizedByExpressionOnNonSelectedFactors() {
+    public void averageFpkmAndRankingShouldNotBePenalizedByExpressionOnNonSelectedFactors() {
 
         //given
         subject.clickDisplayLevelsButton();
 
-        double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(29, "brain", "breast");
-        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(30, "brain", "breast" );
+        double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(1, "brain", "breast");
+        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(2, "brain", "breast" );
 
         //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1.5));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1023.5));
+
+        //then
+        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(535.5));
+
         //and
-        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(2D));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(greaterThan(lowerRankingGeneAverageFpkmOnSelectedFactors)));
 
-        //and even though average fpkm is greater for gene at row 30 than gen at row 29
-        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(greaterThan(higherRankingGeneAverageFpkmOnSelectedFactors)));
-        //and even though max fpkm is greater for gene at row 30 than gene at row 29
-        assertThat(subject.getMaxFpkm(30), is(greaterThan(subject.getMaxFpkm(29))));
-
-        //gene at row 30 follows gene at row 29 because is penalized by fpkm values of non selected factors!
-        assertThat(subject.getGeneThatRanksAt(29), is(HIGHER_RANKING_GENE));
-        assertThat(subject.getGeneThatRanksAt(30), is(LOWER_RANKING_GENE));
+        assertThat(subject.getGeneThatRanksAt(1), is(HIGHER_RANKING_GENE));
+        assertThat(subject.getGeneThatRanksAt(2), is(LOWER_RANKING_GENE));
 
     }
 
