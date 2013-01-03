@@ -47,7 +47,6 @@ function initHelpTooltip() {
                                     }
                                 });
                     $(selectedElement).tooltip("option", "tooltipClass", "help-tooltip");
-//                    $(selectedElement).tooltip("option", "position", { my: "left+15 center", at: "right top" } );
                 });
             });
     }
