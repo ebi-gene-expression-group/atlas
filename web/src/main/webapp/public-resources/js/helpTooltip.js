@@ -45,19 +45,20 @@ function initHelpTooltip() {
                 var selectedElement = this;
                 $('#helpContentTooltip').load('resources/html/atlas-help.html ' + $(selectedElement).attr('data-help-loc'), function () {
                     $(selectedElement).tooltip("option", "content", $('#helpContentTooltip').text());
-//                    $(selectedElement).tooltip("option", "position", {
-//                                    my: "center bottom-20",
-//                                    at: "center top",
-//                                    using: function( position, feedback ) {
-//                                        $( this ).css( position );
-//                                        $( "<div>" )
-//                                            .addClass( "arrow" )
-//                                            .addClass( feedback.vertical )
-//                                            .addClass( feedback.horizontal )
-//                                            .appendTo( this );
-//                                    }
-//                                });
+                    $(selectedElement).tooltip("option", "position", {
+                                    my: "center bottom",
+                                    at: "center top",
+                                    using: function( position, feedback ) {
+                                        $( this ).css( position );
+                                        $( "<div>" )
+                                            .addClass( "arrow" )
+                                            .addClass( feedback.vertical )
+                                            .addClass( feedback.horizontal )
+                                            .appendTo( this );
+                                    }
+                                });
                     $(selectedElement).tooltip("option", "tooltipClass", "help-tooltip");
+//                    $(selectedElement).tooltip("option", "position", { my: "left+15 center", at: "right top" } );
                 });
             })
     }
