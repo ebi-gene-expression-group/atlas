@@ -1,22 +1,26 @@
+/*global $:false */
+
 function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, defaultText) {
 
-    function enableIncludeNonSelectedFactorValues(){
+    "use strict";
+
+    function enableIncludeNonSelectedFactorValues() {
         $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").removeAttr("disabled");
-        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:black')
+        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:black');
         //$("#rankGenesExpressedOnMostFactorsLast").removeAttr("disabled");
         //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:black')
     }
 
-    function disableIncludeNonSelectedFactorValues(){
+    function disableIncludeNonSelectedFactorValues() {
         $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("disabled", true);
-        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:lightgray')
+        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:lightgray');
         //$("#rankGenesExpressedOnMostFactorsLast").attr("disabled", true);
         //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:gray')
     }
 
-    function updatePlot(selectedFactorValues){
-        loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues
-            ,$("#includeGenesExpressedOnNonSelectedFactorValues").attr("value"));
+    function updatePlot(selectedFactorValues) {
+        loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues,
+            $("#includeGenesExpressedOnNonSelectedFactorValues").attr("value"));
     }
 
     $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("checked", $("#includeGenesExpressedOnNonSelectedFactorValues").val()=="true")
@@ -59,4 +63,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
         loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").val(), $("#includeGenesExpressedOnNonSelectedFactorValues").val());
     }
 
+    $("#organismParts_chzn").mouseleave(function () {
+        $("[data-help-loc]").tooltip("option", "disabled", "true");
+    });
 }
