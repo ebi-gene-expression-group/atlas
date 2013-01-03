@@ -59,4 +59,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
         loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").val(), $("#includeGenesExpressedOnNonSelectedFactorValues").val());
     }
 
+    $("#organismParts_chzn").mouseleave(function () {
+        $("[data-help-loc]").tooltip("option", "disabled", "true");
+    });
 }

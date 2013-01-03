@@ -20,23 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
+/*global $:false */
+
+
 function initHelpTooltip() {
 
-    $("[data-help-loc]")
-        .attr("title", "")
-        .tooltip({disabled:true, hide:false, show:false});
-
-
-    $("#display-help").button().
-        toggle(function () {
-            $("#display-help-image").attr("src", "resources/images/helpPressed.png");
-            $(this).tooltip("option", "content", "Hide help");
-            enableTooltip();
-        },function () {
-            $("#display-help-image").attr("src", "resources/images/help.png");
-            $(this).tooltip("option", "content", "Show help");
-            disableTooltip();
-        }).tooltip();
+    "use strict";
 
     function enableTooltip() {
         $("[data-help-loc]")
@@ -59,7 +48,7 @@ function initHelpTooltip() {
 //                                });
                     $(selectedElement).tooltip("option", "tooltipClass", "help-tooltip");
                 });
-            })
+            });
     }
 
     function disableTooltip() {
@@ -68,6 +57,20 @@ function initHelpTooltip() {
             .off('mouseover.loadContent');
     }
 
-    $("#organismParts_chzn").mouseleave(function(){$("[data-help-loc]").tooltip("option","disabled","true")})
+    $("[data-help-loc]")
+        .attr("title", "")
+        .tooltip({disabled: true, hide: false, show: false});
+
+
+    $("#display-help").button().
+        toggle(function () {
+            $("#display-help-image").attr("src", "resources/images/helpPressed.png");
+            $(this).tooltip("option", "content", "Hide help");
+            enableTooltip();
+        }, function () {
+            $("#display-help-image").attr("src", "resources/images/help.png");
+            $(this).tooltip("option", "content", "Show help");
+            disableTooltip();
+        }).tooltip();
 
 }
