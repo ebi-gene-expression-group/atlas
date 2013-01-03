@@ -34,16 +34,14 @@ function initHelpTooltip() {
                 var selectedElement = this;
                 $('#helpContentTooltip').load('resources/html/atlas-help.html ' + $(selectedElement).attr('data-help-loc'), function () {
                     $(selectedElement).tooltip("option", "content", $('#helpContentTooltip').text());
-                    $(selectedElement).tooltip("option", "position", {
-                                    my: "center bottom",
+                    $(selectedElement).tooltip("option", "position", { my: "center bottom",
                                     at: "center top",
-                                    using: function( position, feedback ) {
-                                        $( this ).css( position );
-                                        $( "<div>" )
-                                            .addClass( "arrow" )
-                                            .addClass( feedback.vertical )
-                                            .addClass( feedback.horizontal )
-                                            .appendTo( this );
+                                    using: function (position, feedback) {$(this).css(position);
+                                        $("<div>")
+                                            .addClass("arrow")
+                                            .addClass(feedback.vertical)
+                                            .addClass(feedback.horizontal)
+                                            .appendTo(this);
                                     }
                                 });
                     $(selectedElement).tooltip("option", "tooltipClass", "help-tooltip");

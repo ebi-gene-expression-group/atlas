@@ -47,7 +47,7 @@
                     </div>
                 </td>
                 <td>
-                    <div class="tooltip-div" data-help-loc="#factorSearch">
+                    <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
                             <form:label path="organismParts">${experimentalFactor}</form:label>
                         </span>

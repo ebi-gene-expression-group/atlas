@@ -64,6 +64,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
     }
 
     $("#organismParts_chzn").mouseleave(function () {
-        $("[data-help-loc]").tooltip("option", "disabled", "true");
+        $("#factor-values-div").tooltip("close");
     });
+
 }
