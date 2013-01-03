@@ -23,30 +23,30 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
             $("#includeGenesExpressedOnNonSelectedFactorValues").attr("value"));
     }
 
-    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("checked", $("#includeGenesExpressedOnNonSelectedFactorValues").val()=="true")
+    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("checked", $("#includeGenesExpressedOnNonSelectedFactorValues").val() === "true");
 
-    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").change(function(){
-        $("#includeGenesExpressedOnNonSelectedFactorValues").attr("value", $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").is(":checked"))
+    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").change(function () {
+        $("#includeGenesExpressedOnNonSelectedFactorValues").attr("value", $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").is(":checked"));
         updatePlot($(".chzn-select").val());
     });
 
-    var selectedFactorValues = $(".chzn-select").chosen().change(function() {
-            if ($(this).val()){
+    var selectedFactorValues = $(".chzn-select").chosen().change(function () {
+            if ($(this).val()) {
                 $(this).data("chosen").default_text = "";
                 enableIncludeNonSelectedFactorValues();
             } else {
-                $(this).data("chosen").default_text = defaultText ;
+                $(this).data("chosen").default_text = defaultText;
                 $(this).trigger("liszt:updated");
                 disableIncludeNonSelectedFactorValues();
             }
-            if (!isIE8){
+            if (!isIE8) {
                 updatePlot($(this).val());
             }
         }).val();
 
-    if (selectedFactorValues){
+    if (selectedFactorValues) {
         enableIncludeNonSelectedFactorValues();
-    }else {
+    } else {
         disableIncludeNonSelectedFactorValues();
     }
 
@@ -54,7 +54,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
 
     $("#reset-button").button().click(function (event) {
         location.replace(homePageURL);
-    })
+    });
 
     $("#geneQuery").watermark("(all genes)");
 
