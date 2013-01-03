@@ -146,6 +146,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             }
 
+            var experimentalFactor = "${experimentalFactor}";
+
             if ($.browser.msie && $.browser.version <= 8.0) {
 
                 //configurations required for any IE 8 or lower browser
@@ -160,19 +162,19 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
-                initAnatomogram(experimentalFactors, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                if (experimentalFactor == "Organism part") {
+                    initAnatomogram(experimentalFactors, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                }
             }
 
             //configurations required for any browser...
 
-            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${experimentalFactor}s)");
-            initHeatmapDisplayValueToggle();
-
-            var experimentalFactor = "${experimentalFactor}";
-            if (experimentalFactor !== "Organism part") {
+            if (experimentalFactor != "Organism part") {
                 $("#anatomogram").remove();//remove the anatomogram
                 $("#heatmap-div").removeClass();
             }
+
+            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${experimentalFactor}s)");
 
             $('.container').stickem();
         });
