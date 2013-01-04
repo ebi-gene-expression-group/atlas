@@ -39,7 +39,7 @@ import java.io.InputStreamReader;
 import static java.util.Arrays.asList;
 import static uk.ac.ebi.atlas.commons.HttpRequest.httpPost;
 
-class BioMartGeneNameStream implements ObjectInputStream<String[]> {
+public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
 
     private CSVReader csvReader;
 

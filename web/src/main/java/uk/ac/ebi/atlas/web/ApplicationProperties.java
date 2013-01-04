@@ -70,7 +70,7 @@ public class ApplicationProperties {
         return Sets.newHashSet(configurationProperties.getProperty("experiment.identifiers").trim().split(","));
     }
 
-    public String getFeedbackEmail() {
+    public String getFeedbackEmailAddress() {
         return configurationProperties.getProperty("feedback.email");
     }
 

@@ -23,21 +23,19 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.commons.mail.EmailMessage;
+import uk.ac.ebi.atlas.utils.MailSender;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 @Controller
 @Scope("request")
@@ -45,77 +43,50 @@ public class FeedbackEmailController {
 
     private static final Logger logger = Logger.getLogger(FeedbackEmailController.class);
 
-    private ApplicationProperties properties;
+    private static final String ATLAS_FEEDBACK_SUBJECT = "Atlas Feedback";
+    private static final String ERROR_MESSAGE = "Sorry, an error occurred while sending feedback.";
+    private static final String SUCCESS_MESSAGE = "Thank you for your feedback.";
+
+    private EmailMessage emailMessage;
+
+    private MailSender mailSender;
+
+    private ApplicationProperties applicationProperties;
+
 
     @Inject
-    public FeedbackEmailController(ApplicationProperties properties) {
-        this.properties = properties;
+    public FeedbackEmailController(MailSender mailSender, EmailMessage emailMessage, ApplicationProperties applicationProperties) {
+        this.mailSender = mailSender;
+        this.emailMessage = emailMessage;
+        this.applicationProperties = applicationProperties;
     }
 
     @RequestMapping(value = "/email", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String sendFeedback(@RequestBody MultiValueMap<String, String> body) {
+    public String sendFeedbackMail(@RequestBody MultiValueMap<String, String> body) {
 
         // capture input data
-        String feedback = body.get("feedback").get(0);
-        String email = body.get("email").get(0).trim();
-        boolean sendemail = Boolean.parseBoolean(body.get("sendemail").get(0));
+        emailMessage.setBody(body.get("feedback").get(0));
+        emailMessage.setSender(body.get("email").get(0));
+        if (StringUtils.isEmpty(emailMessage.getSender())){
+            emailMessage.setSender(applicationProperties.getFeedbackEmailAddress());
+        }
+        emailMessage.setSubject(ATLAS_FEEDBACK_SUBJECT);
+        emailMessage.setRecipient(applicationProperties.getFeedbackEmailAddress());
 
         Gson gson = new Gson();
 
-        EmailMessage message = new EmailMessage(email, properties.getFeedbackEmail(), feedback);
-        logger.info(message);
+        logger.info("<sendFeedbackMail> " + emailMessage);
 
-        if (sendemail) {
-            try {
-                message.send();
-            } catch (MessagingException me) {
-                logger.warn(me);
-                return gson.toJson("Sorry, an error occurred while sending feedback.");
-            }
+        try {
+            mailSender.send(emailMessage);
+            return gson.toJson(SUCCESS_MESSAGE);
+        } catch (Exception e) {
+            logger.fatal(e.getMessage(), e);
+            return gson.toJson(ERROR_MESSAGE);
         }
-        return gson.toJson("Thank you for your feedback.");
+
     }
 
-    class EmailMessage {
-
-        private static final String ATLAS_FEEDBACK = "Atlas Feedback";
-
-        public String sender;
-        public String recipient;
-        public String body;
-
-        EmailMessage(String sender, String recipient, String body) {
-            this.sender = sender;
-            if (sender.isEmpty()) {
-                this.sender = recipient;
-            }
-            this.recipient = recipient;
-            this.body = body;
-        }
-
-        public void send() throws MessagingException {
-
-            Session session = Session.getDefaultInstance(properties.getMailServerProperties());
-
-            MimeMessage messageToSend = new MimeMessage(session);
-
-            messageToSend.setFrom(new InternetAddress(this.sender));
-            messageToSend.addRecipient(Message.RecipientType.TO, new InternetAddress(this.recipient));
-            messageToSend.setSubject(ATLAS_FEEDBACK);
-            messageToSend.setText(this.body);
-
-            Transport.send(messageToSend);
-        }
-
-        @Override
-        public String toString() {
-            return "EmailMessage{" +
-                    "sender='" + sender + '\'' +
-                    ", recipient='" + recipient + '\'' +
-                    ", body='" + body + '\'' +
-                    '}';
-        }
-    }
 }

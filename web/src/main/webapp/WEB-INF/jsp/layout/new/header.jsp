@@ -186,8 +186,8 @@
                             success:function (data) {
                                 updateTips(data);
                             },
-                            error:function (data, statusCode) {
-                                alert("ERROR: " + statusCode);
+                            error:function (jqXHR, statusCode) {
+                                document.location = "error-page";
                             }
                         });
 

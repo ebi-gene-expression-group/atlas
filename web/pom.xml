@@ -96,7 +96,9 @@
                         <phase>pre-integration-test</phase>
                         <configuration>
                             <fork>true</fork>
+
                         </configuration>
+
                     </execution>
                     <execution>
                         <id>tomcat-shutdown</id>
@@ -252,6 +254,12 @@
             <groupId>com.sleepycat</groupId>
             <artifactId>je</artifactId>
             <version>5.0.58</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jvnet.mock-javamail</groupId>
+            <artifactId>mock-javamail</artifactId>
+            <version>1.9</version>
         </dependency>
 
         <dependency>
