@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.sun.istack.internal.Nullable;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -31,7 +30,7 @@ public class GeneProfilesDownloadController {
     }
 
     @RequestMapping("/experiments/{experimentAccession}.tsv")
-    public void downloadGeneProfiles(@PathVariable @Nullable String experimentAccession
+    public void downloadGeneProfiles(@PathVariable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
