@@ -41,24 +41,6 @@ import java.util.Map;
 @Scope("singleton")
 public class HomePageController {
 
-    private class WordWrapper {
-
-        String text;
-        double weight;
-        String link;
-
-        public WordWrapper(String t, double d) {
-            this(t, d, null);
-        }
-
-        public WordWrapper(String t, double d, String l) {
-            this.text = t;
-            this.weight = d;
-            this.link = l;
-        }
-
-    }
-
     private ApplicationProperties properties;
 
     private ExperimentsCache experimentsCache;
@@ -74,6 +56,25 @@ public class HomePageController {
         extractFactorValueCounts();
     }
 
+    @RequestMapping("/home")
+    public String getHomePage(Model model) {
+
+        ArrayList<WordWeight> wordList = new ArrayList<>();
+
+        for (String factor : counts.keySet()) {
+            wordList.add(new WordWeight(factor, counts.get(factor)));
+        }
+
+        // does the serialisation to JSON
+        Gson gson = new Gson();
+
+        // add data to model
+        model.addAttribute("wordlist", gson.toJson(wordList));
+        model.addAttribute("speciesToExperiments", speciesToExperiments);
+
+        return "home";
+    }
+
     /**
      * Gets all experiments in data directory and collates experimental factor occurrences into map
      */
@@ -86,25 +87,25 @@ public class HomePageController {
         int totalNumberExperiments = 0;
 
         // check mage-tab directory for its children
-        for (String expAcc : properties.getExperimentIdentifiers()) {
+        for (String experimentAccession : properties.getExperimentIdentifiers()) {
 
             // get experiment for directory name
-            Experiment experiment = experimentsCache.getExperiment(expAcc);
-            if (experiment != null) {
-                totalNumberExperiments++;
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-                if (!speciesToExperiments.containsKey(experiment.getSpecie()))
-                    speciesToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
-                speciesToExperiments.get(experiment.getSpecie()).add(expAcc);
+            totalNumberExperiments++;
 
-                // count per experiment and sum across all experiments
-                for (String factor : experiment.getAllExperimentalFactors()) {
-                    if (!counts.containsKey(factor))
-                        counts.put(factor, 0.0);
-                    counts.put(factor, counts.get(factor) +
-                            1.0);
-                }
+            if (!speciesToExperiments.containsKey(experiment.getSpecie()))
+                speciesToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
+            speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
+
+            // count per experiment and sum across all experiments
+            for (String factor : experiment.getAllExperimentalFactors()) {
+                if (!counts.containsKey(factor))
+                    counts.put(factor, 0.0);
+                counts.put(factor, counts.get(factor) +
+                        1.0);
             }
+
         }
 
         // normalise for total number of experiments
@@ -113,22 +114,15 @@ public class HomePageController {
         }
     }
 
-    @RequestMapping("/home")
-    public String get(Model model) {
+    private class WordWeight {
 
-        ArrayList<WordWrapper> wordList = new ArrayList<>();
+        String factorValue;
+        double weight;
 
-        for (String factor : counts.keySet()) {
-            wordList.add(new WordWrapper(factor, counts.get(factor)));
+        WordWeight(String factorValue, double weight) {
+            this.factorValue = factorValue;
+            this.weight = weight;
         }
 
-        // does the serialisation to JSON
-        Gson gson = new Gson();
-
-        // add data to model
-        model.addAttribute("wordlist", gson.toJson(wordList));
-        model.addAttribute("speciesToExperiments", speciesToExperiments);
-
-        return "home";
     }
 }

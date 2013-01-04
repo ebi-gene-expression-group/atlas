@@ -43,8 +43,6 @@ import java.util.concurrent.ConcurrentMap;
 @Scope("singleton")
 public class AnnotationEnvironment {
 
-    private boolean databaseCreationAttempted;
-
     private static final Logger logger = Logger.getLogger(AnnotationEnvironment.class);
 
     private static final String GENES_DB = "genes.db";
@@ -59,7 +57,10 @@ public class AnnotationEnvironment {
     public AnnotationEnvironment(@Value("#{configuration['genename.bdb.location']}") String environmentLocation) {
         environmentDirectory = new File(environmentLocation);
         if(!environmentDirectory.exists()){
-            environmentDirectory.mkdirs();
+            boolean result = environmentDirectory.mkdirs();
+            if (!result) {
+                throw new IllegalStateException("Cannot create directory for BDB in " + environmentLocation);
+            }
         }
     }
 
@@ -73,9 +74,6 @@ public class AnnotationEnvironment {
             setupEnvironment(readonly);
             setupGeneNameDatabase(readonly);
         } catch(EnvironmentNotFoundException e){
-            if(databaseCreationAttempted){
-                throw e;
-            }
             initBerkeleyDatabase(false);
             close();
             initBerkeleyDatabase(readonly);
@@ -86,10 +84,10 @@ public class AnnotationEnvironment {
     private EnvironmentConfig createEnvironmentConfig(boolean readOnly){
         EnvironmentConfig envConfig = new EnvironmentConfig();
 
-        envConfig.setTransactional(readOnly ? false : true);
-        envConfig.setAllowCreate(readOnly ? false : true);
-        envConfig.setReadOnly(readOnly ? true : false);
-        envConfig.setLocking(readOnly? false : true);
+        envConfig.setTransactional(!readOnly);
+        envConfig.setAllowCreate(!readOnly);
+        envConfig.setReadOnly(readOnly);
+        envConfig.setLocking(!readOnly);
         return envConfig;
     }
 
@@ -99,8 +97,8 @@ public class AnnotationEnvironment {
 
     public void setupGeneNameDatabase(boolean readonly) {
         DatabaseConfig dbConfig = new DatabaseConfig();
-        dbConfig.setAllowCreate(readonly ? false : true);
-        dbConfig.setReadOnly(readonly ? true : false);
+        dbConfig.setAllowCreate(!readonly);
+        dbConfig.setReadOnly(readonly);
         geneNameDatabase = environment.openDatabase(null, GENES_DB, dbConfig);
     }
 
@@ -108,8 +106,7 @@ public class AnnotationEnvironment {
     public ConcurrentMap<String, String> geneNames() {
         TupleBinding<String> keyBinding = TupleBinding.getPrimitiveBinding(String.class);
         TupleBinding<String> dataBinding = TupleBinding.getPrimitiveBinding(String.class);
-        ConcurrentMap<String,String> geneNames = new StoredMap<String, String>(geneNameDatabase, keyBinding, dataBinding, true);
-        return geneNames;
+        return new StoredMap<>(geneNameDatabase, keyBinding, dataBinding, true);
     }
 
     public TransactionRunner getTransactionRunner() {

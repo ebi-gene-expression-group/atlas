@@ -45,35 +45,6 @@ public class FeedbackEmailController {
 
     private static final Logger logger = Logger.getLogger(FeedbackEmailController.class);
 
-    public class EmailMessage {
-        public String sender;
-        public String addressee;
-        public String subject;
-        public String body;
-
-        public EmailMessage(String sender, String addressee, String subject, String body) {
-            this.sender = sender;
-            this.addressee = addressee;
-            this.subject = subject;
-            this.body = body;
-        }
-
-        public void send() throws MessagingException {
-
-            Session session = Session.getDefaultInstance(properties.getMailServerProperties());
-
-            MimeMessage messageToSend = new MimeMessage(session);
-
-            messageToSend.setFrom(new InternetAddress(this.sender));
-            messageToSend.addRecipient(Message.RecipientType.TO, new InternetAddress(this.addressee));
-            messageToSend.setSubject(this.subject);
-            messageToSend.setText(this.body);
-
-            Transport.send(messageToSend);
-        }
-
-    }
-
     private ApplicationProperties properties;
 
     @Inject
@@ -84,25 +55,18 @@ public class FeedbackEmailController {
     @RequestMapping(value = "/email", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String put(@RequestBody MultiValueMap<String, String> body) {
+    public String sendFeedback(@RequestBody MultiValueMap<String, String> body) {
 
         // capture input data
         String feedback = body.get("feedback").get(0);
-        logger.info("<put> feedback = " + feedback);
-        String email = body.get("email").get(0);
-        logger.info("<put> email = " + email);
+        String email = body.get("email").get(0).trim();
         boolean sendemail = Boolean.parseBoolean(body.get("sendemail").get(0));
-        logger.info("<put> mail sent = " + sendemail);
-        // sendemail = false;
 
         Gson gson = new Gson();
 
-        // compose email
-        EmailMessage message;
-        if (email.trim().length() == 0)
-            message = new EmailMessage(properties.getFeedbackEmail(), properties.getFeedbackEmail(), "Atlas Feedback", feedback);
-        else
-            message = new EmailMessage(email, properties.getFeedbackEmail(), "Atlas Feedback", feedback);
+        EmailMessage message = new EmailMessage(email, properties.getFeedbackEmail(), feedback);
+        logger.info(message);
+
         if (sendemail) {
             try {
                 message.send();
@@ -112,5 +76,46 @@ public class FeedbackEmailController {
             }
         }
         return gson.toJson("Thank you for your feedback.");
+    }
+
+    class EmailMessage {
+
+        private static final String ATLAS_FEEDBACK = "Atlas Feedback";
+
+        public String sender;
+        public String recipient;
+        public String body;
+
+        EmailMessage(String sender, String recipient, String body) {
+            this.sender = sender;
+            if (sender.isEmpty()) {
+                this.sender = recipient;
+            }
+            this.recipient = recipient;
+            this.body = body;
+        }
+
+        public void send() throws MessagingException {
+
+            Session session = Session.getDefaultInstance(properties.getMailServerProperties());
+
+            MimeMessage messageToSend = new MimeMessage(session);
+
+            messageToSend.setFrom(new InternetAddress(this.sender));
+            messageToSend.addRecipient(Message.RecipientType.TO, new InternetAddress(this.recipient));
+            messageToSend.setSubject(ATLAS_FEEDBACK);
+            messageToSend.setText(this.body);
+
+            Transport.send(messageToSend);
+        }
+
+        @Override
+        public String toString() {
+            return "EmailMessage{" +
+                    "sender='" + sender + '\'' +
+                    ", recipient='" + recipient + '\'' +
+                    ", body='" + body + '\'' +
+                    '}';
+        }
     }
 }

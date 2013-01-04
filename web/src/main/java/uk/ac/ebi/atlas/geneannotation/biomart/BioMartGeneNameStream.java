@@ -26,6 +26,7 @@ package uk.ac.ebi.atlas.geneannotation.biomart;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.http.client.HttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
@@ -38,9 +39,11 @@ import java.io.InputStreamReader;
 import static java.util.Arrays.asList;
 import static uk.ac.ebi.atlas.commons.HttpRequest.httpPost;
 
-public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
+class BioMartGeneNameStream implements ObjectInputStream<String[]> {
 
     private CSVReader csvReader;
+
+    private static final Logger logger = Logger.getLogger(BioMartGeneNameStream.class);
 
     @Override
     public String[] readNext() {
@@ -77,26 +80,32 @@ public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
         }
 
         public ObjectInputStream<String[]> create(String organism) {
+
+            String martXmlQueryString = queryBuilder.setDataset(organism)
+                    .addAttribute(ENSEMBL_GENE_ID_ATTRIBUTE)
+                    .addAttribute(EXTERNAL_GENE_ID_ATTRIBUTE)
+                    .build();
+
+            InputStream inputStream = getBioMartInputStream(martXmlQueryString);
+
+            BioMartGeneNameStream bioMartGeneNameStream = new BioMartGeneNameStream();
+
+            bioMartGeneNameStream.setCsvReader(new CSVReader(new InputStreamReader(inputStream), '\t'));
+
+            return bioMartGeneNameStream;
+
+        }
+
+        private InputStream getBioMartInputStream(String martXmlQueryString) {
+            InputStream inputStream;
             try {
-
-                String martXmlQueryString = queryBuilder.setDataset(organism)
-                                                .addAttribute(ENSEMBL_GENE_ID_ATTRIBUTE)
-                                                .addAttribute(EXTERNAL_GENE_ID_ATTRIBUTE)
-                                                .build();
-
-                InputStream inputStream = httpPost(httpClient, "http://www.ensembl.org/biomart/martservice?",
+                inputStream = httpPost(httpClient, "http://www.ensembl.org/biomart/martservice?",
                         asList(new BasicNameValuePair("query", martXmlQueryString)
                         ));
-
-                BioMartGeneNameStream bioMartGeneNameStream = new BioMartGeneNameStream();
-
-                bioMartGeneNameStream.setCsvReader(new CSVReader(new InputStreamReader(inputStream), '\t'));
-
-                return bioMartGeneNameStream;
-
             } catch (IOException e) {
                 throw new IllegalStateException("Error while reading from biomart: " + e.getMessage());
             }
+            return inputStream;
         }
     }
 

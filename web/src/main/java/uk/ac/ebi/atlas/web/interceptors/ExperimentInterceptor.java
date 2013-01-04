@@ -39,6 +39,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -116,13 +117,13 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         // a SortedSet is required for RequestPreferences
         TreeSet<String> sortedSet = new TreeSet<>();
-        for (String s : requestFilterFactorValues) {
-            sortedSet.add(s);
-        }
+        Collections.addAll(sortedSet, requestFilterFactorValues);
 
         // use RequestPreferences to convert to FactorValues
+       //ToDo: references.getFilterFactorValuesAsObjects() should be some utility method
         RequestPreferences preferences = new RequestPreferences();
         preferences.setFilterFactorValues(sortedSet);
+
         Set<FactorValue> filterFactorValues = preferences.getFilterFactorValuesAsObjects();
 
         // collect all factorValues from experiment

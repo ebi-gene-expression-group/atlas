@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,7 +66,11 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.experimentsCache = experimentsCache;
     }
 
-    public T apply(String experimentAccession) {
+    public void setRequestPreferences(RequestPreferences requestPreferences) {
+        this.requestPreferences = requestPreferences;
+    }
+
+    @NotNull public T apply(String experimentAccession) {
 
         Set<String> geneIDs = new HashSet<>();
 
@@ -106,10 +111,6 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
         return buildGeneProfilesInputStream(experimentAccession, null);
 
-    }
-
-    public void setRequestPreferences(RequestPreferences requestPreferences) {
-        this.requestPreferences = requestPreferences;
     }
 
     protected abstract T apply(RequestPreferences requestPreferences, Experiment experiment

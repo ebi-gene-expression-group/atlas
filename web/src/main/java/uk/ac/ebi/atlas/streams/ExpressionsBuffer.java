@@ -103,7 +103,7 @@ class ExpressionsBuffer {
 
         public Builder withHeaders(String... tsvFileHeaders) {
 
-            logger.debug("<withHeaders> data file headers: " + tsvFileHeaders);
+            logger.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
 
             checkState(experimentAccession != null, "Builder not properly initialized!");
 
@@ -128,6 +128,7 @@ class ExpressionsBuffer {
 
             String[] columnRuns = columnHeader.split(",");
 
+            //ToDo: no need to have loop, return after the first iteration
             for (String columnRun : columnRuns) {
                 columnRun = columnRun.trim();
 
@@ -144,6 +145,7 @@ class ExpressionsBuffer {
 
             String[] columnRuns = columnHeader.split(",");
 
+            //ToDo: no need to have loop, return after the first iteration
             for (String columnRun : columnRuns) {
                 columnRun = columnRun.trim();
 

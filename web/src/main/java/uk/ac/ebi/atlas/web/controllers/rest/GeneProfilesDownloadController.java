@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.sun.istack.internal.Nullable;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 
+import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
+
 @Controller
 @Scope("request")
 public class GeneProfilesDownloadController {
-    private static final Logger logger = Logger.getLogger(GeneProfilesDownloadController.class);
+    private static final Logger LOGGER = Logger.getLogger(GeneProfilesDownloadController.class);
 
     private WriteGeneProfilesCommand writeGeneProfilesCommand;
 
@@ -28,11 +31,11 @@ public class GeneProfilesDownloadController {
     }
 
     @RequestMapping("/experiments/{experimentAccession}.tsv")
-    public void downloadGeneProfiles(@PathVariable String experimentAccession
+    public void downloadGeneProfiles(@PathVariable @Nullable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        logger.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
+        LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
         response.setHeader("Content-Disposition", "attachment; filename=\"" +experimentAccession + "-gene-expression-profiles.tsv\"");
 
@@ -40,13 +43,13 @@ public class GeneProfilesDownloadController {
 
         writeGeneProfilesCommand.setRequestPreferences(preferences);
 
-        CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', CSVWriter.NO_QUOTE_CHARACTER);
+        CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', NO_QUOTE_CHARACTER);
 
         writeGeneProfilesCommand.setCsvWriter(csvWriter);
 
         long genesCount = writeGeneProfilesCommand.apply(experimentAccession);
 
-        logger.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
+        LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 
         csvWriter.flush();
         csvWriter.close();

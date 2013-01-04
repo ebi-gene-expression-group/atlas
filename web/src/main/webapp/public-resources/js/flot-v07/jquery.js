@@ -4174,7 +4174,8 @@ try {
 
 		} else {
 			if ( typeof array.length === "number" ) {
-				for ( var l = array.length; i < l; i++ ) {
+                //noinspection ForLoopThatDoesntUseLoopVariableJS,ForLoopThatDoesntUseLoopVariableJS,ForLoopThatDoesntUseLoopVariableJS
+                for ( var l = array.length; i < l; i++ ) {
 					ret.push( array[i] );
 				}
 
