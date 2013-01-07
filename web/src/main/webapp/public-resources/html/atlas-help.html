@@ -37,33 +37,30 @@
 
 <!-- request preferences -->
 <div id="geneSearch">Enter Ensembl gene ID(s) or gene symbol(s) to search with genes of interest. Separate them
-    with new lines or spaces. Leave blank to search all annotated
-    genes in this data set.
+    with new lines or spaces. Leave blank to search all annotated genes.
 </div>
 
-<div id="factorSearch">Select tissue(s) to see gene expression profiles for. Leave blank to see expressions in all of
-    them.
+<div id="factorSearch">Select experimental factor value(s) to see gene expression profiles for. Leave blank to see expressions in all of
+    them. Factor values are different experimental conditions, e.g. different tissues or cell types.
 </div>
 
-<div id="cutoff">Enter a <b>minimum expression level</b> (FPKM) cut-off. Only genes with expression
-    above this level will be displayed. The default cut-off is 0.5; if you would like to
-    see results for the entire data set, change this to 0.
+<div id="cutoff">Enter a <b>minimum expression level</b> (FPKM) cutoff. Only genes with expression
+    above this level will be displayed. The default cutoff is 0.5; to
+    see results for the entire data set, change it to 0.
     FPKM stands for "fragments per kilobase of transcript per million mapped reads", and
-    is a normalized measure of expression used in RNA-sequencing analysis.
+    is a normalized measure of gene expression.
 </div>
 
 <div id="gene-distribution">The histogram shows the number of genes (y-axis) expressed above expression
-    level cutoffs (x-axis) for the chosen tissues. You can use it to help you choose a minimum cut-off. Click on a
-    bar to select its expression level as the minimum cut-off.
+    level cutoffs (x-axis) for the chosen factor value(s). You can use it to help decide on a minimum cutoff. Click on a
+    bar to select its expression level as the minimum cutoff.
 </div>
 
-<div id="toggleHistogramButton">Click this button to toggle display of the histogram showing the distribution of
-    expression
-    levels.
+<div id="toggleHistogramButton">Toggle display of histogram showing the distribution of expression levels.
 </div>
 
-<div id="slider">Choose a minimum expression level (FPKM) cut-off using the slider. Only genes with
-    expression above this level will be displayed
+<div id="slider">Choose a minimum expression level (FPKM) cutoff using the slider. Only genes with
+    expression above this level will be displayed.
 </div>
 
 <!--experiment -->
@@ -71,27 +68,26 @@
     higher the expression level is.
 </div>
 
-<div id="anatomogram">Tissues studied in this data set are displayed on the figure. Mouseover a gene in the table
+<div id="anatomogram">Tissues studied in this data set are displayed on the anatomogram. Mouseover a gene in the table
     to highlight the tissue(s) in which it is expressed above the selected minimum expression level. Mouseover tissues
-    in the table to highlight them on the figure.
+    in the table to highlight them on the anatomogram.
 </div>
 
 <div id="heatmapTable">How are the results sorted?
 Genes are sorted in order of expression level, from highest to lowest.
-* If you did not select any tissues, results are ordered so that genes with expression above the
-chosen cut-off in any one tissue are shown first (with highest expression level first), and then genes
-with expression above the cutoff in any two tissues, and so on.
-* If you selected a set of tissues, results are ordered so that genes with expression above the chosen
-cut-off in all your chosen tissues are shown first (with highest expression level first), followed by
-genes with expression above the cut-off in all but one of your chosen tissues, followed by genes with
-expression in all but two of your tissues, and so on.</div>
+* If you did not select any factor values, results are ordered so that genes with expression above the
+chosen cutoff in any one factor value are shown first (with highest expression level first), and then genes
+with expression above the cutoff in any two factor values, and so on.
+* If you selected a set of factor values, results are ordered so that genes with expression above the chosen
+cutoff in all your chosen factor values are shown first (with highest expression level first), followed by
+genes with expression above the cutoff in all but one of your chosen factor values, followed by genes with
+expression in all but two of your factor values, and so on.</div>
 
-<div id="resultInfo">Only the top 50 genes are displayed on this page; please download your results to see them
-    all.</div>
+<div id="resultInfo">Only the top 50 genes are displayed on this page; please download your results to see all genes.</div>
 
-<div id="heatMapTableCellInfo">A coloured box indicates the gene is expressed in the
-corresponding tissue(s). The colour saturation of the box
-indicates the expression level. To see the exact expression level
+<div id="heatMapTableCellInfo">A coloured box indicates the gene is expressed under the
+corresponding factor value(s). The colour saturation of the box
+indicates relative expression level. To see the exact expression level
 (FPKM), click on the box, or click the "Display levels" button in
 the top-left of the table to see them all. Expression levels greater
 than or equal to 1 are rounded to the nearest whole value.
