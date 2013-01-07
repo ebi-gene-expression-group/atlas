@@ -53,11 +53,14 @@ public class HomePageController {
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
         this.properties = properties;
         this.experimentsCache = experimentsCache;
-        extractFactorValueCounts();
     }
 
     @RequestMapping("/home")
     public String getHomePage(Model model) {
+
+        // lazy initialisation
+        if (counts == null)
+            extractFactorValueCounts();
 
         ArrayList<WordWeight> wordList = new ArrayList<>();
 
@@ -92,20 +95,21 @@ public class HomePageController {
             // get experiment for directory name
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            totalNumberExperiments++;
+            if (experiment != null) {
+                totalNumberExperiments++;
 
-            if (!speciesToExperiments.containsKey(experiment.getSpecie()))
-                speciesToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
-            speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
+                if (!speciesToExperiments.containsKey(experiment.getSpecie()))
+                    speciesToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
+                speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
 
-            // count per experiment and sum across all experiments
-            for (String factor : experiment.getAllExperimentalFactors()) {
-                if (!counts.containsKey(factor))
-                    counts.put(factor, 0.0);
-                counts.put(factor, counts.get(factor) +
-                        1.0);
+                // count per experiment and sum across all experiments
+                for (String factor : experiment.getAllExperimentalFactors()) {
+                    if (!counts.containsKey(factor))
+                        counts.put(factor, 0.0);
+                    counts.put(factor, counts.get(factor) +
+                            1.0);
+                }
             }
-
         }
 
         // normalise for total number of experiments
@@ -116,11 +120,11 @@ public class HomePageController {
 
     private class WordWeight {
 
-        String factorValue;
+        String text;
         double weight;
 
         WordWeight(String factorValue, double weight) {
-            this.factorValue = factorValue;
+            this.text = factorValue;
             this.weight = weight;
         }
 

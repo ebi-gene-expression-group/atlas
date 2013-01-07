@@ -27,9 +27,9 @@ function togglePathColor(path, evtType) {
         path.style.fillOpacity = opacity;
     }
 
-    if (evtType == undefined) {
+    if (evtType === undefined) {
         setHilighting("gray", 0.5);
-    } else if (evtType == 'mouseenter' || evtType == 'mouseover') {
+    } else if (evtType === 'mouseenter' || evtType === 'mouseover') {
         setHilighting("red", 0.7);
     } else {
         setHilighting("gray", 0.5);
@@ -41,7 +41,7 @@ function toggleOrganismPartColor(svg, organism_part, evt) {
     var element = svg.getElementById(organism_part);
     var evtType = (typeof evt === 'undefined') ? evt : evt.type;
 
-    if (element != null) {
+    if (element !== null) {
         if (element.nodeName === 'g') {
             $.each(element.getElementsByTagName('path'), function () {
                 togglePathColor(this, evtType);
@@ -64,7 +64,7 @@ function hoverOrganismPart(svg, organism_part) {
             var headerCell = elem.parent();
             var colIndex = headerCell.parent("tr").children().index(headerCell) + 1;
             var dataCells = $('#heatmap-table').find('tr>td:nth-child(' + colIndex + ')');
-            if (evtType != "mouseover") {
+            if (evtType !== "mouseover") {
                 headerCell.removeClass("highlight");
                 dataCells.removeClass("highlight");
             } else {
@@ -81,7 +81,7 @@ function hoverOrganismPart(svg, organism_part) {
         }, false);
         domElem.addEventListener("mouseout", function () {
             $.each(tableHeaderDivs, function () {
-                toggleClass($(this), "mouseout")
+                toggleClass($(this), "mouseout");
             });
             togglePathColor(domElem, "mouseout");
         }, false);
@@ -89,10 +89,10 @@ function hoverOrganismPart(svg, organism_part) {
 
     var element = svg.getElementById(organism_part);
 
-    if (element != null) {
+    if (element !== null) {
         if (element.nodeName === 'g') {
             $.each(element.getElementsByTagName('path'), function (index, domEle) {
-                mouseHover(domEle)
+                mouseHover(domEle);
             });
         } else {
             mouseHover(element);
@@ -102,12 +102,15 @@ function hoverOrganismPart(svg, organism_part) {
 
 function scaleAnatomogram(svg) {
     var elementById = svg.getElementById('group_all');
-    elementById.setAttribute('transform', 'scale(1.6)');
+    // this is in case anatomogram is hidden
+    if (typeof elementById !== 'undefined') {
+        elementById.setAttribute('transform', 'scale(1.6)');
+    }
 }
 
 function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
 
-    if ($('#anatomogramBody').length == 0) {
+    if ($('#anatomogramBody').length === 0) {
         return;
     }
 
@@ -120,7 +123,7 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
         var geneExpressions = $(this).parents("tr .even,.odd").find("div[data-organism-part!='']");
 
         var experimentalFactors = geneExpressions.map(function () {
-            return $(this).attr('data-organism-part')
+            return $(this).attr('data-organism-part');
         }).get();
 
         experimentalFactors.forEach(function (entry) {
@@ -132,7 +135,7 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
 
     $('#heatmap-table').delegate("td,th", "hover", function (evt) {
         var organismPart = $(this).find('div').attr("data-organism-part");
-        if (organismPart != undefined) {
+        if (organismPart !== undefined) {
             toggleOrganismPartColor(svg, organismPart, evt);
         }
     });
@@ -155,13 +158,13 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
         svg.load(location, {onLoad:prepareAnatomogram});
     }
 
-    if (fileNameMale != fileNameFemale) {
+    if (fileNameMale !== fileNameFemale) {
         //switch sex toggle button
         $("#sex-toggle-image").button().toggle(function () {
-            $(this).attr("src", "resources/images/female_selected.png")
+            $(this).attr("src", "resources/images/female_selected.png");
             loadAnatomogram("resources/svg/" + fileNameFemale);
         },function () {
-            $(this).attr("src", "resources/images/male_selected.png")
+            $(this).attr("src", "resources/images/male_selected.png");
             loadAnatomogram("resources/svg/" + fileNameMale);
         }).tooltip();
     } else {
