@@ -107,14 +107,16 @@
 
     </form:form>
 
-    <div id="gene-distribution"
-         data-help-loc="#gene-distribution" style="margin-bottom:0px;height:100px"></div>
+    <div id="gene-distribution-panel">
+        <div id="gene-distribution"
+             data-help-loc="#gene-distribution" style="margin-bottom:0px;height:100px">
+        </div>
+    </div>
 
     <div id="gene-distribution-button" style="float:left">
-        <a id="display-chart" data-help-loc="#toggleHistogramButton" title="Display gene distribution"
-           class="button-image" href="#">
-            <img alt="Display gene distribution"
-                 src="resources/images/yellow-chart-icon-16.png"/></a>
+        <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
+            <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
+        </a>
     </div>
     <div id="slider-range-max" data-help-loc="#slider"
          style="font-size:65%;width:920px;margin-left:27px;margin-right:17px; margin-top:10px"></div>

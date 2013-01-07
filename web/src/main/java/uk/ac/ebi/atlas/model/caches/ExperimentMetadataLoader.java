@@ -143,9 +143,9 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
         MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
-        File x = new File(idfFileLocation);
-        if (x.exists()){
-            return mageTabParser.parse(x);
+        File idfFile = new File(idfFileLocation);
+        if (idfFile.exists()){
+            return mageTabParser.parse(idfFile);
         } else {
             URL idfFileURL = new URL(MessageFormat.format(idfUrlTemplate, experimentAccession));
             return mageTabParser.parse(idfFileURL);

@@ -1,12 +1,12 @@
 /*global $:false */
 
 function hideGeneDistribution(img, isFast) {
-    $('#gene-distribution').hide(isFast ? null : 'slow');
+    $('#gene-distribution-panel').hide(isFast ? null : 'slow');
     $("#display-chart").tooltip({content: "Display gene distribution"});
 }
 
 function displayGeneDistribution(img, isFast) {
-    $('#gene-distribution').show(isFast ? null : 'slow');
+    $('#gene-distribution-panel').show(isFast ? null : 'slow');
     $("#display-chart").tooltip({content: "Hide gene distribution"});
 }
 
