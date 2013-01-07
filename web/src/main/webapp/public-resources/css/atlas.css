@@ -128,8 +128,12 @@ a:active {
 / / IE 10
 }
 
+.tooltip-div {
+    display: inline-block;
+}
+
 /* JQuery UI*/
-.ui-tooltip {
+.ui-tooltip, .help-tooltip {
     background: #fafafa;
     border: 2px solid white;
     padding: 2px 4px;
