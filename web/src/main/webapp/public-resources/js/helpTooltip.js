@@ -57,17 +57,17 @@ function initHelpTooltip() {
 
     $("[data-help-loc]")
         .attr("title", "")
-        .tooltip({disabled: true, hide: false, show: false});
+        .tooltip({disabled: true/*, hide: false, show: false*/}); //the commented parameters remove the in/out fade delay
 
 
     $("#display-help").button().
         toggle(function () {
             $("#display-help-image").attr("src", "resources/images/helpPressed.png");
-            $(this).tooltip("option", "content", "Hide help");
+            $(this).tooltip("option", "content", "Hide additional help");
             enableTooltip();
         }, function () {
             $("#display-help-image").attr("src", "resources/images/help.png");
-            $(this).tooltip("option", "content", "Show help");
+            $(this).tooltip("option", "content", "Show additional help");
             disableTooltip();
         }).tooltip();
 

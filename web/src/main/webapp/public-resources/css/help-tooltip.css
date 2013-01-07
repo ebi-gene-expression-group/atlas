@@ -1,4 +1,15 @@
 
+/* JQuery UI*/
+.help-tooltip {
+    background: #fafafa;
+    border: 2px solid white;
+    padding: 2px 4px;
+    color: #1C94C4;
+    border-radius: 4px;
+    font: bold 1.2em Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+    box-shadow: 0 0 7px black;
+}
+/*
 .help-tooltip {
     background: #fff5e1;
     border: 1px solid #a29989;
@@ -8,6 +19,7 @@
     font: 10px Verdana, Helvetica, Arial, sans-serif;
     box-shadow: 0 0 40px gray;
 }
+*/
 
 .tooltip-div {
     display: inline-block;
