@@ -1,11 +1,13 @@
+/*global $:false */
+
 function hideGeneDistribution(img, isFast) {
     $('#gene-distribution').hide(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content:"Display gene distribution"});
+    $("#display-chart").tooltip({content: "Display gene distribution"});
 }
 
 function displayGeneDistribution(img, isFast) {
     $('#gene-distribution').show(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content:"Hide gene distribution"});
+    $("#display-chart").tooltip({content: "Hide gene distribution"});
 }
 
 function hideOrDisplayGeneDistribution(isFast) {
@@ -23,7 +25,7 @@ function initBarChartButton() {
     $("#display-chart").button().click(function () {
 
         var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
-        if (isDisplayEnabled == "true") {
+        if (isDisplayEnabled === "true") {
             $("#prefForm #displayGeneDistribution").val("false");
         } else {
             $("#prefForm #displayGeneDistribution").val("true");
@@ -97,25 +99,25 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues, in
 
     function plotCutoffBarChart(data, magnifiedScaledCutoffs) {
         return $.plot($("#gene-distribution"), [ data ], {
-            series:{
+            series: {
                 highlightColor:"red",
 
-                label:buildLegendaText(),
+                label: buildLegendaText(),
 
-                bars:{
-                    show:true,
-                    barWidth:.8
+                bars: {
+                    show: true,
+                    barWidth: .8
                 }
             },
-            xaxis:{
-                tickLength:3,
-                ticks:magnifiedScaledCutoffs
+            xaxis: {
+                tickLength: 3,
+                ticks: magnifiedScaledCutoffs
             },
-            grid:{
-                borderColor:"#CDCDCD",
-                borderWidth:1,
-                hoverable:true,
-                clickable:true
+            grid: {
+                borderColor: "#CDCDCD",
+                borderWidth: 1,
+                hoverable: true,
+                clickable: true
             }
         });
     }
@@ -208,7 +210,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues, in
 
         var scaledCutoffPosition = function () {
             for (var i = 0; i < scaledCutoffTicks.length; i++) {
-                if (scaledCutoffTicks[i] == scaledCutoff) {
+                if (scaledCutoffTicks[i] === scaledCutoff) {
                     return i;
                 }
             }//otherwise we are out of scale... and we position the slider on the last tick
@@ -218,13 +220,11 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues, in
         genesByCutoffPlot.highlight(0, scaledCutoffPosition);
 
         $("#slider-range-max").slider({
-            range:"max",
-            min:0,
-            max:scaledCutoffTicks.length - 1,
-
-            value:scaledCutoffPosition,
-
-            slide:function (event, ui) {
+            range: "max",
+            min: 0,
+            max: scaledCutoffTicks.length - 1,
+            value: scaledCutoffPosition,
+            slide: function (event, ui) {
                 genesByCutoffPlot.unhighlight();
                 genesByCutoffPlot.highlight(0, ui.value);
                 var scaledCutoff = getNthScaledCutoff(ui.value, 1);

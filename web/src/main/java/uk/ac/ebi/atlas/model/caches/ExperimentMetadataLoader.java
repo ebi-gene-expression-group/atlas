@@ -41,26 +41,38 @@ import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.*;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named("experimentMetadataLoader")
 public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private static final String ENA_RUN = "ENA_RUN";
 
-    private String idfFileUrlTemplate;
+    private String idfUrlTemplate;
+    private String idfPathTemplate;
 
     private AnalysisMethodsTsvReader analysisMethodsTsvReader;
 
     private ArrayExpressClient arrayExpressClient;
 
     @Inject
-    public ExperimentMetadataLoader(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfFileUrlTemplate
+    public ExperimentMetadataLoader(
+            @Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate
+            ,@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate
             , AnalysisMethodsTsvReader analysisMethodsTsvReader, ArrayExpressClient arrayExpressClient) {
 
-        this.idfFileUrlTemplate = idfFileUrlTemplate;
+        this.idfUrlTemplate = idfUrlTemplate;
+        this.idfPathTemplate = idfPathTemplate;
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
     }
@@ -68,11 +80,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
     @Override
     public Experiment load(String experimentAccession) throws ParseException, IOException {
 
-        String idfFileLocation = buildIdfFileUrl(experimentAccession);
-
-        URL idfFileURL = new URL(idfFileLocation);
-
-        MAGETABInvestigation investigation = parseInvestigation(idfFileURL);
+        MAGETABInvestigation investigation = parseInvestigation(experimentAccession);
 
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
@@ -116,11 +124,6 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         return null;
     }
 
-    String buildIdfFileUrl(String experimentAccession) {
-        return String.format(idfFileUrlTemplate, experimentAccession, experimentAccession);
-    }
-
-
     public Collection<ExperimentRun> extractExperimentRuns(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {
 
         Collection<ExperimentRun> experimentRuns = new ArrayList<>();
@@ -136,10 +139,17 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
     }
 
     //Required for testability - will be overridden to inject mock
-    MAGETABInvestigation parseInvestigation(URL idfFileURL) throws ParseException {
-        MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
+    MAGETABInvestigation parseInvestigation(String experimentAccession) throws ParseException, IOException {
 
-        return mageTabParser.parse(idfFileURL);
+        String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
+        MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
+        File x = new File(idfFileLocation);
+        if (x.exists()){
+            return mageTabParser.parse(x);
+        } else {
+            URL idfFileURL = new URL(MessageFormat.format(idfUrlTemplate, experimentAccession));
+            return mageTabParser.parse(idfFileURL);
+        }
 
     }
 
