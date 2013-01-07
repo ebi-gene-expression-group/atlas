@@ -36,36 +36,6 @@
         <div id="heatmap" style="overflow: auto; padding:15px;" class="row stickem-container">
 
             <div id="anatomogram" class="aside stickem double-click-noselection">
-
-                <table style="font-size:10px" id="heatmap-legenda">
-                    <tr>
-                        <td>
-                            <div style="color:white" class="gradient-level">
-                                <fmt:formatNumber type="number" value="${minExpressionLevel}" groupingUsed="false"/>
-                            </div>
-                        </td>
-                        <td width="200px">
-                            <div data-help-loc="#gradient" style="background-image:
-                                    -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
-
-                                    background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
-
-                                    background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
-
-                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
-                                    startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
-                                &nbsp;
-                            </div>
-                        </td>
-                        <td>
-                            <div style="color:white" class="gradient-level">
-                                <fmt:formatNumber type="number" value="${maxExpressionLevel}" groupingUsed="false"/>
-                            </div>
-                        </td>
-
-                    </tr>
-                </table>
-
                 <table>
                     <tr>
                         <td style="width:25px;padding-top: 15px; vertical-align:top">
@@ -86,8 +56,55 @@
 
             <div id="heatmap-div" class="content">
 
-                <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
+                <table>
+                    <tr>
+                        <td>
+                            <div id="geneCount" style="" data-help-loc="#resultInfo">Showing ${geneProfiles.size()}
+                                of ${totalResultCount} genes
+                                found:
+                            </div>
+                        </td>
 
+                        <td>
+                            <table style="font-size:10px; float: right" id="heatmap-legenda">
+                                <tr>
+                                    <td>
+                                        <div style="color:white" class="gradient-level">
+                                            <fmt:formatNumber type="number" value="${minExpressionLevel}"
+                                                              groupingUsed="false"/>
+                                        </div>
+                                    </td>
+                                    <td width="200px">
+                                        <div data-help-loc="#gradient" style="background-image:
+                                                -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+
+                                                background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+
+                                                background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+
+                                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
+                                                startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                            &nbsp;
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="color:white" class="gradient-level">
+                                            <fmt:formatNumber type="number" value="${maxExpressionLevel}"
+                                                              groupingUsed="false"/>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 

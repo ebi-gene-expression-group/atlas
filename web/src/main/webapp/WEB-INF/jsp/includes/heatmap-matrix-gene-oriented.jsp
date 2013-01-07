@@ -27,10 +27,6 @@
 
 <fmt:setBundle basename="configuration" var="configuration"/>
 
-<div id="geneCount" style="" data-help-loc="#resultInfo">Showing ${geneProfiles.size()} of ${totalResultCount} genes
-    found:
-</div>
-
 <div class="block">
     <table>
         <tbody>
