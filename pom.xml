@@ -49,6 +49,13 @@
         <deploy.port>14092</deploy.port>
         <integration.test.host>localhost</integration.test.host>
         <integration.test.portnumber>9090</integration.test.portnumber>
+        <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
+        <!-- mailtrap.io password: atlas-ebi-14 -->
+        <mail.smtp.host>mailtrap.io</mail.smtp.host>
+        <mail.smtp.port>2525</mail.smtp.port>
+        <mail.smtp.user>feedback-mail-3e3ccf8bbcedeb96</mail.smtp.user>
+        <mail.smtp.password>324c3bac45dfb398</mail.smtp.password>
+        <mail.smtp.auth>true</mail.smtp.auth>
     </properties>
 
     <build>
@@ -454,6 +461,9 @@
                 <deploy.port>8080</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
                 <berkeley.schema.name>bdb-www-test</berkeley.schema.name>
+                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
+                <mail.smtp.port>25</mail.smtp.port>
+                <mail.smtp.auth>false</mail.smtp.auth>
             </properties>
         </profile>
         <profile>

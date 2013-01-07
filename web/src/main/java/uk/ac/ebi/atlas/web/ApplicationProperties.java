@@ -74,10 +74,4 @@ public class ApplicationProperties {
         return configurationProperties.getProperty("feedback.email");
     }
 
-    public Properties getMailServerProperties() {
-        Properties mailServerProperties = new Properties();
-        mailServerProperties.put("mail.smtp.host", configurationProperties.getProperty("mail.smtp.host"));
-        mailServerProperties.put("mail.smtp.port", configurationProperties.getProperty("mail.smtp.port"));
-        return mailServerProperties;
-    }
 }

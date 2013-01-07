@@ -31,7 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.commons.mail.EmailMessage;
-import uk.ac.ebi.atlas.utils.MailSender;
+import uk.ac.ebi.atlas.utils.MailService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -49,14 +49,14 @@ public class FeedbackEmailController {
 
     private EmailMessage emailMessage;
 
-    private MailSender mailSender;
+    private MailService mailService;
 
     private ApplicationProperties applicationProperties;
 
 
     @Inject
-    public FeedbackEmailController(MailSender mailSender, EmailMessage emailMessage, ApplicationProperties applicationProperties) {
-        this.mailSender = mailSender;
+    public FeedbackEmailController(MailService mailService, EmailMessage emailMessage, ApplicationProperties applicationProperties) {
+        this.mailService = mailService;
         this.emailMessage = emailMessage;
         this.applicationProperties = applicationProperties;
     }
@@ -80,13 +80,13 @@ public class FeedbackEmailController {
         logger.info("<sendFeedbackMail> " + emailMessage);
 
         try {
-            mailSender.send(emailMessage);
-            return gson.toJson(SUCCESS_MESSAGE);
-        } catch (Exception e) {
+            mailService.send(emailMessage);
+        } catch (MessagingException e) {
             logger.fatal(e.getMessage(), e);
             return gson.toJson(ERROR_MESSAGE);
         }
 
+        return gson.toJson(SUCCESS_MESSAGE);
     }
 
 }

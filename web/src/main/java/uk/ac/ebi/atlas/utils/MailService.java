@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.mail.EmailMessage;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -35,29 +36,51 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 @Named("mailSender")
 @Scope("singleton")
-public class MailSender {
+public class MailService {
 
-    private ApplicationProperties properties;
+    @Value("#{configuration['mail.smtp.host']}")
+    private String smtpHost;
 
-    @Inject
-    public MailSender(ApplicationProperties properties) {
-        this.properties = properties;
-    }
+    @Value("#{configuration['mail.smtp.port']}")
+    private String smtpPort;
+
+    @Value("#{configuration['mail.smtp.auth']}")
+    private boolean smtpAuthRequired;
+
+    @Value("#{configuration['mail.smtp.user']}")
+    private String smtpUser;
+
+    @Value("#{configuration['mail.smtp.password']}")
+    private String smtpPassword;
 
     public void send(EmailMessage mailMessage) throws MessagingException {
-        Session session = Session.getDefaultInstance(properties.getMailServerProperties());
 
-        MimeMessage messageToSend = new MimeMessage(session);
+        Properties smtpProperties = new Properties();
+        smtpProperties.put("mail.smtp.host", smtpHost);
+        smtpProperties.put("mail.smtp.port", smtpPort);
 
-        messageToSend.setFrom(new InternetAddress(mailMessage.sender));
-        messageToSend.addRecipient(Message.RecipientType.TO, new InternetAddress(mailMessage.recipient));
-        messageToSend.setSubject(mailMessage.subject);
-        messageToSend.setText(mailMessage.body);
+        Session session = Session.getDefaultInstance(smtpProperties);
 
-        Transport.send(messageToSend);
+        MimeMessage message = new MimeMessage(session);
+
+        message.setFrom(new InternetAddress(mailMessage.sender));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailMessage.recipient));
+        message.setSubject(mailMessage.subject);
+        message.setText(mailMessage.body);
+
+        Transport transport = session.getTransport("smtp");
+        if (smtpAuthRequired) {
+            transport.connect(smtpUser, smtpPassword);
+        } else {
+            transport.connect();
+        }
+
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
 
     }
 }
