@@ -79,9 +79,6 @@ public class EmailMessage {
         this.subject = subject;
     }
 
-    public EmailMessage(String sender, String recipient, String subject, String body) {
-    }
-
     @Override
     public String toString() {
         return "EmailMessage{" +
