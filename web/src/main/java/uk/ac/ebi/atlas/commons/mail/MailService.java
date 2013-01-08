@@ -20,9 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.utils;
+package uk.ac.ebi.atlas.commons.mail;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.mail.EmailMessage;
@@ -41,12 +44,13 @@ import java.util.Properties;
 @Named("mailSender")
 @Scope("singleton")
 public class MailService {
+    private static final Logger LOGGER = Logger.getLogger(MailService.class);
 
     @Value("#{configuration['mail.smtp.host']}")
     private String smtpHost;
 
     @Value("#{configuration['mail.smtp.port']}")
-    private String smtpPort;
+    private int smtpPort;
 
     @Value("#{configuration['mail.smtp.auth']}")
     private boolean smtpAuthRequired;
@@ -57,30 +61,24 @@ public class MailService {
     @Value("#{configuration['mail.smtp.password']}")
     private String smtpPassword;
 
-    public void send(EmailMessage mailMessage) throws MessagingException {
+    public void send(EmailMessage mailMessage) throws EmailException {
 
-        Properties smtpProperties = new Properties();
-        smtpProperties.put("mail.smtp.host", smtpHost);
-        smtpProperties.put("mail.smtp.port", smtpPort);
+        SimpleEmail email = new SimpleEmail();
 
-        Session session = Session.getDefaultInstance(smtpProperties);
+        email.setHostName(smtpHost);
+        email.setSmtpPort(smtpPort);
 
-        MimeMessage message = new MimeMessage(session);
+        email.setFrom(mailMessage.sender);
+        email.addTo(mailMessage.recipient);
+        email.setSubject(mailMessage.subject);
+        email.setMsg(mailMessage.body);
 
-        message.setFrom(new InternetAddress(mailMessage.sender));
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailMessage.recipient));
-        message.setSubject(mailMessage.subject);
-        message.setText(mailMessage.body);
-
-        Transport transport = session.getTransport("smtp");
         if (smtpAuthRequired) {
-            transport.connect(smtpUser, smtpPassword);
-        } else {
-            transport.connect();
+            LOGGER.debug("<send> mail authentication required");
+            email.setAuthentication(smtpUser, smtpPassword);
         }
-
-        transport.sendMessage(message, message.getAllRecipients());
-        transport.close();
+        email.send();
+        LOGGER.debug("<send> email sent to host " + smtpHost + ":" + smtpPort + " : " + email);
 
     }
 }
