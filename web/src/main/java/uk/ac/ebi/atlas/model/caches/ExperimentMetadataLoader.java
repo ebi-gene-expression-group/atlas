@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.cache.CacheLoader;
+import org.apache.log4j.Logger;
+import org.apache.velocity.tools.view.servlet.ServletLogger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
@@ -56,6 +58,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("experimentMetadataLoader")
 public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
+    private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataLoader.class);
+
     private static final String ENA_RUN = "ENA_RUN";
 
     private String idfUrlTemplate;
@@ -87,7 +91,9 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         // TODO: takes first experimental factor type as default
         String experimentalFactorType = investigation.IDF.experimentalFactorType.get(0).replaceAll(" ", "_").toUpperCase();
 
-        Experiment experiment = new Experiment(experimentAccession, arrayExpressClient.fetchExperimentName(experimentAccession)
+        String experimentName = fetchExperimentName(experimentAccession);
+
+        Experiment experiment = new Experiment(experimentAccession, experimentName
                 , getExperimentRunAccessions(experimentAccession), experimentalFactorType);
 
         ScanNode firstNode = scanNodes.iterator().next();
@@ -98,6 +104,15 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         return experiment;
 
+    }
+
+    private String fetchExperimentName(String experimentAccession) {
+        try{
+            return arrayExpressClient.fetchExperimentName(experimentAccession);
+        } catch(Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return "Error connecting to ArrayExpress!";
+        }
     }
 
     private Set<String> getExperimentRunAccessions(String experimentAccession) throws IOException {
