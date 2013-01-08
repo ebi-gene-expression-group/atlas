@@ -43,7 +43,7 @@
         and are overridden in profiles for specific deployment environments-->
         <data.files.location>${user.home}/Data</data.files.location>
         <berkeley.schema.name>bdb</berkeley.schema.name>
-        <solr.host>lime</solr.host>
+        <solr.host>ves-hx-75</solr.host>
         <!-- default values for integration testing properties -->
         <deploy.host>lime</deploy.host>
         <deploy.port>14092</deploy.port>
