@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -39,6 +40,7 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -65,7 +67,6 @@ public class GeneProfilesPageController {
 
         if (!result.hasErrors()) {
 
-
             rankCommand.setRequestPreferences(preferences);
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
@@ -87,9 +88,12 @@ public class GeneProfilesPageController {
             // this formats the experimental factor type for display on web page
             String experimentalFactor = experiment.getDefaultFactorType().replaceAll("_", " ").toLowerCase();
             experimentalFactor = experimentalFactor.substring(0, 1).toUpperCase() + experimentalFactor.substring(1);
-            model.addAttribute("experimentalFactor", experimentalFactor);
+            model.addAttribute("defaultFactorType", experimentalFactor);
 
             model.addAttribute("allExperimentalFactors", experiment.getAllExperimentalFactors());
+
+            Set<FactorValue> filterFactorValues = preferences.getFilterFactorValuesAsObjects();
+            model.addAttribute("heatmapExperimentalFactors", experiment.getFilteredExperimentalFactors(filterFactorValues));
 
             String specie = experiment.getSpecie();
 

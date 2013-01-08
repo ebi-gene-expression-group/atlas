@@ -145,10 +145,9 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
         $(document).ready(function () {
 
-            var experimentalFactors = [${allExperimentalFactors.size()}];
-
-            <c:forEach varStatus="i" var="organismPart" items="${allExperimentalFactors}">
-            experimentalFactors[${i.index}] = '${organismPart}';
+            var experimentalFactors = [${heatmapExperimentalFactors.size()}];
+            <c:forEach varStatus="i" var="experimentalFactor" items="${heatmapExperimentalFactors}">
+            experimentalFactors[${i.index}] = '${experimentalFactor}';
             </c:forEach>
 
             var isIE8 = false;
@@ -163,7 +162,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             }
 
-            var experimentalFactor = "${experimentalFactor}";
+            var defaultFactorType = "${defaultFactorType}";
 
             if ($.browser.msie && $.browser.version <= 8.0) {
 
@@ -179,19 +178,19 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
-                if (experimentalFactor === "Organism part") {
+                if (defaultFactorType === "Organism part") {
                     initAnatomogram(experimentalFactors, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }
 
             //configurations required for any browser...
 
-            if (experimentalFactor !== "Organism part") {
+            if (defaultFactorType !== "Organism part") {
                 $("#anatomogram").remove();//remove the anatomogram
                 $("#heatmap-div").removeClass();
             }
 
-            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${experimentalFactor}s)");
+            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${defaultFactorType}s)");
             initHeatmapDisplayValueToggle();
 
             $('.container').stickem();
