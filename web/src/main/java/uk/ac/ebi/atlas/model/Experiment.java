@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 
 import java.text.MessageFormat;
@@ -116,6 +117,26 @@ public class Experiment {
     //ToDo: this is confusing now... we are calling these things: "factor values"... elsewhere
     public SortedSet<String> getAllExperimentalFactors() {
         return experimentalFactors;
+    }
+
+    public SortedSet<String> getFilteredExperimentalFactors(Set<FactorValue> filterFactorValues) {
+        SortedSet<String> results = new TreeSet<>();
+
+        for (String run : experimentRunAccessions) {
+            ExperimentRun experimentRun = runs.get(run);
+            if (experimentRun != null) {
+                if (CollectionUtils.isEmpty(filterFactorValues) ||
+                        experimentRun.getFactorValues().containsAll(filterFactorValues)) {
+                    FactorValue factorValue = experimentRun.getFactorValue(factorType);
+                    checkNotNull(factorValue);
+                    results.add(factorValue.getValue());
+                }
+            } else {
+                logger.warn("Missing ExperimentRun for accession " + run);
+            }
+        }
+
+        return results;
     }
 
     public String getDescription() {

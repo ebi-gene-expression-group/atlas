@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.commons.mail.EmailMessage;
-import uk.ac.ebi.atlas.utils.MailService;
+import uk.ac.ebi.atlas.commons.mail.MailService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -41,7 +42,7 @@ import javax.mail.MessagingException;
 @Scope("request")
 public class FeedbackEmailController {
 
-    private static final Logger logger = Logger.getLogger(FeedbackEmailController.class);
+    private static final Logger LOGGER = Logger.getLogger(FeedbackEmailController.class);
 
     private static final String ATLAS_FEEDBACK_SUBJECT = "Atlas Feedback";
     private static final String ERROR_MESSAGE = "Sorry, an error occurred while sending feedback.";
@@ -77,12 +78,12 @@ public class FeedbackEmailController {
 
         Gson gson = new Gson();
 
-        logger.info("<sendFeedbackMail> " + emailMessage);
+        LOGGER.info("<sendFeedbackMail> " + emailMessage);
 
         try {
             mailService.send(emailMessage);
-        } catch (MessagingException e) {
-            logger.fatal(e.getMessage(), e);
+        } catch (EmailException e) {
+            LOGGER.fatal(e.getMessage(), e);
             return gson.toJson(ERROR_MESSAGE);
         }
 
