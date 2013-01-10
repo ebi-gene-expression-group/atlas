@@ -18,7 +18,7 @@
     </appender>
 
     <logger name="uk.ac.ebi.atlas" additivity="false">
-        <level value="INFO"/>
+        <level value="DEBUG"/>
         <appender-ref ref="console"/>
     </logger>
 
