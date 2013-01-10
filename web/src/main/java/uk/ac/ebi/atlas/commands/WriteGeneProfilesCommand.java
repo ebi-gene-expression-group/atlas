@@ -47,7 +47,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     private NumberUtils numberUtils;
 
     @Inject
-    protected WriteGeneProfilesCommand(NumberUtils numberUtils){
+    protected WriteGeneProfilesCommand(NumberUtils numberUtils) {
         this.numberUtils = numberUtils;
     }
 
@@ -57,7 +57,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         long count = 0;
 
-        SortedSet<String> organismParts = experiment.getAllExperimentalFactors();
+        SortedSet<String> organismParts = experiment.getDefaultFactorValues();
 
         csvWriter.writeNext(buildCsvHeaders(organismParts));
 
