@@ -18,6 +18,7 @@ public abstract class SeleniumFixture {
     //Uncomment this if you want to use local firefox browser
     //protected FirefoxDriver driver;
 
+    //comment this if you want to use local firefox browser
     protected WebDriver driver;
 
 
@@ -39,9 +40,13 @@ public abstract class SeleniumFixture {
 
 
         try {
+
+            //comment this if you want to use local firefox browser
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setJavascriptEnabled(true);
             capabilities.setBrowserName("firefox");
+            //
+
             this.driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
 
         } catch (MalformedURLException e) {
