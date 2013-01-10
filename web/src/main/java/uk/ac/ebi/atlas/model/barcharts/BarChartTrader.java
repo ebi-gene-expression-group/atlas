@@ -59,7 +59,7 @@ public class BarChartTrader {
 
     public NavigableMap<Double, Integer> getChart() {
 
-        return getChart(null,false);
+        return getChart(null, false);
     }
 
     public NavigableMap<Double, Integer> getChart(Set<String> selectedOrganismParts, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
@@ -80,7 +80,7 @@ public class BarChartTrader {
      */
     public int getGeneCountsForOrganismPart(String organismPart, double scaledCutoff) {
         Map<String, BitSet> geneBitSets = geneExpressionIndexes.get(scaledCutoff);
-        checkState(geneBitSets.containsKey(organismPart) != false, "BarChartTrader: factor value not recognized: "+ organismPart);
+        checkState(geneBitSets.containsKey(organismPart) != false, "BarChartTrader: factor value not recognized: " + organismPart);
         return geneBitSets.get(organismPart).cardinality();
     }
 
@@ -93,7 +93,7 @@ public class BarChartTrader {
             if (CollectionUtils.isEmpty(selectedOrganismParts) || selectedOrganismParts.contains(organismPart)) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(organismPart));
-            } else if (!includeGenesExpressedAlsoOnNonSelectedFactorValue){
+            } else if (!includeGenesExpressedAlsoOnNonSelectedFactorValue) {
                 notExpressedGenesBitSet.or(geneBitSets.get(organismPart));
             }
         }
@@ -127,7 +127,7 @@ public class BarChartTrader {
 
         public Builder forExperiment(String experimentAccession) {
 
-            organismParts = experimentsCache.getExperiment(experimentAccession).getAllExperimentalFactors();
+            organismParts = experimentsCache.getExperiment(experimentAccession).getDefaultFactorValues();
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 

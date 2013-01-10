@@ -54,7 +54,7 @@
                         <span>
                             <form:select path="organismParts" data-placeholder="(all ${defaultFactorType}s)"
                                          tabindex="-1"
-                                         items="${heatmapExperimentalFactors}" cssClass="chzn-select"
+                                         items="${heatmapFactorValues}" cssClass="chzn-select"
                                          cssStyle="width:350px;display:none"/>
                         </span>
                     </div>

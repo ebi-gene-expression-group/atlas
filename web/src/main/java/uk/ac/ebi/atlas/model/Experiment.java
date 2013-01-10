@@ -36,55 +36,61 @@ public class Experiment {
 
     private String experimentAccession;
     private String description;
-    private String factorType;
-
-    //ToDo: "factor values" and "experimental factors" what is the difference if any? PLease resolve inconsistencies asap!!!
-    private SortedSet<String> experimentalFactors = new TreeSet<>();
-
-    private Map<String, ExperimentRun> runs = new HashMap<>();
-
     private String specie;
 
+    private String defaultFactorType;
+    private Map<String, SortedSet<String>> factorValuesByType = new HashMap<>();
+
     private Set<String> experimentRunAccessions;
+    private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String factorType) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultFactorType) {
         this.experimentAccession = experimentAccession;
         this.description = description;
-        this.factorType = factorType;
         this.experimentRunAccessions = experimentRunAccessions;
+        this.defaultFactorType = defaultFactorType;
     }
 
     public String getDefaultFactorType() {
-        return factorType;
+        return defaultFactorType;
     }
 
     public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
         for (ExperimentRun experimentRun : experimentRuns) {
             if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
-                runs.put(experimentRun.getRunAccession(), experimentRun);
-                experimentalFactors.add(experimentRun.getFactorValue(factorType).getValue());
+                this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
+                // index all possible factor values by their byType
+                for (FactorValue factorValue : experimentRun.getFactorValues()) {
+                    String type = factorValue.getType();
+                    String value = factorValue.getValue();
+                    if (!factorValuesByType.containsKey(type)) {
+                        factorValuesByType.put(type, new TreeSet<String>());
+                    }
+                    factorValuesByType.get(type).add(value);
+                }
             }
         }
         return this;
     }
 
     //ToDo: redundant, will be removed when we remove organism parts
-    //ToDo: cryptic signature, what is a column run? Find better name for parameter to express the method intent
 
-    public FactorValue getFactorValue(String columnRun) {
-        ExperimentRun experimentRun = getExperimentRun(columnRun);
-        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
-
-        return experimentRun.getFactorValue(factorType);
+    public FactorValue getDefaultFactorValue(String experimentRunAccession) {
+        return getFactorValue(experimentRunAccession, defaultFactorType);
     }
 
-    //ToDo: cryptic signature, what is a column run? Find better name for parameter to express the method intent
+    public FactorValue getFactorValue(String experimentRunAccession, String byType) {
+        ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
+        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
-    public Set<FactorValue> getAllFactorValues(String columnRun) {
-        ExperimentRun experimentRun = getExperimentRun(columnRun);
-        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
+        return experimentRun.getFactorValue(byType);
+    }
+
+    public Set<FactorValue> getAllFactorValues(String experimentRunAccession) {
+        ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
+        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
         return experimentRun.getFactorValues();
     }
@@ -93,12 +99,12 @@ public class Experiment {
         return experimentRunAccessions;
     }
 
-    public ExperimentRun getExperimentRun(String runAccession) {
-        return runs.get(runAccession);
+    public ExperimentRun getExperimentRun(String experimentRunAccession) {
+        return experimentRuns.get(experimentRunAccession);
     }
 
     public int getNumberOfRuns() {
-        return runs.size();
+        return experimentRuns.size();
     }
 
     public String getSpecie() {
@@ -109,38 +115,45 @@ public class Experiment {
         return experimentAccession;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public Experiment setSpecie(String specie) {
         this.specie = specie;
         return this;
     }
 
-    //ToDo: this is confusing now... we are calling these things: "factor values"... elsewhere
-    public SortedSet<String> getAllExperimentalFactors() {
-        return experimentalFactors;
+    public SortedSet<String> getDefaultFactorValues() {
+        return factorValuesByType.get(defaultFactorType);
     }
 
-    public SortedSet<String> getFilteredExperimentalFactors(Set<FactorValue> filterFactorValues) {
+    public SortedSet<String> getFactorValues(String byType) {
+        return factorValuesByType.get(byType);
+    }
+
+    public SortedSet<String> getFilteredDefaultFactorValues(Set<FactorValue> filterByFactorValues) {
+        return getFilteredFactorValues(filterByFactorValues, defaultFactorType);
+    }
+
+    public SortedSet<String> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
         SortedSet<String> results = new TreeSet<>();
 
-        for (String run : experimentRunAccessions) {
-            ExperimentRun experimentRun = runs.get(run);
+        for (String experimentRunAccession : experimentRunAccessions) {
+            ExperimentRun experimentRun = experimentRuns.get(experimentRunAccession);
             if (experimentRun != null) {
-                if (CollectionUtils.isEmpty(filterFactorValues) ||
-                        experimentRun.getFactorValues().containsAll(filterFactorValues)) {
-                    FactorValue factorValue = experimentRun.getFactorValue(factorType);
+                if (CollectionUtils.isEmpty(filterByFactorValues) ||
+                        experimentRun.getFactorValues().containsAll(filterByFactorValues)) {
+                    FactorValue factorValue = experimentRun.getFactorValue(byType);
                     checkNotNull(factorValue);
                     results.add(factorValue.getValue());
                 }
             } else {
-                logger.warn("Missing ExperimentRun for accession " + run);
+                logger.warn("Missing ExperimentRun for accession " + experimentRunAccession);
             }
         }
 
         return results;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
 }

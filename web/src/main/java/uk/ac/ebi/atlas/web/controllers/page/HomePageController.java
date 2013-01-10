@@ -79,7 +79,7 @@ public class HomePageController {
     }
 
     /**
-     * Gets all experiments in data directory and collates experimental factor occurrences into map
+     * Gets all experiments in data directory and collates experimental defaultFactorValue occurrences into map
      */
     private void extractFactorValueCounts() {
 
@@ -103,10 +103,10 @@ public class HomePageController {
                 speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
 
                 // count per experiment and sum across all experiments
-                for (String factor : experiment.getAllExperimentalFactors()) {
-                    if (!counts.containsKey(factor))
-                        counts.put(factor, 0.0);
-                    counts.put(factor, counts.get(factor) +
+                for (String defaultFactorValue : experiment.getDefaultFactorValues()) {
+                    if (!counts.containsKey(defaultFactorValue))
+                        counts.put(defaultFactorValue, 0.0);
+                    counts.put(defaultFactorValue, counts.get(defaultFactorValue) +
                             1.0);
                 }
             }

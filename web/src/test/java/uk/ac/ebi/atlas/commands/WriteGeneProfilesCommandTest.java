@@ -79,7 +79,7 @@ public class WriteGeneProfilesCommandTest {
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
         when(geneProfileMock2.getExpressionLevel("liver")).thenReturn(21.12d);
 
-        when(experimentMock.getAllExperimentalFactors()).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentMock.getDefaultFactorValues()).thenReturn(Sets.newTreeSet(organismParts));
     }
 
     @Before
