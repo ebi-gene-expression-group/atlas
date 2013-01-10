@@ -5,6 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 
@@ -33,8 +36,11 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
     String buildURL(String httpParameters){
         String hostname = System.getProperty("selenium.test.host");
         if (hostname == null) {
-            hostname = "localhost";
+            hostname = getLocalHostAddress();
         }
+
+        System.out.println("running tests on local host address: " + hostname);
+
         String portNumber = System.getProperty("selenium.test.portnumber");
         if (portNumber == null) {
             portNumber = "9090";
@@ -50,6 +56,16 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
         System.out.println("<buildURL> Running on page: " + stringBuilder.toString());
         return stringBuilder.toString();
 
+    }
+
+    private String getLocalHostAddress(){
+        try {
+            InetAddress localHost = InetAddress.getLocalHost();
+            return localHost.getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            throw new IllegalStateException(e);
+        }
     }
 
 
