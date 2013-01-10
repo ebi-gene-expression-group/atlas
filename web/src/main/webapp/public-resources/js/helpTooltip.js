@@ -32,7 +32,7 @@ function initHelpTooltip() {
             .tooltip("option", "disabled", false)
             .on('mouseover.loadContent', function () {
                 var selectedElement = this;
-                $('#helpContentTooltip').load('resources/html/atlas-help.html ' + $(selectedElement).attr('data-help-loc'), function () {
+                $('#helpContentTooltip').load('resources/html/atlas-help-tooltips.html ' + $(selectedElement).attr('data-help-loc'), function () {
                     $(selectedElement).tooltip("option", "content", $('#helpContentTooltip').text());
                     $(selectedElement).tooltip("option", "position", { my: "bottom",
                                     at: "top-5", collision: "flipfit" });

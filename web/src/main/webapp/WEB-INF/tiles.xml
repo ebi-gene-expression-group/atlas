@@ -39,4 +39,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp"/>
     </definition>
 
+    <!-- error pages -->
+    <definition name="help" extends="base.definition">
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/help/help.jsp"/>
+    </definition>
+
 </tiles-definitions>

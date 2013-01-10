@@ -1,10 +1,7 @@
 package uk.ac.ebi.atlas.web;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import uk.ac.ebi.atlas.web.interceptors.ExperimentInterceptor;
 
 import javax.inject.Inject;
@@ -21,6 +18,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/public-resources/");
         registry.addResourceHandler("/json/gene-by-cutoff/**").addResourceLocations("classpath:/cutoff-histograms/");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry viewControllerRegistry){
+        viewControllerRegistry.addViewController("/help").setViewName("help");
+
     }
 
     @Override
