@@ -47,7 +47,9 @@
         <!-- default values for integration testing properties -->
         <deploy.host>lime</deploy.host>
         <deploy.port>14092</deploy.port>
-        <integration.test.host>localhost</integration.test.host>
+        <!-- for a given profile, if the selenium integration tests must be executed against a remote server (not running on the local host where 'maven verify' is being executed)
+                then you have to override integration.test.host property in the profile -->
+        <integration.test.host></integration.test.host>
         <integration.test.portnumber>9090</integration.test.portnumber>
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
@@ -111,6 +113,16 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.12</version>
                 <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>selenium.test.host</name>
+                            <value>${integration.test.host}</value>
+                        </property>
+                        <property>
+                            <name>selenium.test.portnumber</name>
+                            <value>${integration.test.portnumber}</value>
+                        </property>
+                    </systemProperties>
                     <includes>
                         <include>${test.acceptance.pattern}</include>
                     </includes>
