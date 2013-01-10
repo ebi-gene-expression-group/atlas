@@ -39,7 +39,7 @@ public class Experiment {
     private String specie;
 
     private String defaultFactorType;
-    private SortedSet<String> defaultFactorValues = new TreeSet<>();
+    private Map<String, SortedSet<String>> factorValuesByType = new HashMap<>();
 
     private Set<String> experimentRunAccessions;
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
@@ -61,7 +61,15 @@ public class Experiment {
         for (ExperimentRun experimentRun : experimentRuns) {
             if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
                 this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
-                defaultFactorValues.add(experimentRun.getFactorValue(defaultFactorType).getValue());
+                // index all possible factor values by their byType
+                for (FactorValue factorValue : experimentRun.getFactorValues()) {
+                    String type = factorValue.getType();
+                    String value = factorValue.getValue();
+                    if (!factorValuesByType.containsKey(type)) {
+                        factorValuesByType.put(type, new TreeSet<String>());
+                    }
+                    factorValuesByType.get(type).add(value);
+                }
             }
         }
         return this;
@@ -69,11 +77,15 @@ public class Experiment {
 
     //ToDo: redundant, will be removed when we remove organism parts
 
-    public FactorValue getFactorValue(String experimentRunAccession) {
+    public FactorValue getDefaultFactorValue(String experimentRunAccession) {
+        return getFactorValue(experimentRunAccession, defaultFactorType);
+    }
+
+    public FactorValue getFactorValue(String experimentRunAccession, String byType) {
         ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
-        return experimentRun.getFactorValue(defaultFactorType);
+        return experimentRun.getFactorValue(byType);
     }
 
     public Set<FactorValue> getAllFactorValues(String experimentRunAccession) {
@@ -113,10 +125,18 @@ public class Experiment {
     }
 
     public SortedSet<String> getDefaultFactorValues() {
-        return defaultFactorValues;
+        return factorValuesByType.get(defaultFactorType);
+    }
+
+    public SortedSet<String> getFactorValues(String byType) {
+        return factorValuesByType.get(byType);
     }
 
     public SortedSet<String> getFilteredDefaultFactorValues(Set<FactorValue> filterByFactorValues) {
+        return getFilteredFactorValues(filterByFactorValues, defaultFactorType);
+    }
+
+    public SortedSet<String> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
         SortedSet<String> results = new TreeSet<>();
 
         for (String experimentRunAccession : experimentRunAccessions) {
@@ -124,7 +144,7 @@ public class Experiment {
             if (experimentRun != null) {
                 if (CollectionUtils.isEmpty(filterByFactorValues) ||
                         experimentRun.getFactorValues().containsAll(filterByFactorValues)) {
-                    FactorValue factorValue = experimentRun.getFactorValue(defaultFactorType);
+                    FactorValue factorValue = experimentRun.getFactorValue(byType);
                     checkNotNull(factorValue);
                     results.add(factorValue.getValue());
                 }
@@ -135,6 +155,5 @@ public class Experiment {
 
         return results;
     }
-
 
 }
