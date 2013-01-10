@@ -22,7 +22,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry viewControllerRegistry){
-        viewControllerRegistry.addViewController("/help").setViewName("help");
+        viewControllerRegistry.addViewController("/help.html").setViewName("help");
+        viewControllerRegistry.addViewController("/help-2.html").setViewName("help-2");
 
     }
 

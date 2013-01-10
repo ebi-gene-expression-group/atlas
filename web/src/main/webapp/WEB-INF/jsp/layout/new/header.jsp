@@ -59,7 +59,7 @@
                 <ul class="grid_24" id="local-nav">
                     <li class="first last"><a href="${pageContext.request.contextPath}"
                                               title="Go to the Expression Atlas homepage">Home</a></li>
-                    <li class="first last"><a href="${pageContext.request.contextPath}/help"
+                    <li class="first last"><a href="${pageContext.request.contextPath}/help.html"
                                               title="Go to the Expression Atlas help page">Help</a></li>
                     <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
                     add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
