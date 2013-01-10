@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -35,7 +36,8 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
 
     String buildURL(String httpParameters){
         String hostname = System.getProperty("selenium.test.host");
-        if (hostname == null) {
+        if (StringUtils.isBlank(hostname)){
+            System.out.println("selenium.test.host is null, so tests will be executed against local machine");
             hostname = getLocalHostAddress();
         }
 
