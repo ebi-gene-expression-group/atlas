@@ -21,7 +21,7 @@
  */
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
-/*
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,12 +35,12 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-*/
+
 
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFixture {
-    /*
+
     private HeatmapTableWithSearchFormAndBarChartPage subject;
 
     public void getStartingPage() {
@@ -68,13 +68,13 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
     public void checkBarChartAxisForSkeletalMuscle() {
         subject.selectOrganismPart("skeletal muscle");
         assertThat(subject.getYAxisValue(0), is("0"));
-        assertThat(subject.getYAxisValue(1), is("1"));
-        assertThat(subject.getMaxYAxisValue(), is("4"));
+        assertThat(subject.getYAxisValue(1), is("50"));
+        assertThat(subject.getMaxYAxisValue(), is("200"));
     }
-    */
 
-    @Override
-    protected void getStartingPage() {
+
+    //@Override
+    //protected void getStartingPage() {
         // leave empty for now
-    }
+    //}
 }
