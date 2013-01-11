@@ -24,8 +24,6 @@
     background: transparent url('../images/download_blue_small.png');
 }
 
-​
-
 .button-image {
     background-repeat: no-repeat;
     background-position: center;
@@ -143,3 +141,14 @@ a:active {
     box-shadow: 0 0 7px black;
 }
 
+/*
+Set sensible minimum heights for small and large screens
+*/
+@media screen and (min-height: 600px) {
+    div#wrapper { min-height: 250px; }
+}
+
+
+@media screen and (min-height: 1000px) {
+    div#wrapper { min-height: 450px; }
+}
