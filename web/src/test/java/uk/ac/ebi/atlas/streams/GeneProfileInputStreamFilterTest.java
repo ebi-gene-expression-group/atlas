@@ -70,10 +70,10 @@ public class GeneProfileInputStreamFilterTest {
     @Before
     public void initMocks() {
         when(gene1ProfileMock.getGeneId()).thenReturn(GENE_2);
-        when(gene1ProfileMock.isExpressedAtMostOn(factorValues)).thenReturn(true);
+        when(gene1ProfileMock.isExpressedOnAnyOf(factorValues)).thenReturn(true);
         when(gene1ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_1)));
         when(gene3ProfileMock.getGeneId()).thenReturn("UNACCEPTABLE_GENE");
-        when(gene3ProfileMock.isExpressedAtMostOn(factorValues)).thenReturn(true);
+        when(gene3ProfileMock.isExpressedOnAnyOf(factorValues)).thenReturn(true);
         when(gene3ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_2)));
 
     }
