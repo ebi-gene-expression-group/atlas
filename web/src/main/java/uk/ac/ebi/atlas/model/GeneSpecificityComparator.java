@@ -8,12 +8,11 @@ import java.util.Set;
 public class GeneSpecificityComparator implements Comparator<GeneProfile> {
 
     private boolean rankGenesExpressedOnMostFactorsLast;
-    private boolean includeGenesExpressedOnNonSelectedFactorValues;
     private Set<String> selectedOrganismParts;
     private Set<String> allOrganismParts;
 
-    public GeneSpecificityComparator(boolean includeGenesExpressedOnNonSelectedFactorValues, boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts, Set<String> allOrganismParts){
-        this.includeGenesExpressedOnNonSelectedFactorValues = includeGenesExpressedOnNonSelectedFactorValues;
+    public GeneSpecificityComparator( boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts,
+                                      Set<String> allOrganismParts){
         this.rankGenesExpressedOnMostFactorsLast = rankGenesExpressedOnMostFactorsLast;
         this.selectedOrganismParts = selectedOrganismParts;
         this.allOrganismParts = allOrganismParts;
@@ -26,7 +25,7 @@ public class GeneSpecificityComparator implements Comparator<GeneProfile> {
         if (order != 0) {
             return order;
         }
-        if (!includeGenesExpressedOnNonSelectedFactorValues || !rankGenesExpressedOnMostFactorsLast || selectedOrganismParts.equals(allOrganismParts)){
+        if (!rankGenesExpressedOnMostFactorsLast || selectedOrganismParts.equals(allOrganismParts)){
             return Ordering.natural().compare(firstGeneProfile.getAverageExpressionLevelOn(selectedOrganismParts)
                                             ,otherGeneProfile.getAverageExpressionLevelOn(selectedOrganismParts));
         }

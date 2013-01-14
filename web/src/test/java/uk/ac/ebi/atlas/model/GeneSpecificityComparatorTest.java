@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GeneSpecificityComparatorTest {
@@ -42,7 +42,7 @@ public class GeneSpecificityComparatorTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneSpecificityComparator(false,true, selectedOrganismParts, null);
+        subject = new GeneSpecificityComparator(true, selectedOrganismParts, null);
     }
 
     @Test

@@ -50,8 +50,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
                 experiment.getFactorValues(requestPreferences.getDefaultFactorType()) :
                 requestPreferences.getOrganismParts();
 
-        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.isIncludeGenesExpressedOnNonSelectedFactorValues()
-                , requestPreferences.isRankGenesExpressedOnMostFactorsLast()
+        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.isRankGenesExpressedOnMostFactorsLast()
                 , selectedOrganismParts
                 , experiment.getFactorValues(requestPreferences.getDefaultFactorType()));
 
@@ -81,8 +80,8 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildReverseSpecificityComparator(boolean includeGenesExpressedOnNonSelectedFactorValues, boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
-        return Ordering.from(new GeneSpecificityComparator(includeGenesExpressedOnNonSelectedFactorValues, rankGenesExpressedOnMostFactorsLast, selectedOrganismParts, allOrganismParts)).reverse();
+    protected Ordering<GeneProfile> buildReverseSpecificityComparator( boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
+        return Ordering.from(new GeneSpecificityComparator(rankGenesExpressedOnMostFactorsLast, selectedOrganismParts, allOrganismParts)).reverse();
     }
 
     protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> reverseSpecificityComparator, int heatmapMatrixSize) {

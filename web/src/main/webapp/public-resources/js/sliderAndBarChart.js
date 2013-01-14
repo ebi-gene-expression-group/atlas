@@ -38,7 +38,7 @@ function initBarChartButton() {
 
 }
 
-function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues, includeGenesExpressedOnNonSelectedFactorsValues) {
+function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
     function buildLegendaText() {
         return "Y = number of genes expressed above the given FPKM cutoff "
@@ -124,7 +124,6 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues, in
 
     $.getJSON("json/barchart/" + experimentAccession
                 , {
-                    includeGenesExpressedOnNonSelectedFactorsValues: includeGenesExpressedOnNonSelectedFactorsValues,
                     organismParts:selectedFactorValues
                   }
                 , function (data) {
@@ -152,7 +151,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues, in
                     $.each(scaledCutoffTicks, function (index, scaledCutoff) {
                         ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
                     }
-        )
+        );
 
         var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
 

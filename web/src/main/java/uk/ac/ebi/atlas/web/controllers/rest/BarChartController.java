@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -30,11 +29,11 @@ public class BarChartController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getMap(HttpServletRequest request, @PathVariable String experimentAccession,
-                         @RequestParam(value = "organismParts[]", required = false) Set<String> organismParts, @RequestParam boolean includeGenesExpressedOnNonSelectedFactorsValues) {
+                         @RequestParam(value = "organismParts[]", required = false) Set<String> organismParts) {
 
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
-        NavigableMap<Double,Integer> chartData = barchartTrader.getChart(organismParts, includeGenesExpressedOnNonSelectedFactorsValues);
+        NavigableMap<Double,Integer> chartData = barchartTrader.getChart(organismParts, true);
 
         Gson gson = new Gson();
 

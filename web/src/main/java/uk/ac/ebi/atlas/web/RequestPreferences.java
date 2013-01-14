@@ -24,11 +24,9 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
-import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,8 +34,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
-@Named("requestPreferences")
-@Scope("prototype")
+//@Named("requestPreferences")
+//@Scope("request")
 public class RequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
@@ -57,8 +55,6 @@ public class RequestPreferences {
     private SortedSet<String> filterFactorValues;
 
     private String defaultFactorType;
-
-    private boolean includeGenesExpressedOnNonSelectedFactorValues = true;
 
     private boolean rankGenesExpressedOnMostFactorsLast = true;
 
@@ -129,14 +125,6 @@ public class RequestPreferences {
 
     public void setCutoff(Double cutoff) {
         this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
-    }
-
-    public boolean isIncludeGenesExpressedOnNonSelectedFactorValues() {
-        return this.includeGenesExpressedOnNonSelectedFactorValues;
-    }
-
-    public void setIncludeGenesExpressedOnNonSelectedFactorValues(boolean includeGenesExpressedOnNonSelectedFactorValues) {
-        this.includeGenesExpressedOnNonSelectedFactorValues = includeGenesExpressedOnNonSelectedFactorValues;
     }
 
     public boolean isRankGenesExpressedOnMostFactorsLast() {

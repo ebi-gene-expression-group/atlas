@@ -4,51 +4,17 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
 
     "use strict";
 
-    function enableIncludeNonSelectedFactorValues() {
-        $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").removeAttr("disabled");
-        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:black');
-        //$("#rankGenesExpressedOnMostFactorsLast").removeAttr("disabled");
-        //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:black')
-    }
-
-    function disableIncludeNonSelectedFactorValues() {
-        $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("disabled", true);
-        $("label[for='includeGenesExpressedOnNonSelectedFactorValuesCheckbox']").attr('style', 'color:lightgray');
-        //$("#rankGenesExpressedOnMostFactorsLast").attr("disabled", true);
-        //$("label[for='rankGenesExpressedOnMostFactorsLast']").attr('style', 'color:gray')
-    }
-
-    function updatePlot(selectedFactorValues) {
-        loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues,
-            $("#includeGenesExpressedOnNonSelectedFactorValues").attr("value"));
-    }
-
-    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").attr("checked", $("#includeGenesExpressedOnNonSelectedFactorValues").val() === "true");
-
-    $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").change(function () {
-        $("#includeGenesExpressedOnNonSelectedFactorValues").attr("value", $("#includeGenesExpressedOnNonSelectedFactorValuesCheckbox").is(":checked"));
-        updatePlot($(".chzn-select").val());
+    $(".chzn-select").chosen().change(function () {
+        if ($(this).val()) {
+            $(this).data("chosen").default_text = "";
+        } else {
+            $(this).data("chosen").default_text = defaultText;
+            $(this).trigger("liszt:updated");
+        }
+        if (!isIE8) {
+            loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
+        }
     });
-
-    var selectedFactorValues = $(".chzn-select").chosen().change(function () {
-            if ($(this).val()) {
-                $(this).data("chosen").default_text = "";
-                enableIncludeNonSelectedFactorValues();
-            } else {
-                $(this).data("chosen").default_text = defaultText;
-                $(this).trigger("liszt:updated");
-                disableIncludeNonSelectedFactorValues();
-            }
-            if (!isIE8) {
-                updatePlot($(this).val());
-            }
-        }).val();
-
-    if (selectedFactorValues) {
-        enableIncludeNonSelectedFactorValues();
-    } else {
-        disableIncludeNonSelectedFactorValues();
-    }
 
     $("#submit-button").button();
 
@@ -60,7 +26,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
 
     $("#cutoff").watermark("(default 0.5)");
     if (!isIE8) {
-        loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").val(), $("#includeGenesExpressedOnNonSelectedFactorValues").val());
+        loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
     }
 
     $("#organismParts_chzn").mouseleave(function () {
