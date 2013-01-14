@@ -165,7 +165,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             }
 
-            var defaultFactorType = "${defaultFactorType}";
+            var defaultFactorType = "${formattedDefaultFactorType}";
 
             if ($.browser.msie && $.browser.version <= 8.0) {
 
@@ -193,7 +193,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${defaultFactorType}s)");
+            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${formattedDefaultFactorType}s)");
             initHeatmapDisplayValueToggle();
 
             $('.container').stickem();
