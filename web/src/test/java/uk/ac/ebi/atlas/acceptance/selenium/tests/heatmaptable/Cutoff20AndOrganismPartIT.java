@@ -16,8 +16,7 @@ public class Cutoff20AndOrganismPartIT extends SeleniumFixture {
 
     public void getStartingPage() {
         subject = new HeatmapTablePage(driver,
-                "heatmapMatrixSize=5&geneQuery=&organismParts=adrenal&_organismParts=1&cutoff=20"
-                        +"&includeGenesExpressedOnNonSelectedFactorValues=false");
+                "heatmapMatrixSize=5&geneQuery=&organismParts=adrenal&_organismParts=1&cutoff=20");
 
         subject.get();
     }
@@ -25,8 +24,8 @@ public class Cutoff20AndOrganismPartIT extends SeleniumFixture {
     @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
-        assertThat(selectedGenes.size(), is(2));
-        assertThat(selectedGenes, contains("TRAJ13", "Y_RNA"));
+        assertThat(selectedGenes.size(), is(5));
+        assertThat(selectedGenes, contains("TRAJ13", "Y_RNA", "AC011293.1", "IGLV9-49", "ABCD4"));
     }
 
     @Test
@@ -39,13 +38,13 @@ public class Cutoff20AndOrganismPartIT extends SeleniumFixture {
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("", "36", "", "", "", "", "", ""
-                , "", "", "", "", "", "", "", ""));
+        assertThat(subject.getLastGeneProfile(), contains("", "32", "", "", "", "", "", ""
+                , "", "37", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("2"), is(true));
+        assertThat(subject.getGeneCount().contains("39"), is(true));
     }
 
 }

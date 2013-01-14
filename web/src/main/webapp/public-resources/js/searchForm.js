@@ -4,7 +4,11 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
 
     "use strict";
 
-    $(".chzn-select").chosen().change(function () {
+    function updatePlot(selectedFactorValues) {
+        loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues);
+    }
+
+     $(".chzn-select").chosen().change(function () {
         if ($(this).val()) {
             $(this).data("chosen").default_text = "";
         } else {
@@ -12,9 +16,9 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
             $(this).trigger("liszt:updated");
         }
         if (!isIE8) {
-            loadSliderAndPlot(cutoff, experimentAccession, $(this).serialize());
+                updatePlot($(this).val());
         }
-    });
+        });
 
     $("#submit-button").button();
 
@@ -26,7 +30,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
 
     $("#cutoff").watermark("(default 0.5)");
     if (!isIE8) {
-        loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").serialize());
+        loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").val());
     }
 
     $("#organismParts_chzn").mouseleave(function () {
