@@ -148,9 +148,9 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
         $(document).ready(function () {
 
-            var experimentalFactors = [${heatmapExperimentalFactors.size()}];
-            <c:forEach varStatus="i" var="factorValue" items="${heatmapExperimentalFactors}">
-            experimentalFactors[${i.index}] = '${factorValue}';
+            var heatmapFactorValues = [${heatmapFactorValues.size()}];
+            <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
+            heatmapFactorValues[${i.index}] = '${factorValue}';
             </c:forEach>
 
             var isIE8 = false;
@@ -182,7 +182,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
                 if (defaultFactorType === "Organism part") {
-                    initAnatomogram(experimentalFactors, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    initAnatomogram(heatmapFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }
 
