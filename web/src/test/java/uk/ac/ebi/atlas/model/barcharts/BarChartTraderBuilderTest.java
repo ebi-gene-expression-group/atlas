@@ -53,7 +53,7 @@ public class BarChartTraderBuilderTest {
         ORGANISM_PARTS.add(ORGANISM_PART_1);
         ORGANISM_PARTS.add(ORGANISM_PART_2);
         ORGANISM_PARTS.add(ORGANISM_PART_3);
-        when(experiment.getDefaultFactorValues()).thenReturn(ORGANISM_PARTS);
+        when(experiment.getFactorValues(anyString())).thenReturn(ORGANISM_PARTS);
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
 

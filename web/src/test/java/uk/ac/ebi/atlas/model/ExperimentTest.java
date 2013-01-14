@@ -28,8 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 
 public class ExperimentTest {
 
@@ -40,6 +39,11 @@ public class ExperimentTest {
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
     private ExperimentRun experimentRun3;
+
+    private FactorValue factorValue1 = new FactorValue("ORGANISM_PART", "ORGANISM_PART", "heart");
+    private FactorValue factorValue2 = new FactorValue("ORGANISM_PART", "ORGANISM_PART", "liver");
+    private FactorValue factorValue3 = new FactorValue("ORGANISM_PART", "ORGANISM_PART", "lung");
+    private FactorValue factorValue4 = new FactorValue("MATERIAL_TYPE", "RNAtype", "total rna");
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
 
@@ -57,23 +61,73 @@ public class ExperimentTest {
     }
 
     @Test
-    public void testDefaultFactorType() {
-        assertThat(subject.getDefaultFactorType(), is("ORGANISM_PART"));
+    public void testExperimentRunAccessions() {
+        assertThat(subject.getExperimentRunAccessions(), hasItems(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3));
     }
 
     @Test
-    public void testDefaultFactorValue() {
-        assertThat(subject.getDefaultFactorValue(RUN_ACCESSION_1).getValue(), is("heart"));
-        assertThat(subject.getDefaultFactorValue(RUN_ACCESSION_2).getValue(), is("liver"));
-        assertThat(subject.getDefaultFactorValue(RUN_ACCESSION_3).getValue(), is("lung"));
+    public void testExperimentAccession() {
+        assertThat(subject.getExperimentAccession(), is(MOCK_EXPERIMENT_ACCESSION));
+    }
+
+    @Test
+    public void testDescription() {
+        assertThat(subject.getDescription(), nullValue(String.class));
+    }
+
+    @Test
+    public void testNumberOfRuns() {
+        assertThat(subject.getNumberOfRuns(), is(3));
+    }
+
+    @Test
+    public void testSpecies() {
+        assertThat(subject.getSpecie(), nullValue(String.class));
+        subject.setSpecie("homo sapiens");
+        assertThat(subject.getSpecie(), is("homo sapiens"));
+    }
+
+    @Test
+    public void testExperimentRun() {
+        assertThat(subject.getExperimentRun(RUN_ACCESSION_1), is(experimentRun1));
+        assertThat(subject.getExperimentRun(RUN_ACCESSION_2), is(experimentRun2));
+        assertThat(subject.getExperimentRun(RUN_ACCESSION_3), is(experimentRun3));
+        assertThat(subject.getExperimentRun("non existing run"), nullValue(ExperimentRun.class));
+    }
+
+    @Test
+    public void testDefaultFactorType() {
+        assertThat(subject.getDefaultFactorType(), is("ORGANISM_PART"));
     }
 
     @Test
     public void testFactorValueByType() {
         assertThat(subject.getFactorValue(RUN_ACCESSION_1, "ORGANISM_PART").getValue(), is("heart"));
         assertThat(subject.getFactorValue(RUN_ACCESSION_1, "MATERIAL_TYPE"), nullValue(FactorValue.class));
+        assertThat(subject.getFactorValue(RUN_ACCESSION_2, "ORGANISM_PART").getValue(), is("liver"));
         assertThat(subject.getFactorValue(RUN_ACCESSION_3, "ORGANISM_PART").getValue(), is("lung"));
         assertThat(subject.getFactorValue(RUN_ACCESSION_3, "MATERIAL_TYPE").getValue(), is("total rna"));
+    }
+
+    @Test
+    public void testAllFactorValues() {
+        assertThat(subject.getAllFactorValues(RUN_ACCESSION_1), hasItems(factorValue1));
+        assertThat(subject.getAllFactorValues(RUN_ACCESSION_2), hasItems(factorValue2));
+        assertThat(subject.getAllFactorValues(RUN_ACCESSION_3), hasItems(factorValue3, factorValue4));
+    }
+
+    @Test
+    public void testFilteredFactorValues() {
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1), "ORGANISM_PART").size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1), "ORGANISM_PART"), hasItems(factorValue1.getValue()));
+        // there is no such combination as factorValue1 and factorValue2 on an experimentRun
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1, factorValue2), "ORGANISM_PART").size(), is(0));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3, factorValue4), "ORGANISM_PART").size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3, factorValue4), "ORGANISM_PART"), hasItems(factorValue3.getValue()));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue2), "ORGANISM_PART").size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue2), "ORGANISM_PART"), hasItems(factorValue2.getValue()));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3), "MATERIAL_TYPE").size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3), "MATERIAL_TYPE"), hasItems(factorValue4.getValue()));
     }
 
 }

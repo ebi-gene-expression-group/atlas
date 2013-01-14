@@ -86,14 +86,18 @@ public class GeneProfilesPageController {
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             // this formats the default factor type for display on web page
-            String defaultFactorType = experiment.getDefaultFactorType().replaceAll("_", " ").toLowerCase();
+            String defaultFactorType = preferences.getDefaultFactorType();
+            if (defaultFactorType == null || defaultFactorType.trim().length() == 0)
+                defaultFactorType = experiment.getDefaultFactorType();
+            defaultFactorType = defaultFactorType.replaceAll("_", " ").toLowerCase();
             defaultFactorType = defaultFactorType.substring(0, 1).toUpperCase() + defaultFactorType.substring(1);
-            model.addAttribute("defaultFactorType", defaultFactorType);
+            model.addAttribute("formattedDefaultFactorType", defaultFactorType);
 
-            model.addAttribute("allFactorValues", experiment.getDefaultFactorValues());
+            model.addAttribute("allFactorValues", experiment.getFactorValues(preferences.getDefaultFactorType()));
 
             Set<FactorValue> filterByFactorValues = preferences.getFilterFactorValuesAsObjects();
-            model.addAttribute("heatmapFactorValues", experiment.getFilteredDefaultFactorValues(filterByFactorValues));
+            model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
+                    preferences.getDefaultFactorType()));
 
             String specie = experiment.getSpecie();
 

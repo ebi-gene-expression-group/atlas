@@ -127,7 +127,8 @@ public class BarChartTrader {
 
         public Builder forExperiment(String experimentAccession) {
 
-            organismParts = experimentsCache.getExperiment(experimentAccession).getDefaultFactorValues();
+            // TODO: byType needs to come from RequestPreferences
+            organismParts = experimentsCache.getExperiment(experimentAccession).getFactorValues(null);
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 

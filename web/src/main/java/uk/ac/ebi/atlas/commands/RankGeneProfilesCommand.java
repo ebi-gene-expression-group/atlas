@@ -47,13 +47,13 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     public GeneProfilesList apply(RequestPreferences requestPreferences, Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
         Set<String> selectedOrganismParts = CollectionUtils.isEmpty(requestPreferences.getOrganismParts()) ?
-                experiment.getDefaultFactorValues() :
+                experiment.getFactorValues(requestPreferences.getDefaultFactorType()) :
                 requestPreferences.getOrganismParts();
 
         Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.isIncludeGenesExpressedOnNonSelectedFactorValues()
                 , requestPreferences.isRankGenesExpressedOnMostFactorsLast()
                 , selectedOrganismParts
-                , experiment.getDefaultFactorValues());
+                , experiment.getFactorValues(requestPreferences.getDefaultFactorType()));
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, requestPreferences.getHeatmapMatrixSize());
 

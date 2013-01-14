@@ -39,6 +39,7 @@ import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -79,7 +80,7 @@ public class WriteGeneProfilesCommandTest {
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
         when(geneProfileMock2.getExpressionLevel("liver")).thenReturn(21.12d);
 
-        when(experimentMock.getDefaultFactorValues()).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentMock.getFactorValues(anyString())).thenReturn(Sets.newTreeSet(organismParts));
     }
 
     @Before

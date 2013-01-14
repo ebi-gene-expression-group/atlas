@@ -56,6 +56,7 @@ public class RequestPreferences {
     //ToDo: this will become factorValues when we remove organismParts
     private SortedSet<String> filterFactorValues;
 
+    private String defaultFactorType;
 
     private boolean includeGenesExpressedOnNonSelectedFactorValues = true;
 
@@ -74,6 +75,14 @@ public class RequestPreferences {
     //ToDo: this will be removed
     public SortedSet<String> getOrganismParts() {
         return organismParts;
+    }
+
+    public String getDefaultFactorType() {
+        return defaultFactorType;
+    }
+
+    public void setDefaultFactorType(String type) {
+        this.defaultFactorType = type;
     }
 
     public SortedSet<String> getFilterFactorValues() {
@@ -167,6 +176,7 @@ public class RequestPreferences {
                 .add("geneQuery", geneQuery)
                 .add("organismParts", organismParts)
                 .add("cutoff", cutoff)
+                .add("defaultFactorType", defaultFactorType)
                 .toString();
     }
 

@@ -75,12 +75,6 @@ public class Experiment {
         return this;
     }
 
-    //ToDo: redundant, will be removed when we remove organism parts
-
-    public FactorValue getDefaultFactorValue(String experimentRunAccession) {
-        return getFactorValue(experimentRunAccession, defaultFactorType);
-    }
-
     public FactorValue getFactorValue(String experimentRunAccession, String byType) {
         ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
@@ -124,19 +118,16 @@ public class Experiment {
         return this;
     }
 
-    public SortedSet<String> getDefaultFactorValues() {
-        return factorValuesByType.get(defaultFactorType);
-    }
-
     public SortedSet<String> getFactorValues(String byType) {
+        if (byType == null || byType.trim().length() == 0)
+            byType = this.getDefaultFactorType();
         return factorValuesByType.get(byType);
     }
 
-    public SortedSet<String> getFilteredDefaultFactorValues(Set<FactorValue> filterByFactorValues) {
-        return getFilteredFactorValues(filterByFactorValues, defaultFactorType);
-    }
-
     public SortedSet<String> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
+        if (byType == null || byType.trim().length() == 0)
+            byType = this.getDefaultFactorType();
+
         SortedSet<String> results = new TreeSet<>();
 
         for (String experimentRunAccession : experimentRunAccessions) {
