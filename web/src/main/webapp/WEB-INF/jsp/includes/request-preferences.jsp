@@ -49,21 +49,21 @@
                 <td>
                     <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
-                            <form:label path="organismParts">${formattedDefaultFactorType}</form:label>
+                            <form:label path="organismParts">${formattedQueryFactorType}</form:label>
                         </span>
                         <span>
-                            <form:select path="organismParts" data-placeholder="(all ${formattedDefaultFactorType}s)"
+                            <form:select path="organismParts" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
                                          items="${heatmapFactorValues}" cssClass="chzn-select"
                                          cssStyle="width:350px;display:none"/>
                         </span>
                     </div>
-                    <%--<span>--%>
+                        <%--<span>--%>
                         <%--<input type="checkbox" id="includeGenesExpressedOnNonSelectedFactorValuesCheckbox"/>--%>
                         <%--<label for="includeGenesExpressedOnNonSelectedFactorValuesCheckbox">--%>
-                            <%--Include genes expressed in non-selected organism parts--%>
+                        <%--Include genes expressed in non-selected organism parts--%>
                         <%--</label>--%>
-                     <%--</span>--%>
+                        <%--</span>--%>
                     <span>
                         <form:checkbox id="rankGenesExpressedOnMostFactorsLast"
                                        path="rankGenesExpressedOnMostFactorsLast"

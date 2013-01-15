@@ -31,6 +31,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
@@ -64,6 +65,9 @@ public class RankGeneProfilesCommandTest {
     @Mock
     private Experiment experiment;
 
+    @Mock
+    private FilterParameters filterParametersMock;
+
     private ObjectInputStream<GeneProfile> largeInputStream;
 
     private ObjectInputStream<GeneProfile> smallInputStream;
@@ -90,6 +94,7 @@ public class RankGeneProfilesCommandTest {
         when(requestPreferencesMock.getHeatmapMatrixSize()).thenReturn(100);
         when(requestPreferencesMock.getCutoff()).thenReturn(0.1);
         when(requestPreferencesMock.isRankGenesExpressedOnMostFactorsLast()).thenReturn(true);
+        when(filterParametersMock.getCutoff()).thenReturn(0.1);
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -104,6 +109,8 @@ public class RankGeneProfilesCommandTest {
         subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
         subject.setRequestPreferences(requestPreferencesMock);
+
+        subject.setFilterParameters(filterParametersMock);
 
         subject.setIndexClient(indexClient);
 

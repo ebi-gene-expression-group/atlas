@@ -95,12 +95,12 @@ public class GeneProfilesPageController {
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             // this formats the default factor type for display on web page
-            String defaultFactorType = preferences.getQueryFactorType();
-            if (defaultFactorType == null || defaultFactorType.trim().length() == 0)
-                defaultFactorType = experiment.getDefaultFactorType();
-            defaultFactorType = defaultFactorType.replaceAll("_", " ").toLowerCase();
-            defaultFactorType = defaultFactorType.substring(0, 1).toUpperCase() + defaultFactorType.substring(1);
-            model.addAttribute("formattedDefaultFactorType", defaultFactorType);
+            String queryFactorType = preferences.getQueryFactorType();
+            if (queryFactorType == null || queryFactorType.trim().length() == 0)
+                queryFactorType = experiment.getDefaultFactorType();
+            queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
+            queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
+            model.addAttribute("formattedQueryFactorType", queryFactorType);
 
             model.addAttribute("allFactorValues", experiment.getFactorValues(preferences.getQueryFactorType()));
 
