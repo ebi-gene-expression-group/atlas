@@ -1,6 +1,11 @@
 /*global $:false */
 
 
+function a() {
+    "use strict";
+    return "hello";
+}
+
 function hideGeneDistribution(isFast) {
     "use strict";
 
