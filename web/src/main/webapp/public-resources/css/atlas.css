@@ -28,9 +28,11 @@
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
+/*
     width: 22px;
     height: 24px;
     padding: 3px;
+*/
 }
 
 .button-image .ui-button-text {
