@@ -1,4 +1,8 @@
+/*global $:false */
+
 function initHeatmapDisplayValueToggle() {
+
+    "use strict";
 
     function showCellValue(div) {
         $(div).removeClass("hide_cell");
