@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -54,7 +55,8 @@ public class GeneProfilesPageController {
     private ExperimentsCache experimentsCache;
 
     @Inject
-    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties, ExperimentsCache experimentsCache) {
+    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties,
+                                      ExperimentsCache experimentsCache) {
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
@@ -66,6 +68,13 @@ public class GeneProfilesPageController {
             , BindingResult result, Model model, HttpServletRequest request) {
 
         if (!result.hasErrors()) {
+
+            FilterParameters filterParameters = new FilterParameters(preferences.getGeneQuery(),
+                    preferences.getOrganismParts(),
+                    preferences.getFilterFactorValues(),
+                    preferences.getCutoff());
+
+            rankCommand.setFilterParameters(filterParameters);
 
             rankCommand.setRequestPreferences(preferences);
 
@@ -86,18 +95,18 @@ public class GeneProfilesPageController {
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             // this formats the default factor type for display on web page
-            String defaultFactorType = preferences.getDefaultFactorType();
+            String defaultFactorType = preferences.getQueryFactorType();
             if (defaultFactorType == null || defaultFactorType.trim().length() == 0)
                 defaultFactorType = experiment.getDefaultFactorType();
             defaultFactorType = defaultFactorType.replaceAll("_", " ").toLowerCase();
             defaultFactorType = defaultFactorType.substring(0, 1).toUpperCase() + defaultFactorType.substring(1);
             model.addAttribute("formattedDefaultFactorType", defaultFactorType);
 
-            model.addAttribute("allFactorValues", experiment.getFactorValues(preferences.getDefaultFactorType()));
+            model.addAttribute("allFactorValues", experiment.getFactorValues(preferences.getQueryFactorType()));
 
-            Set<FactorValue> filterByFactorValues = preferences.getFilterFactorValuesAsObjects();
+            Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
             model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
-                    preferences.getDefaultFactorType()));
+                    preferences.getQueryFactorType()));
 
             String specie = experiment.getSpecie();
 

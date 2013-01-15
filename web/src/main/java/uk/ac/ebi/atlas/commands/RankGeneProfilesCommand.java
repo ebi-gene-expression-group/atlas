@@ -42,17 +42,23 @@ import java.util.Set;
 @Named("rankGeneProfiles")
 @Scope("prototype")
 public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList> {
+    private RequestPreferences requestPreferences;
+
+
+    public void setRequestPreferences(RequestPreferences requestPreferences) {
+        this.requestPreferences = requestPreferences;
+    }
 
     @Override
-    public GeneProfilesList apply(RequestPreferences requestPreferences, Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
+    public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
         Set<String> selectedOrganismParts = CollectionUtils.isEmpty(requestPreferences.getOrganismParts()) ?
-                experiment.getFactorValues(requestPreferences.getDefaultFactorType()) :
+                experiment.getFactorValues(requestPreferences.getQueryFactorType()) :
                 requestPreferences.getOrganismParts();
 
         Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.isRankGenesExpressedOnMostFactorsLast()
                 , selectedOrganismParts
-                , experiment.getFactorValues(requestPreferences.getDefaultFactorType()));
+                , experiment.getFactorValues(requestPreferences.getQueryFactorType()));
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, requestPreferences.getHeatmapMatrixSize());
 
@@ -75,12 +81,13 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
     }
 
+
     @Override
     protected GeneProfilesList returnEmpty() {
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildReverseSpecificityComparator( boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
+    protected Ordering<GeneProfile> buildReverseSpecificityComparator(boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
         return Ordering.from(new GeneSpecificityComparator(rankGenesExpressedOnMostFactorsLast, selectedOrganismParts, allOrganismParts)).reverse();
     }
 

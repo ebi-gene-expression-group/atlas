@@ -28,11 +28,11 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -43,13 +43,13 @@ import java.util.Set;
 public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
     private static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
 
-    private RequestPreferences requestPreferences;
-
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
     private IndexClient indexClient;
 
     private ExperimentsCache experimentsCache;
+
+    private FilterParameters filterParameters;
 
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
@@ -66,15 +66,15 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.experimentsCache = experimentsCache;
     }
 
-    public void setRequestPreferences(RequestPreferences requestPreferences) {
-        this.requestPreferences = requestPreferences;
+    public void setFilterParameters(FilterParameters filterParameters) {
+        this.filterParameters = filterParameters;
     }
 
     @NotNull public T apply(String experimentAccession) {
 
         Set<String> geneIDs = new HashSet<>();
 
-        String geneProperties = requestPreferences.getGeneQuery();
+        String geneProperties = filterParameters.getGeneQuery();
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -87,9 +87,11 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
             }
         }
 
-        try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession, geneIDs)) {
+        filterParameters.setGeneIDs(geneIDs);
 
-            return apply(requestPreferences, experiment, inputStream);
+        try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession)) {
+
+            return apply(experiment, inputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -97,23 +99,17 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         }
     }
 
-    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession, Set<String> geneIDs) {
+    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
-                .withCutoff(requestPreferences.getCutoff()).create();
+                .withCutoff(filterParameters.getCutoff()).create();
 
 
-        return new GeneProfileInputStreamFilter(geneProfileInputStream, requestPreferences.getFilterFactorValuesAsObjects(), geneIDs
-                , requestPreferences.getOrganismParts());
-
-    }
-
-    protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
-        return buildGeneProfilesInputStream(experimentAccession, null);
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, filterParameters);
 
     }
 
-    protected abstract T apply(RequestPreferences requestPreferences, Experiment experiment
+    protected abstract T apply(Experiment experiment
             , ObjectInputStream<GeneProfile> inputStream) throws IOException;
 
     protected abstract T returnEmpty();

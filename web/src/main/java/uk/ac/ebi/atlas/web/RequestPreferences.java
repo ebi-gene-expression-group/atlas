@@ -24,18 +24,14 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
-import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.SortedSet;
 
-//@Named("requestPreferences")
-//@Scope("request")
+
 public class RequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
@@ -54,7 +50,7 @@ public class RequestPreferences {
     //ToDo: this will become factorValues when we remove organismParts
     private SortedSet<String> filterFactorValues;
 
-    private String defaultFactorType;
+    private String queryFactorType;
 
     private boolean rankGenesExpressedOnMostFactorsLast = true;
 
@@ -73,34 +69,16 @@ public class RequestPreferences {
         return organismParts;
     }
 
-    public String getDefaultFactorType() {
-        return defaultFactorType;
+    public String getQueryFactorType() {
+        return queryFactorType;
     }
 
-    public void setDefaultFactorType(String type) {
-        this.defaultFactorType = type;
+    public void setQueryFactorType(String type) {
+        this.queryFactorType = type;
     }
 
     public SortedSet<String> getFilterFactorValues() {
         return filterFactorValues;
-    }
-
-    public Set<FactorValue> getFilterFactorValuesAsObjects() {
-        Set<FactorValue> results = new HashSet<>();
-
-        // Turns a factor specification string into a FactorValue list.
-        // Splits at : between type and value
-        if (filterFactorValues != null) {
-            for (String filter : filterFactorValues) {
-                String[] split = filter.split(":");
-                if (split.length == 2) {
-                    FactorValue factorValue = new FactorValue(split[0], "", split[1]);
-                    results.add(factorValue);
-                }
-            }
-        }
-
-        return results;
     }
 
     public boolean isDisplayGeneDistribution() {
@@ -164,7 +142,7 @@ public class RequestPreferences {
                 .add("geneQuery", geneQuery)
                 .add("organismParts", organismParts)
                 .add("cutoff", cutoff)
-                .add("defaultFactorType", defaultFactorType)
+                .add("defaultFactorType", queryFactorType)
                 .toString();
     }
 

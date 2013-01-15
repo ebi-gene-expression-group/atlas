@@ -93,7 +93,7 @@ public class WriteGeneProfilesCommandTest {
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(requestPreferencesMock, experimentMock, inputStreamMock);
+        long count = subject.apply( experimentMock, inputStreamMock);
 
         verify(csvWriterMock).writeNext(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"});
 

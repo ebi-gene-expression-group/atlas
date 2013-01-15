@@ -46,18 +46,25 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
     private NumberUtils numberUtils;
 
+    private RequestPreferences requestPreferences;
+
+
+    public void setRequestPreferences(RequestPreferences requestPreferences) {
+        this.requestPreferences = requestPreferences;
+    }
+
     @Inject
     protected WriteGeneProfilesCommand(NumberUtils numberUtils) {
         this.numberUtils = numberUtils;
     }
 
     @Override
-    protected Long apply(RequestPreferences requestPreferences, Experiment experiment
+    protected Long apply(Experiment experiment
             , ObjectInputStream<GeneProfile> inputStream) throws IOException {
 
         long count = 0;
 
-        SortedSet<String> organismParts = experiment.getFactorValues(requestPreferences.getDefaultFactorType());
+        SortedSet<String> organismParts = experiment.getFactorValues(requestPreferences.getQueryFactorType());
 
         csvWriter.writeNext(buildCsvHeaders(organismParts));
 
