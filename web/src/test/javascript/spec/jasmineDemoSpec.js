@@ -1,4 +1,4 @@
-describe("Slider", function() {
+describe("jasmine", function() {
 
     beforeEach(function() {
     });
@@ -7,4 +7,5 @@ describe("Slider", function() {
         expect(a()).toEqual("hello");
 
     });
+
 });
