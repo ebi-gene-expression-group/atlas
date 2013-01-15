@@ -45,12 +45,11 @@ public class RequestPreferences {
     @Min(value = 0, message = "The expression level cutoff must be greater than 0")
     private Double cutoff = DEFAULT_CUTOFF;
 
-    private SortedSet<String> organismParts;
-
-    //ToDo: this will become factorValues when we remove organismParts
     private SortedSet<String> filterFactorValues;
 
     private String queryFactorType;
+
+    private SortedSet<String> queryFactorValues;
 
     private boolean rankGenesExpressedOnMostFactorsLast = true;
 
@@ -64,10 +63,6 @@ public class RequestPreferences {
 
     private NumberUtils numberUtils = new NumberUtils();
 
-    //ToDo: this will be removed
-    public SortedSet<String> getOrganismParts() {
-        return organismParts;
-    }
 
     public String getQueryFactorType() {
         return queryFactorType;
@@ -77,8 +72,21 @@ public class RequestPreferences {
         this.queryFactorType = type;
     }
 
+    public SortedSet<String> getQueryFactorValues() {
+        return queryFactorValues;
+    }
+
+    public void setQueryFactorValues(SortedSet<String> queryFactorValues) {
+        this.queryFactorValues = queryFactorValues;
+    }
+
+
     public SortedSet<String> getFilterFactorValues() {
         return filterFactorValues;
+    }
+
+    public void setFilterFactorValues(SortedSet<String> filterFactorValues) {
+        this.filterFactorValues = filterFactorValues;
     }
 
     public boolean isDisplayGeneDistribution() {
@@ -113,20 +121,12 @@ public class RequestPreferences {
         this.rankGenesExpressedOnMostFactorsLast = rankGenesExpressedOnMostFactorsLast;
     }
 
-    public void setDisplayLevels(boolean displayLevels) {
-        this.displayLevels = displayLevels;
-    }
-
     public boolean getDisplayLevels() {
         return displayLevels;
     }
 
-    public void setOrganismParts(SortedSet<String> organismParts) {
-        this.organismParts = organismParts;
-    }
-
-    public void setFilterFactorValues(SortedSet<String> filterFactorValues) {
-        this.filterFactorValues = filterFactorValues;
+    public void setDisplayLevels(boolean displayLevels) {
+        this.displayLevels = displayLevels;
     }
 
     public String getGeneQuery() {
@@ -140,9 +140,10 @@ public class RequestPreferences {
     public String toString() {
         return Objects.toStringHelper(this.getClass())
                 .add("geneQuery", geneQuery)
-                .add("organismParts", organismParts)
+                .add("queryFactorType", queryFactorType)
+                .add("queryFactorValues", queryFactorValues)
                 .add("cutoff", cutoff)
-                .add("defaultFactorType", queryFactorType)
+                .add("filterFactorValues", filterFactorValues)
                 .toString();
     }
 

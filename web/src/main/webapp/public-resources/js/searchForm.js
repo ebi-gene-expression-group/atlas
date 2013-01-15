@@ -8,7 +8,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
         loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues);
     }
 
-     $(".chzn-select").chosen().change(function () {
+    $(".chzn-select").chosen().change(function () {
         if ($(this).val()) {
             $(this).data("chosen").default_text = "";
         } else {
@@ -16,9 +16,9 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
             $(this).trigger("liszt:updated");
         }
         if (!isIE8) {
-                updatePlot($(this).val());
+            updatePlot($(this).val());
         }
-        });
+    });
 
     $("#submit-button").button();
 
@@ -33,7 +33,7 @@ function initSearchForm(homePageURL, cutoff, experimentAccession, isIE8, default
         loadSliderAndPlot(cutoff, experimentAccession, $(".chzn-select").val());
     }
 
-    $("#organismParts_chzn").mouseleave(function () {
+    $("#queryFactorValues_chzn").mouseleave(function () {
         $("#factor-values-div").tooltip("close");
     });
 

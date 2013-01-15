@@ -2,12 +2,12 @@
 
 function hideGeneDistribution(img, isFast) {
     $('#gene-distribution-panel').hide(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content: "Display gene distribution"});
+    $("#display-chart").tooltip({content:"Display gene distribution"});
 }
 
 function displayGeneDistribution(img, isFast) {
     $('#gene-distribution-panel').show(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content: "Hide gene distribution"});
+    $("#display-chart").tooltip({content:"Hide gene distribution"});
 }
 
 function hideOrDisplayGeneDistribution(isFast) {
@@ -99,143 +99,143 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
     function plotCutoffBarChart(data, magnifiedScaledCutoffs) {
         return $.plot($("#gene-distribution"), [ data ], {
-            series: {
+            series:{
                 highlightColor:"red",
 
-                label: buildLegendaText(),
+                label:buildLegendaText(),
 
-                bars: {
-                    show: true,
-                    barWidth: .8
+                bars:{
+                    show:true,
+                    barWidth:.8
                 }
             },
-            xaxis: {
-                tickLength: 3,
-                ticks: magnifiedScaledCutoffs
+            xaxis:{
+                tickLength:3,
+                ticks:magnifiedScaledCutoffs
             },
-            grid: {
-                borderColor: "#CDCDCD",
-                borderWidth: 1,
-                hoverable: true,
-                clickable: true
+            grid:{
+                borderColor:"#CDCDCD",
+                borderWidth:1,
+                hoverable:true,
+                clickable:true
             }
         });
     }
 
     $.getJSON("json/barchart/" + experimentAccession
-                , {
-                    organismParts:selectedFactorValues
-                  }
-                , function (data) {
-
-                    //this is required because if you load the plot when the div is hidden
-                    //and then you display the div later the plot Y axis will be overlapping the Y ticks
-                    displayGeneDistribution(this, true);
-
-                    var keys = Object.keys(data);
-                    var scaledCutoffTicks = [];
-                    var dataArray = [];
-
-                    for (var i = 0; i < keys.length; i++) {
-                        if (keys[i] > 0 && keys[i] < 1) {
-                            scaledCutoffTicks.push(keys[i]);
-                        } else {
-                            scaledCutoffTicks.push(Math.round(keys[i]));
-                        }
-                        dataArray.push([i, data[keys[i]]]);
-                    }
-
-
-                    var ticksMap = [];
-
-                    $.each(scaledCutoffTicks, function (index, scaledCutoff) {
-                        ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
-                    }
-        );
-
-        var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
-
-        hideOrDisplayGeneDistribution(true);
-
-        function showTooltip(x, y, contents) {
-            $('<div id="barChartTooltip">' + contents + '</div>').css({
-                position:'absolute',
-                display:'none',
-                top:y - 25,
-                left:x - 6,
-                border:'2px solid rgb(238,195,46)',
-                'border-radius':'4px',
-                padding:'2px',
-                'font-family':'Verdana, Helvetica, Arial, sans-serif',
-                'font-size':'smaller',
-                'background-color':'rgb(249,232,176)',
-                opacity:1
-            }).appendTo("body").fadeIn(150);
+        , {
+            queryFactorValues:selectedFactorValues
         }
+        , function (data) {
 
-        var previousPoint = null;
-        $("#gene-distribution")
-            .bind("plothover",function (event, pos, item) {
-                $("#x").text(pos.x.toFixed(2));
-                $("#y").text(pos.y.toFixed(2));
+            //this is required because if you load the plot when the div is hidden
+            //and then you display the div later the plot Y axis will be overlapping the Y ticks
+            displayGeneDistribution(this, true);
 
-                if (item) {
-                    if (previousPoint != item.datapoint) {
-                        previousPoint = item.datapoint;
+            var keys = Object.keys(data);
+            var scaledCutoffTicks = [];
+            var dataArray = [];
 
-                        $("#barChartTooltip").remove();
-                        var content = item.datapoint[1].toFixed(0);
+            for (var i = 0; i < keys.length; i++) {
+                if (keys[i] > 0 && keys[i] < 1) {
+                    scaledCutoffTicks.push(keys[i]);
+                } else {
+                    scaledCutoffTicks.push(Math.round(keys[i]));
+                }
+                dataArray.push([i, data[keys[i]]]);
+            }
 
-                        //now show tooltip
-                        showTooltip(item.pageX, item.pageY, content);
+
+            var ticksMap = [];
+
+            $.each(scaledCutoffTicks, function (index, scaledCutoff) {
+                    ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
+                }
+            );
+
+            var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
+
+            hideOrDisplayGeneDistribution(true);
+
+            function showTooltip(x, y, contents) {
+                $('<div id="barChartTooltip">' + contents + '</div>').css({
+                    position:'absolute',
+                    display:'none',
+                    top:y - 25,
+                    left:x - 6,
+                    border:'2px solid rgb(238,195,46)',
+                    'border-radius':'4px',
+                    padding:'2px',
+                    'font-family':'Verdana, Helvetica, Arial, sans-serif',
+                    'font-size':'smaller',
+                    'background-color':'rgb(249,232,176)',
+                    opacity:1
+                }).appendTo("body").fadeIn(150);
+            }
+
+            var previousPoint = null;
+            $("#gene-distribution")
+                .bind("plothover",function (event, pos, item) {
+                    $("#x").text(pos.x.toFixed(2));
+                    $("#y").text(pos.y.toFixed(2));
+
+                    if (item) {
+                        if (previousPoint != item.datapoint) {
+                            previousPoint = item.datapoint;
+
+                            $("#barChartTooltip").remove();
+                            var content = item.datapoint[1].toFixed(0);
+
+                            //now show tooltip
+                            showTooltip(item.pageX, item.pageY, content);
+                        }
                     }
-                }
-                else {
-                    $("#barChartTooltip").remove();
-                    previousPoint = null;
-                }
+                    else {
+                        $("#barChartTooltip").remove();
+                        previousPoint = null;
+                    }
 
 
-            }).bind("plotclick", function (event, pos, item) {
+                }).bind("plotclick", function (event, pos, item) {
 
-                if (item) {
-                    $("#cutoff").val(getNthScaledCutoff(item.datapoint[0], 1));
+                    if (item) {
+                        $("#cutoff").val(getNthScaledCutoff(item.datapoint[0], 1));
+                        $("form#prefForm").submit();
+                    }
+                });
+
+
+            var scaledCutoff = nearestScaledCutoff(cutoff);
+
+            var scaledCutoffPosition = function () {
+                for (var i = 0; i < scaledCutoffTicks.length; i++) {
+                    if (scaledCutoffTicks[i] === scaledCutoff) {
+                        return i;
+                    }
+                }//otherwise we are out of scale... and we position the slider on the last tick
+                return scaledCutoffTicks.length - 1;
+            }();
+
+            genesByCutoffPlot.highlight(0, scaledCutoffPosition);
+
+            $("#slider-range-max").slider({
+                range:"max",
+                min:0,
+                max:scaledCutoffTicks.length - 1,
+                value:scaledCutoffPosition,
+                slide:function (event, ui) {
+                    genesByCutoffPlot.unhighlight();
+                    genesByCutoffPlot.highlight(0, ui.value);
+                    var scaledCutoff = getNthScaledCutoff(ui.value, 1);
+                    $("#cutoff").val(scaledCutoff);
+                },
+                stop:function (event, ui) {
                     $("form#prefForm").submit();
                 }
             });
 
 
-        var scaledCutoff = nearestScaledCutoff(cutoff);
-
-        var scaledCutoffPosition = function () {
-            for (var i = 0; i < scaledCutoffTicks.length; i++) {
-                if (scaledCutoffTicks[i] === scaledCutoff) {
-                    return i;
-                }
-            }//otherwise we are out of scale... and we position the slider on the last tick
-            return scaledCutoffTicks.length - 1;
-        }();
-
-        genesByCutoffPlot.highlight(0, scaledCutoffPosition);
-
-        $("#slider-range-max").slider({
-            range: "max",
-            min: 0,
-            max: scaledCutoffTicks.length - 1,
-            value: scaledCutoffPosition,
-            slide: function (event, ui) {
-                genesByCutoffPlot.unhighlight();
-                genesByCutoffPlot.highlight(0, ui.value);
-                var scaledCutoff = getNthScaledCutoff(ui.value, 1);
-                $("#cutoff").val(scaledCutoff);
-            },
-            stop:function (event, ui) {
-                $("form#prefForm").submit();
-            }
         });
-
-
-    });
 
 
 }

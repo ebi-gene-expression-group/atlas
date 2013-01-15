@@ -83,7 +83,7 @@ public class BarChartTraderBuilderTest {
     @Test
     public void testAddGeneToIndexes() {
         //given
-        subject.setOrganismParts(ORGANISM_PARTS);
+        subject.setFactorValues(ORGANISM_PARTS);
 
         //when
         subject.addGeneToIndexes(GENE_PROFILE_1, 0);
@@ -102,7 +102,7 @@ public class BarChartTraderBuilderTest {
     @Test
     public void testAddTwoGenesToIndexes() {
         //given
-        subject.setOrganismParts(ORGANISM_PARTS);
+        subject.setFactorValues(ORGANISM_PARTS);
 
         //when
         subject.addGeneToIndexes(GENE_PROFILE_1, 0);
@@ -125,7 +125,7 @@ public class BarChartTraderBuilderTest {
     @Test
     public void testTrimIndexes() {
         //given
-        subject.setOrganismParts(ORGANISM_PARTS);
+        subject.setFactorValues(ORGANISM_PARTS);
 
         for (int i = 0; i < 50; i = i + 2) {
             subject.addGeneToIndexes(initGeneProfile1(), i);

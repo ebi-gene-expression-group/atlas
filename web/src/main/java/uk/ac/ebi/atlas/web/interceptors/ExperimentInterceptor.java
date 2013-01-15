@@ -123,11 +123,11 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
                 allFactorValues.addAll(experiment.getAllFactorValues(run));
         }
 
-        Set<FactorValue>  result = new HashSet<>();
+        Set<FactorValue> result = new HashSet<>();
         for (String requestFilterFactorValue : requestFilterFactorValues) {
             FactorValue factorValue = FactorValue.createFactorValue(requestFilterFactorValue);
             if (!allFactorValues.contains(factorValue)) {
-                if (factorValue!=null) {
+                if (factorValue != null) {
                     result.add(factorValue);
                 }
             }
@@ -158,7 +158,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         logger.info("<postHandle> time taken " + stopWatch.getTotalTimeSeconds()
                 + " s - geneQuery = " + request.getParameter("geneQuery")
-                + ", organism parts = " + request.getParameter("organismParts")
+                + ", query factor values = " + request.getParameter("queryFactorValues")
                 + ", cutoff = " + request.getParameter("cutoff"));
 
     }

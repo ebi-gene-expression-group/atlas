@@ -49,10 +49,10 @@
                 <td>
                     <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
-                            <form:label path="organismParts">${formattedQueryFactorType}</form:label>
+                            <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
                         </span>
                         <span>
-                            <form:select path="organismParts" data-placeholder="(all ${formattedQueryFactorType}s)"
+                            <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
                                          items="${heatmapFactorValues}" cssClass="chzn-select"
                                          cssStyle="width:350px;display:none"/>

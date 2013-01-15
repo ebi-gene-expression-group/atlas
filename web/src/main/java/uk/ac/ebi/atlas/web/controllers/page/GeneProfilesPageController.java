@@ -71,7 +71,7 @@ public class GeneProfilesPageController {
 
             FilterParameters filterParameters = new FilterParameters(preferences.getGeneQuery(),
                     preferences.getQueryFactorType(),
-                    preferences.getOrganismParts(),
+                    preferences.getQueryFactorValues(),
                     preferences.getFilterFactorValues(),
                     preferences.getCutoff());
 

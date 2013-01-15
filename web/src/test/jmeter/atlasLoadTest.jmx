@@ -40,7 +40,7 @@
           <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
         </ConfigTestElement>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (cutoff=1000, organismParts=heart)" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (cutoff=1000, queryFactorValues=heart)" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="cutoff" elementType="HTTPArgument">
@@ -50,19 +50,19 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">cutoff</stringProp>
               </elementProp>
-              <elementProp name="organismParts" elementType="HTTPArgument">
+              <elementProp name="queryFactorValues" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">heart</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">organismParts</stringProp>
+                <stringProp name="Argument.name">queryFactorValues</stringProp>
               </elementProp>
-              <elementProp name="_organismParts" elementType="HTTPArgument">
+              <elementProp name="_queryFactorValues" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">1</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">_organismParts</stringProp>
+                <stringProp name="Argument.name">_queryFactorValues</stringProp>
               </elementProp>
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -163,7 +163,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (cutoff=10, organismParts=lung&amp;brain)" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (cutoff=10, queryFactorValues=lung&amp;brain)" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="cutoff" elementType="HTTPArgument">
@@ -173,26 +173,26 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">cutoff</stringProp>
               </elementProp>
-              <elementProp name="organismParts" elementType="HTTPArgument">
+              <elementProp name="queryFactorValues" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">brain</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">organismParts</stringProp>
+                <stringProp name="Argument.name">queryFactorValues</stringProp>
               </elementProp>
-              <elementProp name="_organismParts" elementType="HTTPArgument">
+              <elementProp name="_queryFactorValues" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">1</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">_organismParts</stringProp>
+                <stringProp name="Argument.name">_queryFactorValues</stringProp>
               </elementProp>
-              <elementProp name="organismParts" elementType="HTTPArgument">
+              <elementProp name="queryFactorValues" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">lung</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">organismParts</stringProp>
+                <stringProp name="Argument.name">queryFactorValues</stringProp>
               </elementProp>
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -740,7 +740,7 @@
           <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
         </ConfigTestElement>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (cutoff=1000, organismParts=heart)" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Experiment Page HTTP Request (cutoff=1000, queryFactorValues=heart)" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="cutoff" elementType="HTTPArgument">
@@ -750,19 +750,19 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">cutoff</stringProp>
               </elementProp>
-              <elementProp name="organismParts" elementType="HTTPArgument">
+              <elementProp name="queryFactorValues" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">heart</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">organismParts</stringProp>
+                <stringProp name="Argument.name">queryFactorValues</stringProp>
               </elementProp>
-              <elementProp name="_organismParts" elementType="HTTPArgument">
+              <elementProp name="_queryFactorValues" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">1</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">_organismParts</stringProp>
+                <stringProp name="Argument.name">_queryFactorValues</stringProp>
               </elementProp>
               <elementProp name="geneQuery" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>

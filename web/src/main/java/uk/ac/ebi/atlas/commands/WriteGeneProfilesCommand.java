@@ -64,14 +64,14 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         long count = 0;
 
-        SortedSet<String> organismParts = experiment.getFactorValues(requestPreferences.getQueryFactorType());
+        SortedSet<String> factorValues = experiment.getFactorValues(requestPreferences.getQueryFactorType());
 
-        csvWriter.writeNext(buildCsvHeaders(organismParts));
+        csvWriter.writeNext(buildCsvHeaders(factorValues));
 
         GeneProfile geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, organismParts));
+            csvWriter.writeNext(buildCsvRow(geneProfile, factorValues));
         }
         return count;
     }
@@ -81,14 +81,14 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         return 0L;
     }
 
-    protected String[] buildCsvHeaders(Set<String> organismParts) {
-        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, organismParts.toArray(new String[organismParts.size()]));
+    protected String[] buildCsvHeaders(Set<String> factorValues) {
+        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, factorValues.toArray(new String[factorValues.size()]));
     }
 
-    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<String> organismParts) {
-        String[] expressionLevels = new String[organismParts.size()];
+    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<String> factorValues) {
+        String[] expressionLevels = new String[factorValues.size()];
         int i = 0;
-        for (String organismPart : organismParts) {
+        for (String organismPart : factorValues) {
             expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(organismPart));
         }
         return buildCsvRow(new String[]{geneProfile.getGeneName(), geneProfile.getGeneId()}, expressionLevels);

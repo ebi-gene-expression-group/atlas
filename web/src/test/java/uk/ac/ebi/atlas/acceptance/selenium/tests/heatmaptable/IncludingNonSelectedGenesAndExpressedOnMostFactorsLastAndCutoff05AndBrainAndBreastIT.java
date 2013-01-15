@@ -33,9 +33,9 @@ import static org.junit.Assert.assertThat;
 public class IncludingNonSelectedGenesAndExpressedOnMostFactorsLastAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
-            +"&organismParts=brain&organismParts=breast"
-            +"&includeGenesExpressedOnNonSelectedFactorValues=true"
-            +"&rankGenesExpressedOnMostFactorsLast=true";
+            + "&queryFactorValues=brain&queryFactorValues=breast"
+            + "&includeGenesExpressedOnNonSelectedFactorValues=true"
+            + "&rankGenesExpressedOnMostFactorsLast=true";
     private static final String HIGHER_RANKING_GENE = "NAIP";
     private static final String LOWER_RANKING_GENE = "RANBP17";
 
@@ -53,7 +53,7 @@ public class IncludingNonSelectedGenesAndExpressedOnMostFactorsLastAndCutoff05An
         subject.clickDisplayLevelsButton();
 
         double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(29, "brain", "breast");
-        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(30, "brain", "breast" );
+        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(30, "brain", "breast");
 
         //then
         assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1.5));

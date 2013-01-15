@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.Set;
 
 
 public class HeatmapTablePage extends TablePage {
@@ -44,10 +42,10 @@ public class HeatmapTablePage extends TablePage {
         return heatmapTable;
     }
 
-    public List<String> getOrganismParts() {
-        List<String> organismParts = getTableHeaders(heatmapTable);
+    public List<String> getQueryFactorValues() {
+        List<String> queryFactorValues = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
-        return organismParts.subList(1, organismParts.size());
+        return queryFactorValues.subList(1, queryFactorValues.size());
     }
 
     public List<String> getSelectedGenes() {
@@ -104,24 +102,24 @@ public class HeatmapTablePage extends TablePage {
         return div.getAttribute("class").contains("hide_cell");
     }
 
-    public double getAverageFpkm(int rowIndex){
+    public double getAverageFpkm(int rowIndex) {
         List<String> stringValues = this.getGeneProfile(rowIndex);
         double averageFpkm = 0D;
-        for (String stringValue : stringValues){
-            if (StringUtils.isNotBlank(stringValue)){
+        for (String stringValue : stringValues) {
+            if (StringUtils.isNotBlank(stringValue)) {
                 averageFpkm += Double.parseDouble(stringValue);
             }
         }
-        return averageFpkm/stringValues.size();
+        return averageFpkm / stringValues.size();
     }
 
-    public double getMaxFpkm(int rowIndex){
+    public double getMaxFpkm(int rowIndex) {
         List<String> stringValues = this.getGeneProfile(rowIndex);
         double maxFpkm = 0D;
-        for (String stringValue : stringValues){
-            if (StringUtils.isNotBlank(stringValue)){
+        for (String stringValue : stringValues) {
+            if (StringUtils.isNotBlank(stringValue)) {
                 double fpkmValue = Double.parseDouble(stringValue);
-                if (fpkmValue > maxFpkm){
+                if (fpkmValue > maxFpkm) {
                     maxFpkm = fpkmValue;
                 }
             }
@@ -130,10 +128,10 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public String getGeneThatRanksAt(int rowIndex) {
-        return getSelectedGenes().get(rowIndex-1);
+        return getSelectedGenes().get(rowIndex - 1);
     }
 
-    public double getAverageFpkm(int rowIndex, String ... factors) {
+    public double getAverageFpkm(int rowIndex, String... factors) {
 
         List<String> tableHeaders = getTableHeaders(heatmapTable);
         tableHeaders.remove(0); //because this is the display button cell
@@ -141,13 +139,13 @@ public class HeatmapTablePage extends TablePage {
         List<String> stringValues = this.getGeneProfile(rowIndex);
 
         double averageFpkm = 0D;
-        for (String factor : factors){
+        for (String factor : factors) {
             int columnIndex = tableHeaders.indexOf(factor);
             String stringValue = stringValues.get(columnIndex);
-            if (StringUtils.isNotBlank(stringValue)){
+            if (StringUtils.isNotBlank(stringValue)) {
                 averageFpkm += Double.parseDouble(stringValue);
             }
         }
-        return averageFpkm/factors.length;
+        return averageFpkm / factors.length;
     }
 }
