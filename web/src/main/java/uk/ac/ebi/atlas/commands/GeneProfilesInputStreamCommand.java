@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Function;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
@@ -49,7 +48,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
     private ExperimentsCache experimentsCache;
 
-    private FilterParameters filterParameters;
+    protected FilterParameters filterParameters;
 
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
@@ -70,17 +69,16 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.filterParameters = filterParameters;
     }
 
-    @NotNull public T apply(String experimentAccession) {
+    @NotNull
+    public T apply(String experimentAccession) {
 
         Set<String> geneIDs = new HashSet<>();
 
-        String geneProperties = filterParameters.getGeneQuery();
-
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        if (!StringUtils.isEmpty(geneProperties)) {
+        if (filterParameters.hasGenesForQuery()) {
 
-            geneIDs.addAll(indexClient.findGeneIds(geneProperties, experiment.getSpecie()));
+            geneIDs.addAll(indexClient.findGeneIds(filterParameters.getGeneQuery(), experiment.getSpecie()));
 
             if (geneIDs.isEmpty()) {
                 return returnEmpty();

@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FilterParameters {
+
     private Set<String> geneIDs;
 
     private Set<String> queryFactorValues;
@@ -38,10 +39,12 @@ public class FilterParameters {
 
     private String geneQuery;
 
+    private String queryFactorType;
 
-    public FilterParameters(String geneQuery, Set<String> queryFactorValues, Set<String> filterFactorValues, Double cutoff) {
+    public FilterParameters(String geneQuery, String queryFactorType, Set<String> queryFactorValues, Set<String> filterFactorValues, Double cutoff) {
 
         this.geneQuery = geneQuery;
+        this.queryFactorType = queryFactorType;
         this.queryFactorValues = queryFactorValues;
         this.cutoff = cutoff;
         this.filterFactorValues = new HashSet<>();
@@ -75,6 +78,10 @@ public class FilterParameters {
 
     public String getGeneQuery() {
         return geneQuery;
+    }
+
+    public String getQueryFactorType() {
+        return queryFactorType;
     }
 
     public void setGeneIDs(Set<String> geneIDs) {

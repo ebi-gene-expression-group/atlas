@@ -52,13 +52,13 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     @Override
     public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
-        Set<String> selectedOrganismParts = CollectionUtils.isEmpty(requestPreferences.getOrganismParts()) ?
-                experiment.getFactorValues(requestPreferences.getQueryFactorType()) :
-                requestPreferences.getOrganismParts();
+        Set<String> selectedOrganismParts = CollectionUtils.isEmpty(filterParameters.getQueryFactorValues()) ?
+                experiment.getFactorValues(filterParameters.getQueryFactorType()) :
+                filterParameters.getQueryFactorValues();
 
         Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.isRankGenesExpressedOnMostFactorsLast()
                 , selectedOrganismParts
-                , experiment.getFactorValues(requestPreferences.getQueryFactorType()));
+                , experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, requestPreferences.getHeatmapMatrixSize());
 

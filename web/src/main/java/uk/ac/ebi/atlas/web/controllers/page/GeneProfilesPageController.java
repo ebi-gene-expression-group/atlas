@@ -70,6 +70,7 @@ public class GeneProfilesPageController {
         if (!result.hasErrors()) {
 
             FilterParameters filterParameters = new FilterParameters(preferences.getGeneQuery(),
+                    preferences.getQueryFactorType(),
                     preferences.getOrganismParts(),
                     preferences.getFilterFactorValues(),
                     preferences.getCutoff());
@@ -95,18 +96,18 @@ public class GeneProfilesPageController {
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             // this formats the default factor type for display on web page
-            String queryFactorType = preferences.getQueryFactorType();
+            String queryFactorType = filterParameters.getQueryFactorType();
             if (queryFactorType == null || queryFactorType.trim().length() == 0)
                 queryFactorType = experiment.getDefaultFactorType();
             queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
             queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
             model.addAttribute("formattedQueryFactorType", queryFactorType);
 
-            model.addAttribute("allFactorValues", experiment.getFactorValues(preferences.getQueryFactorType()));
+            model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
             Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
             model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
-                    preferences.getQueryFactorType()));
+                    filterParameters.getQueryFactorType()));
 
             String specie = experiment.getSpecie();
 
