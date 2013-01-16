@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
+import java.util.HashSet;
 import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -106,25 +107,24 @@ public class GeneProfileTest {
         assertThat(subject.getAllFactorValues(), hasItems(factorValue1, factorValue2, factorValue3));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void averageExpressionLevelOnNullCollection(){
-        subject.getAverageExpressionLevelOn(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void averageExpressionLevelOnEmptyCollection(){
-        subject.getAverageExpressionLevelOn(null);
+    @Test
+    public void averageExpressionLevelOnNullCollection() {
+        assertThat(subject.getAverageExpressionLevelOn(null), is(0D));
     }
 
     @Test
-    public void averageExpressionLevel(){
+    public void averageExpressionLevelOnEmptyCollection() {
+        assertThat(subject.getAverageExpressionLevelOn(new HashSet<String>()), is(0D));
+    }
+
+    @Test
+    public void averageExpressionLevel() {
         double averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet("nose", "head"));
         assertThat(averageExpressionLevel, is(2.6005000000000003D));
 
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet("nose", "head", "panz"));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
-
 
 
 }

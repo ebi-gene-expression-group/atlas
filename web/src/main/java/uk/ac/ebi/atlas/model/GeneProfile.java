@@ -53,7 +53,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public int getSpecificity() {
-        return expressions.size();
+        return expressions.values().size();
     }
 
     public Iterator<Expression> iterator() {
@@ -88,7 +88,9 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public double getAverageExpressionLevelOn(Set<String> factorValues) {
-        checkArgument(CollectionUtils.isNotEmpty(factorValues));
+        if (CollectionUtils.isEmpty(factorValues)) {
+            return 0D;
+        }
         double expressionLevel = 0D;
         for (String organismPart : factorValues) {
             expressionLevel += getExpressionLevel(organismPart);

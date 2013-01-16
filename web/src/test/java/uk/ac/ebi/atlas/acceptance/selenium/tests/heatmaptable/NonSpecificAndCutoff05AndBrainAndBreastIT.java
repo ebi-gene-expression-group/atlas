@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class IncludingNonSelectedGenesAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
+public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
@@ -47,7 +47,7 @@ public class IncludingNonSelectedGenesAndCutoff05AndBrainAndBreastIT extends Sel
     }
 
     @Test
-    public void averageFpkmAndRankingShouldNotBePenalizedByExpressionOnNonSelectedFactors() {
+    public void averageFpkmAcrossSelectedFactors() {
 
         //given
         subject.clickDisplayLevelsButton();

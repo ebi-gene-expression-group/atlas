@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 
@@ -42,15 +41,11 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     @Override
     public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
-        Set<String> selectedQueryFactorValues = CollectionUtils.isEmpty(filterParameters.getQueryFactorValues()) ?
-                experiment.getFactorValues(filterParameters.getQueryFactorType()) :
-                filterParameters.getQueryFactorValues();
+        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(parameters.isSpecific()
+                , parameters.getQueryFactorValues()
+                , experiment.getFactorValues(parameters.getQueryFactorType()));
 
-        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(filterParameters.isSpecific()
-                , selectedQueryFactorValues
-                , experiment.getFactorValues(filterParameters.getQueryFactorType()));
-
-        Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, filterParameters.getHeatmapMatrixSize());
+        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, parameters.getHeatmapMatrixSize());
 
         GeneProfile geneProfile;
 
@@ -63,7 +58,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
         GeneProfilesList list = new GeneProfilesList(rankingQueue);
 
-        Collections.sort(list, reverseSpecificityComparator);
+        Collections.sort(list, geneProfileComparator);
 
         list.setTotalResultCount(geneCount);
 
@@ -77,12 +72,12 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildReverseSpecificityComparator(boolean isSpecific, Set<String> selectedQueryFactorValues, Set<String> allFactorValues) {
-        return Ordering.from(new GeneSpecificityComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
+    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<String> selectedQueryFactorValues, Set<String> allFactorValues) {
+        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
     }
 
-    protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> reverseSpecificityComparator, int heatmapMatrixSize) {
-        return MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(heatmapMatrixSize).create();
+    protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> geneProfileComparator, int heatmapMatrixSize) {
+        return MinMaxPriorityQueue.orderedBy(geneProfileComparator).maximumSize(heatmapMatrixSize).create();
     }
 
 

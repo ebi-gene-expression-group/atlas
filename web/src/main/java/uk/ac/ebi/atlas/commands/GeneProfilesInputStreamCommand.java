@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParameters> implements Function<String, T> {
-    private static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
+    protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
 
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
@@ -48,7 +48,7 @@ public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParamete
 
     private ExperimentsCache experimentsCache;
 
-    protected F filterParameters;
+    protected F parameters;
 
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
@@ -66,7 +66,7 @@ public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParamete
     }
 
     public void setParameters(F filterParameters) {
-        this.filterParameters = filterParameters;
+        this.parameters = filterParameters;
     }
 
     @NotNull
@@ -76,16 +76,16 @@ public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParamete
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        if (filterParameters.hasGenesForQuery()) {
+        if (parameters.hasGenesForQuery()) {
 
-            geneIDs.addAll(indexClient.findGeneIds(filterParameters.getGeneQuery(), experiment.getSpecie()));
+            geneIDs.addAll(indexClient.findGeneIds(parameters.getGeneQuery(), experiment.getSpecie()));
 
             if (geneIDs.isEmpty()) {
                 return returnEmpty();
             }
         }
 
-        filterParameters.setGeneIDs(geneIDs);
+        parameters.setGeneIDs(geneIDs);
 
         try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession)) {
 
@@ -100,10 +100,10 @@ public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParamete
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
-                .withCutoff(filterParameters.getCutoff()).create();
+                .withCutoff(parameters.getCutoff()).create();
 
 
-        return new GeneProfileInputStreamFilter(geneProfileInputStream, filterParameters);
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, parameters);
 
     }
 

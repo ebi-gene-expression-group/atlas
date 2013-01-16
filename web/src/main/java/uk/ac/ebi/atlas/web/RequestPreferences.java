@@ -59,7 +59,7 @@ public class RequestPreferences {
     @Range(min = 0, max = 1000)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
 
-    private boolean isSpecific = true;
+    private boolean specific = true;
 
     private boolean displayLevels;
 
@@ -116,11 +116,11 @@ public class RequestPreferences {
     }
 
     public boolean isSpecific() {
-        return this.isSpecific;
+        return this.specific;
     }
 
     public void setSpecific(boolean specific) {
-        this.isSpecific = specific;
+        this.specific = specific;
     }
 
     public boolean getDisplayLevels() {

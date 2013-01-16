@@ -10,14 +10,13 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TwoOrganismPartsIT extends SeleniumFixture {
+public class TwoOrganismPartsAndCutoff9IT extends SeleniumFixture {
 
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
         subject = new HeatmapTablePage(driver,
                 "heatmapMatrixSize=5&queryFactorValues=adipose&geneQuery=&queryFactorValues=heart&_queryFactorValues=2&cutoff=9");
-
         subject.get();
     }
 
@@ -25,13 +24,13 @@ public class TwoOrganismPartsIT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("AL162853.1", "CU463998.3", "AL031284.1", "AC068312.1", "TMEM56"));
+        assertThat(selectedGenes, contains("AL031284.1", "AC068312.1", "NEBL", "AC091038.1", "S1PR1"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("75", "", "", "", "", "", "", ""
+        assertThat(subject.getFirstGeneProfile(), contains("228", "", "", "", "", "579", "", ""
                 , "", "", "", "", "", "", "", ""));
     }
 
