@@ -28,11 +28,11 @@
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-/*
-    width: 22px;
-    height: 24px;
-    padding: 3px;
-*/
+    /*
+        width: 22px;
+        height: 24px;
+        padding: 3px;
+    */
 }
 
 .button-image .ui-button-text {
@@ -139,7 +139,7 @@ a:active {
     padding: 2px 4px;
     color: #1C94C4;
     border-radius: 4px;
-    font: bold 1.2em Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+    font: bold 1.2em Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     box-shadow: 0 0 7px black;
 }
 
@@ -147,10 +147,13 @@ a:active {
 Set sensible minimum heights for small and large screens
 */
 @media screen and (min-height: 600px) {
-    div#wrapper { min-height: 250px; }
+    div#wrapper {
+        min-height: 250px;
+    }
 }
 
-
 @media screen and (min-height: 1000px) {
-    div#wrapper { min-height: 450px; }
+    div#wrapper {
+        min-height: 450px;
+    }
 }

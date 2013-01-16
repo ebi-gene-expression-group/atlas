@@ -26,9 +26,9 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,7 +40,7 @@ import static java.lang.System.arraycopy;
 
 @Named("streamGeneProfiles")
 @Scope("prototype")
-public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Long> {
+public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Long, FilterParameters> {
 
     private CSVWriter csvWriter;
 
@@ -52,19 +52,19 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     }
 
     @Override
-    protected Long apply(RequestPreferences requestPreferences, Experiment experiment
+    protected Long apply(Experiment experiment
             , ObjectInputStream<GeneProfile> inputStream) throws IOException {
 
         long count = 0;
 
-        SortedSet<String> organismParts = experiment.getFactorValues(requestPreferences.getDefaultFactorType());
+        SortedSet<String> factorValues = experiment.getFactorValues(filterParameters.getQueryFactorType());
 
-        csvWriter.writeNext(buildCsvHeaders(organismParts));
+        csvWriter.writeNext(buildCsvHeaders(factorValues));
 
         GeneProfile geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, organismParts));
+            csvWriter.writeNext(buildCsvRow(geneProfile, factorValues));
         }
         return count;
     }
@@ -74,14 +74,14 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         return 0L;
     }
 
-    protected String[] buildCsvHeaders(Set<String> organismParts) {
-        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, organismParts.toArray(new String[organismParts.size()]));
+    protected String[] buildCsvHeaders(Set<String> factorValues) {
+        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, factorValues.toArray(new String[factorValues.size()]));
     }
 
-    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<String> organismParts) {
-        String[] expressionLevels = new String[organismParts.size()];
+    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<String> factorValues) {
+        String[] expressionLevels = new String[factorValues.size()];
         int i = 0;
-        for (String organismPart : organismParts) {
+        for (String organismPart : factorValues) {
             expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(organismPart));
         }
         return buildCsvRow(new String[]{geneProfile.getGeneName(), geneProfile.getGeneId()}, expressionLevels);

@@ -27,11 +27,7 @@ import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.GeneSpecificityComparator;
-import uk.ac.ebi.atlas.web.RequestPreferences;
+import uk.ac.ebi.atlas.model.*;
 
 import javax.inject.Named;
 import java.util.Collections;
@@ -41,20 +37,20 @@ import java.util.Set;
 
 @Named("rankGeneProfiles")
 @Scope("prototype")
-public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList> {
+public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList, RankingParameters> {
 
     @Override
-    public GeneProfilesList apply(RequestPreferences requestPreferences, Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
+    public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
-        Set<String> selectedOrganismParts = CollectionUtils.isEmpty(requestPreferences.getOrganismParts()) ?
-                experiment.getFactorValues(requestPreferences.getDefaultFactorType()) :
-                requestPreferences.getOrganismParts();
+        Set<String> selectedQueryFactorValues = CollectionUtils.isEmpty(filterParameters.getQueryFactorValues()) ?
+                experiment.getFactorValues(filterParameters.getQueryFactorType()) :
+                filterParameters.getQueryFactorValues();
 
-        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(requestPreferences.isRankGenesExpressedOnMostFactorsLast()
-                , selectedOrganismParts
-                , experiment.getFactorValues(requestPreferences.getDefaultFactorType()));
+        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(filterParameters.isSpecific()
+                , selectedQueryFactorValues
+                , experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
-        Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, requestPreferences.getHeatmapMatrixSize());
+        Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, filterParameters.getHeatmapMatrixSize());
 
         GeneProfile geneProfile;
 
@@ -75,13 +71,14 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
     }
 
+
     @Override
     protected GeneProfilesList returnEmpty() {
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildReverseSpecificityComparator( boolean rankGenesExpressedOnMostFactorsLast, Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
-        return Ordering.from(new GeneSpecificityComparator(rankGenesExpressedOnMostFactorsLast, selectedOrganismParts, allOrganismParts)).reverse();
+    protected Ordering<GeneProfile> buildReverseSpecificityComparator(boolean isSpecific, Set<String> selectedQueryFactorValues, Set<String> allFactorValues) {
+        return Ordering.from(new GeneSpecificityComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
     }
 
     protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> reverseSpecificityComparator, int heatmapMatrixSize) {

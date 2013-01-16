@@ -32,17 +32,14 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Named("experimentInterceptor")
 public class ExperimentInterceptor extends HandlerInterceptorAdapter {
@@ -115,17 +112,6 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
      */
     private Set<FactorValue> validateFilterFactorValues(String experimentAccession, String[] requestFilterFactorValues) {
 
-        // a SortedSet is required for RequestPreferences
-        TreeSet<String> sortedSet = new TreeSet<>();
-        Collections.addAll(sortedSet, requestFilterFactorValues);
-
-        // use RequestPreferences to convert to FactorValues
-       //ToDo: references.getFilterFactorValuesAsObjects() should be some utility method
-        RequestPreferences preferences = new RequestPreferences();
-        preferences.setFilterFactorValues(sortedSet);
-
-        Set<FactorValue> filterFactorValues = preferences.getFilterFactorValuesAsObjects();
-
         // collect all factorValues from experiment
         Set<FactorValue> allFactorValues = new HashSet<>();
 
@@ -137,8 +123,16 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
                 allFactorValues.addAll(experiment.getAllFactorValues(run));
         }
 
-        filterFactorValues.removeAll(allFactorValues);
-        return filterFactorValues;
+        Set<FactorValue> result = new HashSet<>();
+        for (String requestFilterFactorValue : requestFilterFactorValues) {
+            FactorValue factorValue = FactorValue.createFactorValue(requestFilterFactorValue);
+            if (!allFactorValues.contains(factorValue)) {
+                if (factorValue != null) {
+                    result.add(factorValue);
+                }
+            }
+        }
+        return result;
     }
 
 
@@ -164,7 +158,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         logger.info("<postHandle> time taken " + stopWatch.getTotalTimeSeconds()
                 + " s - geneQuery = " + request.getParameter("geneQuery")
-                + ", organism parts = " + request.getParameter("organismParts")
+                + ", query factor values = " + request.getParameter("queryFactorValues")
                 + ", cutoff = " + request.getParameter("cutoff"));
 
     }

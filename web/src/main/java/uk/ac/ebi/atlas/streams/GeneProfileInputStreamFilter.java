@@ -27,6 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
 import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.HashSet;
@@ -40,13 +41,12 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<FactorValue> filterFactorValues;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<FactorValue> filterFactorValues,
-                                        Set<String> geneIDs, Set<String> factorValues) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, FilterParameters filterParameters) {
         super(geneProfileInputStream);
 
-        this.filterFactorValues = filterFactorValues;
-        this.geneIDs = toUpperCase(geneIDs);
-        this.factorValues = factorValues;
+        this.filterFactorValues = filterParameters.getFilterFactorValues();
+        this.geneIDs = toUpperCase(filterParameters.getGeneIDs());
+        this.factorValues = filterParameters.getQueryFactorValues();
     }
 
     @Override
@@ -64,10 +64,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
             }
 
             private boolean hasTheRightExpressionProfile(GeneProfile geneProfile) {
-//                if (includeGenesExpressedOnNonSelectedFactorValues) {
                 return geneProfile.isExpressedOnAnyOf(factorValues);
-//                }
-//                return geneProfile.isExpressedAtMostOn(factorValues);
             }
         };
 

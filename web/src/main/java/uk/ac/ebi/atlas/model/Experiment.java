@@ -46,11 +46,12 @@ public class Experiment {
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultFactorType) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultFactorType, String specie) {
         this.experimentAccession = experimentAccession;
         this.description = description;
         this.experimentRunAccessions = experimentRunAccessions;
         this.defaultFactorType = defaultFactorType;
+        this.specie = specie;
     }
 
     public String getDefaultFactorType() {
@@ -111,11 +112,6 @@ public class Experiment {
 
     public String getDescription() {
         return description;
-    }
-
-    public Experiment setSpecie(String specie) {
-        this.specie = specie;
-        return this;
     }
 
     public SortedSet<String> getFactorValues(String byType) {

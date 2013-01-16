@@ -56,7 +56,7 @@ public class ExperimentTest {
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "lung");
         experimentRun3.addFactorValue("MATERIAL_TYPE", "RNAtype", "total rna");
 
-        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), "ORGANISM_PART")
+        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), "ORGANISM_PART", "homo sapiens")
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
     }
 
@@ -82,8 +82,6 @@ public class ExperimentTest {
 
     @Test
     public void testSpecies() {
-        assertThat(subject.getSpecie(), nullValue(String.class));
-        subject.setSpecie("homo sapiens");
         assertThat(subject.getSpecie(), is("homo sapiens"));
     }
 

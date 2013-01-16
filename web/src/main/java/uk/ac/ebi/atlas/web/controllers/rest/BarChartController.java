@@ -29,11 +29,11 @@ public class BarChartController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getMap(HttpServletRequest request, @PathVariable String experimentAccession,
-                         @RequestParam(value = "organismParts[]", required = false) Set<String> organismParts) {
+                         @RequestParam(value = "queryFactorValues[]", required = false) Set<String> queryFactorValues) {
 
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
-        NavigableMap<Double,Integer> chartData = barchartTrader.getChart(organismParts, true);
+        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(queryFactorValues, true);
 
         Gson gson = new Gson();
 

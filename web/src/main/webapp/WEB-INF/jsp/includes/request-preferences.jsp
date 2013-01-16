@@ -28,7 +28,7 @@
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="filterFactorValues"/>
-        <form:hidden path="defaultFactorType"/>
+        <form:hidden path="queryFactorType"/>
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
@@ -49,25 +49,19 @@
                 <td>
                     <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
-                            <form:label path="organismParts">${formattedDefaultFactorType}</form:label>
+                            <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
                         </span>
                         <span>
-                            <form:select path="organismParts" data-placeholder="(all ${formattedDefaultFactorType}s)"
+                            <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
                                          items="${heatmapFactorValues}" cssClass="chzn-select"
                                          cssStyle="width:350px;display:none"/>
                         </span>
                     </div>
-                    <%--<span>--%>
-                        <%--<input type="checkbox" id="includeGenesExpressedOnNonSelectedFactorValuesCheckbox"/>--%>
-                        <%--<label for="includeGenesExpressedOnNonSelectedFactorValuesCheckbox">--%>
-                            <%--Include genes expressed in non-selected organism parts--%>
-                        <%--</label>--%>
-                     <%--</span>--%>
                     <span>
-                        <form:checkbox id="rankGenesExpressedOnMostFactorsLast"
-                                       path="rankGenesExpressedOnMostFactorsLast"
-                                       label="Report genes expressed in the most organism parts last"></form:checkbox>
+                        <form:checkbox id="specific"
+                                       path="specific"
+                                       label="Specific"></form:checkbox>
                     </span>
                 </td>
                 <td>

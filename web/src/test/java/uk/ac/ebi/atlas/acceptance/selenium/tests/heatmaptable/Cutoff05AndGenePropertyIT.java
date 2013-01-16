@@ -42,7 +42,7 @@ public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
     @Test
     public void verifyResultOnSinglePropertyQuery() {
         subject = new HeatmapTablePage(driver, "geneQuery=regulation&cutoff=0.5"
-                +"&includeGenesExpressedOnNonSelectedFactorValues=false");
+                + "&includeGenesExpressedOnNonSelectedFactorValues=false");
 
         subject.get();
         assertThat(subject.getGeneCount().contains("62"), is(true));
@@ -52,7 +52,7 @@ public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
     @Test
     public void verifyResultOnMultiplePropertyQuery() {
         subject = new HeatmapTablePage(driver, "geneQuery=regulation+%22protein+binding%22&cutoff=0.5"
-                                                      +"&includeGenesExpressedOnNonSelectedFactorValues=false");
+                + "&includeGenesExpressedOnNonSelectedFactorValues=false");
         subject.get();
         assertThat(subject.getGeneCount(), containsString("82"));
 
@@ -61,7 +61,7 @@ public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
     @Test
     public void verifyResultOnMultiplePropertyAndOrganismPartQuery() {
         subject = new HeatmapTablePage(driver, "geneQuery=regulation+%22protein+binding%22&" +
-                "organismParts=skeletal+muscle&organismParts=thyroid&_organismParts=1&cutoff=0.5");
+                "queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
         subject.get();
         assertThat(subject.getGeneCount().contains("67"), is(true));
         subject.clickDisplayLevelsButton();

@@ -32,9 +32,9 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.RankingParameters;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import java.util.List;
 
@@ -53,16 +53,16 @@ public class RankGeneProfilesCommandTest {
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilderMock;
 
     @Mock
-    private RequestPreferences requestPreferencesMock;
+    private IndexClient indexClientMock;
 
     @Mock
-    private IndexClient indexClient;
+    private ExperimentsCache experimentsCacheMock;
 
     @Mock
-    private ExperimentsCache experimentsCache;
+    private Experiment experimentMock;
 
     @Mock
-    private Experiment experiment;
+    private RankingParameters rankingParametersMock;
 
     private ObjectInputStream<GeneProfile> largeInputStream;
 
@@ -77,19 +77,19 @@ public class RankGeneProfilesCommandTest {
     public void initializeSubject() throws Exception {
 
         // no filtering should be done here
-        when(indexClient.findGeneIds(anyString(), anyString())).thenReturn(Lists.<String>newArrayList());
+        when(indexClientMock.findGeneIds(anyString(), anyString())).thenReturn(Lists.<String>newArrayList());
 
-        when(experiment.getSpecie()).thenReturn("SPECIE");
+        when(experimentMock.getSpecie()).thenReturn("SPECIE");
 
-        when(experimentsCache.getExperiment(anyString())).thenReturn(experiment);
+        when(experimentsCacheMock.getExperiment(anyString())).thenReturn(experimentMock);
 
         when(geneProfileInputStreamBuilderMock.forExperiment(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
 
         when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 
-        when(requestPreferencesMock.getHeatmapMatrixSize()).thenReturn(100);
-        when(requestPreferencesMock.getCutoff()).thenReturn(0.1);
-        when(requestPreferencesMock.isRankGenesExpressedOnMostFactorsLast()).thenReturn(true);
+        when(rankingParametersMock.getHeatmapMatrixSize()).thenReturn(100);
+        when(rankingParametersMock.getCutoff()).thenReturn(0.1);
+        when(rankingParametersMock.isSpecific()).thenReturn(true);
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -103,11 +103,11 @@ public class RankGeneProfilesCommandTest {
 
         subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
-        subject.setRequestPreferences(requestPreferencesMock);
+        subject.setParameters(rankingParametersMock);
 
-        subject.setIndexClient(indexClient);
+        subject.setIndexClient(indexClientMock);
 
-        subject.setExperimentsCache(experimentsCache);
+        subject.setExperimentsCache(experimentsCacheMock);
 
     }
 
@@ -118,7 +118,7 @@ public class RankGeneProfilesCommandTest {
         //then
         verify(geneProfileInputStreamBuilderMock).forExperiment("ANY_EXPERIMENT_ACCESSION");
         //verify(geneProfileInputStreamBuilderMock).withExperimentAccession("ANY_EXPERIMENT_ACCESSION");
-        verify(geneProfileInputStreamBuilderMock).withCutoff(requestPreferencesMock.getCutoff());
+        verify(geneProfileInputStreamBuilderMock).withCutoff(rankingParametersMock.getCutoff());
         verify(geneProfileInputStreamBuilderMock).create();
     }
 
@@ -140,7 +140,7 @@ public class RankGeneProfilesCommandTest {
 
 
         //given
-        given(requestPreferencesMock.getHeatmapMatrixSize()).willReturn(3);
+        given(rankingParametersMock.getHeatmapMatrixSize()).willReturn(3);
         //and
         when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
 
@@ -157,7 +157,7 @@ public class RankGeneProfilesCommandTest {
     public void rankedObjectsShouldBeInAscendingOrder() throws Exception {
 
         //given
-        when(requestPreferencesMock.isRankGenesExpressedOnMostFactorsLast()).thenReturn(false);
+        when(rankingParametersMock.isSpecific()).thenReturn(false);
 
         //when
         List<GeneProfile> top3Objects = subject.apply("ANY_ACCESSION");

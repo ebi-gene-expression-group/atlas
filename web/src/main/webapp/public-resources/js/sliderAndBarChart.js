@@ -45,14 +45,14 @@ function hideGeneDistribution(isFast) {
     "use strict";
 
     $('#gene-distribution-panel').hide(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content: "Display gene distribution"});
+    $("#display-chart").tooltip({content:"Display gene distribution"});
 }
 
 function displayGeneDistribution(isFast) {
     "use strict";
 
     $('#gene-distribution-panel').show(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content: "Hide gene distribution"});
+    $("#display-chart").tooltip({content:"Hide gene distribution"});
 }
 
 
@@ -129,32 +129,32 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
     function plotCutoffBarChart(data, magnifiedScaledCutoffs) {
         return $.plot($("#gene-distribution"), [ data ], {
-            series: {
+            series:{
                 highlightColor:"red",
 
-                label: buildLegendaText(),
+                label:buildLegendaText(),
 
-                bars: {
-                    show: true,
-                    barWidth: .8
+                bars:{
+                    show:true,
+                    barWidth:.8
                 }
             },
-            xaxis: {
-                tickLength: 3,
-                ticks: magnifiedScaledCutoffs
+            xaxis:{
+                tickLength:3,
+                ticks:magnifiedScaledCutoffs
             },
-            grid: {
-                borderColor: "#CDCDCD",
-                borderWidth: 1,
-                hoverable: true,
-                clickable: true
+            grid:{
+                borderColor:"#CDCDCD",
+                borderWidth:1,
+                hoverable:true,
+                clickable:true
             }
         });
     }
 
     $.getJSON("json/barchart/" + experimentAccession
         , {
-            organismParts: selectedFactorValues
+            queryFactorValues:selectedFactorValues
         }
         , function (data) {
 
@@ -191,17 +191,17 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
             function showTooltip(x, y, contents) {
                 $('<div id="barChartTooltip">' + contents + '</div>').css({
-                    position: 'absolute',
-                    display: 'none',
-                    top: y - 25,
-                    left: x - 6,
-                    border: '2px solid rgb(238,195,46)',
-                    'border-radius': '4px',
-                    padding: '2px',
-                    'font-family': 'Verdana, Helvetica, Arial, sans-serif',
-                    'font-size': 'smaller',
-                    'background-color': 'rgb(249,232,176)',
-                    opacity: 1
+                    position:'absolute',
+                    display:'none',
+                    top:y - 25,
+                    left:x - 6,
+                    border:'2px solid rgb(238,195,46)',
+                    'border-radius':'4px',
+                    padding:'2px',
+                    'font-family':'Verdana, Helvetica, Arial, sans-serif',
+                    'font-size':'smaller',
+                    'background-color':'rgb(249,232,176)',
+                    opacity:1
                 }).appendTo("body").fadeIn(150);
             }
 
@@ -251,17 +251,17 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             genesByCutoffPlot.highlight(0, scaledCutoffPosition);
 
             $("#slider-range-max").slider({
-                range: "max",
-                min: 0,
-                max: scaledCutoffTicks.length - 1,
-                value: scaledCutoffPosition,
-                slide: function (event, ui) {
+                range:"max",
+                min:0,
+                max:scaledCutoffTicks.length - 1,
+                value:scaledCutoffPosition,
+                slide:function (event, ui) {
                     genesByCutoffPlot.unhighlight();
                     genesByCutoffPlot.highlight(0, ui.value);
                     var scaledCutoff = getNthScaledCutoff(ui.value, 1);
                     $("#cutoff").val(scaledCutoff);
                 },
-                stop: function (event, ui) {
+                stop:function (event, ui) {
                     $("form#prefForm").submit();
                 }
             });

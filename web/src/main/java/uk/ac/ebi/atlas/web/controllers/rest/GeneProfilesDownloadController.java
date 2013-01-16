@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
@@ -36,11 +37,17 @@ public class GeneProfilesDownloadController {
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" +experimentAccession + "-gene-expression-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "-gene-expression-profiles.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
-        writeGeneProfilesCommand.setRequestPreferences(preferences);
+        FilterParameters parameters = new FilterParameters();
+        parameters.setGeneQuery(preferences.getGeneQuery())
+                .setQueryFactorType(preferences.getQueryFactorType())
+                .setQueryFactorValues(preferences.getQueryFactorValues())
+                .setFilterFactorValues(preferences.getFilterFactorValues())
+                .setCutoff(preferences.getCutoff());
+        writeGeneProfilesCommand.setParameters(parameters);
 
         CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', NO_QUOTE_CHARACTER);
 

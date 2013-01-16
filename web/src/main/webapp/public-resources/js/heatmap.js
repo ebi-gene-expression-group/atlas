@@ -65,8 +65,7 @@ function initHeatmapDisplayValueToggle() {
         },function () {
             $("#sort-toggle-image").attr("src", "resources/images/sort-most-on-top.png");
             $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts first");
-        }).attr("title"," ").tooltip();
-
+        }).attr("title", " ").tooltip();
 
 
 }

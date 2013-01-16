@@ -8,11 +8,11 @@ import java.util.List;
 public class HeatmapTablePageOrganismOriented extends HeatmapTablePage {
 
     public HeatmapTablePageOrganismOriented(WebDriver driver, String parameters) {
-        super(driver, parameters.concat(StringUtils.isBlank(parameters)?"?":"&").concat("organismOriented"));
+        super(driver, parameters.concat(StringUtils.isBlank(parameters) ? "?" : "&").concat("organismOriented"));
     }
 
     @Override
-    public List<String> getOrganismParts() {
+    public List<String> getQueryFactorValues() {
         return getFirstColumnValues(getHeatmapTable());
     }
 

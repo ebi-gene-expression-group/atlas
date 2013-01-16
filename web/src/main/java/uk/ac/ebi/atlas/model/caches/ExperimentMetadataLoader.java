@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.cache.CacheLoader;
 import org.apache.log4j.Logger;
-import org.apache.velocity.tools.view.servlet.ServletLogger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
@@ -45,15 +44,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.*;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named("experimentMetadataLoader")
 public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
@@ -72,7 +65,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
     @Inject
     public ExperimentMetadataLoader(
             @Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate
-            ,@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate
+            , @Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate
             , AnalysisMethodsTsvReader analysisMethodsTsvReader, ArrayExpressClient arrayExpressClient) {
 
         this.idfUrlTemplate = idfUrlTemplate;
@@ -93,12 +86,10 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         String experimentName = fetchExperimentName(experimentAccession);
 
-        Experiment experiment = new Experiment(experimentAccession, experimentName
-                , getExperimentRunAccessions(experimentAccession), experimentalFactorType);
-
         ScanNode firstNode = scanNodes.iterator().next();
 
-        experiment.setSpecie(extractSpecie(firstNode));
+        Experiment experiment = new Experiment(experimentAccession, experimentName
+                , getExperimentRunAccessions(experimentAccession), experimentalFactorType, extractSpecie(firstNode));
 
         experiment.addAll(extractExperimentRuns(scanNodes, investigation.IDF));
 
@@ -107,9 +98,9 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
     }
 
     private String fetchExperimentName(String experimentAccession) {
-        try{
+        try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
-        } catch(Exception e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             return "Error connecting to ArrayExpress!";
         }
@@ -159,7 +150,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
         MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
         File idfFile = new File(idfFileLocation);
-        if (idfFile.exists()){
+        if (idfFile.exists()) {
             return mageTabParser.parse(idfFile);
         } else {
             URL idfFileURL = new URL(MessageFormat.format(idfUrlTemplate, experimentAccession));

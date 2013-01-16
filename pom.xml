@@ -208,8 +208,8 @@
                         <include>${project.basedir}/${jasmine.js.src.location}/**</include>
                         <include>${project.basedir}/web/src/test/javascript/jasmine-plugins/**</include>
                     </sourceIncludes>
-                    <jsSrcDir>${project.basedir}/${jasmine.js.src.location}/</jsSrcDir>
-                    <jsTestSrcDir>${project.basedir}/web/src/test/javascript/spec/</jsTestSrcDir>
+                    <jsSrcDir>${jasmine.js.src.location}/</jsSrcDir>
+                    <jsTestSrcDir>web/src/test/javascript/spec/</jsTestSrcDir>
                     <browserVersion>FIREFOX_3_6</browserVersion>
                     <haltOnFailure>true</haltOnFailure>
                 </configuration>

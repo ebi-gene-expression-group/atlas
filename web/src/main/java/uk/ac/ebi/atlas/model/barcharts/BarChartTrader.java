@@ -62,13 +62,13 @@ public class BarChartTrader {
         return getChart(null, false);
     }
 
-    public NavigableMap<Double, Integer> getChart(Set<String> selectedOrganismParts, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
+    public NavigableMap<Double, Integer> getChart(Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
 
         NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
 
         for (Double scaledCutoff : geneExpressionIndexes.navigableKeySet()) {
 
-            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), selectedOrganismParts, includeGenesExpressedAlsoOnNonSelectedFactorValue));
+            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), selectedFactorValues, includeGenesExpressedAlsoOnNonSelectedFactorValue));
 
         }
 
@@ -84,13 +84,13 @@ public class BarChartTrader {
         return geneBitSets.get(organismPart).cardinality();
     }
 
-    protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedOrganismParts, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
+    protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
         BitSet notExpressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
         //ToDo:... this should work, but now that we also added the includeGenesExpressedAlsoOnNonSelectedFactorValue parameter it is harder to read...
         for (String organismPart : geneBitSets.keySet()) {
-            if (CollectionUtils.isEmpty(selectedOrganismParts) || selectedOrganismParts.contains(organismPart)) {
+            if (CollectionUtils.isEmpty(selectedFactorValues) || selectedFactorValues.contains(organismPart)) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(organismPart));
             } else if (!includeGenesExpressedAlsoOnNonSelectedFactorValue) {
@@ -116,7 +116,7 @@ public class BarChartTrader {
 
         private GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder;
 
-        private Set<String> organismParts;
+        private Set<String> factorValues;
 
         @Inject
         public Builder(ExperimentsCache experimentsCache, GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder, CutoffScale cutoffScale) {
@@ -128,7 +128,7 @@ public class BarChartTrader {
         public Builder forExperiment(String experimentAccession) {
 
             // TODO: byType needs to come from RequestPreferences
-            organismParts = experimentsCache.getExperiment(experimentAccession).getFactorValues(null);
+            factorValues = experimentsCache.getExperiment(experimentAccession).getFactorValues(null);
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 
@@ -179,8 +179,8 @@ public class BarChartTrader {
 
             Map<String, BitSet> geneBitSets = new HashMap<>();
 
-            for (String organismPart : organismParts) {
-                geneBitSets.put(organismPart, new BitSet(AVERAGE_GENES_IN_EXPERIMENT));
+            for (String factorValue : factorValues) {
+                geneBitSets.put(factorValue, new BitSet(AVERAGE_GENES_IN_EXPERIMENT));
             }
 
             return geneBitSets;
@@ -188,7 +188,7 @@ public class BarChartTrader {
 
 
         public BarChartTrader create() {
-            checkState(organismParts != null, "Did you set the experimentAccession ?");
+            checkState(factorValues != null, "Did you set the experimentAccession ?");
             trimIndexes();
             return new BarChartTrader(geneExpressionIndexes);
         }
@@ -208,8 +208,8 @@ public class BarChartTrader {
 
         }
 
-        protected void setOrganismParts(Set<String> organismParts) {
-            this.organismParts = organismParts;
+        protected void setFactorValues(Set<String> factorValues) {
+            this.factorValues = factorValues;
         }
 
         protected NavigableMap<Double, Map<String, BitSet>> getGeneExpressionIndexes() {

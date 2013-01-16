@@ -31,6 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.Set;
@@ -65,6 +66,9 @@ public class GeneProfileInputStreamFilterTest {
 
     private Set<FactorValue> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
 
+    @Mock
+    private FilterParameters filterParametersMock;
+
     private GeneProfileInputStreamFilter subject;
 
     @Before
@@ -76,16 +80,16 @@ public class GeneProfileInputStreamFilterTest {
         when(gene3ProfileMock.isExpressedOnAnyOf(factorValues)).thenReturn(true);
         when(gene3ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_2)));
 
-    }
+        when(filterParametersMock.getFilterFactorValues()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
+        when(filterParametersMock.getQueryFactorValues()).thenReturn(factorValues);
+        when(filterParametersMock.getGeneIDs()).thenReturn(geneIDs);
 
-    @Before
-    public void initSubject() {
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_FILTER_FACTOR_VALUES, geneIDs, factorValues);
     }
 
     @Test
     public void acceptanceCriteriaTestShouldBeBasedOnGeneIDsSet() {
         //given
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, filterParametersMock);
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
@@ -98,7 +102,8 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_FILTER_FACTOR_VALUES, EMPTY_GENE_IDS, factorValues);
+        when(filterParametersMock.getGeneIDs()).thenReturn(EMPTY_GENE_IDS);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, filterParametersMock);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
@@ -111,8 +116,11 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestWithFilterFactorValueAndGeneIDsSetIsEmpty() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock,
-                Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_1)), EMPTY_GENE_IDS, factorValues);
+        when(filterParametersMock.getFilterFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART",
+                "", ORGANISM_PART_1)));
+        when(filterParametersMock.getGeneIDs()).thenReturn(EMPTY_GENE_IDS);
+
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, filterParametersMock);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 

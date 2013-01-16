@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.SetUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
@@ -78,23 +77,23 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedAtMostOn(Set<String> factorValues){
+    public boolean isExpressedAtMostOn(Set<String> factorValues) {
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
         return factorValues.containsAll(this.getFactorValues());
     }
 
-    public boolean isExpressedOnAnyOf(Set<String> factorValues){
+    public boolean isExpressedOnAnyOf(Set<String> factorValues) {
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
         return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
     }
 
-    public double getAverageExpressionLevelOn(Set<String> organismParts){
-        checkArgument(CollectionUtils.isNotEmpty(organismParts));
+    public double getAverageExpressionLevelOn(Set<String> factorValues) {
+        checkArgument(CollectionUtils.isNotEmpty(factorValues));
         double expressionLevel = 0D;
-        for (String organismPart: organismParts) {
+        for (String organismPart : factorValues) {
             expressionLevel += getExpressionLevel(organismPart);
         }
-        return expressionLevel / organismParts.size();
+        return expressionLevel / factorValues.size();
     }
 
     public Set<String> getFactorValues() {
@@ -130,11 +129,11 @@ public class GeneProfile implements Iterable<Expression> {
         return csvValues;
     }
 
-    public Comparable getWeightedExpressionLevelOn(Set<String> selectedOrganismParts, Set<String> allOrganismParts) {
-        if (allOrganismParts.isEmpty()){
-            return getAverageExpressionLevelOn(selectedOrganismParts);
+    public Comparable getWeightedExpressionLevelOn(Set<String> selectedFactorValues, Set<String> allFactorValues) {
+        if (allFactorValues.isEmpty()) {
+            return getAverageExpressionLevelOn(selectedFactorValues);
         }
-        return getAverageExpressionLevelOn(selectedOrganismParts) - getAverageExpressionLevelOn(Sets.difference(allOrganismParts, selectedOrganismParts));
+        return getAverageExpressionLevelOn(selectedFactorValues) - getAverageExpressionLevelOn(Sets.difference(allFactorValues, selectedFactorValues));
     }
 
     @Named("geneProfileBuilder")

@@ -16,8 +16,8 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
     @FindBy(id = "geneQuery")
     private WebElement geneQuery;
 
-    @FindBy(id = "organismParts")
-     WebElement organismParts;
+    @FindBy(id = "queryFactorValues")
+    WebElement queryFactorValues;
 
     @FindBy(id = "cutoff")
     private WebElement cutoff;
@@ -46,10 +46,10 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
         return cutoff.getAttribute("value");
     }
 
-    public List<String> getOrganismParts() {
-        Select organismPartsSelect = new Select(organismParts);
+    public List<String> getQueryFactorValues() {
+        Select queryFactorValuesSelect = new Select(queryFactorValues);
         List<String> selectedValues = new ArrayList<>();
-        for (WebElement webElement : organismPartsSelect.getAllSelectedOptions()) {
+        for (WebElement webElement : queryFactorValuesSelect.getAllSelectedOptions()) {
             selectedValues.add(webElement.getAttribute("value"));
         }
         return selectedValues;
@@ -65,19 +65,19 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
         cutoff.sendKeys("" + value);
     }
 
-    private String selectOptionScript(String option){
-        return "$('#organismParts option').each(function() {\n" +
-               "            if ($(this).text() == '" + option + "') {\n" +
-               "                $(this).attr('selected',true);\n" +
-               "            }" +
-               "        });" +
-               "$('#organismParts').trigger('liszt:updated').trigger('change')";
+    private String selectOptionScript(String option) {
+        return "$('#queryFactorValues option').each(function() {\n" +
+                "            if ($(this).text() == '" + option + "') {\n" +
+                "                $(this).attr('selected',true);\n" +
+                "            }" +
+                "        });" +
+                "$('#queryFactorValues').trigger('liszt:updated').trigger('change')";
     }
 
-    public void selectOrganismPart(String ... organismParts) {
+    public void selectQueryFactorValue(String... queryFactorValues) {
 
-        for (String organismPart : organismParts){
-            ((JavascriptExecutor) driver).executeScript(selectOptionScript(organismPart));
+        for (String queryFactorValue : queryFactorValues) {
+            ((JavascriptExecutor) driver).executeScript(selectOptionScript(queryFactorValue));
         }
     }
 }
