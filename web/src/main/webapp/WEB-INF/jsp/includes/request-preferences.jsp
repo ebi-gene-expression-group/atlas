@@ -108,6 +108,8 @@
         </div>
     </div>
 
+    <div class="barchart-tooltip" id="barChartTooltip"></div>
+
     <div id="gene-distribution-button" style="float:left">
         <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
             <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>

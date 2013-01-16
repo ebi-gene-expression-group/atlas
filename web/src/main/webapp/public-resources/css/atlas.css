@@ -20,6 +20,18 @@
  * http://gxa.github.com/gxa
  */
 
+.barchart-tooltip {
+    position:fixed;
+    border: 2px solid rgb(238,195,46);
+    border-radius:4px;
+    padding:2px;
+    font-family:Verdana, Helvetica, Arial, sans-serif;
+    font-size:smaller;
+    background-color:rgb(249,232,176);
+    opacity:1;
+    display:none;
+}
+
 #download-profiles {
     background: transparent url('../images/download_blue_small.png');
 }
