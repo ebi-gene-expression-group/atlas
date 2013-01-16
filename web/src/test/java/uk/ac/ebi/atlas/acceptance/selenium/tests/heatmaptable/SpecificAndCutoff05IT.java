@@ -26,41 +26,41 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
+public class SpecificAndCutoff05IT extends SeleniumFixture {
 
+    private static final String HTTP_PARAMETERS = "cutoff=0.5"
+            + "&specific=true";
+
+    private static final String HIGHER_RANKING_GENE = "ACTL7A";
+    private static final String LOWER_RANKING_GENE = "TEX33";
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-//
+        subject = new HeatmapTablePage(driver, HTTP_PARAMETERS);
+        subject.get();
     }
 
     @Test
-    public void verifyResultOnSinglePropertyQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=regulation&cutoff=0.5");
-        subject.get();
-        assertThat(subject.getGeneCount().contains("62"), is(true));
-    }
+    public void specificityShouldDetermineRanking() {
 
-    @Test
-    public void verifyResultOnMultiplePropertyQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=regulation+%22protein+binding%22&cutoff=0.5");
-        subject.get();
-        assertThat(subject.getGeneCount(), containsString("82"));
-    }
-
-    @Test
-    public void verifyResultOnMultiplePropertyAndOrganismPartQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=regulation+%22protein+binding%22&" +
-                "queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
-        subject.get();
-        assertThat(subject.getGeneCount().contains("67"), is(true));
+        //given
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("9", "10", "5", "8", "18", "5", "30", "4", "1", "10", "15", "9", "103", "8", "56", "0.7"));
+
+        double higherRankingGeneFpkm = subject.getMaxFpkm(1);
+        double lowerRankingGeneFpkm = subject.getMaxFpkm(2);
+
+        //then
+        assertThat(higherRankingGeneFpkm, is(69D));
+        assertThat(higherRankingGeneFpkm, is(greaterThan(lowerRankingGeneFpkm)));
+
+        //gene at row 11 follows gene at row 10
+        assertThat(subject.getGeneThatRanksAt(1), is(HIGHER_RANKING_GENE));
+        assertThat(subject.getGeneThatRanksAt(2), is(LOWER_RANKING_GENE));
+
     }
 
 }

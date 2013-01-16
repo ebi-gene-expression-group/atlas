@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 // TODO: we need to rename this test, as the content changed
-public class IncludingNonSelectedGenesAndExpressedOnMostFactorsLastAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
+public class SpecificAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
@@ -47,7 +47,7 @@ public class IncludingNonSelectedGenesAndExpressedOnMostFactorsLastAndCutoff05An
     }
 
     @Test
-    public void averageFpkmAndRanking() {
+    public void higherAverageFpkmAcrossSelectedMinusAverageFpkmNonSelected() {
 
         //given
         subject.clickDisplayLevelsButton();

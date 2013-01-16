@@ -16,9 +16,9 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneSpecificityComparatorTest {
+public class GeneProfileComparatorTest {
 
-    private GeneSpecificityComparator subject;
+    private GeneProfileComparator subject;
 
     @Mock
     private GeneProfile geneWithSpecificity1;
@@ -55,7 +55,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
 
-        subject = new GeneSpecificityComparator(true, null, allOrganismParts);
+        subject = new GeneProfileComparator(true, null, allOrganismParts);
 
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
@@ -68,7 +68,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void highSpecificityShouldPreceedLowSpecificity() {
 
-        subject = new GeneSpecificityComparator(true, null, allOrganismParts);
+        subject = new GeneProfileComparator(true, null, allOrganismParts);
 
         //when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -81,7 +81,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void sameSpecificityShouldBeSortedByExpressionLevel() {
 
-        subject = new GeneSpecificityComparator(true, null, allOrganismParts);
+        subject = new GeneProfileComparator(true, null, allOrganismParts);
 
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity16AndSmallerExpressionLevel);
@@ -94,7 +94,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void higherAverageAcrossSelectedTissuesMinusAverageNonSelected() {
 
-        subject = new GeneSpecificityComparator(true, selectedOrganismParts, allOrganismParts);
+        subject = new GeneProfileComparator(true, selectedOrganismParts, allOrganismParts);
 
         // when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -107,7 +107,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void higherAverageAcrossAllTissues() {
 
-        subject = new GeneSpecificityComparator(false, null, allOrganismParts);
+        subject = new GeneProfileComparator(false, null, allOrganismParts);
 
         // when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -120,7 +120,7 @@ public class GeneSpecificityComparatorTest {
     @Test
     public void higherAverageAcrossSelectedTissues() {
 
-        subject = new GeneSpecificityComparator(false, selectedOrganismParts, allOrganismParts);
+        subject = new GeneProfileComparator(false, selectedOrganismParts, allOrganismParts);
 
         // when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);

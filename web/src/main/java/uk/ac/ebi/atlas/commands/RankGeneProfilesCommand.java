@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 
@@ -42,15 +41,9 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     @Override
     public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
-        Set<String> selectedQueryFactorValues = CollectionUtils.isEmpty(parameters.getQueryFactorValues()) ?
-                experiment.getFactorValues(parameters.getQueryFactorType()) :
-                parameters.getQueryFactorValues();
-
         Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(parameters.isSpecific()
-                , selectedQueryFactorValues
+                , parameters.getQueryFactorValues()
                 , experiment.getFactorValues(parameters.getQueryFactorType()));
-
-        logger.debug("Using: " + parameters);
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, parameters.getHeatmapMatrixSize());
 
@@ -80,7 +73,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     }
 
     protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<String> selectedQueryFactorValues, Set<String> allFactorValues) {
-        return Ordering.from(new GeneSpecificityComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
+        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
     }
 
     protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> geneProfileComparator, int heatmapMatrixSize) {

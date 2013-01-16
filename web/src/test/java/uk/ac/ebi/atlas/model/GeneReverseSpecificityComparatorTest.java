@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GeneReverseSpecificityComparatorTest {
 
-    private GeneSpecificityComparator subject;
+    private GeneProfileComparator subject;
 
     @Mock
     private GeneProfile geneWithSpecificity1;
@@ -42,7 +42,7 @@ public class GeneReverseSpecificityComparatorTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneSpecificityComparator(false, selectedOrganismParts, null);
+        subject = new GeneProfileComparator(false, selectedOrganismParts, null);
     }
 
     @Test

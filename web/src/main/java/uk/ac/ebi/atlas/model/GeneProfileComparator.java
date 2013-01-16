@@ -7,14 +7,14 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GeneSpecificityComparator implements Comparator<GeneProfile> {
+public class GeneProfileComparator implements Comparator<GeneProfile> {
 
     private boolean isSpecific;
     private Set<String> selectedFactorValues;
     private Set<String> allFactorValues;
 
-    public GeneSpecificityComparator(boolean isSpecific, Set<String> selectFactorValues,
-                                     Set<String> allFactorValues) {
+    public GeneProfileComparator(boolean isSpecific, Set<String> selectFactorValues,
+                                 Set<String> allFactorValues) {
         this.isSpecific = isSpecific;
         this.selectedFactorValues = selectFactorValues;
         this.allFactorValues = allFactorValues;

@@ -16,8 +16,7 @@ public class Cutoff20AndOrganismPartIT extends SeleniumFixture {
 
     public void getStartingPage() {
         subject = new HeatmapTablePage(driver,
-                "heatmapMatrixSize=5&geneQuery=&queryFactorValues=adrenal&_queryFactorValues=1&cutoff=20");
-
+                "specific=true&heatmapMatrixSize=5&geneQuery=&queryFactorValues=adrenal&_queryFactorValues=1&cutoff=20");
         subject.get();
     }
 

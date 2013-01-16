@@ -10,14 +10,13 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TwoOrganismPartsIT extends SeleniumFixture {
+public class TwoOrganismPartsAndCutoff9IT extends SeleniumFixture {
 
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
         subject = new HeatmapTablePage(driver,
                 "heatmapMatrixSize=5&queryFactorValues=adipose&geneQuery=&queryFactorValues=heart&_queryFactorValues=2&cutoff=9");
-
         subject.get();
     }
 
