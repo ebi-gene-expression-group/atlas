@@ -88,7 +88,9 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public double getAverageExpressionLevelOn(Set<String> factorValues) {
-        checkArgument(CollectionUtils.isNotEmpty(factorValues));
+        if (CollectionUtils.isEmpty(factorValues)) {
+            return 0D;
+        }
         double expressionLevel = 0D;
         for (String organismPart : factorValues) {
             expressionLevel += getExpressionLevel(organismPart);

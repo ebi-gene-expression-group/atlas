@@ -29,24 +29,34 @@ public class GeneSpecificityComparatorTest {
     @Mock
     private GeneProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
-    private Set<String> selectedOrganismParts = Sets.newHashSet("heart", "nose");
+    private Set<String> selectedOrganismParts = Sets.newHashSet("heart");
+
+    private Set<String> nonSelectedOrganismParts = Sets.newHashSet("heart");
+
+    private Set<String> allOrganismParts = Sets.newHashSet("heart", "nose");
 
     @Before
     public void initGeneExpressions() {
         when(geneWithSpecificity1.getSpecificity()).thenReturn(1);
+        when(geneWithSpecificity1.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(5D);
+        when(geneWithSpecificity1.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(5D);
         when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
-        when(geneWithSpecificity16.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(10D);
+        when(geneWithSpecificity16.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(10D);
+        when(geneWithSpecificity16.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(2D);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
-        when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(0D);
+        when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(0D);
     }
 
     @Before
     public void initSubject() {
-        subject = new GeneSpecificityComparator(true, selectedOrganismParts, null);
+
     }
 
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
+
+        subject = new GeneSpecificityComparator(true, null, allOrganismParts);
+
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
 
@@ -57,10 +67,39 @@ public class GeneSpecificityComparatorTest {
 
     @Test
     public void highSpecificityShouldPreceedLowSpecificity() {
+
+        subject = new GeneSpecificityComparator(true, null, allOrganismParts);
+
         //when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
 
         //then
+        assertThat(comparison, is(greaterThan(0)));
+
+    }
+
+    @Test
+    public void sameSpecificityShouldBeSortedByExpressionLevel() {
+
+        subject = new GeneSpecificityComparator(true, null, allOrganismParts);
+
+        //when
+        int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity16AndSmallerExpressionLevel);
+
+        // then
+        assertThat(comparison, is(greaterThan(0)));
+
+    }
+
+    @Test
+    public void higherAverageAcrossSelectedTissuesMinusAverageNonSelected() {
+
+        subject = new GeneSpecificityComparator(true, selectedOrganismParts, allOrganismParts);
+
+        // when
+        int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
+
+        // then
         assertThat(comparison, is(greaterThan(0)));
 
     }

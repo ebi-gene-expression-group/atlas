@@ -25,13 +25,13 @@ public class TwoOrganismPartsIT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("AL162853.1", "CU463998.3", "AL031284.1", "AC068312.1", "TMEM56"));
+        assertThat(selectedGenes, contains("AL031284.1", "AC068312.1", "NEBL", "AC091038.1", "S1PR1"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("75", "", "", "", "", "", "", ""
+        assertThat(subject.getFirstGeneProfile(), contains("228", "", "", "", "", "579", "", ""
                 , "", "", "", "", "", "", "", ""));
     }
 
