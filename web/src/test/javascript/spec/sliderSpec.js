@@ -10,6 +10,12 @@ describe("Bar Chart magnified scale", function () {
     beforeEach(function () {
     });
 
+    it("by default will be configured for a scale with one fractional digit", function () {
+
+        expect(magnifiedScale.fractionalDigits).toBe(1);
+
+    });
+
     describe("toString(value) method", function () {
         it("should convert long values into magnified strings, using K and M to indicate thousands and millions", function () {
 
@@ -48,6 +54,19 @@ describe("Bar Chart magnified scale", function () {
             expect(magnifiedScale.getNearestScaleValue(1231)).toEqual("1000");
             expect(magnifiedScale.getNearestScaleValue(380)).toEqual("300");
             expect(magnifiedScale.getNearestScaleValue(48342)).toEqual("40000");
+
+        });
+
+    });
+
+    describe("getNthScaleValue(atPosition) method", function () {
+        it("should return the scale value for the given position", function () {
+
+            expect(magnifiedScale.getNthScaleValue(0)).toEqual("0");
+            expect(magnifiedScale.getNthScaleValue(1)).toEqual("0.1");
+            expect(magnifiedScale.getNthScaleValue(10)).toEqual("1");
+            expect(magnifiedScale.getNthScaleValue(30)).toEqual("300");
+            expect(magnifiedScale.getNthScaleValue(40)).toEqual("4000");
 
         });
 
