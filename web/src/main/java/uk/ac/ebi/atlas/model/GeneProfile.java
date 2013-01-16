@@ -53,7 +53,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public int getSpecificity() {
-        return expressions.size();
+        return expressions.values().size();
     }
 
     public Iterator<Expression> iterator() {

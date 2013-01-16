@@ -13,8 +13,8 @@ public class GenesExpressedOnMostFactorsLastAndCutoff05IT extends SeleniumFixtur
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&specific=false";
 
-    private static final String HIGHER_RANKING_GENE = "VTI1B";
-    private static final String LOWER_RANKING_GENE = "S1PR1";
+    private static final String HIGHER_RANKING_GENE = "VPS4A";
+    private static final String LOWER_RANKING_GENE = "PPT1";
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
@@ -32,7 +32,7 @@ public class GenesExpressedOnMostFactorsLastAndCutoff05IT extends SeleniumFixtur
         double lowerRankingGeneAverageFpkm = subject.getAverageFpkm(11);
 
         //then
-        assertThat(higherRankingGeneAverageFpkm, is(45.0625D));
+        assertThat(higherRankingGeneAverageFpkm, is(47.0D));
         assertThat(higherRankingGeneAverageFpkm, is(greaterThan(lowerRankingGeneAverageFpkm)));
 
         //and even though max fpkm is greater for gene at row 11 than gene at row 10

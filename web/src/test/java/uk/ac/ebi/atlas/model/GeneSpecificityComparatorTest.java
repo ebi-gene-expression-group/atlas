@@ -104,5 +104,31 @@ public class GeneSpecificityComparatorTest {
 
     }
 
+    @Test
+    public void higherAverageAcrossAllTissues() {
+
+        subject = new GeneSpecificityComparator(false, null, allOrganismParts);
+
+        // when
+        int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
+
+        // then
+        assertThat(comparison, is(lessThan(0)));
+
+    }
+
+    @Test
+    public void higherAverageAcrossSelectedTissues() {
+
+        subject = new GeneSpecificityComparator(false, selectedOrganismParts, allOrganismParts);
+
+        // when
+        int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
+
+        // then
+        assertThat(comparison, is(greaterThan(0)));
+
+    }
+
 
 }

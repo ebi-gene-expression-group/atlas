@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.model;
 
 public class RankingParameters extends FilterParameters {
 
-    private boolean isSpecific;
+    private boolean specific;
 
     private Integer heatmapMatrixSize;
 
@@ -32,18 +32,25 @@ public class RankingParameters extends FilterParameters {
     }
 
     public boolean isSpecific() {
-        return isSpecific;
+        return specific;
     }
 
     public Integer getHeatmapMatrixSize() {
         return heatmapMatrixSize;
     }
 
-    public void setSpecific(boolean specific) {
-        isSpecific = specific;
+    public RankingParameters setSpecific(boolean specific) {
+        this.specific = specific;
+        return this;
     }
 
-    public void setHeatmapMatrixSize(Integer heatmapMatrixSize) {
+    public RankingParameters setHeatmapMatrixSize(Integer heatmapMatrixSize) {
         this.heatmapMatrixSize = heatmapMatrixSize;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + this.specific + " " + this.heatmapMatrixSize;
     }
 }

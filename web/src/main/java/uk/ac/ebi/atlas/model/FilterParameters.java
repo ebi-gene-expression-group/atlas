@@ -111,4 +111,8 @@ public class FilterParameters {
     public Set<String> getGeneIDs() {
         return geneIDs;
     }
+
+    public String toString() {
+        return this.geneQuery + " " + this.getQueryFactorType() + " " + this.getQueryFactorValues() + " " + this.getFilterFactorValues() + " " + this.getCutoff();
+    }
 }

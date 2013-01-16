@@ -42,15 +42,17 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     @Override
     public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
-        Set<String> selectedQueryFactorValues = CollectionUtils.isEmpty(filterParameters.getQueryFactorValues()) ?
-                experiment.getFactorValues(filterParameters.getQueryFactorType()) :
-                filterParameters.getQueryFactorValues();
+        Set<String> selectedQueryFactorValues = CollectionUtils.isEmpty(parameters.getQueryFactorValues()) ?
+                experiment.getFactorValues(parameters.getQueryFactorType()) :
+                parameters.getQueryFactorValues();
 
-        Comparator<GeneProfile> reverseSpecificityComparator = buildReverseSpecificityComparator(filterParameters.isSpecific()
+        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(parameters.isSpecific()
                 , selectedQueryFactorValues
-                , experiment.getFactorValues(filterParameters.getQueryFactorType()));
+                , experiment.getFactorValues(parameters.getQueryFactorType()));
 
-        Queue<GeneProfile> rankingQueue = buildRankingQueue(reverseSpecificityComparator, filterParameters.getHeatmapMatrixSize());
+        logger.debug("Using: " + parameters);
+
+        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, parameters.getHeatmapMatrixSize());
 
         GeneProfile geneProfile;
 
@@ -63,7 +65,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
         GeneProfilesList list = new GeneProfilesList(rankingQueue);
 
-        Collections.sort(list, reverseSpecificityComparator);
+        Collections.sort(list, geneProfileComparator);
 
         list.setTotalResultCount(geneCount);
 
@@ -77,12 +79,12 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildReverseSpecificityComparator(boolean isSpecific, Set<String> selectedQueryFactorValues, Set<String> allFactorValues) {
+    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<String> selectedQueryFactorValues, Set<String> allFactorValues) {
         return Ordering.from(new GeneSpecificityComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
     }
 
-    protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> reverseSpecificityComparator, int heatmapMatrixSize) {
-        return MinMaxPriorityQueue.orderedBy(reverseSpecificityComparator).maximumSize(heatmapMatrixSize).create();
+    protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> geneProfileComparator, int heatmapMatrixSize) {
+        return MinMaxPriorityQueue.orderedBy(geneProfileComparator).maximumSize(heatmapMatrixSize).create();
     }
 
 

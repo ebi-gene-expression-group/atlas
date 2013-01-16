@@ -38,7 +38,7 @@ public class GeneSpecificityComparator implements Comparator<GeneProfile> {
 
         // B1: genes with higher 'average across all the selected tissues minus average
         // across all the non-selected tissues' come first
-        else if (isSpecific && !selectedFactorValues.isEmpty()) {
+        else if (isSpecific && !CollectionUtils.isEmpty(selectedFactorValues)) {
             Set<String> nonSelectedFactorValues = new HashSet<>(allFactorValues);
             nonSelectedFactorValues.removeAll(selectedFactorValues);
 
@@ -54,29 +54,27 @@ public class GeneSpecificityComparator implements Comparator<GeneProfile> {
             return ordering.compare(minusAverageFirstProfile, minusAverageOtherProfile);
         }
 
-        // A2
-        else if (!isSpecific && selectedFactorValues.isEmpty()) {
+        // A2: Expression in any tissue is rewarded (higher average over fpkms for all expressed tissues first)
+        else if (!isSpecific && CollectionUtils.isEmpty(selectedFactorValues)) {
 
+            double averageAcrossAllFirstProfile = firstGeneProfile.getAverageExpressionLevelOn(allFactorValues);
+            double averageAcrossAllOtherProfile = otherGeneProfile.getAverageExpressionLevelOn(allFactorValues);
+
+            Ordering<Comparable> ordering = Ordering.natural();
+            return ordering.compare(averageAcrossAllFirstProfile, averageAcrossAllOtherProfile);
         }
 
-        // B2
-        else if (!isSpecific && !selectedFactorValues.isEmpty()) {
+        // B2: genes with higher 'average across all the selected tissues' (disregarding fpkms across non-selected tissues) come first
+        else if (!isSpecific && !CollectionUtils.isEmpty(selectedFactorValues)) {
 
+            double averageAcrossSelectedFirstProfile = firstGeneProfile.getAverageExpressionLevelOn(selectedFactorValues);
+            double averageAcrossSelectedOtherProfile = otherGeneProfile.getAverageExpressionLevelOn(selectedFactorValues);
+
+            Ordering<Comparable> ordering = Ordering.natural();
+            return ordering.compare(averageAcrossSelectedFirstProfile, averageAcrossSelectedOtherProfile);
         }
 
-        Ordering<Comparable> specificityOrdering = isSpecific ? Ordering.natural().reverse() : Ordering.natural();
-        int order = specificityOrdering.compare(firstGeneProfile.getSpecificity(), otherGeneProfile.getSpecificity());
-        if (order != 0) {
-            return order;
-        }
-        if (!isSpecific || selectedFactorValues.equals(allFactorValues)) {
-            return Ordering.natural().compare(firstGeneProfile.getAverageExpressionLevelOn(selectedFactorValues)
-                    , otherGeneProfile.getAverageExpressionLevelOn(selectedFactorValues));
-        }
-        //ToDo: maybe the geneProfile should know by itself what are 'all organismParts'
-        return Ordering.natural().compare(firstGeneProfile.getWeightedExpressionLevelOn(selectedFactorValues, allFactorValues)
-                , otherGeneProfile.getWeightedExpressionLevelOn(selectedFactorValues, allFactorValues));
-
+        throw new IllegalArgumentException("Combination of isSpecific and selectedFactorValues is invalid!");
     }
 
 

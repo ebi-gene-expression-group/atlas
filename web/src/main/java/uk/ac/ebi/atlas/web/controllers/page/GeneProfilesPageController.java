@@ -48,6 +48,7 @@ import java.util.Set;
 public class GeneProfilesPageController {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
+
     private RankGeneProfilesCommand rankCommand;
 
     private ApplicationProperties applicationProperties;
