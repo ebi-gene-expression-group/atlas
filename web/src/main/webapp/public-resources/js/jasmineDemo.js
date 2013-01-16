@@ -1,6 +1,6 @@
 
 
-function a() {
+function hello() {
 
     "use strict";
 

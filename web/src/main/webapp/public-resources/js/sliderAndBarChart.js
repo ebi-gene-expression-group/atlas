@@ -1,10 +1,45 @@
 /*global $:false */
 
+//Object constructors and prototypes: MagnifiedScale
 
-function a() {
+function MagnifiedScale() {
     "use strict";
-    return "hello";
+
+    if (!(this instanceof MagnifiedScale)) {
+        return new MagnifiedScale();
+    }
 }
+
+MagnifiedScale.prototype.getNearestScaleValue = function (cutoff) {
+    "use strict";
+
+    if (cutoff >= 1) {
+        // Remove decimal places and replace all but first digit with zeros.
+        cutoff = Math.floor(cutoff);
+
+        var x = Math.pow(10, cutoff.toString().length - 1);
+        return (Math.floor(cutoff / x) * x).toFixed(0);
+
+    }
+
+    // val is somewhere from 0.1 to 0.9999...
+    return cutoff === 0 ? "0" : cutoff.toFixed(1);
+};
+
+MagnifiedScale.prototype.toString = function (value) {
+    "use strict";
+
+    if (value >= 1000000) {
+        return value / 1000000 + "M";
+    }
+    if (value >= 1000) {
+        return value / 1000 + "K";
+    }
+    return value.toString();
+};
+
+//---------------------------------------------------
+
 
 function hideGeneDistribution(isFast) {
     "use strict";
@@ -63,19 +98,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             (selectedFactorValues ? "for the selected experimental factors" : "in any experimental factor");
     }
 
-    function nearestScaledCutoff(cutoff) {
-        if (cutoff >= 1) {
-            // Remove decimal places and replace all but first digit with zeros.
-            cutoff = Math.floor(cutoff);
 
-            var x = Math.pow(10, cutoff.toString().length - 1);
-            return (Math.floor(cutoff / x) * x).toFixed(0);
-
-        }
-
-        // val is somewhere from 0.1 to 0.9999...
-        return cutoff == 0 ? "0" : cutoff.toFixed(1);
-    }
 
 
     function getNthScaledCutoff(position, fractionalDigits) {
@@ -102,16 +125,6 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             retVal = retVal.toFixed(fractionalDigits - 1);
         }
         return retVal;
-    }
-
-    function magnifiedValue(value) {
-        if (value >= 1000000) {
-            return value / 1000000 + "M";
-        }
-        if (value >= 1000) {
-            return value / 1000 + "K";
-        }
-        return value;
     }
 
     function plotCutoffBarChart(data, magnifiedScaledCutoffs) {
@@ -145,6 +158,8 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
         }
         , function (data) {
 
+            var magnifiedScale = new MagnifiedScale();
+
             //this is required because if you load the plot when the div is hidden
             //and then you display the div later the plot Y axis will be overlapping the Y ticks
             displayGeneDistribution(this, true);
@@ -163,11 +178,10 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
             }
 
-
             var ticksMap = [];
 
             $.each(scaledCutoffTicks, function (index, scaledCutoff) {
-                    ticksMap.push([index, index % 2 === 0 ? magnifiedValue(scaledCutoff).toString() : ""]);
+                    ticksMap.push([index, index % 2 === 0 ? magnifiedScale.toString(scaledCutoff) : ""]);
                 }
             );
 
@@ -223,7 +237,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
                 });
 
 
-            var scaledCutoff = nearestScaledCutoff(cutoff);
+            var scaledCutoff = magnifiedScale.getNearestScaleValue(cutoff);
 
             var scaledCutoffPosition = function () {
                 for (var i = 0; i < scaledCutoffTicks.length; i++) {
@@ -255,5 +269,5 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
         });
 
-
 }
+
