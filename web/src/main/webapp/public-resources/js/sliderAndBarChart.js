@@ -1,6 +1,6 @@
 /*global $:false */
 
-//Object constructors and prototypes: MagnifiedScale
+//MagnifiedScale: object constructor and function prototypes
 
 /*
  fractionalDigits determines the minimal scale granularity,
@@ -175,7 +175,6 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             //this is required because if you load the plot when the div is hidden
             //and then you display the div later the plot Y axis will be overlapping the Y ticks
             displayGeneDistribution(this, true);
-
 
             for (var i = 0; i < keys.length; i++) {
                 dataArray.push([i, data[keys[i]]]);
