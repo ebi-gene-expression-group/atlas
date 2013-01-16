@@ -41,14 +41,13 @@ public class GeneProfilesDownloadController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-        writeGeneProfilesCommand.setRequestPreferences(preferences);
-
-        FilterParameters filterParameters = new FilterParameters(preferences.getGeneQuery(),
-                preferences.getQueryFactorType(),
-                preferences.getQueryFactorValues(),
-                preferences.getFilterFactorValues(),
-                preferences.getCutoff());
-        writeGeneProfilesCommand.setFilterParameters(filterParameters);
+        FilterParameters parameters = new FilterParameters();
+        parameters.setGeneQuery(preferences.getGeneQuery())
+                .setQueryFactorType(preferences.getQueryFactorType())
+                .setQueryFactorValues(preferences.getQueryFactorValues())
+                .setFilterFactorValues(preferences.getFilterFactorValues())
+                .setCutoff(preferences.getCutoff());
+        writeGeneProfilesCommand.setParameters(parameters);
 
         CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', NO_QUOTE_CHARACTER);
 

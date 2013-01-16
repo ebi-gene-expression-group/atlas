@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.RankingParameters;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
@@ -69,15 +69,16 @@ public class GeneProfilesPageController {
 
         if (!result.hasErrors()) {
 
-            FilterParameters filterParameters = new FilterParameters(preferences.getGeneQuery(),
-                    preferences.getQueryFactorType(),
-                    preferences.getQueryFactorValues(),
-                    preferences.getFilterFactorValues(),
-                    preferences.getCutoff());
+            RankingParameters parameters = new RankingParameters();
+            parameters.setGeneQuery(preferences.getGeneQuery())
+                    .setQueryFactorType(preferences.getQueryFactorType())
+                    .setQueryFactorValues(preferences.getQueryFactorValues())
+                    .setFilterFactorValues(preferences.getFilterFactorValues())
+                    .setCutoff(preferences.getCutoff());
+            parameters.setSpecific(preferences.isSpecific());
+            parameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
 
-            rankCommand.setFilterParameters(filterParameters);
-
-            rankCommand.setRequestPreferences(preferences);
+            rankCommand.setParameters(parameters);
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
 
@@ -96,18 +97,18 @@ public class GeneProfilesPageController {
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             // this formats the default factor type for display on web page
-            String queryFactorType = filterParameters.getQueryFactorType();
+            String queryFactorType = parameters.getQueryFactorType();
             if (queryFactorType == null || queryFactorType.trim().length() == 0)
                 queryFactorType = experiment.getDefaultFactorType();
             queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
             queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
             model.addAttribute("formattedQueryFactorType", queryFactorType);
 
-            model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
+            model.addAttribute("allFactorValues", experiment.getFactorValues(parameters.getQueryFactorType()));
 
-            Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
+            Set<FactorValue> filterByFactorValues = parameters.getFilterFactorValues();
             model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
-                    filterParameters.getQueryFactorType()));
+                    parameters.getQueryFactorType()));
 
             String specie = experiment.getSpecie();
 

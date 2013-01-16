@@ -81,7 +81,7 @@ public class GeneProfilesInputStreamIT {
                 .addFactorValue("ORGANISM_PART", "org", "lung");
 
         when(experimentRunsAccessionsMock.contains(anyString())).thenReturn(true);
-        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock, "ORGANISM_PART")
+        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock, "ORGANISM_PART", "homo sapiens")
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(cacheMock.getExperiment(anyString())).thenReturn(experiment);

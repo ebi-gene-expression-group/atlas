@@ -34,8 +34,7 @@ public class IncludingNonSelectedGenesAndCutoff05AndBrainAndBreastIT extends Sel
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
-            + "&includeGenesExpressedOnNonSelectedFactorValues=true"
-            + "&rankGenesExpressedOnMostFactorsLast=false";
+            + "&specific=false";
 
     private static final String HIGHER_RANKING_GENE = "TMSB10";
     private static final String LOWER_RANKING_GENE = "RTN4";

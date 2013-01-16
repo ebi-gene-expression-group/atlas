@@ -38,9 +38,12 @@ public class RequestPreferences {
     static final double DEFAULT_CUTOFF = 0.5d;
     private static final String DEFAULT_GENE_QUERY_STRING = "protein_coding";
 
-    @NotNull
-    @Range(min = 0, max = 1000)
-    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
+    private NumberUtils numberUtils = new NumberUtils();
+
+
+    @Size(max = 900,
+            message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
+    private String geneQuery = DEFAULT_GENE_QUERY_STRING;
 
     @Min(value = 0, message = "The expression level cutoff must be greater than 0")
     private Double cutoff = DEFAULT_CUTOFF;
@@ -51,17 +54,16 @@ public class RequestPreferences {
 
     private SortedSet<String> queryFactorValues;
 
-    private boolean rankGenesExpressedOnMostFactorsLast = true;
 
-    @Size(max = 900,
-            message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
-    private String geneQuery = DEFAULT_GENE_QUERY_STRING;
+    @NotNull
+    @Range(min = 0, max = 1000)
+    private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
+
+    private boolean isSpecific = true;
 
     private boolean displayLevels;
 
     private boolean displayGeneDistribution;
-
-    private NumberUtils numberUtils = new NumberUtils();
 
 
     public String getQueryFactorType() {
@@ -113,12 +115,12 @@ public class RequestPreferences {
         this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
     }
 
-    public boolean isRankGenesExpressedOnMostFactorsLast() {
-        return this.rankGenesExpressedOnMostFactorsLast;
+    public boolean isSpecific() {
+        return this.isSpecific;
     }
 
-    public void setRankGenesExpressedOnMostFactorsLast(boolean rankGenesExpressedOnMostFactorsLast) {
-        this.rankGenesExpressedOnMostFactorsLast = rankGenesExpressedOnMostFactorsLast;
+    public void setSpecific(boolean specific) {
+        this.isSpecific = specific;
     }
 
     public boolean getDisplayLevels() {

@@ -58,16 +58,10 @@
                                          cssStyle="width:350px;display:none"/>
                         </span>
                     </div>
-                        <%--<span>--%>
-                        <%--<input type="checkbox" id="includeGenesExpressedOnNonSelectedFactorValuesCheckbox"/>--%>
-                        <%--<label for="includeGenesExpressedOnNonSelectedFactorValuesCheckbox">--%>
-                        <%--Include genes expressed in non-selected organism parts--%>
-                        <%--</label>--%>
-                        <%--</span>--%>
                     <span>
-                        <form:checkbox id="rankGenesExpressedOnMostFactorsLast"
-                                       path="rankGenesExpressedOnMostFactorsLast"
-                                       label="Report genes expressed in the most organism parts last"></form:checkbox>
+                        <form:checkbox id="specific"
+                                       path="specific"
+                                       label="Specific"></form:checkbox>
                     </span>
                 </td>
                 <td>

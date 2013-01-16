@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
+public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParameters> implements Function<String, T> {
     private static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
 
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
@@ -48,7 +48,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
     private ExperimentsCache experimentsCache;
 
-    protected FilterParameters filterParameters;
+    protected F filterParameters;
 
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
@@ -65,7 +65,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         this.experimentsCache = experimentsCache;
     }
 
-    public void setFilterParameters(FilterParameters filterParameters) {
+    public void setParameters(F filterParameters) {
         this.filterParameters = filterParameters;
     }
 

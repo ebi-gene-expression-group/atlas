@@ -41,12 +41,15 @@ public class FilterParameters {
 
     private String queryFactorType;
 
-    public FilterParameters(String geneQuery, String queryFactorType, Set<String> queryFactorValues, Set<String> filterFactorValues, Double cutoff) {
+    public FilterParameters() {
+    }
 
-        this.geneQuery = geneQuery;
-        this.queryFactorType = queryFactorType;
+    public FilterParameters setQueryFactorValues(Set<String> queryFactorValues) {
         this.queryFactorValues = queryFactorValues;
-        this.cutoff = cutoff;
+        return this;
+    }
+
+    public FilterParameters setFilterFactorValues(Set<String> filterFactorValues) {
         this.filterFactorValues = new HashSet<>();
 
         //ToDo: verify that null check needed
@@ -58,6 +61,23 @@ public class FilterParameters {
                 }
             }
         }
+
+        return this;
+    }
+
+    public FilterParameters setCutoff(Double cutoff) {
+        this.cutoff = cutoff;
+        return this;
+    }
+
+    public FilterParameters setGeneQuery(String geneQuery) {
+        this.geneQuery = geneQuery;
+        return this;
+    }
+
+    public FilterParameters setQueryFactorType(String queryFactorType) {
+        this.queryFactorType = queryFactorType;
+        return this;
     }
 
     public boolean hasGenesForQuery() {

@@ -31,9 +31,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import java.util.SortedSet;
 
@@ -49,7 +49,7 @@ public class WriteGeneProfilesCommandTest {
     @Mock
     private ObjectInputStream<GeneProfile> inputStreamMock;
     @Mock
-    private RequestPreferences requestPreferencesMock;
+    private FilterParameters filterParametersMock;
     @Mock
     private CSVWriter csvWriterMock;
     @Mock
@@ -65,7 +65,7 @@ public class WriteGeneProfilesCommandTest {
     public void initMocks() {
         SortedSet<String> organismParts = Sets.newTreeSet(Sets.newHashSet("adipose", "brain", "breast", "liver", "lung"));
 
-        when(requestPreferencesMock.getQueryFactorValues()).thenReturn(organismParts);
+        when(filterParametersMock.getQueryFactorValues()).thenReturn(organismParts);
 
         when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
                 .thenReturn(geneProfileMock2)
@@ -86,7 +86,7 @@ public class WriteGeneProfilesCommandTest {
     @Before
     public void initSubject() throws Exception {
         subject = new WriteGeneProfilesCommand(new NumberUtils());
-        subject.setRequestPreferences(requestPreferencesMock);
+        subject.setParameters(filterParametersMock);
         subject.setCsvWriter(csvWriterMock);
     }
 
