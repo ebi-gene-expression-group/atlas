@@ -80,14 +80,14 @@ function hideGeneDistribution(isFast) {
     "use strict";
 
     $('#gene-distribution-panel').hide(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content:"Display gene distribution"});
+    $("#display-chart").tooltip({content : "Display gene distribution"});
 }
 
 function displayGeneDistribution(isFast) {
     "use strict";
 
     $('#gene-distribution-panel').show(isFast ? null : 'slow');
-    $("#display-chart").tooltip({content:"Hide gene distribution"});
+    $("#display-chart").tooltip({content : "Hide gene distribution"});
 }
 
 
@@ -136,47 +136,46 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
     function plotCutoffBarChart(data, magnifiedScaledCutoffs) {
         return $.plot($("#gene-distribution"), [ data ], {
-            series:{
-                highlightColor:"red",
+            series : {
+                highlightColor : "red",
 
-                label:buildLegendaText(),
+                label : buildLegendaText(),
 
-                bars:{
-                    show:true,
-                    barWidth:.8
+                bars : {
+                    show : true,
+                    barWidth : 0.8
                 }
             },
-            xaxis:{
-                tickLength:3,
-                ticks:magnifiedScaledCutoffs
+            xaxis : {
+                tickLength : 3,
+                ticks : magnifiedScaledCutoffs
             },
-            grid:{
-                borderColor:"#CDCDCD",
-                borderWidth:1,
-                hoverable:true,
-                clickable:true
+            grid : {
+                borderColor : "#CDCDCD",
+                borderWidth : 1,
+                hoverable : true,
+                clickable : true
             }
         });
     }
 
     $.getJSON("json/barchart/" + experimentAccession,
         {
-            queryFactorValues:selectedFactorValues
+            queryFactorValues : selectedFactorValues
         },
         function (data) {
 
             var magnifiedScale = new MagnifiedScale(1),
                 previousPoint = null,
-                scaledCutoff = magnifiedScale.getNearestScaleValue(cutoff);
-
+                scaledCutoff = magnifiedScale.getNearestScaleValue(cutoff),
+                keys = Object.keys(data),
+                scaledCutoffTicks = [],
+                dataArray = [];
 
             //this is required because if you load the plot when the div is hidden
             //and then you display the div later the plot Y axis will be overlapping the Y ticks
             displayGeneDistribution(this, true);
 
-            var keys = Object.keys(data);
-            var scaledCutoffTicks = [];
-            var dataArray = [];
 
             for (var i = 0; i < keys.length; i++) {
                 dataArray.push([i, data[keys[i]]]);
@@ -221,7 +220,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
                     $("#y").text(pos.y.toFixed(2));
 
                     if (item) {
-                        if (previousPoint != item.datapoint) {
+                        if (previousPoint !== item.datapoint) {
                             previousPoint = item.datapoint;
 
                             $("#barChartTooltip").remove();
