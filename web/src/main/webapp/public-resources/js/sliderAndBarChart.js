@@ -1,26 +1,43 @@
 /*global $:false */
 
-function hideGeneDistribution(img, isFast) {
+
+function a() {
+    "use strict";
+    return "hello";
+}
+
+function hideGeneDistribution(isFast) {
+    "use strict";
+
     $('#gene-distribution-panel').hide(isFast ? null : 'slow');
     $("#display-chart").tooltip({content:"Display gene distribution"});
 }
 
-function displayGeneDistribution(img, isFast) {
+function displayGeneDistribution(isFast) {
+    "use strict";
+
     $('#gene-distribution-panel').show(isFast ? null : 'slow');
     $("#display-chart").tooltip({content:"Hide gene distribution"});
 }
 
-function hideOrDisplayGeneDistribution(isFast) {
-    var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
-    if (isDisplayEnabled == "true") {
-        displayGeneDistribution(this, isFast);
-    } else {
-        hideGeneDistribution(this, isFast);
-    }
 
+function hideOrDisplayGeneDistribution(isFast) {
+
+    "use strict";
+
+    var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
+
+    if (isDisplayEnabled === "true") {
+        displayGeneDistribution(isFast);
+    } else {
+        hideGeneDistribution(isFast);
+    }
 }
 
+
 function initBarChartButton() {
+
+    "use strict";
 
     $("#display-chart").button().click(function () {
 
@@ -39,10 +56,11 @@ function initBarChartButton() {
 }
 
 function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
+    "use strict";
 
     function buildLegendaText() {
-        return "Y = number of genes expressed above the given FPKM cutoff "
-            + (selectedFactorValues ? "for the selected experimental factors" : "in any experimental factor");
+        return "Y = number of genes expressed above the given FPKM cutoff " +
+            (selectedFactorValues ? "for the selected experimental factors" : "in any experimental factor");
     }
 
     function nearestScaledCutoff(cutoff) {
@@ -53,11 +71,10 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             var x = Math.pow(10, cutoff.toString().length - 1);
             return (Math.floor(cutoff / x) * x).toFixed(0);
 
-        } else {
-
-            // val is somewhere from 0.1 to 0.9999...
-            return cutoff == 0 ? "0" : cutoff.toFixed(1);
         }
+
+        // val is somewhere from 0.1 to 0.9999...
+        return cutoff == 0 ? "0" : cutoff.toFixed(1);
     }
 
 
@@ -137,12 +154,13 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             var dataArray = [];
 
             for (var i = 0; i < keys.length; i++) {
-                if (keys[i] > 0 && keys[i] < 1) {
-                    scaledCutoffTicks.push(keys[i]);
-                } else {
-                    scaledCutoffTicks.push(Math.round(keys[i]));
-                }
                 dataArray.push([i, data[keys[i]]]);
+                var scaledCutoffTickValue = parseFloat(keys[i]);
+                if (scaledCutoffTickValue === 0 || scaledCutoffTickValue >= 1) {
+                    scaledCutoffTickValue = Math.round(scaledCutoffTickValue);
+                }
+                scaledCutoffTicks.push(scaledCutoffTickValue.toString());
+
             }
 
 

@@ -1,4 +1,8 @@
+/*global $:false */
+
 function initHeatmapDisplayValueToggle() {
+
+    "use strict";
 
     function showCellValue(div) {
         $(div).removeClass("hide_cell");
@@ -61,8 +65,7 @@ function initHeatmapDisplayValueToggle() {
         },function () {
             $("#sort-toggle-image").attr("src", "resources/images/sort-most-on-top.png");
             $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts first");
-        }).attr("title"," ").tooltip();
-
+        }).attr("title", " ").tooltip();
 
 
 }
