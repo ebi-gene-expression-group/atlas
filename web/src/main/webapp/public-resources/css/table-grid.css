@@ -89,9 +89,9 @@
     padding: 2px;
 }
 
-/*next class is a nasty patch to avoid margin on IE7 only*/
-*+html .show_cell {
-    margin:0px;
+/*next is a css hack patch that only gets enabled on IE7. It removes margins, that do not display properly in IE7.*/
+* + html .show_cell {
+    MARGIN-right: 0px; padding:0px;width:100%; display:inline;
 }
 
 .hide_cell {
