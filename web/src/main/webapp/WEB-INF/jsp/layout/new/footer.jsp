@@ -62,7 +62,7 @@
                 <p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp;
                     &nbsp; +44 (0)1223 49 44 44</p>
 
-                <p>Copyright &copy; EMBL-EBI 2012 | EBI is an Outstation of the <a href="http://www.embl.org">European
+                <p>Copyright &copy; EMBL-EBI 2013 | EBI is an Outstation of the <a href="http://www.embl.org">European
                     Molecular Biology Laboratory​</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a>
                     | <a href="/about/terms-of-use">Terms of use</a></p>
             </div>
