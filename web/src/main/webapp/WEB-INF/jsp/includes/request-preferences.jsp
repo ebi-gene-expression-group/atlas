@@ -48,34 +48,6 @@
                     </div>
                 </td>
                 <td>
-                    <ul id="filterBy">
-                        <c:forEach items="${filterByMenu}" var="level1">
-                            <li>
-                                <a href="#">${level1.key}</a>
-                                <ul>
-                                    <c:forEach items="${level1.value}" var="level2">
-                                        <li>
-                                            <a href="#">${level2.key}</a>
-                                            <ul>
-                                                <c:forEach items="${level2.value}" var="level3">
-                                                    <li>
-                                                        <a href="#">${level3.key}</a>
-                                                        <ul>
-                                                            <c:forEach items="${level3.value}" var="link">
-                                                                <li><a href="#">${link}</a></li>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </td>
-                <td>
                     <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
                             <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
@@ -92,6 +64,40 @@
                                        path="specific"
                                        label="Specific"></form:checkbox>
                     </span>
+                    <div class="tooltip-div">
+                        <span>
+                        <ul id="filterBy">
+                            <li><a href="#">Filter By</a>
+                                <ul>
+                                    <c:forEach items="${filterByMenu}" var="level1">
+                                        <li>
+                                            <a href="#">${level1.key}</a>
+                                            <ul>
+                                                <c:forEach items="${level1.value}" var="level2">
+                                                    <li>
+                                                        <a href="#">${level2.key}</a>
+                                                        <ul>
+                                                            <c:forEach items="${level2.value}" var="level3">
+                                                                <li>
+                                                                    <a href="#">${level3.key}</a>
+                                                                    <ul>
+                                                                        <c:forEach items="${level3.value}" var="link">
+                                                                            <li><a href="#">${link}</a></li>
+                                                                        </c:forEach>
+                                                                    </ul>
+                                                                </li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </li>
+                        </ul>
+                        </span>
+                    </div>
                 </td>
                 <td>
                     <div class="tooltip-div" data-help-loc="#cutoff">
