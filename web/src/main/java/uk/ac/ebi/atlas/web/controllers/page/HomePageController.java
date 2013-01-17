@@ -32,10 +32,7 @@ import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Scope("singleton")
@@ -47,7 +44,8 @@ public class HomePageController {
 
     private Map<String, Double> counts;
 
-    private Map<String, List<String>> speciesToExperiments;
+    // species > experiment acc > link
+    private Map<String, SortedMap<String, String>> speciesToExperiments;
 
     @Inject
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
@@ -99,8 +97,10 @@ public class HomePageController {
                 totalNumberExperiments++;
 
                 if (!speciesToExperiments.containsKey(experiment.getSpecie()))
-                    speciesToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
-                speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
+                    speciesToExperiments.put(experiment.getSpecie(), new TreeMap<String, String>());
+
+                String link = buildLinkForExperiment(experiment);
+                speciesToExperiments.get(experiment.getSpecie()).put(experimentAccession, link);
 
                 // count per experiment and sum across all experiments, using experiment default factor value
                 for (String defaultFactorValue : experiment.getFactorValues(null)) {
@@ -116,6 +116,10 @@ public class HomePageController {
         for (String factor : counts.keySet()) {
             counts.put(factor, counts.get(factor) / totalNumberExperiments);
         }
+    }
+
+    private String buildLinkForExperiment(Experiment experiment) {
+        return "experiments/" + experiment.getExperimentAccession();
     }
 
     private class WordWeight {

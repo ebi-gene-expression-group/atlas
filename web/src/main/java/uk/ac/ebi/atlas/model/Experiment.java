@@ -38,7 +38,8 @@ public class Experiment {
     private String description;
     private String specie;
 
-    private String defaultFactorType;
+    private String defaultQueryFactorType;
+    private Set<FactorValue> defaultFilterFactorTypes;
     private Map<String, SortedSet<String>> factorValuesByType = new HashMap<>();
 
     private SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = new TreeMap<>();
@@ -48,16 +49,21 @@ public class Experiment {
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultFactorType, String specie) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultQueryFactorType, Set<FactorValue> defaultFilterFactorTypes, String specie) {
         this.experimentAccession = experimentAccession;
         this.description = description;
         this.experimentRunAccessions = experimentRunAccessions;
-        this.defaultFactorType = defaultFactorType;
+        this.defaultQueryFactorType = defaultQueryFactorType;
+        this.defaultFilterFactorTypes = defaultFilterFactorTypes;
         this.specie = specie;
     }
 
-    public String getDefaultFactorType() {
-        return defaultFactorType;
+    public String getDefaultQueryFactorType() {
+        return defaultQueryFactorType;
+    }
+
+    public Set<FactorValue> getDefaultFilterFactorValues() {
+        return defaultFilterFactorTypes;
     }
 
     public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
@@ -129,13 +135,13 @@ public class Experiment {
 
     public SortedSet<String> getFactorValues(String byType) {
         if (byType == null || byType.trim().length() == 0)
-            byType = this.getDefaultFactorType();
+            byType = this.getDefaultQueryFactorType();
         return factorValuesByType.get(byType);
     }
 
     public SortedSet<String> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
         if (byType == null || byType.trim().length() == 0)
-            byType = this.getDefaultFactorType();
+            byType = this.getDefaultQueryFactorType();
 
         SortedSet<String> results = new TreeSet<>();
 
