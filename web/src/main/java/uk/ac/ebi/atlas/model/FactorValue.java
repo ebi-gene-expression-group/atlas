@@ -62,7 +62,7 @@ public class FactorValue implements Comparable<FactorValue> {
 
     @Override
     public int compareTo(FactorValue factorValue) {
-        int factorCompare = name.compareTo(factorValue.name);
+        int factorCompare = type.compareTo(factorValue.type);
         if (factorCompare != 0) {
             return factorCompare;
         }

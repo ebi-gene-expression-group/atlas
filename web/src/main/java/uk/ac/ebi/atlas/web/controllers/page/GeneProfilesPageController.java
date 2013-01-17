@@ -41,7 +41,7 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @Scope("request")
@@ -118,6 +118,52 @@ public class GeneProfilesPageController {
             model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, false));
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
+
+            String defaultFactorType = experiment.getDefaultFactorType();
+
+            SortedMap<String, SortedSet<FactorValue>> allFactorTypes = new TreeMap<>();
+
+            SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = experiment.getValidFactorValueCombinations();
+            for (FactorValue key : validFactorValueCombinations.keySet()) {
+                if (!allFactorTypes.containsKey(key.getType()))
+                    allFactorTypes.put(key.getName(), new TreeSet<FactorValue>());
+                allFactorTypes.get(key.getName()).add(key);
+            }
+
+            // build filter by menu map here
+            SortedMap<String, SortedMap<String, SortedMap<String, SortedSet<String>>>> filterByMenu = new TreeMap<>();
+            for (String firstFactorType : allFactorTypes.keySet()) {
+                // first level: factor type
+                if (!filterByMenu.containsKey(firstFactorType))
+                    filterByMenu.put(firstFactorType, new TreeMap<String, SortedMap<String, SortedSet<String>>>());
+                // second level: factor value choices per factor type, all are valid
+                for (FactorValue firstFactorValue : allFactorTypes.get(firstFactorType)) {
+                    SortedMap<String, SortedSet<String>> secondFilterFactorValue = new TreeMap<>();
+                    filterByMenu.get(firstFactorType).put(firstFactorValue.getValue(), secondFilterFactorValue);
+
+                    // index by remaining factor types
+                    SortedMap<String, SortedSet<FactorValue>> secondFactorTypes = new TreeMap<>();
+                    for (FactorValue secondFactorValue : validFactorValueCombinations.get(firstFactorValue)) {
+                        if (!firstFactorType.equals(secondFactorValue.getName())) {
+                            if (!secondFactorTypes.containsKey(secondFactorValue.getName()))
+                                secondFactorTypes.put(secondFactorValue.getName(), new TreeSet<FactorValue>());
+                            secondFactorTypes.get(secondFactorValue.getName()).add(secondFactorValue);
+                        }
+                    }
+
+                    for (String secondFactorType : secondFactorTypes.keySet()) {
+                        // third level: factor type
+                        if (!secondFilterFactorValue.containsKey(secondFactorType))
+                            secondFilterFactorValue.put(secondFactorType, new TreeSet<String>());
+                        // forth level: factor value choices for remaining factor type
+                        for (FactorValue secondFactorValue : secondFactorTypes.get(secondFactorType)) {
+                            secondFilterFactorValue.get(secondFactorType).add(secondFactorValue.getValue());
+                        }
+                    }
+                }
+            }
+
+            model.addAttribute("filterByMenu", filterByMenu);
 
         }
 

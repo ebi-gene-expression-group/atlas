@@ -41,6 +41,8 @@ public class Experiment {
     private String defaultFactorType;
     private Map<String, SortedSet<String>> factorValuesByType = new HashMap<>();
 
+    private SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = new TreeMap<>();
+
     private Set<String> experimentRunAccessions;
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
@@ -63,13 +65,24 @@ public class Experiment {
             if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
                 this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
                 // index all possible factor values by their byType
-                for (FactorValue factorValue : experimentRun.getFactorValues()) {
+                FactorValue[] factorValues = experimentRun.getFactorValues().toArray(new FactorValue[0]);
+                for (int i = 0; i < factorValues.length; i++) {
+                    FactorValue factorValue = factorValues[i];
                     String type = factorValue.getType();
                     String value = factorValue.getValue();
                     if (!factorValuesByType.containsKey(type)) {
                         factorValuesByType.put(type, new TreeSet<String>());
                     }
                     factorValuesByType.get(type).add(value);
+
+                    // track all valid combinations for filterFactorValues
+                    if (!validFactorValueCombinations.containsKey(factorValue))
+                        validFactorValueCombinations.put(factorValue, new TreeSet<FactorValue>());
+                    for (int j = 0; j < factorValues.length; j++) {
+                        if (i != j) {
+                            validFactorValueCombinations.get(factorValue).add(factorValues[j]);
+                        }
+                    }
                 }
             }
         }
@@ -143,4 +156,7 @@ public class Experiment {
         return results;
     }
 
+    public SortedMap<FactorValue, SortedSet<FactorValue>> getValidFactorValueCombinations() {
+        return validFactorValueCombinations;
+    }
 }
