@@ -89,6 +89,11 @@
     padding: 2px;
 }
 
+/*next class is a nasty patch to avoid margin on IE7 only*/
+*+html .show_cell {
+    margin:0px;
+}
+
 .hide_cell {
     display: none;
     visibility: hidden;
