@@ -49,7 +49,7 @@
                 </td>
                 <td>
                     <span>
-                            <label> what to put here? the selected dimensions? </label>
+                            <label>${filterByLabel}</label>
                     </span>
                     <span>
                         <ul id="filterBy">
@@ -95,7 +95,7 @@
                             <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
                                          items="${heatmapFactorValues}" cssClass="chzn-select"
-                                         cssStyle="width:350px;display:none"/>
+                                         cssStyle="width:300px;display:none"/>
                         </span>
                     </div>
                     <span>

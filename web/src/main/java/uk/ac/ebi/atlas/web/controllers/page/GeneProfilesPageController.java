@@ -179,6 +179,23 @@ public class GeneProfilesPageController {
 
             model.addAttribute("filterByMenu", filterByMenu);
 
+            // construct label above filter by menu
+            SortedSet<String> labels = new TreeSet<>();
+            for (String name : allFactorNames.keySet()) {
+                for (FactorValue factorValue : allFactorNames.get(name)) {
+                    // this is necessary because what comes back from RequestPreferences are not "complete" FactorValues
+                    // they are missing the factor name
+                    if (parameters.getFilterFactorValues().contains(factorValue)) {
+                        labels.add(name + ":" + factorValue.getValue());
+                    }
+                }
+            }
+
+            // can be done better
+            String label = labels.toString().replaceAll("\\[", "").replaceAll("\\]", "");
+            if (label.trim().length() == 0)
+                label = "defaults";
+            model.addAttribute("filterByLabel", "Filtered by " + label);
         }
 
         return "experiment";
