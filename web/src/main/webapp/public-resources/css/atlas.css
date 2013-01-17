@@ -155,6 +155,11 @@ a:active {
     box-shadow: 0 0 7px black;
 }
 
+.ui-menu {
+    width: 120px;
+    z-index:100;
+}
+
 /*
 Set sensible minimum heights for small and large screens
 */

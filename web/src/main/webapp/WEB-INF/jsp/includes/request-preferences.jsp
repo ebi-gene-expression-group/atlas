@@ -48,24 +48,10 @@
                     </div>
                 </td>
                 <td>
-                    <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
-                        <span>
-                            <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
-                        </span>
-                        <span>
-                            <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
-                                         tabindex="-1"
-                                         items="${heatmapFactorValues}" cssClass="chzn-select"
-                                         cssStyle="width:350px;display:none"/>
-                        </span>
-                    </div>
                     <span>
-                        <form:checkbox id="specific"
-                                       path="specific"
-                                       label="Specific"></form:checkbox>
+                            <label> what to put here? the selected dimensions? </label>
                     </span>
-                    <div class="tooltip-div">
-                        <span>
+                    <span>
                         <ul id="filterBy">
                             <li><a href="#">Filter By</a>
                                 <ul>
@@ -82,7 +68,9 @@
                                                                     <a href="#">${level3.key}</a>
                                                                     <ul>
                                                                         <c:forEach items="${level3.value}" var="link">
-                                                                            <li><a href="#">${link}</a></li>
+                                                                            <li>
+                                                                                <a href="#">${link}</a>
+                                                                            </li>
                                                                         </c:forEach>
                                                                     </ul>
                                                                 </li>
@@ -96,9 +84,25 @@
                                 </ul>
                             </li>
                         </ul>
+                    </span>
+                </td>
+                <td>
+                    <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
+                        <span>
+                            <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
+                        </span>
+                        <span>
+                            <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
+                                         tabindex="-1"
+                                         items="${heatmapFactorValues}" cssClass="chzn-select"
+                                         cssStyle="width:350px;display:none"/>
                         </span>
                     </div>
-                </td>
+                    <span>
+                        <form:checkbox id="specific"
+                                       path="specific"
+                                       label="Specific"></form:checkbox>
+                    </span>
                 <td>
                     <div class="tooltip-div" data-help-loc="#cutoff">
                         <span>
@@ -156,6 +160,12 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#filterBy").menu();
+        $("#filterBy").menu({
+            select : function(event, ui){
+                event.preventDefault();
+                return false;
+            }
+        }).zIndex(100);
     });
+
 </script>
