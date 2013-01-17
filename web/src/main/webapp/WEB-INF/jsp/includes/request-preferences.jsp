@@ -56,7 +56,8 @@
                     <span style="width:200px;
                                 border-style: solid;
                                 border-width: 1px;
-                                border-color: lightgray;">
+                                border-color: lightgray;
+                                margin:2px;">
                             ${filterByLabel}
                     </span>
                             </div>
