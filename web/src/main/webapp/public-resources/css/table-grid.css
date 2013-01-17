@@ -91,7 +91,7 @@
 
 /*next is a css hack patch that only gets enabled on IE7. It removes margins, that do not display properly in IE7.*/
 * + html .show_cell {
-    MARGIN-right: 0px; padding:0px;width:100%; display:inline;
+    PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 100%; PADDING-TOP: 0px
 }
 
 .hide_cell {
