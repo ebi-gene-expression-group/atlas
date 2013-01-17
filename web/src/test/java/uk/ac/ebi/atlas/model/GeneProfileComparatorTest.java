@@ -40,9 +40,11 @@ public class GeneProfileComparatorTest {
         when(geneWithSpecificity1.getSpecificity()).thenReturn(1);
         when(geneWithSpecificity1.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(5D);
         when(geneWithSpecificity1.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(5D);
+
         when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(10D);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(2D);
+
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(0D);
     }
@@ -93,6 +95,10 @@ public class GeneProfileComparatorTest {
 
     @Test
     public void higherAverageAcrossSelectedTissuesMinusAverageNonSelected() {
+
+        when(geneWithSpecificity1.getWeightedExpressionLevelOn(selectedOrganismParts,allOrganismParts)).thenReturn(5D);
+        when(geneWithSpecificity16.getWeightedExpressionLevelOn(selectedOrganismParts, allOrganismParts)).thenReturn(2D);
+
 
         subject = new GeneProfileComparator(true, selectedOrganismParts, allOrganismParts);
 
