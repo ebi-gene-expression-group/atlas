@@ -65,6 +65,12 @@ public class FilterParameters {
         return this;
     }
 
+    // TODO: this method might get redundant when changing everything to FactorValue
+    public FilterParameters setFilterFactorValuesObjects(Set<FactorValue> filterFactorValues) {
+        this.filterFactorValues = filterFactorValues;
+        return this;
+    }
+
     public FilterParameters setCutoff(Double cutoff) {
         this.cutoff = cutoff;
         return this;

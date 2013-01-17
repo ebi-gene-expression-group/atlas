@@ -28,7 +28,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
@@ -100,7 +99,7 @@ public class HomePageController {
                 if (!speciesToExperiments.containsKey(experiment.getSpecie()))
                     speciesToExperiments.put(experiment.getSpecie(), new TreeMap<String, String>());
 
-                String link = buildLinkWithFilterFactorValues(experiment);
+                String link = buildLinkForExperiment(experiment);
                 speciesToExperiments.get(experiment.getSpecie()).put(experimentAccession, link);
 
                 // count per experiment and sum across all experiments, using experiment default factor value
@@ -119,12 +118,8 @@ public class HomePageController {
         }
     }
 
-    private String buildLinkWithFilterFactorValues(Experiment experiment) {
-        String filterBy = "";
-        for (FactorValue factorValue : experiment.getDefaultFilterFactorValues()) {
-            filterBy += "&filterFactorValues=" + factorValue.getType() + ":" + factorValue.getValue();
-        }
-        return "experiments/" + experiment.getExperimentAccession() + "?queryFactorType=" + experiment.getDefaultQueryFactorType() + filterBy;
+    private String buildLinkForExperiment(Experiment experiment) {
+        return "experiments/" + experiment.getExperimentAccession();
     }
 
     private class WordWeight {

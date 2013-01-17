@@ -70,14 +70,30 @@ public class GeneProfilesPageController {
 
         if (!result.hasErrors()) {
 
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
             RankingParameters parameters = new RankingParameters();
             parameters.setGeneQuery(preferences.getGeneQuery())
-                    .setQueryFactorType(preferences.getQueryFactorType())
                     .setQueryFactorValues(preferences.getQueryFactorValues())
-                    .setFilterFactorValues(preferences.getFilterFactorValues())
                     .setCutoff(preferences.getCutoff());
             parameters.setSpecific(preferences.isSpecific());
             parameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
+
+            // check for query factor type present, otherwise use default
+            if (preferences.getQueryFactorType() == null ||
+                    preferences.getQueryFactorType().trim().length() == 0) {
+                parameters.setQueryFactorType(experiment.getDefaultQueryFactorType());
+            } else {
+                parameters.setQueryFactorType(preferences.getQueryFactorType());
+            }
+
+            // check for filter factor values present, otherwise use default
+            if (preferences.getFilterFactorValues() == null ||
+                    preferences.getFilterFactorValues().size() == 0) {
+                parameters.setFilterFactorValuesObjects(experiment.getDefaultFilterFactorValues());
+            } else {
+                parameters.setFilterFactorValues(preferences.getFilterFactorValues());
+            }
 
             rankCommand.setParameters(parameters);
 
@@ -95,15 +111,7 @@ public class GeneProfilesPageController {
 
             model.addAttribute("experimentAccession", experimentAccession);
 
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-            // this formats the default factor type for display on web page
-            String queryFactorType = parameters.getQueryFactorType();
-            if (queryFactorType == null || queryFactorType.trim().length() == 0)
-                queryFactorType = experiment.getDefaultQueryFactorType();
-            queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
-            queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
-            model.addAttribute("formattedQueryFactorType", queryFactorType);
+            model.addAttribute("formattedQueryFactorType", formatQueryFactorType(parameters.getQueryFactorType()));
 
             model.addAttribute("allFactorValues", experiment.getFactorValues(parameters.getQueryFactorType()));
 
@@ -199,6 +207,13 @@ public class GeneProfilesPageController {
         }
 
         return "experiment";
+    }
+
+    String formatQueryFactorType(String queryFactorType) {
+        // this formats the default factor type for display on web page
+        queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
+        queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
+        return queryFactorType;
     }
 
     String buildFilterFactorValueURL(HttpServletRequest request, String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {

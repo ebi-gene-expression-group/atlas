@@ -88,16 +88,20 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
-        // TODO: takes first experimental factor type as default
+        // this is a fall-back in case factors file is missing
         String defaultQueryFactorType = investigation.IDF.experimentalFactorType.get(0).replaceAll(" ", "_").toUpperCase();
 
         Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
-        for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
-            if (line.length == 2) {
-                defaultFilterFactorValues.add(FactorValue.createFactorValue(line));
-            } else {
-                defaultQueryFactorType = line[0];
+        try {
+            for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
+                if (line.length == 2) {
+                    defaultFilterFactorValues.add(FactorValue.createFactorValue(line));
+                } else {
+                    defaultQueryFactorType = line[0];
+                }
             }
+        } catch (IllegalStateException ise) {
+            LOGGER.error("Factors file missing for experiment accession " + experimentAccession);
         }
 
         String experimentName = fetchExperimentName(experimentAccession);
