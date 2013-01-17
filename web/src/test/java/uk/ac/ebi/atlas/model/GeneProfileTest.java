@@ -88,19 +88,6 @@ public class GeneProfileTest {
 
     }
 
-    @Test
-    public void isExpressedAtMostOnTest() {
-        assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("nose", "trunk")), is(false));
-
-        assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("nose", "head", "trunk")), is(true));
-
-        assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("nose", "head", "trunk", "knee")), is(true));
-    }
-
-    @Test
-    public void isExpressedAtMostOnShouldNotBeCaseInsensitiveTest() {
-        assertThat(subject.isExpressedAtMostOn(Sets.newHashSet("noSe", "Head", "trUnK")), is(false));
-    }
 
     @Test
     public void getAllFactorValuesTest() {
@@ -125,6 +112,18 @@ public class GeneProfileTest {
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet("nose", "head", "panz"));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
+
+     @Test
+    public void weightedExpressionLevelOn() {
+        double averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet("nose", "head"),
+                Sets.newHashSet("nose", "head", "trunk"));
+        assertThat(averageExpressionLevel, is(-0.39949999999999974D));
+
+        averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet("nose"), Sets.newHashSet("nose", "head", "trunk"));
+        assertThat(averageExpressionLevel, is(-0.8004999999999995D));
+    }
+
+
 
 
 }

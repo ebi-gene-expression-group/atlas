@@ -37,7 +37,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> geneIDs;
 
-    private Set<String> factorValues;
+    private Set<String> queryFactorValues;
 
     private Set<FactorValue> filterFactorValues;
 
@@ -46,7 +46,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
         this.filterFactorValues = filterParameters.getFilterFactorValues();
         this.geneIDs = toUpperCase(filterParameters.getGeneIDs());
-        this.factorValues = filterParameters.getQueryFactorValues();
+        this.queryFactorValues = filterParameters.getQueryFactorValues();
     }
 
     @Override
@@ -60,11 +60,11 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                 hasAllFactorValues = hasAllFactorValues || profile.getAllFactorValues().containsAll(filterFactorValues);
                 boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
                 return hasAllFactorValues && checkGene
-                        && (CollectionUtils.isEmpty(factorValues) || hasTheRightExpressionProfile(profile));
+                        && (CollectionUtils.isEmpty(queryFactorValues) || hasTheRightExpressionProfile(profile));
             }
 
             private boolean hasTheRightExpressionProfile(GeneProfile geneProfile) {
-                return geneProfile.isExpressedOnAnyOf(factorValues);
+                return geneProfile.isExpressedOnAnyOf(queryFactorValues);
             }
         };
 

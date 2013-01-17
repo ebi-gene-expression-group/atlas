@@ -4,7 +4,6 @@ import com.google.common.collect.Ordering;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Set;
 
 public class GeneProfileComparator implements Comparator<GeneProfile> {
@@ -23,58 +22,38 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
     @Override
     public int compare(GeneProfile firstGeneProfile, GeneProfile otherGeneProfile) {
 
-        // A1: Expressions in one tissue only first, then expressions in two tissues only, etc
-        // (with higher average (across all the expressed tissues) fpkms at the top in each group
+        Ordering<Comparable> naturalOrdering = Ordering.natural();
+
+        // A1:
         if (isSpecific && CollectionUtils.isEmpty(selectedFactorValues)) {
-            Ordering<Comparable> specificityOrdering = Ordering.natural().reverse();
+            Ordering<Comparable> specificityOrdering = naturalOrdering.reverse();
             int order = specificityOrdering.compare(firstGeneProfile.getSpecificity(), otherGeneProfile.getSpecificity());
-            if (order != 0) {
-                return order;
-            } else {
-                return Ordering.natural().compare(firstGeneProfile.getAverageExpressionLevelOn(allFactorValues)
-                        , otherGeneProfile.getAverageExpressionLevelOn(allFactorValues));
-            }
+            return 0 != order ? order : compareOnAverage(firstGeneProfile, otherGeneProfile, allFactorValues);
         }
 
-        // B1: genes with higher 'average across all the selected tissues minus average
-        // across all the non-selected tissues' come first
-        else if (isSpecific && !CollectionUtils.isEmpty(selectedFactorValues)) {
-            Set<String> nonSelectedFactorValues = new HashSet<>(allFactorValues);
-            nonSelectedFactorValues.removeAll(selectedFactorValues);
+        // B1:
+        if (isSpecific && !CollectionUtils.isEmpty(selectedFactorValues)) {
 
-            double averageAcrossSelectedFirstProfile = firstGeneProfile.getAverageExpressionLevelOn(selectedFactorValues);
-            double averageAcrossNonSelectedFirstProfile = firstGeneProfile.getAverageExpressionLevelOn(nonSelectedFactorValues);
-            double minusAverageFirstProfile = averageAcrossSelectedFirstProfile - averageAcrossNonSelectedFirstProfile;
-
-            double averageAcrossSelectedOtherProfile = otherGeneProfile.getAverageExpressionLevelOn(selectedFactorValues);
-            double averageAcrossNonSelectedOtherProfile = otherGeneProfile.getAverageExpressionLevelOn(nonSelectedFactorValues);
-            double minusAverageOtherProfile = averageAcrossSelectedOtherProfile - averageAcrossNonSelectedOtherProfile;
-
-            Ordering<Comparable> ordering = Ordering.natural();
-            return ordering.compare(minusAverageFirstProfile, minusAverageOtherProfile);
+            return naturalOrdering.compare(firstGeneProfile.getWeightedExpressionLevelOn(selectedFactorValues, allFactorValues),
+                    otherGeneProfile.getWeightedExpressionLevelOn(selectedFactorValues, allFactorValues));
         }
 
-        // A2: Expression in any tissue is rewarded (higher average over fpkms for all expressed tissues first)
-        else if (!isSpecific && CollectionUtils.isEmpty(selectedFactorValues)) {
-
-            double averageAcrossAllFirstProfile = firstGeneProfile.getAverageExpressionLevelOn(allFactorValues);
-            double averageAcrossAllOtherProfile = otherGeneProfile.getAverageExpressionLevelOn(allFactorValues);
-
-            Ordering<Comparable> ordering = Ordering.natural();
-            return ordering.compare(averageAcrossAllFirstProfile, averageAcrossAllOtherProfile);
+        // A2
+        if (!isSpecific && CollectionUtils.isEmpty(selectedFactorValues)) {
+            return compareOnAverage(firstGeneProfile, otherGeneProfile, allFactorValues);
         }
 
-        // B2: genes with higher 'average across all the selected tissues' (disregarding fpkms across non-selected tissues) come first
-        else if (!isSpecific && !CollectionUtils.isEmpty(selectedFactorValues)) {
+        //B2
+        return compareOnAverage(firstGeneProfile, otherGeneProfile, selectedFactorValues);
 
-            double averageAcrossSelectedFirstProfile = firstGeneProfile.getAverageExpressionLevelOn(selectedFactorValues);
-            double averageAcrossSelectedOtherProfile = otherGeneProfile.getAverageExpressionLevelOn(selectedFactorValues);
+    }
 
-            Ordering<Comparable> ordering = Ordering.natural();
-            return ordering.compare(averageAcrossSelectedFirstProfile, averageAcrossSelectedOtherProfile);
-        }
+    private int compareOnAverage(GeneProfile firstGeneProfile, GeneProfile otherGeneProfile,
+                                 Set<String> averageOn) {
 
-        throw new IllegalArgumentException("Combination of isSpecific and selectedFactorValues is invalid!");
+        Ordering<Comparable> naturalOrdering = Ordering.natural();
+        return naturalOrdering.compare(firstGeneProfile.getAverageExpressionLevelOn(averageOn),
+                otherGeneProfile.getAverageExpressionLevelOn(averageOn));
     }
 
 

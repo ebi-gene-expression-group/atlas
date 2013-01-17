@@ -77,11 +77,6 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedAtMostOn(Set<String> factorValues) {
-        checkArgument(CollectionUtils.isNotEmpty(factorValues));
-        return factorValues.containsAll(this.getFactorValues());
-    }
-
     public boolean isExpressedOnAnyOf(Set<String> factorValues) {
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
         return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
@@ -120,16 +115,6 @@ public class GeneProfile implements Iterable<Expression> {
         return null;
     }
 
-    public String[] toCsv() {
-        String[] csvValues = new String[expressions.size() + 2];
-        csvValues[0] = getGeneName();
-        csvValues[1] = getGeneId();
-        int i = 2;
-        for (Expression expression : expressions.values()) {
-            csvValues[i++] = "" + expression.getLevel();
-        }
-        return csvValues;
-    }
 
     public Comparable getWeightedExpressionLevelOn(Set<String> selectedFactorValues, Set<String> allFactorValues) {
         if (allFactorValues.isEmpty()) {
