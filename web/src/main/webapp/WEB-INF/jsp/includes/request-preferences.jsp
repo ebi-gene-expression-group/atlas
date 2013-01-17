@@ -49,12 +49,20 @@
                 </td>
                 <c:if test="${factorTypesCount > 2}">
                     <td>
+                        <div data-help-loc="#filterBy" class="tooltip-div" title="">
                     <span>
-                            <label>${filterByLabel}</label>
+                            <label>Filtered by</label>
                     </span>
+                    <span style="width:200px;
+                                border-style: solid;
+                                border-width: 1px;
+                                border-color: lightgray;">
+                            ${filterByLabel}
+                    </span>
+                            </div>
                     <span>
                         <ul id="filterBy">
-                            <li><a>Filter By</a>
+                            <li><a>Change filters</a>
                                 <ul>
                                     <c:forEach items="${filterByMenu}" var="level1">
                                         <li>
