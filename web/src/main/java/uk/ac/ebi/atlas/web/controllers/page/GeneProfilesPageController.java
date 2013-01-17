@@ -100,7 +100,7 @@ public class GeneProfilesPageController {
             // this formats the default factor type for display on web page
             String queryFactorType = parameters.getQueryFactorType();
             if (queryFactorType == null || queryFactorType.trim().length() == 0)
-                queryFactorType = experiment.getDefaultFactorType();
+                queryFactorType = experiment.getDefaultQueryFactorType();
             queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
             queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
             model.addAttribute("formattedQueryFactorType", queryFactorType);
@@ -194,7 +194,7 @@ public class GeneProfilesPageController {
             // can be done better
             String label = labels.toString().replaceAll("\\[", "").replaceAll("\\]", "");
             if (label.trim().length() == 0)
-                label = "defaults";
+                label = "none";
             model.addAttribute("filterByLabel", "Filtered by " + label);
         }
 

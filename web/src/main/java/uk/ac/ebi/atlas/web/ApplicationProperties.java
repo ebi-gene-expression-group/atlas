@@ -66,6 +66,10 @@ public class ApplicationProperties {
         return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
     }
 
+    public String getExperimentFactorsCsvFilePath(String experimentAccession) {
+        return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-factors.path.template"), experimentAccession);
+    }
+
     public Set<String> getExperimentIdentifiers() {
         return Sets.newHashSet(configurationProperties.getProperty("experiment.identifiers").trim().split(","));
     }

@@ -33,7 +33,7 @@
         <h2>Homo Sapiens</h2>
         <ul>
             <c:forEach items="${speciesToExperiments['Homo sapiens']}" var="entry">
-                <li><a href="experiments/${entry}">${entry}</a></li>
+                <li><a href="${entry.value}">${entry.key}</a></li>
             </c:forEach>
         </ul>
     </div>
@@ -45,7 +45,7 @@
         <h2>Mus Musculus</h2>
         <ul>
             <c:forEach items="${speciesToExperiments['Mus musculus']}" var="entry">
-                <li><a href="experiments/${entry}">${entry}</a></li>
+                <li><a href="${entry.value}">${entry.key}</a></li>
             </c:forEach>
         </ul>
     </div>

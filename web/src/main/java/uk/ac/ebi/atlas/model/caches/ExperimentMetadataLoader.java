@@ -37,7 +37,9 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
+import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
@@ -60,17 +62,22 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private AnalysisMethodsTsvReader analysisMethodsTsvReader;
 
+    private ExperimentFactorsTsvReader experimentFactorsTsvReader;
+
     private ArrayExpressClient arrayExpressClient;
 
     @Inject
     public ExperimentMetadataLoader(
             @Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate
             , @Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate
-            , AnalysisMethodsTsvReader analysisMethodsTsvReader, ArrayExpressClient arrayExpressClient) {
+            , AnalysisMethodsTsvReader analysisMethodsTsvReader
+            , ExperimentFactorsTsvReader experimentFactorsTsvReader
+            , ArrayExpressClient arrayExpressClient) {
 
         this.idfUrlTemplate = idfUrlTemplate;
         this.idfPathTemplate = idfPathTemplate;
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
+        this.experimentFactorsTsvReader = experimentFactorsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
     }
 
@@ -82,14 +89,24 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
         // TODO: takes first experimental factor type as default
-        String experimentalFactorType = investigation.IDF.experimentalFactorType.get(0).replaceAll(" ", "_").toUpperCase();
+        String defaultQueryFactorType = investigation.IDF.experimentalFactorType.get(0).replaceAll(" ", "_").toUpperCase();
+
+        Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
+        for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
+            if (line.length == 2) {
+                defaultFilterFactorValues.add(FactorValue.createFactorValue(line));
+            } else {
+                defaultQueryFactorType = line[0];
+            }
+        }
 
         String experimentName = fetchExperimentName(experimentAccession);
 
         ScanNode firstNode = scanNodes.iterator().next();
 
         Experiment experiment = new Experiment(experimentAccession, experimentName
-                , getExperimentRunAccessions(experimentAccession), experimentalFactorType, extractSpecie(firstNode));
+                , getExperimentRunAccessions(experimentAccession), defaultQueryFactorType
+                , defaultFilterFactorValues, extractSpecie(firstNode));
 
         experiment.addAll(extractExperimentRuns(scanNodes, investigation.IDF));
 

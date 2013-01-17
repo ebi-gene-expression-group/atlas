@@ -70,7 +70,10 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     public static FactorValue createFactorValue(String factorValue) {
-        String[] split = factorValue.split(":");
+        return createFactorValue(factorValue.split(":"));
+    }
+
+    public static FactorValue createFactorValue(String[] split) {
         if (split.length == 2) {
             return new FactorValue(split[0].trim(), "", split[1].trim());
         }
