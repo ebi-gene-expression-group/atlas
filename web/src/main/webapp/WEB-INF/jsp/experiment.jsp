@@ -77,7 +77,9 @@
                                             </div>
                                         </td>
                                         <td width="200px">
-                                            <div style="background-image:
+                                            <div style="
+                                                    overflow:auto;
+                                                    background-image:
                                                     -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
                                                     background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
