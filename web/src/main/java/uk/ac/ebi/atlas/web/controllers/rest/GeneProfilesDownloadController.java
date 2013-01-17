@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
-import uk.ac.ebi.atlas.model.FilterParameters;
+import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Controller
 @Scope("request")
-public class GeneProfilesDownloadController {
+public class GeneProfilesDownloadController extends GeneProfilesController{
     private static final Logger LOGGER = Logger.getLogger(GeneProfilesDownloadController.class);
 
     private WriteGeneProfilesCommand writeGeneProfilesCommand;
@@ -41,13 +42,8 @@ public class GeneProfilesDownloadController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-        FilterParameters parameters = new FilterParameters();
-        parameters.setGeneQuery(preferences.getGeneQuery())
-                .setQueryFactorType(preferences.getQueryFactorType())
-                .setQueryFactorValues(preferences.getQueryFactorValues())
-                .setFilterFactorValues(preferences.getFilterFactorValues())
-                .setCutoff(preferences.getCutoff());
-        writeGeneProfilesCommand.setParameters(parameters);
+        FilterParameters parameters = createFilterParameters(experimentAccession, preferences);
+        writeGeneProfilesCommand.setFilteredParameters(parameters);
 
         CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', NO_QUOTE_CHARACTER);
 

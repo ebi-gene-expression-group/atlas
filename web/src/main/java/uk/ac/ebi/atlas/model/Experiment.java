@@ -114,11 +114,18 @@ public class Experiment {
         return description;
     }
 
-    public SortedSet<String> getFactorValues(String byType) {
+    public SortedSet<String> getFactorValueStrings(String byType) {
         if (byType == null || byType.trim().length() == 0)
             byType = this.getDefaultFactorType();
         return factorValuesByType.get(byType);
     }
+
+    public SortedSet<FactorValue> getFactorValues(String byType) {
+        if (byType == null || byType.trim().length() == 0)
+            byType = this.getDefaultFactorType();
+        return factorValuesByType.get(byType);
+    }
+
 
     public SortedSet<String> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
         if (byType == null || byType.trim().length() == 0)

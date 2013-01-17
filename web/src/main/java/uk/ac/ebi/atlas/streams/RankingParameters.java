@@ -20,16 +20,15 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.atlas.streams;
 
-public class RankingParameters extends FilterParameters {
+
+public class RankingParameters{
 
     private boolean specific;
 
     private Integer heatmapMatrixSize;
 
-    public RankingParameters() {
-    }
 
     public boolean isSpecific() {
         return specific;

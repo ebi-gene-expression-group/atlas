@@ -26,11 +26,15 @@ public class GeneProfile implements Iterable<Expression> {
     //ToDo: and this will not be required anymore...
     private Set<FactorValue> allFactorValues = new HashSet<>();
 
+    private SortedMap<FactorValue, Expression> factorValueExpressions = new TreeMap<>();
+
     private GeneProfile() {
     }
 
     public GeneProfile add(Expression expression) {
-        String factorValue = expression.getFactorValue();
+        factorValueExpressions.put(expression.getFactorValue(), expression);
+
+        String factorValue = expression.getFactorValueString();
         if (!StringUtils.isEmpty(factorValue)) {
             this.expressions.put(factorValue, expression);
             this.allFactorValues.addAll(expression.getAllFactorValues());
@@ -77,7 +81,7 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedOnAnyOf(Set<String> factorValues) {
+    public boolean isExpressedOnAnyOf(Set<FactorValue> factorValues) {
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
         return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
     }
@@ -93,8 +97,12 @@ public class GeneProfile implements Iterable<Expression> {
         return expressionLevel / factorValues.size();
     }
 
-    public Set<String> getFactorValues() {
+    public Set<String> getFactorValueStrings() {
         return this.expressions.keySet();
+    }
+
+    public Set<FactorValue> getFactorValues() {
+        return this.factorValueExpressions.keySet();
     }
 
     public Set<FactorValue> getAllFactorValues() {

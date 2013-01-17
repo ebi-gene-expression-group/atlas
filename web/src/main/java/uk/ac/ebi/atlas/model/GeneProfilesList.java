@@ -73,7 +73,7 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
     public SortedSet<String> getAllExperimentalFactors() {
         SortedSet<String> allExperimentalFactors = new TreeSet<>();
         for (GeneProfile geneProfile : this) {
-            allExperimentalFactors.addAll(geneProfile.getFactorValues());
+            allExperimentalFactors.addAll(geneProfile.getFactorValueStrings());
         }
         return allExperimentalFactors;
     }

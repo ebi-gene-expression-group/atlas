@@ -103,7 +103,7 @@ public class HomePageController {
                 speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
 
                 // count per experiment and sum across all experiments, using experiment default factor value
-                for (String defaultFactorValue : experiment.getFactorValues(null)) {
+                for (String defaultFactorValue : experiment.getFactorValueStrings(null)) {
                     if (!counts.containsKey(defaultFactorValue))
                         counts.put(defaultFactorValue, 0.0);
                     counts.put(defaultFactorValue, counts.get(defaultFactorValue) +

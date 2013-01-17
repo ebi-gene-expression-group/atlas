@@ -27,7 +27,6 @@ import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
 import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.HashSet;
@@ -37,7 +36,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> geneIDs;
 
-    private Set<String> queryFactorValues;
+    private Set<FactorValue> queryFactorValues;
 
     private Set<FactorValue> filterFactorValues;
 

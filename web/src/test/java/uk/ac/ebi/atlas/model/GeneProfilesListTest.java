@@ -101,11 +101,11 @@ public class GeneProfilesListTest {
         when(profile_4.getGeneId()).thenReturn(GENE_ID_3);
         when(profile_5.getGeneId()).thenReturn(GENE_ID_4);
         //and
-        when(profile_1.getFactorValues()).thenReturn(Sets.newHashSet("brain"));
-        when(profile_2.getFactorValues()).thenReturn(Sets.newHashSet("blood"));
-        when(profile_3.getFactorValues()).thenReturn(Sets.newHashSet("bomb"));
-        when(profile_4.getFactorValues()).thenReturn(Sets.newHashSet("banana"));
-        when(profile_5.getFactorValues()).thenReturn(Sets.newHashSet("berrywhite"));
+        when(profile_1.getFactorValueStrings()).thenReturn(Sets.newHashSet("brain"));
+        when(profile_2.getFactorValueStrings()).thenReturn(Sets.newHashSet("blood"));
+        when(profile_3.getFactorValueStrings()).thenReturn(Sets.newHashSet("bomb"));
+        when(profile_4.getFactorValueStrings()).thenReturn(Sets.newHashSet("banana"));
+        when(profile_5.getFactorValueStrings()).thenReturn(Sets.newHashSet("berrywhite"));
 
         //when
         SortedSet<String> organismParts = subject.getAllExperimentalFactors();

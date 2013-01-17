@@ -26,8 +26,8 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
@@ -57,7 +57,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         long count = 0;
 
-        SortedSet<String> factorValues = experiment.getFactorValues(parameters.getQueryFactorType());
+        SortedSet<String> factorValues = experiment.getFactorValueStrings(parameters.getQueryFactorType());
 
         csvWriter.writeNext(buildCsvHeaders(factorValues));
 

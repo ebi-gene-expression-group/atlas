@@ -32,9 +32,9 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.RankingParameters;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
+import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import java.util.List;
 
@@ -103,7 +103,7 @@ public class RankGeneProfilesCommandTest {
 
         subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
-        subject.setParameters(rankingParametersMock);
+        subject.setFilteredParameters(rankingParametersMock);
 
         subject.setIndexClient(indexClientMock);
 

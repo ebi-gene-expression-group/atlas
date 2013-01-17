@@ -27,19 +27,17 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FilterParameters;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
-public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParameters> implements Function<String, T> {
+public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
     protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
 
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
@@ -48,7 +46,7 @@ public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParamete
 
     private ExperimentsCache experimentsCache;
 
-    protected F parameters;
+    protected FilterParameters filterParameters;
 
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
@@ -65,27 +63,22 @@ public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParamete
         this.experimentsCache = experimentsCache;
     }
 
-    public void setParameters(F filterParameters) {
-        this.parameters = filterParameters;
+    public void setFilteredParameters(FilterParameters filterParameters) {
+        this.filterParameters = filterParameters;
     }
 
     @NotNull
     public T apply(String experimentAccession) {
 
-        Set<String> geneIDs = new HashSet<>();
-
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        if (parameters.hasGenesForQuery()) {
+        if (filterParameters.hasGenesForQuery()) {
 
-            geneIDs.addAll(indexClient.findGeneIds(parameters.getGeneQuery(), experiment.getSpecie()));
-
-            if (geneIDs.isEmpty()) {
+            if (filterParameters.getGeneIDs().isEmpty()) {
                 return returnEmpty();
             }
         }
 
-        parameters.setGeneIDs(geneIDs);
 
         try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession)) {
 
@@ -100,10 +93,10 @@ public abstract class GeneProfilesInputStreamCommand<T, F extends FilterParamete
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
-                .withCutoff(parameters.getCutoff()).create();
+                .withCutoff(filterParameters.getCutoff()).create();
 
 
-        return new GeneProfileInputStreamFilter(geneProfileInputStream, parameters);
+        return new GeneProfileInputStreamFilter(geneProfileInputStream, filterParameters);
 
     }
 
