@@ -25,6 +25,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
+
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="filterFactorValues"/>
@@ -134,6 +135,8 @@
              data-help-loc="#gene-distribution" style="margin-bottom:0px;height:100px">
         </div>
     </div>
+
+    <div class="barchart-tooltip" id="barChartTooltip"></div>
 
     <div id="gene-distribution-button" style="float:left">
         <a id="display-chart" title="Display gene distribution" class="button-image" href="#">

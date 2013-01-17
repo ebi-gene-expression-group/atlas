@@ -1,6 +1,6 @@
 /*global $:false */
 
-//Object constructors and prototypes: MagnifiedScale
+//MagnifiedScale: object constructor and function prototypes
 
 /*
  fractionalDigits determines the minimal scale granularity,
@@ -176,7 +176,6 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             //and then you display the div later the plot Y axis will be overlapping the Y ticks
             displayGeneDistribution(this, true);
 
-
             for (var i = 0; i < keys.length; i++) {
                 dataArray.push([i, data[keys[i]]]);
                 var scaledCutoffTickValue = parseFloat(keys[i]);
@@ -198,20 +197,12 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
 
             hideOrDisplayGeneDistribution(true);
 
-            function showTooltip(x, y, contents) {
-                $('<div id="barChartTooltip">' + contents + '</div>').css({
-                    position:'absolute',
-                    display:'none',
-                    top:y - 25,
-                    left:x - 6,
-                    border:'2px solid rgb(238,195,46)',
-                    'border-radius':'4px',
-                    padding:'2px',
-                    'font-family':'Verdana, Helvetica, Arial, sans-serif',
-                    'font-size':'smaller',
-                    'background-color':'rgb(249,232,176)',
-                    opacity:1
-                }).appendTo("body").fadeIn(150);
+            function showBarChartTooltip(x, y, contents) {
+                $("#barChartTooltip").text(contents).css({
+                    display:'block',
+                    top:y - 30,
+                    left:x - 6
+                });
             }
 
             $("#gene-distribution")
@@ -223,16 +214,11 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
                         if (previousPoint !== item.datapoint) {
                             previousPoint = item.datapoint;
 
-                            $("#barChartTooltip").remove();
-                            var content = item.datapoint[1].toFixed(0);
-
-                            //now show tooltip
-                            showTooltip(item.pageX, item.pageY, content);
+                            showBarChartTooltip(item.pageX, item.pageY, item.datapoint[1].toFixed(0));
                         }
                     }
                     else {
-                        $("#barChartTooltip").remove();
-                        previousPoint = null;
+                        $("#barChartTooltip").css({display:'none'});
                     }
 
 
