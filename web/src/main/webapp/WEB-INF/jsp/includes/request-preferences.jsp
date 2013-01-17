@@ -53,23 +53,23 @@
                     </span>
                     <span>
                         <ul id="filterBy">
-                            <li><a href="#">Filter By</a>
+                            <li><a>Filter By</a>
                                 <ul>
                                     <c:forEach items="${filterByMenu}" var="level1">
                                         <li>
-                                            <a href="#">${level1.key}</a>
+                                            <a>${level1.key}</a>
                                             <ul>
                                                 <c:forEach items="${level1.value}" var="level2">
                                                     <li>
-                                                        <a href="#">${level2.key}</a>
+                                                        <a>${level2.key}</a>
                                                         <ul>
                                                             <c:forEach items="${level2.value}" var="level3">
                                                                 <li>
-                                                                    <a href="#">${level3.key}</a>
+                                                                    <a>${level3.key}</a>
                                                                     <ul>
-                                                                        <c:forEach items="${level3.value}" var="link">
+                                                                        <c:forEach items="${level3.value}" var="level4">
                                                                             <li>
-                                                                                <a href="#">${link}</a>
+                                                                                <a href="${level4.value}">${level4.key}</a>
                                                                             </li>
                                                                         </c:forEach>
                                                                     </ul>
@@ -160,12 +160,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#filterBy").menu({
-            select : function(event, ui){
-                event.preventDefault();
-                return false;
-            }
-        }).zIndex(100);
+        $("#filterBy").menu();
     });
 
 </script>

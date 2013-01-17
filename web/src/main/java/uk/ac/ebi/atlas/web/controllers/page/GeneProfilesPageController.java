@@ -121,43 +121,57 @@ public class GeneProfilesPageController {
 
             String defaultFactorType = experiment.getDefaultFactorType();
 
-            SortedMap<String, SortedSet<FactorValue>> allFactorTypes = new TreeMap<>();
+            // using factor names here for better readability and compatibility with experiment design page
+            SortedMap<String, SortedSet<FactorValue>> allFactorNames = new TreeMap<>();
 
             SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = experiment.getValidFactorValueCombinations();
             for (FactorValue key : validFactorValueCombinations.keySet()) {
-                if (!allFactorTypes.containsKey(key.getType()))
-                    allFactorTypes.put(key.getName(), new TreeSet<FactorValue>());
-                allFactorTypes.get(key.getName()).add(key);
+                if (!allFactorNames.containsKey(key.getName()))
+                    allFactorNames.put(key.getName(), new TreeSet<FactorValue>());
+                allFactorNames.get(key.getName()).add(key);
             }
 
-            // build filter by menu map here
-            SortedMap<String, SortedMap<String, SortedMap<String, SortedSet<String>>>> filterByMenu = new TreeMap<>();
-            for (String firstFactorType : allFactorTypes.keySet()) {
-                // first level: factor type
-                if (!filterByMenu.containsKey(firstFactorType))
-                    filterByMenu.put(firstFactorType, new TreeMap<String, SortedMap<String, SortedSet<String>>>());
-                // second level: factor value choices per factor type, all are valid
-                for (FactorValue firstFactorValue : allFactorTypes.get(firstFactorType)) {
-                    SortedMap<String, SortedSet<String>> secondFilterFactorValue = new TreeMap<>();
-                    filterByMenu.get(firstFactorType).put(firstFactorValue.getValue(), secondFilterFactorValue);
+            // build filter by menu map here, structure:
+            // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
+            SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> filterByMenu = new TreeMap<>();
+            for (String firstFactorName : allFactorNames.keySet()) {
+                // first level: factor name
+                if (!filterByMenu.containsKey(firstFactorName))
+                    filterByMenu.put(firstFactorName, new TreeMap<String, SortedMap<String, SortedMap<String, String>>>());
+                // second level: factor value choices per factor name, all are valid
+                for (FactorValue firstFactorValue : allFactorNames.get(firstFactorName)) {
 
-                    // index by remaining factor types
-                    SortedMap<String, SortedSet<FactorValue>> secondFactorTypes = new TreeMap<>();
+                    // factor name 2 > factor value 2 > link
+                    SortedMap<String, SortedMap<String, String>> secondFilterFactorValue = new TreeMap<>();
+                    filterByMenu.get(firstFactorName).put(firstFactorValue.getValue(), secondFilterFactorValue);
+
+                    // index second level factor names
+                    SortedMap<String, SortedSet<FactorValue>> secondFactorNames = new TreeMap<>();
                     for (FactorValue secondFactorValue : validFactorValueCombinations.get(firstFactorValue)) {
-                        if (!firstFactorType.equals(secondFactorValue.getName())) {
-                            if (!secondFactorTypes.containsKey(secondFactorValue.getName()))
-                                secondFactorTypes.put(secondFactorValue.getName(), new TreeSet<FactorValue>());
-                            secondFactorTypes.get(secondFactorValue.getName()).add(secondFactorValue);
+                        if (!firstFactorName.equals(secondFactorValue.getName())) {
+                            if (!secondFactorNames.containsKey(secondFactorValue.getName()))
+                                secondFactorNames.put(secondFactorValue.getName(), new TreeSet<FactorValue>());
+                            secondFactorNames.get(secondFactorValue.getName()).add(secondFactorValue);
                         }
                     }
 
-                    for (String secondFactorType : secondFactorTypes.keySet()) {
-                        // third level: factor type
-                        if (!secondFilterFactorValue.containsKey(secondFactorType))
-                            secondFilterFactorValue.put(secondFactorType, new TreeSet<String>());
-                        // forth level: factor value choices for remaining factor type
-                        for (FactorValue secondFactorValue : secondFactorTypes.get(secondFactorType)) {
-                            secondFilterFactorValue.get(secondFactorType).add(secondFactorValue.getValue());
+                    for (String secondFactorName : secondFactorNames.keySet()) {
+                        // third level: factor name
+                        if (!secondFilterFactorValue.containsKey(secondFactorName))
+                            secondFilterFactorValue.put(secondFactorName, new TreeMap<String, String>());
+
+                        // get remainder of factor names
+                        SortedSet<String> remainingFactorNames = new TreeSet<>(allFactorNames.keySet());
+                        remainingFactorNames.remove(firstFactorName);
+                        remainingFactorNames.remove(secondFactorName);
+                        // TODO: what in case there are more than 3 possible factor types?
+
+                        // forth level: factor value choices for second factor name
+                        for (FactorValue secondFactorValue : secondFactorNames.get(secondFactorName)) {
+                            // arbitrarily taking first of remaining factor names as query factor type
+                            String factorType = allFactorNames.get(remainingFactorNames.first()).first().getType();
+                            String link = buildFilterFactorValueURL(request, factorType, firstFactorValue, secondFactorValue);
+                            secondFilterFactorValue.get(secondFactorName).put(secondFactorValue.getValue(), link);
                         }
                     }
                 }
@@ -168,6 +182,14 @@ public class GeneProfilesPageController {
         }
 
         return "experiment";
+    }
+
+    String buildFilterFactorValueURL(HttpServletRequest request, String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {
+        // we disregard here previous query string, as site will load completely fresh
+        // TODO: we might want to include some previous query
+        return request.getRequestURI() + "?" + "queryFactorType=" + queryFactorType
+                + "&filterFactorValues=" + firstFactorValue.getType() + ":" + firstFactorValue.getValue()
+                + "&filterFactorValues=" + secondFactorValue.getType() + ":" + secondFactorValue.getValue();
     }
 
     String buildDownloadURL(HttpServletRequest request) {
