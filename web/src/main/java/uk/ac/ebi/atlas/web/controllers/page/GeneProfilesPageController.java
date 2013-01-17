@@ -119,8 +119,6 @@ public class GeneProfilesPageController {
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            String defaultFactorType = experiment.getDefaultFactorType();
-
             // using factor names here for better readability and compatibility with experiment design page
             SortedMap<String, SortedSet<FactorValue>> allFactorNames = new TreeMap<>();
 
@@ -130,6 +128,8 @@ public class GeneProfilesPageController {
                     allFactorNames.put(key.getName(), new TreeSet<FactorValue>());
                 allFactorNames.get(key.getName()).add(key);
             }
+
+            model.addAttribute("factorTypesCount", allFactorNames.size());
 
             // build filter by menu map here, structure:
             // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link

@@ -47,7 +47,8 @@
                         </span>
                     </div>
                 </td>
-                <td>
+                <c:if test="${factorTypesCount > 2}">
+                    <td>
                     <span>
                             <label>${filterByLabel}</label>
                     </span>
@@ -85,7 +86,8 @@
                             </li>
                         </ul>
                     </span>
-                </td>
+                    </td>
+                </c:if>
                 <td>
                     <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
