@@ -88,21 +88,9 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
-        // this is a fall-back in case factors file is missing
-        String defaultQueryFactorType = investigation.IDF.experimentalFactorType.get(0).replaceAll(" ", "_").toUpperCase();
+        String defaultQueryFactorType = parseDefaultQueryFactorType(experimentAccession);
 
-        Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
-        try {
-            for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
-                if (line.length == 2) {
-                    defaultFilterFactorValues.add(new FactorValue(line[0], line[1]));
-                } else {
-                    defaultQueryFactorType = line[0];
-                }
-            }
-        } catch (IllegalStateException ise) {
-            LOGGER.error("Factors file missing for experiment accession " + experimentAccession);
-        }
+        Set<FactorValue> defaultFilterFactorValues = parseDefaultFilterFactorValues(experimentAccession);
 
         String experimentName = fetchExperimentName(experimentAccession);
 
@@ -116,6 +104,33 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         return experiment;
 
+    }
+
+    private Set<FactorValue> parseDefaultFilterFactorValues(String experimentAccession) {
+        Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
+        try {
+            for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
+                if (line.length == 2) {
+                    defaultFilterFactorValues.add(new FactorValue(line[0], line[1]));
+                }
+            }
+        } catch (IllegalStateException ise) {
+            LOGGER.error("Factors file missing for experiment accession " + experimentAccession);
+        }
+        return defaultFilterFactorValues;
+    }
+
+    private String parseDefaultQueryFactorType(String experimentAccession) {
+        try {
+            for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
+                if (line.length == 1) {
+                    return line[0];
+                }
+            }
+        } catch (IllegalStateException ise) {
+            LOGGER.error("Factors file missing for experiment accession " + experimentAccession);
+        }
+        throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
     }
 
     private String fetchExperimentName(String experimentAccession) {
