@@ -73,10 +73,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         if (!result.hasErrors()) {
 
-            RankingParameters parameters = new RankingParameters();
+            RankingParameters parameters = new RankingParameters(preferences.isSpecific(),
+                    preferences.getHeatmapMatrixSize());
 
-            parameters.setSpecific(preferences.isSpecific());
-            parameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
             rankCommand.setRankingParameters(parameters);
 
             FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
@@ -106,9 +105,8 @@ public class GeneProfilesPageController extends GeneProfilesController {
             queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
             model.addAttribute("formattedQueryFactorType", queryFactorType);
 
-            model.addAttribute("allFactorValues", experiment.getFactorValueStrings(filterParameters.getQueryFactorType()));
-
             Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
+
             model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
                     filterParameters.getQueryFactorType()));
 

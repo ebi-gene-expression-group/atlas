@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -24,10 +22,20 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         return subList(0, size);
     }
 
-    public Double getExpressionLevel(String geneId, String organismPart) {
+    //ToDo: refactor this method with heatmap-matrix-gene-oriented.jsp
+//    public Double getExpressionLevel(String geneId, String factorValueString) {
+//        for (GeneProfile geneProfile : this) {
+//            if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
+//                return geneProfile.getExpressionLevelByFactorVauleString(factorValueString);
+//            }
+//        }
+//        return null;
+//    }
+
+    public Double getExpressionLevel(String geneId, FactorValue factorValue) {
         for (GeneProfile geneProfile : this) {
             if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
-                return geneProfile.getExpressionLevel(organismPart);
+                return geneProfile.getExpressionLevel(factorValue);
             }
         }
         return null;
@@ -68,13 +76,5 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
 
     public void setTotalResultCount(int totalResultCount) {
         this.totalResultCount = totalResultCount;
-    }
-
-    public SortedSet<String> getAllExperimentalFactors() {
-        SortedSet<String> allExperimentalFactors = new TreeSet<>();
-        for (GeneProfile geneProfile : this) {
-            allExperimentalFactors.addAll(geneProfile.getFactorValueStrings());
-        }
-        return allExperimentalFactors;
     }
 }

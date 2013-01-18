@@ -48,9 +48,6 @@ public class FilterParameters {
 
     private String queryFactorType;
 
-    private FilterParameters() {
-    }
-
     private FilterParameters(Builder builder) {
         geneIDs = builder.geneIDs;
         filterFactorValues = builder.filterFactorValues;
@@ -124,7 +121,6 @@ public class FilterParameters {
             this.indexClient = indexClient;
         }
 
-        //ToDo: create factory similar to GeneProfileBuilderFactory to initialize Builder with default values
         public Builder forExperimentAccession(String experimentAccession) {
             this.experimentAccession = experimentAccession;
             return this;
@@ -141,7 +137,7 @@ public class FilterParameters {
         }
 
         public Builder withFilterFactorValues(Set<String> filterFactorValues) {
-            filterFactorValues = new HashSet<>();
+            this.filterFactorValues = new HashSet<>();
 
             //ToDo: verify that null check needed
             if (filterFactorValues != null) {
@@ -170,6 +166,7 @@ public class FilterParameters {
         public Builder withQueryFactorValues(Set<String> queryFactorValues) {
             //init queryFactorValues
             this.queryFactorValues = new HashSet<>();
+            //ToDo: check if these assertions can be removed...
             if (queryFactorValues != null) {
                 if (StringUtils.isEmpty(queryFactorType)) {
                     Experiment experiment = experimentsCache.getExperiment(experimentAccession);

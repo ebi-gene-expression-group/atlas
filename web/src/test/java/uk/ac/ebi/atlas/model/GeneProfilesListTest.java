@@ -1,14 +1,11 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -90,29 +87,6 @@ public class GeneProfilesListTest {
         GeneProfilesList geneProfiles = subject.subList(0, 7);
         //then
         assertThat(geneProfiles, hasSize(5));
-    }
-
-    @Test
-    public void testGetAllExperimentalFactors() throws Exception {
-        //given
-        when(profile_1.getGeneId()).thenReturn(GENE_ID_1);
-        when(profile_2.getGeneId()).thenReturn(GENE_ID_1);
-        when(profile_3.getGeneId()).thenReturn(GENE_ID_4);
-        when(profile_4.getGeneId()).thenReturn(GENE_ID_3);
-        when(profile_5.getGeneId()).thenReturn(GENE_ID_4);
-        //and
-        when(profile_1.getFactorValueStrings()).thenReturn(Sets.newHashSet("brain"));
-        when(profile_2.getFactorValueStrings()).thenReturn(Sets.newHashSet("blood"));
-        when(profile_3.getFactorValueStrings()).thenReturn(Sets.newHashSet("bomb"));
-        when(profile_4.getFactorValueStrings()).thenReturn(Sets.newHashSet("banana"));
-        when(profile_5.getFactorValueStrings()).thenReturn(Sets.newHashSet("berrywhite"));
-
-        //when
-        SortedSet<String> organismParts = subject.getAllExperimentalFactors();
-
-        //then
-        assertThat(organismParts, contains("banana", "berrywhite", "blood", "bomb", "brain"));
-
     }
 
     @Test

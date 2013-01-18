@@ -65,7 +65,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         GeneProfile geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, factorValuesStrings));
+            csvWriter.writeNext(buildCsvRow(geneProfile, factorValues));
         }
         return count;
     }
@@ -79,11 +79,11 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         return buildCsvRow(new String[]{"Gene name", "Gene Id"}, factorValues.toArray(new String[factorValues.size()]));
     }
 
-    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<String> factorValues) {
+    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<FactorValue> factorValues) {
         String[] expressionLevels = new String[factorValues.size()];
         int i = 0;
-        for (String organismPart : factorValues) {
-            expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(organismPart));
+        for (FactorValue factorValue : factorValues) {
+            expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(factorValue));
         }
         return buildCsvRow(new String[]{geneProfile.getGeneName(), geneProfile.getGeneId()}, expressionLevels);
     }

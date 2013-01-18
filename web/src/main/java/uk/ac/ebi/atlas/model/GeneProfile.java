@@ -2,13 +2,15 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -21,11 +23,6 @@ public class GeneProfile implements Iterable<Expression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    //ToDo: key will become FactorValue when we will remove organism parts
-    private SortedMap<String, Expression> expressions = new TreeMap<>();
-    //ToDo: and this will not be required anymore...
-    private Set<FactorValue> allFactorValues = new HashSet<>();
-
     private SortedMap<FactorValue, Expression> factorValueExpressions = new TreeMap<>();
 
     private GeneProfile() {
@@ -34,11 +31,6 @@ public class GeneProfile implements Iterable<Expression> {
     public GeneProfile add(Expression expression) {
         factorValueExpressions.put(expression.getFactorValue(), expression);
 
-        String factorValue = expression.getFactorValueString();
-        if (!StringUtils.isEmpty(factorValue)) {
-            this.expressions.put(factorValue, expression);
-            this.allFactorValues.addAll(expression.getAllFactorValues());
-        }
         updateProfileExpression(expression.getLevel());
         return this;
     }
@@ -57,11 +49,11 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public int getSpecificity() {
-        return expressions.values().size();
+        return factorValueExpressions.values().size();
     }
 
     public Iterator<Expression> iterator() {
-        return expressions.values().iterator();
+        return factorValueExpressions.values().iterator();
     }
 
     public double getMaxExpressionLevel() {
@@ -97,22 +89,19 @@ public class GeneProfile implements Iterable<Expression> {
         return expressionLevel / factorValues.size();
     }
 
-    public Set<String> getFactorValueStrings() {
-        return this.expressions.keySet();
-    }
-
     public Set<FactorValue> getFactorValues() {
         return this.factorValueExpressions.keySet();
     }
 
     public Set<FactorValue> getAllFactorValues() {
-        return this.allFactorValues;
+        return this.factorValueExpressions.keySet();
     }
 
-    public double getExpressionLevel(String factorValue) {
-        Expression expression = expressions.get(factorValue);
+    public double getExpressionLevel(FactorValue factorValue) {
+        Expression expression = factorValueExpressions.get(factorValue);
         return expression == null ? 0 : expression.getLevel();
     }
+
 
     public double getExpressionLevelByFactorValue(FactorValue factorValue) {
         Expression expression = factorValueExpressions.get(factorValue);
@@ -183,7 +172,7 @@ public class GeneProfile implements Iterable<Expression> {
         }
 
         public boolean containsExpressions() {
-            return !geneProfile.expressions.isEmpty();
+            return !geneProfile.factorValueExpressions.isEmpty();
         }
 
     }

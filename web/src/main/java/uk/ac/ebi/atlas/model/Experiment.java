@@ -72,7 +72,8 @@ public class Experiment {
                     if (!factorValuesByType.containsKey(type)) {
                         factorValuesByType.put(type, new TreeSet<FactorValue>());
                     }
-                    factorValuesByType.get(type).add(factorValue);               }
+                    factorValuesByType.get(type).add(factorValue);
+                }
             }
         }
         return this;
@@ -131,7 +132,7 @@ public class Experiment {
     }
 
 
-    public SortedSet<String> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
+    public SortedSet<String> getFilteredFactorValueStrings(Set<FactorValue> filterByFactorValues, String byType) {
         if (byType == null || byType.trim().length() == 0)
             byType = this.getDefaultFactorType();
 
@@ -145,6 +146,29 @@ public class Experiment {
                     FactorValue factorValue = experimentRun.getFactorValue(byType);
                     checkNotNull(factorValue);
                     results.add(factorValue.getValue());
+                }
+            } else {
+                logger.warn("Missing ExperimentRun for accession " + experimentRunAccession);
+            }
+        }
+
+        return results;
+    }
+
+    public SortedSet<FactorValue> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
+        if (byType == null || byType.trim().length() == 0)
+            byType = this.getDefaultFactorType();
+
+        SortedSet<FactorValue> results = new TreeSet<>();
+
+        for (String experimentRunAccession : experimentRunAccessions) {
+            ExperimentRun experimentRun = experimentRuns.get(experimentRunAccession);
+            if (experimentRun != null) {
+                if (CollectionUtils.isEmpty(filterByFactorValues) ||
+                        experimentRun.getFactorValues().containsAll(filterByFactorValues)) {
+                    FactorValue factorValue = experimentRun.getFactorValue(byType);
+                    checkNotNull(factorValue);
+                    results.add(factorValue);
                 }
             } else {
                 logger.warn("Missing ExperimentRun for accession " + experimentRunAccession);

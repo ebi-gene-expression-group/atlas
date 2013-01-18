@@ -77,12 +77,12 @@ public class WriteGeneProfilesCommandTest {
 
         when(geneProfileMock1.getGeneName()).thenReturn("GN1");
         when(geneProfileMock1.getGeneId()).thenReturn("GI1");
-        when(geneProfileMock1.getExpressionLevel("brain")).thenReturn(0.11d);
-        when(geneProfileMock1.getExpressionLevel("lung")).thenReturn(9d);
+        when(geneProfileMock1.getExpressionLevel(createFV("brain"))).thenReturn(0.11d);
+        when(geneProfileMock1.getExpressionLevel(createFV("lung"))).thenReturn(9d);
 
         when(geneProfileMock2.getGeneName()).thenReturn("GN2");
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
-        when(geneProfileMock2.getExpressionLevel("liver")).thenReturn(21.12d);
+        when(geneProfileMock2.getExpressionLevel(createFV("liver"))).thenReturn(21.12d);
 
         when(experimentMock.getFactorValues(anyString())).thenReturn(Sets.newTreeSet(organismParts));
     }
