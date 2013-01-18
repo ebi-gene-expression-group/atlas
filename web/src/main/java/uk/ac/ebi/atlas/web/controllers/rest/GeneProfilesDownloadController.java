@@ -27,7 +27,8 @@ public class GeneProfilesDownloadController extends GeneProfilesController{
     private WriteGeneProfilesCommand writeGeneProfilesCommand;
 
     @Inject
-    public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand) {
+    public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand, FilterParameters.Builder filterParameterBuilder) {
+        super(filterParameterBuilder);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 

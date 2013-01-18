@@ -26,8 +26,8 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
@@ -40,7 +40,7 @@ import static java.lang.System.arraycopy;
 
 @Named("streamGeneProfiles")
 @Scope("prototype")
-public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Long, FilterParameters> {
+public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Long> {
 
     private CSVWriter csvWriter;
 
@@ -57,14 +57,15 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         long count = 0;
 
-        SortedSet<String> factorValues = experiment.getFactorValueStrings(parameters.getQueryFactorType());
+        SortedSet<FactorValue> factorValues = experiment.getFactorValues(filterParameters.getQueryFactorType());
 
-        csvWriter.writeNext(buildCsvHeaders(factorValues));
+        SortedSet<String> factorValuesStrings = FactorValue.getFactorValuesStrings(factorValues);
+        csvWriter.writeNext(buildCsvHeaders(factorValuesStrings));
 
         GeneProfile geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, factorValues));
+            csvWriter.writeNext(buildCsvRow(geneProfile, factorValuesStrings));
         }
         return count;
     }

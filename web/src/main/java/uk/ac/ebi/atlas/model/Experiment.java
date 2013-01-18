@@ -39,7 +39,9 @@ public class Experiment {
     private String specie;
 
     private String defaultFactorType;
-    private Map<String, SortedSet<String>> factorValuesByType = new HashMap<>();
+
+    //ToDo: use multimap here
+    private Map<String, SortedSet<FactorValue>> factorValuesByType = new HashMap<>();
 
     private Set<String> experimentRunAccessions;
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
@@ -66,11 +68,11 @@ public class Experiment {
                 for (FactorValue factorValue : experimentRun.getFactorValues()) {
                     String type = factorValue.getType();
                     String value = factorValue.getValue();
+
                     if (!factorValuesByType.containsKey(type)) {
-                        factorValuesByType.put(type, new TreeSet<String>());
+                        factorValuesByType.put(type, new TreeSet<FactorValue>());
                     }
-                    factorValuesByType.get(type).add(value);
-                }
+                    factorValuesByType.get(type).add(factorValue);               }
             }
         }
         return this;
@@ -114,10 +116,12 @@ public class Experiment {
         return description;
     }
 
+    //ToDo: refactor all usages of this method, replace with getFactorValues()
     public SortedSet<String> getFactorValueStrings(String byType) {
         if (byType == null || byType.trim().length() == 0)
             byType = this.getDefaultFactorType();
-        return factorValuesByType.get(byType);
+        SortedSet<FactorValue> factorValues = factorValuesByType.get(byType);
+        return FactorValue.getFactorValuesStrings(factorValues);
     }
 
     public SortedSet<FactorValue> getFactorValues(String byType) {

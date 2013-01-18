@@ -86,13 +86,13 @@ public class GeneProfile implements Iterable<Expression> {
         return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
     }
 
-    public double getAverageExpressionLevelOn(Set<String> factorValues) {
+    public double getAverageExpressionLevelOn(Set<FactorValue> factorValues) {
         if (CollectionUtils.isEmpty(factorValues)) {
             return 0D;
         }
         double expressionLevel = 0D;
-        for (String organismPart : factorValues) {
-            expressionLevel += getExpressionLevel(organismPart);
+        for (FactorValue factorValue : factorValues) {
+            expressionLevel += getExpressionLevelByFactorValue(factorValue);
         }
         return expressionLevel / factorValues.size();
     }
@@ -114,6 +114,11 @@ public class GeneProfile implements Iterable<Expression> {
         return expression == null ? 0 : expression.getLevel();
     }
 
+    public double getExpressionLevelByFactorValue(FactorValue factorValue) {
+        Expression expression = factorValueExpressions.get(factorValue);
+        return expression == null ? 0 : expression.getLevel();
+    }
+
     //we decided to lazy load rather then have an attribute because
     // not always the name is used
     public String getGeneName() {
@@ -124,7 +129,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
 
-    public Comparable getWeightedExpressionLevelOn(Set<String> selectedFactorValues, Set<String> allFactorValues) {
+    public Comparable getWeightedExpressionLevelOn(Set<FactorValue> selectedFactorValues, Set<FactorValue> allFactorValues) {
         if (allFactorValues.isEmpty()) {
             return getAverageExpressionLevelOn(selectedFactorValues);
         }

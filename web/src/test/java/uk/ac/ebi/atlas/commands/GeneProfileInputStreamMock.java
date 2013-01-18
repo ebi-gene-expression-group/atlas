@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.commands;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
 
@@ -60,6 +61,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
                 when(expressionMock.getFactorValueString()).thenReturn("org" + (j + 1));
+                when(expressionMock.getFactorValue()).thenReturn(new FactorValue("org", "", "org" + (j + 1)));
                 geneProfileBuilder.addExpression(expressionMock);
 
             }

@@ -9,11 +9,11 @@ import java.util.Set;
 public class GeneProfileComparator implements Comparator<GeneProfile> {
 
     private boolean isSpecific;
-    private Set<String> selectedFactorValues;
-    private Set<String> allFactorValues;
+    private Set<FactorValue>  selectedFactorValues;
+    private Set<FactorValue>  allFactorValues;
 
-    public GeneProfileComparator(boolean isSpecific, Set<String> selectFactorValues,
-                                 Set<String> allFactorValues) {
+    public GeneProfileComparator(boolean isSpecific, Set<FactorValue> selectFactorValues,
+                                 Set<FactorValue> allFactorValues) {
         this.isSpecific = isSpecific;
         this.selectedFactorValues = selectFactorValues;
         this.allFactorValues = allFactorValues;
@@ -49,7 +49,7 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
     }
 
     private int compareOnAverage(GeneProfile firstGeneProfile, GeneProfile otherGeneProfile,
-                                 Set<String> averageOn) {
+                                 Set<FactorValue> averageOn) {
 
         Ordering<Comparable> naturalOrdering = Ordering.natural();
         return naturalOrdering.compare(firstGeneProfile.getAverageExpressionLevelOn(averageOn),

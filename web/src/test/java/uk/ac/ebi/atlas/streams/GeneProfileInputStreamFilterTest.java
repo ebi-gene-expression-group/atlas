@@ -59,7 +59,11 @@ public class GeneProfileInputStreamFilterTest {
 
     private Set<String> geneIDs = Sets.newHashSet(GENE_1, GENE_2);
 
-    private Set<String> factorValues = Sets.newHashSet(ORGANISM_PART_1, ORGANISM_PART_2);
+    private FactorValue factorValue1 = new FactorValue("ORG", null, "heart");
+    private FactorValue factorValue2 = new FactorValue("ORG", null, "hair");
+
+
+    private Set<FactorValue> factorValues = Sets.newHashSet(factorValue1, factorValue2);
 
     private Set<String> EMPTY_GENE_IDS = Sets.newHashSet();
 

@@ -57,12 +57,10 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private ExperimentsCache experimentsCache;
 
-    protected FilterParameters.Builder filterParamenterBuilder;
-
     @Inject
     public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParamenterBuilder) {
-        super(filterParamenterBuilder);
+                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder) {
+        super(filterParameterBuilder);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;

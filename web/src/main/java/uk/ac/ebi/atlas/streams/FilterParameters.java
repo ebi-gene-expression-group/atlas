@@ -159,6 +159,7 @@ public class FilterParameters {
         public Builder withGeneQuery(String geneQuery) {
             this.hasGenesForQuery = !StringUtils.isEmpty(geneQuery);
 
+            this.geneIDs = new HashSet<>();
             //init geneIds
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
             this.geneIDs.addAll(indexClient.findGeneIds(geneQuery, experiment.getSpecie()));
@@ -169,12 +170,14 @@ public class FilterParameters {
         public Builder withQueryFactorValues(Set<String> queryFactorValues) {
             //init queryFactorValues
             this.queryFactorValues = new HashSet<>();
-            if (StringUtils.isEmpty(queryFactorType)) {
-                Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-                queryFactorType = experiment.getDefaultFactorType();
-            }
-            for (String queryFactorValue : queryFactorValues) {
-                this.queryFactorValues.add(new FactorValue(queryFactorType, queryFactorType, queryFactorValue));
+            if (queryFactorValues != null) {
+                if (StringUtils.isEmpty(queryFactorType)) {
+                    Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+                    queryFactorType = experiment.getDefaultFactorType();
+                }
+                for (String queryFactorValue : queryFactorValues) {
+                    this.queryFactorValues.add(new FactorValue(queryFactorType, queryFactorType, queryFactorValue));
+                }
             }
             return this;
         }

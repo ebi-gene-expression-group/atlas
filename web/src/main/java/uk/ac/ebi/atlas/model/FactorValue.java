@@ -1,12 +1,15 @@
 package uk.ac.ebi.atlas.model;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
-import static com.google.common.base.Objects.toStringHelper;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorValue implements Comparable<FactorValue> {
 
+    //ToDo: this should be removed... class should be possibly independent from representation
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private String type;
@@ -15,9 +18,14 @@ public class FactorValue implements Comparable<FactorValue> {
 
     private String value;
 
+    public FactorValue(String type, String value) {
+        this(type, null, value);
+    }
+
     public FactorValue(String type, String name, String value) {
+        //ToDo: this pre-processing of type metadata (space to underscore and case conversion) should be removed, we should assume configuration is well formed and valid
         this.type = checkNotNull(type).replaceAll(" ", "_").toUpperCase();
-        this.name = checkNotNull(name);
+        this.name = name;
         this.value = checkNotNull(value);
     }
 
@@ -33,47 +41,59 @@ public class FactorValue implements Comparable<FactorValue> {
         return type;
     }
 
-    public String getDisplayString() {
-        return type.concat(FACTOR_VALUE_SEPARATOR).concat(name.concat(FACTOR_VALUE_SEPARATOR)
-                .concat(value));
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(type, value);
+        return Objects.hashCode(type, value);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object other) {
+        if (getClass() != other.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final FactorValue other = (FactorValue) obj;
-        return Objects.equals(this.type, other.type) && Objects.equals(this.value, other.value);
+        return Objects.equal(this.getClass(), other.getClass())
+                && Objects.equal(this.type, ((FactorValue) other).type)
+                && Objects.equal(this.value, ((FactorValue) other).value);
     }
 
     @Override
     public String toString() {
-        return toStringHelper(this).addValue(getDisplayString()).toString();
+        return Objects.toStringHelper(this)
+                .add("type", type)
+                .add("name", name)
+                .add("value", value)
+                .toString();
     }
 
     @Override
     public int compareTo(FactorValue factorValue) {
-        int factorCompare = name.compareTo(factorValue.name);
+        int factorCompare = type.compareTo(factorValue.type);
         if (factorCompare != 0) {
             return factorCompare;
         }
         return value.compareTo(factorValue.value);
     }
 
+    //ToDo: this should be dropped, construction depending on representation, no good...
     public static FactorValue createFactorValue(String factorValue) {
-        String[] split = factorValue.split(":");
+        return createFactorValue(factorValue.split(":"));
+    }
+
+    //ToDo: this should be dropped, construction must be done with constructor
+    protected static FactorValue createFactorValue(String[] split) {
         if (split.length == 2) {
-            return new FactorValue(split[0].trim(), "", split[1].trim());
+            return new FactorValue(split[0].trim(), split[1].trim());
         }
+
         return null;
+    }
+
+
+    public static SortedSet<String> getFactorValuesStrings(SortedSet<FactorValue> factorValues) {
+        SortedSet<String> result = new TreeSet<>();
+        for (FactorValue factorValue : factorValues) {
+            result.add(factorValue.getValue());
+        }
+        return result;
     }
 }

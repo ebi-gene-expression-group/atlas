@@ -29,11 +29,13 @@ public class GeneProfileComparatorTest {
     @Mock
     private GeneProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
-    private Set<String> selectedOrganismParts = Sets.newHashSet("heart");
+    private FactorValue factorValue1 = new FactorValue("ORG", null, "heart");
+    private FactorValue factorValue2 = new FactorValue("ORG", null, "nose");
 
-    private Set<String> nonSelectedOrganismParts = Sets.newHashSet("heart");
 
-    private Set<String> allOrganismParts = Sets.newHashSet("heart", "nose");
+    private Set<FactorValue> selectedOrganismParts = Sets.newHashSet(factorValue1);
+
+    private Set<FactorValue> allOrganismParts = Sets.newHashSet(factorValue1, factorValue2);
 
     @Before
     public void initGeneExpressions() {
@@ -96,7 +98,7 @@ public class GeneProfileComparatorTest {
     @Test
     public void higherAverageAcrossSelectedTissuesMinusAverageNonSelected() {
 
-        when(geneWithSpecificity1.getWeightedExpressionLevelOn(selectedOrganismParts,allOrganismParts)).thenReturn(5D);
+        when(geneWithSpecificity1.getWeightedExpressionLevelOn(selectedOrganismParts, allOrganismParts)).thenReturn(5D);
         when(geneWithSpecificity16.getWeightedExpressionLevelOn(selectedOrganismParts, allOrganismParts)).thenReturn(2D);
 
 

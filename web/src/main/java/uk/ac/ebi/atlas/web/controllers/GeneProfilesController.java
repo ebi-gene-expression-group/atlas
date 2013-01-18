@@ -4,10 +4,14 @@ import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 public class GeneProfilesController {
-    protected FilterParameters.Builder filterParamenterBuilder;
+    protected FilterParameters.Builder filterParameterBuilder;
+
+    public GeneProfilesController(FilterParameters.Builder filterParameterBuilder) {
+        this.filterParameterBuilder = filterParameterBuilder;
+    }
 
     protected FilterParameters createFilterParameters(String experimentAccession, RequestPreferences preferences) {
-        return filterParamenterBuilder.forExperimentAccession(experimentAccession)
+        return filterParameterBuilder.forExperimentAccession(experimentAccession)
                 .withCutoff(preferences.getCutoff())
                 .withFilterFactorValues(preferences.getFilterFactorValues())
                 .withQueryFactorType(preferences.getQueryFactorType())

@@ -31,6 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -63,7 +64,10 @@ public class WriteGeneProfilesCommandTest {
 
     @Before
     public void initMocks() {
-        SortedSet<String> organismParts = Sets.newTreeSet(Sets.newHashSet("adipose", "brain", "breast", "liver", "lung"));
+        SortedSet<FactorValue> organismParts = Sets.newTreeSet(Sets.newHashSet(createFV("adipose"), createFV("brain"),
+                createFV("breast"),
+                createFV("liver"),
+                createFV("lung")));
 
         when(filterParametersMock.getQueryFactorValues()).thenReturn(organismParts);
 
@@ -80,7 +84,7 @@ public class WriteGeneProfilesCommandTest {
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
         when(geneProfileMock2.getExpressionLevel("liver")).thenReturn(21.12d);
 
-        when(experimentMock.getFactorValueStrings(anyString())).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentMock.getFactorValues(anyString())).thenReturn(Sets.newTreeSet(organismParts));
     }
 
     @Before
@@ -105,4 +109,7 @@ public class WriteGeneProfilesCommandTest {
 
     }
 
+    private FactorValue createFV(String value) {
+        return new FactorValue("ORG", null, value);
+    }
 }

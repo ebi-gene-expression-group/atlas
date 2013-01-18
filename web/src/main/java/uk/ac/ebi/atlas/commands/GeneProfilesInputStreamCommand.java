@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.base.Function;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -42,8 +41,6 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
     private GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
 
-    private IndexClient indexClient;
-
     private ExperimentsCache experimentsCache;
 
     protected FilterParameters filterParameters;
@@ -51,11 +48,6 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
-    }
-
-    @Inject
-    public void setIndexClient(IndexClient indexClient) {
-        this.indexClient = indexClient;
     }
 
     @Inject
