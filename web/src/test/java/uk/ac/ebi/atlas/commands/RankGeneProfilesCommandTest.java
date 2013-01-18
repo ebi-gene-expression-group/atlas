@@ -32,9 +32,10 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.RankingParameters;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
+import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import java.util.List;
 
@@ -60,6 +61,9 @@ public class RankGeneProfilesCommandTest {
 
     @Mock
     private Experiment experimentMock;
+
+    @Mock
+    private FilterParameters filterParameters;
 
     @Mock
     private RankingParameters rankingParametersMock;
@@ -88,7 +92,7 @@ public class RankGeneProfilesCommandTest {
         when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
 
         when(rankingParametersMock.getHeatmapMatrixSize()).thenReturn(100);
-        when(rankingParametersMock.getCutoff()).thenReturn(0.1);
+        when(filterParameters.getCutoff()).thenReturn(0.1);
         when(rankingParametersMock.isSpecific()).thenReturn(true);
 
         //a stream with 5 profile of 2 expressions
@@ -103,9 +107,8 @@ public class RankGeneProfilesCommandTest {
 
         subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
-        subject.setParameters(rankingParametersMock);
-
-        subject.setIndexClient(indexClientMock);
+        subject.setFilteredParameters(filterParameters);
+        subject.setRankingParameters(rankingParametersMock);
 
         subject.setExperimentsCache(experimentsCacheMock);
 
@@ -118,7 +121,7 @@ public class RankGeneProfilesCommandTest {
         //then
         verify(geneProfileInputStreamBuilderMock).forExperiment("ANY_EXPERIMENT_ACCESSION");
         //verify(geneProfileInputStreamBuilderMock).withExperimentAccession("ANY_EXPERIMENT_ACCESSION");
-        verify(geneProfileInputStreamBuilderMock).withCutoff(rankingParametersMock.getCutoff());
+        verify(geneProfileInputStreamBuilderMock).withCutoff(filterParameters.getCutoff());
         verify(geneProfileInputStreamBuilderMock).create();
     }
 

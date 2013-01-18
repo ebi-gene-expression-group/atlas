@@ -116,16 +116,16 @@ public class ExperimentTest {
 
     @Test
     public void testFilteredFactorValues() {
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1), "ORGANISM_PART").size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1), "ORGANISM_PART"), hasItems(factorValue1.getValue()));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue1), "ORGANISM_PART").size(), is(1));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue1), "ORGANISM_PART"), hasItems(factorValue1.getValue()));
         // there is no such combination as factorValue1 and factorValue2 on an experimentRun
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1, factorValue2), "ORGANISM_PART").size(), is(0));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3, factorValue4), "ORGANISM_PART").size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3, factorValue4), "ORGANISM_PART"), hasItems(factorValue3.getValue()));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue2), "ORGANISM_PART").size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue2), "ORGANISM_PART"), hasItems(factorValue2.getValue()));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3), "MATERIAL_TYPE").size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3), "MATERIAL_TYPE"), hasItems(factorValue4.getValue()));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue1, factorValue2), "ORGANISM_PART").size(), is(0));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue3, factorValue4), "ORGANISM_PART").size(), is(1));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue3, factorValue4), "ORGANISM_PART"), hasItems(factorValue3.getValue()));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue2), "ORGANISM_PART").size(), is(1));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue2), "ORGANISM_PART"), hasItems(factorValue2.getValue()));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue3), "MATERIAL_TYPE").size(), is(1));
+        assertThat(subject.getFilteredFactorValueStrings(Sets.newHashSet(factorValue3), "MATERIAL_TYPE"), hasItems(factorValue4.getValue()));
     }
 
 }

@@ -20,16 +20,20 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.atlas.streams;
 
-public class RankingParameters extends FilterParameters {
+
+public class RankingParameters{
 
     private boolean specific;
 
     private Integer heatmapMatrixSize;
 
-    public RankingParameters() {
+    public RankingParameters(boolean specific, Integer heatmapMatrixSize) {
+       this.specific = specific;
+        this.heatmapMatrixSize = heatmapMatrixSize;
     }
+
 
     public boolean isSpecific() {
         return specific;
@@ -37,16 +41,6 @@ public class RankingParameters extends FilterParameters {
 
     public Integer getHeatmapMatrixSize() {
         return heatmapMatrixSize;
-    }
-
-    public RankingParameters setSpecific(boolean specific) {
-        this.specific = specific;
-        return this;
-    }
-
-    public RankingParameters setHeatmapMatrixSize(Integer heatmapMatrixSize) {
-        this.heatmapMatrixSize = heatmapMatrixSize;
-        return this;
     }
 
     @Override

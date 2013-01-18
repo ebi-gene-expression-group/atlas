@@ -18,8 +18,12 @@ public class Expression {
         this.allFactorValues = allFactorValues;
     }
 
-    public String getFactorValue() {
+    public String getFactorValueString() {
         return factorValue.getValue();
+    }
+
+    public FactorValue getFactorValue() {
+        return factorValue;
     }
 
     public Set<FactorValue> getAllFactorValues() {

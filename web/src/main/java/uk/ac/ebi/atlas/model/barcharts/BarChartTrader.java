@@ -128,7 +128,7 @@ public class BarChartTrader {
         public Builder forExperiment(String experimentAccession) {
 
             // TODO: byType needs to come from RequestPreferences
-            factorValues = experimentsCache.getExperiment(experimentAccession).getFactorValues(null);
+            factorValues = experimentsCache.getExperiment(experimentAccession).getFactorValueStrings(null);
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 
@@ -168,7 +168,7 @@ public class BarChartTrader {
                         geneExpressionIndexes.put(cutoff, geneBitSets);
 
                     }
-                    geneBitSets.get(expression.getFactorValue()).set(geneIndexPosition);
+                    geneBitSets.get(expression.getFactorValueString()).set(geneIndexPosition);
 
                 }
             }

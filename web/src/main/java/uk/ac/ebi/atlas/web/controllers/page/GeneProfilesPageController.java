@@ -33,10 +33,12 @@ import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.RankingParameters;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.streams.FilterParameters;
+import uk.ac.ebi.atlas.streams.RankingParameters;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +47,7 @@ import java.util.Set;
 
 @Controller
 @Scope("request")
-public class GeneProfilesPageController {
+public class GeneProfilesPageController extends GeneProfilesController {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
 
@@ -57,7 +59,8 @@ public class GeneProfilesPageController {
 
     @Inject
     public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache) {
+                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder) {
+        super(filterParameterBuilder);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
@@ -70,16 +73,13 @@ public class GeneProfilesPageController {
 
         if (!result.hasErrors()) {
 
-            RankingParameters parameters = new RankingParameters();
-            parameters.setGeneQuery(preferences.getGeneQuery())
-                    .setQueryFactorType(preferences.getQueryFactorType())
-                    .setQueryFactorValues(preferences.getQueryFactorValues())
-                    .setFilterFactorValues(preferences.getFilterFactorValues())
-                    .setCutoff(preferences.getCutoff());
-            parameters.setSpecific(preferences.isSpecific());
-            parameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
+            RankingParameters parameters = new RankingParameters(preferences.isSpecific(),
+                    preferences.getHeatmapMatrixSize());
 
-            rankCommand.setParameters(parameters);
+            rankCommand.setRankingParameters(parameters);
+
+            FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
+            rankCommand.setFilteredParameters(filterParameters);
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
 
@@ -98,18 +98,17 @@ public class GeneProfilesPageController {
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             // this formats the default factor type for display on web page
-            String queryFactorType = parameters.getQueryFactorType();
+            String queryFactorType = preferences.getQueryFactorType();
             if (queryFactorType == null || queryFactorType.trim().length() == 0)
                 queryFactorType = experiment.getDefaultFactorType();
             queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
             queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
             model.addAttribute("formattedQueryFactorType", queryFactorType);
 
-            model.addAttribute("allFactorValues", experiment.getFactorValues(parameters.getQueryFactorType()));
+            Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
 
-            Set<FactorValue> filterByFactorValues = parameters.getFilterFactorValues();
             model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
-                    parameters.getQueryFactorType()));
+                    filterParameters.getQueryFactorType()));
 
             String specie = experiment.getSpecie();
 
@@ -127,7 +126,6 @@ public class GeneProfilesPageController {
     String buildDownloadURL(HttpServletRequest request) {
         return request.getRequestURI() + TSV_FILE_EXTENSION + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
     }
-
 
 }
 

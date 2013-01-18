@@ -101,25 +101,28 @@ public class GeneProfileTest {
 
     @Test
     public void averageExpressionLevelOnEmptyCollection() {
-        assertThat(subject.getAverageExpressionLevelOn(new HashSet<String>()), is(0D));
+        assertThat(subject.getAverageExpressionLevelOn(new HashSet<FactorValue>()), is(0D));
     }
 
     @Test
     public void averageExpressionLevel() {
-        double averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet("nose", "head"));
+        double averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factorValue1, factorValue3));
         assertThat(averageExpressionLevel, is(2.6005000000000003D));
 
-        averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet("nose", "head", "panz"));
+        averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factorValue1, factorValue3,
+                new FactorValue("ORGANISM_PART", "org","panz")));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
 
      @Test
     public void weightedExpressionLevelOn() {
-        double averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet("nose", "head"),
-                Sets.newHashSet("nose", "head", "trunk"));
+        double averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet(factorValue1,
+                factorValue3),
+                Sets.newHashSet(factorValue1, factorValue3, factorValue2));
         assertThat(averageExpressionLevel, is(-0.39949999999999974D));
 
-        averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet("nose"), Sets.newHashSet("nose", "head", "trunk"));
+        averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet(factorValue1),
+                Sets.newHashSet(factorValue1, factorValue3, factorValue2));
         assertThat(averageExpressionLevel, is(-0.8004999999999995D));
     }
 

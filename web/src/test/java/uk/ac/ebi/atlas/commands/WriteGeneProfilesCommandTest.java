@@ -31,8 +31,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FilterParameters;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.util.SortedSet;
@@ -63,7 +64,10 @@ public class WriteGeneProfilesCommandTest {
 
     @Before
     public void initMocks() {
-        SortedSet<String> organismParts = Sets.newTreeSet(Sets.newHashSet("adipose", "brain", "breast", "liver", "lung"));
+        SortedSet<FactorValue> organismParts = Sets.newTreeSet(Sets.newHashSet(createFV("adipose"), createFV("brain"),
+                createFV("breast"),
+                createFV("liver"),
+                createFV("lung")));
 
         when(filterParametersMock.getQueryFactorValues()).thenReturn(organismParts);
 
@@ -73,12 +77,12 @@ public class WriteGeneProfilesCommandTest {
 
         when(geneProfileMock1.getGeneName()).thenReturn("GN1");
         when(geneProfileMock1.getGeneId()).thenReturn("GI1");
-        when(geneProfileMock1.getExpressionLevel("brain")).thenReturn(0.11d);
-        when(geneProfileMock1.getExpressionLevel("lung")).thenReturn(9d);
+        when(geneProfileMock1.getExpressionLevel(createFV("brain"))).thenReturn(0.11d);
+        when(geneProfileMock1.getExpressionLevel(createFV("lung"))).thenReturn(9d);
 
         when(geneProfileMock2.getGeneName()).thenReturn("GN2");
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
-        when(geneProfileMock2.getExpressionLevel("liver")).thenReturn(21.12d);
+        when(geneProfileMock2.getExpressionLevel(createFV("liver"))).thenReturn(21.12d);
 
         when(experimentMock.getFactorValues(anyString())).thenReturn(Sets.newTreeSet(organismParts));
     }
@@ -86,7 +90,7 @@ public class WriteGeneProfilesCommandTest {
     @Before
     public void initSubject() throws Exception {
         subject = new WriteGeneProfilesCommand(new NumberUtils());
-        subject.setParameters(filterParametersMock);
+        subject.setFilteredParameters(filterParametersMock);
         subject.setCsvWriter(csvWriterMock);
     }
 
@@ -105,4 +109,7 @@ public class WriteGeneProfilesCommandTest {
 
     }
 
+    private FactorValue createFV(String value) {
+        return new FactorValue("ORG", null, value);
+    }
 }

@@ -152,7 +152,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             var heatmapFactorValues = [${heatmapFactorValues.size()}];
             <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
-            heatmapFactorValues[${i.index}] = '${factorValue}';
+            heatmapFactorValues[${i.index}] = '${factorValue.value}';
             </c:forEach>
 
             var isIE8 = false;

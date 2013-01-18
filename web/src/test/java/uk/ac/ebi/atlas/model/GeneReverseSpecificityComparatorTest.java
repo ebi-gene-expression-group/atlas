@@ -29,7 +29,10 @@ public class GeneReverseSpecificityComparatorTest {
     @Mock
     private GeneProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
-    private Set<String> selectedOrganismParts = Sets.newHashSet("heart", "nose");
+    FactorValue factorValue1 = new FactorValue("ORG", null, "heart");
+    FactorValue factorValue2 = new FactorValue("ORG", null, "nose");
+
+    private Set<FactorValue> selectedOrganismParts = Sets.newHashSet(factorValue1, factorValue2);
 
     @Before
     public void initGeneExpressions() {
