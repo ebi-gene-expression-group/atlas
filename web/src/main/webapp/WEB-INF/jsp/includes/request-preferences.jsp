@@ -58,9 +58,14 @@
                                 border-width: 1px;
                                 border-color: lightgray;
                                 margin:2px;">
-                            ${filterByLabel}
+                            <c:if test="${filterByLabel.size == 0}">
+                                none
+                            </c:if>
+                            <c:forEach items="${filterByLabel}" var="entry">
+                                ${entry.key}:${entry.value}<br>
+                            </c:forEach>
                     </span>
-                            </div>
+                        </div>
                     <span>
                         <ul id="filterBy">
                             <li><a>Change filters</a>
