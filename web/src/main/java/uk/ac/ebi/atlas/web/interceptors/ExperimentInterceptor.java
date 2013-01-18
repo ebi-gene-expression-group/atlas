@@ -38,6 +38,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -83,8 +84,17 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
         if (applicationProperties.getExperimentIdentifiers().contains(experimentAccession)) {
 
             if (request.getParameterValues("filterFactorValues") != null) {
+                // TODO: why does the request parameter suddenly has length 1 when search is performed?
+                logger.debug("Length=" + request.getParameterValues("filterFactorValues").length + " " + Arrays.asList(request.getParameterValues("filterFactorValues")));
+
+                String[] parameters = request.getParameterValues("filterFactorValues");
+                // TODO: this is hack to overcome strange request parameter behaviour
+                if (parameters.length == 1) {
+                    parameters = parameters[0].split(",");
+                }
+
                 Set<FactorValue> offendingFilterFactorValues = validateFilterFactorValues(experimentAccession,
-                        request.getParameterValues("filterFactorValues"));
+                        parameters);
                 if (offendingFilterFactorValues.size() > 0) {
                     logger.warn("Offending filterFactorValues found: " + offendingFilterFactorValues);
                     response.sendError(404);
@@ -125,10 +135,12 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         Set<FactorValue> result = new HashSet<>();
         for (String requestFilterFactorValue : requestFilterFactorValues) {
-            FactorValue factorValue = FactorValue.createFactorValue(requestFilterFactorValue);
-            if (!allFactorValues.contains(factorValue)) {
-                if (factorValue != null) {
-                    result.add(factorValue);
+            if (requestFilterFactorValue.trim().length() > 0) {
+                FactorValue factorValue = FactorValue.createFactorValue(requestFilterFactorValue);
+                if (!allFactorValues.contains(factorValue)) {
+                    if (factorValue != null) {
+                        result.add(factorValue);
+                    }
                 }
             }
         }
