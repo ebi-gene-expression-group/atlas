@@ -22,19 +22,14 @@
 
 package uk.ac.ebi.atlas.model.readers;
 
-import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,24 +37,22 @@ import java.util.Map;
 
 @Named("analysisMethodsTsvReader")
 @Scope("singleton")
-public class AnalysisMethodsTsvReader {
+public class AnalysisMethodsTsvReader extends AbstractTsvReader {
 
-    private static final Logger logger = Logger.getLogger(AnalysisMethodsTsvReader.class);
-
-    private ApplicationProperties applicationProperties;
-
-    public static final String LIBRARIES_TITLE = "Processed libraries";
+    private static final String LIBRARIES_TITLE = "Processed libraries";
 
     @Inject
-    public AnalysisMethodsTsvReader(ApplicationProperties applicationProperties) {
-        this.applicationProperties = applicationProperties;
+    public AnalysisMethodsTsvReader(ApplicationProperties a) {
+        super(Logger.getLogger(AnalysisMethodsTsvReader.class), a);
     }
 
-    public Collection<String[]> readAll(String experimentAccession) throws IllegalStateException {
-        return readAndFilter(experimentAccession, new IsCommented());
+    @Override
+    public Collection<String[]> readAll(String experimentAccession) {
+        Path path = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodTsvFilePath(experimentAccession));
+        return readAllForPath(path);
     }
 
-    public Collection<String[]> readAllWithoutLibraries(String experimentAccession) throws IllegalStateException {
+    public Collection<String[]> readAllWithoutLibraries(String experimentAccession) {
         Predicate<String[]> predicate = new Predicate<String[]>() {
             @Override
             public boolean apply(String[] columns) {
@@ -67,41 +60,17 @@ public class AnalysisMethodsTsvReader {
                 return !(firstColumn.startsWith("#") || firstColumn.equals(LIBRARIES_TITLE));
             }
         };
-        return readAndFilter(experimentAccession, predicate);
-    }
-
-    protected Collection<String[]> readAndFilter(String experimentAccession,
-                                                 Predicate<String[]> filter) throws IllegalStateException {
-
-        Path filePath = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodCsvFilePath(experimentAccession));
-
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Files.newInputStream(filePath)), '\t')) {
-
-            return Collections2.filter(csvReader.readAll(), filter);
-
-        } catch (IOException e) {
-
-            logger.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-
-        }
+        Path path = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodTsvFilePath(experimentAccession));
+        return readAndFilter(path, predicate);
     }
 
     public Map<String, String> readAsMap(String experimentAccession) {
         Collection<String[]> rows = readAll(experimentAccession);
-        Map<String, String> keyValuePairs = new HashMap<>();
+        Map<String, String> keyValuePairs = new HashMap<>(rows.size());
         for (String[] row : rows) {
             keyValuePairs.put(row[0], row[1]);
         }
         return keyValuePairs;
-    }
-
-    protected class IsCommented implements Predicate<String[]> {
-
-        @Override
-        public boolean apply(String[] columns) {
-            return !columns[0].trim().startsWith("#");
-        }
     }
 
 }

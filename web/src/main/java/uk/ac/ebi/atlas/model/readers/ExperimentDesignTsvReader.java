@@ -22,66 +22,27 @@
 
 package uk.ac.ebi.atlas.model.readers;
 
-import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Named("experimentDesignTsvReader")
-public class ExperimentDesignTsvReader {
-
-    private static final Logger logger = Logger.getLogger(ExperimentDesignTsvReader.class);
-
-    private ApplicationProperties applicationProperties;
+public class ExperimentDesignTsvReader extends AbstractTsvReader {
 
     @Inject
-    public ExperimentDesignTsvReader(ApplicationProperties applicationProperties) {
-        this.applicationProperties = applicationProperties;
+    public ExperimentDesignTsvReader(ApplicationProperties a) {
+        super(Logger.getLogger(ExperimentDesignTsvReader.class), a);
     }
 
-    public Collection<String[]> readAll(String experimentAccession) throws IllegalStateException {
-
-        Path filePath = FileSystems.getDefault().getPath(applicationProperties.getExperimentDesignCsvFilePath(experimentAccession));
-
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Files.newInputStream(filePath)), '\t')) {
-
-            return Collections2.filter(csvReader.readAll(), new IsCommented());
-
-        } catch (IOException e) {
-
-            logger.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-
-        }
-    }
-
-    public Map<String, String> readAsMap(String experimentAccession) {
-        Collection<String[]> rows = readAll(experimentAccession);
-        Map<String, String> keyValuePairs = new HashMap<>();
-        for (String[] row : rows) {
-            keyValuePairs.put(row[0], row[1]);
-        }
-        return keyValuePairs;
-    }
-
-    protected class IsCommented implements Predicate<String[]> {
-
-        @Override
-        public boolean apply(String[] columns) {
-            return !columns[0].trim().startsWith("#");
-        }
+    @Override
+    public Collection<String[]> readAll(String experimentAccession) {
+        Path path = FileSystems.getDefault().getPath(applicationProperties.getExperimentDesignTsvFilePath(experimentAccession));
+        return readAllForPath(path);
     }
 
 }

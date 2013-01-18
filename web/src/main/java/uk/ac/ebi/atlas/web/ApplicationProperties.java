@@ -58,15 +58,15 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
-    public String getAnalisysMethodCsvFilePath(String experimentAccession) {
+    public String getAnalisysMethodTsvFilePath(String experimentAccession) {
         return MessageFormat.format(configurationProperties.getProperty("experiment.analysis-method.path.template"), experimentAccession);
     }
 
-    public String getExperimentDesignCsvFilePath(String experimentAccession) {
+    public String getExperimentDesignTsvFilePath(String experimentAccession) {
         return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
     }
 
-    public String getExperimentFactorsCsvFilePath(String experimentAccession) {
+    public String getExperimentFactorsTsvFilePath(String experimentAccession) {
         return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-factors.path.template"), experimentAccession);
     }
 
