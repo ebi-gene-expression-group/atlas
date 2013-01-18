@@ -203,7 +203,7 @@ public class GeneProfilesPageController {
             String label = labels.toString().replaceAll("\\[", "").replaceAll("\\]", "");
             if (label.trim().length() == 0)
                 label = "none";
-            model.addAttribute("filterByLabel", "Filtered by " + label);
+            model.addAttribute("filterByLabel", label);
         }
 
         return "experiment";
