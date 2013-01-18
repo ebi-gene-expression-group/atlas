@@ -188,19 +188,18 @@ public class GeneProfilesPageController {
             model.addAttribute("filterByMenu", filterByMenu);
 
             // construct label above filter by menu
-            SortedMap<String, String> labels = new TreeMap<>();
+            SortedSet<FactorValue> selectedFactorValues = new TreeSet<>();
             for (String name : allFactorNames.keySet()) {
                 for (FactorValue factorValue : allFactorNames.get(name)) {
                     // this is necessary because what comes back from RequestPreferences are not "complete" FactorValues
                     // they are missing the factor name
                     if (parameters.getFilterFactorValues().contains(factorValue)) {
-                        labels.put(name, factorValue.getValue());
+                        selectedFactorValues.add(factorValue);
                     }
                 }
             }
 
-            // can be done better
-            model.addAttribute("filterByLabel", labels);
+            model.addAttribute("selectedFactorValues", selectedFactorValues);
         }
 
         return "experiment";

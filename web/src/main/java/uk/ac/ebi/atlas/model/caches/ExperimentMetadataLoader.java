@@ -95,7 +95,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         try {
             for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
                 if (line.length == 2) {
-                    defaultFilterFactorValues.add(FactorValue.createFactorValue(line));
+                    defaultFilterFactorValues.add(new FactorValue(line[0], line[1]));
                 } else {
                     defaultQueryFactorType = line[0];
                 }

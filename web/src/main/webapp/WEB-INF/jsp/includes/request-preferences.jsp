@@ -50,25 +50,35 @@
                 <c:if test="${factorTypesCount > 2}">
                     <td>
                         <div data-help-loc="#filterBy" class="tooltip-div" title="">
-                    <span>
-                            <label>Filtered by</label>
-                    </span>
-                    <span style="width:200px;
-                                border-style: solid;
-                                border-width: 1px;
-                                border-color: lightgray;
-                                margin:2px;">
-                            <c:if test="${filterByLabel.size == 0}">
-                                none
-                            </c:if>
-                            <c:forEach items="${filterByLabel}" var="entry">
-                                ${entry.key}:${entry.value}<br>
-                            </c:forEach>
-                    </span>
+
+                            <c:choose>
+                                <c:when test="${not empty selectedFactorValues}">
+                                    <span>
+                                            <label>Filtered by</label>
+                                    </span>
+                                    <span class="filters-frame">
+                                        <c:forEach items="${selectedFactorValues}" var="factorValue">
+                                            <span class="filter-name">
+                                            ${factorValue.name}:
+                                            </span>
+                                            ${factorValue.value}
+                                            <br/>
+                                        </c:forEach>
+                                    </span>
+                                    <c:set var="filterMenuLabel" value="Change filters"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>
+                                        <label>Filter by</label>
+                                    </span>
+                                    <c:set var="filterMenuLabel" value="Choose filters"/>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
+
                     <span>
                         <ul id="filterBy">
-                            <li><a>Change filters</a>
+                            <li><a>${filterMenuLabel}</a>
                                 <ul>
                                     <c:forEach items="${filterByMenu}" var="level1">
                                         <li>
