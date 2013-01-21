@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class GeneProfilesController {
     protected FilterParameters.Builder filterParameterBuilder;
@@ -45,7 +44,7 @@ public class GeneProfilesController {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        // check for query factor type present, otherwise use default
+        // check for query factor type present, otherwise use experiment default
         String queryFactorType;
         if (preferences.getQueryFactorType() == null ||
                 preferences.getQueryFactorType().trim().length() == 0) {
@@ -54,17 +53,11 @@ public class GeneProfilesController {
             queryFactorType = preferences.getQueryFactorType();
         }
 
-        // check for filter factor values present, otherwise use default
+        // check for filter factor values present, otherwise use experiment default
         SortedSet<String> filterFactorValues;
         if (preferences.getFilterFactorValues() == null ||
                 preferences.getFilterFactorValues().size() == 0) {
-            // TODO: Experiment could also return the URL representation of factor values?
-            SortedSet<String> filterDefaultFilterFactorValues = new TreeSet<>();
-            for (FactorValue factorValue : experiment.getDefaultFilterFactorValues()) {
-                // this simulates how filter factor values arrive from URL as type:value
-                filterDefaultFilterFactorValues.add(factorValue.getType() + ":" + factorValue.getValue());
-            }
-            filterFactorValues = filterDefaultFilterFactorValues;
+            filterFactorValues = FactorValue.getFactorValuesURLRepresentation(experiment.getDefaultFilterFactorValues());
         } else {
             filterFactorValues = preferences.getFilterFactorValues();
         }

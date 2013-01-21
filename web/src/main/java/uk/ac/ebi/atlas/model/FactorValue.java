@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Objects;
 
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -84,8 +85,7 @@ public class FactorValue implements Comparable<FactorValue> {
         if (split.length == 2) {
             return new FactorValue(split[0].trim(), split[1].trim());
         }
-        return null;
-        //throw new IllegalArgumentException("FactorValue mus");
+        throw new IllegalArgumentException("FactorValue mus");
     }
 
 
@@ -93,6 +93,17 @@ public class FactorValue implements Comparable<FactorValue> {
         SortedSet<String> result = new TreeSet<>();
         for (FactorValue factorValue : factorValues) {
             result.add(factorValue.getValue());
+        }
+        return result;
+    }
+
+    // representational differences are due to encoding in URL / RequestPreferences
+    // you would need to change RequestPreferences to translate URL String into FactorValues
+    // or use this method to "emulate" URL like encoding of factor values
+    public static SortedSet<String> getFactorValuesURLRepresentation(Set<FactorValue> factorValues) {
+        SortedSet<String> result = new TreeSet<>();
+        for (FactorValue factorValue : factorValues) {
+            result.add(factorValue.getType() + ":" + factorValue.getValue());
         }
         return result;
     }
