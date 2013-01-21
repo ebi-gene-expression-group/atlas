@@ -150,11 +150,6 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
         $(document).ready(function () {
 
-            var heatmapFactorValues = [${heatmapFactorValues.size()}];
-            <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
-            heatmapFactorValues[${i.index}] = '${factorValue.value}';
-            </c:forEach>
-
             var isIE8 = false;
 
             //disable vertical header and anatomogram in IE
@@ -183,8 +178,15 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
+
+                //ToDo: this should be replaced with a JSON array directly sent from backend layer
+                var heatmapFactorValueValues = [${heatmapFactorValueValues.size()}];
+                <c:forEach varStatus="i" var="factorValueValue" items="${heatmapFactorValueValues}">
+                    heatmapFactorValueValues[${i.index}] = '${factorValueValue}';
+                </c:forEach>
+
                 if (formattedQueryFactorType === "Organism part") {
-                    initAnatomogram(heatmapFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    initAnatomogram(heatmapFactorValueValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }
 

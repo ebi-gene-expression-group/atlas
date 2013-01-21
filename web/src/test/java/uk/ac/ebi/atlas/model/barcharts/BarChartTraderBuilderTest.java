@@ -1,6 +1,29 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model.barcharts;
 
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
@@ -45,17 +69,27 @@ public class BarChartTraderBuilderTest {
     public static final GeneProfile GENE_PROFILE_2 = mock(GeneProfile.class);
     public static final SortedSet<String> ORGANISM_PARTS = new TreeSet<>();
 
+
     @Before
     public void initializeSubject() {
 
-        Experiment experiment = mock(Experiment.class);
+        Experiment experimentMock = mock(Experiment.class);
+
+        FactorValue factorValueMock1 = mock(FactorValue.class);
+        when(factorValueMock1.getValue()).thenReturn(ORGANISM_PART_1);
+        FactorValue factorValueMock2 = mock(FactorValue.class);
+        when(factorValueMock2.getValue()).thenReturn(ORGANISM_PART_2);
+        FactorValue factorValueMock3 = mock(FactorValue.class);
+        when(factorValueMock3.getValue()).thenReturn(ORGANISM_PART_3);
 
         ORGANISM_PARTS.add(ORGANISM_PART_1);
         ORGANISM_PARTS.add(ORGANISM_PART_2);
         ORGANISM_PARTS.add(ORGANISM_PART_3);
-        when(experiment.getFactorValueStrings(anyString())).thenReturn(ORGANISM_PARTS);
+        SortedSet<FactorValue> factorValueMocks = new TreeSet<>();
+        factorValueMocks.addAll(Sets.newHashSet(factorValueMock1, factorValueMock2, factorValueMock3));
+        when(experimentMock.getFactorValues(anyString())).thenReturn(factorValueMocks);
 
-        when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
+        when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
 
         when(cutoffScale.getValuesSmallerThan(1)).thenReturn(initTreeSetWithValuesLessThen(1));
         when(cutoffScale.getValuesSmallerThan(2)).thenReturn(initTreeSetWithValuesLessThen(2));

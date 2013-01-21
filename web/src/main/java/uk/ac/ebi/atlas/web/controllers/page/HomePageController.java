@@ -28,14 +28,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Scope("singleton")
@@ -103,7 +101,9 @@ public class HomePageController {
                 speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
 
                 // count per experiment and sum across all experiments, using experiment default factor value
-                for (String defaultFactorValue : experiment.getFactorValueStrings(null)) {
+                SortedSet<FactorValue> defaultFactorValues = experiment.getFactorValues(null);
+                SortedSet<String> defaultFactorValuesValues = FactorValue.getFactorValuesStrings(defaultFactorValues);
+                for (String defaultFactorValue : defaultFactorValuesValues) {
                     if (!counts.containsKey(defaultFactorValue))
                         counts.put(defaultFactorValue, 0.0);
                     counts.put(defaultFactorValue, counts.get(defaultFactorValue) +

@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
@@ -127,8 +128,8 @@ public class BarChartTrader {
 
         public Builder forExperiment(String experimentAccession) {
 
-            // TODO: byType needs to come from RequestPreferences
-            factorValues = experimentsCache.getExperiment(experimentAccession).getFactorValueStrings(null);
+            // TODO: the static method will be moved to a FactorValues class
+            factorValues = FactorValue.getFactorValuesStrings(experimentsCache.getExperiment(experimentAccession).getFactorValues(null));
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 

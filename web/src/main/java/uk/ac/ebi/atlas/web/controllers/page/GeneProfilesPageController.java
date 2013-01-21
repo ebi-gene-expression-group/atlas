@@ -44,6 +44,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Controller
 @Scope("request")
@@ -107,8 +108,11 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
 
-            model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
-                    filterParameters.getQueryFactorType()));
+            SortedSet<FactorValue> filteredFactorValues = experiment.getFilteredFactorValues(filterByFactorValues, filterParameters.getQueryFactorType());
+
+            model.addAttribute("heatmapFactorValues", filteredFactorValues);
+
+            model.addAttribute("heatmapFactorValueValues", FactorValue.getFactorValuesStrings(filteredFactorValues));
 
             String specie = experiment.getSpecie();
 

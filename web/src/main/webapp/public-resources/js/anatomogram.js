@@ -41,11 +41,11 @@ function togglePathColor(path, evtType) {
     }
 }
 
-function toggleOrganismPartColor(svg, organism_part, evt) {
+function toggleOrganismPartColor(svg, factorValue, evt) {
 
     "use strict";
 
-    var element = svg.getElementById(organism_part);
+    var element = svg.getElementById(factorValue);
     var evtType = (typeof evt === 'undefined') ? evt : evt.type;
 
     if (element !== null) {
@@ -115,7 +115,7 @@ function scaleAnatomogram(svg) {
     }
 }
 
-function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
+function initAnatomogram(factorValues, fileNameMale, fileNameFemale) {
 
     //load anatomogram from given location and display given organism parts
     function loadAnatomogram(location) {
@@ -134,11 +134,11 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
     $("#heatmap-table").delegate("td:first-child", "hover", function (evt) { //hover on cells of the first table column
         var geneExpressions = $(this).parents("tr .even,.odd").find("div[data-organism-part!='']");
 
-        var experimentalFactors = geneExpressions.map(function () {
+        var factorValues = geneExpressions.map(function () {
             return $(this).attr('data-organism-part');
         }).get();
 
-        experimentalFactors.forEach(function (entry) {
+        factorValues.forEach(function (entry) {
             toggleOrganismPartColor(svg, entry, evt);
         });
 
@@ -153,15 +153,15 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
     });
 
     //load anatomogram from given location and display given organism parts
-    function displayExperimentalFactors() {
-        $.each(experimentalFactors, function () {
+    function displayFactorValues() {
+        $.each(factorValues, function () {
             toggleOrganismPartColor(svg, this);
             hoverOrganismPart(svg, this);
         });
     }
 
     function prepareAnatomogram() {
-        displayExperimentalFactors();
+        displayFactorValues();
         scaleAnatomogram(svg);
     }
 

@@ -55,7 +55,7 @@
                         <span>
                             <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
-                                         items="${heatmapFactorValues}" cssClass="chzn-select"
+                                         items="${heatmapFactorValueValues}" cssClass="chzn-select"
                                          cssStyle="width:350px;display:none"/>
                         </span>
                     </div>
