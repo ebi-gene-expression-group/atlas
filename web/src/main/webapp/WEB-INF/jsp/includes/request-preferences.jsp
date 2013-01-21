@@ -47,71 +47,7 @@
                         </span>
                     </div>
                 </td>
-                <c:if test="${factorTypesCount > 2}">
-                    <td>
-                        <div data-help-loc="#filterBy" class="tooltip-div" title="">
-
-                            <c:choose>
-                                <c:when test="${not empty selectedFactorValues}">
-                                    <span>
-                                            <label>Filtered by</label>
-                                    </span>
-                                    <span class="filters-frame">
-                                        <c:forEach items="${selectedFactorValues}" var="factorValue">
-                                            <span class="filter-name">
-                                            ${factorValue.name}:
-                                            </span>
-                                            ${factorValue.value}
-                                            <br/>
-                                        </c:forEach>
-                                    </span>
-                                    <c:set var="filterMenuLabel" value="Change filters"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <span>
-                                        <label>Filter by</label>
-                                    </span>
-                                    <c:set var="filterMenuLabel" value="Choose filters"/>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-
-                    <span>
-                        <ul id="filterBy">
-                            <li><a>${filterMenuLabel}</a>
-                                <ul>
-                                    <c:forEach items="${filterByMenu}" var="level1">
-                                        <li>
-                                            <a>${level1.key}</a>
-                                            <ul>
-                                                <c:forEach items="${level1.value}" var="level2">
-                                                    <li>
-                                                        <a>${level2.key}</a>
-                                                        <ul>
-                                                            <c:forEach items="${level2.value}" var="level3">
-                                                                <li>
-                                                                    <a>${level3.key}</a>
-                                                                    <ul>
-                                                                        <c:forEach items="${level3.value}" var="level4">
-                                                                            <li>
-                                                                                <a href="${level4.value}">${level4.key}</a>
-                                                                            </li>
-                                                                        </c:forEach>
-                                                                    </ul>
-                                                                </li>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </li>
-                        </ul>
-                    </span>
-                    </td>
-                </c:if>
+                <c:import url="includes/filterby-menu.jsp"/>
                 <td>
                     <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>

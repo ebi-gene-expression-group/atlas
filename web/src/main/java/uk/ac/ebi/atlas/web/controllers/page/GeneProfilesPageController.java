@@ -124,7 +124,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             SortedMap<String, SortedSet<FactorValue>> allFactorNames = indexFactorValuesByName(validFactorValueCombinations.keySet());
 
-            model.addAttribute("factorTypesCount", allFactorNames.size());
+            model.addAttribute("defaultFilterFactorValuesSize", experiment.getDefaultFilterFactorValues().size());
 
             model.addAttribute("filterByMenu", buildFilterByMenu(allFactorNames, validFactorValueCombinations, request));
 
