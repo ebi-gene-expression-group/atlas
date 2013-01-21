@@ -58,10 +58,11 @@ public class GeneProfilesController {
         SortedSet<String> filterFactorValues;
         if (preferences.getFilterFactorValues() == null ||
                 preferences.getFilterFactorValues().size() == 0) {
-            // TODO: Experiment could also return the String representation of factor values?
+            // TODO: Experiment could also return the URL representation of factor values?
             SortedSet<String> filterDefaultFilterFactorValues = new TreeSet<>();
             for (FactorValue factorValue : experiment.getDefaultFilterFactorValues()) {
-                filterDefaultFilterFactorValues.add(factorValue.getValue());
+                // this simulates how filter factor values arrive from URL as type:value
+                filterDefaultFilterFactorValues.add(factorValue.getType() + ":" + factorValue.getValue());
             }
             filterFactorValues = filterDefaultFilterFactorValues;
         } else {
