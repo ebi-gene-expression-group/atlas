@@ -43,7 +43,7 @@
                         <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
                     </display:column>
 
-                    <c:forEach var="factorValue" items="${heatmapFactorValuesValue}">
+                    <c:forEach var="factorValue" items="${heatmapFactorValues}">
 
                         <c:set var="expressionLevel"
                                value="${geneProfile.getExpressionLevel(factorValue)}"/>

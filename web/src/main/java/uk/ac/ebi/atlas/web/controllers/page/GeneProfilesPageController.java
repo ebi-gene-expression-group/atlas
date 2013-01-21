@@ -108,6 +108,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("heatmapFactorValues", filteredFactorValues);
 
+            // this is currently required for the request preferences filter drop-down multi-selection box
             model.addAttribute("heatmapFactorValueValues", FactorValue.getFactorValuesStrings(filteredFactorValues));
 
             String specie = experiment.getSpecie();
