@@ -118,7 +118,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
 
-    public Comparable getWeightedExpressionLevelOn(Set<FactorValue> selectedFactorValues, Set<FactorValue> allFactorValues) {
+    public double getWeightedExpressionLevelOn(Set<FactorValue> selectedFactorValues, Set<FactorValue> allFactorValues) {
         if (allFactorValues.isEmpty()) {
             return getAverageExpressionLevelOn(selectedFactorValues);
         }

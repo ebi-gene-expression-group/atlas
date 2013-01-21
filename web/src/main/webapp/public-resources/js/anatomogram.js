@@ -20,23 +20,30 @@
  * http://gxa.github.com/gxa
  */
 
+/*global $, svg:false */
+
+
+function setHilighting(path, color, opacity) {
+    path.style.fill = color;
+    path.style.fillOpacity = opacity;
+}
+
 function togglePathColor(path, evtType) {
 
-    function setHilighting(color, opacity) {
-        path.style.fill = color;
-        path.style.fillOpacity = opacity;
-    }
+    "use strict";
 
     if (evtType === undefined) {
-        setHilighting("gray", 0.5);
+        setHilighting(path, "gray", 0.5);
     } else if (evtType === 'mouseenter' || evtType === 'mouseover') {
-        setHilighting("red", 0.7);
+        setHilighting(path, "red", 0.7);
     } else {
-        setHilighting("gray", 0.5);
+        setHilighting(path, "gray", 0.5);
     }
 }
 
 function toggleOrganismPartColor(svg, organism_part, evt) {
+
+    "use strict";
 
     var element = svg.getElementById(organism_part);
     var evtType = (typeof evt === 'undefined') ? evt : evt.type;
@@ -110,6 +117,11 @@ function scaleAnatomogram(svg) {
 
 function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
 
+    //load anatomogram from given location and display given organism parts
+    function loadAnatomogram(location) {
+        svg.load(location, {onLoad: prepareAnatomogram});
+    }
+
     if ($('#anatomogramBody').length === 0) {
         return;
     }
@@ -153,20 +165,18 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
         scaleAnatomogram(svg);
     }
 
-    //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(location) {
-        svg.load(location, {onLoad:prepareAnatomogram});
-    }
-
     if (fileNameMale !== fileNameFemale) {
         //switch sex toggle button
-        $("#sex-toggle-image").button().toggle(function () {
-            $(this).attr("src", "resources/images/female_selected.png");
-            loadAnatomogram("resources/svg/" + fileNameFemale);
-        },function () {
-            $(this).attr("src", "resources/images/male_selected.png");
-            loadAnatomogram("resources/svg/" + fileNameMale);
-        }).tooltip();
+        $("#sex-toggle-image").button().toggle(
+            function () {
+                $(this).attr("src", "resources/images/female_selected.png");
+                loadAnatomogram("resources/svg/" + fileNameFemale);
+            },
+            function () {
+                $(this).attr("src", "resources/images/male_selected.png");
+                loadAnatomogram("resources/svg/" + fileNameMale);
+            }
+        ).tooltip();
     } else {
         $("#sex-toggle").hide();
     }
