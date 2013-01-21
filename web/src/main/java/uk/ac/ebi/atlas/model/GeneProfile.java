@@ -29,7 +29,9 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public GeneProfile add(Expression expression) {
-        factorValueExpressions.put(expression.getFactorValue(), expression);
+        for (FactorValue factorValue : expression.getAllFactorValues()) {
+            factorValueExpressions.put(factorValue, expression);
+        }
 
         updateProfileExpression(expression.getLevel());
         return this;

@@ -29,9 +29,9 @@ public class GeneProfileTest {
     private FactorValue factorValue2 = new FactorValue("ORGANISM_PART", "org", "trunk");
     private FactorValue factorValue3 = new FactorValue("ORGANISM_PART", "org", "head");
 
-    private Expression expression_1 = new Expression(factorValue1, 2.2D, Sets.newHashSet(factorValue1));
-    private Expression expression_2 = new Expression(factorValue2, 3D, Sets.newHashSet(factorValue2));
-    private Expression expression_3 = new Expression(factorValue3, 3.001D, Sets.newHashSet(factorValue3));
+    private Expression expression_1 = new Expression( 2.2D, Sets.newHashSet(factorValue1));
+    private Expression expression_2 = new Expression( 3D, Sets.newHashSet(factorValue2));
+    private Expression expression_3 = new Expression( 3.001D, Sets.newHashSet(factorValue3));
 
     private GeneProfile subject;
 

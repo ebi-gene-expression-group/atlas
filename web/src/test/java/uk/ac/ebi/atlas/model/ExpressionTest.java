@@ -19,7 +19,7 @@ public class ExpressionTest {
 
         FactorValue factorValue = new FactorValue("aType", "organ", "heart");
 
-        subject = new Expression(factorValue, 2.3, Sets.newHashSet(factorValue));
+        subject = new Expression(2.3, Sets.newHashSet(factorValue));
     }
 
     @Test
