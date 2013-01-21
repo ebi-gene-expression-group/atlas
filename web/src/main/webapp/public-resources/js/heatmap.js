@@ -31,16 +31,18 @@ function initHeatmapDisplayValueToggle() {
     }
 
     $("#display-levels").button()
-        .toggle(function () {
+        .toggle(
+        function () {
             showValues(this);
             $("#prefForm #displayLevels").val("true");
         },
         function () {
             hideValues(this);
             $("#prefForm #displayLevels").val("false");
-        });
+        }
+    );
 
-    if ($("#prefForm #displayLevels").val() == "true") {
+    if ($("#prefForm #displayLevels").val() === "true") {
         $("#display-levels").click();
     }
 
@@ -51,21 +53,22 @@ function initHeatmapDisplayValueToggle() {
             showCellValue(div);
         } else if (div.hasClass("show_cell")) {
             hideCellValue(div);
-        } else {
-            alert('The cell clicked is incorrect.')
         }
     });
 
     $('#download-profiles-link').button().tooltip();
 
     $("#sort-toggle").button().
-        toggle(function () {
+        toggle(
+        function () {
             $("#sort-toggle-image").attr("src", "resources/images/sort-least-on-top.png");
             $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts last'");
-        },function () {
+        },
+        function () {
             $("#sort-toggle-image").attr("src", "resources/images/sort-most-on-top.png");
             $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts first");
-        }).attr("title", " ").tooltip();
+        }
+    ).attr("title", " ").tooltip();
 
 
 }

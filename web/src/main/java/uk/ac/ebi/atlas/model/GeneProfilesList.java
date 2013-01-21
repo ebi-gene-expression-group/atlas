@@ -24,10 +24,20 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         return subList(0, size);
     }
 
-    public Double getExpressionLevel(String geneId, String organismPart) {
+    //ToDo: refactor this method with heatmap-matrix-gene-oriented.jsp
+//    public Double getExpressionLevel(String geneId, String factorValueString) {
+//        for (GeneProfile geneProfile : this) {
+//            if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
+//                return geneProfile.getExpressionLevelByFactorVauleString(factorValueString);
+//            }
+//        }
+//        return null;
+//    }
+
+    public Double getExpressionLevel(String geneId, FactorValue factorValue) {
         for (GeneProfile geneProfile : this) {
             if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
-                return geneProfile.getExpressionLevel(organismPart);
+                return geneProfile.getExpressionLevel(factorValue);
             }
         }
         return null;
@@ -70,8 +80,8 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         this.totalResultCount = totalResultCount;
     }
 
-    public SortedSet<String> getAllExperimentalFactors() {
-        SortedSet<String> allExperimentalFactors = new TreeSet<>();
+    public SortedSet<FactorValue> getAllExperimentalFactors() {
+        SortedSet<FactorValue> allExperimentalFactors = new TreeSet<>();
         for (GeneProfile geneProfile : this) {
             allExperimentalFactors.addAll(geneProfile.getFactorValues());
         }

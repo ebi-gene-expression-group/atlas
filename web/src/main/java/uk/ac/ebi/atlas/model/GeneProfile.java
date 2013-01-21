@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
@@ -21,20 +20,17 @@ public class GeneProfile implements Iterable<Expression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    //ToDo: key will become FactorValue when we will remove organism parts
-    private SortedMap<String, Expression> expressions = new TreeMap<>();
-    //ToDo: and this will not be required anymore...
+    private SortedMap<FactorValue, Expression> factorValueExpressions = new TreeMap<>();
+    //ToDo: and this might not be required anymore...
     private Set<FactorValue> allFactorValues = new HashSet<>();
 
     private GeneProfile() {
     }
 
     public GeneProfile add(Expression expression) {
-        String factorValue = expression.getFactorValue();
-        if (!StringUtils.isEmpty(factorValue)) {
-            this.expressions.put(factorValue, expression);
-            this.allFactorValues.addAll(expression.getAllFactorValues());
-        }
+        factorValueExpressions.put(expression.getFactorValue(), expression);
+        allFactorValues.addAll(expression.getAllFactorValues());
+
         updateProfileExpression(expression.getLevel());
         return this;
     }
@@ -53,11 +49,11 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public int getSpecificity() {
-        return expressions.values().size();
+        return factorValueExpressions.values().size();
     }
 
     public Iterator<Expression> iterator() {
-        return expressions.values().iterator();
+        return factorValueExpressions.values().iterator();
     }
 
     public double getMaxExpressionLevel() {
@@ -77,32 +73,32 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedOnAnyOf(Set<String> factorValues) {
+    public boolean isExpressedOnAnyOf(Set<FactorValue> factorValues) {
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
         return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
     }
 
-    public double getAverageExpressionLevelOn(Set<String> factorValues) {
+    public double getAverageExpressionLevelOn(Set<FactorValue> factorValues) {
         if (CollectionUtils.isEmpty(factorValues)) {
             return 0D;
         }
         double expressionLevel = 0D;
-        for (String organismPart : factorValues) {
-            expressionLevel += getExpressionLevel(organismPart);
+        for (FactorValue factorValue : factorValues) {
+            expressionLevel += getExpressionLevel(factorValue);
         }
         return expressionLevel / factorValues.size();
     }
 
-    public Set<String> getFactorValues() {
-        return this.expressions.keySet();
+    public Set<FactorValue> getFactorValues() {
+        return this.factorValueExpressions.keySet();
     }
 
     public Set<FactorValue> getAllFactorValues() {
         return this.allFactorValues;
     }
 
-    public double getExpressionLevel(String factorValue) {
-        Expression expression = expressions.get(factorValue);
+    public double getExpressionLevel(FactorValue factorValue) {
+        Expression expression = factorValueExpressions.get(factorValue);
         return expression == null ? 0 : expression.getLevel();
     }
 
@@ -116,7 +112,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
 
-    public Comparable getWeightedExpressionLevelOn(Set<String> selectedFactorValues, Set<String> allFactorValues) {
+    public double getWeightedExpressionLevelOn(Set<FactorValue> selectedFactorValues, Set<FactorValue> allFactorValues) {
         if (allFactorValues.isEmpty()) {
             return getAverageExpressionLevelOn(selectedFactorValues);
         }
@@ -170,7 +166,7 @@ public class GeneProfile implements Iterable<Expression> {
         }
 
         public boolean containsExpressions() {
-            return !geneProfile.expressions.isEmpty();
+            return !geneProfile.factorValueExpressions.isEmpty();
         }
 
     }

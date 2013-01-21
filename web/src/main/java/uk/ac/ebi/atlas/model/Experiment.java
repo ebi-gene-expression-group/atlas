@@ -40,7 +40,7 @@ public class Experiment {
 
     private String defaultQueryFactorType;
     private Set<FactorValue> defaultFilterFactorTypes;
-    private Map<String, SortedSet<String>> factorValuesByType = new HashMap<>();
+    private Map<String, SortedSet<FactorValue>> factorValuesByType = new HashMap<>();
 
     private SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = new TreeMap<>();
 
@@ -75,11 +75,11 @@ public class Experiment {
                 for (int i = 0; i < factorValues.length; i++) {
                     FactorValue factorValue = factorValues[i];
                     String type = factorValue.getType();
-                    String value = factorValue.getValue();
+
                     if (!factorValuesByType.containsKey(type)) {
-                        factorValuesByType.put(type, new TreeSet<String>());
+                        factorValuesByType.put(type, new TreeSet<FactorValue>());
                     }
-                    factorValuesByType.get(type).add(value);
+                    factorValuesByType.get(type).add(factorValue);
 
                     // track all valid combinations for filterFactorValues
                     if (!validFactorValueCombinations.containsKey(factorValue))
@@ -133,17 +133,17 @@ public class Experiment {
         return description;
     }
 
-    public SortedSet<String> getFactorValues(String byType) {
+    public SortedSet<FactorValue> getFactorValues(String byType) {
         if (byType == null || byType.trim().length() == 0)
             byType = this.getDefaultQueryFactorType();
         return factorValuesByType.get(byType);
     }
 
-    public SortedSet<String> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
+    public SortedSet<FactorValue> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
         if (byType == null || byType.trim().length() == 0)
             byType = this.getDefaultQueryFactorType();
 
-        SortedSet<String> results = new TreeSet<>();
+        SortedSet<FactorValue> results = new TreeSet<>();
 
         for (String experimentRunAccession : experimentRunAccessions) {
             ExperimentRun experimentRun = experimentRuns.get(experimentRunAccession);
@@ -152,7 +152,7 @@ public class Experiment {
                         experimentRun.getFactorValues().containsAll(filterByFactorValues)) {
                     FactorValue factorValue = experimentRun.getFactorValue(byType);
                     checkNotNull(factorValue);
-                    results.add(factorValue.getValue());
+                    results.add(factorValue);
                 }
             } else {
                 logger.warn("Missing ExperimentRun for accession " + experimentRunAccession);

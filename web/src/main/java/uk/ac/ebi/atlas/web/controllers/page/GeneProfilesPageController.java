@@ -30,10 +30,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.streams.FilterParameters;
+import uk.ac.ebi.atlas.streams.RankingParameters;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +47,7 @@ import java.util.*;
 
 @Controller
 @Scope("request")
-public class GeneProfilesPageController {
+public class GeneProfilesPageController extends GeneProfilesController {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
 
@@ -54,7 +59,8 @@ public class GeneProfilesPageController {
 
     @Inject
     public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache) {
+                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder) {
+        super(filterParameterBuilder, experimentsCache);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
@@ -67,34 +73,18 @@ public class GeneProfilesPageController {
 
         if (!result.hasErrors()) {
 
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+            FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
 
-            RankingParameters parameters = new RankingParameters();
-            parameters.setGeneQuery(preferences.getGeneQuery())
-                    .setQueryFactorValues(preferences.getQueryFactorValues())
-                    .setCutoff(preferences.getCutoff());
-            parameters.setSpecific(preferences.isSpecific());
-            parameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
+            rankCommand.setFilteredParameters(filterParameters);
 
-            // check for query factor type present, otherwise use default
-            if (preferences.getQueryFactorType() == null ||
-                    preferences.getQueryFactorType().trim().length() == 0) {
-                parameters.setQueryFactorType(experiment.getDefaultQueryFactorType());
-            } else {
-                parameters.setQueryFactorType(preferences.getQueryFactorType());
-            }
+            RankingParameters parameters = new RankingParameters(preferences.isSpecific(),
+                    preferences.getHeatmapMatrixSize());
 
-            // check for filter factor values present, otherwise use default
-            if (preferences.getFilterFactorValues() == null ||
-                    preferences.getFilterFactorValues().size() == 0) {
-                parameters.setFilterFactorValuesObjects(experiment.getDefaultFilterFactorValues());
-            } else {
-                parameters.setFilterFactorValues(preferences.getFilterFactorValues());
-            }
-
-            rankCommand.setParameters(parameters);
+            rankCommand.setRankingParameters(parameters);
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
+
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             model.addAttribute("geneProfiles", geneProfiles);
 
@@ -108,13 +98,17 @@ public class GeneProfilesPageController {
 
             model.addAttribute("experimentAccession", experimentAccession);
 
-            model.addAttribute("formattedQueryFactorType", formatQueryFactorType(parameters.getQueryFactorType()));
+            model.addAttribute("formattedQueryFactorType", formatQueryFactorType(filterParameters.getQueryFactorType()));
 
-            model.addAttribute("allFactorValues", experiment.getFactorValues(parameters.getQueryFactorType()));
+            model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
-            Set<FactorValue> filterByFactorValues = parameters.getFilterFactorValues();
-            model.addAttribute("heatmapFactorValues", experiment.getFilteredFactorValues(filterByFactorValues,
-                    parameters.getQueryFactorType()));
+            Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
+
+            SortedSet<FactorValue> filteredFactorValues = experiment.getFilteredFactorValues(filterByFactorValues, filterParameters.getQueryFactorType());
+
+            model.addAttribute("heatmapFactorValues", filteredFactorValues);
+
+            model.addAttribute("heatmapFactorValueValues", FactorValue.getFactorValuesStrings(filteredFactorValues));
 
             String specie = experiment.getSpecie();
 
@@ -133,7 +127,7 @@ public class GeneProfilesPageController {
 
             model.addAttribute("filterByMenu", buildFilterByMenu(allFactorNames, validFactorValueCombinations, request));
 
-            model.addAttribute("selectedFactorValues", extractSelectedFactorValues(allFactorNames, parameters));
+            model.addAttribute("selectedFactorValues", extractSelectedFactorValues(allFactorNames, filterParameters));
         }
 
         return "experiment";

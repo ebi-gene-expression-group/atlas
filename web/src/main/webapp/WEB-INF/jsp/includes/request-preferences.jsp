@@ -120,8 +120,8 @@
                         <span>
                             <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
-                                         items="${heatmapFactorValues}" cssClass="chzn-select"
-                                         cssStyle="width:300px;display:none"/>
+                                         items="${heatmapFactorValueValues}" cssClass="chzn-select"
+                                         cssStyle="width:350px;display:none"/>
                         </span>
                     </div>
                     <span>
@@ -129,6 +129,7 @@
                                        path="specific"
                                        label="Specific"></form:checkbox>
                     </span>
+                </td>
                 <td>
                     <div class="tooltip-div" data-help-loc="#cutoff">
                         <span>

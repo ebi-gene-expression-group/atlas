@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Objects;
 
-import static com.google.common.base.Objects.toStringHelper;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorValue implements Comparable<FactorValue> {
@@ -55,7 +57,7 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return Objects.toStringHelper(this)
                 .add("type", type)
                 .add("name", name)
@@ -82,6 +84,16 @@ public class FactorValue implements Comparable<FactorValue> {
         if (split.length == 2) {
             return new FactorValue(split[0].trim(), split[1].trim());
         }
-        throw new IllegalArgumentException("FactorValue mus");
+        return null;
+        //throw new IllegalArgumentException("FactorValue mus");
+    }
+
+
+    public static SortedSet<String> getFactorValuesStrings(SortedSet<FactorValue> factorValues) {
+        SortedSet<String> result = new TreeSet<>();
+        for (FactorValue factorValue : factorValues) {
+            result.add(factorValue.getValue());
+        }
+        return result;
     }
 }

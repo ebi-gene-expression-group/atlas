@@ -27,6 +27,7 @@ import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import javax.inject.Named;
 import java.util.Collections;
@@ -36,16 +37,22 @@ import java.util.Set;
 
 @Named("rankGeneProfiles")
 @Scope("prototype")
-public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList, RankingParameters> {
+public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList> {
+
+    private RankingParameters rankingParameters;
+
+    public void setRankingParameters(RankingParameters rankingParameters) {
+        this.rankingParameters = rankingParameters;
+    }
 
     @Override
     public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
-        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(parameters.isSpecific()
-                , parameters.getQueryFactorValues()
-                , experiment.getFactorValues(parameters.getQueryFactorType()));
+        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(rankingParameters.isSpecific()
+                , filterParameters.getQueryFactorValues()
+                , experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
-        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, parameters.getHeatmapMatrixSize());
+        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, rankingParameters.getHeatmapMatrixSize());
 
         GeneProfile geneProfile;
 
@@ -72,7 +79,8 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<String> selectedQueryFactorValues, Set<String> allFactorValues) {
+    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<FactorValue> selectedQueryFactorValues,
+                                                               Set<FactorValue> allFactorValues) {
         return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
     }
 

@@ -20,25 +20,32 @@
  * http://gxa.github.com/gxa
  */
 
+/*global $, svg:false */
+
+
+function setHilighting(path, color, opacity) {
+    path.style.fill = color;
+    path.style.fillOpacity = opacity;
+}
+
 function togglePathColor(path, evtType) {
 
-    function setHilighting(color, opacity) {
-        path.style.fill = color;
-        path.style.fillOpacity = opacity;
-    }
+    "use strict";
 
     if (evtType === undefined) {
-        setHilighting("gray", 0.5);
+        setHilighting(path, "gray", 0.5);
     } else if (evtType === 'mouseenter' || evtType === 'mouseover') {
-        setHilighting("red", 0.7);
+        setHilighting(path, "red", 0.7);
     } else {
-        setHilighting("gray", 0.5);
+        setHilighting(path, "gray", 0.5);
     }
 }
 
-function toggleOrganismPartColor(svg, organism_part, evt) {
+function toggleOrganismPartColor(svg, factorValue, evt) {
 
-    var element = svg.getElementById(organism_part);
+    "use strict";
+
+    var element = svg.getElementById(factorValue);
     var evtType = (typeof evt === 'undefined') ? evt : evt.type;
 
     if (element !== null) {
@@ -108,7 +115,12 @@ function scaleAnatomogram(svg) {
     }
 }
 
-function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
+function initAnatomogram(factorValues, fileNameMale, fileNameFemale) {
+
+    //load anatomogram from given location and display given organism parts
+    function loadAnatomogram(location) {
+        svg.load(location, {onLoad:prepareAnatomogram});
+    }
 
     if ($('#anatomogramBody').length === 0) {
         return;
@@ -122,11 +134,11 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
     $("#heatmap-table").delegate("td:first-child", "hover", function (evt) { //hover on cells of the first table column
         var geneExpressions = $(this).parents("tr .even,.odd").find("div[data-organism-part!='']");
 
-        var experimentalFactors = geneExpressions.map(function () {
+        var factorValues = geneExpressions.map(function () {
             return $(this).attr('data-organism-part');
         }).get();
 
-        experimentalFactors.forEach(function (entry) {
+        factorValues.forEach(function (entry) {
             toggleOrganismPartColor(svg, entry, evt);
         });
 
@@ -141,32 +153,30 @@ function initAnatomogram(experimentalFactors, fileNameMale, fileNameFemale) {
     });
 
     //load anatomogram from given location and display given organism parts
-    function displayExperimentalFactors() {
-        $.each(experimentalFactors, function () {
+    function displayFactorValues() {
+        $.each(factorValues, function () {
             toggleOrganismPartColor(svg, this);
             hoverOrganismPart(svg, this);
         });
     }
 
     function prepareAnatomogram() {
-        displayExperimentalFactors();
+        displayFactorValues();
         scaleAnatomogram(svg);
-    }
-
-    //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(location) {
-        svg.load(location, {onLoad:prepareAnatomogram});
     }
 
     if (fileNameMale !== fileNameFemale) {
         //switch sex toggle button
-        $("#sex-toggle-image").button().toggle(function () {
-            $(this).attr("src", "resources/images/female_selected.png");
-            loadAnatomogram("resources/svg/" + fileNameFemale);
-        },function () {
-            $(this).attr("src", "resources/images/male_selected.png");
-            loadAnatomogram("resources/svg/" + fileNameMale);
-        }).tooltip();
+        $("#sex-toggle-image").button().toggle(
+            function () {
+                $(this).attr("src", "resources/images/female_selected.png");
+                loadAnatomogram("resources/svg/" + fileNameFemale);
+            },
+            function () {
+                $(this).attr("src", "resources/images/male_selected.png");
+                loadAnatomogram("resources/svg/" + fileNameMale);
+            }
+        ).tooltip();
     } else {
         $("#sex-toggle").hide();
     }
