@@ -46,22 +46,22 @@ public class OneCellLineAndCutoff05IT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("HIST1H2AC",
-                "HIST2H2AA4",
-                "HIST2H2AA4",
-                "HIST1H2BD",
-                "GNB2L1"));
+        assertThat(selectedGenes, contains("AC239868.2",
+                "CELF2",
+                "PTBP3",
+                "DEPTOR",
+                "LINGO3"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("8777", "302", "699", "951", "58"));
+        assertThat(subject.getFirstGeneProfile(), contains("693", "189", "1424", "2681", "24"));
     }
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("11383"), is(true));
+        assertThat(subject.getGeneCount().contains("190"), is(true));
     }
 
 
