@@ -58,7 +58,7 @@ public class ExperimentDesignPageController {
      * @param category
      * @return
      */
-    private TreeMap<String, Integer> extractSubcategories(String[] headerLine, String category) {
+    private Map<String, Integer> extractSubcategories(String[] headerLine, String category) {
         TreeMap<String, Integer> map = new TreeMap<>();
         for (int i = 1; i < headerLine.length; i++) {
             if (headerLine[i].startsWith(category)) {
@@ -78,8 +78,8 @@ public class ExperimentDesignPageController {
         String[] headerLine = csvLines.remove(0);
 
         // split header line into samples and factors
-        TreeMap<String, Integer> samples = extractSubcategories(headerLine, "Sample Characteristics");
-        TreeMap<String, Integer> factors = extractSubcategories(headerLine, "Factor Values");
+        Map<String, Integer> samples = extractSubcategories(headerLine, "Sample Characteristics");
+        Map<String, Integer> factors = extractSubcategories(headerLine, "Factor Values");
 
         // reorder lines according to new header
         Map<Integer, Integer> mapping = new HashMap<>();

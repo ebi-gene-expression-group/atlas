@@ -42,8 +42,6 @@ public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
 
     private CSVReader csvReader;
 
-    //private static final Logger logger = Logger.getLogger(BioMartGeneNameStream.class);
-
     @Override
     public String[] readNext() {
         try {

@@ -25,11 +25,12 @@ public class FactorValue implements Comparable<FactorValue> {
 
     public FactorValue(String type, String name, String value) {
         // this was previously in ExperimentMetadataLoader
-        if (type == null) {
-            type = name;
+        this.type = type;
+        if (this.type == null) {
+            this.type = name;
         }
         //ToDo: this pre-processing of type metadata (space to underscore and case conversion) should be removed, we should assume configuration is well formed and valid
-        this.type = checkNotNull(type).replaceAll(" ", "_").toUpperCase();
+        this.type = checkNotNull(this.type).replaceAll(" ", "_").toUpperCase();
         this.name = name;
         // this was previously in ExperimentMetadataLoader
         this.value = checkNotNull(value).toLowerCase();

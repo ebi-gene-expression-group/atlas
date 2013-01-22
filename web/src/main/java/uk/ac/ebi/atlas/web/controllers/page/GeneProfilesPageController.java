@@ -212,9 +212,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     String formatQueryFactorType(String queryFactorType) {
         // this formats the default factor type for display on web page
-        queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
-        queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
-        return queryFactorType;
+        String result = queryFactorType.replaceAll("_", " ").toLowerCase();
+        result = result.substring(0, 1).toUpperCase() + result.substring(1);
+        return result;
     }
 
     String buildFilterFactorValueURL(HttpServletRequest request, String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {

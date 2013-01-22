@@ -23,15 +23,6 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
     }
 
     //ToDo: refactor this method with heatmap-matrix-gene-oriented.jsp
-//    public Double getExpressionLevel(String geneId, String factorValueString) {
-//        for (GeneProfile geneProfile : this) {
-//            if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
-//                return geneProfile.getExpressionLevelByFactorVauleString(factorValueString);
-//            }
-//        }
-//        return null;
-//    }
-
     public Double getExpressionLevel(String geneId, FactorValue factorValue) {
         for (GeneProfile geneProfile : this) {
             if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {

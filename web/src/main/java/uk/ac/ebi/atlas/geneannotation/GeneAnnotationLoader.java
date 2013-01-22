@@ -34,8 +34,6 @@ import javax.inject.Named;
 @Named("geneAnnotationLoader")
 public class GeneAnnotationLoader {
 
-    //private static final Logger logger = Logger.getLogger(GeneAnnotationLoader.class);
-
     private TransactionRunner transactionRunner;
 
     private BioMartGeneNameStream.Builder geneNameStreamBuilder;

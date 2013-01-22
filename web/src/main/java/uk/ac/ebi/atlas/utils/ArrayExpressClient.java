@@ -17,7 +17,7 @@ import java.io.StringReader;
 @Named
 @Scope("prototype")
 public class ArrayExpressClient {
-    //private static final Logger logger = Logger.getLogger(ArrayExpressClient.class);
+
     private static final String EXPERIMENT_NAME_XPATH = "//experiment/name/text()";
 
     private RestTemplate restTemplate;

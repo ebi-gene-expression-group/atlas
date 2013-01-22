@@ -10,9 +10,9 @@ import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Set;
-import java.util.TreeMap;
 
 @Controller
 @Scope("request")
@@ -37,7 +37,8 @@ public class BarChartController {
 
         Gson gson = new Gson();
 
-        return gson.toJson(chartData, TreeMap.class);
+        // changed to more generic Map interface as per Sonar recommendation
+        return gson.toJson(chartData, Map.class);
 
     }
 
