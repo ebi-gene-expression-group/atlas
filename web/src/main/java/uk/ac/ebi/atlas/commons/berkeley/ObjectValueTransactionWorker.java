@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.commons.berkeley;
 
 import com.sleepycat.collections.TransactionWorker;
 
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
 
 public abstract class ObjectValueTransactionWorker<V> implements TransactionWorker {
@@ -37,7 +38,8 @@ public abstract class ObjectValueTransactionWorker<V> implements TransactionWork
     }
 
     public ObjectValueTransactionWorker setRow(String[] row) {
-        this.row = row;
+        // this copy has been suggested by Sonar
+        this.row = Arrays.copyOf(row, row.length);
         return this;
     }
 

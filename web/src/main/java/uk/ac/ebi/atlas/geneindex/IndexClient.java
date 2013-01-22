@@ -67,7 +67,7 @@ public class IndexClient {
 
     protected String findGeneIdJson(String searchText, String organism) {
 
-        try{
+        try {
 
             String geneProperty = queryBuilder.buildQueryString(searchText);
             String organismQuery = "\"" + organism.toLowerCase() + "\"";
@@ -83,7 +83,8 @@ public class IndexClient {
             logger.info("<findGeneIdJson> time taken " + stopWatch.getTotalTimeSeconds() + " s - solr response for geneQuery: " + geneProperty + " - organismQuery: " + organismQuery);
 
             return jsonResponse;
-        }catch(Throwable e){
+        } catch (Exception e) {
+            // catching Exception instead of Throwable was suggested by Sonar, as Throwable also includes Errors
             logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL, e);
             throw e;
         }

@@ -25,6 +25,8 @@ package uk.ac.ebi.atlas.utils.spring.servlet.view;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import java.util.Arrays;
+
 public class TilesExposingBeansViewResolver extends UrlBasedViewResolver {
 
     private Boolean exposeContextBeansAsAttributes;
@@ -35,7 +37,8 @@ public class TilesExposingBeansViewResolver extends UrlBasedViewResolver {
     }
 
     public void setExposedContextBeanNames(String[] exposedContextBeanNames) {
-        this.exposedContextBeanNames = exposedContextBeanNames;
+        // this copy has been suggested by Sonar
+        this.exposedContextBeanNames = Arrays.copyOf(exposedContextBeanNames, exposedContextBeanNames.length);
     }
 
     @Override
