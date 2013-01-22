@@ -53,10 +53,14 @@ public class TilesExposingBeansView extends TilesView {
     }
 
     @Override
-    protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpServletRequest requestToExpose = getRequestToExpose(request);
-        exposeModelAsRequestAttributes(model, requestToExpose);
-        super.renderMergedOutputModel(model, requestToExpose, response);
+    protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpServletRequest requestToExpose = getRequestToExpose(request);
+            exposeModelAsRequestAttributes(model, requestToExpose);
+            super.renderMergedOutputModel(model, requestToExpose, response);
+        } catch (Exception e) {
+            throw new IllegalStateException("Exception when rendering merged output model.", e);
+        }
     }
 
 }

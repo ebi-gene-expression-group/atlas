@@ -44,7 +44,7 @@ public abstract class ObjectValueTransactionWorker<V> implements TransactionWork
     }
 
     @Override
-    public void doWork() throws Exception {
+    public void doWork() {
         try {
             map.put(getKey(), getValue());
         } catch (Exception e) {

@@ -49,27 +49,30 @@ public class GeneAnnotationLoader {
         this.geneNameStreamBuilder = geneNameStreamBuilder;
     }
 
-    private void turnOffReadonly(){
+    private void turnOffReadonly() {
         this.annotationEnvironment.close();
         this.annotationEnvironment.initBerkeleyDatabase(false);
     }
 
-    private void turnOnReadOnly(){
+    private void turnOnReadOnly() {
         this.annotationEnvironment.close();
         this.annotationEnvironment.initBerkeleyReadonly();
     }
 
 
     protected void loadAnnotations(ObjectInputStream<String[]> annotationsInputStream,
-                                ObjectValueTransactionWorker transactionWorker) throws Exception {
+                                   ObjectValueTransactionWorker transactionWorker) {
 
         String[] row;
 
         transactionRunner = annotationEnvironment.getTransactionRunner();
 
-        while ((row = annotationsInputStream.readNext()) != null) {
-            transactionRunner.run(transactionWorker.setRow(row));
-
+        try {
+            while ((row = annotationsInputStream.readNext()) != null) {
+                transactionRunner.run(transactionWorker.setRow(row));
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Exception while loading annotations.", e);
         }
     }
 
@@ -80,7 +83,7 @@ public class GeneAnnotationLoader {
             turnOffReadonly();
 
             ObjectValueTransactionWorker<String> transactionWorker =
-                new StringValueTransactionWorker(annotationEnvironment.geneNames());
+                    new StringValueTransactionWorker(annotationEnvironment.geneNames());
 
 
             loadAnnotations(annotationsInputStream, transactionWorker);

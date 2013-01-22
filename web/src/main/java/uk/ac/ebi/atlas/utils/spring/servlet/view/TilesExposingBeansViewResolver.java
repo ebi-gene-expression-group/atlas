@@ -42,18 +42,22 @@ public class TilesExposingBeansViewResolver extends UrlBasedViewResolver {
     }
 
     @Override
-    protected AbstractUrlBasedView buildView(String viewName) throws Exception {
-        AbstractUrlBasedView superView = super.buildView(viewName);
-        if (superView instanceof TilesExposingBeansView) {
-            TilesExposingBeansView view = (TilesExposingBeansView) superView;
-            if (this.exposeContextBeansAsAttributes != null) {
-                view.setExposeContextBeansAsAttributes(this.exposeContextBeansAsAttributes);
+    protected AbstractUrlBasedView buildView(String viewName) {
+        try {
+            AbstractUrlBasedView superView = super.buildView(viewName);
+            if (superView instanceof TilesExposingBeansView) {
+                TilesExposingBeansView view = (TilesExposingBeansView) superView;
+                if (this.exposeContextBeansAsAttributes != null) {
+                    view.setExposeContextBeansAsAttributes(this.exposeContextBeansAsAttributes);
+                }
+                if (this.exposedContextBeanNames != null) {
+                    view.setExposedContextBeanNames(this.exposedContextBeanNames);
+                }
             }
-            if (this.exposedContextBeanNames != null) {
-                view.setExposedContextBeanNames(this.exposedContextBeanNames);
-            }
+            return superView;
+        } catch (Exception e) {
+            throw new IllegalStateException("When building view with name " + viewName, e);
         }
-        return superView;
     }
 
 }
