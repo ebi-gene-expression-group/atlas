@@ -1,39 +1,155 @@
-<html>
-<head>
-    <title>this is the title</title>
-</head>
-<body>
-
-<h1>HTML Ipsum Presents</h1>
-
-<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui.
-    <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
-
-<h2>Header Level 2</h2>
-
-<ol>
-    <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-    <li>Aliquam tincidunt mauris eu risus.</li>
-    <li><a href="help-2.html">bingo bongo ergo sum</a> in frutta ad libitum gioiam. Ut felis. Ut domandume <img src="resources/images/help/help.png" alt="questionum marckis">
-    </li>
-</ol>
-
-<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
-
-<h3>Header Level 3</h3>
-
+<h1><strong>Baseline Atlas of Gene Expression - Help</strong>
+</h1>
+<h2> About Baseline Atlas
+</h2>
+<p> Baseline Atlas aims primarily at representing information about which gene product is present (and at what abundance) in which normal condition (e.g., tissue, cell type). In the first instance Baseline Atlas will consist of individual well understood and curated RNA-Seq experiments, such as:
+</p>
 <ul>
-    <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-    <li>Aliquam tincidunt mauris eu risus.</li>
+  <li><a class="externallink" href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-513" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-513">Illumina Body Map</a></li>
+  <li><a class="externallink" href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599">Transcriptome of DBAxC57BL/6J mice</a></li>
+  <li><a class="externallink" href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">RNA-seq of long coding and long non coding RNAs from ENCODE cell lines</a></li>
+  <li><a class="externallink" href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352">RNA-seq of 6 tissues from 10 species to investigate the evolution of gene expression levels in mammalian organs</a></li>
 </ul>
-
-<pre><code>
-    #header h1 a {
-    display: block;
-    width: 300px;
-    height: 80px;
-    }
-</code></pre>
-
-</body>
-</html>
+<p>The above experiments have been re-analyzed using an in-house RNA-seq processing pipeline, ensuring the highest quality of the original data and of subsequent experiment metadata curation. The analysis methods used are shown below (TODO). The resulting data matrix stores gene expression profiles across the analyzed experimental factor values as a set of expression counts (<a title="FPKM" href="http://www.nature.com/nbt/journal/v28/n5/full/nbt.1621.html">FPKM</a>s). The user is able to search the data&nbsp; by a combination of genes conditions, experimental factor values, and an FPKM cutoff. All expressions above the selected cutoff are considered to be 'real', and the expression on or below the FPKM cutoff are treated as 'background'.A default cutoff is pre-selected. A histogram of the number of genes expressed above a given cutoff for a range of FPKM cutoffs is also available - to help the user choose the most appropriate cutoff for their query of interest.
+  <br />
+</p>
+<p>
+</p>
+<h2>Baseline Atlas 'At a Glance'
+</h2>
+<blockquote>
+  <p>&nbsp;<img alt="Baseline Atlas Experiment View 'At a Glance'" src="resources/images/help/baseline_helpText.png" align="bottom" />
+    <br />
+  </p>
+</blockquote>
+<ul>
+  <li>&nbsp;TODO: Mention/describe Contextual Help</li>
+</ul>
+<h2>Filtering Baseline Atlas Data
+</h2>
+<ul>
+  <li>
+  <p><b>TODO
+    <br /></b>
+  </p></li>
+</ul>
+<h2>Searching Baseline Atlas
+</h2>
+<ul>
+  <li><b>Gene Conditions</b></li>
+  <ul>
+    <li>You can search by Ensembl gene symbols (e.g. SAA4) , identifiers (e.g. ENSG00000148965) or <a title="Ensembl Glossary" href="http://www.ensembl.org/Help/Glossary">biotypes</a> (e.g. protein_coding), UniProt accessions (e.g. P35542), GO ("phosphoglycerate kinase activity") or InterPro terms (e.g. phosphatase). A space-separated list of gene conditions will bring back genes that match at least one of the conditions in the query.</li>
+  </ul>
+</ul>
+<ul>
+  <li><b>Experimental Factor Values</b></li>
+  <ul>
+    <li>You can search for any combination of experimental factor (e.g. <i>organism part</i> or <i>cell line</i>) values available
+    <br /></li>
+    <ul>
+      <li>within a single-factor experiment, e.g. <a href="http://www-test.ebi.ac.uk/gxa/experiments/E-MTAB-513" title="E-MTAB-513">Illumina Body Map</a><a title="E-MTAB-513" href="http://www-test.ebi.ac.uk/gxa/experiments/E-MTAB-513">,</a> or
+      <br /></li>
+      <li>within a pre-selected subset of a multi-factorial experiment, e.g. <a class="externallink" href="http://www-test.ebi.ac.uk/gxa/experiments/E-GEOD-26284" rel="nofollow" title="E-GEOD-26284">RNA-seq of long coding and long non coding RNAs from ENCODE cell lines</a></li>
+    </ul>
+    <li>When you click on the experiment factor value input box, a dropdown appears, containing the list of all factor values available for selection:
+    <br /><img alt="Factor values dropdown" src="resources/images/help/factor_values_dropdown.png" align="bottom" /></li>
+    <li><i>Specific</i> vs <i>Non-specific </i>search.
+    <br /></li>
+    <ul>
+      <li>The default Baseline Atlas search reports first genes more specifically expressed (with the <i>Specific</i> option selected by default).
+      <br /></li>
+      <ul>
+        <li>If the query contains no experimental factor values, the <i>Specific</i> search will report genes expressed in just one experimental factor value, then genes expressed in just two factor values, then three and so on, reporting any genes expressed in all the available factor values at the end of the list of results. Within each group of genes expressed in N factor values only, genes are sorted by the highest average FPKM across the N factor values in which they are expressed.</li>
+        <li>If the query contains at least one experimental factor value, the <i>Specific</i> search will reward genes with higher average FPKM across the queried factor values, and at the same time penalize genes with the higher FPKM across the non-queried factor values. In other words,&nbsp; genes with the highest difference in average expression between queried and non-queried tissues will be shown first.</li>
+      </ul>
+      <li>If the <i>Specific</i> option is not selected, Baseline Atlas search will ignore specificity of expression when ordering the results. In particular:</li>
+      <ul>
+        <li>If the query contains no experimental factor values, genes with the highest average expression across all the available tissues will be reported first.</li>
+        <li>If the query contains at least one experimental factor value, genes with the higher average FPKM across the selected factor values are reported first (and expression levels across the non-selected factor values is ignored in the ordering of results)
+        <br /></li>
+      </ul>
+    </ul>
+  </ul>
+</ul>
+<ul>
+  <li><b>Specifying the Expression level cutoff</b></li>
+  <ul>
+    <li>The expression level cutoff is intended to discriminate between the 'real' (i.e. above the cutoff) and the 'background' (i.e on or below the cutoff) expression for each gene. The default FPKM cutoff is 0.5, but the user is able to selected a different cutoff if need be. This can be done by inputting a different value into the 'Expression level cutoff' input box, or moving the slider along until the 'Expression level cutoff' input box shows the intended cutoff value. A histogram showing the number of genes expressed above selected cutoffs is also available - to help the user decided how many genes they are excluding by selecting a given cutoff. Clicking on the <img alt="Histogram enable/disable button" src="resources/images/yellow-chart-icon-16.png" align="bottom" /> button displays/hides a histogram.
+    <br /></li>
+    <ul>
+      <li>If the user has not selected any experimental factors, the histogram shows the number of genes expressed in any factor value for each of the shown cutoffs.</li>
+      <li>If the user has selected at least one factor value, the histogram shows the number of genes expressed in at least one of the selected factor values, for each of the shown cutoffs.</li>
+    </ul>
+  </ul>
+</ul>
+<h2><b>Heatmap Results Display</b>
+</h2>
+<ul>
+  <li>The heatmap rows and columns are labelled by gene symbols and experimental factor values respectively. By default, the heatmap shows represents expressions by colour intensity, according to the gradient legend,<img alt="heatmap colour gradient" src="resources/images/help/gradient.png" align="bottom" />, displayed above the heatmap. Clicking on the <img alt="Display levels" src="resources/images/help/display_levels.png" align="bottom" /> button, displays all the FPKM values in the heatmap as well as the minimum and the maximum FPKM on each side of the colour gradient. From this you can see that gradient encodes colour intensities corresponding to the FPKM values for the top 50 (default) genes currently displayed to the user (rather than all FPKM values for all genes returned by the query). In Addition, the user is able to click on each heatmap cell to reveal the underlying FPKM value. Clicking on the cell with the FPKM displayed in turn hides the FPKM again.
+  <br /></li>
+  <li>When displayed factor values are organism parts, a mouseover action over each heatmap column highlights thus selected tissue in the anatomogram on the left (if available). If the selected organism part is gender-specifc, and anatomogram is available for each gender (i.e. if you can see the <img alt="Gender selection button" src="resources/images/male_selected.png" align="bottom" /> button), you may need to switch to the gender to which a given tissue applies before seeing it highlighted.</li>
+</ul>
+<h2><b>Anatomogram</b>
+</h2>
+<ul>
+  <li>The anatomogram provides an attractive focal point for the tissues studied in a given experiment. As a reciprocal functionality for column mouseover in the heatmap, the mouseover action over tissues visualised in the anatomogram highlights the corresponding column in the heatmap table.</li>
+</ul>
+<h2>Downloading Query Results
+</h2>
+<ul>
+  <li>Clicking on the <img alt="Download button" src="resources/images/download_blue_small.png" align="bottom" /> button, downloads the full results of the current query in tab-delimited format with no ordering.
+  <br /></li>
+</ul>
+<h2>Experiment Design Page
+</h2>
+<blockquote>
+  <p>The Experiment Design page (e.g. <a title="Illumina Body Map - Experiment Design page" href="http://lime:14092/gxa/experiments/E-MTAB-513/experiment-design">Illumina Body Map</a>) shows RNA-seq processing run acessions, along with their coresponding sample characteristcs and factor values. By default, only the runs that have been re-analyzed for Baseline Atlas are shown. To see all runs, the <i>Show Analysed only</i> checkbox needs to be unselected. The experiment design table is sortable by clicking on individual columns. Sorting by multiple columns is also possible, by holding down the <i>shift</i> key and selecting more than column. In this case, the first selected column forms the primary sort order and the subsequently selected columns form secondary, tertiary, etc. sort orders in turn.
+    <br />
+  </p>
+  <p>Please note that a column being sorted may be in three states:
+    <br />
+  </p>
+  <ol>
+    <li>sorted in ascending order</li>
+    <li>sorted in descending order and </li>
+    <li>usorted</li>
+  </ol>
+  <p>In the single-column sort mode (the <i>shift </i>key not pressed), clicking on a column heading jumps between 1. and 2.
+    <br />In the multiple-column sort mode (the <i>shift</i> key pressed), clicking on a column heading alternates between 1., 2. and 3.
+    <br />Essentially, in the multiple-column sort mode, leaving one of the columns in state 3. removes it from the current sort operation.
+    <br />
+  </p>
+  <p>The experiment table is also searchable - entering a keyword automatically selects the subsection of the experiment design table that matches the keyword.
+    <br />
+  </p>
+  <p>Finally, clicking on the <img alt="Download button" src="resources/images/download_blue_small.png" align="bottom" /> button on the right-hand side, downloads the full results of the current query (with no ordering applied) in tab-delimited format.
+    <br />
+  </p>
+</blockquote>
+<h2>Analysis Methods Page
+  <br />
+</h2>
+<blockquote>
+  <p>The Analysis Methods page (e.g. <a title="Illumina Body Map - Analysis Methods page" href="http://lime:14092/gxa/experiments/E-MTAB-513/analysis-methods">Illumina Body Map</a>) lists data analysis methods applied to the original experiment data in <a title="FASTQ format" href="http://en.wikipedia.org/wiki/FASTQ_format">FASTQ</a>, in the order in which the methods were applied, to arrive at the gene expression levels shown on in Baseline Atlas.
+    <br />
+  </p>
+</blockquote>
+<h2>Providing Feedback
+  <br />
+</h2>
+<blockquote>
+  <p>Baseline Atlas is still a prototype and thus more then ever we rely and value user feedback on what we are doing right, what does not work or what could be achieved more intuitively to the user. We would also be grateful for any feedback on the analysis methods we adopted - we are passionate about not only about intuitive data presentation, the highest level of experimental metadata curation, but also about the quality and biological validity of the expression data presented in baseline Atlas.
+  </p>
+  <p>The feedback form can be accessed by clicking on the <i>Feedback</i> link on the top right of the Baseline Atlas experiment page:
+    <br />
+  </p>
+  <p>&nbsp;<img alt="Feedback Pop-up" src="resources/images/help/feedback.png" align="bottom" />
+  </p>
+</blockquote>
+<p>&nbsp;
+</p>
+<p>&nbsp;
+</p>
+<p>
+  <br />
+</p>
