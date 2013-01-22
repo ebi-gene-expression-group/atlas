@@ -45,7 +45,8 @@ public class HomePageController {
 
     private Map<String, Double> counts;
 
-    private Map<String, List<String>> speciesToExperiments;
+    // species > experiment acc > link
+    private Map<String, SortedMap<String, String>> speciesToExperiments;
 
     @Inject
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
@@ -57,8 +58,9 @@ public class HomePageController {
     public String getHomePage(Model model) {
 
         // lazy initialisation
-        if (counts == null)
+        if (counts == null) {
             extractFactorValueCounts();
+        }
 
         ArrayList<WordWeight> wordList = new ArrayList<>();
 
@@ -96,16 +98,20 @@ public class HomePageController {
             if (experiment != null) {
                 totalNumberExperiments++;
 
-                if (!speciesToExperiments.containsKey(experiment.getSpecie()))
-                    speciesToExperiments.put(experiment.getSpecie(), new ArrayList<String>());
-                speciesToExperiments.get(experiment.getSpecie()).add(experimentAccession);
+                if (!speciesToExperiments.containsKey(experiment.getSpecie())) {
+                    speciesToExperiments.put(experiment.getSpecie(), new TreeMap<String, String>());
+                }
+
+                String link = buildLinkForExperiment(experiment);
+                speciesToExperiments.get(experiment.getSpecie()).put(experimentAccession, link);
 
                 // count per experiment and sum across all experiments, using experiment default factor value
-                SortedSet<FactorValue> defaultFactorValues = experiment.getFactorValues(null);
+                SortedSet<FactorValue> defaultFactorValues = experiment.getFactorValues(experiment.getDefaultQueryFactorType());
                 SortedSet<String> defaultFactorValuesValues = FactorValue.getFactorValuesStrings(defaultFactorValues);
                 for (String defaultFactorValue : defaultFactorValuesValues) {
-                    if (!counts.containsKey(defaultFactorValue))
+                    if (!counts.containsKey(defaultFactorValue)) {
                         counts.put(defaultFactorValue, 0.0);
+                    }
                     counts.put(defaultFactorValue, counts.get(defaultFactorValue) +
                             1.0);
                 }
@@ -118,15 +124,26 @@ public class HomePageController {
         }
     }
 
+    private String buildLinkForExperiment(Experiment experiment) {
+        return "experiments/" + experiment.getExperimentAccession();
+    }
+
     private class WordWeight {
 
-        String text;
-        double weight;
+        private String text;
+        private double weight;
 
         WordWeight(String factorValue, double weight) {
             this.text = factorValue;
             this.weight = weight;
         }
 
+        public String getText() {
+            return text;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
     }
 }

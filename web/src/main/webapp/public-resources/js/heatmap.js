@@ -32,15 +32,15 @@ function initHeatmapDisplayValueToggle() {
 
     $("#display-levels").button()
         .toggle(
-            function () {
-                showValues(this);
-                $("#prefForm #displayLevels").val("true");
-            },
-            function () {
-                hideValues(this);
-                $("#prefForm #displayLevels").val("false");
-            }
-        );
+        function () {
+            showValues(this);
+            $("#prefForm #displayLevels").val("true");
+        },
+        function () {
+            hideValues(this);
+            $("#prefForm #displayLevels").val("false");
+        }
+    );
 
     if ($("#prefForm #displayLevels").val() === "true") {
         $("#display-levels").click();
@@ -60,15 +60,15 @@ function initHeatmapDisplayValueToggle() {
 
     $("#sort-toggle").button().
         toggle(
-            function () {
-                $("#sort-toggle-image").attr("src", "resources/images/sort-least-on-top.png");
-                $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts last'");
-            },
-            function () {
-                $("#sort-toggle-image").attr("src", "resources/images/sort-most-on-top.png");
-                $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts first");
-            }
-        ).attr("title", " ").tooltip();
+        function () {
+            $("#sort-toggle-image").attr("src", "resources/images/sort-least-on-top.png");
+            $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts last'");
+        },
+        function () {
+            $("#sort-toggle-image").attr("src", "resources/images/sort-most-on-top.png");
+            $(this).tooltip("option", "content", "Click to report genes expressed in the most organism parts first");
+        }
+    ).attr("title", " ").tooltip();
 
 
 }

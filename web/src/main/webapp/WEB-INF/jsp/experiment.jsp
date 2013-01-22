@@ -180,10 +180,10 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 initBarChartButton();
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
-                var heatmapFactorValueValues = [${heatmapFactorValueValues.size()}];
-                <c:forEach varStatus="i" var="factorValueValue" items="${heatmapFactorValueValues}">
-                    heatmapFactorValueValues[${i.index}] = '${factorValueValue}';
-                </c:forEach>
+                var heatmapFactorValueValues = [${heatmapFactorValues.size()}];
+            <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
+                heatmapFactorValueValues[${i.index}] = '${factorValue.value}';
+            </c:forEach>
 
                 if (formattedQueryFactorType === "Organism part") {
                     initAnatomogram(heatmapFactorValueValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');

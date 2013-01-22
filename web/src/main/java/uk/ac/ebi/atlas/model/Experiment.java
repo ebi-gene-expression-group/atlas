@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 
+import javax.validation.constraints.NotNull;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -38,26 +39,33 @@ public class Experiment {
     private String description;
     private String specie;
 
-    private String defaultFactorType;
+    private String defaultQueryFactorType;
+    private Set<FactorValue> defaultFilterFactorTypes;
 
-    //ToDo: use multimap here
     private Map<String, SortedSet<FactorValue>> factorValuesByType = new HashMap<>();
+
+    private SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = new TreeMap<>();
 
     private Set<String> experimentRunAccessions;
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultFactorType, String specie) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultQueryFactorType, Set<FactorValue> defaultFilterFactorTypes, String specie) {
         this.experimentAccession = experimentAccession;
         this.description = description;
         this.experimentRunAccessions = experimentRunAccessions;
-        this.defaultFactorType = defaultFactorType;
+        this.defaultQueryFactorType = defaultQueryFactorType;
+        this.defaultFilterFactorTypes = defaultFilterFactorTypes;
         this.specie = specie;
     }
 
-    public String getDefaultFactorType() {
-        return defaultFactorType;
+    public String getDefaultQueryFactorType() {
+        return defaultQueryFactorType;
+    }
+
+    public Set<FactorValue> getDefaultFilterFactorValues() {
+        return defaultFilterFactorTypes;
     }
 
     public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
@@ -65,18 +73,38 @@ public class Experiment {
             if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
                 this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
                 // index all possible factor values by their byType
-                for (FactorValue factorValue : experimentRun.getFactorValues()) {
-                    String type = factorValue.getType();
-                    String value = factorValue.getValue();
 
-                    if (!factorValuesByType.containsKey(type)) {
-                        factorValuesByType.put(type, new TreeSet<FactorValue>());
-                    }
-                    factorValuesByType.get(type).add(factorValue);
+                Set<FactorValue> factorValues1 = experimentRun.getFactorValues();
+                for (FactorValue factorValue : factorValues1) {
+                    addToFactorValuesByType(factorValue);
+
+                    addToFactorValueCombinations(factorValues1, factorValue);
                 }
+
             }
         }
         return this;
+    }
+
+    private void addToFactorValueCombinations(Set<FactorValue> factorValues, FactorValue factorValue) {// track all valid
+        // combinations for filterFactorValues
+        if (!validFactorValueCombinations.containsKey(factorValue)) {
+            validFactorValueCombinations.put(factorValue, new TreeSet<FactorValue>());
+        }
+        for (FactorValue value : factorValues) {
+            if (!value.equals(factorValue)) {
+                validFactorValueCombinations.get(factorValue).add(value);
+            }
+        }
+    }
+
+    private void addToFactorValuesByType(FactorValue factorValue) {
+        String type = factorValue.getType();
+
+        if (!factorValuesByType.containsKey(type)) {
+            factorValuesByType.put(type, new TreeSet<FactorValue>());
+        }
+        factorValuesByType.get(type).add(factorValue);
     }
 
     public FactorValue getFactorValue(String experimentRunAccession, String byType) {
@@ -117,15 +145,12 @@ public class Experiment {
         return description;
     }
 
-    public SortedSet<FactorValue> getFactorValues(String byType) {
-        if (byType == null || byType.trim().length() == 0)
-            byType = this.getDefaultFactorType();
+    public SortedSet<FactorValue> getFactorValues(@NotNull String byType) {
         return factorValuesByType.get(byType);
     }
 
+    //ToDo: parameter byType is not needed, it's always the remaining type
     public SortedSet<FactorValue> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
-        if (byType == null || byType.trim().length() == 0)
-            byType = this.getDefaultFactorType();
 
         SortedSet<FactorValue> results = new TreeSet<>();
 
@@ -135,6 +160,7 @@ public class Experiment {
                 if (CollectionUtils.isEmpty(filterByFactorValues) ||
                         experimentRun.getFactorValues().containsAll(filterByFactorValues)) {
                     FactorValue factorValue = experimentRun.getFactorValue(byType);
+
                     checkNotNull(factorValue);
                     results.add(factorValue);
                 }
@@ -146,4 +172,7 @@ public class Experiment {
         return results;
     }
 
+    public SortedMap<FactorValue, SortedSet<FactorValue>> getValidFactorValueCombinations() {
+        return validFactorValueCombinations;
+    }
 }

@@ -47,6 +47,7 @@
                         </span>
                     </div>
                 </td>
+                <c:import url="includes/filterby-menu.jsp"/>
                 <td>
                     <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
                         <span>
@@ -119,3 +120,10 @@
          style="font-size:65%;width:920px;margin-left:27px;margin-right:17px; margin-top:10px"></div>
 
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#filterBy").menu();
+    });
+
+</script>

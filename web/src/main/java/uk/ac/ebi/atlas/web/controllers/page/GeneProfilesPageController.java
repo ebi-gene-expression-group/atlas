@@ -43,8 +43,7 @@ import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Controller
 @Scope("request")
@@ -61,7 +60,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
     @Inject
     public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties,
                                       ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder) {
-        super(filterParameterBuilder);
+        super(filterParameterBuilder, experimentsCache);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
@@ -74,15 +73,18 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         if (!result.hasErrors()) {
 
+            FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
+
+            rankCommand.setFilteredParameters(filterParameters);
+
             RankingParameters parameters = new RankingParameters(preferences.isSpecific(),
                     preferences.getHeatmapMatrixSize());
 
             rankCommand.setRankingParameters(parameters);
 
-            FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
-            rankCommand.setFilteredParameters(filterParameters);
-
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
+
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             model.addAttribute("geneProfiles", geneProfiles);
 
@@ -96,15 +98,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("experimentAccession", experimentAccession);
 
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+            model.addAttribute("formattedQueryFactorType", formatQueryFactorType(filterParameters.getQueryFactorType()));
 
-            // this formats the default factor type for display on web page
-            String queryFactorType = preferences.getQueryFactorType();
-            if (queryFactorType == null || queryFactorType.trim().length() == 0)
-                queryFactorType = experiment.getDefaultFactorType();
-            queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
-            queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
-            model.addAttribute("formattedQueryFactorType", queryFactorType);
+            model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
             Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
 
@@ -112,6 +108,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("heatmapFactorValues", filteredFactorValues);
 
+            // this is currently required for the request preferences filter drop-down multi-selection box
             model.addAttribute("heatmapFactorValueValues", FactorValue.getFactorValuesStrings(filteredFactorValues));
 
             String specie = experiment.getSpecie();
@@ -122,14 +119,113 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
+            // all the following is required for filtering by two factor values chosen from drop down menu
+            SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = experiment.getValidFactorValueCombinations();
+
+            SortedMap<String, SortedSet<FactorValue>> allFactorNames = indexFactorValuesByName(validFactorValueCombinations.keySet());
+
+            model.addAttribute("defaultFilterFactorValuesSize", experiment.getDefaultFilterFactorValues().size());
+
+            model.addAttribute("filterByMenu", buildFilterByMenu(allFactorNames, validFactorValueCombinations, request));
+
+            model.addAttribute("selectedFactorValues", extractSelectedFactorValues(allFactorNames, filterParameters));
         }
 
         return "experiment";
     }
 
+    SortedMap<String, SortedSet<FactorValue>> indexFactorValuesByName(Set<FactorValue> factorValues) {
+        // using factor names here for better readability and compatibility with experiment design page
+        SortedMap<String, SortedSet<FactorValue>> allFactorNames = new TreeMap<>();
+        for (FactorValue key : factorValues) {
+            if (!allFactorNames.containsKey(key.getName()))
+                allFactorNames.put(key.getName(), new TreeSet<FactorValue>());
+            allFactorNames.get(key.getName()).add(key);
+        }
+        return allFactorNames;
+    }
+
+    SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> buildFilterByMenu(
+            SortedMap<String, SortedSet<FactorValue>> allFactorNames,
+            SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations,
+            HttpServletRequest request) {
+        // build filter by menu map here, structure:
+        // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
+        SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> filterByMenu = new TreeMap<>();
+        for (String firstFactorName : allFactorNames.keySet()) {
+            // first level: factor name
+            if (!filterByMenu.containsKey(firstFactorName))
+                filterByMenu.put(firstFactorName, new TreeMap<String, SortedMap<String, SortedMap<String, String>>>());
+            // second level: factor value choices per factor name, all are valid
+            for (FactorValue firstFactorValue : allFactorNames.get(firstFactorName)) {
+
+                // factor name 2 > factor value 2 > link
+                SortedMap<String, SortedMap<String, String>> secondFilterFactorValue = new TreeMap<>();
+                filterByMenu.get(firstFactorName).put(firstFactorValue.getValue(), secondFilterFactorValue);
+
+                // index second level factor names
+                SortedMap<String, SortedSet<FactorValue>> secondFactorNames =
+                        indexFactorValuesByName(validFactorValueCombinations.get(firstFactorValue));
+
+                for (String secondFactorName : secondFactorNames.keySet()) {
+                    // third level: factor name
+                    if (!secondFilterFactorValue.containsKey(secondFactorName))
+                        secondFilterFactorValue.put(secondFactorName, new TreeMap<String, String>());
+
+                    // get remainder of factor names
+                    SortedSet<String> remainingFactorNames = new TreeSet<>(allFactorNames.keySet());
+                    remainingFactorNames.remove(firstFactorName);
+                    remainingFactorNames.remove(secondFactorName);
+                    // TODO: what in case there are more than 3 possible factor types?
+
+                    // forth level: factor value choices for second factor name
+                    for (FactorValue secondFactorValue : secondFactorNames.get(secondFactorName)) {
+                        // arbitrarily taking first of remaining factor names as query factor type
+                        String factorType = allFactorNames.get(remainingFactorNames.first()).first().getType();
+                        String link = buildFilterFactorValueURL(request, factorType, firstFactorValue, secondFactorValue);
+                        secondFilterFactorValue.get(secondFactorName).put(secondFactorValue.getValue(), link);
+                    }
+                }
+            }
+        }
+
+        return filterByMenu;
+    }
+
+    SortedSet<FactorValue> extractSelectedFactorValues(SortedMap<String, SortedSet<FactorValue>> allFactorNames, FilterParameters parameters) {
+        // construct label above filter by menu
+        SortedSet<FactorValue> selectedFactorValues = new TreeSet<>();
+        for (String name : allFactorNames.keySet()) {
+            for (FactorValue factorValue : allFactorNames.get(name)) {
+                // this is necessary because what comes back from RequestPreferences are not "complete" FactorValues
+                // they are missing the factor name
+                if (parameters.getFilterFactorValues().contains(factorValue)) {
+                    selectedFactorValues.add(factorValue);
+                }
+            }
+        }
+        return selectedFactorValues;
+    }
+
+    String formatQueryFactorType(String queryFactorType) {
+        // this formats the default factor type for display on web page
+        queryFactorType = queryFactorType.replaceAll("_", " ").toLowerCase();
+        queryFactorType = queryFactorType.substring(0, 1).toUpperCase() + queryFactorType.substring(1);
+        return queryFactorType;
+    }
+
+    String buildFilterFactorValueURL(HttpServletRequest request, String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {
+        // we disregard here previous query string, as site will load completely fresh
+        // TODO: we might want to include some previous query
+        return request.getRequestURI() + "?" + "queryFactorType=" + queryFactorType
+                + "&filterFactorValues=" + firstFactorValue.getType() + ":" + firstFactorValue.getValue()
+                + "&filterFactorValues=" + secondFactorValue.getType() + ":" + secondFactorValue.getValue();
+    }
+
     String buildDownloadURL(HttpServletRequest request) {
         return request.getRequestURI() + TSV_FILE_EXTENSION + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
     }
+
 
 }
 

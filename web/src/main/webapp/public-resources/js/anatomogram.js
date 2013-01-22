@@ -119,7 +119,7 @@ function initAnatomogram(factorValues, fileNameMale, fileNameFemale) {
 
     //load anatomogram from given location and display given organism parts
     function loadAnatomogram(location) {
-        svg.load(location, {onLoad: prepareAnatomogram});
+        svg.load(location, {onLoad:prepareAnatomogram});
     }
 
     if ($('#anatomogramBody').length === 0) {

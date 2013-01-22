@@ -29,9 +29,9 @@ public class GeneProfileTest {
     private FactorValue factorValue2 = new FactorValue("ORGANISM_PART", "org", "trunk");
     private FactorValue factorValue3 = new FactorValue("ORGANISM_PART", "org", "head");
 
-    private Expression expression_1 = new Expression( 2.2D, Sets.newHashSet(factorValue1));
-    private Expression expression_2 = new Expression( 3D, Sets.newHashSet(factorValue2));
-    private Expression expression_3 = new Expression( 3.001D, Sets.newHashSet(factorValue3));
+    private Expression expression_1 = new Expression(2.2D, Sets.newHashSet(factorValue1));
+    private Expression expression_2 = new Expression(3D, Sets.newHashSet(factorValue2));
+    private Expression expression_3 = new Expression(3.001D, Sets.newHashSet(factorValue3));
 
     private GeneProfile subject;
 
@@ -110,11 +110,11 @@ public class GeneProfileTest {
         assertThat(averageExpressionLevel, is(2.6005000000000003D));
 
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factorValue1, factorValue3,
-                new FactorValue("ORGANISM_PART", "org","panz")));
+                new FactorValue("ORGANISM_PART", "org", "panz")));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
 
-     @Test
+    @Test
     public void weightedExpressionLevelOn() {
         double averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet(factorValue1,
                 factorValue3),
@@ -125,8 +125,6 @@ public class GeneProfileTest {
                 Sets.newHashSet(factorValue1, factorValue3, factorValue2));
         assertThat(averageExpressionLevel, is(-0.8004999999999995D));
     }
-
-
 
 
 }

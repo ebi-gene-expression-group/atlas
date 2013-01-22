@@ -20,31 +20,29 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.model.readers;
 
+import org.apache.log4j.Logger;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 
-public class RankingParameters {
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Collection;
 
-    private boolean specific;
+@Named("experimentFactorsTsvReader")
+public class ExperimentFactorsTsvReader extends AbstractTsvReader {
 
-    private Integer heatmapMatrixSize;
-
-    public RankingParameters(boolean specific, Integer heatmapMatrixSize) {
-        this.specific = specific;
-        this.heatmapMatrixSize = heatmapMatrixSize;
-    }
-
-
-    public boolean isSpecific() {
-        return specific;
-    }
-
-    public Integer getHeatmapMatrixSize() {
-        return heatmapMatrixSize;
+    @Inject
+    public ExperimentFactorsTsvReader(ApplicationProperties a) {
+        super(Logger.getLogger(ExperimentFactorsTsvReader.class), a);
     }
 
     @Override
-    public String toString() {
-        return super.toString() + " " + this.specific + " " + this.heatmapMatrixSize;
+    public Collection<String[]> readAll(String experimentAccession) {
+        Path path = FileSystems.getDefault().getPath(applicationProperties.getExperimentFactorsTsvFilePath(experimentAccession));
+        return read(path);
     }
+
 }

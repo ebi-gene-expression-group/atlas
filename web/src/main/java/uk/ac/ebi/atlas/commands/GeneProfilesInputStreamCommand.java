@@ -71,7 +71,6 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
             }
         }
 
-
         try (ObjectInputStream<GeneProfile> inputStream = buildGeneProfilesInputStream(experimentAccession)) {
 
             return apply(experiment, inputStream);

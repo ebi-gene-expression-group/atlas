@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,23 +22,52 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
+
+import java.util.SortedSet;
 
 public class GeneProfilesController {
     protected FilterParameters.Builder filterParameterBuilder;
 
-    public GeneProfilesController(FilterParameters.Builder filterParameterBuilder) {
+    protected ExperimentsCache experimentsCache;
+
+    public GeneProfilesController(FilterParameters.Builder filterParameterBuilder, ExperimentsCache experimentsCache) {
         this.filterParameterBuilder = filterParameterBuilder;
+        this.experimentsCache = experimentsCache;
     }
 
     protected FilterParameters createFilterParameters(String experimentAccession, RequestPreferences preferences) {
+
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+        // check for query factor type present, otherwise use experiment default
+        String queryFactorType;
+        if (preferences.getQueryFactorType() == null ||
+                preferences.getQueryFactorType().trim().length() == 0) {
+            queryFactorType = experiment.getDefaultQueryFactorType();
+        } else {
+            queryFactorType = preferences.getQueryFactorType();
+        }
+
+        // check for filter factor values present, otherwise use experiment default
+        SortedSet<String> filterFactorValues;
+        if (preferences.getFilterFactorValues() == null ||
+                preferences.getFilterFactorValues().size() == 0) {
+            filterFactorValues = FactorValue.getFactorValuesURLRepresentation(experiment.getDefaultFilterFactorValues());
+        } else {
+            filterFactorValues = preferences.getFilterFactorValues();
+        }
+
         return filterParameterBuilder.forExperimentAccession(experimentAccession)
                 .withCutoff(preferences.getCutoff())
-                .withFilterFactorValues(preferences.getFilterFactorValues())
-                .withQueryFactorType(preferences.getQueryFactorType())
+                .withFilterFactorValues(filterFactorValues)
+                .withQueryFactorType(queryFactorType)
                 .withQueryFactorValues(preferences.getQueryFactorValues())
                 .withGeneQuery(preferences.getGeneQuery())
-        .build();
+                .build();
     }
 }

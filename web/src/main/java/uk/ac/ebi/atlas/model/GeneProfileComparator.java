@@ -9,8 +9,8 @@ import java.util.Set;
 public class GeneProfileComparator implements Comparator<GeneProfile> {
 
     private boolean isSpecific;
-    private Set<FactorValue>  selectedFactorValues;
-    private Set<FactorValue>  allFactorValues;
+    private Set<FactorValue> selectedFactorValues;
+    private Set<FactorValue> allFactorValues;
 
     public GeneProfileComparator(boolean isSpecific, Set<FactorValue> selectFactorValues,
                                  Set<FactorValue> allFactorValues) {

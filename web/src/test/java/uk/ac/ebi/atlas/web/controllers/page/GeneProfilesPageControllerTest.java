@@ -74,7 +74,7 @@ public class GeneProfilesPageControllerTest {
     }
 
     @Test
-    public void buildDownloadUrl(){
+    public void buildDownloadUrl() {
         //when
         String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
 

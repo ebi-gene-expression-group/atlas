@@ -135,8 +135,8 @@ class ExpressionsBuffer {
                 Experiment experiment = experimentsCache.getExperiment(experimentAccession);
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
-                // TOOD: default factor value needs to come from RequestPreferences
-                return experiment.getFactorValue(columnRun, experiment.getDefaultFactorType());
+                // TODO: default factor value needs to come from RequestPreferences
+                return experiment.getFactorValue(columnRun, experiment.getDefaultQueryFactorType());
             }
 
             throw new IllegalStateException(MessageFormat.format(FACTOR_VALUE_NOT_FOUND, columnHeader, experimentAccession));

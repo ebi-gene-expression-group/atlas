@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
@@ -21,14 +22,14 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Controller
 @Scope("request")
-public class GeneProfilesDownloadController extends GeneProfilesController{
+public class GeneProfilesDownloadController extends GeneProfilesController {
     private static final Logger LOGGER = Logger.getLogger(GeneProfilesDownloadController.class);
 
     private WriteGeneProfilesCommand writeGeneProfilesCommand;
 
     @Inject
-    public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand, FilterParameters.Builder filterParameterBuilder) {
-        super(filterParameterBuilder);
+    public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand, FilterParameters.Builder filterParameterBuilder, ExperimentsCache experimentsCache) {
+        super(filterParameterBuilder, experimentsCache);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 

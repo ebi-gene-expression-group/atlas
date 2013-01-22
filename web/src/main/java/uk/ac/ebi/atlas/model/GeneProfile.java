@@ -29,6 +29,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public GeneProfile add(Expression expression) {
+        // ToDo: this is wrong, this could lead to overriding certain expressions by reoccurring factor values
         for (FactorValue factorValue : expression.getAllFactorValues()) {
             factorValueExpressions.put(factorValue, expression);
         }
@@ -77,7 +78,7 @@ public class GeneProfile implements Iterable<Expression> {
 
     public boolean isExpressedOnAnyOf(Set<FactorValue> factorValues) {
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
-        return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
+        return Sets.intersection(this.getAllFactorValues(), factorValues).size() > 0;
     }
 
     public double getAverageExpressionLevelOn(Set<FactorValue> factorValues) {
@@ -86,13 +87,9 @@ public class GeneProfile implements Iterable<Expression> {
         }
         double expressionLevel = 0D;
         for (FactorValue factorValue : factorValues) {
-            expressionLevel += getExpressionLevelByFactorValue(factorValue);
+            expressionLevel += getExpressionLevel(factorValue);
         }
         return expressionLevel / factorValues.size();
-    }
-
-    public Set<FactorValue> getFactorValues() {
-        return this.factorValueExpressions.keySet();
     }
 
     public Set<FactorValue> getAllFactorValues() {
@@ -100,12 +97,6 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public double getExpressionLevel(FactorValue factorValue) {
-        Expression expression = factorValueExpressions.get(factorValue);
-        return expression == null ? 0 : expression.getLevel();
-    }
-
-
-    public double getExpressionLevelByFactorValue(FactorValue factorValue) {
         Expression expression = factorValueExpressions.get(factorValue);
         return expression == null ? 0 : expression.getLevel();
     }

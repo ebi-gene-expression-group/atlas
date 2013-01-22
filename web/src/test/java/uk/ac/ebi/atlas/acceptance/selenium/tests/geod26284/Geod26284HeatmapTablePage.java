@@ -27,6 +27,10 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 public class Geod26284HeatmapTablePage extends HeatmapTablePage {
 
+    public Geod26284HeatmapTablePage(WebDriver driver) {
+        super(driver);
+    }
+
     public Geod26284HeatmapTablePage(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);
     }

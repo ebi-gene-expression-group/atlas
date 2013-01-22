@@ -17,8 +17,8 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         this.runAccession = checkNotNull(accession);
     }
 
-    public ExperimentRun addFactorValue(String type, String name, String value) {
-        factorValues.add(new FactorValue(type, name, value));
+    public ExperimentRun addFactorValue(FactorValue value) {
+        factorValues.add(value);
         return this;
     }
 
