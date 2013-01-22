@@ -1,0 +1,172 @@
+Run	Sample Characteristics[organism]	Sample Characteristics[sex]	Sample Characteristics[cell line]	Sample Characteristics[cell type identifier]	Sample Characteristics[cellular component]	Sample Characteristics[organism part]	Sample Characteristics[cell type]	Sample Characteristics[disease state]	Sample Characteristics[karyotype]	Sample Characteristics[biosource provider]	Factor Values[cell type identifier]	Factor Values[cellular component]	Factor Values[RNA type]
+SRR387660	Homo sapiens	female	K562	K562	whole cell			erythromyeloblastoid leukemia	cancer	ATCC	K562	whole cell	total RNA
+SRR387664	Homo sapiens	female	GM12878	GM12878	whole cell		B-lymphocyte		  	Coriell	GM12878	whole cell	total RNA
+SRR387659	Homo sapiens	female	K562	K562	whole cell			erythromyeloblastoid leukemia	cancer	ATCC	K562	whole cell	total RNA
+SRR387663	Homo sapiens	female	GM12878	GM12878	whole cell		B-lymphocyte		  	Coriell	GM12878	whole cell	total RNA
+SRR307897	Homo sapiens	  	GM12878	GM12878	whole cell		B-lymphocyte		  	Coriell	GM12878	whole cell	long polyA RNA
+SRR307898	Homo sapiens	  	GM12878	GM12878	whole cell		B-lymphocyte		  	Coriell	GM12878	whole cell	long polyA RNA
+SRR307899	Homo sapiens	  	GM12878	GM12878	cytosol		B-lymphocyte		  	Coriell	GM12878	cytosol	long polyA RNA
+SRR307900	Homo sapiens	  	GM12878	GM12878	cytosol		B-lymphocyte		  	Coriell	GM12878	cytosol	long polyA RNA
+SRR307901	Homo sapiens	  	AG445	AG445	whole cell	lung	fibroblast		  	Coriell	AG445	whole cell	long polyA RNA
+SRR307902	Homo sapiens	  	AG445	AG445	whole cell	lung	fibroblast		  	Coriell	AG445	whole cell	long polyA RNA
+SRR307903	Homo sapiens	  	BJ	BJ	whole cell	skin	fibroblast		  	ATCC	BJ	whole cell	long polyA RNA
+SRR307904	Homo sapiens	  	BJ	BJ	whole cell	skin	fibroblast		  	ATCC	BJ	whole cell	long polyA RNA
+SRR307905	Homo sapiens	  		HUVEC	whole cell	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	whole cell	long polyA RNA
+SRR307906	Homo sapiens	  		HUVEC	whole cell	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	whole cell	long polyA RNA
+SRR307907	Homo sapiens	  	A549	A549	whole cell	lung	epithelial	carcinoma	  	ATCC	A549	whole cell	long polyA RNA
+SRR307908	Homo sapiens	  	A549	A549	whole cell	lung	epithelial	carcinoma	  	ATCC	A549	whole cell	long polyA RNA
+SRR307909	Homo sapiens	  		HUVEC	nucleus	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	nucleus	long polyA RNA
+SRR307910	Homo sapiens	  		HUVEC	nucleus	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	nucleus	long polyA RNA
+SRR307911	Homo sapiens	  	H1-hESC	H1-hESC	whole cell		embryonic stem cell		  	WiCell Research Institute	H1-hESC	whole cell	long polyA RNA
+SRR307912	Homo sapiens	  	H1-hESC	H1-hESC	whole cell		embryonic stem cell		  	WiCell Research Institute	H1-hESC	whole cell	long polyA RNA
+SRR307913	Homo sapiens	  	HepG2	HepG2	whole cell	liver		hepatocellular carcinoma	  	ATCC	HepG2	whole cell	long non-polyA RNA
+SRR307914	Homo sapiens	  	HepG2	HepG2	whole cell	liver		hepatocellular carcinoma	  	ATCC	HepG2	whole cell	long non-polyA RNA
+SRR307915	Homo sapiens	  	HepG2	HepG2	nucleus	liver		hepatocellular carcinoma	  	ATCC	HepG2	nucleus	long polyA RNA
+SRR307916	Homo sapiens	  	HepG2	HepG2	nucleus	liver		hepatocellular carcinoma	  	ATCC	HepG2	nucleus	long polyA RNA
+SRR307917	Homo sapiens	  		HUVEC	cytosol	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	cytosol	long polyA RNA
+SRR307918	Homo sapiens	  		HUVEC	cytosol	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	cytosol	long polyA RNA
+SRR307919	Homo sapiens	  	H1-hESC	H1-hESC	cytosol		embryonic stem cell		  	WiCell Research Institute	H1-hESC	cytosol	long polyA RNA
+SRR307920	Homo sapiens	  		HMEC	whole cell	mammary	human mammary epithelial cell (HMEC)		normal	Lonza	HMEC	whole cell	long polyA RNA
+SRR307921	Homo sapiens	  	GM12878	GM12878	whole cell		B-lymphocyte		  	Coriell	GM12878	whole cell	long non-polyA RNA
+SRR307922	Homo sapiens	  	GM12878	GM12878	whole cell		B-lymphocyte		  	Coriell	GM12878	whole cell	long non-polyA RNA
+SRR307923	Homo sapiens	  	H1-hESC	H1-hESC	whole cell		embryonic stem cell		  	WiCell Research Institute	H1-hESC	whole cell	long non-polyA RNA
+SRR307924	Homo sapiens	  	H1-hESC	H1-hESC	whole cell		embryonic stem cell		  	WiCell Research Institute	H1-hESC	whole cell	long non-polyA RNA
+SRR307925	Homo sapiens	  	H1-hESC	H1-hESC	nucleus		embryonic stem cell		  	WiCell Research Institute	H1-hESC	nucleus	long polyA RNA
+SRR307926	Homo sapiens	  	HepG2	HepG2	whole cell	liver		hepatocellular carcinoma	  	ATCC	HepG2	whole cell	long polyA RNA
+SRR307927	Homo sapiens	  	HepG2	HepG2	whole cell	liver		hepatocellular carcinoma	  	ATCC	HepG2	whole cell	long polyA RNA
+SRR307928	Homo sapiens	  	HepG2	HepG2	cytosol	liver		hepatocellular carcinoma	  	ATCC	HepG2	cytosol	long polyA RNA
+SRR307929	Homo sapiens	  	HepG2	HepG2	cytosol	liver		hepatocellular carcinoma	  	ATCC	HepG2	cytosol	long polyA RNA
+SRR307930	Homo sapiens	  	K562	K562	whole cell			erythromyeloblastoid leukemia	  	ATCC	K562	whole cell	long non-polyA RNA
+SRR307931	Homo sapiens	  	K562	K562	whole cell			erythromyeloblastoid leukemia	  	ATCC	K562	whole cell	long non-polyA RNA
+SRR307932	Homo sapiens	  		HSMM	whole cell	skeletal muscle	human skeletal muscle myoblast (HSMM)		  	Refer to the protocol documents for differing sources	HSMM	whole cell	long polyA RNA
+SRR307933	Homo sapiens	  		HSMM	whole cell	skeletal muscle	human skeletal muscle myoblast (HSMM)		  	Refer to the protocol documents for differing sources	HSMM	whole cell	long polyA RNA
+SRR315297	Homo sapiens	  	GM12878	GM12878	nucleus		B-lymphocyte		  	Coriell	GM12878	nucleus	long polyA RNA
+SRR315298	Homo sapiens	  	GM12878	GM12878	nucleus		B-lymphocyte		  	Coriell	GM12878	nucleus	long polyA RNA
+SRR315299	Homo sapiens	  	K562	K562	nucleus			erythromyeloblastoid leukemia	  	ATCC	K562	nucleus	long polyA RNA
+SRR315300	Homo sapiens	  	K562	K562	nucleus			erythromyeloblastoid leukemia	  	ATCC	K562	nucleus	long polyA RNA
+SRR315301	Homo sapiens	  	MCF-7	MCF-7	whole cell	mammary gland		adenocarcinoma	  	ATCC	MCF-7	whole cell	long polyA RNA
+SRR315302	Homo sapiens	  	MCF-7	MCF-7	whole cell	mammary gland		adenocarcinoma	  	ATCC	MCF-7	whole cell	long polyA RNA
+SRR315303	Homo sapiens	  		NHLF	whole cell	lung	normal human lung fibroblast (NHLF)	normal	normal	Lonza	NHLF	whole cell	long non-polyA RNA
+SRR315304	Homo sapiens	  		NHLF	whole cell	lung	normal human lung fibroblast (NHLF)	normal	normal	Lonza	NHLF	whole cell	long non-polyA RNA
+SRR315305	Homo sapiens	  	K562	K562	nucleoplasm			erythromyeloblastoid leukemia	  	ATCC	K562	nucleoplasm	total RNA
+SRR315306	Homo sapiens	  	K562	K562	nucleoplasm			erythromyeloblastoid leukemia	  	ATCC	K562	nucleoplasm	total RNA
+SRR315307	Homo sapiens	  		HSMM	whole cell	skeletal muscle	human skeletal muscle myoblast (HSMM)		  	Refer to the protocol documents for differing sources	HSMM	whole cell	long non-polyA RNA
+SRR315308	Homo sapiens	  		HSMM	whole cell	skeletal muscle	human skeletal muscle myoblast (HSMM)		  	Refer to the protocol documents for differing sources	HSMM	whole cell	long non-polyA RNA
+SRR315309	Homo sapiens	  	K562	K562	chromatin			erythromyeloblastoid leukemia	  	ATCC	K562	chromatin	total RNA
+SRR315310	Homo sapiens	  	K562	K562	chromatin			erythromyeloblastoid leukemia	  	ATCC	K562	chromatin	total RNA
+SRR315311	Homo sapiens	  	K562	K562	nucleolus			erythromyeloblastoid leukemia	  	ATCC	K562	nucleolus	total RNA
+SRR315312	Homo sapiens	  	K562	K562	nucleolus			erythromyeloblastoid leukemia	  	ATCC	K562	nucleolus	total RNA
+SRR315313	Homo sapiens	  		NHLF	whole cell	lung	normal human lung fibroblast (NHLF)	normal	normal	Lonza	NHLF	whole cell	long polyA RNA
+SRR315314	Homo sapiens	  		NHLF	whole cell	lung	normal human lung fibroblast (NHLF)	normal	normal	Lonza	NHLF	whole cell	long polyA RNA
+SRR315315	Homo sapiens	  	SK-N-SH	SK-N-SH	whole cell	brain		neuroblastoma	  	ATCC	SK-N-SH	whole cell	long polyA RNA
+SRR315316	Homo sapiens	  	SK-N-SH	SK-N-SH	whole cell	brain		neuroblastoma	  	ATCC	SK-N-SH	whole cell	long polyA RNA
+SRR315317	Homo sapiens	  	AG445	AG445	whole cell	lung	fibroblast		  	Coriell	AG445	whole cell	long non-polyA RNA
+SRR315318	Homo sapiens	  	AG445	AG445	whole cell	lung	fibroblast		  	Coriell	AG445	whole cell	long non-polyA RNA
+SRR315319	Homo sapiens	  		HMEC	whole cell	mammary gland	human mammary epithelial cells (HMEC)	normal	normal	Lonza	HMEC	whole cell	long non-polyA RNA
+SRR315320	Homo sapiens	female		NHEK	whole cell		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	whole cell	long non-polyA RNA
+SRR315321	Homo sapiens	female		NHEK	whole cell		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	whole cell	long non-polyA RNA
+SRR315322	Homo sapiens	female		NHEK	whole cell		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	whole cell	long non-polyA RNA
+SRR315323	Homo sapiens	female		NHEK	nucleus		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	nucleus	long polyA RNA
+SRR315324	Homo sapiens	female		NHEK	nucleus		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	nucleus	long polyA RNA
+SRR315325	Homo sapiens	female		NHEK	cytosol		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	cytosol	long polyA RNA
+SRR315326	Homo sapiens	female		NHEK	cytosol		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	cytosol	long polyA RNA
+SRR315327	Homo sapiens	female		NHEK	whole cell		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	whole cell	long polyA RNA
+SRR315328	Homo sapiens	female		NHEK	whole cell		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	whole cell	long polyA RNA
+SRR315329	Homo sapiens	female		NHEK	whole cell		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	whole cell	long polyA RNA
+SRR315330	Homo sapiens	  	HeLa-S3	HeLa-S3	whole cell		epithelial	carcinoma	  	ATCC	HeLa-S3	whole cell	long polyA RNA
+SRR315331	Homo sapiens	  	HeLa-S3	HeLa-S3	whole cell		epithelial	carcinoma	  	ATCC	HeLa-S3	whole cell	long polyA RNA
+SRR315332	Homo sapiens	  	HeLa-S3	HeLa-S3	nucleus		epithelial	carcinoma	  	ATCC	HeLa-S3	nucleus	long polyA RNA
+SRR315333	Homo sapiens	  	HeLa-S3	HeLa-S3	nucleus		epithelial	carcinoma	  	ATCC	HeLa-S3	nucleus	long polyA RNA
+SRR315334	Homo sapiens	  	HeLa-S3	HeLa-S3	cytosol		epithelial	carcinoma	  	ATCC	HeLa-S3	cytosol	long polyA RNA
+SRR315335	Homo sapiens	  	HeLa-S3	HeLa-S3	cytosol		epithelial	carcinoma	  	ATCC	HeLa-S3	cytosol	long polyA RNA
+SRR315336	Homo sapiens	  	K562	K562	whole cell			erythromyeloblastoid leukemia	  	ATCC	K562	whole cell	long polyA RNA
+SRR315337	Homo sapiens	  	K562	K562	whole cell			erythromyeloblastoid leukemia	  	ATCC	K562	whole cell	long polyA RNA
+SRR317035	Homo sapiens	  	HeLa-S3	HeLa-S3	cytosol		epithelial	carcinoma	  	ATCC	HeLa-S3	cytosol	long non-polyA RNA
+SRR317036	Homo sapiens	  		HUVEC	cytosol	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	cytosol	long non-polyA RNA
+SRR317037	Homo sapiens	  	HepG2	HepG2	cytosol	liver		hepatocellular carcinoma	  	ATCC	HepG2	cytosol	long non-polyA RNA
+SRR317038	Homo sapiens	  	HepG2	HepG2	cytosol	liver		hepatocellular carcinoma	  	ATCC	HepG2	cytosol	long non-polyA RNA
+SRR317039	Homo sapiens	  	H1-hESC	H1-hESC	nucleus		embryonic stem cell		  	WiCell Research Institute	H1-hESC	nucleus	long non-polyA RNA
+SRR317040	Homo sapiens	  	H1-hESC	H1-hESC	cytosol		embryonic stem cell		  	WiCell Research Institute	H1-hESC	cytosol	long non-polyA RNA
+SRR317041	Homo sapiens	female		NHEK	cytosol		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	cytosol	long non-polyA RNA
+SRR317042	Homo sapiens	  	K562	K562	nucleus			erythromyeloblastoid leukemia	  	ATCC	K562	nucleus	long non-polyA RNA
+SRR317043	Homo sapiens	  	K562	K562	nucleus			erythromyeloblastoid leukemia	  	ATCC	K562	nucleus	long non-polyA RNA
+SRR317044	Homo sapiens	  	SK-N-SH	SK-N-SH	whole cell	brain		neuroblastoma	  	ATCC	SK-N-SH	whole cell	long non-polyA RNA
+SRR317045	Homo sapiens	  	SK-N-SH	SK-N-SH	whole cell	brain		neuroblastoma	  	ATCC	SK-N-SH	whole cell	long non-polyA RNA
+SRR317046	Homo sapiens	female		NHEK	nucleus		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	nucleus	long non-polyA RNA
+SRR317047	Homo sapiens	female		NHEK	nucleus		normal human epidermal keratinocyte (NHEK)		  	Lonza	NHEK	nucleus	long non-polyA RNA
+SRR317048	Homo sapiens	  	HeLa-S3	HeLa-S3	whole cell		epithelial	carcinoma	  	ATCC	HeLa-S3	whole cell	long non-polyA RNA
+SRR317049	Homo sapiens	  	HeLa-S3	HeLa-S3	whole cell		epithelial	carcinoma	  	ATCC	HeLa-S3	whole cell	long non-polyA RNA
+SRR317050	Homo sapiens	  	HeLa-S3	HeLa-S3	nucleus		epithelial	carcinoma	  	ATCC	HeLa-S3	nucleus	long non-polyA RNA
+SRR317051	Homo sapiens	  	HeLa-S3	HeLa-S3	nucleus		epithelial	carcinoma	  	ATCC	HeLa-S3	nucleus	long non-polyA RNA
+SRR317052	Homo sapiens	  	K562	K562	cytosol			erythromyeloblastoid leukemia	  	ATCC	K562	cytosol	long non-polyA RNA
+SRR317053	Homo sapiens	  	K562	K562	cytosol			erythromyeloblastoid leukemia	  	ATCC	K562	cytosol	long non-polyA RNA
+SRR317054	Homo sapiens	  	HepG2	HepG2	nucleus	liver		hepatocellular carcinoma	  	ATCC	HepG2	nucleus	long non-polyA RNA
+SRR317055	Homo sapiens	  	HepG2	HepG2	nucleus	liver		hepatocellular carcinoma	  	ATCC	HepG2	nucleus	long non-polyA RNA
+SRR317056	Homo sapiens	  	MCF-7	MCF-7	whole cell	mammary gland		adenocarcinoma	  	ATCC	MCF-7	whole cell	long non-polyA RNA
+SRR317057	Homo sapiens	  	MCF-7	MCF-7	whole cell	mammary gland		adenocarcinoma	  	ATCC	MCF-7	whole cell	long non-polyA RNA
+SRR317058	Homo sapiens	  	GM12878	GM12878	cytosol		B-lymphocyte		  	Coriell	GM12878	cytosol	long non-polyA RNA
+SRR317059	Homo sapiens	  	GM12878	GM12878	cytosol		B-lymphocyte		  	Coriell	GM12878	cytosol	long non-polyA RNA
+SRR317060	Homo sapiens	  	GM12878	GM12878	nucleus		B-lymphocyte		  	Coriell	GM12878	nucleus	long non-polyA RNA
+SRR317061	Homo sapiens	  	GM12878	GM12878	nucleus		B-lymphocyte		  	Coriell	GM12878	nucleus	long non-polyA RNA
+SRR317062	Homo sapiens	  	A549	A549	whole cell	lung	epithelial	carcinoma	  	ATCC	A549	whole cell	long non-polyA RNA
+SRR317063	Homo sapiens	  	A549	A549	whole cell	lung	epithelial	carcinoma	  	ATCC	A549	whole cell	long non-polyA RNA
+SRR317064	Homo sapiens	  	BJ	BJ	whole cell	skin	fibroblast		  	ATCC	BJ	whole cell	long non-polyA RNA
+SRR317065	Homo sapiens	  	BJ	BJ	whole cell	skin	fibroblast		  	ATCC	BJ	whole cell	long non-polyA RNA
+SRR317066	Homo sapiens	  		HUVEC	whole cell	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	whole cell	long non-polyA RNA
+SRR317067	Homo sapiens	  		HUVEC	whole cell	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	whole cell	long non-polyA RNA
+SRR317068	Homo sapiens	  		HUVEC	nucleus	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	nucleus	long non-polyA RNA
+SRR317069	Homo sapiens	  		HUVEC	nucleus	umbilical vein	human umblical vein endothelial cells (HUVEC)		  	Lonza	HUVEC	nucleus	long non-polyA RNA
+SRR387661	Homo sapiens	  	K562	K562	cytosol			erythromyeloblastoid leukemia	  	ATCC	K562	cytosol	long polyA RNA
+SRR387662	Homo sapiens	  	K562	K562	cytosol			erythromyeloblastoid leukemia	  	ATCC	K562	cytosol	long polyA RNA
+SRR534289	Homo sapiens	  	IMR9	IMR9	whole cell	lung	fibroblast		  	ATCC	IMR9	whole cell	total RNA
+SRR534290	Homo sapiens	  	IMR9	IMR9	whole cell	lung	fibroblast		  	ATCC	IMR9	whole cell	total RNA
+SRR534291	Homo sapiens	  	IMR9	IMR9	cytosol	lung	fibroblast		  	ATCC	IMR9	cytosol	long polyA RNA
+SRR534292	Homo sapiens	  	IMR9	IMR9	cytosol	lung	fibroblast		  	ATCC	IMR9	cytosol	long polyA RNA
+SRR534293	Homo sapiens	  	MCF-7	MCF-7	nucleus			breast cancer	  	ATCC	MCF-7	nucleus	long polyA RNA
+SRR534294	Homo sapiens	  	MCF-7	MCF-7	nucleus			breast cancer	  	ATCC	MCF-7	nucleus	long polyA RNA
+SRR534295	Homo sapiens	  	A549	A549	cytosol	lung	epithelial	carcinoma	  	ATCC	A549	cytosol	long polyA RNA
+SRR534296	Homo sapiens	  	A549	A549	cytosol	lung	epithelial	carcinoma	  	ATCC	A549	cytosol	long polyA RNA
+SRR534297	Homo sapiens	  	A549	A549	nucleus	lung	epithelial	carcinoma	  	ATCC	A549	nucleus	long polyA RNA
+SRR534298	Homo sapiens	  	A549	A549	nucleus	lung	epithelial	carcinoma	  	ATCC	A549	nucleus	long polyA RNA
+SRR534299	Homo sapiens	  	IMR9	IMR9	nucleus	lung	fibroblast		  	ATCC	IMR9	nucleus	long polyA RNA
+SRR534300	Homo sapiens	  	IMR9	IMR9	nucleus	lung	fibroblast		  	ATCC	IMR9	nucleus	long polyA RNA
+SRR534301	Homo sapiens	  	IMR9	IMR9	whole cell	lung	fibroblast		  	ATCC	IMR9	whole cell	long polyA RNA
+SRR534302	Homo sapiens	  	IMR9	IMR9	whole cell	lung	fibroblast		  	ATCC	IMR9	whole cell	long polyA RNA
+SRR534303	Homo sapiens	  	SK-N-SH	SK-N-SH	nucleus			neuroblastoma	  	ATCC	SK-N-SH	nucleus	long polyA RNA
+SRR534304	Homo sapiens	  	SK-N-SH	SK-N-SH	nucleus			neuroblastoma	  	ATCC	SK-N-SH	nucleus	long polyA RNA
+SRR534305	Homo sapiens	  	SK-N-SH	SK-N-SH	cytosol			neuroblastoma	  	ATCC	SK-N-SH	cytosol	long polyA RNA
+SRR534306	Homo sapiens	  	SK-N-SH	SK-N-SH	cytosol			neuroblastoma	  	ATCC	SK-N-SH	cytosol	long polyA RNA
+SRR534307	Homo sapiens	  	MCF-7	MCF-7	cytosol			breast cancer	  	ATCC	MCF-7	cytosol	long polyA RNA
+SRR534308	Homo sapiens	  	MCF-7	MCF-7	cytosol			breast cancer	  	ATCC	MCF-7	cytosol	long polyA RNA
+SRR534309	Homo sapiens	  	SK-N-SH	SK-N-SH	whole cell			neuroblastoma	  	ATCC	SK-N-SH	whole cell	long polyA RNA
+SRR534310	Homo sapiens	  	SK-N-SH	SK-N-SH	whole cell			neuroblastoma	  	ATCC	SK-N-SH	whole cell	long polyA RNA
+SRR534311	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long non-polyA RNA
+SRR534312	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long non-polyA RNA
+SRR534313	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long non-polyA RNA
+SRR534314	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long non-polyA RNA
+SRR534315	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long non-polyA RNA
+SRR534316	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long non-polyA RNA
+SRR534317	Homo sapiens	  		HPC-PL	whole cell	placenta	human pericytes from placenta (hPC-PL)		  	PromoCell	HPC-PL	whole cell	total RNA
+SRR534318	Homo sapiens	  		HPC-PL	whole cell	placenta	human pericytes from placenta (hPC-PL)		  	PromoCell	HPC-PL	whole cell	total RNA
+SRR534319	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long polyA RNA
+SRR534320	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long polyA RNA
+SRR534321	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long polyA RNA
+SRR534322	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long polyA RNA
+SRR534323	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long polyA RNA
+SRR534324	Homo sapiens	  		CD20-positive B cell	whole cell		CD2-positive B cell		  	Dr. Heimfeld Lab at FHCRC	CD2-positive B cell	whole cell	long polyA RNA
+SRR534325	Homo sapiens	  		CD34-positive mobilized cell	whole cell		CD34-positive mobilized cell		  	Dr. Heimfeld Lab at FHCRC	CD34-positive mobilized cell	whole cell	total RNA
+SRR534326	Homo sapiens	  		HFDPC	whole cell	hair follicle	hair follicle dermal papilla cell (HFDPC)(mesenchyme cell)		  	PromoCell	HFDPC	whole cell	total RNA
+SRR534327	Homo sapiens	  		HFDPC	whole cell	hair follicle	hair follicle dermal papilla cell (HFDPC)(mesenchyme cell)		  	PromoCell	HFDPC	whole cell	total RNA
+SRR534328	Homo sapiens	  		CD14-positive monocyte	whole cell		CD14-positive monocyte		  	"S. Heimfeld Laboratory, FHCRC"	CD14-positive monocyte	whole cell	long non-polyA RNA
+SRR534329	Homo sapiens	  		CD14-positive monocyte	whole cell		CD14-positive monocyte		  	"S. Heimfeld Laboratory, FHCRC"	CD14-positive monocyte	whole cell	long non-polyA RNA
+SRR534330	Homo sapiens	  		CD14-positive monocyte	whole cell		CD14-positive monocyte		  	"S. Heimfeld Laboratory, FHCRC"	CD14-positive monocyte	whole cell	long non-polyA RNA
+SRR534331	Homo sapiens	  		CD14-positive monocyte	whole cell		CD14-positive monocyte		  	"S. Heimfeld Laboratory, FHCRC"	CD14-positive monocyte	whole cell	long non-polyA RNA
+SRR534332	Homo sapiens	  		CD14-positive monocyte	whole cell		CD14-positive monocyte		  	"S. Heimfeld Laboratory, FHCRC"	CD14-positive monocyte	whole cell	long non-polyA RNA
+SRR534333	Homo sapiens	  		CD14-positive monocyte	whole cell		CD14-positive monocyte		  	"S. Heimfeld Laboratory, FHCRC"	CD14-positive monocyte	whole cell	long non-polyA RNA
+SRR534334	Homo sapiens	  		hMSC-AT	whole cell	adipose	human mesenchymal stem cells from adipose tissue (hMSC-AT)		  	PromoCell	hMSC-AT	whole cell	total RNA
+SRR534335	Homo sapiens	  		hMSC-AT	whole cell	adipose	human mesenchymal stem cells from adipose tissue (hMSC-AT)		  	PromoCell	hMSC-AT	whole cell	total RNA
+SRR089333	Homo sapiens	female	GM12878	GM12878	whole cell		B-lymphocyte		relatively normal	Coriell Cell Repositories http://ccr.coriell.org/Sections/Search/Search.aspx?PgId=165&q=GM12878	GM12878	whole cell	total RNA
+SRR089335	Homo sapiens	female	K562	K562	whole cell			leukemia	cancer	ATCC	K562	whole cell	total RNA
+SRR089332	Homo sapiens	female	GM12878	GM12878	whole cell		B-lymphocyte		relatively normal	Coriell Cell Repositories http://ccr.coriell.org/Sections/Search/Search.aspx?PgId=165&q=GM12878	GM12878	whole cell	total RNA
+SRR089334	Homo sapiens	female	K562	K562	whole cell			leukemia	cancer	ATCC	K562	whole cell	total RNA
+SRR089336	Homo sapiens	female	K562	K562	cytosol			leukemia	cancer	ATCC	K562	cytosol	long polyA RNA
