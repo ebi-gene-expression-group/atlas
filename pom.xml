@@ -42,7 +42,7 @@
         <!-- default values for configuration properties,
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
-        <data.files.location>${user.home}/Data</data.files.location>
+        <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
         <berkeley.schema.name>bdb</berkeley.schema.name>
         <solr.host>ves-hx-75</solr.host>
         <!-- default values for integration testing properties -->
@@ -59,6 +59,14 @@
         <mail.smtp.user>feedback-mail-3e3ccf8bbcedeb96</mail.smtp.user>
         <mail.smtp.password>324c3bac45dfb398</mail.smtp.password>
         <mail.smtp.auth>true</mail.smtp.auth>
+
+        <sonar.jdbc.url>
+            jdbc:h2:tcp://lime:9092/sonar
+        </sonar.jdbc.url>
+        <sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
+        <sonar.jdbc.username>sonar</sonar.jdbc.username>
+        <sonar.jdbc.password>sonar</sonar.jdbc.password>
+        <sonar.host.url>http://lime:9000</sonar.host.url>
     </properties>
 
     <build>
