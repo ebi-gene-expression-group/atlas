@@ -138,8 +138,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
         // using factor names here for better readability and compatibility with experiment design page
         SortedMap<String, SortedSet<FactorValue>> allFactorNames = new TreeMap<>();
         for (FactorValue key : factorValues) {
-            if (!allFactorNames.containsKey(key.getName()))
+            if (!allFactorNames.containsKey(key.getName())) {
                 allFactorNames.put(key.getName(), new TreeSet<FactorValue>());
+            }
             allFactorNames.get(key.getName()).add(key);
         }
         return allFactorNames;
@@ -154,8 +155,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
         SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> filterByMenu = new TreeMap<>();
         for (String firstFactorName : allFactorNames.keySet()) {
             // first level: factor name
-            if (!filterByMenu.containsKey(firstFactorName))
+            if (!filterByMenu.containsKey(firstFactorName)) {
                 filterByMenu.put(firstFactorName, new TreeMap<String, SortedMap<String, SortedMap<String, String>>>());
+            }
             // second level: factor value choices per factor name, all are valid
             for (FactorValue firstFactorValue : allFactorNames.get(firstFactorName)) {
 
@@ -169,8 +171,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
                 for (String secondFactorName : secondFactorNames.keySet()) {
                     // third level: factor name
-                    if (!secondFilterFactorValue.containsKey(secondFactorName))
+                    if (!secondFilterFactorValue.containsKey(secondFactorName)) {
                         secondFilterFactorValue.put(secondFactorName, new TreeMap<String, String>());
+                    }
 
                     // get remainder of factor names
                     SortedSet<String> remainingFactorNames = new TreeSet<>(allFactorNames.keySet());
