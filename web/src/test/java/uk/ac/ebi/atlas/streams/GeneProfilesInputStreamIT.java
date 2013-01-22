@@ -53,6 +53,15 @@ public class GeneProfilesInputStreamIT {
     @Mock
     Set<String> experimentRunsAccessionsMock;
 
+    @Mock
+    private FactorValue factorValueMock1;
+
+    @Mock
+    private FactorValue factorValueMock2;
+
+    @Mock
+    private FactorValue factorValueMock3;
+
     private static final String RUN_ACCESSION_1 = "ERR030872";
     private static final String RUN_ACCESSION_2 = "ERR030873";
     private static final String RUN_ACCESSION_3 = "ERR030874";
@@ -68,20 +77,35 @@ public class GeneProfilesInputStreamIT {
 
     private GeneProfileBuilderFactory geneProfileBuilderFactory;
 
+    private String specie = "homo sapiens";
+
     @Before
     public void initSubject() throws Exception {
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
+        when(factorValueMock1.getType()).thenReturn("ORGANISM_PART");
+        when(factorValueMock1.getName()).thenReturn("org");
+        when(factorValueMock1.getValue()).thenReturn("heart");
+
+        when(factorValueMock2.getType()).thenReturn("ORGANISM_PART");
+        when(factorValueMock2.getName()).thenReturn("org");
+        when(factorValueMock2.getValue()).thenReturn("liver");
+
+        when(factorValueMock3.getType()).thenReturn("ORGANISM_PART");
+        when(factorValueMock3.getName()).thenReturn("org");
+        when(factorValueMock3.getValue()).thenReturn("lung");
+
         ExperimentRun experimentRun1 = new ExperimentRun(RUN_ACCESSION_1)
-                .addFactorValue("ORGANISM_PART", "org", "heart");
+                .addFactorValue(factorValueMock1);
         ExperimentRun experimentRun2 = new ExperimentRun(RUN_ACCESSION_2)
-                .addFactorValue("ORGANISM_PART", "org", "liver");
+                .addFactorValue(factorValueMock2);
         ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3)
-                .addFactorValue("ORGANISM_PART", "org", "lung");
+                .addFactorValue(factorValueMock3);
 
         when(experimentRunsAccessionsMock.contains(anyString())).thenReturn(true);
-        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock, "ORGANISM_PART", null, "homo sapiens")
+
+        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock, factorValueMock1.getType(), null, specie)
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(cacheMock.getExperiment(anyString())).thenReturn(experiment);

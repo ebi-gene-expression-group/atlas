@@ -216,13 +216,9 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
                     }
                 }
             }
-            if (factorType == null) {
-                factorType = factorName;
-            }
 
-            run.addFactorValue(factorType, factorName, factorValueAttribute.getAttributeValue().toLowerCase());
-
-
+            FactorValue factorValue = new FactorValue(factorType, factorName, factorValueAttribute.getAttributeValue());
+            run.addFactorValue(factorValue);
         }
 
         return run;

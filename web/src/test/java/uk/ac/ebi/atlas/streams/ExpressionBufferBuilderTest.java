@@ -31,6 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import java.util.Comparator;
@@ -56,15 +57,38 @@ public class ExpressionBufferBuilderTest {
     @Mock
     private ExperimentsCache experimentsCacheMock;
 
+    @Mock
+    private FactorValue factorValueMock1;
+
+    @Mock
+    private FactorValue factorValueMock2;
+
+    @Mock
+    private FactorValue factorValueMock3;
+
     private ExpressionsBuffer.Builder subject;
+    private String specie = "homo sapiens";
 
     @Before
     public void initializeSubject() {
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "heart");
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "liver");
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue("ORGANISM_PART", "ORGANISM_PART", "lung");
 
-        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), "ORGANISM_PART", null, "homo sapiens")
+        when(factorValueMock1.getType()).thenReturn("ORGANISM_PART");
+        when(factorValueMock1.getName()).thenReturn("org");
+        when(factorValueMock1.getValue()).thenReturn("heart");
+
+        when(factorValueMock2.getType()).thenReturn("ORGANISM_PART");
+        when(factorValueMock2.getName()).thenReturn("org");
+        when(factorValueMock2.getValue()).thenReturn("liver");
+
+        when(factorValueMock3.getType()).thenReturn("ORGANISM_PART");
+        when(factorValueMock3.getName()).thenReturn("org");
+        when(factorValueMock3.getValue()).thenReturn("lung");
+
+        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue(factorValueMock1);
+        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factorValueMock2);
+        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factorValueMock3);
+
+        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorValueMock1.getType(), null, specie)
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);

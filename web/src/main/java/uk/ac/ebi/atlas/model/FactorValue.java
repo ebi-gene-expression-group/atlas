@@ -24,10 +24,15 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     public FactorValue(String type, String name, String value) {
+        // this was previously in ExperimentMetadataLoader
+        if (type == null) {
+            type = name;
+        }
         //ToDo: this pre-processing of type metadata (space to underscore and case conversion) should be removed, we should assume configuration is well formed and valid
         this.type = checkNotNull(type).replaceAll(" ", "_").toUpperCase();
         this.name = name;
-        this.value = checkNotNull(value);
+        // this was previously in ExperimentMetadataLoader
+        this.value = checkNotNull(value).toLowerCase();
     }
 
     public String getName() {
@@ -77,7 +82,7 @@ public class FactorValue implements Comparable<FactorValue> {
 
     //ToDo: this should be dropped, construction depending on representation, no good...
     public static FactorValue createFactorValue(String factorValue) {
-        return createFactorValue(factorValue.split(":"));
+        return createFactorValue(factorValue.split(FACTOR_VALUE_SEPARATOR));
     }
 
     //ToDo: this should be dropped, construction must be done with constructor
@@ -103,7 +108,7 @@ public class FactorValue implements Comparable<FactorValue> {
     public static SortedSet<String> getFactorValuesURLRepresentation(Set<FactorValue> factorValues) {
         SortedSet<String> result = new TreeSet<>();
         for (FactorValue factorValue : factorValues) {
-            result.add(factorValue.getType() + ":" + factorValue.getValue());
+            result.add(factorValue.getType() + FACTOR_VALUE_SEPARATOR + factorValue.getValue());
         }
         return result;
     }
