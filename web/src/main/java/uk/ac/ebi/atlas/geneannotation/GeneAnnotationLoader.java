@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.geneannotation;
 
 import com.sleepycat.collections.TransactionRunner;
-import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
 import uk.ac.ebi.atlas.commons.berkeley.StringValueTransactionWorker;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -35,7 +34,7 @@ import javax.inject.Named;
 @Named("geneAnnotationLoader")
 public class GeneAnnotationLoader {
 
-    private static final Logger logger = Logger.getLogger(GeneAnnotationLoader.class);
+    //private static final Logger logger = Logger.getLogger(GeneAnnotationLoader.class);
 
     private TransactionRunner transactionRunner;
 

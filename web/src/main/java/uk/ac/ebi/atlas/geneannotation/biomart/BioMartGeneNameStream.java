@@ -26,7 +26,6 @@ package uk.ac.ebi.atlas.geneannotation.biomart;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.http.client.HttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
@@ -43,7 +42,7 @@ public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
 
     private CSVReader csvReader;
 
-    private static final Logger logger = Logger.getLogger(BioMartGeneNameStream.class);
+    //private static final Logger logger = Logger.getLogger(BioMartGeneNameStream.class);
 
     @Override
     public String[] readNext() {

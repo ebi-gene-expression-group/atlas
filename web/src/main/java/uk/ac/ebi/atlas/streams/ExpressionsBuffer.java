@@ -28,8 +28,6 @@ class ExpressionsBuffer {
 
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
-    private Iterator<FactorValue> expectedFactorValues;
-
     private Iterator<Set<FactorValue>> expectedAllFactorValues;
 
     private int expectedNumberOfValues;
@@ -38,7 +36,6 @@ class ExpressionsBuffer {
 
     protected ExpressionsBuffer(List<FactorValue> orderedFactorValues, List<Set<FactorValue>> orderedAllFactorValues) {
         expectedNumberOfValues = orderedFactorValues.size() + 1;
-        this.expectedFactorValues = Iterables.cycle(orderedFactorValues).iterator();
         this.expectedAllFactorValues = Iterables.cycle(orderedAllFactorValues).iterator();
     }
 
@@ -54,8 +51,6 @@ class ExpressionsBuffer {
         return new Expression(expressionLevel, expectedAllFactorValues.next());
     }
 
-    private String gene;
-
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
@@ -66,7 +61,7 @@ class ExpressionsBuffer {
 
         Collections.addAll(this.expressionLevelsBuffer, values);
 
-        gene = expressionLevelsBuffer.poll();
+        expressionLevelsBuffer.poll();
 
         return this;
     }

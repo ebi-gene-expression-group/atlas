@@ -5,7 +5,6 @@ import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Nodes;
 import nu.xom.ParsingException;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -18,7 +17,7 @@ import java.io.StringReader;
 @Named
 @Scope("prototype")
 public class ArrayExpressClient {
-    private static final Logger logger = Logger.getLogger(ArrayExpressClient.class);
+    //private static final Logger logger = Logger.getLogger(ArrayExpressClient.class);
     private static final String EXPERIMENT_NAME_XPATH = "//experiment/name/text()";
 
     private RestTemplate restTemplate;

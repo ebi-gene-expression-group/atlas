@@ -27,7 +27,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
 import javax.inject.Inject;
@@ -37,15 +36,11 @@ import java.io.IOException;
 @Scope("request")
 public class AnalysisMethodsPageController {
 
-    private static final String ANALYSIS_METHODS_FILE_SUFFIX = "-analysis-methods.tsv";
-
     private AnalysisMethodsTsvReader analysisMethodsTsvReader;
-    private ExperimentsCache experimentsCache;
 
     @Inject
-    public AnalysisMethodsPageController(AnalysisMethodsTsvReader analysisMethodsTsvReader, ExperimentsCache experimentsCache) {
+    public AnalysisMethodsPageController(AnalysisMethodsTsvReader analysisMethodsTsvReader) {
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
-        this.experimentsCache = experimentsCache;
     }
 
     @RequestMapping("/experiments/{experimentAccession}/analysis-methods")
