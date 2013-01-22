@@ -27,6 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
@@ -76,15 +77,6 @@ public class BarChartTrader {
         return barChartPoints;
     }
 
-    /**
-     * Returns number of genes expressed for a given organism part above a cutoff
-     */
-    public int getGeneCountsForOrganismPart(String organismPart, double scaledCutoff) {
-        Map<String, BitSet> geneBitSets = geneExpressionIndexes.get(scaledCutoff);
-        checkState(geneBitSets.containsKey(organismPart) != false, "BarChartTrader: factor value not recognized: " + organismPart);
-        return geneBitSets.get(organismPart).cardinality();
-    }
-
     protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
         BitSet notExpressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
@@ -117,7 +109,12 @@ public class BarChartTrader {
 
         private GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder;
 
-        private Set<String> factorValues;
+
+        //ToDo: we should keep either factorValueValues or factorValues and use FactorValues values or object as keys
+        // for the geneExpressionIndexes map
+        private Set<String> factorValueValues;
+        private SortedSet<FactorValue> defaultFactorValues;
+
 
         @Inject
         public Builder(ExperimentsCache experimentsCache, GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder, CutoffScale cutoffScale) {
@@ -128,8 +125,14 @@ public class BarChartTrader {
 
         public Builder forExperiment(String experimentAccession) {
 
+
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+            defaultFactorValues = experiment.getFactorValues(null);
+
             // TODO: the static method will be moved to a FactorValues class
-            factorValues = FactorValue.getFactorValuesStrings(experimentsCache.getExperiment(experimentAccession).getFactorValues(null));
+            factorValueValues = FactorValue.getFactorValuesStrings(defaultFactorValues);
+
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 
@@ -169,7 +172,12 @@ public class BarChartTrader {
                         geneExpressionIndexes.put(cutoff, geneBitSets);
 
                     }
-                    geneBitSets.get(expression.getFactorValueString()).set(geneIndexPosition);
+
+                    for (FactorValue defaultFactorValue : defaultFactorValues) {
+                        if (expression.isForFactorValue(defaultFactorValue)) {
+                            geneBitSets.get(defaultFactorValue.getValue()).set(geneIndexPosition);
+                        }
+                    }
 
                 }
             }
@@ -180,7 +188,7 @@ public class BarChartTrader {
 
             Map<String, BitSet> geneBitSets = new HashMap<>();
 
-            for (String factorValue : factorValues) {
+            for (String factorValue : factorValueValues) {
                 geneBitSets.put(factorValue, new BitSet(AVERAGE_GENES_IN_EXPERIMENT));
             }
 
@@ -189,7 +197,7 @@ public class BarChartTrader {
 
 
         public BarChartTrader create() {
-            checkState(factorValues != null, "Did you set the experimentAccession ?");
+            checkState(factorValueValues != null, "Did you set the experimentAccession ?");
             trimIndexes();
             return new BarChartTrader(geneExpressionIndexes);
         }
@@ -209,12 +217,16 @@ public class BarChartTrader {
 
         }
 
-        protected void setFactorValues(Set<String> factorValues) {
-            this.factorValues = factorValues;
+        protected void setFactorValueValues(Set<String> factorValueValues) {
+            this.factorValueValues = factorValueValues;
         }
 
         protected NavigableMap<Double, Map<String, BitSet>> getGeneExpressionIndexes() {
             return geneExpressionIndexes;
+        }
+
+        protected void setDefaultFactorValues(SortedSet<FactorValue> defaultFactorValues) {
+            this.defaultFactorValues = defaultFactorValues;
         }
     }
 

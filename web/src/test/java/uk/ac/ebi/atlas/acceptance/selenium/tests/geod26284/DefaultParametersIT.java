@@ -30,6 +30,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class DefaultParametersIT extends SeleniumFixture {
 
@@ -57,13 +58,14 @@ public class DefaultParametersIT extends SeleniumFixture {
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
         //ToDo: that is kind of wrong, there should be expression
-        assertThat(subject.getFirstGeneProfile(), contains("", "", "", "", ""));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "1", "", ""));
+        fail("We need the right test data here!");
     }
 
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("6", "2", "2", "4", "2"));
+        assertThat(subject.getLastGeneProfile(), contains("", "4", "31", "17", "2"));
     }
 
     @Test

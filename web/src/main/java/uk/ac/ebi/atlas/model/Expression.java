@@ -1,29 +1,19 @@
 package uk.ac.ebi.atlas.model;
 
-import java.util.Objects;
 import java.util.Set;
 
 public class Expression {
     private double level;
 
-    private FactorValue factorValue;
-
     private Set<FactorValue> allFactorValues;
 
-    //ToDo: verify what is going on here
-
-    public Expression(FactorValue factorValue, double level, Set<FactorValue> allFactorValues) {
-        this.factorValue = factorValue;
+    public Expression(double level, Set<FactorValue> allFactorValues) {
         this.level = level;
         this.allFactorValues = allFactorValues;
     }
 
-    public String getFactorValueString() {
-        return factorValue.getValue();
-    }
-
-    public FactorValue getFactorValue() {
-        return factorValue;
+    public boolean isForFactorValue(FactorValue factorValue) {
+        return allFactorValues.contains(factorValue);
     }
 
     public Set<FactorValue> getAllFactorValues() {
@@ -39,21 +29,25 @@ public class Expression {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(factorValue, level);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Expression that = (Expression) o;
+
+        if (Double.compare(that.level, level) != 0) return false;
+        if (!allFactorValues.equals(that.allFactorValues)) return false;
+
+        return true;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Expression other = (Expression) obj;
-
-        return Objects.equals(factorValue, other.factorValue)
-                && Objects.equals(level, level);
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = level != +0.0d ? Double.doubleToLongBits(level) : 0L;
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + allFactorValues.hashCode();
+        return result;
     }
 }

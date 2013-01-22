@@ -60,19 +60,16 @@ public class ExpressionBufferTest {
         Expression expression = subject.poll();
         //then we expect first expression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
-        assertThat(expression.getFactorValueString(), is("lung"));
 
         //given we poll again
         expression = subject.poll();
         //then we expect second Expression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_2)));
-        assertThat(expression.getFactorValueString(), is("liver"));
 
         //given we poll again
         expression = subject.poll();
         //then we expect second Expression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_3)));
-        assertThat(expression.getFactorValueString(), is("longue"));
 
     }
 
@@ -105,7 +102,6 @@ public class ExpressionBufferTest {
         Expression expression = subject.poll();
         //then we expect to find the new values
         assertThat(expression.getLevel(), is(1d));
-        assertThat(expression.getFactorValueString(), is("lung"));
     }
 
     @Test(expected = IllegalStateException.class)

@@ -7,7 +7,10 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -21,15 +24,15 @@ public class GeneProfile implements Iterable<Expression> {
     private double minExpressionLevel = Double.MAX_VALUE;
 
     private SortedMap<FactorValue, Expression> factorValueExpressions = new TreeMap<>();
-    //ToDo: and this might not be required anymore...
-    private Set<FactorValue> allFactorValues = new HashSet<>();
 
     private GeneProfile() {
     }
 
     public GeneProfile add(Expression expression) {
-        factorValueExpressions.put(expression.getFactorValue(), expression);
-        allFactorValues.addAll(expression.getAllFactorValues());
+        // ToDo: this is wrong, this could lead to overriding certain expressions by reoccurring factor values
+        for (FactorValue factorValue : expression.getAllFactorValues()) {
+            factorValueExpressions.put(factorValue, expression);
+        }
 
         updateProfileExpression(expression.getLevel());
         return this;
@@ -75,7 +78,7 @@ public class GeneProfile implements Iterable<Expression> {
 
     public boolean isExpressedOnAnyOf(Set<FactorValue> factorValues) {
         checkArgument(CollectionUtils.isNotEmpty(factorValues));
-        return Sets.intersection(this.getFactorValues(), factorValues).size() > 0;
+        return Sets.intersection(this.getAllFactorValues(), factorValues).size() > 0;
     }
 
     public double getAverageExpressionLevelOn(Set<FactorValue> factorValues) {
@@ -89,12 +92,8 @@ public class GeneProfile implements Iterable<Expression> {
         return expressionLevel / factorValues.size();
     }
 
-    public Set<FactorValue> getFactorValues() {
-        return this.factorValueExpressions.keySet();
-    }
-
     public Set<FactorValue> getAllFactorValues() {
-        return this.allFactorValues;
+        return this.factorValueExpressions.keySet();
     }
 
     public double getExpressionLevel(FactorValue factorValue) {

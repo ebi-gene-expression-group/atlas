@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -78,13 +76,5 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
 
     public void setTotalResultCount(int totalResultCount) {
         this.totalResultCount = totalResultCount;
-    }
-
-    public SortedSet<FactorValue> getAllExperimentalFactors() {
-        SortedSet<FactorValue> allExperimentalFactors = new TreeSet<>();
-        for (GeneProfile geneProfile : this) {
-            allExperimentalFactors.addAll(geneProfile.getFactorValues());
-        }
-        return allExperimentalFactors;
     }
 }
