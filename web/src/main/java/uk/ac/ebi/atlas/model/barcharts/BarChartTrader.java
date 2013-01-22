@@ -128,7 +128,7 @@ public class BarChartTrader {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            defaultFactorValues = experiment.getFactorValues(null);
+            defaultFactorValues = experiment.getFactorValues(experiment.getDefaultQueryFactorType());
 
             // TODO: the static method will be moved to a FactorValues class
             factorValueValues = FactorValue.getFactorValuesStrings(defaultFactorValues);

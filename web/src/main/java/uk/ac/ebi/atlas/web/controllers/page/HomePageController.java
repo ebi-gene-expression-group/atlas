@@ -104,7 +104,7 @@ public class HomePageController {
                 speciesToExperiments.get(experiment.getSpecie()).put(experimentAccession, link);
 
                 // count per experiment and sum across all experiments, using experiment default factor value
-                SortedSet<FactorValue> defaultFactorValues = experiment.getFactorValues(null);
+                SortedSet<FactorValue> defaultFactorValues = experiment.getFactorValues(experiment.getDefaultQueryFactorType());
                 SortedSet<String> defaultFactorValuesValues = FactorValue.getFactorValuesStrings(defaultFactorValues);
                 for (String defaultFactorValue : defaultFactorValuesValues) {
                     if (!counts.containsKey(defaultFactorValue))

@@ -49,7 +49,7 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
     @Override
     public Collection<String[]> readAll(String experimentAccession) {
         Path path = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodTsvFilePath(experimentAccession));
-        return readAllForPath(path);
+        return read(path);
     }
 
     public Collection<String[]> readAllWithoutLibraries(String experimentAccession) {

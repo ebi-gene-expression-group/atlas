@@ -47,7 +47,7 @@ public abstract class AbstractTsvReader {
 
     public abstract Collection<String[]> readAll(String experimentAccession);
 
-    Collection<String[]> readAllForPath(Path path) {
+    Collection<String[]> read(Path path) {
         return readAndFilter(path, new IsCommented());
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractTsvReader {
 
         } catch (IOException e) {
             log4jLogger.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("Cannot read Tsv file from path " + path, e);
         }
     }
 

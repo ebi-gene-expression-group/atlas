@@ -108,28 +108,23 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private Set<FactorValue> parseDefaultFilterFactorValues(String experimentAccession) {
         Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
-        try {
-            for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
-                if (line.length == 2) {
-                    defaultFilterFactorValues.add(new FactorValue(line[0], line[1]));
-                }
+
+        for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
+            if (line.length == 2) {
+                defaultFilterFactorValues.add(new FactorValue(line[0], line[1]));
             }
-        } catch (IllegalStateException ise) {
-            LOGGER.error("Factors file missing for experiment accession " + experimentAccession);
         }
         return defaultFilterFactorValues;
     }
 
     private String parseDefaultQueryFactorType(String experimentAccession) {
-        try {
-            for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
-                if (line.length == 1) {
-                    return line[0];
-                }
+
+        for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
+            if (line.length == 1) {
+                return line[0];
             }
-        } catch (IllegalStateException ise) {
-            LOGGER.error("Factors file missing for experiment accession " + experimentAccession);
         }
+
         throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
     }
 
