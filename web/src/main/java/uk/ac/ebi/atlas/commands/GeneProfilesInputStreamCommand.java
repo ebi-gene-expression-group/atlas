@@ -43,7 +43,8 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
     private ExperimentsCache experimentsCache;
 
-    protected FilterParameters filterParameters;
+    // changed to private by Sonar recommendation
+    private FilterParameters filterParameters;
 
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
@@ -57,6 +58,10 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
     public void setFilteredParameters(FilterParameters filterParameters) {
         this.filterParameters = filterParameters;
+    }
+
+    public FilterParameters getFilterParameters() {
+        return filterParameters;
     }
 
     @NotNull

@@ -38,7 +38,8 @@ public abstract class AbstractTsvReader {
 
     private final Logger log4jLogger;
 
-    final ApplicationProperties applicationProperties;
+    // changed to private by Sonar recommendation
+    private final ApplicationProperties applicationProperties;
 
     protected AbstractTsvReader(Logger logger, ApplicationProperties a) {
         log4jLogger = logger;
@@ -46,6 +47,10 @@ public abstract class AbstractTsvReader {
     }
 
     public abstract Collection<String[]> readAll(String experimentAccession);
+
+    ApplicationProperties getApplicationProperties() {
+        return applicationProperties;
+    }
 
     Collection<String[]> read(Path path) {
         return readAndFilter(path, new IsCommented());

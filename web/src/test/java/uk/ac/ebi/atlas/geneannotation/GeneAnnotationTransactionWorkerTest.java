@@ -50,12 +50,12 @@ public class GeneAnnotationTransactionWorkerTest {
         subject = new StringValueTransactionWorker(map) {
             @Override
             protected String getValue() {
-                return row[1];
+                return getRow()[1];
             }
 
             @Override
             protected String getKey() {
-                return row[0];
+                return getRow()[0];
             }
         };
     }

@@ -31,9 +31,10 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 import java.util.SortedSet;
 
 public class GeneProfilesController {
-    protected FilterParameters.Builder filterParameterBuilder;
 
-    protected ExperimentsCache experimentsCache;
+    // changed visibility by Sonar recommendation
+    private FilterParameters.Builder filterParameterBuilder;
+    private ExperimentsCache experimentsCache;
 
     public GeneProfilesController(FilterParameters.Builder filterParameterBuilder, ExperimentsCache experimentsCache) {
         this.filterParameterBuilder = filterParameterBuilder;

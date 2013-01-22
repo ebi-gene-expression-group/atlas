@@ -48,7 +48,7 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
 
     @Override
     public Collection<String[]> readAll(String experimentAccession) {
-        Path path = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodTsvFilePath(experimentAccession));
+        Path path = FileSystems.getDefault().getPath(getApplicationProperties().getAnalisysMethodTsvFilePath(experimentAccession));
         return read(path);
     }
 
@@ -60,7 +60,7 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
                 return !(firstColumn.startsWith("#") || firstColumn.equals(LIBRARIES_TITLE));
             }
         };
-        Path path = FileSystems.getDefault().getPath(applicationProperties.getAnalisysMethodTsvFilePath(experimentAccession));
+        Path path = FileSystems.getDefault().getPath(getApplicationProperties().getAnalisysMethodTsvFilePath(experimentAccession));
         return readAndFilter(path, predicate);
     }
 

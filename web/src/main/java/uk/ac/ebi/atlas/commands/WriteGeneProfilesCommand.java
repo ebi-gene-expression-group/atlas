@@ -57,7 +57,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         long count = 0;
 
-        SortedSet<FactorValue> factorValues = experiment.getFactorValues(filterParameters.getQueryFactorType());
+        SortedSet<FactorValue> factorValues = experiment.getFactorValues(getFilterParameters().getQueryFactorType());
 
         SortedSet<String> factorValuesStrings = FactorValue.getFactorValuesStrings(factorValues);
         csvWriter.writeNext(buildCsvHeaders(factorValuesStrings));

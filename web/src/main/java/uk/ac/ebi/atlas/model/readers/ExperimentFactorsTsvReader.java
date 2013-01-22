@@ -41,7 +41,7 @@ public class ExperimentFactorsTsvReader extends AbstractTsvReader {
 
     @Override
     public Collection<String[]> readAll(String experimentAccession) {
-        Path path = FileSystems.getDefault().getPath(applicationProperties.getExperimentFactorsTsvFilePath(experimentAccession));
+        Path path = FileSystems.getDefault().getPath(getApplicationProperties().getExperimentFactorsTsvFilePath(experimentAccession));
         return read(path);
     }
 

@@ -22,24 +22,13 @@
 
 package uk.ac.ebi.atlas.commons.mail;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.mail.EmailMessage;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 @Named("mailSender")
 @Scope("singleton")
@@ -68,10 +57,10 @@ public class MailService {
         email.setHostName(smtpHost);
         email.setSmtpPort(smtpPort);
 
-        email.setFrom(mailMessage.sender);
-        email.addTo(mailMessage.recipient);
-        email.setSubject(mailMessage.subject);
-        email.setMsg(mailMessage.body);
+        email.setFrom(mailMessage.getSender());
+        email.addTo(mailMessage.getRecipient());
+        email.setSubject(mailMessage.getSubject());
+        email.setMsg(mailMessage.getBody());
 
         if (smtpAuthRequired) {
             LOGGER.debug("<send> mail authentication required");

@@ -75,7 +75,7 @@ class ExpressionsBuffer {
     @Scope("prototype")
     public static class Builder {
 
-        String experimentAccession;
+        private String experimentAccession;
 
         private ExperimentsCache experimentsCache;
 

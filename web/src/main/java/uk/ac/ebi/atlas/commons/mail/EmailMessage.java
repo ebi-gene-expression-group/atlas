@@ -25,23 +25,18 @@ package uk.ac.ebi.atlas.commons.mail;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 @Named("mailMessage")
 @Scope("prototype")
 public class EmailMessage {
 
-    public String sender;
-    public String recipient;
-    public String body;
-    public String subject;
+    // changed to private by Sonar recommendation
+    private String sender;
+    private String recipient;
+    private String body;
+    private String subject;
 
-    public EmailMessage(){
+    public EmailMessage() {
 
     }
 
@@ -50,7 +45,7 @@ public class EmailMessage {
     }
 
     public void setSender(String sender) {
-        if(sender != null) {
+        if (sender != null) {
             this.sender = sender.trim();
         }
     }

@@ -29,7 +29,8 @@ import java.util.concurrent.ConcurrentMap;
 
 public abstract class ObjectValueTransactionWorker<V> implements TransactionWorker {
 
-    protected String[] row;
+    // changed to private by Sonar recommendation
+    private String[] row;
 
     private ConcurrentMap<String, V> map;
 
@@ -41,6 +42,10 @@ public abstract class ObjectValueTransactionWorker<V> implements TransactionWork
         // this copy has been suggested by Sonar
         this.row = Arrays.copyOf(row, row.length);
         return this;
+    }
+
+    protected String[] getRow() {
+        return row;
     }
 
     @Override
