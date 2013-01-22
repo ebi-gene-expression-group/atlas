@@ -58,8 +58,9 @@ public class HomePageController {
     public String getHomePage(Model model) {
 
         // lazy initialisation
-        if (counts == null)
+        if (counts == null) {
             extractFactorValueCounts();
+        }
 
         ArrayList<WordWeight> wordList = new ArrayList<>();
 
@@ -97,8 +98,9 @@ public class HomePageController {
             if (experiment != null) {
                 totalNumberExperiments++;
 
-                if (!speciesToExperiments.containsKey(experiment.getSpecie()))
+                if (!speciesToExperiments.containsKey(experiment.getSpecie())) {
                     speciesToExperiments.put(experiment.getSpecie(), new TreeMap<String, String>());
+                }
 
                 String link = buildLinkForExperiment(experiment);
                 speciesToExperiments.get(experiment.getSpecie()).put(experimentAccession, link);
@@ -107,8 +109,9 @@ public class HomePageController {
                 SortedSet<FactorValue> defaultFactorValues = experiment.getFactorValues(experiment.getDefaultQueryFactorType());
                 SortedSet<String> defaultFactorValuesValues = FactorValue.getFactorValuesStrings(defaultFactorValues);
                 for (String defaultFactorValue : defaultFactorValuesValues) {
-                    if (!counts.containsKey(defaultFactorValue))
+                    if (!counts.containsKey(defaultFactorValue)) {
                         counts.put(defaultFactorValue, 0.0);
+                    }
                     counts.put(defaultFactorValue, counts.get(defaultFactorValue) +
                             1.0);
                 }
@@ -127,13 +130,20 @@ public class HomePageController {
 
     private class WordWeight {
 
-        String text;
-        double weight;
+        private String text;
+        private double weight;
 
         WordWeight(String factorValue, double weight) {
             this.text = factorValue;
             this.weight = weight;
         }
 
+        public String getText() {
+            return text;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
     }
 }
