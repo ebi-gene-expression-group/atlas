@@ -44,13 +44,7 @@ public class DefaultParametersIT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(50));
-        assertThat(selectedGenes, hasItems("OR8B4",
-                "ASPA",
-                "APOBR",
-                "NOTUM",
-                "GABRA5",
-                "OR51B5",
-                "AC010336.1"));
+        assertThat(selectedGenes, hasItems("ASPA", "APOBR", "OR8B4", "GABRA5", "LINGO3"));
     }
 
     @Test

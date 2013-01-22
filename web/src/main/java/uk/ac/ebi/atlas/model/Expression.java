@@ -30,13 +30,21 @@ public class Expression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Expression that = (Expression) o;
 
-        if (Double.compare(that.level, level) != 0) return false;
-        if (!allFactorValues.equals(that.allFactorValues)) return false;
+        if (Double.compare(that.level, level) != 0) {
+            return false;
+        }
+        if (!allFactorValues.equals(that.allFactorValues)) {
+            return false;
+        }
 
         return true;
     }

@@ -129,8 +129,9 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
         for (String run : experiment.getExperimentRunAccessions()) {
             ExperimentRun experimentRun = experiment.getExperimentRun(run);
             // ToDo: this is necessary because of an error in supplied analysis-methods file
-            if (experimentRun != null)
+            if (experimentRun != null) {
                 allFactorValues.addAll(experiment.getAllFactorValues(run));
+            }
         }
 
         Set<FactorValue> result = new HashSet<>();

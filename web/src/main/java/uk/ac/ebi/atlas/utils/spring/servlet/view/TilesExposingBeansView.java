@@ -46,8 +46,9 @@ public class TilesExposingBeansView extends TilesView {
     }
 
     protected HttpServletRequest getRequestToExpose(HttpServletRequest originalRequest) {
-        if (this.exposeContextBeansAsAttributes || this.exposedContextBeanNames != null)
+        if (this.exposeContextBeansAsAttributes || this.exposedContextBeanNames != null) {
             return new ContextExposingHttpServletRequest(originalRequest, getWebApplicationContext(), this.exposedContextBeanNames);
+        }
         return originalRequest;
     }
 

@@ -43,9 +43,12 @@ public class TilesExposingBeansViewResolver extends UrlBasedViewResolver {
         AbstractUrlBasedView superView = super.buildView(viewName);
         if (superView instanceof TilesExposingBeansView) {
             TilesExposingBeansView view = (TilesExposingBeansView) superView;
-            if (this.exposeContextBeansAsAttributes != null)
+            if (this.exposeContextBeansAsAttributes != null) {
                 view.setExposeContextBeansAsAttributes(this.exposeContextBeansAsAttributes);
-            if (this.exposedContextBeanNames != null) view.setExposedContextBeanNames(this.exposedContextBeanNames);
+            }
+            if (this.exposedContextBeanNames != null) {
+                view.setExposedContextBeanNames(this.exposedContextBeanNames);
+            }
         }
         return superView;
     }

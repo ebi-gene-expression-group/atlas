@@ -27,16 +27,18 @@ public class GenePropertyQueryBuilder {
 
             // this is used as a delimiter
             if (cur == ',') {
-                if (sb.length() > 0)
+                if (sb.length() > 0) {
                     result.add(sb.toString());
+                }
                 // clear StringBuffer
                 sb.delete(0, sb.length());
             }
 
             // this is used as a delimiter
             else if (cur == ' ' || cur == '\n' || cur == '\r') {
-                if (sb.length() > 0)
+                if (sb.length() > 0) {
                     result.add(sb.toString());
+                }
                 // clear StringBuffer
                 sb.delete(0, sb.length());
             }
@@ -58,8 +60,9 @@ public class GenePropertyQueryBuilder {
             }
         }
         // don't forget the last entity
-        if (sb.length() > 0)
+        if (sb.length() > 0) {
             result.add(sb.toString());
+        }
 
         return result;
     }
