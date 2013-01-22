@@ -12,25 +12,8 @@ public class Expression {
         this.allFactorValues = allFactorValues;
     }
 
-//    public String getFactorValueString() {
-//        return factorValue.getValue();
-//    }
-//
-//    public FactorValue getFactorValue() {
-//        return factorValue;
-//    }
-
     public boolean isForFactorValue(FactorValue factorValue) {
         return allFactorValues.contains(factorValue);
-    }
-
-    public boolean isForFactorValueValue(String value) {
-        for (FactorValue allFactorValue : allFactorValues) {
-            if (allFactorValue.getValue().equals(value)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Set<FactorValue> getAllFactorValues() {

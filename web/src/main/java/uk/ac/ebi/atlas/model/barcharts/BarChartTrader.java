@@ -77,15 +77,6 @@ public class BarChartTrader {
         return barChartPoints;
     }
 
-    /**
-     * Returns number of genes expressed for a given organism part above a cutoff
-     */
-    public int getGeneCountsForOrganismPart(String organismPart, double scaledCutoff) {
-        Map<String, BitSet> geneBitSets = geneExpressionIndexes.get(scaledCutoff);
-        checkState(geneBitSets.containsKey(organismPart) != false, "BarChartTrader: factor value not recognized: " + organismPart);
-        return geneBitSets.get(organismPart).cardinality();
-    }
-
     protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
         BitSet notExpressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
@@ -122,7 +113,6 @@ public class BarChartTrader {
         //ToDo: we should keep either factorValueValues or factorValues and use FactorValues values or object as keys
         // for the geneExpressionIndexes map
         private Set<String> factorValueValues;
-
         private SortedSet<FactorValue> defaultFactorValues;
 
 

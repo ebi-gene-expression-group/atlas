@@ -64,9 +64,4 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
         assertThat(subject.getMaxYAxisValue(), is("200"));
     }
 
-
-    //@Override
-    //protected void getStartingPage() {
-    // leave empty for now
-    //}
 }
