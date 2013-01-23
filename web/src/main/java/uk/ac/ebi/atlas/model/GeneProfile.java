@@ -7,12 +7,10 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 public class GeneProfile implements Iterable<Expression> {
 
@@ -146,7 +144,7 @@ public class GeneProfile implements Iterable<Expression> {
         }
 
         public Builder addExpression(Expression expression) {
-
+            checkState(geneProfile != null, "Please invoke forGeneID before create");
             if (expression.isGreaterThan(cutoffValue)) {
                 geneProfile.add(expression);
             }
@@ -161,6 +159,7 @@ public class GeneProfile implements Iterable<Expression> {
         }
 
         public GeneProfile create() {
+            checkState(geneProfile != null, "Please invoke forGeneID before create");
             return geneProfile;
         }
 
