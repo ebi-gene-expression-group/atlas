@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commons;
+package uk.ac.ebi.atlas.utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -29,12 +29,11 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.protocol.HTTP;
 
-import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Named("httpRequest")
+// this is purely utility class and can go into the utils package
 public class HttpRequest {
 
     public static InputStream httpPost(org.apache.http.client.HttpClient httpClient, String url, List<? extends NameValuePair> params) throws IOException {

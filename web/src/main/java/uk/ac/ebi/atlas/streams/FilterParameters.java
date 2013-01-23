@@ -34,6 +34,7 @@ import javax.inject.Named;
 import java.util.HashSet;
 import java.util.Set;
 
+// should have been declared final, but cannot mock final classes
 public class FilterParameters {
 
     private Set<String> geneIDs;

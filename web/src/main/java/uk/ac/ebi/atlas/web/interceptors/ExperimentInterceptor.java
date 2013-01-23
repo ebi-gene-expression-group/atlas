@@ -46,6 +46,9 @@ import java.util.Set;
 public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger logger = Logger.getLogger(ExperimentInterceptor.class);
+    public static final String FILTER_FACTOR_VALUES = "filterFactorValues";
+    public static final String EXPERIMENT_ACCESSION = "experimentAccession";
+    public static final String STOP_WATCH = "stopWatch";
 
     private ExperimentsCache experimentsCache;
     private ApplicationProperties applicationProperties;
@@ -83,11 +86,11 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         if (applicationProperties.getExperimentIdentifiers().contains(experimentAccession)) {
 
-            if (request.getParameterValues("filterFactorValues") != null) {
+            if (request.getParameterValues(FILTER_FACTOR_VALUES) != null) {
                 // TODO: why does the request parameter suddenly has length 1 when search is performed?
-                logger.debug("Length=" + request.getParameterValues("filterFactorValues").length + " " + Arrays.asList(request.getParameterValues("filterFactorValues")));
+                logger.debug("Length=" + request.getParameterValues(FILTER_FACTOR_VALUES).length + " " + Arrays.asList(request.getParameterValues(FILTER_FACTOR_VALUES)));
 
-                String[] parameters = request.getParameterValues("filterFactorValues");
+                String[] parameters = request.getParameterValues(FILTER_FACTOR_VALUES);
                 // TODO: this is hack to overcome strange request parameter behaviour
                 if (parameters.length == 1) {
                     parameters = parameters[0].split(",");
@@ -102,11 +105,11 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
                 }
             }
 
-            request.setAttribute("experimentAccession", experimentAccession);
+            request.setAttribute(EXPERIMENT_ACCESSION, experimentAccession);
 
             StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
             stopWatch.start();
-            request.setAttribute("stopWatch", stopWatch);
+            request.setAttribute(STOP_WATCH, stopWatch);
 
             return true;
         }
@@ -155,7 +158,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
                            Object handler,
                            ModelAndView modelAndView) throws IOException {
 
-        String experimentAccession = (String) request.getAttribute("experimentAccession");
+        String experimentAccession = (String) request.getAttribute(EXPERIMENT_ACCESSION);
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -165,7 +168,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         modelAndView.getModel().put("experimentDescription", experiment.getDescription());
 
-        StopWatch stopWatch = (StopWatch) request.getAttribute("stopWatch");
+        StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
 
         stopWatch.stop();
 
