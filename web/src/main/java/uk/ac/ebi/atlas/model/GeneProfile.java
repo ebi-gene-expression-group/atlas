@@ -12,6 +12,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
+// should have been declared final, but cannot mock final classes
 public class GeneProfile implements Iterable<Expression> {
 
     private String geneId;
@@ -124,7 +125,7 @@ public class GeneProfile implements Iterable<Expression> {
 
         private GeneProfile geneProfile;
 
-        private static double DEFAULT_CUTOFF_VALUE = 0D;
+        private static final double DEFAULT_CUTOFF_VALUE = 0D;
 
         private double cutoffValue = DEFAULT_CUTOFF_VALUE;
 

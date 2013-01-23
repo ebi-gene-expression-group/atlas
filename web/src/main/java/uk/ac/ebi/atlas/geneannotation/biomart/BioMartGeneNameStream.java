@@ -36,7 +36,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import static java.util.Arrays.asList;
-import static uk.ac.ebi.atlas.commons.HttpRequest.httpPost;
+import static uk.ac.ebi.atlas.utils.HttpRequest.httpPost;
 
 public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
 

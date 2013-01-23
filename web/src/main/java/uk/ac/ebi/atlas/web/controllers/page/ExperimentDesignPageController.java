@@ -42,24 +42,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Scope("request")
 public class ExperimentDesignPageController {
 
-    private ExperimentDesignTsvReader experimentDesignTsvReader;
-    private ExperimentsCache experimentsCache;
+    private final ExperimentDesignTsvReader experimentDesignTsvReader;
+    private final ExperimentsCache experimentsCache;
 
     @Inject
-    public ExperimentDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader, ExperimentsCache experimentsCache) {
-        this.experimentDesignTsvReader = experimentDesignTsvReader;
-        this.experimentsCache = experimentsCache;
+    public ExperimentDesignPageController(ExperimentDesignTsvReader expDesignTsvReader, ExperimentsCache expCache) {
+        this.experimentDesignTsvReader = expDesignTsvReader;
+        this.experimentsCache = expCache;
     }
 
     /**
      * Extracts subcategories for a given category within the header line
-     *
-     * @param headerLine
-     * @param category
-     * @return
      */
-    private Map<String, Integer> extractSubcategories(String[] headerLine, String category) {
-        TreeMap<String, Integer> map = new TreeMap<>();
+    private static Map<String, Integer> extractSubcategories(String[] headerLine, String category) {
+        Map<String, Integer> map = new TreeMap<>();
         for (int i = 1; i < headerLine.length; i++) {
             if (headerLine[i].startsWith(category)) {
                 String subcategory = headerLine[i].substring(category.length() + 1, headerLine[i].length() - 1);
@@ -82,25 +78,16 @@ public class ExperimentDesignPageController {
         Map<String, Integer> factors = extractSubcategories(headerLine, "Factor Values");
 
         // reorder lines according to new header
-        Map<Integer, Integer> mapping = new HashMap<>();
-        mapping.put(0, 0);
-        int i = 1;
-        for (Integer value : samples.values()) {
-            mapping.put(i, value);
-            i++;
-        }
-        for (Integer value : factors.values()) {
-            mapping.put(i, value);
-            i++;
-        }
-        for (i = 0; i < csvLines.size(); i++) {
-            String[] line = csvLines.get(i);
-            String[] newLine = new String[line.length];
-            for (int j = 0; j < line.length; j++) {
-                Integer value = checkNotNull(mapping.get(j), "No mapping found for ExpDesign column.");
-                newLine[j] = line[value];
+        Map<Integer, Integer> mapping = createReorderMapping(samples, factors);
+
+        for (String[] line : csvLines) {
+            String[] copy = Arrays.copyOf(line, line.length);
+            for (int j = 0; j < copy.length; j++) {
+                Integer value = mapping.get(j);
+                checkNotNull(value, "No mapping found for ExpDesign column.");
+                // here re-ordering of each line
+                line[j] = copy[value];
             }
-            csvLines.set(i, newLine);
         }
 
         // does the serialisation to JSON
@@ -121,6 +108,22 @@ public class ExperimentDesignPageController {
         model.addAttribute("experimentAccession", experimentAccession);
 
         return "experiment-experiment-design";
+    }
+
+    private static Map<Integer, Integer> createReorderMapping(Map<String, Integer> samples, Map<String, Integer> factors) {
+        Map<Integer, Integer> mapping = new HashMap<>(1 + samples.size() + factors.size());
+        // run accession always at first column
+        mapping.put(0, 0);
+        int i = 1;
+        for (Integer value : samples.values()) {
+            mapping.put(i, value);
+            i++;
+        }
+        for (Integer value : factors.values()) {
+            mapping.put(i, value);
+            i++;
+        }
+        return mapping;
     }
 
 }

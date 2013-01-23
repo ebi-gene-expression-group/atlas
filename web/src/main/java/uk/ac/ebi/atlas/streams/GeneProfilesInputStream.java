@@ -121,7 +121,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
+            throw new IllegalStateException("Exception thrown while reading next csv line.", e);
         }
     }
 
@@ -145,7 +145,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
         private ExpressionsBuffer expressionsBuffer;
 
         @Inject
-        public Builder(GeneProfilesInputStream geneProfilesInputStream, ExpressionsBuffer.Builder expressionsBufferBuilder){
+        public Builder(GeneProfilesInputStream geneProfilesInputStream, ExpressionsBuffer.Builder expressionsBufferBuilder) {
             this.expressionsBufferBuilder = expressionsBufferBuilder;
             this.geneProfilesInputStream = geneProfilesInputStream;
         }
@@ -171,12 +171,12 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
         public Builder forExperiment(String experimentAccession) {
             String tsvFileUrl = MessageFormat.format(tsvFileUrlTemplate, experimentAccession);
-            try{
+            try {
                 Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileUrl));
                 return forExperiment(experimentAccession, Files.newInputStream(filePath));
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
-                throw new IllegalArgumentException("Error while building GeneProfileInputStream. Error details: " + e.getMessage());
+                throw new IllegalArgumentException("Error while building GeneProfileInputStream.", e);
             }
         }
 
