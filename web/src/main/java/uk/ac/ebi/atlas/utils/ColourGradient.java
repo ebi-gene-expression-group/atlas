@@ -94,7 +94,7 @@ public class ColourGradient {
 
     protected Color getGradientColour(double value, double min, double max) {
 
-        if (value == max){
+        if (value == max) {
             return highValueColour;
         }
 
@@ -183,8 +183,8 @@ public class ColourGradient {
     * and the other using an RGB coding with 0-255 values for each of red,
     * green and blue. So the maximum colour distance is 255 + 255 + 255.
     */
-
-    protected int calculateColourDistance() {
+    // made final because called in constructor
+    protected final int calculateColourDistance() {
         int r1 = lowValueColour.getRed();
         int g1 = lowValueColour.getGreen();
         int b1 = lowValueColour.getBlue();

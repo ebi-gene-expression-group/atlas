@@ -55,14 +55,21 @@ public class GenePropertyQueryBuilder {
 
     private int addQuotedStringToResult(String searchText, Set<String> result, StringBuilder sb, int i) {
         // find closing double quote
+        int pos = i;
         char cur;
-        while (i < searchText.length() && (cur = searchText.charAt(++i)) != '"') {
-            sb.append(cur);
+        while (i < searchText.length()) {
+            pos++;
+            cur = searchText.charAt(pos);
+            if (cur != '"') {
+                sb.append(cur);
+            } else {
+                break;
+            }
         }
         result.add(sb.toString());
         // clear StringBuffer
         sb.delete(0, sb.length());
-        return i;
+        return pos;
     }
 
     private void addCurrentStringBufferToResult(Set<String> result, StringBuilder sb) {

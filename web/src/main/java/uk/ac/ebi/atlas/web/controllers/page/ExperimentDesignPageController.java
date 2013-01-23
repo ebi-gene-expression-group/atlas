@@ -95,12 +95,12 @@ public class ExperimentDesignPageController {
         }
         for (i = 0; i < csvLines.size(); i++) {
             String[] line = csvLines.get(i);
-            String[] newLine = new String[line.length];
+            List<String> newLine = new ArrayList<>(line.length);
             for (int j = 0; j < line.length; j++) {
                 Integer value = checkNotNull(mapping.get(j), "No mapping found for ExpDesign column.");
-                newLine[j] = line[value];
+                newLine.add(line[value]);
             }
-            csvLines.set(i, newLine);
+            csvLines.set(i, newLine.toArray(new String[newLine.size()]));
         }
 
         // does the serialisation to JSON

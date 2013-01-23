@@ -36,6 +36,10 @@ import java.util.List;
 // this is purely utility class and can go into the utils package
 public class HttpRequest {
 
+    private HttpRequest() {
+
+    }
+
     public static InputStream httpPost(org.apache.http.client.HttpClient httpClient, String url, List<? extends NameValuePair> params) throws IOException {
         HttpPost httppost = new HttpPost(url);
         httppost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
