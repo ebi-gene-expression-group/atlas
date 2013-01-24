@@ -79,16 +79,12 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
 
+            prepareGeneExpressionPrecondition(preferences, filterParameters);
+
             rankCommand.setFilteredParameters(filterParameters);
 
             rankingParameters.setSpecific(preferences.isSpecific());
             rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
-
-            //RankingParameters parameters = new RankingParameters(preferences.isSpecific(), preferences.getHeatmapMatrixSize());
-
-            //rankCommand.setRankingParameters(parameters);
-
-            prepareGeneExpressionPrecondition(preferences, filterParameters);
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
 
@@ -239,19 +235,3 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

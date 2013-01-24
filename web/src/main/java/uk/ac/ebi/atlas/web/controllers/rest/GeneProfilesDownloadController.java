@@ -50,6 +50,7 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
         response.setContentType("text/plain; charset=utf-8");
 
         FilterParameters parameters = createFilterParameters(experimentAccession, preferences);
+
         prepareGeneExpressionPrecondition(preferences, parameters);
 
         writeGeneProfilesCommand.setFilteredParameters(parameters);
@@ -68,19 +69,3 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

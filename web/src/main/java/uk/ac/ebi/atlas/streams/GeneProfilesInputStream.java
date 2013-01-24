@@ -30,7 +30,6 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -52,15 +51,15 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
     private static final Logger logger = Logger.getLogger(GeneProfilesInputStream.class);
 
-    private GeneProfileBuilderFactory geneProfileBuilderFactory;
+    private GeneProfile.Builder geneProfileBuilder;
 
     private CSVReader csvReader;
 
     private ExpressionsBuffer expressionsBuffer;
 
     @Inject
-    protected GeneProfilesInputStream(GeneProfileBuilderFactory geneProfileBuilderFactory) {
-        this.geneProfileBuilderFactory = geneProfileBuilderFactory;
+    protected GeneProfilesInputStream(GeneProfile.Builder geneProfileBuilder) {
+        this.geneProfileBuilder = geneProfileBuilder;
     }
 
     protected GeneProfilesInputStream setExpressionBuffer(ExpressionsBuffer expressionsBuffer) {
@@ -93,9 +92,9 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
     private GeneProfile buildGeneProfile(String[] values) {
 
+        geneProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
 
-        GeneProfile.Builder geneProfileBuilder = geneProfileBuilderFactory.with(values[GENE_ID_COLUMN]);
-
+        //we need to reload because the first line can only be used to extract the gene ID
         expressionsBuffer.reload(values);
 
         Expression expression;
@@ -106,7 +105,6 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
         }
 
         return geneProfileBuilder.create();
-
 
     }
 

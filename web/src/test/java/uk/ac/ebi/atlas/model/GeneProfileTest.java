@@ -41,8 +41,7 @@ public class GeneProfileTest {
         when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
 
 
-        GeneProfile.Builder geneProfileBuilder = new GeneProfileBuilderConcreteFactory()
-                .with(GENE_ID);
+        GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder().forGeneId(GENE_ID);
 
         GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
         when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);

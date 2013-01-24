@@ -37,12 +37,6 @@ public class RankingParameters {
     public RankingParameters(){
 
     }
-/*
-    public RankingParameters(boolean specific, Integer heatmapMatrixSize) {
-        this.specific = specific;
-        this.heatmapMatrixSize = heatmapMatrixSize;
-    }
-*/
 
     public boolean isSpecific() {
         return specific;

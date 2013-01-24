@@ -23,10 +23,6 @@
         <lookup-method name="createNew" bean="barchartTraderBuilder"/>
     </bean>
 
-    <bean id="geneProfileBuilderFactory" class="uk.ac.ebi.atlas.model.GeneProfileBuilderFactory">
-        <lookup-method name="createNew" bean="geneProfileBuilder"/>
-    </bean>
-
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
         <constructor-arg ref="httpClientConnectionManager"/>
     </bean>

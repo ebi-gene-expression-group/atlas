@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Predicate;
-import com.sun.istack.internal.Nullable;
 import org.apache.commons.collections.CollectionUtils;
 
 import javax.inject.Named;
@@ -37,7 +36,7 @@ public class GeneExpressionPrecondition implements Predicate<Expression> {
     }
 
     @Override
-    public boolean apply(@Nullable Expression expression) {
+    public boolean apply(Expression expression) {
 
         return expression.isGreaterThan(cutoff)
                 && checkLimitingFactors(expression);

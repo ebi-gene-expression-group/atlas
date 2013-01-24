@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -50,13 +50,11 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
         when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);
         when(geneExpressionPreconditionMock.getQueryFactorType()).thenReturn("factor_type");
 
-        GeneProfileBuilderConcreteFactory geneProfileBuilderConcreteFactory = new GeneProfileBuilderConcreteFactory();
-
         List<GeneProfile> geneProfiles = new ArrayList<GeneProfile>();
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = geneProfileBuilderConcreteFactory.with("" + i);
+            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder().forGeneId("" + i);
             geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
 
             for (int j = 0; j < i; j++) {

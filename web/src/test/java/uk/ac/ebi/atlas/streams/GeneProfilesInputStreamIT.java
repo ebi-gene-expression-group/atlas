@@ -31,7 +31,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import javax.annotation.PostConstruct;
@@ -56,7 +55,7 @@ public class GeneProfilesInputStreamIT {
     private GeneExpressionPrecondition geneExpressionPrecondition;
 
     @Inject
-    private GeneProfileBuilderFactory geneProfileBuilderFactory;
+    private GeneProfile.Builder geneProfileBuilder;
 
 
     private static final String GENE_ID_1 = "ENST00000000233";
@@ -78,7 +77,7 @@ public class GeneProfilesInputStreamIT {
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(experimentsCache))
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilder), new ExpressionsBuffer.Builder(experimentsCache))
                 .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
                 .create();
 
@@ -128,7 +127,7 @@ public class GeneProfilesInputStreamIT {
 
         geneExpressionPrecondition.setCutoff(20D);
         //given
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(experimentsCache))
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilder), new ExpressionsBuffer.Builder(experimentsCache))
                 .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
                 .create();
 

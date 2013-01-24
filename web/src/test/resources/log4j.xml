@@ -11,7 +11,7 @@
 
     <appender name="atlas" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
-        <param name="File" value="${catalina.base}/logs/atlas_test.log"/>
+        <param name="File" value="/Users/bennyfio/workspace/gxa_logs/atlas_test.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %-5p [%t] %C{2} - %m%n"/>
         </layout>

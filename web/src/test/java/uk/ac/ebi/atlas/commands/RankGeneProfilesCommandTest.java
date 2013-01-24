@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileInputStreamMock;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
