@@ -42,7 +42,7 @@ public class GeneProfileTest {
 
 
         GeneProfile.Builder geneProfileBuilder = new GeneProfileBuilderConcreteFactory()
-                .with(GENE_ID, 0);
+                .with(GENE_ID);
 
         GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
         when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);

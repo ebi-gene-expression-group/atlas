@@ -89,7 +89,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
-                .withCutoff(filterParameters.getCutoff()).create();
+                .create();
 
 
         return new GeneProfileInputStreamFilter(geneProfileInputStream, filterParameters);

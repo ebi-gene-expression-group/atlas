@@ -68,7 +68,7 @@ public class GeneProfilesInputStreamTest {
         when(geneProfileBuilderMock.addExpression(any(Expression.class))).thenReturn(geneProfileBuilderMock);
 
         GeneProfileBuilderFactory geneProfileBuilderFactoryMock = mock(GeneProfileBuilderFactory.class);
-        when(geneProfileBuilderFactoryMock.with(anyString(),anyDouble())).thenReturn(geneProfileBuilderMock);
+        when(geneProfileBuilderFactoryMock.with(anyString())).thenReturn(geneProfileBuilderMock);
 
         GeneProfilesInputStream geneProfileInputStream = new GeneProfilesInputStream(geneProfileBuilderFactoryMock);
         GeneProfilesInputStream.Builder builder = new GeneProfilesInputStream.Builder(geneProfileInputStream, expressionsBufferBuilderMock){

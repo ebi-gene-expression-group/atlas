@@ -116,20 +116,4 @@ public class GeneProfileInputStreamFilterTest {
         assertThat(acceptancePredicate.apply(gene3ProfileMock), is(true));
     }
 
-    @Test
-    public void acceptanceCriteriaTestWithFilterFactorValueAndGeneIDsSetIsEmpty() {
-        //given
-        when(filterParametersMock.getFilterFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART",
-                "", ORGANISM_PART_1)));
-        when(filterParametersMock.getGeneIDs()).thenReturn(EMPTY_GENE_IDS);
-
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, filterParametersMock);
-        //and
-        Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
-
-        //then
-        assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));
-        //and
-        assertThat(acceptancePredicate.apply(gene3ProfileMock), is(false));
-    }
 }

@@ -29,8 +29,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.SortedMap;
 
@@ -43,10 +45,19 @@ import static org.hamcrest.Matchers.hasEntry;
 public class BarChartTraderIT {
 
     private static final boolean INCLUDE_GENES_EXPRESSED_ALSO_ON_NON_SELECTED_FACTOR_VALUE = false;
+
     @Inject
     private BarChartTradersCache barChartTradersCache;
 
+    @Inject
+    private GeneExpressionPrecondition geneExpressionPrecondition;
     private BarChartTrader subject;
+
+
+    @PostConstruct
+    public void initSpringBeans() {
+        geneExpressionPrecondition.setQueryFactorType("ORGANISM_PART");
+    }
 
     @Before
     public void initSubject() {

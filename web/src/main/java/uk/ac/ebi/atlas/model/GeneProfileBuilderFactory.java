@@ -7,9 +7,9 @@ package uk.ac.ebi.atlas.model;
  */
 public abstract class GeneProfileBuilderFactory {
 
-    public GeneProfile.Builder with(String geneId, double cutoff) {
+    public GeneProfile.Builder with(String geneId) {
         GeneProfile.Builder geneProfileBuilder = createNew();
-        return geneProfileBuilder.forGeneId(geneId).withCutoff(cutoff);
+        return geneProfileBuilder.forGeneId(geneId);
     }
 
     protected abstract GeneProfile.Builder createNew();

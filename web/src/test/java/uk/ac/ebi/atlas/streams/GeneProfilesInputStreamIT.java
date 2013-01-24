@@ -22,97 +22,63 @@
 
 package uk.ac.ebi.atlas.streams;
 
-import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
+import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class GeneProfilesInputStreamIT {
 
-    public static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-    @Mock
-    ExperimentsCache cacheMock;
+    public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    @Mock
-    Set<String> experimentRunsAccessionsMock;
+    @Inject
+    ExperimentsCache experimentsCache;
 
-    @Mock
-    private FactorValue factorValueMock1;
+    @Inject
+    private GeneExpressionPrecondition geneExpressionPrecondition;
 
-    @Mock
-    private FactorValue factorValueMock2;
+    @Inject
+    private GeneProfileBuilderFactory geneProfileBuilderFactory;
 
-    @Mock
-    private FactorValue factorValueMock3;
 
-    private static final String RUN_ACCESSION_1 = "ERR030872";
-    private static final String RUN_ACCESSION_2 = "ERR030873";
-    private static final String RUN_ACCESSION_3 = "ERR030874";
     private static final String GENE_ID_1 = "ENST00000000233";
     private static final String GENE_ID_2 = "ENST00000000412";
     private static final String GENE_ID_3 = "ENST00000000442";
 
-    private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private URL dataFileURL;
 
     private ObjectInputStream<GeneProfile> subject;
 
-    private GeneProfileBuilderFactory geneProfileBuilderFactory;
-
-    private String specie = "homo sapiens";
+    @PostConstruct
+    public void initSpringBeans() {
+        geneExpressionPrecondition.setQueryFactorType("ORGANISM_PART");
+    }
 
     @Before
     public void initSubject() throws Exception {
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
-        when(factorValueMock1.getType()).thenReturn("ORGANISM_PART");
-        when(factorValueMock1.getName()).thenReturn("org");
-        when(factorValueMock1.getValue()).thenReturn("heart");
-
-        when(factorValueMock2.getType()).thenReturn("ORGANISM_PART");
-        when(factorValueMock2.getName()).thenReturn("org");
-        when(factorValueMock2.getValue()).thenReturn("liver");
-
-        when(factorValueMock3.getType()).thenReturn("ORGANISM_PART");
-        when(factorValueMock3.getName()).thenReturn("org");
-        when(factorValueMock3.getValue()).thenReturn("lung");
-
-        ExperimentRun experimentRun1 = new ExperimentRun(RUN_ACCESSION_1)
-                .addFactorValue(factorValueMock1);
-        ExperimentRun experimentRun2 = new ExperimentRun(RUN_ACCESSION_2)
-                .addFactorValue(factorValueMock2);
-        ExperimentRun experimentRun3 = new ExperimentRun(RUN_ACCESSION_3)
-                .addFactorValue(factorValueMock3);
-
-        when(experimentRunsAccessionsMock.contains(anyString())).thenReturn(true);
-
-        Experiment experiment = new Experiment(EXPERIMENT_ACCESSION, null, experimentRunsAccessionsMock, factorValueMock1.getType(), null, specie)
-                .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
-
-        when(cacheMock.getExperiment(anyString())).thenReturn(experiment);
-
-        geneProfileBuilderFactory = new GeneProfileBuilderConcreteFactory();
-
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(cacheMock))
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(experimentsCache))
                 .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
                 .create();
 
@@ -160,10 +126,10 @@ public class GeneProfilesInputStreamIT {
     @Test
     public void setCutoffChangesSpecificity() throws IOException {
 
+        geneExpressionPrecondition.setCutoff(20D);
         //given
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(cacheMock))
-                .forExperiment("AN_ACCESSION", dataFileURL.openStream())
-                .withCutoff(20D)
+        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilderFactory), new ExpressionsBuffer.Builder(experimentsCache))
+                .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
                 .create();
 
         //when

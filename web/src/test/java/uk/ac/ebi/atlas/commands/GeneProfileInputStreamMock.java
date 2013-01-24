@@ -56,7 +56,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = geneProfileBuilderConcreteFactory.with("" + i, 0);
+            GeneProfile.Builder geneProfileBuilder = geneProfileBuilderConcreteFactory.with("" + i);
             geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
 
             for (int j = 0; j < i; j++) {

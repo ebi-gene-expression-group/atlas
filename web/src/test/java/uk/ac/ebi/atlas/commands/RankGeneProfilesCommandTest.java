@@ -42,7 +42,6 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -89,8 +88,6 @@ public class RankGeneProfilesCommandTest {
 
         when(geneProfileInputStreamBuilderMock.forExperiment(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
 
-        when(geneProfileInputStreamBuilderMock.withCutoff(anyDouble())).thenReturn(geneProfileInputStreamBuilderMock);
-
         when(rankingParametersMock.getHeatmapMatrixSize()).thenReturn(100);
         when(filterParameters.getCutoff()).thenReturn(0.1);
         when(rankingParametersMock.isSpecific()).thenReturn(true);
@@ -120,8 +117,6 @@ public class RankGeneProfilesCommandTest {
         subject.apply("ANY_EXPERIMENT_ACCESSION");
         //then
         verify(geneProfileInputStreamBuilderMock).forExperiment("ANY_EXPERIMENT_ACCESSION");
-        //verify(geneProfileInputStreamBuilderMock).withExperimentAccession("ANY_EXPERIMENT_ACCESSION");
-        verify(geneProfileInputStreamBuilderMock).withCutoff(filterParameters.getCutoff());
         verify(geneProfileInputStreamBuilderMock).create();
     }
 

@@ -44,7 +44,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         super(geneProfileInputStream);
 
         this.filterFactorValues = filterParameters.getFilterFactorValues();
-        this.geneIDs = toUpperCase(filterParameters.getGeneIDs());
+        this.geneIDs = toUpperCaseGeneIds(filterParameters.getGeneIDs());
         this.queryFactorValues = filterParameters.getQueryFactorValues();
     }
 
@@ -55,11 +55,9 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
             @Override
             public boolean apply(GeneProfile profile) {
                 //ToDo: this need to be simplified when we remove organismParts....
-                boolean hasAllFactorValues = CollectionUtils.isEmpty(filterFactorValues);
-                hasAllFactorValues = hasAllFactorValues || profile.getAllFactorValues().containsAll(filterFactorValues);
+
                 boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
-                return hasAllFactorValues && checkGene
-                        && (CollectionUtils.isEmpty(queryFactorValues) || hasTheRightExpressionProfile(profile));
+                return checkGene && (CollectionUtils.isEmpty(queryFactorValues) || hasTheRightExpressionProfile(profile));
             }
 
             private boolean hasTheRightExpressionProfile(GeneProfile geneProfile) {
@@ -75,7 +73,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
                 || (geneName != null && geneIDs.contains(geneName.toUpperCase()));
     }
 
-    private Set<String> toUpperCase(Set<String> strings) {
+    private Set<String> toUpperCaseGeneIds(Set<String> strings) {
         Set<String> capitalizedStrings = new HashSet<>();
         if (strings != null) {
             for (String s : strings) {

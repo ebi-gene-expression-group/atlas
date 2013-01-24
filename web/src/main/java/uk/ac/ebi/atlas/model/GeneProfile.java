@@ -24,18 +24,12 @@ public class GeneProfile implements Iterable<Expression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    private SortedMap<FactorValue, Expression> factorValueExpressions = new TreeMap<>();
-
     private SortedMap<FactorValue, Expression> expressions = new TreeMap<>();
 
     private GeneProfile() {
     }
 
     private GeneProfile add(Expression expression, String queryFactorType) {
-        // ToDo: this is wrong, this could lead to overriding certain expressions by reoccurring factor values
-        for (FactorValue factorValue : expression.getAllFactorValues()) {
-            factorValueExpressions.put(factorValue, expression);
-        }
 
         updateProfileExpression(expression.getLevel());
 
@@ -57,7 +51,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public int getSpecificity() {
-        return factorValueExpressions.values().size();
+        return expressions.values().size();
     }
 
     public Iterator<Expression> iterator() {
@@ -98,11 +92,11 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public Set<FactorValue> getAllFactorValues() {
-        return this.factorValueExpressions.keySet();
+        return this.expressions.keySet();
     }
 
     public double getExpressionLevel(FactorValue factorValue) {
-        Expression expression = factorValueExpressions.get(factorValue);
+        Expression expression = expressions.get(factorValue);
         return expression == null ? 0 : expression.getLevel();
     }
 
@@ -131,10 +125,6 @@ public class GeneProfile implements Iterable<Expression> {
 
         private GeneProfile geneProfile;
 
-        private static final double DEFAULT_CUTOFF_VALUE = 0D;
-
-        private double cutoffValue = DEFAULT_CUTOFF_VALUE;
-
         private GeneExpressionPrecondition geneExpressionPrecondition;
 
         protected Builder() {
@@ -162,12 +152,6 @@ public class GeneProfile implements Iterable<Expression> {
             if (geneExpressionPrecondition.apply(expression)) {
                 geneProfile.add(expression, geneExpressionPrecondition.getQueryFactorType());
             }
-            return this;
-        }
-
-        public Builder withCutoff(double cutoff) {
-            this.cutoffValue = cutoff;
-
             return this;
         }
 

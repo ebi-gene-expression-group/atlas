@@ -58,8 +58,6 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
 
     private ExpressionsBuffer expressionsBuffer;
 
-    private double cutoff;
-
     @Inject
     protected GeneProfilesInputStream(GeneProfileBuilderFactory geneProfileBuilderFactory) {
         this.geneProfileBuilderFactory = geneProfileBuilderFactory;
@@ -96,7 +94,7 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
     private GeneProfile buildGeneProfile(String[] values) {
 
 
-        GeneProfile.Builder geneProfileBuilder = geneProfileBuilderFactory.with(values[GENE_ID_COLUMN], cutoff);
+        GeneProfile.Builder geneProfileBuilder = geneProfileBuilderFactory.with(values[GENE_ID_COLUMN]);
 
         expressionsBuffer.reload(values);
 
@@ -176,11 +174,6 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
                 logger.error(e.getMessage(), e);
                 throw new IllegalArgumentException("Error while building GeneProfileInputStream.", e);
             }
-        }
-
-        public Builder withCutoff(double cutoff) {
-            geneProfilesInputStream.cutoff = cutoff;
-            return this;
         }
 
         public ObjectInputStream<GeneProfile> create() {
