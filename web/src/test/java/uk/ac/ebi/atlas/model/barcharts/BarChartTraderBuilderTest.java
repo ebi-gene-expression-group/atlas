@@ -8,10 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 
@@ -90,7 +87,9 @@ public class BarChartTraderBuilderTest {
         when(geneProfilesInputStreamBuilder.forExperiment(anyString())).thenReturn(geneProfilesInputStreamBuilder);
         when(geneProfilesInputStreamBuilder.create()).thenReturn(inputStream);
 
-        subject = new BarChartTrader.Builder(experimentsCacheMock, geneProfilesInputStreamBuilder, cutoffScale);
+        GeneExpressionPrecondition geneExpressionPrecondition = mock(GeneExpressionPrecondition.class);
+
+        subject = new BarChartTrader.Builder(experimentsCacheMock, geneProfilesInputStreamBuilder, cutoffScale, geneExpressionPrecondition);
         subject.setDefaultFactorValues(factorValueMocks);
 
     }

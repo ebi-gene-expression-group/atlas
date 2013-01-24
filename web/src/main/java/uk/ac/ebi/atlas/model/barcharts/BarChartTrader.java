@@ -27,10 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 
@@ -117,10 +114,12 @@ public class BarChartTrader {
 
 
         @Inject
-        public Builder(ExperimentsCache experimentsCache, GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder, CutoffScale cutoffScale) {
+        public Builder(ExperimentsCache experimentsCache, GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder
+                        , CutoffScale cutoffScale, GeneExpressionPrecondition geneExpressionPrecondition) {
             this.experimentsCache = experimentsCache;
             this.cutoffScale = cutoffScale;
             this.geneProfilesInputStreamBuilder = geneProfilesInputStreamBuilder;
+            geneExpressionPrecondition.setCutoff(0d);
         }
 
         public Builder forExperiment(String experimentAccession) {
