@@ -28,6 +28,15 @@ public class Expression {
         return Double.compare(this.level, level) > 0;
     }
 
+    public FactorValue getFactorValue(String type) {
+        for (FactorValue factorValue : allFactorValues) {
+            if (factorValue.getType().equals(type)) {
+                return factorValue;
+            }
+        }
+        throw new IllegalStateException("Expression doesn't contain factor value for a given type");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

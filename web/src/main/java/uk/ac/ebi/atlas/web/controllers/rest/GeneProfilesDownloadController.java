@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
+import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
@@ -28,8 +29,12 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     private WriteGeneProfilesCommand writeGeneProfilesCommand;
 
     @Inject
-    public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand, FilterParameters.Builder filterParameterBuilder, ExperimentsCache experimentsCache) {
-        super(filterParameterBuilder, experimentsCache);
+    public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
+                                          FilterParameters.Builder filterParameterBuilder,
+                                          ExperimentsCache experimentsCache,
+                                          GeneExpressionPrecondition geneExpressionPrecondition) {
+
+        super(filterParameterBuilder, experimentsCache, geneExpressionPrecondition);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
@@ -45,6 +50,8 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
         response.setContentType("text/plain; charset=utf-8");
 
         FilterParameters parameters = createFilterParameters(experimentAccession, preferences);
+        prepareGeneExpressionPrecondition(preferences, parameters);
+
         writeGeneProfilesCommand.setFilteredParameters(parameters);
 
         CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', NO_QUOTE_CHARACTER);

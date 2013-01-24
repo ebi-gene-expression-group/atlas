@@ -22,18 +22,27 @@
 
 package uk.ac.ebi.atlas.streams;
 
+import org.springframework.context.annotation.Scope;
 
+import javax.inject.Named;
+
+@Named
+@Scope("request")
 public class RankingParameters {
 
     private boolean specific;
 
     private Integer heatmapMatrixSize;
 
+    public RankingParameters(){
+
+    }
+/*
     public RankingParameters(boolean specific, Integer heatmapMatrixSize) {
         this.specific = specific;
         this.heatmapMatrixSize = heatmapMatrixSize;
     }
-
+*/
 
     public boolean isSpecific() {
         return specific;
@@ -41,6 +50,15 @@ public class RankingParameters {
 
     public Integer getHeatmapMatrixSize() {
         return heatmapMatrixSize;
+    }
+
+
+    public void setSpecific(boolean specific) {
+        this.specific = specific;
+    }
+
+    public void setHeatmapMatrixSize(Integer heatmapMatrixSize) {
+        this.heatmapMatrixSize = heatmapMatrixSize;
     }
 
     @Override

@@ -9,11 +9,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,12 +40,22 @@ public class GeneProfileTest {
     public void setUp() throws Exception {
         when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
 
-        subject = new GeneProfileBuilderConcreteFactory()
-                .with(GENE_ID, 0)
+
+        GeneProfile.Builder geneProfileBuilder = new GeneProfileBuilderConcreteFactory()
+                .with(GENE_ID, 0);
+
+        GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
+        when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);
+        when(geneExpressionPreconditionMock.getQueryFactorType()).thenReturn("ORGANISM_PART");
+
+        geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
+
+        subject = geneProfileBuilder
                 .addExpression(expression_1)
                 .addExpression(expression_2)
                 .addExpression(expression_3)
                 .create();
+
         subject.setGeneNamesProvider(geneNamesProviderMock);
     }
 
@@ -52,42 +63,6 @@ public class GeneProfileTest {
     public void testGetGeneSpecificity() throws Exception {
         assertThat(subject.getSpecificity(), is(3));
     }
-
-    @Test
-    public void iteratorReturnsExpressionsOrderedByOrganismPartNameAndThenNull() throws Exception {
-        //given
-        Iterator<Expression> profileIterator = subject.iterator();
-
-        //then
-        assertThat(profileIterator.next().getLevel(), is(3.001D));
-        assertThat(profileIterator.next().getLevel(), is(2.2D));
-        assertThat(profileIterator.next().getLevel(), is(3D));
-        //and
-        assertThat(profileIterator.hasNext(), is(false));
-    }
-
-    @Test
-    public void builderAddExpressionTest() {
-        //given
-        GeneProfile.Builder builder = new GeneProfileBuilderConcreteFactory()
-                .with(GENE_ID, 3D);
-
-        builder.addExpression(expression_1);
-
-        builder.addExpression(expression_2);
-
-        builder.addExpression(expression_3);
-
-        //when
-        Iterator<Expression> profileIterator = builder.create().iterator();
-
-        //then
-        assertThat(profileIterator.next().getLevel(), is(3.001D));
-        //and
-        assertThat(profileIterator.hasNext(), is(false));
-
-    }
-
 
     @Test
     public void getAllFactorValuesTest() {

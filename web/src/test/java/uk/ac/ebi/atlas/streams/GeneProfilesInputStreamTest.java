@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
+import uk.ac.ebi.atlas.model.GeneProfileBuilderFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,7 +64,13 @@ public class GeneProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headers)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
-        GeneProfilesInputStream geneProfileInputStream = new GeneProfilesInputStream(new GeneProfileBuilderConcreteFactory());
+        GeneProfile.Builder geneProfileBuilderMock = mock(GeneProfile.Builder.class);
+        when(geneProfileBuilderMock.addExpression(any(Expression.class))).thenReturn(geneProfileBuilderMock);
+
+        GeneProfileBuilderFactory geneProfileBuilderFactoryMock = mock(GeneProfileBuilderFactory.class);
+        when(geneProfileBuilderFactoryMock.with(anyString(),anyDouble())).thenReturn(geneProfileBuilderMock);
+
+        GeneProfilesInputStream geneProfileInputStream = new GeneProfilesInputStream(geneProfileBuilderFactoryMock);
         GeneProfilesInputStream.Builder builder = new GeneProfilesInputStream.Builder(geneProfileInputStream, expressionsBufferBuilderMock){
             @Override
             protected CSVReader buildCsvReader(InputStream inputStream){

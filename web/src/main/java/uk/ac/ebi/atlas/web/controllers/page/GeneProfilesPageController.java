@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
@@ -53,14 +54,17 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private RankGeneProfilesCommand rankCommand;
 
+    private RankingParameters rankingParameters;
     private ApplicationProperties applicationProperties;
 
     private ExperimentsCache experimentsCache;
 
     @Inject
-    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand, ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder) {
-        super(filterParameterBuilder, experimentsCache);
+    public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
+                                      ApplicationProperties applicationProperties,
+                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder, GeneExpressionPrecondition geneExpressionPrecondition) {
+        super(filterParameterBuilder, experimentsCache, geneExpressionPrecondition);
+        this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
@@ -77,10 +81,14 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             rankCommand.setFilteredParameters(filterParameters);
 
-            RankingParameters parameters = new RankingParameters(preferences.isSpecific(),
-                    preferences.getHeatmapMatrixSize());
+            rankingParameters.setSpecific(preferences.isSpecific());
+            rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
 
-            rankCommand.setRankingParameters(parameters);
+            //RankingParameters parameters = new RankingParameters(preferences.isSpecific(), preferences.getHeatmapMatrixSize());
+
+            //rankCommand.setRankingParameters(parameters);
+
+            prepareGeneExpressionPrecondition(preferences, filterParameters);
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
 

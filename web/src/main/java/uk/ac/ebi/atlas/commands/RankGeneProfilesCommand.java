@@ -29,6 +29,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,6 +42,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
     private RankingParameters rankingParameters;
 
+    @Inject
     public void setRankingParameters(RankingParameters rankingParameters) {
         this.rankingParameters = rankingParameters;
     }

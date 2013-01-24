@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers;
 
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
@@ -35,10 +36,13 @@ public class GeneProfilesController {
     // changed visibility by Sonar recommendation
     private FilterParameters.Builder filterParameterBuilder;
     private ExperimentsCache experimentsCache;
+    private GeneExpressionPrecondition geneExpressionPrecondition;
 
-    public GeneProfilesController(FilterParameters.Builder filterParameterBuilder, ExperimentsCache experimentsCache) {
+    public GeneProfilesController(FilterParameters.Builder filterParameterBuilder, ExperimentsCache experimentsCache,
+                                  GeneExpressionPrecondition geneExpressionPrecondition) {
         this.filterParameterBuilder = filterParameterBuilder;
         this.experimentsCache = experimentsCache;
+        this.geneExpressionPrecondition = geneExpressionPrecondition;
     }
 
     protected FilterParameters createFilterParameters(String experimentAccession, RequestPreferences preferences) {
@@ -70,5 +74,12 @@ public class GeneProfilesController {
                 .withQueryFactorValues(preferences.getQueryFactorValues())
                 .withGeneQuery(preferences.getGeneQuery())
                 .build();
+    }
+
+    protected void prepareGeneExpressionPrecondition(RequestPreferences preferences,
+                                                    FilterParameters filterParameters) {
+        geneExpressionPrecondition.setCutoff(preferences.getCutoff());
+        geneExpressionPrecondition.setLimitingFactorValues(filterParameters.getFilterFactorValues());
+        geneExpressionPrecondition.setQueryFactorType(preferences.getQueryFactorType());
     }
 }

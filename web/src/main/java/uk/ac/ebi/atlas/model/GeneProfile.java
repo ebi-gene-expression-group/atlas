@@ -7,12 +7,14 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-// should have been declared final, but cannot mock final classes
 public class GeneProfile implements Iterable<Expression> {
 
     private String geneId;
@@ -24,20 +26,24 @@ public class GeneProfile implements Iterable<Expression> {
 
     private SortedMap<FactorValue, Expression> factorValueExpressions = new TreeMap<>();
 
+    private SortedMap<FactorValue, Expression> expressions = new TreeMap<>();
+
     private GeneProfile() {
     }
 
-    public GeneProfile add(Expression expression) {
+    private GeneProfile add(Expression expression, String queryFactorType) {
         // ToDo: this is wrong, this could lead to overriding certain expressions by reoccurring factor values
         for (FactorValue factorValue : expression.getAllFactorValues()) {
             factorValueExpressions.put(factorValue, expression);
         }
 
         updateProfileExpression(expression.getLevel());
+
+        expressions.put(expression.getFactorValue(queryFactorType), expression);
         return this;
     }
 
-    public GeneProfile setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
+    protected GeneProfile setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
         this.geneNamesProvider = geneNamesProvider;
         return this;
     }
@@ -46,7 +52,7 @@ public class GeneProfile implements Iterable<Expression> {
         return geneId;
     }
 
-    public void setGeneId(String geneId) {
+    protected void setGeneId(String geneId) {
         this.geneId = geneId;
     }
 
@@ -55,7 +61,7 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
     public Iterator<Expression> iterator() {
-        return factorValueExpressions.values().iterator();
+        return expressions.values().iterator();
     }
 
     public double getMaxExpressionLevel() {
@@ -129,12 +135,19 @@ public class GeneProfile implements Iterable<Expression> {
 
         private double cutoffValue = DEFAULT_CUTOFF_VALUE;
 
+        private GeneExpressionPrecondition geneExpressionPrecondition;
+
         protected Builder() {
         }
 
         @Inject
         protected void setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
             this.geneNamesProvider = geneNamesProvider;
+        }
+
+        @Inject
+        public void setGeneExpressionPrecondition(GeneExpressionPrecondition precondition) {
+            this.geneExpressionPrecondition = precondition;
         }
 
         public Builder forGeneId(String geneId) {
@@ -146,10 +159,9 @@ public class GeneProfile implements Iterable<Expression> {
 
         public Builder addExpression(Expression expression) {
             checkState(geneProfile != null, "Please invoke forGeneID before create");
-            if (expression.isGreaterThan(cutoffValue)) {
-                geneProfile.add(expression);
+            if (geneExpressionPrecondition.apply(expression)) {
+                geneProfile.add(expression, geneExpressionPrecondition.getQueryFactorType());
             }
-
             return this;
         }
 
@@ -161,11 +173,13 @@ public class GeneProfile implements Iterable<Expression> {
 
         public GeneProfile create() {
             checkState(geneProfile != null, "Please invoke forGeneID before create");
-            return geneProfile;
+
+            return containsExpressions() ? geneProfile : null;
         }
 
         public boolean containsExpressions() {
-            return !geneProfile.factorValueExpressions.isEmpty();
+//            return !geneProfile.factorValueExpressions.isEmpty();
+            return !geneProfile.expressions.isEmpty();
         }
 
     }

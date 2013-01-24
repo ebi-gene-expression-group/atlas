@@ -107,10 +107,8 @@ public class GeneProfilesInputStream implements ObjectInputStream<GeneProfile> {
             geneProfileBuilder.addExpression(expression);
         }
 
-        if (geneProfileBuilder.containsExpressions()) {
-            return geneProfileBuilder.create();
-        }
-        return null;
+        return geneProfileBuilder.create();
+
 
     }
 

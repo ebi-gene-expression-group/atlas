@@ -24,15 +24,13 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileBuilderConcreteFactory;
+import uk.ac.ebi.atlas.model.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -48,6 +46,10 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
     //of the final order required by the user stories, profiles with higher selectivity will be streamed last.
     public GeneProfileInputStreamMock(int streamSize) {
 
+        GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
+        when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);
+        when(geneExpressionPreconditionMock.getQueryFactorType()).thenReturn("factor_type");
+
         GeneProfileBuilderConcreteFactory geneProfileBuilderConcreteFactory = new GeneProfileBuilderConcreteFactory();
 
         List<GeneProfile> geneProfiles = new ArrayList<GeneProfile>();
@@ -55,14 +57,17 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
         for (int i = streamSize; i > 0; i--) {
 
             GeneProfile.Builder geneProfileBuilder = geneProfileBuilderConcreteFactory.with("" + i, 0);
+            geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
 
             for (int j = 0; j < i; j++) {
 
                 Expression expressionMock = mock(Expression.class);
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
-                when(expressionMock.isForFactorValue(new FactorValue("org", "", "org" + (j + 1)))).thenReturn(true);
-                when(expressionMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("org", "", "org" + (j + 1))));
+                FactorValue factorValue = new FactorValue("factor_type", "", "factor_value" + (j + 1));
+                when(expressionMock.isForFactorValue(factorValue)).thenReturn(true);
+                when(expressionMock.getAllFactorValues()).thenReturn(Sets.newHashSet(factorValue));
+                when(expressionMock.getFactorValue("factor_type")).thenReturn(factorValue);
                 geneProfileBuilder.addExpression(expressionMock);
 
             }

@@ -70,7 +70,8 @@ public class GeneProfilesPageControllerTest {
         when(httpServletRequestMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
 
-        subject = new GeneProfilesPageController(rankCommandMock, applicationPropertiesMock, experimentCacheMock, filterParameterBuilderMock);
+        subject = new GeneProfilesPageController(null,rankCommandMock, applicationPropertiesMock,
+                experimentCacheMock, filterParameterBuilderMock, null);
     }
 
     @Test
