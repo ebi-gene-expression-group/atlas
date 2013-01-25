@@ -5,11 +5,11 @@ import java.util.Set;
 public class Expression {
     private double level;
 
-    private Set<FactorValue> allFactorValues;
+    private FactorValueSet allFactorValues;
 
     public Expression(double level, Set<FactorValue> allFactorValues) {
         this.level = level;
-        this.allFactorValues = allFactorValues;
+        this.allFactorValues = new FactorValueSet(allFactorValues);
     }
 
     public boolean isForFactorValue(FactorValue factorValue) {
@@ -17,6 +17,10 @@ public class Expression {
     }
 
     public Set<FactorValue> getAllFactorValues() {
+        return allFactorValues;
+    }
+
+    public FactorValueSet getFactorValueSet() {
         return allFactorValues;
     }
 
@@ -29,12 +33,7 @@ public class Expression {
     }
 
     public FactorValue getFactorValue(String type) {
-        for (FactorValue factorValue : allFactorValues) {
-            if (factorValue.getType().equals(type)) {
-                return factorValue;
-            }
-        }
-        throw new IllegalStateException("Expression doesn't contain factor value for a given type");
+        return allFactorValues.getFactorValue(type);
     }
 
     @Override

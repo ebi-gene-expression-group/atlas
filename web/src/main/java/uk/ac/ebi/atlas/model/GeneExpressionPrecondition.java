@@ -46,4 +46,8 @@ public class GeneExpressionPrecondition implements Predicate<Expression> {
         return (CollectionUtils.isEmpty(limitingFactorValues)
         || expression.getAllFactorValues().containsAll(limitingFactorValues));
     }
+
+    public Set<FactorValue> getLimitingFactorValues() {
+        return limitingFactorValues;
+    }
 }

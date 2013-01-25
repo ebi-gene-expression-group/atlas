@@ -27,16 +27,16 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.*;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.FactorValueSet;
+import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
+import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.*;
-
-import static com.google.common.base.Preconditions.checkState;
 
 //ToDo: to be continued in order to handle the includeGenesExpressedAlsoOnNonSelectedFactorValue parameter...
 @Named("barChartTrader")
@@ -47,48 +47,85 @@ public class BarChartTrader {
 
     //key: scaled cutoff
     //value: Map<organism part, gene expression bitset index>
-    private NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = new TreeMap<>();
+//    private NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = new TreeMap<>();
+
+    private NavigableMap<Double, Map<FactorValueSet, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
 
     protected BarChartTrader() {
     }
 
-    protected BarChartTrader(NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes) {
-        this.geneExpressionIndexes = geneExpressionIndexes;
+//    protected BarChartTrader(NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes) {
+//        this.geneExpressionIndexes = geneExpressionIndexes;
+//    }
+
+    public BarChartTrader(NavigableMap<Double, Map<FactorValueSet, BitSet>> factorSetGeneExpressionIndexes) {
+        this.factorSetGeneExpressionIndexes = factorSetGeneExpressionIndexes;
     }
 
-    public NavigableMap<Double, Integer> getChart() {
 
-        return getChart(null, false);
-    }
+//    public NavigableMap<Double, Integer> getChart(Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
+//
+//        NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
+//
+//        for (Double scaledCutoff : geneExpressionIndexes.navigableKeySet()) {
+//
+//            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), selectedFactorValues, includeGenesExpressedAlsoOnNonSelectedFactorValue));
+//
+//        }
+//
+//        return barChartPoints;
+//    }
 
-    public NavigableMap<Double, Integer> getChart(Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
+    public NavigableMap<Double, Integer> getChart(FactorValueSet limitingFactorValueSet, FactorValueSet selectedFactorValues) {
 
         NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
 
-        for (Double scaledCutoff : geneExpressionIndexes.navigableKeySet()) {
+        for (Double scaledCutoff : factorSetGeneExpressionIndexes.navigableKeySet()) {
 
-            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), selectedFactorValues, includeGenesExpressedAlsoOnNonSelectedFactorValue));
+            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(factorSetGeneExpressionIndexes.get(scaledCutoff), limitingFactorValueSet, selectedFactorValues));
 
         }
 
         return barChartPoints;
     }
 
-    protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
-        BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
-        BitSet notExpressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
-        //ToDo:... this should work, but now that we also added the includeGenesExpressedAlsoOnNonSelectedFactorValue parameter it is harder to read...
-        for (String organismPart : geneBitSets.keySet()) {
-            if (CollectionUtils.isEmpty(selectedFactorValues) || selectedFactorValues.contains(organismPart)) {
+//    protected static int countGenesAboveCutoff(Map<String, BitSet> geneBitSets, Set<String> selectedFactorValues, boolean includeGenesExpressedAlsoOnNonSelectedFactorValue) {
+//        BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
+//        BitSet notExpressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
+//
+//        //ToDo:... this should work, but now that we also added the includeGenesExpressedAlsoOnNonSelectedFactorValue parameter it is harder to read...
+//        for (String organismPart : geneBitSets.keySet()) {
+//            if (CollectionUtils.isEmpty(selectedFactorValues) || selectedFactorValues.contains(organismPart)) {
+//                //add
+//                expressedGenesBitSet.or(geneBitSets.get(organismPart));
+//            } else if (!includeGenesExpressedAlsoOnNonSelectedFactorValue) {
+//                notExpressedGenesBitSet.or(geneBitSets.get(organismPart));
+//            }
+//        }
+//        expressedGenesBitSet.andNot(notExpressedGenesBitSet);
+//        return expressedGenesBitSet.cardinality();
+//    }
+
+    protected static int countGenesAboveCutoff(Map<FactorValueSet, BitSet> geneBitSets, FactorValueSet limitingFactorValueSet, FactorValueSet selectedFactorValues) {
+        BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
+
+        for (FactorValueSet setFactorValues : geneBitSets.keySet()) {
+            if (forLimitingFactorValues(setFactorValues, limitingFactorValueSet) && forQueryFactorValues(setFactorValues, selectedFactorValues)) {
                 //add
-                expressedGenesBitSet.or(geneBitSets.get(organismPart));
-            } else if (!includeGenesExpressedAlsoOnNonSelectedFactorValue) {
-                notExpressedGenesBitSet.or(geneBitSets.get(organismPart));
+                expressedGenesBitSet.or(geneBitSets.get(setFactorValues));
             }
         }
-        expressedGenesBitSet.andNot(notExpressedGenesBitSet);
         return expressedGenesBitSet.cardinality();
+    }
+
+
+    protected static boolean forLimitingFactorValues(FactorValueSet factorValueSet, FactorValueSet limitingFactorValueSet) {
+        return CollectionUtils.isEmpty(limitingFactorValueSet) || factorValueSet.containsAll(limitingFactorValueSet);
+    }
+
+    protected static boolean forQueryFactorValues(FactorValueSet factorValueSet, FactorValueSet queryFactorValues) {
+        return CollectionUtils.isEmpty(queryFactorValues) || factorValueSet.contains(queryFactorValues);
     }
 
 
@@ -98,40 +135,22 @@ public class BarChartTrader {
 
         private static final Logger logger = Logger.getLogger(Builder.class);
 
-        private NavigableMap<Double, Map<String, BitSet>> geneExpressionIndexes = new TreeMap<>();
-
-        private ExperimentsCache experimentsCache;
+        private NavigableMap<Double, Map<FactorValueSet, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
 
         private CutoffScale cutoffScale;
 
         private GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder;
 
 
-        //ToDo: we should keep either factorValueValues or factorValues and use FactorValues values or object as keys
-        // for the geneExpressionIndexes map
-        private Set<String> factorValueValues;
-        private SortedSet<FactorValue> defaultFactorValues;
-
-
         @Inject
-        public Builder(ExperimentsCache experimentsCache, GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder
-                        , CutoffScale cutoffScale, GeneExpressionPrecondition geneExpressionPrecondition) {
-            this.experimentsCache = experimentsCache;
+        public Builder(GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder
+                , CutoffScale cutoffScale, GeneExpressionPrecondition geneExpressionPrecondition) {
             this.cutoffScale = cutoffScale;
             this.geneProfilesInputStreamBuilder = geneProfilesInputStreamBuilder;
             geneExpressionPrecondition.setCutoff(0d);
         }
 
         public Builder forExperiment(String experimentAccession) {
-
-
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-            defaultFactorValues = experiment.getFactorValues(experiment.getDefaultQueryFactorType());
-
-            // TODO: the static method will be moved to a FactorValues class
-            factorValueValues = FactorValue.getFactorValuesStrings(defaultFactorValues);
-
 
             try (ObjectInputStream<GeneProfile> inputStream = geneProfilesInputStreamBuilder.forExperiment(experimentAccession).create()) {
 
@@ -163,70 +182,52 @@ public class BarChartTrader {
 
                 for (Double cutoff : cutoffsSmallerThanExpression) {
 
-                    Map<String, BitSet> geneBitSets = geneExpressionIndexes.get(cutoff);
+                    Map<FactorValueSet, BitSet> geneBitSets = factorSetGeneExpressionIndexes.get(cutoff);
 
                     if (geneBitSets == null) {
-
-                        geneBitSets = initGenesBitSets();
-                        geneExpressionIndexes.put(cutoff, geneBitSets);
+                        geneBitSets = new HashMap<>();
+                        factorSetGeneExpressionIndexes.put(cutoff, geneBitSets);
 
                     }
 
-                    for (FactorValue defaultFactorValue : defaultFactorValues) {
-                        if (expression.isForFactorValue(defaultFactorValue)) {
-                            geneBitSets.get(defaultFactorValue.getValue()).set(geneIndexPosition);
-                        }
+                    FactorValueSet factorValueSet = expression.getFactorValueSet();
+                    BitSet bitSet = geneBitSets.get(factorValueSet);
+                    if (bitSet == null) {
+                        bitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
+                        geneBitSets.put(factorValueSet, bitSet);
                     }
+
+                    bitSet.set(geneIndexPosition);
 
                 }
             }
 
         }
 
-        protected Map<String, BitSet> initGenesBitSets() {
-
-            Map<String, BitSet> geneBitSets = new HashMap<>();
-
-            for (String factorValue : factorValueValues) {
-                geneBitSets.put(factorValue, new BitSet(AVERAGE_GENES_IN_EXPERIMENT));
-            }
-
-            return geneBitSets;
-        }
-
-
         public BarChartTrader create() {
-            checkState(factorValueValues != null, "Did you set the experimentAccession ?");
             trimIndexes();
-            return new BarChartTrader(geneExpressionIndexes);
+            return new BarChartTrader(factorSetGeneExpressionIndexes);
         }
 
 
         //ToDo:... Huston... we (may) have a problem... will the max cutoff be a lot higher now that we include also genes expressed on non selected factor values?
         protected void trimIndexes() {
 
-            Set<Double> doubles = Sets.newHashSet(geneExpressionIndexes.keySet());
+            Set<Double> doubles = Sets.newHashSet(factorSetGeneExpressionIndexes.keySet());
             for (Double scaledCutoff : doubles) {
 
-                if (countGenesAboveCutoff(geneExpressionIndexes.get(scaledCutoff), null, true) < 50) {
-                    geneExpressionIndexes.remove(scaledCutoff);
+                if (countGenesAboveCutoff(factorSetGeneExpressionIndexes.get(scaledCutoff), limitingFactorValueSet, null) < 50) {
+                    factorSetGeneExpressionIndexes.remove(scaledCutoff);
                 }
 
             }
 
         }
 
-        protected void setFactorValueValues(Set<String> factorValueValues) {
-            this.factorValueValues = factorValueValues;
+        protected NavigableMap<Double, Map<FactorValueSet, BitSet>> getGeneExpressionIndexes() {
+            return factorSetGeneExpressionIndexes;
         }
 
-        protected NavigableMap<Double, Map<String, BitSet>> getGeneExpressionIndexes() {
-            return geneExpressionIndexes;
-        }
-
-        protected void setDefaultFactorValues(SortedSet<FactorValue> defaultFactorValues) {
-            this.defaultFactorValues = defaultFactorValues;
-        }
     }
 
 }

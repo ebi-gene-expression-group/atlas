@@ -77,6 +77,8 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         if (!result.hasErrors()) {
 
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
             FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
 
             prepareGeneExpressionPrecondition(preferences, filterParameters);
@@ -88,7 +90,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
 
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             model.addAttribute("geneProfiles", geneProfiles);
 

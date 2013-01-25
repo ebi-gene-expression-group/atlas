@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.FactorValueSet;
+import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 
@@ -20,9 +23,12 @@ public class BarChartController {
 
     private BarChartTradersCache barChartTradersCache;
 
+    private GeneExpressionPrecondition geneExpressionPrecondition;
+
     @Inject
-    public BarChartController(BarChartTradersCache barChartTradersCache) {
+    public BarChartController(BarChartTradersCache barChartTradersCache, GeneExpressionPrecondition geneExpressionPrecondition) {
         this.barChartTradersCache = barChartTradersCache;
+        this.geneExpressionPrecondition = geneExpressionPrecondition;
     }
 
     @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
@@ -31,9 +37,19 @@ public class BarChartController {
     public String getMap(HttpServletRequest request, @PathVariable String experimentAccession,
                          @RequestParam(value = "queryFactorValues[]", required = false) Set<String> queryFactorValues) {
 
+        System.out.println("geneExpressionPrecondition.getQueryFactorType() = " + geneExpressionPrecondition.getQueryFactorType());
+        System.out.println("geneExpressionPrecondition = " + geneExpressionPrecondition.getLimitingFactorValues());
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
-        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(queryFactorValues, true);
+        FactorValueSet limitingFactorValueSet = new FactorValueSet(geneExpressionPrecondition.getLimitingFactorValues());
+        FactorValueSet queryFactorValueSet = new FactorValueSet();
+        if (queryFactorValues != null) {
+            for (String queryFactorValue : queryFactorValues) {
+                queryFactorValueSet.add(new FactorValue(geneExpressionPrecondition.getQueryFactorType(), queryFactorValue));
+            }
+        }
+
+        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(limitingFactorValueSet, queryFactorValueSet);
 
         Gson gson = new Gson();
 
