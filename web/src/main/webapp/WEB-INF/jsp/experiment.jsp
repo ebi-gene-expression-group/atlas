@@ -197,7 +197,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${formattedQueryFactorType}s)");
+            searchForm.init(${preferences.cutoff}, '${experimentAccession}', "(all ${formattedQueryFactorType}s)");
+
             initHeatmapDisplayValueToggle();
 
             $('.container').stickem();

@@ -532,7 +532,7 @@
         <profile>
             <id>local.integration.test</id>
             <properties>
-                <solr.host>ves-hx-75</solr.host>
+                <solr.host>localhost</solr.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <berkeley.schema.name>bdb</berkeley.schema.name>
             </properties>
