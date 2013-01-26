@@ -9,6 +9,8 @@
  */
 var searchForm = {
 
+    cutoff :0,
+
     removeHttpParameters : function (string) {
         "use strict";
         return string.split("?")[0];
@@ -22,9 +24,13 @@ var searchForm = {
     init : function (cutoff, experimentAccession, watermarkLabel) {
         "use strict";
 
+        var that = this;
+
+        //ToDo: this should not be here, plot object should be passed to searchForm init, that way it could be mocked
+        //ToDo: check about IE should also be responsibility of the client
         function updatePlot(selectedFactorValues) {
 
-            if (searchForm.isNotIE7orOlder()) {
+            if (that.isNotIE7orOlder()) {
                 loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues);
             }
         }
@@ -32,7 +38,7 @@ var searchForm = {
         $("#submit-button").button();
 
         $("#reset-button").button().click(function (event) {
-            var urlWithoutParameters = searchForm.removeHttpParameters(window.location.href);
+            var urlWithoutParameters = this.removeHttpParameters(window.location.href);
             window.location.replace(urlWithoutParameters);
         });
 
@@ -40,6 +46,7 @@ var searchForm = {
 
         $("#cutoff").watermark("(default 0.5)");
 
+        //ToDo: this should be in a plot object init method
         updatePlot($("#queryFactorValues").val());
 
         $("#queryFactorValues").chosen().change(function () {
