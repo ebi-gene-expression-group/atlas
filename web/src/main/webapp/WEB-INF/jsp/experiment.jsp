@@ -138,7 +138,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/searchForm.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -176,14 +176,20 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 isIE8 = true;
             } else {
 
+                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}');
+
+                $("#queryFactorValues").change(function () {
+                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}');
+                });
+
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var heatmapFactorValueValues = [${heatmapFactorValues.size()}];
-            <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
-                heatmapFactorValueValues[${i.index}] = '${factorValue.value}';
-            </c:forEach>
+                <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
+                    heatmapFactorValueValues[${i.index}] = '${factorValue.value}';
+                </c:forEach>
 
                 if (formattedQueryFactorType === "Organism part") {
                     initAnatomogram(heatmapFactorValueValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
@@ -197,7 +203,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            searchForm.init(${preferences.cutoff}, '${experimentAccession}', "(all ${formattedQueryFactorType}s)");
+            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(all ${formattedQueryFactorType}s)");
 
             initHeatmapDisplayValueToggle();
 

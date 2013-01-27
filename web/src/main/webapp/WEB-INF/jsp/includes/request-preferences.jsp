@@ -57,7 +57,7 @@
                             <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
                                          items="${heatmapFactorValueValues}"
-                                         cssStyle="width:350px;display:none"/>
+                                         cssStyle="width:350px"/>
                         </span>
                     </div>
                     <span>

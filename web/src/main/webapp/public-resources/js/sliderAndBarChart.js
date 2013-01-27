@@ -125,8 +125,10 @@ function initBarChartButton() {
 
 }
 
-function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
+function loadSliderAndPlot(cutoff, experimentAccession) {
     "use strict";
+
+    var selectedFactorValues = $("#queryFactorValues").val();
 
     function buildLegendaText() {
         return "Y = number of genes expressed above the given FPKM cutoff " +
