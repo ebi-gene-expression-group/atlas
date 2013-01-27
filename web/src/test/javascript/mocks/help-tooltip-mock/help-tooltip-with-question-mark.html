@@ -91,8 +91,8 @@
                                     <span class="help-subject">
                                         <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="3" cols="35">protein_coding</textarea>
                                     </span>
-                                    <span class="help-icon" data-help-loc="#geneSearch">
-                                        <a href="#">?</a>
+                                    <span>
+                                        <a data-help-loc="#geneSearch" class="help-icon" href="#">?</a>
                                     </span>
                             </div>
                         </td>
@@ -110,8 +110,8 @@
                                             <option value="thymus">thymus</option>
                                         </select>
                                     </span>
-                                    <span class="help-icon" data-help-loc="#factorSearch">
-                                        <a href="#">?</a>
+                                    <span data-help-loc="#factorSearch">
+                                        <a class="help-icon" href="#">?</a>
                                     </span>
                             </span>
                             <span style="clear:both">
@@ -119,8 +119,8 @@
                                     <input id="specific" name="specific" type="checkbox" value="true" checked="checked"/>
                                     <label for="specific">Specific</label>
                                 </span>
-                                <span class="help-icon" data-help-loc="#specific">
-                                    <a href="#">?</a>
+                                <span data-help-loc="#specific">
+                                    <a class="help-icon" href="#">?</a>
                                 </span>
                             </span>
                         </td>
@@ -132,8 +132,8 @@
                                     <span>
                                         <input class="help-subject" id="cutoff" name="cutoff" style="border:1px; font-weight:bold;" type="text" value="0.5" size="10"/>
                                     </span>
-                                    <span class="help-icon" data-help-loc="#cutoff">
-                                        <a href="#">?</a>
+                                    <span data-help-loc="#cutoff">
+                                        <a class="help-icon" href="#">?</a>
                                     </span>
                             </div>
                         </td>
@@ -154,7 +154,7 @@
 
 
             <!-- start of: <add your content here> -->
-
+                <div id="help-tooltip-content" style="display:none">Hello boy</div>
             <!-- end of: <add your content here> -->
 
         </div>
@@ -173,3 +173,26 @@
 </body>
 
 </html>
+<script>
+
+    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+
+        $(document).ready(function () {
+
+            $("[data-help-loc]")
+            .attr("title", "")
+            .tooltip({/*, hide: false, show: false*/}) //the commented parameters remove the in/out fade delay
+            .on('mouseover.loadContent', function () {
+                var selectedElement = this;
+                //$('#help-tooltip-content').load('resources/html/atlas-help-tooltips.html ' + $(selectedElement).attr('data-help-loc'), function () {
+                    $(selectedElement).tooltip("option", "content", $('#help-tooltip-content').text());
+                    $(selectedElement).tooltip("option", "position", { my: "bottom", at: "top-5", collision: "flipfit" });
+                    $(selectedElement).tooltip("option", "tooltipClass", "help-tooltip");
+                //});
+            });
+        });
+
+    })(jQuery);
+
+
+</script>

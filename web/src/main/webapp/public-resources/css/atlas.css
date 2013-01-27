@@ -194,11 +194,8 @@ Set sensible minimum heights for small and large screens
     float:left;
 }
 
-.help-icon {
-    color:orange;
-}
-
-.help-icon a {
-    color:orange;
+a.help-icon {
+    color:rgb(255, 82, 0);
+    background: rgba(250, 250, 202, 0.28);
 }
 
