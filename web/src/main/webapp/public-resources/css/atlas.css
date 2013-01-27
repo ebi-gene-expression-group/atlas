@@ -188,3 +188,17 @@ Set sensible minimum heights for small and large screens
         min-height: 450px;
     }
 }
+
+/* help tooltip */
+.help-subject {
+    float:left;
+}
+
+.help-icon {
+    color:orange;
+}
+
+.help-icon a {
+    color:orange;
+}
+

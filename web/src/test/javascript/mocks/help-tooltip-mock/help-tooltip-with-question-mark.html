@@ -23,7 +23,7 @@
     <title>Html Mock</title>
 
     <link rel="stylesheet" type="text/css" href="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
-    <link rel="stylesheet" type="text/css" href="http://www-test.ebi.ac.uk/gxa/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:9090/gxa/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css" href="http://www-test.ebi.ac.uk/gxa/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="http://www-test.ebi.ac.uk/gxa/resources/css/heatmap-and-anatomogram.css">
 
@@ -34,8 +34,7 @@
 
     <script language="JavaScript" type="text/javascript" src="http://www-test.ebi.ac.uk/gxa/resources/js/chosen/chosen.jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="http://localhost:9090/gxa/resources/js/searchForm.js"></script>
-    <script language="JavaScript" type="text/javascript" src="http://localhost:9090/gxa/resources/js/sliderAndBarChart.js"></script>
+    <script language="JavaScript" type="text/javascript" src="http://localhost:9090/gxa/resources/js/searchFormModule.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="http://www-test.ebi.ac.uk/gxa/resources/js/flot-v07/jquery.flot.js"></script>
     <!--[if lte IE 8]>
@@ -52,7 +51,7 @@
 
                 "use strict";
 
-                searchForm.init(0.5, 'E-MTAB-513', "(all organism parts)");
+                searchFormModule.init(0.5, 'E-MTAB-513', "(all organism parts)");
 
             });
         }(jQuery));
@@ -63,12 +62,12 @@
 
 <body>
 
-<iframe src="reusable-frames/EBI-masthead.html" style="padding: 0; margin: 0; border: 0; " height="138px" width="100%" frameborder="0" scrolling="no">
+<iframe src="../reusable-frames/EBI-masthead.html" style="padding: 0; margin: 0; border: 0; " height="138px" width="100%" frameborder="0" scrolling="no">
 </iframe>
 
 <!-- start of: atlas3 experiment header -->
 
-<iframe src="reusable-frames/experiment-header.html" style="padding: 0; margin: 0; border: 0;" height="80px" width="100%" frameborder="0" scrolling="no">
+<iframe src="../reusable-frames/experiment-header.html" style="padding: 0; margin: 0; border: 0;" height="80px" width="100%" frameborder="0" scrolling="no">
 </iframe>
 
 <!-- end of: atlas 3 experiment header -->
@@ -79,27 +78,30 @@
 
         <div class="container">
 
-            <!-- start of: <add your content here> -->
+            <!-- start of: form -->
             <form id="prefForm" action="#" method="get">
 
                 <table class="form-grid">
                     <tr>
                         <td>
-                            <div class="tooltip-div" data-help-loc="#geneSearch">
+                            <div>
                                     <span>
                                         <label for="geneQuery">Gene Query</label>
                                     </span>
-                                    <span>
+                                    <span class="help-subject">
                                         <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="3" cols="35">protein_coding</textarea>
+                                    </span>
+                                    <span class="help-icon" data-help-loc="#geneSearch">
+                                        <a href="#">?</a>
                                     </span>
                             </div>
                         </td>
                         <td>
-                            <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
+                            <span id="factor-values-div">
                                     <span>
                                         <label for="queryFactorValues">Organism part</label>
                                     </span>
-                                    <span>
+                                    <span class="help-subject" >
                                         <select id="queryFactorValues" name="queryFactorValues"
                                                 style="width:350px;" multiple="multiple">
                                             <option value="heart">heart</option>
@@ -108,19 +110,30 @@
                                             <option value="thymus">thymus</option>
                                         </select>
                                     </span>
-                            </div>
-                                <span>
+                                    <span class="help-icon" data-help-loc="#factorSearch">
+                                        <a href="#">?</a>
+                                    </span>
+                            </span>
+                            <span style="clear:both">
+                                <span class="help-subject" >
                                     <input id="specific" name="specific" type="checkbox" value="true" checked="checked"/>
                                     <label for="specific">Specific</label>
                                 </span>
+                                <span class="help-icon" data-help-loc="#specific">
+                                    <a href="#">?</a>
+                                </span>
+                            </span>
                         </td>
                         <td>
-                            <div class="tooltip-div" data-help-loc="#cutoff">
+                            <div>
                                     <span>
                                         <label for="cutoff">Expression level cutoff</label>
                                     </span>
                                     <span>
-                                        <input id="cutoff" name="cutoff" style="border:1px; font-weight:bold;" type="text" value="0.5" size="10"/>
+                                        <input class="help-subject" id="cutoff" name="cutoff" style="border:1px; font-weight:bold;" type="text" value="0.5" size="10"/>
+                                    </span>
+                                    <span class="help-icon" data-help-loc="#cutoff">
+                                        <a href="#">?</a>
                                     </span>
                             </div>
                         </td>
@@ -137,6 +150,10 @@
                 <br/>
 
             </form>
+            <!-- end of: form -->
+
+
+            <!-- start of: <add your content here> -->
 
             <!-- end of: <add your content here> -->
 
@@ -148,7 +165,7 @@
 
 <!-- start of: EBI footer -->
 
-<iframe src="reusable-frames/EBI-footer.html" style="padding: 0; margin: 0; border: 0; " height="100%" width="100%" frameborder="0" scrolling="no">
+<iframe src="../reusable-frames/EBI-footer.html" style="padding: 0; margin: 0; border: 0; " height="100%" width="100%" frameborder="0" scrolling="no">
 </iframe>
 
 <!-- end of: EBI footer -->
