@@ -35,7 +35,7 @@ import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileInputStreamMock;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
-import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
+import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import java.util.List;
@@ -51,7 +51,7 @@ import static org.mockito.Mockito.when;
 public class RankGeneProfilesCommandTest {
 
     @Mock
-    private GeneProfilesInputStream.Builder geneProfileInputStreamBuilderMock;
+    private GeneProfileInputStreamBuilder geneProfileInputStreamBuilderMock;
 
     @Mock
     private IndexClient indexClientMock;
@@ -99,7 +99,7 @@ public class RankGeneProfilesCommandTest {
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
-        when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
+        when(geneProfileInputStreamBuilderMock.createGeneProfileInputStream()).thenReturn(largeInputStream);
 
         subject = new RankGeneProfilesCommand();
 
@@ -118,14 +118,14 @@ public class RankGeneProfilesCommandTest {
         subject.apply("ANY_EXPERIMENT_ACCESSION");
         //then
         verify(geneProfileInputStreamBuilderMock).forExperiment("ANY_EXPERIMENT_ACCESSION");
-        verify(geneProfileInputStreamBuilderMock).create();
+        verify(geneProfileInputStreamBuilderMock).createGeneProfileInputStream();
     }
 
 
     @Test
     public void givenAStreamWithLessExpressionsThanRankSizeTheCommandShouldReturnAllTheExpressions() throws Exception {
         //given
-        given(geneProfileInputStreamBuilderMock.create()).willReturn(smallInputStream);
+        given(geneProfileInputStreamBuilderMock.createGeneProfileInputStream()).willReturn(smallInputStream);
         //when
         List<GeneProfile> top3Objects = subject.apply("ANY_ACCESSION");
 
@@ -141,7 +141,7 @@ public class RankGeneProfilesCommandTest {
         //given
         given(rankingParametersMock.getHeatmapMatrixSize()).willReturn(3);
         //and
-        when(geneProfileInputStreamBuilderMock.create()).thenReturn(largeInputStream);
+        when(geneProfileInputStreamBuilderMock.createGeneProfileInputStream()).thenReturn(largeInputStream);
 
 
         //when

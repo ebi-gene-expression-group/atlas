@@ -7,13 +7,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -40,7 +38,7 @@ public class GeneProfilesInputStreamTest {
 
     private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
 
-    private ObjectInputStream<GeneProfile> subject;
+    private GeneProfilesInputStream subject;
 
 
     @Before
@@ -66,15 +64,7 @@ public class GeneProfilesInputStreamTest {
         GeneProfile.Builder geneProfileBuilderMock = mock(GeneProfile.Builder.class);
         when(geneProfileBuilderMock.addExpression(any(Expression.class))).thenReturn(geneProfileBuilderMock);
 
-        GeneProfilesInputStream geneProfileInputStream = new GeneProfilesInputStream(geneProfileBuilderMock);
-        GeneProfilesInputStream.Builder builder = new GeneProfilesInputStream.Builder(geneProfileInputStream, expressionsBufferBuilderMock){
-            @Override
-            protected CSVReader buildCsvReader(InputStream inputStream){
-                return csvReaderMock;
-            }
-        };
-        subject = builder.forExperiment("AN_ACCESSION", mock(InputStream.class))
-                .create();
+        subject = new GeneProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);
 
     }
 

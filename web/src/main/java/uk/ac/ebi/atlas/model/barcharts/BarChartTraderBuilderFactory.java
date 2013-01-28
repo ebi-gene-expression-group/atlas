@@ -22,17 +22,25 @@
 
 package uk.ac.ebi.atlas.model.barcharts;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 /**
  * This class is a factory of BarChartTrader Builders, to be used only in cases where new instances of builder need to be created from within a "singleton" object, like a CacheLoader.
  * It is injected using spring lookup-method (application-context.xml). In Spring 3.0 no equivalent annotation has yet been implemented for this feature.
- * If you need to build a new BarChartTrader in the context of another class that has scope "prototype" you should directly inject BarChartTrader.Builder and not use this factory.
+ * If you need to build a new BarChartTrader in the context of another class that has scope "prototype" you should directly inject BarChartTrader.BitIndexBuilder and not use this factory.
  */
 public abstract class BarChartTraderBuilderFactory {
 
-    public BarChartTrader.Builder with(String experimentAccession) {
-        BarChartTrader.Builder barChartTraderBuilder = createNew();
-        return barChartTraderBuilder.forExperiment(experimentAccession);
+    public BitIndexBuilder with(String experimentAccession) {
+
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        ctx.getEnvironment().setActiveProfiles("barChartLoad");
+
+        BitIndexBuilder barChartTraderBitIndexBuilder = createNew();
+
+        ctx.refresh();
+        return barChartTraderBitIndexBuilder.forExperiment(experimentAccession);
     }
 
-    protected abstract BarChartTrader.Builder createNew();
+    protected abstract BitIndexBuilder createNew();
 }

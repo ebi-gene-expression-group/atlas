@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.streams;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -28,7 +27,6 @@ public class ExpressionBufferTest {
 
     private ExpressionsBuffer subject;
 
-    private List<FactorValue> orderedFactorValues = Lists.newLinkedList();
 
     @Before
     public void initializeSubject() {
@@ -43,11 +41,7 @@ public class ExpressionBufferTest {
         orderedAllFactorValues.add(Sets.newHashSet(factorValue2));
         orderedAllFactorValues.add(Sets.newHashSet(factorValue3));
 
-        orderedFactorValues.add(factorValue1);
-        orderedFactorValues.add(factorValue2);
-        orderedFactorValues.add(factorValue3);
-
-        subject = new ExpressionsBuffer(orderedFactorValues, orderedAllFactorValues);
+        subject = new ExpressionsBuffer(orderedAllFactorValues);
 
     }
 
@@ -113,26 +107,6 @@ public class ExpressionBufferTest {
 
         //when we reload again
         subject.reload(THREE_EXPRESSION_LEVELS);
-
-        //then we expect an IllegalArgumentException
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void reloadShouldThrowExceptionIfWeProvideMoreValuesThanRuns() throws Exception {
-        //given that we built a buffer suitable for three experiment runs
-
-        //when we reload with 4 expressions per line
-        subject.reload(GENE_ID, "0", "42.9134", "0.0001", "666");
-
-        //then we expect an IllegalArgumentException
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void reloadShouldThrowExceptionIfWeProvideLessValuesThanRuns() throws Exception {
-        //given that we built a buffer suitable for three experiment runs
-
-        //when we reload with 2 expressions per line
-        subject.reload(GENE_ID, "0", "42.9134");
 
         //then we expect an IllegalArgumentException
     }

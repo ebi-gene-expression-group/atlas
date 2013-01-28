@@ -18,7 +18,8 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 class ExpressionsBuffer {
 
@@ -30,12 +31,10 @@ class ExpressionsBuffer {
 
     private Iterator<Set<FactorValue>> expectedAllFactorValues;
 
-    private int expectedNumberOfValues;
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected ExpressionsBuffer(List<FactorValue> orderedFactorValues, List<Set<FactorValue>> orderedAllFactorValues) {
-        expectedNumberOfValues = orderedFactorValues.size() + 1;
+    protected ExpressionsBuffer(List<Set<FactorValue>> orderedAllFactorValues) {
         this.expectedAllFactorValues = Iterables.cycle(orderedAllFactorValues).iterator();
     }
 
@@ -54,8 +53,8 @@ class ExpressionsBuffer {
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
 
-        checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
-                "found: " + values.length);
+//        checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
+//                "found: " + values.length);
 
         expressionLevelsBuffer.clear();
 
@@ -74,7 +73,7 @@ class ExpressionsBuffer {
 
         private ExperimentsCache experimentsCache;
 
-        private List<FactorValue> orderedFactorValues = new LinkedList<>();
+//        private List<FactorValue> orderedFactorValues = new LinkedList<>();
 
         private List<Set<FactorValue>> orderedAllFactorValues = new LinkedList<>();
 
@@ -107,8 +106,8 @@ class ExpressionsBuffer {
             for (String columnHeader : columnHeaders) {
 
                 //ToDo: will be refactored soon as we remove organism parts
-                FactorValue factorValue = getFactorValue(columnHeader, experimentAccession);
-                orderedFactorValues.add(factorValue);
+//                FactorValue factorValue = getFactorValue(columnHeader, experimentAccession);
+//                orderedFactorValues.add(factorValue);
 
                 Set<FactorValue> allFactorValues = getAllFactorValues(columnHeader, experimentAccession);
                 orderedAllFactorValues.add(allFactorValues);
@@ -119,23 +118,6 @@ class ExpressionsBuffer {
             return this;
         }
 
-        private FactorValue getFactorValue(String columnHeader, String experimentAccession) {
-
-            String[] columnRuns = columnHeader.split(",");
-
-            //ToDo: no need to have loop, return after the first iteration
-            for (String columnRun : columnRuns) {
-                columnRun = columnRun.trim();
-
-                Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-                checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
-
-                // TODO: default factor value needs to come from RequestPreferences
-                return experiment.getFactorValue(columnRun, experiment.getDefaultQueryFactorType());
-            }
-
-            throw new IllegalStateException(MessageFormat.format(FACTOR_VALUE_NOT_FOUND, columnHeader, experimentAccession));
-        }
 
         private Set<FactorValue> getAllFactorValues(String columnHeader, String experimentAccession) {
 
@@ -158,7 +140,7 @@ class ExpressionsBuffer {
 
             checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
 
-            return new ExpressionsBuffer(orderedFactorValues, orderedAllFactorValues);
+            return new ExpressionsBuffer(orderedAllFactorValues);
 
         }
 

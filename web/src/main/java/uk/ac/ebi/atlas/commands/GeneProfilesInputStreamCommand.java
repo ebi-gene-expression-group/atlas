@@ -29,8 +29,8 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
+import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
-import uk.ac.ebi.atlas.streams.GeneProfilesInputStream;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -39,7 +39,7 @@ import java.io.IOException;
 public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
     protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
 
-    private GeneProfilesInputStream.Builder geneProfileInputStreamBuilder;
+    private GeneProfileInputStreamBuilder geneProfileInputStreamBuilder;
 
     private ExperimentsCache experimentsCache;
 
@@ -47,7 +47,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     private FilterParameters filterParameters;
 
     @Inject
-    protected void setGeneProfileInputStreamBuilder(GeneProfilesInputStream.Builder geneProfileInputStreamBuilder) {
+    protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
     }
 
@@ -89,7 +89,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     protected ObjectInputStream<GeneProfile> buildGeneProfilesInputStream(String experimentAccession) {
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
-                .create();
+                .createGeneProfileInputStream();
 
 
         return new GeneProfileInputStreamFilter(geneProfileInputStream, filterParameters);

@@ -23,7 +23,7 @@
 //@RunWith(MockitoJUnitRunner.class)
 //public class BarChartTraderBuilderTest {
 //
-//    private BarChartTrader.Builder subject;
+//    private BarChartTrader.BitIndexBuilder subject;
 //
 //    private static final String ORGANISM_PART_1 = "op1";
 //    private static final String ORGANISM_PART_2 = "op2";
@@ -40,7 +40,7 @@
 //    private ExperimentsCache experimentsCacheMock;
 //
 //    @Mock
-//    private GeneProfilesInputStream.Builder geneProfilesInputStreamBuilder;
+//    private GeneProfilesInputStream.BitIndexBuilder geneProfilesInputStreamBuilder;
 //
 //    @Mock
 //    private CutoffScale cutoffScale;
@@ -89,7 +89,7 @@
 //
 //        GeneExpressionPrecondition geneExpressionPrecondition = mock(GeneExpressionPrecondition.class);
 //
-//        subject = new BarChartTrader.Builder( geneProfilesInputStreamBuilder, cutoffScale, geneExpressionPrecondition);
+//        subject = new BarChartTrader.BitIndexBuilder( geneProfilesInputStreamBuilder, cutoffScale, geneExpressionPrecondition);
 //
 //    }
 //

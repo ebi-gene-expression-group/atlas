@@ -77,9 +77,9 @@ public class GeneProfilesInputStreamIT {
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilder), new ExpressionsBuffer.Builder(experimentsCache))
+        subject = new GeneProfileInputStreamBuilder(new ExpressionsBuffer.Builder(experimentsCache), geneProfileBuilder)
                 .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
-                .create();
+                .createGeneProfileInputStream();
 
     }
 
@@ -127,9 +127,9 @@ public class GeneProfilesInputStreamIT {
 
         geneExpressionPrecondition.setCutoff(20D);
         //given
-        subject = new GeneProfilesInputStream.Builder(new GeneProfilesInputStream(geneProfileBuilder), new ExpressionsBuffer.Builder(experimentsCache))
+        subject = new GeneProfileInputStreamBuilder(new ExpressionsBuffer.Builder(experimentsCache), geneProfileBuilder)
                 .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
-                .create();
+                .createGeneProfileInputStream();
 
         //when
         subject.readNext();
