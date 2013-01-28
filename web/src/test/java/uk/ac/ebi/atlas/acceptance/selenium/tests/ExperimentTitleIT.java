@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 
 public class ExperimentTitleIT extends SeleniumFixture {
 
@@ -18,9 +19,8 @@ public class ExperimentTitleIT extends SeleniumFixture {
 
     @Test
     public void testTitle() {
-        assertThat(subject.getExperimentDescription(), is("RNA-Seq of human individual tissues and mixture of 16 " +
-                "tissues (Illumina Body " +
-                "Map)"));
+        assertThat(subject.getExperimentDescription(), startsWith("RNA-Seq of human individual tissues and mixture of 16 " +
+                "tissues (Illumina Body Map)"));
     }
 
 

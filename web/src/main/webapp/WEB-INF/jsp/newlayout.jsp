@@ -42,8 +42,6 @@
           href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/embl-petrol-colours.css"/>
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/helpTooltip.js"></script>
 
     <style type="text/css">
             /* You have the option of setting a maximum width for your page, and making sure everything is centered */
@@ -75,13 +73,14 @@
             src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/experiment-header-buttons.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
 
     <script>
         (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
             $(document).ready(function () {
 
                 initExperimentHeaderButtons();
-                initHelpTooltip();
 
             });
         })(jQuery);

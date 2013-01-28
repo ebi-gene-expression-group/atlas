@@ -58,6 +58,8 @@
 
     </script>
 
+    <script language="JavaScript" type="text/javascript" src="http://localhost:9090/gxa/resources/js/helpTooltipsModule.js"></script>
+
 </head>
 
 <body>
@@ -85,65 +87,55 @@
                     <tr>
                         <td>
                             <div>
-                                    <span>
-                                        <label for="geneQuery">Gene Query</label>
-                                    </span>
-                                    <span class="help-subject">
-                                        <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="3" cols="35">protein_coding</textarea>
-                                    </span>
-                                    <span>
-                                        <a data-help-loc="#geneSearch" class="help-icon" href="#">?</a>
-                                    </span>
+                                <label for="geneQuery">Gene Query</label>
                             </div>
-                        </td>
-                        <td>
-                            <span id="factor-values-div">
-                                    <span>
-                                        <label for="queryFactorValues">Organism part</label>
-                                    </span>
-                                    <span class="help-subject" >
-                                        <select id="queryFactorValues" name="queryFactorValues"
-                                                style="width:350px;" multiple="multiple">
-                                            <option value="heart">heart</option>
-                                            <option value="liver">liver</option>
-                                            <option value="lung">lung</option>
-                                            <option value="thymus">thymus</option>
-                                        </select>
-                                    </span>
-                                    <span data-help-loc="#factorSearch">
-                                        <a class="help-icon" href="#">?</a>
-                                    </span>
+                            <span>
+                                <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="3" cols="35">protein_coding</textarea>
                             </span>
-                            <span style="clear:both">
-                                <span class="help-subject" >
-                                    <input id="specific" name="specific" type="checkbox" value="true" checked="checked"/>
-                                    <label for="specific">Specific</label>
-                                </span>
-                                <span data-help-loc="#specific">
-                                    <a class="help-icon" href="#">?</a>
-                                </span>
-                            </span>
+                            <span data-help-loc="#geneSearch"/>
                         </td>
                         <td>
                             <div>
-                                    <span>
-                                        <label for="cutoff">Expression level cutoff</label>
-                                    </span>
-                                    <span>
-                                        <input class="help-subject" id="cutoff" name="cutoff" style="border:1px; font-weight:bold;" type="text" value="0.5" size="10"/>
-                                    </span>
-                                    <span data-help-loc="#cutoff">
-                                        <a class="help-icon" href="#">?</a>
-                                    </span>
+                                <div>
+                                    <label for="queryFactorValues">Organism part</label>
+                                </div>
+                                <span>
+                                    <select id="queryFactorValues" name="queryFactorValues"
+                                            style="width:350px;" multiple="multiple">
+                                        <option value="heart">heart</option>
+                                        <option value="liver">liver</option>
+                                        <option value="lung">lung</option>
+                                        <option value="thymus">thymus</option>
+                                    </select>
+                                </span>
+                                <span data-help-loc="#factorSearch"/>
+                            </div>
+                            <span >
+                                <input id="specific" name="specific" type="checkbox" value="true" checked="checked"/>
+                                <label for="specific">Specific</label>
+                            </span>
+                            <span data-help-loc="#specific"/>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <label for="cutoff">Expression level cutoff</label>
+                                </div>
+                                <span>
+                                    <input class="help-subject" id="cutoff" name="cutoff" style="border:1px; font-weight:bold;" type="text" value="0.5" size="10"/>
+                                </span>
+                                <span data-help-loc="#cutoff"/>
                             </div>
                         </td>
                         <td rowspan="4">
-                                <span>
+                            <div style="text-align: center">
+                                <div>
                                     <input id="submit-button" type="submit" value="Search"/>
-                                </span>
-                                <span>
+                                </div>
+                                <div>
                                     <input id="reset-button" type="button" value="Reset"/>
-                                </span>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -151,11 +143,6 @@
 
             </form>
             <!-- end of: form -->
-
-
-            <!-- start of: <add your content here> -->
-                <div id="help-tooltip-content" style="display:none">Hello boy</div>
-            <!-- end of: <add your content here> -->
 
         </div>
 
@@ -178,18 +165,7 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
         $(document).ready(function () {
-
-            $("[data-help-loc]")
-            .attr("title", "")
-            .tooltip({/*, hide: false, show: false*/}) //the commented parameters remove the in/out fade delay
-            .on('mouseover.loadContent', function () {
-                var selectedElement = this;
-                //$('#help-tooltip-content').load('resources/html/atlas-help-tooltips.html ' + $(selectedElement).attr('data-help-loc'), function () {
-                    $(selectedElement).tooltip("option", "content", $('#help-tooltip-content').text());
-                    $(selectedElement).tooltip("option", "position", { my: "bottom", at: "top-5", collision: "flipfit" });
-                    $(selectedElement).tooltip("option", "tooltipClass", "help-tooltip");
-                //});
-            });
+            helpTooltipsModule.init('experiment');
         });
 
     })(jQuery);
