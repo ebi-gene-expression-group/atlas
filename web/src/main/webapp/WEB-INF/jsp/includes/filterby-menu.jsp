@@ -28,27 +28,23 @@
 
 <c:if test="${defaultFilterFactorValuesSize > 1}">
     <td>
-        <div data-help-loc="#filterBy" class="tooltip-div" title="">
-            <c:choose>
-                <c:when test="${not empty selectedFactorValues}">
-                    <span>
-                        <label>Filtered by</label>
-                    </span>
-                    <span class="filters-frame">
-                        <c:forEach items="${selectedFactorValues}" var="factorValue">
-                            <span class="filter-name">${factorValue.name}:</span>${factorValue.value}<br/>
-                        </c:forEach>
-                    </span>
-                    <c:set var="filterMenuLabel" value="Change filters"/>
-                </c:when>
-                <c:otherwise>
-                    <span>
-                        <label>Filter by</label>
-                    </span>
-                    <c:set var="filterMenuLabel" value="Choose filters"/>
-                </c:otherwise>
-            </c:choose>
+        <div>
+            <label>Filtered by</label>
         </div>
+        <c:choose>
+            <c:when test="${not empty selectedFactorValues}">
+                <div class="filters-frame">
+                    <c:forEach items="${selectedFactorValues}" var="factorValue">
+                        <div class="filter-name">${factorValue.name}:</div>${factorValue.value}<br/>
+                    </c:forEach>
+                </div>
+                <c:set var="filterMenuLabel" value="Change filters"/>
+            </c:when>
+            <c:otherwise>
+                <c:set var="filterMenuLabel" value="Choose filters"/>
+            </c:otherwise>
+        </c:choose>
+        <span data-help-loc="#filterBy"></span>
 
         <span>
             <ul id="filterBy" style="display: none">
@@ -91,7 +87,7 @@
 
     $(function () {
         $("#filterBy").menu();
-        $('li:not(:has(>ul))', 'ul#filterBy').live('click', function () {
+        $('li:not(:has(>ul))', 'ul#filterBy').on('click', function () {
             var filterFactorValuesFromJSON = JSON.parse($(this).attr('data'));
             $("#queryFactorType").val(filterFactorValuesFromJSON.queryFactorType);
             $("#queryFactorValues").val(''); // clear previous selection

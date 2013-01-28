@@ -45,9 +45,9 @@
                         <form:textarea path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
                     </span>
                     <span data-help-loc="#geneSearch"/>
-                </td>
-                <c:import url="includes/filterby-menu.jsp"/>
-                <td>
+                    </td>
+                        <c:import url="includes/filterby-menu.jsp"/>
+                    <td>
                     <div>
                         <div>
                             <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
