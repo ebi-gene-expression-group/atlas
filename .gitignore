@@ -7,6 +7,9 @@ _idea
 .idea-files
 .project
 .settings/
+web/src/main/resources/log4j.xml
+web/src/test/resources/log4j.xml 
+web/bin
 web/.classpath
 web/.project
 web/.settings/
