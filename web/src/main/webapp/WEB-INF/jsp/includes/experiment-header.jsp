@@ -35,11 +35,6 @@
                         <img alt="ArrayExpress"
                              src="resources/images/ae2_icon.png"/></a>
 
-                    <a id="display-help" class="button-image" title="Show additional help" class="button-image">
-                        <img id="display-help-image"
-                             style="width:23px;height:23px" src="resources/images/help.png"/>
-                    </a>
-
                 </div>
             </td>
         </tr>
