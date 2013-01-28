@@ -51,7 +51,7 @@
         </div>
 
         <span>
-            <ul id="filterBy">
+            <ul id="filterBy" style="display: none">
                 <li><a>${filterMenuLabel}</a>
                     <ul>
                         <c:forEach items="${filterByMenu}" var="level1">
@@ -89,6 +89,7 @@
 <script type="text/javascript">
     $(function () {
         $("#filterBy").menu();
+        $("#filterBy").show();
     });
 
 </script>
