@@ -19,7 +19,8 @@ function initHeatmapDisplayValueToggle() {
         $("div[data-color]").each(function () {
             showCellValue(this);
         });
-        $(".gradient-level").attr("style", '');
+        $(".gradient-level-min").attr("style", '');
+        $(".gradient-level-max").attr("style", '');
     }
 
     function hideValues(button) {
@@ -27,7 +28,8 @@ function initHeatmapDisplayValueToggle() {
         $("div[data-color]").each(function () {
             hideCellValue(this);
         });
-        $(".gradient-level").attr("style", 'color:white');
+        $(".gradient-level-min").attr("style", 'color:white');
+        $(".gradient-level-max").attr("style", 'color:white');
     }
 
     $("#display-levels").button()
