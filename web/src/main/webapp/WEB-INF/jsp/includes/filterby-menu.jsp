@@ -67,7 +67,8 @@
                                                         <a>${level3.key}</a>
                                                         <ul>
                                                             <c:forEach items="${level3.value}" var="level4">
-                                                                <li data='${level4.value}'>${level4.key}</li>
+                                                                <li data='${level4.value}'
+                                                                    style="text-decoration: underline; cursor: pointer;">${level4.key}</li>
                                                             </c:forEach>
                                                         </ul>
                                                     </li>
