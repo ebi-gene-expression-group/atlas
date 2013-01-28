@@ -103,7 +103,7 @@
         </table>
         <br/>
     </form:form>
-    <div>
+    <div id="gene-distribution-panel">
         <div id="gene-distribution" style="height:100px;width:940px;display:inline-block;">
         </div>
         <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
