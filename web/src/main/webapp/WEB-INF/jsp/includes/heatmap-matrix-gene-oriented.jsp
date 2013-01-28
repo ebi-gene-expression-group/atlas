@@ -35,7 +35,9 @@
                 <display:table name="${geneProfiles}" id="geneProfile"
                                htmlId="heatmap-table" class="table-grid">
                     <display:column
-                            title="<button id='display-levels' /><label for='display-levels'>Display levels</label>"
+                            title="
+                                <span data-help-loc='#heatMapTableCellInfo'/>
+                                <button id='display-levels' /><label for='display-levels'>Display levels</label>"
                             class="header-cell">
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                             <fmt:param value="${geneProfile.geneId}"/>
@@ -123,7 +125,5 @@
         }
         return result;
     }
-
-    $("#heatmap-table tbody").attr("data-help-loc", "#heatMapTableCellInfo");
 
 </script>

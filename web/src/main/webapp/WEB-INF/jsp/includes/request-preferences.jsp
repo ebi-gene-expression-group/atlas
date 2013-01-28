@@ -38,85 +38,84 @@
         <table class="form-grid">
             <tr>
                 <td>
-                    <div class="tooltip-div" data-help-loc="#geneSearch">
-                        <span>
-                            <form:label path="geneQuery">Gene Query</form:label>
-                        </span>
-                        <span>
-                            <form:textarea path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
-                        </span>
+                    <div>
+                        <form:label path="geneQuery">Gene Query</form:label>
                     </div>
+                    <span>
+                        <form:textarea path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
+                    </span>
+                    <span data-help-loc="#geneSearch"/>
                 </td>
                 <c:import url="includes/filterby-menu.jsp"/>
                 <td>
-                    <div id="factor-values-div" class="tooltip-div" data-help-loc="#factorSearch">
-                        <span>
+                    <div>
+                        <div>
                             <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
-                        </span>
+                        </div>
                         <span>
                             <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                          tabindex="-1"
                                          items="${heatmapFactorValueValues}"
                                          cssStyle="width:350px"/>
                         </span>
+                        <span data-help-loc="#factorSearch"/>
                     </div>
                     <span>
                         <form:checkbox id="specific"
                                        path="specific"
                                        label="Specific"></form:checkbox>
                     </span>
+                    <span data-help-loc="#specific"/>
                 </td>
                 <td>
-                    <div class="tooltip-div" data-help-loc="#cutoff">
-                        <span>
-                            <form:label path="cutoff">Expression level cutoff</form:label>
-                        </span>
-                        <span>
-                            <c:choose>
-                                <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
-                                    <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
-                                                      type="number"
-                                                      maxFractionDigits="0"
-                                                      var="formattedCutoff"/>
-                                    <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"
-                                                style="border:1; font-weight:bold;"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <form:input size="10" path="cutoff" id="cutoff"
-                                                style="border:1; font-weight:bold;"/>
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
+                    <div>
+                        <form:label path="cutoff">Expression level cutoff</form:label>
                     </div>
+                    <span>
+                        <c:choose>
+                            <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
+                                <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
+                                                  type="number"
+                                                  maxFractionDigits="0"
+                                                  var="formattedCutoff"/>
+                                <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"
+                                            style="border:1; font-weight:bold;"/>
+                            </c:when>
+                            <c:otherwise>
+                                <form:input size="10" path="cutoff" id="cutoff"
+                                            style="border:1; font-weight:bold;"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
+                    <span data-help-loc="#cutoff"/>
                 </td>
                 <td rowspan="4">
-                    <span>
-                        <input id="submit-button" type="submit" value="Search"/>
-                    </span>
-                    <span>
-                        <input id="reset-button" type="button" value="Reset"/>
-                    </span>
+                    <div style="text-align: center">
+                        <div>
+                            <input id="submit-button" type="submit" value="Search"/>
+                        </div>
+                        <div>
+                            <input id="reset-button" type="button" value="Reset"/>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
         <br/>
-
     </form:form>
-
-    <div id="gene-distribution-panel">
-        <div id="gene-distribution"
-             data-help-loc="#gene-distribution" style="margin-bottom:0px;height:100px">
+    <div>
+        <div id="gene-distribution" style="height:100px;width:940px;display:inline-block;">
         </div>
+        <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
     </div>
-
-    <div class="barchart-tooltip" id="barChartTooltip"></div>
-
-    <div id="gene-distribution-button" style="float:left">
-        <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
-            <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
-        </a>
-    </div>
-    <div id="slider-range-max" data-help-loc="#slider"
-         style="font-size:65%;width:920px;margin-left:27px;margin-right:17px; margin-top:10px"></div>
+    <span style = "display:inline-block">
+        <div id="gene-distribution-button" style="float:left">
+            <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
+                <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
+            </a>
+        </div>
+        <div id="slider-range-max" style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
+    </span>
+    <span data-help-loc="#slider"/>
 
 </div>

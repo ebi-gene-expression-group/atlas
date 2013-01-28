@@ -68,7 +68,7 @@ var searchFormModule = (function($) {
 
     return {
         init: init,
-        removeHttpParameters: removeHttpParameters,
+        removeHttpParameters: removeHttpParameters
     };
 
 }(jQuery));
