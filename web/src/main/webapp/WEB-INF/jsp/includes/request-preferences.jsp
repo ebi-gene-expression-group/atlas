@@ -120,10 +120,3 @@
          style="font-size:65%;width:920px;margin-left:27px;margin-right:17px; margin-top:10px"></div>
 
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        $("#filterBy").menu();
-    });
-
-</script>

@@ -109,8 +109,12 @@ public class FactorValue implements Comparable<FactorValue> {
     public static SortedSet<String> getFactorValuesURLRepresentation(Set<FactorValue> factorValues) {
         SortedSet<String> result = new TreeSet<>();
         for (FactorValue factorValue : factorValues) {
-            result.add(factorValue.getType() + FACTOR_VALUE_SEPARATOR + factorValue.getValue());
+            result.add(composeFactorValueURLRepresentation(factorValue));
         }
         return result;
+    }
+
+    public static String composeFactorValueURLRepresentation(FactorValue factorValue) {
+        return factorValue.getType() + FACTOR_VALUE_SEPARATOR + factorValue.getValue();
     }
 }
