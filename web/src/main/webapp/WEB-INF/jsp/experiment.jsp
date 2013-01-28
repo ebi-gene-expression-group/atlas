@@ -71,7 +71,7 @@
                                 <table style="font-size:10px; float: right" id="heatmap-legenda">
                                     <tr>
                                         <td>
-                                            <div style="color:white" class="gradient-level">
+                                            <div style="color:white" class="gradient-level-min">
                                                 <fmt:formatNumber type="number" value="${minExpressionLevel}"
                                                                   groupingUsed="false"/>
                                             </div>
@@ -92,7 +92,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div style="color:white" class="gradient-level">
+                                            <div style="color:white" class="gradient-level-max">
                                                 <fmt:formatNumber type="number" value="${maxExpressionLevel}"
                                                                   groupingUsed="false"/>
                                             </div>
@@ -187,9 +187,9 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var heatmapFactorValueValues = [${heatmapFactorValues.size()}];
-                <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
-                    heatmapFactorValueValues[${i.index}] = '${factorValue.value}';
-                </c:forEach>
+            <c:forEach varStatus="i" var="factorValue" items="${heatmapFactorValues}">
+                heatmapFactorValueValues[${i.index}] = '${factorValue.value}';
+            </c:forEach>
 
                 if (formattedQueryFactorType === "Organism part") {
                     initAnatomogram(heatmapFactorValueValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
