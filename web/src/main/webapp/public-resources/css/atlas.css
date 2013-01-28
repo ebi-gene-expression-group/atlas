@@ -145,7 +145,8 @@ a:active {
 }
 
 .filters-frame {
-    width:200px;
+    display:inline-block;
+    width:120px;
     border-style: solid;
     border-width: 1px;
     border-color: lightgray;
@@ -153,7 +154,6 @@ a:active {
 }
 
 .filter-name {
-    display:inline;
     color:#FF9C2A;
     font-weight: bold;
 }
