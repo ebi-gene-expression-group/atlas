@@ -26,62 +26,53 @@
   --%>
 
 
-<c:if test="${defaultFilterFactorValuesSize > 1}">
-    <td>
-        <div>
-            <label>Filtered by</label>
+<c:choose>
+    <c:when test="${not empty selectedFactorValues}">
+        <div class="filters-frame">
+            <c:forEach items="${selectedFactorValues}" var="factorValue">
+                <div class="filter-name">${factorValue.name}:</div>${factorValue.value}<br/>
+            </c:forEach>
         </div>
-        <c:choose>
-            <c:when test="${not empty selectedFactorValues}">
-                <div class="filters-frame">
-                    <c:forEach items="${selectedFactorValues}" var="factorValue">
-                        <div class="filter-name">${factorValue.name}:</div>${factorValue.value}<br/>
-                    </c:forEach>
-                </div>
-                <c:set var="filterMenuLabel" value="Change filters"/>
-            </c:when>
-            <c:otherwise>
-                <c:set var="filterMenuLabel" value="Choose filters"/>
-            </c:otherwise>
-        </c:choose>
-        <span data-help-loc="#filterBy"></span>
+        <c:set var="filterMenuLabel" value="Change filters"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="filterMenuLabel" value="Choose filters"/>
+    </c:otherwise>
+</c:choose>
 
-        <span>
-            <ul id="filterBy" style="display: none">
-                <li><a>${filterMenuLabel}</a>
-                    <ul>
-                        <c:forEach items="${filterByMenu}" var="level1">
-                            <li>
-                                <a>${level1.key}</a>
-                                <ul>
-                                    <c:forEach items="${level1.value}" var="level2">
-                                        <li>
-                                            <a>${level2.key}</a>
-                                            <ul>
-                                                <c:forEach items="${level2.value}" var="level3">
-                                                    <li>
-                                                        <a>${level3.key}</a>
-                                                        <ul>
-                                                            <c:forEach items="${level3.value}" var="level4">
-                                                                <li data='${level4.value}'
-                                                                    style="text-decoration: underline; cursor: pointer;">${level4.key}</li>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </li>
+<span>
+    <ul id="filterBy" style="display: none">
+        <li><a>${filterMenuLabel}</a>
+            <ul>
+                <c:forEach items="${filterByMenu}" var="level1">
+                    <li>
+                        <a>${level1.key}</a>
+                        <ul>
+                            <c:forEach items="${level1.value}" var="level2">
+                                <li>
+                                    <a>${level2.key}</a>
+                                    <ul>
+                                        <c:forEach items="${level2.value}" var="level3">
+                                            <li>
+                                                <a>${level3.key}</a>
+                                                <ul>
+                                                    <c:forEach items="${level3.value}" var="level4">
+                                                        <li data='${level4.value}'
+                                                            style="text-decoration: underline; cursor: pointer;">${level4.key}</li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </li>
+                </c:forEach>
             </ul>
-        </span>
-    </td>
-</c:if>
-
+        </li>
+    </ul>
+</span>
 
 <script type="text/javascript">
 

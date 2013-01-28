@@ -38,17 +38,17 @@
             <div id="anatomogram" class="aside stickem double-click-noselection">
                 <table>
                     <tr>
-                        <td style="width:25px;padding-top: 15px; vertical-align:top">
-                            <div id="sex-toggle">
+                        <td style="padding-top: 15px; vertical-align:top">
+                            <span id="sex-toggle">
                                 <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
                                      style="width:20px;height:38px;padding:2px"
                                      src="resources/images/male_selected.png"/>
-                            </div>
+                            </span>
+                            <span data-help-loc="#anatomogram"/>
                         </td>
                         <td>
                             <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
                             </div>
-                            <span data-help-loc="#anatomogram"/>
                         </td>
                     </tr>
                 </table>

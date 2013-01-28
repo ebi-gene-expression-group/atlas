@@ -38,40 +38,61 @@
         <table class="form-grid">
             <tr>
                 <td>
-                    <div>
-                        <form:label path="geneQuery">Gene Query</form:label>
-                    </div>
-                    <span>
-                        <form:textarea path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
-                    </span>
+                    <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
-                    </td>
-                        <c:import url="includes/filterby-menu.jsp"/>
+                </td>
+                <c:if test="${defaultFilterFactorValuesSize > 1}">
                     <td>
+                        <label>Filtered by</label>
+                        <span data-help-loc="#filterBy"></span>
+                    </td>
+                </c:if>
+                <td>
+                    <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
+                    <span data-help-loc="#factorSearch"/>
+                </td>
+                <td>
+                    <form:label path="cutoff">Expression level cutoff</form:label>
+                    <span data-help-loc="#cutoff"/>
+                </td>
+                <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
                     <div>
                         <div>
-                            <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
+                            <input id="submit-button" type="submit" value="Search"/>
                         </div>
-                        <span>
-                            <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
-                                         tabindex="-1"
-                                         items="${heatmapFactorValueValues}"
-                                         cssStyle="width:350px"/>
-                        </span>
-                        <span data-help-loc="#factorSearch"/>
+                        <div>
+                            <input id="reset-button" type="button" value="Reset"/>
+                        </div>
                     </div>
-                    <span>
-                        <form:checkbox id="specific"
-                                       path="specific"
-                                       label="Specific"></form:checkbox>
-                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <form:textarea path="geneQuery" maxlength="900" rows="3" cols="35"></form:textarea>
+                    </div>
+                </td>
+                <c:if test="${defaultFilterFactorValuesSize > 1}">
+                    <td>
+                        <c:import url="includes/filterby-menu.jsp"/>
+                    </td>
+                </c:if>
+                <td>
+                    <div>
+                        <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
+                                     tabindex="-1"
+                                     items="${heatmapFactorValueValues}"
+                                     cssStyle="width:350px"/>
+                    </div>
+                        <span>
+                            <form:checkbox id="specific"
+                                           path="specific"
+                                           label="Specific"></form:checkbox>
+                        </span>
                     <span data-help-loc="#specific"/>
                 </td>
                 <td>
                     <div>
-                        <form:label path="cutoff">Expression level cutoff</form:label>
-                    </div>
-                    <span>
                         <c:choose>
                             <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
                                 <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
@@ -86,17 +107,6 @@
                                             style="border:1; font-weight:bold;"/>
                             </c:otherwise>
                         </c:choose>
-                    </span>
-                    <span data-help-loc="#cutoff"/>
-                </td>
-                <td rowspan="4">
-                    <div style="text-align: center">
-                        <div>
-                            <input id="submit-button" type="submit" value="Search"/>
-                        </div>
-                        <div>
-                            <input id="reset-button" type="button" value="Reset"/>
-                        </div>
                     </div>
                 </td>
             </tr>
@@ -121,3 +131,5 @@
     <span data-help-loc="#slider"/>
 
 </div>
+
+
