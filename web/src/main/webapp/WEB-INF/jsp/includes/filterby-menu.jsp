@@ -51,7 +51,7 @@
         </div>
 
         <span>
-            <ul id="filterBy">
+            <ul id="filterBy" style="display: none">
                 <li><a>${filterMenuLabel}</a>
                     <ul>
                         <c:forEach items="${filterByMenu}" var="level1">
@@ -67,7 +67,8 @@
                                                         <a>${level3.key}</a>
                                                         <ul>
                                                             <c:forEach items="${level3.value}" var="level4">
-                                                                <li><a href="${level4.value}">${level4.key}</a></li>
+                                                                <li data='${level4.value}'
+                                                                    style="text-decoration: underline; cursor: pointer;">${level4.key}</li>
                                                             </c:forEach>
                                                         </ul>
                                                     </li>
@@ -87,8 +88,17 @@
 
 
 <script type="text/javascript">
+
     $(function () {
         $("#filterBy").menu();
+        $('li:not(:has(>ul))', 'ul#filterBy').live('click', function () {
+            var filterFactorValuesFromJSON = JSON.parse($(this).attr('data'));
+            $("#queryFactorType").val(filterFactorValuesFromJSON.queryFactorType);
+            $("#queryFactorValues").val(''); // clear previous selection
+            $("#filterFactorValues").val(filterFactorValuesFromJSON.filterFactorValuesURL);
+            $("form#prefForm").submit();
+        });
+        $("#filterBy").show();
     });
 
 </script>

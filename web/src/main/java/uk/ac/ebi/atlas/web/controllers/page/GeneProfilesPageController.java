@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -150,6 +151,10 @@ public class GeneProfilesPageController extends GeneProfilesController {
             SortedMap<String, SortedSet<FactorValue>> allFactorNames,
             SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations,
             HttpServletRequest request) {
+
+        // does the serialisation to JSON
+        Gson gson = new Gson();
+
         // build filter by menu map here, structure:
         // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> filterByMenu = new TreeMap<>();
@@ -185,7 +190,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
                     for (FactorValue secondFactorValue : secondFactorNames.get(secondFactorName)) {
                         // arbitrarily taking first of remaining factor names as query factor type
                         String factorType = allFactorNames.get(remainingFactorNames.first()).first().getType();
-                        String link = buildFilterFactorValueURL(request, factorType, firstFactorValue, secondFactorValue);
+                        String link = gson.toJson(buildFilterFactorValueURL(factorType, firstFactorValue, secondFactorValue));
                         secondFilterFactorValue.get(secondFactorName).put(secondFactorValue.getValue(), link);
                     }
                 }
@@ -217,19 +222,33 @@ public class GeneProfilesPageController extends GeneProfilesController {
         return result;
     }
 
-    String buildFilterFactorValueURL(HttpServletRequest request, String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {
-        // we disregard here previous query string, as site will load completely fresh
-        // TODO: we might want to include some previous query
-        return request.getRequestURI() + "?" + "queryFactorType=" + queryFactorType
-                + "&filterFactorValues=" + firstFactorValue.getType() + ":" + firstFactorValue.getValue()
-                + "&filterFactorValues=" + secondFactorValue.getType() + ":" + secondFactorValue.getValue();
+    FilterFactorValues buildFilterFactorValueURL(String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {
+        return new FilterFactorValues(queryFactorType, firstFactorValue, secondFactorValue);
     }
 
     String buildDownloadURL(HttpServletRequest request) {
         return request.getRequestURI() + TSV_FILE_EXTENSION + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
     }
 
+    private class FilterFactorValues {
 
+        final String queryFactorType;
+
+        final String filterFactorValuesURL;
+
+        public FilterFactorValues(String queryFT, FactorValue firstFV, FactorValue secondFV) {
+            this.queryFactorType = queryFT;
+            this.filterFactorValuesURL = FactorValue.composeFactorValueURLRepresentation(firstFV) + "," + FactorValue.composeFactorValueURLRepresentation(secondFV);
+        }
+
+        public String getQueryFactorType() {
+            return queryFactorType;
+        }
+
+        public String getFilterFactorValuesURL() {
+            return filterFactorValuesURL;
+        }
+    }
 }
 
 

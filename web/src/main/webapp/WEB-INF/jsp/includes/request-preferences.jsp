@@ -119,10 +119,3 @@
     <span data-help-loc="#slider"/>
 
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        $("#filterBy").menu();
-    });
-
-</script>
