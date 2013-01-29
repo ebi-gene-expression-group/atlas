@@ -21,7 +21,6 @@
  */
 
 /*global $, jQuery, console:false */
-
 var helpTooltipsModule = (function($) {
     "use strict";
 
@@ -34,12 +33,12 @@ var helpTooltipsModule = (function($) {
                 });
     }
 
-    function getHelpLocation(pageName, inlineAnchor) {
-        return 'resources/html/' + getHelpFileName(pageName) + ' ' + inlineAnchor;
-    }
-
     function getHelpFileName(pageName){
         return 'help-tooltips.' + pageName + '-page.html';
+    }
+
+    function getHelpLocation(pageName, inlineAnchor) {
+        return 'resources/html/' + getHelpFileName(pageName) + ' ' + inlineAnchor;
     }
 
     function initTooltips(pageName){
@@ -48,6 +47,9 @@ var helpTooltipsModule = (function($) {
 
         $("[data-help-loc]")
             .append(anchor)
+            .click(function(e) {
+                e.preventDefault();
+            })
             .tooltip(
             {
                 tooltipClass: "help-tooltip",
@@ -77,7 +79,8 @@ var helpTooltipsModule = (function($) {
         init:  function(pageName) {
                     initTooltips(pageName);
                 },
-        buildHelpAnchor: buildHelpAnchor()
+        buildHelpAnchor: buildHelpAnchor,
+        getHelpFileName: getHelpFileName
     };
 
 }(jQuery));
