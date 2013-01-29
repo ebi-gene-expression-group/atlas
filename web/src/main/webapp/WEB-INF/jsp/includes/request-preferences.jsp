@@ -89,7 +89,7 @@
                                            path="specific"
                                            label="Specific"></form:checkbox>
                         </span>
-                    <span data-help-loc="#specific"/>
+                        <span data-help-loc="#specific" style="display:inline-block"/>
                 </td>
                 <td>
                     <div>
