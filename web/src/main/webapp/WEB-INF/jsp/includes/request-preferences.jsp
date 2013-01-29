@@ -128,7 +128,7 @@
         </div>
         <div id="slider-range-max" style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
     </span>
-    <span data-help-loc="#slider"/>
+    <span id="slider-help" data-help-loc="#slider"/>
 
 </div>
 
