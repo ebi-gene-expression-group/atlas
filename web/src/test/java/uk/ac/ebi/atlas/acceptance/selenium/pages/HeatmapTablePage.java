@@ -45,7 +45,7 @@ public class HeatmapTablePage extends TablePage {
         return heatmapTable;
     }
 
-    public List<String> getQueryFactorValues() {
+    public List<String> getFactorValueHeaders() {
         List<String> queryFactorValues = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
         return queryFactorValues.subList(1, queryFactorValues.size());

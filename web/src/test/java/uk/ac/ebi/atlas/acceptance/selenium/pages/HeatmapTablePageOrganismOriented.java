@@ -12,7 +12,7 @@ public class HeatmapTablePageOrganismOriented extends HeatmapTablePage {
     }
 
     @Override
-    public List<String> getQueryFactorValues() {
+    public List<String> getFactorValueHeaders() {
         return getFirstColumnValues(getHeatmapTable());
     }
 

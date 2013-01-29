@@ -46,7 +46,7 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
         return cutoff.getAttribute("value");
     }
 
-    public List<String> getQueryFactorValues() {
+    public List<String> getFactorValueHeaders() {
         Select queryFactorValuesSelect = new Select(queryFactorValues);
         List<String> selectedValues = new ArrayList<>();
         for (WebElement webElement : queryFactorValuesSelect.getAllSelectedOptions()) {
