@@ -46,9 +46,9 @@
                             </div>
                         </td>
                         <td>
-                            <div id="anatomogramBody" data-help-loc="#anatomogram" style="width: 230px; height:
-                             360px">
+                            <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
                             </div>
+                            <span data-help-loc="#anatomogram"/>
                         </td>
                     </tr>
                 </table>
@@ -59,22 +59,21 @@
                 <table>
                     <tr>
                         <td>
-                            <div id="geneCount" style="" data-help-loc="#resultInfo">Showing ${geneProfiles.size()}
-                                of ${totalResultCount} genes
-                                found:
-                            </div>
+                            <span id="geneCount">Showing ${geneProfiles.size()}
+                                of ${totalResultCount} genes found:
+                            </span>
+                            <span data-help-loc="#resultInfo"/>
                         </td>
 
                         <td>
-                            <div class="tooltip-div" style="float:right" data-help-loc="#gradient">
-
+                            <div style="float:right">
                                 <table style="font-size:10px; float: right" id="heatmap-legenda">
                                     <tr>
                                         <td>
-                                            <div style="color:white" class="gradient-level">
+                                            <span style="color:white" class="gradient-level-min">
                                                 <fmt:formatNumber type="number" value="${minExpressionLevel}"
                                                                   groupingUsed="false"/>
-                                            </div>
+                                            </span>
                                         </td>
                                         <td width="200px">
                                             <div style="
@@ -92,10 +91,11 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div style="color:white" class="gradient-level">
+                                            <span style="color:white" class="gradient-level-max">
                                                 <fmt:formatNumber type="number" value="${maxExpressionLevel}"
                                                                   groupingUsed="false"/>
-                                            </div>
+                                            </span>
+                                            <span data-help-loc="#gradient"/>
                                         </td>
 
                                     </tr>
@@ -116,6 +116,8 @@
     </div>
 
     <br/>
+
+    <div id="test" style="display: none"></div>
 
 </c:if>
 
@@ -138,7 +140,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/searchForm.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -176,6 +178,12 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 isIE8 = true;
             } else {
 
+                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}');
+
+                $("#queryFactorValues").change(function () {
+                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}');
+                });
+
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
 
@@ -197,7 +205,10 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            initSearchForm('${requestURI}', ${preferences.cutoff}, '${experimentAccession}', isIE8, "(all ${formattedQueryFactorType}s)");
+            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(all ${formattedQueryFactorType}s)");
+
+            helpTooltipsModule.init('experiment');
+
             initHeatmapDisplayValueToggle();
 
             $('.container').stickem();

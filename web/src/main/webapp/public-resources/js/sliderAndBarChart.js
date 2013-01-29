@@ -1,4 +1,4 @@
-/*global $:false */
+/*global $,console: false */
 
 //MagnifiedScale: object constructor and function prototypes
 
@@ -125,8 +125,10 @@ function initBarChartButton() {
 
 }
 
-function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
+function loadSliderAndPlot(cutoff, experimentAccession) {
     "use strict";
+
+    var selectedFactorValues = $("#queryFactorValues").val();
 
     function buildLegendaText() {
         return "Y = number of genes expressed above the given FPKM cutoff " +
@@ -159,11 +161,11 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
         });
     }
 
-    $.getJSON("json/barchart/" + experimentAccession,
-        {
-            queryFactorValues : selectedFactorValues
-        },
-        function (data) {
+    $.ajax({
+        url: "json/barchart/" + experimentAccession,
+        data: {queryFactorValues: selectedFactorValues},
+        datatype: 'json',
+        success: function (data) {
 
             var magnifiedScale = new MagnifiedScale(1),
                 previousPoint = null,
@@ -258,7 +260,12 @@ function loadSliderAndPlot(cutoff, experimentAccession, selectedFactorValues) {
             });
 
 
-        });
+        }
+    }).fail(function( data ) {
+        console.log( "ERROR:  " + data );
+    });
+
+
 
 }
 

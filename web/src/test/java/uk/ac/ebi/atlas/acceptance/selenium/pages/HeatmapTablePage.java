@@ -27,8 +27,11 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "display-levels")
     private WebElement displayLevelsButton;
 
-    @FindBy(className = "gradient-level")
-    private List<WebElement> gradientLevels;
+    @FindBy(className = "gradient-level-min")
+    private WebElement gradientLevelsMin;
+
+    @FindBy(className = "gradient-level-max")
+    private WebElement gradientLevelsMax;
 
     public HeatmapTablePage(WebDriver driver) {
         super(driver);
@@ -91,8 +94,9 @@ public class HeatmapTablePage extends TablePage {
 
 
     public boolean areGradientLevelsHidden() {
-        String style = gradientLevels.get(0).getAttribute("style");
-        return style.contains("color") && style.contains("white");
+        String style = gradientLevelsMin.getAttribute("style");
+        String style2 = gradientLevelsMax.getAttribute("style");
+        return style.contains("color") && style.contains("white") && style2.contains("color") && style2.contains("white");
     }
 
     public Boolean areExpressionLevelsHidden() {

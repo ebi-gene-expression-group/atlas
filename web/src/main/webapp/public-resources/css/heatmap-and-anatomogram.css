@@ -23,8 +23,8 @@
 }
 
 .content {
-    position:relative;
-    margin-left:300px;
+    position: relative;
+    margin-left: 300px;
 }
 
 .aside {
@@ -46,7 +46,12 @@
 
 /* end of sticky things */
 
-.gradient-level {
-    text-align:right;
+.gradient-level-min {
+    text-align: right;
+    width: 30px;
+}
+
+.gradient-level-max {
+    text-align: left;
     width: 30px;
 }
