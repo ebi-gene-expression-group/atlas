@@ -28,8 +28,8 @@ function initHeatmapDisplayValueToggle() {
         $("div[data-color]").each(function () {
             hideCellValue(this);
         });
-        $(".gradient-level-min").attr("style", 'color:white');
-        $(".gradient-level-max").attr("style", 'color:white');
+        $(".gradient-level-min").css("display","none");
+        $(".gradient-level-max").css("display","none");
     }
 
     $("#display-levels").button()
