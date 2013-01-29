@@ -7,12 +7,12 @@
         <tbody>
         <tr>
             <td>
-                <div class="experiment-accession" data-help-loc="#experimentAcc">
+                <div class="experiment-accession">
                     <a href="experiments/${experimentAccession}">${experimentAccession}</a>
                 </div>
             </td>
             <td>
-                <div id="experimentDescription" style="font-weight: bold;" data-help-loc="#experimentTitle">
+                <div id="experimentDescription" style="font-weight: bold;">
                     ${experimentDescription}
                 </div>
                 <div>Organism: ${specie}</div>

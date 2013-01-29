@@ -44,7 +44,9 @@
                                      style="width:20px;height:38px;padding:2px"
                                      src="resources/images/male_selected.png"/>
                             </span>
+                            <!--
                             <span data-help-loc="#anatomogram"/>
+                            -->
                         </td>
                         <td>
                             <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
@@ -62,7 +64,9 @@
                             <span id="geneCount">Showing ${geneProfiles.size()}
                                 of ${totalResultCount} genes found:
                             </span>
-                            <span data-help-loc="#resultInfo"/>
+                            <!--
+                                <span data-help-loc="#resultInfo"/>
+                            -->
                         </td>
 
                         <td>
