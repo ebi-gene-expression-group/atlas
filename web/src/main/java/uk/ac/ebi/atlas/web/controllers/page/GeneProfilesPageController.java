@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +37,7 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.streams.RankingParameters;
+import uk.ac.ebi.atlas.utils.FilterByMenuBuilder;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
@@ -45,7 +45,9 @@ import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
 
 @Controller
 @Scope("request")
@@ -128,96 +130,16 @@ public class GeneProfilesPageController extends GeneProfilesController {
             // all the following is required for filtering by two factor values chosen from drop down menu
             SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = experiment.getValidFactorValueCombinations();
 
-            SortedMap<String, SortedSet<FactorValue>> allFactorNames = indexFactorValuesByName(validFactorValueCombinations.keySet());
+            SortedMap<String, SortedSet<FactorValue>> allFactorNames = FilterByMenuBuilder.indexFactorValuesByName(validFactorValueCombinations.keySet());
 
             model.addAttribute("defaultFilterFactorValuesSize", experiment.getDefaultFilterFactorValues().size());
 
-            model.addAttribute("filterByMenu", buildFilterByMenu(allFactorNames, validFactorValueCombinations, request));
+            model.addAttribute("filterByMenu", FilterByMenuBuilder.buildFilterByMenu(allFactorNames, validFactorValueCombinations));
 
-            model.addAttribute("selectedFactorValues", extractSelectedFactorValues(allFactorNames, filterParameters));
+            model.addAttribute("selectedFactorValues", FilterByMenuBuilder.extractSelectedFactorValues(allFactorNames, filterParameters));
         }
 
         return "experiment";
-    }
-
-    SortedMap<String, SortedSet<FactorValue>> indexFactorValuesByName(Set<FactorValue> factorValues) {
-        // using factor names here for better readability and compatibility with experiment design page
-        SortedMap<String, SortedSet<FactorValue>> allFactorNames = new TreeMap<>();
-        for (FactorValue key : factorValues) {
-            if (!allFactorNames.containsKey(key.getName())) {
-                allFactorNames.put(key.getName(), new TreeSet<FactorValue>());
-            }
-            allFactorNames.get(key.getName()).add(key);
-        }
-        return allFactorNames;
-    }
-
-    SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> buildFilterByMenu(
-            SortedMap<String, SortedSet<FactorValue>> allFactorNames,
-            SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations,
-            HttpServletRequest request) {
-
-        // does the serialisation to JSON
-        Gson gson = new Gson();
-
-        // build filter by menu map here, structure:
-        // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
-        SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> filterByMenu = new TreeMap<>();
-        for (String firstFactorName : allFactorNames.keySet()) {
-            // first level: factor name
-            if (!filterByMenu.containsKey(firstFactorName)) {
-                filterByMenu.put(firstFactorName, new TreeMap<String, SortedMap<String, SortedMap<String, String>>>());
-            }
-            // second level: factor value choices per factor name, all are valid
-            for (FactorValue firstFactorValue : allFactorNames.get(firstFactorName)) {
-
-                // factor name 2 > factor value 2 > link
-                SortedMap<String, SortedMap<String, String>> secondFilterFactorValue = new TreeMap<>();
-                filterByMenu.get(firstFactorName).put(firstFactorValue.getValue(), secondFilterFactorValue);
-
-                // index second level factor names
-                SortedMap<String, SortedSet<FactorValue>> secondFactorNames =
-                        indexFactorValuesByName(validFactorValueCombinations.get(firstFactorValue));
-
-                for (String secondFactorName : secondFactorNames.keySet()) {
-                    // third level: factor name
-                    if (!secondFilterFactorValue.containsKey(secondFactorName)) {
-                        secondFilterFactorValue.put(secondFactorName, new TreeMap<String, String>());
-                    }
-
-                    // get remainder of factor names
-                    SortedSet<String> remainingFactorNames = new TreeSet<>(allFactorNames.keySet());
-                    remainingFactorNames.remove(firstFactorName);
-                    remainingFactorNames.remove(secondFactorName);
-                    // TODO: what in case there are more than 3 possible factor types?
-
-                    // forth level: factor value choices for second factor name
-                    for (FactorValue secondFactorValue : secondFactorNames.get(secondFactorName)) {
-                        // arbitrarily taking first of remaining factor names as query factor type
-                        String factorType = allFactorNames.get(remainingFactorNames.first()).first().getType();
-                        String link = gson.toJson(buildFilterFactorValueURL(factorType, firstFactorValue, secondFactorValue));
-                        secondFilterFactorValue.get(secondFactorName).put(secondFactorValue.getValue(), link);
-                    }
-                }
-            }
-        }
-
-        return filterByMenu;
-    }
-
-    SortedSet<FactorValue> extractSelectedFactorValues(SortedMap<String, SortedSet<FactorValue>> allFactorNames, FilterParameters parameters) {
-        // construct label above filter by menu
-        SortedSet<FactorValue> selectedFactorValues = new TreeSet<>();
-        for (String name : allFactorNames.keySet()) {
-            for (FactorValue factorValue : allFactorNames.get(name)) {
-                // this is necessary because what comes back from RequestPreferences are not "complete" FactorValues
-                // they are missing the factor name
-                if (parameters.getFilterFactorValues().contains(factorValue)) {
-                    selectedFactorValues.add(factorValue);
-                }
-            }
-        }
-        return selectedFactorValues;
     }
 
     String formatQueryFactorType(String queryFactorType) {
@@ -227,32 +149,8 @@ public class GeneProfilesPageController extends GeneProfilesController {
         return result;
     }
 
-    FilterFactorValues buildFilterFactorValueURL(String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {
-        return new FilterFactorValues(queryFactorType, firstFactorValue, secondFactorValue);
-    }
-
     String buildDownloadURL(HttpServletRequest request) {
         return request.getRequestURI() + TSV_FILE_EXTENSION + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-    }
-
-    private class FilterFactorValues {
-
-        final String queryFactorType;
-
-        final String filterFactorValuesURL;
-
-        public FilterFactorValues(String queryFT, FactorValue firstFV, FactorValue secondFV) {
-            this.queryFactorType = queryFT;
-            this.filterFactorValuesURL = FactorValue.composeFactorValueURLRepresentation(firstFV) + "," + FactorValue.composeFactorValueURLRepresentation(secondFV);
-        }
-
-        public String getQueryFactorType() {
-            return queryFactorType;
-        }
-
-        public String getFilterFactorValuesURL() {
-            return filterFactorValuesURL;
-        }
     }
 }
 
