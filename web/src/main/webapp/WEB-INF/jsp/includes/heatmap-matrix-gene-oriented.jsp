@@ -127,6 +127,6 @@
     }
 
     //required for the positioning of the stuff that must go inside the top-left corner header cell
-    $("#tooltip-span").parent().css("position","relative").css("display","block");
+    $("#tooltip-span").parent().addClass("heatmap-matrix-top-left-corner");
 
 </script>

@@ -113,12 +113,12 @@
         </table>
         <br/>
     </form:form>
-    <div id="gene-distribution-panel">
+    <div style="position:relative" id="gene-distribution-panel">
+        <div class="barchart-tooltip" id="barChartTooltip"></div>
         <div id="gene-distribution" style="height:100px;width:940px;display:inline-block;">
         </div>
         <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
     </div>
-    <div class="barchart-tooltip" id="barChartTooltip"></div>
 
     <span style = "display:inline-block">
         <div id="gene-distribution-button" style="float:left">

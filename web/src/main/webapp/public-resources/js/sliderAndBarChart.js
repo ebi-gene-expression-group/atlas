@@ -202,8 +202,10 @@ function loadSliderAndPlot(cutoff, experimentAccession) {
             function showBarChartTooltip(x, y, contents) {
                 $("#barChartTooltip").text(contents).css({
                     display:'block',
-                    top:y - 30,
-                    left:x - 6
+                    position:'absolute',
+                    'z-index': 1,
+                    top:y - 350,
+                    left:x - 26
                 });
             }
 

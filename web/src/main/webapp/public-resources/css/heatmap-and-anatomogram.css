@@ -55,3 +55,9 @@
     text-align: left;
     width: 30px;
 }
+
+.heatmap-matrix-top-left-corner {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+}
