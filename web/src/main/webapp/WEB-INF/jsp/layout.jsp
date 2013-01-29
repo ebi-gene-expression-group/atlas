@@ -38,7 +38,6 @@
 
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
     <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/old/atlas-ebi.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/old/atlas-searchform.css">
     <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
@@ -60,7 +59,8 @@
           href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">

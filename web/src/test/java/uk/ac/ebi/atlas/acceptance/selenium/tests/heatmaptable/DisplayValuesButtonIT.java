@@ -53,7 +53,7 @@ public class DisplayValuesButtonIT extends SeleniumFixture {
         //when
         subject.clickDisplayLevelsButton();
         //and
-        subject.setCutoff(1111.1);
+        subject.setCutoff(11.1);
         //and
         subject = subject.submit();
         String displayLevelsValue = subject.getDisplayLevelsButtonValue();

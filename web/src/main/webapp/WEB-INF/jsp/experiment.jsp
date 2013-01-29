@@ -74,7 +74,7 @@
                                 <table style="font-size:10px; float: right" id="heatmap-legenda">
                                     <tr>
                                         <td>
-                                            <span style="color:white" class="gradient-level-min">
+                                            <span style="display:none" class="gradient-level-min">
                                                 <fmt:formatNumber type="number" value="${minExpressionLevel}"
                                                                   groupingUsed="false"/>
                                             </span>
@@ -95,7 +95,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span style="color:white" class="gradient-level-max">
+                                            <span style="display:none" class="gradient-level-max">
                                                 <fmt:formatNumber type="number" value="${maxExpressionLevel}"
                                                                   groupingUsed="false"/>
                                             </span>

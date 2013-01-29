@@ -96,7 +96,7 @@ public class HeatmapTablePage extends TablePage {
     public boolean areGradientLevelsHidden() {
         String style = gradientLevelsMin.getAttribute("style");
         String style2 = gradientLevelsMax.getAttribute("style");
-        return style.contains("color") && style.contains("white") && style2.contains("color") && style2.contains("white");
+        return style.contains("display") && style.contains("none") && style2.contains("display") && style2.contains("none");
     }
 
     public Boolean areExpressionLevelsHidden() {
