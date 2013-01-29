@@ -87,7 +87,7 @@
                      <button id="download-profiles" class="button-image" value="D"></button>
 
                     -->
-                    <a id="download-profiles-link" title="Download query results" href="${downloadUrl}"
+                    <a id="download-profiles-link" title="Top 50 genes displayed on page. Download results to see the rest." href="${downloadUrl}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
                              src="resources/images/download_blue_small.png">

@@ -7,12 +7,12 @@
         <tbody>
         <tr>
             <td>
-                <div class="experiment-accession" data-help-loc="#experimentAcc">
+                <div class="experiment-accession">
                     <a href="experiments/${experimentAccession}">${experimentAccession}</a>
                 </div>
             </td>
             <td>
-                <div id="experimentDescription" style="font-weight: bold;" data-help-loc="#experimentTitle">
+                <div id="experimentDescription" style="font-weight: bold;">
                     ${experimentDescription}
                 </div>
                 <div>Organism: ${specie}</div>
@@ -34,11 +34,6 @@
                        target="_blank">
                         <img alt="ArrayExpress"
                              src="resources/images/ae2_icon.png"/></a>
-
-                    <a id="display-help" class="button-image" title="Show additional help" class="button-image">
-                        <img id="display-help-image"
-                             style="width:23px;height:23px" src="resources/images/help.png"/>
-                    </a>
 
                 </div>
             </td>
