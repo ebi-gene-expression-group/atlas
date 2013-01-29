@@ -28,40 +28,36 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class OneCellLineAndCutoff05IT extends SeleniumFixture {
+public class OneCellLineAndCutoff05SpecificSearchIT extends SeleniumFixture {
 
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
         subject = new Geod26284HeatmapTablePage(driver,
-                "heatmapMatrixSize=5&filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+rna&queryFactorValues=cd34-positive+mobilized+cell+cell+line&cutoff=0.5");
+                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+rna&queryFactorType=&heatmapMatrixSize=50&displayGeneDistribution=false&geneQuery=&queryFactorValues=cd34-positive+mobilized+cell+cell+line&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
         subject.get();
     }
 
     @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
-        assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("AC239868.2",
-                "CELF2",
-                "PTBP3",
-                "DEPTOR",
-                "LINGO3"));
+        assertThat(selectedGenes.get(0), is("PTBP3"));
+        assertThat(selectedGenes.get(1), is("THOC6"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("693", "189", "1424", "2681", "24"));
+        assertThat(subject.getFirstGeneProfile(), hasItems("92", "14", "7", "12", "9"));
     }
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("190"), is(true));
+        assertThat(subject.getGeneCount().contains("25"), is(true));
     }
 
 

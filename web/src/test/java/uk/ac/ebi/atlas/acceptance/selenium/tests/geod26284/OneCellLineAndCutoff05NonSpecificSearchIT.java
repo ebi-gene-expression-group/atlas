@@ -28,40 +28,36 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TwoCellLinesAndCutoff05IT extends SeleniumFixture {
+public class OneCellLineAndCutoff05NonSpecificSearchIT extends SeleniumFixture {
 
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
         subject = new Geod26284HeatmapTablePage(driver,
-                "heatmapMatrixSize=5&filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+rna&queryFactorValues=cd34-positive+mobilized+cell+cell+line&queryFactorValues=imr-90&cutoff=0.5");
+                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+rna&queryFactorType=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=&queryFactorValues=cd34-positive+mobilized+cell+cell+line&_queryFactorValues=1&_specific=on&cutoff=0.5");
         subject.get();
     }
 
     @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
-        assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("MIB2",
-                "RHBDF1",
-                "FASTK",
-                "MIR22HG",
-                "HAPLN3"));
+        assertThat(selectedGenes.get(0), is("TMSB10"));
+        assertThat(selectedGenes.get(1), is("PTBP3"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("15", "11", "3", "12", "291"));
+        assertThat(subject.getFirstGeneProfile(), hasItems("123", "288", "490", "695", "1023"));
     }
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("223"), is(true));
+        assertThat(subject.getGeneCount().contains("25"), is(true));
     }
 
 
