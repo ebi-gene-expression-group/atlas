@@ -209,8 +209,11 @@
                 <configuration>
                     <!-- unfortunately js files seem to be loaded only if added to preloadSources -->
                     <preloadSources>
+                        <include>${jasmine.js.src.location}/jquery-1.8.3.js</include>
+                        <include>${jasmine.js.src.location}/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.js</include>
                         <include>${jasmine.js.src.location}/jasmineDemo.js</include>
                         <include>${jasmine.js.src.location}/sliderAndBarChart.js</include>
+                        <include>${jasmine.js.src.location}/helpTooltipsModule.js</include>
                     </preloadSources>
                     <sourceIncludes>
                         <include>${project.basedir}/${jasmine.js.src.location}/**</include>
