@@ -35,9 +35,9 @@
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
     <thead>
     <tr>
-        <th id="assaysHeader" class="header-cell bl br bt bb" rowspan="2">${assayHeader}</th>
-        <th id="samplesHeader" class="samples br bt">Sample Characteristics</th>
-        <th id="factorsHeader" class="factors br bt">Factor Values</th>
+        <th id="assaysHeader" class="header-cell bl br bt bb" rowspan="2">${assayHeader}<span style="margin-left:3px;" data-help-loc="#runAccs"></span></th>
+        <th id="samplesHeader" class="samples br bt">Sample Characteristics<span style="margin-left:3px;" data-help-loc="#sampleChars"></span></th>
+        <th id="factorsHeader" class="factors br bt">Factor Values<span style="margin-left:3px;" data-help-loc="#factorValues"></span></th>
     </tr>
     <tr id="headerStub"></tr>
     </thead>
@@ -45,6 +45,8 @@
 </table>
 
 <p></p>
+
+<div id="help-placeholder" style="display: none"></div>
 
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
@@ -138,6 +140,8 @@
         });
 
         $('#download-experiment-design-link').button().tooltip();
-    });
+
+        helpTooltipsModule.init('experiment-design');
+    })(jQuery);
 
 </script>
