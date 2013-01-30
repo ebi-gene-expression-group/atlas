@@ -55,7 +55,7 @@ var helpTooltipsModule = (function($) {
                 tooltipClass: "help-tooltip",
                 content: function(callback) {
                     var tooltipHelpHtmlId = $(this).parent().attr('data-help-loc');
-                    $("#test").load(getHelpLocation(pageName, tooltipHelpHtmlId),
+                    $("#help-placeholder").load(getHelpLocation(pageName, tooltipHelpHtmlId),
                         function (response, status, xhr) {
                             var tooltipContent;
                             if (status === "error") {
