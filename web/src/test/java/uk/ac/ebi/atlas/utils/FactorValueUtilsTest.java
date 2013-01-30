@@ -63,10 +63,4 @@ public class FactorValueUtilsTest {
         assertThat(subject.factorValuesByName(factorValues).get(ORGANISM_PART), hasItems(factorValue1, factorValue2));
         assertThat(subject.factorValuesByName(factorValues).get(CELL_LINE), hasItems(factorValue3));
     }
-
-    @Test
-    public void testFormatFactorTypeForDisplay() {
-        assertThat(subject.formatFactorTypeForDisplay(ORGANISM_PART), is("Organism part"));
-        assertThat(subject.formatFactorTypeForDisplay(CELL_LINE), is("Cell line"));
-    }
 }

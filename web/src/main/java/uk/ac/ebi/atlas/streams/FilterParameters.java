@@ -86,6 +86,17 @@ public class FilterParameters {
         return queryFactorType;
     }
 
+    public String formattedQueryFactorType() {
+        return formatForDisplay(queryFactorType);
+    }
+
+    protected String formatForDisplay(String queryFactorType){
+        // this formats the default factor type for display on web page
+        String result = queryFactorType.replaceAll("_", " ").toLowerCase();
+        result = result.substring(0, 1).toUpperCase() + result.substring(1);
+        return result;
+    }
+
     @Override
     public String toString() {
         return "FilterParameters{" +
@@ -94,7 +105,7 @@ public class FilterParameters {
                 ", cutoff=" + cutoff +
                 ", hasGenesForQuery=" + hasGenesForQuery +
                 ", queryFactorValues=" + queryFactorValues +
-                ", queryFactorType='" + queryFactorType + '\'' +
+                ", queryFactorType=" + queryFactorType +
                 '}';
     }
 

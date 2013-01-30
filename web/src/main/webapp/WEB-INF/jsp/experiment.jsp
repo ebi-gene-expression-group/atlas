@@ -166,7 +166,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             }
 
-            var formattedQueryFactorType = "${factorValueUtils.formatFactorTypeForDisplay(queryFactorType)}";
+            var formattedQueryFactorType = "${formattedQueryFactorType}";
 
             if ($.browser.msie && $.browser.version <= 8.0) {
 

@@ -45,10 +45,4 @@ public class FactorValueUtils {
         return factorValuesByName;
     }
 
-    public String formatFactorTypeForDisplay(String queryFactorType) {
-        // this formats the default factor type for display on web page
-        String result = queryFactorType.replaceAll("_", " ").toLowerCase();
-        result = result.substring(0, 1).toUpperCase() + result.substring(1);
-        return result;
-    }
 }

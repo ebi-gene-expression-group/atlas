@@ -1,0 +1,57 @@
+package uk.ac.ebi.atlas.streams;
+
+import com.google.common.collect.Sets;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.geneindex.IndexClient;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
+public class FilterParametersTest {
+
+    public static final String ORGANISM_PART = "ORGANISM_PART";
+    public static final String CELL_LINE = "CELL_LINE";
+    private static final String EXPERIMENT_ACCESSION = "E-GEKO";
+
+    private FilterParameters subject;
+
+    @Mock
+    ExperimentsCache experimentCacheMock;
+
+    @Mock
+    Experiment experimentMock;
+
+    @Mock
+    IndexClient indexClientMock;
+
+    @Before
+    public void initSubject(){
+
+        when(experimentMock.getFactorName(anyString(),anyString())).thenReturn("X");
+
+        when(experimentCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
+
+        FilterParameters.Builder builder = new FilterParameters.Builder(experimentCacheMock, indexClientMock);
+
+        subject = builder.forExperimentAccession(EXPERIMENT_ACCESSION)
+                         .withFilterFactorValues(Sets.newHashSet("A:B","C:D"))
+                         .build();
+
+    }
+
+    @Test
+    public void testFormatFactorTypeForDisplay() {
+        assertThat(subject.formatForDisplay(ORGANISM_PART), is("Organism part"));
+        assertThat(subject.formatForDisplay(CELL_LINE), is("Cell line"));
+    }
+
+}

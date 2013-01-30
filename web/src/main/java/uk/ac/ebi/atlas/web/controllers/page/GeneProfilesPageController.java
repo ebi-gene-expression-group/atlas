@@ -110,7 +110,10 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("experimentAccession", experimentAccession);
 
+            //ToDo: is this really used anywhere on jsp's?
             model.addAttribute("queryFactorType", filterParameters.getQueryFactorType());
+
+            model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
 
             model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
 

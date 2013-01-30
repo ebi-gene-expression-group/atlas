@@ -25,7 +25,6 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<c:set var="formattedQueryFactorType" value="${factorValueUtils.formatFactorTypeForDisplay(queryFactorType)}"/>
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="filterFactorValues"/>
