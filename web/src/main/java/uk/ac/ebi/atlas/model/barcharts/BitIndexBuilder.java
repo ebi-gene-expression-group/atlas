@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.CompleteGeneProfile;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorValueSet;
+import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 
 import javax.inject.Inject;
@@ -20,7 +20,7 @@ public class BitIndexBuilder {
 
     private static final Logger logger = Logger.getLogger(BitIndexBuilder.class);
 
-    private NavigableMap<Double, Map<FactorValueSet, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
+    private NavigableMap<Double, Map<Set<FactorValue>, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
 
     private CutoffScale cutoffScale;
 
@@ -67,7 +67,7 @@ public class BitIndexBuilder {
 
             for (Double cutoff : cutoffsSmallerThanExpression) {
 
-                Map<FactorValueSet, BitSet> geneBitSets = factorSetGeneExpressionIndexes.get(cutoff);
+                Map<Set<FactorValue>, BitSet> geneBitSets = factorSetGeneExpressionIndexes.get(cutoff);
 
                 if (geneBitSets == null) {
                     geneBitSets = new HashMap<>();
@@ -75,7 +75,7 @@ public class BitIndexBuilder {
 
                 }
 
-                FactorValueSet factorValueSet = expression.getFactorValueSet();
+                Set<FactorValue> factorValueSet = expression.getAllFactorValues();
                 BitSet bitSet = geneBitSets.get(factorValueSet);
                 if (bitSet == null) {
                     bitSet = new BitSet(BarChartTrader.AVERAGE_GENES_IN_EXPERIMENT);
@@ -107,7 +107,7 @@ public class BitIndexBuilder {
 
     }
 
-    protected NavigableMap<Double, Map<FactorValueSet, BitSet>> getGeneExpressionIndexes() {
+    protected NavigableMap<Double, Map<Set<FactorValue>, BitSet>> getGeneExpressionIndexes() {
         return factorSetGeneExpressionIndexes;
     }
 

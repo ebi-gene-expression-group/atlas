@@ -30,7 +30,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.model.FactorValueSet;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 
@@ -79,8 +78,8 @@ public class BarChartTraderIT {
 
     @Test
     public void chartDataForSomeExperimentalFactorsTest() {
-        SortedMap<Double, Integer> chartData = subject.getChart(null, new FactorValueSet(Sets.newHashSet(new FactorValue(ORGANISM_PART, "liver")
-                , new FactorValue(ORGANISM_PART, "lung"))));
+        SortedMap<Double, Integer> chartData = subject.getChart(null, Sets.newHashSet(new FactorValue(ORGANISM_PART, "liver")
+                , new FactorValue(ORGANISM_PART, "lung")));
         //returns
         assertThat(chartData, hasEntry(0.0, 21950));
         assertThat(chartData, hasEntry(2.0, 14758));
