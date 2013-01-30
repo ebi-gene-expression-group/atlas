@@ -48,6 +48,11 @@ public class FactorValue implements Comparable<FactorValue> {
         return type;
     }
 
+    public FactorValue setName(String name){
+        this.name = name;
+        return this;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(type, value);

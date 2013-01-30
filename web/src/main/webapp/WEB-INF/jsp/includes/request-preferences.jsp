@@ -27,7 +27,7 @@
 
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
-        <form:hidden path="filterFactorValues"/>
+        <form:hidden path="serializedFilterFactorValues"/>
         <form:hidden path="queryFactorType"/>
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>

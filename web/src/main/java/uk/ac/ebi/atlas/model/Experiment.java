@@ -33,6 +33,8 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+//ToDo: this class needs a builder, for example in order to fully load defaultFilterFactorValues we first have to load all the metadata (we need factorValuesByType).
+//ToDo: the way it is now we are loading incomplete DefaultFilterFactorValues (they miss their name), forcing client api to callback and fetch the name in an extra step.
 public class Experiment {
 
     private static final Logger logger = Logger.getLogger(Experiment.class);
@@ -42,7 +44,7 @@ public class Experiment {
     private String specie;
 
     private String defaultQueryFactorType;
-    private Set<FactorValue> defaultFilterFactorTypes;
+    private Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
 
     private Map<String, SortedSet<FactorValue>> factorValuesByType = new HashMap<>();
 
@@ -53,12 +55,12 @@ public class Experiment {
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultQueryFactorType, Set<FactorValue> defaultFilterFactorTypes, String specie) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultQueryFactorType, Set<FactorValue> defaultFilterFactorValues, String specie) {
         this.experimentAccession = experimentAccession;
         this.description = description;
         this.experimentRunAccessions = experimentRunAccessions;
         this.defaultQueryFactorType = defaultQueryFactorType;
-        this.defaultFilterFactorTypes = defaultFilterFactorTypes;
+        setDefaultFilterFactorValues(defaultFilterFactorValues);
         this.specie = specie;
     }
 
@@ -68,7 +70,7 @@ public class Experiment {
                 return factorValue.getName();
             }
         }
-        throw new IllegalStateException("Supplied FactorValue type and value combination not valid in this experiment.");
+        throw new IllegalStateException("Type: " + type + " and value: " + value + " are not a valid combination in this experiment.");
     }
 
     public String getDefaultQueryFactorType() {
@@ -76,7 +78,7 @@ public class Experiment {
     }
 
     public Set<FactorValue> getDefaultFilterFactorValues() {
-        return defaultFilterFactorTypes;
+        return defaultFilterFactorValues;
     }
 
     public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
@@ -181,5 +183,13 @@ public class Experiment {
 
     public SortedSetMultimap<FactorValue, FactorValue> getValidFactorValueCombinations() {
         return validFactorValueCombinations;
+    }
+
+    public void setDefaultFilterFactorValues(Set<FactorValue> defaultFilterFactorValues) {
+        for (FactorValue defaultFilterFactorValue : defaultFilterFactorValues) {
+            //String factorValueName = getFactorName(defaultFilterFactorValue.getType(), defaultFilterFactorValue.getName());
+            //defaultFilterFactorValue.setName(factorValueName);
+            this.defaultFilterFactorValues.add(defaultFilterFactorValue);
+        }
     }
 }

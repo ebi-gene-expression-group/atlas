@@ -22,51 +22,47 @@
 
 package uk.ac.ebi.atlas.streams;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.geneindex.IndexClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
-// should have been declared final, but cannot mock final classes
+//ToDo: this class name smells bad, GeneProfileInputStreamFilter now only requires queryFactorValues from this class and that is available also from other beans.
 public class FilterParameters {
 
-    private Set<String> geneIDs;
+    private String geneQuery;
 
     private Set<FactorValue> filterFactorValues;
 
     private Double cutoff;
 
-    private boolean hasGenesForQuery;
 
     private Set<FactorValue> queryFactorValues;
 
     private String queryFactorType;
 
     private FilterParameters(Builder builder) {
-        geneIDs = builder.geneIDs;
+        geneQuery = builder.geneQuery;
         filterFactorValues = builder.filterFactorValues;
         cutoff = builder.cutoff;
-        hasGenesForQuery = builder.hasGenesForQuery;
         queryFactorValues = builder.queryFactorValues;
         queryFactorType = builder.queryFactorType;
 
     }
 
-    public boolean hasGenesForQuery() {
-        return hasGenesForQuery;
-    }
-
-    public Set<String> getGeneIDs() {
-        return geneIDs;
+    public String getGeneQuery() {
+        return geneQuery;
     }
 
     public Set<FactorValue> getFilterFactorValues() {
@@ -76,7 +72,6 @@ public class FilterParameters {
     public Double getCutoff() {
         return cutoff;
     }
-
 
     public Set<FactorValue> getQueryFactorValues() {
         return queryFactorValues;
@@ -91,52 +86,41 @@ public class FilterParameters {
     }
 
     protected String formatForDisplay(String queryFactorType){
-        // this formats the default factor type for display on web page
-        String result = queryFactorType.replaceAll("_", " ").toLowerCase();
-        result = result.substring(0, 1).toUpperCase() + result.substring(1);
-        return result;
+        return StringUtils.capitalize(queryFactorType.replaceAll("_", " ").toLowerCase());
     }
 
     @Override
     public String toString() {
-        return "FilterParameters{" +
-                "geneIDs=" + geneIDs +
-                ", filterFactorValues=" + filterFactorValues +
-                ", cutoff=" + cutoff +
-                ", hasGenesForQuery=" + hasGenesForQuery +
-                ", queryFactorValues=" + queryFactorValues +
-                ", queryFactorType=" + queryFactorType +
-                '}';
+        return Objects.toStringHelper(this.getClass())
+                    .add("geneQuery", geneQuery)
+                    .add("filterFactorValues", filterFactorValues)
+                    .add("cutoff", cutoff)
+                    .add("queryFactorValues", queryFactorValues)
+                    .add("queryFactorType", queryFactorType)
+                .toString();
     }
 
     @Named("filterParametersBuilder")
     @Scope("request")
     public static class Builder {
-        //required
-        private String experimentAccession;
+
         private Double cutoff;
 
-        //optional
         private String queryFactorType;
 
-        private Set<String> geneIDs;
-        private Set<FactorValue> filterFactorValues;
         private String geneQuery;
-        private Set<FactorValue> queryFactorValues;
-        private boolean hasGenesForQuery;
+        private Set<FactorValue> filterFactorValues = new HashSet<>();
+        private Set<FactorValue> queryFactorValues = new HashSet<>();
+        private Set<String> queryFactorValuesStrings = Collections.EMPTY_SET;
+        private Set<String> serializedFilterFactorValues = Collections.EMPTY_SET;
 
+        Experiment experiment;
 
-        private ExperimentsCache experimentsCache;
-        private IndexClient indexClient;
-
-        @Inject
-        public Builder(ExperimentsCache experimentsCache, IndexClient indexClient) {
-            this.experimentsCache = experimentsCache;
-            this.indexClient = indexClient;
+        public Builder() {
         }
 
-        public Builder forExperimentAccession(String experimentAccession) {
-            this.experimentAccession = experimentAccession;
+        public Builder forExperiment(Experiment experiment) {
+            this.experiment = experiment;
             return this;
         }
 
@@ -150,58 +134,55 @@ public class FilterParameters {
             return this;
         }
 
-        public Builder withFilterFactorValues(Set<String> filterFactorValues) {
-            checkState(experimentAccession != null, "Please invoke forExperimentAccession before any other method.");
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-            this.filterFactorValues = new HashSet<>();
-
-            for (String filterFactorValueString : filterFactorValues) {
-                FactorValue factorValue = buildFactorValueFromFilterFactorValueString(experiment, filterFactorValueString);
-                this.filterFactorValues.add(factorValue);
+        public Builder withFilterFactorValues(Set<String> serializedFilterFactorValues) {
+            if(CollectionUtils.isNotEmpty(serializedFilterFactorValues)){
+                this.serializedFilterFactorValues = serializedFilterFactorValues;
             }
-
             return this;
         }
 
-        private FactorValue buildFactorValueFromFilterFactorValueString(Experiment experiment, String filterFactorValueString) {
-            String[] split = filterFactorValueString.split(FactorValue.FACTOR_VALUE_SEPARATOR);
+        protected FactorValue buildFromSerializedFilterFactorValues(Experiment experiment, String serializedFilterFactorValues) {
+            String[] split = serializedFilterFactorValues.split(FactorValue.FACTOR_VALUE_SEPARATOR);
             if (split.length == 2) {
                 String name = experiment.getFactorName(split[0], split[1]);
                 return new FactorValue(split[0], name, split[1]);
             }
-            throw new IllegalArgumentException("FactorValue string should be colon separated between type and value.");
+            throw new IllegalArgumentException("serialized FactorValue string should be colon separated between type and value.");
         }
 
         public Builder withGeneQuery(String geneQuery) {
-            this.hasGenesForQuery = !StringUtils.isEmpty(geneQuery);
-
-            this.geneIDs = new HashSet<>();
-            //init geneIds
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-            this.geneIDs.addAll(indexClient.findGeneIds(geneQuery, experiment.getSpecie()));
+            this.geneQuery = geneQuery;
             return this;
-
         }
 
-        public Builder withQueryFactorValues(Set<String> queryFactorValues) {
-            //init queryFactorValues
-            this.queryFactorValues = new HashSet<>();
-            //ToDo: check if these assertions can be removed...
-            if (queryFactorValues != null) {
-                if (StringUtils.isEmpty(queryFactorType)) {
-                    Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-                    queryFactorType = experiment.getDefaultQueryFactorType();
-                }
-                for (String queryFactorValue : queryFactorValues) {
-                    this.queryFactorValues.add(new FactorValue(queryFactorType, queryFactorType, queryFactorValue));
-                }
+        public Builder withQueryFactorValues(Set<String> queryFactorValuesString) {
+            if(CollectionUtils.isNotEmpty(queryFactorValuesString)){
+                this.queryFactorValuesStrings = queryFactorValuesString;
             }
             return this;
         }
 
         public FilterParameters build() {
+            checkState(experiment != null, "Please invoke forExperiment before build");
 
+            if (StringUtils.isBlank(queryFactorType)){
+                queryFactorType = experiment.getDefaultQueryFactorType();
+            }
+            if (CollectionUtils.isEmpty(serializedFilterFactorValues)){
+                for (FactorValue factorValue: experiment.getDefaultFilterFactorValues()){
+                    //ToDo: this should be removed as soon as we have a proper builder for the Experiment class, so that experiment can fetch DefaultFactorValue names once and for all at load time
+                    String factorValueName = experiment.getFactorName(factorValue.getType(), factorValue.getValue());
+                    factorValue.setName(factorValueName);
+                    filterFactorValues.addAll(experiment.getDefaultFilterFactorValues());
+                }
+            } else {
+                for (String serializedFilterFactorValue : serializedFilterFactorValues) {
+                    this.filterFactorValues.add(buildFromSerializedFilterFactorValues(experiment, serializedFilterFactorValue));
+                }
+            }
+            for (String queryFactorValueString : queryFactorValuesStrings) {
+                this.queryFactorValues.add(new FactorValue(queryFactorType, queryFactorValueString));
+            }
             return new FilterParameters(this);
         }
     }

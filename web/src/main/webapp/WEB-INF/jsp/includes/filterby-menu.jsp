@@ -26,19 +26,12 @@
   --%>
 
 
-<c:choose>
-    <c:when test="${not empty selectedFactorValues}">
-        <div class="filters-frame">
-            <c:forEach items="${selectedFactorValues}" var="factorValue">
-                <div class="filter-name">${factorValue.name}:</div>${factorValue.value}<br/>
-            </c:forEach>
-        </div>
-        <c:set var="filterMenuLabel" value="Change filters"/>
-    </c:when>
-    <c:otherwise>
-        <c:set var="filterMenuLabel" value="Choose filters"/>
-    </c:otherwise>
-</c:choose>
+<div class="filters-frame">
+    <c:forEach items="${selectedFactorValues}" var="factorValue">
+        <div class="filter-name">${factorValue.name}:</div>${factorValue.value}<br/>
+    </c:forEach>
+</div>
+<c:set var="filterMenuLabel" value="Change filters"/>
 
 <span>
     <ul id="filterBy" style="display: none">
@@ -82,7 +75,7 @@
             var filterFactorValuesFromJSON = JSON.parse($(this).attr('data'));
             $("#queryFactorType").val(filterFactorValuesFromJSON.queryFactorType);
             $("#queryFactorValues").val(''); // clear previous selection
-            $("#filterFactorValues").val(filterFactorValuesFromJSON.filterFactorValuesURL);
+            $("#serializedFilterFactorValues").val(filterFactorValuesFromJSON.filterFactorValuesURL);
             $("form#prefForm").submit();
         });
         $("#filterBy").show();

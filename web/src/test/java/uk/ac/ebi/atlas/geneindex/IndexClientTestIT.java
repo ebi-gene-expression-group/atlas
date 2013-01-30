@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class IndexClientTestIT {
 
-    private IndexClient subject;
+    private SolrClient subject;
 
     private GenePropertyQueryBuilder queryBuilder;
 
@@ -44,7 +44,7 @@ public class IndexClientTestIT {
 
         queryBuilder = mock(GenePropertyQueryBuilder.class);
 
-        subject = new IndexClient(restTemplate, queryBuilder);
+        subject = new SolrClient(restTemplate, queryBuilder);
 
         subject.setServerURL(solrURL);
     }

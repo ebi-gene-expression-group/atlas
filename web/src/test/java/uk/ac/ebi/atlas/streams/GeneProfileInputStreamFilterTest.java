@@ -57,7 +57,7 @@ public class GeneProfileInputStreamFilterTest {
     @Mock
     private GeneProfile gene3ProfileMock;
 
-    private Set<String> geneIDs = Sets.newHashSet(GENE_1, GENE_2);
+    private Set<String> geneIDs = Sets.newHashSet("GENE1", "GENE2");
 
     private FactorValue factorValue1 = new FactorValue("ORG", null, "heart");
     private FactorValue factorValue2 = new FactorValue("ORG", null, "hair");
@@ -84,15 +84,13 @@ public class GeneProfileInputStreamFilterTest {
         when(gene3ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_2)));
 
         when(filterParametersMock.getFilterFactorValues()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
-        when(filterParametersMock.getQueryFactorValues()).thenReturn(factorValues);
-        when(filterParametersMock.getGeneIDs()).thenReturn(geneIDs);
 
     }
 
     @Test
     public void acceptanceCriteriaTestShouldBeBasedOnGeneIDsSet() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, filterParametersMock);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, factorValues);
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
@@ -105,8 +103,7 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty() {
         //given
-        when(filterParametersMock.getGeneIDs()).thenReturn(EMPTY_GENE_IDS);
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, filterParametersMock);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_GENE_IDS, factorValues);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 

@@ -36,13 +36,13 @@ import java.util.SortedSet;
 @Scope("request")
 public class GeneProfilesController {
 
-    private FilterParameters.Builder filterParameterBuilder;
+    private FilterParameters.Builder filtersParameterBuilder;
     private ExperimentsCache experimentsCache;
     private GeneExpressionPrecondition geneExpressionPrecondition;
 
-    public GeneProfilesController(FilterParameters.Builder filterParameterBuilder, ExperimentsCache experimentsCache,
+    public GeneProfilesController(FilterParameters.Builder filtersParameterBuilder, ExperimentsCache experimentsCache,
                                   GeneExpressionPrecondition geneExpressionPrecondition) {
-        this.filterParameterBuilder = filterParameterBuilder;
+        this.filtersParameterBuilder = filtersParameterBuilder;
         this.experimentsCache = experimentsCache;
         this.geneExpressionPrecondition = geneExpressionPrecondition;
     }
@@ -51,28 +51,10 @@ public class GeneProfilesController {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        // check for query factor type present, otherwise use experiment default
-        String queryFactorType;
-        if (preferences.getQueryFactorType() == null ||
-                preferences.getQueryFactorType().trim().length() == 0) {
-            queryFactorType = experiment.getDefaultQueryFactorType();
-        } else {
-            queryFactorType = preferences.getQueryFactorType();
-        }
-
-        // check for filter factor values present, otherwise use experiment default
-        SortedSet<String> filterFactorValues;
-        if (preferences.getFilterFactorValues() == null ||
-                preferences.getFilterFactorValues().size() == 0) {
-            filterFactorValues = FactorValue.getFactorValuesURLRepresentation(experiment.getDefaultFilterFactorValues());
-        } else {
-            filterFactorValues = preferences.getFilterFactorValues();
-        }
-
-        return filterParameterBuilder.forExperimentAccession(experimentAccession)
+        return filtersParameterBuilder.forExperiment(experiment)
                 .withCutoff(preferences.getCutoff())
-                .withFilterFactorValues(filterFactorValues)
-                .withQueryFactorType(queryFactorType)
+                .withFilterFactorValues(preferences.getSerializedFilterFactorValues())
+                .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())
                 .withGeneQuery(preferences.getGeneQuery())
                 .build();

@@ -27,6 +27,8 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collections;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -57,7 +59,7 @@ public class ExperimentTest {
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factorValue3);
         experimentRun3.addFactorValue(factorValue4);
 
-        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorValue1.getType(), null, specie)
+        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorValue1.getType(), Collections.EMPTY_SET, specie)
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
     }
 

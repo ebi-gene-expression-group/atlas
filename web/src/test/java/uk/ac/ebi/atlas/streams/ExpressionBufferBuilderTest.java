@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class ExpressionBufferBuilderTest {
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factorValueMock2);
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factorValueMock3);
 
-        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorValueMock1.getType(), null, specie)
+        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorValueMock1.getType(), Collections.EMPTY_SET, specie)
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);

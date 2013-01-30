@@ -48,7 +48,7 @@ public class RequestPreferences {
     @Min(value = 0, message = "The expression level cutoff must be greater than 0")
     private Double cutoff = DEFAULT_CUTOFF;
 
-    private SortedSet<String> filterFactorValues;
+    private SortedSet<String> serializedFilterFactorValues;
 
     private String queryFactorType;
 
@@ -83,12 +83,12 @@ public class RequestPreferences {
     }
 
 
-    public SortedSet<String> getFilterFactorValues() {
-        return filterFactorValues;
+    public SortedSet<String> getSerializedFilterFactorValues() {
+        return serializedFilterFactorValues;
     }
 
-    public void setFilterFactorValues(SortedSet<String> filterFactorValues) {
-        this.filterFactorValues = filterFactorValues;
+    public void setSerializedFilterFactorValues(SortedSet<String> serializedFilterFactorValues) {
+        this.serializedFilterFactorValues = serializedFilterFactorValues;
     }
 
     public boolean isDisplayGeneDistribution() {
@@ -145,7 +145,7 @@ public class RequestPreferences {
                 .add("queryFactorType", queryFactorType)
                 .add("queryFactorValues", queryFactorValues)
                 .add("cutoff", cutoff)
-                .add("filterFactorValues", filterFactorValues)
+                .add("serializedFilterFactorValues", serializedFilterFactorValues)
                 .toString();
     }
 

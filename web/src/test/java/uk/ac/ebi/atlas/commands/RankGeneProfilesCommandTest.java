@@ -23,13 +23,14 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneindex.IndexClient;
+import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileInputStreamMock;
@@ -54,7 +55,7 @@ public class RankGeneProfilesCommandTest {
     private GeneProfileInputStreamBuilder geneProfileInputStreamBuilderMock;
 
     @Mock
-    private IndexClient indexClientMock;
+    private SolrClient solrClientMock;
 
     @Mock
     private ExperimentsCache experimentsCacheMock;
@@ -81,7 +82,7 @@ public class RankGeneProfilesCommandTest {
     public void initializeSubject() throws Exception {
 
         // no filtering should be done here
-        when(indexClientMock.findGeneIds(anyString(), anyString())).thenReturn(Lists.<String>newArrayList());
+        when(solrClientMock.findGeneIds(anyString(), anyString())).thenReturn(Lists.<String>newArrayList());
 
         when(experimentMock.getSpecie()).thenReturn("SPECIE");
 

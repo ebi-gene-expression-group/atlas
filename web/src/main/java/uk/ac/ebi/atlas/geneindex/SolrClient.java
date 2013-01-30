@@ -22,6 +22,10 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,12 +35,14 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class IndexClient {
-    private static final Logger logger = Logger.getLogger(IndexClient.class);
+public class SolrClient {
+    private static final Logger logger = Logger.getLogger(SolrClient.class);
 
     private static final String JSON_PATH_EXPRESSION = "$.response.docs[*].identifier";
 
@@ -50,7 +56,7 @@ public class IndexClient {
     private GenePropertyQueryBuilder queryBuilder;
 
     @Inject
-    public IndexClient(RestTemplate restTemplate, GenePropertyQueryBuilder queryBuilder) {
+    public SolrClient(RestTemplate restTemplate, GenePropertyQueryBuilder queryBuilder) {
         this.restTemplate = restTemplate;
         this.queryBuilder = queryBuilder;
     }
@@ -63,6 +69,22 @@ public class IndexClient {
     public List<String> findGeneIds(String searchText, String organism) {
         String jsonString = findGeneIdJson(searchText, organism);
         return extractGeneIds(jsonString);
+    }
+
+    public Set<String> findGeneIds(String searchText, String organism, boolean returnUppercase) {
+        List<String> geneIds = findGeneIds(searchText, organism);
+        if (returnUppercase) {
+            return toUppercase(geneIds);
+        }
+        return Sets.newHashSet(geneIds);
+    }
+
+    public Set<String> toUppercase(List<String> geneIds){
+        return Sets.newHashSet(Iterables.transform(geneIds, new Function<String, String>() {
+            public String apply(String geneId) {
+                return geneId.toUpperCase();
+            }
+        }));
     }
 
     protected String findGeneIdJson(String searchText, String organism) {

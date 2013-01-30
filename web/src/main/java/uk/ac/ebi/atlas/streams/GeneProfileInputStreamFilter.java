@@ -29,23 +29,19 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GeneProfile> {
 
-    private Set<String> geneIDs;
+    private Set<String> uppercaseGeneIDs;
 
     private Set<FactorValue> queryFactorValues;
 
-    private Set<FactorValue> filterFactorValues;
-
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, FilterParameters filterParameters) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> uppercaseGeneIDs, Set<FactorValue> queryFactorValues) {
         super(geneProfileInputStream);
 
-        this.filterFactorValues = filterParameters.getFilterFactorValues();
-        this.geneIDs = toUpperCaseGeneIds(filterParameters.getGeneIDs());
-        this.queryFactorValues = filterParameters.getQueryFactorValues();
+        this.uppercaseGeneIDs = uppercaseGeneIDs;
+        this.queryFactorValues = queryFactorValues;
     }
 
     @Override
@@ -54,7 +50,6 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
         return new Predicate<GeneProfile>() {
             @Override
             public boolean apply(GeneProfile profile) {
-                //ToDo: this need to be simplified when we remove organismParts....
 
                 boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
                 return checkGene && (CollectionUtils.isEmpty(queryFactorValues) || hasTheRightExpressionProfile(profile));
@@ -68,18 +63,9 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
     }
 
     private boolean checkGeneId(String geneId, String geneName) {
-        return CollectionUtils.isEmpty(geneIDs)
-                || geneIDs.contains(geneId.toUpperCase())
-                || (geneName != null && geneIDs.contains(geneName.toUpperCase()));
+        return CollectionUtils.isEmpty(uppercaseGeneIDs)
+                || uppercaseGeneIDs.contains(geneId.toUpperCase())
+                || (geneName != null && uppercaseGeneIDs.contains(geneName.toUpperCase()));
     }
 
-    private Set<String> toUpperCaseGeneIds(Set<String> strings) {
-        Set<String> capitalizedStrings = new HashSet<>();
-        if (strings != null) {
-            for (String s : strings) {
-                capitalizedStrings.add(s.toUpperCase());
-            }
-        }
-        return capitalizedStrings;
-    }
 }
