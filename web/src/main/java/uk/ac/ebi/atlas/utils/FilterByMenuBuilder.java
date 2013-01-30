@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.SortedSetMultimap;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -38,14 +40,11 @@ import java.util.TreeSet;
 @Scope("prototype")
 public class FilterByMenuBuilder {
 
-    // does the serialisation to JSON
-    private final Gson gson = new Gson();
-
     private final FactorValueUtils factorValueUtils;
 
-    private SortedMap<String, SortedSet<FactorValue>> allFactorNames;
+    private SortedSetMultimap<String, FactorValue> allFactorNames;
 
-    private SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations;
+    private SortedSetMultimap<FactorValue, FactorValue> validFactorValueCombinations;
 
     @Inject
     public FilterByMenuBuilder(FactorValueUtils factorValueUtils) {
@@ -56,7 +55,7 @@ public class FilterByMenuBuilder {
 
         validFactorValueCombinations = experiment.getValidFactorValueCombinations();
 
-        allFactorNames = factorValueUtils.indexFactorValuesByName(validFactorValueCombinations.keySet());
+        allFactorNames = factorValueUtils.factorValuesByName(validFactorValueCombinations.keySet());
 
         // build filter by menu map here, structure:
         // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
@@ -93,8 +92,8 @@ public class FilterByMenuBuilder {
         SortedMap<String, SortedMap<String, String>> thirdMenuLevel = new TreeMap<>();
 
         // index second level factor names
-        SortedMap<String, SortedSet<FactorValue>> secondFactorNames =
-                factorValueUtils.indexFactorValuesByName(validFactorValueCombinations.get(firstFactorValue));
+        SortedSetMultimap<String, FactorValue> secondFactorNames =
+                factorValueUtils.factorValuesByName(validFactorValueCombinations.get(firstFactorValue));
 
         // third level: factor value choices per factor name, restricted by previous
         for (String secondFactorName : secondFactorNames.keySet()) {
@@ -112,7 +111,7 @@ public class FilterByMenuBuilder {
             String queryFactorType = firstArbitraryFactorValue.getType();
 
             // third level: factor name
-            SortedMap<String, String> thirdLevel = buildForthMenuLevel(queryFactorType, firstFactorValue, secondFactorNames.get(secondFactorName));
+            SortedMap<String, String> thirdLevel = this.buildForthMenuLevel(queryFactorType, firstFactorValue, secondFactorNames.get(secondFactorName));
             if (!thirdMenuLevel.containsKey(secondFactorName)) {
                 thirdMenuLevel.put(secondFactorName, thirdLevel);
             }
@@ -130,8 +129,7 @@ public class FilterByMenuBuilder {
 
         // forth level: factor value choices for second factor name
         for (FactorValue secondFactorValue : secondFactorValues) {
-
-            String link = gson.toJson(buildFilterFactorValueURL(queryFactorType, firstFactorValue, secondFactorValue));
+            String link = new Gson().toJson(buildFilterFactorValueURL(queryFactorType, firstFactorValue, secondFactorValue));
             forthMenuLevel.put(secondFactorValue.getValue(), link);
 
         }

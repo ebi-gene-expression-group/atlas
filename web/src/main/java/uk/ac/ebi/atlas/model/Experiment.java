@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 
@@ -44,7 +46,7 @@ public class Experiment {
 
     private Map<String, SortedSet<FactorValue>> factorValuesByType = new HashMap<>();
 
-    private SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = new TreeMap<>();
+    private SortedSetMultimap<FactorValue, FactorValue> validFactorValueCombinations = TreeMultimap.create();
 
     private Set<String> experimentRunAccessions;
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
@@ -95,14 +97,10 @@ public class Experiment {
         return this;
     }
 
-    private void addToFactorValueCombinations(Set<FactorValue> factorValues, FactorValue factorValue) {// track all valid
-        // combinations for filterFactorValues
-        if (!validFactorValueCombinations.containsKey(factorValue)) {
-            validFactorValueCombinations.put(factorValue, new TreeSet<FactorValue>());
-        }
+    private void addToFactorValueCombinations(Set<FactorValue> factorValues, FactorValue factorValue) {
         for (FactorValue value : factorValues) {
             if (!value.equals(factorValue)) {
-                validFactorValueCombinations.get(factorValue).add(value);
+                validFactorValueCombinations.put(factorValue,value);
             }
         }
     }
@@ -181,7 +179,7 @@ public class Experiment {
         return results;
     }
 
-    public SortedMap<FactorValue, SortedSet<FactorValue>> getValidFactorValueCombinations() {
+    public SortedSetMultimap<FactorValue, FactorValue> getValidFactorValueCombinations() {
         return validFactorValueCombinations;
     }
 }

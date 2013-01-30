@@ -22,6 +22,10 @@
 
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.FactorValue;
 
@@ -32,17 +36,13 @@ import java.util.*;
 @Scope("singleton")
 public class FactorValueUtils {
 
-    public SortedMap<String, SortedSet<FactorValue>> indexFactorValuesByName(Set<FactorValue> factorValues) {
+    public SortedSetMultimap<String, FactorValue> factorValuesByName(Set<FactorValue> factorValues) {
         // using factor names here for better readability and compatibility with experiment design page
-        SortedMap<String, SortedSet<FactorValue>> allFactorNames = new TreeMap<>();
-        for (FactorValue key : factorValues) {
-            if (!allFactorNames.containsKey(key.getName())) {
-                allFactorNames.put(key.getName(), new TreeSet<FactorValue>());
-            }
-            SortedSet<FactorValue> factorValuesForName = allFactorNames.get(key.getName());
-            factorValuesForName.add(key);
+        SortedSetMultimap<String, FactorValue> factorValuesByName = TreeMultimap.create();
+        for (FactorValue factorValue : factorValues) {
+            factorValuesByName.put(factorValue.getName(),factorValue);
         }
-        return allFactorNames;
+        return factorValuesByName;
     }
 
     public String formatFactorTypeForDisplay(String queryFactorType) {

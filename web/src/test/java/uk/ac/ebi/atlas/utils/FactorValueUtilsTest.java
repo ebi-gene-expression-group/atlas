@@ -58,10 +58,10 @@ public class FactorValueUtilsTest {
 
         Set<FactorValue> factorValues = Sets.newHashSet(factorValue1, factorValue2, factorValue3);
 
-        assertThat(subject.indexFactorValuesByName(factorValues), notNullValue());
-        assertThat(subject.indexFactorValuesByName(factorValues).keySet(), hasItems(ORGANISM_PART, CELL_LINE));
-        assertThat(subject.indexFactorValuesByName(factorValues).get(ORGANISM_PART), hasItems(factorValue1, factorValue2));
-        assertThat(subject.indexFactorValuesByName(factorValues).get(CELL_LINE), hasItems(factorValue3));
+        assertThat(subject.factorValuesByName(factorValues), notNullValue());
+        assertThat(subject.factorValuesByName(factorValues).keySet(), hasItems(ORGANISM_PART, CELL_LINE));
+        assertThat(subject.factorValuesByName(factorValues).get(ORGANISM_PART), hasItems(factorValue1, factorValue2));
+        assertThat(subject.factorValuesByName(factorValues).get(CELL_LINE), hasItems(factorValue3));
     }
 
     @Test
