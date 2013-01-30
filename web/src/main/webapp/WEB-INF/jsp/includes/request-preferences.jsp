@@ -25,7 +25,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-
+<c:set var="formattedQueryFactorType" value="${factorValueUtils.formatFactorTypeForDisplay(queryFactorType)}"/>
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="filterFactorValues"/>
@@ -89,7 +89,7 @@
                                            path="specific"
                                            label="Specific"></form:checkbox>
                         </span>
-                        <span data-help-loc="#specific" style="display:inline-block"/>
+                    <span data-help-loc="#specific" style="display:inline-block"/>
                 </td>
                 <td>
                     <div>
@@ -120,13 +120,14 @@
     </div>
     <div class="barchart-tooltip" id="barChartTooltip"></div>
 
-    <span style = "display:inline-block">
+    <span style="display:inline-block">
         <div id="gene-distribution-button" style="float:left">
             <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
                 <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
             </a>
         </div>
-        <div id="slider-range-max" style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
+        <div id="slider-range-max"
+             style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
     </span>
     <span data-help-loc="#slider"/>
 

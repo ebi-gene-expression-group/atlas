@@ -60,6 +60,15 @@ public class Experiment {
         this.specie = specie;
     }
 
+    public String getFactorName(String type, String value) {
+        for (FactorValue factorValue : factorValuesByType.get(type)) {
+            if (factorValue.getValue().equals(value)) {
+                return factorValue.getName();
+            }
+        }
+        throw new IllegalStateException("Supplied FactorValue type and value combination not valid in this experiment.");
+    }
+
     public String getDefaultQueryFactorType() {
         return defaultQueryFactorType;
     }

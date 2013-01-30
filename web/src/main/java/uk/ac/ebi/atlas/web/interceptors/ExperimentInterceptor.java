@@ -28,8 +28,6 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
@@ -38,15 +36,11 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @Named("experimentInterceptor")
 public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger logger = Logger.getLogger(ExperimentInterceptor.class);
-    public static final String FILTER_FACTOR_VALUES = "filterFactorValues";
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
     public static final String STOP_WATCH = "stopWatch";
 
@@ -55,7 +49,6 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
     public ExperimentInterceptor() {
     }
-
 
     @Inject
     public void setApplicationProperties(ApplicationProperties applicationProperties) {
@@ -86,25 +79,6 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         if (applicationProperties.getExperimentIdentifiers().contains(experimentAccession)) {
 
-            if (request.getParameterValues(FILTER_FACTOR_VALUES) != null) {
-                // TODO: why does the request parameter suddenly has length 1 when search is performed?
-                logger.debug("Length=" + request.getParameterValues(FILTER_FACTOR_VALUES).length + " " + Arrays.asList(request.getParameterValues(FILTER_FACTOR_VALUES)));
-
-                String[] parameters = request.getParameterValues(FILTER_FACTOR_VALUES);
-                // TODO: this is hack to overcome strange request parameter behaviour
-                if (parameters.length == 1) {
-                    parameters = parameters[0].split(",");
-                }
-
-                Set<FactorValue> offendingFilterFactorValues = validateFilterFactorValues(experimentAccession,
-                        parameters);
-                if (offendingFilterFactorValues.size() > 0) {
-                    logger.warn("Offending filterFactorValues found: " + offendingFilterFactorValues);
-                    response.sendError(404);
-                    return false;
-                }
-            }
-
             request.setAttribute(EXPERIMENT_ACCESSION, experimentAccession);
 
             StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
@@ -114,43 +88,9 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-
         response.sendError(404);
         return false;
     }
-
-    /**
-     * Checks FactorValue objects against all FactorValue object of an experiment.
-     * If an illegal FactorValue has been found, it will be collected in the result set.
-     */
-    private Set<FactorValue> validateFilterFactorValues(String experimentAccession, String[] requestFilterFactorValues) {
-
-        // collect all factorValues from experiment
-        Set<FactorValue> allFactorValues = new HashSet<>();
-
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-        for (String run : experiment.getExperimentRunAccessions()) {
-            ExperimentRun experimentRun = experiment.getExperimentRun(run);
-            // ToDo: this is necessary because of an error in supplied analysis-methods file
-            if (experimentRun != null) {
-                allFactorValues.addAll(experiment.getAllFactorValues(run));
-            }
-        }
-
-        Set<FactorValue> result = new HashSet<>();
-        for (String requestFilterFactorValue : requestFilterFactorValues) {
-            if (requestFilterFactorValue.trim().length() > 0) {
-                FactorValue factorValue = FactorValue.createFactorValue(requestFilterFactorValue);
-                if (!allFactorValues.contains(factorValue)) {
-                    if (factorValue != null) {
-                        result.add(factorValue);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
 
     @Override
     public void postHandle(HttpServletRequest request,

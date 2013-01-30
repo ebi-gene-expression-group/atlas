@@ -34,6 +34,8 @@ import javax.inject.Named;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkState;
+
 // should have been declared final, but cannot mock final classes
 public class FilterParameters {
 
@@ -138,20 +140,27 @@ public class FilterParameters {
         }
 
         public Builder withFilterFactorValues(Set<String> filterFactorValues) {
+            checkState(experimentAccession != null, "Please invoke forExperimentAccession before any other method.");
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
             this.filterFactorValues = new HashSet<>();
 
-            //ToDo: verify that null check needed
-            if (filterFactorValues != null) {
-                for (String filter : filterFactorValues) {
-                    FactorValue factorValue = FactorValue.createFactorValue(filter);
-                    if (factorValue != null) {
-                        this.filterFactorValues.add(factorValue);
-                    }
-                }
+            for (String filterFactorValueString : filterFactorValues) {
+                FactorValue factorValue = buildFactorValueFromFilterFactorValueString(experiment, filterFactorValueString);
+                this.filterFactorValues.add(factorValue);
             }
+
             return this;
         }
 
+        private FactorValue buildFactorValueFromFilterFactorValueString(Experiment experiment, String filterFactorValueString) {
+            String[] split = filterFactorValueString.split(FactorValue.FACTOR_VALUE_SEPARATOR);
+            if (split.length == 2) {
+                String name = experiment.getFactorName(split[0], split[1]);
+                return new FactorValue(split[0], name, split[1]);
+            }
+            throw new IllegalArgumentException("FactorValue string should be colon separated between type and value.");
+        }
 
         public Builder withGeneQuery(String geneQuery) {
             this.hasGenesForQuery = !StringUtils.isEmpty(geneQuery);

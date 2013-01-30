@@ -46,7 +46,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
 
 @Controller
@@ -58,19 +57,24 @@ public class GeneProfilesPageController extends GeneProfilesController {
     private RankGeneProfilesCommand rankCommand;
 
     private RankingParameters rankingParameters;
+
     private ApplicationProperties applicationProperties;
 
     private ExperimentsCache experimentsCache;
 
+    private FilterByMenuBuilder filterByMenuBuilder;
+
     @Inject
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder, GeneExpressionPrecondition geneExpressionPrecondition) {
+                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder,
+                                      GeneExpressionPrecondition geneExpressionPrecondition, FilterByMenuBuilder filterByMenuBuilder) {
         super(filterParameterBuilder, experimentsCache, geneExpressionPrecondition);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
+        this.filterByMenuBuilder = filterByMenuBuilder;
     }
 
     @RequestMapping("/experiments/{experimentAccession}")
@@ -106,7 +110,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("experimentAccession", experimentAccession);
 
-            model.addAttribute("formattedQueryFactorType", formatQueryFactorType(filterParameters.getQueryFactorType()));
+            model.addAttribute("queryFactorType", filterParameters.getQueryFactorType());
 
             model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
@@ -127,26 +131,14 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            // all the following is required for filtering by two factor values chosen from drop down menu
-            SortedMap<FactorValue, SortedSet<FactorValue>> validFactorValueCombinations = experiment.getValidFactorValueCombinations();
-
-            SortedMap<String, SortedSet<FactorValue>> allFactorNames = FilterByMenuBuilder.indexFactorValuesByName(validFactorValueCombinations.keySet());
-
             model.addAttribute("defaultFilterFactorValuesSize", experiment.getDefaultFilterFactorValues().size());
 
-            model.addAttribute("filterByMenu", FilterByMenuBuilder.buildFilterByMenu(allFactorNames, validFactorValueCombinations));
+            model.addAttribute("filterByMenu", filterByMenuBuilder.build(experiment));
 
-            model.addAttribute("selectedFactorValues", FilterByMenuBuilder.extractSelectedFactorValues(allFactorNames, filterParameters));
+            model.addAttribute("selectedFactorValues", filterByFactorValues);
         }
 
         return "experiment";
-    }
-
-    String formatQueryFactorType(String queryFactorType) {
-        // this formats the default factor type for display on web page
-        String result = queryFactorType.replaceAll("_", " ").toLowerCase();
-        result = result.substring(0, 1).toUpperCase() + result.substring(1);
-        return result;
     }
 
     String buildDownloadURL(HttpServletRequest request) {

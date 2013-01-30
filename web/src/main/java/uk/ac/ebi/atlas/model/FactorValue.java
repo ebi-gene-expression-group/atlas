@@ -81,20 +81,6 @@ public class FactorValue implements Comparable<FactorValue> {
         return value.compareTo(factorValue.value);
     }
 
-    //ToDo: this should be dropped, construction depending on representation, no good...
-    public static FactorValue createFactorValue(String factorValue) {
-        return createFactorValue(factorValue.split(FACTOR_VALUE_SEPARATOR));
-    }
-
-    //ToDo: this should be dropped, construction must be done with constructor
-    protected static FactorValue createFactorValue(String[] split) {
-        if (split.length == 2) {
-            return new FactorValue(split[0].trim(), split[1].trim());
-        }
-        throw new IllegalArgumentException("FactorValue mus");
-    }
-
-
     public static SortedSet<String> getFactorValuesStrings(SortedSet<FactorValue> factorValues) {
         SortedSet<String> result = new TreeSet<>();
         for (FactorValue factorValue : factorValues) {
