@@ -125,41 +125,55 @@ function initBarChartButton() {
 
 }
 
+function buildLegendaText(isAnyFactorValueSelected) {
+    "use strict";
+    return "Y = number of genes expressed above the given FPKM cutoff " +
+        (isAnyFactorValueSelected ? "for the selected experimental factors" : "in any experimental factor");
+}
+
+function plotCutoffBarChart(selectedFactorValues, data, magnifiedScaledCutoffs) {
+    "use strict";
+
+    return $.plot($("#gene-distribution"), [ data ], {
+        series : {
+            highlightColor : "red",
+
+            label : buildLegendaText(selectedFactorValues),
+
+            bars : {
+                show : true,
+                barWidth : 0.8
+            }
+        },
+        xaxis : {
+            tickLength : 3,
+            ticks : magnifiedScaledCutoffs
+        },
+        grid : {
+            borderColor : "#CDCDCD",
+            borderWidth : 1,
+            hoverable : true,
+            clickable : true
+        }
+    });
+}
+
+function showBarChartTooltip(x, y, contents) {
+    "use strict";
+
+    $("#barChartTooltip").text(contents).css({
+        display:'block',
+        position:'absolute',
+        'z-index': 1,
+        top:y - 350,
+        left:x - 26
+    });
+}
+
 function loadSliderAndPlot(cutoff, experimentAccession) {
     "use strict";
 
     var selectedFactorValues = $("#queryFactorValues").val();
-
-    function buildLegendaText() {
-        return "Y = number of genes expressed above the given FPKM cutoff " +
-            (selectedFactorValues ? "for the selected experimental factors" : "in any experimental factor");
-    }
-
-
-    function plotCutoffBarChart(data, magnifiedScaledCutoffs) {
-        return $.plot($("#gene-distribution"), [ data ], {
-            series : {
-                highlightColor : "red",
-
-                label : buildLegendaText(),
-
-                bars : {
-                    show : true,
-                    barWidth : 0.8
-                }
-            },
-            xaxis : {
-                tickLength : 3,
-                ticks : magnifiedScaledCutoffs
-            },
-            grid : {
-                borderColor : "#CDCDCD",
-                borderWidth : 1,
-                hoverable : true,
-                clickable : true
-            }
-        });
-    }
 
     $.ajax({
         url: "json/barchart/" + experimentAccession,
@@ -176,7 +190,7 @@ function loadSliderAndPlot(cutoff, experimentAccession) {
 
             //this is required because if you load the plot when the div is hidden
             //and then you display the div later the plot Y axis will be overlapping the Y ticks
-            displayGeneDistribution(this, true);
+            displayGeneDistribution(true);
 
             for (var i = 0; i < keys.length; i++) {
                 dataArray.push([i, data[keys[i]]]);
@@ -195,17 +209,9 @@ function loadSliderAndPlot(cutoff, experimentAccession) {
                 }
             );
 
-            var genesByCutoffPlot = plotCutoffBarChart(dataArray, ticksMap);
+            var genesByCutoffPlot = plotCutoffBarChart(selectedFactorValues, dataArray, ticksMap);
 
             hideOrDisplayGeneDistribution(true);
-
-            function showBarChartTooltip(x, y, contents) {
-                $("#barChartTooltip").text(contents).css({
-                    display:'block',
-                    top:y - 30,
-                    left:x - 6
-                });
-            }
 
             $("#gene-distribution")
                 .bind("plothover",function (event, pos, item) {

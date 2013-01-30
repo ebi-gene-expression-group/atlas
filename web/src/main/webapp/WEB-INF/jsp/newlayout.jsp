@@ -43,13 +43,6 @@
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
 
-    <style type="text/css">
-            /* You have the option of setting a maximum width for your page, and making sure everything is centered */
-        body {
-            min-width: 1000px;
-            margin: 0 auto;
-        }
-    </style>
     <!-- new style end -->
 
     <title><tiles:insertAttribute name="title" ignore="true"/></title>

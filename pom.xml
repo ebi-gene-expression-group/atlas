@@ -32,7 +32,6 @@
 
     <properties>
         <java-version>1.7</java-version>
-        <jasmine.js.src.location>web/src/main/webapp/public-resources/js</jasmine.js.src.location>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
         <org.springframework.rc.version>3.2.0.RC1</org.springframework.rc.version>
@@ -192,38 +191,6 @@
                 <groupId>com.lazerycode.jmeter</groupId>
                 <artifactId>jmeter-maven-plugin</artifactId>
                 <version>1.6.0</version>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.searls</groupId>
-                <artifactId>jasmine-maven-plugin</artifactId>
-                <version>1.2.0.0</version>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- unfortunately js files seem to be loaded only if added to preloadSources -->
-                    <preloadSources>
-                        <include>${jasmine.js.src.location}/jquery-1.8.3.js</include>
-                        <include>${jasmine.js.src.location}/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.js</include>
-                        <include>${jasmine.js.src.location}/jasmineDemo.js</include>
-                        <include>${jasmine.js.src.location}/sliderAndBarChart.js</include>
-                        <include>${jasmine.js.src.location}/helpTooltipsModule.js</include>
-                    </preloadSources>
-                    <sourceIncludes>
-                        <include>${project.basedir}/${jasmine.js.src.location}/**</include>
-                        <include>${project.basedir}/web/src/test/javascript/jasmine-plugins/**</include>
-                    </sourceIncludes>
-                    <jsSrcDir>${jasmine.js.src.location}/</jsSrcDir>
-                    <jsTestSrcDir>web/src/test/javascript/spec/</jsTestSrcDir>
-                    <browserVersion>FIREFOX_3_6</browserVersion>
-                    <haltOnFailure>true</haltOnFailure>
-                </configuration>
             </plugin>
 
         </plugins>
@@ -419,7 +386,6 @@
             <name>The EBI internal snapshot repository</name>
             <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
         </repository>
-
         <repository>
             <id>oracleReleases</id>
             <name>Oracle Released Java Packages</name>
@@ -535,7 +501,7 @@
         <profile>
             <id>local.integration.test</id>
             <properties>
-                <solr.host>ves-hx-75</solr.host>
+                <solr.host>localhost</solr.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <berkeley.schema.name>bdb</berkeley.schema.name>
             </properties>

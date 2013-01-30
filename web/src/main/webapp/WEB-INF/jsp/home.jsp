@@ -49,42 +49,6 @@
             </c:forEach>
         </ul>
     </div>
-    <!--<div class="item rat">
-        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_rat.png" alt="" width="40" height="40"
-             class="circle"/>
-        <a href="#" class="species-icon"></a>
-
-        <h2>Rattus Norvegicus</h2>
-        <ul>
-            <li><a href="#">Test1</a></li>
-            <li><a href="#">Test2</a></li>
-            <li><a href="#">Test3</a></li>
-        </ul>
-    </div>
-    <div class="item fly">
-        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_fly3.png" alt="" width="40" height="40"
-             class="circle"/>
-        <a href="#" class="species-icon"></a>
-
-        <h2>Drosophila Melanogaster</h2>
-        <ul>
-            <li><a href="#">Test1</a></li>
-            <li><a href="#">Test2</a></li>
-            <li><a href="#">Test3</a></li>
-        </ul>
-    </div>
-    <div class="item fish">
-        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_zebrafish.png" alt="" width="40"
-             height="40" class="circle"/>
-        <a href="#" class="species-icon"></a>
-
-        <h2>Danio Rerio</h2>
-        <ul>
-            <li><a href="#">Test1</a></li>
-            <li><a href="#">Test2</a></li>
-            <li><a href="#">Test3</a></li>
-        </ul>
-    </div>-->
 </div>
 
 <!-- The JavaScript -->
@@ -92,6 +56,7 @@
         src="${pageContext.request.contextPath}/resources/js/jquery.easing.1.3.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {
+        $('ul').mouseleave(function(){$(this).fadeOut(200)});
         $('#species-nav > div').hover(
                 function () {
                     var $this = $(this);
@@ -102,14 +67,13 @@
                         'left':'0px',
                         'opacity':'1.0'
                     }, 500, 'easeOutBack', function () {
-                        $(this).parent().find('ul').fadeIn(500);
+                        $(this).parent().find('ul').fadeIn(1);
                     });
 
                     $this.find('a:first,h2').addClass('active');
                 },
                 function () {
                     var $this = $(this);
-                    $this.find('ul').fadeOut(500);
                     $this.find('img').stop().animate({
                         'width':'40px',
                         'height':'40px',

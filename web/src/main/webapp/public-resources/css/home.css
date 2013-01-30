@@ -81,8 +81,9 @@ a.species-icon {
 }
 
 .item h2.active {
-    color: #fff;
-    text-shadow: 1px 0px 1px #555;
+    /*color: #fff;
+    text-shadow: 1px 0px 1px #ffd752;
+    */
 }
 
 .item ul {

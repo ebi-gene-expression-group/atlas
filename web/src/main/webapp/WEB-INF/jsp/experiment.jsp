@@ -121,9 +121,9 @@
 
     <br/>
 
-    <div id="test" style="display: none"></div>
-
 </c:if>
+
+<div id="test" style="display: none"></div>
 
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
@@ -156,8 +156,6 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
         $(document).ready(function () {
 
-            var isIE8 = false;
-
             //disable vertical header and anatomogram in IE
             if ($.browser.msie) {
 
@@ -177,9 +175,9 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
-                $("#gene-distribution").hide();//hide the bar chart
+                $("#gene-distribution-panel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
-                isIE8 = true;
+                $("#slider-help").hide();//hide the slider help
             } else {
 
                 loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}');

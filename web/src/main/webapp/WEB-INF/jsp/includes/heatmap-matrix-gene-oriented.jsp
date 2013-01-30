@@ -36,8 +36,8 @@
                                htmlId="heatmap-table" class="table-grid">
                     <display:column
                             title="
-                                <span id='tooltip-span' style='display:block;position:absolute;top:0%' data-help-loc='#heatMapTableCellInfo'></span>
-                                <button style='margin:5px;' id='display-levels' /><label for='display-levels'>Display levels</label>"
+                                <span id='tooltip-span' style='display:block;position:absolute;top:0%;margin:5px' data-help-loc='#heatMapTableCellInfo'></span>
+                                <button style='margin-top:45%;margin-left:5px;margin-right:5px;' id='display-levels' /><label for='display-levels'>Display levels</label>"
                             class="header-cell">
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                             <fmt:param value="${geneProfile.geneId}"/>
@@ -126,6 +126,7 @@
         return result;
     }
 
-    $("#tooltip-span").parent().css("position","relative");
+    //required for the positioning of the stuff that must go inside the top-left corner header cell
+    $("#tooltip-span").parent().addClass("heatmap-matrix-top-left-corner");
 
 </script>
