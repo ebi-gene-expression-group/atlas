@@ -22,38 +22,38 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div id="wordcloud" style="width: 550px; height: 350px; position:relative; top: 180px; left:130px;"></div>
+<c:import url="includes/word-cloud-mock.jsp"/>
 
 <div class="species-navigation" id="species-nav" style="width: 550px; height: 200px;">
     <div class="item human">
-        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_man.png" alt="" width="40" height="40"
+        <img src="resources/images/SPECIES_man.png" width="40" height="40"
              class="circle"/>
         <a href="#" class="species-icon"></a>
 
         <h2>Homo Sapiens</h2>
         <ul>
-            <c:forEach items="${speciesToExperiments['Homo sapiens']}" var="entry">
-                <li><a href="${entry.value}">${entry.key}</a></li>
+            <c:forEach items="${experimentAccessions.get('Homo sapiens')}" var="experimentAccession">
+                <li><a href="experiments/${experimentAccession}">${experimentAccession}</a></li>
             </c:forEach>
         </ul>
     </div>
     <div class="item mouse">
-        <img src="${pageContext.request.contextPath}/resources/images/SPECIES_mouse2.png" alt="" width="40" height="40"
+        <img src="resources/images/SPECIES_mouse2.png" width="40" height="40"
              class="circle"/>
         <a href="#" class="species-icon"></a>
 
         <h2>Mus Musculus</h2>
         <ul>
-            <c:forEach items="${speciesToExperiments['Mus musculus']}" var="entry">
-                <li><a href="${entry.value}">${entry.key}</a></li>
+            <c:forEach items="${experimentAccessions.get('Mus musculus')}" var="experimentAccession">
+                <li><a href="experiments/${experimentAccession}">${experimentAccession}</a></li>
             </c:forEach>
         </ul>
     </div>
 </div>
 
 <!-- The JavaScript -->
-<script type="text/javascript" language="javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery.easing.1.3.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/jquery.easing.1.3.js" type="text/javascript"></script>
+
 <script type="text/javascript">
     $(function () {
         $('ul').mouseleave(function(){$(this).fadeOut(200)});
@@ -87,17 +87,3 @@
         );
     });
 </script>
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jqcloud-1.0.2.js"></script>
-<script type="text/javascript">
-    /*!
-     * Create an array of word objects, each representing a word in the cloud
-     */
-    var word_list = ${wordlist};
-
-    $(function () {
-        // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
-        $("#wordcloud").jQCloud(word_list);
-    });
-</script>
-

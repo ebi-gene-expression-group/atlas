@@ -22,18 +22,18 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.gson.Gson;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.*;
 
 @Controller
 @Scope("singleton")
@@ -43,10 +43,7 @@ public class HomePageController {
 
     private ExperimentsCache experimentsCache;
 
-    private Map<String, Double> counts;
-
-    // species > experiment acc > link
-    private Map<String, SortedMap<String, String>> speciesToExperiments;
+    private SortedSetMultimap<String, String> experimentAccessions = TreeMultimap.create();
 
     @Inject
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
@@ -57,93 +54,23 @@ public class HomePageController {
     @RequestMapping("/home")
     public String getHomePage(Model model) {
 
-        // lazy initialisation
-        if (counts == null) {
-            extractFactorValueCounts();
-        }
+        extractFactorValueCounts();
 
-        ArrayList<WordWeight> wordList = new ArrayList<>();
-
-        for (String factor : counts.keySet()) {
-            wordList.add(new WordWeight(factor, counts.get(factor)));
-        }
-
-        // does the serialisation to JSON
-        Gson gson = new Gson();
-
-        // add data to model
-        model.addAttribute("wordlist", gson.toJson(wordList));
-        model.addAttribute("speciesToExperiments", speciesToExperiments);
+        model.addAttribute("experimentAccessions", experimentAccessions);
 
         return "home";
     }
 
-    /**
-     * Gets all experiments in data directory and collates experimental defaultFactorValue occurrences into map
-     */
+    @PostConstruct
     private void extractFactorValueCounts() {
 
-        counts = new HashMap<>();
-
-        speciesToExperiments = new HashMap<>();
-
-        int totalNumberExperiments = 0;
-
-        // check mage-tab directory for its children
         for (String experimentAccession : properties.getExperimentIdentifiers()) {
 
-            // get experiment for directory name
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            if (experiment != null) {
-                totalNumberExperiments++;
-
-                if (!speciesToExperiments.containsKey(experiment.getSpecie())) {
-                    speciesToExperiments.put(experiment.getSpecie(), new TreeMap<String, String>());
-                }
-
-                String link = buildLinkForExperiment(experiment);
-                speciesToExperiments.get(experiment.getSpecie()).put(experimentAccession, link);
-
-                // count per experiment and sum across all experiments, using experiment default factor value
-                SortedSet<FactorValue> defaultFactorValues = experiment.getFactorValues(experiment.getDefaultQueryFactorType());
-                SortedSet<String> defaultFactorValuesValues = FactorValue.getFactorValuesStrings(defaultFactorValues);
-                for (String defaultFactorValue : defaultFactorValuesValues) {
-                    if (!counts.containsKey(defaultFactorValue)) {
-                        counts.put(defaultFactorValue, 0.0);
-                    }
-                    counts.put(defaultFactorValue, counts.get(defaultFactorValue) +
-                            1.0);
-                }
-            }
+            experimentAccessions.put(experiment.getSpecie(), experimentAccession);
         }
 
-        // normalise for total number of experiments
-        for (String factor : counts.keySet()) {
-            counts.put(factor, counts.get(factor) / totalNumberExperiments);
-        }
     }
 
-    private String buildLinkForExperiment(Experiment experiment) {
-        return "experiments/" + experiment.getExperimentAccession();
-    }
-
-    private class WordWeight {
-
-        private String text;
-        private double weight;
-
-        WordWeight(String factorValue, double weight) {
-            this.text = factorValue;
-            this.weight = weight;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
-    }
 }

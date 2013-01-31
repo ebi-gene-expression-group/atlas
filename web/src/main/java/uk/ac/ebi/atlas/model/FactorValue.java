@@ -2,16 +2,12 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Objects;
 
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorValue implements Comparable<FactorValue> {
-
-    //ToDo: this should be removed... class should be possibly independent from representation
-    public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private String type;
 
@@ -24,16 +20,14 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     public FactorValue(String type, String name, String value) {
-        // this was previously in ExperimentMetadataLoader
-        this.type = type;
-        if (this.type == null) {
-            this.type = name;
-        }
-        //ToDo: this pre-processing of type metadata (space to underscore and case conversion) should be removed, we should assume configuration is well formed and valid
-        this.type = checkNotNull(this.type).replaceAll(" ", "_").toUpperCase();
+
+        this.type = normalize(checkNotNull(type));
         this.name = name;
-        // this was previously in ExperimentMetadataLoader
         this.value = checkNotNull(value).toLowerCase();
+    }
+
+    protected String normalize(String type) {
+        return type.replaceAll(" ", "_").toUpperCase();
     }
 
     public String getName() {
@@ -86,7 +80,7 @@ public class FactorValue implements Comparable<FactorValue> {
         return value.compareTo(factorValue.value);
     }
 
-    public static SortedSet<String> getFactorValuesStrings(SortedSet<FactorValue> factorValues) {
+    public static SortedSet<String> getValues(SortedSet<FactorValue> factorValues) {
         SortedSet<String> result = new TreeSet<>();
         for (FactorValue factorValue : factorValues) {
             result.add(factorValue.getValue());
@@ -94,18 +88,4 @@ public class FactorValue implements Comparable<FactorValue> {
         return result;
     }
 
-    // representational differences are due to encoding in URL / RequestPreferences
-    // you would need to change RequestPreferences to translate URL String into FactorValues
-    // or use this method to "emulate" URL like encoding of factor values
-    public static SortedSet<String> getFactorValuesURLRepresentation(Set<FactorValue> factorValues) {
-        SortedSet<String> result = new TreeSet<>();
-        for (FactorValue factorValue : factorValues) {
-            result.add(composeFactorValueURLRepresentation(factorValue));
-        }
-        return result;
-    }
-
-    public static String composeFactorValueURLRepresentation(FactorValue factorValue) {
-        return factorValue.getType() + FACTOR_VALUE_SEPARATOR + factorValue.getValue();
-    }
 }

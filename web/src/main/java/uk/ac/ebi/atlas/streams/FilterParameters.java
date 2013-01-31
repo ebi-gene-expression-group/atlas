@@ -23,14 +23,12 @@
 package uk.ac.ebi.atlas.streams;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,6 +38,8 @@ import static com.google.common.base.Preconditions.checkState;
 
 //ToDo: this class name smells bad, GeneProfileInputStreamFilter now only requires queryFactorValues from this class and that is available also from other beans.
 public class FilterParameters {
+
+    public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private String geneQuery;
 
@@ -142,7 +142,7 @@ public class FilterParameters {
         }
 
         protected FactorValue buildFromSerializedFilterFactorValues(Experiment experiment, String serializedFilterFactorValues) {
-            String[] split = serializedFilterFactorValues.split(FactorValue.FACTOR_VALUE_SEPARATOR);
+            String[] split = serializedFilterFactorValues.split(FACTOR_VALUE_SEPARATOR);
             if (split.length == 2) {
                 String name = experiment.getFactorName(split[0], split[1]);
                 return new FactorValue(split[0], name, split[1]);

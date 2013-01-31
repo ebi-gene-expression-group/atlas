@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.collect.Multimap;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
@@ -39,6 +38,8 @@ import java.util.TreeSet;
 @Named("filterByMenuBuilder")
 @Scope("prototype")
 public class FilterByMenuBuilder {
+
+    public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private final FactorValueUtils factorValueUtils;
 
@@ -129,12 +130,14 @@ public class FilterByMenuBuilder {
 
         // forth level: factor value choices for second factor name
         for (FactorValue secondFactorValue : secondFactorValues) {
-            String link = new Gson().toJson(buildFilterFactorValueURL(queryFactorType, firstFactorValue, secondFactorValue));
+            String link = getJsonUrl(queryFactorType, firstFactorValue, secondFactorValue);
             forthMenuLevel.put(secondFactorValue.getValue(), link);
-
         }
-
         return forthMenuLevel;
+    }
+
+    protected String getJsonUrl(String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue){
+        return new Gson().toJson(buildFilterFactorValueURL(queryFactorType, firstFactorValue, secondFactorValue));
     }
 
     private FilterFactorValues buildFilterFactorValueURL(String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {
@@ -147,9 +150,9 @@ public class FilterByMenuBuilder {
 
         private final String filterFactorValuesURL;
 
-        FilterFactorValues(String queryFT, FactorValue firstFV, FactorValue secondFV) {
+        FilterFactorValues(String queryFT, FactorValue firstFactorValue, FactorValue secondFactorValue) {
             queryFactorType = queryFT;
-            filterFactorValuesURL = FactorValue.composeFactorValueURLRepresentation(firstFV) + ',' + FactorValue.composeFactorValueURLRepresentation(secondFV);
+            filterFactorValuesURL = serialize(firstFactorValue) + ',' + serialize(secondFactorValue);
         }
 
         public String getQueryFactorType() {
@@ -159,5 +162,10 @@ public class FilterByMenuBuilder {
         public String getFilterFactorValuesURL() {
             return filterFactorValuesURL;
         }
+
+    }
+
+    public static String serialize(FactorValue factorValue) {
+        return factorValue.getType() + FACTOR_VALUE_SEPARATOR + factorValue.getValue();
     }
 }

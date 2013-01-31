@@ -70,7 +70,6 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
         }
     }
 
-
     protected abstract String getPageURI();
 
 

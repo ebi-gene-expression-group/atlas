@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,10 +65,12 @@ public class WriteGeneProfilesCommandTest {
 
     @Before
     public void initMocks() {
-        SortedSet<FactorValue> organismParts = Sets.newTreeSet(Sets.newHashSet(createFV("adipose"), createFV("brain"),
-                createFV("breast"),
-                createFV("liver"),
-                createFV("lung")));
+        SortedSet<FactorValue> organismParts = Sets.newTreeSet(Sets.newHashSet(
+                createFactorValue("adipose"),
+                createFactorValue("brain"),
+                createFactorValue("breast"),
+                createFactorValue("liver"),
+                createFactorValue("lung")));
 
         when(filterParametersMock.getQueryFactorValues()).thenReturn(organismParts);
 
@@ -77,12 +80,12 @@ public class WriteGeneProfilesCommandTest {
 
         when(geneProfileMock1.getGeneName()).thenReturn("GN1");
         when(geneProfileMock1.getGeneId()).thenReturn("GI1");
-        when(geneProfileMock1.getExpressionLevel(createFV("brain"))).thenReturn(0.11d);
-        when(geneProfileMock1.getExpressionLevel(createFV("lung"))).thenReturn(9d);
+        when(geneProfileMock1.getExpressionLevel(createFactorValue("brain"))).thenReturn(0.11d);
+        when(geneProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
 
         when(geneProfileMock2.getGeneName()).thenReturn("GN2");
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
-        when(geneProfileMock2.getExpressionLevel(createFV("liver"))).thenReturn(21.12d);
+        when(geneProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
         when(experimentMock.getFactorValues(anyString())).thenReturn(Sets.newTreeSet(organismParts));
     }
@@ -109,7 +112,21 @@ public class WriteGeneProfilesCommandTest {
 
     }
 
-    private FactorValue createFV(String value) {
+    @Test
+    public void buildCsvHeadersTest(){
+        String [] headers = subject.buildCsvHeaders(Sets.newTreeSet(Lists.newArrayList("adipose", "brain")));
+        assertThat(headers, is(new String[]{"Gene name", "Gene Id", "adipose", "brain"}));
+    }
+
+    @Test
+    public void buildCsvRowTest(){
+        String [] headers = subject.buildCsvRow(new String[]{"A", "B"}, new String[]{"C", "D"});
+        assertThat(headers, is(new String[]{"A", "B", "C", "D"}));
+    }
+
+    private FactorValue createFactorValue(String value) {
         return new FactorValue("ORG", null, value);
     }
+
+
 }
