@@ -5,15 +5,15 @@ import java.util.Set;
 public class Expression {
     private double level;
 
-    private Set<FactorValue> allFactorValues;
+    private Set<Factor> allFactors;
 
-    public Expression(double level, Set<FactorValue> allFactorValues) {
+    public Expression(double level, Set<Factor> allFactors) {
         this.level = level;
-        this.allFactorValues = allFactorValues;
+        this.allFactors = allFactors;
     }
 
-    public Set<FactorValue> getAllFactorValues() {
-        return allFactorValues;
+    public Set<Factor> getAllFactors() {
+        return allFactors;
     }
 
     public double getLevel() {
@@ -24,10 +24,10 @@ public class Expression {
         return Double.compare(this.level, level) > 0;
     }
 
-    public FactorValue getFactorValue(String type) {
-        for (FactorValue factorValue : allFactorValues) {
-            if (factorValue.getType().equals(type)) {
-                return factorValue;
+    public Factor getFactorValue(String type) {
+        for (Factor factor : allFactors) {
+            if (factor.getType().equals(type)) {
+                return factor;
             }
         }
         throw new IllegalStateException("Expression doesn't contain factor value for a given type");
@@ -47,7 +47,7 @@ public class Expression {
         if (Double.compare(that.level, level) != 0) {
             return false;
         }
-        if (!allFactorValues.equals(that.allFactorValues)) {
+        if (!allFactors.equals(that.allFactors)) {
             return false;
         }
 
@@ -60,7 +60,7 @@ public class Expression {
         long temp;
         temp = level != +0.0d ? Double.doubleToLongBits(level) : 0L;
         result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + allFactorValues.hashCode();
+        result = 31 * result + allFactors.hashCode();
         return result;
     }
 }

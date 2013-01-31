@@ -60,7 +60,7 @@ public class GeneProfilesController {
     protected void prepareGeneExpressionPrecondition(RequestPreferences preferences,
                                                     FilterParameters filterParameters) {
         geneExpressionPrecondition.setCutoff(preferences.getCutoff());
-        geneExpressionPrecondition.setLimitingFactorValues(filterParameters.getFilterFactorValues());
+        geneExpressionPrecondition.setLimitingFactors(filterParameters.getFilterFactors());
         String queryFactorType = preferences.getQueryFactorType();
         if (StringUtils.isBlank(queryFactorType)) {
             queryFactorType = filterParameters.getQueryFactorType();

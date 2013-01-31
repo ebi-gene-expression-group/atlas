@@ -33,7 +33,7 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//ToDo: this class needs a builder, for example in order to fully load defaultFilterFactorValues we first have to load all the metadata (we need factorValuesByType).
+//ToDo: this class needs a builder, for example in order to fully load defaultFilterFactors we first have to load all the metadata (we need factorValuesByType).
 //ToDo: the way it is now we are loading incomplete DefaultFilterFactorValues (they miss their name), forcing client api to callback and fetch the name in an extra step.
 public class Experiment {
 
@@ -44,30 +44,30 @@ public class Experiment {
     private String specie;
 
     private String defaultQueryFactorType;
-    private Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
+    private Set<Factor> defaultFilterFactors = new HashSet<>();
 
-    private Map<String, SortedSet<FactorValue>> factorValuesByType = new HashMap<>();
+    private Map<String, SortedSet<Factor>> factorValuesByType = new HashMap<>();
 
-    private SortedSetMultimap<FactorValue, FactorValue> validFactorValueCombinations = TreeMultimap.create();
+    private SortedSetMultimap<Factor, Factor> validFactorValueCombinations = TreeMultimap.create();
 
     private Set<String> experimentRunAccessions;
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultQueryFactorType, Set<FactorValue> defaultFilterFactorValues, String specie) {
+    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, String specie) {
         this.experimentAccession = experimentAccession;
         this.description = description;
         this.experimentRunAccessions = experimentRunAccessions;
         this.defaultQueryFactorType = defaultQueryFactorType;
-        setDefaultFilterFactorValues(defaultFilterFactorValues);
+        setDefaultFilterFactors(defaultFilterFactors);
         this.specie = specie;
     }
 
     public String getFactorName(String type, String value) {
-        for (FactorValue factorValue : factorValuesByType.get(type)) {
-            if (factorValue.getValue().equals(value)) {
-                return factorValue.getName();
+        for (Factor factor : factorValuesByType.get(type)) {
+            if (factor.getValue().equals(value)) {
+                return factor.getName();
             }
         }
         throw new IllegalStateException("Type: " + type + " and value: " + value + " are not a valid combination in this experiment.");
@@ -77,8 +77,8 @@ public class Experiment {
         return defaultQueryFactorType;
     }
 
-    public Set<FactorValue> getDefaultFilterFactorValues() {
-        return defaultFilterFactorValues;
+    public Set<Factor> getDefaultFilterFactors() {
+        return defaultFilterFactors;
     }
 
     public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
@@ -87,11 +87,11 @@ public class Experiment {
                 this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
                 // index all possible factor values by their byType
 
-                Set<FactorValue> factorValues1 = experimentRun.getFactorValues();
-                for (FactorValue factorValue : factorValues1) {
-                    addToFactorValuesByType(factorValue);
+                Set<Factor> factorValues1 = experimentRun.getFactors();
+                for (Factor factor : factorValues1) {
+                    addToFactorValuesByType(factor);
 
-                    addToFactorValueCombinations(factorValues1, factorValue);
+                    addToFactorValueCombinations(factorValues1, factor);
                 }
 
             }
@@ -99,35 +99,35 @@ public class Experiment {
         return this;
     }
 
-    private void addToFactorValueCombinations(Set<FactorValue> factorValues, FactorValue factorValue) {
-        for (FactorValue value : factorValues) {
-            if (!value.equals(factorValue)) {
-                validFactorValueCombinations.put(factorValue,value);
+    private void addToFactorValueCombinations(Set<Factor> factors, Factor factor) {
+        for (Factor value : factors) {
+            if (!value.equals(factor)) {
+                validFactorValueCombinations.put(factor,value);
             }
         }
     }
 
-    private void addToFactorValuesByType(FactorValue factorValue) {
-        String type = factorValue.getType();
+    private void addToFactorValuesByType(Factor factor) {
+        String type = factor.getType();
 
         if (!factorValuesByType.containsKey(type)) {
-            factorValuesByType.put(type, new TreeSet<FactorValue>());
+            factorValuesByType.put(type, new TreeSet<Factor>());
         }
-        factorValuesByType.get(type).add(factorValue);
+        factorValuesByType.get(type).add(factor);
     }
 
-    public FactorValue getFactorValue(String experimentRunAccession, String byType) {
+    public Factor getFactorValue(String experimentRunAccession, String byType) {
         ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
         return experimentRun.getFactorValue(byType);
     }
 
-    public Set<FactorValue> getAllFactorValues(String experimentRunAccession) {
+    public Set<Factor> getAllFactorValues(String experimentRunAccession) {
         ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
-        return experimentRun.getFactorValues();
+        return experimentRun.getFactors();
     }
 
     public Set<String> getExperimentRunAccessions() {
@@ -154,24 +154,24 @@ public class Experiment {
         return description;
     }
 
-    public SortedSet<FactorValue> getFactorValues(@NotNull String byType) {
+    public SortedSet<Factor> getFactorValues(@NotNull String byType) {
         return factorValuesByType.get(byType);
     }
 
     //ToDo: parameter byType is not needed, it's always the remaining type
-    public SortedSet<FactorValue> getFilteredFactorValues(Set<FactorValue> filterByFactorValues, String byType) {
+    public SortedSet<Factor> getFilteredFactorValues(Set<Factor> filterByFactors, String byType) {
 
-        SortedSet<FactorValue> results = new TreeSet<>();
+        SortedSet<Factor> results = new TreeSet<>();
 
         for (String experimentRunAccession : experimentRunAccessions) {
             ExperimentRun experimentRun = experimentRuns.get(experimentRunAccession);
             if (experimentRun != null) {
-                if (CollectionUtils.isEmpty(filterByFactorValues) ||
-                        experimentRun.getFactorValues().containsAll(filterByFactorValues)) {
-                    FactorValue factorValue = experimentRun.getFactorValue(byType);
+                if (CollectionUtils.isEmpty(filterByFactors) ||
+                        experimentRun.getFactors().containsAll(filterByFactors)) {
+                    Factor factor = experimentRun.getFactorValue(byType);
 
-                    checkNotNull(factorValue);
-                    results.add(factorValue);
+                    checkNotNull(factor);
+                    results.add(factor);
                 }
             } else {
                 logger.warn("Missing ExperimentRun for accession " + experimentRunAccession);
@@ -181,15 +181,16 @@ public class Experiment {
         return results;
     }
 
-    public SortedSetMultimap<FactorValue, FactorValue> getValidFactorValueCombinations() {
+    public SortedSetMultimap<Factor, Factor> getValidFactorValueCombinations() {
         return validFactorValueCombinations;
     }
 
-    public void setDefaultFilterFactorValues(Set<FactorValue> defaultFilterFactorValues) {
-        for (FactorValue defaultFilterFactorValue : defaultFilterFactorValues) {
-            //String factorValueName = getFactorName(defaultFilterFactorValue.getType(), defaultFilterFactorValue.getName());
-            //defaultFilterFactorValue.setName(factorValueName);
-            this.defaultFilterFactorValues.add(defaultFilterFactorValue);
+    public void setDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
+        for (Factor defaultFilterFactor : defaultFilterFactors) {
+            //Next two lines should be uncommented when we have a proper builder that forces gene metadata to be loaded before curated metadata (before our tsv files)
+            //String factorValueName = getFactorName(defaultFilterFactor.getType(), defaultFilterFactor.getName());
+            //defaultFilterFactor.setName(factorValueName);
+            this.defaultFilterFactors.add(defaultFilterFactor);
         }
     }
 }

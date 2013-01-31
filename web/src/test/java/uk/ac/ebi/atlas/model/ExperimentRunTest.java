@@ -16,33 +16,33 @@ public class ExperimentRunTest {
     private ExperimentRun subject;
 
     @Mock
-    private FactorValue factorValueMock1;
+    private Factor factorMock1;
 
     @Mock
-    private FactorValue factorValueMock2;
+    private Factor factorMock2;
 
     private static final String organismPart = "finger";
 
     @Before
     public void setUp() throws Exception {
 
-        when(factorValueMock1.getType()).thenReturn("A_TYPE");
-        when(factorValueMock1.getName()).thenReturn("factor1");
-        when(factorValueMock1.getValue()).thenReturn("value1");
+        when(factorMock1.getType()).thenReturn("A_TYPE");
+        when(factorMock1.getName()).thenReturn("factor1");
+        when(factorMock1.getValue()).thenReturn("value1");
 
-        when(factorValueMock2.getType()).thenReturn("ORGANISM_PART");
-        when(factorValueMock2.getName()).thenReturn("org");
-        when(factorValueMock2.getValue()).thenReturn(organismPart);
+        when(factorMock2.getType()).thenReturn("ORGANISM_PART");
+        when(factorMock2.getName()).thenReturn("org");
+        when(factorMock2.getValue()).thenReturn(organismPart);
 
         subject = new ExperimentRun("RUN_ACCESSION")
-                .addFactorValue(factorValueMock1)
-                .addFactorValue(factorValueMock2);
+                .addFactorValue(factorMock1)
+                .addFactorValue(factorMock2);
     }
 
     @Test
     public void testGetOrganismPart() throws Exception {
 
-        assertThat(subject.getFactorValue(factorValueMock2.getType()).getValue(), is(organismPart));
+        assertThat(subject.getFactorValue(factorMock2.getType()).getValue(), is(organismPart));
 
     }
 

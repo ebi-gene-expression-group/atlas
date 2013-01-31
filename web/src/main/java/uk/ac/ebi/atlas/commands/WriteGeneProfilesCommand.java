@@ -27,7 +27,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
@@ -55,15 +55,15 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         long count = 0;
 
-        SortedSet<FactorValue> factorValues = experiment.getFactorValues(getFilterParameters().getQueryFactorType());
+        SortedSet<Factor> factors = experiment.getFactorValues(getFilterParameters().getQueryFactorType());
 
-        SortedSet<String> factorValuesStrings = FactorValue.getValues(factorValues);
-        csvWriter.writeNext(buildCsvHeaders(factorValuesStrings));
+        SortedSet<String> factorValues = Factor.getValues(factors);
+        csvWriter.writeNext(buildCsvHeaders(factorValues));
 
         GeneProfile geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, factorValues));
+            csvWriter.writeNext(buildCsvRow(geneProfile, factors));
         }
         return count;
     }
@@ -77,11 +77,11 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         return buildCsvRow(new String[]{"Gene name", "Gene Id"}, factorValues.toArray(new String[factorValues.size()]));
     }
 
-    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<FactorValue> factorValues) {
-        String[] expressionLevels = new String[factorValues.size()];
+    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<Factor> factors) {
+        String[] expressionLevels = new String[factors.size()];
         int i = 0;
-        for (FactorValue factorValue : factorValues) {
-            expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(factorValue));
+        for (Factor factor : factors) {
+            expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(factor));
         }
         return buildCsvRow(new String[]{geneProfile.getGeneName(), geneProfile.getGeneId()}, expressionLevels);
     }

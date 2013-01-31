@@ -10,11 +10,11 @@ public class FactorValueEqualsHashCodeTest extends EqualsHashCodeTestCase {
 
     @Override
     protected Object createInstance() throws Exception {
-        return new FactorValue("aType", "factor", "name");
+        return new Factor("aType", "factor", "name");
     }
 
     @Override
     protected Object createNotEqualInstance() throws Exception {
-        return new FactorValue("aType", "factor_1", "name_1");
+        return new Factor("aType", "factor_1", "name_1");
     }
 }

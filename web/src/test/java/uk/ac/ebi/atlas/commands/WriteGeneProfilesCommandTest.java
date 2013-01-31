@@ -32,7 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
@@ -64,14 +64,14 @@ public class WriteGeneProfilesCommandTest {
 
     @Before
     public void initMocks() {
-        SortedSet<FactorValue> organismParts = Sets.newTreeSet(Sets.newHashSet(
+        SortedSet<Factor> organismParts = Sets.newTreeSet(Sets.newHashSet(
                 createFactorValue("adipose"),
                 createFactorValue("brain"),
                 createFactorValue("breast"),
                 createFactorValue("liver"),
                 createFactorValue("lung")));
 
-        when(filterParametersMock.getQueryFactorValues()).thenReturn(organismParts);
+        when(filterParametersMock.getQueryFactors()).thenReturn(organismParts);
 
         when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
                 .thenReturn(geneProfileMock2)
@@ -123,8 +123,8 @@ public class WriteGeneProfilesCommandTest {
         assertThat(headers, is(new String[]{"A", "B", "C", "D"}));
     }
 
-    private FactorValue createFactorValue(String value) {
-        return new FactorValue("ORG", null, value);
+    private Factor createFactorValue(String value) {
+        return new Factor("ORG", null, value);
     }
 
 

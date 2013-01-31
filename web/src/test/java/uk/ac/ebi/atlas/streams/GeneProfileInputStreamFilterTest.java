@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.Set;
@@ -60,15 +60,15 @@ public class GeneProfileInputStreamFilterTest {
 
     private Set<String> geneIDs = Sets.newHashSet("GENE1", "GENE2");
 
-    private FactorValue factorValue1 = new FactorValue("ORG", null, "heart");
-    private FactorValue factorValue2 = new FactorValue("ORG", null, "hair");
+    private Factor factor1 = new Factor("ORG", null, "heart");
+    private Factor factor2 = new Factor("ORG", null, "hair");
 
 
-    private Set<FactorValue> factorValues = Sets.newHashSet(factorValue1, factorValue2);
+    private Set<Factor> factors = Sets.newHashSet(factor1, factor2);
 
     private Set<String> EMPTY_GENE_IDS = Sets.newHashSet();
 
-    private Set<FactorValue> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
+    private Set<Factor> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
 
     @Mock
     private FilterParameters filterParametersMock;
@@ -78,20 +78,20 @@ public class GeneProfileInputStreamFilterTest {
     @Before
     public void initMocks() {
         when(gene1ProfileMock.getGeneId()).thenReturn(GENE_2);
-        when(gene1ProfileMock.isExpressedOnAnyOf(factorValues)).thenReturn(true);
-        when(gene1ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_1)));
+        when(gene1ProfileMock.isExpressedOnAnyOf(factors)).thenReturn(true);
+        when(gene1ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new Factor("ORGANISM_PART", "", ORGANISM_PART_1)));
         when(gene3ProfileMock.getGeneId()).thenReturn("UNACCEPTABLE_GENE");
-        when(gene3ProfileMock.isExpressedOnAnyOf(factorValues)).thenReturn(true);
-        when(gene3ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new FactorValue("ORGANISM_PART", "", ORGANISM_PART_2)));
+        when(gene3ProfileMock.isExpressedOnAnyOf(factors)).thenReturn(true);
+        when(gene3ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new Factor("ORGANISM_PART", "", ORGANISM_PART_2)));
 
-        when(filterParametersMock.getFilterFactorValues()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
+        when(filterParametersMock.getFilterFactors()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
 
     }
 
     @Test
     public void acceptanceCriteriaTestShouldBeBasedOnGeneIDsSet() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, factorValues);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, factors);
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
@@ -104,7 +104,7 @@ public class GeneProfileInputStreamFilterTest {
     @Test
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_GENE_IDS, factorValues);
+        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_GENE_IDS, factors);
         //and
         Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
 

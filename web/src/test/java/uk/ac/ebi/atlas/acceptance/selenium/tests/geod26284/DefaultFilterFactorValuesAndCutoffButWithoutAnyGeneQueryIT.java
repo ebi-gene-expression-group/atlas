@@ -49,7 +49,7 @@ public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQueryIT extends 
 
         //then
         assertThat(selectedGenes, hasItems(
-                            "RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", //expressed on 1 FactorValue
+                            "RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", //expressed on 1 Factor
                             "RP11-368L12.1", //expressed on two FactorValues
                             "RP11-20I23.6" //expressed on three FactorValues
                     ));

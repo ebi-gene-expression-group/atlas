@@ -68,7 +68,7 @@ public class GeneProfileBuilderTest {
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock2.isGreaterThan(0d)).willReturn(true);
-        given(expressionMock1.getFactorValue("factor_type")).willReturn(mock(FactorValue.class));
+        given(expressionMock1.getFactorValue("factor_type")).willReturn(mock(Factor.class));
         //when
         subject.setGeneExpressionPrecondition(geneExpressionPrecondition);
 

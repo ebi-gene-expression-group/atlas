@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.CompleteGeneProfile;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 
@@ -35,19 +35,19 @@ public class BarChartTraderBuilderTest {
     private static final String ORIGIN_2 = "origin2";
 
     @Mock
-    private FactorValue factorValueMock2;
+    private Factor factorMock2;
     @Mock
-    private FactorValue factorValueMock1;
+    private Factor factorMock1;
     @Mock
-    private FactorValue factorValueMock3;
+    private Factor factorMock3;
 
 
     @Mock
-    private FactorValue factorValueMock12;
+    private Factor factorMock12;
     @Mock
-    private FactorValue factorValueMock11;
+    private Factor factorMock11;
     @Mock
-    private FactorValue factorValueMock13;
+    private Factor factorMock13;
 
 
     @Mock
@@ -59,9 +59,9 @@ public class BarChartTraderBuilderTest {
     @Mock
     private CutoffScale cutoffScale;
 
-    private HashSet<FactorValue> factorValueHashSet1;
-    private HashSet<FactorValue> factorValueHashSet2;
-    private HashSet<FactorValue> factorValueHashSet3;
+    private HashSet<Factor> factorHashSet1;
+    private HashSet<Factor> factorHashSet2;
+    private HashSet<Factor> factorHashSet3;
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
     public static final CompleteGeneProfile GENE_PROFILE_1 = mock(CompleteGeneProfile.class);
@@ -71,16 +71,16 @@ public class BarChartTraderBuilderTest {
     @Before
     public void initializeSubject() {
 
-        when(factorValueMock1.getValue()).thenReturn(ORGANISM_PART_1);
-        when(factorValueMock2.getValue()).thenReturn(ORGANISM_PART_2);
-        when(factorValueMock3.getValue()).thenReturn(ORGANISM_PART_3);
+        when(factorMock1.getValue()).thenReturn(ORGANISM_PART_1);
+        when(factorMock2.getValue()).thenReturn(ORGANISM_PART_2);
+        when(factorMock3.getValue()).thenReturn(ORGANISM_PART_3);
 
-        when(factorValueMock11.getValue()).thenReturn(ORIGIN_1);
-        when(factorValueMock12.getValue()).thenReturn(ORIGIN_2);
+        when(factorMock11.getValue()).thenReturn(ORIGIN_1);
+        when(factorMock12.getValue()).thenReturn(ORIGIN_2);
 
-        factorValueHashSet1 = Sets.newHashSet(factorValueMock1, factorValueMock11);
-        factorValueHashSet2 = Sets.newHashSet(factorValueMock2, factorValueMock12);
-        factorValueHashSet3 = Sets.newHashSet(factorValueMock3, factorValueMock11);
+        factorHashSet1 = Sets.newHashSet(factorMock1, factorMock11);
+        factorHashSet2 = Sets.newHashSet(factorMock2, factorMock12);
+        factorHashSet3 = Sets.newHashSet(factorMock3, factorMock11);
 
         when(cutoffScale.getValuesSmallerThan(1)).thenReturn(initTreeSetWithValuesLessThen(1));
         when(cutoffScale.getValuesSmallerThan(2)).thenReturn(initTreeSetWithValuesLessThen(2));
@@ -107,16 +107,16 @@ public class BarChartTraderBuilderTest {
     private CompleteGeneProfile initGeneProfile1() {
         Expression expression1 = mock(Expression.class);
         when(expression1.getLevel()).thenReturn(1d);
-        when(expression1.getAllFactorValues()).thenReturn(factorValueHashSet1);
+        when(expression1.getAllFactors()).thenReturn(factorHashSet1);
 
 
         Expression expression2 = mock(Expression.class);
         when(expression2.getLevel()).thenReturn(2d);
-        when(expression2.getAllFactorValues()).thenReturn(factorValueHashSet2);
+        when(expression2.getAllFactors()).thenReturn(factorHashSet2);
 
         Expression expression3 = mock(Expression.class);
         when(expression3.getLevel()).thenReturn(0d);
-        when(expression3.getAllFactorValues()).thenReturn(factorValueHashSet3);
+        when(expression3.getAllFactors()).thenReturn(factorHashSet3);
 
 
         Iterator<Expression> iterator = Iterators.forArray(expression1, expression2, expression3);
@@ -128,16 +128,16 @@ public class BarChartTraderBuilderTest {
     private CompleteGeneProfile initGeneProfile2() {
         Expression expression21 = mock(Expression.class);
         when(expression21.getLevel()).thenReturn(3d);
-        when(expression21.getAllFactorValues()).thenReturn(factorValueHashSet1);
+        when(expression21.getAllFactors()).thenReturn(factorHashSet1);
 
         Expression expression22 = mock(Expression.class);
         when(expression22.getLevel()).thenReturn(2d);
-        when(expression22.getAllFactorValues()).thenReturn(factorValueHashSet2);
+        when(expression22.getAllFactors()).thenReturn(factorHashSet2);
 
 
         Expression expression23 = mock(Expression.class);
         when(expression23.getLevel()).thenReturn(1d);
-        when(expression23.getAllFactorValues()).thenReturn(factorValueHashSet3);
+        when(expression23.getAllFactors()).thenReturn(factorHashSet3);
 
 
         Iterator<Expression> iterator2 = Iterators.forArray(expression21, expression22, expression23);
@@ -154,17 +154,17 @@ public class BarChartTraderBuilderTest {
         subject.addGeneToIndexes(GENE_PROFILE_1, 0);
 
         //then
-        NavigableMap<Double, Map<Set<FactorValue>, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
+        NavigableMap<Double, Map<Set<Factor>, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
         assertThat(geneExpressionIndexes.size(), is(2));
         assertThat(geneExpressionIndexes.keySet().contains(0d), is(true));
         assertThat(geneExpressionIndexes.keySet().contains(1d), is(true));
 
         assertThat(geneExpressionIndexes.get(1d).size(), is(1));
-        assertThat(geneExpressionIndexes.get(1d).get(factorValueHashSet2).cardinality(), is(1));
+        assertThat(geneExpressionIndexes.get(1d).get(factorHashSet2).cardinality(), is(1));
 
         assertThat(geneExpressionIndexes.get(0d).size(), is(2));
-        assertThat(geneExpressionIndexes.get(0d).get(factorValueHashSet1).cardinality(), is(1));
-        assertThat(geneExpressionIndexes.get(0d).get(factorValueHashSet2).cardinality(), is(1));
+        assertThat(geneExpressionIndexes.get(0d).get(factorHashSet1).cardinality(), is(1));
+        assertThat(geneExpressionIndexes.get(0d).get(factorHashSet2).cardinality(), is(1));
     }
 
     @Test
@@ -175,7 +175,7 @@ public class BarChartTraderBuilderTest {
         subject.addGeneToIndexes(GENE_PROFILE_2, 1);
 
         //then
-        NavigableMap<Double, Map<Set<FactorValue>, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
+        NavigableMap<Double, Map<Set<Factor>, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
         assertThat(geneExpressionIndexes.size(), is(3));
         assertThat(geneExpressionIndexes.keySet().contains(0d), is(true));
         assertThat(geneExpressionIndexes.keySet().contains(1d), is(true));
@@ -183,9 +183,9 @@ public class BarChartTraderBuilderTest {
         assertThat(geneExpressionIndexes.keySet().contains(3d), is(false));
 
 
-        assertThat(geneExpressionIndexes.get(1d).get(factorValueHashSet1).cardinality(), is(1));
-        assertThat(geneExpressionIndexes.get(1d).get(factorValueHashSet2).cardinality(), is(2));
-        assertThat(geneExpressionIndexes.get(2d).get(factorValueHashSet1).cardinality(), is(1));
+        assertThat(geneExpressionIndexes.get(1d).get(factorHashSet1).cardinality(), is(1));
+        assertThat(geneExpressionIndexes.get(1d).get(factorHashSet2).cardinality(), is(2));
+        assertThat(geneExpressionIndexes.get(2d).get(factorHashSet1).cardinality(), is(1));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class BarChartTraderBuilderTest {
             subject.addGeneToIndexes(initGeneProfile2(), i + 1);
         }
 
-        NavigableMap<Double, Map<Set<FactorValue>, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
+        NavigableMap<Double, Map<Set<Factor>, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
 
         assertThat(geneExpressionIndexes.size(), is(3));
         assertThat(geneExpressionIndexes.keySet().contains(2d), is(true));

@@ -51,8 +51,8 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
 
         Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(rankingParameters.isSpecific()
-                , getFilterParameters().getQueryFactorValues()
-                , experiment.getFilteredFactorValues(getFilterParameters().getFilterFactorValues(), getFilterParameters().getQueryFactorType()));
+                , getFilterParameters().getQueryFactors()
+                , experiment.getFilteredFactorValues(getFilterParameters().getFilterFactors(), getFilterParameters().getQueryFactorType()));
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, rankingParameters.getHeatmapMatrixSize());
 
@@ -81,9 +81,9 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
         return new GeneProfilesList();
     }
 
-    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<FactorValue> selectedQueryFactorValues,
-                                                               Set<FactorValue> allFactorValues) {
-        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactorValues, allFactorValues)).reverse();
+    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
+                                                               Set<Factor> allFactors) {
+        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactors, allFactors)).reverse();
     }
 
     protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> geneProfileComparator, int heatmapMatrixSize) {

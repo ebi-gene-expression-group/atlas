@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import javax.inject.Inject;
@@ -29,12 +29,12 @@ class ExpressionsBuffer {
 
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
-    private Iterator<Set<FactorValue>> expectedAllFactorValues;
+    private Iterator<Set<Factor>> expectedAllFactorValues;
 
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected ExpressionsBuffer(List<Set<FactorValue>> orderedAllFactorValues) {
+    protected ExpressionsBuffer(List<Set<Factor>> orderedAllFactorValues) {
         this.expectedAllFactorValues = Iterables.cycle(orderedAllFactorValues).iterator();
     }
 
@@ -73,9 +73,9 @@ class ExpressionsBuffer {
 
         private ExperimentsCache experimentsCache;
 
-//        private List<FactorValue> orderedFactorValues = new LinkedList<>();
+//        private List<Factor> orderedFactorValues = new LinkedList<>();
 
-        private List<Set<FactorValue>> orderedAllFactorValues = new LinkedList<>();
+        private List<Set<Factor>> orderedAllFactorValues = new LinkedList<>();
 
         private boolean readyToCreate;
         private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
@@ -106,11 +106,11 @@ class ExpressionsBuffer {
             for (String columnHeader : columnHeaders) {
 
                 //ToDo: will be refactored soon as we remove organism parts
-//                FactorValue factorValue = getFactorValue(columnHeader, experimentAccession);
+//                Factor factorValue = getFactorValue(columnHeader, experimentAccession);
 //                orderedFactorValues.add(factorValue);
 
-                Set<FactorValue> allFactorValues = getAllFactorValues(columnHeader, experimentAccession);
-                orderedAllFactorValues.add(allFactorValues);
+                Set<Factor> allFactors = getAllFactorValues(columnHeader, experimentAccession);
+                orderedAllFactorValues.add(allFactors);
 
             }
             readyToCreate = true;
@@ -119,7 +119,7 @@ class ExpressionsBuffer {
         }
 
 
-        private Set<FactorValue> getAllFactorValues(String columnHeader, String experimentAccession) {
+        private Set<Factor> getAllFactorValues(String columnHeader, String experimentAccession) {
 
             String[] columnRuns = columnHeader.split(",");
 

@@ -29,13 +29,13 @@ public class GeneProfileComparatorTest {
     @Mock
     private GeneProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
-    private FactorValue factorValue1 = new FactorValue("ORG", null, "heart");
-    private FactorValue factorValue2 = new FactorValue("ORG", null, "nose");
+    private Factor factor1 = new Factor("ORG", null, "heart");
+    private Factor factor2 = new Factor("ORG", null, "nose");
 
 
-    private Set<FactorValue> selectedOrganismParts = Sets.newHashSet(factorValue1);
+    private Set<Factor> selectedOrganismParts = Sets.newHashSet(factor1);
 
-    private Set<FactorValue> allOrganismParts = Sets.newHashSet(factorValue1, factorValue2);
+    private Set<Factor> allOrganismParts = Sets.newHashSet(factor1, factor2);
 
     @Before
     public void initGeneExpressions() {

@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.model.barcharts;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 
 import java.util.*;
 
@@ -14,16 +14,16 @@ public class BarChartTraderTest {
 
     private BarChartTrader subject;
 
-    private NavigableMap<Double, Map<Set<FactorValue>, BitSet>> geneExpressionIndexes = new TreeMap<>();
+    private NavigableMap<Double, Map<Set<Factor>, BitSet>> geneExpressionIndexes = new TreeMap<>();
 
     private final BitSetMapFactory bitSetMapFactory = new BitSetMapFactory();
 
-    private static FactorValue organismPart1 = new FactorValue("op", "op1");
-    private static FactorValue organismPart2 = new FactorValue("op", "op2");
-    private static FactorValue organismPart3 = new FactorValue("op", "op3");
+    private static Factor organismPart1 = new Factor("op", "op1");
+    private static Factor organismPart2 = new Factor("op", "op2");
+    private static Factor organismPart3 = new Factor("op", "op3");
 
-    private static FactorValue origin1 = new FactorValue("origin", "origin1");
-    private static FactorValue origin2 = new FactorValue("origin", "origin2");
+    private static Factor origin1 = new Factor("origin", "origin1");
+    private static Factor origin2 = new Factor("origin", "origin2");
 
     @Before
     public void initSubject() {
@@ -100,8 +100,8 @@ public class BarChartTraderTest {
     private static class BitSetMapFactory {
         public BitSetMapFactory() { }
 
-        Map<Set<FactorValue>, BitSet> createChartSize5() {
-            Map<Set<FactorValue>, BitSet> map = new HashMap();
+        Map<Set<Factor>, BitSet> createChartSize5() {
+            Map<Set<Factor>, BitSet> map = new HashMap();
             map.put(Sets.newHashSet(organismPart1, origin1), initBitSet(1, 3, 5));
             map.put(Sets.newHashSet(organismPart2, origin1), initBitSet(0, 3));
             map.put(Sets.newHashSet(organismPart3, origin2), initBitSet(0, 1, 4));
@@ -109,8 +109,8 @@ public class BarChartTraderTest {
             return map;
         }
 
-        Map<Set<FactorValue>, BitSet> createChartSize2() {
-            Map<Set<FactorValue>, BitSet> map = new HashMap();
+        Map<Set<Factor>, BitSet> createChartSize2() {
+            Map<Set<Factor>, BitSet> map = new HashMap();
             map.put(Sets.newHashSet(organismPart1, origin1), initBitSet(3, 5));
             map.put(Sets.newHashSet(organismPart2, origin1), initBitSet(3));
             map.put(Sets.newHashSet(organismPart3, origin2), initBitSet(5));

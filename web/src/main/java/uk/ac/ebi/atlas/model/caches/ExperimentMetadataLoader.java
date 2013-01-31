@@ -37,7 +37,7 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
@@ -90,7 +90,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         String defaultQueryFactorType = parseDefaultQueryFactorType(experimentAccession);
 
-        Set<FactorValue> defaultFilterFactorValues = parseDefaultFilterFactorValues(experimentAccession);
+        Set<Factor> defaultFilterFactors = parseDefaultFilterFactorValues(experimentAccession);
 
         String experimentName = fetchExperimentName(experimentAccession);
 
@@ -98,7 +98,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         Experiment experiment = new Experiment(experimentAccession, experimentName
                 , getExperimentRunAccessions(experimentAccession), defaultQueryFactorType
-                , defaultFilterFactorValues, extractSpecie(firstNode));
+                , defaultFilterFactors, extractSpecie(firstNode));
 
         experiment.addAll(extractExperimentRuns(scanNodes, investigation.IDF));
 
@@ -106,15 +106,15 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     }
 
-    private Set<FactorValue> parseDefaultFilterFactorValues(String experimentAccession) {
-        Set<FactorValue> defaultFilterFactorValues = new HashSet<>();
+    private Set<Factor> parseDefaultFilterFactorValues(String experimentAccession) {
+        Set<Factor> defaultFilterFactors = new HashSet<>();
 
         for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
             if (line.length == 2) {
-                defaultFilterFactorValues.add(new FactorValue(line[0], line[1]));
+                defaultFilterFactors.add(new Factor(line[0], line[1]));
             }
         }
-        return defaultFilterFactorValues;
+        return defaultFilterFactors;
     }
 
     private String parseDefaultQueryFactorType(String experimentAccession) {
@@ -217,8 +217,8 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
                 }
             }
 
-            FactorValue factorValue = new FactorValue(factorType, factorName, factorValueAttribute.getAttributeValue());
-            run.addFactorValue(factorValue);
+            Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
+            run.addFactorValue(factor);
         }
 
         return run;

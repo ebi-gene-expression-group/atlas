@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.model.barcharts;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Named;
 import java.util.*;
@@ -35,23 +35,23 @@ public class BarChartTrader {
 
     public static final int AVERAGE_GENES_IN_EXPERIMENT = 45000;
 
-    private NavigableMap<Double, Map<Set<FactorValue>, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
+    private NavigableMap<Double, Map<Set<Factor>, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
 
     protected BarChartTrader() {
     }
 
-    public BarChartTrader(NavigableMap<Double, Map<Set<FactorValue>, BitSet>> factorSetGeneExpressionIndexes) {
+    public BarChartTrader(NavigableMap<Double, Map<Set<Factor>, BitSet>> factorSetGeneExpressionIndexes) {
         this.factorSetGeneExpressionIndexes = factorSetGeneExpressionIndexes;
     }
 
 
-    public NavigableMap<Double, Integer> getChart(Set<FactorValue> limitingFactorValueSet, Set<FactorValue> selectedFactorValues) {
+    public NavigableMap<Double, Integer> getChart(Set<Factor> limitingFactorSet, Set<Factor> selectedFactors) {
 
         NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
 
         for (Double scaledCutoff : factorSetGeneExpressionIndexes.navigableKeySet()) {
 
-            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(factorSetGeneExpressionIndexes.get(scaledCutoff), limitingFactorValueSet, selectedFactorValues));
+            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(factorSetGeneExpressionIndexes.get(scaledCutoff), limitingFactorSet, selectedFactors));
 
         }
 
@@ -59,25 +59,25 @@ public class BarChartTrader {
     }
 
 
-    protected static int countGenesAboveCutoff(Map<Set<FactorValue>, BitSet> geneBitSets, Set<FactorValue> limitingFactorValueSet, Set<FactorValue> selectedFactorValues) {
+    protected static int countGenesAboveCutoff(Map<Set<Factor>, BitSet> geneBitSets, Set<Factor> limitingFactorSet, Set<Factor> selectedFactors) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
-        for (Set<FactorValue> bitSetFactorValues : geneBitSets.keySet()) {
-            if (forLimitingFactorValues(bitSetFactorValues, limitingFactorValueSet) && forQueryFactorValues(bitSetFactorValues, selectedFactorValues)) {
+        for (Set<Factor> bitSetFactors : geneBitSets.keySet()) {
+            if (forLimitingFactorValues(bitSetFactors, limitingFactorSet) && forQueryFactorValues(bitSetFactors, selectedFactors)) {
                 //add
-                expressedGenesBitSet.or(geneBitSets.get(bitSetFactorValues));
+                expressedGenesBitSet.or(geneBitSets.get(bitSetFactors));
             }
         }
         return expressedGenesBitSet.cardinality();
     }
 
 
-    protected static boolean forLimitingFactorValues(Set<FactorValue> factorValueSet, Set<FactorValue> limitingFactorValueSet) {
-        return CollectionUtils.isEmpty(limitingFactorValueSet) || factorValueSet.containsAll(limitingFactorValueSet);
+    protected static boolean forLimitingFactorValues(Set<Factor> factorSet, Set<Factor> limitingFactorSet) {
+        return CollectionUtils.isEmpty(limitingFactorSet) || factorSet.containsAll(limitingFactorSet);
     }
 
-    protected static boolean forQueryFactorValues(Set<FactorValue> factorValueSet, Set<FactorValue> queryFactorValues) {
-        return CollectionUtils.isEmpty(queryFactorValues) ||  !Collections.disjoint(factorValueSet ,queryFactorValues);
+    protected static boolean forQueryFactorValues(Set<Factor> factorSet, Set<Factor> queryFactors) {
+        return CollectionUtils.isEmpty(queryFactors) ||  !Collections.disjoint(factorSet, queryFactors);
     }
 
 

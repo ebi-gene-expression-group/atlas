@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 
 import java.util.Set;
 
@@ -31,34 +31,34 @@ public class FilterByMenuBuilderTest {
 
     @Test
     public void testGetJsonUrl() throws Exception {
-        FactorValue firstFactorValueMock = mock(FactorValue.class);
-        FactorValue secondFactorValueMock = mock(FactorValue.class);
-        when(firstFactorValueMock.getType()).thenReturn("firstFactorValueType");
-        when(firstFactorValueMock.getName()).thenReturn(null);
-        when(firstFactorValueMock.getValue()).thenReturn("firstFactorValueValue");
-        when(secondFactorValueMock.getType()).thenReturn("secondFactorValueType");
-        when(firstFactorValueMock.getName()).thenReturn(null);
-        when(firstFactorValueMock.getValue()).thenReturn("firstFactorValueValue");
-        FactorValue f1 = new FactorValue("hello","world");
-        FactorValue f2 = new FactorValue("hello1","world1");
+        Factor firstFactorMock = mock(Factor.class);
+        Factor secondFactorMock = mock(Factor.class);
+        when(firstFactorMock.getType()).thenReturn("firstFactorValueType");
+        when(firstFactorMock.getName()).thenReturn(null);
+        when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
+        when(secondFactorMock.getType()).thenReturn("secondFactorValueType");
+        when(firstFactorMock.getName()).thenReturn(null);
+        when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
+        Factor f1 = new Factor("hello","world");
+        Factor f2 = new Factor("hello1","world1");
 
         assertThat(subject.getJsonUrl("aType", f1, f2),
-                        is("{\"queryFactorType\":\"aType\",\"filterFactorValuesURL\":\"HELLO:world,HELLO1:world1\"}"));
+                        is("{\"queryFactorType\":\"aType\",\"filterFactorsURL\":\"HELLO:world,HELLO1:world1\"}"));
     }
 
 
     @Test
     public void testIndexFactorValuesByName() {
 
-        FactorValue factorValue1 = new FactorValue(ORGANISM_PART, ORGANISM_PART, "liver");
-        FactorValue factorValue2 = new FactorValue(ORGANISM_PART, ORGANISM_PART, "heart");
-        FactorValue factorValue3 = new FactorValue(CELL_LINE, CELL_LINE, "imr-90");
-        Set<FactorValue> factorValues = Sets.newHashSet(factorValue1, factorValue2, factorValue3);
+        Factor factor1 = new Factor(ORGANISM_PART, ORGANISM_PART, "liver");
+        Factor factor2 = new Factor(ORGANISM_PART, ORGANISM_PART, "heart");
+        Factor factor3 = new Factor(CELL_LINE, CELL_LINE, "imr-90");
+        Set<Factor> factors = Sets.newHashSet(factor1, factor2, factor3);
 
-        assertThat(subject.factorValuesByName(factorValues), notNullValue());
-        assertThat(subject.factorValuesByName(factorValues).keySet(), hasItems(ORGANISM_PART, CELL_LINE));
-        assertThat(subject.factorValuesByName(factorValues).get(ORGANISM_PART), hasItems(factorValue1, factorValue2));
-        assertThat(subject.factorValuesByName(factorValues).get(CELL_LINE), hasItems(factorValue3));
+        assertThat(subject.factorValuesByName(factors), notNullValue());
+        assertThat(subject.factorValuesByName(factors).keySet(), hasItems(ORGANISM_PART, CELL_LINE));
+        assertThat(subject.factorValuesByName(factors).get(ORGANISM_PART), hasItems(factor1, factor2));
+        assertThat(subject.factorValuesByName(factors).get(CELL_LINE), hasItems(factor3));
     }
 
 }
