@@ -23,17 +23,14 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 @Named("filterByMenuBuilder")
 @Scope("prototype")
@@ -41,22 +38,18 @@ public class FilterByMenuBuilder {
 
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
-    private final FactorValueUtils factorValueUtils;
-
     private SortedSetMultimap<String, FactorValue> allFactorNames;
 
     private SortedSetMultimap<FactorValue, FactorValue> validFactorValueCombinations;
 
-    @Inject
-    public FilterByMenuBuilder(FactorValueUtils factorValueUtils) {
-        this.factorValueUtils = factorValueUtils;
+    public FilterByMenuBuilder() {
     }
 
     public SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> build(Experiment experiment) {
 
         validFactorValueCombinations = experiment.getValidFactorValueCombinations();
 
-        allFactorNames = factorValueUtils.factorValuesByName(validFactorValueCombinations.keySet());
+        allFactorNames = factorValuesByName(validFactorValueCombinations.keySet());
 
         // build filter by menu map here, structure:
         // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
@@ -94,7 +87,7 @@ public class FilterByMenuBuilder {
 
         // index second level factor names
         SortedSetMultimap<String, FactorValue> secondFactorNames =
-                factorValueUtils.factorValuesByName(validFactorValueCombinations.get(firstFactorValue));
+                factorValuesByName(validFactorValueCombinations.get(firstFactorValue));
 
         // third level: factor value choices per factor name, restricted by previous
         for (String secondFactorName : secondFactorNames.keySet()) {
@@ -165,7 +158,16 @@ public class FilterByMenuBuilder {
 
     }
 
-    public static String serialize(FactorValue factorValue) {
+    protected SortedSetMultimap<String, FactorValue> factorValuesByName(Set<FactorValue> factorValues) {
+        // using factor names here for better readability and compatibility with experiment design page
+        SortedSetMultimap<String, FactorValue> factorValuesByName = TreeMultimap.create();
+        for (FactorValue factorValue : factorValues) {
+            factorValuesByName.put(factorValue.getName(),factorValue);
+        }
+        return factorValuesByName;
+    }
+
+    protected String serialize(FactorValue factorValue) {
         return factorValue.getType() + FACTOR_VALUE_SEPARATOR + factorValue.getValue();
     }
 }

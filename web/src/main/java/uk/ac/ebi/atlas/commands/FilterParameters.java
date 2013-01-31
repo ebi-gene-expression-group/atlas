@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Objects;
 import org.apache.commons.collections.CollectionUtils;
@@ -36,7 +36,7 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
-//ToDo: this class name smells bad, GeneProfileInputStreamFilter now only requires queryFactorValues from this class and that is available also from other beans.
+//ToDo: this class now smells, GeneProfileInputStreamFilter now only requires queryFactorValues from this class and that is available also from other beans.
 public class FilterParameters {
 
     public static final String FACTOR_VALUE_SEPARATOR = ":";

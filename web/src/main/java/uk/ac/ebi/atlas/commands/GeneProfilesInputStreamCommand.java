@@ -31,7 +31,6 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 

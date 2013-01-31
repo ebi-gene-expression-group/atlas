@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;

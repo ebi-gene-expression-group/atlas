@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 

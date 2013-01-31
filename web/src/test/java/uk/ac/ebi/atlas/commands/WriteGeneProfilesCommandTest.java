@@ -34,7 +34,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.util.SortedSet;
