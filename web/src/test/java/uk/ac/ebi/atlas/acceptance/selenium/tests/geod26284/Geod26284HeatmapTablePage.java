@@ -38,7 +38,6 @@ import java.util.List;
 public class Geod26284HeatmapTablePage extends HeatmapTablePage {
 
     private static final String XPATH_TEMPLATE = "ul/li[%d]";
-    ;
 
     @FindBy(xpath = "//ul[@id = 'filterBy']/li")
     private WebElement filterByMenu;
@@ -57,6 +56,20 @@ public class Geod26284HeatmapTablePage extends HeatmapTablePage {
 
     public String getFilterByMenuTopText() {
         return filterByMenu.getText();
+    }
+
+    public String getFilterByMenuText(int... indices) {
+
+        // get last element in path
+        WebElement lastMenuElement = extractLastMenuElement(indices);
+        return lastMenuElement.getText();
+    }
+
+    public void clickFilterByMenuElement(int... indices) {
+
+        // get last element in path
+        WebElement lastMenuElement = extractLastMenuElement(indices);
+        lastMenuElement.click();
     }
 
     protected List<WebElement> getWebElementPath(List<WebElement> list, WebElement element, int[] indices) {
@@ -78,13 +91,12 @@ public class Geod26284HeatmapTablePage extends HeatmapTablePage {
         return getWebElementPath(list, childElement, newIndices);
     }
 
-    public String getFilterByMenuText(int... indicies) {
+    protected WebElement extractLastMenuElement(int... indices) {
 
         // get path to click through menu
-        List<WebElement> menuElements = getWebElementPath(new ArrayList<WebElement>(), filterByMenu, indicies);
+        List<WebElement> menuElements = getWebElementPath(new ArrayList<WebElement>(), filterByMenu, indices);
 
-        // make whole menu appear
-        ((JavascriptExecutor) driver).executeScript("$(\"ul:hidden\").show();");
+        makeWholeMenuAppear();
 
         final WebElement lastMenuElement = menuElements.get(menuElements.size() - 1);
 
@@ -97,11 +109,15 @@ public class Geod26284HeatmapTablePage extends HeatmapTablePage {
             }
         });
 
-        for (WebElement menuElement : menuElements) {
-            WebElement link = menuElement.findElement(By.xpath("a"));
-            System.out.println(link + " " + link.getTagName() + " " + link.getText());
+        // the last menu item does not use hyperlink
+        if (lastMenuElement.getAttribute("data") == null) {
+            return lastMenuElement.findElement(By.xpath("a"));
         }
+        return lastMenuElement;
+    }
 
-        return lastMenuElement.findElement(By.xpath("a")).getText();
+    protected void makeWholeMenuAppear() {
+        // make whole menu appear
+        ((JavascriptExecutor) driver).executeScript("$(\"ul:hidden\").show();");
     }
 }
