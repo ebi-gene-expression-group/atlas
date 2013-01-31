@@ -11,7 +11,7 @@ var experimentDesignTableModule = (function ($) {
         _factors,
         _experimentAccession;
 
-    function initExperimentDesignTable() {
+    function _initExperimentDesignTable() {
 
         var $window = $(window);
         var calcDataTableHeight = function () {
@@ -100,7 +100,7 @@ var experimentDesignTableModule = (function ($) {
         _experimentAccession = experimentAccession;
 
 
-        initExperimentDesignTable();
+        _initExperimentDesignTable();
     }
 
     return {
