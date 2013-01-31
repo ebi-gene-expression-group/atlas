@@ -110,7 +110,7 @@ public class Geod26284HeatmapTablePage extends HeatmapTablePage {
         });
 
         // the last menu item does not use hyperlink
-        if (lastMenuElement.getAttribute("data") == null) {
+        if (lastMenuElement.getAttribute("data-serialized-factors") == null) {
             return lastMenuElement.findElement(By.xpath("a"));
         }
         return lastMenuElement;
