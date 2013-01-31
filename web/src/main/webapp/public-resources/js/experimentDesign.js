@@ -5,10 +5,11 @@
 var experimentDesignTableModule = (function ($) {
     "use strict";
 
-    var aDataSet;
-    var aRunAccessions;
-    var aSamples;
-    var aFactors;
+    var _dataSet,
+        _runAccessions,
+        _samples,
+        _factors,
+        _experimentAccession;
 
     function initExperimentDesignTable() {
 
@@ -29,20 +30,20 @@ var experimentDesignTableModule = (function ($) {
         };
 
         /* Set colspan for each category */
-        $('#samplesHeader').attr('colspan', $.assocArraySize(aSamples));
-        $('#factorsHeader').attr('colspan', $.assocArraySize(aFactors));
+        $('#samplesHeader').attr('colspan', $.assocArraySize(_samples));
+        $('#factorsHeader').attr('colspan', $.assocArraySize(_factors));
 
         /* populate all sub categories */
         var aoColumnDefs = new Array();
         var i = 0;
         aoColumnDefs[i] = { "sClass": "assays bb br bl", "aTargets": [ i ] };
-        for (var sample in aSamples) {
+        for (var sample in _samples) {
             $('#headerStub').append("<th class=\"header-cell bb\">" + sample + "</th>");
             aoColumnDefs[++i] = { "sClass": "center bb", "aTargets": [ i ] };
         }
         aoColumnDefs[i]["sClass"] = "center bb br";
         $('#headerStub th:last()').attr("class", "header-cell bb br");
-        for (var factor in aFactors) {
+        for (var factor in _factors) {
             $('#headerStub').append("<th class=\"header-cell bb\">" + factor + "</th>");
             aoColumnDefs[++i] = { "sClass": "center bb", "aTargets": [ i ] };
         }
@@ -53,7 +54,7 @@ var experimentDesignTableModule = (function ($) {
         $.fn.dataTableExt.afnFiltering.push(
             function (oSettings, aData, iDataIndex) {
                 var only = $('#isOnlyAnalysed').is(':checked');
-                if (!only || jQuery.inArray(aData[0], aRunAccessions) > -1) {
+                if (!only || jQuery.inArray(aData[0], _runAccessions) > -1) {
                     return true;
                 }
                 return false;
@@ -61,7 +62,7 @@ var experimentDesignTableModule = (function ($) {
         );
 
         var oTable = $('#experiment-design-table').dataTable({
-            "aaData": aDataSet,
+            "aaData": _dataSet,
             "aoColumnDefs": aoColumnDefs,
             "bPaginate": false,
             "bScrollCollapse": true,
@@ -70,7 +71,7 @@ var experimentDesignTableModule = (function ($) {
             "sDom": 'i<"download">f<"clear">t'
         });
 
-        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/${experimentAccession}/experiment-design.tsv" target="_blank">' +
+        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/' + _experimentAccession + '/experiment-design.tsv" target="_blank">' +
             '<img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>');
         $('div.download').attr('style', 'float: right');
         $('#isOnlyAnalysed').click(function () {
@@ -91,11 +92,12 @@ var experimentDesignTableModule = (function ($) {
 
     }
 
-    function init(_aDataSet, _aRunAccessions, _aSamples, _aFactors) {
-        aDataSet = _aDataSet;
-        aRunAccessions = _aRunAccessions;
-        aSamples = _aSamples;
-        aFactors = _aFactors;
+    function init(experimentAccession, dataSet, runAccessions, samples, factors) {
+        _dataSet = dataSet;
+        _runAccessions = runAccessions;
+        _samples = samples;
+        _factors = factors;
+        _experimentAccession = experimentAccession;
 
 
         initExperimentDesignTable();
