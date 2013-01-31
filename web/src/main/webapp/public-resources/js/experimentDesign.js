@@ -92,7 +92,7 @@ var experimentDesignTableModule = (function ($) {
 
     }
 
-    function init(experimentAccession, dataSet, runAccessions, samples, factors) {
+    function _init(experimentAccession, dataSet, runAccessions, samples, factors) {
         _dataSet = dataSet;
         _runAccessions = runAccessions;
         _samples = samples;
@@ -104,7 +104,7 @@ var experimentDesignTableModule = (function ($) {
     }
 
     return {
-        init: init
+        init: _init
     };
 
 }(jQuery));
