@@ -51,6 +51,6 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
 
     @Test
     public void verifyFilterByMenuFirstFirstLabels() {
-        //assertThat(subject.getFilterByMenuText(new int[]{0,0}), is("long non-polya rna"));
+        assertThat(subject.getFilterByMenuText(new int[]{0, 0}), is("long non-polya rna"));
     }
 }
