@@ -50,98 +50,17 @@
 
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript"
+        src="${pageContext.request.contextPath}/resources/js/experimentDesign.js"></script>
 
-<script type="text/javascript" charset="utf-8">
+<script>
 
-    /* this is for dynamically resizing table */
-    var $window = $(window);
-    var calcDataTableHeight = function () {
-        return $window.height() - 270;
-    };
-    var calcDataTableWidth = function () {
-        return $window.width() - 100;
-    };
-
-
-    /* Data set - loaded from experiment design tsv file */
-    var aDataSet = ${tableData};
-    var aRunAccessions = ${runAccessions};
-    var aSamples = ${samples};
-    var aFactors = ${factors};
-
-    /* configuring actual table */
+    (function ($) {
     $(document).ready(function () {
-
-        $.assocArraySize = function (obj) {
-            var size = 0, key;
-            for (key in obj) {
-                if (obj.hasOwnProperty(key)) size++;
-            }
-            return size;
-        };
-
-        /* Set colspan for each category */
-        $('#samplesHeader').attr('colspan', $.assocArraySize(aSamples));
-        $('#factorsHeader').attr('colspan', $.assocArraySize(aFactors));
-
-        /* populate all sub categories */
-        var aoColumnDefs = new Array();
-        var i = 0;
-        aoColumnDefs[i] = { "sClass":"assays bb br bl", "aTargets":[ i ] };
-        for (var sample in aSamples) {
-            $('#headerStub').append("<th class=\"header-cell bb\">" + sample + "</th>");
-            aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
-        }
-        aoColumnDefs[i]["sClass"] = "center bb br";
-        $('#headerStub th:last()').attr("class", "header-cell bb br");
-        for (var factor in aFactors) {
-            $('#headerStub').append("<th class=\"header-cell bb\">" + factor + "</th>");
-            aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
-        }
-        aoColumnDefs[i]["sClass"] = "center bb br";
-        $('#headerStub th:last()').attr("class", "header-cell bb br");
-
-        /* Custom filtering function which will filter analysed runs */
-        $.fn.dataTableExt.afnFiltering.push(
-                function (oSettings, aData, iDataIndex) {
-                    var only = $('#isOnlyAnalysed').is(':checked');
-                    if (!only || jQuery.inArray(aData[0], aRunAccessions) > -1) {
-                        return true;
-                    }
-                    return false;
-                }
-        );
-
-        var oTable = $('#experiment-design-table').dataTable({
-            "aaData":aDataSet,
-            "aoColumnDefs":aoColumnDefs,
-            "bPaginate":false,
-            "bScrollCollapse":true,
-            "sScrollY":calcDataTableHeight(),
-            "sScrollX":calcDataTableWidth(),
-            "sDom":'i<"download">f<"clear">t'
-        });
-
-        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/${experimentAccession}/experiment-design.tsv" target="_blank">' +
-                '<img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>');
-        $('div.download').attr('style', 'float: right');
-        $('#isOnlyAnalysed').click(function () {
-            oTable.fnDraw();
-        });
-
-        $window.resize(function () {
-            var oSettings = oTable.fnSettings();
-            oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
-            //oSettings.oScroll.sX = calcDataTableWidth();
-
-            // maybe you need to redraw the table (not sure about this)
-            oTable.fnAdjustColumnSizing(false);
-            oTable.fnDraw(false);
-        });
-
-        $('#download-experiment-design-link').button().tooltip();
+        experimentDesignTableModule.init(${tableData}, ${runAccessions}, ${samples}, ${factors});
 
         helpTooltipsModule.init('experiment-design');
+    });
     })(jQuery);
 
 </script>

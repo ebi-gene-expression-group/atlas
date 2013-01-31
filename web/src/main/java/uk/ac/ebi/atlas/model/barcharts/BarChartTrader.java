@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.model.FactorValue;
 import javax.inject.Named;
 import java.util.*;
 
-//ToDo: to be continued in order to handle the includeGenesExpressedAlsoOnNonSelectedFactorValue parameter...
 @Named("barChartTrader")
 @Scope("prototype")
 public class BarChartTrader {
