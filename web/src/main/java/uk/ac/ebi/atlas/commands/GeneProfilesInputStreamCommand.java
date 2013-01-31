@@ -31,7 +31,6 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
@@ -91,7 +90,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .createGeneProfileInputStream();
 
-        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, uppercaseGeneIDsToBeSearched, filterParameters.getQueryFactorValues())) {
+        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, uppercaseGeneIDsToBeSearched, filterParameters.getQueryFactors())) {
 
             return apply(experiment, inputStream);
 

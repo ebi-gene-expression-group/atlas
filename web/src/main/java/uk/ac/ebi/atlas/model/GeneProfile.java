@@ -24,7 +24,7 @@ public class GeneProfile implements Iterable<Expression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    private SortedMap<FactorValue, Expression> expressions = new TreeMap<>();
+    private SortedMap<Factor, Expression> expressions = new TreeMap<>();
 
     private GeneProfile() {
     }
@@ -75,28 +75,28 @@ public class GeneProfile implements Iterable<Expression> {
         }
     }
 
-    public boolean isExpressedOnAnyOf(Set<FactorValue> factorValues) {
-        checkArgument(CollectionUtils.isNotEmpty(factorValues));
-        return Sets.intersection(this.getAllFactorValues(), factorValues).size() > 0;
+    public boolean isExpressedOnAnyOf(Set<Factor> factors) {
+        checkArgument(CollectionUtils.isNotEmpty(factors));
+        return Sets.intersection(this.getAllFactorValues(), factors).size() > 0;
     }
 
-    public double getAverageExpressionLevelOn(Set<FactorValue> factorValues) {
-        if (CollectionUtils.isEmpty(factorValues)) {
+    public double getAverageExpressionLevelOn(Set<Factor> factors) {
+        if (CollectionUtils.isEmpty(factors)) {
             return 0D;
         }
         double expressionLevel = 0D;
-        for (FactorValue factorValue : factorValues) {
-            expressionLevel += getExpressionLevel(factorValue);
+        for (Factor factor : factors) {
+            expressionLevel += getExpressionLevel(factor);
         }
-        return expressionLevel / factorValues.size();
+        return expressionLevel / factors.size();
     }
 
-    public Set<FactorValue> getAllFactorValues() {
+    public Set<Factor> getAllFactorValues() {
         return this.expressions.keySet();
     }
 
-    public double getExpressionLevel(FactorValue factorValue) {
-        Expression expression = expressions.get(factorValue);
+    public double getExpressionLevel(Factor factor) {
+        Expression expression = expressions.get(factor);
         return expression == null ? 0 : expression.getLevel();
     }
 
@@ -110,11 +110,11 @@ public class GeneProfile implements Iterable<Expression> {
     }
 
 
-    public double getWeightedExpressionLevelOn(Set<FactorValue> selectedFactorValues, Set<FactorValue> allFactorValues) {
-        if (allFactorValues.isEmpty()) {
-            return getAverageExpressionLevelOn(selectedFactorValues);
+    public double getWeightedExpressionLevelOn(Set<Factor> selectedFactors, Set<Factor> allFactors) {
+        if (allFactors.isEmpty()) {
+            return getAverageExpressionLevelOn(selectedFactors);
         }
-        return getAverageExpressionLevelOn(selectedFactorValues) - getAverageExpressionLevelOn(Sets.difference(allFactorValues, selectedFactorValues));
+        return getAverageExpressionLevelOn(selectedFactors) - getAverageExpressionLevelOn(Sets.difference(allFactors, selectedFactors));
     }
 
     @Named("geneProfileBuilder")

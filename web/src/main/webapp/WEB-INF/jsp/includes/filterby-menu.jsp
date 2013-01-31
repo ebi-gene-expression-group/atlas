@@ -27,8 +27,8 @@
 
 
 <div class="filters-frame">
-    <c:forEach items="${selectedFactorValues}" var="factorValue">
-        <div class="filter-name">${factorValue.name}:</div>${factorValue.value}<br/>
+    <c:forEach items="${selectedFactors}" var="factor">
+        <div class="filter-name">${factor.name}:</div>${factor.value}<br/>
     </c:forEach>
 </div>
 <c:set var="filterMenuLabel" value="Change filters"/>
@@ -50,7 +50,7 @@
                                                 <a>${level3.key}</a>
                                                 <ul>
                                                     <c:forEach items="${level3.value}" var="level4">
-                                                        <li data='${level4.value}'
+                                                        <li data-serialized-factors='${level4.value}'
                                                             style="text-decoration: underline; cursor: pointer;">${level4.key}</li>
                                                     </c:forEach>
                                                 </ul>
@@ -72,10 +72,10 @@
     $(function () {
         $("#filterBy").menu();
         $('li:not(:has(>ul))', 'ul#filterBy').on('click', function () {
-            var filterFactorValuesFromJSON = JSON.parse($(this).attr('data'));
-            $("#queryFactorType").val(filterFactorValuesFromJSON.queryFactorType);
+            var jsonData = JSON.parse($(this).attr('data-serialized-factors'));
+            $("#queryFactorType").val(jsonData.queryFactorType);
             $("#queryFactorValues").val(''); // clear previous selection
-            $("#serializedFilterFactorValues").val(filterFactorValuesFromJSON.filterFactorValuesURL);
+            $("#serializedFilterFactorValues").val(jsonData.filterFactorsURL);
             $("form#prefForm").submit();
         });
         $("#filterBy").show();

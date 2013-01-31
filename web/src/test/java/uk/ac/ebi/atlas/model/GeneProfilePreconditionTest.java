@@ -15,10 +15,10 @@ public class GeneProfilePreconditionTest {
 
     private GeneExpressionPrecondition subject;
 
-    private FactorValue factorValue1 = new FactorValue("type1", "value1");
-    private FactorValue factorValue2 = new FactorValue("type2", "value2");
+    private Factor factor1 = new Factor("type1", "value1");
+    private Factor factor2 = new Factor("type2", "value2");
 
-    private FactorValue factorValue3 = new FactorValue("type3", "value3");
+    private Factor factor3 = new Factor("type3", "value3");
 
     @Mock
     private Expression expressionMock;
@@ -27,8 +27,8 @@ public class GeneProfilePreconditionTest {
     public void checkLimitingFactorsShouldSucceedWhenExpressionHasSupersetOfLimitingFactors() throws Exception {
         //given
         subject = new GeneExpressionPrecondition();
-        subject.setLimitingFactorValues(Sets.newHashSet(factorValue1, factorValue2));
-        given(expressionMock.getAllFactorValues()).willReturn(Sets.newHashSet(factorValue1, factorValue2, factorValue3));
+        subject.setLimitingFactors(Sets.newHashSet(factor1, factor2));
+        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2, factor3));
 
         //then
         assertThat(subject.checkLimitingFactors(expressionMock), is(true));
@@ -39,7 +39,7 @@ public class GeneProfilePreconditionTest {
 
         //given
         subject = new GeneExpressionPrecondition();
-        given(expressionMock.getAllFactorValues()).willReturn(Sets.newHashSet(factorValue1, factorValue2, factorValue3));
+        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2, factor3));
 
         //then
         assertThat(subject.checkLimitingFactors(expressionMock), is(true));
@@ -50,7 +50,7 @@ public class GeneProfilePreconditionTest {
 
         //given
         subject = new GeneExpressionPrecondition();
-        given(expressionMock.getAllFactorValues()).willReturn(Sets.newHashSet(factorValue1, factorValue2, factorValue3));
+        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2, factor3));
 
         //then
         assertThat(subject.checkLimitingFactors(expressionMock), is(true));
@@ -61,8 +61,8 @@ public class GeneProfilePreconditionTest {
 
         //given
         subject = new GeneExpressionPrecondition();
-        subject.setLimitingFactorValues(Sets.newHashSet(factorValue1, factorValue2));
-        given(expressionMock.getAllFactorValues()).willReturn(Sets.newHashSet(factorValue1));
+        subject.setLimitingFactors(Sets.newHashSet(factor1, factor2));
+        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1));
 
         //then
         assertThat(subject.apply(expressionMock), is(false));
@@ -73,10 +73,10 @@ public class GeneProfilePreconditionTest {
 
         //given
         subject = new GeneExpressionPrecondition();
-        subject.setLimitingFactorValues(Sets.newHashSet(factorValue1, factorValue2));
+        subject.setLimitingFactors(Sets.newHashSet(factor1, factor2));
         subject.setCutoff(1d);
 
-        given(expressionMock.getAllFactorValues()).willReturn(Sets.newHashSet(factorValue1, factorValue2));
+        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2));
         given(expressionMock.isGreaterThan(1d)).willReturn(true);
 
         //then

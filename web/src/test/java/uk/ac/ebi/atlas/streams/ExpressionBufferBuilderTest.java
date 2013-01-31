@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import java.util.Collections;
@@ -59,13 +59,13 @@ public class ExpressionBufferBuilderTest {
     private ExperimentsCache experimentsCacheMock;
 
     @Mock
-    private FactorValue factorValueMock1;
+    private Factor factorMock1;
 
     @Mock
-    private FactorValue factorValueMock2;
+    private Factor factorMock2;
 
     @Mock
-    private FactorValue factorValueMock3;
+    private Factor factorMock3;
 
     private ExpressionsBuffer.Builder subject;
     private String specie = "homo sapiens";
@@ -73,23 +73,23 @@ public class ExpressionBufferBuilderTest {
     @Before
     public void initializeSubject() {
 
-        when(factorValueMock1.getType()).thenReturn("ORGANISM_PART");
-        when(factorValueMock1.getName()).thenReturn("org");
-        when(factorValueMock1.getValue()).thenReturn("heart");
+        when(factorMock1.getType()).thenReturn("ORGANISM_PART");
+        when(factorMock1.getName()).thenReturn("org");
+        when(factorMock1.getValue()).thenReturn("heart");
 
-        when(factorValueMock2.getType()).thenReturn("ORGANISM_PART");
-        when(factorValueMock2.getName()).thenReturn("org");
-        when(factorValueMock2.getValue()).thenReturn("liver");
+        when(factorMock2.getType()).thenReturn("ORGANISM_PART");
+        when(factorMock2.getName()).thenReturn("org");
+        when(factorMock2.getValue()).thenReturn("liver");
 
-        when(factorValueMock3.getType()).thenReturn("ORGANISM_PART");
-        when(factorValueMock3.getName()).thenReturn("org");
-        when(factorValueMock3.getValue()).thenReturn("lung");
+        when(factorMock3.getType()).thenReturn("ORGANISM_PART");
+        when(factorMock3.getName()).thenReturn("org");
+        when(factorMock3.getValue()).thenReturn("lung");
 
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue(factorValueMock1);
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factorValueMock2);
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factorValueMock3);
+        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue(factorMock1);
+        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factorMock2);
+        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factorMock3);
 
-        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorValueMock1.getType(), Collections.EMPTY_SET, specie)
+        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorMock1.getType(), Collections.EMPTY_SET, specie)
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);

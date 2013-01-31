@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class FactorValue implements Comparable<FactorValue> {
+public class Factor implements Comparable<Factor> {
 
     private String type;
 
@@ -15,11 +15,11 @@ public class FactorValue implements Comparable<FactorValue> {
 
     private String value;
 
-    public FactorValue(String type, String value) {
+    public Factor(String type, String value) {
         this(type, null, value);
     }
 
-    public FactorValue(String type, String name, String value) {
+    public Factor(String type, String name, String value) {
 
         this.type = normalize(checkNotNull(type));
         this.name = name;
@@ -42,7 +42,7 @@ public class FactorValue implements Comparable<FactorValue> {
         return type;
     }
 
-    public FactorValue setName(String name){
+    public Factor setName(String name){
         this.name = name;
         return this;
     }
@@ -58,8 +58,8 @@ public class FactorValue implements Comparable<FactorValue> {
             return false;
         }
         return Objects.equal(this.getClass(), other.getClass())
-                && Objects.equal(this.type, ((FactorValue) other).type)
-                && Objects.equal(this.value, ((FactorValue) other).value);
+                && Objects.equal(this.type, ((Factor) other).type)
+                && Objects.equal(this.value, ((Factor) other).value);
     }
 
     @Override
@@ -72,18 +72,18 @@ public class FactorValue implements Comparable<FactorValue> {
     }
 
     @Override
-    public int compareTo(FactorValue factorValue) {
-        int factorCompare = type.compareTo(factorValue.type);
+    public int compareTo(Factor factor) {
+        int factorCompare = type.compareTo(factor.type);
         if (factorCompare != 0) {
             return factorCompare;
         }
-        return value.compareTo(factorValue.value);
+        return value.compareTo(factor.value);
     }
 
-    public static SortedSet<String> getValues(SortedSet<FactorValue> factorValues) {
+    public static SortedSet<String> getValues(SortedSet<Factor> factors) {
         SortedSet<String> result = new TreeSet<>();
-        for (FactorValue factorValue : factorValues) {
-            result.add(factorValue.getValue());
+        for (Factor factor : factors) {
+            result.add(factor.getValue());
         }
         return result;
     }

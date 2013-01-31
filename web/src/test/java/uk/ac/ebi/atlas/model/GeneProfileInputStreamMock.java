@@ -61,9 +61,9 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
                 Expression expressionMock = mock(Expression.class);
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
-                FactorValue factorValue = new FactorValue("factor_type", "", "factor_value" + (j + 1));
-                when(expressionMock.getAllFactorValues()).thenReturn(Sets.newHashSet(factorValue));
-                when(expressionMock.getFactorValue("factor_type")).thenReturn(factorValue);
+                Factor factor = new Factor("factor_type", "", "factor_value" + (j + 1));
+                when(expressionMock.getAllFactors()).thenReturn(Sets.newHashSet(factor));
+                when(expressionMock.getFactorValue("factor_type")).thenReturn(factor);
                 geneProfileBuilder.addExpression(expressionMock);
 
             }

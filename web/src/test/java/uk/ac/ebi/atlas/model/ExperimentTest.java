@@ -42,10 +42,10 @@ public class ExperimentTest {
     private ExperimentRun experimentRun2;
     private ExperimentRun experimentRun3;
 
-    private FactorValue factorValue1 = new FactorValue("ORGANISM_PART", "ORGANISM_PART", "heart");
-    private FactorValue factorValue2 = new FactorValue("ORGANISM_PART", "ORGANISM_PART", "liver");
-    private FactorValue factorValue3 = new FactorValue("ORGANISM_PART", "ORGANISM_PART", "lung");
-    private FactorValue factorValue4 = new FactorValue("MATERIAL_TYPE", "RNAtype", "total rna");
+    private Factor factor1 = new Factor("ORGANISM_PART", "ORGANISM_PART", "heart");
+    private Factor factor2 = new Factor("ORGANISM_PART", "ORGANISM_PART", "liver");
+    private Factor factor3 = new Factor("ORGANISM_PART", "ORGANISM_PART", "lung");
+    private Factor factor4 = new Factor("MATERIAL_TYPE", "RNAtype", "total rna");
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
 
@@ -54,12 +54,12 @@ public class ExperimentTest {
 
     @Before
     public void initializeSubject() {
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue(factorValue1);
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factorValue2);
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factorValue3);
-        experimentRun3.addFactorValue(factorValue4);
+        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue(factor1);
+        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factor2);
+        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factor3);
+        experimentRun3.addFactorValue(factor4);
 
-        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorValue1.getType(), Collections.EMPTY_SET, specie)
+        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factor1.getType(), Collections.EMPTY_SET, specie)
                 .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
     }
 
@@ -98,37 +98,37 @@ public class ExperimentTest {
 
     @Test
     public void testDefaultFactorType() {
-        assertThat(subject.getDefaultQueryFactorType(), is(factorValue1.getType()));
+        assertThat(subject.getDefaultQueryFactorType(), is(factor1.getType()));
     }
 
     @Test
     public void testFactorValueByType() {
-        assertThat(subject.getFactorValue(RUN_ACCESSION_1, factorValue1.getType()).getValue(), is(factorValue1.getValue()));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_1, factorValue4.getType()), nullValue(FactorValue.class));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_2, factorValue2.getType()).getValue(), is(factorValue2.getValue()));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_3, factorValue3.getType()).getValue(), is(factorValue3.getValue()));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_3, factorValue4.getType()).getValue(), is(factorValue4.getValue()));
+        assertThat(subject.getFactorValue(RUN_ACCESSION_1, factor1.getType()).getValue(), is(factor1.getValue()));
+        assertThat(subject.getFactorValue(RUN_ACCESSION_1, factor4.getType()), nullValue(Factor.class));
+        assertThat(subject.getFactorValue(RUN_ACCESSION_2, factor2.getType()).getValue(), is(factor2.getValue()));
+        assertThat(subject.getFactorValue(RUN_ACCESSION_3, factor3.getType()).getValue(), is(factor3.getValue()));
+        assertThat(subject.getFactorValue(RUN_ACCESSION_3, factor4.getType()).getValue(), is(factor4.getValue()));
     }
 
     @Test
     public void testAllFactorValues() {
-        assertThat(subject.getAllFactorValues(RUN_ACCESSION_1), hasItems(factorValue1));
-        assertThat(subject.getAllFactorValues(RUN_ACCESSION_2), hasItems(factorValue2));
-        assertThat(subject.getAllFactorValues(RUN_ACCESSION_3), hasItems(factorValue3, factorValue4));
+        assertThat(subject.getAllFactorValues(RUN_ACCESSION_1), hasItems(factor1));
+        assertThat(subject.getAllFactorValues(RUN_ACCESSION_2), hasItems(factor2));
+        assertThat(subject.getAllFactorValues(RUN_ACCESSION_3), hasItems(factor3, factor4));
     }
 
     @Test
     public void testFilteredFactorValues() {
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1), factorValue1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1), factorValue1.getType()), hasItems(factorValue1));
-        // there is no such combination as factorValue1 and factorValue2 on an experimentRun
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue1, factorValue2), factorValue1.getType()).size(), is(0));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3, factorValue4), factorValue1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3, factorValue4), factorValue1.getType()), hasItems(factorValue3));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue2), factorValue1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue2), factorValue1.getType()), hasItems(factorValue2));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3), factorValue4.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factorValue3), factorValue4.getType()), hasItems(factorValue4));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor1), factor1.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor1), factor1.getType()), hasItems(factor1));
+        // there is no such combination as factor1 and factor2 on an experimentRun
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor1, factor2), factor1.getType()).size(), is(0));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3, factor4), factor1.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3, factor4), factor1.getType()), hasItems(factor3));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor2), factor1.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor2), factor1.getType()), hasItems(factor2));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3), factor4.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3), factor4.getType()), hasItems(factor4));
     }
 
 }

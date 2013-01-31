@@ -22,10 +22,10 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
         return subList(0, size);
     }
 
-    public Double getExpressionLevel(String geneId, FactorValue factorValue) {
+    public Double getExpressionLevel(String geneId, Factor factor) {
         for (GeneProfile geneProfile : this) {
             if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
-                return geneProfile.getExpressionLevel(factorValue);
+                return geneProfile.getExpressionLevel(factor);
             }
         }
         return null;

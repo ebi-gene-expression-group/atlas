@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
@@ -38,18 +38,18 @@ public class BarChartController {
                          @RequestParam(value = "queryFactorValues[]", required = false) Set<String> queryFactorValues) {
 
         System.out.println("geneExpressionPrecondition.getQueryFactorType() = " + geneExpressionPrecondition.getQueryFactorType());
-        System.out.println("geneExpressionPrecondition = " + geneExpressionPrecondition.getLimitingFactorValues());
+        System.out.println("geneExpressionPrecondition = " + geneExpressionPrecondition.getLimitingFactors());
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
-        Set<FactorValue> queryFactorValueSet = new HashSet<>();
+        Set<Factor> queryFactorSet = new HashSet<>();
         if (queryFactorValues != null) {
             for (String queryFactorValue : queryFactorValues) {
-                queryFactorValueSet.add(new FactorValue(geneExpressionPrecondition.getQueryFactorType(), queryFactorValue));
+                queryFactorSet.add(new Factor(geneExpressionPrecondition.getQueryFactorType(), queryFactorValue));
             }
         }
 
-        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(geneExpressionPrecondition.getLimitingFactorValues()
-                , queryFactorValueSet);
+        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(geneExpressionPrecondition.getLimitingFactors()
+                , queryFactorSet);
 
         Gson gson = new Gson();
 

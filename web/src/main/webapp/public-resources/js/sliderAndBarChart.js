@@ -125,20 +125,20 @@ function initBarChartButton() {
 
 }
 
-function buildLegendaText(isAnyFactorValueSelected) {
+function buildLegendaText(isAnyQueryFactorValueSelected) {
     "use strict";
     return "Y = number of genes expressed above the given FPKM cutoff " +
-        (isAnyFactorValueSelected ? "for the selected experimental factors" : "in any experimental factor");
+        (isAnyQueryFactorValueSelected ? "for the selected experimental factors" : "in any experimental factor");
 }
 
-function plotCutoffBarChart(selectedFactorValues, data, magnifiedScaledCutoffs) {
+function plotCutoffBarChart(selectedQueryFactorValues, data, magnifiedScaledCutoffs) {
     "use strict";
 
     return $.plot($("#gene-distribution"), [ data ], {
         series : {
             highlightColor : "red",
 
-            label : buildLegendaText(selectedFactorValues),
+            label : buildLegendaText(selectedQueryFactorValues),
 
             bars : {
                 show : true,
@@ -173,11 +173,11 @@ function showBarChartTooltip(x, y, contents) {
 function loadSliderAndPlot(cutoff, experimentAccession) {
     "use strict";
 
-    var selectedFactorValues = $("#queryFactorValues").val();
+    var selectedQueryFactorValues = $("#queryFactorValues").val();
 
     $.ajax({
         url: "json/barchart/" + experimentAccession,
-        data: {queryFactorValues: selectedFactorValues},
+        data: {queryFactorValues: selectedQueryFactorValues},
         datatype: 'json',
         success: function (data) {
 
@@ -209,7 +209,7 @@ function loadSliderAndPlot(cutoff, experimentAccession) {
                 }
             );
 
-            var genesByCutoffPlot = plotCutoffBarChart(selectedFactorValues, dataArray, ticksMap);
+            var genesByCutoffPlot = plotCutoffBarChart(selectedQueryFactorValues, dataArray, ticksMap);
 
             hideOrDisplayGeneDistribution(true);
 

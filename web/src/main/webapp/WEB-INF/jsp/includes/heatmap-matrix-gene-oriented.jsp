@@ -45,10 +45,10 @@
                         <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
                     </display:column>
 
-                    <c:forEach var="factorValue" items="${heatmapFactorValues}">
+                    <c:forEach var="factor" items="${heatmapFactors}">
 
                         <c:set var="expressionLevel"
-                               value="${geneProfile.getExpressionLevel(factorValue)}"/>
+                               value="${geneProfile.getExpressionLevel(factor)}"/>
 
                         <c:if test="${expressionLevel != 0}">
 
@@ -60,14 +60,14 @@
                         </c:if>
 
                         <display:column
-                                title="<div tableHeaderCell data-organism-part='${factorValue.value}' class='rotate_text' title='${factorValue.value}'></div>"
+                                title="<div tableHeaderCell data-organism-part='${factor.value}' class='rotate_text' title='${factor.value}'></div>"
                                 headerClass='rotated_cell'
                                 style="${expressionLevel !=0 ? style : ''}">
 
                             <c:if test="${expressionLevel != 0}">
 
                                 <div class="hide_cell"
-                                     data-organism-part="${factorValue.value}" data-color="${cellColour}">
+                                     data-organism-part="${factor.value}" data-color="${cellColour}">
                                     <fmt:formatNumber type="number"
                                                       maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                       value="${expressionLevel}" groupingUsed="false"/>

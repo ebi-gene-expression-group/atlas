@@ -57,7 +57,7 @@
 
     (function ($) {
     $(document).ready(function () {
-        experimentDesignTableModule.init(${tableData}, ${runAccessions}, ${samples}, ${factors});
+        experimentDesignTableModule.init('${experimentAccession}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
 
         helpTooltipsModule.init('experiment-design');
     });

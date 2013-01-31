@@ -26,7 +26,7 @@ import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.Set;
@@ -35,13 +35,13 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     private Set<String> uppercaseGeneIDs;
 
-    private Set<FactorValue> queryFactorValues;
+    private Set<Factor> queryFactors;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> uppercaseGeneIDs, Set<FactorValue> queryFactorValues) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> uppercaseGeneIDs, Set<Factor> queryFactors) {
         super(geneProfileInputStream);
 
         this.uppercaseGeneIDs = uppercaseGeneIDs;
-        this.queryFactorValues = queryFactorValues;
+        this.queryFactors = queryFactors;
     }
 
     @Override
@@ -52,11 +52,11 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
             public boolean apply(GeneProfile profile) {
 
                 boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
-                return checkGene && (CollectionUtils.isEmpty(queryFactorValues) || hasTheRightExpressionProfile(profile));
+                return checkGene && (CollectionUtils.isEmpty(queryFactors) || hasTheRightExpressionProfile(profile));
             }
 
             private boolean hasTheRightExpressionProfile(GeneProfile geneProfile) {
-                return geneProfile.isExpressedOnAnyOf(queryFactorValues);
+                return geneProfile.isExpressedOnAnyOf(queryFactors);
             }
         };
 

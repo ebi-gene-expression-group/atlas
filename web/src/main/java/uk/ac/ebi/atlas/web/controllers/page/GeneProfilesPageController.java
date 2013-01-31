@@ -29,13 +29,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 import uk.ac.ebi.atlas.utils.FilterByMenuBuilder;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -114,14 +114,14 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
-            Set<FactorValue> filterByFactorValues = filterParameters.getFilterFactorValues();
+            Set<Factor> filterByFactors = filterParameters.getFilterFactors();
 
-            SortedSet<FactorValue> filteredFactorValues = experiment.getFilteredFactorValues(filterByFactorValues, filterParameters.getQueryFactorType());
+            SortedSet<Factor> filteredFactors = experiment.getFilteredFactorValues(filterByFactors, filterParameters.getQueryFactorType());
 
-            model.addAttribute("heatmapFactorValues", filteredFactorValues);
+            model.addAttribute("heatmapFactors", filteredFactors);
 
             // this is currently required for the request preferences filter drop-down multi-selection box
-            model.addAttribute("heatmapFactorValueValues", FactorValue.getValues(filteredFactorValues));
+            model.addAttribute("heatmapFactorValues", Factor.getValues(filteredFactors));
 
             String specie = experiment.getSpecie();
 
@@ -131,11 +131,11 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            model.addAttribute("defaultFilterFactorValuesSize", experiment.getDefaultFilterFactorValues().size());
+            model.addAttribute("defaultFilterFactorsSize", experiment.getDefaultFilterFactors().size());
 
             model.addAttribute("filterByMenu", filterByMenuBuilder.build(experiment));
 
-            model.addAttribute("selectedFactorValues", filterByFactorValues);
+            model.addAttribute("selectedFactors", filterByFactors);
         }
 
         return "experiment";

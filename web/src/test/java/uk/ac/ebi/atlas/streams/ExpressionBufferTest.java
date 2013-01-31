@@ -5,7 +5,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,15 +31,15 @@ public class ExpressionBufferTest {
     @Before
     public void initializeSubject() {
 
-        FactorValue factorValue1 = new FactorValue("ORGANISM_PART", "org", "lung");
-        FactorValue factorValue2 = new FactorValue("ORGANISM_PART", "org", "liver");
-        FactorValue factorValue3 = new FactorValue("ORGANISM_PART", "org", "longue");
+        Factor factor1 = new Factor("ORGANISM_PART", "org", "lung");
+        Factor factor2 = new Factor("ORGANISM_PART", "org", "liver");
+        Factor factor3 = new Factor("ORGANISM_PART", "org", "longue");
 
         // the only possible factor values here are the default ones
-        List<Set<FactorValue>> orderedAllFactorValues = new LinkedList<>();
-        orderedAllFactorValues.add(Sets.newHashSet(factorValue1));
-        orderedAllFactorValues.add(Sets.newHashSet(factorValue2));
-        orderedAllFactorValues.add(Sets.newHashSet(factorValue3));
+        List<Set<Factor>> orderedAllFactorValues = new LinkedList<>();
+        orderedAllFactorValues.add(Sets.newHashSet(factor1));
+        orderedAllFactorValues.add(Sets.newHashSet(factor2));
+        orderedAllFactorValues.add(Sets.newHashSet(factor3));
 
         subject = new ExpressionsBuffer(orderedAllFactorValues);
 

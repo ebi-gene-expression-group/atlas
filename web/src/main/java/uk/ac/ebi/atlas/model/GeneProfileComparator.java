@@ -9,14 +9,14 @@ import java.util.Set;
 public class GeneProfileComparator implements Comparator<GeneProfile> {
 
     private boolean isSpecific;
-    private Set<FactorValue> selectedFactorValues;
-    private Set<FactorValue> allFactorValues;
+    private Set<Factor> selectedFactors;
+    private Set<Factor> allFactors;
 
-    public GeneProfileComparator(boolean isSpecific, Set<FactorValue> selectFactorValues,
-                                 Set<FactorValue> allFactorValues) {
+    public GeneProfileComparator(boolean isSpecific, Set<Factor> selectFactors,
+                                 Set<Factor> allFactors) {
         this.isSpecific = isSpecific;
-        this.selectedFactorValues = selectFactorValues;
-        this.allFactorValues = allFactorValues;
+        this.selectedFactors = selectFactors;
+        this.allFactors = allFactors;
     }
 
     @Override
@@ -25,31 +25,31 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
         Ordering<Comparable> naturalOrdering = Ordering.natural();
 
         // A1:
-        if (isSpecific && CollectionUtils.isEmpty(selectedFactorValues)) {
+        if (isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
             Ordering<Comparable> specificityOrdering = naturalOrdering.reverse();
             int order = specificityOrdering.compare(firstGeneProfile.getSpecificity(), otherGeneProfile.getSpecificity());
-            return 0 != order ? order : compareOnAverage(firstGeneProfile, otherGeneProfile, allFactorValues);
+            return 0 != order ? order : compareOnAverage(firstGeneProfile, otherGeneProfile, allFactors);
         }
 
         // B1:
-        if (isSpecific && !CollectionUtils.isEmpty(selectedFactorValues)) {
+        if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
 
-            return naturalOrdering.compare(firstGeneProfile.getWeightedExpressionLevelOn(selectedFactorValues, allFactorValues),
-                    otherGeneProfile.getWeightedExpressionLevelOn(selectedFactorValues, allFactorValues));
+            return naturalOrdering.compare(firstGeneProfile.getWeightedExpressionLevelOn(selectedFactors, allFactors),
+                    otherGeneProfile.getWeightedExpressionLevelOn(selectedFactors, allFactors));
         }
 
         // A2
-        if (!isSpecific && CollectionUtils.isEmpty(selectedFactorValues)) {
-            return compareOnAverage(firstGeneProfile, otherGeneProfile, allFactorValues);
+        if (!isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
+            return compareOnAverage(firstGeneProfile, otherGeneProfile, allFactors);
         }
 
         //B2
-        return compareOnAverage(firstGeneProfile, otherGeneProfile, selectedFactorValues);
+        return compareOnAverage(firstGeneProfile, otherGeneProfile, selectedFactors);
 
     }
 
     private int compareOnAverage(GeneProfile firstGeneProfile, GeneProfile otherGeneProfile,
-                                 Set<FactorValue> averageOn) {
+                                 Set<Factor> averageOn) {
 
         Ordering<Comparable> naturalOrdering = Ordering.natural();
         return naturalOrdering.compare(firstGeneProfile.getAverageExpressionLevelOn(averageOn),

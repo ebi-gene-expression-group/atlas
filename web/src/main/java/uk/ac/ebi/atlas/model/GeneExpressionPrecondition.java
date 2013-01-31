@@ -12,15 +12,15 @@ public class GeneExpressionPrecondition implements Predicate<Expression> {
 
     private double cutoff;
 
-    private Set<FactorValue> limitingFactorValues = new HashSet<>();
+    private Set<Factor> limitingFactors = new HashSet<>();
 
     private String queryFactorType;
 
     public GeneExpressionPrecondition() {
     }
 
-    public void setLimitingFactorValues(Set<FactorValue> limitingFactorValues) {
-        this.limitingFactorValues = limitingFactorValues;
+    public void setLimitingFactors(Set<Factor> limitingFactors) {
+        this.limitingFactors = limitingFactors;
     }
 
     public void setCutoff(double cutoff) {
@@ -43,11 +43,11 @@ public class GeneExpressionPrecondition implements Predicate<Expression> {
     }
 
     protected boolean checkLimitingFactors(Expression expression) {
-        return (CollectionUtils.isEmpty(limitingFactorValues)
-        || expression.getAllFactorValues().containsAll(limitingFactorValues));
+        return (CollectionUtils.isEmpty(limitingFactors)
+        || expression.getAllFactors().containsAll(limitingFactors));
     }
 
-    public Set<FactorValue> getLimitingFactorValues() {
-        return limitingFactorValues;
+    public Set<Factor> getLimitingFactors() {
+        return limitingFactors;
     }
 }

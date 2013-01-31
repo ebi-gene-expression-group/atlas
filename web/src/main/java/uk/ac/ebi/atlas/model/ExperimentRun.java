@@ -11,14 +11,14 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
 
     private String runAccession;
 
-    private Set<FactorValue> factorValues = new LinkedHashSet<>();
+    private Set<Factor> factors = new LinkedHashSet<>();
 
     public ExperimentRun(String accession) {
         this.runAccession = checkNotNull(accession);
     }
 
-    public ExperimentRun addFactorValue(FactorValue value) {
-        factorValues.add(value);
+    public ExperimentRun addFactorValue(Factor value) {
+        factors.add(value);
         return this;
     }
 
@@ -26,14 +26,14 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         return runAccession;
     }
 
-    public Set<FactorValue> getFactorValues() {
-        return factorValues;
+    public Set<Factor> getFactors() {
+        return factors;
     }
 
-    public FactorValue getFactorValue(String type) {
-        for (FactorValue factorValue : factorValues) {
-            if (factorValue.getType().equalsIgnoreCase(type)) {
-                return factorValue;
+    public Factor getFactorValue(String type) {
+        for (Factor factor : factors) {
+            if (factor.getType().equalsIgnoreCase(type)) {
+                return factor;
             }
         }
         return null;
@@ -61,7 +61,7 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
     public String toString() {
         return toStringHelper(this)
                 .add("runAccession", runAccession)
-                .add("factorValues", factorValues).toString();
+                .add("factors", factors).toString();
     }
 
     @Override

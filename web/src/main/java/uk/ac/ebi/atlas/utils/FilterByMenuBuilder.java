@@ -23,17 +23,14 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FactorValue;
+import uk.ac.ebi.atlas.model.Factor;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 @Named("filterByMenuBuilder")
 @Scope("prototype")
@@ -41,22 +38,18 @@ public class FilterByMenuBuilder {
 
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
-    private final FactorValueUtils factorValueUtils;
+    private SortedSetMultimap<String, Factor> allFactorNames;
 
-    private SortedSetMultimap<String, FactorValue> allFactorNames;
+    private SortedSetMultimap<Factor, Factor> validFactorValueCombinations;
 
-    private SortedSetMultimap<FactorValue, FactorValue> validFactorValueCombinations;
-
-    @Inject
-    public FilterByMenuBuilder(FactorValueUtils factorValueUtils) {
-        this.factorValueUtils = factorValueUtils;
+    public FilterByMenuBuilder() {
     }
 
     public SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> build(Experiment experiment) {
 
         validFactorValueCombinations = experiment.getValidFactorValueCombinations();
 
-        allFactorNames = factorValueUtils.factorValuesByName(validFactorValueCombinations.keySet());
+        allFactorNames = factorValuesByName(validFactorValueCombinations.keySet());
 
         // build filter by menu map here, structure:
         // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
@@ -78,41 +71,41 @@ public class FilterByMenuBuilder {
         SortedMap<String, SortedMap<String, SortedMap<String, String>>> secondMenuLevel = new TreeMap<>();
 
         // second level: factor value choices per factor name, all are valid
-        for (FactorValue firstFactorValue : allFactorNames.get(firstFactorName)) {
+        for (Factor firstFactor : allFactorNames.get(firstFactorName)) {
 
-            secondMenuLevel.put(firstFactorValue.getValue(), buildThirdMenuLevel(firstFactorValue));
+            secondMenuLevel.put(firstFactor.getValue(), buildThirdMenuLevel(firstFactor));
 
         }
 
         return secondMenuLevel;
     }
 
-    private SortedMap<String, SortedMap<String, String>> buildThirdMenuLevel(FactorValue firstFactorValue) {
+    private SortedMap<String, SortedMap<String, String>> buildThirdMenuLevel(Factor firstFactor) {
 
         // factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, String>> thirdMenuLevel = new TreeMap<>();
 
         // index second level factor names
-        SortedSetMultimap<String, FactorValue> secondFactorNames =
-                factorValueUtils.factorValuesByName(validFactorValueCombinations.get(firstFactorValue));
+        SortedSetMultimap<String, Factor> secondFactorNames =
+                factorValuesByName(validFactorValueCombinations.get(firstFactor));
 
         // third level: factor value choices per factor name, restricted by previous
         for (String secondFactorName : secondFactorNames.keySet()) {
 
             // get remainder of factor names
             SortedSet<String> remainingFactorNames = new TreeSet<>(allFactorNames.keySet());
-            remainingFactorNames.remove(firstFactorValue.getName());
+            remainingFactorNames.remove(firstFactor.getName());
             remainingFactorNames.remove(secondFactorName);
 
             // TODO: what in case there are more than 3 possible factor types?
             // arbitrarily taking first of remaining factor names as query factor type
             String firstRemainingFactorName = remainingFactorNames.first();
-            SortedSet<FactorValue> factorValuesForFirstRemainingFactorName = allFactorNames.get(firstRemainingFactorName);
-            FactorValue firstArbitraryFactorValue = factorValuesForFirstRemainingFactorName.first();
-            String queryFactorType = firstArbitraryFactorValue.getType();
+            SortedSet<Factor> factorValuesForFirstRemainingFactorName = allFactorNames.get(firstRemainingFactorName);
+            Factor firstArbitraryFactor = factorValuesForFirstRemainingFactorName.first();
+            String queryFactorType = firstArbitraryFactor.getType();
 
             // third level: factor name
-            SortedMap<String, String> thirdLevel = this.buildForthMenuLevel(queryFactorType, firstFactorValue, secondFactorNames.get(secondFactorName));
+            SortedMap<String, String> thirdLevel = this.buildForthMenuLevel(queryFactorType, firstFactor, secondFactorNames.get(secondFactorName));
             if (!thirdMenuLevel.containsKey(secondFactorName)) {
                 thirdMenuLevel.put(secondFactorName, thirdLevel);
             }
@@ -123,49 +116,58 @@ public class FilterByMenuBuilder {
         return thirdMenuLevel;
     }
 
-    private SortedMap<String, String> buildForthMenuLevel(String queryFactorType, FactorValue firstFactorValue, SortedSet<FactorValue> secondFactorValues) {
+    private SortedMap<String, String> buildForthMenuLevel(String queryFactorType, Factor firstFactor, SortedSet<Factor> secondFactors) {
 
         // factor value 2 > link
         SortedMap<String, String> forthMenuLevel = new TreeMap<>();
 
         // forth level: factor value choices for second factor name
-        for (FactorValue secondFactorValue : secondFactorValues) {
-            String link = getJsonUrl(queryFactorType, firstFactorValue, secondFactorValue);
-            forthMenuLevel.put(secondFactorValue.getValue(), link);
+        for (Factor secondFactor : secondFactors) {
+            String link = getJsonUrl(queryFactorType, firstFactor, secondFactor);
+            forthMenuLevel.put(secondFactor.getValue(), link);
         }
         return forthMenuLevel;
     }
 
-    protected String getJsonUrl(String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue){
-        return new Gson().toJson(buildFilterFactorValueURL(queryFactorType, firstFactorValue, secondFactorValue));
+    protected String getJsonUrl(String queryFactorType, Factor firstFactor, Factor secondFactor){
+        return new Gson().toJson(buildFactorsCombination(queryFactorType, firstFactor, secondFactor));
     }
 
-    private FilterFactorValues buildFilterFactorValueURL(String queryFactorType, FactorValue firstFactorValue, FactorValue secondFactorValue) {
-        return new FilterFactorValues(queryFactorType, firstFactorValue, secondFactorValue);
+    private FactorsCombination buildFactorsCombination(String queryFactorType, Factor firstFactor, Factor secondFactor) {
+        return new FactorsCombination(queryFactorType, firstFactor, secondFactor);
     }
 
-    private final class FilterFactorValues {
+    private final class FactorsCombination {
 
         private final String queryFactorType;
 
-        private final String filterFactorValuesURL;
+        private final String filterFactorsURL;
 
-        FilterFactorValues(String queryFT, FactorValue firstFactorValue, FactorValue secondFactorValue) {
+        FactorsCombination(String queryFT, Factor firstFactor, Factor secondFactor) {
             queryFactorType = queryFT;
-            filterFactorValuesURL = serialize(firstFactorValue) + ',' + serialize(secondFactorValue);
+            filterFactorsURL = serialize(firstFactor) + ',' + serialize(secondFactor);
         }
 
         public String getQueryFactorType() {
             return queryFactorType;
         }
 
-        public String getFilterFactorValuesURL() {
-            return filterFactorValuesURL;
+        public String getFilterFactorsURL() {
+            return filterFactorsURL;
         }
 
     }
 
-    public static String serialize(FactorValue factorValue) {
-        return factorValue.getType() + FACTOR_VALUE_SEPARATOR + factorValue.getValue();
+    protected SortedSetMultimap<String, Factor> factorValuesByName(Set<Factor> factors) {
+        // using factor names here for better readability and compatibility with experiment design page
+        SortedSetMultimap<String, Factor> factorValuesByName = TreeMultimap.create();
+        for (Factor factor : factors) {
+            factorValuesByName.put(factor.getName(), factor);
+        }
+        return factorValuesByName;
+    }
+
+    protected String serialize(Factor factor) {
+        return factor.getType() + FACTOR_VALUE_SEPARATOR + factor.getValue();
     }
 }

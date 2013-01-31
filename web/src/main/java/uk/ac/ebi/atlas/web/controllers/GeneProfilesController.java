@@ -24,14 +24,11 @@ package uk.ac.ebi.atlas.web.controllers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.FactorValue;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.streams.FilterParameters;
 import uk.ac.ebi.atlas.web.RequestPreferences;
-
-import java.util.SortedSet;
 
 @Scope("request")
 public class GeneProfilesController {
@@ -63,7 +60,7 @@ public class GeneProfilesController {
     protected void prepareGeneExpressionPrecondition(RequestPreferences preferences,
                                                     FilterParameters filterParameters) {
         geneExpressionPrecondition.setCutoff(preferences.getCutoff());
-        geneExpressionPrecondition.setLimitingFactorValues(filterParameters.getFilterFactorValues());
+        geneExpressionPrecondition.setLimitingFactors(filterParameters.getFilterFactors());
         String queryFactorType = preferences.getQueryFactorType();
         if (StringUtils.isBlank(queryFactorType)) {
             queryFactorType = filterParameters.getQueryFactorType();

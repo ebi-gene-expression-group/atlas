@@ -17,9 +17,9 @@ public class ExpressionTest {
     @Before
     public void initSubject() {
 
-        FactorValue factorValue = new FactorValue("aType", "organ", "heart");
+        Factor factor = new Factor("aType", "organ", "heart");
 
-        subject = new Expression(2.3, Sets.newHashSet(factorValue));
+        subject = new Expression(2.3, Sets.newHashSet(factor));
     }
 
     @Test
