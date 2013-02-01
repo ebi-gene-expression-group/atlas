@@ -62,7 +62,7 @@
                     <tr>
                         <td>
                             <span id="geneCount">Showing ${geneProfiles.size()}
-                                of ${totalResultCount} genes found:
+                                of ${geneProfiles.getTotalResultCount()} genes found:
                             </span>
                             <!--
                                 <span data-help-loc="#resultInfo"/>
@@ -75,7 +75,7 @@
                                     <tr>
                                         <td>
                                             <span style="display:none" class="gradient-level-min">
-                                                <fmt:formatNumber type="number" value="${minExpressionLevel}"
+                                                <fmt:formatNumber type="number" value="${geneProfiles.getMinExpressionLevel()}"
                                                                   groupingUsed="false"/>
                                             </span>
                                         </td>
@@ -96,7 +96,7 @@
                                         </td>
                                         <td>
                                             <span style="display:none" class="gradient-level-max">
-                                                <fmt:formatNumber type="number" value="${maxExpressionLevel}"
+                                                <fmt:formatNumber type="number" value="${geneProfiles.getMaxExpressionLevel()}"
                                                                   groupingUsed="false"/>
                                             </span>
                                             <span data-help-loc="#gradient"/>

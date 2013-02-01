@@ -40,7 +40,7 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
-                <c:if test="${defaultFilterFactorsSize > 1}">
+                <c:if test="${selectedFilterFactors.size() > 1}">
                     <td>
                         <label>Filtered by</label>
                         <span data-help-loc="#filterBy"></span>
@@ -71,7 +71,7 @@
                         <form:textarea path="geneQuery" maxlength="900" rows="3" cols="30"></form:textarea>
                     </div>
                 </td>
-                <c:if test="${defaultFilterFactorsSize > 1}">
+                <c:if test="${selectedFilterFactors.size() > 1}">
                     <td>
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>
