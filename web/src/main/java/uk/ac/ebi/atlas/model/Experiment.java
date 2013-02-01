@@ -81,7 +81,7 @@ public class Experiment {
 
     public Experiment add(ExperimentRun experimentRun) {
         this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
-        // index all possible factor values by their byType
+        // index all possible factor values by their type
 
         Set<Factor> factors = experimentRun.getFactors();
         for (Factor factor : factors) {
@@ -105,11 +105,11 @@ public class Experiment {
         factorsByType.put(type, factor);
     }
 
-    public Factor getFactor(String experimentRunAccession, String byType) {
+    public Factor getFactor(String experimentRunAccession, String type) {
         ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
-        return experimentRun.getFactor(byType);
+        return experimentRun.getFactor(type);
     }
 
     public Set<Factor> getAllFactors(String experimentRunAccession) {
@@ -143,12 +143,12 @@ public class Experiment {
         return description;
     }
 
-    public SortedSet<Factor> getFactors(@NotNull String byType) {
-        return factorsByType.get(byType);
+    public SortedSet<Factor> getFactorsByType(@NotNull String type) {
+        return factorsByType.get(type);
     }
 
-    //ToDo: parameter byType is not needed, it's always the remaining type
-    public SortedSet<Factor> getFilteredFactors(Set<Factor> filterByFactors, String byType) {
+    //ToDo: parameter type is not needed, it's always the remaining type
+    public SortedSet<Factor> getFilteredFactors(Set<Factor> filterByFactors, String type) {
 
         SortedSet<Factor> results = new TreeSet<>();
 
@@ -157,7 +157,7 @@ public class Experiment {
             if (experimentRun != null) {
                 if (CollectionUtils.isEmpty(filterByFactors) ||
                         experimentRun.getFactors().containsAll(filterByFactors)) {
-                    Factor factor = experimentRun.getFactor(byType);
+                    Factor factor = experimentRun.getFactor(type);
 
                     checkNotNull(factor);
                     results.add(factor);

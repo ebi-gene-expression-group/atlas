@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -30,8 +31,10 @@ public class ExperimentIT {
     }
 
     @Test
-    public void t(){
-        //assertThat(subject.getFactors(""));
+    public void getFactorsByTypeTest(){
+        assertThat(subject.getFactorsByType("MATERIAL_TYPE").size(),is(3));
+        assertThat(subject.getFactorsByType("CELL_LINE").size(),is(23));
+        assertThat(subject.getFactorsByType("CELLULAR_COMPONENT").size(),is(6));
     }
 
 }
