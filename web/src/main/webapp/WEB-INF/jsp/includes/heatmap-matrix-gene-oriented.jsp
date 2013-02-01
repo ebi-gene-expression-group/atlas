@@ -53,7 +53,7 @@
                         <c:if test="${expressionLevel != 0}">
 
                             <c:set var="cellColour"
-                                   value="${colourGradient.getGradientColour(expressionLevel, minExpressionLevel, maxExpressionLevel)}"/>
+                                   value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
 
                             <c:set var="style" value="background-color:${cellColour}"/>
 
