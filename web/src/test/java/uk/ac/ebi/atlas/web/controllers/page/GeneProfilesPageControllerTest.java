@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -85,5 +86,17 @@ public class GeneProfilesPageControllerTest {
 
         //then
         assertThat(downloadUrl, is(DOWNLOAD_URL));
+    }
+
+    @Test
+    public void buildDownloadUrlWithoutQueryParameters() {
+        //given
+        given(httpServletRequestMock.getQueryString()).willReturn(null);
+
+        //when
+        String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
+
+        //then
+        assertThat(downloadUrl, is(EXPERIMENT_URL + ".tsv"));
     }
 }

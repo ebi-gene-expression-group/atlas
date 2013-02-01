@@ -22,6 +22,9 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,14 +103,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("geneProfiles", geneProfiles);
 
-            model.addAttribute("minExpressionLevel", geneProfiles.getMinExpressionLevel());
-
-            model.addAttribute("maxExpressionLevel", geneProfiles.getMaxExpressionLevel());
-
-            model.addAttribute("totalResultCount", geneProfiles.getTotalResultCount());
-
-            model.addAttribute("requestURI", request.getRequestURI());
-
             model.addAttribute("experimentAccession", experimentAccession);
 
             model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
@@ -142,7 +137,8 @@ public class GeneProfilesPageController extends GeneProfilesController {
     }
 
     String buildDownloadURL(HttpServletRequest request) {
-        return request.getRequestURI() + TSV_FILE_EXTENSION + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        return Joiner.on("?").skipNulls()
+                .join(new String[]{request.getRequestURI() + TSV_FILE_EXTENSION, request.getQueryString()}).toString();
     }
 }
 
