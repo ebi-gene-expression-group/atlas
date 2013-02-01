@@ -57,7 +57,6 @@ public class Experiment {
     public Experiment(String experimentAccession, String description, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, String specie) {
         this.experimentAccession = experimentAccession;
         this.description = description;
-        //this.experimentRunAccessions = experimentRunAccessions;
         this.defaultQueryFactorType = defaultQueryFactorType;
         setDefaultFilterFactors(defaultFilterFactors);
         this.specie = specie;
