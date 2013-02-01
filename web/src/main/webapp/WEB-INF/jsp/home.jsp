@@ -57,6 +57,13 @@
 
 <script type="text/javascript">
     $(function () {
+        clearLocalNav();
+        $('#local-nav-home').addClass("active");
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
         $('#species-nav ul').mouseleave(function () {
             $(this).fadeOut(200)
         });

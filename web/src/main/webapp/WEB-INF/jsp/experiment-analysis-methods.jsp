@@ -46,3 +46,10 @@
         </display:column>
     </display:table>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        clearLocalNav();
+        $('#local-nav-home').addClass("active");
+    });
+</script>
