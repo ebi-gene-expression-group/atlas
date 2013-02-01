@@ -47,7 +47,7 @@ public class FilterByMenuBuilder {
 
     public SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> build(Experiment experiment) {
 
-        validFactorValueCombinations = experiment.getValidFactorValueCombinations();
+        validFactorValueCombinations = experiment.getValidFactorCombinations();
 
         allFactorNames = factorValuesByName(validFactorValueCombinations.keySet());
 

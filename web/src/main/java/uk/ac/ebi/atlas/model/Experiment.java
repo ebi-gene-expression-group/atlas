@@ -33,7 +33,7 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//ToDo: this class needs a builder, for example in order to fully load defaultFilterFactors we first have to load all the metadata (we need factorValuesByType).
+//ToDo: this class needs a builder, for example in order to fully load defaultFilterFactors we first have to load all the metadata (we need factorsByType).
 //ToDo: the way it is now we are loading incomplete DefaultFilterFactorValues (they miss their name), forcing client api to callback and fetch the name in an extra step.
 public class Experiment {
 
@@ -46,9 +46,9 @@ public class Experiment {
     private String defaultQueryFactorType;
     private Set<Factor> defaultFilterFactors = new HashSet<>();
 
-    private SortedSetMultimap<String, Factor> factorValuesByType = TreeMultimap.create();
+    private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
-    private SortedSetMultimap<Factor, Factor> validFactorValueCombinations = TreeMultimap.create();
+    private SortedSetMultimap<Factor, Factor> validFactorCombinations = TreeMultimap.create();
 
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
@@ -63,7 +63,7 @@ public class Experiment {
     }
 
     public String getFactorName(String type, String value) {
-        for (Factor factor : factorValuesByType.get(type)) {
+        for (Factor factor : factorsByType.get(type)) {
             if (factor.getValue().equals(value)) {
                 return factor.getName();
             }
@@ -85,24 +85,24 @@ public class Experiment {
 
         Set<Factor> factors = experimentRun.getFactors();
         for (Factor factor : factors) {
-            addToFactorValuesByType(factor);
+            addToFactorsByType(factor);
 
-            addToFactorValueCombinations(factors, factor);
+            addToFactorCombinations(factors, factor);
         }
         return this;
     }
 
-    private void addToFactorValueCombinations(Set<Factor> factors, Factor factor) {
+    private void addToFactorCombinations(Set<Factor> factors, Factor factor) {
         for (Factor value : factors) {
             if (!value.equals(factor)) {
-                validFactorValueCombinations.put(factor,value);
+                validFactorCombinations.put(factor, value);
             }
         }
     }
 
-    private void addToFactorValuesByType(Factor factor) {
+    private void addToFactorsByType(Factor factor) {
         String type = factor.getType();
-        factorValuesByType.put(type, factor);
+        factorsByType.put(type, factor);
     }
 
     public Factor getFactorValue(String experimentRunAccession, String byType) {
@@ -112,7 +112,7 @@ public class Experiment {
         return experimentRun.getFactorValue(byType);
     }
 
-    public Set<Factor> getAllFactorValues(String experimentRunAccession) {
+    public Set<Factor> getAllFactors(String experimentRunAccession) {
         ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
@@ -144,11 +144,11 @@ public class Experiment {
     }
 
     public SortedSet<Factor> getFactorValues(@NotNull String byType) {
-        return factorValuesByType.get(byType);
+        return factorsByType.get(byType);
     }
 
     //ToDo: parameter byType is not needed, it's always the remaining type
-    public SortedSet<Factor> getFilteredFactorValues(Set<Factor> filterByFactors, String byType) {
+    public SortedSet<Factor> getFilteredFactors(Set<Factor> filterByFactors, String byType) {
 
         SortedSet<Factor> results = new TreeSet<>();
 
@@ -170,8 +170,8 @@ public class Experiment {
         return results;
     }
 
-    public SortedSetMultimap<Factor, Factor> getValidFactorValueCombinations() {
-        return validFactorValueCombinations;
+    public SortedSetMultimap<Factor, Factor> getValidFactorCombinations() {
+        return validFactorCombinations;
     }
 
     public void setDefaultFilterFactors(Set<Factor> defaultFilterFactors) {

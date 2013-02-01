@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -112,23 +111,23 @@ public class ExperimentTest {
 
     @Test
     public void testAllFactorValues() {
-        assertThat(subject.getAllFactorValues(RUN_ACCESSION_1), hasItems(factor1));
-        assertThat(subject.getAllFactorValues(RUN_ACCESSION_2), hasItems(factor2));
-        assertThat(subject.getAllFactorValues(RUN_ACCESSION_3), hasItems(factor3, factor4));
+        assertThat(subject.getAllFactors(RUN_ACCESSION_1), hasItems(factor1));
+        assertThat(subject.getAllFactors(RUN_ACCESSION_2), hasItems(factor2));
+        assertThat(subject.getAllFactors(RUN_ACCESSION_3), hasItems(factor3, factor4));
     }
 
     @Test
     public void testFilteredFactorValues() {
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor1), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor1), factor1.getType()), hasItems(factor1));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1), factor1.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1), factor1.getType()), hasItems(factor1));
         // there is no such combination as factor1 and factor2 on an experimentRun
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor1, factor2), factor1.getType()).size(), is(0));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3, factor4), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3, factor4), factor1.getType()), hasItems(factor3));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor2), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor2), factor1.getType()), hasItems(factor2));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3), factor4.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactorValues(Sets.newHashSet(factor3), factor4.getType()), hasItems(factor4));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1, factor2), factor1.getType()).size(), is(0));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), factor1.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), factor1.getType()), hasItems(factor3));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor2), factor1.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor2), factor1.getType()), hasItems(factor2));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3), factor4.getType()).size(), is(1));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3), factor4.getType()), hasItems(factor4));
     }
 
 }
