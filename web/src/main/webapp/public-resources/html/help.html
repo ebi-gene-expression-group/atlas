@@ -82,7 +82,7 @@ data is available.</p>
 	
 	<ul>
 		<li>If the query contains <b>no experimental factor values</b>, the <i>Specific</i> search will report genes expressed in just <b>one</b> experimental factor value, then genes expressed in just <b>two</b> factor values, then three and so on, reporting any genes expressed in all the available factor values at the end of the list of results. Within each group of genes expressed in N factor values only, genes are sorted by the highest average FPKM across the N factor values in which they are expressed.</li>
-		<li>If the query contains <b>at least one</b> experimental factor value, the <i>Specific</i> search will promote genes with <b>higher FPKM</b> in the <b>queried</b> factor value(s), and at the same time penalize genes with a higher FPKM across the <b>non&ndash;queried</b> factor values. In other words, genes with the <b>greatest difference</b> in expression between queried and non&ndash;queried tissues will be pushed towards the top of the list.</li>
+		<li>If the query contains <b>at least one</b> experimental factor value, the <i>Specific</i> search will promote genes with <b>higher average FPKM</b> in the <b>queried</b> factor value(s), and at the same time penalize genes with a higher average FPKM across the <b>non&ndash;queried</b> factor values. In other words, genes with the <b>greatest difference</b> in expression between queried and non&ndash;queried tissues will be pushed towards the top of the list.</li>
   </ul>
   
   <p>If the <i>Specific</i> option is not selected, the Baseline Atlas search will <b>ignore</b> specificity of expression when ordering the results. In particular:</p>
