@@ -126,11 +126,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            model.addAttribute("defaultFilterFactorsSize", experiment.getDefaultFilterFactors().size());
-
             model.addAttribute("filterByMenu", filterByMenuBuilder.build(experiment));
 
-            model.addAttribute("selectedFactors", filterByFactors);
+            model.addAttribute("selectedFilterFactors", filterByFactors);
         }
 
         return "experiment";

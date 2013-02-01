@@ -27,7 +27,7 @@
 
 
 <div class="filters-frame">
-    <c:forEach items="${selectedFactors}" var="factor">
+    <c:forEach items="${selectedFilterFactors}" var="factor">
         <div class="filter-name">${factor.name}:</div>${factor.value}<br/>
     </c:forEach>
 </div>
