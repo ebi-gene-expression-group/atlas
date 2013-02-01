@@ -29,6 +29,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.jayway.restassured.RestAssured.get;
 
@@ -81,6 +83,13 @@ public abstract class RestPage {
 
     public ResponseBody getResponseBody() {
         return get(pageURL).getBody();
+    }
+
+    public List<String> getRowAsList(int row) {
+        String bodyAsString = getResponseBody().asString();
+        String[] lines = bodyAsString.split("\n");
+        String line = lines[row];
+        return Arrays.asList(line.split("\t"));
     }
 
     protected abstract String getPageURI();
