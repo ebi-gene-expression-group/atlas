@@ -11,31 +11,17 @@ var experimentDesignTableModule = (function ($) {
         _factors,
         _experimentAccession;
 
-    /* populate all sub categories */
-    function initHeaderRow() {
-        var aoColumnDefs = [];
-        aoColumnDefs[0] = { "sClass": "assays bb br bl", "aTargets": [ 0 ] };
-
-        function initHeaderRowSection(values, startCount) {
-            for (var value in values) {
-                $('#headerStub').append("<th class=\"header-cell bb\">" + value + "</th>");
-                aoColumnDefs[startCount] = { "sClass": "center bb", "aTargets": [ startCount ] };
-                startCount++;
-            }
-            aoColumnDefs[startCount].sClass = "center bb br";
-        }
-
-        initHeaderRowSection(_samples, 1);
-
-        initHeaderRowSection(_factors, _samples.length+1);
-
-        $('#headerStub th:last()').attr("class", "header-cell bb br");
-        return aoColumnDefs;
-    }
-
     function _initExperimentDesignTable() {
 
-        var assocArraySize = function (obj) {
+        var $window = $(window);
+        var calcDataTableHeight = function () {
+            return $window.height() - 270;
+        };
+        var calcDataTableWidth = function () {
+            return $window.width() - 100;
+        };
+
+        $.assocArraySize = function (obj) {
             var size = 0, key;
             for (key in obj) {
                 if (obj.hasOwnProperty(key)) size++;
@@ -44,8 +30,25 @@ var experimentDesignTableModule = (function ($) {
         };
 
         /* Set colspan for each category */
-        $('#samplesHeader').attr('colspan', assocArraySize(_samples));
-        $('#factorsHeader').attr('colspan', assocArraySize(_factors));
+        $('#samplesHeader').attr('colspan', $.assocArraySize(_samples));
+        $('#factorsHeader').attr('colspan', $.assocArraySize(_factors));
+
+        /* populate all sub categories */
+        var aoColumnDefs = new Array();
+        var i = 0;
+        aoColumnDefs[i] = { "sClass":"assays bb br bl", "aTargets":[ i ] };
+        for (var sample in _samples) {
+            $('#headerStub').append("<th class=\"header-cell bb\">" + sample + "</th>");
+            aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
+        }
+        aoColumnDefs[i]["sClass"] = "center bb br";
+        $('#headerStub th:last()').attr("class", "header-cell bb br");
+        for (var factor in _factors) {
+            $('#headerStub').append("<th class=\"header-cell bb\">" + factor + "</th>");
+            aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
+        }
+        aoColumnDefs[i]["sClass"] = "center bb br";
+        $('#headerStub th:last()').attr("class", "header-cell bb br");
 
         /* Custom filtering function which will filter analysed runs */
         $.fn.dataTableExt.afnFiltering.push(
@@ -58,22 +61,14 @@ var experimentDesignTableModule = (function ($) {
             }
         );
 
-        var $window = $(window);
-        var calcDataTableHeight = function () {
-            return $window.height() - 270;
-        };
-        var calcDataTableWidth = function () {
-            return $window.width() - 100;
-        };
-
         var oTable = $('#experiment-design-table').dataTable({
-            "aaData": _dataSet,
-            "aoColumnDefs": _samples,
-            "bPaginate": false,
-            "bScrollCollapse": true,
-            "sScrollY": calcDataTableHeight(),
-            "sScrollX": calcDataTableWidth(),
-            "sDom": 'i<"download">f<"clear">t'
+            "aaData":_dataSet,
+            "aoColumnDefs":aoColumnDefs,
+            "bPaginate":false,
+            "bScrollCollapse":true,
+            "sScrollY":calcDataTableHeight(),
+            "sScrollX":calcDataTableWidth(),
+            "sDom":'i<"download">f<"clear">t'
         });
 
         $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/' + _experimentAccession + '/experiment-design.tsv" target="_blank">' +
@@ -109,7 +104,7 @@ var experimentDesignTableModule = (function ($) {
     }
 
     return {
-        init: _init
+        init:_init
     };
 
 }(jQuery));
