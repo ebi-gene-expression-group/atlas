@@ -28,7 +28,8 @@
 
 <div class="filters-frame">
     <c:forEach items="${selectedFilterFactors}" var="factor">
-        <div class="filter-name">${factor.name}:</div>${factor.value}<br/>
+        <div class="filter-name">${factor.name}:</div>
+        ${factor.value}<br/>
     </c:forEach>
 </div>
 <c:set var="filterMenuLabel" value="Change filters"/>
@@ -72,10 +73,11 @@
     $(function () {
         $("#filterBy").menu();
         $('li:not(:has(>ul))', 'ul#filterBy').on('click', function () {
-            var jsonData = JSON.parse($(this).attr('data-serialized-factors'));
-            $("#queryFactorType").val(jsonData.queryFactorType);
+            var json = $(this).attr('data-serialized-factors');
+            var obj = $.parseJSON(json);
+            $("#queryFactorType").val(obj.queryFactorType);
             $("#queryFactorValues").val(''); // clear previous selection
-            $("#serializedFilterFactorValues").val(jsonData.filterFactorsURL);
+            $("#serializedFilterFactorValues").val(obj.filterFactorsURL);
             $("form#prefForm").submit();
         });
         $("#filterBy").show();

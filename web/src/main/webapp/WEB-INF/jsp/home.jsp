@@ -52,11 +52,21 @@
 </div>
 
 <!-- The JavaScript -->
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/jquery.easing.1.3.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript"
+        src="${pageContext.request.contextPath}/resources/js/jquery.easing.1.3.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(function () {
-        $('ul').mouseleave(function(){$(this).fadeOut(200)});
+        clearLocalNav();
+        $('#local-nav-home').addClass("active");
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#species-nav ul').mouseleave(function () {
+            $(this).fadeOut(200)
+        });
         $('#species-nav > div').hover(
                 function () {
                     var $this = $(this);

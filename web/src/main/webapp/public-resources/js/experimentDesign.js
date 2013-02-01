@@ -36,16 +36,16 @@ var experimentDesignTableModule = (function ($) {
         /* populate all sub categories */
         var aoColumnDefs = new Array();
         var i = 0;
-        aoColumnDefs[i] = { "sClass": "assays bb br bl", "aTargets": [ i ] };
+        aoColumnDefs[i] = { "sClass":"assays bb br bl", "aTargets":[ i ] };
         for (var sample in _samples) {
             $('#headerStub').append("<th class=\"header-cell bb\">" + sample + "</th>");
-            aoColumnDefs[++i] = { "sClass": "center bb", "aTargets": [ i ] };
+            aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
         }
         aoColumnDefs[i]["sClass"] = "center bb br";
         $('#headerStub th:last()').attr("class", "header-cell bb br");
         for (var factor in _factors) {
             $('#headerStub').append("<th class=\"header-cell bb\">" + factor + "</th>");
-            aoColumnDefs[++i] = { "sClass": "center bb", "aTargets": [ i ] };
+            aoColumnDefs[++i] = { "sClass":"center bb", "aTargets":[ i ] };
         }
         aoColumnDefs[i]["sClass"] = "center bb br";
         $('#headerStub th:last()').attr("class", "header-cell bb br");
@@ -62,13 +62,13 @@ var experimentDesignTableModule = (function ($) {
         );
 
         var oTable = $('#experiment-design-table').dataTable({
-            "aaData": _dataSet,
-            "aoColumnDefs": aoColumnDefs,
-            "bPaginate": false,
-            "bScrollCollapse": true,
-            "sScrollY": calcDataTableHeight(),
-            "sScrollX": calcDataTableWidth(),
-            "sDom": 'i<"download">f<"clear">t'
+            "aaData":_dataSet,
+            "aoColumnDefs":aoColumnDefs,
+            "bPaginate":false,
+            "bScrollCollapse":true,
+            "sScrollY":calcDataTableHeight(),
+            "sScrollX":calcDataTableWidth(),
+            "sDom":'i<"download">f<"clear">t'
         });
 
         $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/' + _experimentAccession + '/experiment-design.tsv" target="_blank">' +
@@ -104,7 +104,7 @@ var experimentDesignTableModule = (function ($) {
     }
 
     return {
-        init: _init
+        init:_init
     };
 
 }(jQuery));

@@ -28,7 +28,6 @@
 
 <head>
     <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"/>
-    <!-- old style start -->
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="en-GB" http-equiv="Content-Language">
@@ -36,22 +35,15 @@
     <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
     <meta content="IE=9" http-equiv="X-UA-Compatible"/>
 
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/contents.css" type="text/css"/>
-    <link rel="stylesheet" href="http://www.ebi.ac.uk/inc/css/userstyles.css" type="text/css"/>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/old/atlas-searchform.css">
-    <script src="http://www.ebi.ac.uk/inc/js/contents.js" type="text/javascript"></script>
-    <link rel="SHORTCUT ICON" href="http://www.ebi.ac.uk/bookmark.ico"/>
+    <!-- new style start -->
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/ebi-mitigation.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/mitigation/develop/embl-petrol-colours.css"/>
+    <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
+    <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
 
-    <style type="text/css">
-        @media print {
-            body, .contents, .header, .contentsarea, .head {
-                position: relative;
-            }
-        }
-    </style>
-
-    <!-- old style end -->
+    <!-- new style end -->
 
     <title><tiles:insertAttribute name="title" ignore="true"/></title>
 
@@ -73,6 +65,20 @@
             src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/experiment-header-buttons.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
+
+    <script>
+        (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+            $(document).ready(function () {
+
+                initExperimentHeaderButtons();
+
+            });
+        })(jQuery);
+    </script>
 
 </head>
 
@@ -80,15 +86,16 @@
 
 <tiles:insertAttribute name="header"/>
 
-<div id="contents" class="page-contents">
+<div id="contents" class="grid_24">
 
-    <tiles:insertAttribute name="menu" ignore="true"/>
+    <div id="wrapper" style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+        <tiles:insertAttribute name="menu" ignore="true"/>
+        <tiles:insertAttribute name="body"/>
+    </div>
 
-    <tiles:insertAttribute name="body"/>
+    <tiles:insertAttribute name="footer"/>
 
 </div>
-
-<tiles:insertAttribute name="footer"/>
 
 </body>
 

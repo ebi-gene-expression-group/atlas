@@ -75,7 +75,8 @@
                                     <tr>
                                         <td>
                                             <span style="display:none" class="gradient-level-min">
-                                                <fmt:formatNumber type="number" value="${geneProfiles.getMinExpressionLevel()}"
+                                                <fmt:formatNumber type="number"
+                                                                  value="${geneProfiles.getMinExpressionLevel()}"
                                                                   groupingUsed="false"/>
                                             </span>
                                         </td>
@@ -96,7 +97,8 @@
                                         </td>
                                         <td>
                                             <span style="display:none" class="gradient-level-max">
-                                                <fmt:formatNumber type="number" value="${geneProfiles.getMaxExpressionLevel()}"
+                                                <fmt:formatNumber type="number"
+                                                                  value="${geneProfiles.getMaxExpressionLevel()}"
                                                                   groupingUsed="false"/>
                                             </span>
                                             <span data-help-loc="#gradient"/>
@@ -149,6 +151,13 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        clearLocalNav();
+        $('#local-nav-home').addClass("active");
+    });
+</script>
 
 <script>
 
