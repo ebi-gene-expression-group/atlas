@@ -80,7 +80,7 @@
                     <div>
                         <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
                                      tabindex="-1"
-                                     items="${heatmapFactorValues}"
+                                     items="${allQueryFactorValues}"
                                      cssStyle="width:300px"/>
                     </div>
                         <span>

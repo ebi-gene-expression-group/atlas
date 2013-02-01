@@ -46,19 +46,18 @@ public class Experiment {
     private String defaultQueryFactorType;
     private Set<Factor> defaultFilterFactors = new HashSet<>();
 
-    private Map<String, SortedSet<Factor>> factorValuesByType = new HashMap<>();
+    private SortedSetMultimap<String, Factor> factorValuesByType = TreeMultimap.create();
 
     private SortedSetMultimap<Factor, Factor> validFactorValueCombinations = TreeMultimap.create();
 
-    private Set<String> experimentRunAccessions;
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
-    public Experiment(String experimentAccession, String description, Set<String> experimentRunAccessions, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, String specie) {
+    public Experiment(String experimentAccession, String description, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, String specie) {
         this.experimentAccession = experimentAccession;
         this.description = description;
-        this.experimentRunAccessions = experimentRunAccessions;
+        //this.experimentRunAccessions = experimentRunAccessions;
         this.defaultQueryFactorType = defaultQueryFactorType;
         setDefaultFilterFactors(defaultFilterFactors);
         this.specie = specie;
@@ -81,20 +80,15 @@ public class Experiment {
         return defaultFilterFactors;
     }
 
-    public Experiment addAll(Collection<ExperimentRun> experimentRuns) {
-        for (ExperimentRun experimentRun : experimentRuns) {
-            if (experimentRunAccessions.contains(experimentRun.getRunAccession())) {
-                this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
-                // index all possible factor values by their byType
+    public Experiment add(ExperimentRun experimentRun) {
+        this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
+        // index all possible factor values by their byType
 
-                Set<Factor> factorValues1 = experimentRun.getFactors();
-                for (Factor factor : factorValues1) {
-                    addToFactorValuesByType(factor);
+        Set<Factor> factors = experimentRun.getFactors();
+        for (Factor factor : factors) {
+            addToFactorValuesByType(factor);
 
-                    addToFactorValueCombinations(factorValues1, factor);
-                }
-
-            }
+            addToFactorValueCombinations(factors, factor);
         }
         return this;
     }
@@ -109,11 +103,7 @@ public class Experiment {
 
     private void addToFactorValuesByType(Factor factor) {
         String type = factor.getType();
-
-        if (!factorValuesByType.containsKey(type)) {
-            factorValuesByType.put(type, new TreeSet<Factor>());
-        }
-        factorValuesByType.get(type).add(factor);
+        factorValuesByType.put(type, factor);
     }
 
     public Factor getFactorValue(String experimentRunAccession, String byType) {
@@ -130,8 +120,8 @@ public class Experiment {
         return experimentRun.getFactors();
     }
 
-    public Set<String> getExperimentRunAccessions() {
-        return experimentRunAccessions;
+    public Set<String> getExperimentRunAccessions(){
+        return experimentRuns.keySet();
     }
 
     public ExperimentRun getExperimentRun(String experimentRunAccession) {
@@ -163,7 +153,7 @@ public class Experiment {
 
         SortedSet<Factor> results = new TreeSet<>();
 
-        for (String experimentRunAccession : experimentRunAccessions) {
+        for (String experimentRunAccession : getExperimentRunAccessions()) {
             ExperimentRun experimentRun = experimentRuns.get(experimentRunAccession);
             if (experimentRun != null) {
                 if (CollectionUtils.isEmpty(filterByFactors) ||

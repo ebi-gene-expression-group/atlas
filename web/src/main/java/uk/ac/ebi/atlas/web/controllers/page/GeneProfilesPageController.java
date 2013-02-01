@@ -23,8 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -107,16 +105,19 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
 
-            model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
+            //model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
 
-            Set<Factor> filterByFactors = filterParameters.getFilterFactors();
+            Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
 
-            SortedSet<Factor> filteredFactors = experiment.getFilteredFactorValues(filterByFactors, filterParameters.getQueryFactorType());
+            SortedSet<Factor> allQueryFactors = experiment.getFilteredFactorValues(selectedFilterFactors, filterParameters.getQueryFactorType());
 
-            model.addAttribute("heatmapFactors", filteredFactors);
+            //model.addAttribute("heatmapFactors", filteredFactors);
 
             // this is currently required for the request preferences filter drop-down multi-selection box
-            model.addAttribute("heatmapFactorValues", Factor.getValues(filteredFactors));
+            model.addAttribute("allQueryFactors", allQueryFactors);
+
+            // this is currently required for the request preferences filter drop-down multi-selection box
+            model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
 
             String specie = experiment.getSpecie();
 
@@ -128,7 +129,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("filterByMenu", filterByMenuBuilder.build(experiment));
 
-            model.addAttribute("selectedFilterFactors", filterByFactors);
+            model.addAttribute("selectedFilterFactors", selectedFilterFactors);
         }
 
         return "experiment";

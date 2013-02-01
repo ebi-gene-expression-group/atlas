@@ -26,56 +26,53 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.Collection;
 
 public abstract class AbstractTsvReader {
 
-    private final Logger log4jLogger;
+    private static final Logger LOGGER = Logger.getLogger(AbstractTsvReader.class);
 
-    // changed to private by Sonar recommendation
-    private final ApplicationProperties applicationProperties;
-
-    protected AbstractTsvReader(Logger logger, ApplicationProperties a) {
-        log4jLogger = logger;
-        applicationProperties = a;
+    protected AbstractTsvReader() {
     }
 
-    public abstract Collection<String[]> readAll(String experimentAccession);
+    protected abstract String getPathTemplate();
 
-    ApplicationProperties getApplicationProperties() {
-        return applicationProperties;
+    public Collection<String[]> readAll(String experimentAccession) {
+        return readAndFilter(experimentAccession, new IsRowCommented());
     }
 
-    Collection<String[]> read(Path path) {
-        return readAndFilter(path, new IsCommented());
-    }
+    protected Collection<String[]> readAndFilter(String experimentAccession, Predicate<String[]> filter) {
 
-    Collection<String[]> readAndFilter(Path path,
-                                       Predicate<String[]> filter) {
+        Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
 
-        try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(path));
+        try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
              CSVReader csvReader = new CSVReader(reader, '\t')) {
 
             return Collections2.filter(csvReader.readAll(), filter);
 
         } catch (IOException e) {
-            log4jLogger.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file from path " + path, e);
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException("Cannot read Tsv file from path " + fileSystemPath.toString(), e);
         }
     }
 
-    private static class IsCommented implements Predicate<String[]> {
+    private static class IsRowCommented implements Predicate<String[]> {
 
         @Override
         public boolean apply(String[] columns) {
             return !columns[0].trim().startsWith("#");
         }
+    }
+
+    private String getPathString(String experimentAccession){
+        return MessageFormat.format(getPathTemplate(), experimentAccession);
     }
 
 }

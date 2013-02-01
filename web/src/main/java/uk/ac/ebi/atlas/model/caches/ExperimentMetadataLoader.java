@@ -22,7 +22,13 @@
 
 package uk.ac.ebi.atlas.model.caches;
 
+import com.google.common.base.Predicate;
 import com.google.common.cache.CacheLoader;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import org.apache.commons.collections.SetUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -57,7 +63,10 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private static final String ENA_RUN = "ENA_RUN";
 
+    @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String idfUrlTemplate;
+
+    @Value("#{configuration['experiment.magetab.idf.path.template']}")
     private String idfPathTemplate;
 
     private AnalysisMethodsTsvReader analysisMethodsTsvReader;
@@ -67,15 +76,10 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
     private ArrayExpressClient arrayExpressClient;
 
     @Inject
-    public ExperimentMetadataLoader(
-            @Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate
-            , @Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate
-            , AnalysisMethodsTsvReader analysisMethodsTsvReader
+    public ExperimentMetadataLoader(AnalysisMethodsTsvReader analysisMethodsTsvReader
             , ExperimentFactorsTsvReader experimentFactorsTsvReader
             , ArrayExpressClient arrayExpressClient) {
 
-        this.idfUrlTemplate = idfUrlTemplate;
-        this.idfPathTemplate = idfPathTemplate;
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
         this.experimentFactorsTsvReader = experimentFactorsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
@@ -97,13 +101,33 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         ScanNode firstNode = scanNodes.iterator().next();
 
         Experiment experiment = new Experiment(experimentAccession, experimentName
-                , getExperimentRunAccessions(experimentAccession), defaultQueryFactorType
+                , defaultQueryFactorType
                 , defaultFilterFactors, extractSpecie(firstNode));
 
-        experiment.addAll(extractExperimentRuns(scanNodes, investigation.IDF));
+        Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
+
+        Collection<ExperimentRun> selectedExperimentRuns = Collections2.filter(allExperimentRuns, new IsExperimentRunSelected(experimentAccession));
+
+        for (ExperimentRun experimentRun: selectedExperimentRuns){
+            experiment.add(experimentRun);
+        }
 
         return experiment;
 
+    }
+
+    protected Collection<ExperimentRun> extractAllExperimentRunsFromSdrf(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {
+
+        Collection<ExperimentRun> experimentRuns = new ArrayList<>();
+
+        for (ScanNode scanNode : scanNodes) {
+
+            if (scanNode.comments.keySet().contains(ENA_RUN)) {
+                ExperimentRun run = buildExperimentRun(scanNode, idf);
+                experimentRuns.add(run);
+            }
+        }
+        return experimentRuns;
     }
 
     private Set<Factor> parseDefaultFilterFactorValues(String experimentAccession) {
@@ -137,20 +161,6 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         }
     }
 
-    private Set<String> getExperimentRunAccessions(String experimentAccession) throws IOException {
-        Map<String, String> analysisMethodsRows = analysisMethodsTsvReader.readAsMap(experimentAccession);
-
-        String[] processedLibraries = analysisMethodsRows.get("Processed libraries").split(",");
-
-        Set<String> experimentRunAccessions = new HashSet<>();
-
-        for (String processedLibrary : processedLibraries) {
-            experimentRunAccessions.add(processedLibrary.trim());
-        }
-
-        return experimentRunAccessions;
-    }
-
     private String extractSpecie(ScanNode firstScanNode) {
         SourceNode firstSourceNode = GraphUtils.findUpstreamNodes(firstScanNode, SourceNode.class).iterator().next();
         for (CharacteristicsAttribute characteristic : firstSourceNode.characteristics) {
@@ -159,20 +169,6 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
             }
         }
         return null;
-    }
-
-    public Collection<ExperimentRun> extractExperimentRuns(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {
-
-        Collection<ExperimentRun> experimentRuns = new ArrayList<>();
-
-        for (ScanNode scanNode : scanNodes) {
-
-            if (scanNode.comments.keySet().contains(ENA_RUN)) {
-                ExperimentRun run = buildExperimentRun(scanNode, idf);
-                experimentRuns.add(run);
-            }
-        }
-        return experimentRuns;
     }
 
     //Required for testability - will be overridden to inject mock
@@ -222,6 +218,27 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         }
 
         return run;
+    }
+
+    class IsExperimentRunSelected implements Predicate<ExperimentRun>{
+
+        Set<String> selectedRunAccessions;
+
+        public IsExperimentRunSelected(String experimentAccession) throws IOException{
+            selectedRunAccessions = getSelectedRunAccessions(experimentAccession);
+        }
+
+        @Override
+        public boolean apply(ExperimentRun experimentRun){
+            return selectedRunAccessions.contains(experimentRun.getRunAccession());
+        }
+
+        protected Set<String> getSelectedRunAccessions(String experimentAccession) throws IOException {
+
+            return analysisMethodsTsvReader.readProcessedLibraries(experimentAccession);
+
+        }
+
     }
 
 

@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.model.readers;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -32,17 +34,15 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 @Named("experimentDesignTsvReader")
+@Scope("singleton")
 public class ExperimentDesignTsvReader extends AbstractTsvReader {
 
-    @Inject
-    public ExperimentDesignTsvReader(ApplicationProperties a) {
-        super(Logger.getLogger(ExperimentDesignTsvReader.class), a);
-    }
+    @Value("#{configuration['experiment.experiment-design.path.template']}")
+    private String pathTemplate;
 
     @Override
-    public Collection<String[]> readAll(String experimentAccession) {
-        Path path = FileSystems.getDefault().getPath(getApplicationProperties().getExperimentDesignTsvFilePath(experimentAccession));
-        return read(path);
+    protected String getPathTemplate() {
+        return pathTemplate;
     }
 
 }

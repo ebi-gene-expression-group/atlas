@@ -43,7 +43,7 @@ public class FilterParameters {
 
     private String geneQuery;
 
-    private Set<Factor> filterFactors;
+    private Set<Factor> selectedFilterFactors;
 
     private Double cutoff;
 
@@ -54,7 +54,7 @@ public class FilterParameters {
 
     private FilterParameters(Builder builder) {
         geneQuery = builder.geneQuery;
-        filterFactors = builder.filterFactors;
+        selectedFilterFactors = builder.selectedFilterFactors;
         cutoff = builder.cutoff;
         queryFactors = builder.queryFactors;
         queryFactorType = builder.queryFactorType;
@@ -65,8 +65,8 @@ public class FilterParameters {
         return geneQuery;
     }
 
-    public Set<Factor> getFilterFactors() {
-        return filterFactors;
+    public Set<Factor> getSelectedFilterFactors() {
+        return selectedFilterFactors;
     }
 
     public Double getCutoff() {
@@ -93,7 +93,7 @@ public class FilterParameters {
     public String toString() {
         return Objects.toStringHelper(this.getClass())
                     .add("geneQuery", geneQuery)
-                    .add("filterFactors", filterFactors)
+                    .add("selectedFilterFactors", selectedFilterFactors)
                     .add("cutoff", cutoff)
                     .add("queryFactors", queryFactors)
                     .add("queryFactorType", queryFactorType)
@@ -109,7 +109,7 @@ public class FilterParameters {
         private String queryFactorType;
 
         private String geneQuery;
-        private Set<Factor> filterFactors = new HashSet<>();
+        private Set<Factor> selectedFilterFactors = new HashSet<>();
         private Set<Factor> queryFactors = new HashSet<>();
         private Set<String> queryFactorValues = Collections.EMPTY_SET;
         private Set<String> serializedFilterFactorValues = Collections.EMPTY_SET;
@@ -173,11 +173,11 @@ public class FilterParameters {
                     //ToDo: this should be removed as soon as we have a proper builder for the Experiment class, so that experiment can fetch DefaultFactorValue names once and for all at load time
                     String factorValueName = experiment.getFactorName(factor.getType(), factor.getValue());
                     factor.setName(factorValueName);
-                    filterFactors.addAll(experiment.getDefaultFilterFactors());
+                    selectedFilterFactors.addAll(experiment.getDefaultFilterFactors());
                 }
             } else {
                 for (String serializedFilterFactorValue : serializedFilterFactorValues) {
-                    this.filterFactors.add(buildFromSerializedFilterFactorValues(experiment, serializedFilterFactorValue));
+                    this.selectedFilterFactors.add(buildFromSerializedFilterFactorValues(experiment, serializedFilterFactorValue));
                 }
             }
             for (String queryFactorValues : this.queryFactorValues) {

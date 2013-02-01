@@ -48,6 +48,7 @@ public class ApplicationProperties {
         return fileName != null ? fileName : configurationProperties.getProperty(key);
     }
 
+    //This is invoked from jsp el
     public String getArrayExpressURL(String experimentAccession) {
         String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.url.template");
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
@@ -56,18 +57,6 @@ public class ApplicationProperties {
     public String getArrayExpressRestURL(String experimentAccession) {
         String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.rest.url.template");
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
-    }
-
-    public String getAnalisysMethodTsvFilePath(String experimentAccession) {
-        return MessageFormat.format(configurationProperties.getProperty("experiment.analysis-method.path.template"), experimentAccession);
-    }
-
-    public String getExperimentDesignTsvFilePath(String experimentAccession) {
-        return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-design.path.template"), experimentAccession);
-    }
-
-    public String getExperimentFactorsTsvFilePath(String experimentAccession) {
-        return MessageFormat.format(configurationProperties.getProperty("experiment.experiment-factors.path.template"), experimentAccession);
     }
 
     public Set<String> getExperimentIdentifiers() {

@@ -59,8 +59,8 @@ public class ExperimentTest {
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factor3);
         experimentRun3.addFactorValue(factor4);
 
-        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factor1.getType(), Collections.EMPTY_SET, specie)
-                .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
+        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, factor1.getType(), Collections.EMPTY_SET, specie)
+                .add(experimentRun1).add(experimentRun2).add(experimentRun3);
     }
 
     @Test

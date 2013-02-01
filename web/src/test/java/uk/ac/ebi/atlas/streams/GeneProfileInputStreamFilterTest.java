@@ -84,7 +84,7 @@ public class GeneProfileInputStreamFilterTest {
         when(gene3ProfileMock.isExpressedOnAnyOf(factors)).thenReturn(true);
         when(gene3ProfileMock.getAllFactorValues()).thenReturn(Sets.newHashSet(new Factor("ORGANISM_PART", "", ORGANISM_PART_2)));
 
-        when(filterParametersMock.getFilterFactors()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
+        when(filterParametersMock.getSelectedFilterFactors()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
 
     }
 

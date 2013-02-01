@@ -23,17 +23,18 @@
 package uk.ac.ebi.atlas.model.readers;
 
 import com.google.common.base.Predicate;
-import org.apache.log4j.Logger;
+import com.google.common.collect.Sets;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Named("analysisMethodsTsvReader")
 @Scope("singleton")
@@ -41,15 +42,12 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
 
     private static final String LIBRARIES_TITLE = "Processed libraries";
 
-    @Inject
-    public AnalysisMethodsTsvReader(ApplicationProperties a) {
-        super(Logger.getLogger(AnalysisMethodsTsvReader.class), a);
-    }
+    @Value("#{configuration['experiment.analysis-method.path.template']}")
+    private String pathTemplate;
 
     @Override
-    public Collection<String[]> readAll(String experimentAccession) {
-        Path path = FileSystems.getDefault().getPath(getApplicationProperties().getAnalisysMethodTsvFilePath(experimentAccession));
-        return read(path);
+    protected String getPathTemplate() {
+        return pathTemplate;
     }
 
     public Collection<String[]> readAllWithoutLibraries(String experimentAccession) {
@@ -60,11 +58,22 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
                 return !(firstColumn.startsWith("#") || firstColumn.equals(LIBRARIES_TITLE));
             }
         };
-        Path path = FileSystems.getDefault().getPath(getApplicationProperties().getAnalisysMethodTsvFilePath(experimentAccession));
-        return readAndFilter(path, predicate);
+        return readAndFilter(experimentAccession, predicate);
     }
 
-    public Map<String, String> readAsMap(String experimentAccession) {
+    public Set<String> readProcessedLibraries(String experimentAccession){
+        String[] processedLibraries = readAsMap(experimentAccession).get("Processed libraries").split(",");
+        return Sets.newHashSet(trim(processedLibraries));
+    }
+
+    protected String[] trim(String[] strings){
+        for (int i = 0; i < strings.length ; i++){
+            strings[i] = strings[i].trim();
+        }
+        return strings;
+    }
+
+    protected Map<String, String> readAsMap(String experimentAccession) {
         Collection<String[]> rows = readAll(experimentAccession);
         Map<String, String> keyValuePairs = new HashMap<>(rows.size());
         for (String[] row : rows) {

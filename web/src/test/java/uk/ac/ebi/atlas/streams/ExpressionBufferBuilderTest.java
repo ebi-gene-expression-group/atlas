@@ -89,8 +89,8 @@ public class ExpressionBufferBuilderTest {
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factorMock2);
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factorMock3);
 
-        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, Sets.newHashSet(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3), factorMock1.getType(), Collections.EMPTY_SET, specie)
-                .addAll(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3));
+        Experiment experiment = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, factorMock1.getType(), Collections.EMPTY_SET, specie)
+                .add(experimentRun1).add(experimentRun2).add(experimentRun3);
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
 
