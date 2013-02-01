@@ -84,7 +84,7 @@
         padding: .3em;
     }
 
-    li {
+    #filterBy li {
         padding-bottom: 4px;
     }
 
