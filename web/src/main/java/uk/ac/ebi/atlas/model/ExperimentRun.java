@@ -17,8 +17,8 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         this.runAccession = checkNotNull(accession);
     }
 
-    public ExperimentRun addFactorValue(Factor value) {
-        factors.add(value);
+    public ExperimentRun addFactor(Factor factor) {
+        factors.add(factor);
         return this;
     }
 
@@ -30,7 +30,7 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         return factors;
     }
 
-    public Factor getFactorValue(String type) {
+    public Factor getFactor(String type) {
         for (Factor factor : factors) {
             if (factor.getType().equalsIgnoreCase(type)) {
                 return factor;

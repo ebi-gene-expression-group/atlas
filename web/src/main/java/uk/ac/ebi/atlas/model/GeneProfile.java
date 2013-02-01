@@ -33,7 +33,7 @@ public class GeneProfile implements Iterable<Expression> {
 
         updateProfileExpression(expression.getLevel());
 
-        expressions.put(expression.getFactorValue(queryFactorType), expression);
+        expressions.put(expression.getFactor(queryFactorType), expression);
         return this;
     }
 
@@ -77,7 +77,7 @@ public class GeneProfile implements Iterable<Expression> {
 
     public boolean isExpressedOnAnyOf(Set<Factor> factors) {
         checkArgument(CollectionUtils.isNotEmpty(factors));
-        return Sets.intersection(this.getAllFactorValues(), factors).size() > 0;
+        return Sets.intersection(this.getAllFactors(), factors).size() > 0;
     }
 
     public double getAverageExpressionLevelOn(Set<Factor> factors) {
@@ -91,7 +91,7 @@ public class GeneProfile implements Iterable<Expression> {
         return expressionLevel / factors.size();
     }
 
-    public Set<Factor> getAllFactorValues() {
+    public Set<Factor> getAllFactors() {
         return this.expressions.keySet();
     }
 
@@ -162,7 +162,6 @@ public class GeneProfile implements Iterable<Expression> {
         }
 
         public boolean containsExpressions() {
-//            return !geneProfile.factorValueExpressions.isEmpty();
             return !geneProfile.expressions.isEmpty();
         }
 

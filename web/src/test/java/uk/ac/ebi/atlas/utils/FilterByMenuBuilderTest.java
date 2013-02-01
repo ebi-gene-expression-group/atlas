@@ -55,10 +55,10 @@ public class FilterByMenuBuilderTest {
         Factor factor3 = new Factor(CELL_LINE, CELL_LINE, "imr-90");
         Set<Factor> factors = Sets.newHashSet(factor1, factor2, factor3);
 
-        assertThat(subject.factorValuesByName(factors), notNullValue());
-        assertThat(subject.factorValuesByName(factors).keySet(), hasItems(ORGANISM_PART, CELL_LINE));
-        assertThat(subject.factorValuesByName(factors).get(ORGANISM_PART), hasItems(factor1, factor2));
-        assertThat(subject.factorValuesByName(factors).get(CELL_LINE), hasItems(factor3));
+        assertThat(subject.factorsByName(factors), notNullValue());
+        assertThat(subject.factorsByName(factors).keySet(), hasItems(ORGANISM_PART, CELL_LINE));
+        assertThat(subject.factorsByName(factors).get(ORGANISM_PART), hasItems(factor1, factor2));
+        assertThat(subject.factorsByName(factors).get(CELL_LINE), hasItems(factor3));
     }
 
 }

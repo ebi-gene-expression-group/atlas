@@ -35,14 +35,14 @@ public class ExperimentRunTest {
         when(factorMock2.getValue()).thenReturn(organismPart);
 
         subject = new ExperimentRun("RUN_ACCESSION")
-                .addFactorValue(factorMock1)
-                .addFactorValue(factorMock2);
+                .addFactor(factorMock1)
+                .addFactor(factorMock2);
     }
 
     @Test
     public void testGetOrganismPart() throws Exception {
 
-        assertThat(subject.getFactorValue(factorMock2.getType()).getValue(), is(organismPart));
+        assertThat(subject.getFactor(factorMock2.getType()).getValue(), is(organismPart));
 
     }
 

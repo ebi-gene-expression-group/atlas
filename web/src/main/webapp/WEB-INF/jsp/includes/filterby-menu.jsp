@@ -77,7 +77,7 @@
             var obj = $.parseJSON(json);
             $("#queryFactorType").val(obj.queryFactorType);
             $("#queryFactorValues").val(''); // clear previous selection
-            $("#serializedFilterFactorValues").val(obj.filterFactorsURL);
+            $("#serializedFilterFactors").val(obj.filterFactorsURL);
             $("form#prefForm").submit();
         });
         $("#filterBy").show();

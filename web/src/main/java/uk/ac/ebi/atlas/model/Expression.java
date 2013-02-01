@@ -24,13 +24,13 @@ public class Expression {
         return Double.compare(this.level, level) > 0;
     }
 
-    public Factor getFactorValue(String type) {
+    public Factor getFactor(String type) {
         for (Factor factor : allFactors) {
             if (factor.getType().equals(type)) {
                 return factor;
             }
         }
-        throw new IllegalStateException("Expression doesn't contain factor value for a given type");
+        throw new IllegalStateException("Expression doesn't contain factor for a given type");
     }
 
     @Override

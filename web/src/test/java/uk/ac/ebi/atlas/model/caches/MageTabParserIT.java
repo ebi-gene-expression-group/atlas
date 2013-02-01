@@ -49,7 +49,7 @@ public class MageTabParserIT {
         //then
         assertThat(experimentRun.getRunAccession(), is(RUN_ACCESSION));
         assertThat(experimentRun.getFactors().size(), is(3));
-        assertThat(experimentRun.getFactorValue("ORGANISM_PART").getValue(), is(equalTo("adipose")));
+        assertThat(experimentRun.getFactor("ORGANISM_PART").getValue(), is(equalTo("adipose")));
     }
 
 }

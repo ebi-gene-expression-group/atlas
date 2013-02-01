@@ -63,7 +63,7 @@ public class BarChartTrader {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
         for (Set<Factor> bitSetFactors : geneBitSets.keySet()) {
-            if (forLimitingFactorValues(bitSetFactors, limitingFactorSet) && forQueryFactorValues(bitSetFactors, selectedFactors)) {
+            if (forLimitingFactors(bitSetFactors, limitingFactorSet) && forQueryFactors(bitSetFactors, selectedFactors)) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(bitSetFactors));
             }
@@ -72,11 +72,11 @@ public class BarChartTrader {
     }
 
 
-    protected static boolean forLimitingFactorValues(Set<Factor> factorSet, Set<Factor> limitingFactorSet) {
+    protected static boolean forLimitingFactors(Set<Factor> factorSet, Set<Factor> limitingFactorSet) {
         return CollectionUtils.isEmpty(limitingFactorSet) || factorSet.containsAll(limitingFactorSet);
     }
 
-    protected static boolean forQueryFactorValues(Set<Factor> factorSet, Set<Factor> queryFactors) {
+    protected static boolean forQueryFactors(Set<Factor> factorSet, Set<Factor> queryFactors) {
         return CollectionUtils.isEmpty(queryFactors) ||  !Collections.disjoint(factorSet, queryFactors);
     }
 

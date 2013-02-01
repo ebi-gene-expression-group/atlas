@@ -105,13 +105,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
 
-            //model.addAttribute("allFactorValues", experiment.getFactorValues(filterParameters.getQueryFactorType()));
-
             Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
 
             SortedSet<Factor> allQueryFactors = experiment.getFilteredFactors(selectedFilterFactors, filterParameters.getQueryFactorType());
-
-            //model.addAttribute("heatmapFactors", filteredFactors);
 
             // this is currently required for the request preferences filter drop-down multi-selection box
             model.addAttribute("allQueryFactors", allQueryFactors);

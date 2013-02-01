@@ -50,7 +50,7 @@ public class GeneProfilesController {
 
         return filtersParameterBuilder.forExperiment(experiment)
                 .withCutoff(preferences.getCutoff())
-                .withFilterFactorValues(preferences.getSerializedFilterFactorValues())
+                .withFilterFactors(preferences.getSerializedFilterFactors())
                 .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())
                 .withGeneQuery(preferences.getGeneQuery())

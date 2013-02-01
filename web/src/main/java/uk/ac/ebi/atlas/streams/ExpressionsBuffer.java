@@ -25,17 +25,17 @@ class ExpressionsBuffer {
 
     private static final Logger logger = Logger.getLogger(ExpressionsBuffer.class);
 
-    private static final String FACTOR_VALUE_NOT_FOUND = "Factor value not found for Run Accessions {0} and Experiment Accession {1}";
+    private static final String FACTOR_NOT_FOUND = "Factor value not found for Run Accessions {0} and Experiment Accession {1}";
 
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
-    private Iterator<Set<Factor>> expectedAllFactorValues;
+    private Iterator<Set<Factor>> expectedAllFactors;
 
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected ExpressionsBuffer(List<Set<Factor>> orderedAllFactorValues) {
-        this.expectedAllFactorValues = Iterables.cycle(orderedAllFactorValues).iterator();
+    protected ExpressionsBuffer(List<Set<Factor>> orderedAllFactors) {
+        this.expectedAllFactors = Iterables.cycle(orderedAllFactors).iterator();
     }
 
 
@@ -47,7 +47,7 @@ class ExpressionsBuffer {
         }
         double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new Expression(expressionLevel, expectedAllFactorValues.next());
+        return new Expression(expressionLevel, expectedAllFactors.next());
     }
 
     public ExpressionsBuffer reload(String... values) {
@@ -73,9 +73,7 @@ class ExpressionsBuffer {
 
         private ExperimentsCache experimentsCache;
 
-//        private List<Factor> orderedFactorValues = new LinkedList<>();
-
-        private List<Set<Factor>> orderedAllFactorValues = new LinkedList<>();
+        private List<Set<Factor>> orderedAllFactors = new LinkedList<>();
 
         private boolean readyToCreate;
         private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
@@ -106,11 +104,11 @@ class ExpressionsBuffer {
             for (String columnHeader : columnHeaders) {
 
                 //ToDo: will be refactored soon as we remove organism parts
-//                Factor factorValue = getFactorValue(columnHeader, experimentAccession);
+//                Factor factorValue = getFactor(columnHeader, experimentAccession);
 //                orderedFactorValues.add(factorValue);
 
-                Set<Factor> allFactors = getAllFactorValues(columnHeader, experimentAccession);
-                orderedAllFactorValues.add(allFactors);
+                Set<Factor> allFactors = getAllFactors(columnHeader, experimentAccession);
+                orderedAllFactors.add(allFactors);
 
             }
             readyToCreate = true;
@@ -119,7 +117,7 @@ class ExpressionsBuffer {
         }
 
 
-        private Set<Factor> getAllFactorValues(String columnHeader, String experimentAccession) {
+        private Set<Factor> getAllFactors(String columnHeader, String experimentAccession) {
 
             String[] columnRuns = columnHeader.split(",");
 
@@ -133,14 +131,14 @@ class ExpressionsBuffer {
                 return experiment.getAllFactors(columnRun);
             }
 
-            throw new IllegalStateException(MessageFormat.format(FACTOR_VALUE_NOT_FOUND, columnHeader, experimentAccession));
+            throw new IllegalStateException(MessageFormat.format(FACTOR_NOT_FOUND, columnHeader, experimentAccession));
         }
 
         public ExpressionsBuffer create() {
 
             checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
 
-            return new ExpressionsBuffer(orderedAllFactorValues);
+            return new ExpressionsBuffer(orderedAllFactors);
 
         }
 

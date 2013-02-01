@@ -41,7 +41,7 @@ public class FilterParametersTest {
         FilterParameters.Builder builder = new FilterParameters.Builder();
 
         subject = builder.forExperiment(experimentMock)
-                         .withFilterFactorValues(Sets.newHashSet("A:B","C:D"))
+                         .withFilterFactors(Sets.newHashSet("A:B", "C:D"))
                          .build();
 
     }

@@ -34,7 +34,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 //ToDo: this class needs a builder, for example in order to fully load defaultFilterFactors we first have to load all the metadata (we need factorsByType).
-//ToDo: the way it is now we are loading incomplete DefaultFilterFactorValues (they miss their name), forcing client api to callback and fetch the name in an extra step.
+//ToDo: the way it is now we are loading incomplete DefaultFilterFactors (they miss their name), forcing client api to callback and fetch the name in an extra step.
 public class Experiment {
 
     private static final Logger logger = Logger.getLogger(Experiment.class);
@@ -105,11 +105,11 @@ public class Experiment {
         factorsByType.put(type, factor);
     }
 
-    public Factor getFactorValue(String experimentRunAccession, String byType) {
+    public Factor getFactor(String experimentRunAccession, String byType) {
         ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
         checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession, experimentAccession));
 
-        return experimentRun.getFactorValue(byType);
+        return experimentRun.getFactor(byType);
     }
 
     public Set<Factor> getAllFactors(String experimentRunAccession) {
@@ -143,7 +143,7 @@ public class Experiment {
         return description;
     }
 
-    public SortedSet<Factor> getFactorValues(@NotNull String byType) {
+    public SortedSet<Factor> getFactors(@NotNull String byType) {
         return factorsByType.get(byType);
     }
 
@@ -157,7 +157,7 @@ public class Experiment {
             if (experimentRun != null) {
                 if (CollectionUtils.isEmpty(filterByFactors) ||
                         experimentRun.getFactors().containsAll(filterByFactors)) {
-                    Factor factor = experimentRun.getFactorValue(byType);
+                    Factor factor = experimentRun.getFactor(byType);
 
                     checkNotNull(factor);
                     results.add(factor);
@@ -177,8 +177,8 @@ public class Experiment {
     public void setDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
         for (Factor defaultFilterFactor : defaultFilterFactors) {
             //Next two lines should be uncommented when we have a proper builder that forces gene metadata to be loaded before curated metadata (before our tsv files)
-            //String factorValueName = getFactorName(defaultFilterFactor.getType(), defaultFilterFactor.getName());
-            //defaultFilterFactor.setName(factorValueName);
+            //String factorName = getFactorName(defaultFilterFactor.getType(), defaultFilterFactor.getName());
+            //defaultFilterFactor.setName(factorName);
             this.defaultFilterFactors.add(defaultFilterFactor);
         }
     }

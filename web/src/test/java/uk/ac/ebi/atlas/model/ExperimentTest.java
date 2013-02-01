@@ -53,10 +53,10 @@ public class ExperimentTest {
 
     @Before
     public void initializeSubject() {
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactorValue(factor1);
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactorValue(factor2);
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactorValue(factor3);
-        experimentRun3.addFactorValue(factor4);
+        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactor(factor1);
+        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(factor2);
+        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(factor3);
+        experimentRun3.addFactor(factor4);
 
         subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, factor1.getType(), Collections.EMPTY_SET, specie)
                 .add(experimentRun1).add(experimentRun2).add(experimentRun3);
@@ -102,11 +102,11 @@ public class ExperimentTest {
 
     @Test
     public void testFactorValueByType() {
-        assertThat(subject.getFactorValue(RUN_ACCESSION_1, factor1.getType()).getValue(), is(factor1.getValue()));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_1, factor4.getType()), nullValue(Factor.class));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_2, factor2.getType()).getValue(), is(factor2.getValue()));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_3, factor3.getType()).getValue(), is(factor3.getValue()));
-        assertThat(subject.getFactorValue(RUN_ACCESSION_3, factor4.getType()).getValue(), is(factor4.getValue()));
+        assertThat(subject.getFactor(RUN_ACCESSION_1, factor1.getType()).getValue(), is(factor1.getValue()));
+        assertThat(subject.getFactor(RUN_ACCESSION_1, factor4.getType()), nullValue(Factor.class));
+        assertThat(subject.getFactor(RUN_ACCESSION_2, factor2.getType()).getValue(), is(factor2.getValue()));
+        assertThat(subject.getFactor(RUN_ACCESSION_3, factor3.getType()).getValue(), is(factor3.getValue()));
+        assertThat(subject.getFactor(RUN_ACCESSION_3, factor4.getType()).getValue(), is(factor4.getValue()));
     }
 
     @Test

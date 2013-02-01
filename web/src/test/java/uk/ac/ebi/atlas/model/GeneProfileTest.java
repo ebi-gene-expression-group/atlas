@@ -65,7 +65,7 @@ public class GeneProfileTest {
 
     @Test
     public void getAllFactorValuesTest() {
-        assertThat(subject.getAllFactorValues(), hasItems(factor1, factor2, factor3));
+        assertThat(subject.getAllFactors(), hasItems(factor1, factor2, factor3));
     }
 
     @Test

@@ -25,10 +25,6 @@ package uk.ac.ebi.atlas.model.caches;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import org.apache.commons.collections.SetUtils;
-import org.apache.commons.collections.Transformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -94,7 +90,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         String defaultQueryFactorType = parseDefaultQueryFactorType(experimentAccession);
 
-        Set<Factor> defaultFilterFactors = parseDefaultFilterFactorValues(experimentAccession);
+        Set<Factor> defaultFilterFactors = parseDefaultFilterFactors(experimentAccession);
 
         String experimentName = fetchExperimentName(experimentAccession);
 
@@ -130,7 +126,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         return experimentRuns;
     }
 
-    private Set<Factor> parseDefaultFilterFactorValues(String experimentAccession) {
+    private Set<Factor> parseDefaultFilterFactors(String experimentAccession) {
         Set<Factor> defaultFilterFactors = new HashSet<>();
 
         for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
@@ -214,7 +210,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
             }
 
             Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
-            run.addFactorValue(factor);
+            run.addFactor(factor);
         }
 
         return run;

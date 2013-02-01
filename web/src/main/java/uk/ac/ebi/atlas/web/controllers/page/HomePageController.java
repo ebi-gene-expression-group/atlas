@@ -54,7 +54,7 @@ public class HomePageController {
     @RequestMapping("/home")
     public String getHomePage(Model model) {
 
-        extractFactorValueCounts();
+        loadExperimentAccessionsBySpecie();
 
         model.addAttribute("experimentAccessions", experimentAccessions);
 
@@ -62,7 +62,7 @@ public class HomePageController {
     }
 
     @PostConstruct
-    private void extractFactorValueCounts() {
+    private void loadExperimentAccessionsBySpecie() {
 
         for (String experimentAccession : properties.getExperimentIdentifiers()) {
 

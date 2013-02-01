@@ -112,7 +112,7 @@ public class FilterParameters {
         private Set<Factor> selectedFilterFactors = new HashSet<>();
         private Set<Factor> queryFactors = new HashSet<>();
         private Set<String> queryFactorValues = Collections.EMPTY_SET;
-        private Set<String> serializedFilterFactorValues = Collections.EMPTY_SET;
+        private Set<String> serializedFilterFactors = Collections.EMPTY_SET;
 
         Experiment experiment;
 
@@ -134,15 +134,15 @@ public class FilterParameters {
             return this;
         }
 
-        public Builder withFilterFactorValues(Set<String> serializedFilterFactorValues) {
-            if(CollectionUtils.isNotEmpty(serializedFilterFactorValues)){
-                this.serializedFilterFactorValues = serializedFilterFactorValues;
+        public Builder withFilterFactors(Set<String> serializedFilterFactors) {
+            if(CollectionUtils.isNotEmpty(serializedFilterFactors)){
+                this.serializedFilterFactors = serializedFilterFactors;
             }
             return this;
         }
 
-        protected Factor buildFromSerializedFilterFactorValues(Experiment experiment, String serializedFilterFactorValues) {
-            String[] split = serializedFilterFactorValues.split(FACTOR_VALUE_SEPARATOR);
+        protected Factor buildFromSerializedFilterFactors(Experiment experiment, String serializedFilterFactors) {
+            String[] split = serializedFilterFactors.split(FACTOR_VALUE_SEPARATOR);
             if (split.length == 2) {
                 String name = experiment.getFactorName(split[0], split[1]);
                 return new Factor(split[0], name, split[1]);
@@ -168,7 +168,7 @@ public class FilterParameters {
             if (StringUtils.isBlank(queryFactorType)){
                 queryFactorType = experiment.getDefaultQueryFactorType();
             }
-            if (CollectionUtils.isEmpty(serializedFilterFactorValues)){
+            if (CollectionUtils.isEmpty(serializedFilterFactors)){
                 for (Factor factor : experiment.getDefaultFilterFactors()){
                     //ToDo: this should be removed as soon as we have a proper builder for the Experiment class, so that experiment can fetch DefaultFactorValue names once and for all at load time
                     String factorValueName = experiment.getFactorName(factor.getType(), factor.getValue());
@@ -176,8 +176,8 @@ public class FilterParameters {
                     selectedFilterFactors.addAll(experiment.getDefaultFilterFactors());
                 }
             } else {
-                for (String serializedFilterFactorValue : serializedFilterFactorValues) {
-                    this.selectedFilterFactors.add(buildFromSerializedFilterFactorValues(experiment, serializedFilterFactorValue));
+                for (String serializedFilterFactor : serializedFilterFactors) {
+                    this.selectedFilterFactors.add(buildFromSerializedFilterFactors(experiment, serializedFilterFactor));
                 }
             }
             for (String queryFactorValues : this.queryFactorValues) {
