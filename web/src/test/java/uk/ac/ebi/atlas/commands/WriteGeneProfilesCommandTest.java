@@ -71,7 +71,7 @@ public class WriteGeneProfilesCommandTest {
                 createFactorValue("liver"),
                 createFactorValue("lung")));
 
-        when(filterParametersMock.getQueryFactors()).thenReturn(organismParts);
+        when(filterParametersMock.getSelectedQueryFactors()).thenReturn(organismParts);
 
         when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
                 .thenReturn(geneProfileMock2)

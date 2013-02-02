@@ -36,7 +36,7 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
-//ToDo: this class now smells, GeneProfileInputStreamFilter now only requires queryFactors from this class and that is available also from other beans.
+//ToDo: this class now smells, GeneProfileInputStreamFilter now only requires selectedQueryFactors from this class and that is available also from other beans.
 public class FilterParameters {
 
     public static final String FACTOR_VALUE_SEPARATOR = ":";
@@ -48,7 +48,7 @@ public class FilterParameters {
     private Double cutoff;
 
 
-    private Set<Factor> queryFactors;
+    private Set<Factor> selectedQueryFactors;
 
     private String queryFactorType;
 
@@ -56,7 +56,7 @@ public class FilterParameters {
         geneQuery = builder.geneQuery;
         selectedFilterFactors = builder.selectedFilterFactors;
         cutoff = builder.cutoff;
-        queryFactors = builder.queryFactors;
+        selectedQueryFactors = builder.queryFactors;
         queryFactorType = builder.queryFactorType;
 
     }
@@ -73,8 +73,8 @@ public class FilterParameters {
         return cutoff;
     }
 
-    public Set<Factor> getQueryFactors() {
-        return queryFactors;
+    public Set<Factor> getSelectedQueryFactors() {
+        return selectedQueryFactors;
     }
 
     public String getQueryFactorType() {
@@ -95,7 +95,7 @@ public class FilterParameters {
                     .add("geneQuery", geneQuery)
                     .add("selectedFilterFactors", selectedFilterFactors)
                     .add("cutoff", cutoff)
-                    .add("queryFactors", queryFactors)
+                    .add("selectedQueryFactors", selectedQueryFactors)
                     .add("queryFactorType", queryFactorType)
                 .toString();
     }
