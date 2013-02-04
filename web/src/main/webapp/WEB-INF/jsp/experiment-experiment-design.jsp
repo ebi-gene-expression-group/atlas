@@ -33,20 +33,7 @@
 </div>
 
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
-    <thead>
-    <tr>
-        <th id="assaysHeader" class="header-cell bl br bt bb" rowspan="2">${assayHeader}<span style="margin-left:3px;"
-                                                                                              data-help-loc="#runAccs"></span>
-        </th>
-        <th id="samplesHeader" class="samples br bt">Sample Characteristics<span style="margin-left:3px;"
-                                                                                 data-help-loc="#sampleChars"></span>
-        </th>
-        <th id="factorsHeader" class="factors br bt">Factor Values<span style="margin-left:3px;"
-                                                                        data-help-loc="#factorValues"></span></th>
-    </tr>
-    <tr id="headerStub"></tr>
-    </thead>
-    <tbody></tbody>
+
 </table>
 
 <p></p>
@@ -69,7 +56,7 @@
 
     (function ($) {
         $(document).ready(function () {
-            experimentDesignTableModule.init('${experimentAccession}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
+            experimentDesignTableModule.init('${assayHeader}','${experimentAccession}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
 
             helpTooltipsModule.init('experiment-design');
         });
