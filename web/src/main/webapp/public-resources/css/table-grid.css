@@ -27,6 +27,7 @@
     border-spacing: 0;
     empty-cells: show;
     width: 100%;
+    height: 100%;
 }
 
 .table-grid, .analysis-grid {
@@ -108,7 +109,7 @@
 
 .rotate_text {
     position: relative;
-    top: 20px;
+    top: 25px;
     width: 25px;
     padding-top: 5px;
     white-space: nowrap;
