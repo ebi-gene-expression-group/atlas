@@ -38,8 +38,6 @@ public class FilterByMenuBuilder {
 
     public static final String FACTOR_SEPARATOR = ":";
 
-    private SortedSetMultimap<String, Factor> factorsByName;
-
     private SortedSetMultimap<Factor, Factor> validFactorCombinations;
 
     public FilterByMenuBuilder() {
@@ -49,38 +47,36 @@ public class FilterByMenuBuilder {
 
         validFactorCombinations = experiment.getValidFactorCombinations();
 
-        factorsByName = factorsByName(validFactorCombinations.keySet());
-
         // build filter by menu map here, structure:
         // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> filterByMenu = new TreeMap<>();
 
         // first level: factor name
-        for (String firstFactorName : factorsByName.keySet()) {
+        for (String firstFactorName : experiment.getAllFactorNames()) {
 
-            filterByMenu.put(firstFactorName, buildSecondMenuLevel(firstFactorName));
+            filterByMenu.put(firstFactorName, buildSecondMenuLevel(experiment, firstFactorName));
 
         }
 
         return filterByMenu;
     }
 
-    private SortedMap<String, SortedMap<String, SortedMap<String, String>>> buildSecondMenuLevel(String firstFactorName) {
+    private SortedMap<String, SortedMap<String, SortedMap<String, String>>> buildSecondMenuLevel(Experiment experiment, String firstFactorName) {
 
         // factor value 1 > factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, SortedMap<String, String>>> secondMenuLevel = new TreeMap<>();
 
         // second level: factor value choices per factor name, all are valid
-        for (Factor firstFactor : factorsByName.get(firstFactorName)) {
+        for (Factor firstFactor : experiment.getFactorsByName(firstFactorName)) {
 
-            secondMenuLevel.put(firstFactor.getValue(), buildThirdMenuLevel(firstFactor));
+            secondMenuLevel.put(firstFactor.getValue(), buildThirdMenuLevel(experiment, firstFactor));
 
         }
 
         return secondMenuLevel;
     }
 
-    private SortedMap<String, SortedMap<String, String>> buildThirdMenuLevel(Factor firstFactor) {
+    private SortedMap<String, SortedMap<String, String>> buildThirdMenuLevel(Experiment experiment, Factor firstFactor) {
 
         // factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, String>> thirdMenuLevel = new TreeMap<>();
@@ -93,14 +89,14 @@ public class FilterByMenuBuilder {
         for (String secondFactorName : secondFactorNames.keySet()) {
 
             // get remainder of factor names
-            SortedSet<String> remainingFactorNames = new TreeSet<>(factorsByName.keySet());
+            SortedSet<String> remainingFactorNames = new TreeSet<>(experiment.getAllFactorNames());
             remainingFactorNames.remove(firstFactor.getName());
             remainingFactorNames.remove(secondFactorName);
 
             // TODO: what in case there are more than 3 possible factor types?
             // arbitrarily taking first of remaining factor names as query factor type
             String firstRemainingFactorName = remainingFactorNames.first();
-            SortedSet<Factor> factorsForFirstRemainingFactorName = factorsByName.get(firstRemainingFactorName);
+            SortedSet<Factor> factorsForFirstRemainingFactorName = experiment.getFactorsByName(firstRemainingFactorName);
             Factor firstArbitraryFactor = factorsForFirstRemainingFactorName.first();
             String queryFactorType = firstArbitraryFactor.getType();
 
@@ -129,7 +125,7 @@ public class FilterByMenuBuilder {
         return forthMenuLevel;
     }
 
-    protected String getJsonUrl(String queryFactorType, Factor firstFactor, Factor secondFactor){
+    protected String getJsonUrl(String queryFactorType, Factor firstFactor, Factor secondFactor) {
         return new Gson().toJson(buildFactorsCombination(queryFactorType, firstFactor, secondFactor));
     }
 

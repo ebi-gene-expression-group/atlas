@@ -22,16 +22,10 @@
 
 package uk.ac.ebi.atlas.model.readers;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.util.Collection;
 
 @Named("experimentFactorsTsvReader")
 @Scope("singleton")
@@ -40,7 +34,7 @@ public class ExperimentFactorsTsvReader extends AbstractTsvReader {
     @Value("#{configuration['experiment.experiment-factors.path.template']}")
     private String pathTemplate;
 
-    protected String getPathTemplate(){
+    protected String getPathTemplate() {
         return pathTemplate;
     }
 
