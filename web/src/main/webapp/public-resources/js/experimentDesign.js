@@ -36,8 +36,6 @@ var experimentDesignTableModule = (function ($) {
 
         initColumn(_factors, Object.keys(_samples).length);
 
-
-        $('#headerStub th:last()').attr("class", "header-cell bb br");
         return aoColumnDefs;
     }
 
@@ -53,6 +51,10 @@ var experimentDesignTableModule = (function ($) {
                 return false;
             }
         );
+
+        $('#isOnlyAnalysed').click(function () {
+            oTable.fnDraw();
+        });
 
         var $window = $(window);
         var calcDataTableHeight = function () {
@@ -72,13 +74,9 @@ var experimentDesignTableModule = (function ($) {
             "sDom": 'i<"download">f<"clear">t'
         });
 
-        $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/' + _experimentAccession + '/experiment-design.tsv" target="_blank">' +
-            '<img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>');
+        $('div.download').html($('#download-button'));
         $('div.download').attr('style', 'float: right');
 
-        $('#isOnlyAnalysed').click(function () {
-            oTable.fnDraw();
-        });
 
         $window.resize(function () {
             var oSettings = oTable.fnSettings();
@@ -93,7 +91,8 @@ var experimentDesignTableModule = (function ($) {
         var tableHeaderRow = $(".dataTables_scrollHeadInner").find('thead > tr');
         $("<tr><th id='assaysHeader' class='header-cell br bt bl'></th>" +
             "<th id='samplesHeader' class='samples br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
-            "<th id='factorsHeader' class='factors br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>").insertBefore(tableHeaderRow);
+            "<th id='factorsHeader' class='factors br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
+            .insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */
         $('#samplesHeader').attr('colspan', Object.keys(_samples).length);

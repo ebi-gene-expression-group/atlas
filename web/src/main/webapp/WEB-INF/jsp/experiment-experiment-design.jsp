@@ -38,6 +38,11 @@
 
 <p></p>
 
+<div id="download-button"><a id="download-experiment-design-link" title="Download experiment design"
+                             class="button-image" style="margin-bottom:5px"
+                             href="experiments/${experimentAccession}/experiment-design.tsv" target="_blank">
+    <img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>
+</div>
 <div id="help-placeholder" style="display: none"></div>
 
 <script type="text/javascript" language="javascript"
@@ -45,18 +50,16 @@
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/experimentDesign.js"></script>
 
-<script type="text/javascript">
+<script>
+
     $(function () {
         clearLocalNav();
         $('#local-nav-home').addClass("active");
     });
-</script>
-
-<script>
 
     (function ($) {
         $(document).ready(function () {
-            experimentDesignTableModule.init('${assayHeader}','${experimentAccession}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
+            experimentDesignTableModule.init('${assayHeader}', '${experimentAccession}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
 
             helpTooltipsModule.init('experiment-design');
         });
