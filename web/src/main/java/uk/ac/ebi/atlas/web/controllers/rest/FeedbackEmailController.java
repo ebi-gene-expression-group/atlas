@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.commons.mail.MailService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
-import javax.mail.MessagingException;
 
 @Controller
 @Scope("request")
@@ -70,7 +69,7 @@ public class FeedbackEmailController {
         // capture input data
         emailMessage.setBody(body.get("feedback").get(0));
         emailMessage.setSender(body.get("email").get(0));
-        if (StringUtils.isEmpty(emailMessage.getSender())){
+        if (StringUtils.isEmpty(emailMessage.getSender())) {
             emailMessage.setSender(applicationProperties.getFeedbackEmailAddress());
         }
         emailMessage.setSubject(ATLAS_FEEDBACK_SUBJECT);

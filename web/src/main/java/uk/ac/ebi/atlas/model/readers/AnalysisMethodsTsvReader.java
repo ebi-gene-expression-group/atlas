@@ -26,11 +26,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Named;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,13 +58,13 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
         return readAndFilter(experimentAccession, predicate);
     }
 
-    public Set<String> readProcessedLibraries(String experimentAccession){
+    public Set<String> readProcessedLibraries(String experimentAccession) {
         String[] processedLibraries = readAsMap(experimentAccession).get("Processed libraries").split(",");
         return Sets.newHashSet(trim(processedLibraries));
     }
 
-    protected String[] trim(String[] strings){
-        for (int i = 0; i < strings.length ; i++){
+    protected String[] trim(String[] strings) {
+        for (int i = 0; i < strings.length; i++) {
             strings[i] = strings[i].trim();
         }
         return strings;
