@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
+import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.HashSet;
 
@@ -30,9 +31,9 @@ public class GeneProfileTest {
     private Factor factor2 = new Factor("ORGANISM_PART", "org", "trunk");
     private Factor factor3 = new Factor("ORGANISM_PART", "org", "head");
 
-    private Expression expression_1 = new Expression(2.2D, Sets.newHashSet(factor1));
-    private Expression expression_2 = new Expression(3D, Sets.newHashSet(factor2));
-    private Expression expression_3 = new Expression(3.001D, Sets.newHashSet(factor3));
+    private Expression expression_1 = new Expression(2.2D, new FactorSet().add(factor1));
+    private Expression expression_2 = new Expression(3D, new FactorSet().add(factor2));
+    private Expression expression_3 = new Expression(3.001D, new FactorSet().add(factor3));
 
     private GeneProfile subject;
 

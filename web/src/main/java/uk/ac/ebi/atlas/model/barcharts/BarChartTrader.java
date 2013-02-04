@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.barcharts;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.FactorGroup;
 
 import javax.inject.Named;
 import java.util.*;
@@ -35,23 +36,23 @@ public class BarChartTrader {
 
     public static final int AVERAGE_GENES_IN_EXPERIMENT = 45000;
 
-    private NavigableMap<Double, Map<Set<Factor>, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
+    private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
 
     protected BarChartTrader() {
     }
 
-    public BarChartTrader(NavigableMap<Double, Map<Set<Factor>, BitSet>> factorSetGeneExpressionIndexes) {
-        this.factorSetGeneExpressionIndexes = factorSetGeneExpressionIndexes;
+    public BarChartTrader(NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes) {
+        this.factorGroupGeneExpressionIndexes = factorGroupGeneExpressionIndexes;
     }
 
 
-    public NavigableMap<Double, Integer> getChart(Set<Factor> limitingFactorSet, Set<Factor> selectedFactors) {
+    public NavigableMap<Double, Integer> getChart(Set<Factor> filterFactors, Set<Factor> selectedFactors) {
 
         NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
 
-        for (Double scaledCutoff : factorSetGeneExpressionIndexes.navigableKeySet()) {
+        for (Double scaledCutoff : factorGroupGeneExpressionIndexes.navigableKeySet()) {
 
-            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(factorSetGeneExpressionIndexes.get(scaledCutoff), limitingFactorSet, selectedFactors));
+            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(factorGroupGeneExpressionIndexes.get(scaledCutoff), filterFactors, selectedFactors));
 
         }
 
@@ -59,11 +60,12 @@ public class BarChartTrader {
     }
 
 
-    protected static int countGenesAboveCutoff(Map<Set<Factor>, BitSet> geneBitSets, Set<Factor> limitingFactorSet, Set<Factor> selectedFactors) {
+    //ToDo: static methods... this method obviously shows that we should create a specialized container class for geneBitSets exposing these kind of services. Delegating to static methods only drives to non-design.
+    protected static int countGenesAboveCutoff(Map<FactorGroup, BitSet> geneBitSets, Set<Factor> filterFactors, Set<Factor> selectedFactors) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
-        for (Set<Factor> bitSetFactors : geneBitSets.keySet()) {
-            if (forLimitingFactors(bitSetFactors, limitingFactorSet) && forQueryFactors(bitSetFactors, selectedFactors)) {
+        for (FactorGroup bitSetFactors : geneBitSets.keySet()) {
+            if (forFilterFactors(bitSetFactors, filterFactors) && forQueryFactors(bitSetFactors, selectedFactors)) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(bitSetFactors));
             }
@@ -71,13 +73,14 @@ public class BarChartTrader {
         return expressedGenesBitSet.cardinality();
     }
 
-
-    protected static boolean forLimitingFactors(Set<Factor> factorSet, Set<Factor> limitingFactorSet) {
-        return CollectionUtils.isEmpty(limitingFactorSet) || factorSet.containsAll(limitingFactorSet);
+    //ToDo: what does this method name means?????
+    protected static boolean forFilterFactors(FactorGroup factorGroup, Set<Factor> filterFactors) {
+        return CollectionUtils.isEmpty(filterFactors) || factorGroup.containsAll(filterFactors);
     }
 
-    protected static boolean forQueryFactors(Set<Factor> factorSet, Set<Factor> queryFactors) {
-        return CollectionUtils.isEmpty(queryFactors) ||  !Collections.disjoint(factorSet, queryFactors);
+    //ToDo: what does this method name means?@?@?@?
+    protected static boolean forQueryFactors(FactorGroup factorGroup, Set<Factor> queryFactors) {
+        return CollectionUtils.isEmpty(queryFactors) ||  !factorGroup.isDisjointFrom(queryFactors);
     }
 
 

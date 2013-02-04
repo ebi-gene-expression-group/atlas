@@ -1,15 +1,15 @@
 package uk.ac.ebi.atlas.streams;
 
-import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.FactorGroup;
+import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -36,10 +36,10 @@ public class ExpressionBufferTest {
         Factor factor3 = new Factor("ORGANISM_PART", "org", "longue");
 
         // the only possible factor values here are the default ones
-        List<Set<Factor>> orderedAllFactorValues = new LinkedList<>();
-        orderedAllFactorValues.add(Sets.newHashSet(factor1));
-        orderedAllFactorValues.add(Sets.newHashSet(factor2));
-        orderedAllFactorValues.add(Sets.newHashSet(factor3));
+        List<FactorGroup> orderedAllFactorValues = new LinkedList<>();
+        orderedAllFactorValues.add(new FactorSet().add(factor1));
+        orderedAllFactorValues.add(new FactorSet().add(factor2));
+        orderedAllFactorValues.add(new FactorSet().add(factor3));
 
         subject = new ExpressionsBuffer(orderedAllFactorValues);
 

@@ -144,7 +144,7 @@ public class FilterParameters {
         protected Factor buildFromSerializedFilterFactors(Experiment experiment, String serializedFilterFactors) {
             String[] split = serializedFilterFactors.split(FACTOR_VALUE_SEPARATOR);
             if (split.length == 2) {
-                String name = experiment.getFactorName(split[0], split[1]);
+                String name = experiment.getFactorName(split[0]);
                 return new Factor(split[0], name, split[1]);
             }
             throw new IllegalArgumentException("serialized Factor string should be colon separated between type and value.");
@@ -169,12 +169,7 @@ public class FilterParameters {
                 queryFactorType = experiment.getDefaultQueryFactorType();
             }
             if (CollectionUtils.isEmpty(serializedFilterFactors)){
-                for (Factor factor : experiment.getDefaultFilterFactors()){
-                    //ToDo: this should be removed as soon as we have a proper builder for the Experiment class, so that experiment can fetch DefaultFactorValue names once and for all at load time
-                    String factorValueName = experiment.getFactorName(factor.getType(), factor.getValue());
-                    factor.setName(factorValueName);
-                    selectedFilterFactors.addAll(experiment.getDefaultFilterFactors());
-                }
+                selectedFilterFactors = experiment.getDefaultFilterFactors();
             } else {
                 for (String serializedFilterFactor : serializedFilterFactors) {
                     this.selectedFilterFactors.add(buildFromSerializedFilterFactors(experiment, serializedFilterFactor));

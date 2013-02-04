@@ -22,8 +22,8 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -62,7 +62,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
                 Factor factor = new Factor("factor_type", "", "factor_value" + (j + 1));
-                when(expressionMock.getAllFactors()).thenReturn(Sets.newHashSet(factor));
+                when(expressionMock.getFactorGroup()).thenReturn(new FactorSet().add(factor));
                 when(expressionMock.getFactor("factor_type")).thenReturn(factor);
                 geneProfileBuilder.addExpression(expressionMock);
 

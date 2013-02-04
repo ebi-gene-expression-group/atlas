@@ -22,20 +22,17 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Collections;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 public class ExperimentTest {
 
     private static final String RUN_ACCESSION_1 = "ENS0";
     private static final String RUN_ACCESSION_2 = "ENS1";
     private static final String RUN_ACCESSION_3 = "ENS2";
+    private static final String QUERY_FACTOR_TYPE = "CELLULAR_COMPONENT";
 
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
@@ -45,6 +42,7 @@ public class ExperimentTest {
     private Factor factor2 = new Factor("ORGANISM_PART", "ORGANISM_PART", "liver");
     private Factor factor3 = new Factor("ORGANISM_PART", "ORGANISM_PART", "lung");
     private Factor factor4 = new Factor("MATERIAL_TYPE", "RNAtype", "total rna");
+    //private Factor cellularComponentFactor = new ExperimentRun("A_RUN_ACCESSION").addFactor(cellularComponentFactor);
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
 
@@ -58,18 +56,12 @@ public class ExperimentTest {
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(factor3);
         experimentRun3.addFactor(factor4);
 
-        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, factor1.getType(), Collections.EMPTY_SET, specie)
-                .add(experimentRun1).add(experimentRun2).add(experimentRun3);
+        subject = new Experiment(Lists.newArrayList(experimentRun1,experimentRun2,experimentRun3), null, factor1.getType(), Collections.EMPTY_SET, specie);
     }
-
+/*
     @Test
     public void testExperimentRunAccessions() {
         assertThat(subject.getExperimentRunAccessions(), hasItems(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3));
-    }
-
-    @Test
-    public void testExperimentAccession() {
-        assertThat(subject.getExperimentAccession(), is(MOCK_EXPERIMENT_ACCESSION));
     }
 
     @Test
@@ -78,21 +70,8 @@ public class ExperimentTest {
     }
 
     @Test
-    public void testNumberOfRuns() {
-        assertThat(subject.getNumberOfRuns(), is(3));
-    }
-
-    @Test
     public void testSpecies() {
         assertThat(subject.getSpecie(), is(specie));
-    }
-
-    @Test
-    public void testExperimentRun() {
-        assertThat(subject.getExperimentRun(RUN_ACCESSION_1), is(experimentRun1));
-        assertThat(subject.getExperimentRun(RUN_ACCESSION_2), is(experimentRun2));
-        assertThat(subject.getExperimentRun(RUN_ACCESSION_3), is(experimentRun3));
-        assertThat(subject.getExperimentRun("non existing run"), nullValue(ExperimentRun.class));
     }
 
     @Test
@@ -101,33 +80,30 @@ public class ExperimentTest {
     }
 
     @Test
-    public void testFactorValueByType() {
-        assertThat(subject.getFactor(RUN_ACCESSION_1, factor1.getType()).getValue(), is(factor1.getValue()));
-        assertThat(subject.getFactor(RUN_ACCESSION_1, factor4.getType()), nullValue(Factor.class));
-        assertThat(subject.getFactor(RUN_ACCESSION_2, factor2.getType()).getValue(), is(factor2.getValue()));
-        assertThat(subject.getFactor(RUN_ACCESSION_3, factor3.getType()).getValue(), is(factor3.getValue()));
-        assertThat(subject.getFactor(RUN_ACCESSION_3, factor4.getType()).getValue(), is(factor4.getValue()));
-    }
-
-    @Test
     public void testAllFactorValues() {
-        assertThat(subject.getAllFactors(RUN_ACCESSION_1), hasItems(factor1));
-        assertThat(subject.getAllFactors(RUN_ACCESSION_2), hasItems(factor2));
-        assertThat(subject.getAllFactors(RUN_ACCESSION_3), hasItems(factor3, factor4));
+        assertThat(subject.getFactorGroup(RUN_ACCESSION_1), hasItems(factor1));
+        assertThat(subject.getFactorGroup(RUN_ACCESSION_2), hasItems(factor2));
+        assertThat(subject.getFactorGroup(RUN_ACCESSION_3), hasItems(factor3, factor4));
     }
 
     @Test
     public void testFilteredFactorValues() {
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1), factor1.getType()), hasItems(factor1));
-        // there is no such combination as factor1 and factor2 on an experimentRun
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1, factor2), factor1.getType()).size(), is(0));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), factor1.getType()), hasItems(factor3));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor2), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor2), factor1.getType()), hasItems(factor2));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3), factor4.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3), factor4.getType()), hasItems(factor4));
+        //given
+        subject.add(new ExperimentRun("A_RUN_ACCESSION").addFactor(cellularComponentFactor));
+        //then
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), QUERY_FACTOR_TYPE), hasItems(factor3));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor2), QUERY_FACTOR_TYPE), hasItems(factor2));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3), QUERY_FACTOR_TYPE), hasItems(factor4));
     }
+
+    @Test
+    public void filteredFactorValuesShouldThrowExceptionIfNoFactorHasQueryFilterType() {
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), QUERY_FACTOR_TYPE), hasItems(factor3));
+    }
+
+        @Test(expected = IllegalArgumentException.class)
+    public void filteredFactorValuesShouldThrowExceptionIfQueryFilterTypeIsTheSameAsAnyFilterFactorType() {
+        subject.getFilteredFactors(Sets.newHashSet(factor1), factor1.getType());
+    }*/
 
 }

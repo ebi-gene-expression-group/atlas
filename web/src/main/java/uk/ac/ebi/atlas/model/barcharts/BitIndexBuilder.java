@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.CompleteGeneProfile;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.FactorGroup;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 
 import javax.inject.Inject;
@@ -20,7 +20,7 @@ public class BitIndexBuilder {
 
     private static final Logger logger = Logger.getLogger(BitIndexBuilder.class);
 
-    private NavigableMap<Double, Map<Set<Factor>, BitSet>> factorSetGeneExpressionIndexes = new TreeMap<>();
+    private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
 
     private CutoffScale cutoffScale;
 
@@ -67,19 +67,19 @@ public class BitIndexBuilder {
 
             for (Double cutoff : cutoffsSmallerThanExpression) {
 
-                Map<Set<Factor>, BitSet> geneBitSets = factorSetGeneExpressionIndexes.get(cutoff);
+                Map<FactorGroup, BitSet> geneBitSets = factorGroupGeneExpressionIndexes.get(cutoff);
 
                 if (geneBitSets == null) {
                     geneBitSets = new HashMap<>();
-                    factorSetGeneExpressionIndexes.put(cutoff, geneBitSets);
+                    factorGroupGeneExpressionIndexes.put(cutoff, geneBitSets);
 
                 }
 
-                Set<Factor> factorSet = expression.getAllFactors();
-                BitSet bitSet = geneBitSets.get(factorSet);
+                FactorGroup factorGroup = expression.getFactorGroup();
+                BitSet bitSet = geneBitSets.get(factorGroup);
                 if (bitSet == null) {
                     bitSet = new BitSet(BarChartTrader.AVERAGE_GENES_IN_EXPERIMENT);
-                    geneBitSets.put(factorSet, bitSet);
+                    geneBitSets.put(factorGroup, bitSet);
                 }
 
                 bitSet.set(geneIndexPosition);
@@ -91,24 +91,24 @@ public class BitIndexBuilder {
 
     public BarChartTrader create() {
         trimIndexes();
-        return new BarChartTrader(factorSetGeneExpressionIndexes);
+        return new BarChartTrader(factorGroupGeneExpressionIndexes);
     }
 
     protected void trimIndexes() {
 
-        Set<Double> doubles = Sets.newHashSet(factorSetGeneExpressionIndexes.keySet());
+        Set<Double> doubles = Sets.newHashSet(factorGroupGeneExpressionIndexes.keySet());
         for (Double scaledCutoff : doubles) {
 
-            if (BarChartTrader.countGenesAboveCutoff(factorSetGeneExpressionIndexes.get(scaledCutoff), null, null) < 50) {
-                factorSetGeneExpressionIndexes.remove(scaledCutoff);
+            if (BarChartTrader.countGenesAboveCutoff(factorGroupGeneExpressionIndexes.get(scaledCutoff), null, null) < 50) {
+                factorGroupGeneExpressionIndexes.remove(scaledCutoff);
             }
 
         }
 
     }
 
-    protected NavigableMap<Double, Map<Set<Factor>, BitSet>> getGeneExpressionIndexes() {
-        return factorSetGeneExpressionIndexes;
+    protected NavigableMap<Double, Map<FactorGroup, BitSet>> getGeneExpressionIndexes() {
+        return factorGroupGeneExpressionIndexes;
     }
 
 }
