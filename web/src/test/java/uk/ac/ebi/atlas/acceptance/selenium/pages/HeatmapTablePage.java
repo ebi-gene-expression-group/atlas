@@ -33,6 +33,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(className = "gradient-level-max")
     private WebElement gradientLevelsMax;
 
+    @FindBy(xpath = "//label[@for='queryFactorValues']")
+    private WebElement queryFactorLabel;
+
     public HeatmapTablePage(WebDriver driver) {
         super(driver);
     }
@@ -53,6 +56,10 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getSelectedGenes() {
         return getFirstColumnValues(heatmapTable);
+    }
+
+    public String getQueryFactorLabel() {
+        return queryFactorLabel.getText();
     }
 
     public String getDownloadExpressionProfilesLink() {

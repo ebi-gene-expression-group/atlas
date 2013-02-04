@@ -30,6 +30,11 @@ public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geo
     }
 
     @Override
+    protected String getQueryFactorLabel() {
+        return "Cell line";
+    }
+
+    @Override
     protected String[] getTop9Genes() {
         return new String[]{"RP11-439L8.3", "RP11-192H23.4", "RP11-736N17.8", "RP11-727M10.1", "RGS7BP",
                 "RP5-961K14.1", "SLC10A1", "RP11-14C10.1", "RP11-273B20.1"};
