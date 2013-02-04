@@ -42,7 +42,7 @@ public class ExperimentRunTest {
     @Test
     public void testGetOrganismPart() throws Exception {
 
-        assertThat(subject.getFactor(factorMock2.getType()).getValue(), is(organismPart));
+        assertThat(subject.getFactorByType(factorMock2.getType()).getValue(), is(organismPart));
 
     }
 

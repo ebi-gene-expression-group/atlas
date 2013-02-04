@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentRun;
+import uk.ac.ebi.atlas.model.FactorGroup;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -36,20 +36,12 @@ public class MageTabParserIT {
     }
 
     @Test
-    public void parseExperimentRunsReturnsMoreThanOneRun() throws Exception {
-        Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
-        assertThat(experiment.getNumberOfRuns(), is(16));
-    }
-
-    @Test
     public void firstRunIsCorrect() throws Exception {
         //given
         Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
-        ExperimentRun experimentRun = experiment.getExperimentRun(RUN_ACCESSION);
+        FactorGroup experimentRun = experiment.getFactorGroup(RUN_ACCESSION);
         //then
-        assertThat(experimentRun.getRunAccession(), is(RUN_ACCESSION));
-        assertThat(experimentRun.getFactors().size(), is(3));
-        assertThat(experimentRun.getFactor("ORGANISM_PART").getValue(), is(equalTo("adipose")));
+        assertThat(experimentRun.getFactorByType("ORGANISM_PART").getValue(), is(equalTo("adipose")));
     }
 
 }

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model;
 
-import java.util.LinkedHashSet;
+import uk.ac.ebi.atlas.model.impl.FactorSet;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,15 +11,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExperimentRun implements Comparable<ExperimentRun> {
 
     private String runAccession;
-
-    private Set<Factor> factors = new LinkedHashSet<>();
+    private FactorSet factorGroup = new FactorSet();
 
     public ExperimentRun(String accession) {
         this.runAccession = checkNotNull(accession);
     }
 
     public ExperimentRun addFactor(Factor factor) {
-        factors.add(factor);
+        factorGroup.add(factor);
         return this;
     }
 
@@ -26,17 +26,16 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         return runAccession;
     }
 
-    public Set<Factor> getFactors() {
-        return factors;
+    public FactorGroup getFactorGroup() {
+        return factorGroup;
     }
 
-    public Factor getFactor(String type) {
-        for (Factor factor : factors) {
-            if (factor.getType().equalsIgnoreCase(type)) {
-                return factor;
-            }
-        }
-        return null;
+    public Factor getFactorByType(String type) {
+        return factorGroup.getFactorByType(type);
+    }
+
+    public boolean containsAll(Set<Factor> factors){
+        return factorGroup.containsAll(factors);
     }
 
     @Override
@@ -61,11 +60,12 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
     public String toString() {
         return toStringHelper(this)
                 .add("runAccession", runAccession)
-                .add("factors", factors).toString();
+                .add("factorGroup", factorGroup).toString();
     }
 
     @Override
     public int compareTo(ExperimentRun other) {
         return runAccession.compareTo(other.runAccession);
     }
+
 }

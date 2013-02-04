@@ -90,7 +90,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .createGeneProfileInputStream();
 
-        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, uppercaseGeneIDsToBeSearched, filterParameters.getQueryFactors())) {
+        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, uppercaseGeneIDsToBeSearched, filterParameters.getSelectedQueryFactors())) {
 
             return apply(experiment, inputStream);
 

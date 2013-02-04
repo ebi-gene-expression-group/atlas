@@ -22,16 +22,21 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 public class ExperimentTest {
+
+    private static final String SPECIE = "homo sapiens";
 
     private static final String RUN_ACCESSION_1 = "ENS0";
     private static final String RUN_ACCESSION_2 = "ENS1";
@@ -41,25 +46,40 @@ public class ExperimentTest {
     private ExperimentRun experimentRun2;
     private ExperimentRun experimentRun3;
 
-    private Factor factor1 = new Factor("ORGANISM_PART", "ORGANISM_PART", "heart");
-    private Factor factor2 = new Factor("ORGANISM_PART", "ORGANISM_PART", "liver");
-    private Factor factor3 = new Factor("ORGANISM_PART", "ORGANISM_PART", "lung");
-    private Factor factor4 = new Factor("MATERIAL_TYPE", "RNAtype", "total rna");
+    private static final String CELLULAR_COMPONENT = "CELLULAR_COMPONENT";
+    private static final String MATERIAL_TYPE = "MATERIAL_TYPE";
+    private static final String ORGANISM_PART = "ORGANISM_PART";
+
+    private static final Factor ORGANISM_PART_HEART = new Factor(ORGANISM_PART, ORGANISM_PART, "heart");
+    private static final Factor ORGANISM_PART_LIVER = new Factor(ORGANISM_PART, ORGANISM_PART, "liver");
+    private static final Factor ORGANISM_PART_LUNG = new Factor(ORGANISM_PART, ORGANISM_PART, "lung");
+    private static final Factor MATERIAL_TYPE_TOTALRNA = new Factor(MATERIAL_TYPE, "RNAtype", "total rna");
+    private static final Factor MATERIAL_TYPE_LONGA = new Factor(MATERIAL_TYPE, "RNAtype", "long ploy a rna");
+    private static final Factor CELLULAR_COMPONENT_NUCLEUS = new Factor(CELLULAR_COMPONENT, CELLULAR_COMPONENT, "nucleus");
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
 
     private Experiment subject;
-    private final String specie = "homo sapiens";
 
     @Before
     public void initializeSubject() {
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactor(factor1);
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(factor2);
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(factor3);
-        experimentRun3.addFactor(factor4);
 
-        subject = new Experiment(MOCK_EXPERIMENT_ACCESSION, null, factor1.getType(), Collections.EMPTY_SET, specie)
-                .add(experimentRun1).add(experimentRun2).add(experimentRun3);
+        // heart, nucleus, long a
+        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactor(ORGANISM_PART_HEART);
+        experimentRun1.addFactor(CELLULAR_COMPONENT_NUCLEUS);
+        experimentRun1.addFactor(MATERIAL_TYPE_LONGA);
+
+        // liver, nucleus, long a
+        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(ORGANISM_PART_LIVER);
+        experimentRun2.addFactor(CELLULAR_COMPONENT_NUCLEUS);
+        experimentRun2.addFactor(MATERIAL_TYPE_LONGA);
+
+        // lung, nucleus, total rna
+        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(ORGANISM_PART_LUNG);
+        experimentRun3.addFactor(CELLULAR_COMPONENT_NUCLEUS);
+        experimentRun3.addFactor(MATERIAL_TYPE_TOTALRNA);
+
+        subject = new Experiment(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3), null, ORGANISM_PART, Collections.EMPTY_SET, SPECIE);
     }
 
     @Test
@@ -68,66 +88,42 @@ public class ExperimentTest {
     }
 
     @Test
-    public void testExperimentAccession() {
-        assertThat(subject.getExperimentAccession(), is(MOCK_EXPERIMENT_ACCESSION));
-    }
-
-    @Test
     public void testDescription() {
         assertThat(subject.getDescription(), nullValue(String.class));
     }
 
     @Test
-    public void testNumberOfRuns() {
-        assertThat(subject.getNumberOfRuns(), is(3));
-    }
-
-    @Test
     public void testSpecies() {
-        assertThat(subject.getSpecie(), is(specie));
-    }
-
-    @Test
-    public void testExperimentRun() {
-        assertThat(subject.getExperimentRun(RUN_ACCESSION_1), is(experimentRun1));
-        assertThat(subject.getExperimentRun(RUN_ACCESSION_2), is(experimentRun2));
-        assertThat(subject.getExperimentRun(RUN_ACCESSION_3), is(experimentRun3));
-        assertThat(subject.getExperimentRun("non existing run"), nullValue(ExperimentRun.class));
+        assertThat(subject.getSpecie(), is(SPECIE));
     }
 
     @Test
     public void testDefaultFactorType() {
-        assertThat(subject.getDefaultQueryFactorType(), is(factor1.getType()));
-    }
-
-    @Test
-    public void testFactorValueByType() {
-        assertThat(subject.getFactor(RUN_ACCESSION_1, factor1.getType()).getValue(), is(factor1.getValue()));
-        assertThat(subject.getFactor(RUN_ACCESSION_1, factor4.getType()), nullValue(Factor.class));
-        assertThat(subject.getFactor(RUN_ACCESSION_2, factor2.getType()).getValue(), is(factor2.getValue()));
-        assertThat(subject.getFactor(RUN_ACCESSION_3, factor3.getType()).getValue(), is(factor3.getValue()));
-        assertThat(subject.getFactor(RUN_ACCESSION_3, factor4.getType()).getValue(), is(factor4.getValue()));
+        assertThat(subject.getDefaultQueryFactorType(), is(ORGANISM_PART));
     }
 
     @Test
     public void testAllFactorValues() {
-        assertThat(subject.getAllFactors(RUN_ACCESSION_1), hasItems(factor1));
-        assertThat(subject.getAllFactors(RUN_ACCESSION_2), hasItems(factor2));
-        assertThat(subject.getAllFactors(RUN_ACCESSION_3), hasItems(factor3, factor4));
+        assertThat(subject.getFactorGroup(RUN_ACCESSION_1), hasItems(ORGANISM_PART_HEART, MATERIAL_TYPE_LONGA, CELLULAR_COMPONENT_NUCLEUS));
+        assertThat(subject.getFactorGroup(RUN_ACCESSION_2), hasItems(ORGANISM_PART_LIVER, MATERIAL_TYPE_LONGA, CELLULAR_COMPONENT_NUCLEUS));
+        assertThat(subject.getFactorGroup(RUN_ACCESSION_3), hasItems(ORGANISM_PART_LUNG, MATERIAL_TYPE_TOTALRNA, CELLULAR_COMPONENT_NUCLEUS));
     }
 
     @Test
     public void testFilteredFactorValues() {
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1), factor1.getType()), hasItems(factor1));
-        // there is no such combination as factor1 and factor2 on an experimentRun
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor1, factor2), factor1.getType()).size(), is(0));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3, factor4), factor1.getType()), hasItems(factor3));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor2), factor1.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor2), factor1.getType()), hasItems(factor2));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3), factor4.getType()).size(), is(1));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(factor3), factor4.getType()), hasItems(factor4));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_LUNG, MATERIAL_TYPE_TOTALRNA), CELLULAR_COMPONENT), hasItems(CELLULAR_COMPONENT_NUCLEUS));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_LIVER, CELLULAR_COMPONENT_NUCLEUS), MATERIAL_TYPE), hasItems(MATERIAL_TYPE_LONGA));
+        assertThat(subject.getFilteredFactors(Sets.newHashSet(MATERIAL_TYPE_LONGA, CELLULAR_COMPONENT_NUCLEUS), ORGANISM_PART), hasItems(ORGANISM_PART_HEART, ORGANISM_PART_LIVER));
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void filteredFactorValuesShouldThrowExceptionIfNoFactorHasQueryFilterType() {
+        subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_LUNG, MATERIAL_TYPE_TOTALRNA), "BLA");
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void filteredFactorValuesShouldThrowExceptionIfQueryFilterTypeIsTheSameAsAnyFilterFactorType() {
+        subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_HEART), ORGANISM_PART);
     }
 
 }

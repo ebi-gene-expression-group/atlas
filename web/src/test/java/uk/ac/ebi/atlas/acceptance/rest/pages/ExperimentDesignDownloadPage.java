@@ -20,16 +20,16 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest.pages;
+package uk.ac.ebi.atlas.acceptance.rest.pages;
 
-public class GeneProfilesDownloadPage extends RestPage {
+public class ExperimentDesignDownloadPage extends RestPage {
 
-    public GeneProfilesDownloadPage(String httpParameters) {
+    public ExperimentDesignDownloadPage(String httpParameters) {
         super(httpParameters);
     }
 
     @Override
     protected String getPageURI() {
-        return "/gxa/experiments/E-MTAB-513.tsv";
+        return "/gxa/experiments/E-MTAB-513/experiment-design.tsv";
     }
 }

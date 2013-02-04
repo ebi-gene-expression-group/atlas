@@ -22,19 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
-import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
-
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-public class OneCellLineAndCutoff05SpecificSearchIT extends SeleniumFixture {
-
-    protected HeatmapTablePage subject;
+public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
         subject = new Geod26284HeatmapTablePage(driver,
@@ -42,23 +30,28 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends SeleniumFixture {
         subject.get();
     }
 
-    @Test
-    public void verifySelectedGenes() {
-        List<String> selectedGenes = subject.getSelectedGenes();
-        assertThat(selectedGenes.get(0), is("PTBP3"));
-        assertThat(selectedGenes.get(1), is("THOC6"));
+    @Override
+    protected String[] getTop9Genes() {
+        return new String[]{"PTBP3", "THOC6", "AC111200.7", "THOC3", "TERF2", "GFI1", "RP11-20I23.6", "ARHGAP1", "7SK"};
     }
 
-    @Test
-    public void verifyFirstGeneProfile() {
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), hasItems("92", "14", "7", "12", "9"));
+    @Override
+    protected String[] getHeatmapHeader() {
+        return new String[]{"cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"};
     }
 
-    @Test
-    public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("25"), is(true));
+    @Override
+    protected String[] getFirstGeneProfile() {
+        return new String[]{"92", "14", "7", "12", "9"};
     }
 
+    @Override
+    protected String[] getNinthGeneProfile() {
+        return new String[]{"5", "3", "2", "2", "2"};
+    }
 
+    @Override
+    protected String getGeneCount() {
+        return "25";
+    }
 }

@@ -71,7 +71,7 @@ public class WriteGeneProfilesCommandTest {
                 createFactorValue("liver"),
                 createFactorValue("lung")));
 
-        when(filterParametersMock.getQueryFactors()).thenReturn(organismParts);
+        when(filterParametersMock.getSelectedQueryFactors()).thenReturn(organismParts);
 
         when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
                 .thenReturn(geneProfileMock2)
@@ -86,7 +86,7 @@ public class WriteGeneProfilesCommandTest {
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
         when(geneProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
-        when(experimentMock.getFactors(anyString())).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
     }
 
     @Before

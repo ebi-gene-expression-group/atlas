@@ -36,7 +36,7 @@ public class FilterParametersTest {
     @Before
     public void initSubject(){
 
-        when(experimentMock.getFactorName(anyString(),anyString())).thenReturn("X");
+        when(experimentMock.getFactorName(anyString())).thenReturn("X");
 
         FilterParameters.Builder builder = new FilterParameters.Builder();
 

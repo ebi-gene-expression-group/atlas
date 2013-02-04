@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -19,7 +19,7 @@ public class ExpressionTest {
 
         Factor factor = new Factor("aType", "organ", "heart");
 
-        subject = new Expression(2.3, Sets.newHashSet(factor));
+        subject = new Expression(2.3, new FactorSet().add(factor));
     }
 
     @Test

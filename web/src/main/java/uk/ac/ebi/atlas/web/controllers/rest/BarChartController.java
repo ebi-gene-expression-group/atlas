@@ -37,19 +37,17 @@ public class BarChartController {
     public String getMap(HttpServletRequest request, @PathVariable String experimentAccession,
                          @RequestParam(value = "queryFactorValues[]", required = false) Set<String> queryFactorValues) {
 
-        System.out.println("geneExpressionPrecondition.getQueryFactorType() = " + geneExpressionPrecondition.getQueryFactorType());
-        System.out.println("geneExpressionPrecondition = " + geneExpressionPrecondition.getLimitingFactors());
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
-        Set<Factor> queryFactorSet = new HashSet<>();
+        Set<Factor> queryFactors = new HashSet<>();
         if (queryFactorValues != null) {
             for (String queryFactorValue : queryFactorValues) {
-                queryFactorSet.add(new Factor(geneExpressionPrecondition.getQueryFactorType(), queryFactorValue));
+                queryFactors.add(new Factor(geneExpressionPrecondition.getQueryFactorType(), queryFactorValue));
             }
         }
 
-        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(geneExpressionPrecondition.getLimitingFactors()
-                , queryFactorSet);
+        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(geneExpressionPrecondition.getFilterFactors()
+                , queryFactors);
 
         Gson gson = new Gson();
 

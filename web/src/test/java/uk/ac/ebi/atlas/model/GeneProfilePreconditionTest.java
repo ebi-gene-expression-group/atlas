@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -23,15 +24,22 @@ public class GeneProfilePreconditionTest {
     @Mock
     private Expression expressionMock;
 
+    @Before
+    public void init(){
+    }
+
     @Test
-    public void checkLimitingFactorsShouldSucceedWhenExpressionHasSupersetOfLimitingFactors() throws Exception {
+    public void checkLimitingFactorsShouldSucceedWhenExpressionContainsAllLimitingFactors() throws Exception {
+
         //given
+        given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(true);
+
+        //when
         subject = new GeneExpressionPrecondition();
-        subject.setLimitingFactors(Sets.newHashSet(factor1, factor2));
-        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2, factor3));
+        subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
 
         //then
-        assertThat(subject.checkLimitingFactors(expressionMock), is(true));
+        assertThat(subject.checkFilterFactors(expressionMock), is(true));
     }
 
     @Test
@@ -39,30 +47,18 @@ public class GeneProfilePreconditionTest {
 
         //given
         subject = new GeneExpressionPrecondition();
-        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2, factor3));
 
         //then
-        assertThat(subject.checkLimitingFactors(expressionMock), is(true));
+        assertThat(subject.checkFilterFactors(expressionMock), is(true));
     }
 
     @Test
-    public void checkLimitingFactorsShouldSucceedWhenLimitingFactorSetIsNull() throws Exception {
+    public void applyShouldFailExpressionDoesntContainAllLimitingFactors() throws Exception {
 
         //given
         subject = new GeneExpressionPrecondition();
-        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2, factor3));
-
-        //then
-        assertThat(subject.checkLimitingFactors(expressionMock), is(true));
-    }
-
-    @Test
-    public void applyShouldFailExpressionHasSubsetOfLimitingFactors() throws Exception {
-
-        //given
-        subject = new GeneExpressionPrecondition();
-        subject.setLimitingFactors(Sets.newHashSet(factor1, factor2));
-        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1));
+        subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
+        given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
 
         //then
         assertThat(subject.apply(expressionMock), is(false));
@@ -73,10 +69,10 @@ public class GeneProfilePreconditionTest {
 
         //given
         subject = new GeneExpressionPrecondition();
-        subject.setLimitingFactors(Sets.newHashSet(factor1, factor2));
+        subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         subject.setCutoff(1d);
 
-        given(expressionMock.getAllFactors()).willReturn(Sets.newHashSet(factor1, factor2));
+        given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(true);
         given(expressionMock.isGreaterThan(1d)).willReturn(true);
 
         //then

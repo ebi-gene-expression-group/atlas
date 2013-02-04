@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.FactorGroup;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import javax.inject.Inject;
@@ -29,13 +29,13 @@ class ExpressionsBuffer {
 
     private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
-    private Iterator<Set<Factor>> expectedAllFactors;
+    private Iterator<FactorGroup> expectedFactorGroups;
 
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected ExpressionsBuffer(List<Set<Factor>> orderedAllFactors) {
-        this.expectedAllFactors = Iterables.cycle(orderedAllFactors).iterator();
+    protected ExpressionsBuffer(List<FactorGroup> orderedFactorGroups) {
+        this.expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 
 
@@ -47,14 +47,11 @@ class ExpressionsBuffer {
         }
         double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new Expression(expressionLevel, expectedAllFactors.next());
+        return new Expression(expressionLevel, expectedFactorGroups.next());
     }
 
     public ExpressionsBuffer reload(String... values) {
         checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
-
-//        checkArgument(values.length == expectedNumberOfValues, "Expected " + expectedNumberOfValues + " values but " +
-//                "found: " + values.length);
 
         expressionLevelsBuffer.clear();
 
@@ -73,7 +70,7 @@ class ExpressionsBuffer {
 
         private ExperimentsCache experimentsCache;
 
-        private List<Set<Factor>> orderedAllFactors = new LinkedList<>();
+        private List<FactorGroup> orderedFactorGroups = new LinkedList<>();
 
         private boolean readyToCreate;
         private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
@@ -103,12 +100,7 @@ class ExpressionsBuffer {
 
             for (String columnHeader : columnHeaders) {
 
-                //ToDo: will be refactored soon as we remove organism parts
-//                Factor factorValue = getFactor(columnHeader, experimentAccession);
-//                orderedFactorValues.add(factorValue);
-
-                Set<Factor> allFactors = getAllFactors(columnHeader, experimentAccession);
-                orderedAllFactors.add(allFactors);
+                orderedFactorGroups.add(getFactorGroup(columnHeader, experimentAccession));
 
             }
             readyToCreate = true;
@@ -117,7 +109,7 @@ class ExpressionsBuffer {
         }
 
 
-        private Set<Factor> getAllFactors(String columnHeader, String experimentAccession) {
+        private FactorGroup getFactorGroup(String columnHeader, String experimentAccession) {
 
             String[] columnRuns = columnHeader.split(",");
 
@@ -128,7 +120,7 @@ class ExpressionsBuffer {
                 Experiment experiment = experimentsCache.getExperiment(experimentAccession);
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
-                return experiment.getAllFactors(columnRun);
+                return experiment.getFactorGroup(columnRun);
             }
 
             throw new IllegalStateException(MessageFormat.format(FACTOR_NOT_FOUND, columnHeader, experimentAccession));
@@ -138,7 +130,7 @@ class ExpressionsBuffer {
 
             checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
 
-            return new ExpressionsBuffer(orderedAllFactors);
+            return new ExpressionsBuffer(orderedFactorGroups);
 
         }
 

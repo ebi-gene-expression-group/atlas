@@ -20,16 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest.pages;
+package uk.ac.ebi.atlas.model;
 
-public class ExperimentDesignDownloadPage extends RestPage {
+import java.util.Collection;
+import java.util.Set;
 
-    public ExperimentDesignDownloadPage(String httpParameters) {
-        super(httpParameters);
-    }
 
-    @Override
-    protected String getPageURI() {
-        return "/gxa/experiments/E-MTAB-513/experiment-design.tsv";
-    }
+/*
+    Overview: is a group of factors that combine together in an ExperimentRun
+ */
+public interface FactorGroup extends Iterable<Factor> {
+
+    public Factor getFactorByType(String type);
+
+    public boolean containsAll(Set<Factor> factors);
+
+    public boolean isDisjointFrom(Collection<Factor> factors);
+
 }

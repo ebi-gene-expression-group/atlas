@@ -5,15 +5,15 @@ import java.util.Set;
 public class Expression {
     private double level;
 
-    private Set<Factor> allFactors;
+    private FactorGroup factorGroup;
 
-    public Expression(double level, Set<Factor> allFactors) {
+    public Expression(double level, FactorGroup factorGroup) {
         this.level = level;
-        this.allFactors = allFactors;
+        this.factorGroup = factorGroup;
     }
 
-    public Set<Factor> getAllFactors() {
-        return allFactors;
+    public FactorGroup getFactorGroup() {
+        return factorGroup;
     }
 
     public double getLevel() {
@@ -25,7 +25,7 @@ public class Expression {
     }
 
     public Factor getFactor(String type) {
-        for (Factor factor : allFactors) {
+        for (Factor factor : factorGroup) {
             if (factor.getType().equals(type)) {
                 return factor;
             }
@@ -47,7 +47,7 @@ public class Expression {
         if (Double.compare(that.level, level) != 0) {
             return false;
         }
-        if (!allFactors.equals(that.allFactors)) {
+        if (!factorGroup.equals(that.factorGroup)) {
             return false;
         }
 
@@ -60,7 +60,11 @@ public class Expression {
         long temp;
         temp = level != +0.0d ? Double.doubleToLongBits(level) : 0L;
         result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + allFactors.hashCode();
+        result = 31 * result + factorGroup.hashCode();
         return result;
+    }
+
+    public boolean containsAll(Set<Factor> factors) {
+        return factorGroup.containsAll(factors);
     }
 }

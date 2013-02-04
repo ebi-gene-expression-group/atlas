@@ -22,35 +22,37 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
-public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
+public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=MATERIAL_TYPE%3Along+polya+rna%2CCELLULAR_COMPONENT%3Anucleus&queryFactorType=CELL_LINE");
         subject.get();
     }
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"};
+        return new String[]{"RP11-439L8.3", "RP11-192H23.4", "RP11-736N17.8", "RP11-727M10.1", "RGS7BP",
+                "RP5-961K14.1", "SLC10A1", "RP11-14C10.1", "RP11-273B20.1"};
     }
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"};
+        return new String[]{"a549", "gm12878", "h1-hesc", "hela-s3", "hepg2", "huvec cell line", "imr-90", "k562",
+                "mcf-7", "nhek cell line", "sk-n-sh"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"", "", "", "6", ""};
+        return new String[]{"", "19", "", "", "", "", "", "", "", "", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"4", "", "1", "1", ""};
+        return new String[]{"", "", "", "25", "", "", "", "", "0.9", "", ""};
     }
 
     @Override
     protected String getGeneCount() {
-        return "31";
+        return "50";
     }
 }

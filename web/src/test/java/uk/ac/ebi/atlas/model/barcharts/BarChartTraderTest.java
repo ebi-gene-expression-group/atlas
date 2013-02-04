@@ -4,6 +4,8 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.FactorGroup;
+import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.*;
 
@@ -14,7 +16,7 @@ public class BarChartTraderTest {
 
     private BarChartTrader subject;
 
-    private NavigableMap<Double, Map<Set<Factor>, BitSet>> geneExpressionIndexes = new TreeMap<>();
+    private NavigableMap<Double, Map<FactorGroup, BitSet>> geneExpressionIndexes = new TreeMap<>();
 
     private final BitSetMapFactory bitSetMapFactory = new BitSetMapFactory();
 
@@ -100,20 +102,20 @@ public class BarChartTraderTest {
     private static class BitSetMapFactory {
         public BitSetMapFactory() { }
 
-        Map<Set<Factor>, BitSet> createChartSize5() {
-            Map<Set<Factor>, BitSet> map = new HashMap();
-            map.put(Sets.newHashSet(organismPart1, origin1), initBitSet(1, 3, 5));
-            map.put(Sets.newHashSet(organismPart2, origin1), initBitSet(0, 3));
-            map.put(Sets.newHashSet(organismPart3, origin2), initBitSet(0, 1, 4));
+        Map<FactorGroup, BitSet> createChartSize5() {
+            Map<FactorGroup, BitSet> map = new HashMap();
+            map.put(new FactorSet().add(organismPart1).add(origin1), initBitSet(1, 3, 5));
+            map.put(new FactorSet().add(organismPart2).add(origin1), initBitSet(0, 3));
+            map.put(new FactorSet().add(organismPart3).add(origin2), initBitSet(0, 1, 4));
 
             return map;
         }
 
-        Map<Set<Factor>, BitSet> createChartSize2() {
-            Map<Set<Factor>, BitSet> map = new HashMap();
-            map.put(Sets.newHashSet(organismPart1, origin1), initBitSet(3, 5));
-            map.put(Sets.newHashSet(organismPart2, origin1), initBitSet(3));
-            map.put(Sets.newHashSet(organismPart3, origin2), initBitSet(5));
+        Map<FactorGroup, BitSet> createChartSize2() {
+            Map<FactorGroup, BitSet> map = new HashMap();
+            map.put(new FactorSet().add(organismPart1).add(origin1), initBitSet(3, 5));
+            map.put(new FactorSet().add(organismPart2).add(origin1), initBitSet(3));
+            map.put(new FactorSet().add(organismPart3).add(origin2), initBitSet(5));
 
             return map;
         }
@@ -126,4 +128,29 @@ public class BarChartTraderTest {
             return bs;
         }
     }
+
+    @Test
+    public void forQueryFactors(){
+
+        FactorGroup factorGroup = new FactorSet().add(new Factor("A","B"))
+                        .add(new Factor("C","D")).add(new Factor("E","F"));
+
+        boolean forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D")));
+        assertThat(forQueryFactors, is(true));
+        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","E")));
+        assertThat(forQueryFactors, is(false));
+        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D"),new Factor("E","F")));
+        assertThat(forQueryFactors, is(true));
+        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D"),new Factor("E","F"),new Factor("A","B")));
+        assertThat(forQueryFactors, is(true));
+        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D"),new Factor("E","F")));
+        assertThat(forQueryFactors, is(true));
+        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","A"),new Factor("E","F")));
+        assertThat(forQueryFactors, is(true));
+        forQueryFactors = subject.forQueryFactors(factorGroup, new HashSet<Factor>());
+        assertThat(forQueryFactors, is(true));
+
+    }
 }
+
+

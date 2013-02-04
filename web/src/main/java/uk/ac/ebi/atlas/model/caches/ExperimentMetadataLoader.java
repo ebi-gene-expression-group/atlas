@@ -96,19 +96,13 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         ScanNode firstNode = scanNodes.iterator().next();
 
-        Experiment experiment = new Experiment(experimentAccession, experimentName
-                , defaultQueryFactorType
-                , defaultFilterFactors, extractSpecie(firstNode));
-
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
         Collection<ExperimentRun> selectedExperimentRuns = Collections2.filter(allExperimentRuns, new IsExperimentRunSelected(experimentAccession));
 
-        for (ExperimentRun experimentRun: selectedExperimentRuns){
-            experiment.add(experimentRun);
-        }
-
-        return experiment;
+        return new Experiment(selectedExperimentRuns, experimentName
+                , defaultQueryFactorType
+                , defaultFilterFactors, extractSpecie(firstNode));
 
     }
 
