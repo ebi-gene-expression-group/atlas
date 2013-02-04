@@ -223,7 +223,7 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
             return selectedRunAccessions.contains(experimentRun.getRunAccession());
         }
 
-        protected Set<String> getSelectedRunAccessions(String experimentAccession) throws IOException {
+        protected final Set<String> getSelectedRunAccessions(String experimentAccession) throws IOException {
 
             return analysisMethodsTsvReader.readProcessedLibraries(experimentAccession);
 

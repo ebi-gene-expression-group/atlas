@@ -33,8 +33,7 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//ToDo: this class needs a builder, for example in order to fully load defaultFilterFactors we first have to load all the metadata (we need factorsByType).
-//ToDo: the way it is now we are loading incomplete DefaultFilterFactors (they miss their name), forcing client api to callback and fetch the name in an extra step.
+//ToDo: this class needs a builder.
 public class Experiment{
 
     private static final Logger logger = Logger.getLogger(Experiment.class);

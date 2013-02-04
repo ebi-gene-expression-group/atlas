@@ -26,7 +26,7 @@ public class Factor implements Comparable<Factor> {
         this.value = checkNotNull(value).toLowerCase();
     }
 
-    protected String normalize(String type) {
+    protected final String normalize(String type) {
         return type.replaceAll(" ", "_").toUpperCase();
     }
 

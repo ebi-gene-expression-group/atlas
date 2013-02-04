@@ -56,7 +56,7 @@ public class ExperimentalFactors {
         setDefaultFilterFactors(defaultFilterFactors);
     }
 
-    public String getFactorName(String type) {
+    public final String getFactorName(String type) {
         return factorNamesByType.get(type);
     }
 
@@ -91,7 +91,7 @@ public class ExperimentalFactors {
 
     }
 
-    protected void addToFactorCombinations(FactorGroup factorGroup, Factor factor) {
+    protected final void addToFactorCombinations(FactorGroup factorGroup, Factor factor) {
         for (Factor value : factorGroup) {
             if (!value.equals(factor)) {
                 validFactorCombinations.put(factor, value);
