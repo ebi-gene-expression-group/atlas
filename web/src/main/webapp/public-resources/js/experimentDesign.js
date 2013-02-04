@@ -16,7 +16,7 @@ var experimentDesignTableModule = (function ($) {
     /* populate all sub categories */
     function initColumnDefs() {
         var aoColumnDefs = [];
-        aoColumnDefs[0] = { "sClass": "assays bb br bl", "sTitle": _assayHeader + "<span style='margin-left:3px;'data-help-loc='#runAccs'>", "aTargets": [ 0 ]};
+        aoColumnDefs[0] = { "sClass": "assays bb br bl", "sTitle": _assayHeader + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets": [ 0 ]};
 
         function initColumn(values, startCount) {
             for (var value in values) {
@@ -59,7 +59,7 @@ var experimentDesignTableModule = (function ($) {
             return $window.height() - 270;
         };
         var calcDataTableWidth = function () {
-            return $window.width() - 100;
+            return $('#contents').width() - 100;
         };
 
         var oTable = $('#experiment-design-table').dataTable({
@@ -75,6 +75,7 @@ var experimentDesignTableModule = (function ($) {
         $('div.download').html('<a id="download-experiment-design-link" title="Download experiment design" class="button-image" style="margin-bottom:5px" href="experiments/' + _experimentAccession + '/experiment-design.tsv" target="_blank">' +
             '<img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>');
         $('div.download').attr('style', 'float: right');
+
         $('#isOnlyAnalysed').click(function () {
             oTable.fnDraw();
         });
@@ -89,10 +90,10 @@ var experimentDesignTableModule = (function ($) {
             oTable.fnDraw(false);
         });
 
-        var x = $(".dataTables_scrollHeadInner").find('thead > tr');
+        var tableHeaderRow = $(".dataTables_scrollHeadInner").find('thead > tr');
         $("<tr><th id='assaysHeader' class='header-cell br bt bl'></th>" +
-            "<th id='samplesHeader' class='samples br bt'>Sample Characteristics<span style='margin-left:3px;'data-help-loc='#sampleChars'></span></th>" +
-            "<th id='factorsHeader' class='factors br bt'>Factor Values<span style='margin-left:3px;'data-help-loc='#factorValues'></span></th></tr>").insertBefore(x);
+            "<th id='samplesHeader' class='samples br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
+            "<th id='factorsHeader' class='factors br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>").insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */
         $('#samplesHeader').attr('colspan', Object.keys(_samples).length);

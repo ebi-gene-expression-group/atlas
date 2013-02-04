@@ -63,6 +63,10 @@
     *cursor: hand;
 }
 
+.doc_span {
+    margin-left: 3px;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables features
  */
