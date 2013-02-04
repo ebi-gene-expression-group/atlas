@@ -9,44 +9,39 @@ var experimentDesignTableModule = (function ($) {
         _runAccessions,
         _samples,
         _factors,
+        _assayHeader,
         _experimentAccession;
 
-    //ToDo: review implementation
-    var valuesSize = function (obj) {
-        var size = 0, key;
-        for (key in obj) {
-            if (obj.hasOwnProperty(key)) size++;
-        }
-        return size;
-    };
 
     /* populate all sub categories */
     function initColumnDefs() {
         var aoColumnDefs = [];
-        aoColumnDefs[0] = { "sClass": "assays bb br bl", "aTargets": [ 0 ] };
+        aoColumnDefs[0] = { "sClass": "assays bb br bl", "sTitle": _assayHeader + "<span style='margin-left:3px;'data-help-loc='#runAccs'>", "aTargets": [ 0 ]};
 
-        function initHeaderRowSection(values, startCount) {
+        function initColumn(values, startCount) {
             for (var value in values) {
-                $('#headerStub').append("<th class=\"header-cell bb\">" + value + "</th>");
-                aoColumnDefs[++startCount] = { "sClass": "center bb", "aTargets": [ startCount ] };
+                startCount = startCount + 1;
+
+                aoColumnDefs[startCount] = {
+                    "sClass": "center bb",
+                    "sTitle": value,
+                    "aTargets": [ startCount ]
+                };
+
             }
-            // show vertical line for the last element
-            aoColumnDefs[startCount]["sClass"] = "center bb br";
+            aoColumnDefs[startCount].sClass = "center bb br";
         }
 
-        initHeaderRowSection(_samples, 0);
+        initColumn(_samples, 0);
 
-        initHeaderRowSection(_factors, valuesSize(_samples));
+        initColumn(_factors, Object.keys(_samples).length);
+
 
         $('#headerStub th:last()').attr("class", "header-cell bb br");
         return aoColumnDefs;
     }
 
     function _initExperimentDesignTable() {
-
-        /* Set colspan for each category */
-        $('#samplesHeader').attr('colspan', valuesSize(_samples));
-        $('#factorsHeader').attr('colspan', valuesSize(_factors));
 
         /* Custom filtering function which will filter analysed runs */
         $.fn.dataTableExt.afnFiltering.push(
@@ -94,16 +89,27 @@ var experimentDesignTableModule = (function ($) {
             oTable.fnDraw(false);
         });
 
+        var x = $(".dataTables_scrollHeadInner").find('thead > tr');
+        $("<tr><th id='assaysHeader' class='header-cell br bt bl'></th>" +
+            "<th id='samplesHeader' class='samples br bt'>Sample Characteristics<span style='margin-left:3px;'data-help-loc='#sampleChars'></span></th>" +
+            "<th id='factorsHeader' class='factors br bt'>Factor Values<span style='margin-left:3px;'data-help-loc='#factorValues'></span></th></tr>").insertBefore(x);
+
+        /* Set colspan for each category */
+        $('#samplesHeader').attr('colspan', Object.keys(_samples).length);
+        $('#factorsHeader').attr('colspan', Object.keys(_factors).length);
+
+
         $('#download-experiment-design-link').button().tooltip();
 
     }
 
-    function _init(experimentAccession, dataSet, runAccessions, samples, factors) {
+    function _init(assayHeader, experimentAccession, dataSet, runAccessions, samples, factors) {
         _dataSet = dataSet;
         _runAccessions = runAccessions;
         _samples = samples;
         _factors = factors;
         _experimentAccession = experimentAccession;
+        _assayHeader = assayHeader;
 
 
         _initExperimentDesignTable();
