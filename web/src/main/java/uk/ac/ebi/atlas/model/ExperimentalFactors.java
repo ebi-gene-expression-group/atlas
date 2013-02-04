@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Predicate;
@@ -26,8 +48,8 @@ public class ExperimentalFactors {
 
     private SortedSetMultimap<Factor, Factor> validFactorCombinations = TreeMultimap.create();
 
-    protected ExperimentalFactors(Collection<FactorGroup> factorGroups, String defaultQueryFactorType, Set<Factor> defaultFilterFactors){
-        for (FactorGroup factorGroup : factorGroups){
+    protected ExperimentalFactors(Collection<FactorGroup> factorGroups, String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
+        for (FactorGroup factorGroup : factorGroups) {
             addFactorGroup(factorGroup);
         }
         this.defaultQueryFactorType = defaultQueryFactorType;
@@ -38,7 +60,7 @@ public class ExperimentalFactors {
         return factorNamesByType.get(type);
     }
 
-    protected ExperimentalFactors addFactorGroup(FactorGroup factorGroup){
+    protected ExperimentalFactors addFactorGroup(FactorGroup factorGroup) {
         factorGroups.add(factorGroup);
 
         for (Factor factor : factorGroup) {
@@ -51,15 +73,15 @@ public class ExperimentalFactors {
         return this;
     }
 
-    public SortedSet<String> getAllFactorNames(){
+    public SortedSet<String> getAllFactorNames() {
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
     }
 
-    public SortedSet<Factor> getFactorsByName(String name){
+    public SortedSet<Factor> getFactorsByName(String name) {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }
 
-    public SortedSet<Factor> getFactorsByType(String type){
+    public SortedSet<Factor> getFactorsByType(String type) {
 
         String factorName = factorNamesByType.get(type);
 
@@ -97,17 +119,17 @@ public class ExperimentalFactors {
         return validFactorCombinations;
     }
 
-    public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, String type) {
+    public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, String queryFactorType) {
 
-        for(Factor filterFactor : filterFactors){
-            checkArgument(!filterFactor.getType().equals(type));
+        for (Factor filterFactor : filterFactors) {
+            checkArgument(!filterFactor.getType().equals(queryFactorType));
         }
 
-        SortedSet<Factor> factorsByType = getFactorsByType(type);
+        SortedSet<Factor> factorsByType = getFactorsByType(queryFactorType);
 
         //ToDo: this is a nasty trick to handle experiments that have multiple factor types but where we are not interested in filtering (e.g. Illumina)
         //ToDo: we should rather avoid storing inside expressions factors that are useless (i.e. illumina experiment)
-        if (CollectionUtils.isEmpty(filterFactors)){
+        if (CollectionUtils.isEmpty(filterFactors)) {
             return factorsByType;
         }
 
