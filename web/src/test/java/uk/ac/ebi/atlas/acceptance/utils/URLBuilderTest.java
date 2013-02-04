@@ -51,10 +51,10 @@ public class URLBuilderTest {
         if (currentSeleniumHost != null) {
             System.setProperty(URLBuilder.SELENIUM_TEST_HOST_PROPERTY_KEY, currentSeleniumHost);
         } else {
-            System.clearProperty(URLBuilder.SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY);
+            System.clearProperty(URLBuilder.SELENIUM_TEST_HOST_PROPERTY_KEY);
         }
         if (currentSeleniumPort != null) {
-            System.setProperty(URLBuilder.SELENIUM_TEST_HOST_PROPERTY_KEY, currentSeleniumPort);
+            System.setProperty(URLBuilder.SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY, currentSeleniumPort);
         } else {
             System.clearProperty(URLBuilder.SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY);
         }
