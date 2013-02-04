@@ -52,7 +52,7 @@ public class Experiment{
     public Experiment(Collection<ExperimentRun> experimentRuns, String description, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, String specie) {
         this.description = description;
         this.specie = specie;
-        add(experimentRuns);
+        initExperimentRuns(experimentRuns);
         experimentalFactors = new ExperimentalFactors(extractFactorGroups(), defaultQueryFactorType, defaultFilterFactors);
     }
 
@@ -74,7 +74,7 @@ public class Experiment{
         return experimentalFactors.getDefaultFilterFactors();
     }
 
-    private void add(Collection<ExperimentRun> experimentRuns){
+    private final void initExperimentRuns(Collection<ExperimentRun> experimentRuns){
         for (ExperimentRun experimentRun: experimentRuns){
             this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
         }

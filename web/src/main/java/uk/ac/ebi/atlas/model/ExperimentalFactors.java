@@ -60,7 +60,7 @@ public class ExperimentalFactors {
         return factorNamesByType.get(type);
     }
 
-    protected ExperimentalFactors addFactorGroup(FactorGroup factorGroup) {
+    protected final ExperimentalFactors addFactorGroup(FactorGroup factorGroup) {
         factorGroups.add(factorGroup);
 
         for (Factor factor : factorGroup) {
@@ -99,7 +99,7 @@ public class ExperimentalFactors {
         }
     }
 
-    protected void setDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
+    protected final void setDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
         for (Factor defaultFilterFactor : defaultFilterFactors) {
             //we need to set the name because defaultFilterFactors config file doesn't contain factor names
             defaultFilterFactor.setName(getFactorName(defaultFilterFactor.getType()));
