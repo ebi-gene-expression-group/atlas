@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
@@ -35,6 +36,8 @@ public abstract class Geod26284HeatmapTableTests extends SeleniumFixture {
 
     protected HeatmapTablePage subject;
 
+    protected abstract String getQueryFactorLabel();
+
     protected abstract String[] getTop9Genes();
 
     protected abstract String[] getHeatmapHeader();
@@ -44,6 +47,11 @@ public abstract class Geod26284HeatmapTableTests extends SeleniumFixture {
     protected abstract String[] getNinthGeneProfile();
 
     protected abstract String getGeneCount();
+
+    @Test
+    public void testQueryFactorLabel() {
+        MatcherAssert.assertThat(subject.getQueryFactorLabel(), is(getQueryFactorLabel()));
+    }
 
     @Test
     public void verifyTop9SelectedGenes() {

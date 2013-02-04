@@ -216,7 +216,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(all ${formattedQueryFactorType}s)");
+            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(any ${formattedQueryFactorType}s)");
 
             helpTooltipsModule.init('experiment');
 

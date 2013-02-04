@@ -50,7 +50,7 @@
                     <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
                     <span data-help-loc="#factorSearch"/>
                 </td>
-                <td>
+                <td style="width:100%;display:block">
                     <form:label path="cutoff">Expression level cutoff</form:label>
                     <span data-help-loc="#cutoff"/>
                 </td>
@@ -78,7 +78,7 @@
                 </c:if>
                 <td>
                     <div>
-                        <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
+                        <form:select path="queryFactorValues" data-placeholder="(any ${formattedQueryFactorType}s)"
                                      tabindex="-1"
                                      items="${allQueryFactorValues}"
                                      cssStyle="width:300px"/>
@@ -112,14 +112,14 @@
         </table>
         <br/>
     </form:form>
-    <div style="position:relative" id="gene-distribution-panel">
+    <div style="min-width: 955px;position:relative" id="gene-distribution-panel">
         <div class="barchart-tooltip" id="barChartTooltip"></div>
         <div id="gene-distribution" style="height:100px;width:940px;display:inline-block;">
         </div>
         <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
     </div>
 
-    <div style="min-width: 950px;">
+    <div style="min-width: 955px;">
         <span style="display:inline-block">
             <div id="gene-distribution-button" style="float:left">
                 <a id="display-chart" title="Display gene distribution" class="button-image" href="#">

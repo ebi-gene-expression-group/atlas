@@ -31,6 +31,11 @@ public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapT
     }
 
     @Override
+    protected String getQueryFactorLabel() {
+        return "Cell line";
+    }
+
+    @Override
     protected String[] getTop9Genes() {
         return new String[]{"TMSB10", "PTBP3", "Y_RNA", "ARHGAP1", "THOC6", "THOC3", "BMI1", "AC111200.7", "CALU"};
     }
