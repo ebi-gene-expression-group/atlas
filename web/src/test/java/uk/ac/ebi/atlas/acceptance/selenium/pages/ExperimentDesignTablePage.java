@@ -50,13 +50,13 @@ public class ExperimentDesignTablePage extends TablePage {
     @FindBy(xpath = "//div[@id='experiment-design-table_filter']/label/input")
     private WebElement searchField;
 
-    @FindBy(xpath = "//thead/tr[1]/th[1]")
+    @FindBy(xpath = "//thead/tr[2]/th[1]")
     private WebElement firstColumnHeader;
 
-    @FindBy(xpath = "//thead/tr[2]/th[1]")
+    @FindBy(xpath = "//thead/tr[2]/th[2]")
     private WebElement secondColumnHeader;
 
-    @FindBy(xpath = "//thead/tr[2]/th[2]")
+    @FindBy(xpath = "//thead/tr[2]/th[3]")
     private WebElement thirdColumnHeader;
 
     public ExperimentDesignTablePage(WebDriver driver) {

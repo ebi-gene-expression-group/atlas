@@ -78,7 +78,7 @@
                 </c:if>
                 <td>
                     <div>
-                        <form:select path="queryFactorValues" data-placeholder="(all ${formattedQueryFactorType}s)"
+                        <form:select path="queryFactorValues" data-placeholder="(any ${formattedQueryFactorType}s)"
                                      tabindex="-1"
                                      items="${allQueryFactorValues}"
                                      cssStyle="width:300px"/>
