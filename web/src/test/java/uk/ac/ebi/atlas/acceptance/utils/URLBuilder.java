@@ -20,30 +20,28 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest.pages;
+package uk.ac.ebi.atlas.acceptance.utils;
 
 import com.google.common.base.Strings;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.response.ResponseBody;
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.List;
 
-import static com.jayway.restassured.RestAssured.get;
+public class URLBuilder {
 
-public abstract class RestPage {
+    public static final String SELENIUM_TEST_HOST_PROPERTY_KEY = "selenium.test.host";
 
-    private String pageURL;
+    public static final String SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY = "selenium.test.portnumber";
 
-    RestPage(String httpParameters) {
-        pageURL = buildURL(httpParameters);
+    private final String pageURI;
+
+    public URLBuilder(String pageURI) {
+        this.pageURI = pageURI;
     }
 
-    String buildURL(String httpParameters) {
-        String hostname = System.getProperty("selenium.test.host");
+    public String buildURL(String httpParameters) {
+        String hostname = System.getProperty(SELENIUM_TEST_HOST_PROPERTY_KEY);
         if (StringUtils.isBlank(hostname)) {
             System.out.println("selenium.test.host is null, so tests will be executed against local machine");
             hostname = getLocalHostAddress();
@@ -51,23 +49,24 @@ public abstract class RestPage {
 
         System.out.println("running tests on local host address: " + hostname);
 
-        String portNumber = System.getProperty("selenium.test.portnumber");
-        if (portNumber == null) {
+        String portNumber = System.getProperty(SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY);
+        if (StringUtils.isBlank(portNumber)) {
             portNumber = "9090";
         }
         StringBuilder stringBuilder = new StringBuilder("http://")
                 .append(hostname)
                 .append(":")
                 .append(portNumber)
-                .append(getPageURI());
+                .append(pageURI);
         if (!Strings.isNullOrEmpty(httpParameters)) {
             stringBuilder.append("?").append(httpParameters);
         }
         System.out.println("<buildURL> Running on page: " + stringBuilder.toString());
         return stringBuilder.toString();
+
     }
 
-    private String getLocalHostAddress() {
+    public String getLocalHostAddress() {
         try {
             InetAddress localHost = InetAddress.getLocalHost();
             return localHost.getHostAddress();
@@ -77,20 +76,7 @@ public abstract class RestPage {
         }
     }
 
-    public Response getResponse() {
-        return get(pageURL);
+    public String getPageURI() {
+        return pageURI;
     }
-
-    public ResponseBody getResponseBody() {
-        return get(pageURL).getBody();
-    }
-
-    public List<String> getRowAsList(int row) {
-        String bodyAsString = getResponseBody().asString();
-        String[] lines = bodyAsString.split("\n");
-        String line = lines[row];
-        return Arrays.asList(line.split("\t"));
-    }
-
-    protected abstract String getPageURI();
 }

@@ -20,22 +20,22 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
-import uk.ac.ebi.atlas.web.controllers.rest.pages.ExperimentDesignDownloadPage;
+import uk.ac.ebi.atlas.acceptance.rest.pages.GeneProfilesDownloadPage;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ExperimentDesignDownloadControllerIT {
+public class GeneProfilesDownloadControllerIT {
 
-    ExperimentDesignDownloadPage subject = new ExperimentDesignDownloadPage("");
+    GeneProfilesDownloadPage subject = new GeneProfilesDownloadPage("");
 
     @Test
     public void verifyHeader() {
@@ -48,7 +48,7 @@ public class ExperimentDesignDownloadControllerIT {
         assertThat(response.getContentType(), is("text/plain;charset=utf-8"));
 
         // filename of attachment should be ending in -gene-expression-profiles.tsv
-        assertThat(response.getHeader("Content-Disposition"), containsString("-experiment-design.tsv"));
+        assertThat(response.getHeader("Content-Disposition"), containsString("-gene-expression-profiles.tsv"));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowAsList(0);
 
         assertThat(firstLine,
-                hasItems("Assay", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]", "Factor Values[library preparation method]", "Factor Values[phenotype]", "Analysed")
+                hasItems("Gene name", "Gene Id", "adipose", "adrenal", "brain", "breast", "colon", "heart", "kidney", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testes", "thyroid", "white blood cells")
         );
 
     }
@@ -70,7 +70,7 @@ public class ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowAsList(1);
 
         assertThat(secondLine,
-                hasItems("ERR030872", "Homo sapiens", "60", "female", "Human thyroid total RNA, lot 0908003", "thyroid", "mRNA-Seq", "caucasian", "Yes")
+                hasItems("METTL25", "ENSG00000127720", "0", "2", "0.7", "2", "0.9", "2", "5", "4", "0.9", "2", "3", "3", "1", "3", "3", "4")
         );
 
     }
@@ -80,7 +80,7 @@ public class ExperimentDesignDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(49));
+        assertThat(lines.length, is(160));
     }
 
 }
