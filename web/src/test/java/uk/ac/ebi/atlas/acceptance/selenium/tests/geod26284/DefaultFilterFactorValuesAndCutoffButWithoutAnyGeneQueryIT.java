@@ -30,6 +30,11 @@ public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQueryIT extends 
     }
 
     @Override
+    protected String getQueryFactorLabel() {
+        return "Cell line";
+    }
+
+    @Override
     protected String[] getTop9Genes() {
         return new String[]{"RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"};
     }

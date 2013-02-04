@@ -22,42 +22,41 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
-public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTableTests {
+public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver,
-                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+rna&queryFactorType=&heatmapMatrixSize=50&displayGeneDistribution=false&geneQuery=&queryFactorValues=cd34-positive+mobilized+cell+cell+line&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3Aa549&queryFactorType=MATERIAL_TYPE");
         subject.get();
     }
 
-
     @Override
     protected String getQueryFactorLabel() {
-        return "Cell line";
+        return "Material type";
     }
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"PTBP3", "THOC6", "AC111200.7", "THOC3", "TERF2", "GFI1", "RP11-20I23.6", "ARHGAP1", "7SK"};
+        return new String[]{"AC011293.1", "C6orf203", "7SK", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10"};
     }
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"};
+        return new String[]{"long non-polya...", "long polya rna"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"92", "14", "7", "12", "9"};
+        return new String[]{"297", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"5", "3", "2", "2", "2"};
+        return new String[]{"74", "1202"};
     }
 
     @Override
     protected String getGeneCount() {
-        return "25";
+        return "32";
     }
+
 }
