@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 //ToDo: this class needs a builder, for example in order to fully load defaultFilterFactors we first have to load all the metadata (we need factorsByType).
 //ToDo: the way it is now we are loading incomplete DefaultFilterFactors (they miss their name), forcing client api to callback and fetch the name in an extra step.
-public class Experiment{
+public class Experiment {
 
     private static final Logger logger = Logger.getLogger(Experiment.class);
 
@@ -56,11 +56,11 @@ public class Experiment{
         experimentalFactors = new ExperimentalFactors(extractFactorGroups(), defaultQueryFactorType, defaultFilterFactors);
     }
 
-    protected Collection<FactorGroup> extractFactorGroups(){
-        return Collections2.transform(experimentRuns.values(), new Function<ExperimentRun, FactorGroup>(){
+    protected Collection<FactorGroup> extractFactorGroups() {
+        return Collections2.transform(experimentRuns.values(), new Function<ExperimentRun, FactorGroup>() {
 
             @Override
-            public FactorGroup apply( ExperimentRun experimentRun) {
+            public FactorGroup apply(ExperimentRun experimentRun) {
                 return experimentRun.getFactorGroup();
             }
         });
@@ -74,8 +74,8 @@ public class Experiment{
         return experimentalFactors.getDefaultFilterFactors();
     }
 
-    private final void initExperimentRuns(Collection<ExperimentRun> experimentRuns){
-        for (ExperimentRun experimentRun: experimentRuns){
+    private final void initExperimentRuns(Collection<ExperimentRun> experimentRuns) {
+        for (ExperimentRun experimentRun : experimentRuns) {
             this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
         }
     }
@@ -87,11 +87,11 @@ public class Experiment{
         return experimentRun.getFactorGroup();
     }
 
-    public String getFactorName(String type){
+    public String getFactorName(String type) {
         return experimentalFactors.getFactorName(type);
     }
 
-    public Set<String> getExperimentRunAccessions(){
+    public Set<String> getExperimentRunAccessions() {
         return experimentRuns.keySet();
     }
 
@@ -118,6 +118,14 @@ public class Experiment{
     //ToDo: data structures like this should not be exposed
     public SortedSetMultimap<Factor, Factor> getValidFactorCombinations() {
         return experimentalFactors.getValidFactorCombinations();
+    }
+
+    public SortedSet<String> getAllFactorNames() {
+        return experimentalFactors.getAllFactorNames();
+    }
+
+    public SortedSet<Factor> getFactorsByName(String name) {
+        return experimentalFactors.getFactorsByName(name);
     }
 
 }
