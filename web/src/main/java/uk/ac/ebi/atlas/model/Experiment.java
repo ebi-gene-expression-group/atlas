@@ -105,7 +105,7 @@ public class Experiment {
     }
 
     public SortedSet<Factor> getValidCombinationsForFactorAndName(Factor factor, String name) {
-        return experimentalFactors.getValidCombinationsForFactorAndName(factor, name);
+        return experimentalFactors.getFactorsWithGivenNameCooccurringWithGivenFactor(factor, name);
     }
 
 }

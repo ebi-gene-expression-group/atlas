@@ -89,7 +89,7 @@ public class ExperimentalFactors {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }
 
-    public SortedSet<Factor> getValidCombinationsForFactorAndName(@NotNull Factor factor, @NotNull final String name) {
+    public SortedSet<Factor> getFactorsWithGivenNameCooccurringWithGivenFactor(@NotNull Factor factor, @NotNull final String name) {
         checkArgument(!factor.getName().equals(name));
         checkState(validFactorCombinations.containsKey(factor));
 
