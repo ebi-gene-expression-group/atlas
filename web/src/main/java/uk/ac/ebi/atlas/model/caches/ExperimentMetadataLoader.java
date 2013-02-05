@@ -27,6 +27,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
@@ -38,6 +39,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValue
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
@@ -53,6 +55,7 @@ import java.text.MessageFormat;
 import java.util.*;
 
 @Named("experimentMetadataLoader")
+@Scope("prototype")
 public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataLoader.class);
@@ -71,14 +74,17 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private ArrayExpressClient arrayExpressClient;
 
+    private ExperimentBuilder experimentBuilder;
+
     @Inject
     public ExperimentMetadataLoader(AnalysisMethodsTsvReader analysisMethodsTsvReader
             , ExperimentFactorsTsvReader experimentFactorsTsvReader
-            , ArrayExpressClient arrayExpressClient) {
+            , ArrayExpressClient arrayExpressClient, ExperimentBuilder experimentBuilder) {
 
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
         this.experimentFactorsTsvReader = experimentFactorsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
+        this.experimentBuilder = experimentBuilder;
     }
 
     @Override
@@ -100,9 +106,12 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
         Collection<ExperimentRun> selectedExperimentRuns = Collections2.filter(allExperimentRuns, new IsExperimentRunSelected(experimentAccession));
 
-        return new Experiment(selectedExperimentRuns, experimentName
-                , defaultQueryFactorType
-                , defaultFilterFactors, extractSpecie(firstNode));
+        return experimentBuilder.forSpecie(extractSpecie(firstNode))
+                                .withDescription(experimentName)
+                                .withDefaultQueryType(defaultQueryFactorType)
+                                .withDefaultFilterFactors(defaultFilterFactors)
+                                .withExperimentRuns(selectedExperimentRuns)
+                                .create();
 
     }
 

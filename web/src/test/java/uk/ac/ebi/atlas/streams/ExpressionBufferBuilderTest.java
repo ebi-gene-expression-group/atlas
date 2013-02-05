@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -44,15 +45,17 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionBufferBuilderTest {
 
+    private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
+    private static final String SPECIE = "homo sapiens";
+
     private static final String RUN_ACCESSION_1 = "ENS0";
     private static final String RUN_ACCESSION_2 = "ENS1";
     private static final String RUN_ACCESSION_3 = "ENS2";
+    private static final String DESCRIPTION = "A_DESCRIPTION";
 
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
     private ExperimentRun experimentRun3;
-
-    private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
 
     @Mock
     private ExperimentsCache experimentsCacheMock;
@@ -67,7 +70,6 @@ public class ExpressionBufferBuilderTest {
     private Factor factorMock3;
 
     private ExpressionsBuffer.Builder subject;
-    private String specie = "homo sapiens";
 
     @Before
     public void initializeSubject() {
@@ -88,7 +90,13 @@ public class ExpressionBufferBuilderTest {
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(factorMock2);
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(factorMock3);
 
-        Experiment experiment = new Experiment(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3), null, factorMock1.getType(), Collections.EMPTY_SET, specie);
+        Experiment experiment = new ExperimentBuilder().forSpecie(SPECIE)
+                .withDescription(DESCRIPTION)
+                .withDefaultQueryType(factorMock1.getType())
+                .withDefaultFilterFactors(Collections.EMPTY_SET)
+                .withExperimentRuns(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3))
+                .create();
+
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
 

@@ -48,19 +48,15 @@ public class ExperimentalFactors {
 
     private SortedSetMultimap<Factor, Factor> validFactorCombinations = TreeMultimap.create();
 
-    protected ExperimentalFactors(Collection<FactorGroup> factorGroups, String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
-        for (FactorGroup factorGroup : factorGroups) {
-            addFactorGroup(factorGroup);
-        }
+    ExperimentalFactors(String defaultQueryFactorType) {
         this.defaultQueryFactorType = defaultQueryFactorType;
-        setDefaultFilterFactors(defaultFilterFactors);
     }
 
-    public final String getFactorName(String type) {
+    public String getFactorName(String type) {
         return factorNamesByType.get(type);
     }
 
-    protected final ExperimentalFactors addFactorGroup(FactorGroup factorGroup) {
+    ExperimentalFactors addFactorGroup(FactorGroup factorGroup) {
         factorGroups.add(factorGroup);
 
         for (Factor factor : factorGroup) {
@@ -91,7 +87,7 @@ public class ExperimentalFactors {
 
     }
 
-    protected final void addToFactorCombinations(FactorGroup factorGroup, Factor factor) {
+    void addToFactorCombinations(FactorGroup factorGroup, Factor factor) {
         for (Factor value : factorGroup) {
             if (!value.equals(factor)) {
                 validFactorCombinations.put(factor, value);
@@ -99,12 +95,10 @@ public class ExperimentalFactors {
         }
     }
 
-    protected final void setDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
-        for (Factor defaultFilterFactor : defaultFilterFactors) {
-            //we need to set the name because defaultFilterFactors config file doesn't contain factor names
-            defaultFilterFactor.setName(getFactorName(defaultFilterFactor.getType()));
-        }
-        this.defaultFilterFactors = Collections.unmodifiableSet(defaultFilterFactors);
+    void addDefaultFilterFactor(Factor defaultFilterFactor) {
+        //we need to set the name because defaultFilterFactors config file doesn't contain factor names
+        String factorName = getFactorName(defaultFilterFactor.getType());
+        defaultFilterFactors.add(defaultFilterFactor.setName(factorName));
     }
 
     public String getDefaultQueryFactorType() {
@@ -112,7 +106,7 @@ public class ExperimentalFactors {
     }
 
     public Set<Factor> getDefaultFilterFactors() {
-        return defaultFilterFactors;
+        return Collections.unmodifiableSet(defaultFilterFactors);
     }
 
     public SortedSetMultimap<Factor, Factor> getValidFactorCombinations() {

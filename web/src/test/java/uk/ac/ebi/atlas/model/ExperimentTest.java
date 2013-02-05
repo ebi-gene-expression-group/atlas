@@ -32,7 +32,6 @@ import java.util.Collections;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 
 public class ExperimentTest {
 
@@ -41,6 +40,7 @@ public class ExperimentTest {
     private static final String RUN_ACCESSION_1 = "ENS0";
     private static final String RUN_ACCESSION_2 = "ENS1";
     private static final String RUN_ACCESSION_3 = "ENS2";
+    private static final String DESCRIPTION = "aDescription";
 
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
@@ -79,7 +79,12 @@ public class ExperimentTest {
         experimentRun3.addFactor(CELLULAR_COMPONENT_NUCLEUS);
         experimentRun3.addFactor(MATERIAL_TYPE_TOTALRNA);
 
-        subject = new Experiment(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3), null, ORGANISM_PART, Collections.EMPTY_SET, SPECIE);
+        subject = new ExperimentBuilder().forSpecie(SPECIE)
+                                         .withDescription(DESCRIPTION)
+                                         .withDefaultQueryType(ORGANISM_PART)
+                                         .withDefaultFilterFactors(Collections.EMPTY_SET)
+                                         .withExperimentRuns(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3))
+                                         .create();
     }
 
     @Test
@@ -89,7 +94,7 @@ public class ExperimentTest {
 
     @Test
     public void testDescription() {
-        assertThat(subject.getDescription(), nullValue(String.class));
+        assertThat(subject.getDescription(), is(DESCRIPTION));
     }
 
     @Test

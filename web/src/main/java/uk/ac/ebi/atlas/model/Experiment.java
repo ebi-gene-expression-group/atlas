@@ -22,8 +22,6 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.log4j.Logger;
 
@@ -48,21 +46,13 @@ public class Experiment{
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 
 
-    public Experiment(Collection<ExperimentRun> experimentRuns, String description, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, String specie) {
+    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, String specie) {
         this.description = description;
         this.specie = specie;
-        initExperimentRuns(experimentRuns);
-        experimentalFactors = new ExperimentalFactors(extractFactorGroups(), defaultQueryFactorType, defaultFilterFactors);
-    }
-
-    protected Collection<FactorGroup> extractFactorGroups() {
-        return Collections2.transform(experimentRuns.values(), new Function<ExperimentRun, FactorGroup>() {
-
-            @Override
-            public FactorGroup apply(ExperimentRun experimentRun) {
-                return experimentRun.getFactorGroup();
-            }
-        });
+        this.experimentalFactors = experimentalFactors;
+        for (ExperimentRun experimentRun : experimentRuns) {
+            this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
+        }
     }
 
     public String getDefaultQueryFactorType() {
@@ -71,12 +61,6 @@ public class Experiment{
 
     public Set<Factor> getDefaultFilterFactors() {
         return experimentalFactors.getDefaultFilterFactors();
-    }
-
-    private final void initExperimentRuns(Collection<ExperimentRun> experimentRuns) {
-        for (ExperimentRun experimentRun : experimentRuns) {
-            this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
-        }
     }
 
     public FactorGroup getFactorGroup(String experimentRunAccession) {
@@ -110,7 +94,7 @@ public class Experiment{
         return experimentalFactors.getFactorsByType(type);
     }
 
-    public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, final String type) {
+    public SortedSet<Factor> getFilteredFactors(Set<Factor> filterFactors, String type) {
         return experimentalFactors.getFilteredFactors(filterFactors, type);
     }
 
