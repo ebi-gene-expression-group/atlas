@@ -96,19 +96,21 @@ public class ExperimentIT {
         assertThat(objectCount, is(32));
 
         Factor factor = new Factor("MATERIAL_TYPE", "total rna");
-        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(10));
+        assertThat(subject.getValidCombinationsForFactorAndName(factor, "cell line").size(), is(6));
         factor = new Factor("MATERIAL_TYPE", "long polya rna");
-        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(21));
+        assertThat(subject.getValidCombinationsForFactorAndName(factor, "cell line").size(), is(18));
         factor = new Factor("CELLULAR_COMPONENT", "whole cell");
-        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(26));
+        assertThat(subject.getValidCombinationsForFactorAndName(factor, "RNA type").size(), is(3));
         factor = new Factor("CELL_LINE", "imr-90");
-        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(5));
+        assertThat(subject.getValidCombinationsForFactorAndName(factor, "cellular component").size(), is(3));
         factor = new Factor("CELL_LINE", "cd34-positive mobilized cell cell line");
-        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(2));
+        assertThat(subject.getValidCombinationsForFactorAndName(factor, "RNA type").size(), is(1));
 
         for (String factorName : subject.getAllFactorNames()) {
-            for (Factor keyFactor : subject.getFactorsByName(factorName)) {
-                objectCount += subject.getValidCombinationsForFactor(keyFactor).size();
+            for (String remainingFactorName : subject.getRemainingFactorNamesForNames(factorName)) {
+                for (Factor keyFactor : subject.getFactorsByName(factorName)) {
+                    objectCount += subject.getValidCombinationsForFactorAndName(keyFactor, remainingFactorName).size();
+                }
             }
         }
         assertThat(objectCount, is(230));

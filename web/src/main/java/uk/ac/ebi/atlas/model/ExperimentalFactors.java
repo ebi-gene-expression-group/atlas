@@ -87,8 +87,16 @@ public class ExperimentalFactors {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }
 
-    public SortedSet<Factor> getValidCombinationsForFactor(Factor factor) {
-        return ImmutableSortedSet.copyOf(validFactorCombinations.get(factor));
+    public SortedSet<Factor> getValidCombinationsForFactorAndName(Factor factor, final String name) {
+        SortedSet<Factor> factors = validFactorCombinations.get(factor);
+
+        return Sets.filter(factors, new Predicate<Factor>() {
+            @Override
+            public boolean apply(Factor factorOfTheSelectedName) {
+                String factorName = factorOfTheSelectedName.getName();
+                return factorName.equals(name);
+            }
+        });
     }
 
     public SortedSet<Factor> getFactorsByType(String type) {
