@@ -13,7 +13,9 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.*;
 
-@Named("barchartTraderBuilder")
+import static com.google.common.base.Preconditions.checkState;
+
+@Named("bitIndexBuilder")
 @Scope("prototype")
 public class BitIndexBuilder {
 
@@ -89,6 +91,8 @@ public class BitIndexBuilder {
     }
 
     public BarChartTrader create() {
+        checkState(factorGroupGeneExpressionIndexes.size() > 0, "Index is empty, please verify that the forExperiment method was invoked");
+
         BarChartTrader barChartTrader = new BarChartTrader(factorGroupGeneExpressionIndexes);
         barChartTrader.trimIndexes();
         return barChartTrader;

@@ -2,26 +2,19 @@ package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.cache.CacheLoader;
 import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.barcharts.BarChartTraderBuilderFactory;
+import uk.ac.ebi.atlas.model.barcharts.BitIndexBuilder;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-@Named("barChartTraderLoader")
-public class BarChartTraderLoader extends CacheLoader<String, BarChartTrader> {
-
-    private BarChartTraderBuilderFactory barChartTraderBuilderFactory;
-
-    @Inject
-    public BarChartTraderLoader(BarChartTraderBuilderFactory barChartTraderBuilderFactory) {
-        this.barChartTraderBuilderFactory = barChartTraderBuilderFactory;
-    }
+//Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of BitIndexBuilder everytime the load method is invoked
+//The reason to do so is that Guava CacheBuilder, that is the one using this class, is not spring managed.
+public abstract class BarChartTraderLoader extends CacheLoader<String, BarChartTrader> {
 
     @Override
     public BarChartTrader load(String experimentAccession) {
 
-        return barChartTraderBuilderFactory.with(experimentAccession).create();
+        return createBitIndexBuilder().forExperiment(experimentAccession).create();
 
     }
+
+    public abstract BitIndexBuilder createBitIndexBuilder();
 
 }

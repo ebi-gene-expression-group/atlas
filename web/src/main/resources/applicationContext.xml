@@ -19,8 +19,8 @@
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
-    <bean id="barchartTraderBuilderFactory" class="uk.ac.ebi.atlas.model.barcharts.BarChartTraderBuilderFactory">
-        <lookup-method name="createNew" bean="barchartTraderBuilder"/>
+    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.model.caches.BarChartTraderLoader">
+        <lookup-method name="createBitIndexBuilder" bean="bitIndexBuilder"/>
     </bean>
 
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
