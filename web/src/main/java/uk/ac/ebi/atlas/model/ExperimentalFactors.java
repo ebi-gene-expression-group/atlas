@@ -32,9 +32,11 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
@@ -87,7 +89,10 @@ public class ExperimentalFactors {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }
 
-    public SortedSet<Factor> getValidCombinationsForFactorAndName(Factor factor, final String name) {
+    public SortedSet<Factor> getValidCombinationsForFactorAndName(@NotNull Factor factor, @NotNull final String name) {
+        checkArgument(!factor.getName().equals(name));
+        checkState(validFactorCombinations.containsKey(factor));
+
         SortedSet<Factor> factors = validFactorCombinations.get(factor);
 
         return Sets.filter(factors, new Predicate<Factor>() {

@@ -40,19 +40,21 @@
             <ul>
                 <c:forEach items="${filterByMenu}" var="level1">
                     <li>
-                        <a>${level1.key}</a>
+                        <a>${level1.value}</a>
                         <ul>
-                            <c:forEach items="${level1.value}" var="level2">
+                            <c:forEach items="${level1.children}" var="level2">
                                 <li>
-                                    <a>${level2.key}</a>
+                                    <a>${level2.value}</a>
                                     <ul>
-                                        <c:forEach items="${level2.value}" var="level3">
+                                        <c:forEach items="${level2.children}" var="level3">
                                             <li>
-                                                <a>${level3.key}</a>
+                                                <a>${level3.value}</a>
                                                 <ul>
-                                                    <c:forEach items="${level3.value}" var="level4">
-                                                        <li data-serialized-factors='${level4.value}'
-                                                            style="text-decoration: underline; cursor: pointer;">${level4.key}</li>
+                                                    <c:forEach items="${level3.children}" var="level4">
+                                                        <c:forEach items="${level4.children}" var="link">
+                                                            <li data-serialized-factors='${link.value}'
+                                                                style="text-decoration: underline; cursor: pointer;">${level4.value}</li>
+                                                        </c:forEach>
                                                     </c:forEach>
                                                 </ul>
                                             </li>

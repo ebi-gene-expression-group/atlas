@@ -95,15 +95,15 @@ public class ExperimentIT {
         }
         assertThat(objectCount, is(32));
 
-        Factor factor = new Factor("MATERIAL_TYPE", "total rna");
+        Factor factor = new Factor("MATERIAL_TYPE", "RNA type", "total rna");
         assertThat(subject.getValidCombinationsForFactorAndName(factor, "cell line").size(), is(6));
-        factor = new Factor("MATERIAL_TYPE", "long polya rna");
+        factor = new Factor("MATERIAL_TYPE", "RNA type", "long polya rna");
         assertThat(subject.getValidCombinationsForFactorAndName(factor, "cell line").size(), is(18));
-        factor = new Factor("CELLULAR_COMPONENT", "whole cell");
+        factor = new Factor("CELLULAR_COMPONENT", "cellular component", "whole cell");
         assertThat(subject.getValidCombinationsForFactorAndName(factor, "RNA type").size(), is(3));
-        factor = new Factor("CELL_LINE", "imr-90");
+        factor = new Factor("CELL_LINE", "cell line", "imr-90");
         assertThat(subject.getValidCombinationsForFactorAndName(factor, "cellular component").size(), is(3));
-        factor = new Factor("CELL_LINE", "cd34-positive mobilized cell cell line");
+        factor = new Factor("CELL_LINE", "cell line", "cd34-positive mobilized cell cell line");
         assertThat(subject.getValidCombinationsForFactorAndName(factor, "RNA type").size(), is(1));
 
         for (String factorName : subject.getAllFactorNames()) {
