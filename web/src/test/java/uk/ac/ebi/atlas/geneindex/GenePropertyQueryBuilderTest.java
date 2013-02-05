@@ -38,20 +38,20 @@ public class GenePropertyQueryBuilderTest {
     @Test
     public void testParseSearchText() {
         Collection<String> strings = subject.parseSearchText("aa \"1 cc\" d , \"c\"");
-        assertThat(strings, hasItems("aa", "1 cc", "d", "c"));
-        assertThat(strings, not(hasItem(",")));
+        assertThat(strings, containsInAnyOrder("aa", "1 cc", "d", "c"));
+        assertThat(strings, not(contains(",")));
 
         strings = subject.parseSearchText("ENSG00000175084 ENSG00000210195");
-        assertThat(strings, hasItems("ENSG00000175084", "ENSG00000210195"));
+        assertThat(strings, containsInAnyOrder("ENSG00000175084", "ENSG00000210195"));
 
         strings = subject.parseSearchText("LINC00402, RP11-192H23.4");
-        assertThat(strings, hasItems("LINC00402", "RP11-192H23.4"));
+        assertThat(strings, containsInAnyOrder("LINC00402", "RP11-192H23.4"));
 
         strings = subject.parseSearchText("TRAJ34\r\nTRAJ13");
-        assertThat(strings, hasItems("TRAJ34", "TRAJ13"));
+        assertThat(strings, containsInAnyOrder("TRAJ34", "TRAJ13"));
 
         strings = subject.parseSearchText("\"TRAJ3\"");
-        assertThat(strings, hasItems("TRAJ3"));
+        assertThat(strings, containsInAnyOrder("TRAJ3"));
     }
 
     @Test

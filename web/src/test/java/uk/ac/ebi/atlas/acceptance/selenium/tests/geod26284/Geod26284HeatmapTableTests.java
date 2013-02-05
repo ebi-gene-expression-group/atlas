@@ -61,7 +61,7 @@ public abstract class Geod26284HeatmapTableTests extends SeleniumFixture {
         List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
 
         //then
-        assertThat(selectedGenes, hasItems(getTop9Genes()));
+        assertThat(selectedGenes, contains(getTop9Genes()));
     }
 
     @Test
@@ -69,7 +69,7 @@ public abstract class Geod26284HeatmapTableTests extends SeleniumFixture {
         //given selected filterFactorValues
 
         //then
-        assertThat(subject.getFactorValueHeaders(), hasItems(getHeatmapHeader()));
+        assertThat(subject.getFactorValueHeaders(), contains(getHeatmapHeader()));
     }
 
     @Test

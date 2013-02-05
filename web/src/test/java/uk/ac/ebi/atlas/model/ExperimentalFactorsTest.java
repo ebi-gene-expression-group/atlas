@@ -88,26 +88,26 @@ public class ExperimentalFactorsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void getValidCombinationsForFactorAndNameShouldFailIfNameIsSameAsFactorName(){
-        subject.getValidCombinationsForFactorAndName(factorWithType2, "NAME2");
+    public void getFactorsWithGivenNameCooccurringWithGivenFactorShouldFailIfNameIsSameAsFactorName(){
+        subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType2, "NAME2");
     }
 
     @Test
-    public void getValidCombinationsForFactorAndName(){
+    public void getFactorsWithGivenNameCooccurringWithGivenFactorTest(){
         //when
-        SortedSet<Factor> factors = subject.getValidCombinationsForFactorAndName(factorWithType2, "NAME1");
+        SortedSet<Factor> factors = subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType2, "NAME1");
         //then
         assertThat(factors, contains(factorWithType1));
 
         //when
-        factors = subject.getValidCombinationsForFactorAndName(factorWithType1, "NAME2");
+        factors = subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType1, "NAME2");
         //then
         assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2));
 
         //when
-        factors = subject.getValidCombinationsForFactorAndName(factorWithType3, "NAME1");
+        factors = subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType3, "NAME1");
         //then
-        assertThat(factors, hasItems(factorWithType1));
+        assertThat(factors, contains(factorWithType1));
 
     }
 

@@ -121,7 +121,7 @@ public class ExperimentIT {
         Factor filterFactor1 = new Factor("CELL_LINE", "imr-90");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELL_LINE");
+        subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELL_LINE");
     }
 
 
@@ -138,9 +138,9 @@ public class ExperimentIT {
 
     @Test
     public void getRemainingFactorNamesForNames() {
-        assertThat(subject.getRemainingFactorNamesForNames("RNA type"), hasItems("cell line", "cellular component"));
+        assertThat(subject.getRemainingFactorNamesForNames("RNA type"), contains("cell line", "cellular component"));
         assertThat(subject.getRemainingFactorNamesForNames("cell line", "cellular component").size(), is(1));
-        assertThat(subject.getRemainingFactorNamesForNames("cell line", "cellular component"), hasItem("RNA type"));
+        assertThat(subject.getRemainingFactorNamesForNames("cell line", "cellular component"), contains("RNA type"));
     }
 
 }

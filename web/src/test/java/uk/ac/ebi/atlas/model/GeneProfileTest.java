@@ -12,7 +12,8 @@ import uk.ac.ebi.atlas.model.impl.FactorSet;
 import java.util.HashSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -66,7 +67,7 @@ public class GeneProfileTest {
 
     @Test
     public void getAllFactorValuesTest() {
-        assertThat(subject.getAllFactors(), hasItems(factor1, factor2, factor3));
+        assertThat(subject.getAllFactors(), containsInAnyOrder(factor1, factor2, factor3));
     }
 
     @Test

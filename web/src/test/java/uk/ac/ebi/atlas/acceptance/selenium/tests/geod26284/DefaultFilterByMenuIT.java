@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 public class DefaultFilterByMenuIT extends SeleniumFixture {
@@ -112,7 +112,7 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
         List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
 
         //then
-        Assert.assertThat(selectedGenes, hasItems(
+        Assert.assertThat(selectedGenes, contains(
                 "RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", //expressed on 1 FactorValue
                 "RP11-368L12.1", //expressed on two FactorValues
                 "RP11-20I23.6" //expressed on three FactorValues
@@ -124,7 +124,7 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
         //given that we selected the default filterFactorValues RNA Type : total RNA and cellular component : whole cell
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), hasItems("cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains("cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"));
     }
 
     @Test
@@ -163,13 +163,13 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
         subject.clickFilterByMenuElement(new int[]{2, 5, 0, 0});
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), hasItems(A_549, "ag445", "bj", "cd14-positive...", "cd20-positive b...", "gm12878", "h1-hesc", "hela-s3", "hepg2", "hmec cell line", "hsmm cell line", "huvec cell line", "k562", "mcf-7", "nhek cell line", "nhlf cell line", SK_N_SH_RA));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains(A_549, "ag445", "bj", "cd14-positive...", "cd20-positive b...", "gm12878", "h1-hesc", "hela-s3", "hepg2", "hmec cell line", "hsmm cell line", "huvec cell line", "k562", "mcf-7", "nhek cell line", "nhlf cell line", SK_N_SH_RA));
 
         //when we extract top 9 from heatmap
         List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
 
         //then
-        Assert.assertThat(selectedGenes, hasItems(
+        Assert.assertThat(selectedGenes, contains(
                 "RP11-439L8.3", "U4", "RP11-90H3.1", "RTDR1", "RGS7BP", "RP11-736N17.8", "RP11-727M10.1", "RP3-406C18.2", "SCN2A"
         ));
     }
@@ -182,13 +182,13 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
         subject.clickFilterByMenuElement(new int[]{2, 5, 1, 22});
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), hasItems("long non-polya...", LONG_POLYA_RNA));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains("long non-polya...", LONG_POLYA_RNA));
 
         //when we extract top 9 from heatmap
         List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
 
         //then
-        Assert.assertThat(selectedGenes, hasItems(
+        Assert.assertThat(selectedGenes, contains(
                 "AC011293.1", "Y_RNA", "7SK", "PCDHGB8P", "RP5-961K14.1", "GEMIN8P4", "RPS6P20", "RTDR1", "RP11-698F20.3"
         ));
 

@@ -14,6 +14,7 @@ import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -58,7 +59,7 @@ public class ExperimentBuilderTest {
         //given
         subject.withExperimentRuns(experimentRunMocks);
         //then
-        assertThat(subject.extractFactorGroups(), hasItems(factorGroup1Mock, factorGroup2Mock));
+        assertThat(subject.extractFactorGroups(), contains(factorGroup1Mock, factorGroup2Mock));
     }
 
     @Test
