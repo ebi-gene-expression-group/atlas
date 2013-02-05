@@ -22,15 +22,12 @@
 
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.collect.SortedSetMultimap;
-import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Named;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -80,19 +77,15 @@ public class FilterByMenuBuilder {
         // factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, String>> thirdMenuLevel = new TreeMap<>();
 
-        SortedSet<Factor> validCombinationsForFactor = experiment.getValidCombinationsForFactor(firstFactor);
-
+        // what names are currently remaining
         String firstFactorName = firstFactor.getName();
         SortedSet<String> currentFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName);
-
-        // index second level factor names
-        SortedSetMultimap<String, Factor> secondFactorNames =
-                factorsByName(validCombinationsForFactor);
 
         // third level: factor value choices per factor name, restricted by previous
         for (String secondFactorName : currentFactorNames) {
 
-            // get remainder of factor names
+            // get remainder of factors and names
+            SortedSet<Factor> remainingFactors = experiment.getValidCombinationsForFactorAndName(firstFactor, secondFactorName);
             SortedSet<String> remainingFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName, secondFactorName);
 
             // TODO: what in case there are more than 3 possible factor types?
@@ -103,7 +96,7 @@ public class FilterByMenuBuilder {
             String queryFactorType = firstArbitraryFactor.getType();
 
             // third level: factor name
-            SortedMap<String, String> thirdLevel = this.buildForthMenuLevel(queryFactorType, firstFactor, secondFactorNames.get(secondFactorName));
+            SortedMap<String, String> thirdLevel = this.buildForthMenuLevel(queryFactorType, firstFactor, remainingFactors);
             if (!thirdMenuLevel.containsKey(secondFactorName)) {
                 thirdMenuLevel.put(secondFactorName, thirdLevel);
             }
@@ -154,15 +147,6 @@ public class FilterByMenuBuilder {
             return filterFactorsURL;
         }
 
-    }
-
-    protected SortedSetMultimap<String, Factor> factorsByName(Set<Factor> factors) {
-        // using factor names here for better readability and compatibility with experiment design page
-        SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
-        for (Factor factor : factors) {
-            factorsByName.put(factor.getName(), factor);
-        }
-        return factorsByName;
     }
 
     protected String serialize(Factor factor) {
