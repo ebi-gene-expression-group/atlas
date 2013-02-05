@@ -41,4 +41,8 @@ public class FilterByMenuBuilderTest {
                 is("{\"queryFactorType\":\"aType\",\"filterFactorsURL\":\"HELLO:world,HELLO1:world1\"}"));
     }
 
+    @Test
+    public void testMenuLevel() {
+
+    }
 }

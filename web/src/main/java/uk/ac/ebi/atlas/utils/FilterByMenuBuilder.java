@@ -22,15 +22,15 @@
 
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Named;
-import java.util.SortedMap;
+import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeMap;
 
 @Named("filterByMenuBuilder")
 @Scope("prototype")
@@ -41,83 +41,139 @@ public class FilterByMenuBuilder {
     public FilterByMenuBuilder() {
     }
 
-    public SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> build(Experiment experiment) {
 
-        // build filter by menu map here, structure:
-        // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
-        SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> filterByMenu = new TreeMap<>();
+    public class MenuLevel implements Comparable<MenuLevel> {
+
+        String value;
+
+        SortedSet<MenuLevel> children = Sets.newTreeSet();
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void addChild(MenuLevel child) {
+            children.add(child);
+        }
+
+        public void addChildren(SortedSet<MenuLevel> children) {
+            this.children.addAll(children);
+        }
+
+        public Set<MenuLevel> getChildren() {
+            return children;
+        }
+
+        public void iterate(SortedSet<MenuLevel> visited) {
+            for (MenuLevel child : children) {
+                if (visited.contains(child)) continue;
+                visited.add(child);
+                child.iterate(visited);
+            }
+        }
+
+        @Override
+        public int compareTo(MenuLevel o) {
+            return value.compareTo(o.value);
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
+
+    public SortedSet<MenuLevel> build(Experiment experiment) {
+
+        SortedSet<MenuLevel> firstMenuLevel = Sets.newTreeSet();
 
         // first level: factor name
         for (String firstFactorName : experiment.getAllFactorNames()) {
 
-            filterByMenu.put(firstFactorName, buildSecondMenuLevel(experiment, firstFactorName));
-
+            MenuLevel level = new MenuLevel();
+            level.setValue(firstFactorName);
+            level.addChildren(buildSecondMenuLevel(experiment, firstFactorName));
+            firstMenuLevel.add(level);
         }
 
-        return filterByMenu;
+        return firstMenuLevel;
     }
 
-    private SortedMap<String, SortedMap<String, SortedMap<String, String>>> buildSecondMenuLevel(Experiment experiment, String firstFactorName) {
+    private SortedSet<MenuLevel> buildSecondMenuLevel(Experiment experiment, String firstFactorName) {
 
-        // factor value 1 > factor name 2 > factor value 2 > link
-        SortedMap<String, SortedMap<String, SortedMap<String, String>>> secondMenuLevel = new TreeMap<>();
+        SortedSet<MenuLevel> secondMenuLevel = Sets.newTreeSet();
 
         // second level: factor value choices per factor name, all are valid
         for (Factor firstFactor : experiment.getFactorsByName(firstFactorName)) {
 
-            secondMenuLevel.put(firstFactor.getValue(), buildThirdMenuLevel(experiment, firstFactor));
-
+            MenuLevel level = new MenuLevel();
+            level.setValue(firstFactor.getValue());
+            level.addChildren(buildThirdMenuLevel(experiment, firstFactor));
+            secondMenuLevel.add(level);
         }
 
         return secondMenuLevel;
     }
 
-    private SortedMap<String, SortedMap<String, String>> buildThirdMenuLevel(Experiment experiment, Factor firstFactor) {
+    private SortedSet<MenuLevel> buildThirdMenuLevel(Experiment experiment, Factor firstFactor) {
 
-        // factor name 2 > factor value 2 > link
-        SortedMap<String, SortedMap<String, String>> thirdMenuLevel = new TreeMap<>();
+        SortedSet<MenuLevel> thirdMenuLevel = Sets.newTreeSet();
 
         // what names are currently remaining
         String firstFactorName = firstFactor.getName();
         SortedSet<String> currentFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName);
 
-        // third level: factor value choices per factor name, restricted by previous
+        // third level: factor name choices, restricted by previous
         for (String secondFactorName : currentFactorNames) {
 
-            // get remainder of factors and names
             SortedSet<Factor> remainingFactors = experiment.getValidCombinationsForFactorAndName(firstFactor, secondFactorName);
-            SortedSet<String> remainingFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName, secondFactorName);
 
-            // TODO: what in case there are more than 3 possible factor types?
-            // arbitrarily taking first of remaining factor names as query factor type
-            String firstRemainingFactorName = remainingFactorNames.first();
-            SortedSet<Factor> factorsForFirstRemainingFactorName = experiment.getFactorsByName(firstRemainingFactorName);
-            Factor firstArbitraryFactor = factorsForFirstRemainingFactorName.first();
-            String queryFactorType = firstArbitraryFactor.getType();
-
-            // third level: factor name
-            SortedMap<String, String> thirdLevel = this.buildForthMenuLevel(queryFactorType, firstFactor, remainingFactors);
-            if (!thirdMenuLevel.containsKey(secondFactorName)) {
-                thirdMenuLevel.put(secondFactorName, thirdLevel);
-            }
-            SortedMap<String, String> stringStringSortedMap = thirdMenuLevel.get(secondFactorName);
-            stringStringSortedMap.putAll(thirdLevel);
+            MenuLevel level = new MenuLevel();
+            level.setValue(secondFactorName);
+            level.addChildren(buildForthMenuLevel(experiment, firstFactor, remainingFactors));
+            thirdMenuLevel.add(level);
         }
 
         return thirdMenuLevel;
     }
 
-    private SortedMap<String, String> buildForthMenuLevel(String queryFactorType, Factor firstFactor, SortedSet<Factor> secondFactors) {
+    private SortedSet<MenuLevel> buildForthMenuLevel(Experiment experiment, Factor firstFactor, SortedSet<Factor> secondFactors) {
 
-        // factor value 2 > link
-        SortedMap<String, String> forthMenuLevel = new TreeMap<>();
+        SortedSet<MenuLevel> forthMenuLevel = Sets.newTreeSet();
 
         // forth level: factor value choices for second factor name
         for (Factor secondFactor : secondFactors) {
-            String link = getJsonUrl(queryFactorType, firstFactor, secondFactor);
-            forthMenuLevel.put(secondFactor.getValue(), link);
+
+            MenuLevel level = new MenuLevel();
+            level.setValue(secondFactor.getValue());
+            level.addChild(buildLastMenuLevel(experiment, firstFactor, secondFactor));
+            forthMenuLevel.add(level);
         }
+
         return forthMenuLevel;
+    }
+
+    private MenuLevel buildLastMenuLevel(Experiment experiment, Factor firstFactor, Factor secondFactor) {
+
+        // get remainder of factors and names
+        SortedSet<String> remainingFactorNames = experiment.getRemainingFactorNamesForNames(firstFactor.getName(), secondFactor.getName());
+
+        // TODO: what in case there are more than 3 possible factor types?
+        // arbitrarily taking first of remaining factor names as query factor type
+        String firstRemainingFactorName = remainingFactorNames.first();
+        SortedSet<Factor> factorsForFirstRemainingFactorName = experiment.getFactorsByName(firstRemainingFactorName);
+        Factor firstArbitraryFactor = factorsForFirstRemainingFactorName.first();
+        String queryFactorType = firstArbitraryFactor.getType();
+
+        String link = getJsonUrl(queryFactorType, firstFactor, secondFactor);
+        MenuLevel level = new MenuLevel();
+        level.setValue(link);
+
+        return level;
     }
 
     protected String getJsonUrl(String queryFactorType, Factor firstFactor, Factor secondFactor) {
