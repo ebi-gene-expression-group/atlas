@@ -38,14 +38,10 @@ public class FilterByMenuBuilder {
 
     public static final String FACTOR_SEPARATOR = ":";
 
-    private SortedSetMultimap<Factor, Factor> validFactorCombinations;
-
     public FilterByMenuBuilder() {
     }
 
     public SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> build(Experiment experiment) {
-
-        validFactorCombinations = experiment.getValidFactorCombinations();
 
         // build filter by menu map here, structure:
         // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
@@ -81,9 +77,11 @@ public class FilterByMenuBuilder {
         // factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, String>> thirdMenuLevel = new TreeMap<>();
 
+        SortedSet<Factor> validCombinationsForFactor = experiment.getValidCombinationsForFactor(firstFactor);
+
         // index second level factor names
         SortedSetMultimap<String, Factor> secondFactorNames =
-                factorsByName(validFactorCombinations.get(firstFactor));
+                factorsByName(validCombinationsForFactor);
 
         // third level: factor value choices per factor name, restricted by previous
         for (String secondFactorName : secondFactorNames.keySet()) {

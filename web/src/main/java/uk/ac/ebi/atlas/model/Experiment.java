@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.SortedSetMultimap;
 import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
@@ -32,7 +31,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 //ToDo: this class needs a builder.
-public class Experiment{
+public class Experiment {
 
     private static final Logger logger = Logger.getLogger(Experiment.class);
 
@@ -98,17 +97,16 @@ public class Experiment{
         return experimentalFactors.getFilteredFactors(filterFactors, type);
     }
 
-    //ToDo: data structures like this should not be exposed
-    public SortedSetMultimap<Factor, Factor> getValidFactorCombinations() {
-        return experimentalFactors.getValidFactorCombinations();
-    }
-
     public SortedSet<String> getAllFactorNames() {
         return experimentalFactors.getAllFactorNames();
     }
 
-    public SortedSet<Factor> getFactorsByName(String name) {
+    public SortedSet<Factor> getFactorsByName(@NotNull String name) {
         return experimentalFactors.getFactorsByName(name);
+    }
+
+    public SortedSet<Factor> getValidCombinationsForFactor(Factor factor) {
+        return experimentalFactors.getValidCombinationsForFactor(factor);
     }
 
 }
