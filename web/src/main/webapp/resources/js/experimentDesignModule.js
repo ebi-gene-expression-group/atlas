@@ -9,32 +9,30 @@ var experimentDesignTableModule = (function ($) {
         _runAccessions,
         _samples,
         _factors,
-        _assayHeader,
-        _experimentAccession;
+        _assayHeader;
 
+    function initColumn(aoColumnDefs, values, startCount) {
+        for (var value in values) {
+            startCount = startCount + 1;
+
+            aoColumnDefs[startCount] = {
+                "sClass": "center bb",
+                "sTitle": value,
+                "aTargets": [ startCount ]
+            };
+
+        }
+        aoColumnDefs[startCount].sClass = "center bb br";
+    }
 
     /* populate all sub categories */
     function initColumnDefs() {
         var aoColumnDefs = [];
         aoColumnDefs[0] = { "sClass": "assays bb br bl", "sTitle": _assayHeader + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets": [ 0 ]};
 
-        function initColumn(values, startCount) {
-            for (var value in values) {
-                startCount = startCount + 1;
+        initColumn(aoColumnDefs, _samples, 0);
 
-                aoColumnDefs[startCount] = {
-                    "sClass": "center bb",
-                    "sTitle": value,
-                    "aTargets": [ startCount ]
-                };
-
-            }
-            aoColumnDefs[startCount].sClass = "center bb br";
-        }
-
-        initColumn(_samples, 0);
-
-        initColumn(_factors, Object.keys(_samples).length);
+        initColumn(aoColumnDefs, _factors, Object.keys(_samples).length);
 
         return aoColumnDefs;
     }
@@ -103,12 +101,11 @@ var experimentDesignTableModule = (function ($) {
 
     }
 
-    function _init(assayHeader, experimentAccession, dataSet, runAccessions, samples, factors) {
+    function _init(assayHeader, dataSet, runAccessions, samples, factors) {
         _dataSet = dataSet;
         _runAccessions = runAccessions;
         _samples = samples;
         _factors = factors;
-        _experimentAccession = experimentAccession;
         _assayHeader = assayHeader;
 
 

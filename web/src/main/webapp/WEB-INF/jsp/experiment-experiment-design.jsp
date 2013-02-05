@@ -48,7 +48,7 @@
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript"
-        src="${pageContext.request.contextPath}/resources/js/experimentDesign.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/experimentDesignModule.js"></script>
 
 <script>
 
@@ -59,7 +59,7 @@
 
     (function ($) {
         $(document).ready(function () {
-            experimentDesignTableModule.init('${assayHeader}', '${experimentAccession}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
+            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
 
             helpTooltipsModule.init('experiment-design');
         });
