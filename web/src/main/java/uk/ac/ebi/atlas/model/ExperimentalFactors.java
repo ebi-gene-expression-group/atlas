@@ -76,8 +76,19 @@ public class ExperimentalFactors {
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
     }
 
+    public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
+        SortedSet<String> result = new TreeSet<>(factorsByName.keySet());
+        List<String> list = Arrays.asList(names);
+        result.removeAll(list);
+        return result;
+    }
+
     public SortedSet<Factor> getFactorsByName(String name) {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
+    }
+
+    public SortedSet<Factor> getValidCombinationsForFactor(Factor factor) {
+        return ImmutableSortedSet.copyOf(validFactorCombinations.get(factor));
     }
 
     public SortedSet<Factor> getFactorsByType(String type) {
@@ -112,10 +123,6 @@ public class ExperimentalFactors {
 
     public Set<Factor> getDefaultFilterFactors() {
         return Collections.unmodifiableSet(defaultFilterFactors);
-    }
-
-    public SortedSetMultimap<Factor, Factor> getValidFactorCombinations() {
-        return validFactorCombinations;
     }
 
     public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, String queryFactorType) {

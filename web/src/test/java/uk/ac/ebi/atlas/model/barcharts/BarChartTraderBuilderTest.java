@@ -189,30 +189,6 @@ public class BarChartTraderBuilderTest {
         assertThat(geneExpressionIndexes.get(2d).get(factorHashSet1).cardinality(), is(1));
     }
 
-    @Test
-    public void testTrimIndexes() {
-        //given
-
-        for (int i = 0; i < 50; i = i + 2) {
-
-            subject.addGeneToIndexes(initGeneProfile1(), i);
-            subject.addGeneToIndexes(initGeneProfile2(), i + 1);
-        }
-
-        NavigableMap<Double, Map<FactorGroup, BitSet>> geneExpressionIndexes = subject.getGeneExpressionIndexes();
-
-        assertThat(geneExpressionIndexes.size(), is(3));
-        assertThat(geneExpressionIndexes.keySet().contains(2d), is(true));
-
-        //when
-        subject.trimIndexes();
-
-        //then
-        geneExpressionIndexes = subject.getGeneExpressionIndexes();
-        assertThat(geneExpressionIndexes.size(), is(2));
-        assertThat(geneExpressionIndexes.keySet().contains(2d), is(false));
-    }
-
     private SortedSet<Double> initTreeSetWithValuesLessThen(double value) {
         SortedSet<Double> cutOffs = new TreeSet<>();
         for (int i = 0; i < value; i++) {

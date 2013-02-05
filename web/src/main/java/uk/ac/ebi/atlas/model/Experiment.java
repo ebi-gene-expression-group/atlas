@@ -94,17 +94,20 @@ public class Experiment{
         return experimentalFactors.getFilteredFactors(filterFactors, type);
     }
 
-    //ToDo: data structures like this should not be exposed
-    public SortedSetMultimap<Factor, Factor> getValidFactorCombinations() {
-        return experimentalFactors.getValidFactorCombinations();
-    }
-
     public SortedSet<String> getAllFactorNames() {
         return experimentalFactors.getAllFactorNames();
     }
 
-    public SortedSet<Factor> getFactorsByName(String name) {
+    public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
+        return experimentalFactors.getRemainingFactorNamesForNames(names);
+    }
+
+    public SortedSet<Factor> getFactorsByName(@NotNull String name) {
         return experimentalFactors.getFactorsByName(name);
+    }
+
+    public SortedSet<Factor> getValidCombinationsForFactor(Factor factor) {
+        return experimentalFactors.getValidCombinationsForFactor(factor);
     }
 
 }

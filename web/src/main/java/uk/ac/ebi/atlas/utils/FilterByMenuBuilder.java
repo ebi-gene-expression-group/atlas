@@ -30,7 +30,10 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
 
 @Named("filterByMenuBuilder")
 @Scope("prototype")
@@ -38,14 +41,10 @@ public class FilterByMenuBuilder {
 
     public static final String FACTOR_SEPARATOR = ":";
 
-    private SortedSetMultimap<Factor, Factor> validFactorCombinations;
-
     public FilterByMenuBuilder() {
     }
 
     public SortedMap<String, SortedMap<String, SortedMap<String, SortedMap<String, String>>>> build(Experiment experiment) {
-
-        validFactorCombinations = experiment.getValidFactorCombinations();
 
         // build filter by menu map here, structure:
         // factor name 1 > factor value 1 > factor name 2 > factor value 2 > link
@@ -81,17 +80,20 @@ public class FilterByMenuBuilder {
         // factor name 2 > factor value 2 > link
         SortedMap<String, SortedMap<String, String>> thirdMenuLevel = new TreeMap<>();
 
+        SortedSet<Factor> validCombinationsForFactor = experiment.getValidCombinationsForFactor(firstFactor);
+
+        String firstFactorName = firstFactor.getName();
+        SortedSet<String> currentFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName);
+
         // index second level factor names
         SortedSetMultimap<String, Factor> secondFactorNames =
-                factorsByName(validFactorCombinations.get(firstFactor));
+                factorsByName(validCombinationsForFactor);
 
         // third level: factor value choices per factor name, restricted by previous
-        for (String secondFactorName : secondFactorNames.keySet()) {
+        for (String secondFactorName : currentFactorNames) {
 
             // get remainder of factor names
-            SortedSet<String> remainingFactorNames = new TreeSet<>(experiment.getAllFactorNames());
-            remainingFactorNames.remove(firstFactor.getName());
-            remainingFactorNames.remove(secondFactorName);
+            SortedSet<String> remainingFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName, secondFactorName);
 
             // TODO: what in case there are more than 3 possible factor types?
             // arbitrarily taking first of remaining factor names as query factor type

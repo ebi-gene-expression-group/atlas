@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -86,33 +86,32 @@ public class ExperimentIT {
     }
 
     @Test
-    public void getValidFactorCombinationsTest() {
+    public void getValidCombinationsForFactorTest() {
 
-        assertThat(subject.getValidFactorCombinations().keySet().size(), is(32));
-        assertThat(subject.getValidFactorCombinations().keys().size(), is(198));
-        assertThat(subject.getValidFactorCombinations().size(), is(198));
+        assertThat(subject.getAllFactorNames().size(), is(3));
+        int objectCount = 0;
+        for (String factorName : subject.getAllFactorNames()) {
+            objectCount += subject.getFactorsByName(factorName).size();
+        }
+        assertThat(objectCount, is(32));
 
         Factor factor = new Factor("MATERIAL_TYPE", "total rna");
-        assertThat(subject.getValidFactorCombinations().get(factor).size(), is(10));
+        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(10));
         factor = new Factor("MATERIAL_TYPE", "long polya rna");
-        assertThat(subject.getValidFactorCombinations().get(factor).size(), is(21));
+        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(21));
         factor = new Factor("CELLULAR_COMPONENT", "whole cell");
-        assertThat(subject.getValidFactorCombinations().get(factor).size(), is(26));
+        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(26));
         factor = new Factor("CELL_LINE", "imr-90");
-        assertThat(subject.getValidFactorCombinations().get(factor).size(), is(5));
+        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(5));
         factor = new Factor("CELL_LINE", "cd34-positive mobilized cell cell line");
-        assertThat(subject.getValidFactorCombinations().get(factor).size(), is(2));
+        assertThat(subject.getValidCombinationsForFactor(factor).size(), is(2));
 
-
-        int objectCount = 32;
-        for (Factor keyFactor : subject.getValidFactorCombinations().keySet()) {
-            objectCount += subject.getValidFactorCombinations().get(keyFactor).size();
+        for (String factorName : subject.getAllFactorNames()) {
+            for (Factor keyFactor : subject.getFactorsByName(factorName)) {
+                objectCount += subject.getValidCombinationsForFactor(keyFactor).size();
+            }
         }
-
         assertThat(objectCount, is(230));
-
-        objectCount = 198 + subject.getValidFactorCombinations().values().size();
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -133,6 +132,13 @@ public class ExperimentIT {
 
         assertThat(filteredFactors.size(), is(1));
         assertThat(filteredFactors.first().getValue(), is("whole cell"));
+    }
+
+    @Test
+    public void getRemainingFactorNamesForNames() {
+        assertThat(subject.getRemainingFactorNamesForNames("RNA type"), hasItems("cell line", "cellular component"));
+        assertThat(subject.getRemainingFactorNamesForNames("cell line", "cellular component").size(), is(1));
+        assertThat(subject.getRemainingFactorNamesForNames("cell line", "cellular component"), hasItem("RNA type"));
     }
 
 }
