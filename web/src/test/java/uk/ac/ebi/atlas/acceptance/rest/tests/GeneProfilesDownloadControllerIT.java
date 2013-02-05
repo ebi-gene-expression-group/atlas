@@ -58,7 +58,7 @@ public class GeneProfilesDownloadControllerIT {
         List<String> firstLine = subject.getRowAsList(0);
 
         assertThat(firstLine,
-                hasItems("Gene name", "Gene Id", "adipose", "adrenal", "brain", "breast", "colon", "heart", "kidney", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testes", "thyroid", "white blood cells")
+                contains("Gene name", "Gene Id", "adipose", "adrenal", "brain", "breast", "colon", "heart", "kidney", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testes", "thyroid", "white blood cells")
         );
 
     }
@@ -70,7 +70,7 @@ public class GeneProfilesDownloadControllerIT {
         List<String> secondLine = subject.getRowAsList(1);
 
         assertThat(secondLine,
-                hasItems("METTL25", "ENSG00000127720", "0", "2", "0.7", "2", "0.9", "2", "5", "4", "0.9", "2", "3", "3", "1", "3", "3", "4")
+                contains("METTL25", "ENSG00000127720", "0", "2", "0.7", "2", "0.9", "2", "5", "4", "0.9", "2", "3", "3", "1", "3", "3", "4")
         );
 
     }

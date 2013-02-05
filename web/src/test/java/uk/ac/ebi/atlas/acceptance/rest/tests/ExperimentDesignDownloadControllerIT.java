@@ -58,7 +58,7 @@ public class ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowAsList(0);
 
         assertThat(firstLine,
-                hasItems("Assay", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]", "Factor Values[library preparation method]", "Factor Values[phenotype]", "Analysed")
+                contains("Assay", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]", "Factor Values[library preparation method]", "Factor Values[phenotype]", "Analysed")
         );
 
     }
@@ -70,7 +70,7 @@ public class ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowAsList(1);
 
         assertThat(secondLine,
-                hasItems("ERR030872", "Homo sapiens", "60", "female", "Human thyroid total RNA, lot 0908003", "thyroid", "mRNA-Seq", "caucasian", "Yes")
+                contains("ERR030872", "Homo sapiens", "60", "female", "Human thyroid total RNA, lot 0908003", "thyroid", "mRNA-Seq", "caucasian", "Yes")
         );
 
     }

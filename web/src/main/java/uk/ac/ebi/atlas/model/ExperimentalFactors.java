@@ -77,10 +77,10 @@ public class ExperimentalFactors {
     }
 
     public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
-        SortedSet<String> result = new TreeSet<>(factorsByName.keySet());
-        List<String> list = Arrays.asList(names);
-        result.removeAll(list);
-        return result;
+        SortedSet<String> factorNames = new TreeSet<>(factorsByName.keySet());
+        List<String> namesToBeExcluded = Arrays.asList(names);
+        factorNames.removeAll(namesToBeExcluded);
+        return factorNames;
     }
 
     public SortedSet<Factor> getFactorsByName(String name) {
@@ -141,7 +141,7 @@ public class ExperimentalFactors {
 
         SortedSet<Factor> factorsByType = getFactorsByType(queryFactorType);
 
-        //ToDo: this is a nasty trick to handle experiments that have multiple factor types but where we are not interested in filtering (e.g. Illumina)
+        //ToDo: this is a patch to handle experiments that have multiple factor types but where we are not interested in filtering (e.g. Illumina)
         //ToDo: we should rather avoid storing inside expressions factors that are useless (i.e. illumina experiment)
         if (CollectionUtils.isEmpty(filterFactors)) {
             return factorsByType;
