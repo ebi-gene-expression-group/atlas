@@ -22,15 +22,13 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.collect.SortedSetMultimap;
-
 import javax.validation.constraints.NotNull;
 import java.text.MessageFormat;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Experiment{
+public class Experiment {
 
     private String description;
     private String specie;
@@ -106,8 +104,8 @@ public class Experiment{
         return experimentalFactors.getFactorsByName(name);
     }
 
-    public SortedSet<Factor> getValidCombinationsForFactor(Factor factor) {
-        return experimentalFactors.getValidCombinationsForFactor(factor);
+    public SortedSet<Factor> getValidCombinationsForFactorAndName(Factor factor, String name) {
+        return experimentalFactors.getValidCombinationsForFactorAndName(factor, name);
     }
 
 }
