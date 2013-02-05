@@ -29,12 +29,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -69,7 +67,15 @@ public class ExpressionBufferBuilderTest {
     @Mock
     private Factor factorMock3;
 
+    //@Mock
+    //private ExperimentBuilder experimentBuilderMock;
+
+    @Mock
+    private Experiment experimentMock;
+
     private ExpressionsBuffer.Builder subject;
+
+
 
     @Before
     public void initializeSubject() {
@@ -90,15 +96,18 @@ public class ExpressionBufferBuilderTest {
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(factorMock2);
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(factorMock3);
 
-        Experiment experiment = new ExperimentBuilder().forSpecie(SPECIE)
+        //when(experimentBuilderMock.create()).thenReturn(experimentMock);
+        /*
+        Experiment experiment = new ExperimentBuilder(mock(ExperimentalFactors.class))
+                .forSpecie(SPECIE)
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(factorMock1.getType())
                 .withDefaultFilterFactors(Collections.EMPTY_SET)
                 .withExperimentRuns(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3))
                 .create();
+*/
 
-
-        when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experiment);
+        when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
 
         subject = new ExpressionsBuffer.Builder(experimentsCacheMock);
     }

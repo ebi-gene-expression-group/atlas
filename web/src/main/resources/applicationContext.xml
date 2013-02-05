@@ -27,6 +27,10 @@
         <constructor-arg ref="httpClientConnectionManager"/>
     </bean>
 
+    <bean id="experimentMetadataLoader" class="uk.ac.ebi.atlas.model.caches.ExperimentMetadataLoader">
+        <lookup-method name="createExperimentBuilder" bean="experimentBuilder"/>
+    </bean>
+
     <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
           destroy-method="shutdown">
     </bean>

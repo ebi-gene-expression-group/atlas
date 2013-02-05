@@ -26,70 +26,74 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ExperimentTest {
+
+    @Mock
+    private ExperimentalFactors experimentalFactorsMock;
 
     private static final String SPECIE = "homo sapiens";
 
     private static final String RUN_ACCESSION_1 = "ENS0";
     private static final String RUN_ACCESSION_2 = "ENS1";
-    private static final String RUN_ACCESSION_3 = "ENS2";
     private static final String DESCRIPTION = "aDescription";
 
-    private ExperimentRun experimentRun1;
-    private ExperimentRun experimentRun2;
-    private ExperimentRun experimentRun3;
-
     private static final String CELLULAR_COMPONENT = "CELLULAR_COMPONENT";
-    private static final String MATERIAL_TYPE = "MATERIAL_TYPE";
     private static final String ORGANISM_PART = "ORGANISM_PART";
 
-    private static final Factor ORGANISM_PART_HEART = new Factor(ORGANISM_PART, ORGANISM_PART, "heart");
-    private static final Factor ORGANISM_PART_LIVER = new Factor(ORGANISM_PART, ORGANISM_PART, "liver");
-    private static final Factor ORGANISM_PART_LUNG = new Factor(ORGANISM_PART, ORGANISM_PART, "lung");
-    private static final Factor MATERIAL_TYPE_TOTALRNA = new Factor(MATERIAL_TYPE, "RNAtype", "total rna");
-    private static final Factor MATERIAL_TYPE_LONGA = new Factor(MATERIAL_TYPE, "RNAtype", "long ploy a rna");
-    private static final Factor CELLULAR_COMPONENT_NUCLEUS = new Factor(CELLULAR_COMPONENT, CELLULAR_COMPONENT, "nucleus");
 
-    private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
+    @Mock
+    private ExperimentRun experimentRun1Mock;
+    @Mock
+    private ExperimentRun experimentRun2Mock;
+    @Mock
+    private FactorGroup factorGroupMock1;
+    @Mock
+    private FactorGroup factorGroupMock2;
+
+    @Mock
+    private Factor factorMock1;
+    @Mock
+    private Factor factorMock2;
+
 
     private Experiment subject;
 
     @Before
     public void initializeSubject() {
 
-        // heart, nucleus, long a
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactor(ORGANISM_PART_HEART);
-        experimentRun1.addFactor(CELLULAR_COMPONENT_NUCLEUS);
-        experimentRun1.addFactor(MATERIAL_TYPE_LONGA);
+        when(experimentRun1Mock.getRunAccession()).thenReturn(RUN_ACCESSION_1);
+        when(experimentRun2Mock.getRunAccession()).thenReturn(RUN_ACCESSION_2);
 
-        // liver, nucleus, long a
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(ORGANISM_PART_LIVER);
-        experimentRun2.addFactor(CELLULAR_COMPONENT_NUCLEUS);
-        experimentRun2.addFactor(MATERIAL_TYPE_LONGA);
+        when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroupMock1);
+        when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
 
-        // lung, nucleus, total rna
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(ORGANISM_PART_LUNG);
-        experimentRun3.addFactor(CELLULAR_COMPONENT_NUCLEUS);
-        experimentRun3.addFactor(MATERIAL_TYPE_TOTALRNA);
-
-        subject = new ExperimentBuilder().forSpecie(SPECIE)
+        subject = new ExperimentBuilder(experimentalFactorsMock)
+                                         .forSpecie(SPECIE)
                                          .withDescription(DESCRIPTION)
                                          .withDefaultQueryType(ORGANISM_PART)
                                          .withDefaultFilterFactors(Collections.EMPTY_SET)
-                                         .withExperimentRuns(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3))
+                                         .withExperimentRuns(Lists.newArrayList(experimentRun1Mock, experimentRun2Mock))
                                          .create();
+
+
     }
 
     @Test
     public void testExperimentRunAccessions() {
-        assertThat(subject.getExperimentRunAccessions(), hasItems(RUN_ACCESSION_1, RUN_ACCESSION_2, RUN_ACCESSION_3));
+        assertThat(subject.getExperimentRunAccessions(), hasItems(RUN_ACCESSION_1, RUN_ACCESSION_2));
     }
 
     @Test
@@ -103,32 +107,29 @@ public class ExperimentTest {
     }
 
     @Test
-    public void testDefaultFactorType() {
-        assertThat(subject.getDefaultQueryFactorType(), is(ORGANISM_PART));
+    public void getDefaultFactorTypeShouldDelegateToExperimentalFactors() {
+        //when
+        subject.getDefaultQueryFactorType();
+        verify(experimentalFactorsMock).getDefaultQueryFactorType();
     }
 
     @Test
-    public void testAllFactorValues() {
-        assertThat(subject.getFactorGroup(RUN_ACCESSION_1), hasItems(ORGANISM_PART_HEART, MATERIAL_TYPE_LONGA, CELLULAR_COMPONENT_NUCLEUS));
-        assertThat(subject.getFactorGroup(RUN_ACCESSION_2), hasItems(ORGANISM_PART_LIVER, MATERIAL_TYPE_LONGA, CELLULAR_COMPONENT_NUCLEUS));
-        assertThat(subject.getFactorGroup(RUN_ACCESSION_3), hasItems(ORGANISM_PART_LUNG, MATERIAL_TYPE_TOTALRNA, CELLULAR_COMPONENT_NUCLEUS));
+    public void getFactorGroupShouldDelegateToExperimentalRun() {
+        //when
+        subject.getFactorGroup(RUN_ACCESSION_1);
+        //then
+        verify(experimentRun1Mock,times(2)).getFactorGroup();
     }
 
     @Test
     public void testFilteredFactorValues() {
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_LUNG, MATERIAL_TYPE_TOTALRNA), CELLULAR_COMPONENT), hasItems(CELLULAR_COMPONENT_NUCLEUS));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_LIVER, CELLULAR_COMPONENT_NUCLEUS), MATERIAL_TYPE), hasItems(MATERIAL_TYPE_LONGA));
-        assertThat(subject.getFilteredFactors(Sets.newHashSet(MATERIAL_TYPE_LONGA, CELLULAR_COMPONENT_NUCLEUS), ORGANISM_PART), hasItems(ORGANISM_PART_HEART, ORGANISM_PART_LIVER));
-    }
+        //given
+        Set<Factor> filteredFactors = Sets.newHashSet(factorMock1, factorMock2);
+        //when
+        subject.getFilteredFactors(filteredFactors, CELLULAR_COMPONENT);
 
-    @Test(expected = java.lang.IllegalArgumentException.class)
-    public void filteredFactorValuesShouldThrowExceptionIfNoFactorHasQueryFilterType() {
-        subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_LUNG, MATERIAL_TYPE_TOTALRNA), "BLA");
-    }
-
-    @Test(expected = java.lang.IllegalArgumentException.class)
-    public void filteredFactorValuesShouldThrowExceptionIfQueryFilterTypeIsTheSameAsAnyFilterFactorType() {
-        subject.getFilteredFactors(Sets.newHashSet(ORGANISM_PART_HEART), ORGANISM_PART);
+        //then
+        verify(experimentalFactorsMock).getFilteredFactors(filteredFactors, CELLULAR_COMPONENT);
     }
 
 }
