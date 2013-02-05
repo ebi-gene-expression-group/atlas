@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.barcharts;
 
-import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -90,22 +89,11 @@ public class BitIndexBuilder {
     }
 
     public BarChartTrader create() {
-        trimIndexes();
-        return new BarChartTrader(factorGroupGeneExpressionIndexes);
+        BarChartTrader barChartTrader = new BarChartTrader(factorGroupGeneExpressionIndexes);
+        barChartTrader.trimIndexes();
+        return barChartTrader;
     }
 
-    protected void trimIndexes() {
-
-        Set<Double> doubles = Sets.newHashSet(factorGroupGeneExpressionIndexes.keySet());
-        for (Double scaledCutoff : doubles) {
-
-            if (BarChartTrader.countGenesAboveCutoff(factorGroupGeneExpressionIndexes.get(scaledCutoff), null, null) < 50) {
-                factorGroupGeneExpressionIndexes.remove(scaledCutoff);
-            }
-
-        }
-
-    }
 
     protected NavigableMap<Double, Map<FactorGroup, BitSet>> getGeneExpressionIndexes() {
         return factorGroupGeneExpressionIndexes;

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.barcharts;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Factor;
@@ -35,6 +36,9 @@ import java.util.*;
 public class BarChartTrader {
 
     public static final int AVERAGE_GENES_IN_EXPERIMENT = 45000;
+    private static final int MINIMUM_SET_SIZE = 50;
+
+    private int minimumSetSize = MINIMUM_SET_SIZE;
 
     private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
 
@@ -59,13 +63,12 @@ public class BarChartTrader {
         return barChartPoints;
     }
 
-
-    //ToDo: static methods... this method obviously shows that we should create a specialized container class for geneBitSets exposing these kind of services. Delegating to static methods only drives to non-design.
-    protected static int countGenesAboveCutoff(Map<FactorGroup, BitSet> geneBitSets, Set<Factor> filterFactors, Set<Factor> selectedFactors) {
+    protected int countGenesAboveCutoff(Map<FactorGroup, BitSet> geneBitSets, Set<Factor> filterFactors, Set<Factor> selectedFactors) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
         for (FactorGroup bitSetFactors : geneBitSets.keySet()) {
-            if (forFilterFactors(bitSetFactors, filterFactors) && forQueryFactors(bitSetFactors, selectedFactors)) {
+            if ((CollectionUtils.isEmpty(filterFactors) || bitSetFactors.containsAll(filterFactors))
+                    && (CollectionUtils.isEmpty(selectedFactors) || !bitSetFactors.isDisjointFrom(selectedFactors))) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(bitSetFactors));
             }
@@ -73,15 +76,19 @@ public class BarChartTrader {
         return expressedGenesBitSet.cardinality();
     }
 
-    //ToDo: what does this method name means?????
-    protected static boolean forFilterFactors(FactorGroup factorGroup, Set<Factor> filterFactors) {
-        return CollectionUtils.isEmpty(filterFactors) || factorGroup.containsAll(filterFactors);
+    protected void trimIndexes() {
+
+        Set<Double> doubles = Sets.newHashSet(factorGroupGeneExpressionIndexes.keySet());
+        for (Double scaledCutoff : doubles) {
+
+            if (countGenesAboveCutoff(factorGroupGeneExpressionIndexes.get(scaledCutoff), null, null) < minimumSetSize) {
+                factorGroupGeneExpressionIndexes.remove(scaledCutoff);
+            }
+
+        }
     }
 
-    //ToDo: what does this method name means?@?@?@?
-    protected static boolean forQueryFactors(FactorGroup factorGroup, Set<Factor> queryFactors) {
-        return CollectionUtils.isEmpty(queryFactors) ||  !factorGroup.isDisjointFrom(queryFactors);
+    protected void setMinimumSetSize(int minimumSetSize) {
+        this.minimumSetSize = minimumSetSize;
     }
-
-
 }
