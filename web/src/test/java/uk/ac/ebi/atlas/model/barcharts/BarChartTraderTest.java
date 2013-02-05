@@ -87,16 +87,28 @@ public class BarChartTraderTest {
 
     @Test
     public void testCountGenesAboveCutoffWithoutFilterValues() {
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null, null), is(5));
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null, Sets.newHashSet(organismPart1)), is(3));
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null, Sets.newHashSet(organismPart1, organismPart3)), is(5));
+        assertThat(subject.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null, null), is(5));
+        assertThat(subject.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null, Sets.newHashSet(organismPart1)), is(3));
+        assertThat(subject.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), null, Sets.newHashSet(organismPart1, organismPart3)), is(5));
     }
 
     @Test
     public void testCountGenesAboveCutoffWithFilterFactorValues() {
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet(origin1), null), is(4));
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet(origin1), Sets.newHashSet(organismPart1)), is(3));
-        assertThat(BarChartTrader.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet(origin1), Sets.newHashSet(organismPart1, organismPart3)), is(3));
+        assertThat(subject.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet(origin1), null), is(4));
+        assertThat(subject.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet(origin1), Sets.newHashSet(organismPart1)), is(3));
+        assertThat(subject.countGenesAboveCutoff(bitSetMapFactory.createChartSize5(), Sets.newHashSet(origin1), Sets.newHashSet(organismPart1, organismPart3)), is(3));
+    }
+
+    @Test
+    public void testTrimIndexes() {
+        //when
+        subject.setMinimumSetSize(3);
+        subject.trimIndexes();
+
+        //then
+        assertThat(subject.getChart(null, null).containsKey(1d), is(false));
+        assertThat(subject.getChart(null, null).containsKey(0d), is(true));
+
     }
 
     private static class BitSetMapFactory {
@@ -127,29 +139,6 @@ public class BarChartTraderTest {
             }
             return bs;
         }
-    }
-
-    @Test
-    public void forQueryFactors(){
-
-        FactorGroup factorGroup = new FactorSet().add(new Factor("A","B"))
-                        .add(new Factor("C","D")).add(new Factor("E","F"));
-
-        boolean forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D")));
-        assertThat(forQueryFactors, is(true));
-        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","E")));
-        assertThat(forQueryFactors, is(false));
-        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D"),new Factor("E","F")));
-        assertThat(forQueryFactors, is(true));
-        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D"),new Factor("E","F"),new Factor("A","B")));
-        assertThat(forQueryFactors, is(true));
-        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","D"),new Factor("E","F")));
-        assertThat(forQueryFactors, is(true));
-        forQueryFactors = subject.forQueryFactors(factorGroup, Sets.newHashSet(new Factor("C","A"),new Factor("E","F")));
-        assertThat(forQueryFactors, is(true));
-        forQueryFactors = subject.forQueryFactors(factorGroup, new HashSet<Factor>());
-        assertThat(forQueryFactors, is(true));
-
     }
 }
 
