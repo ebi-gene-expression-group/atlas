@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -132,6 +132,13 @@ public class ExperimentIT {
 
         assertThat(filteredFactors.size(), is(1));
         assertThat(filteredFactors.first().getValue(), is("whole cell"));
+    }
+
+    @Test
+    public void getRemainingFactorNamesForNames() {
+        assertThat(subject.getRemainingFactorNamesForNames("RNA type"), hasItems("cell line", "cellular component"));
+        assertThat(subject.getRemainingFactorNamesForNames("cell line", "cellular component").size(), is(1));
+        assertThat(subject.getRemainingFactorNamesForNames("cell line", "cellular component"), hasItem("RNA type"));
     }
 
 }

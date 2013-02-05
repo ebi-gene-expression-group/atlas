@@ -73,6 +73,13 @@ public class ExperimentalFactors {
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
     }
 
+    public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
+        SortedSet<String> result = new TreeSet<>(factorsByName.keySet());
+        List<String> list = Arrays.asList(names);
+        result.removeAll(list);
+        return result;
+    }
+
     public SortedSet<Factor> getFactorsByName(String name) {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }

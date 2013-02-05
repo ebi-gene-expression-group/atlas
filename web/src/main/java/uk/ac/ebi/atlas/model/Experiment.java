@@ -101,6 +101,10 @@ public class Experiment {
         return experimentalFactors.getAllFactorNames();
     }
 
+    public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
+        return experimentalFactors.getRemainingFactorNamesForNames(names);
+    }
+
     public SortedSet<Factor> getFactorsByName(@NotNull String name) {
         return experimentalFactors.getFactorsByName(name);
     }

@@ -30,7 +30,10 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
 
 @Named("filterByMenuBuilder")
 @Scope("prototype")
@@ -79,17 +82,18 @@ public class FilterByMenuBuilder {
 
         SortedSet<Factor> validCombinationsForFactor = experiment.getValidCombinationsForFactor(firstFactor);
 
+        String firstFactorName = firstFactor.getName();
+        SortedSet<String> currentFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName);
+
         // index second level factor names
         SortedSetMultimap<String, Factor> secondFactorNames =
                 factorsByName(validCombinationsForFactor);
 
         // third level: factor value choices per factor name, restricted by previous
-        for (String secondFactorName : secondFactorNames.keySet()) {
+        for (String secondFactorName : currentFactorNames) {
 
             // get remainder of factor names
-            SortedSet<String> remainingFactorNames = new TreeSet<>(experiment.getAllFactorNames());
-            remainingFactorNames.remove(firstFactor.getName());
-            remainingFactorNames.remove(secondFactorName);
+            SortedSet<String> remainingFactorNames = experiment.getRemainingFactorNamesForNames(firstFactorName, secondFactorName);
 
             // TODO: what in case there are more than 3 possible factor types?
             // arbitrarily taking first of remaining factor names as query factor type
