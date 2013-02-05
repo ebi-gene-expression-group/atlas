@@ -28,12 +28,16 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
+import javax.inject.Named;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+@Named
+@Scope("prototype")
 public class ExperimentalFactors {
 
     private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
@@ -42,14 +46,13 @@ public class ExperimentalFactors {
 
     private Map<String, String> factorNamesByType = new HashMap<>();
 
-    public Collection<FactorGroup> factorGroups = new HashSet<>();
+    private Collection<FactorGroup> factorGroups = new HashSet<>();
 
     private Set<Factor> defaultFilterFactors = new HashSet<>();
 
     private SortedSetMultimap<Factor, Factor> validFactorCombinations = TreeMultimap.create();
 
-    ExperimentalFactors(String defaultQueryFactorType) {
-        this.defaultQueryFactorType = defaultQueryFactorType;
+    ExperimentalFactors() {
     }
 
     public String getFactorName(String type) {
@@ -95,10 +98,12 @@ public class ExperimentalFactors {
         }
     }
 
-    void addDefaultFilterFactor(Factor defaultFilterFactor) {
+    ExperimentalFactors addDefaultFilterFactor(Factor defaultFilterFactor) {
         //we need to set the name because defaultFilterFactors config file doesn't contain factor names
         String factorName = getFactorName(defaultFilterFactor.getType());
-        defaultFilterFactors.add(defaultFilterFactor.setName(factorName));
+        defaultFilterFactor.setName(factorName);
+        defaultFilterFactors.add(defaultFilterFactor);
+        return this;
     }
 
     public String getDefaultQueryFactorType() {
@@ -135,5 +140,10 @@ public class ExperimentalFactors {
             }
         });
 
+    }
+
+    ExperimentalFactors setDefaultQueryFactorType(String defaultQueryFactorType) {
+        this.defaultQueryFactorType = defaultQueryFactorType;
+        return this;
     }
 }

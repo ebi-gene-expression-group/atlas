@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.SortedSetMultimap;
-import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
 import java.text.MessageFormat;
@@ -31,10 +30,7 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//ToDo: this class needs a builder.
 public class Experiment{
-
-    private static final Logger logger = Logger.getLogger(Experiment.class);
 
     private String description;
     private String specie;

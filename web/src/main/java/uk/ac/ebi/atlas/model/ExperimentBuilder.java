@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -21,6 +21,12 @@ public class ExperimentBuilder {
     private Collection<ExperimentRun> experimentRuns;
     private String defaultQueryType;
     private Set<Factor> defaultFilterFactors;
+    private ExperimentalFactors experimentalFactors;
+
+    @Inject
+    ExperimentBuilder(ExperimentalFactors experimentalFactors){
+        this.experimentalFactors = experimentalFactors;
+    }
 
     public ExperimentBuilder forSpecie(String specie){
         this.specie = specie;
@@ -48,13 +54,11 @@ public class ExperimentBuilder {
     }
 
     Collection<FactorGroup> extractFactorGroups() {
-        return Collections2.transform(experimentRuns, new Function<ExperimentRun, FactorGroup>() {
-
-            @Override
-            public FactorGroup apply(ExperimentRun experimentRun) {
-                return experimentRun.getFactorGroup();
-            }
-        });
+        Collection<FactorGroup> factorGroups = new ArrayList();
+        for (ExperimentRun experimentRun: experimentRuns){
+            factorGroups.add(experimentRun.getFactorGroup());
+        }
+       return factorGroups;
     }
 
     public Experiment create(){
@@ -63,7 +67,7 @@ public class ExperimentBuilder {
         checkState(StringUtils.isNotBlank(defaultQueryType) , "Please provide a non blank defaultQueryType");
         checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
 
-        ExperimentalFactors experimentalFactors = buildExperimentalFactors();
+        buildExperimentalFactors();
 
         return new Experiment(experimentalFactors, experimentRuns, description, specie);
     }
@@ -71,7 +75,7 @@ public class ExperimentBuilder {
     ExperimentalFactors buildExperimentalFactors() {
         Collection<FactorGroup> factorGroups = extractFactorGroups();
 
-        ExperimentalFactors experimentalFactors = new ExperimentalFactors(defaultQueryType);
+        experimentalFactors.setDefaultQueryFactorType(defaultQueryType);
 
         for (FactorGroup factorGroup : factorGroups) {
             experimentalFactors.addFactorGroup(factorGroup);

@@ -27,7 +27,6 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
@@ -47,16 +46,15 @@ import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
 
-@Named("experimentMetadataLoader")
-@Scope("prototype")
-public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
+//Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder everytime the load method is invoked
+//The reason to do so is that Guava CacheBuilder, that is the one using this class, is not spring managed.
+public abstract class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataLoader.class);
 
@@ -74,17 +72,14 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private ArrayExpressClient arrayExpressClient;
 
-    private ExperimentBuilder experimentBuilder;
-
     @Inject
     public ExperimentMetadataLoader(AnalysisMethodsTsvReader analysisMethodsTsvReader
             , ExperimentFactorsTsvReader experimentFactorsTsvReader
-            , ArrayExpressClient arrayExpressClient, ExperimentBuilder experimentBuilder) {
+            , ArrayExpressClient arrayExpressClient) {
 
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
         this.experimentFactorsTsvReader = experimentFactorsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
-        this.experimentBuilder = experimentBuilder;
     }
 
     @Override
@@ -105,6 +100,8 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
         Collection<ExperimentRun> selectedExperimentRuns = Collections2.filter(allExperimentRuns, new IsExperimentRunSelected(experimentAccession));
+
+        ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
         return experimentBuilder.forSpecie(extractSpecie(firstNode))
                                 .withDescription(experimentName)
@@ -187,12 +184,12 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     ExperimentRun buildExperimentRun(ScanNode scanNode, IDF idf) {
 
-        ExperimentRun run = new ExperimentRun(scanNode.comments.get(ENA_RUN));
+        ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN));
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
 
         if (assayNodes.size() != 1) {
-            throw new IllegalStateException("No assay corresponds to ENA run " + run.getRunAccession());
+            throw new IllegalStateException("No assay corresponds to ENA run " + experimentRun.getRunAccession());
         }
 
         AssayNode assayNode = assayNodes.iterator().next();
@@ -213,10 +210,10 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
             }
 
             Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
-            run.addFactor(factor);
+            experimentRun.addFactor(factor);
         }
 
-        return run;
+        return experimentRun;
     }
 
     class IsExperimentRunSelected implements Predicate<ExperimentRun>{
@@ -239,6 +236,8 @@ public class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
         }
 
     }
+
+    protected abstract ExperimentBuilder createExperimentBuilder();
 
 
 }
