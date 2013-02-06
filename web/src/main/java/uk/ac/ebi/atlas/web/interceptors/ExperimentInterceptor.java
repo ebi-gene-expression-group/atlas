@@ -102,12 +102,17 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
+
         String specie = experiment.getSpecie();
 
-        modelAndView.getModel().put("specie", specie);
+        if (modelAndView != null){ //it is null for REST services
 
-        modelAndView.getModel().put("experimentDescription", experiment.getDescription());
+            modelAndView.getModel().put("specie", specie);
 
+            modelAndView.getModel().put("experimentDescription", experiment.getDescription());
+
+        }
+        
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
 
         stopWatch.stop();
