@@ -29,7 +29,8 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public abstract class Geod26284HeatmapTableTests extends SeleniumFixture {

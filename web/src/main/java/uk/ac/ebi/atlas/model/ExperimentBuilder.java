@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ExperimentBuilder {
+public class ExperimentBuilder{
 
     private String specie;
     private String description;
@@ -69,19 +69,19 @@ public class ExperimentBuilder {
 
         buildExperimentalFactors();
 
-        return new Experiment(experimentalFactors, experimentRuns, description, specie);
+        for (Factor defaultFilterFactor: defaultFilterFactors){
+            String factorName = experimentalFactors.getFactorName(defaultFilterFactor.getType());
+            defaultFilterFactor.setName(factorName);
+        }
+
+        return new Experiment(experimentalFactors, experimentRuns, description, specie, defaultQueryType, defaultFilterFactors);
     }
 
     ExperimentalFactors buildExperimentalFactors() {
         Collection<FactorGroup> factorGroups = extractFactorGroups();
 
-        experimentalFactors.setDefaultQueryFactorType(defaultQueryType);
-
         for (FactorGroup factorGroup : factorGroups) {
             experimentalFactors.addFactorGroup(factorGroup);
-        }
-        for (Factor defaultFilterFactor : defaultFilterFactors) {
-            experimentalFactors.addDefaultFilterFactor(defaultFilterFactor);
         }
         return experimentalFactors;
     }

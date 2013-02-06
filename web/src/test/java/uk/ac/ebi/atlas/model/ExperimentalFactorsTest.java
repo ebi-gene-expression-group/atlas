@@ -13,9 +13,7 @@ import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,10 +40,8 @@ public class ExperimentalFactorsTest {
         when(defaultFilterFactorMock.getType()).thenReturn(DEFAULT_FILTER_FACTOR_TYPE);
 
         subject = new ExperimentalFactors()
-                    .setDefaultQueryFactorType(DEFAULT_QUERY_FACTOR_TYPE)
                     .addFactorGroup(factorGroup1)
-                    .addFactorGroup(factorGroup2)
-                    .addDefaultFilterFactor(defaultFilterFactorMock);
+                    .addFactorGroup(factorGroup2);
     }
 
     @Test
@@ -89,23 +85,23 @@ public class ExperimentalFactorsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getFactorsWithGivenNameCooccurringWithGivenFactorShouldFailIfNameIsSameAsFactorName(){
-        subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType2, "NAME2");
+        subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType2, "NAME2");
     }
 
     @Test
     public void getFactorsWithGivenNameCooccurringWithGivenFactorTest(){
         //when
-        SortedSet<Factor> factors = subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType2, "NAME1");
+        SortedSet<Factor> factors = subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType2, "NAME1");
         //then
         assertThat(factors, contains(factorWithType1));
 
         //when
-        factors = subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType1, "NAME2");
+        factors = subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType1, "NAME2");
         //then
         assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2));
 
         //when
-        factors = subject.getFactorsWithGivenNameCooccurringWithGivenFactor(factorWithType3, "NAME1");
+        factors = subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType3, "NAME1");
         //then
         assertThat(factors, contains(factorWithType1));
 
