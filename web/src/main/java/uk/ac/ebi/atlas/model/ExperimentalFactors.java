@@ -40,7 +40,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ExperimentalFactors implements Iterable<Factor>{
+public class ExperimentalFactors{
 
     private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
 
@@ -74,7 +74,6 @@ public class ExperimentalFactors implements Iterable<Factor>{
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
     }
 
-    //ToDo: if ExperimentalFactors becomes an Iterable of factors this method can become removeByName(...)
     public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
         SortedSet<String> factorNames = new TreeSet<>(factorsByName.keySet());
         List<String> namesToBeExcluded = Arrays.asList(names);
@@ -122,7 +121,7 @@ public class ExperimentalFactors implements Iterable<Factor>{
         }
     }
 
-    //ToDo: this would be: experimentalFactor.sliceBy(...factor) ... or any better name?
+    //ToDo: this would be: experimentalFactor.sliceBy(... FilterFactor).byType(queryFactorType) ... or any better name?
     public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, String queryFactorType) {
 
         for (Factor filterFactor : filterFactors) {
@@ -147,8 +146,4 @@ public class ExperimentalFactors implements Iterable<Factor>{
 
     }
 
-    @Override
-    public Iterator<Factor> iterator() {
-        return coOccurringFactors.keySet().iterator(); //To change body of implemented methods use File | Settings | File Templates.
-    }
 }

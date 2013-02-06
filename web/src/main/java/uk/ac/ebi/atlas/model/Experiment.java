@@ -113,4 +113,8 @@ public class Experiment {
         return experimentalFactors.getFactorsWithGivenNameCoOccurringWithGivenFactor(factor, name);
     }
 
+    public ExperimentalFactors getAllExperimentalFactors(){
+        return experimentalFactors;
+    }
+
 }
