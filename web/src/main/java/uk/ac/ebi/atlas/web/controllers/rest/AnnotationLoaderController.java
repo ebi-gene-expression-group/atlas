@@ -46,17 +46,14 @@ public class AnnotationLoaderController {
 
 
     @Inject
-    public AnnotationLoaderController(ApplicationProperties applicationProperties, ExperimentsCache experimentsCache) {
+    public AnnotationLoaderController(ApplicationProperties applicationProperties, ExperimentsCache experimentsCache, GeneNamesImportCommand geneNamesImportCommand) {
         this.experimentsCache = experimentsCache;
         this.applicationProperties = applicationProperties;
+        this.geneNamesImportCommand = geneNamesImportCommand;
+
     }
 
     private GeneNamesImportCommand geneNamesImportCommand;
-
-    @Inject
-    public AnnotationLoaderController(GeneNamesImportCommand geneNamesImportCommand) {
-        this.geneNamesImportCommand = geneNamesImportCommand;
-    }
 
     @RequestMapping("/updateAnnotations")
     @ResponseBody
