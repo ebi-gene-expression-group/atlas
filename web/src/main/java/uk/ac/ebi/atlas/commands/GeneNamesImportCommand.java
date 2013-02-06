@@ -28,6 +28,7 @@ import uk.ac.ebi.atlas.geneannotation.GeneAnnotationLoader;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Set;
 
 @Named("geneNameUpdateCommand")
 @Scope("prototype")
@@ -40,8 +41,8 @@ public class GeneNamesImportCommand {
         this.geneAnnotationLoader = geneAnnotationLoader;
     }
 
-    public void loadGeneNames(List<String> organisms) {
-        for (String organism: organisms){
+    public void loadGeneNames(Set<String> species) {
+        for (String organism: species){
             geneAnnotationLoader.loadGeneNames(organism);
         }
     }

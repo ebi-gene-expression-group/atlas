@@ -63,6 +63,10 @@ public class ApplicationProperties {
         return Sets.newHashSet(configurationProperties.getProperty("experiment.identifiers").trim().split(","));
     }
 
+    public Set<String> getBiomartDatasetIdentifiers() {
+        return Sets.newHashSet(configurationProperties.getProperty("biomart.dataset.names").trim().split(","));
+    }
+
     public String getFeedbackEmailAddress() {
         return configurationProperties.getProperty("feedback.email");
     }
