@@ -14,7 +14,7 @@
             <div id="experimentDescription" style="font-weight: bold;">
                 ${experimentDescription}
             </div>
-            <div>Organism: ${specie}</div>
+            <div>Organism(s): ${species}</div>
         </td>
         <td style="float:right">
             <div>

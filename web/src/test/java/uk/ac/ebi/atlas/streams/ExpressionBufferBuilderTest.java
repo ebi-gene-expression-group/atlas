@@ -99,7 +99,7 @@ public class ExpressionBufferBuilderTest {
         //when(experimentBuilderMock.create()).thenReturn(experimentMock);
         /*
         Experiment experiment = new ExperimentBuilder(mock(ExperimentalFactors.class))
-                .forSpecie(SPECIE)
+                .forSpecies(SPECIE)
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(factorMock1.getType())
                 .withDefaultFilterFactors(Collections.EMPTY_SET)

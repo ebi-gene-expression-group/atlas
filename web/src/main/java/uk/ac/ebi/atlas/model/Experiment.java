@@ -31,7 +31,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class Experiment {
 
     private String description;
-    private String specie;
+    private Set<String> species;
 
     private String defaultQueryFactorType;
     private Set<Factor> defaultFilterFactors = new HashSet<>();
@@ -43,9 +43,9 @@ public class Experiment {
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 
 
-    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, String specie, String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
+    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
         this.description = description;
-        this.specie = specie;
+        this.species = species;
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
@@ -73,8 +73,12 @@ public class Experiment {
         return experimentRuns.get(experimentRunAccession);
     }
 
-    public String getSpecie() {
-        return specie;
+    public Set<String> getSpecies() {
+        return species;
+    }
+
+    public String getFirstSpecies(){
+        return species.iterator().next();
     }
 
     public String getDescription() {

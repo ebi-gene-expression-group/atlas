@@ -31,7 +31,6 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
 import java.util.Properties;
-import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -71,8 +70,8 @@ public class ApplicationPropertiesTest {
         when(configurationMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".female")).thenReturn(FEMALE_SAPIENS_FILE_NAME);
         when(configurationMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + MOUSE_SPECIE)).thenReturn(MOUSE_FILE_NAME);
 
-        when(homoSapiensExperimentMock.getSpecie()).thenReturn(HOMO_SAPIENS_SPECIE);
-        when(mouseExperimentMock.getSpecie()).thenReturn(MOUSE_SPECIE);
+        when(homoSapiensExperimentMock.getFirstSpecies()).thenReturn(HOMO_SAPIENS_SPECIE);
+        when(mouseExperimentMock.getFirstSpecies()).thenReturn(MOUSE_SPECIE);
 
         subject = new ApplicationProperties(configurationMock);
     }

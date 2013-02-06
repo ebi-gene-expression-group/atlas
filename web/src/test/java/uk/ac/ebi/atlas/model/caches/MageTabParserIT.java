@@ -15,18 +15,21 @@ import uk.ac.ebi.atlas.model.FactorGroup;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItems;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MageTabParserIT {
 
-    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
-    private static final String RUN_ACCESSION = "ERR030880";
+    private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";
+    private static final String RUN_ACCESSION = "SRR306774";
 
     @Inject
     private ExperimentMetadataLoader subject;
@@ -41,7 +44,9 @@ public class MageTabParserIT {
         Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
         FactorGroup experimentRun = experiment.getFactorGroup(RUN_ACCESSION);
         //then
-        assertThat(experimentRun.getFactorByType("ORGANISM_PART").getValue(), is(equalTo("adipose")));
+        assertThat(experimentRun.getFactorByType("ORGANISM_PART").getValue(), is(equalTo("liver")));
+        Set<String> species = experiment.getSpecies();
+        assertThat(species, hasItems("Monodelphis domestica", "Gallus gallus", "Homo sapiens"));
     }
 
 }

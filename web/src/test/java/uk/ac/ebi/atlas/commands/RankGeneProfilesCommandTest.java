@@ -82,7 +82,7 @@ public class RankGeneProfilesCommandTest {
         // no filtering should be done here
         when(solrClientMock.findGeneIds(anyString(), anyString())).thenReturn(Lists.<String>newArrayList());
 
-        when(experimentMock.getSpecie()).thenReturn("SPECIE");
+        when(experimentMock.getFirstSpecies()).thenReturn("SPECIE");
 
         when(experimentsCacheMock.getExperiment(anyString())).thenReturn(experimentMock);
 

@@ -115,16 +115,19 @@ public class GeneProfilesPageController extends GeneProfilesController {
             // this is currently required for the request preferences filter drop-down multi-selection box
             model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
 
-            String specie = experiment.getSpecie();
+            //ToDo: the anatomogram species should be derived from filterParameter.getFilterFactor (if one of the filter factors is species)
+            //ToDo: but only for experiments that have species as a factor type...
+            String species = experiment.getFirstSpecies();
 
-            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, true));
+            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
 
-            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(specie, false));
+            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            model.addAttribute("filterByMenu", filterByMenuBuilder.build(experiment));
-
+            if(!"E-GEOD-30352".equals(experimentAccession)){
+                model.addAttribute("filterByMenu", filterByMenuBuilder.build(experiment));
+            }
             model.addAttribute("selectedFilterFactors", selectedFilterFactors);
         }
 

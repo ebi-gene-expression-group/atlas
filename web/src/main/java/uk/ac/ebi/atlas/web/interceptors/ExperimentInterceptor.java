@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.web.interceptors;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.StopWatch;
@@ -36,6 +38,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @Named("experimentInterceptor")
 public class ExperimentInterceptor extends HandlerInterceptorAdapter {
@@ -102,9 +105,9 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        String specie = experiment.getSpecie();
+        Set<String> species = experiment.getSpecies();
 
-        modelAndView.getModel().put("specie", specie);
+        modelAndView.getModel().put("species", StringUtils.join(species,", "));
 
         modelAndView.getModel().put("experimentDescription", experiment.getDescription());
 

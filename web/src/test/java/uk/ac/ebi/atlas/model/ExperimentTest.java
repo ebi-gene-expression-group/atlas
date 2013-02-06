@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -81,7 +82,7 @@ public class ExperimentTest {
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
 
         subject = new ExperimentBuilder(experimentalFactorsMock)
-                                         .forSpecie(SPECIE)
+                                         .forSpecies(Sets.newHashSet(SPECIE))
                                          .withDescription(DESCRIPTION)
                                          .withDefaultQueryType(ORGANISM_PART)
                                          .withDefaultFilterFactors(Collections.EMPTY_SET)
@@ -103,7 +104,7 @@ public class ExperimentTest {
 
     @Test
     public void testSpecies() {
-        assertThat(subject.getSpecie(), is(SPECIE));
+        assertThat(subject.getFirstSpecies(), is(SPECIE));
     }
 
     @Test

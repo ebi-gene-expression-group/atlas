@@ -57,7 +57,7 @@ public class ExperimentBuilderTest {
 
         subject = new ExperimentBuilder(experimentalFactorsMock);
 
-        subject.forSpecie(SPECIE)
+        subject.forSpecies(Sets.newHashSet(SPECIE))
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(DEFAULT_QUERY_TYPE)
                 .withDefaultFilterFactors(defaultFilterFactors)

@@ -36,7 +36,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 @Controller
-@Scope("singleton")
+@Scope("request")
 public class HomePageController {
 
     private ApplicationProperties properties;
@@ -68,7 +68,7 @@ public class HomePageController {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            experimentAccessions.put(experiment.getSpecie(), experimentAccession);
+            experimentAccessions.put(experiment.getFirstSpecies(), experimentAccession);
         }
 
     }

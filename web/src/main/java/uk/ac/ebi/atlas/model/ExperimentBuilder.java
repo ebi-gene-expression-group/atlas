@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class ExperimentBuilder{
 
-    private String specie;
+    private Set<String> species;
     private String description;
     private Collection<ExperimentRun> experimentRuns;
     private String defaultQueryType;
@@ -28,8 +28,8 @@ public class ExperimentBuilder{
         this.experimentalFactors = experimentalFactors;
     }
 
-    public ExperimentBuilder forSpecie(String specie){
-        this.specie = specie;
+    public ExperimentBuilder forSpecies(Set<String> species){
+        this.species = species;
         return this;
     }
 
@@ -62,7 +62,7 @@ public class ExperimentBuilder{
     }
 
     public Experiment create(){
-        checkState(StringUtils.isNotBlank(specie), "Please provide a non blank specie");
+        checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
         checkState(StringUtils.isNotBlank(defaultQueryType) , "Please provide a non blank defaultQueryType");
         checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
@@ -74,7 +74,7 @@ public class ExperimentBuilder{
             defaultFilterFactor.setName(factorName);
         }
 
-        return new Experiment(experimentalFactors, experimentRuns, description, specie, defaultQueryType, defaultFilterFactors);
+        return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors);
     }
 
     ExperimentalFactors buildExperimentalFactors() {

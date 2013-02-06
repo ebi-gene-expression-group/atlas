@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.caches;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -87,15 +88,13 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         MAGETABInvestigation investigation = parseInvestigation(experimentAccession);
 
-        Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
-
         String defaultQueryFactorType = parseDefaultQueryFactorType(experimentAccession);
 
         Set<Factor> defaultFilterFactors = parseDefaultFilterFactors(experimentAccession);
 
         String experimentName = fetchExperimentName(experimentAccession);
 
-        ScanNode firstNode = scanNodes.iterator().next();
+        Collection<ScanNode> scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
@@ -103,12 +102,12 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
-        return experimentBuilder.forSpecie(extractSpecie(firstNode))
-                                .withDescription(experimentName)
-                                .withDefaultQueryType(defaultQueryFactorType)
-                                .withDefaultFilterFactors(defaultFilterFactors)
-                                .withExperimentRuns(selectedExperimentRuns)
-                                .create();
+        return experimentBuilder.forSpecies(extractSpecie(scanNodes))
+                .withDescription(experimentName)
+                .withDefaultQueryType(defaultQueryFactorType)
+                .withDefaultFilterFactors(defaultFilterFactors)
+                .withExperimentRuns(selectedExperimentRuns)
+                .create();
 
     }
 
@@ -157,14 +156,20 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         }
     }
 
-    private String extractSpecie(ScanNode firstScanNode) {
-        SourceNode firstSourceNode = GraphUtils.findUpstreamNodes(firstScanNode, SourceNode.class).iterator().next();
-        for (CharacteristicsAttribute characteristic : firstSourceNode.characteristics) {
-            if (characteristic.type.equalsIgnoreCase("ORGANISM")) {
-                return characteristic.getAttributeValue();
+    protected Set<String> extractSpecie(Collection<ScanNode> scanNodes) {
+        Set<String> species = Sets.newHashSet();
+        for (ScanNode scanNode : scanNodes) {
+            SourceNode firstScanNode = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class).iterator().next();
+
+            for (CharacteristicsAttribute characteristic : firstScanNode.characteristics) {
+                if (characteristic.type.equalsIgnoreCase("ORGANISM")) {
+                    species.add(characteristic.getAttributeValue());
+                }
             }
+
         }
-        return null;
+
+        return species;
     }
 
     //Required for testability - will be overridden to inject mock
@@ -216,16 +221,16 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         return experimentRun;
     }
 
-    class IsExperimentRunSelected implements Predicate<ExperimentRun>{
+    class IsExperimentRunSelected implements Predicate<ExperimentRun> {
 
         Set<String> selectedRunAccessions;
 
-        public IsExperimentRunSelected(String experimentAccession) throws IOException{
+        public IsExperimentRunSelected(String experimentAccession) throws IOException {
             selectedRunAccessions = getSelectedRunAccessions(experimentAccession);
         }
 
         @Override
-        public boolean apply(ExperimentRun experimentRun){
+        public boolean apply(ExperimentRun experimentRun) {
             return selectedRunAccessions.contains(experimentRun.getRunAccession());
         }
 
