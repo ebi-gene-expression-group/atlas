@@ -28,14 +28,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Scope("request")
 public class AnnotationLoaderController {
 
+    private ExperimentsCache experimentsCache;
+    private ApplicationProperties applicationProperties;
+
+
+    @Inject
+    public AnnotationLoaderController(ApplicationProperties applicationProperties, ExperimentsCache experimentsCache) {
+        this.experimentsCache = experimentsCache;
+        this.applicationProperties = applicationProperties;
+    }
 
     private GeneNamesImportCommand geneNamesImportCommand;
 
@@ -46,11 +60,19 @@ public class AnnotationLoaderController {
 
     @RequestMapping("/updateAnnotations")
     @ResponseBody
-    public String showGeneExpressions(@RequestParam("organism") List<String> organisms) {
+    public String updateAnnotations(@RequestParam("species") Set<String> species) {
 
-        geneNamesImportCommand.loadGeneNames(organisms);
+        geneNamesImportCommand.loadGeneNames(species);
 
         return "Updated";
+    }
+
+    @RequestMapping("/updateAllAnnotations")
+    @ResponseBody
+    public String updateAnnotationsForAllLoadedExperiments() {
+
+        return updateAnnotations(applicationProperties.getBiomartDatasetIdentifiers());
+
     }
 
 
