@@ -2,7 +2,7 @@
 
 <div id="helpContentTooltip" style='display:none'></div>
 
-<table width="100%">
+<table width="100%" style="table-layout:fixed;">
     <tbody>
     <tr>
         <td style="width:140px;">
