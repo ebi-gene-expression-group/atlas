@@ -33,9 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Collections;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -112,7 +110,8 @@ public class ExperimentTest {
     public void getDefaultFactorTypeShouldDelegateToExperimentalFactors() {
         //when
         subject.getDefaultQueryFactorType();
-        verify(experimentalFactorsMock).getDefaultQueryFactorType();
+
+        assertThat(subject.getDefaultFilterFactors(), is(Collections.EMPTY_SET));
     }
 
     @Test

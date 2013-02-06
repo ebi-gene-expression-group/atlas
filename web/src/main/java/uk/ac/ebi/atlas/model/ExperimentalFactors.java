@@ -40,19 +40,15 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ExperimentalFactors {
+public class ExperimentalFactors implements Iterable<Factor>{
 
     private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
-
-    private String defaultQueryFactorType;
 
     private Map<String, String> factorNamesByType = new HashMap<>();
 
     private Collection<FactorGroup> factorGroups = new HashSet<>();
 
-    private Set<Factor> defaultFilterFactors = new HashSet<>();
-
-    private SortedSetMultimap<Factor, Factor> validFactorCombinations = TreeMultimap.create();
+    private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
     ExperimentalFactors() {
     }
@@ -78,6 +74,7 @@ public class ExperimentalFactors {
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
     }
 
+    //ToDo: if ExperimentalFactors becomes an Iterable of factors this method can become removeByName(...)
     public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
         SortedSet<String> factorNames = new TreeSet<>(factorsByName.keySet());
         List<String> namesToBeExcluded = Arrays.asList(names);
@@ -89,21 +86,24 @@ public class ExperimentalFactors {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }
 
-    public SortedSet<Factor> getFactorsWithGivenNameCooccurringWithGivenFactor(@NotNull Factor factor, @NotNull final String name) {
+    //ToDo: if this class becomes an Iterable this method can be simplified in a two steps fluent API call:
+    //ToDo: experimentalFactors.cooccurringWith(factor).havingName(name)
+    public SortedSet<Factor> getFactorsWithGivenNameCoOccurringWithGivenFactor(@NotNull Factor factor, @NotNull final String name) {
         checkArgument(!factor.getName().equals(name));
-        checkState(validFactorCombinations.containsKey(factor));
+        checkState(coOccurringFactors.containsKey(factor));
 
-        SortedSet<Factor> factors = validFactorCombinations.get(factor);
+        SortedSet<Factor> factors = coOccurringFactors.get(factor);
 
         return Sets.filter(factors, new Predicate<Factor>() {
             @Override
-            public boolean apply(Factor factorOfTheSelectedName) {
-                String factorName = factorOfTheSelectedName.getName();
+            public boolean apply(Factor factor) {
+                String factorName = factor.getName();
                 return factorName.equals(name);
             }
         });
     }
 
+    //ToDo: this would become experimentalFactors.byType(...)
     public SortedSet<Factor> getFactorsByType(String type) {
 
         String factorName = factorNamesByType.get(type);
@@ -117,27 +117,12 @@ public class ExperimentalFactors {
     void addToFactorCombinations(FactorGroup factorGroup, Factor factor) {
         for (Factor value : factorGroup) {
             if (!value.equals(factor)) {
-                validFactorCombinations.put(factor, value);
+                coOccurringFactors.put(factor, value);
             }
         }
     }
 
-    ExperimentalFactors addDefaultFilterFactor(Factor defaultFilterFactor) {
-        //we need to set the name because defaultFilterFactors config file doesn't contain factor names
-        String factorName = getFactorName(defaultFilterFactor.getType());
-        defaultFilterFactor.setName(factorName);
-        defaultFilterFactors.add(defaultFilterFactor);
-        return this;
-    }
-
-    public String getDefaultQueryFactorType() {
-        return defaultQueryFactorType;
-    }
-
-    public Set<Factor> getDefaultFilterFactors() {
-        return Collections.unmodifiableSet(defaultFilterFactors);
-    }
-
+    //ToDo: this would be: experimentalFactor.sliceBy(...factor) ... or any better name?
     public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, String queryFactorType) {
 
         for (Factor filterFactor : filterFactors) {
@@ -162,8 +147,8 @@ public class ExperimentalFactors {
 
     }
 
-    ExperimentalFactors setDefaultQueryFactorType(String defaultQueryFactorType) {
-        this.defaultQueryFactorType = defaultQueryFactorType;
-        return this;
+    @Override
+    public Iterator<Factor> iterator() {
+        return coOccurringFactors.keySet().iterator(); //To change body of implemented methods use File | Settings | File Templates.
     }
 }

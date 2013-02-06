@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.geneindex;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
@@ -11,7 +9,6 @@ import uk.ac.ebi.atlas.utils.Files;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItems;
 

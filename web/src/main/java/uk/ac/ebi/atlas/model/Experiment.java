@@ -33,6 +33,9 @@ public class Experiment {
     private String description;
     private String specie;
 
+    private String defaultQueryFactorType;
+    private Set<Factor> defaultFilterFactors = new HashSet<>();
+
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private ExperimentalFactors experimentalFactors;
@@ -40,21 +43,15 @@ public class Experiment {
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 
 
-    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, String specie) {
+    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, String specie, String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
         this.description = description;
         this.specie = specie;
         this.experimentalFactors = experimentalFactors;
+        this.defaultQueryFactorType = defaultQueryFactorType;
+        this.defaultFilterFactors = defaultFilterFactors;
         for (ExperimentRun experimentRun : experimentRuns) {
             this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
         }
-    }
-
-    public String getDefaultQueryFactorType() {
-        return experimentalFactors.getDefaultQueryFactorType();
-    }
-
-    public Set<Factor> getDefaultFilterFactors() {
-        return experimentalFactors.getDefaultFilterFactors();
     }
 
     public FactorGroup getFactorGroup(String experimentRunAccession) {
@@ -84,6 +81,14 @@ public class Experiment {
         return description;
     }
 
+    public String getDefaultQueryFactorType() {
+        return defaultQueryFactorType;
+    }
+
+    public Set<Factor> getDefaultFilterFactors() {
+        return Collections.unmodifiableSet(defaultFilterFactors);
+    }
+
     public SortedSet<Factor> getFactorsByType(@NotNull String type) {
         return experimentalFactors.getFactorsByType(type);
     }
@@ -105,7 +110,7 @@ public class Experiment {
     }
 
     public SortedSet<Factor> getValidCombinationsForFactorAndName(Factor factor, String name) {
-        return experimentalFactors.getFactorsWithGivenNameCooccurringWithGivenFactor(factor, name);
+        return experimentalFactors.getFactorsWithGivenNameCoOccurringWithGivenFactor(factor, name);
     }
 
 }
