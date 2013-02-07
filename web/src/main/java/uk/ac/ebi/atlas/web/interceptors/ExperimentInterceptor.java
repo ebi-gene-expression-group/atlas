@@ -107,15 +107,14 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         Set<String> species = experiment.getSpecies();
 
-        modelAndView.getModel().put("species", StringUtils.join(species,", "));
-        if (modelAndView != null){ //it is null for REST services
+        if (modelAndView != null) { //it is null for REST services
 
-            modelAndView.getModel().put("specie", specie);
+            modelAndView.getModel().put("species", StringUtils.join(species, ", "));
 
             modelAndView.getModel().put("experimentDescription", experiment.getDescription());
 
         }
-        
+
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
 
         stopWatch.stop();
