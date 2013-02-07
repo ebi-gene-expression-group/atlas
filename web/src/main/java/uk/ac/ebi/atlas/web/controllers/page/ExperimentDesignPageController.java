@@ -36,6 +36,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Controller
@@ -84,8 +85,10 @@ public class ExperimentDesignPageController {
             String[] copy = Arrays.copyOf(line, line.length);
             for (int j = 0; j < copy.length; j++) {
                 Integer value = mapping.get(j);
-                checkNotNull(value, "No mapping found for ExpDesign column.");
+                checkNotNull(value, "No mapping found for ExpDesign column " + j);
                 // here re-ordering of each line
+                checkElementIndex(j, line.length, "ExpDesign column " + j + " is outside legal range.");
+                checkElementIndex(value, copy.length, "Mapped index for ExpDesign column " + j + " is " + value + ", but is outside legal range.");
                 line[j] = copy[value];
             }
         }

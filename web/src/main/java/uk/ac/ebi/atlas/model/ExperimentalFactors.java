@@ -23,24 +23,19 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Sets;
-import com.google.common.collect.SortedSetMultimap;
-import com.google.common.collect.TreeMultimap;
+import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ExperimentalFactors{
+public class ExperimentalFactors {
 
     private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
 
@@ -74,32 +69,12 @@ public class ExperimentalFactors{
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
     }
 
-    public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
-        SortedSet<String> factorNames = new TreeSet<>(factorsByName.keySet());
-        List<String> namesToBeExcluded = Arrays.asList(names);
-        factorNames.removeAll(namesToBeExcluded);
-        return factorNames;
-    }
-
     public SortedSet<Factor> getFactorsByName(String name) {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }
 
-    //ToDo: if this class becomes an Iterable this method can be simplified in a two steps fluent API call:
-    //ToDo: experimentalFactors.cooccurringWith(factor).havingName(name)
-    public SortedSet<Factor> getFactorsWithGivenNameCoOccurringWithGivenFactor(@NotNull Factor factor, @NotNull final String name) {
-        checkArgument(!factor.getName().equals(name));
-        checkState(coOccurringFactors.containsKey(factor));
-
-        SortedSet<Factor> factors = coOccurringFactors.get(factor);
-
-        return Sets.filter(factors, new Predicate<Factor>() {
-            @Override
-            public boolean apply(Factor factor) {
-                String factorName = factor.getName();
-                return factorName.equals(name);
-            }
-        });
+    public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
+        return coOccurringFactors.get(factor);
     }
 
     //ToDo: this would become experimentalFactors.byType(...)
@@ -144,6 +119,10 @@ public class ExperimentalFactors{
             }
         });
 
+    }
+
+    public Set<Factor> getAllFactors() {
+        return ImmutableSet.copyOf(coOccurringFactors.keySet());
     }
 
 }

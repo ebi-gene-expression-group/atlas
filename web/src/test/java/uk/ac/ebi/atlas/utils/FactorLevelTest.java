@@ -1,0 +1,156 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.utils;
+
+import com.google.common.collect.Sets;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.Factor;
+
+import java.util.Set;
+import java.util.SortedSet;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
+public class FactorLevelTest {
+
+    private static final String ORGANISM_PART = "ORGANISM_PART";
+    private static final String MATERIAL_TYPE = "MATERIAL_TYPE";
+    private static final String CELLULAR_COMPONENT = "CELLULAR COMPONENT";
+    private static final String ORGANISM_PART_NAME = "organism part";
+    private static final String MATERIAL_TYPE_NAME = "RNA type";
+    private static final String CELLULAR_COMPONENT_NAME = "cellular component";
+
+    Factor firstFactor = new Factor(ORGANISM_PART, ORGANISM_PART_NAME, "liver");
+    Factor secondFactor = new Factor(ORGANISM_PART, ORGANISM_PART_NAME, "heart");
+    Factor thirdFactor = new Factor(ORGANISM_PART, ORGANISM_PART_NAME, "brain");
+    Factor forthFactor = new Factor(MATERIAL_TYPE, MATERIAL_TYPE_NAME, "long poly a rna");
+    Factor fifthFactor = new Factor(MATERIAL_TYPE, MATERIAL_TYPE_NAME, "total rna");
+    Factor sixthFactor = new Factor(CELLULAR_COMPONENT, CELLULAR_COMPONENT_NAME, "plasma");
+    Factor sevenFactor = new Factor(CELLULAR_COMPONENT, CELLULAR_COMPONENT_NAME, "whole cell");
+
+    @Mock
+    Experiment experimentMock;
+
+    FactorLevel subject;
+
+    private SortedSet<Factor> putIntoSortedSet(Factor... factors) {
+        SortedSet<Factor> result = Sets.newTreeSet();
+        for (Factor factor : factors) {
+            result.add(factor);
+        }
+        return result;
+    }
+
+    @Before
+    public void setup() {
+        Set<Factor> allFactors = Sets.newHashSet(firstFactor, secondFactor, thirdFactor, forthFactor, fifthFactor, sixthFactor, sevenFactor);
+
+        // liver, long poly a rna, plasma
+        when(experimentMock.getCoOccurringFactors(firstFactor)).thenReturn(putIntoSortedSet(forthFactor, sixthFactor));
+
+        // heart, long poly a rna, whole cell
+        when(experimentMock.getCoOccurringFactors(secondFactor)).thenReturn(putIntoSortedSet(forthFactor, sevenFactor));
+
+        // brain, total rna, whole cell
+        when(experimentMock.getCoOccurringFactors(thirdFactor)).thenReturn(putIntoSortedSet(fifthFactor, sevenFactor));
+
+        // long poly a rna with liver, heart, plasma, whole cell
+        when(experimentMock.getCoOccurringFactors(forthFactor)).thenReturn(putIntoSortedSet(firstFactor, secondFactor, sixthFactor, sevenFactor));
+
+        // total rna with brain, whole cell
+        when(experimentMock.getCoOccurringFactors(fifthFactor)).thenReturn(putIntoSortedSet(thirdFactor, sevenFactor));
+
+        // plasma with liver, long poly a rna
+        when(experimentMock.getCoOccurringFactors(sixthFactor)).thenReturn(putIntoSortedSet(firstFactor, forthFactor));
+
+        // whole cell with, heart, brain, long poly a rna, total rna
+        when(experimentMock.getCoOccurringFactors(sevenFactor)).thenReturn(putIntoSortedSet(secondFactor, thirdFactor, forthFactor, fifthFactor));
+
+        subject = new FactorLevel(experimentMock, allFactors);
+    }
+
+    @Test
+    public void testFirstFactorLevel() {
+        assertThat(subject.getFactors(), contains(sixthFactor, sevenFactor, forthFactor, fifthFactor, thirdFactor, secondFactor, firstFactor));
+    }
+
+    @Test
+    public void testFilterOutByFactor() {
+        assertThat(subject.filterOutByFactor(firstFactor).getFactors(), contains(sixthFactor, forthFactor));
+    }
+
+    @Test
+    public void testGetFactorsForFactorName() {
+        assertThat(subject.getFactorsForFactorName(ORGANISM_PART_NAME), contains(thirdFactor, secondFactor, firstFactor));
+    }
+
+    @Test
+    public void testFilterOutByFactorAndAnotherFactor() {
+        assertThat(subject.filterOutByFactor(secondFactor).filterOutByFactor(forthFactor).getFactors(), contains(sevenFactor));
+    }
+
+    @Test
+    public void testFilterOutByFactorAndGetFactorsForFactorName() {
+        assertThat(subject.filterOutByFactor(forthFactor).getFactorsForFactorName(CELLULAR_COMPONENT_NAME), contains(sixthFactor, sevenFactor));
+    }
+
+    @Test
+    public void testLastFactorLevel() {
+        assertThat(subject.filterOutByFactor(thirdFactor).filterOutByFactor(fifthFactor).getFactorsForFactorName(CELLULAR_COMPONENT_NAME), contains(sevenFactor));
+    }
+
+    @Test
+    public void testGetAllFactorNames() {
+        assertThat(subject.getAllFactorNames(), contains(MATERIAL_TYPE_NAME, CELLULAR_COMPONENT_NAME, ORGANISM_PART_NAME));
+        assertThat(subject.filterOutByFactor(firstFactor).getAllFactorNames(), contains(MATERIAL_TYPE_NAME, CELLULAR_COMPONENT_NAME));
+        assertThat(subject.filterOutByFactor(sixthFactor).filterOutByFactor(firstFactor).getAllFactorNames(), contains(MATERIAL_TYPE_NAME));
+    }
+
+    @Test
+    public void testGetJsonUrl() throws Exception {
+        Factor firstFactorMock = mock(Factor.class);
+        Factor secondFactorMock = mock(Factor.class);
+        when(firstFactorMock.getType()).thenReturn("firstFactorValueType");
+        when(firstFactorMock.getName()).thenReturn(null);
+        when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
+        when(secondFactorMock.getType()).thenReturn("secondFactorValueType");
+        when(firstFactorMock.getName()).thenReturn(null);
+        when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
+        Factor f1 = new Factor("hello", "world");
+        Factor f2 = new Factor("hello1", "world1");
+
+        assertThat(subject.getJsonUrl("aType", f1, f2),
+                is("{\"queryFactorType\":\"aType\",\"filterFactorsURL\":\"HELLO:world,HELLO1:world1\"}"));
+    }
+
+}

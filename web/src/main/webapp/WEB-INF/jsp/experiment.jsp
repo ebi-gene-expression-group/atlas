@@ -200,8 +200,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var allQueryFactorValues = [${allQueryFactors.size()}];
-            <c:forEach varStatus="i" var="factor" items="${allQueryFactors}">
-                allQueryFactorValues[${i.index}] = '${factor.value}';
+            <c:forEach varStatus="i" var="firstFactor" items="${allQueryFactors}">
+                allQueryFactorValues[${i.index}] = '${firstFactor.value}';
             </c:forEach>
 
                 if (formattedQueryFactorType === "Organism part") {

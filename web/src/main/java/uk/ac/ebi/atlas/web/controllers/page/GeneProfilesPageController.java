@@ -38,7 +38,7 @@ import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.RankingParameters;
-import uk.ac.ebi.atlas.utils.FilterByMenuBuilder;
+import uk.ac.ebi.atlas.utils.FactorLevel;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
@@ -63,19 +63,16 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private ExperimentsCache experimentsCache;
 
-    private FilterByMenuBuilder filterByMenuBuilder;
-
     @Inject
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
                                       ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder,
-                                      GeneExpressionPrecondition geneExpressionPrecondition, FilterByMenuBuilder filterByMenuBuilder) {
+                                      GeneExpressionPrecondition geneExpressionPrecondition) {
         super(filterParameterBuilder, experimentsCache, geneExpressionPrecondition);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
-        this.filterByMenuBuilder = filterByMenuBuilder;
     }
 
     @RequestMapping("/experiments/{experimentAccession}")
@@ -125,9 +122,10 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            if(!"E-GEOD-30352".equals(experimentAccession)){
-                model.addAttribute("filterByMenu", filterByMenuBuilder.build(experiment));
-            }
+            Set<Factor> allFactors = experiment.getAllExperimentalFactors().getAllFactors();
+            FactorLevel factorLevel = new FactorLevel(experiment, allFactors);
+            model.addAttribute("factorLevel", factorLevel);
+
             model.addAttribute("selectedFilterFactors", selectedFilterFactors);
         }
 

@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model;
 
 
@@ -36,16 +58,16 @@ public class ExperimentalFactorsTest {
 
 
     @Before
-    public void initSubject(){
+    public void initSubject() {
         when(defaultFilterFactorMock.getType()).thenReturn(DEFAULT_FILTER_FACTOR_TYPE);
 
         subject = new ExperimentalFactors()
-                    .addFactorGroup(factorGroup1)
-                    .addFactorGroup(factorGroup2);
+                .addFactorGroup(factorGroup1)
+                .addFactorGroup(factorGroup2);
     }
 
     @Test
-    public void getFactorNameShouldSucceedForValidType(){
+    public void getFactorNameShouldSucceedForValidType() {
         //when
         String factorName = subject.getFactorName("TYPE2");
         //then
@@ -54,7 +76,7 @@ public class ExperimentalFactorsTest {
 
 
     @Test
-    public void getAllFactorNamesShouldReturnAllNamesComingFromFactorGroups(){
+    public void getAllFactorNamesShouldReturnAllNamesComingFromFactorGroups() {
         //when
         SortedSet<String> allFactorNames = subject.getAllFactorNames();
         //then
@@ -62,48 +84,29 @@ public class ExperimentalFactorsTest {
     }
 
     @Test
-    public void getRemainingFactorNamesShouldNotReturnGivenNames(){
-        //when
-        SortedSet<String> factorNames = subject.getRemainingFactorNamesForNames("NAME1");
-        //then
-        assertThat(factorNames, contains("NAME2", "NAME3"));
-
-        //when
-        factorNames = subject.getRemainingFactorNamesForNames("NAME1", "NAME3");
-        //then
-        assertThat(factorNames, contains("NAME2"));
-
-    }
-
-    @Test
-    public void getFactorsByName(){
+    public void getFactorsByName() {
         //when
         SortedSet<Factor> factors = subject.getFactorsByName("NAME2");
         //then
         assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getFactorsWithGivenNameCooccurringWithGivenFactorShouldFailIfNameIsSameAsFactorName(){
-        subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType2, "NAME2");
-    }
-
     @Test
-    public void getFactorsWithGivenNameCooccurringWithGivenFactorTest(){
+    public void getFactorsWithGivenNameCooccurringWithGivenFactorTest() {
         //when
-        SortedSet<Factor> factors = subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType2, "NAME1");
+        SortedSet<Factor> factors = subject.getCoOccurringFactors(factorWithType2);
         //then
-        assertThat(factors, contains(factorWithType1));
+        assertThat(factors, contains(factorWithType1, factorWithType3));
 
         //when
-        factors = subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType1, "NAME2");
+        factors = subject.getCoOccurringFactors(factorWithType1);
         //then
-        assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2));
+        assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2, factorWithType3));
 
         //when
-        factors = subject.getFactorsWithGivenNameCoOccurringWithGivenFactor(factorWithType3, "NAME1");
+        factors = subject.getCoOccurringFactors(factorWithType3);
         //then
-        assertThat(factors, contains(factorWithType1));
+        assertThat(factors, contains(factorWithType1, factorWithType2DifferentValue, factorWithType2));
 
     }
 
