@@ -74,7 +74,7 @@ public class Experiment {
     }
 
     public Set<String> getSpecies() {
-        return species;
+        return Collections.unmodifiableSet(species);
     }
 
     public String getFirstSpecies(){

@@ -34,7 +34,7 @@ public class SolrClientTest {
 
     @Test
     public void extractGeneIdentifiers(){
-        assertThat(subject.extractGeneIds(jsonData), hasItems("ENSG00000113196", "ENSG00000166823"));
+        assertThat(subject.jsonToString(jsonData), hasItems("ENSG00000113196", "ENSG00000166823"));
     }
 
     @Test

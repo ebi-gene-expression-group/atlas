@@ -65,17 +65,12 @@ public class SolrClient {
         this.serverURL = serverURL;
     }
 
-    public List<String> findGeneIds(String searchText, Set<String> organisms) {
+    public Set<String> findGeneIds(String searchText, Set<String> organisms) {
         String jsonString = findGeneIdJson(searchText, organisms);
-        return extractGeneIds(jsonString);
-    }
+        List<String> geneIds = jsonToString(jsonString);
 
-    public Set<String> findGeneIds(String searchText, Set<String> organisms, boolean returnUppercase) {
-        List<String> geneIds = findGeneIds(searchText, organisms);
-        if (returnUppercase) {
-            return toUppercase(geneIds);
-        }
-        return Sets.newHashSet(geneIds);
+        return toUppercase(geneIds);
+
     }
 
     public Set<String> toUppercase(List<String> geneIds) {
@@ -91,7 +86,7 @@ public class SolrClient {
         try {
 
             String geneProperty = queryBuilder.buildQueryString(searchText);
-            String organismQuery = "\"" + buildSpeciesQuery(organisms) + "\"";
+            String organismQuery = buildSpeciesQuery(organisms);
 
             StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
 
@@ -115,7 +110,7 @@ public class SolrClient {
         return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
     }
 
-    protected List<String> extractGeneIds(String jsonString) {
+    protected List<String> jsonToString(String jsonString) {
         return JsonPath.read(jsonString, JSON_PATH_EXPRESSION);
     }
 

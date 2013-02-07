@@ -43,6 +43,7 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -88,7 +89,7 @@ public class RankGeneProfilesCommandTest {
         when(filterParameters.getGeneQuery()).thenReturn("");
 
         // no filtering should be done here
-        when(solrClientMock.findGeneIds(GENE_QUERY, species, true)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
+        when(solrClientMock.findGeneIds(GENE_QUERY, species)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
         when(experimentMock.getSpecies()).thenReturn(species);
 
@@ -155,6 +156,32 @@ public class RankGeneProfilesCommandTest {
 
         //then
         assertThat(top3Objects.size(), is(3));
+
+    }
+
+    @Test
+    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked(){
+        when(filterParameters.getGeneQuery()).thenReturn("");
+        subject.apply(EXPERIMENT_ACCESSION);
+        verify(solrClientMock,times(0)).findGeneIds(GENE_QUERY, species);
+    }
+
+    @Test
+    public void givenEmptyFilterFactorSpeciesShouldBeTakenFromExperiment(){
+
+        when(filterParameters.getGeneQuery()).thenReturn(GENE_QUERY);
+        subject.searchForGeneIds(experimentMock);
+        verify(solrClientMock).findGeneIds(GENE_QUERY, experimentMock.getSpecies());
+
+    }
+
+    @Test
+    public void givenAFilterFactorHasTypeOrganismSpeciesShouldBeTakenFromTheFilterFactor(){
+
+
+        when(filterParameters.getGeneQuery()).thenReturn(GENE_QUERY);
+        subject.searchForGeneIds(experimentMock);
+        verify(solrClientMock).findGeneIds(GENE_QUERY, experimentMock.getSpecies());
 
     }
 
