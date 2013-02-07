@@ -82,7 +82,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
         if (StringUtils.isNotBlank(filterParameters.getGeneQuery())){
             //ToDo: we need to inject the right set of species depending on experiment type when query factor type is species
-            uppercaseGeneIDsToBeSearched = Sets.newHashSet(solrClient.findGeneIds(filterParameters.getGeneQuery(), experiment.getFirstSpecies(), true));
+            uppercaseGeneIDsToBeSearched = Sets.newHashSet(solrClient.findGeneIds(filterParameters.getGeneQuery(), experiment.getSpecies(), true));
             if (uppercaseGeneIDsToBeSearched.isEmpty()) {
                 return returnEmpty();
             }

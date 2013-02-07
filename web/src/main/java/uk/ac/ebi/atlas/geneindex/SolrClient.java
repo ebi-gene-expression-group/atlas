@@ -26,6 +26,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.jayway.jsonpath.JsonPath;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -64,13 +65,13 @@ public class SolrClient {
         this.serverURL = serverURL;
     }
 
-    public List<String> findGeneIds(String searchText, String organism) {
-        String jsonString = findGeneIdJson(searchText, organism);
+    public List<String> findGeneIds(String searchText, Set<String> organisms) {
+        String jsonString = findGeneIdJson(searchText, organisms);
         return extractGeneIds(jsonString);
     }
 
-    public Set<String> findGeneIds(String searchText, String organism, boolean returnUppercase) {
-        List<String> geneIds = findGeneIds(searchText, organism);
+    public Set<String> findGeneIds(String searchText, Set<String> organisms, boolean returnUppercase) {
+        List<String> geneIds = findGeneIds(searchText, organisms);
         if (returnUppercase) {
             return toUppercase(geneIds);
         }
@@ -85,12 +86,12 @@ public class SolrClient {
         }));
     }
 
-    protected String findGeneIdJson(String searchText, String organism) {
+    protected String findGeneIdJson(String searchText, Set<String> organisms) {
 
         try {
 
             String geneProperty = queryBuilder.buildQueryString(searchText);
-            String organismQuery = "\"" + organism.toLowerCase() + "\"";
+            String organismQuery = "\"" + buildSpeciesQuery(organisms) + "\"";
 
             StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
 
@@ -108,6 +109,10 @@ public class SolrClient {
             logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL, e);
             throw e;
         }
+    }
+
+    protected String buildSpeciesQuery(Set<String> organisms) {
+        return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
     }
 
     protected List<String> extractGeneIds(String jsonString) {

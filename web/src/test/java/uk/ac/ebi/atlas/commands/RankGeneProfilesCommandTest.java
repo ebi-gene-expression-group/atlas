@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,17 +38,19 @@ import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RankGeneProfilesCommandTest {
 
+    private static final String EXPERIMENT_ACCESSION = "ANY_EXPERIMENT_ACCESSION";
+    private static final String GENE_QUERY = "A GENE QUERY";
     @Mock
     private GeneProfileInputStreamBuilder geneProfileInputStreamBuilderMock;
 
@@ -64,6 +66,8 @@ public class RankGeneProfilesCommandTest {
     @Mock
     private FilterParameters filterParameters;
 
+    private Set<String> species = Sets.newHashSet("Species 1", "Species 2");
+
     @Mock
     private RankingParameters rankingParametersMock;
 
@@ -76,20 +80,23 @@ public class RankGeneProfilesCommandTest {
     public RankGeneProfilesCommandTest() {
     }
 
+    //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
     @Before
     public void initializeSubject() throws Exception {
 
+        when(filterParameters.getCutoff()).thenReturn(0.1);
+        when(filterParameters.getGeneQuery()).thenReturn("");
+
         // no filtering should be done here
-        when(solrClientMock.findGeneIds(anyString(), anyString())).thenReturn(Lists.<String>newArrayList());
+        when(solrClientMock.findGeneIds(GENE_QUERY, species, true)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
-        when(experimentMock.getFirstSpecies()).thenReturn("SPECIE");
+        when(experimentMock.getSpecies()).thenReturn(species);
 
-        when(experimentsCacheMock.getExperiment(anyString())).thenReturn(experimentMock);
+        when(experimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
 
-        when(geneProfileInputStreamBuilderMock.forExperiment(anyString())).thenReturn(geneProfileInputStreamBuilderMock);
+        when(geneProfileInputStreamBuilderMock.forExperiment(EXPERIMENT_ACCESSION)).thenReturn(geneProfileInputStreamBuilderMock);
 
         when(rankingParametersMock.getHeatmapMatrixSize()).thenReturn(100);
-        when(filterParameters.getCutoff()).thenReturn(0.1);
         when(rankingParametersMock.isSpecific()).thenReturn(true);
 
         //a stream with 5 profile of 2 expressions
@@ -101,7 +108,7 @@ public class RankGeneProfilesCommandTest {
         when(geneProfileInputStreamBuilderMock.createGeneProfileInputStream()).thenReturn(largeInputStream);
 
         subject = new RankGeneProfilesCommand();
-
+        subject.setSolrClient(solrClientMock);
         subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
         subject.setFilteredParameters(filterParameters);
@@ -114,9 +121,9 @@ public class RankGeneProfilesCommandTest {
     @Test
     public void commandBuildsGeneProfileInputStream() {
         //when
-        subject.apply("ANY_EXPERIMENT_ACCESSION");
+        subject.apply(EXPERIMENT_ACCESSION);
         //then
-        verify(geneProfileInputStreamBuilderMock).forExperiment("ANY_EXPERIMENT_ACCESSION");
+        verify(geneProfileInputStreamBuilderMock).forExperiment(EXPERIMENT_ACCESSION);
         verify(geneProfileInputStreamBuilderMock).createGeneProfileInputStream();
     }
 
@@ -126,7 +133,7 @@ public class RankGeneProfilesCommandTest {
         //given
         given(geneProfileInputStreamBuilderMock.createGeneProfileInputStream()).willReturn(smallInputStream);
         //when
-        List<GeneProfile> top3Objects = subject.apply("ANY_ACCESSION");
+        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
 
         //then
         assertThat(top3Objects.size(), is(1));
@@ -144,7 +151,7 @@ public class RankGeneProfilesCommandTest {
 
 
         //when
-        List<GeneProfile> top3Objects = subject.apply("AN_ACCESSION");
+        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
 
         //then
         assertThat(top3Objects.size(), is(3));
@@ -158,7 +165,7 @@ public class RankGeneProfilesCommandTest {
         when(rankingParametersMock.isSpecific()).thenReturn(false);
 
         //when
-        List<GeneProfile> top3Objects = subject.apply("ANY_ACCESSION");
+        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(5));
@@ -180,7 +187,7 @@ public class RankGeneProfilesCommandTest {
     public void rankedObjectsShouldBeInDescendingOrder() throws Exception {
 
         //when
-        List<GeneProfile> top3Objects = subject.apply("ANY_ACCESSION");
+        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(1));
