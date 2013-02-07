@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commons.berkeley;
 
 import com.sleepycat.collections.TransactionWorker;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
@@ -51,7 +52,10 @@ public abstract class ObjectValueTransactionWorker<V> implements TransactionWork
     @Override
     public void doWork() {
         try {
-            map.put(getKey(), getValue());
+
+            if (!isEmptyValue(getValue())) {
+                map.put(getKey(), getValue());
+            }
         } catch (Exception e) {
             throw new IllegalStateException("Error while writing gene annotations DB: " + e.getMessage());
         }
@@ -60,4 +64,6 @@ public abstract class ObjectValueTransactionWorker<V> implements TransactionWork
     protected abstract V getValue();
 
     protected abstract String getKey();
+
+    protected abstract boolean isEmptyValue(V value);
 }

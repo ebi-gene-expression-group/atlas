@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.geneannotation.biomart;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.context.annotation.Scope;
@@ -36,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import static com.google.common.base.Preconditions.checkState;
 import static java.util.Arrays.asList;
 import static uk.ac.ebi.atlas.utils.HttpRequest.httpPost;
 
@@ -47,16 +45,7 @@ public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
     @Override
     public String[] readNext() {
         try {
-            String[] line = csvReader.readNext();
-            if (line == null) {
-                return null;
-            }
-            checkState(line.length == 2, "Invalid line read from Biomart");
-            if (StringUtils.isNotBlank(line[1])) {
-                return line;
-            }
-            return readNext();
-
+            return csvReader.readNext();
         } catch (IOException e) {
             throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
         }

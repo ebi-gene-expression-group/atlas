@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.commons.berkeley;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.concurrent.ConcurrentMap;
 
 public class StringValueTransactionWorker extends ObjectValueTransactionWorker<String> {
@@ -39,6 +41,12 @@ public class StringValueTransactionWorker extends ObjectValueTransactionWorker<S
     protected String getKey() {
         return getRow()[0];
     }
+
+    @Override
+    protected boolean isEmptyValue(String value) {
+        return StringUtils.isBlank(value);
+    }
+
 
 }
 
