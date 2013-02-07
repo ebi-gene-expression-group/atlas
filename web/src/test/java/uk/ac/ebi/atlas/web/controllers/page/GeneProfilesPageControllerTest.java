@@ -30,7 +30,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.utils.FilterByMenuBuilder;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,9 +62,6 @@ public class GeneProfilesPageControllerTest {
     @Mock
     private FilterParameters.Builder filterParameterBuilderMock;
 
-    @Mock
-    private FilterByMenuBuilder filterByMenuBuilderMock;
-
     private GeneProfilesPageController subject;
 
 
@@ -76,7 +72,7 @@ public class GeneProfilesPageControllerTest {
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
 
         subject = new GeneProfilesPageController(null, rankCommandMock, applicationPropertiesMock,
-                experimentCacheMock, filterParameterBuilderMock, null, filterByMenuBuilderMock);
+                experimentCacheMock, filterParameterBuilderMock, null);
     }
 
     @Test

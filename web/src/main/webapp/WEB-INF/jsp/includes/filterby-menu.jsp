@@ -27,9 +27,9 @@
 
 
 <div class="filters-frame">
-    <c:forEach items="${selectedFilterFactors}" var="factor">
-        <div class="filter-name">${factor.name}:</div>
-        ${factor.value}<br/>
+    <c:forEach items="${selectedFilterFactors}" var="firstFactor">
+        <div class="filter-name">${firstFactor.name}:</div>
+        ${firstFactor.value}<br/>
     </c:forEach>
 </div>
 <c:set var="filterMenuLabel" value="Change filters"/>
@@ -38,22 +38,33 @@
     <ul id="filterBy" style="display: none">
         <li><a>${filterMenuLabel}</a>
             <ul>
-                <c:forEach items="${filterByMenu}" var="level1">
+                <c:forEach items="${factorLevel.allFactorNames}" var="firstFactorName">
                     <li>
-                        <a>${level1.value}</a>
+                        <a>${firstFactorName}</a>
                         <ul>
-                            <c:forEach items="${level1.children}" var="level2">
+                            <c:forEach items="${factorLevel.getFactorsForFactorName(firstFactorName)}"
+                                       var="firstFactor">
                                 <li>
-                                    <a>${level2.value}</a>
+                                    <a>${firstFactor.value}</a>
                                     <ul>
-                                        <c:forEach items="${level2.children}" var="level3">
+                                        <c:set var="secondFactorLevel"
+                                               value="${factorLevel.filterOutByFactor(firstFactor)}"/>
+                                        <c:forEach items="${secondFactorLevel.allFactorNames}" var="secondFactorName">
                                             <li>
-                                                <a>${level3.value}</a>
+                                                <a>${secondFactorName}</a>
                                                 <ul>
-                                                    <c:forEach items="${level3.children}" var="level4">
-                                                        <c:forEach items="${level4.children}" var="link">
-                                                            <li data-serialized-factors='${link.value}'
-                                                                style="text-decoration: underline; cursor: pointer;">${level4.value}</li>
+                                                    <c:forEach
+                                                            items="${secondFactorLevel.getFactorsForFactorName(secondFactorName)}"
+                                                            var="secondFactor">
+                                                        <c:set var="lastFactorLevel"
+                                                               value="${secondFactorLevel.filterOutByFactor(secondFactor)}"/>
+
+                                                        <c:forEach items="${lastFactorLevel.allFactorNames}"
+                                                                   var="queryFactorName">
+                                                            <c:set var="queryFactorType"
+                                                                   value="${factorLevel.resolveTypeForName(queryFactorName)}"/>
+                                                            <li data-serialized-factors='${lastFactorLevel.getLink(queryFactorType, firstFactor, secondFactor)}'
+                                                                style="text-decoration: underline; cursor: pointer;">${secondFactor.value}</li>
                                                         </c:forEach>
                                                     </c:forEach>
                                                 </ul>
