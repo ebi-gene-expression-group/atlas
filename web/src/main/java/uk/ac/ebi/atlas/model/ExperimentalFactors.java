@@ -32,6 +32,7 @@ import javax.inject.Named;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
@@ -49,6 +50,9 @@ public class ExperimentalFactors {
     }
 
     public String getFactorName(String type) {
+
+        checkState(factorNamesByType.containsKey(type), "Cannot request a factor name for an unknown type.");
+
         return factorNamesByType.get(type);
     }
 

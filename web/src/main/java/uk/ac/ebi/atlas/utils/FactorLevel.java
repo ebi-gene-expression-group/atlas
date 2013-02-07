@@ -32,6 +32,8 @@ import uk.ac.ebi.atlas.model.Factor;
 import java.util.Set;
 import java.util.SortedSet;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 // TODO: needs a better name
 public class FactorLevel {
 
@@ -51,6 +53,9 @@ public class FactorLevel {
     }
 
     public FactorLevel filterOutByFactor(Factor factor) {
+
+        checkNotNull(factor, "Cannot filter by null factor!");
+        checkNotNull(factor.getName(), "Factor should have a name!");
 
         Set<String> remainingNames = getAllFactorNames();
         remainingNames.remove(factor.getName());
