@@ -112,9 +112,11 @@ public class GeneProfilesPageController extends GeneProfilesController {
             // this is currently required for the request preferences filter drop-down multi-selection box
             model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
 
-            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(filterParameters.getFilteredBySpecies(), true));
+            String species = findShownSpecie(experiment, filterParameters);
 
-            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(filterParameters.getFilteredBySpecies(), false));
+            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
+
+            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
@@ -126,6 +128,10 @@ public class GeneProfilesPageController extends GeneProfilesController {
         }
 
         return "experiment";
+    }
+
+    private String findShownSpecie(Experiment experiment, FilterParameters filterParameters) {
+        return experiment.isForSingleSpecie() ? experiment.getFirstSpecies() : filterParameters.getFilteredBySpecies();
     }
 
     String buildDownloadURL(HttpServletRequest request) {

@@ -117,4 +117,8 @@ public class Experiment {
         return experimentalFactors.getCoOccurringFactors(factor);
     }
 
+    public boolean isForSingleSpecie() {
+        return 1 == species.size();
+    }
+
 }
