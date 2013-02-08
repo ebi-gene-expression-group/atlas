@@ -63,7 +63,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     }
 
     @Inject
-    public void setSolrClient(SolrClient solrClient){
+    public void setSolrClient(SolrClient solrClient) {
         this.solrClient = solrClient;
     }
 
@@ -82,7 +82,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
         Set<String> selectedGeneIds = null;
 
-        if (StringUtils.isNotBlank(filterParameters.getGeneQuery())){
+        if (StringUtils.isNotBlank(filterParameters.getGeneQuery())) {
 
             selectedGeneIds = searchForGeneIds(experiment);
             if (selectedGeneIds.isEmpty()) {
@@ -104,16 +104,14 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     }
 
     protected Set<String> searchForGeneIds(Experiment experiment) {
-        Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
 
         Set<String> species = Sets.newHashSet(experiment.getSpecies());
 
-        for (Factor selectedFilterFactor : selectedFilterFactors) {
-            if(selectedFilterFactor.getType().equalsIgnoreCase("organism")) {
-                species.clear();
-                species.add(selectedFilterFactor.getValue());
-                break;
-            }
+        String filteredBySpecies = filterParameters.getFilteredBySpecies();
+        if (!StringUtils.isEmpty(filteredBySpecies)) {
+            species.clear();
+            species.add(filteredBySpecies);
+
         }
 
         return solrClient.findGeneIds(filterParameters.getGeneQuery(), species);

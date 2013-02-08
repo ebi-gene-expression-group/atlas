@@ -177,6 +177,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             var formattedQueryFactorType = "${formattedQueryFactorType}";
 
+            var anyAnatomogramFile = "${maleAnatomogramFile}"+"${femaleAnatomogramFile}"
+
             if ($.browser.msie && $.browser.version <= 8.0) {
 
                 //configurations required for any IE 8 or lower browser
@@ -204,14 +206,14 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 allQueryFactorValues[${i.index}] = '${firstFactor.value}';
             </c:forEach>
 
-                if (formattedQueryFactorType === "Organism part") {
+                if (anyAnatomogramFile && 0 < anyAnatomogramFile.length)  {
                     initAnatomogram(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }
 
             //configurations required for any browser...
 
-            if (formattedQueryFactorType !== "Organism part") {
+            if (!anyAnatomogramFile || 0 === anyAnatomogramFile.length) {
                 $("#anatomogram").remove();//remove the anatomogram
                 $("#heatmap-div").removeClass();
             }
