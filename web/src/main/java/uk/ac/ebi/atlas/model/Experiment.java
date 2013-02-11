@@ -74,7 +74,7 @@ public class Experiment {
     }
 
     public Set<String> getSpecies() {
-        return species;
+        return Collections.unmodifiableSet(species);
     }
 
     public String getFirstSpecies(){
@@ -105,20 +105,20 @@ public class Experiment {
         return experimentalFactors.getAllFactorNames();
     }
 
-    public SortedSet<String> getRemainingFactorNamesForNames(String... names) {
-        return experimentalFactors.getRemainingFactorNamesForNames(names);
-    }
-
     public SortedSet<Factor> getFactorsByName(@NotNull String name) {
         return experimentalFactors.getFactorsByName(name);
     }
 
-    public SortedSet<Factor> getValidCombinationsForFactorAndName(Factor factor, String name) {
-        return experimentalFactors.getFactorsWithGivenNameCoOccurringWithGivenFactor(factor, name);
+    public ExperimentalFactors getAllExperimentalFactors() {
+        return experimentalFactors;
     }
 
-    public ExperimentalFactors getAllExperimentalFactors(){
-        return experimentalFactors;
+    public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
+        return experimentalFactors.getCoOccurringFactors(factor);
+    }
+
+    public boolean isForSingleSpecie() {
+        return 1 == species.size();
     }
 
 }

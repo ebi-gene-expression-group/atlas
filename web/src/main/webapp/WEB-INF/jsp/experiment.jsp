@@ -177,6 +177,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             var formattedQueryFactorType = "${formattedQueryFactorType}";
 
+            var anyAnatomogramFile = "${maleAnatomogramFile}"+"${femaleAnatomogramFile}"
+
             if ($.browser.msie && $.browser.version <= 8.0) {
 
                 //configurations required for any IE 8 or lower browser
@@ -200,18 +202,18 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var allQueryFactorValues = [${allQueryFactors.size()}];
-            <c:forEach varStatus="i" var="factor" items="${allQueryFactors}">
-                allQueryFactorValues[${i.index}] = '${factor.value}';
+            <c:forEach varStatus="i" var="firstFactor" items="${allQueryFactors}">
+                allQueryFactorValues[${i.index}] = '${firstFactor.value}';
             </c:forEach>
 
-                if (formattedQueryFactorType === "Organism part") {
+                if (anyAnatomogramFile && 0 < anyAnatomogramFile.length)  {
                     initAnatomogram(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }
 
             //configurations required for any browser...
 
-            if (formattedQueryFactorType !== "Organism part") {
+            if (!anyAnatomogramFile || 0 === anyAnatomogramFile.length) {
                 $("#anatomogram").remove();//remove the anatomogram
                 $("#heatmap-div").removeClass();
             }

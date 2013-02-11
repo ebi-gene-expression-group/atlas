@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.utils.Files;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -29,6 +31,8 @@ public class IndexClientTestIT {
     private GenePropertyQueryBuilder queryBuilder;
 
     private String jsonData;
+
+    private Set<String> species = Sets.newHashSet("Homo sapiens");
 
     @Value("#{configuration['index.server.url']}")
     private String solrURL;
@@ -55,7 +59,7 @@ public class IndexClientTestIT {
         when(queryBuilder.buildQueryString(anyString())).thenReturn("(alltext:\"GO:0008134\" OR alltext:\"p53 " +
                 "binding\")");
 
-        String result = subject.findGeneIdJson(anyString(), "homo sapiens");
+        String result = subject.findGeneIdJson(anyString(), species);
 
         //some genes are found
         assertThat(result, containsString("[{\"identifier\":\"ENSG"));
@@ -67,7 +71,7 @@ public class IndexClientTestIT {
         //given
         when(queryBuilder.buildQueryString(anyString())).thenReturn("(alltext:\"NOT THERE\")");
 
-        String result = subject.findGeneIdJson(anyString(), "homo sapiens");
+        String result = subject.findGeneIdJson(anyString(), species);
 
         //no genes are found
         assertThat(result, containsString("\"numFound\":0"));

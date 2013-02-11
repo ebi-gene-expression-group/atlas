@@ -26,6 +26,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.jayway.jsonpath.JsonPath;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -64,17 +65,12 @@ public class SolrClient {
         this.serverURL = serverURL;
     }
 
-    public List<String> findGeneIds(String searchText, String organism) {
-        String jsonString = findGeneIdJson(searchText, organism);
-        return extractGeneIds(jsonString);
-    }
+    public Set<String> findGeneIds(String searchText, Set<String> organisms) {
+        String jsonString = findGeneIdJson(searchText, organisms);
+        List<String> geneIds = jsonToString(jsonString);
 
-    public Set<String> findGeneIds(String searchText, String organism, boolean returnUppercase) {
-        List<String> geneIds = findGeneIds(searchText, organism);
-        if (returnUppercase) {
-            return toUppercase(geneIds);
-        }
-        return Sets.newHashSet(geneIds);
+        return toUppercase(geneIds);
+
     }
 
     public Set<String> toUppercase(List<String> geneIds) {
@@ -85,12 +81,12 @@ public class SolrClient {
         }));
     }
 
-    protected String findGeneIdJson(String searchText, String organism) {
+    protected String findGeneIdJson(String searchText, Set<String> organisms) {
 
         try {
 
             String geneProperty = queryBuilder.buildQueryString(searchText);
-            String organismQuery = "\"" + organism.toLowerCase() + "\"";
+            String organismQuery = buildSpeciesQuery(organisms);
 
             StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
 
@@ -110,7 +106,11 @@ public class SolrClient {
         }
     }
 
-    protected List<String> extractGeneIds(String jsonString) {
+    protected String buildSpeciesQuery(Set<String> organisms) {
+        return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
+    }
+
+    protected List<String> jsonToString(String jsonString) {
         return JsonPath.read(jsonString, JSON_PATH_EXPRESSION);
     }
 

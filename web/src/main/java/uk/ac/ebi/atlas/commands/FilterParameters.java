@@ -37,6 +37,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkState;
 
 //ToDo: this class now smells, GeneProfileInputStreamFilter now only requires selectedQueryFactors from this class and that is available also from other beans.
+//ToDo: (NK)  getGeneQuery is used as well
 public class FilterParameters {
 
     public static final String FACTOR_VALUE_SEPARATOR = ":";
@@ -85,18 +86,27 @@ public class FilterParameters {
         return formatForDisplay(queryFactorType);
     }
 
-    protected String formatForDisplay(String queryFactorType){
+    protected String formatForDisplay(String queryFactorType) {
         return StringUtils.capitalize(queryFactorType.replaceAll("_", " ").toLowerCase());
+    }
+
+    public String getFilteredBySpecies() {
+        for (Factor selectedFilterFactor : selectedFilterFactors) {
+            if (selectedFilterFactor.getType().equalsIgnoreCase("organism")) {
+                return selectedFilterFactor.getValue();
+            }
+        }
+        return "";
     }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(this.getClass())
-                    .add("geneQuery", geneQuery)
-                    .add("selectedFilterFactors", selectedFilterFactors)
-                    .add("cutoff", cutoff)
-                    .add("selectedQueryFactors", selectedQueryFactors)
-                    .add("queryFactorType", queryFactorType)
+                .add("geneQuery", geneQuery)
+                .add("selectedFilterFactors", selectedFilterFactors)
+                .add("cutoff", cutoff)
+                .add("selectedQueryFactors", selectedQueryFactors)
+                .add("queryFactorType", queryFactorType)
                 .toString();
     }
 
@@ -135,7 +145,7 @@ public class FilterParameters {
         }
 
         public Builder withFilterFactors(Set<String> serializedFilterFactors) {
-            if(CollectionUtils.isNotEmpty(serializedFilterFactors)){
+            if (CollectionUtils.isNotEmpty(serializedFilterFactors)) {
                 this.serializedFilterFactors = serializedFilterFactors;
             }
             return this;
@@ -156,7 +166,7 @@ public class FilterParameters {
         }
 
         public Builder withQueryFactorValues(Set<String> queryFactorValuesString) {
-            if(CollectionUtils.isNotEmpty(queryFactorValuesString)){
+            if (CollectionUtils.isNotEmpty(queryFactorValuesString)) {
                 this.queryFactorValues = queryFactorValuesString;
             }
             return this;
@@ -165,10 +175,10 @@ public class FilterParameters {
         public FilterParameters build() {
             checkState(experiment != null, "Please invoke forExperiment before build");
 
-            if (StringUtils.isBlank(queryFactorType)){
+            if (StringUtils.isBlank(queryFactorType)) {
                 queryFactorType = experiment.getDefaultQueryFactorType();
             }
-            if (CollectionUtils.isEmpty(serializedFilterFactors)){
+            if (CollectionUtils.isEmpty(serializedFilterFactors)) {
                 selectedFilterFactors = experiment.getDefaultFilterFactors();
             } else {
                 for (String serializedFilterFactor : serializedFilterFactors) {

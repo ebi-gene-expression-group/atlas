@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
@@ -37,6 +38,7 @@ import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
@@ -61,7 +63,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     }
 
     @Inject
-    public void setSolrClient(SolrClient solrClient){
+    public void setSolrClient(SolrClient solrClient) {
         this.solrClient = solrClient;
     }
 
@@ -78,12 +80,12 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        Set<String> uppercaseGeneIDsToBeSearched = null;
+        Set<String> selectedGeneIds = null;
 
-        if (StringUtils.isNotBlank(filterParameters.getGeneQuery())){
-            //ToDo: we need to inject the right set of species depending on experiment type when query factor type is species
-            uppercaseGeneIDsToBeSearched = Sets.newHashSet(solrClient.findGeneIds(filterParameters.getGeneQuery(), experiment.getFirstSpecies(), true));
-            if (uppercaseGeneIDsToBeSearched.isEmpty()) {
+        if (StringUtils.isNotBlank(filterParameters.getGeneQuery())) {
+
+            selectedGeneIds = searchForGeneIds(experiment);
+            if (selectedGeneIds.isEmpty()) {
                 return returnEmpty();
             }
         }
@@ -91,7 +93,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .createGeneProfileInputStream();
 
-        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, uppercaseGeneIDsToBeSearched, filterParameters.getSelectedQueryFactors())) {
+        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, filterParameters.getSelectedQueryFactors())) {
 
             return apply(experiment, inputStream);
 
@@ -99,6 +101,20 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
+    }
+
+    protected Set<String> searchForGeneIds(Experiment experiment) {
+
+        Set<String> species = Sets.newHashSet(experiment.getSpecies());
+
+        String filteredBySpecies = filterParameters.getFilteredBySpecies();
+        if (!StringUtils.isEmpty(filteredBySpecies)) {
+            species.clear();
+            species.add(filteredBySpecies);
+
+        }
+
+        return solrClient.findGeneIds(filterParameters.getGeneQuery(), species);
     }
 
     protected abstract T apply(Experiment experiment
