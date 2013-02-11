@@ -16,7 +16,7 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
 
     private String pageURL;
 
-    AtlasPage(WebDriver driver) {
+    public AtlasPage(WebDriver driver) {
         this(driver, null);
     }
 
