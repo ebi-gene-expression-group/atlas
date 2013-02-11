@@ -56,9 +56,11 @@ public class ExperimentIT {
 
     @Test
     public void getFactorsByTypeTest() {
-        assertThat(subject.getFactorsByType("MATERIAL_TYPE").size(), is(3));
-        assertThat(subject.getFactorsByType("CELL_LINE").size(), is(23));
-        assertThat(subject.getFactorsByType("CELLULAR_COMPONENT").size(), is(6));
+        ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
+
+        assertThat(experimentalFactors.getFactorsByType("MATERIAL_TYPE").size(), is(3));
+        assertThat(experimentalFactors.getFactorsByType("CELL_LINE").size(), is(23));
+        assertThat(experimentalFactors.getFactorsByType("CELLULAR_COMPONENT").size(), is(6));
     }
 
     @Test
@@ -66,7 +68,8 @@ public class ExperimentIT {
         Factor filterFactor1 = new Factor("MATERIAL_TYPE", "total rna");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELL_LINE");
+        ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
+        SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELL_LINE");
 
         assertThat(filteredFactors.size(), is(5));
         assertThat(filteredFactors.first().getValue(), is("cd34-positive mobilized cell cell line"));
@@ -78,7 +81,8 @@ public class ExperimentIT {
         Factor filterFactor1 = new Factor("CELL_LINE", "imr-90");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "MATERIAL_TYPE");
+        ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
+        SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "MATERIAL_TYPE");
 
         assertThat(filteredFactors.size(), is(2));
         assertThat(filteredFactors.first().getValue(), is("long polya rna"));
@@ -88,23 +92,24 @@ public class ExperimentIT {
     @Test
     public void getValidCombinationsForFactorTest() {
 
-        assertThat(subject.getAllFactorNames().size(), is(3));
+        ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
+        assertThat(experimentalFactors.getAllFactorNames().size(), is(3));
         int objectCount = 0;
-        for (String factorName : subject.getAllFactorNames()) {
-            objectCount += subject.getFactorsByName(factorName).size();
+        for (String factorName : experimentalFactors.getAllFactorNames()) {
+            objectCount += experimentalFactors.getFactorsByName(factorName).size();
         }
         assertThat(objectCount, is(32));
 
         Factor factor = new Factor("MATERIAL_TYPE", "RNA type", "total rna");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(10));
+        assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(10));
         factor = new Factor("MATERIAL_TYPE", "RNA type", "long polya rna");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(21));
+        assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(21));
         factor = new Factor("CELLULAR_COMPONENT", "cellular component", "whole cell");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(26));
+        assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(26));
         factor = new Factor("CELL_LINE", "cell line", "imr-90");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(5));
+        assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(5));
         factor = new Factor("CELL_LINE", "cell line", "cd34-positive mobilized cell cell line");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(2));
+        assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(2));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -112,7 +117,8 @@ public class ExperimentIT {
         Factor filterFactor1 = new Factor("CELL_LINE", "imr-90");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELL_LINE");
+        ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
+        experimentalFactors.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELL_LINE");
     }
 
 
@@ -121,7 +127,8 @@ public class ExperimentIT {
         Factor filterFactor1 = new Factor("CELL_LINE", "imr-90");
         Factor filterFactor2 = new Factor("MATERIAL_TYPE", "total rna");
 
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELLULAR_COMPONENT");
+        ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
+        SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELLULAR_COMPONENT");
 
         assertThat(filteredFactors.size(), is(1));
         assertThat(filteredFactors.first().getValue(), is("whole cell"));

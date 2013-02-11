@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model;
 
-import javax.validation.constraints.NotNull;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -61,10 +60,6 @@ public class Experiment {
         return experimentRun.getFactorGroup();
     }
 
-    public String getFactorName(String type) {
-        return experimentalFactors.getFactorName(type);
-    }
-
     public Set<String> getExperimentRunAccessions() {
         return experimentRuns.keySet();
     }
@@ -77,7 +72,7 @@ public class Experiment {
         return Collections.unmodifiableSet(species);
     }
 
-    public String getFirstSpecies(){
+    public String getFirstSpecies() {
         return species.iterator().next();
     }
 
@@ -93,28 +88,8 @@ public class Experiment {
         return Collections.unmodifiableSet(defaultFilterFactors);
     }
 
-    public SortedSet<Factor> getFactorsByType(@NotNull String type) {
-        return experimentalFactors.getFactorsByType(type);
-    }
-
-    public SortedSet<Factor> getFilteredFactors(Set<Factor> filterFactors, String type) {
-        return experimentalFactors.getFilteredFactors(filterFactors, type);
-    }
-
-    public SortedSet<String> getAllFactorNames() {
-        return experimentalFactors.getAllFactorNames();
-    }
-
-    public SortedSet<Factor> getFactorsByName(@NotNull String name) {
-        return experimentalFactors.getFactorsByName(name);
-    }
-
-    public ExperimentalFactors getAllExperimentalFactors() {
+    public ExperimentalFactors getExperimentalFactors() {
         return experimentalFactors;
-    }
-
-    public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
-        return experimentalFactors.getCoOccurringFactors(factor);
     }
 
     public boolean isForSingleSpecie() {

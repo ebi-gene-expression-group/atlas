@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.Factor;
 
 import java.util.Set;
@@ -59,7 +59,7 @@ public class FactorLevelTest {
     Factor sevenFactor = new Factor(CELLULAR_COMPONENT, CELLULAR_COMPONENT_NAME, "whole cell");
 
     @Mock
-    Experiment experimentMock;
+    ExperimentalFactors experimentalFactorsMock;
 
     FactorLevel subject;
 
@@ -76,27 +76,27 @@ public class FactorLevelTest {
         Set<Factor> allFactors = Sets.newHashSet(firstFactor, secondFactor, thirdFactor, forthFactor, fifthFactor, sixthFactor, sevenFactor);
 
         // liver, long poly a rna, plasma
-        when(experimentMock.getCoOccurringFactors(firstFactor)).thenReturn(putIntoSortedSet(forthFactor, sixthFactor));
+        when(experimentalFactorsMock.getCoOccurringFactors(firstFactor)).thenReturn(putIntoSortedSet(forthFactor, sixthFactor));
 
         // heart, long poly a rna, whole cell
-        when(experimentMock.getCoOccurringFactors(secondFactor)).thenReturn(putIntoSortedSet(forthFactor, sevenFactor));
+        when(experimentalFactorsMock.getCoOccurringFactors(secondFactor)).thenReturn(putIntoSortedSet(forthFactor, sevenFactor));
 
         // brain, total rna, whole cell
-        when(experimentMock.getCoOccurringFactors(thirdFactor)).thenReturn(putIntoSortedSet(fifthFactor, sevenFactor));
+        when(experimentalFactorsMock.getCoOccurringFactors(thirdFactor)).thenReturn(putIntoSortedSet(fifthFactor, sevenFactor));
 
         // long poly a rna with liver, heart, plasma, whole cell
-        when(experimentMock.getCoOccurringFactors(forthFactor)).thenReturn(putIntoSortedSet(firstFactor, secondFactor, sixthFactor, sevenFactor));
+        when(experimentalFactorsMock.getCoOccurringFactors(forthFactor)).thenReturn(putIntoSortedSet(firstFactor, secondFactor, sixthFactor, sevenFactor));
 
         // total rna with brain, whole cell
-        when(experimentMock.getCoOccurringFactors(fifthFactor)).thenReturn(putIntoSortedSet(thirdFactor, sevenFactor));
+        when(experimentalFactorsMock.getCoOccurringFactors(fifthFactor)).thenReturn(putIntoSortedSet(thirdFactor, sevenFactor));
 
         // plasma with liver, long poly a rna
-        when(experimentMock.getCoOccurringFactors(sixthFactor)).thenReturn(putIntoSortedSet(firstFactor, forthFactor));
+        when(experimentalFactorsMock.getCoOccurringFactors(sixthFactor)).thenReturn(putIntoSortedSet(firstFactor, forthFactor));
 
         // whole cell with, heart, brain, long poly a rna, total rna
-        when(experimentMock.getCoOccurringFactors(sevenFactor)).thenReturn(putIntoSortedSet(secondFactor, thirdFactor, forthFactor, fifthFactor));
+        when(experimentalFactorsMock.getCoOccurringFactors(sevenFactor)).thenReturn(putIntoSortedSet(secondFactor, thirdFactor, forthFactor, fifthFactor));
 
-        subject = new FactorLevel(experimentMock, allFactors);
+        subject = new FactorLevel(experimentalFactorsMock, allFactors);
     }
 
     @Test

@@ -26,7 +26,7 @@ package uk.ac.ebi.atlas.utils;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.Factor;
 
 import java.util.Set;
@@ -34,17 +34,16 @@ import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-// TODO: needs a better name
 public class FactorLevel {
 
     public static final String FACTOR_SEPARATOR = ":";
 
     private final SortedSet<Factor> factors = Sets.newTreeSet();
 
-    private final Experiment experiment;
+    private ExperimentalFactors experimentalFactors;
 
-    public FactorLevel(Experiment experiment, Set<Factor> setOfFactors) {
-        this.experiment = experiment;
+    public FactorLevel(ExperimentalFactors experimentalFactors, Set<Factor> setOfFactors) {
+        this.experimentalFactors = experimentalFactors;
         factors.addAll(setOfFactors);
     }
 
@@ -66,10 +65,10 @@ public class FactorLevel {
             validFactors.addAll(factorsForFactorName);
         }
 
-        SortedSet<Factor> coOccurring = experiment.getCoOccurringFactors(factor);
+        SortedSet<Factor> coOccurring = experimentalFactors.getCoOccurringFactors(factor);
         validFactors.retainAll(coOccurring);
 
-        return new FactorLevel(experiment, validFactors);
+        return new FactorLevel(experimentalFactors, validFactors);
     }
 
     public SortedSet<Factor> getFactorsForFactorName(final String name) {

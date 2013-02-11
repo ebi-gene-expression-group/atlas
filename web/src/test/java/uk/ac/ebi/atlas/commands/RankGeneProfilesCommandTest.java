@@ -31,6 +31,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileInputStreamMock;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -43,9 +44,7 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RankGeneProfilesCommandTest {
@@ -63,6 +62,9 @@ public class RankGeneProfilesCommandTest {
 
     @Mock
     private Experiment experimentMock;
+
+    @Mock
+    private ExperimentalFactors experimentalFactors;
 
     @Mock
     private FilterParameters filterParameters;
@@ -92,6 +94,7 @@ public class RankGeneProfilesCommandTest {
         when(solrClientMock.findGeneIds(GENE_QUERY, species)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
         when(experimentMock.getSpecies()).thenReturn(species);
+        when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactors);
 
         when(experimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
 
@@ -160,14 +163,14 @@ public class RankGeneProfilesCommandTest {
     }
 
     @Test
-    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked(){
+    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() {
         when(filterParameters.getGeneQuery()).thenReturn("");
         subject.apply(EXPERIMENT_ACCESSION);
-        verify(solrClientMock,times(0)).findGeneIds(GENE_QUERY, species);
+        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, species);
     }
 
     @Test
-    public void givenEmptyFilterFactorSpeciesShouldBeTakenFromExperiment(){
+    public void givenEmptyFilterFactorSpeciesShouldBeTakenFromExperiment() {
 
         when(filterParameters.getGeneQuery()).thenReturn(GENE_QUERY);
         subject.searchForGeneIds(experimentMock);
@@ -176,7 +179,7 @@ public class RankGeneProfilesCommandTest {
     }
 
     @Test
-    public void givenAFilterFactorHasTypeOrganismSpeciesShouldBeTakenFromTheFilterFactor(){
+    public void givenAFilterFactorHasTypeOrganismSpeciesShouldBeTakenFromTheFilterFactor() {
 
 
         when(filterParameters.getGeneQuery()).thenReturn(GENE_QUERY);

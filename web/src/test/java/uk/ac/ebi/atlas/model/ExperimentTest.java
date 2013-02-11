@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -82,12 +81,12 @@ public class ExperimentTest {
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
 
         subject = new ExperimentBuilder(experimentalFactorsMock)
-                                         .forSpecies(Sets.newHashSet(SPECIE))
-                                         .withDescription(DESCRIPTION)
-                                         .withDefaultQueryType(ORGANISM_PART)
-                                         .withDefaultFilterFactors(Collections.EMPTY_SET)
-                                         .withExperimentRuns(Lists.newArrayList(experimentRun1Mock, experimentRun2Mock))
-                                         .create();
+                .forSpecies(Sets.newHashSet(SPECIE))
+                .withDescription(DESCRIPTION)
+                .withDefaultQueryType(ORGANISM_PART)
+                .withDefaultFilterFactors(Collections.EMPTY_SET)
+                .withExperimentRuns(Lists.newArrayList(experimentRun1Mock, experimentRun2Mock))
+                .create();
 
 
     }
@@ -120,7 +119,7 @@ public class ExperimentTest {
         //when
         subject.getFactorGroup(RUN_ACCESSION_1);
         //then
-        verify(experimentRun1Mock,times(2)).getFactorGroup();
+        verify(experimentRun1Mock, times(2)).getFactorGroup();
     }
 
     @Test
@@ -128,7 +127,8 @@ public class ExperimentTest {
         //given
         Set<Factor> filteredFactors = Sets.newHashSet(factorMock1, factorMock2);
         //when
-        subject.getFilteredFactors(filteredFactors, CELLULAR_COMPONENT);
+        ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
+        experimentalFactors.getFilteredFactors(filteredFactors, CELLULAR_COMPONENT);
 
         //then
         verify(experimentalFactorsMock).getFilteredFactors(filteredFactors, CELLULAR_COMPONENT);

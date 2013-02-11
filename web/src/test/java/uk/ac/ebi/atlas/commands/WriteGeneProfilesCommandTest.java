@@ -32,6 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -59,6 +60,8 @@ public class WriteGeneProfilesCommandTest {
     private GeneProfile geneProfileMock2;
     @Mock
     private Experiment experimentMock;
+    @Mock
+    private ExperimentalFactors experimentalFactorsMock;
 
     private WriteGeneProfilesCommand subject;
 
@@ -86,7 +89,8 @@ public class WriteGeneProfilesCommandTest {
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
         when(geneProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
-        when(experimentMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
     }
 
     @Before
@@ -112,14 +116,14 @@ public class WriteGeneProfilesCommandTest {
     }
 
     @Test
-    public void buildCsvHeadersTest(){
-        String [] headers = subject.buildCsvHeaders(Sets.newTreeSet(Lists.newArrayList("adipose", "brain")));
+    public void buildCsvHeadersTest() {
+        String[] headers = subject.buildCsvHeaders(Sets.newTreeSet(Lists.newArrayList("adipose", "brain")));
         assertThat(headers, is(new String[]{"Gene name", "Gene Id", "adipose", "brain"}));
     }
 
     @Test
-    public void buildCsvRowTest(){
-        String [] headers = subject.buildCsvRow(new String[]{"A", "B"}, new String[]{"C", "D"});
+    public void buildCsvRowTest() {
+        String[] headers = subject.buildCsvRow(new String[]{"A", "B"}, new String[]{"C", "D"});
         assertThat(headers, is(new String[]{"A", "B", "C", "D"}));
     }
 
