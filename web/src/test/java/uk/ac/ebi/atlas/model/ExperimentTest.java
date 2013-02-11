@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
@@ -68,11 +69,14 @@ public class ExperimentTest {
     @Mock
     private Factor factorMock2;
 
+    @Mock
+    private ExperimentalFactorsBuilder experimentalFactorsBuilderMock;
 
     private Experiment subject;
 
     @Before
     public void initializeSubject() {
+        ArrayList<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
 
         when(experimentRun1Mock.getRunAccession()).thenReturn(RUN_ACCESSION_1);
         when(experimentRun2Mock.getRunAccession()).thenReturn(RUN_ACCESSION_2);
@@ -80,12 +84,15 @@ public class ExperimentTest {
         when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroupMock1);
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
 
-        subject = new ExperimentBuilder(experimentalFactorsMock)
+        when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRuns)).thenReturn(experimentalFactorsBuilderMock);
+        when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
+
+        subject = new ExperimentBuilder(experimentalFactorsBuilderMock)
                 .forSpecies(Sets.newHashSet(SPECIE))
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(ORGANISM_PART)
                 .withDefaultFilterFactors(Collections.EMPTY_SET)
-                .withExperimentRuns(Lists.newArrayList(experimentRun1Mock, experimentRun2Mock))
+                .withExperimentRuns(experimentRuns)
                 .create();
 
 
@@ -119,7 +126,7 @@ public class ExperimentTest {
         //when
         subject.getFactorGroup(RUN_ACCESSION_1);
         //then
-        verify(experimentRun1Mock, times(2)).getFactorGroup();
+        verify(experimentRun1Mock, times(1)).getFactorGroup();
     }
 
     @Test

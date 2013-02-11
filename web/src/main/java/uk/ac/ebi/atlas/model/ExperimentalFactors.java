@@ -34,8 +34,6 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-@Named
-@Scope("prototype")
 public class ExperimentalFactors {
 
     private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
@@ -46,7 +44,11 @@ public class ExperimentalFactors {
 
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
-    ExperimentalFactors() {
+    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByName, Map<String, String> factorNamesByType, Collection<FactorGroup> factorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors) {
+        this.factorsByName = factorsByName;
+        this.factorNamesByType = factorNamesByType;
+        this.factorGroups = factorGroups;
+        this.coOccurringFactors = coOccurringFactors;
     }
 
     public String getFactorName(String type) {
@@ -56,18 +58,6 @@ public class ExperimentalFactors {
         return factorNamesByType.get(type);
     }
 
-    ExperimentalFactors addFactorGroup(FactorGroup factorGroup) {
-        factorGroups.add(factorGroup);
-
-        for (Factor factor : factorGroup) {
-
-            factorsByName.put(factor.getName(), factor);
-            factorNamesByType.put(factor.getType(), factor.getName());
-
-            addToFactorCombinations(factorGroup, factor);
-        }
-        return this;
-    }
 
     public SortedSet<String> getAllFactorNames() {
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
@@ -90,14 +80,6 @@ public class ExperimentalFactors {
 
         return ImmutableSortedSet.copyOf(factorsByName.get(factorName));
 
-    }
-
-    void addToFactorCombinations(FactorGroup factorGroup, Factor factor) {
-        for (Factor value : factorGroup) {
-            if (!value.equals(factor)) {
-                coOccurringFactors.put(factor, value);
-            }
-        }
     }
 
     //ToDo: this would be: experimentalFactor.sliceBy(... FilterFactor).byType(queryFactorType) ... or any better name?

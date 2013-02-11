@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -43,11 +42,11 @@ public class ExperimentBuilder {
     private Collection<ExperimentRun> experimentRuns;
     private String defaultQueryType;
     private Set<Factor> defaultFilterFactors;
-    private ExperimentalFactors experimentalFactors;
+    private ExperimentalFactorsBuilder experimentalFactorsBuilder;
 
     @Inject
-    ExperimentBuilder(ExperimentalFactors experimentalFactors) {
-        this.experimentalFactors = experimentalFactors;
+    ExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
+        this.experimentalFactorsBuilder = experimentalFactorsBuilder;
     }
 
     public ExperimentBuilder forSpecies(Set<String> species) {
@@ -75,21 +74,13 @@ public class ExperimentBuilder {
         return this;
     }
 
-    Collection<FactorGroup> extractFactorGroups() {
-        Collection<FactorGroup> factorGroups = new ArrayList();
-        for (ExperimentRun experimentRun : experimentRuns) {
-            factorGroups.add(experimentRun.getFactorGroup());
-        }
-        return factorGroups;
-    }
-
     public Experiment create() {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
 
-        buildExperimentalFactors();
+        ExperimentalFactors experimentalFactors = experimentalFactorsBuilder.withExperimentRuns(experimentRuns).create();
 
         for (Factor defaultFilterFactor : defaultFilterFactors) {
             String factorName = experimentalFactors.getFactorName(defaultFilterFactor.getType());
@@ -99,13 +90,6 @@ public class ExperimentBuilder {
         return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors);
     }
 
-    ExperimentalFactors buildExperimentalFactors() {
-        Collection<FactorGroup> factorGroups = extractFactorGroups();
 
-        for (FactorGroup factorGroup : factorGroups) {
-            experimentalFactors.addFactorGroup(factorGroup);
-        }
-        return experimentalFactors;
-    }
 
 }

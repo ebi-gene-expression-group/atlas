@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model;
 
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
+import java.util.Collection;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,6 +49,13 @@ public class ExperimentalFactorsTest {
     @Mock
     private Factor defaultFilterFactorMock;
 
+    @Mock
+    private ExperimentRun experimentRun1Mock;
+    @Mock
+    private ExperimentRun experimentRun2Mock;
+
+    private Collection<ExperimentRun> experimentRunMocks;
+
     private ExperimentalFactors subject;
 
     private Factor factorWithType1 = new Factor("TYPE1", "NAME1", "VALUE1");
@@ -61,9 +70,13 @@ public class ExperimentalFactorsTest {
     public void initSubject() {
         when(defaultFilterFactorMock.getType()).thenReturn(DEFAULT_FILTER_FACTOR_TYPE);
 
-        subject = new ExperimentalFactors()
-                .addFactorGroup(factorGroup1)
-                .addFactorGroup(factorGroup2);
+        when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroup1);
+        when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroup2);
+
+        experimentRunMocks = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
+
+        ExperimentalFactorsBuilder builder = new ExperimentalFactorsBuilder();
+        subject = builder.withExperimentRuns(experimentRunMocks).create();
     }
 
     @Test

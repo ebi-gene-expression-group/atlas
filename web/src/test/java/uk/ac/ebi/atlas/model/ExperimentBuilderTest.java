@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentBuilderTest {
 
-    private static final String DEFAULT_FILTER_FACTOR_TYPE = "A_TYPE" ;
+    private static final String DEFAULT_FILTER_FACTOR_TYPE = "A_TYPE";
     private static final String DEFAULT_QUERY_TYPE = "A_QUERY_TYPE";
     private static final String SPECIE = "A_SPECIE";
     private static final String DESCRIPTION = "A_DESCRIPTION";
@@ -42,6 +42,9 @@ public class ExperimentBuilderTest {
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
 
+    @Mock
+    private ExperimentalFactorsBuilder experimentalFactorsBuilderMock;
+
     private Collection<ExperimentRun> experimentRunMocks;
     private Set<Factor> defaultFilterFactors;
 
@@ -55,7 +58,9 @@ public class ExperimentBuilderTest {
         when(factorGroup1Mock.iterator()).thenReturn(IteratorUtils.EMPTY_ITERATOR);
         when(factorGroup2Mock.iterator()).thenReturn(IteratorUtils.EMPTY_ITERATOR);
 
-        subject = new ExperimentBuilder(experimentalFactorsMock);
+        when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRunMocks)).thenReturn(experimentalFactorsBuilderMock);
+        when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
+        subject = new ExperimentBuilder(experimentalFactorsBuilderMock);
 
         subject.forSpecies(Sets.newHashSet(SPECIE))
                 .withDescription(DESCRIPTION)
@@ -65,13 +70,6 @@ public class ExperimentBuilderTest {
 
     }
 
-    @Test
-    public void testExtractFactorGroups() throws Exception {
-        //given
-        subject.withExperimentRuns(experimentRunMocks);
-        //then
-        assertThat(subject.extractFactorGroups(), contains(factorGroup1Mock, factorGroup2Mock));
-    }
 
     @Test
     public void testCreate() throws Exception {
@@ -85,15 +83,4 @@ public class ExperimentBuilderTest {
 
     }
 
-    @Test
-    public void testBuildExperimentalFactors() throws Exception {
-
-        //when
-        subject.buildExperimentalFactors();
-
-        //then
-        verify(experimentalFactorsMock).addFactorGroup(factorGroup1Mock);
-        verify(experimentalFactorsMock).addFactorGroup(factorGroup2Mock);
-
-    }
 }
