@@ -22,11 +22,13 @@
 
 package uk.ac.ebi.atlas.model.readers;
 
-import com.google.common.base.Predicate;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.HashMap;
@@ -39,27 +41,16 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
 
     private static final String LIBRARIES_TITLE = "Processed libraries";
 
-    @Value("#{configuration['experiment.analysis-method.path.template']}")
-    private String pathTemplate;
-
-    @Override
-    protected String getPathTemplate() {
-        return pathTemplate;
-    }
-
-    public Collection<String[]> readAllWithoutLibraries(String experimentAccession) {
-        Predicate<String[]> predicate = new Predicate<String[]>() {
-            @Override
-            public boolean apply(String[] columns) {
-                String firstColumn = columns[0].trim();
-                return !(firstColumn.startsWith("#") || firstColumn.equals(LIBRARIES_TITLE));
-            }
-        };
-        return readAndFilter(experimentAccession, predicate);
+    @Inject
+    public AnalysisMethodsTsvReader(
+                        @Value("#{configuration['experiment.analysis-method.path.template']}")
+                        String pathTemplate){
+        super(pathTemplate);
     }
 
     public Set<String> readProcessedLibraries(String experimentAccession) {
-        String[] processedLibraries = readAsMap(experimentAccession).get("Processed libraries").split(",");
+        SortedSetMultimap<String,String> allComments = readAllCommentsAsMap(experimentAccession);
+        String[] processedLibraries = allComments.get("Libraries").first().split(",");
         return Sets.newHashSet(trim(processedLibraries));
     }
 
@@ -68,15 +59,6 @@ public class AnalysisMethodsTsvReader extends AbstractTsvReader {
             strings[i] = strings[i].trim();
         }
         return strings;
-    }
-
-    protected Map<String, String> readAsMap(String experimentAccession) {
-        Collection<String[]> rows = readAll(experimentAccession);
-        Map<String, String> keyValuePairs = new HashMap<>(rows.size());
-        for (String[] row : rows) {
-            keyValuePairs.put(row[0], row[1]);
-        }
-        return keyValuePairs;
     }
 
 }

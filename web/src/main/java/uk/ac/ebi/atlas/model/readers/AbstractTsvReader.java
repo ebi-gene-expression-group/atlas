@@ -25,6 +25,9 @@ package uk.ac.ebi.atlas.model.readers;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -33,29 +36,47 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.Collection;
+import java.util.*;
 
 public abstract class AbstractTsvReader {
 
     private static final Logger LOGGER = Logger.getLogger(AbstractTsvReader.class);
 
-    protected AbstractTsvReader() {
+    private String pathTemplate;
+
+    protected AbstractTsvReader(String pathTemplate) {
+        this.pathTemplate = pathTemplate;
     }
 
-    protected abstract String getPathTemplate();
-
-    public Collection<String[]> readAll(String experimentAccession) {
-        return readAndFilter(experimentAccession, new IsRowCommented());
+    public List<String[]> readAll(String experimentAccession) {
+        return readAndFilter(experimentAccession, new IsNotComment());
     }
 
-    protected Collection<String[]> readAndFilter(String experimentAccession, Predicate<String[]> filter) {
+    public List<String[]> readAllComments(String experimentAccession) {
+        return readAndFilter(experimentAccession, new IsComment());
+    }
+
+    public SortedSetMultimap<String, String> readAllCommentsAsMap(String experimentAccession){
+        SortedSetMultimap<String, String> comments = TreeMultimap.create();
+        for (String[] row: readAllComments(experimentAccession)){
+            comments.put(row[0].replaceFirst("#*","").trim(),row[1].trim());
+        }
+        return comments;
+    }
+
+    protected List<String[]> readAndFilter(String experimentAccession, Predicate<String> acceptanceCriteria) {
 
         Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
 
         try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
-             CSVReader csvReader = new CSVReader(reader, '\t')) {
-
-            return Collections2.filter(csvReader.readAll(), filter);
+            CSVReader csvReader = new CSVReader(reader, '\t')) {
+            List<String[]> rows = new ArrayList<>();
+            for (String[] row: csvReader.readAll()){
+                if (acceptanceCriteria.apply(row[0])){
+                    rows.add(row);
+                }
+            }
+            return rows;
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
@@ -63,16 +84,24 @@ public abstract class AbstractTsvReader {
         }
     }
 
-    private static class IsRowCommented implements Predicate<String[]> {
+    protected static class IsComment implements Predicate<String> {
 
         @Override
-        public boolean apply(String[] columns) {
-            return !columns[0].trim().startsWith("#");
+        public boolean apply(String rowHeader) {
+            return rowHeader.trim().startsWith("#");
+        }
+    }
+
+    private static class IsNotComment extends IsComment {
+
+        @Override
+        public boolean apply(String rowHeader) {
+            return !super.apply(rowHeader);
         }
     }
 
     private String getPathString(String experimentAccession){
-        return MessageFormat.format(getPathTemplate(), experimentAccession);
+        return MessageFormat.format(pathTemplate, experimentAccession);
     }
 
 }

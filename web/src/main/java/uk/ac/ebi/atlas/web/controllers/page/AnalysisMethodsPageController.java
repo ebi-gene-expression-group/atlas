@@ -46,7 +46,7 @@ public class AnalysisMethodsPageController {
     @RequestMapping("/experiments/{experimentAccession}/analysis-methods")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
-        model.addAttribute("csvLines", analysisMethodsTsvReader.readAllWithoutLibraries(experimentAccession));
+        model.addAttribute("csvLines", analysisMethodsTsvReader.readAll(experimentAccession));
 
         model.addAttribute("experimentAccession", experimentAccession);
 
