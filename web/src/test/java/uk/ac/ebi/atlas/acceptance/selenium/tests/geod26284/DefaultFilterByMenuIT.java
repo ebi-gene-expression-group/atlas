@@ -34,15 +34,16 @@ import static org.hamcrest.Matchers.is;
 
 public class DefaultFilterByMenuIT extends SeleniumFixture {
 
-    public static final String TOTAL_RNA = "total rna";
+    public static final String TOTAL_RNA = "total RNA";
     public static final String RNA_TYPE = "RNA type";
     public static final String WHOLE_CELL = "whole cell";
     public static final String CELLULAR_COMPONENT = "cellular component";
     public static final String CELL_LINE = "cell line";
-    public static final String LONG_NON_POLYA_RNA = "long non-polya rna";
-    public static final String LONG_POLYA_RNA = "long polya rna";
-    public static final String SK_N_SH_RA = "sk-n-sh_ra";
-    public static final String A_549 = "a549";
+    public static final String LONG_NON_POLYA_RNA = "long non-polyA RNA";
+    public static final String LONG_POLYA_RNA = "long polyA RNA";
+    public static final String SK_N_SH_RA = "SK-N-SH_RA";
+    public static final String A_549 = "A549";
+    public static final String H_MSC_AT_CELL_LINE = "hMSC-AT cell line";
 
     protected Geod26284HeatmapTablePage subject;
 
@@ -73,7 +74,7 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
     @Test
     public void verifyFilterByMenuFirstSecondLabels() {
         assertThat(subject.getFilterByMenuText(new int[]{1, 0}), is(A_549));
-        assertThat(subject.getFilterByMenuText(new int[]{1, 22}), is(SK_N_SH_RA));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 22}), is(H_MSC_AT_CELL_LINE));
     }
 
     @Test
@@ -124,7 +125,7 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
         //given that we selected the default filterFactorValues RNA Type : total RNA and cellular component : whole cell
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), contains("cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains("CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", H_MSC_AT_CELL_LINE));
     }
 
     @Test
@@ -163,7 +164,7 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
         subject.clickFilterByMenuElement(new int[]{2, 5, 0, 0});
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), contains(A_549, "ag445", "bj", "cd14-positive...", "cd20-positive b...", "gm12878", "h1-hesc", "hela-s3", "hepg2", "hmec cell line", "hsmm cell line", "huvec cell line", "k562", "mcf-7", "nhek cell line", "nhlf cell line", SK_N_SH_RA));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains(A_549, "AG445", "BJ", "CD14-positive...", "CD20-positive B...", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell line", "HeLa-S3", "HepG2", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", SK_N_SH_RA));
 
         //when we extract top 9 from heatmap
         List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
@@ -176,20 +177,20 @@ public class DefaultFilterByMenuIT extends SeleniumFixture {
 
     @Test
     public void verifyAlwaysUsingLastMenuElementClick() {
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5, 1, 22}), is(SK_N_SH_RA));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 5, 1, 22}), is(H_MSC_AT_CELL_LINE));
 
         // always the last index
         subject.clickFilterByMenuElement(new int[]{2, 5, 1, 22});
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), contains("long non-polya...", LONG_POLYA_RNA));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains(TOTAL_RNA));
 
         //when we extract top 9 from heatmap
         List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
 
         //then
         Assert.assertThat(selectedGenes, contains(
-                "AC011293.1", "Y_RNA", "7SK", "PCDHGB8P", "RP5-961K14.1", "GEMIN8P4", "RPS6P20", "RTDR1", "RP11-698F20.3"
+                "TMSB10", "Y_RNA", "CALU", "ARHGAP1", "IL13RA1", "VTI1B", "SNX27", "BMI1", "B3GNT1"
         ));
 
     }

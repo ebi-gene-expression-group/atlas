@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=MATERIAL_TYPE%3Along+polya+rna%2CCELLULAR_COMPONENT%3Anucleus&queryFactorType=CELL_LINE");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=MATERIAL_TYPE%3Along+polyA+RNA%2CCELLULAR_COMPONENT%3Anucleus&queryFactorType=CELL_LINE");
         subject.get();
     }
 
@@ -42,8 +42,7 @@ public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geo
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"a549", "gm12878", "h1-hesc", "hela-s3", "hepg2", "huvec cell line", "imr-90", "k562",
-                "mcf-7", "nhek cell line", "sk-n-sh"};
+        return new String[]{"A549", "GM12878", "H1-hESC", "HUVEC cell line", "HeLa-S3", "HepG2", "IMR-90", "K562", "MCF-7", "NHEK cell line", "SK-N-SH"};
     }
 
     @Override
@@ -53,7 +52,7 @@ public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geo
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"", "", "", "25", "", "", "", "", "0.9", "", ""};
+        return new String[]{"", "", "", "", "25", "", "", "", "0.9", "", ""};
     }
 
     @Override

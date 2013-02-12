@@ -38,9 +38,9 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
     public void getStartingPage() {
         subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, "geneQuery=") {
             @Override
-                protected String getPageURI() {
-                    return "/gxa/experiments/E-GEOD-26284";
-                }
+            protected String getPageURI() {
+                return "/gxa/experiments/E-GEOD-26284";
+            }
         };
         subject.get();
     }
@@ -63,7 +63,7 @@ public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFix
 
     @Test
     public void checkBarChartAxisForSkeletalMuscle() {
-        subject.selectQueryFactorValue("hfdpc cell line");
+        subject.selectQueryFactorValue("HFDPC cell line");
         assertThat(subject.getYAxisValue(0), is("0"));
         assertThat(subject.getYAxisValue(1), is("10"));
         assertThat(subject.getMaxYAxisValue(), is("40"));

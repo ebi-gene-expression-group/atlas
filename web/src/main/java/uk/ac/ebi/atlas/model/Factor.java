@@ -45,7 +45,7 @@ public class Factor implements Comparable<Factor> {
 
         this.type = normalize(checkNotNull(type));
         this.name = name;
-        this.value = checkNotNull(value).toLowerCase();
+        this.value = checkNotNull(value);
     }
 
     protected final String normalize(String type) {
