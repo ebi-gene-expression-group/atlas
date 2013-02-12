@@ -123,6 +123,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
             model.addAttribute("factorLevel", factorLevel);
 
             model.addAttribute("selectedFilterFactors", selectedFilterFactors);
+
+            model.addAttribute("hasExtraInfo", experiment.hasExtraInfoFile());
+
         }
 
         return "experiment";

@@ -41,6 +41,7 @@ public class ExperimentBuilder {
     private String description;
     private Collection<ExperimentRun> experimentRuns;
     private String defaultQueryType;
+    private boolean hasExtraInfoFile;
     private Set<Factor> defaultFilterFactors;
     private ExperimentalFactorsBuilder experimentalFactorsBuilder;
 
@@ -74,6 +75,11 @@ public class ExperimentBuilder {
         return this;
     }
 
+    public ExperimentBuilder withExtraInfo(boolean hasExtraInfoFile){
+        this.hasExtraInfoFile = hasExtraInfoFile;
+        return this;
+    }
+
     public Experiment create() {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
@@ -87,7 +93,7 @@ public class ExperimentBuilder {
             defaultFilterFactor.setName(factorName);
         }
 
-        return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors);
+        return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
     }
 
 

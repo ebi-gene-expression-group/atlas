@@ -25,7 +25,7 @@ public class ExperimentImageController {
     private String extraInfoPathTemplate;
 
     @ResponseBody
-    @RequestMapping("/experiments/{experimentAccession}/extra-info")
+    @RequestMapping("/experiments/{experimentAccession}/extra-info.png")
     public void getImage(HttpServletResponse response, @PathVariable String experimentAccession){
 
         try{

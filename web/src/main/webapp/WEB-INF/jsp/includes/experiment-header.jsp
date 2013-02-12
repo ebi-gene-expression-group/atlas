@@ -1,5 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="http://localhost:9090/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://localhost:9090/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+
+<script>
+    /*global jQuery: false */
+    /*jslint browser:true */
+    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+
+        "use strict";
+
+        $(document).ready(function () {
+
+            $('#display-analysis-methods').button().tooltip();
+            $('#display-experiment-design').button().tooltip();
+            $('#goto-ae').button().tooltip();
+
+            $("#extra-info").fancybox({
+                beforeLoad: function(){
+                    this.title = "Look at this marvelous title... yes this is the title";
+                },
+                padding : 0,
+                openEffect	: 'elastic',
+                closeEffect	: 'elastic'
+            });
+
+        });
+
+    }(jQuery));
+
+</script>
+
 <div id="helpContentTooltip" style='display:none'></div>
 
 <table width="100%">
@@ -13,6 +45,9 @@
         <td width="100%">
             <div id="experimentDescription" style="font-weight: bold;">
                 ${experimentDescription}
+                <c:if test="${hasExtraInfo}">
+                    <a id="extra-info" href="experiments/${experimentAccession}/extra-info.png">...</a>
+                </c:if>
             </div>
             <div>Organism(s): ${species}</div>
         </td>

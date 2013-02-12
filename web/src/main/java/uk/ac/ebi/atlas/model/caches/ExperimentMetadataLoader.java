@@ -61,6 +61,9 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
     private static final String ENA_RUN = "ENA_RUN";
 
+    @Value("#{configuration['experiment.extra-info-image.path.template']}")
+    private String extraInfoPathTemplate;
+
     @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String idfUrlTemplate;
 
@@ -100,6 +103,10 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         Collection<ExperimentRun> selectedExperimentRuns = Collections2.filter(allExperimentRuns, new IsExperimentRunSelected(experimentAccession));
 
+        String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
+
+        boolean hasExtraInfoFile = new File(extraInfoFileLocation).exists();
+
         ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
         return experimentBuilder.forSpecies(extractSpecie(scanNodes))
@@ -107,6 +114,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
                 .withDefaultQueryType(defaultQueryFactorType)
                 .withDefaultFilterFactors(defaultFilterFactors)
                 .withExperimentRuns(selectedExperimentRuns)
+                .withExtraInfo(hasExtraInfoFile)
                 .create();
 
     }

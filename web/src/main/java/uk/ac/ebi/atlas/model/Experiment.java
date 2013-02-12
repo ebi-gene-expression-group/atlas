@@ -29,6 +29,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Experiment {
 
+    private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
+
     private String description;
     private Set<String> species;
 
@@ -39,15 +41,16 @@ public class Experiment {
 
     private ExperimentalFactors experimentalFactors;
 
-    private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
+    private boolean hasExtraInfoFile;
 
 
-    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
+    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
         this.description = description;
         this.species = species;
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
+        this.hasExtraInfoFile = hasExtraInfoFile;
         for (ExperimentRun experimentRun : experimentRuns) {
             this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
         }
@@ -94,6 +97,10 @@ public class Experiment {
 
     public boolean isForSingleSpecie() {
         return 1 == species.size();
+    }
+
+    public boolean hasExtraInfoFile(){
+        return hasExtraInfoFile;
     }
 
 }
