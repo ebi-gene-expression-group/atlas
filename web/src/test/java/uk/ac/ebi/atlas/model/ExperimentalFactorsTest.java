@@ -62,8 +62,9 @@ public class ExperimentalFactorsTest {
     private Factor factorWithType2 = new Factor("TYPE2", "NAME2", "VALUE2");
     private Factor factorWithType2DifferentValue = new Factor("TYPE2", "NAME2", "DIFFERENT_VALUE2");
     private Factor factorWithType3 = new Factor("TYPE3", "NAME3", "VALUE3");
+    private Factor factorWithType3DifferentValue = new Factor("TYPE3", "NAME3", "DIFFERENT_VALUE3");
     private FactorGroup factorGroup1 = new FactorSet(Sets.newHashSet(factorWithType2, factorWithType1, factorWithType3));
-    private FactorGroup factorGroup2 = new FactorSet(Sets.newHashSet(factorWithType3, factorWithType2DifferentValue, factorWithType1));
+    private FactorGroup factorGroup2 = new FactorSet(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2DifferentValue, factorWithType1));
 
 
     @Before
@@ -114,14 +115,32 @@ public class ExperimentalFactorsTest {
         //when
         factors = subject.getCoOccurringFactors(factorWithType1);
         //then
-        assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2, factorWithType3));
+        assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2, factorWithType3DifferentValue, factorWithType3));
 
         //when
         factors = subject.getCoOccurringFactors(factorWithType3);
         //then
-        assertThat(factors, contains(factorWithType1, factorWithType2DifferentValue, factorWithType2));
+        assertThat(factors, contains(factorWithType1, factorWithType2));
 
     }
+
+    @Test
+    public void testGetFilteredFactors() {
+        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2), "TYPE3");
+        assertThat(filteredFactors, contains(factorWithType3));
+
+        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2DifferentValue), "TYPE3");
+        assertThat(filteredFactors, contains(factorWithType3DifferentValue));
+
+
+        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2DifferentValue), "TYPE1");
+        assertThat(filteredFactors, contains(factorWithType1));
+
+        //ToDo: this is not valid combination: do we need to check it?!!!
+        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2), "TYPE1");
+        assertThat(filteredFactors.isEmpty(), is(true));
+    }
+
 
     @Test(expected = java.lang.IllegalArgumentException.class)
     public void filteredFactorValuesShouldThrowExceptionIfNoFactorHasQueryFilterType() {

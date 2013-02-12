@@ -112,9 +112,11 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
             String species = findShownSpecie(experiment, filterParameters);
 
-            model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
+            if ("ORGANISM_PART".equals(filterParameters.getQueryFactorType())) {
+                model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
 
-            model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
+                model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
+            }
 
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
