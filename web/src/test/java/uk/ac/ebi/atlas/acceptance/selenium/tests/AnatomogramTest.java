@@ -75,4 +75,16 @@ public class AnatomogramTest extends SeleniumFixture {
         initStartingPage("/gxa/experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM_PART:liver&queryFactorType=ORGANISM&geneQuery=");
         assertThat(isAnotomogramElementFound(), is(false));
     }
+
+    @Test
+    public void testAnotomogramIsNotThereForCellTypeExperiment() {
+        initStartingPage("/gxa/experiments/E-GEOD-26284&geneQuery=");
+        assertThat(isAnotomogramElementFound(), is(false));
+    }
+
+    @Test
+    public void testAnotomogramIsThereForSingleSpeciesExp() {
+        initStartingPage("/gxa/experiments/E-MTAB-513?geneQuery=");
+        assertThat(isAnotomogramElementFound(), is(true));
+    }
 }
