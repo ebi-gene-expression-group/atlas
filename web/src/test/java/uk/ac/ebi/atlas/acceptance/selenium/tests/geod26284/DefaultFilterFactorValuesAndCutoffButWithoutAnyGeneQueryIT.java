@@ -41,17 +41,17 @@ public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQueryIT extends 
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"};
+        return new String[]{"CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"", "", "", "6", ""};
+        return new String[]{"", "", "6", "", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"4", "", "1", "1", ""};
+        return new String[]{"4", "", "1", "", "1"};
     }
 
     @Override

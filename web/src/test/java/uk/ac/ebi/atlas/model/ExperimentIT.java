@@ -65,28 +65,28 @@ public class ExperimentIT {
 
     @Test
     public void getCellLineFilteredFactorsTest() {
-        Factor filterFactor1 = new Factor("MATERIAL_TYPE", "total rna");
+        Factor filterFactor1 = new Factor("MATERIAL_TYPE", "total RNA");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
         ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
         SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELL_LINE");
 
         assertThat(filteredFactors.size(), is(5));
-        assertThat(filteredFactors.first().getValue(), is("cd34-positive mobilized cell cell line"));
-        assertThat(filteredFactors.last().getValue(), is("imr-90"));
+        assertThat(filteredFactors.first().getValue(), is("CD34-positive mobilized cell cell line"));
+        assertThat(filteredFactors.last().getValue(), is("hMSC-AT cell line"));
     }
 
     @Test
     public void getMaterialTypeFilteredFactorsTest() {
-        Factor filterFactor1 = new Factor("CELL_LINE", "imr-90");
+        Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
         ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
         SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "MATERIAL_TYPE");
 
         assertThat(filteredFactors.size(), is(2));
-        assertThat(filteredFactors.first().getValue(), is("long polya rna"));
-        assertThat(filteredFactors.last().getValue(), is("total rna"));
+        assertThat(filteredFactors.first().getValue(), is("long polyA RNA"));
+        assertThat(filteredFactors.last().getValue(), is("total RNA"));
     }
 
     @Test
@@ -100,21 +100,21 @@ public class ExperimentIT {
         }
         assertThat(objectCount, is(32));
 
-        Factor factor = new Factor("MATERIAL_TYPE", "RNA type", "total rna");
+        Factor factor = new Factor("MATERIAL_TYPE", "RNA type", "total RNA");
         assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(10));
-        factor = new Factor("MATERIAL_TYPE", "RNA type", "long polya rna");
+        factor = new Factor("MATERIAL_TYPE", "RNA type", "long polyA RNA");
         assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(21));
         factor = new Factor("CELLULAR_COMPONENT", "cellular component", "whole cell");
         assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(26));
-        factor = new Factor("CELL_LINE", "cell line", "imr-90");
+        factor = new Factor("CELL_LINE", "cell line", "IMR-90");
         assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(5));
-        factor = new Factor("CELL_LINE", "cell line", "cd34-positive mobilized cell cell line");
+        factor = new Factor("CELL_LINE", "cell line", "CD34-positive mobilized cell cell line");
         assertThat(experimentalFactors.getCoOccurringFactors(factor).size(), is(2));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void geFilteredFactorsShouldFailIfQueryFactorTypeIsEqualToTheTypeOfOneOfTheFilterFactors() {
-        Factor filterFactor1 = new Factor("CELL_LINE", "imr-90");
+        Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
         ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
@@ -124,8 +124,8 @@ public class ExperimentIT {
 
     @Test
     public void getCellularComponentFilteredFactorsTest() {
-        Factor filterFactor1 = new Factor("CELL_LINE", "imr-90");
-        Factor filterFactor2 = new Factor("MATERIAL_TYPE", "total rna");
+        Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
+        Factor filterFactor2 = new Factor("MATERIAL_TYPE", "total RNA");
 
         ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
         SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2), "CELLULAR_COMPONENT");

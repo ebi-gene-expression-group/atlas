@@ -26,7 +26,7 @@ public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapT
 
     public void getStartingPage() {
         subject = new Geod26284HeatmapTablePage(driver,
-                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+rna&queryFactorType=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=&queryFactorValues=cd34-positive+mobilized+cell+cell+line&_queryFactorValues=1&_specific=on&cutoff=0.5");
+                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+RNA&queryFactorType=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=&queryFactorValues=CD34-positive+mobilized+cell+cell+line&_queryFactorValues=1&_specific=on&cutoff=0.5");
         subject.get();
     }
 
@@ -42,17 +42,17 @@ public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapT
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"};
+        return new String[]{"CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"123", "288", "490", "695", "1023"};
+        return new String[]{"123", "288", "695", "1023", "490"};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"6", "209", "123", "223", "311"};
+        return new String[]{"6", "209", "223", "311", "123"};
     }
 
     @Override

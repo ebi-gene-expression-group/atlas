@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3Aa549&queryFactorType=MATERIAL_TYPE");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3AA549&queryFactorType=MATERIAL_TYPE");
         subject.get();
     }
 
@@ -41,7 +41,7 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"long non-polya...", "long polya rna"};
+        return new String[]{"long non-polyA...", "long polyA RNA"};
     }
 
     @Override
