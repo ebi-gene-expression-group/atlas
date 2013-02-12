@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.pages;
+package uk.ac.ebi.atlas.acceptance.rest;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
@@ -31,31 +31,39 @@ import java.util.List;
 
 import static com.jayway.restassured.RestAssured.get;
 
-public abstract class RestPage {
+public class EndPoint {
 
     private URLBuilder urlBuilder;
 
+    private String httpParameters;
+
     private String pageURL;
 
-    RestPage(String httpParameters) {
-        urlBuilder = new URLBuilder(getPageURI());
-        pageURL = urlBuilder.buildURL(httpParameters);
+    public EndPoint(String endPointURI) {
+        this(endPointURI, null);
+    }
+
+    public EndPoint(String endPointURI, String httpParameters) {
+        urlBuilder = new URLBuilder(endPointURI);
+        this.httpParameters = httpParameters;
+    }
+
+    private String buildURL(){
+        return urlBuilder.buildURL(httpParameters);
     }
 
     public Response getResponse() {
-        return get(pageURL);
+        return get(buildURL());
     }
 
     public ResponseBody getResponseBody() {
-        return get(pageURL).getBody();
+        return getResponse().getBody();
     }
 
-    public List<String> getRowAsList(int row) {
+    public List<String> getRowValues(int rowIndex) {
         String bodyAsString = getResponseBody().asString();
-        String[] lines = bodyAsString.split("\n");
-        String line = lines[row];
-        return Arrays.asList(line.split("\t"));
+        String[] rows = bodyAsString.split("\n");
+        String row = rows[rowIndex];
+        return Arrays.asList(row.split("\t"));
     }
-
-    protected abstract String getPageURI();
 }
