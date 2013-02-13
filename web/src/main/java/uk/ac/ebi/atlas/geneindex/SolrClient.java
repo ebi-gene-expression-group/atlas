@@ -22,9 +22,6 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -35,6 +32,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -74,11 +72,11 @@ public class SolrClient {
     }
 
     public Set<String> toUppercase(List<String> geneIds) {
-        return Sets.newHashSet(Iterables.transform(geneIds, new Function<String, String>() {
-            public String apply(String geneId) {
-                return geneId.toUpperCase();
-            }
-        }));
+        Set<String> result = new HashSet<>();
+        for (String geneId : geneIds) {
+            result.add(geneId.toUpperCase());
+        }
+        return result;
     }
 
     protected String findGeneIdJson(String searchText, Set<String> organisms) {

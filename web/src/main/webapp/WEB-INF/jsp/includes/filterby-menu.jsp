@@ -38,21 +38,21 @@
     <ul id="filterBy" style="display: none">
         <li><a>${filterMenuLabel}</a>
             <ul>
-                <c:forEach items="${factorLevel.allFactorNames}" var="firstFactorName">
+                <c:forEach items="${filterFactorMenu.allFactorNames}" var="firstFactorName">
                     <li>
                         <a>${firstFactorName}</a>
                         <ul>
-                            <c:forEach items="${factorLevel.getFactorsForFactorName(firstFactorName)}"
+                            <c:forEach items="${filterFactorMenu.getFactorsForFactorName(firstFactorName)}"
                                        var="firstFactor">
-                                <c:set var="secondFactorLevel"
-                                       value="${factorLevel.filterOutByFactor(firstFactor)}"/>
+                                <c:set var="secondFilterFactorMenu"
+                                       value="${filterFactorMenu.filterOutByFactor(firstFactor)}"/>
                                 <c:choose>
-                                    <c:when test="${secondFactorLevel.allFactorNames.size() == 1}">
-                                        <c:forEach items="${secondFactorLevel.allFactorNames}"
+                                    <c:when test="${secondFilterFactorMenu.allFactorNames.size() == 1}">
+                                        <c:forEach items="${secondFilterFactorMenu.allFactorNames}"
                                                    var="queryFactorName">
                                             <c:set var="queryFactorType"
-                                                   value="${factorLevel.resolveTypeForName(queryFactorName)}"/>
-                                            <li data-serialized-factors='${secondFactorLevel.getLink(queryFactorType, firstFactor)}'
+                                                   value="${filterFactorMenu.resolveTypeForName(queryFactorName)}"/>
+                                            <li data-serialized-factors='${secondFilterFactorMenu.getLink(queryFactorType, firstFactor)}'
                                                 style="text-decoration: underline; cursor: pointer;">${firstFactor.value}</li>
                                         </c:forEach>
                                     </c:when>
@@ -60,22 +60,22 @@
                                         <li>
                                             <a>${firstFactor.value}</a>
                                             <ul>
-                                                <c:forEach items="${secondFactorLevel.allFactorNames}"
+                                                <c:forEach items="${secondFilterFactorMenu.allFactorNames}"
                                                            var="secondFactorName">
                                                     <li>
                                                         <a>${secondFactorName}</a>
                                                         <ul>
                                                             <c:forEach
-                                                                    items="${secondFactorLevel.getFactorsForFactorName(secondFactorName)}"
+                                                                    items="${secondFilterFactorMenu.getFactorsForFactorName(secondFactorName)}"
                                                                     var="secondFactor">
-                                                                <c:set var="lastFactorLevel"
-                                                                       value="${secondFactorLevel.filterOutByFactor(secondFactor)}"/>
+                                                                <c:set var="lastFilterFactorMenu"
+                                                                       value="${secondFilterFactorMenu.filterOutByFactor(secondFactor)}"/>
 
-                                                                <c:forEach items="${lastFactorLevel.allFactorNames}"
+                                                                <c:forEach items="${lastFilterFactorMenu.allFactorNames}"
                                                                            var="queryFactorName">
                                                                     <c:set var="queryFactorType"
-                                                                           value="${factorLevel.resolveTypeForName(queryFactorName)}"/>
-                                                                    <li data-serialized-factors='${lastFactorLevel.getLink(queryFactorType, firstFactor, secondFactor)}'
+                                                                           value="${filterFactorMenu.resolveTypeForName(queryFactorName)}"/>
+                                                                    <li data-serialized-factors='${lastFilterFactorMenu.getLink(queryFactorType, firstFactor, secondFactor)}'
                                                                         style="text-decoration: underline; cursor: pointer;">${secondFactor.value}</li>
                                                                 </c:forEach>
                                                             </c:forEach>

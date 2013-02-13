@@ -4,7 +4,6 @@
 package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.collect.Sets;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,13 +18,9 @@ import uk.ac.ebi.atlas.model.FactorGroup;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Set;
-import java.util.SortedSet;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItems;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,16 +50,6 @@ public class MageTabParserIT {
     }
 
     @Test
-    public void factorNamesShouldBeCorrect() throws Exception {
-        //given
-        Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
-        //when
-        SortedSet<String> factorNames = experiment.getExperimentalFactors().getAllFactorNames();
-        //then
-        assertThat(factorNames,contains("organism", "organism part"));
-    }
-
-    @Test
     public void experimentRunShouldContainTheRightFactorsTest() throws Exception {
         Factor organismFactor = new Factor("ORGANISM","organism","Mus musculus");
         Factor organismPartFactor = new Factor("ORGANISM_PART","organism part","liver");
@@ -85,8 +70,8 @@ public class MageTabParserIT {
         //when
         FactorGroup factorGroup = experiment.getFactorGroup("ERR030887");
         //then
-        //assertThat(factorGroup.getFactorByType("PHENOTYPE"), is(nullValue()));
-        //assertThat(factorGroup.getFactorByType("PROTOCOL"), is(nullValue()));
+        assertThat(factorGroup.getFactorByType("PHENOTYPE"), is(nullValue()));
+        assertThat(factorGroup.getFactorByType("PROTOCOL"), is(nullValue()));
         assertThat(factorGroup.getFactorByType("ORGANISM_PART"), is(organismPartFactor));
 
     }

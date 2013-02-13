@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoaderBuilder;
+import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
@@ -39,7 +40,8 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder everytime the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one using this class, is not spring managed.
@@ -55,14 +57,17 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
     private ArrayExpressClient arrayExpressClient;
 
+    private AnalysisMethodsTsvReader analysisMethodsTsvReader;
+
 
     @Inject
     public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsTsvReader experimentFactorsTsvReader
-            , ArrayExpressClient arrayExpressClient) {
+            , ArrayExpressClient arrayExpressClient, AnalysisMethodsTsvReader analysisMethodsTsvReader) {
         this.mageTabLoaderBuilder = mageTabLoaderBuilder;
 
         this.experimentFactorsTsvReader = experimentFactorsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
+        this.analysisMethodsTsvReader = analysisMethodsTsvReader;
     }
 
     @Override
@@ -84,11 +89,16 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         boolean hasExtraInfoFile = new File(extraInfoFileLocation).exists();
 
+
+        Set<String> processedExperimentRunAccessions = analysisMethodsTsvReader.readProcessedLibraries(experimentAccession);
+
         ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
         MageTabLoader mageTabLoader = mageTabLoaderBuilder
                                                         .forExperimentAccession(experimentAccession)
-                                                        .withRequiredFactorTypes(requiredFactorTypes).build();
+                                                        .withRequiredFactorTypes(requiredFactorTypes)
+                                                        .withProcessedExperimentRunAccessions(processedExperimentRunAccessions)
+                                                        .build();
 
         return experimentBuilder.forSpecies(mageTabLoader.extractSpecies())
                 .withDescription(experimentName)

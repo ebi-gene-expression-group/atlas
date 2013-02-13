@@ -139,7 +139,9 @@ public class FilterParameters {
         protected Factor buildFromSerializedFilterFactors(String serializedFilterFactors) {
             String[] split = serializedFilterFactors.split(FACTOR_VALUE_SEPARATOR);
             if (split.length == 2) {
-                return new Factor(split[0], split[1]);
+                ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+                String name = experimentalFactors.getFactorName(split[0]);
+                return new Factor(split[0], name, split[1]);
             }
             throw new IllegalArgumentException("serialized Factor string should be colon separated between type and value.");
         }

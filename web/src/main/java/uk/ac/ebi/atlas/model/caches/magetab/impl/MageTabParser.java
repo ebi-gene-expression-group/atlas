@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.caches.magetab.impl;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +19,7 @@ import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoaderBuilder;
-import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +42,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     @Value("#{configuration['experiment.magetab.idf.path.template']}")
     private String idfPathTemplate;
 
-    private AnalysisMethodsTsvReader analysisMethodsTsvReader;
+    private Set<String> processedExperimentRunAccessions;
 
     private String experimentAccession;
 
@@ -57,11 +54,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
     private MAGETABInvestigation investigation;
 
-    @Inject
-    public MageTabParser(AnalysisMethodsTsvReader analysisMethodsTsvReader) {
-        this.analysisMethodsTsvReader = analysisMethodsTsvReader;
-    }
-
     public MageTabParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
@@ -70,6 +62,12 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     @Override
     public MageTabLoaderBuilder withRequiredFactorTypes(Set<String> requiredFactorTypes) {
         this.requiredFactorTypes = requiredFactorTypes;
+        return this;
+    }
+
+    @Override
+    public MageTabLoaderBuilder withProcessedExperimentRunAccessions(Set<String> processedExperimentRunAccessions) {
+        this.processedExperimentRunAccessions = processedExperimentRunAccessions;
         return this;
     }
 
@@ -89,9 +87,14 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
-        //ToDo: Collections2.filter replace with standard collection
-        return Collections2.filter(allExperimentRuns, new IsExperimentRunSelected(experimentAccession));
+        Collection<ExperimentRun> processedExperimentRuns = Lists.newArrayList();
 
+        for (ExperimentRun experimentRun: allExperimentRuns) {
+            if (processedExperimentRunAccessions.contains(experimentRun.getRunAccession())){
+                processedExperimentRuns.add(experimentRun);
+            }
+        }
+        return processedExperimentRuns;
     }
 
     @Override
@@ -164,38 +167,19 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
                 if (experimentalFactorNames.get(i).equals(factorValueAttribute.type)) {
                     if (idf.experimentalFactorType.size() > i) {
                         factorType = idf.experimentalFactorType.get(i);
+                        break;
                     }
                 }
             }
-            //ToDo:... requiredFactorTypes.contains(factorType) fails because factor type in tsv are all converted to uppercase and joined with _, but why do we do that?
-            //if (requiredFactorTypes.contains(factorType)){
-                Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
+            Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
+            if (requiredFactorTypes.contains(factor.getType())){
+
                 experimentRun.addFactor(factor);
-            //}
+            }
         }
 
         return experimentRun;
     }
 
 
-    class IsExperimentRunSelected implements Predicate<ExperimentRun> {
-
-        Set<String> selectedRunAccessions;
-
-        public IsExperimentRunSelected(String experimentAccession) throws IOException {
-            selectedRunAccessions = getSelectedRunAccessions(experimentAccession);
-        }
-
-        @Override
-        public boolean apply(ExperimentRun experimentRun) {
-            return selectedRunAccessions.contains(experimentRun.getRunAccession());
-        }
-
-        protected final Set<String> getSelectedRunAccessions(String experimentAccession) throws IOException {
-
-            return analysisMethodsTsvReader.readProcessedLibraries(experimentAccession);
-
-        }
-
-    }
 }

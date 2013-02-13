@@ -88,23 +88,6 @@ public class ExperimentalFactorsTest {
         assertThat(factorName, is("NAME2"));
     }
 
-
-    @Test
-    public void getAllFactorNamesShouldReturnAllNamesComingFromFactorGroups() {
-        //when
-        SortedSet<String> allFactorNames = subject.getAllFactorNames();
-        //then
-        assertThat(allFactorNames, contains("NAME1", "NAME2", "NAME3"));
-    }
-
-    @Test
-    public void getFactorsByName() {
-        //when
-        SortedSet<Factor> factors = subject.getFactorsByName("NAME2");
-        //then
-        assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2));
-    }
-
     @Test
     public void getFactorsWithGivenNameCooccurringWithGivenFactorTest() {
         //when
@@ -126,30 +109,20 @@ public class ExperimentalFactorsTest {
 
     @Test
     public void testGetFilteredFactors() {
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2), "TYPE3");
+        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2));
         assertThat(filteredFactors, contains(factorWithType3));
 
-        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2DifferentValue), "TYPE3");
+        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2DifferentValue));
         assertThat(filteredFactors, contains(factorWithType3DifferentValue));
 
 
-        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2DifferentValue), "TYPE1");
+        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2DifferentValue));
         assertThat(filteredFactors, contains(factorWithType1));
 
         //ToDo: this is not valid combination: do we need to check it?!!!
-        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2), "TYPE1");
+        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2));
         assertThat(filteredFactors.isEmpty(), is(true));
     }
 
-
-    @Test(expected = java.lang.IllegalArgumentException.class)
-    public void filteredFactorValuesShouldThrowExceptionIfNoFactorHasQueryFilterType() {
-        subject.getFilteredFactors(Sets.newHashSet(defaultFilterFactorMock), "BLA");
-    }
-
-    @Test(expected = java.lang.IllegalArgumentException.class)
-    public void filteredFactorValuesShouldThrowExceptionIfQueryFilterTypeIsTheSameAsAnyFilterFactorType() {
-        subject.getFilteredFactors(Sets.newHashSet(defaultFilterFactorMock), DEFAULT_FILTER_FACTOR_TYPE);
-    }
 
 }
