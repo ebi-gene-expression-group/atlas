@@ -12,9 +12,10 @@
         $(document).ready(function () {
 
             $("#extra-info").fancybox({
+                /*
                 beforeLoad: function(){
                     this.title = "Look at this marvelous title... yes this is the title";
-                },
+                },*/
                 padding : 0,
                 openEffect	: 'elastic',
                 closeEffect	: 'elastic'
@@ -40,7 +41,9 @@
             <div id="experimentDescription" style="font-weight: bold;">
                 ${experimentDescription}
                 <c:if test="${hasExtraInfo}">
-                    <a id="extra-info" href="experiments/${experimentAccession}/extra-info.png">...</a>
+                    <a id="extra-info" href="experiments/${experimentAccession}/extra-info.png">
+                        <img alt="more information" src="/gxa/resources/images/balloon-ellipsis-icon-left.png">
+                    </a>
                 </c:if>
             </div>
             <div>Organism(s): ${species}</div>
