@@ -3,21 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Add fancyBox -->
-<link rel="stylesheet" href="http://localhost:9090/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen" />
-<script type="text/javascript" src="http://localhost:9090/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
 
 <script>
-    /*global jQuery: false */
-    /*jslint browser:true */
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
-
-        "use strict";
-
         $(document).ready(function () {
-
-            $('#display-analysis-methods').button().tooltip();
-            $('#display-experiment-design').button().tooltip();
-            $('#goto-ae').button().tooltip();
 
             $("#extra-info").fancybox({
                 beforeLoad: function(){
@@ -29,10 +21,10 @@
             });
 
         });
-
-    }(jQuery));
-
+    })(jQuery);
 </script>
+
+
 
 <div id="helpContentTooltip" style='display:none'></div>
 
