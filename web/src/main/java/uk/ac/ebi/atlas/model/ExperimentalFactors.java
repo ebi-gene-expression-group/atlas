@@ -57,16 +57,7 @@ public class ExperimentalFactors {
         return factorNamesByType.get(type);
     }
 
-    //ToDo: Used only in tests
-    public SortedSet<String> getAllFactorNames() {
-        return ImmutableSortedSet.copyOf(factorsByName.keySet());
-    }
-
-    //ToDo: Used only in tests
-    public SortedSet<Factor> getFactorsByName(String name) {
-        return ImmutableSortedSet.copyOf(factorsByName.get(name));
-    }
-
+    //ToDo: this is only used to build factor filter menu, maybe should be encapsulated in a menu builder and the menu builder could be used by a menu cache loader
     public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
         return coOccurringFactors.get(factor);
     }

@@ -88,23 +88,6 @@ public class ExperimentalFactorsTest {
         assertThat(factorName, is("NAME2"));
     }
 
-
-    @Test
-    public void getAllFactorNamesShouldReturnAllNamesComingFromFactorGroups() {
-        //when
-        SortedSet<String> allFactorNames = subject.getAllFactorNames();
-        //then
-        assertThat(allFactorNames, contains("NAME1", "NAME2", "NAME3"));
-    }
-
-    @Test
-    public void getFactorsByName() {
-        //when
-        SortedSet<Factor> factors = subject.getFactorsByName("NAME2");
-        //then
-        assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2));
-    }
-
     @Test
     public void getFactorsWithGivenNameCooccurringWithGivenFactorTest() {
         //when

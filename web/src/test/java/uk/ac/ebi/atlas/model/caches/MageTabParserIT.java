@@ -18,11 +18,9 @@ import uk.ac.ebi.atlas.model.FactorGroup;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Set;
-import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItems;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,16 +47,6 @@ public class MageTabParserIT {
         assertThat(experimentRun.getFactorByType("ORGANISM_PART").getValue(), is(equalTo("liver")));
         Set<String> species = experiment.getSpecies();
         assertThat(species, hasItems("Monodelphis domestica", "Gallus gallus", "Homo sapiens"));
-    }
-
-    @Test
-    public void factorNamesShouldBeCorrect() throws Exception {
-        //given
-        Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
-        //when
-        SortedSet<String> factorNames = experiment.getExperimentalFactors().getAllFactorNames();
-        //then
-        assertThat(factorNames,contains("organism", "organism part"));
     }
 
     @Test

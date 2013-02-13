@@ -167,6 +167,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
                 if (experimentalFactorNames.get(i).equals(factorValueAttribute.type)) {
                     if (idf.experimentalFactorType.size() > i) {
                         factorType = idf.experimentalFactorType.get(i);
+                        break;
                     }
                 }
             }

@@ -35,7 +35,7 @@ import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.RankingParameters;
-import uk.ac.ebi.atlas.utils.FactorLevel;
+import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
@@ -121,8 +121,10 @@ public class GeneProfilesPageController extends GeneProfilesController {
             model.addAttribute("downloadUrl", buildDownloadURL(request));
 
             Set<Factor> allFactors = experimentalFactors.getAllFactors();
-            FactorLevel factorLevel = new FactorLevel(experimentalFactors, allFactors);
-            model.addAttribute("factorLevel", factorLevel);
+
+            FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, allFactors);
+
+            model.addAttribute("filterFactorMenu", filterFactorMenu);
 
             model.addAttribute("selectedFilterFactors", selectedFilterFactors);
 

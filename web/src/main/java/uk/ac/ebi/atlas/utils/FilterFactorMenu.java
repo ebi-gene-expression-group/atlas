@@ -34,7 +34,7 @@ import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class FactorLevel {
+public class FilterFactorMenu {
 
     public static final String FACTOR_SEPARATOR = ":";
 
@@ -42,16 +42,16 @@ public class FactorLevel {
 
     private ExperimentalFactors experimentalFactors;
 
-    public FactorLevel(ExperimentalFactors experimentalFactors, Set<Factor> setOfFactors) {
+    public FilterFactorMenu(ExperimentalFactors experimentalFactors, Set<Factor> setOfFactors) {
         this.experimentalFactors = experimentalFactors;
         factors.addAll(setOfFactors);
     }
 
-    public SortedSet<Factor> getFactors() {
+    protected SortedSet<Factor> getFactors() {
         return factors;
     }
 
-    public FactorLevel filterOutByFactor(Factor factor) {
+    public FilterFactorMenu filterOutByFactor(Factor factor) {
 
         checkNotNull(factor, "Cannot filter by null factor!");
         checkNotNull(factor.getName(), "Factor should have a name!");
@@ -68,7 +68,7 @@ public class FactorLevel {
         SortedSet<Factor> coOccurring = experimentalFactors.getCoOccurringFactors(factor);
         validFactors.retainAll(coOccurring);
 
-        return new FactorLevel(experimentalFactors, validFactors);
+        return new FilterFactorMenu(experimentalFactors, validFactors);
     }
 
     public SortedSet<Factor> getFactorsForFactorName(final String name) {
