@@ -49,7 +49,6 @@ public class GeneProfilesController {
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         return filtersParameterBuilder.forExperiment(experiment)
-                .withCutoff(preferences.getCutoff())
                 .withFilterFactors(preferences.getSerializedFilterFactors())
                 .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())

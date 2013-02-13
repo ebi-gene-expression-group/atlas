@@ -25,10 +25,9 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.base.Predicate;
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
-import javax.inject.Named;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -58,11 +57,12 @@ public class ExperimentalFactors {
         return factorNamesByType.get(type);
     }
 
-
+    //ToDo: Used only in tests
     public SortedSet<String> getAllFactorNames() {
         return ImmutableSortedSet.copyOf(factorsByName.keySet());
     }
 
+     //ToDo: Used only in tests
     public SortedSet<Factor> getFactorsByName(String name) {
         return ImmutableSortedSet.copyOf(factorsByName.get(name));
     }
@@ -83,6 +83,7 @@ public class ExperimentalFactors {
     }
 
     //ToDo: this would be: experimentalFactor.sliceBy(... FilterFactor).byType(queryFactorType) ... or any better name?
+    //ToDo: (NK) This method has two different behaviour (and need different parameters) depending on type of experiment
     public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, String queryFactorType) {
 
         for (Factor filterFactor : filterFactors) {
@@ -105,6 +106,10 @@ public class ExperimentalFactors {
             }
         });
 
+    }
+
+    public SortedSet<Factor> getFilteredFactors(FilterParameters filterParameters) {
+        return getFilteredFactors(filterParameters.getSelectedFilterFactors(), filterParameters.getQueryFactorType());
     }
 
     public Set<Factor> getAllFactors() {
