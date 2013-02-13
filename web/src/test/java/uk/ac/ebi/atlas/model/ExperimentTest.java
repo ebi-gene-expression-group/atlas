@@ -135,10 +135,10 @@ public class ExperimentTest {
         Set<Factor> filteredFactors = Sets.newHashSet(factorMock1, factorMock2);
         //when
         ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
-        experimentalFactors.getFilteredFactors(filteredFactors, CELLULAR_COMPONENT);
+        experimentalFactors.getFilteredFactors(filteredFactors);
 
         //then
-        verify(experimentalFactorsMock).getFilteredFactors(filteredFactors, CELLULAR_COMPONENT);
+        verify(experimentalFactorsMock).getFilteredFactors(filteredFactors);
     }
 
 }

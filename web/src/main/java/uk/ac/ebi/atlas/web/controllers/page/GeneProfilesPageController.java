@@ -102,7 +102,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
             Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
 
             ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-            SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors, filterParameters.getQueryFactorType());
+            SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
 
             // this is currently required for the request preferences filter drop-down multi-selection box
             model.addAttribute("allQueryFactors", allQueryFactors);

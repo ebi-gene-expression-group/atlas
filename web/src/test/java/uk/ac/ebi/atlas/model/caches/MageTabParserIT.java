@@ -4,7 +4,6 @@
 package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.collect.Sets;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,9 +20,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.SortedSet;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItems;
@@ -85,8 +82,8 @@ public class MageTabParserIT {
         //when
         FactorGroup factorGroup = experiment.getFactorGroup("ERR030887");
         //then
-        //assertThat(factorGroup.getFactorByType("PHENOTYPE"), is(nullValue()));
-        //assertThat(factorGroup.getFactorByType("PROTOCOL"), is(nullValue()));
+        assertThat(factorGroup.getFactorByType("PHENOTYPE"), is(nullValue()));
+        assertThat(factorGroup.getFactorByType("PROTOCOL"), is(nullValue()));
         assertThat(factorGroup.getFactorByType("ORGANISM_PART"), is(organismPartFactor));
 
     }

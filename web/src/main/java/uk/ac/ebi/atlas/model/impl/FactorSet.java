@@ -2,25 +2,26 @@ package uk.ac.ebi.atlas.model.impl;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.FactorGroup;
 
 import java.util.*;
 
-public class FactorSet implements FactorGroup{
+public class FactorSet implements FactorGroup {
 
     private Map<String, Factor> factorsByType = new HashMap<>();
 
-    public FactorSet(Set<Factor> factors){
-        for (Factor factor: factors){
-           factorsByType.put(factor.getType(), factor);
+    public FactorSet(Set<Factor> factors) {
+        for (Factor factor : factors) {
+            factorsByType.put(factor.getType(), factor);
         }
     }
 
-    public FactorSet(){}
+    public FactorSet() {}
 
 
-    public FactorSet add(Factor factor){
+    public FactorSet add(Factor factor) {
         factorsByType.put(factor.getType(), factor);
         return this;
     }
@@ -42,7 +43,7 @@ public class FactorSet implements FactorGroup{
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (getClass() != other.getClass()) {
             return false;
         }
@@ -56,14 +57,23 @@ public class FactorSet implements FactorGroup{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return Objects.toStringHelper(this.getClass())
-                    .add("factors",factorsByType.values())
-                    .toString();
+                .add("factors", factorsByType.values())
+                .toString();
     }
 
     @Override
     public boolean overlapsWith(Collection<Factor> factors) {
         return !Collections.disjoint(this.factorsByType.values(), factors);
+    }
+
+    @Override
+    public List<Factor> remove(Collection<Factor> factors) {
+        ArrayList<Factor> allFactors = Lists.newArrayList(factorsByType.values());
+
+        allFactors.removeAll(factors);
+
+        return allFactors;
     }
 }
