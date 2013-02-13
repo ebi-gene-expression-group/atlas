@@ -68,7 +68,7 @@ public class BarChartTrader {
 
         for (FactorGroup bitSetFactors : geneBitSets.keySet()) {
             if ((CollectionUtils.isEmpty(filterFactors) || bitSetFactors.containsAll(filterFactors))
-                    && (CollectionUtils.isEmpty(selectedFactors) || !bitSetFactors.isDisjointFrom(selectedFactors))) {
+                    && (CollectionUtils.isEmpty(selectedFactors) || bitSetFactors.overlapsWith(selectedFactors))) {
                 //add
                 expressedGenesBitSet.or(geneBitSets.get(bitSetFactors));
             }

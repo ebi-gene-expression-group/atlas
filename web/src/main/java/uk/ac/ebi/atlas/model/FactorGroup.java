@@ -35,6 +35,6 @@ public interface FactorGroup extends Iterable<Factor> {
 
     public boolean containsAll(Set<Factor> factors);
 
-    public boolean isDisjointFrom(Collection<Factor> factors);
+    public boolean overlapsWith(Collection<Factor> factors);
 
 }

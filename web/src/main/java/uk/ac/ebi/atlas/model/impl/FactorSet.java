@@ -63,7 +63,7 @@ public class FactorSet implements FactorGroup{
     }
 
     @Override
-    public boolean isDisjointFrom(Collection<Factor> factors) {
-        return Collections.disjoint(this.factorsByType.values(), factors);
+    public boolean overlapsWith(Collection<Factor> factors) {
+        return !Collections.disjoint(this.factorsByType.values(), factors);
     }
 }

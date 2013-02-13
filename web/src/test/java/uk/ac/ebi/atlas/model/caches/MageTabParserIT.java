@@ -3,6 +3,8 @@
 
 package uk.ac.ebi.atlas.model.caches;
 
+import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,14 +13,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.FactorGroup;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Set;
+import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItems;
@@ -48,5 +53,43 @@ public class MageTabParserIT {
         Set<String> species = experiment.getSpecies();
         assertThat(species, hasItems("Monodelphis domestica", "Gallus gallus", "Homo sapiens"));
     }
+
+    @Test
+    public void factorNamesShouldBeCorrect() throws Exception {
+        //given
+        Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
+        //when
+        SortedSet<String> factorNames = experiment.getExperimentalFactors().getAllFactorNames();
+        //then
+        assertThat(factorNames,contains("organism", "organism part"));
+    }
+
+    @Test
+    public void experimentRunShouldContainTheRightFactorsTest() throws Exception {
+        Factor organismFactor = new Factor("ORGANISM","organism","Mus musculus");
+        Factor organismPartFactor = new Factor("ORGANISM_PART","organism part","liver");
+        //given
+        Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
+        //when
+        FactorGroup factorGroup = experiment.getFactorGroup(RUN_ACCESSION);
+        //then
+        assertThat(factorGroup.containsAll(Sets.newHashSet(organismFactor, organismPartFactor)), is(true));
+
+    }
+
+    @Test
+    public void illuminaBodymapExperimentRunShouldContainTheRightFactorsTest() throws Exception {
+        Factor organismPartFactor = new Factor("ORGANISM_PART","organism part","liver");
+        //given
+        Experiment experiment = subject.load("E-MTAB-513");
+        //when
+        FactorGroup factorGroup = experiment.getFactorGroup("ERR030887");
+        //then
+        assertThat(factorGroup.getFactorByType("PHENOTYPE"), is(nullValue()));
+        assertThat(factorGroup.getFactorByType("PROTOCOL"), is(nullValue()));
+        assertThat(factorGroup.getFactorByType("ORGANISM_PART"), is(organismPartFactor));
+
+    }
+
 
 }
