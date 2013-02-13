@@ -29,9 +29,9 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentBuilder;
-import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.caches.magetab.ExperimentRunsBuilder;
+import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
+import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoaderBuilder;
 import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
@@ -50,16 +50,16 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
     @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
 
-    private ExperimentRunsBuilder experimentRunsBuilder;
+    private MageTabLoaderBuilder mageTabLoaderBuilder;
     private ExperimentFactorsTsvReader experimentFactorsTsvReader;
 
     private ArrayExpressClient arrayExpressClient;
 
 
     @Inject
-    public ExperimentMetadataLoader(ExperimentRunsBuilder experimentRunsBuilder, ExperimentFactorsTsvReader experimentFactorsTsvReader
+    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsTsvReader experimentFactorsTsvReader
             , ArrayExpressClient arrayExpressClient) {
-        this.experimentRunsBuilder = experimentRunsBuilder;
+        this.mageTabLoaderBuilder = mageTabLoaderBuilder;
 
         this.experimentFactorsTsvReader = experimentFactorsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
@@ -86,13 +86,15 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
-        Collection<ExperimentRun> experimentRuns = experimentRunsBuilder.forExperimentAccession(experimentAccession).extractExperimentRuns();
+        MageTabLoader mageTabLoader = mageTabLoaderBuilder
+                                                        .forExperimentAccession(experimentAccession)
+                                                        .withRequiredFactorTypes(requiredFactorTypes).build();
 
-        return experimentBuilder.forSpecies(experimentRunsBuilder.extractSpecies())
+        return experimentBuilder.forSpecies(mageTabLoader.extractSpecies())
                 .withDescription(experimentName)
                 .withDefaultQueryType(defaultQueryFactorType)
                 .withDefaultFilterFactors(defaultFilterFactors)
-                .withExperimentRuns(experimentRuns)
+                .withExperimentRuns(mageTabLoader.extractExperimentRuns())
                 .withExtraInfo(hasExtraInfoFile)
                 .create();
 

@@ -1,8 +1,9 @@
-package uk.ac.ebi.atlas.model.caches.magetab;
+package uk.ac.ebi.atlas.model.caches.magetab.impl;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -17,6 +18,8 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
+import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoaderBuilder;
 import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
 
 import javax.inject.Inject;
@@ -30,9 +33,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkState;
+
 @Named
 @Scope("prototype")
-public class ExperimentRunsBuilder implements  MageTabLoader, MageTabLoaderBuilder{
+public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
     @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String idfUrlTemplate;
@@ -48,31 +53,39 @@ public class ExperimentRunsBuilder implements  MageTabLoader, MageTabLoaderBuild
 
     private Collection<ScanNode> scanNodes;
 
+    private Set<String> requiredFactorTypes;
+
+    private MAGETABInvestigation investigation;
+
     @Inject
-    public ExperimentRunsBuilder(AnalysisMethodsTsvReader analysisMethodsTsvReader) {
+    public MageTabParser(AnalysisMethodsTsvReader analysisMethodsTsvReader) {
         this.analysisMethodsTsvReader = analysisMethodsTsvReader;
     }
 
-    public ExperimentRunsBuilder forExperimentAccession(String experimentAccession) {
+    public MageTabParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
     }
 
     @Override
-    public MageTabLoaderBuilder withRequiredFactorTypes(Set<String> factorTypes) {
-        return null;
+    public MageTabLoaderBuilder withRequiredFactorTypes(Set<String> requiredFactorTypes) {
+        this.requiredFactorTypes = requiredFactorTypes;
+        return this;
     }
 
     @Override
-    public MageTabLoader build() {
-        return null;
+    public MageTabLoader build() throws IOException, ParseException {
+        checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
+        checkState(CollectionUtils.isNotEmpty(requiredFactorTypes), "Please invoke withRequiredFactorTypes method to initialize the builder !");
+
+        investigation = parseInvestigation();
+        scanNodes = investigation.SDRF.getNodes(ScanNode.class);
+        return this;
     }
 
 
     @Override
     public Collection<ExperimentRun> extractExperimentRuns() throws IOException, ParseException {
-        MAGETABInvestigation investigation = parseInvestigation();
-        scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
@@ -113,7 +126,7 @@ public class ExperimentRunsBuilder implements  MageTabLoader, MageTabLoaderBuild
 
     }
 
-    protected Collection<ExperimentRun> extractAllExperimentRunsFromSdrf(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {
+    Collection<ExperimentRun> extractAllExperimentRunsFromSdrf(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {
 
         Collection<ExperimentRun> experimentRuns = new ArrayList<>();
 
@@ -154,9 +167,11 @@ public class ExperimentRunsBuilder implements  MageTabLoader, MageTabLoaderBuild
                     }
                 }
             }
-
-            Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
-            experimentRun.addFactor(factor);
+            //ToDo:... requiredFactorTypes.contains(factorType) fails because factor type in tsv are all converted to uppercase and joined with _, but why do we do that?
+            //if (requiredFactorTypes.contains(factorType)){
+                Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
+                experimentRun.addFactor(factor);
+            //}
         }
 
         return experimentRun;
