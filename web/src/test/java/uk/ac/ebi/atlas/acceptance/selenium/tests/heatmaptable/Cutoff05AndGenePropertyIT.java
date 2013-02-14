@@ -41,26 +41,25 @@ public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
 
     @Test
     public void verifyResultOnSinglePropertyQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=regulation&cutoff=0.5");
+        subject = new HeatmapTablePage(driver, "geneQuery=&cutoff=0.5");
         subject.get();
-        assertThat(subject.getGeneCount().contains("62"), is(true));
+        assertThat(subject.getGeneCount(), containsString("of 268"));
     }
 
     @Test
     public void verifyResultOnMultiplePropertyQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=regulation+%22protein+binding%22&cutoff=0.5");
+        subject = new HeatmapTablePage(driver, "geneQuery=&cutoff=0.5");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("82"));
+        assertThat(subject.getGeneCount(), containsString("of 268"));
     }
 
     @Test
     public void verifyResultOnMultiplePropertyAndOrganismPartQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=regulation+%22protein+binding%22&" +
-                "queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
+        subject = new HeatmapTablePage(driver, "geneQuery=&queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
         subject.get();
-        assertThat(subject.getGeneCount().contains("67"), is(true));
+        assertThat(subject.getGeneCount(), containsString("of 169"));
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("9", "10", "5", "8", "18", "5", "30", "4", "1", "10", "15", "9", "103", "8", "56", "0.7"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "10688", "", "", "", "", "", "", "6899", "7811", "6720", "", "", "", "8660", "4149"));
     }
 
 }
