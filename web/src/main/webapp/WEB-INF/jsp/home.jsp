@@ -23,12 +23,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<div id="wordcloud" style="position: absolute; margin-left:200px; margin-top: 40px;">
+<div id="wordcloud" style="position: absolute; margin-left:200px; margin-top: 100px;">
     <img src="resources/images/home/centre_landing.png"/>
 </div>
 
 <div class="species-navigation" id="species-nav"
-     style=" margin-left:50px; margin-top: 50px; width: 600px; height: 600px;">
+     style="position: relative; top: 75px; margin-left:50px; width: 600px; height: 600px;">
 
     <c:forEach items="${experimentAccessions.keySet()}" var="specie">
 
@@ -71,11 +71,11 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width': '60px',
-                        'height': '60px',
-                        'top': '0px',
-                        'left': '0px',
-                        'opacity': '1.0'
+                        'width':'60px',
+                        'height':'60px',
+                        'top':'0px',
+                        'left':'0px',
+                        'opacity':'1.0'
                     }, 500, 'easeOutBack', function () {
                         $(this).parent().find('ul').fadeIn(1);
                     });
@@ -85,11 +85,11 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width': '40px',
-                        'height': '40px',
-                        'top': '0px',
-                        'left': '0px',
-                        'opacity': '1.0'
+                        'width':'40px',
+                        'height':'40px',
+                        'top':'0px',
+                        'left':'0px',
+                        'opacity':'1.0'
                     }, 5000, 'easeOutBack');
 
                     $this.find('a:first,h2').removeClass('active');
