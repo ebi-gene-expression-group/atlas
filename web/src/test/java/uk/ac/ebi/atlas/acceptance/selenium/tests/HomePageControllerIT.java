@@ -26,7 +26,10 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HomePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 public class HomePageControllerIT extends SeleniumFixture {
@@ -61,5 +64,18 @@ public class HomePageControllerIT extends SeleniumFixture {
     @Test
     public void checkNumberOfExperimentsOfSecondSpecies() {
         assertThat(subject.getAllExperimentsOfSpecies(5).size(), is(2));
+    }
+
+    @Test
+    public void checkSecondSpecieExperimentLink() {
+        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(1);
+        assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Gorilla%20gorilla"));
+    }
+
+    @Test
+    public void checkMouseExperimentLink() {
+        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(5);
+        assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Mus%20musculus"));
+        assertThat(allExperimentLinksOfSpecies.get(1), containsString("experiments/E-MTAB-599"));
     }
 }

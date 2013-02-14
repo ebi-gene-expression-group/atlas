@@ -27,6 +27,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage extends AtlasPage {
@@ -56,6 +57,16 @@ public class HomePage extends AtlasPage {
     public List<WebElement> getAllExperimentsOfSpecies(int i) {
         WebElement specie = getAllSpeciesItems().get(i);
         return specie.findElements(By.xpath("ul/li"));
+    }
+
+    public List<String> getAllExperimentLinksOfSpecies(int i){
+        List<String> result = new ArrayList<>();
+        List<WebElement> allExperimentsOfSpecies = getAllExperimentsOfSpecies(i);
+        for (WebElement link : allExperimentsOfSpecies) {
+            result.add(link.findElement(By.xpath("a")).getAttribute("href"));
+        }
+
+        return result;
     }
 
     @Override

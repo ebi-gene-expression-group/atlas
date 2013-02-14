@@ -23,12 +23,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<div id="wordcloud" style="position: absolute; margin-left:75px; margin-top: 150px;">
+<div id="wordcloud" style="position: absolute; margin-left:200px; margin-top: 40px;">
     <img src="resources/images/home/centre_landing.png"/>
 </div>
 
 <div class="species-navigation" id="species-nav"
-     style="position: absolute; margin-left:50px; margin-top: 50px; width: 600px; height: 600px;">
+     style=" margin-left:50px; margin-top: 50px; width: 600px; height: 600px;">
 
     <c:forEach items="${experimentAccessions.keySet()}" var="specie">
 
@@ -40,7 +40,10 @@
             <h2>${specie}</h2>
             <ul>
                 <c:forEach items="${experimentAccessions.get(specie)}" var="experimentAccession">
-                    <li><a href="experiments/${experimentAccession}">${experimentAccession}</a></li>
+                    <c:set var="key" value="${experimentAccession}${specie}"/>
+                    <li>
+                        <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentAccession}</a>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
@@ -68,11 +71,11 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width':'60px',
-                        'height':'60px',
-                        'top':'0px',
-                        'left':'0px',
-                        'opacity':'1.0'
+                        'width': '60px',
+                        'height': '60px',
+                        'top': '0px',
+                        'left': '0px',
+                        'opacity': '1.0'
                     }, 500, 'easeOutBack', function () {
                         $(this).parent().find('ul').fadeIn(1);
                     });
@@ -82,11 +85,11 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width':'40px',
-                        'height':'40px',
-                        'top':'0px',
-                        'left':'0px',
-                        'opacity':'1.0'
+                        'width': '40px',
+                        'height': '40px',
+                        'top': '0px',
+                        'left': '0px',
+                        'opacity': '1.0'
                     }, 5000, 'easeOutBack');
 
                     $this.find('a:first,h2').removeClass('active');
@@ -119,9 +122,43 @@
         });
     }
 
+    /*
+     drawEllipse()
+     selector : a jQuery selector defining an element or array of elements
+     x: the left offset of all points on the ellipse
+     y: the top offset of all points on the ellipse
+     a: the height of the ellipse
+     b: the width of the ellipse
+     angle: the angle of the ellipse
+     Sample usage:
+     CSS: .box { background-color:red; height:60px; width:60px;  position:absolute; margin:5px;}
+     JS:drawEllipse(".box", 230,300, 200, 350, 360);
+     */
+    function drawEllipse(selector, x, y, a, b, angle) {
+        var steps = $(selector).length;
+        var i = 0;
+        var beta = -angle * (Math.PI / 180);
+        var sinbeta = Math.sin(beta);
+        var cosbeta = Math.cos(beta);
+        $(selector).each(function (index) {
+            i += (360 / steps);
+            var alpha = i * (Math.PI / 180);
+            var sinalpha = Math.sin(alpha);
+            var cosalpha = Math.cos(alpha);
+            var X = x + (a * cosalpha * cosbeta - b * sinalpha * sinbeta);
+            var Y = y + (a * cosalpha * sinbeta + b * sinalpha * cosbeta);
+            X = Math.floor(X);
+            Y = Math.floor(Y);
+            //again, here's where the important X and Y coordinates
+            //are being output
+            $(this).css('margin-top', X + 'px');
+            $(this).css('margin-left', Y + 'px');
+        });
+    }
+
     $(document).ready(function () {
 
-        drawCircle('.item', 50, 200, 0, 310, 220);
+        drawEllipse('.item', 200, 350, 250, 390, 360);
 
     });
 
