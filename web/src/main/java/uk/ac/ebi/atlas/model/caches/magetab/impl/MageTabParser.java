@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.caches.magetab.impl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -15,6 +16,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.Characteris
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
+import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
@@ -35,6 +37,8 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 @Scope("prototype")
 public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
+
+    private static final Logger LOGGER = Logger.getLogger(RankGeneProfilesCommand.class);
 
     @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String idfUrlTemplate;
@@ -118,11 +122,15 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     MAGETABInvestigation parseInvestigation() throws ParseException, IOException {
 
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
+        LOGGER.info("<parseInvestigation> idfFileLocation = " +idfFileLocation);
+
         MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
         File idfFile = new File(idfFileLocation);
         if (idfFile.exists()) {
+            LOGGER.info("<parseInvestigation> investigation file exists on the filesystem, going to use it");
             return mageTabParser.parse(idfFile);
         } else {
+            LOGGER.info("<parseInvestigation> investigation file not found on the filesystem, going to use online file");
             URL idfFileURL = new URL(MessageFormat.format(idfUrlTemplate, experimentAccession));
             return mageTabParser.parse(idfFileURL);
         }
