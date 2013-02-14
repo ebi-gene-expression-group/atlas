@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
 
+
 <script>
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
@@ -18,7 +19,12 @@
                 },*/
                 padding : 0,
                 openEffect	: 'elastic',
-                closeEffect	: 'elastic'
+                closeEffect	: 'elastic',
+                helpers : {
+                    overlay : {
+                        locked : false
+                    }
+                }
             });
 
         });
