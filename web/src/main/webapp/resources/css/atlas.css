@@ -68,7 +68,9 @@ body {
     min-width: 950px;
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif;
+    margin:0px auto !important;
 }
+
 
 textarea, .chzn-container {
     font-family: inherit !important;

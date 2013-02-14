@@ -19,12 +19,7 @@
                 },*/
                 padding : 0,
                 openEffect	: 'elastic',
-                closeEffect	: 'elastic',
-                helpers : {
-                    overlay : {
-                        locked : false
-                    }
-                }
+                closeEffect	: 'elastic'
             });
 
         });
