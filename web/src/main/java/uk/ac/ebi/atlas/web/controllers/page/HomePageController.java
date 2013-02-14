@@ -68,7 +68,9 @@ public class HomePageController {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            experimentAccessions.put(experiment.getFirstSpecies(), experimentAccession);
+            for (String specie : experiment.getSpecies()) {
+                experimentAccessions.put(specie, experimentAccession);
+            }
         }
 
     }

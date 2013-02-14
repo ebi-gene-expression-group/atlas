@@ -22,51 +22,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%--<c:import url="includes/word-cloud-mock.jsp"/>--%>
-<%--<div id="wordcloud" style="width: 550px; height: 350px; position: relative; top: 180px; left: 130px;" class="jqcloud">--%>
-    <%--<img src="resources/images/home/centre_landing.png" width="40" height="40"--%>
-         <%--class="circle"/>--%>
-<%--</div>--%>
-<div class="species-navigation" id="species-nav">
-    <div class="item">
-        <img src="resources/images/SPECIES_man.png" width="40" height="40"
-             class="circle"/>
-        <a href="#" class="species-icon"></a>
 
-        <h2>Homo Sapiens</h2>
-        <ul>
-            <c:forEach items="${experimentAccessions.get('Homo sapiens')}" var="experimentAccession">
-                <li><a href="experiments/${experimentAccession}">${experimentAccession}</a></li>
-            </c:forEach>
-        </ul>
-    </div>
-    <div class="item">
-        <img src="resources/images/SPECIES_mouse2.png" width="40" height="40"
-             class="circle"/>
-        <a href="#" class="species-icon"></a>
+<div id="wordcloud" style="position: absolute; margin-left:75px; margin-top: 150px;">
+    <img src="resources/images/home/centre_landing.png"/>
+</div>
 
-        <h2>Mus Musculus</h2>
-        <ul>
-            <c:forEach items="${experimentAccessions.get('Mus musculus')}" var="experimentAccession">
-                <li><a href="experiments/${experimentAccession}">${experimentAccession}</a></li>
-            </c:forEach>
-        </ul>
-    </div>
-    <div class="item">
-        <img src="resources/images/home/rhesus_monkey1.png" width="40" height="40"
-             class="circle"/>
-        <a href="#" class="species-icon"></a>
+<div class="species-navigation" id="species-nav"
+     style="position: absolute; margin-left:50px; margin-top: 50px; width: 600px; height: 600px;">
 
-        <h2>rhesus monkey</h2>
-    </div>
-    <div class="item">
-        <img src="resources/images/home/chicken.png" width="40" height="40"
-             class="circle"/>
-        <a href="#" class="species-icon"></a>
+    <c:forEach items="${experimentAccessions.keySet()}" var="specie">
 
-        <h2>chicken</h2>
+        <div class="item">
+            <img src="resources/images/home/${specie}.png" width="40" height="40"
+                 class="circle"/>
+            <a href="#" class="species-icon"></a>
 
-    </div>
+            <h2>${specie}</h2>
+            <ul>
+                <c:forEach items="${experimentAccessions.get(specie)}" var="experimentAccession">
+                    <li><a href="experiments/${experimentAccession}">${experimentAccession}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+    </c:forEach>
 
 </div>
 
@@ -90,11 +68,11 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width': '60px',
-                        'height': '60px',
-                        'top': '0px',
-                        'left': '0px',
-                        'opacity': '1.0'
+                        'width':'60px',
+                        'height':'60px',
+                        'top':'0px',
+                        'left':'0px',
+                        'opacity':'1.0'
                     }, 500, 'easeOutBack', function () {
                         $(this).parent().find('ul').fadeIn(1);
                     });
@@ -104,11 +82,11 @@
                 function () {
                     var $this = $(this);
                     $this.find('img').stop().animate({
-                        'width': '40px',
-                        'height': '40px',
-                        'top': '0px',
-                        'left': '0px',
-                        'opacity': '1.0'
+                        'width':'40px',
+                        'height':'40px',
+                        'top':'0px',
+                        'left':'0px',
+                        'opacity':'1.0'
                     }, 5000, 'easeOutBack');
 
                     $this.find('a:first,h2').removeClass('active');
@@ -143,7 +121,7 @@
 
     $(document).ready(function () {
 
-        drawCircle('.item', 50, 200, 90, 310, 220);
+        drawCircle('.item', 50, 200, 0, 310, 220);
 
     });
 
