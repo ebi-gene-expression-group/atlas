@@ -65,7 +65,7 @@ a.species-icon {
     position: absolute;
     top: 30px;
     left: 20px;
-    display: none;
+    /*display: none;*/
 }
 
 .item ul li a {
@@ -73,21 +73,15 @@ a.species-icon {
     text-decoration: none;
     text-transform: uppercase;
     width: 110px;
-    color: #222;
+    color: #736a5a;
     padding: 3px;
     float: left;
     clear: both;
     text-shadow: 1px 1px 1px #fff;
 }
 
-.item ul li a:hover {
-    background-color: #fff;
-    color: #444;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -moz-box-shadow: 1px 1px 4px #666;
-    -webkit-box-shadow: 1px 1px 4px #666;
-    box-shadow: 1px 1px 4px #666;
+.item ul li a:hover  {
+    text-decoration:underline;
 }
+
 
