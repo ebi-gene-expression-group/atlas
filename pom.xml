@@ -497,6 +497,52 @@
                 <berkeley.schema.name>bdb</berkeley.schema.name>
             </properties>
         </profile>
+        <profile>
+            <id>deploy.tomcat7</id>
+            <activation>
+                <activeByDefault>
+                    false
+                </activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <configuration>
+                            <!-- application path always starts with /-->
+                            <path>/gxa</path>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>tomcat-deploy</id>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <phase>install</phase>
+                                <configuration>
+                                    <url>http://${deploy.host}:${deploy.port}/manager/html</url>
+                                    <username>tomcat</username>
+                                    <password>tomcat</password>
+                                    <path>/gxa</path>
+                                    <update>true</update>
+                                    <!-- optional only if you want to use a preconfigured server.xml file -->
+                                    <!--
+                                    <serverXml>src/main/tomcatconf/server.xml</serverXml>
+                                    -->
+                                    <!-- optional values which can be configurable -->
+                                    <!--
+                                    <attachArtifactClassifier>default value is exec-war but you can customize</attachArtifactClassifier>
+                                    <attachArtifactClassifierType>default value is jar</attachArtifactClassifierType>
+                                    -->
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
 </project>

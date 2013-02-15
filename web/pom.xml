@@ -84,9 +84,7 @@
                         <phase>pre-integration-test</phase>
                         <configuration>
                             <fork>true</fork>
-
                         </configuration>
-
                     </execution>
                     <execution>
                         <id>tomcat-shutdown</id>
@@ -94,29 +92,6 @@
                             <goal>shutdown</goal>
                         </goals>
                         <phase>post-integration-test</phase>
-                    </execution>
-                    <execution>
-                        <id>tomcat-deploy</id>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <phase>install</phase>
-                        <configuration>
-                            <url>http://${deploy.host}:${deploy.port}/manager/html</url>
-                            <username>tomcat</username>
-                            <password>tomcat</password>
-                            <path>/gxa</path>
-                            <update>true</update>
-                            <!-- optional only if you want to use a preconfigured server.xml file -->
-                            <!--
-                            <serverXml>src/main/tomcatconf/server.xml</serverXml>
-                            -->
-                            <!-- optional values which can be configurable -->
-                            <!--
-                            <attachArtifactClassifier>default value is exec-war but you can customize</attachArtifactClassifier>
-                            <attachArtifactClassifierType>default value is jar</attachArtifactClassifierType>
-                            -->
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
