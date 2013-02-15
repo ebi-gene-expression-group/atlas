@@ -26,7 +26,7 @@
     <groupId>uk.ac.ebi.gxa</groupId>
     <artifactId>atlas</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <name>Gene Expression Atlas</name>
     <url>http://www.ebi.ac.uk/gxa/</url>
 
@@ -68,6 +68,12 @@
         <sonar.host.url>http://lime:9000</sonar.host.url>
     </properties>
 
+    <scm>
+        <url>https://github.com/gxa/atlas</url>
+        <connection>scm:git:https://github.com/gxa/atlas.git</connection>
+        <developerConnection>scm:git:https://github.com/gxa/atlas.git</developerConnection>
+    </scm>
+
     <build>
 
         <finalName>gxa</finalName>
@@ -87,8 +93,13 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>3.0</version>
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
@@ -147,29 +158,9 @@
             </plugin>
 
             <plugin>
-                <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-clover2-plugin</artifactId>
-                <version>3.1.6</version>
-                <configuration>
-                    <licenseLocation>${user.home}/clover/clover.license</licenseLocation>
-                    <snapshot>${user.home}/.clover/atlassian-plugins-clover.snapshot</snapshot>
-                    <singleCloverDatabase>true</singleCloverDatabase>
-                    <targetPercentage>70%</targetPercentage>
-                    <reportDescriptor>clover-report.xml</reportDescriptor>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.1-SNAPSHOT</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.cenqua.clover</groupId>
-                        <artifactId>clover</artifactId>
-                        <version>3.1.6</version>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <!-- http port -->
                     <port>9090</port>
