@@ -1,5 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!-- Add fancyBox -->
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+
+
+<script>
+    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+        $(document).ready(function () {
+
+            $("#extra-info").fancybox({
+                /*
+                beforeLoad: function(){
+                    this.title = "Look at this marvelous title... yes this is the title";
+                },*/
+                padding : 0,
+                openEffect	: 'elastic',
+                closeEffect	: 'elastic'
+            });
+
+        });
+    })(jQuery);
+</script>
+
+
+
 <div id="helpContentTooltip" style='display:none'></div>
 
 <table width="100%">
@@ -13,6 +41,11 @@
         <td width="100%">
             <div id="experimentDescription" style="font-weight: bold;">
                 ${experimentDescription}
+                <c:if test="${hasExtraInfo}">
+                    <a id="extra-info" href="experiments/${experimentAccession}/extra-info.png">
+                        <img alt="more information" src="/gxa/resources/images/balloon-ellipsis-icon-left.png">
+                    </a>
+                </c:if>
             </div>
             <div>Organism(s): ${species}</div>
         </td>

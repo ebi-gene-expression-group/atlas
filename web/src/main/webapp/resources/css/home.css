@@ -21,7 +21,6 @@
  */
 
 .species-navigation {
-    margin: 0px auto;
     font-family: "Trebuchet MS", sans-serif;
     font-size: 18px;
     font-style: normal;
@@ -31,31 +30,6 @@
 
 .species-navigation .item {
     position: absolute;
-}
-
-.human {
-    top: 185px;
-    left: 70px;
-}
-
-.mouse {
-    top: 110px;
-    left: 320px;
-}
-
-.rat {
-    top: 150px;
-    left: 585px;
-}
-
-.fly {
-    top: 290px;
-    left: 790px;
-}
-
-.fish {
-    top: 480px;
-    left: 900px;
 }
 
 a.species-icon {

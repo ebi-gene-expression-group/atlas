@@ -60,6 +60,8 @@ var helpTooltipsModule = (function($) {
                             var tooltipContent;
                             if (status === "error") {
                                 tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
+                                callback(tooltipContent);
+                                return;
                             }
                             tooltipContent = $(this).text();
                             if (!tooltipContent){

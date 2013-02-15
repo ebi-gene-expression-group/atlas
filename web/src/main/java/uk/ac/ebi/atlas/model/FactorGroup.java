@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 
@@ -35,6 +36,8 @@ public interface FactorGroup extends Iterable<Factor> {
 
     public boolean containsAll(Set<Factor> factors);
 
-    public boolean isDisjointFrom(Collection<Factor> factors);
+    public boolean overlapsWith(Collection<Factor> factors);
+
+    public List<Factor> remove(Collection<Factor> factors);
 
 }

@@ -87,7 +87,6 @@ public class RankGeneProfilesCommandTest {
     @Before
     public void initializeSubject() throws Exception {
 
-        when(filterParameters.getCutoff()).thenReturn(0.1);
         when(filterParameters.getGeneQuery()).thenReturn("");
 
         // no filtering should be done here

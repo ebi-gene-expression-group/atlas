@@ -26,7 +26,7 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     public void getStartingPage() {
         subject = new Geod26284HeatmapTablePage(driver,
-                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+rna&queryFactorType=&heatmapMatrixSize=50&displayGeneDistribution=false&geneQuery=&queryFactorValues=cd34-positive+mobilized+cell+cell+line&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
+                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%2CMATERIAL_TYPE%3Atotal+RNA&queryFactorType=&heatmapMatrixSize=50&displayGeneDistribution=false&geneQuery=&queryFactorValues=CD34-positive+mobilized+cell+cell+line&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
         subject.get();
     }
 
@@ -43,12 +43,12 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"cd34-positive...", "hfdpc cell line", "hmsc-at cell line", "hpc-pl cell line", "imr-90"};
+        return new String[]{"CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"92", "14", "7", "12", "9"};
+        return new String[]{"92", "14", "12", "9", "7"};
     }
 
     @Override

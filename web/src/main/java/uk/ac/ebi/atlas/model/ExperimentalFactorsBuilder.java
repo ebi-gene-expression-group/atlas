@@ -22,6 +22,8 @@ public class ExperimentalFactorsBuilder {
 
     private Collection<FactorGroup> factorGroups = new HashSet<>();
 
+    private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
+
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
     public ExperimentalFactorsBuilder withExperimentRuns(Collection<ExperimentRun> experimentRuns) {
@@ -57,6 +59,8 @@ public class ExperimentalFactorsBuilder {
         for (Factor factor : factorGroup) {
 
             factorsByName.put(factor.getName(), factor);
+            factorsByType.put(factor.getType(), factor);
+
             factorNamesByType.put(factor.getType(), factor.getName());
 
             addToFactorCombinations(factorGroup, factor);

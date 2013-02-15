@@ -47,9 +47,6 @@ public class FilterParameters {
 
     private Set<Factor> selectedFilterFactors;
 
-    private Double cutoff;
-
-
     private Set<Factor> selectedQueryFactors;
 
     private String queryFactorType;
@@ -57,7 +54,6 @@ public class FilterParameters {
     private FilterParameters(Builder builder) {
         geneQuery = builder.geneQuery;
         selectedFilterFactors = builder.selectedFilterFactors;
-        cutoff = builder.cutoff;
         selectedQueryFactors = builder.queryFactors;
         queryFactorType = builder.queryFactorType;
 
@@ -69,10 +65,6 @@ public class FilterParameters {
 
     public Set<Factor> getSelectedFilterFactors() {
         return selectedFilterFactors;
-    }
-
-    public Double getCutoff() {
-        return cutoff;
     }
 
     public Set<Factor> getSelectedQueryFactors() {
@@ -105,8 +97,6 @@ public class FilterParameters {
         return Objects.toStringHelper(this.getClass())
                 .add("geneQuery", geneQuery)
                 .add("selectedFilterFactors", selectedFilterFactors)
-                .add("cutoff", cutoff)
-                .add("selectedQueryFactors", selectedQueryFactors)
                 .add("queryFactorType", queryFactorType)
                 .toString();
     }
@@ -115,7 +105,6 @@ public class FilterParameters {
     @Scope("request")
     public static class Builder {
 
-        private Double cutoff;
 
         private String queryFactorType;
 
@@ -135,11 +124,6 @@ public class FilterParameters {
             return this;
         }
 
-        public Builder withCutoff(Double cutoff) {
-            this.cutoff = cutoff;
-            return this;
-        }
-
         public Builder withQueryFactorType(String queryFactorType) {
             this.queryFactorType = queryFactorType;
             return this;
@@ -152,7 +136,7 @@ public class FilterParameters {
             return this;
         }
 
-        protected Factor buildFromSerializedFilterFactors(Experiment experiment, String serializedFilterFactors) {
+        protected Factor buildFromSerializedFilterFactors(String serializedFilterFactors) {
             String[] split = serializedFilterFactors.split(FACTOR_VALUE_SEPARATOR);
             if (split.length == 2) {
                 ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
@@ -184,7 +168,7 @@ public class FilterParameters {
                 selectedFilterFactors = experiment.getDefaultFilterFactors();
             } else {
                 for (String serializedFilterFactor : serializedFilterFactors) {
-                    this.selectedFilterFactors.add(buildFromSerializedFilterFactors(experiment, serializedFilterFactor));
+                    this.selectedFilterFactors.add(buildFromSerializedFilterFactors(serializedFilterFactor));
                 }
             }
             for (String queryFactorValues : this.queryFactorValues) {

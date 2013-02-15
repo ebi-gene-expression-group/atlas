@@ -41,7 +41,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FactorLevelTest {
+public class FilterFactorMenuTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final String MATERIAL_TYPE = "MATERIAL_TYPE";
@@ -61,7 +61,7 @@ public class FactorLevelTest {
     @Mock
     ExperimentalFactors experimentalFactorsMock;
 
-    FactorLevel subject;
+    FilterFactorMenu subject;
 
     private SortedSet<Factor> putIntoSortedSet(Factor... factors) {
         SortedSet<Factor> result = Sets.newTreeSet();
@@ -96,7 +96,7 @@ public class FactorLevelTest {
         // whole cell with, heart, brain, long poly a rna, total rna
         when(experimentalFactorsMock.getCoOccurringFactors(sevenFactor)).thenReturn(putIntoSortedSet(secondFactor, thirdFactor, forthFactor, fifthFactor));
 
-        subject = new FactorLevel(experimentalFactorsMock, allFactors);
+        subject = new FilterFactorMenu(experimentalFactorsMock, allFactors);
     }
 
     @Test

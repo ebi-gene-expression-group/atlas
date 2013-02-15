@@ -22,13 +22,12 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.impl.FactorSet;
 
-import javax.inject.Named;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -58,20 +57,11 @@ public class ExperimentalFactors {
         return factorNamesByType.get(type);
     }
 
-
-    public SortedSet<String> getAllFactorNames() {
-        return ImmutableSortedSet.copyOf(factorsByName.keySet());
-    }
-
-    public SortedSet<Factor> getFactorsByName(String name) {
-        return ImmutableSortedSet.copyOf(factorsByName.get(name));
-    }
-
+    //ToDo: this is only used to build factor filter menu, maybe should be encapsulated in a menu builder and the menu builder could be used by a menu cache loader
     public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
         return coOccurringFactors.get(factor);
     }
 
-    //ToDo: this would become experimentalFactors.byType(...)
     public SortedSet<Factor> getFactorsByType(String type) {
 
         String factorName = factorNamesByType.get(type);
@@ -82,33 +72,28 @@ public class ExperimentalFactors {
 
     }
 
-    //ToDo: this would be: experimentalFactor.sliceBy(... FilterFactor).byType(queryFactorType) ... or any better name?
-    public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors, String queryFactorType) {
+    public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors) {
 
-        for (Factor filterFactor : filterFactors) {
-            checkArgument(!filterFactor.getType().equals(queryFactorType));
-        }
-
-        SortedSet<Factor> factorsByType = getFactorsByType(queryFactorType);
-
-        //ToDo: this is a patch to handle experiments that have multiple factor types but where we are not interested in filtering (e.g. Illumina)
-        //ToDo: we should rather avoid storing inside expressions factors that are useless (i.e. illumina experiment)
         if (CollectionUtils.isEmpty(filterFactors)) {
-            return factorsByType;
+            return getAllFactors();
         }
 
-        return Sets.filter(factorsByType, new Predicate<Factor>() {
-            @Override
-            public boolean apply(Factor factorOfTheSelectedType) {
-                FactorGroup factorGroup = new FactorSet(filterFactors).add(factorOfTheSelectedType);
-                return factorGroups.contains(factorGroup);
+        TreeSet<Factor> factorsByType = Sets.newTreeSet();
+
+        for (FactorGroup factorGroup : factorGroups) {
+
+            List<Factor> remainingFactors = factorGroup.remove(filterFactors);
+            if(remainingFactors.size() == 1) {
+                factorsByType.add(remainingFactors.get(0));
             }
-        });
+        }
+
+        return  factorsByType;
 
     }
 
-    public Set<Factor> getAllFactors() {
-        return ImmutableSet.copyOf(coOccurringFactors.keySet());
+    public SortedSet<Factor> getAllFactors() {
+        return ImmutableSortedSet.copyOf(factorsByName.values());
     }
 
 }

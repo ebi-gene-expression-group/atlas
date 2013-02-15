@@ -39,13 +39,12 @@ public abstract class SeleniumFixture {
         //this.driver = new FirefoxDriver();
 
 
+        //comment this if you want to use local firefox browser
         try {
 
-            //comment this if you want to use local firefox browser
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setJavascriptEnabled(true);
             capabilities.setBrowserName("firefox");
-            //
 
             this.driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
 
@@ -54,6 +53,8 @@ public abstract class SeleniumFixture {
             e.printStackTrace();
 
         }
+        //
+
 
     }
 

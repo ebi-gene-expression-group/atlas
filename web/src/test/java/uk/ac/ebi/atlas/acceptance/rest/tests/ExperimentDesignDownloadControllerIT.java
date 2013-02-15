@@ -26,7 +26,7 @@ package uk.ac.ebi.atlas.acceptance.rest.tests;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.rest.pages.ExperimentDesignDownloadPage;
+import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.*;
 
 public class ExperimentDesignDownloadControllerIT {
 
-    ExperimentDesignDownloadPage subject = new ExperimentDesignDownloadPage("");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513/experiment-design.tsv");
 
     @Test
     public void verifyHeader() {
@@ -55,7 +55,7 @@ public class ExperimentDesignDownloadControllerIT {
     public void verifyFirstLine() {
         ResponseBody body = subject.getResponseBody();
 
-        List<String> firstLine = subject.getRowAsList(0);
+        List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
                 contains("Assay", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]", "Factor Values[library preparation method]", "Factor Values[phenotype]", "Analysed")
@@ -67,7 +67,7 @@ public class ExperimentDesignDownloadControllerIT {
     public void verifySecondLine() {
         ResponseBody body = subject.getResponseBody();
 
-        List<String> secondLine = subject.getRowAsList(1);
+        List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
                 contains("ERR030872", "Homo sapiens", "60", "female", "Human thyroid total RNA, lot 0908003", "thyroid", "mRNA-Seq", "caucasian", "Yes")

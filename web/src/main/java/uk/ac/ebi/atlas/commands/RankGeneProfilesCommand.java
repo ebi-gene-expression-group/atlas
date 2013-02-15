@@ -54,7 +54,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
         Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(rankingParameters.isSpecific()
                 , getFilterParameters().getSelectedQueryFactors()
-                , experimentalFactors.getFilteredFactors(getFilterParameters().getSelectedFilterFactors(), getFilterParameters().getQueryFactorType()));
+                , experimentalFactors.getFilteredFactors(getFilterParameters().getSelectedFilterFactors()));
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, rankingParameters.getHeatmapMatrixSize());
 

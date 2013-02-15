@@ -34,6 +34,8 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @Scope("request")
@@ -44,6 +46,8 @@ public class HomePageController {
     private ExperimentsCache experimentsCache;
 
     private SortedSetMultimap<String, String> experimentAccessions = TreeMultimap.create();
+
+    private Map<String, String> experimentLinks = new HashMap<>();
 
     @Inject
     public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
@@ -57,6 +61,7 @@ public class HomePageController {
         loadExperimentAccessionsBySpecie();
 
         model.addAttribute("experimentAccessions", experimentAccessions);
+        model.addAttribute("experimentLinks", experimentLinks);
 
         return "home";
     }
@@ -68,7 +73,15 @@ public class HomePageController {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            experimentAccessions.put(experiment.getFirstSpecies(), experimentAccession);
+            for (String specie : experiment.getSpecies()) {
+                experimentAccessions.put(specie, experimentAccession);
+                if (experiment.getSpecies().size() > 1) {
+                    experimentLinks.put(experimentAccession+specie, "?serializedFilterFactors=ORGANISM:" + specie);
+                } else {
+                    experimentLinks.put(experimentAccession+specie, "");
+                }
+            }
+
         }
 
     }
