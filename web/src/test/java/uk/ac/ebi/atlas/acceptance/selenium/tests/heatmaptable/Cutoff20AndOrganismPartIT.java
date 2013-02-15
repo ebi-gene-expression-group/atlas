@@ -30,14 +30,14 @@ public class Cutoff20AndOrganismPartIT extends SeleniumFixture {
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "10688", "", "", "", "", "", "", "6899", "7811", "6720", "", "", "", "8660", "4149"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "10688", "", "","" ,"" ,"" , "4149","" , "6899", "7811", "6720","" ,"" ,"" , "8660"));
     }
 
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("", "238", "", "", "", "", "", ""
-                , "388", "", "", "", "", "", "", ""));
+        assertThat(subject.getLastGeneProfile(), contains("", "238", "", "", "", "", "", "", ""
+                , "388", "", "", "", "", "", ""));
     }
 
     @Test

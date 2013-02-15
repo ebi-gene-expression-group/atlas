@@ -27,7 +27,6 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -59,7 +58,7 @@ public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 169"));
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "10688", "", "", "", "", "", "", "6899", "7811", "6720", "", "", "", "8660", "4149"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "10688","" , "", "","" ,"" , "4149","" , "6899", "7811", "6720", "","" , "", "8660"));
     }
 
 }
