@@ -71,8 +71,8 @@
 
     <scm>
         <url>https://github.com/gxa/atlas</url>
-        <connection>scm:git:https://github.com/gxa/atlas.git</connection>
-        <developerConnection>scm:git:https://github.com/gxa/atlas.git</developerConnection>
+        <connection>scm:git:git://github.com/gxa/atlas.git</connection>
+        <developerConnection>scm:git:git://github.com/gxa/atlas.git</developerConnection>
     </scm>
 
     <build>
