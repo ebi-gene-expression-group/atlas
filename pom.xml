@@ -143,11 +143,9 @@
                             <value>${integration.test.portnumber}</value>
                         </property>
                     </systemProperties>
-                    <!--
                     <includes>
                         <include>${test.acceptance.pattern}</include>
                     </includes>
-                    -->
                     <reportsDirectory>${surefire.and.failsafe.report.dir}</reportsDirectory>
                 </configuration>
                 <executions>
