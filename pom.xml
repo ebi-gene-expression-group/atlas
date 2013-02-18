@@ -545,10 +545,3 @@
     </profiles>
 
 </project>
-<!-- ToDo: verify that 'mvn -B -Pwww-test release:prepare -DdryRun=true -DskipTests -DskipITs' succeeds locally -->
-<!-- ToDo: test a real mvn release (with -B etc.) from localhost -->
-<!-- ToDo: verify what has been pushed on git by maven, verify that version numbers are incremented correctly in both poms -->
-<!-- ToDo: verify that the artifact has been deployed on nexus -->
-<!-- ToDo: check what is going on on the nexus snapshot repo (there should be no recent deployment there) -->
-<!-- ToDo: change the second stage of the bamboo plan -->
-<!-- ToDo: test full build plan -->
