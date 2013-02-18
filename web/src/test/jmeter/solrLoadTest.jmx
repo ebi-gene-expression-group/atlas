@@ -110,7 +110,7 @@
               <stringProp name="-232329682">responseHeader</stringProp>
               <stringProp name="-109035610">protein_coding</stringProp>
               <stringProp name="1740232332">homo sapiens</stringProp>
-              <stringProp name="1593527009">&quot;numFound&quot;:45459</stringProp>
+              <stringProp name="-149452138">&quot;numFound&quot;:</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
