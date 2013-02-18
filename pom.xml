@@ -70,9 +70,9 @@
     </properties>
 
     <scm>
-        <url>https://github.com/gxa/atlas</url>
-        <connection>scm:git:git://github.com/gxa/atlas.git</connection>
-        <developerConnection>scm:git:git://github.com/gxa/atlas.git</developerConnection>
+        <url>scm:git:git@github.com:gxa/atlas.git</url>
+        <connection>scm:git:git@github.com:gxa/atlas.git</connection>
+        <developerConnection>scm:git:git@github.com:gxa/atlas.git</developerConnection>
     </scm>
 
     <build>
