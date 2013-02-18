@@ -25,7 +25,7 @@
     <groupId>uk.ac.ebi.gxa</groupId>
     <artifactId>atlas</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.1</version>
+    <version>0.1.2-SNAPSHOT</version>
     <name>Gene Expression Atlas</name>
     <url>http://www.ebi.ac.uk/gxa/</url>
 
@@ -72,7 +72,7 @@
         <url>scm:git:git@github.com:gxa/atlas.git</url>
         <connection>scm:git:git@github.com:gxa/atlas.git</connection>
         <developerConnection>scm:git:git@github.com:gxa/atlas.git</developerConnection>
-      <tag>atlas-0.1.1</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <build>
