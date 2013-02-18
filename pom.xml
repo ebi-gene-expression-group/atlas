@@ -44,13 +44,14 @@
         <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
         <berkeley.schema.name>bdb</berkeley.schema.name>
         <solr.host>ves-hx-75</solr.host>
-        <!-- default values for integration testing properties -->
-        <deploy.host>lime</deploy.host>
-        <deploy.port>14092</deploy.port>
-        <!-- for a given profile, if the selenium integration tests must be executed against a remote server (not running on the local host where 'maven verify' is being executed)
-                then you have to override integration.test.host property in the profile -->
+        <deploy.host>
+            <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
+        </deploy.host>
+        <deploy.port>
+            <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
+        </deploy.port>
         <integration.test.host></integration.test.host>
-        <integration.test.portnumber>9090</integration.test.portnumber>
+        <integration.test.portnumber></integration.test.portnumber>
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
         <mail.smtp.host>mailtrap.io</mail.smtp.host>
@@ -70,8 +71,8 @@
 
     <scm>
         <url>https://github.com/gxa/atlas</url>
-        <connection>scm:git:https://github.com/gxa/atlas.git</connection>
-        <developerConnection>scm:git:https://github.com/gxa/atlas.git</developerConnection>
+        <connection>scm:git:git://github.com/gxa/atlas.git</connection>
+        <developerConnection>scm:git:git://github.com/gxa/atlas.git</developerConnection>
     </scm>
 
     <build>
@@ -461,6 +462,7 @@
     </modules>
 
     <profiles>
+<!-- environment profiles -->
         <profile>
             <id>lime</id>
             <properties>
@@ -473,8 +475,6 @@
         <profile>
             <id>www-test</id>
             <properties>
-                <deploy.host>ves-hx-75</deploy.host>
-                <deploy.port>8080</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
                 <berkeley.schema.name>bdb-www-test</berkeley.schema.name>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
@@ -483,7 +483,7 @@
             </properties>
         </profile>
         <profile>
-            <id>integration.test</id>
+            <id>integration.test</id> <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <berkeley.schema.name>bdb-integration</berkeley.schema.name>
@@ -492,25 +492,24 @@
         <profile>
             <id>local.integration.test</id>
             <properties>
-                <solr.host>ves-hx-75</solr.host>
+                <!-- uncomment to integrate with a solr running on localhost rather than the default remote host
+                <solr.host>localhost</solr.host>
+                -->
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <berkeley.schema.name>bdb</berkeley.schema.name>
             </properties>
         </profile>
+
+<!-- execution profiles -->
         <profile>
+            <!-- deploys war artifact to a remote or local tomcat 7 instance using tomcat manager interface -->
             <id>deploy.tomcat7</id>
-            <activation>
-                <activeByDefault>
-                    false
-                </activeByDefault>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.tomcat.maven</groupId>
                         <artifactId>tomcat7-maven-plugin</artifactId>
                         <configuration>
-                            <!-- application path always starts with /-->
                             <path>/gxa</path>
                         </configuration>
                         <executions>
@@ -546,3 +545,10 @@
     </profiles>
 
 </project>
+<!-- ToDo: verify that 'mvn -B -Pwww-test release:prepare -DdryRun=true -DskipTests -DskipITs' succeeds locally -->
+<!-- ToDo: test a real mvn release (with -B etc.) from localhost -->
+<!-- ToDo: verify what has been pushed on git by maven, verify that version numbers are incremented correctly in both poms -->
+<!-- ToDo: verify that the artifact has been deployed on nexus -->
+<!-- ToDo: check what is going on on the nexus snapshot repo (there should be no recent deployment there) -->
+<!-- ToDo: change the second stage of the bamboo plan -->
+<!-- ToDo: test full build plan -->
