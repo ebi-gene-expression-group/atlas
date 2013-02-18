@@ -36,9 +36,7 @@
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
         <org.springframework.rc.version>3.2.0.RC1</org.springframework.rc.version>
         <json-path.version>0.8.1</json-path.version>
-        <!--
         <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
-        -->
         <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
         <!-- default values for configuration properties,
         they are set to local development machine defaults
@@ -145,9 +143,11 @@
                             <value>${integration.test.portnumber}</value>
                         </property>
                     </systemProperties>
+                    <!--
                     <includes>
                         <include>${test.acceptance.pattern}</include>
                     </includes>
+                    -->
                     <reportsDirectory>${surefire.and.failsafe.report.dir}</reportsDirectory>
                 </configuration>
                 <executions>
