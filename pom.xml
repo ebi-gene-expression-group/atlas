@@ -20,13 +20,12 @@
   ~ http://gxa.github.com/gxa
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.ac.ebi.gxa</groupId>
     <artifactId>atlas</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
     <name>Gene Expression Atlas</name>
     <url>http://www.ebi.ac.uk/gxa/</url>
 
@@ -50,8 +49,8 @@
         <deploy.port>
             <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
         </deploy.port>
-        <integration.test.host></integration.test.host>
-        <integration.test.portnumber></integration.test.portnumber>
+        <integration.test.host />
+        <integration.test.portnumber />
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
         <mail.smtp.host>mailtrap.io</mail.smtp.host>
@@ -70,10 +69,11 @@
     </properties>
 
     <scm>
-        <url>https://github.com/gxa/atlas</url>
-        <connection>scm:git:git://github.com/gxa/atlas.git</connection>
-        <developerConnection>scm:git:git://github.com/gxa/atlas.git</developerConnection>
-    </scm>
+        <url>scm:git:git@github.com:gxa/atlas.git</url>
+        <connection>scm:git:git@github.com:gxa/atlas.git</connection>
+        <developerConnection>scm:git:git@github.com:gxa/atlas.git</developerConnection>
+      <tag>HEAD</tag>
+  </scm>
 
     <build>
 
@@ -166,7 +166,7 @@
                     <!-- http port -->
                     <port>9090</port>
                     <!-- optionnal path to a context file -->
-                    <contextFile></contextFile>
+                    <contextFile />
                     <!-- optionnal system propoerties you want to add -->
                     <systemProperties>
                     </systemProperties>
@@ -174,7 +174,7 @@
                     <useTestClasspath>false</useTestClasspath>
                     <!-- optionnal if you want to add some extra directories in the class loader -->
                     <additionalClasspathDirs>
-                        <additionalClasspathDir></additionalClasspathDir>
+                        <additionalClasspathDir />
                     </additionalClasspathDirs>
                 </configuration>
             </plugin>
@@ -385,7 +385,7 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
-            <snapshots/>
+            <snapshots />
         </repository>
 
         <!--
@@ -441,7 +441,7 @@
                 <role>Developer</role>
             </roles>
             <timezone>0</timezone>
-            <properties/>
+            <properties />
         </developer>
         <developer>
             <id>nsklyar</id>
@@ -453,7 +453,7 @@
                 <role>Developer</role>
             </roles>
             <timezone>0</timezone>
-            <properties/>
+            <properties />
         </developer>
     </developers>
 
