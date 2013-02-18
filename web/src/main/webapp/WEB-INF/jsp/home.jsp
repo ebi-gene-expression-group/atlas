@@ -22,13 +22,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<div id="wordcloud" style="position: absolute; margin-left:442px; margin-top: 163px;">
-    <img src="resources/images/home/centre_landing1.png"/>
-</div>
-
-<div class="species-navigation" id="species-nav"
-     style="position: relative; top: 75px; margin-left:200px; width: 600px; height: 600px;">
+<div class="species-navigation" id="species-nav">
 
     <c:forEach items="${experimentAccessions.keySet()}" var="specie">
 
@@ -51,8 +45,11 @@
 
 </div>
 
-<!-- The JavaScript -->
+<div class="wordcloud">
+    <img src="resources/images/home/centre_landing1.png"/>
+</div>
 
+<!-- The JavaScript -->
 
 
 <script type="text/javascript">
@@ -92,8 +89,8 @@
     }
 
     $(document).ready(function () {
-
-        drawEllipse('.item', 200, 350, 220, 330, 0);
+        // x and y offset is vice versa!
+        drawEllipse('.item', 230, 310, 220, 330, 0);
 
     });
 

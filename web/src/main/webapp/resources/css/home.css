@@ -20,12 +20,27 @@
  * http://gxa.github.com/gxa
  */
 
+.wordcloud {
+    display: block;
+    width: 406px;
+    height: 410px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -400px;
+}
+
 .species-navigation {
     font-family: "Trebuchet MS", sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: bold;
     letter-spacing: 1px;
+    position: relative;
+    width: 800px;
+    height: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    top: 20px;
 }
 
 .species-navigation .item {
@@ -80,8 +95,8 @@ a.species-icon {
     text-shadow: 1px 1px 1px #fff;
 }
 
-.item ul li a:hover  {
-    text-decoration:underline;
+.item ul li a:hover {
+    text-decoration: underline;
 }
 
 
