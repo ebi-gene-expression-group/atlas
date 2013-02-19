@@ -476,7 +476,7 @@
             <id>www-test</id>
             <properties>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
-                <berkeley.schema.name>bdb-www-test</berkeley.schema.name>
+                <berkeley.schema.name>bdb-lime</berkeley.schema.name>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
