@@ -486,7 +486,7 @@
             <id>integration.test</id> <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <berkeley.schema.name>bdb-integration</berkeley.schema.name>
+                <berkeley.schema.name>bdb-lime</berkeley.schema.name>
             </properties>
         </profile>
         <profile>
