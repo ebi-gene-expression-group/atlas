@@ -41,7 +41,7 @@
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
         <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-        <berkeley.schema.name>bdb</berkeley.schema.name>
+        <berkeley.schema.name>bdb-lime</berkeley.schema.name>
         <solr.host>ves-hx-75</solr.host>
         <deploy.host>
             <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
@@ -469,14 +469,12 @@
                 <deploy.host>lime</deploy.host>
                 <deploy.port>14092</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
-                <berkeley.schema.name>bdb-lime</berkeley.schema.name>
             </properties>
         </profile>
         <profile>
             <id>www-test</id>
             <properties>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
-                <berkeley.schema.name>bdb-lime</berkeley.schema.name>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
@@ -486,7 +484,7 @@
             <id>integration.test</id> <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <berkeley.schema.name>bdb-lime</berkeley.schema.name>
+                <berkeley.schema.name>bdb-integration</berkeley.schema.name>
             </properties>
         </profile>
         <profile>
