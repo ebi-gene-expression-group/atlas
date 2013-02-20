@@ -22,14 +22,12 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
@@ -38,10 +36,9 @@ import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
-public abstract class GeneProfilesInputStreamCommand<T> implements Function<String, T> {
+public abstract class GeneProfilesInputStreamCommand<T> {
     protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
 
     private GeneProfileInputStreamBuilder geneProfileInputStreamBuilder;
@@ -76,7 +73,7 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     }
 
     @NotNull
-    public T apply(String experimentAccession) {
+    public T apply(String experimentAccession) throws GeneNotFoundException{
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -120,5 +117,5 @@ public abstract class GeneProfilesInputStreamCommand<T> implements Function<Stri
     protected abstract T apply(Experiment experiment
             , ObjectInputStream<GeneProfile> inputStream) throws IOException;
 
-    protected abstract T returnEmpty();
+    protected abstract T returnEmpty() throws GeneNotFoundException;
 }

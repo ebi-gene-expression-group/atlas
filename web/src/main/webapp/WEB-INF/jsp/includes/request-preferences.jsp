@@ -33,7 +33,7 @@
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
 
-        <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
+        <form:errors path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
                 <td>

@@ -79,6 +79,8 @@ textarea, .chzn-container {
 
 .error {
     color: red;
+    display:block;
+    padding-bottom:5px;
 }
 
 .page-contents {
