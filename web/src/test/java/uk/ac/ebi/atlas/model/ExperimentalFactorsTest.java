@@ -63,8 +63,13 @@ public class ExperimentalFactorsTest {
     private Factor factorWithType2DifferentValue = new Factor("TYPE2", "NAME2", "DIFFERENT_VALUE2");
     private Factor factorWithType3 = new Factor("TYPE3", "NAME3", "VALUE3");
     private Factor factorWithType3DifferentValue = new Factor("TYPE3", "NAME3", "DIFFERENT_VALUE3");
-    private FactorGroup factorGroup1 = new FactorSet(Sets.newHashSet(factorWithType2, factorWithType1, factorWithType3));
-    private FactorGroup factorGroup2 = new FactorSet(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2DifferentValue, factorWithType1));
+    private FactorGroup factorGroup1 = new FactorSet().add(factorWithType2)
+                                                    .add(factorWithType1)
+                                                    .add(factorWithType3);
+    private FactorGroup factorGroup2 = new FactorSet()
+                                                    .add(factorWithType3DifferentValue)
+                                                    .add(factorWithType2DifferentValue)
+                                                    .add(factorWithType1);
 
 
     @Before

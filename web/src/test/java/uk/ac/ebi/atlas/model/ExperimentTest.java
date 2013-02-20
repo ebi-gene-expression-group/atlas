@@ -78,8 +78,8 @@ public class ExperimentTest {
     public void initializeSubject() {
         ArrayList<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
 
-        when(experimentRun1Mock.getRunAccession()).thenReturn(RUN_ACCESSION_1);
-        when(experimentRun2Mock.getRunAccession()).thenReturn(RUN_ACCESSION_2);
+        when(experimentRun1Mock.getAccession()).thenReturn(RUN_ACCESSION_1);
+        when(experimentRun2Mock.getAccession()).thenReturn(RUN_ACCESSION_2);
 
         when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroupMock1);
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
