@@ -25,14 +25,16 @@ package uk.ac.ebi.atlas.model.readers;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+@Named
 public class ExperimentFactorsTsvReader extends AbstractTsvReader {
 
     @Inject
     protected ExperimentFactorsTsvReader(
-                        @Value("#{configuration['experiment.experiment-factors.path.template']}")
-                        String pathTemplate
-                                        ) {
+            @Value("#{configuration['experiment.experiment-factors.path.template']}")
+            String pathTemplate) {
+
         super(pathTemplate);
     }
 

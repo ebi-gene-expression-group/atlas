@@ -47,6 +47,7 @@ public class ExperimentMetadataLoaderIT {
         assertThat(experimentRun.getFactorByType("ORGANISM_PART").getValue(), is(equalTo("liver")));
         Set<String> species = experiment.getSpecies();
         assertThat(species, hasItems("Monodelphis domestica", "Gallus gallus", "Homo sapiens"));
+        assertThat(species, not(hasItem("Ornithorhynchus anatinus")));
     }
 
     @Test

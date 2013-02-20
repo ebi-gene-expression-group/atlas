@@ -40,6 +40,8 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
     private static final Logger LOGGER = Logger.getLogger(RankGeneProfilesCommand.class);
 
+    private static final String SPECIES_FACTOR_TYPE = "ORGANISM";
+
     @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String idfUrlTemplate;
 
@@ -47,8 +49,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     private String idfPathTemplate;
 
     private Set<String> processedRunAccessions;
-
-    private List<String> orderedExperimentRunAccessions;
 
     private String experimentAccession;
 
@@ -59,6 +59,8 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     private Set<String> requiredFactorTypes;
 
     private MAGETABInvestigation investigation;
+
+    private Collection<ExperimentRun> processedExperimentRuns;
 
     public MageTabParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
@@ -84,36 +86,49 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         investigation = parseInvestigation();
         scanNodes = investigation.SDRF.getNodes(ScanNode.class);
+        processedExperimentRuns = extractProcessedExperimentRuns();
         return this;
     }
 
-    protected Collection<ExperimentRun> extractExperimentRuns() throws IOException, ParseException {
+    @Override
+    public Collection<ExperimentRun> getProcessedExperimentRuns() {
+        return processedExperimentRuns;
+    }
+
+    protected Collection<ExperimentRun> extractProcessedExperimentRuns() throws IOException, ParseException {
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
         Collection<ExperimentRun> processedExperimentRuns = Lists.newArrayList();
 
-        for (ExperimentRun experimentRun: allExperimentRuns) {
-            if (processedRunAccessions.contains(experimentRun.getRunAccession())){
+        for (ExperimentRun experimentRun : allExperimentRuns) {
+            if (processedRunAccessions.contains(experimentRun.getAccession())) {
                 processedExperimentRuns.add(experimentRun);
             }
         }
         return processedExperimentRuns;
     }
 
-    @Override
-    public Collection<ExperimentRun> extractProcessedExperimentRuns() throws IOException, ParseException{
-        Collection<ExperimentRun> processedExperimentRuns = this.extractExperimentRuns();
-        List<ExperimentRun> orderedExperimentRuns = new ArrayList(processedExperimentRuns.size());
-        for (ExperimentRun processedExperimentRun : processedExperimentRuns){
-            int runIndex = orderedExperimentRunAccessions.indexOf(processedExperimentRun.getRunAccession());
-            orderedExperimentRuns.set(runIndex, processedExperimentRun);
-        }
-        return orderedExperimentRuns;
-    }
 
     @Override
     public Set<String> extractSpecies() {
+        if (requiredFactorTypes.contains(SPECIES_FACTOR_TYPE)) {
+
+            Set<String> species = Sets.newHashSet();
+            for (ExperimentRun experimentRun : processedExperimentRuns) {
+                String organism = experimentRun.getFactorByType(SPECIES_FACTOR_TYPE).getValue();
+                if (organism != null) {
+                    species.add(organism);
+                }
+            }
+            return species;
+        } else {
+            return extractSpeciesFromSDRF();
+        }
+
+    }
+
+    private Set<String> extractSpeciesFromSDRF() {
         Set<String> species = Sets.newHashSet();
         for (ScanNode scanNode : scanNodes) {
             SourceNode firstScanNode = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class).iterator().next();
@@ -125,7 +140,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
             }
 
         }
-
         return species;
     }
 
@@ -133,7 +147,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     MAGETABInvestigation parseInvestigation() throws ParseException, IOException {
 
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
-        LOGGER.info("<parseInvestigation> idfFileLocation = " +idfFileLocation);
+        LOGGER.info("<parseInvestigation> idfFileLocation = " + idfFileLocation);
 
         MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
         File idfFile = new File(idfFileLocation);
@@ -170,7 +184,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
 
         if (assayNodes.size() != 1) {
-            throw new IllegalStateException("No assay corresponds to ENA run " + experimentRun.getRunAccession());
+            throw new IllegalStateException("No assay corresponds to ENA run " + experimentRun.getAccession());
         }
 
         AssayNode assayNode = assayNodes.iterator().next();
@@ -191,7 +205,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
                 }
             }
             Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
-            if (requiredFactorTypes.contains(factor.getType())){
+            if (requiredFactorTypes.contains(factor.getType())) {
 
                 experimentRun.addFactor(factor);
             }

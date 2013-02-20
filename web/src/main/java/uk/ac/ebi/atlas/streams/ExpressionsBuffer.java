@@ -138,7 +138,7 @@ class ExpressionsBuffer {
             return new Predicate<ExperimentRun>() {
                 @Override
                 public boolean apply(ExperimentRun experimentRun) {
-                    return orderedRunAccessions.contains(experimentRun.getRunAccession());
+                    return orderedRunAccessions.contains(experimentRun.getAccession());
                 }
             };
         }
@@ -149,8 +149,8 @@ class ExpressionsBuffer {
             return Ordering.natural().onResultOf(new Function<ExperimentRun, Integer>() {
                 @Override
                 public Integer apply(ExperimentRun experimentRun) {
-                    int orderIndexOfRun = orderedRunAccessions.indexOf(experimentRun.getRunAccession());
-                    checkState(orderIndexOfRun >= 0, "Illegal state, experimentRun with accession = " + experimentRun.getRunAccession() + "is not included in ordered run accessions : " + orderedRunAccessions);
+                    int orderIndexOfRun = orderedRunAccessions.indexOf(experimentRun.getAccession());
+                    checkState(orderIndexOfRun >= 0, "Illegal state, experimentRun with accession = " + experimentRun.getAccession() + "is not included in ordered run accessions : " + orderedRunAccessions);
                     return orderIndexOfRun;
                 }
             });

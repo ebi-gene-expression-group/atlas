@@ -1,12 +1,10 @@
 package uk.ac.ebi.atlas.model.readers;
 
-import com.google.common.collect.SortedSetMultimap;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.startsWith;
 
 public class AnalysisMethodsTsvReaderIT {
 
@@ -25,13 +23,6 @@ public class AnalysisMethodsTsvReaderIT {
         String[] firstLine = subject.readLine(EXPERIMENT_ACCESSION, 0L);
         assertThat(firstLine, arrayContaining("# Pipeline version", "0.1.6"));
     }
-
-    @Test
-    public void readCommentsAsMap(){
-        SortedSetMultimap<String, String> comments = subject.readAllCommentsAsMap(EXPERIMENT_ACCESSION);
-        assertThat(comments.get("Libraries").first(), startsWith("ERR") );
-    }
-
 
 
 

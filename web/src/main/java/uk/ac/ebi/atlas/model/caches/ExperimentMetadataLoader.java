@@ -30,9 +30,12 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentBuilder;
+import uk.ac.ebi.atlas.model.ExperimentRun;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoaderBuilder;
+import uk.ac.ebi.atlas.model.readers.ExperimentDataTsvReader;
+import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
 import uk.ac.ebi.atlas.model.readers.TsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
@@ -40,10 +43,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder everytime the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
@@ -65,8 +65,8 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
 
     @Inject
-    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, TsvReader experimentFactorsTsvReader
-            , ArrayExpressClient arrayExpressClient, TsvReader experimentDataTsvReader) {
+    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsTsvReader experimentFactorsTsvReader
+            , ArrayExpressClient arrayExpressClient, ExperimentDataTsvReader experimentDataTsvReader) {
         this.mageTabLoaderBuilder = mageTabLoaderBuilder;
 
         this.experimentFactorsTsvReader = experimentFactorsTsvReader;
@@ -81,11 +81,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         Set<Factor> defaultFilterFactors = parseDefaultFilterFactors(experimentAccession);
 
-        Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);
-
-        for (Factor defaultFilterFactor : defaultFilterFactors) {
-            requiredFactorTypes.add(defaultFilterFactor.getType());
-        }
+        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
 
         String experimentName = fetchExperimentName(experimentAccession);
 
@@ -103,14 +99,30 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
                                                         .withProcessedRunAccessions(processedRunAccessions)
                                                         .build();
 
-        return experimentBuilder.forSpecies(mageTabLoader.extractSpecies())
+        Collection<ExperimentRun> experimentRuns = mageTabLoader.getProcessedExperimentRuns();
+
+        return experimentBuilder.forSpecies(getSpecies(mageTabLoader, experimentRuns))
                 .withDescription(experimentName)
                 .withDefaultQueryType(defaultQueryFactorType)
                 .withDefaultFilterFactors(defaultFilterFactors)
-                .withExperimentRuns(mageTabLoader.extractProcessedExperimentRuns())
+                .withExperimentRuns(experimentRuns)
                 .withExtraInfo(hasExtraInfoFile)
                 .create();
 
+    }
+
+    private Set<String> getSpecies(MageTabLoader mageTabLoader, Collection<ExperimentRun> experimentRuns) {
+
+        return mageTabLoader.extractSpecies();
+    }
+
+    private Set<String> getRequiredFactorTypes(String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
+        Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);
+
+        for (Factor defaultFilterFactor : defaultFilterFactors) {
+            requiredFactorTypes.add(defaultFilterFactor.getType());
+        }
+        return requiredFactorTypes;
     }
 
     private Set<Factor> parseDefaultFilterFactors(String experimentAccession) {

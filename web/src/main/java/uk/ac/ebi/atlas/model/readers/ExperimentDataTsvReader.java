@@ -25,7 +25,9 @@ package uk.ac.ebi.atlas.model.readers;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+@Named
 public class ExperimentDataTsvReader extends AbstractTsvReader {
 
     @Inject

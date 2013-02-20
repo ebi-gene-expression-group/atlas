@@ -1,150 +1,150 @@
 Run	Sample Characteristics[Organism]	Sample Characteristics[sex]	Sample Characteristics[individual]	Sample Characteristics[clinical information]	Sample Characteristics[strain or line]	Sample Characteristics[organism part]	Sample Characteristics[developmental stage]	Sample Characteristics[age]	Sample Characteristics[biosource provider]	Factor Values[organism]	Factor Values[organism part]
-SRR306710	Gallus gallus	female		brain	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	brain
-SRR306711	Gallus gallus	male		brain	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	brain
-SRR306712	Gallus gallus	female		cerebellum	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	cerebellum
-SRR306713	Gallus gallus	male		cerebellum	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	cerebellum
-SRR306714	Gallus gallus	female		heart	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	heart
-SRR306715	Gallus gallus	male		heart	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	heart
-SRR306716	Gallus gallus	female		kidney	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	kidney
-SRR306717	Gallus gallus	male		kidney	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	kidney
-SRR306718	Gallus gallus	female		liver	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	liver
-SRR306719	Gallus gallus	male		liver	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	liver
-SRR306720	Gallus gallus	male		liver	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	liver
-SRR306721	Gallus gallus	male		testis	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	testis
-SRR306722	Gallus gallus	male		testis	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	testis
-SRR306723	Gallus gallus	male		testis	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	testis
-SRR306724	Ornithorhynchus anatinus	female		brain	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
-SRR306725	Ornithorhynchus anatinus	female		brain	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
-SRR306726	Ornithorhynchus anatinus	male		brain	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
-SRR306727	Ornithorhynchus anatinus	male		brain	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
-SRR306728	Ornithorhynchus anatinus	female		not lactating		cerebellum	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	cerebellum
-SRR306729	Ornithorhynchus anatinus	male		cerebellum	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	cerebellum
-SRR306730	Ornithorhynchus anatinus	female		not lactating		heart	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	heart
-SRR306731	Ornithorhynchus anatinus	male		heart	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	heart
-SRR306732	Ornithorhynchus anatinus	female		not lactating		kidney	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	kidney
-SRR306733	Ornithorhynchus anatinus	male		kidney	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	kidney
-SRR306734	Ornithorhynchus anatinus	male		kidney	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	kidney
-SRR306735	Ornithorhynchus anatinus	female		not lactating		liver	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
-SRR306736	Ornithorhynchus anatinus	female		not lactating		liver	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
-SRR306737	Ornithorhynchus anatinus	male		liver	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
-SRR306738	Ornithorhynchus anatinus	male		liver	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
-SRR306739	Ornithorhynchus anatinus	male		testis	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	testis
-SRR306740	Ornithorhynchus anatinus	male		testis	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	testis
-SRR306741	Ornithorhynchus anatinus	male		testis	adult		"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	testis
-SRR306742	Monodelphis domestica	female		brain		20 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	brain
-SRR306743	Monodelphis domestica	female		brain		20 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	brain
-SRR306744	Monodelphis domestica	male		brain		6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	brain
-SRR306745	Monodelphis domestica	female		cerebellum		20 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	cerebellum
-SRR306746	Monodelphis domestica	male		cerebellum		6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	cerebellum
-SRR306747	Monodelphis domestica	female		heart		25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
-SRR306748	Monodelphis domestica	female		heart		25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
-SRR306749	Monodelphis domestica	male		heart		6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
-SRR306750	Monodelphis domestica	male		heart		6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
-SRR306751	Monodelphis domestica	female		kidney		25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	kidney
-SRR306752	Monodelphis domestica	male		kidney		6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	kidney
-SRR306753	Monodelphis domestica	female		liver		25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	liver
-SRR306754	Monodelphis domestica	male		liver		6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	liver
-SRR306755	Monodelphis domestica	male		testis		6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	testis
-SRR306756	Monodelphis domestica	male		testis		4 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	testis
-SRR306757	Mus musculus	female		C57BL/6	brain	adult		"In house, C57BL7/6 colonies"	Mus musculus	brain
-SRR306758	Mus musculus	male		C57BL/6	brain	adult		"In house, C57BL7/6 colonies"	Mus musculus	brain
-SRR306759	Mus musculus	male		C57BL/6	brain	adult		"In house, C57BL7/6 colonies"	Mus musculus	brain
-SRR306760	Mus musculus	male		C57BL/6	brain	adult		"In house, C57BL7/6 colonies"	Mus musculus	brain
-SRR306761	Mus musculus	male		C57BL/6	brain	adult		"In house, C57BL7/6 colonies"	Mus musculus	brain
-SRR306762	Mus musculus	male		wild type	brain	adult		"Captured in Catalonia, Spain"	Mus musculus	brain
-SRR306763	Mus musculus	female		C57BL/6	cerebellum	adult		"In house, C57BL7/6 colonies"	Mus musculus	cerebellum
-SRR306764	Mus musculus	male		C57BL/6	cerebellum	adult		"In house, C57BL7/6 colonies"	Mus musculus	cerebellum
-SRR306765	Mus musculus	male		wild type	cerebellum	adult		"Captured in Catalonia, Spain"	Mus musculus	cerebellum
-SRR306766	Mus musculus	female		C57BL/6	heart	adult		"In house, C57BL7/6 colonies"	Mus musculus	heart
-SRR306767	Mus musculus	male		C57BL/6	heart	adult		"In house, C57BL7/6 colonies"	Mus musculus	heart
-SRR306768	Mus musculus	male		wild type	heart	adult		"Captured in Catalonia, Spain"	Mus musculus	heart
-SRR306769	Mus musculus	female		C57BL/6	kidney	adult		"In house, C57BL7/6 colonies"	Mus musculus	kidney
-SRR306770	Mus musculus	male		C57BL/6	kidney	adult		"In house, C57BL7/6 colonies"	Mus musculus	kidney
-SRR306771	Mus musculus	male		wild type	kidney	adult		"Captured in Catalonia, Spain"	Mus musculus	kidney
-SRR306772	Mus musculus	female		C57BL/6	liver	adult		"In house, C57BL7/6 colonies"	Mus musculus	liver
-SRR306773	Mus musculus	male		C57BL/6	liver	adult		"In house, C57BL7/6 colonies"	Mus musculus	liver
-SRR306774	Mus musculus	male		wild type	liver	adult		"Captured in Catalonia, Spain"	Mus musculus	liver
-SRR306775	Mus musculus	male		C57BL/6	testis	adult		"In house, C57BL7/6 colonies"	Mus musculus	testis
-SRR306776	Mus musculus	male		wild type	testis	adult		"Captured in Catalonia, Spain"	Mus musculus	testis
-SRR306777	Macaca mulatta	female		brain		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	brain
-SRR306778	Macaca mulatta	male		brain		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	brain
-SRR306779	Macaca mulatta	male		prefrontal cortex		7 year	"Deutsches Primatenzentrum, Germany"	Macaca mulatta	prefrontal cortex
-SRR306780	Macaca mulatta	female		cerebellum		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	cerebellum
-SRR306781	Macaca mulatta	male		cerebellum		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	cerebellum
-SRR306782	Macaca mulatta	female		heart		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	heart
-SRR306783	Macaca mulatta	male		heart		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	heart
-SRR306784	Macaca mulatta	female		kidney		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	kidney
-SRR306785	Macaca mulatta	male		kidney		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	kidney
-SRR306786	Macaca mulatta	female		liver		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	liver
-SRR306787	Macaca mulatta	male		liver		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	liver
-SRR306788	Macaca mulatta	male		liver		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	liver
-SRR306789	Macaca mulatta	male		testis		8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	testis
-SRR306790	Macaca mulatta	male		testis		9 year	"Deutsches Primatenzentrum, Germany"	Macaca mulatta	testis
-SRR306791	Pongo pygmaeus	female	Dunja		prefrontal cortex		56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	prefrontal cortex
-SRR306792	Pongo pygmaeus	male	Douglas		prefrontal cortex		16 year	"National Veterinary Institute, Uppsala, Sweden"	Pongo pygmaeus	prefrontal cortex
-SRR306793	Pongo pygmaeus	female	Dunja		cerebellum		56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	cerebellum
-SRR306794	Pongo pygmaeus	female	Dunja		heart		56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	heart
-SRR306795	Pongo pygmaeus	male	Gelar		heart		21 year	"Yerkes Regional Primate Center, USA"	Pongo pygmaeus	heart
-SRR306796	Pongo pygmaeus	female	Dunja		kidney		56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	kidney
-SRR306797	Pongo pygmaeus	male	Gelar		kidney		21 year	"Yerkes Regional Primate Center, USA"	Pongo pygmaeus	kidney
-SRR306798	Pongo pygmaeus	female	Dunja		liver		56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	liver
-SRR306799	Pongo pygmaeus	male	Gelar		liver		21 year	"Yerkes Regional Primate Center, USA"	Pongo pygmaeus	liver
-SRR306800	Gorilla gorilla	female	Gigi		prefrontal cortex		50 year	"Zoo Berlin, Germany"	Gorilla gorilla	prefrontal cortex
-SRR306801	Gorilla gorilla	male	Matze		prefrontal cortex		51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	prefrontal cortex
-SRR306802	Gorilla gorilla	female	Gigi		cerebellum		50 year	"Zoo Berlin, Germany"	Gorilla gorilla	cerebellum
-SRR306803	Gorilla gorilla	male	Matze		cerebellum		51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	cerebellum
-SRR306804	Gorilla gorilla	female	Gigi		heart		50 year	"Zoo Berlin, Germany"	Gorilla gorilla	heart
-SRR306805	Gorilla gorilla	male	Matze		heart		51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	heart
-SRR306806	Gorilla gorilla	female	Gigi		kidney		50 year	"Zoo Berlin, Germany"	Gorilla gorilla	kidney
-SRR306807	Gorilla gorilla	male	Matze		kidney		51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	kidney
-SRR306808	Gorilla gorilla	female	Gigi		liver		50 year	"Zoo Berlin, Germany"	Gorilla gorilla	liver
-SRR306809	Gorilla gorilla	male	Matze		liver		51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	liver
-SRR306810	Gorilla gorilla	male	Matze		testis		51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	testis
-SRR306811	Pan troglodytes	female	Reba		prefrontal cortex		44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	prefrontal cortex
-SRR306812	Pan troglodytes	male	Japie		prefrontal cortex		12.3 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
-SRR306813	Pan troglodytes	male	Big male zurich		prefrontal cortex		35 year	"Zoo Zurich, Switzerland"	Pan troglodytes	prefrontal cortex
-SRR306814	Pan troglodytes	male	Koos		prefrontal cortex		12.1 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
-SRR306815	Pan troglodytes	male	Antoine		prefrontal cortex		6.7 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
-SRR306816	Pan troglodytes	male	Herman		prefrontal cortex		12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
-SRR306817	Pan troglodytes	female	Reba		cerebellum		44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	cerebellum
-SRR306818	Pan troglodytes	male	Herman		cerebellum		12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	cerebellum
-SRR306819	Pan troglodytes	female	Reba		heart		44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	heart
-SRR306820	Pan troglodytes	male	Herman		heart		12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	heart
-SRR306821	Pan troglodytes	female	Reba		kidney		44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	kidney
-SRR306822	Pan troglodytes	male	Herman		kidney		12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	kidney
-SRR306823	Pan troglodytes	female	Reba		liver		44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	liver
-SRR306824	Pan troglodytes	male	Herman		liver		12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	liver
-SRR306825	Pan troglodytes	male	Herman		testis		12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	testis
-SRR306826	Pan paniscus	female	Waola		prefrontal cortex		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	prefrontal cortex
-SRR306827	Pan paniscus	female	Lodja		prefrontal cortex		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	prefrontal cortex
-SRR306828	Pan paniscus	male	Tatango		prefrontal cortex		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	prefrontal cortex
-SRR306829	Pan paniscus	female	Lodja		cerebellum		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	cerebellum
-SRR306830	Pan paniscus	male	Tatango		cerebellum		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	cerebellum
-SRR306831	Pan paniscus	female	Lodja		heart		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	heart
-SRR306832	Pan paniscus	male	Tatango		heart		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	heart
-SRR306833	Pan paniscus	female	Lodja		kidney		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	kidney
-SRR306834	Pan paniscus	male	Tatango		kidney		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	kidney
-SRR306835	Pan paniscus	female	Lodja		liver		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	liver
-SRR306836	Pan paniscus	male	Tatango		liver		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	liver
-SRR306837	Pan paniscus	male	Tatango		testis		"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	testis
-SRR306838	Homo sapiens	female		frontal lobe		Commercial / AMS biotechnology	Homo sapiens	frontal lobe
-SRR306839	Homo sapiens	male		frontal lobe		Commercial / Ambion	Homo sapiens	frontal lobe
-SRR306840	Homo sapiens	male		prefrontal cortex		"Netherland Brain Bank, Netherlands"	Homo sapiens	prefrontal cortex
-SRR306841	Homo sapiens	male		prefrontal cortex		"Netherland Brain Bank, Netherlands"	Homo sapiens	prefrontal cortex
-SRR306842	Homo sapiens	male		prefrontal cortex		"Netherland Brain Bank, Netherlands"	Homo sapiens	prefrontal cortex
-SRR306843	Homo sapiens	male		temporal lobe		Commercial / AMS biotechnology	Homo sapiens	temporal lobe
-SRR306844	Homo sapiens	female		cerebellum		Commercial / AMS biotechnology	Homo sapiens	cerebellum
-SRR306845	Homo sapiens	male		cerebellum		Commercial / Ambion	Homo sapiens	cerebellum
-SRR306846	Homo sapiens	male		cerebellum		Commercial / Ambion	Homo sapiens	cerebellum
-SRR306847	Homo sapiens	female		heart		Commercial / AMS biotechnology	Homo sapiens	heart
-SRR306848	Homo sapiens	male		heart		Commercial / AMS biotechnology	Homo sapiens	heart
-SRR306849	Homo sapiens	male		heart		Commercial / AMS biotechnology	Homo sapiens	heart
-SRR306850	Homo sapiens	male		heart		"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	heart
-SRR306851	Homo sapiens	female		kidney		Commercial / AMS biotechnology	Homo sapiens	kidney
-SRR306852	Homo sapiens	male		kidney		Commercial / AMS biotechnology	Homo sapiens	kidney
-SRR306853	Homo sapiens	male		kidney		"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	kidney
-SRR306854	Homo sapiens	male		liver		Commercial / AMS biotechnology	Homo sapiens	liver
-SRR306855	Homo sapiens	male		liver		Commercial / AMS biotechnology	Homo sapiens	liver
-SRR306856	Homo sapiens	male		liver		"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	liver
-SRR306857	Homo sapiens	male		testis		Commercial / AMS biotechnology	Homo sapiens	testis
-SRR306858	Homo sapiens	male		testis		"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	testis
+SRR306710	Gallus gallus	female	  	  	  	brain	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	brain
+SRR306711	Gallus gallus	male	  	  	  	brain	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	brain
+SRR306712	Gallus gallus	female	  	  	  	cerebellum	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	cerebellum
+SRR306713	Gallus gallus	male	  	  	  	cerebellum	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	cerebellum
+SRR306714	Gallus gallus	female	  	  	  	heart	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	heart
+SRR306715	Gallus gallus	male	  	  	  	heart	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	heart
+SRR306716	Gallus gallus	female	  	  	  	kidney	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	kidney
+SRR306717	Gallus gallus	male	  	  	  	kidney	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	kidney
+SRR306718	Gallus gallus	female	  	  	  	liver	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	liver
+SRR306719	Gallus gallus	male	  	  	  	liver	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	liver
+SRR306720	Gallus gallus	male	  	  	  	liver	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	liver
+SRR306721	Gallus gallus	male	  	  	  	testis	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	testis
+SRR306722	Gallus gallus	male	  	  	  	testis	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	testis
+SRR306723	Gallus gallus	male	  	  	  	testis	adult	approx 1 year	"Facility of Linkoping University, Sweden"	Gallus gallus	testis
+SRR306724	Ornithorhynchus anatinus	female	  	  	  	brain	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
+SRR306725	Ornithorhynchus anatinus	female	  	  	  	brain	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
+SRR306726	Ornithorhynchus anatinus	male	  	  	  	brain	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
+SRR306727	Ornithorhynchus anatinus	male	  	  	  	brain	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	brain
+SRR306728	Ornithorhynchus anatinus	female	  	not lactating	  	cerebellum	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	cerebellum
+SRR306729	Ornithorhynchus anatinus	male	  	  	  	cerebellum	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	cerebellum
+SRR306730	Ornithorhynchus anatinus	female	  	not lactating	  	heart	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	heart
+SRR306731	Ornithorhynchus anatinus	male	  	  	  	heart	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	heart
+SRR306732	Ornithorhynchus anatinus	female	  	not lactating	  	kidney	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	kidney
+SRR306733	Ornithorhynchus anatinus	male	  	  	  	kidney	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	kidney
+SRR306734	Ornithorhynchus anatinus	male	  	  	  	kidney	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	kidney
+SRR306735	Ornithorhynchus anatinus	female	  	not lactating	  	liver	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
+SRR306736	Ornithorhynchus anatinus	female	  	not lactating	  	liver	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
+SRR306737	Ornithorhynchus anatinus	male	  	  	  	liver	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
+SRR306738	Ornithorhynchus anatinus	male	  	  	  	liver	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	liver
+SRR306739	Ornithorhynchus anatinus	male	  	  	  	testis	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	testis
+SRR306740	Ornithorhynchus anatinus	male	  	  	  	testis	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	testis
+SRR306741	Ornithorhynchus anatinus	male	  	  	  	testis	adult	  	"Captured in New South Wales, Australia (provided by Adelaide University)"	Ornithorhynchus anatinus	testis
+SRR306742	Monodelphis domestica	female	  	  	  	brain	  	20 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	brain
+SRR306743	Monodelphis domestica	female	  	  	  	brain	  	20 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	brain
+SRR306744	Monodelphis domestica	male	  	  	  	brain	  	6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	brain
+SRR306745	Monodelphis domestica	female	  	  	  	cerebellum	  	20 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	cerebellum
+SRR306746	Monodelphis domestica	male	  	  	  	cerebellum	  	6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	cerebellum
+SRR306747	Monodelphis domestica	female	  	  	  	heart	  	25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
+SRR306748	Monodelphis domestica	female	  	  	  	heart	  	25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
+SRR306749	Monodelphis domestica	male	  	  	  	heart	  	6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
+SRR306750	Monodelphis domestica	male	  	  	  	heart	  	6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	heart
+SRR306751	Monodelphis domestica	female	  	  	  	kidney	  	25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	kidney
+SRR306752	Monodelphis domestica	male	  	  	  	kidney	  	6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	kidney
+SRR306753	Monodelphis domestica	female	  	  	  	liver	  	25 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	liver
+SRR306754	Monodelphis domestica	male	  	  	  	liver	  	6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	liver
+SRR306755	Monodelphis domestica	male	  	  	  	testis	  	6 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	testis
+SRR306756	Monodelphis domestica	male	  	  	  	testis	  	4 month	"Opossum colonies from the Museum of Natural History, Berlin, Germany"	Monodelphis domestica	testis
+SRR306757	Mus musculus	female	  	  	C57BL/6	brain	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	brain
+SRR306758	Mus musculus	male	  	  	C57BL/6	brain	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	brain
+SRR306759	Mus musculus	male	  	  	C57BL/6	brain	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	brain
+SRR306760	Mus musculus	male	  	  	C57BL/6	brain	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	brain
+SRR306761	Mus musculus	male	  	  	C57BL/6	brain	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	brain
+SRR306762	Mus musculus	male	  	  	wild type	brain	adult	  	"Captured in Catalonia, Spain"	Mus musculus	brain
+SRR306763	Mus musculus	female	  	  	C57BL/6	cerebellum	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	cerebellum
+SRR306764	Mus musculus	male	  	  	C57BL/6	cerebellum	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	cerebellum
+SRR306765	Mus musculus	male	  	  	wild type	cerebellum	adult	  	"Captured in Catalonia, Spain"	Mus musculus	cerebellum
+SRR306766	Mus musculus	female	  	  	C57BL/6	heart	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	heart
+SRR306767	Mus musculus	male	  	  	C57BL/6	heart	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	heart
+SRR306768	Mus musculus	male	  	  	wild type	heart	adult	  	"Captured in Catalonia, Spain"	Mus musculus	heart
+SRR306769	Mus musculus	female	  	  	C57BL/6	kidney	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	kidney
+SRR306770	Mus musculus	male	  	  	C57BL/6	kidney	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	kidney
+SRR306771	Mus musculus	male	  	  	wild type	kidney	adult	  	"Captured in Catalonia, Spain"	Mus musculus	kidney
+SRR306772	Mus musculus	female	  	  	C57BL/6	liver	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	liver
+SRR306773	Mus musculus	male	  	  	C57BL/6	liver	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	liver
+SRR306774	Mus musculus	male	  	  	wild type	liver	adult	  	"Captured in Catalonia, Spain"	Mus musculus	liver
+SRR306775	Mus musculus	male	  	  	C57BL/6	testis	adult	  	"In house, C57BL7/6 colonies"	Mus musculus	testis
+SRR306776	Mus musculus	male	  	  	wild type	testis	adult	  	"Captured in Catalonia, Spain"	Mus musculus	testis
+SRR306777	Macaca mulatta	female	  	  	  	brain	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	brain
+SRR306778	Macaca mulatta	male	  	  	  	brain	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	brain
+SRR306779	Macaca mulatta	male	  	  	  	prefrontal cortex	  	7 year	"Deutsches Primatenzentrum, Germany"	Macaca mulatta	prefrontal cortex
+SRR306780	Macaca mulatta	female	  	  	  	cerebellum	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	cerebellum
+SRR306781	Macaca mulatta	male	  	  	  	cerebellum	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	cerebellum
+SRR306782	Macaca mulatta	female	  	  	  	heart	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	heart
+SRR306783	Macaca mulatta	male	  	  	  	heart	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	heart
+SRR306784	Macaca mulatta	female	  	  	  	kidney	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	kidney
+SRR306785	Macaca mulatta	male	  	  	  	kidney	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	kidney
+SRR306786	Macaca mulatta	female	  	  	  	liver	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	liver
+SRR306787	Macaca mulatta	male	  	  	  	liver	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	liver
+SRR306788	Macaca mulatta	male	  	  	  	liver	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	liver
+SRR306789	Macaca mulatta	male	  	  	  	testis	  	8 year	"Macaque facility in Souzhou, China"	Macaca mulatta	testis
+SRR306790	Macaca mulatta	male	  	  	  	testis	  	9 year	"Deutsches Primatenzentrum, Germany"	Macaca mulatta	testis
+SRR306791	Pongo pygmaeus	female	Dunja	  	  	prefrontal cortex	  	56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	prefrontal cortex
+SRR306792	Pongo pygmaeus	male	Douglas	  	  	prefrontal cortex	  	16 year	"National Veterinary Institute, Uppsala, Sweden"	Pongo pygmaeus	prefrontal cortex
+SRR306793	Pongo pygmaeus	female	Dunja	  	  	cerebellum	  	56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	cerebellum
+SRR306794	Pongo pygmaeus	female	Dunja	  	  	heart	  	56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	heart
+SRR306795	Pongo pygmaeus	male	Gelar	  	  	heart	  	21 year	"Yerkes Regional Primate Center, USA"	Pongo pygmaeus	heart
+SRR306796	Pongo pygmaeus	female	Dunja	  	  	kidney	  	56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	kidney
+SRR306797	Pongo pygmaeus	male	Gelar	  	  	kidney	  	21 year	"Yerkes Regional Primate Center, USA"	Pongo pygmaeus	kidney
+SRR306798	Pongo pygmaeus	female	Dunja	  	  	liver	  	56 year	"Zoo Leipzig, Germany"	Pongo pygmaeus	liver
+SRR306799	Pongo pygmaeus	male	Gelar	  	  	liver	  	21 year	"Yerkes Regional Primate Center, USA"	Pongo pygmaeus	liver
+SRR306800	Gorilla gorilla	female	Gigi	  	  	prefrontal cortex	  	50 year	"Zoo Berlin, Germany"	Gorilla gorilla	prefrontal cortex
+SRR306801	Gorilla gorilla	male	Matze	  	  	prefrontal cortex	  	51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	prefrontal cortex
+SRR306802	Gorilla gorilla	female	Gigi	  	  	cerebellum	  	50 year	"Zoo Berlin, Germany"	Gorilla gorilla	cerebellum
+SRR306803	Gorilla gorilla	male	Matze	  	  	cerebellum	  	51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	cerebellum
+SRR306804	Gorilla gorilla	female	Gigi	  	  	heart	  	50 year	"Zoo Berlin, Germany"	Gorilla gorilla	heart
+SRR306805	Gorilla gorilla	male	Matze	  	  	heart	  	51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	heart
+SRR306806	Gorilla gorilla	female	Gigi	  	  	kidney	  	50 year	"Zoo Berlin, Germany"	Gorilla gorilla	kidney
+SRR306807	Gorilla gorilla	male	Matze	  	  	kidney	  	51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	kidney
+SRR306808	Gorilla gorilla	female	Gigi	  	  	liver	  	50 year	"Zoo Berlin, Germany"	Gorilla gorilla	liver
+SRR306809	Gorilla gorilla	male	Matze	  	  	liver	  	51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	liver
+SRR306810	Gorilla gorilla	male	Matze	  	  	testis	  	51 year	"Zoo Frankfurt, Germany"	Gorilla gorilla	testis
+SRR306811	Pan troglodytes	female	Reba	  	  	prefrontal cortex	  	44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	prefrontal cortex
+SRR306812	Pan troglodytes	male	Japie	  	  	prefrontal cortex	  	12.3 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
+SRR306813	Pan troglodytes	male	Big male zurich	  	  	prefrontal cortex	  	35 year	"Zoo Zurich, Switzerland"	Pan troglodytes	prefrontal cortex
+SRR306814	Pan troglodytes	male	Koos	  	  	prefrontal cortex	  	12.1 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
+SRR306815	Pan troglodytes	male	Antoine	  	  	prefrontal cortex	  	6.7 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
+SRR306816	Pan troglodytes	male	Herman	  	  	prefrontal cortex	  	12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	prefrontal cortex
+SRR306817	Pan troglodytes	female	Reba	  	  	cerebellum	  	44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	cerebellum
+SRR306818	Pan troglodytes	male	Herman	  	  	cerebellum	  	12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	cerebellum
+SRR306819	Pan troglodytes	female	Reba	  	  	heart	  	44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	heart
+SRR306820	Pan troglodytes	male	Herman	  	  	heart	  	12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	heart
+SRR306821	Pan troglodytes	female	Reba	  	  	kidney	  	44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	kidney
+SRR306822	Pan troglodytes	male	Herman	  	  	kidney	  	12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	kidney
+SRR306823	Pan troglodytes	female	Reba	  	  	liver	  	44 year	"Yerkes Regional Primate Center, USA"	Pan troglodytes	liver
+SRR306824	Pan troglodytes	male	Herman	  	  	liver	  	12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	liver
+SRR306825	Pan troglodytes	male	Herman	  	  	testis	  	12 year	"Biomedical Primate Research Center, Netherlands (BPRC)"	Pan troglodytes	testis
+SRR306826	Pan paniscus	female	Waola	  	  	prefrontal cortex	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	prefrontal cortex
+SRR306827	Pan paniscus	female	Lodja	  	  	prefrontal cortex	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	prefrontal cortex
+SRR306828	Pan paniscus	male	Tatango	  	  	prefrontal cortex	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	prefrontal cortex
+SRR306829	Pan paniscus	female	Lodja	  	  	cerebellum	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	cerebellum
+SRR306830	Pan paniscus	male	Tatango	  	  	cerebellum	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	cerebellum
+SRR306831	Pan paniscus	female	Lodja	  	  	heart	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	heart
+SRR306832	Pan paniscus	male	Tatango	  	  	heart	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	heart
+SRR306833	Pan paniscus	female	Lodja	  	  	kidney	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	kidney
+SRR306834	Pan paniscus	male	Tatango	  	  	kidney	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	kidney
+SRR306835	Pan paniscus	female	Lodja	  	  	liver	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	liver
+SRR306836	Pan paniscus	male	Tatango	  	  	liver	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	liver
+SRR306837	Pan paniscus	male	Tatango	  	  	testis	  	  	"Lola ya Bonobo Sanctuary, Democratic Republic of Congo"	Pan paniscus	testis
+SRR306838	Homo sapiens	female	  	  	  	frontal lobe	  	  	Commercial / AMS biotechnology	Homo sapiens	frontal lobe
+SRR306839	Homo sapiens	male	  	  	  	frontal lobe	  	  	Commercial / Ambion	Homo sapiens	frontal lobe
+SRR306840	Homo sapiens	male	  	  	  	prefrontal cortex	  	  	"Netherland Brain Bank, Netherlands"	Homo sapiens	prefrontal cortex
+SRR306841	Homo sapiens	male	  	  	  	prefrontal cortex	  	  	"Netherland Brain Bank, Netherlands"	Homo sapiens	prefrontal cortex
+SRR306842	Homo sapiens	male	  	  	  	prefrontal cortex	  	  	"Netherland Brain Bank, Netherlands"	Homo sapiens	prefrontal cortex
+SRR306843	Homo sapiens	male	  	  	  	temporal lobe	  	  	Commercial / AMS biotechnology	Homo sapiens	temporal lobe
+SRR306844	Homo sapiens	female	  	  	  	cerebellum	  	  	Commercial / AMS biotechnology	Homo sapiens	cerebellum
+SRR306845	Homo sapiens	male	  	  	  	cerebellum	  	  	Commercial / Ambion	Homo sapiens	cerebellum
+SRR306846	Homo sapiens	male	  	  	  	cerebellum	  	  	Commercial / Ambion	Homo sapiens	cerebellum
+SRR306847	Homo sapiens	female	  	  	  	heart	  	  	Commercial / AMS biotechnology	Homo sapiens	heart
+SRR306848	Homo sapiens	male	  	  	  	heart	  	  	Commercial / AMS biotechnology	Homo sapiens	heart
+SRR306849	Homo sapiens	male	  	  	  	heart	  	  	Commercial / AMS biotechnology	Homo sapiens	heart
+SRR306850	Homo sapiens	male	  	  	  	heart	  	  	"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	heart
+SRR306851	Homo sapiens	female	  	  	  	kidney	  	  	Commercial / AMS biotechnology	Homo sapiens	kidney
+SRR306852	Homo sapiens	male	  	  	  	kidney	  	  	Commercial / AMS biotechnology	Homo sapiens	kidney
+SRR306853	Homo sapiens	male	  	  	  	kidney	  	  	"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	kidney
+SRR306854	Homo sapiens	male	  	  	  	liver	  	  	Commercial / AMS biotechnology	Homo sapiens	liver
+SRR306855	Homo sapiens	male	  	  	  	liver	  	  	Commercial / AMS biotechnology	Homo sapiens	liver
+SRR306856	Homo sapiens	male	  	  	  	liver	  	  	"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	liver
+SRR306857	Homo sapiens	male	  	  	  	testis	  	  	Commercial / AMS biotechnology	Homo sapiens	testis
+SRR306858	Homo sapiens	male	  	  	  	testis	  	  	"National Disease Research Interchange, USA (NDRI)"	Homo sapiens	testis
