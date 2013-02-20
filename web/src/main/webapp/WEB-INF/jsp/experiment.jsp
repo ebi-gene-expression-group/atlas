@@ -42,7 +42,7 @@
 <c:choose>
     <c:when test="${empty geneProfiles}">
         <c:if test="${not isPreferenceError}">
-            No expressions found above the expression level cutoff for the query
+            No expressions found above the expression level cutoff for the query.
         </c:if>
     </c:when>
     <c:otherwise>
