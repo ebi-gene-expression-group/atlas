@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -37,6 +38,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class ExperimentBuilder {
 
+    private static final String SPECIES_FACTOR_TYPE = "ORGANISM";
     private Set<String> species;
     private String description;
     private Collection<ExperimentRun> experimentRuns;
@@ -91,6 +93,20 @@ public class ExperimentBuilder {
         for (Factor defaultFilterFactor : defaultFilterFactors) {
             String factorName = experimentalFactors.getFactorName(defaultFilterFactor.getType());
             defaultFilterFactor.setName(factorName);
+        }
+
+        Set<String> species = Sets.newHashSet();
+
+        for (ExperimentRun experimentRun: experimentRuns){
+            String organism = experimentRun.getFactorByType(SPECIES_FACTOR_TYPE).getValue();
+            if (organism != null){
+                species.add(organism);
+            }
+        }
+        //ToDo: I think this is required for experiments that don't have organism as a factor type!!
+        //ToDo: or maybe all experiments have ?
+        if (species.isEmpty()){
+            species = this.species;
         }
 
         return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);

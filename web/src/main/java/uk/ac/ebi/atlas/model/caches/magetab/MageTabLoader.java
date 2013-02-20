@@ -8,7 +8,8 @@ import java.util.Collection;
 import java.util.Set;
 
 public interface MageTabLoader {
-    Collection<ExperimentRun> extractExperimentRuns() throws IOException, ParseException;
+
+    Collection<ExperimentRun> extractProcessedExperimentRuns() throws IOException, ParseException;
 
     Set<String> extractSpecies();
 

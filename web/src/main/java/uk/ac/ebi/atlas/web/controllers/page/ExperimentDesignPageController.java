@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
+import uk.ac.ebi.atlas.model.readers.TsvReader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -43,11 +43,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Scope("request")
 public class ExperimentDesignPageController {
 
-    private final ExperimentDesignTsvReader experimentDesignTsvReader;
+    private final TsvReader experimentDesignTsvReader;
     private final ExperimentsCache experimentsCache;
 
     @Inject
-    public ExperimentDesignPageController(ExperimentDesignTsvReader expDesignTsvReader, ExperimentsCache expCache) {
+    public ExperimentDesignPageController(TsvReader expDesignTsvReader, ExperimentsCache expCache) {
         this.experimentDesignTsvReader = expDesignTsvReader;
         this.experimentsCache = expCache;
     }

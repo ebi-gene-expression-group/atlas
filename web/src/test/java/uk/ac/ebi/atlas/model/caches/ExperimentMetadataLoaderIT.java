@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.hasItems;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class MageTabParserIT {
+public class ExperimentMetadataLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";
     private static final String RUN_ACCESSION = "SRR306774";
@@ -74,6 +74,18 @@ public class MageTabParserIT {
         assertThat(factorGroup.getFactorByType("PROTOCOL"), is(nullValue()));
         assertThat(factorGroup.getFactorByType("ORGANISM_PART"), is(organismPartFactor));
 
+    }
+
+    @Test
+    public void ExperimentShouldOnlyContainRunsFromDataFile() throws IOException, ParseException {
+        Experiment experiment = subject.load("E-MTAB-513");
+
+        assertThat(experiment.getExperimentRunAccessions(), hasItems(
+            "ERR030872", "ERR030873", "ERR030874", "ERR030875",
+            "ERR030876", "ERR030877", "ERR030878", "ERR030879",
+            "ERR030880", "ERR030881", "ERR030882", "ERR030883",
+            "ERR030884", "ERR030885", "ERR030886", "ERR030887"
+        ));
     }
 
 

@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
@@ -32,42 +33,45 @@ import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoaderBuilder;
-import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
-import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
+import uk.ac.ebi.atlas.model.readers.TsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder everytime the load method is invoked
-//The reason to do so is that Guava CacheBuilder, that is the one using this class, is not spring managed.
+//The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
 public abstract class ExperimentMetadataLoader extends CacheLoader<String, Experiment> {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataLoader.class);
+
+    public static final int GENE_ID_COLUMN = 0;
 
     @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
 
     private MageTabLoaderBuilder mageTabLoaderBuilder;
-    private ExperimentFactorsTsvReader experimentFactorsTsvReader;
+    private TsvReader experimentFactorsTsvReader;
 
     private ArrayExpressClient arrayExpressClient;
 
-    private AnalysisMethodsTsvReader analysisMethodsTsvReader;
+    private TsvReader experimentDataTsvReader;
 
 
     @Inject
-    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsTsvReader experimentFactorsTsvReader
-            , ArrayExpressClient arrayExpressClient, AnalysisMethodsTsvReader analysisMethodsTsvReader) {
+    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, TsvReader experimentFactorsTsvReader
+            , ArrayExpressClient arrayExpressClient, TsvReader experimentDataTsvReader) {
         this.mageTabLoaderBuilder = mageTabLoaderBuilder;
 
         this.experimentFactorsTsvReader = experimentFactorsTsvReader;
         this.arrayExpressClient = arrayExpressClient;
-        this.analysisMethodsTsvReader = analysisMethodsTsvReader;
+        this.experimentDataTsvReader = experimentDataTsvReader;
     }
 
     @Override
@@ -78,33 +82,32 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         Set<Factor> defaultFilterFactors = parseDefaultFilterFactors(experimentAccession);
 
         Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);
+
         for (Factor defaultFilterFactor : defaultFilterFactors) {
             requiredFactorTypes.add(defaultFilterFactor.getType());
         }
 
         String experimentName = fetchExperimentName(experimentAccession);
 
-
         String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
 
         boolean hasExtraInfoFile = new File(extraInfoFileLocation).exists();
 
-
-        Set<String> processedExperimentRunAccessions = analysisMethodsTsvReader.readProcessedLibraries(experimentAccession);
+        Set<String> processedRunAccessions = extractProcessedRunAccessions(experimentAccession);
 
         ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
         MageTabLoader mageTabLoader = mageTabLoaderBuilder
                                                         .forExperimentAccession(experimentAccession)
                                                         .withRequiredFactorTypes(requiredFactorTypes)
-                                                        .withProcessedExperimentRunAccessions(processedExperimentRunAccessions)
+                                                        .withProcessedRunAccessions(processedRunAccessions)
                                                         .build();
 
         return experimentBuilder.forSpecies(mageTabLoader.extractSpecies())
                 .withDescription(experimentName)
                 .withDefaultQueryType(defaultQueryFactorType)
                 .withDefaultFilterFactors(defaultFilterFactors)
-                .withExperimentRuns(mageTabLoader.extractExperimentRuns())
+                .withExperimentRuns(mageTabLoader.extractProcessedExperimentRuns())
                 .withExtraInfo(hasExtraInfoFile)
                 .create();
 
@@ -141,6 +144,26 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         }
     }
 
+    protected Set<String> extractProcessedRunAccessions(String experimentAccession){
+
+        String[] experimentRunHeaders = experimentDataTsvReader.readLine(experimentAccession, 0);
+
+        List<String> columnHeaders = Arrays.asList(ArrayUtils.remove(experimentRunHeaders, GENE_ID_COLUMN));
+
+        Set<String> processedRunAccessions = Sets.newHashSet();
+
+        for (String columnHeader : columnHeaders) {
+            String[] columnRuns = columnHeader.split(",");
+
+            for (String columnRun : columnRuns) {
+                columnRun = columnRun.trim();
+
+                processedRunAccessions.add(columnRun);
+
+            }
+        }
+        return processedRunAccessions;
+    }
 
     protected abstract ExperimentBuilder createExperimentBuilder();
 

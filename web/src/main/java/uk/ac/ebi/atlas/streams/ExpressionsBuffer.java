@@ -31,7 +31,6 @@ class ExpressionsBuffer {
 
     private Iterator<FactorGroup> expectedFactorGroups;
 
-
     public static final int GENE_ID_COLUMN = 0;
 
     protected ExpressionsBuffer(List<FactorGroup> orderedFactorGroups) {

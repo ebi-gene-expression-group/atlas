@@ -24,8 +24,6 @@ package uk.ac.ebi.atlas.model.readers;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
@@ -36,9 +34,10 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class AbstractTsvReader {
+public abstract class AbstractTsvReader implements TsvReader {
 
     private static final Logger LOGGER = Logger.getLogger(AbstractTsvReader.class);
 
@@ -48,14 +47,35 @@ public abstract class AbstractTsvReader {
         this.pathTemplate = pathTemplate;
     }
 
+    @Override
+    public String[] readLine(String experimentAccession, long lineIndex){
+        Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
+
+        try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
+            CSVReader csvReader = new CSVReader(reader, '\t')) {
+            String[] line = null;
+            for (int i = 0; i <= lineIndex; i++){
+                line = csvReader.readNext();
+            }
+            return line;
+
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException("Cannot read Tsv file from path " + fileSystemPath.toString(), e);
+        }
+    }
+
+    @Override
     public List<String[]> readAll(String experimentAccession) {
         return readAndFilter(experimentAccession, new IsNotComment());
     }
 
+    @Override
     public List<String[]> readAllComments(String experimentAccession) {
         return readAndFilter(experimentAccession, new IsComment());
     }
 
+    @Override
     public SortedSetMultimap<String, String> readAllCommentsAsMap(String experimentAccession){
         SortedSetMultimap<String, String> comments = TreeMultimap.create();
         for (String[] row: readAllComments(experimentAccession)){

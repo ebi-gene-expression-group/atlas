@@ -12,12 +12,6 @@ public class FactorSet implements FactorGroup {
 
     private Map<String, Factor> factorsByType = new HashMap<>();
 
-    public FactorSet(Set<Factor> factors) {
-        for (Factor factor : factors) {
-            factorsByType.put(factor.getType(), factor);
-        }
-    }
-
     public FactorSet() {}
 
 

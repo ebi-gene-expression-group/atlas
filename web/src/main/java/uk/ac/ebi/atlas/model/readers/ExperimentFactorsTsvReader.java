@@ -23,13 +23,9 @@
 package uk.ac.ebi.atlas.model.readers;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named("experimentFactorsTsvReader")
-@Scope("singleton")
 public class ExperimentFactorsTsvReader extends AbstractTsvReader {
 
     @Inject

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +28,12 @@ public class ExperimentalFactorsBuilderTest {
     private Factor factorWithType2 = new Factor("TYPE2", "NAME2", "VALUE2");
     private Factor factorWithType2DifferentValue = new Factor("TYPE2", "NAME2", "DIFFERENT_VALUE2");
     private Factor factorWithType3 = new Factor("TYPE3", "NAME3", "VALUE3");
-    private FactorGroup factorGroup1 = new FactorSet(Sets.newHashSet(factorWithType2, factorWithType1, factorWithType3));
-    private FactorGroup factorGroup2 = new FactorSet(Sets.newHashSet(factorWithType3, factorWithType2DifferentValue, factorWithType1));
+    private FactorGroup factorGroup1 = new FactorSet().add(factorWithType2)
+                                                      .add(factorWithType1)
+                                                      .add(factorWithType3);
+    private FactorGroup factorGroup2 = new FactorSet().add(factorWithType3)
+                                                      .add(factorWithType2DifferentValue)
+                                                      .add(factorWithType1);
 
 
     private Collection<ExperimentRun> experimentRunMocks;

@@ -46,7 +46,9 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     @Value("#{configuration['experiment.magetab.idf.path.template']}")
     private String idfPathTemplate;
 
-    private Set<String> processedExperimentRunAccessions;
+    private Set<String> processedRunAccessions;
+
+    private List<String> orderedExperimentRunAccessions;
 
     private String experimentAccession;
 
@@ -70,8 +72,8 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     }
 
     @Override
-    public MageTabLoaderBuilder withProcessedExperimentRunAccessions(Set<String> processedExperimentRunAccessions) {
-        this.processedExperimentRunAccessions = processedExperimentRunAccessions;
+    public MageTabLoaderBuilder withProcessedRunAccessions(Set<String> processedRunAccessions) {
+        this.processedRunAccessions = processedRunAccessions;
         return this;
     }
 
@@ -85,20 +87,29 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
         return this;
     }
 
-
-    @Override
-    public Collection<ExperimentRun> extractExperimentRuns() throws IOException, ParseException {
+    protected Collection<ExperimentRun> extractExperimentRuns() throws IOException, ParseException {
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
         Collection<ExperimentRun> processedExperimentRuns = Lists.newArrayList();
 
         for (ExperimentRun experimentRun: allExperimentRuns) {
-            if (processedExperimentRunAccessions.contains(experimentRun.getRunAccession())){
+            if (processedRunAccessions.contains(experimentRun.getRunAccession())){
                 processedExperimentRuns.add(experimentRun);
             }
         }
         return processedExperimentRuns;
+    }
+
+    @Override
+    public Collection<ExperimentRun> extractProcessedExperimentRuns() throws IOException, ParseException{
+        Collection<ExperimentRun> processedExperimentRuns = this.extractExperimentRuns();
+        List<ExperimentRun> orderedExperimentRuns = new ArrayList(processedExperimentRuns.size());
+        for (ExperimentRun processedExperimentRun : processedExperimentRuns){
+            int runIndex = orderedExperimentRunAccessions.indexOf(processedExperimentRun.getRunAccession());
+            orderedExperimentRuns.set(runIndex, processedExperimentRun);
+        }
+        return orderedExperimentRuns;
     }
 
     @Override
