@@ -265,6 +265,8 @@ function loadSliderAndPlot(cutoff, experimentAccession) {
                 }
             });
 
+            $("#sliderAndChart").show();
+
 
         }
     }).fail(function( data ) {

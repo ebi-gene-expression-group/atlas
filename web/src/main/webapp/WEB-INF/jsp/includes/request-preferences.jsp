@@ -119,7 +119,7 @@
         <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
     </div>
 
-    <div style="min-width: 955px;">
+    <div style="min-width: 955px;display:none;" id="sliderAndChart">
         <span style="display:inline-block">
             <div id="gene-distribution-button" style="float:left">
                 <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
