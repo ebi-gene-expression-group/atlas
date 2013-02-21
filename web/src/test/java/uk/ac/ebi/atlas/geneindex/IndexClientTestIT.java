@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.utils.Files;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Set;
@@ -26,40 +27,17 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class IndexClientTestIT {
 
+    @Inject
     private SolrClient subject;
 
-    private GenePropertyQueryBuilder queryBuilder;
-
-    private String jsonData;
+    private String query = "GO:0008134 \"p53 binding\"";
 
     private Set<String> species = Sets.newHashSet("Homo sapiens");
-
-    @Value("#{configuration['index.server.url']}")
-    private String solrURL;
-
-    @Before
-    public void loadTestData() throws IOException {
-        jsonData = Files.readTextFileFromClasspath(this.getClass(), "solr.json");
-    }
-
-    @Before
-    public void initSubject() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        queryBuilder = mock(GenePropertyQueryBuilder.class);
-
-        subject = new SolrClient(restTemplate, queryBuilder);
-
-        subject.setServerURL(solrURL);
-    }
 
     @Test
     public void testFindGeneIdJsonValidQuery() throws URISyntaxException {
         //given
-        when(queryBuilder.buildQueryString(anyString())).thenReturn("(alltext:\"GO:0008134\" OR alltext:\"p53 " +
-                "binding\")");
-
-        String result = subject.findGeneIdJson(anyString(), species);
+        String result = subject.findGeneIdJson(query, species);
 
         //some genes are found
         assertThat(result, containsString("[{\"identifier\":\"ENSG"));
@@ -69,9 +47,9 @@ public class IndexClientTestIT {
     @Test
     public void testFindGeneIdJsonNotExistingQuery() throws URISyntaxException {
         //given
-        when(queryBuilder.buildQueryString(anyString())).thenReturn("(alltext:\"NOT THERE\")");
+        String query = "\"NOT THERE\"";
 
-        String result = subject.findGeneIdJson(anyString(), species);
+        String result = subject.findGeneIdJson(query, species);
 
         //no genes are found
         assertThat(result, containsString("\"numFound\":0"));
