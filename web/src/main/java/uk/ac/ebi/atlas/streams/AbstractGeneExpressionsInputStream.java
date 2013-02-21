@@ -30,16 +30,16 @@ import uk.ac.ebi.atlas.model.Expression;
 
 import java.io.IOException;
 
-public abstract class AbstractGeneProfilesInputStream<T extends Iterable<Expression>> implements ObjectInputStream<T> {
+public abstract class AbstractGeneExpressionsInputStream<T extends Iterable<Expression>> implements ObjectInputStream<T> {
 
-    private static final Logger logger = Logger.getLogger(AbstractGeneProfilesInputStream.class);
+    private static final Logger logger = Logger.getLogger(AbstractGeneExpressionsInputStream.class);
 
     private CSVReader csvReader;
 
     private ExpressionsBuffer expressionsBuffer;
 
 
-    protected AbstractGeneProfilesInputStream(CSVReader csvReader, String experimentAccession
+    protected AbstractGeneExpressionsInputStream(CSVReader csvReader, String experimentAccession
             , ExpressionsBuffer.Builder expressionsBufferBuilder) {
 
         this.csvReader = csvReader;

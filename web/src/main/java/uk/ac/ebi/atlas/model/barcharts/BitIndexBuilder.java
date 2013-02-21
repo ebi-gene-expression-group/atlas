@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.model.barcharts;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.CompleteGeneProfile;
+import uk.ac.ebi.atlas.model.GeneExpressions;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.FactorGroup;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
@@ -37,7 +37,7 @@ public class BitIndexBuilder {
 
     public BitIndexBuilder forExperiment(String experimentAccession) {
 
-        try (ObjectInputStream<CompleteGeneProfile> inputStream =
+        try (ObjectInputStream<GeneExpressions> inputStream =
                      geneProfilesInputStreamBuilder.forExperiment(experimentAccession).createCompleteGeneProfileInputStream()) {
 
             populateGeneExpressionIndexes(inputStream);
@@ -50,17 +50,17 @@ public class BitIndexBuilder {
 
     }
 
-    protected void populateGeneExpressionIndexes(ObjectInputStream<CompleteGeneProfile> inputStream) {
+    protected void populateGeneExpressionIndexes(ObjectInputStream<GeneExpressions> inputStream) {
         int geneIndexPosition = 0;
 
-        CompleteGeneProfile geneProfile;
+        GeneExpressions geneProfile;
 
         while ((geneProfile = inputStream.readNext()) != null) {
             addGeneToIndexes(geneProfile, geneIndexPosition++);
         }
     }
 
-    protected void addGeneToIndexes(CompleteGeneProfile geneProfile, int geneIndexPosition) {
+    protected void addGeneToIndexes(GeneExpressions geneProfile, int geneIndexPosition) {
 
         for (Expression expression : geneProfile) {
 
