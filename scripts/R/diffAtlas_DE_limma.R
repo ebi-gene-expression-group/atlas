@@ -10,7 +10,9 @@
 # 	- normExprsFile <- matrix of normalized and summarized expression values.
 #	- refAssays <- comma-separated list of assay accessions in reference assay group.
 #	- testAssays <- comma-separated list of assay accessions in test assay group.
-diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays) {
+#	- resFile <- filename for results.
+#	- plotDataFile <- filename for data for MvA plot.
+diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays, resFile, plotDataFile) {
 
 	e <- try({
 		
@@ -61,8 +63,8 @@ diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays) {
 		plotData <- data.frame(designElements = featureNames(esetForContrast), adjPval = contrastFitEbayes$adjPvals, logFC = contrastFitEbayes$coefficients, avgInt = contrastFitEbayes$Amean)
 
 		# write.
-		write.table(contrastResults, file="limma_res.txt", row.names=FALSE, quote=FALSE, sep="\t")
-		write.table(plotData, file="plotData.txt", row.names=FALSE, quote=FALSE, sep="\t")
+		write.table(contrastResults, file=resFile, row.names=FALSE, quote=FALSE, sep="\t")
+		write.table(plotData, file=plotDataFile, row.names=FALSE, quote=FALSE, sep="\t")
 	})
 }
 
