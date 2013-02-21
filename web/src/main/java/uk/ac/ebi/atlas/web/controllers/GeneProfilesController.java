@@ -65,5 +65,7 @@ public class GeneProfilesController {
             queryFactorType = filterParameters.getQueryFactorType();
         }
         geneExpressionPrecondition.setQueryFactorType(queryFactorType);
+        geneExpressionPrecondition.setSelectedQueryFactors(filterParameters.getSelectedQueryFactors());
+        geneExpressionPrecondition.setSpecific(preferences.isSpecific());
     }
 }

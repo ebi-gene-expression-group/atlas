@@ -16,6 +16,10 @@ public class GeneExpressionPrecondition implements Predicate<Expression> {
 
     private String queryFactorType;
 
+    private Set<Factor> selectedQueryFactors;
+
+    private boolean isSpecific;
+
     public GeneExpressionPrecondition() {
     }
 
@@ -33,6 +37,22 @@ public class GeneExpressionPrecondition implements Predicate<Expression> {
 
     public void setQueryFactorType(String queryFactorType) {
         this.queryFactorType = queryFactorType;
+    }
+
+    public Set<Factor> getSelectedQueryFactors() {
+        return selectedQueryFactors;
+    }
+
+    public boolean isSpecific() {
+        return isSpecific;
+    }
+
+    public void setSpecific(boolean specific) {
+        isSpecific = specific;
+    }
+
+    public void setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
+        this.selectedQueryFactors = selectedQueryFactors;
     }
 
     @Override

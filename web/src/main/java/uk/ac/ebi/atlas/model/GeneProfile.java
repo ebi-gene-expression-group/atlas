@@ -7,10 +7,7 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
@@ -87,10 +84,12 @@ public class GeneProfile extends GeneExpressions {
     }
 
     public double getAverageExpressionLevelOn(Set<Factor> factors) {
-        if (CollectionUtils.isEmpty(factors)) {
-            return 0D;
-        }
         double expressionLevel = 0D;
+
+        if (CollectionUtils.isEmpty(factors)) {
+            return expressionLevel;
+        }
+
         for (Factor factor : factors) {
             expressionLevel += getExpressionLevel(factor);
         }
@@ -98,7 +97,7 @@ public class GeneProfile extends GeneExpressions {
     }
 
     public Set<Factor> getAllFactors() {
-        return this.expressions.keySet();
+        return Collections.unmodifiableSet(this.expressions.keySet());
     }
 
     public double getExpressionLevel(Factor factor) {
@@ -164,11 +163,27 @@ public class GeneProfile extends GeneExpressions {
         public GeneProfile create() {
             checkState(geneProfile != null, "Please invoke forGeneID before create");
 
-            return containsExpressions() ? geneProfile : null;
+            return containsExpressions() && isOverExpressedInSelectedFactors() ? geneProfile : null;
         }
 
-        public boolean containsExpressions() {
+        private boolean containsExpressions() {
             return !geneProfile.expressions.isEmpty();
+        }
+
+        protected boolean isOverExpressedInSelectedFactors() {
+            Set<Factor> selectedQueryFactors = geneExpressionPrecondition.getSelectedQueryFactors();
+
+            if (!geneExpressionPrecondition.isSpecific() || selectedQueryFactors.isEmpty()) {
+                return true;
+            }
+
+            double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
+            Set<Factor> remainingFactors = Sets.newHashSet(geneProfile.getAllFactors());
+            remainingFactors.removeAll(selectedQueryFactors);
+
+            double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);
+
+            return (averageOnSelected - averageOnRest) > 0;
         }
 
     }
