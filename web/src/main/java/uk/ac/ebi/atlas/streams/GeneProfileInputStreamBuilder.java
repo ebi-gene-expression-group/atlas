@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.CompleteGeneProfile;
+import uk.ac.ebi.atlas.model.GeneExpressions;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import javax.inject.Inject;
@@ -70,8 +70,8 @@ public class GeneProfileInputStreamBuilder {
         return new GeneProfilesInputStream(csvReader, experimentAccession, expressionsBufferBuilder, geneProfileBuilder);
     }
 
-    public ObjectInputStream<CompleteGeneProfile> createCompleteGeneProfileInputStream() {
-       return new CompleteGeneProfileInputStream(csvReader, experimentAccession, expressionsBufferBuilder);
+    public ObjectInputStream<GeneExpressions> createCompleteGeneProfileInputStream() {
+       return new GeneExpressionsInputStream(csvReader, experimentAccession, expressionsBufferBuilder);
     }
 
 }

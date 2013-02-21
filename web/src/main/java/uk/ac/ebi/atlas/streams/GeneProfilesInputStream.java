@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.model.GeneProfile;
 
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
 
-public class GeneProfilesInputStream extends AbstractGeneProfilesInputStream<GeneProfile> {
+public class GeneProfilesInputStream extends AbstractGeneExpressionsInputStream<GeneProfile> {
 
     private GeneProfile.Builder geneProfileBuilder;
 

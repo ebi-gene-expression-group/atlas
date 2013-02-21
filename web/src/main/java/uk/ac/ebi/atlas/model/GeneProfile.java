@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-public class GeneProfile implements Iterable<Expression> {
+public class GeneProfile extends GeneExpressions {
 
     private String geneId;
 
@@ -27,6 +27,11 @@ public class GeneProfile implements Iterable<Expression> {
     private SortedMap<Factor, Expression> expressions = new TreeMap<>();
 
     private GeneProfile() {
+    }
+
+    @Override
+    public void addExpression(Expression expression){
+        throw new UnsupportedOperationException("Please use the builder!");
     }
 
     private GeneProfile add(Expression expression, String queryFactorType) {
@@ -54,6 +59,7 @@ public class GeneProfile implements Iterable<Expression> {
         return expressions.values().size();
     }
 
+    @Override
     public Iterator<Expression> iterator() {
         return expressions.values().iterator();
     }
