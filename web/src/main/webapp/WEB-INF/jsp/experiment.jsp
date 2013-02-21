@@ -42,7 +42,9 @@
 <c:choose>
     <c:when test="${empty geneProfiles}">
         <c:if test="${not isPreferenceError}">
-            No expressions found above the expression level cutoff for the query.
+            <div id="heatmap-message">
+                No expressions found above the expression level cutoff for the query.
+            </div>
         </c:if>
     </c:when>
     <c:otherwise>
