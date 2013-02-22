@@ -51,9 +51,11 @@
     */
 }
 
+
 .button-image .ui-button-text {
-    padding: 2px;
+    padding: 2px!important;
 }
+
 
 form td {
     vertical-align: top;
