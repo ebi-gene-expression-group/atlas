@@ -179,7 +179,7 @@ a:active {
 
 .ui-menu {
     width: 140px;
-    z-index: 100;
+    z-index: 100!important;
 }
 
 /*
