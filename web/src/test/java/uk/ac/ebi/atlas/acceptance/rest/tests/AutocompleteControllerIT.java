@@ -64,7 +64,7 @@ public class AutocompleteControllerIT {
         //when
         List<String> suggestions = gson.fromJson(jsonString, List.class);
 
-        assertThat(suggestions, hasItems("aspa","aspm"));
+        assertThat(suggestions, hasItems("asp","aspm"));
 
     }
 

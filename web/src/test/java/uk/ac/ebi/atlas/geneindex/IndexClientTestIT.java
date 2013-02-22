@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -37,10 +37,10 @@ public class IndexClientTestIT {
     @Test
     public void testFindGeneIdJsonValidQuery() throws URISyntaxException {
         //given
-        String result = subject.findGeneIdJson(query, species);
+        Set<String> result = subject.findGeneIds(query, species);
 
         //some genes are found
-        assertThat(result, containsString("[{\"identifier\":\"ENSG"));
+        assertThat(result.iterator().next(), startsWith("ENSG"));
     }
 
 
@@ -49,10 +49,10 @@ public class IndexClientTestIT {
         //given
         String query = "\"NOT THERE\"";
 
-        String result = subject.findGeneIdJson(query, species);
+        Set<String> result = subject.findGeneIds(query, species);
 
         //no genes are found
-        assertThat(result, containsString("\"numFound\":0"));
+        assertThat(result, is(empty()));
     }
 
 

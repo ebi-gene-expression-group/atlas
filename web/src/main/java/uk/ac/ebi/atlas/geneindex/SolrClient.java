@@ -27,7 +27,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,18 +37,18 @@ import java.util.*;
 @Named
 @Scope("prototype")
 public class SolrClient {
-    private static final Logger logger = Logger.getLogger(SolrClient.class);
+    private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    static final String JSON_PATH_SUGGESTION_EXPRESSION = "$..suggestion";
+    static final String JSON_PATH_SUGGESTION = "$..suggestion";
 
-    private static final String JSON_PATH_GENE_IDENTIFIERS_EXPRESSION = "$.response.docs[*].identifier";
+    private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
 
-    private static final String SOLR_REST_QUERY_TEMPLATE = "select?q={query} " +
+    private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={query} " +
             "AND species:{organism}&start=0&rows=100000&fl=identifier&wt=json";
 
-    private static final String SOLR_REST_GENENAMES_QUERY_TEMPLATE = "suggest_genename?q={0}&wt=json&omitHeader=true";
+    private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q={0}&wt=json&omitHeader=true";
 
-    private static final String SOLR_REST_PROPERTIES_QUERY_TEMPLATE = "suggest_properties?q={0}&wt=json&omitHeader=true&rows=0";
+    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q={0}&wt=json&omitHeader=true&rows=0";
 
     private RestTemplate restTemplate;
 
@@ -69,82 +68,55 @@ public class SolrClient {
     }
 
     public Set<String> findGeneIds(String searchText, Set<String> organisms) {
-        String jsonString = findGeneIdJson(searchText, organisms);
-        List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS_EXPRESSION);
+        String geneQuery = queryBuilder.buildQueryString(searchText);
+        String organismsQuery = buildSpeciesQuery(organisms);
+
+        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, geneQuery, organismsQuery);
+
+        List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS);
 
         return toUppercase(geneIds);
 
     }
 
-    public Set<String> toUppercase(List<String> geneIds) {
+    public List<String> findGeneNameSuggestions(String query){
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, query);
+
+        return JsonPath.read(jsonString, JSON_PATH_SUGGESTION);
+    }
+
+    public List<String> findGenePropertySuggestions(String query){
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, query);
+
+        return JsonPath.read(jsonString, JSON_PATH_SUGGESTION);
+
+    }
+
+    String getJsonResponse(String restQueryTemplate, String... arguments) {
+        try {
+
+            String jsonResponse = restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
+
+            LOGGER.debug("<getJsonResponse> response size (characters) = " + jsonResponse.length() + ", arguments: " + Arrays.toString(arguments));
+
+            return jsonResponse;
+
+        } catch (RestClientException e) {
+            LOGGER.fatal("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
+            throw e;
+        }
+    }
+
+    String buildSpeciesQuery(Set<String> organisms) {
+        return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
+    }
+
+    Set<String> toUppercase(List<String> geneIds) {
         Set<String> result = new HashSet<>();
         for (String geneId : geneIds) {
             result.add(geneId.toUpperCase());
         }
         return result;
-    }
-
-    protected String findGeneIdJson(String searchText, Set<String> organisms) {
-
-        try {
-
-            String geneProperty = queryBuilder.buildQueryString(searchText);
-            String organismQuery = buildSpeciesQuery(organisms);
-
-            StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-
-            stopWatch.start();
-
-            String jsonResponse = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
-
-            stopWatch.stop();
-
-            logger.info("<findGeneIdJson> time taken " + stopWatch.getTotalTimeSeconds() + " s - solr response for geneQuery: " + geneProperty + " - organismQuery: " + organismQuery);
-
-            return jsonResponse;
-        } catch (RestClientException e) {
-            logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL, e);
-            throw e;
-        }
-    }
-
-    protected String buildSpeciesQuery(Set<String> organisms) {
-        return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
-    }
-
-    public List<String> findGeneNameSuggestions(String query){
-        String jsonString = getJsonSuggestions(query, SOLR_REST_GENENAMES_QUERY_TEMPLATE);
-
-        return JsonPath.read(jsonString, JSON_PATH_SUGGESTION_EXPRESSION);
-    }
-
-    //ToDo: maybe should be extracted as a class to get json responses from generic rest services, setting a url and parameters
-    protected String getJsonSuggestions(String query, String restQueryTemplate) {
-        try {
-
-            StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-
-            stopWatch.start();
-
-            String jsonResponse = restTemplate.getForObject(serverURL + restQueryTemplate, String.class, query);
-
-            stopWatch.stop();
-
-            logger.info("<getJsonSuggestions> time taken " + stopWatch.getTotalTimeSeconds() + " s - solr response for suggestion query: " + query);
-
-            return jsonResponse;
-
-        } catch (RestClientException e) {
-            logger.fatal("<getJsonSuggestions> error connecting to the solr service: " + serverURL, e);
-            throw e;
-        }
-    }
-
-    public List<String> findGenePropertySuggestions(String query){
-        String jsonString = getJsonSuggestions(query, SOLR_REST_PROPERTIES_QUERY_TEMPLATE);
-
-        return JsonPath.read(jsonString, JSON_PATH_SUGGESTION_EXPRESSION);
-
     }
 
 }

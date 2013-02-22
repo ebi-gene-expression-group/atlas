@@ -62,10 +62,10 @@ public class SolrClientIT {
     @Test
     public void testGetJsonForGeneNameSuggestions() {
 
-        String jsonString = subject.getJsonSuggestions("asp", SOLR_REST_GENENAMES_QUERY_TEMPLATE);
+        String jsonString = subject.getJsonResponse(SOLR_REST_GENENAMES_QUERY_TEMPLATE, "asp");
 
-        List<String> list = JsonPath.read(jsonString, SolrClient.JSON_PATH_SUGGESTION_EXPRESSION);
+        List<String> list = JsonPath.read(jsonString, SolrClient.JSON_PATH_SUGGESTION);
         assertThat(list, is(not(empty())));
-        assertThat(list, hasItems("aspa", "aspm"));
+        assertThat(list, hasItems("asp", "aspm"));
     }
 }
