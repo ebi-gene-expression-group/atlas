@@ -74,7 +74,7 @@ var searchFormModule = (function($) {
             })
             .autocomplete({
                 delay:500,
-                minLength: 2,
+                minLength: 1,
                 autoFocus:true,
                 focus: function() {
                     // prevent value inserted on focus
