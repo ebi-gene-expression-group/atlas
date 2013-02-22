@@ -92,21 +92,18 @@ var searchFormModule = (function($) {
                     return false;
                 },
                 source:function (request, response) {
+                    var lastItem = extractLast( request.term );
 
-                    // delegate back to autocomplete, but extract the last term
-                    response( $.ui.autocomplete.filter(
-                                                        $.ajax({
-                                                            url:'http://localhost:9090/gxa/json/suggestions',
-                                                            data:{'query': request.term.toLowerCase()},
-                                                            success:function (data) {
-                                                                response(data);
-                                                            },
-                                                            error:function (jqXHR, textStatus, errorThrown) {
-                                                                console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
-                                                            }
-                                                        }), extractLast( request.term )
-                                                      )
-                    );
+                    $.ajax({
+                        url:'http://localhost:9090/gxa/json/suggestions',
+                        data:{'query': lastItem},
+                        success:function (data) {
+                            response(data);
+                        },
+                        error:function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
+                        }
+                    });
                 }
             });
     }
