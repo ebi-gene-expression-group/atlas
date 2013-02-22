@@ -190,7 +190,7 @@ sub getDEresults {
 		
 		
 		# Filename for MvA plot
-		my $plotFile = $exptAcc."-".$arrayDesAcc."-".$contrastHash->{ $contrastName }->{ "AGnums" }."-mvaPlot.png";
+		my $plotFile = $exptAcc."_".$arrayDesAcc."-".$contrastHash->{ $contrastName }->{ "AGnums" }."-mvaPlot.png";
 		
 		print "Making MvA plot...";
 		# Create MvA plot with MvA plot script
@@ -228,7 +228,7 @@ sub writeLimmaResults {
 	$_ = shift for my ($exptAcc, $arrayDesAcc, $limmaResHash);
 	
 	# Make filename
-	my $limmaResFile = $exptAcc."-".$arrayDesAcc."-analytics.tsv";
+	my $limmaResFile = $exptAcc."_".$arrayDesAcc."-analytics.tsv";
 
 	print "Writing results to $limmaResFile\n";
 
