@@ -64,18 +64,19 @@ var searchFormModule = (function($) {
                     success:function (data) {
                         response(data);
                     },
-                    error:function (x, y, z) {
-                        console.log("error");
-                    },
-                    dataType:'jsonp',
-                    jsonp:'json.wrf'
+                    error:function (jqXHR, textStatus, errorThrown) {
+                        console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
+                    }
                 });
-                return false;
             }
         });
     }
 
-    $("#geneQuery").autocomplete({ delay:500 });
+    $("#geneQuery").autocomplete({
+                            delay:500,
+                            minLength: 2,
+                            autoFocus:true
+                            });
 
 
     function init (cutoff, experimentAccession, watermarkLabel) {

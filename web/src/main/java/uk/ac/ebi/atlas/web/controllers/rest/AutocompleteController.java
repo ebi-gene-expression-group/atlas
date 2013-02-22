@@ -43,6 +43,4 @@ public class AutocompleteController {
         return gson.toJson(topSuggestions);
     }
 
-
-
 }

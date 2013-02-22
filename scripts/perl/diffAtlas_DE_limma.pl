@@ -5,11 +5,16 @@
 # Compute statistics for differential expression for each contrast using limma
 # R package;
 # Create "MvA" plots for each contrast using ggplot2 R package.
+#
+# To run:
+# 	./diffAtlas_DE_limma.pl <*-contrasts.tsv> <normalized expressions file> </path/to/diffAtlas_DE_limma.R> </path/to/diffAtlas_mvaPlot.R>
 
 use strict;
 use warnings;
 
 use File::Basename;
+
+$| = 1;
 
 # Commandline arguments are:
 # 	- $defsFile : file with assignment of assay accessions to assay groups and assay groups to contrasts.
@@ -24,6 +29,8 @@ my $exptAcc = $accessions[0];
 
 unless($exptAcc && $arrayDesAcc) { die "Error: Couldn't find experiment and array design accessions in filename: $defsFile\n"; }
 
+print "\nExperiment: $exptAcc\nArray design: $arrayDesAcc\n";
+
 
 # Read data from contrast definitions file into hash:
 # contrastHash->{ "contrast 1" }->{ "reference" } = [ "wildType1", "wildType2", "wildType3" ]
@@ -36,16 +43,17 @@ my $contrastHash = readContrasts($defsFile);
 # Check we've got things in $contrastHash.
 unless(%{ $contrastHash }) { die "Error: No contrasts found in $defsFile\n"; }
 
-# Run differential expression analysis and get results, make MvA plots.
-# $limmaResultsHash->{ "designElement1" }->{ "contrast 1" } = [ "p-value", "t-stat", "logFC" ]
+
+# Run differential expression analysis and make MvA plots.
+# $limmaResHash->{ "designElement1" }->{ "contrast 1" } = [ "p-value", "t-stat", "logFC" ]
 # 		                                 ->{ "contrast 2" } = [ "p-value", "t-stat", "logFC" ]
 # 		           ->{ "designElement2" }->{ "contrast 1" } = [ "p-value", "t-stat", "logFC" ]
 #                                        ->{ "contrast 2" } = [ "p-value", "t-stat", "logFC" ]
-my $limmaResHash = getDEresults($contrastHash, $limmaScript, $normExpr);
+my $limmaResHash = getDEresults($contrastHash, $limmaScript, $normExpr, $exptAcc, $arrayDesAcc);
+
 
 # Write all differential expression stats to a file.
 writeLimmaResults($exptAcc, $arrayDesAcc, $limmaResHash);
-
 
 # end
 #####
@@ -104,6 +112,11 @@ sub readContrasts {
 			}
 		}
 	}
+	
+	my $numAGs = keys %{ $agHash };
+	my $numContrasts = keys %{ $contrastHash };
+	print "$numAGs assay groups and $numContrasts contrasts.\n\n";
+
 	return $contrastHash;
 }
 
@@ -118,9 +131,11 @@ sub readContrasts {
 # 		                                 ->{ "contrast 2" } = [ "p-value", "t-stat", "logFC" ]
 # 		           ->{ "designElement2" }->{ "contrast 1" } = [ "p-value", "t-stat", "logFC" ]
 #                                        ->{ "contrast 2" } = [ "p-value", "t-stat", "logFC" ]
+#
+#  - Make an MvA plot for each contrast.
 sub getDEresults {
 
-	$_ = shift for my ($contrastHash, $limmaScript, $normExpr);
+	$_ = shift for my ($contrastHash, $limmaScript, $normExpr, $exptAcc, $arrayDesAcc);
 
 	my $limmaResHash = {};
 	
@@ -131,15 +146,26 @@ sub getDEresults {
 	# Do differential expression stats for each contrast
 	foreach my $contrastName (keys %{ $contrastHash }) {
 
-		print "Computing differential exprssion statistics for contrast \"$contrastName\".\n";
-		
 		# Reference and test assay accessions for limma script.
 		my $refAssays = join ",", @{ $contrastHash->{ $contrastName }->{ "reference" }};
 		my $testAssays = join ",", @{ $contrastHash->{ $contrastName }->{ "test" }};
+
+		print "Computing differential expression statistics for contrast \"$contrastName\"...";
 		
 		# Run limma script.
-		`Rscript $limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
+		my $R_limmaOutput = `Rscript $limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
 		
+		# Check for errors.
+		if($R_limmaOutput =~ /error/i) {
+			
+			# Can't continue without results from limma so may as well quit.
+			die("\nError during differential expression analysis, outout from R below.\n------------\n$R_limmaOutput\n------------\n");
+		
+		} else {
+			print "done\n";
+		}
+
+
 		# Add results to hash.
 		open(LIMMARES, "<$limmaResTempFile") or die("Can't open file $limmaResTempFile: $!\n");
 		while(defined(my $line = <LIMMARES>)) {
@@ -161,15 +187,33 @@ sub getDEresults {
 			}
 		}
 		close(LIMMARES);
+		
+		
+		# Filename for MvA plot
+		my $plotFile = $exptAcc."-".$arrayDesAcc."-".$contrastHash->{ $contrastName }->{ "AGnums" }."-mvaPlot.png";
+		
+		print "Making MvA plot...";
+		# Create MvA plot with MvA plot script
+		my $R_mvaOutput = `Rscript $mvaScript $plotDataTempFile \"$contrastName\" $plotFile microarray 2>&1`;
+		
+		if($R_mvaOutput =~ /error/i) {
+
+			# Report the error but don't worry about dying as we can live
+			# without the MvA plot.
+			print "\nError creating MvA plot, output from R below.\n------------\n$R_mvaOutput\n------------\n";
+
+		} else {
+			print "done.\n";
+		}
+
 		# clean up
 		`rm $limmaResTempFile`;
 		`rm $plotDataTempFile`;
+		# mysterious Rplots.pdf
+		`rm Rplots.pdf`;
 	}
 
-	# TODO: MvA plots.
-	
-
-
+	print "\nStatistics for all contrasts computed.\n";
 	return $limmaResHash;
 }
 
@@ -178,13 +222,16 @@ sub getDEresults {
 
 
 # writeLimmaResults
-#  - Write results from limma to tab-delimited test file.
+#  - Write results from limma to tab-delimited text file.
 sub writeLimmaResults {
 
 	$_ = shift for my ($exptAcc, $arrayDesAcc, $limmaResHash);
 	
 	# Make filename
 	my $limmaResFile = $exptAcc."-".$arrayDesAcc."-analytics.tsv";
+
+	print "Writing results to $limmaResFile\n";
+
 	open(RESFILE, ">$limmaResFile") or die("Can't open $limmaResFile: $!\n");
 
 	# write column headers

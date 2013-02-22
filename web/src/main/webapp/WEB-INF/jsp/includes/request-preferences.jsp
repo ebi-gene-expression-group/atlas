@@ -68,7 +68,7 @@
             <tr>
                 <td>
                     <div>
-                        <form:textarea path="geneQuery" maxlength="900" rows="3" cols="30"></form:textarea>
+                        <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="3" cols="30"></form:textarea>
                     </div>
                 </td>
                 <c:if test="${selectedFilterFactors.size() > 0}">
