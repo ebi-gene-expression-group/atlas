@@ -106,8 +106,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         model.addAttribute("selectedFilterFactors", selectedFilterFactors);
 
-        model.addAttribute("hasExtraInfo", experiment.hasExtraInfoFile());
-
         if (!result.hasErrors()) {
 
 
