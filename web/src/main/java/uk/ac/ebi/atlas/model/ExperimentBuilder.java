@@ -75,7 +75,7 @@ public class ExperimentBuilder {
         return this;
     }
 
-    public ExperimentBuilder withExtraInfo(boolean hasExtraInfoFile){
+    public ExperimentBuilder withExtraInfo(boolean hasExtraInfoFile) {
         this.hasExtraInfoFile = hasExtraInfoFile;
         return this;
     }
@@ -95,7 +95,6 @@ public class ExperimentBuilder {
 
         return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
     }
-
 
 
 }

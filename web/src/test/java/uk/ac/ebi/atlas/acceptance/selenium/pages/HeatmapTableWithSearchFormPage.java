@@ -22,6 +22,12 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
     @FindBy(id = "cutoff")
     private WebElement cutoff;
 
+    @FindBy(id = "preferences.errors")
+    private WebElement preferencesErrors;
+
+    @FindBy(id = "heatmap-message")
+    private WebElement heatmapMessage;
+
     @FindBy(id = "submit-button")
     private WebElement submitButton;
 
@@ -44,6 +50,14 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
 
     public String getCutoff() {
         return cutoff.getAttribute("value");
+    }
+
+    public String getPreferencesErrors(){
+        return preferencesErrors.getText();
+    }
+
+    public String getHeatmapMessage() {
+        return heatmapMessage.getText();
     }
 
     public List<String> getFactorValueHeaders() {

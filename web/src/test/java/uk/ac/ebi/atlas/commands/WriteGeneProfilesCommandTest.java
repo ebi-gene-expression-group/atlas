@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -37,6 +36,7 @@ import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
+import java.io.PrintWriter;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,7 +53,7 @@ public class WriteGeneProfilesCommandTest {
     @Mock
     private FilterParameters filterParametersMock;
     @Mock
-    private CSVWriter csvWriterMock;
+    private PrintWriter printWriterMock;
     @Mock
     private GeneProfile geneProfileMock1;
     @Mock
@@ -97,7 +97,7 @@ public class WriteGeneProfilesCommandTest {
     public void initSubject() throws Exception {
         subject = new WriteGeneProfilesCommand(new NumberUtils());
         subject.setFilteredParameters(filterParametersMock);
-        subject.setCsvWriter(csvWriterMock);
+        subject.setResponseWriter(printWriterMock);
     }
 
     @Test
@@ -105,11 +105,11 @@ public class WriteGeneProfilesCommandTest {
 
         long count = subject.apply(experimentMock, inputStreamMock);
 
-        verify(csvWriterMock).writeNext(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"});
+        verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 
-        verify(csvWriterMock).writeNext(new String[]{"GN1", "GI1", "0", "0.11", "0", "0", "9"});
+        verify(printWriterMock).write("GN1\tGI1\t0\t0.11\t0\t0\t9\n", 0, 21);
 
-        verify(csvWriterMock).writeNext(new String[]{"GN2", "GI2", "0", "0", "0", "21.12", "0"});
+        verify(printWriterMock).write("GN2\tGI2\t0\t0\t0\t21.12\t0\n", 0, 22);
 
         assertThat(count, is(2L));
 

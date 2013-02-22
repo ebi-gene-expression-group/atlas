@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.readers;
 
-import com.google.common.base.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,11 +16,6 @@ public class AnalysisMethodsTsvReaderTest {
     @Before
     public void setUp() throws Exception {
 
-    }
-
-    @Test
-    public void testTrim() throws Exception {
-        assertThat(subject.trim(new String[]{" hello", "   boy   "}), is(new String[]{"hello", "boy"}));
     }
 
     @Test

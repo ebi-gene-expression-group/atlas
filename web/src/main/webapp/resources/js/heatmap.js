@@ -72,5 +72,6 @@ function initHeatmapDisplayValueToggle() {
         }
     ).attr("title", " ").tooltip();
 
+    $("#heatmap-div").show();
 
 }

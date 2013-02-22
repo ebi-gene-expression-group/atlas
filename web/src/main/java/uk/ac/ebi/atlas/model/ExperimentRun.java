@@ -22,7 +22,7 @@ public class ExperimentRun implements Comparable<ExperimentRun> {
         return this;
     }
 
-    public String getRunAccession() {
+    public String getAccession() {
         return runAccession;
     }
 

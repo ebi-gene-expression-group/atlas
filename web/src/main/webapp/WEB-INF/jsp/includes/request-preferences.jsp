@@ -33,7 +33,7 @@
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
 
-        <form:errors title="HeatmapMatrixSize" path="*" cssClass="error"/>
+        <form:errors path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
                 <td>
@@ -119,7 +119,7 @@
         <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
     </div>
 
-    <div style="min-width: 955px;">
+    <div style="min-width: 955px;display:none;" id="sliderAndChart">
         <span style="display:inline-block">
             <div id="gene-distribution-button" style="float:left">
                 <a id="display-chart" title="Display gene distribution" class="button-image" href="#">

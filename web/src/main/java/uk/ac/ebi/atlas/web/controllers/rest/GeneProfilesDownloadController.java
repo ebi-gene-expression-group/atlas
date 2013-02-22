@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.FilterParameters;
+import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -18,8 +18,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-
-import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Controller
 @Scope("request")
@@ -41,7 +39,7 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     @RequestMapping("/experiments/{experimentAccession}.tsv")
     public void downloadGeneProfiles(@PathVariable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+            , HttpServletResponse response) throws IOException, GeneNotFoundException {
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
@@ -55,16 +53,12 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
 
         writeGeneProfilesCommand.setFilteredParameters(parameters);
 
-        CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', NO_QUOTE_CHARACTER);
-
-        writeGeneProfilesCommand.setCsvWriter(csvWriter);
+        writeGeneProfilesCommand.setResponseWriter(response.getWriter());
 
         long genesCount = writeGeneProfilesCommand.apply(experimentAccession);
 
         LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 
-        csvWriter.flush();
-        csvWriter.close();
 
     }
 

@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.CompleteGeneProfile;
+import uk.ac.ebi.atlas.model.GeneExpressions;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.FactorGroup;
@@ -65,8 +65,8 @@ public class BarChartTraderBuilderTest {
     private FactorGroup factorHashSet3;
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
-    public static final CompleteGeneProfile GENE_PROFILE_1 = mock(CompleteGeneProfile.class);
-    public static final CompleteGeneProfile GENE_PROFILE_2 = mock(CompleteGeneProfile.class);
+    public static final GeneExpressions GENE_PROFILE_1 = mock(GeneExpressions.class);
+    public static final GeneExpressions GENE_PROFILE_2 = mock(GeneExpressions.class);
 
 
     @Before
@@ -94,7 +94,7 @@ public class BarChartTraderBuilderTest {
         initGeneProfile2();
 
         //Init input stream
-        ObjectInputStream<CompleteGeneProfile> inputStream = mock(ObjectInputStream.class);
+        ObjectInputStream<GeneExpressions> inputStream = mock(ObjectInputStream.class);
         when(inputStream.readNext()).thenReturn(GENE_PROFILE_1).thenReturn(GENE_PROFILE_2).thenReturn(null);
 
         //mock stream builder
@@ -105,7 +105,7 @@ public class BarChartTraderBuilderTest {
 
     }
 
-    private CompleteGeneProfile initGeneProfile1() {
+    private GeneExpressions initGeneProfile1() {
         Expression expression1 = mock(Expression.class);
         when(expression1.getLevel()).thenReturn(1d);
         when(expression1.getFactorGroup()).thenReturn(factorHashSet1);
@@ -126,7 +126,7 @@ public class BarChartTraderBuilderTest {
     }
 
 
-    private CompleteGeneProfile initGeneProfile2() {
+    private GeneExpressions initGeneProfile2() {
         Expression expression21 = mock(Expression.class);
         when(expression21.getLevel()).thenReturn(3d);
         when(expression21.getFactorGroup()).thenReturn(factorHashSet1);

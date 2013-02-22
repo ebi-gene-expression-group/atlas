@@ -43,7 +43,7 @@ public class HomePageControllerIT extends SeleniumFixture {
 
     @Test
     public void countNumberOfSpecies() {
-        assertThat(subject.getAllSpeciesItems().size(), is(10));
+        assertThat(subject.getAllSpeciesItems().size(), is(9));
     }
 
     @Test

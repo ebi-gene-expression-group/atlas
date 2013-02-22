@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class CompleteGeneProfile implements Iterable<Expression> {
+public class GeneExpressions implements Iterable<Expression> {
     Set<Expression> expressions = new HashSet<>();
 
     @Override

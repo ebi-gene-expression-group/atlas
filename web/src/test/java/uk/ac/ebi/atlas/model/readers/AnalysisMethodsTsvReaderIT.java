@@ -1,13 +1,10 @@
 package uk.ac.ebi.atlas.model.readers;
 
-import com.google.common.collect.SortedSetMultimap;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Set;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContaining;
 
 public class AnalysisMethodsTsvReaderIT {
 
@@ -22,18 +19,10 @@ public class AnalysisMethodsTsvReaderIT {
     }
 
     @Test
-    public void readLibrariesTest(){
-        Set<String> processedLibraries = subject.readProcessedLibraries(EXPERIMENT_ACCESSION);
-        assertThat(processedLibraries.size(), is(greaterThan(1)));
-        assertThat(processedLibraries.iterator().next(), startsWith("ERR"));
+    public void readLine(){
+        String[] firstLine = subject.readLine(EXPERIMENT_ACCESSION, 0L);
+        assertThat(firstLine, arrayContaining("# Pipeline version", "0.1.6"));
     }
-
-    @Test
-    public void readCommentsAsMap(){
-        SortedSetMultimap<String, String> comments = subject.readAllCommentsAsMap(EXPERIMENT_ACCESSION);
-        assertThat(comments.get("Libraries").first(), startsWith("ERR") );
-    }
-
 
 
 

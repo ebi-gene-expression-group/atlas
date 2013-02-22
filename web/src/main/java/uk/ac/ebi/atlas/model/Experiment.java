@@ -52,7 +52,7 @@ public class Experiment {
         this.defaultFilterFactors = defaultFilterFactors;
         this.hasExtraInfoFile = hasExtraInfoFile;
         for (ExperimentRun experimentRun : experimentRuns) {
-            this.experimentRuns.put(experimentRun.getRunAccession(), experimentRun);
+            this.experimentRuns.put(experimentRun.getAccession(), experimentRun);
         }
     }
 

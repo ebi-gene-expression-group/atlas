@@ -47,8 +47,8 @@ public class GeneProfilesInputStreamTest {
         ExperimentRun experimentRuns1Mock = mock(ExperimentRun.class);
         ExperimentRun experimentRuns2Mock = mock(ExperimentRun.class);
 
-        given(experimentRuns1Mock.getRunAccession()).willReturn(RUN_ACCESSION_1);
-        given(experimentRuns2Mock.getRunAccession()).willReturn(RUN_ACCESSION_2);
+        given(experimentRuns1Mock.getAccession()).willReturn(RUN_ACCESSION_1);
+        given(experimentRuns2Mock.getAccession()).willReturn(RUN_ACCESSION_2);
 
         String [] headers = new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2};
 

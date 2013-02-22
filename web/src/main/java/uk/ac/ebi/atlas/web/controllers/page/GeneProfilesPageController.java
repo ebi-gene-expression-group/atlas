@@ -27,10 +27,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.FilterParameters;
+import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -77,11 +79,37 @@ public class GeneProfilesPageController extends GeneProfilesController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
+        FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
+
+        model.addAttribute("experimentAccession", experimentAccession);
+
+        model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
+
+        Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
+
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+        SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
+
+        // this is currently required for the request preferences filter drop-down multi-selection box
+        model.addAttribute("allQueryFactors", allQueryFactors);
+
+        // this is currently required for the request preferences filter drop-down multi-selection box
+        model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
+
+        Set<Factor> allFactors = experimentalFactors.getAllFactors();
+
+        FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, allFactors);
+
+        model.addAttribute("filterFactorMenu", filterFactorMenu);
+
+        model.addAttribute("selectedFilterFactors", selectedFilterFactors);
+
+        model.addAttribute("hasExtraInfo", experiment.hasExtraInfoFile());
+
         if (!result.hasErrors()) {
 
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-            FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
 
             prepareGeneExpressionPrecondition(preferences, filterParameters);
 
@@ -90,45 +118,26 @@ public class GeneProfilesPageController extends GeneProfilesController {
             rankingParameters.setSpecific(preferences.isSpecific());
             rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
 
-            GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
+            try {
+                GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
+
+                model.addAttribute("geneProfiles", geneProfiles);
 
 
-            model.addAttribute("geneProfiles", geneProfiles);
+                String species = findShownSpecie(experiment, filterParameters);
 
-            model.addAttribute("experimentAccession", experimentAccession);
+                if ("ORGANISM_PART".equals(filterParameters.getQueryFactorType())) {
+                    model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
 
-            model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
+                    model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
+                }
 
-            Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
+                model.addAttribute("downloadUrl", buildDownloadURL(request));
 
-            ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-            SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
 
-            // this is currently required for the request preferences filter drop-down multi-selection box
-            model.addAttribute("allQueryFactors", allQueryFactors);
-
-            // this is currently required for the request preferences filter drop-down multi-selection box
-            model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
-
-            String species = findShownSpecie(experiment, filterParameters);
-
-            if ("ORGANISM_PART".equals(filterParameters.getQueryFactorType())) {
-                model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
-
-                model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
+            } catch (GeneNotFoundException e) {
+                result.addError(new ObjectError("preferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
             }
-
-            model.addAttribute("downloadUrl", buildDownloadURL(request));
-
-            Set<Factor> allFactors = experimentalFactors.getAllFactors();
-
-            FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, allFactors);
-
-            model.addAttribute("filterFactorMenu", filterFactorMenu);
-
-            model.addAttribute("selectedFilterFactors", selectedFilterFactors);
-
-            model.addAttribute("hasExtraInfo", experiment.hasExtraInfoFile());
 
         }
 

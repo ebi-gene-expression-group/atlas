@@ -35,7 +35,10 @@ import uk.ac.ebi.atlas.utils.NumberUtils;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.SortedSet;
+
+import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Named("streamGeneProfiles")
 @Scope("prototype")
@@ -67,6 +70,10 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
             ++count;
             csvWriter.writeNext(buildCsvRow(geneProfile, factors));
         }
+
+        csvWriter.flush();
+        csvWriter.close();
+
         return count;
     }
 
@@ -94,9 +101,8 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
     }
 
-
-    public void setCsvWriter(CSVWriter csvWriter) {
-        this.csvWriter = csvWriter;
+    public void setResponseWriter(PrintWriter responseWriter) {
+        csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER);
     }
 
 }

@@ -122,7 +122,7 @@ public class RankGeneProfilesCommandTest {
     }
 
     @Test
-    public void commandBuildsGeneProfileInputStream() {
+    public void commandBuildsGeneProfileInputStream() throws GeneNotFoundException{
         //when
         subject.apply(EXPERIMENT_ACCESSION);
         //then
@@ -162,7 +162,7 @@ public class RankGeneProfilesCommandTest {
     }
 
     @Test
-    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() {
+    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GeneNotFoundException{
         when(filterParameters.getGeneQuery()).thenReturn("");
         subject.apply(EXPERIMENT_ACCESSION);
         verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, species);

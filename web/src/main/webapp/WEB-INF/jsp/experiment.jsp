@@ -24,14 +24,30 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <c:import url="includes/request-preferences.jsp"/>
 
-<c:if test="${not empty geneProfiles}">
 
-    <div class="container">
+<div class="container">
+
+<spring:hasBindErrors name="preferences">
+    <c:set var="isPreferenceError" value="true"/>
+</spring:hasBindErrors>
+
+
+<c:choose>
+    <c:when test="${empty geneProfiles}">
+        <c:if test="${not isPreferenceError}">
+            <div id="heatmap-message">
+                No expressions found above the expression level cutoff for the query.
+            </div>
+        </c:if>
+    </c:when>
+    <c:otherwise>
 
         <div id="heatmap" style="overflow: auto; padding:15px;" class="row stickem-container">
 
@@ -39,11 +55,11 @@
                 <table>
                     <tr>
                         <td style="padding-top: 15px; vertical-align:top">
-                            <span id="sex-toggle">
-                                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                                     style="width:20px;height:38px;padding:2px"
-                                     src="resources/images/male_selected.png"/>
-                            </span>
+                        <span id="sex-toggle">
+                            <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
+                                 style="width:20px;height:38px;padding:2px"
+                                 src="resources/images/male_selected.png"/>
+                        </span>
                             <!--
                             <span data-help-loc="#anatomogram"/>
                             -->
@@ -56,14 +72,14 @@
                 </table>
             </div>
 
-            <div id="heatmap-div" class="content">
+            <div id="heatmap-div" class="content" style="display:none;">
 
                 <table>
                     <tr>
                         <td>
-                            <span id="geneCount">Showing ${geneProfiles.size()}
-                                of ${geneProfiles.getTotalResultCount()} genes found:
-                            </span>
+                        <span id="geneCount">Showing ${geneProfiles.size()}
+                            of ${geneProfiles.getTotalResultCount()} genes found:
+                        </span>
                             <!--
                                 <span data-help-loc="#resultInfo"/>
                             -->
@@ -74,11 +90,11 @@
                                 <table style="font-size:10px; float: right" id="heatmap-legenda">
                                     <tr>
                                         <td>
-                                            <span style="display:none" class="gradient-level-min">
-                                                <fmt:formatNumber type="number"
-                                                                  value="${geneProfiles.getMinExpressionLevel()}"
-                                                                  groupingUsed="false"/>
-                                            </span>
+                                        <span style="display:none" class="gradient-level-min">
+                                            <fmt:formatNumber type="number"
+                                                              value="${geneProfiles.getMinExpressionLevel()}"
+                                                              groupingUsed="false"/>
+                                        </span>
                                         </td>
                                         <td width="200px">
                                             <div style="
@@ -96,11 +112,11 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span style="display:none" class="gradient-level-max">
-                                                <fmt:formatNumber type="number"
-                                                                  value="${geneProfiles.getMaxExpressionLevel()}"
-                                                                  groupingUsed="false"/>
-                                            </span>
+                                        <span style="display:none" class="gradient-level-max">
+                                            <fmt:formatNumber type="number"
+                                                              value="${geneProfiles.getMaxExpressionLevel()}"
+                                                              groupingUsed="false"/>
+                                        </span>
                                             <span data-help-loc="#gradient"/>
                                         </td>
 
@@ -119,11 +135,12 @@
             </div>
         </div>
 
-    </div>
+    </c:otherwise>
+</c:choose>
 
-    <br/>
+</div>
 
-</c:if>
+<br/>
 
 <div id="help-placeholder" style="display: none"></div>
 

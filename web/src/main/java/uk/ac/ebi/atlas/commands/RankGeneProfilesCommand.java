@@ -77,10 +77,9 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
     }
 
-
     @Override
-    protected GeneProfilesList returnEmpty() {
-        return new GeneProfilesList();
+    protected GeneProfilesList returnEmpty() throws GeneNotFoundException{
+        throw new GeneNotFoundException("The specified search parameters don't select any gene");
     }
 
     protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,

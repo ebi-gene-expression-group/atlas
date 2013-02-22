@@ -24,15 +24,12 @@ package uk.ac.ebi.atlas.streams;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
 
-public class GeneProfilesInputStream extends AbstractGeneProfilesInputStream<GeneProfile> {
-
-    private static final Logger logger = Logger.getLogger(GeneProfilesInputStream.class);
+public class GeneProfilesInputStream extends AbstractGeneExpressionsInputStream<GeneProfile> {
 
     private GeneProfile.Builder geneProfileBuilder;
 

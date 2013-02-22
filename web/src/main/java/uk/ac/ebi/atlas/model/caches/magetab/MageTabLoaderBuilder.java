@@ -9,7 +9,7 @@ public interface MageTabLoaderBuilder {
 
     public MageTabLoaderBuilder withRequiredFactorTypes(Set<String> factorTypes);
 
-    public MageTabLoaderBuilder withProcessedExperimentRunAccessions(Set<String> processedExperimentRunAccessions);
+    public MageTabLoaderBuilder withProcessedRunAccessions(Set<String> processedRunAccessions);
 
     public MageTabLoader build() throws IOException, uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
