@@ -55,6 +55,29 @@ var searchFormModule = (function($) {
 
     }
 
+    function initAutocomplete(){
+        $("#geneQuery").autocomplete({
+            source:function (request, response) {
+                $.ajax({
+                    url:'http://localhost:9090/gxa/json/suggestions',
+                    data:{'query': request.term.toLowerCase()},
+                    success:function (data) {
+                        response(data);
+                    },
+                    error:function (x, y, z) {
+                        console.log("error");
+                    },
+                    dataType:'jsonp',
+                    jsonp:'json.wrf'
+                });
+                return false;
+            }
+        });
+    }
+
+    $("#geneQuery").autocomplete({ delay:500 });
+
+
     function init (cutoff, experimentAccession, watermarkLabel) {
         _cutoff = cutoff;
 
@@ -63,6 +86,8 @@ var searchFormModule = (function($) {
         initWatermarks();
 
         initSelectBox(watermarkLabel);
+
+        initAutocomplete();
 
     }
 
