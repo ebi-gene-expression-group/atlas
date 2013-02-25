@@ -249,7 +249,7 @@ sub writeLimmaResults {
 
 			my $statsString = join "\t", @{ $limmaResHash->{ $designElement }->{ $contrastName }};
 
-			printf(RESFILE "\t".$statsString);
+			printf(RESFILE "\t$statsString");
 		}
 	}
 
