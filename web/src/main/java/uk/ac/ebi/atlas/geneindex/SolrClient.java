@@ -99,7 +99,7 @@ public class SolrClient {
 
                 JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
 
-                if (term.equals(suggestionEntry.get(0).getAsString())){
+                if (term.equalsIgnoreCase(suggestionEntry.get(0).getAsString())){
                     JsonArray suggestions = suggestionEntry.get(1).getAsJsonObject().getAsJsonArray("suggestion");
                     Gson gson = new Gson();
                     return gson.fromJson(suggestions, List.class);
