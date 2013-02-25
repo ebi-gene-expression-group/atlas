@@ -91,7 +91,7 @@ public class SolrClient {
     List<String> extractSuggestions(String jsonString, String term) {
         JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
 
-        if (suggestionsElement.isJsonArray()){
+        if (suggestionsElement !=null && suggestionsElement.isJsonArray()){
 
             JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
 
@@ -114,17 +114,19 @@ public class SolrClient {
     }
 
     JsonElement extractSuggestionsElement(String jsonString){
-        return new JsonParser().parse(jsonString).getAsJsonObject()
-                .getAsJsonObject("spellcheck").get("suggestions");
-
+        JsonObject spellCheckObject = new JsonParser().parse(jsonString).getAsJsonObject().getAsJsonObject("spellcheck");
+        if (spellCheckObject != null) {
+            return spellCheckObject.get("suggestions");
+        }
+        return null;
     }
 
     List<String> extractCollations(String jsonString) {
-        JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
-
         List<String> suggestionStrings = new ArrayList<>();
 
-        if (suggestionsElement.isJsonArray()){
+        JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
+
+        if (suggestionsElement !=null && suggestionsElement.isJsonArray()){
 
             JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
 
@@ -136,7 +138,6 @@ public class SolrClient {
                 }
             }
         }
-
         return suggestionStrings;
     }
 

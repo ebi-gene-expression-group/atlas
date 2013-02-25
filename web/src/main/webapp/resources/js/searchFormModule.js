@@ -55,12 +55,36 @@ var searchFormModule = (function($) {
 
     }
 
-    function split( val ) {
-        return val.split( /,\s*/ );
+    function isEven(value) {
+        if (value%2 === 0){
+            return true;
+        }
+        return false;
     }
 
-    function extractLast( term ) {
-        return split( term ).pop().trim().replace("\"","");
+    function extractLastIncludingDoubleQuotes( val ){
+        var splitByDoubleQuotes = val.split( /\s*"/),
+            numberOfDoubleQuotes = splitByDoubleQuotes.length -1;
+
+        if (!isEven(numberOfDoubleQuotes)){
+            return "\"" + splitByDoubleQuotes.pop();
+        }
+        return splitByDoubleQuotes.pop().split( /\s+/).pop();
+    }
+
+    function extractLast( term , includeDoubleQuote) {
+
+        var splitByDoubleQuotes = term.split( /\s*"/),
+            numberOfDoubleQuotes = splitByDoubleQuotes.length - 1,
+            lastItem = splitByDoubleQuotes.pop();
+
+        if (!isEven(numberOfDoubleQuotes)){
+            if(includeDoubleQuote){
+                return "\"" + lastItem;
+            }
+            return lastItem;
+        }
+        return lastItem.split( /\s+/).pop();
     }
 
     function initAutocomplete(){
@@ -81,25 +105,20 @@ var searchFormModule = (function($) {
                     return false;
                 },
                 select: function( event, ui ) {
-                    var terms = split( this.value );
-                    // remove the current input
-                    terms.pop();
-                    // add the selected item
-                    var selectedValue = ui.item.value;
+                    var selectedValue = ui.item.value.trim(),
+                        lastItem = extractLast(this.value, true);
+
                     if (selectedValue.indexOf(" ") !== -1){
                         selectedValue = "\"" + selectedValue + "\"";
                     }
-                    terms.push( selectedValue );
-                    // add placeholder to get the comma-and-space at the end
-                    terms.push( "" );
-                    this.value = terms.join( ", " );
+                    this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue).concat(" ");
                     return false;
                 },
                 source:function (request, response) {
-                    var lastItem = extractLast( request.term );
+                    var lastItem = extractLast( request.term, false );
 
                     $.ajax({
-                        url:'http://localhost:9090/gxa/json/suggestions',
+                        url:'json/suggestions',
                         data:{'query': lastItem},
                         success:function (data) {
                             response(data);
