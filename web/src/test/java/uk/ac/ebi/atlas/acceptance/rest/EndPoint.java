@@ -60,6 +60,7 @@ public class EndPoint {
         return getResponse().getBody();
     }
 
+    //Only useful for csv file download services
     public List<String> getRowValues(int rowIndex) {
         String bodyAsString = getResponseBody().asString();
         String[] rows = bodyAsString.split("\n");

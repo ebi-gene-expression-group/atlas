@@ -31,12 +31,6 @@ public class SolrClientTest {
         subject = new SolrClient(restTemplate, queryBuilder);
     }
 
-
-    @Test
-    public void extractGeneIdentifiers(){
-        assertThat(subject.jsonToString(jsonData), hasItems("ENSG00000113196", "ENSG00000166823"));
-    }
-
     @Test
     public void toUppercaseShouldConvertAllStringsToUppercase(){
         assertThat(subject.toUppercase(Lists.newArrayList("hEllo", "bOy")),containsInAnyOrder("HELLO", "BOY"));

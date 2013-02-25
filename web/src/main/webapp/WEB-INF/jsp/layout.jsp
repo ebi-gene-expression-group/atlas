@@ -47,9 +47,9 @@
 
     <title><tiles:insertAttribute name="title" ignore="true"/></title>
 
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
