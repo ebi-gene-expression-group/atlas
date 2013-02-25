@@ -178,7 +178,7 @@ public class GeneProfile extends GeneExpressions {
             }
 
             double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
-            Set<Factor> remainingFactors = Sets.newHashSet(geneProfile.getAllFactors());
+            Set<Factor> remainingFactors = Sets.newHashSet(geneExpressionPrecondition.getAllFactors());
             remainingFactors.removeAll(selectedQueryFactors);
 
             double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);

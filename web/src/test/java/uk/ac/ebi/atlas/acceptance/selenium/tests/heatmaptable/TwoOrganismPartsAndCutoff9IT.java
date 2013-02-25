@@ -36,7 +36,7 @@ public class TwoOrganismPartsAndCutoff9IT extends SeleniumFixture {
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("72"), is(true));
+        assertThat(subject.getGeneCount().contains("35"), is(true));
     }
 
 }

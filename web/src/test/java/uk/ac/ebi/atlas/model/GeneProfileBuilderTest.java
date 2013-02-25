@@ -12,7 +12,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -94,6 +93,7 @@ public class GeneProfileBuilderTest {
         given(geneExpressionPrecondition.getQueryFactorType()).willReturn("factor_type");
         given(geneExpressionPrecondition.isSpecific()).willReturn(true);
         given(geneExpressionPrecondition.getSelectedQueryFactors()).willReturn(Sets.newHashSet(selectedFactorMock));
+
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock1.getLevel()).willReturn(5d);
@@ -123,6 +123,7 @@ public class GeneProfileBuilderTest {
         given(geneExpressionPrecondition.getQueryFactorType()).willReturn("factor_type");
         given(geneExpressionPrecondition.isSpecific()).willReturn(true);
         given(geneExpressionPrecondition.getSelectedQueryFactors()).willReturn(Sets.newHashSet(selectedFactorMock));
+        given(geneExpressionPrecondition.getAllFactors()).willReturn(Sets.newHashSet(selectedFactorMock, otherFactorMock));
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock1.getLevel()).willReturn(5d);
@@ -154,6 +155,8 @@ public class GeneProfileBuilderTest {
         given(geneExpressionPrecondition.getQueryFactorType()).willReturn("factor_type");
         given(geneExpressionPrecondition.isSpecific()).willReturn(true);
         given(geneExpressionPrecondition.getSelectedQueryFactors()).willReturn(Sets.newHashSet(selectedFactorMock));
+        given(geneExpressionPrecondition.getAllFactors()).willReturn(Sets.newHashSet(selectedFactorMock, otherFactorMock));
+
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock1.getLevel()).willReturn(5d);

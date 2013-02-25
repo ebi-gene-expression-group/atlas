@@ -109,7 +109,8 @@ public class GeneProfilesPageController extends GeneProfilesController {
         if (!result.hasErrors()) {
 
 
-            prepareGeneExpressionPrecondition(preferences, filterParameters);
+            prepareGeneExpressionPrecondition(experimentAccession, preferences, filterParameters);
+
 
             rankCommand.setFilteredParameters(filterParameters);
 

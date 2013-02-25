@@ -56,7 +56,7 @@ public class GeneProfilesController {
                 .build();
     }
 
-    protected void prepareGeneExpressionPrecondition(RequestPreferences preferences,
+    protected void prepareGeneExpressionPrecondition(String experimentAccession, RequestPreferences preferences,
                                                     FilterParameters filterParameters) {
         geneExpressionPrecondition.setCutoff(preferences.getCutoff());
         geneExpressionPrecondition.setFilterFactors(filterParameters.getSelectedFilterFactors());
@@ -67,5 +67,6 @@ public class GeneProfilesController {
         geneExpressionPrecondition.setQueryFactorType(queryFactorType);
         geneExpressionPrecondition.setSelectedQueryFactors(filterParameters.getSelectedQueryFactors());
         geneExpressionPrecondition.setSpecific(preferences.isSpecific());
+        geneExpressionPrecondition.setExperimentalFactors(experimentsCache.getExperiment(experimentAccession).getExperimentalFactors().getFilteredFactors(filterParameters.getSelectedFilterFactors()));
     }
 }

@@ -49,7 +49,7 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
 
         FilterParameters parameters = createFilterParameters(experimentAccession, preferences);
 
-        prepareGeneExpressionPrecondition(preferences, parameters);
+        prepareGeneExpressionPrecondition(experimentAccession, preferences, parameters);
 
         writeGeneProfilesCommand.setFilteredParameters(parameters);
 
