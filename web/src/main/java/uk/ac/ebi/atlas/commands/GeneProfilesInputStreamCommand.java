@@ -71,10 +71,6 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         this.filterParameters = filterParameters;
     }
 
-    public FilterParameters getFilterParameters() {
-        return filterParameters;
-    }
-
     @NotNull
     public T apply(String experimentAccession) throws GeneNotFoundException {
 
@@ -98,7 +94,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
             ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
             SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(filterParameters.getSelectedFilterFactors());
-            return apply(filteredFactors, inputStream);
+            return apply(filteredFactors, filterParameters.getSelectedQueryFactors(), inputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -120,7 +116,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         return solrClient.findGeneIds(filterParameters.getGeneQuery(), species);
     }
 
-    protected abstract T apply(SortedSet<Factor> filteredFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException;
+    protected abstract T apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException;
 
     protected abstract T returnEmpty() throws GeneNotFoundException;
 }

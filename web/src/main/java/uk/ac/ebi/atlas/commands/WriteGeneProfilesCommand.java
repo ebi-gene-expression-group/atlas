@@ -34,6 +34,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Set;
 import java.util.SortedSet;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
@@ -52,7 +53,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     }
 
     @Override
-    protected Long apply(SortedSet<Factor> filteredFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException {
+    protected Long apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException {
         long count = 0;
         SortedSet<String> factorValues = Factor.getValues(filteredFactors);
         csvWriter.writeNext(buildCsvHeaders(factorValues));
@@ -68,6 +69,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
 
         return count;
     }
+
 
     @Override
     protected Long returnEmpty() {

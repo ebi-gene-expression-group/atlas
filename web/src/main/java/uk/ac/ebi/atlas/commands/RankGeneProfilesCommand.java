@@ -48,9 +48,9 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     }
 
     @Override
-    protected GeneProfilesList apply(SortedSet<Factor> filteredFactors, ObjectInputStream<GeneProfile> inputStream) {
+    protected GeneProfilesList apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) {
         Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(rankingParameters.isSpecific()
-                , getFilterParameters().getSelectedQueryFactors()
+                , selectedQueryFactors
                 , filteredFactors);
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, rankingParameters.getHeatmapMatrixSize());
