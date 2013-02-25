@@ -27,24 +27,30 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.StopWatch;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.MessageFormat;
+import java.util.*;
 
 @Named
 @Scope("prototype")
 public class SolrClient {
-    private static final Logger logger = Logger.getLogger(SolrClient.class);
+    private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    private static final String JSON_PATH_EXPRESSION = "$.response.docs[*].identifier";
+    static final String JSON_PATH_LAST_TERM_SUGGESTION = "$..suggestions[(@.length-1)].suggestion";
 
-    private static final String SOLR_REST_QUERY_TEMPLATE = "select?q={query} " +
+    private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
+
+    private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={query} " +
             "AND species:{organism}&start=0&rows=100000&fl=identifier&wt=json";
+
+    private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q={0}&wt=json&omitHeader=true";
+
+    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q={0}&wt=json&omitHeader=true&rows=0";
+    private static final String JSON_PATH_COLLATION_SUGGESTION = "$..suggestions[{0}][1]";
 
     private RestTemplate restTemplate;
 
@@ -64,52 +70,89 @@ public class SolrClient {
     }
 
     public Set<String> findGeneIds(String searchText, Set<String> organisms) {
-        String jsonString = findGeneIdJson(searchText, organisms);
-        List<String> geneIds = jsonToString(jsonString);
+        String geneQuery = queryBuilder.buildQueryString(searchText);
+        String organismsQuery = buildSpeciesQuery(organisms);
+
+        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, geneQuery, organismsQuery);
+
+        List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS);
 
         return toUppercase(geneIds);
 
     }
 
-    public Set<String> toUppercase(List<String> geneIds) {
+    public List<String> findGeneNameSuggestions(String query){
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, query);
+
+        return JsonPath.read(jsonString, JSON_PATH_LAST_TERM_SUGGESTION);
+    }
+
+    public List<String> findGenePropertySuggestions(String query){
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, query);
+
+        int numberOfTerms = StringUtils.split(query).length;
+
+        int i = 0;
+
+        List<String> collations = new ArrayList<>();
+
+        try{
+
+        do {
+
+                String jsonPathNthCollation = MessageFormat.format(JSON_PATH_COLLATION_SUGGESTION, getIndexOfFirstCollation(numberOfTerms) + (i * 2));
+
+                String collationValue = JsonPath.read(jsonString, jsonPathNthCollation);
+
+                collations.add(collationValue);
+
+                i++;
+
+            } while (i < 10);
+
+        }catch (RuntimeException e){
+            //this should only happen when there are less then 10 collations
+            LOGGER.debug("Less than 10 collations: " + e.getMessage());
+        }
+
+        if (collations.size() < 10){
+            List<String> lastTermSuggestions = JsonPath.read(jsonString, JSON_PATH_LAST_TERM_SUGGESTION);
+            collations.addAll(lastTermSuggestions);
+        }
+        return collations;
+
+    }
+
+    private int getIndexOfFirstCollation(int numberOfTerms) {
+        //collations happen to be after single term suggestions. First collation index is:
+        return (numberOfTerms * 2) + 1;
+    }
+
+    String getJsonResponse(String restQueryTemplate, String... arguments) {
+        try {
+
+            String jsonResponse = restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
+
+            LOGGER.debug("<getJsonResponse> response size (characters) = " + jsonResponse.length() + ", arguments: " + Arrays.toString(arguments));
+
+            return jsonResponse;
+
+        } catch (RestClientException e) {
+            LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
+            throw e;
+        }
+    }
+
+    String buildSpeciesQuery(Set<String> organisms) {
+        return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
+    }
+
+    Set<String> toUppercase(List<String> geneIds) {
         Set<String> result = new HashSet<>();
         for (String geneId : geneIds) {
             result.add(geneId.toUpperCase());
         }
         return result;
-    }
-
-    protected String findGeneIdJson(String searchText, Set<String> organisms) {
-
-        try {
-
-            String geneProperty = queryBuilder.buildQueryString(searchText);
-            String organismQuery = buildSpeciesQuery(organisms);
-
-            StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-
-            stopWatch.start();
-
-            String jsonResponse = restTemplate.getForObject(serverURL + SOLR_REST_QUERY_TEMPLATE, String.class, geneProperty, organismQuery);
-
-            stopWatch.stop();
-
-            logger.info("<findGeneIdJson> time taken " + stopWatch.getTotalTimeSeconds() + " s - solr response for geneQuery: " + geneProperty + " - organismQuery: " + organismQuery);
-
-            return jsonResponse;
-        } catch (Exception e) {
-            // catching Exception instead of Throwable was suggested by Sonar, as Throwable also includes Errors
-            logger.fatal("<findGeneIdJson> error connecting to the solr service: " + serverURL, e);
-            throw e;
-        }
-    }
-
-    protected String buildSpeciesQuery(Set<String> organisms) {
-        return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
-    }
-
-    protected List<String> jsonToString(String jsonString) {
-        return JsonPath.read(jsonString, JSON_PATH_EXPRESSION);
     }
 
 }

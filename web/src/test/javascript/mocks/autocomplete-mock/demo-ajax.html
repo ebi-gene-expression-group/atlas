@@ -45,10 +45,18 @@
             $("#tags").autocomplete({
                 source:function (request, response) {
                     $.ajax({
-                        'url':'http://ves-hx-75.ebi.ac.uk:8983/solr/suggest',
-                        'data':{'wt':'json', 'q':"alltext:" + request.term.toLowerCase()},
+                        'url':'http://bop.windows.ebi.ac.uk:8983/solr/suggest_genename',
+                        'data':{
+                            'wt':'json',
+                            'q':request.term,
+                            'omitHeader':true
+                        },
                         'success':function (data) {
-                            response(extract(data))
+                            alert(JSON.stringify(data));
+                            response(extract(data));
+                        },
+                        'error':function (x, y, z) {
+                            console.log("error " + x);
                         },
                         'dataType':'jsonp',
                         'jsonp':'json.wrf'

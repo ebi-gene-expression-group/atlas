@@ -174,8 +174,8 @@
             autoOpen:false,
             show:"blind",
             hide:"explode",
-            height:265,
-            width:395,
+            height:"300",
+            width:"440",
             modal:true,
             buttons:[
                 {width:"60px", text:"Send", id:"send-button", click:function () {

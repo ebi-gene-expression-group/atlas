@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.ui.Model;
 import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -38,6 +39,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
 @Named("experimentInterceptor")
@@ -109,9 +111,14 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         if (modelAndView != null) { //it is null for REST services
 
-            modelAndView.getModel().put("species", StringUtils.join(species, ", "));
+            Map modelMap = modelAndView.getModel();
 
-            modelAndView.getModel().put("experimentDescription", experiment.getDescription());
+            modelMap.put("species", StringUtils.join(species, ", "));
+
+            modelMap.put("experimentDescription", experiment.getDescription());
+
+            modelMap.put("hasExtraInfo", experiment.hasExtraInfoFile());
+
 
         }
 

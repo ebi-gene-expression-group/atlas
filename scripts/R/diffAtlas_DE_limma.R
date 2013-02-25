@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 # diffAtlas_DE_limma.R
-# Prototyping microarray differential expression statistics computation for the
+# Microarray differential expression statistics computation for the
 # Differential Atlas.
 
 
@@ -10,7 +10,9 @@
 # 	- normExprsFile <- matrix of normalized and summarized expression values.
 #	- refAssays <- comma-separated list of assay accessions in reference assay group.
 #	- testAssays <- comma-separated list of assay accessions in test assay group.
-diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays) {
+#	- resFile <- filename for results.
+#	- plotDataFile <- filename for data for MvA plot.
+diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays, resFile, plotDataFile) {
 
 	e <- try({
 		
@@ -57,12 +59,12 @@ diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays) {
 		# Relevant results to data frames.
 		# results for heatmap matrix display:
 		contrastResults <- data.frame(designElements = featureNames(esetForContrast), adjPval = contrastFitEbayes$adjPvals, t = contrastFitEbayes$t, logFC = contrastFitEbayes$coefficients)
-		# results for MvA plot:
-		plotData <- data.frame(designElements = featureNames(esetForContrast), adjPval = contrastFitEbayes$adjPvals, logFC = contrastFitEbayes$coefficients, avgInt = contrastFitEbayes$Amean)
+		# results to be used for MvA plot creation (as above but with average intensities and without t-stats):
+		plotData <- data.frame(designElements = featureNames(esetForContrast), adjPval = contrastFitEbayes$adjPvals, logFC = contrastFitEbayes$coefficients, avgExpr = contrastFitEbayes$Amean)
 
 		# write.
-		write.table(contrastResults, file="limma_res.txt", row.names=FALSE, quote=FALSE, sep="\t")
-		write.table(plotData, file="plotData.txt", row.names=FALSE, quote=FALSE, sep="\t")
+		write.table(contrastResults, file=resFile, row.names=FALSE, quote=FALSE, sep="\t")
+		write.table(plotData, file=plotDataFile, row.names=FALSE, quote=FALSE, sep="\t")
 	})
 }
 
