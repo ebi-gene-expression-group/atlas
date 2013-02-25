@@ -32,6 +32,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.*;
 
 @Named
@@ -39,7 +40,7 @@ import java.util.*;
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    static final String JSON_PATH_SUGGESTION = "$..suggestion";
+    static final String JSON_PATH_LAST_TERM_SUGGESTION = "$..suggestions[(@.length-1)].suggestion";
 
     private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
 
@@ -49,6 +50,7 @@ public class SolrClient {
     private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q={0}&wt=json&omitHeader=true";
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q={0}&wt=json&omitHeader=true&rows=0";
+    private static final String JSON_PATH_COLLATION_SUGGESTION = "$..suggestions[{0}][1]";
 
     private RestTemplate restTemplate;
 
@@ -82,14 +84,47 @@ public class SolrClient {
     public List<String> findGeneNameSuggestions(String query){
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, query);
 
-        return JsonPath.read(jsonString, JSON_PATH_SUGGESTION);
+        return JsonPath.read(jsonString, JSON_PATH_LAST_TERM_SUGGESTION);
     }
 
     public List<String> findGenePropertySuggestions(String query){
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, query);
 
-        return JsonPath.read(jsonString, JSON_PATH_SUGGESTION);
+        int numberOfTerms = StringUtils.split(query).length;
 
+        int i = 0;
+
+        List<String> collations = new ArrayList<>();
+
+        try{
+
+        do {
+
+                String jsonPathNthCollation = MessageFormat.format(JSON_PATH_COLLATION_SUGGESTION, getIndexOfFirstCollation(numberOfTerms) + (i * 2));
+
+                String collationValue = JsonPath.read(jsonString, jsonPathNthCollation);
+
+                collations.add(collationValue);
+
+                i++;
+
+            } while (i < 10);
+
+        }catch (Exception e){
+            LOGGER.debug(e.getMessage(), e);
+        }
+
+        if (collations.size() < 10){
+            List<String> lastTermSuggestions = JsonPath.read(jsonString, JSON_PATH_LAST_TERM_SUGGESTION);
+            collations.addAll(lastTermSuggestions);
+        }
+        return collations;
+
+    }
+
+    private int getIndexOfFirstCollation(int numberOfTerms) {
+        //collations happen to be after single term suggestions. First collation index is:
+        return (numberOfTerms * 2) + 1;
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {
@@ -102,7 +137,7 @@ public class SolrClient {
             return jsonResponse;
 
         } catch (RestClientException e) {
-            LOGGER.fatal("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
+            LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
             throw e;
         }
     }

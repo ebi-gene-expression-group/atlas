@@ -30,11 +30,12 @@ public class AutocompleteController {
     @ResponseBody
     public String getTopSuggestions(@RequestParam(value = "query") String query){
         List<String> geneNameSuggestions = solrClient.findGeneNameSuggestions(query);
-        List<String> genePropertiesSuggestions = solrClient.findGenePropertySuggestions(query);
-
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet(geneNameSuggestions);
 
-        suggestions.addAll(genePropertiesSuggestions);
+        if (suggestions.size()<10) {
+            List<String> genePropertiesSuggestions = solrClient.findGenePropertySuggestions(query);
+            suggestions.addAll(genePropertiesSuggestions);
+        }
 
         int suggestionsCount = suggestions.size();
 

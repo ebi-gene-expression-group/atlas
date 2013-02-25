@@ -60,12 +60,21 @@ public class SolrClientIT {
     }
 
     @Test
-    public void testGetJsonForGeneNameSuggestions() {
+    public void testGetJsonResponseForGeneNameSuggestions() {
 
         String jsonString = subject.getJsonResponse(SOLR_REST_GENENAMES_QUERY_TEMPLATE, "asp");
 
-        List<String> list = JsonPath.read(jsonString, SolrClient.JSON_PATH_SUGGESTION);
+        List<String> list = JsonPath.read(jsonString, SolrClient.JSON_PATH_LAST_TERM_SUGGESTION);
         assertThat(list, is(not(empty())));
         assertThat(list, hasItems("asp", "aspm"));
+    }
+
+    @Test
+    public void testGetJsonForMultiTermSuggestions() {
+
+        List<String> properties = subject.findGenePropertySuggestions("p b");
+
+        assertThat(properties.size(), is(10));
+        assertThat(properties, hasItems("p b", "p binding", "putative b"));
     }
 }
