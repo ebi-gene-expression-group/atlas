@@ -24,7 +24,7 @@ public class TwoOrganismPartsAndCutoff9IT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("AL031284.1", "AC068312.1", "NEBL", "AC091038.1", "S1PR1"));
+        assertThat(selectedGenes, contains("AL031284.1", "AL162853.1", "CU463998.3", "NEBL", "AC068312.1"));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class TwoOrganismPartsAndCutoff9IT extends SeleniumFixture {
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("35"), is(true));
+        assertThat(subject.getGeneCount().contains("36"), is(true));
     }
 
 }

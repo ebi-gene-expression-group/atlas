@@ -24,13 +24,13 @@ public class Cutoff20AndOrganismPartIT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("MT-ATP6", "TMSB10", "TRAJ13", "RPL23P8", "AC011293.1"));
+        assertThat(selectedGenes, contains("TRAJ13", "Y_RNA", "ABCD4", "PLCG2", "AC011293.1"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "10688", "", "","" ,"" ,"" , "4149","" , "6899", "7811", "6720","" ,"" ,"" , "8660"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "776", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
     }
 
     @Test

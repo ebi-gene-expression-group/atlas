@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
 
 import org.junit.Test;
@@ -29,19 +51,19 @@ public class SpecificAndOrganismPartIT extends SeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedGenes();
         assertThat(selectedGenes.size(), is(8));
-        assertThat(selectedGenes, contains("Gc", "Apoh", "Serpina1d", "Tdo2", "Cyp2d10", "Afm", "Ecm1", "5830473C10Rik"));
+        assertThat(selectedGenes, contains("Afm", "Apoh", "Gc", "Cyp2d10", "Serpina1d", "Tdo2", "5830473C10Rik", "Ecm1"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "", "4582", "0.7", "36", "0.8"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "270", "", "1", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("", "", "18", "", "", ""));
+        assertThat(subject.getLastGeneProfile(), contains("25", "4", "112", "94", "23", "11"));
     }
 
     @Test

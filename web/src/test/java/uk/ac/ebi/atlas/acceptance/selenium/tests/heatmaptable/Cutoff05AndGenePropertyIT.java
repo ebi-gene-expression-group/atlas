@@ -56,9 +56,9 @@ public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
     public void verifyResultOnMultiplePropertyAndOrganismPartQuery() {
         subject = new HeatmapTablePage(driver, "geneQuery=&queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 68"));
+        assertThat(subject.getGeneCount(), containsString("of 69"));
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "10688","" , "", "","" ,"" , "4149","" , "6899", "7811", "6720", "","" , "", "8660"));
+        assertThat(subject.getFirstGeneProfile(), contains("0.6", "", "1", "", "", "0.6", "0.9", "1", "", "", "1", "", "", "8", "", "3"));
     }
 
 }

@@ -38,7 +38,7 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"PTBP3", "THOC6", "AC111200.7", "THOC3", "TERF2", "GFI1", "RP11-20I23.6", "ARHGAP1", "7SK"};
+        return new String[]{"PTBP3", "RP11-20I23.6", "TERF2", "GFI1", "AC111200.7", "THOC6", "7SK", "THOC3", "METTL25"};
     }
 
     @Override
@@ -53,7 +53,7 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"5", "3", "2", "2", "2"};
+        return new String[]{"4", "4", "3", "2", "4"};
     }
 
     @Override

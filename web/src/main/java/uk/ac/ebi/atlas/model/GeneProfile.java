@@ -27,7 +27,7 @@ public class GeneProfile extends GeneExpressions {
     }
 
     @Override
-    public void addExpression(Expression expression){
+    public void addExpression(Expression expression) {
         throw new UnsupportedOperationException("Please use the builder!");
     }
 
@@ -115,11 +115,13 @@ public class GeneProfile extends GeneExpressions {
     }
 
 
-    public double getWeightedExpressionLevelOn(Set<Factor> selectedFactors, Set<Factor> allFactors) {
-        if (allFactors.isEmpty()) {
-            return getAverageExpressionLevelOn(selectedFactors);
+    public double getExpressionLevelFoldChangeOn(Set<Factor> selectedFactors, Set<Factor> allFactors) {
+        double averageExpressionLevelOnRemaining = getAverageExpressionLevelOn(Sets.difference(allFactors, selectedFactors));
+        double averageExpressionLevelOnSelected = getAverageExpressionLevelOn(selectedFactors);
+        if (allFactors.isEmpty() || averageExpressionLevelOnRemaining == 0) {
+            return averageExpressionLevelOnSelected;
         }
-        return getAverageExpressionLevelOn(selectedFactors) - getAverageExpressionLevelOn(Sets.difference(allFactors, selectedFactors));
+        return averageExpressionLevelOnSelected / averageExpressionLevelOnRemaining;
     }
 
     @Named("geneProfileBuilder")
@@ -183,7 +185,7 @@ public class GeneProfile extends GeneExpressions {
 
             double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);
 
-            return (averageOnSelected - averageOnRest) > 0;
+            return (averageOnSelected / averageOnRest) >= 1;
         }
 
     }

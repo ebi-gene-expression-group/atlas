@@ -98,8 +98,8 @@ public class GeneProfileComparatorTest {
     @Test
     public void higherAverageAcrossSelectedTissuesMinusAverageNonSelected() {
 
-        when(geneWithSpecificity1.getWeightedExpressionLevelOn(selectedOrganismParts, allOrganismParts)).thenReturn(5D);
-        when(geneWithSpecificity16.getWeightedExpressionLevelOn(selectedOrganismParts, allOrganismParts)).thenReturn(2D);
+        when(geneWithSpecificity1.getExpressionLevelFoldChangeOn(selectedOrganismParts, allOrganismParts)).thenReturn(5D);
+        when(geneWithSpecificity16.getExpressionLevelFoldChangeOn(selectedOrganismParts, allOrganismParts)).thenReturn(2D);
 
 
         subject = new GeneProfileComparator(true, selectedOrganismParts, allOrganismParts);

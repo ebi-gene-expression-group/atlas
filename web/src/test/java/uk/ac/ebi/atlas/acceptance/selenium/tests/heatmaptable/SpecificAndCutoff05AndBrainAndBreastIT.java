@@ -8,14 +8,12 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * distributed under the License is distributed on an "AS IS" BASIS, * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
  *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
+ * For further details of the Gene Expression Atlas project, including source code, * downloads and documentation, please see:
  *
  * http://gxa.github.com/gxa
  */
@@ -36,8 +34,8 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
             + "&specific=true";
-    private static final String HIGHER_RANKING_GENE = "COL4A3BP";
-    private static final String LOWER_RANKING_GENE = "RAB27B";
+    private static final String HIGHER_RANKING_GENE = "GPD2";
+    private static final String LOWER_RANKING_GENE = "PLEKHB2";
 
     protected HeatmapTablePage subject;
 
@@ -54,16 +52,19 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
 
         double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(29, "brain", "breast");
         double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(30, "brain", "breast");
+        double higherRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageFpkm(29, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
+        double lowerRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageFpkm(30, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
 
         //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(15.5));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(10.5D));
+        assertThat(higherRankingGeneAverageFpkmOnRemainingFactors, is(7.142857142857143D));
         //and
-        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(3D));
+        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(33.0D));
+        assertThat(lowerRankingGeneAverageFpkmOnRemainingFactors, is(22.785714285714285D));
 
         //and average fpkm is greater for gene at row 29 than gene at row 30
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(greaterThan(lowerRankingGeneAverageFpkmOnSelectedFactors)));
-        //and max fpkm is greater for gene at row 29 than gene at row 30
-        assertThat(subject.getMaxFpkm(29), is(greaterThan(subject.getMaxFpkm(30))));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors / higherRankingGeneAverageFpkmOnRemainingFactors,
+                is(greaterThan(lowerRankingGeneAverageFpkmOnSelectedFactors / lowerRankingGeneAverageFpkmOnRemainingFactors)));
 
         //gene at row 30 follows gene at row 29
         assertThat(subject.getGeneThatRanksAt(29), is(HIGHER_RANKING_GENE));

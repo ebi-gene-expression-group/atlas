@@ -37,12 +37,13 @@ public class GeneProfileTest {
 
     private GeneProfile subject;
 
+    private GeneProfile.Builder geneProfileBuilder;
+
     @Before
     public void setUp() throws Exception {
         when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
 
-
-        GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder().forGeneId(GENE_ID);
+        geneProfileBuilder = new GeneProfile.Builder().forGeneId(GENE_ID);
 
         GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
         when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);
@@ -90,17 +91,40 @@ public class GeneProfileTest {
     }
 
     @Test
-    public void weightedExpressionLevelOn() {
-        double averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet(factor1,
+    public void expressionLevelFoldChangeOn() {
+        double averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1,
                 factor3),
                 Sets.newHashSet(factor1, factor3, factor2));
-        assertThat(averageExpressionLevel, is(-0.39949999999999974D));
+        assertThat(averageExpressionLevel, is(0.8668333333333335D));
 
-        averageExpressionLevel = (double) subject.getWeightedExpressionLevelOn(Sets.newHashSet(factor1),
+        averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1),
                 Sets.newHashSet(factor1, factor3, factor2));
-        assertThat(averageExpressionLevel, is(-0.8004999999999995D));
+        assertThat(averageExpressionLevel, is(0.7332111314780871D));
     }
 
+    @Test
+    public void expressionLevelFoldChangeOnWithZeroExpression() {
 
+        Expression expression_1 = new Expression(2D, new FactorSet().add(factor1));
+        Expression expression_2 = new Expression(0D, new FactorSet().add(factor2));
+        Expression expression_3 = new Expression(0D, new FactorSet().add(factor3));
+
+        subject = geneProfileBuilder
+                .addExpression(expression_1)
+                .addExpression(expression_2)
+                .addExpression(expression_3)
+                .create();
+
+        subject.setGeneNamesProvider(geneNamesProviderMock);
+
+        double averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1,
+                factor3),
+                Sets.newHashSet(factor1, factor3, factor2));
+        assertThat(averageExpressionLevel, is(1.0D));
+
+        averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1),
+                Sets.newHashSet(factor1, factor3, factor2));
+        assertThat(averageExpressionLevel, is(2.0D));
+    }
 }
 

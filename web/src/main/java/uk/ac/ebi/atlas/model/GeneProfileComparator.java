@@ -34,8 +34,8 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
 
-            return naturalOrdering.compare(firstGeneProfile.getWeightedExpressionLevelOn(selectedFactors, allFactors),
-                    otherGeneProfile.getWeightedExpressionLevelOn(selectedFactors, allFactors));
+            return naturalOrdering.compare(firstGeneProfile.getExpressionLevelFoldChangeOn(selectedFactors, allFactors),
+                    otherGeneProfile.getExpressionLevelFoldChangeOn(selectedFactors, allFactors));
         }
 
         // A2
