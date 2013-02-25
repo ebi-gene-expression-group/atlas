@@ -60,7 +60,7 @@ var searchFormModule = (function($) {
     }
 
     function extractLast( term ) {
-        return split( term ).pop();
+        return split( term ).pop().trim().replace("\"","");
     }
 
     function initAutocomplete(){
@@ -85,7 +85,11 @@ var searchFormModule = (function($) {
                     // remove the current input
                     terms.pop();
                     // add the selected item
-                    terms.push( ui.item.value );
+                    var selectedValue = ui.item.value;
+                    if (selectedValue.indexOf(" ") !== -1){
+                        selectedValue = "\"" + selectedValue + "\"";
+                    }
+                    terms.push( selectedValue );
                     // add placeholder to get the comma-and-space at the end
                     terms.push( "" );
                     this.value = terms.join( ", " );
