@@ -28,6 +28,8 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
@@ -37,6 +39,7 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Set;
+import java.util.SortedSet;
 
 public abstract class GeneProfilesInputStreamCommand<T> {
     protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
@@ -68,12 +71,8 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         this.filterParameters = filterParameters;
     }
 
-    public FilterParameters getFilterParameters() {
-        return filterParameters;
-    }
-
     @NotNull
-    public T apply(String experimentAccession) throws GeneNotFoundException{
+    public T apply(String experimentAccession) throws GeneNotFoundException {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -92,7 +91,10 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
         try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, filterParameters.getSelectedQueryFactors())) {
 
-            return apply(experiment, inputStream);
+            ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+
+            SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(filterParameters.getSelectedFilterFactors());
+            return apply(filteredFactors, filterParameters.getSelectedQueryFactors(), inputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -114,8 +116,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         return solrClient.findGeneIds(filterParameters.getGeneQuery(), species);
     }
 
-    protected abstract T apply(Experiment experiment
-            , ObjectInputStream<GeneProfile> inputStream) throws IOException;
+    protected abstract T apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException;
 
     protected abstract T returnEmpty() throws GeneNotFoundException;
 }

@@ -90,4 +90,10 @@ public class JsonAutocompleteTest {
         List<String> suggestions = subject.extractCollations(jsonAutocompleteEmptyResponse);
         assertThat(suggestions, is(empty()));
     }
+
+    @Test
+    public void shouldReturnEmptyListIfResponseIsEmpty(){
+        List<String> suggestions = subject.extractCollations("{}");
+        assertThat(suggestions, is(empty()));
+    }
 }

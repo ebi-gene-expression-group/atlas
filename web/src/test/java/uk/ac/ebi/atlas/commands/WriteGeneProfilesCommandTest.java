@@ -65,9 +65,11 @@ public class WriteGeneProfilesCommandTest {
 
     private WriteGeneProfilesCommand subject;
 
+    private SortedSet<Factor> organismParts;
+
     @Before
     public void initMocks() {
-        SortedSet<Factor> organismParts = Sets.newTreeSet(Sets.newHashSet(
+        organismParts = Sets.newTreeSet(Sets.newHashSet(
                 createFactorValue("adipose"),
                 createFactorValue("brain"),
                 createFactorValue("breast"),
@@ -103,7 +105,7 @@ public class WriteGeneProfilesCommandTest {
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(experimentMock, inputStreamMock);
+        long count = subject.apply(organismParts, null ,inputStreamMock);
 
         verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 
