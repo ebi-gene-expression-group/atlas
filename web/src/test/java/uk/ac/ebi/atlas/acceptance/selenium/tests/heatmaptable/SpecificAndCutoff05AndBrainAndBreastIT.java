@@ -56,7 +56,7 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
         double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(30, "brain", "breast");
 
         //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(15.5));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(7.5));
         //and
         assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(3D));
 
