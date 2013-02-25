@@ -110,8 +110,9 @@ public class SolrClient {
 
             } while (i < 10);
 
-        }catch (Exception e){
-            LOGGER.debug(e.getMessage(), e);
+        }catch (RuntimeException e){
+            //this should only happen when there are less then 10 collations
+            LOGGER.debug("Less than 10 collations: " + e.getMessage());
         }
 
         if (collations.size() < 10){
