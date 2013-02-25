@@ -4,6 +4,7 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import java.util.List;
 @Scope("request")
 public class AutocompleteController {
 
+    private static final int MAX_NUMBER_OF_SUGGESTIONS = 10;
+
     private SolrClient solrClient;
 
     @Inject
@@ -29,17 +32,22 @@ public class AutocompleteController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTopSuggestions(@RequestParam(value = "query") String query){
-        List<String> geneNameSuggestions = solrClient.findGeneNameSuggestions(query);
-        LinkedHashSet<String> suggestions = Sets.newLinkedHashSet(geneNameSuggestions);
+        LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
 
-        if (suggestions.size()<10) {
-            List<String> genePropertiesSuggestions = solrClient.findGenePropertySuggestions(query);
-            suggestions.addAll(genePropertiesSuggestions);
+        if (!StringUtils.containsWhitespace(query)){
+            suggestions.addAll(solrClient.findGeneNameSuggestions(query));
         }
 
-        int suggestionsCount = suggestions.size();
+        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+            suggestions.addAll(solrClient.findGenePropertySuggestions(query));
+        }
 
-        List<String> topSuggestions = Lists.newArrayList(suggestions).subList(0, suggestionsCount > 10? 10 : suggestionsCount);
+        List<String> topSuggestions = Lists.newArrayList(suggestions);
+
+        if (topSuggestions.size() > MAX_NUMBER_OF_SUGGESTIONS){
+            topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);
+        }
+
         Gson gson = new Gson();
         return gson.toJson(topSuggestions);
     }

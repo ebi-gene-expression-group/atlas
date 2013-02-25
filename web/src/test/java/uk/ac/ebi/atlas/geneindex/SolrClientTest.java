@@ -16,11 +16,13 @@ public class SolrClientTest {
 
     private SolrClient subject;
 
-    private String jsonData;
+    private String jsonSearchResponse;
+    private String jsonAutocompleteResponse;
 
     @Before
     public void loadTestData() throws IOException {
-        jsonData = Files.readTextFileFromClasspath(this.getClass(), "solr.json");
+        jsonSearchResponse = Files.readTextFileFromClasspath(this.getClass(), "solrSearchResponse.json");
+        jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
     }
 
     @Before
@@ -44,6 +46,7 @@ public class SolrClientTest {
         assertThat(speciesQuery, containsString("species 1"));
         assertThat(speciesQuery, containsString("species 2"));
     }
+
 
 
 }

@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Lists;
+import com.google.gson.*;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -47,10 +49,9 @@ public class SolrClient {
     private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={query} " +
             "AND species:{organism}&start=0&rows=100000&fl=identifier&wt=json";
 
-    private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q={0}&wt=json&omitHeader=true";
+    private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q=\"{0}\"&wt=json&omitHeader=true&json.nl=arrarr";
 
-    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q={0}&wt=json&omitHeader=true&rows=0";
-    private static final String JSON_PATH_COLLATION_SUGGESTION = "$..suggestions[{0}][1]";
+    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
     private RestTemplate restTemplate;
 
@@ -81,51 +82,79 @@ public class SolrClient {
 
     }
 
-    public List<String> findGeneNameSuggestions(String query){
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, query);
+    public List<String> findGeneNameSuggestions(String geneName){
+            String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName);
 
-        return JsonPath.read(jsonString, JSON_PATH_LAST_TERM_SUGGESTION);
+            return extractSuggestions(jsonString, geneName);
     }
 
-    public List<String> findGenePropertySuggestions(String query){
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, query);
+    List<String> extractSuggestions(String jsonString, String term) {
+        JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
 
-        int numberOfTerms = StringUtils.split(query).length;
+        if (suggestionsElement.isJsonArray()){
 
-        int i = 0;
+            JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
 
-        List<String> collations = new ArrayList<>();
+            for(JsonElement suggestionElement : suggestionElements){
 
-        try{
+                JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
 
-        do {
+                if (term.equalsIgnoreCase(suggestionEntry.get(0).getAsString())){
+                    JsonArray suggestions = suggestionEntry.get(1).getAsJsonObject().getAsJsonArray("suggestion");
+                    Gson gson = new Gson();
+                    return gson.fromJson(suggestions, List.class);
+                }
 
-                String jsonPathNthCollation = MessageFormat.format(JSON_PATH_COLLATION_SUGGESTION, getIndexOfFirstCollation(numberOfTerms) + (i * 2));
+            }
 
-                String collationValue = JsonPath.read(jsonString, jsonPathNthCollation);
-
-                collations.add(collationValue);
-
-                i++;
-
-            } while (i < 10);
-
-        }catch (RuntimeException e){
-            //this should only happen when there are less then 10 collations
-            LOGGER.debug("Less than 10 collations: " + e.getMessage());
         }
 
+        return Lists.newArrayList();
+
+    }
+
+    JsonElement extractSuggestionsElement(String jsonString){
+        return new JsonParser().parse(jsonString).getAsJsonObject()
+                .getAsJsonObject("spellcheck").get("suggestions");
+
+    }
+
+    List<String> extractCollations(String jsonString) {
+        JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
+
+        List<String> suggestionStrings = new ArrayList<>();
+
+        if (suggestionsElement.isJsonArray()){
+
+            JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
+
+            for(JsonElement suggestionElement : suggestionElements){
+                JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
+                if ("collation".equals(suggestionEntry.get(0).getAsString())){
+                    String suggestion = suggestionEntry.get(1).getAsJsonArray().get(0).getAsJsonArray().get(1).getAsString();
+                    suggestionStrings.add(StringUtils.strip(suggestion, "\""));
+                }
+            }
+        }
+
+        return suggestionStrings;
+    }
+
+    public List<String> findGenePropertySuggestions(String multiTermToken){
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken);
+
+        List<String> collations = extractCollations(jsonString);
+
         if (collations.size() < 10){
-            List<String> lastTermSuggestions = JsonPath.read(jsonString, JSON_PATH_LAST_TERM_SUGGESTION);
+
+            String lastTerm = StringUtils.substringAfterLast(multiTermToken, " ");
+
+            List<String> lastTermSuggestions = extractSuggestions(jsonString, lastTerm);
+
             collations.addAll(lastTermSuggestions);
         }
         return collations;
 
-    }
-
-    private int getIndexOfFirstCollation(int numberOfTerms) {
-        //collations happen to be after single term suggestions. First collation index is:
-        return (numberOfTerms * 2) + 1;
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {
