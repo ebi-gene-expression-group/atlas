@@ -26,15 +26,15 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfileComparator;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 @Named("rankGeneProfiles")
 @Scope("prototype")
@@ -48,13 +48,10 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     }
 
     @Override
-    public GeneProfilesList apply(Experiment experiment, ObjectInputStream<GeneProfile> inputStream) {
-
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-
+    protected GeneProfilesList apply(SortedSet<Factor> filteredFactors, ObjectInputStream<GeneProfile> inputStream) {
         Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(rankingParameters.isSpecific()
                 , getFilterParameters().getSelectedQueryFactors()
-                , experimentalFactors.getFilteredFactors(getFilterParameters().getSelectedFilterFactors()));
+                , filteredFactors);
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, rankingParameters.getHeatmapMatrixSize());
 
@@ -78,7 +75,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     }
 
     @Override
-    protected GeneProfilesList returnEmpty() throws GeneNotFoundException{
+    protected GeneProfilesList returnEmpty() throws GeneNotFoundException {
         throw new GeneNotFoundException("The specified search parameters don't select any gene");
     }
 
