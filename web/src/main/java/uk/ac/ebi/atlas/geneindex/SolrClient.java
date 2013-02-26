@@ -72,7 +72,7 @@ public class SolrClient {
     public Set<String> findGeneIds(String searchText, String species) {    
 
         String geneQuery = buildQueryAllTextString(searchText);
-        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, "{!lucene q.op=OR df=alltext}", searchText, species);
+        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, "{!lucene q.op=OR df=alltext}", geneQuery, species);
 
         List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS);
 
