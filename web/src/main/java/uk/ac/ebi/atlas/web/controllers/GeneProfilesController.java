@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.web.controllers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.FilterParameters;
+import uk.ac.ebi.atlas.commands.SessionContext;
+import uk.ac.ebi.atlas.commands.SessionContextBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -33,22 +34,22 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 @Scope("request")
 public class GeneProfilesController {
 
-    private FilterParameters.Builder filtersParameterBuilder;
+    private SessionContextBuilder sessionContextBuilder;
     private ExperimentsCache experimentsCache;
     private GeneExpressionPrecondition geneExpressionPrecondition;
 
-    public GeneProfilesController(FilterParameters.Builder filtersParameterBuilder, ExperimentsCache experimentsCache,
+    public GeneProfilesController(SessionContextBuilder sessionContextBuilder, ExperimentsCache experimentsCache,
                                   GeneExpressionPrecondition geneExpressionPrecondition) {
-        this.filtersParameterBuilder = filtersParameterBuilder;
+        this.sessionContextBuilder = sessionContextBuilder;
         this.experimentsCache = experimentsCache;
         this.geneExpressionPrecondition = geneExpressionPrecondition;
     }
 
-    protected FilterParameters createFilterParameters(String experimentAccession, RequestPreferences preferences) {
+    protected SessionContext updateSessionContext(String experimentAccession, RequestPreferences preferences) {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        return filtersParameterBuilder.forExperiment(experiment)
+        return sessionContextBuilder.forExperiment(experiment)
                 .withFilterFactors(preferences.getSerializedFilterFactors())
                 .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())
@@ -57,16 +58,16 @@ public class GeneProfilesController {
     }
 
     protected void prepareGeneExpressionPrecondition(String experimentAccession, RequestPreferences preferences,
-                                                    FilterParameters filterParameters) {
+                                                    SessionContext sessionContext) {
         geneExpressionPrecondition.setCutoff(preferences.getCutoff());
-        geneExpressionPrecondition.setFilterFactors(filterParameters.getSelectedFilterFactors());
+        geneExpressionPrecondition.setFilterFactors(sessionContext.getSelectedFilterFactors());
         String queryFactorType = preferences.getQueryFactorType();
         if (StringUtils.isBlank(queryFactorType)) {
-            queryFactorType = filterParameters.getQueryFactorType();
+            queryFactorType = sessionContext.getQueryFactorType();
         }
         geneExpressionPrecondition.setQueryFactorType(queryFactorType);
-        geneExpressionPrecondition.setSelectedQueryFactors(filterParameters.getSelectedQueryFactors());
+        geneExpressionPrecondition.setSelectedQueryFactors(sessionContext.getSelectedQueryFactors());
         geneExpressionPrecondition.setSpecific(preferences.isSpecific());
-        geneExpressionPrecondition.setExperimentalFactors(experimentsCache.getExperiment(experimentAccession).getExperimentalFactors().getFilteredFactors(filterParameters.getSelectedFilterFactors()));
+        geneExpressionPrecondition.setExperimentalFactors(experimentsCache.getExperiment(experimentAccession).getExperimentalFactors().getFilteredFactors(sessionContext.getSelectedFilterFactors()));
     }
 }

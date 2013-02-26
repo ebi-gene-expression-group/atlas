@@ -31,9 +31,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
+import uk.ac.ebi.atlas.commands.SessionContext;
+import uk.ac.ebi.atlas.commands.SessionContextBuilder;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.RankingParameters;
@@ -65,9 +66,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
     @Inject
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder,
+                                      ExperimentsCache experimentsCache, SessionContextBuilder sessionContextBuilder,
                                       GeneExpressionPrecondition geneExpressionPrecondition) {
-        super(filterParameterBuilder, experimentsCache, geneExpressionPrecondition);
+        super(sessionContextBuilder, experimentsCache, geneExpressionPrecondition);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
@@ -79,13 +80,13 @@ public class GeneProfilesPageController extends GeneProfilesController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
+        SessionContext sessionContext = updateSessionContext(experimentAccession, preferences);
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
+        model.addAttribute("formattedQueryFactorType", sessionContext.formattedQueryFactorType());
 
-        Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
+        Set<Factor> selectedFilterFactors = sessionContext.getSelectedFilterFactors();
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -110,10 +111,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
         if (!result.hasErrors()) {
 
 
-            prepareGeneExpressionPrecondition(experimentAccession, preferences, filterParameters);
-
-
-            rankCommand.setFilteredParameters(filterParameters);
+            prepareGeneExpressionPrecondition(experimentAccession, preferences, sessionContext);
 
             rankingParameters.setSpecific(preferences.isSpecific());
             rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
@@ -124,9 +122,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
                 model.addAttribute("geneProfiles", geneProfiles);
 
 
-                String species = findShownSpecie(experiment, filterParameters);
+                String species = sessionContext.getFilteredBySpecies();
 
-                if ("ORGANISM_PART".equals(filterParameters.getQueryFactorType())) {
+                if ("ORGANISM_PART".equals(sessionContext.getQueryFactorType())) {
                     model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
 
                     model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
@@ -142,10 +140,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
         }
 
         return "experiment";
-    }
-
-    private String findShownSpecie(Experiment experiment, FilterParameters filterParameters) {
-        return experiment.isForSingleSpecie() ? experiment.getFirstSpecies() : filterParameters.getFilteredBySpecies();
     }
 
     String buildDownloadURL(HttpServletRequest request) {

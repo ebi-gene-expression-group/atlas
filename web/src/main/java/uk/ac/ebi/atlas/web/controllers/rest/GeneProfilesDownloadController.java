@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.apache.log4j.Logger;
@@ -6,8 +28,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
+import uk.ac.ebi.atlas.commands.SessionContext;
+import uk.ac.ebi.atlas.commands.SessionContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -28,11 +51,11 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
 
     @Inject
     public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
-                                          FilterParameters.Builder filterParameterBuilder,
+                                          SessionContextBuilder sessionContextBuilder,
                                           ExperimentsCache experimentsCache,
                                           GeneExpressionPrecondition geneExpressionPrecondition) {
 
-        super(filterParameterBuilder, experimentsCache, geneExpressionPrecondition);
+        super(sessionContextBuilder, experimentsCache, geneExpressionPrecondition);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
@@ -47,7 +70,7 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-        FilterParameters parameters = createFilterParameters(experimentAccession, preferences);
+        SessionContext parameters = updateSessionContext(experimentAccession, preferences);
 
         prepareGeneExpressionPrecondition(experimentAccession, preferences, parameters);
 

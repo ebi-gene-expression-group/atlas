@@ -39,7 +39,6 @@ import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -49,8 +48,10 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class RankGeneProfilesCommandTest {
 
+    private static final String SPECIES = "Species 1";
     private static final String EXPERIMENT_ACCESSION = "ANY_EXPERIMENT_ACCESSION";
     private static final String GENE_QUERY = "A GENE QUERY";
+
     @Mock
     private GeneProfileInputStreamBuilder geneProfileInputStreamBuilderMock;
 
@@ -67,9 +68,7 @@ public class RankGeneProfilesCommandTest {
     private ExperimentalFactors experimentalFactors;
 
     @Mock
-    private FilterParameters filterParameters;
-
-    private Set<String> species = Sets.newHashSet("Species 1", "Species 2");
+    private SessionContext sessionContextMock;
 
     @Mock
     private RankingParameters rankingParametersMock;
@@ -87,12 +86,13 @@ public class RankGeneProfilesCommandTest {
     @Before
     public void initializeSubject() throws Exception {
 
-        when(filterParameters.getGeneQuery()).thenReturn("");
+        when(sessionContextMock.getGeneQuery()).thenReturn("");
 
         // no filtering should be done here
-        when(solrClientMock.findGeneIds(GENE_QUERY, species)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
+        when(solrClientMock.findGeneIds(GENE_QUERY, SPECIES)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
-        when(experimentMock.getSpecies()).thenReturn(species);
+        when(sessionContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
+
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactors);
 
         when(experimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
@@ -112,9 +112,9 @@ public class RankGeneProfilesCommandTest {
 
         subject = new RankGeneProfilesCommand();
         subject.setSolrClient(solrClientMock);
-        subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
+        subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock, sessionContextMock);
 
-        subject.setFilteredParameters(filterParameters);
+        subject.setFilteredParameters(sessionContextMock);
         subject.setRankingParameters(rankingParametersMock);
 
         subject.setExperimentsCache(experimentsCacheMock);
@@ -163,17 +163,17 @@ public class RankGeneProfilesCommandTest {
 
     @Test
     public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GeneNotFoundException{
-        when(filterParameters.getGeneQuery()).thenReturn("");
+        when(sessionContextMock.getGeneQuery()).thenReturn("");
         subject.apply(EXPERIMENT_ACCESSION);
-        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, species);
+        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
     }
 
     @Test
     public void givenEmptyFilterFactorSpeciesShouldBeTakenFromExperiment() {
 
-        when(filterParameters.getGeneQuery()).thenReturn(GENE_QUERY);
+        when(sessionContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
         subject.searchForGeneIds(experimentMock);
-        verify(solrClientMock).findGeneIds(GENE_QUERY, experimentMock.getSpecies());
+        verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
 
     }
 
@@ -181,9 +181,9 @@ public class RankGeneProfilesCommandTest {
     public void givenAFilterFactorHasTypeOrganismSpeciesShouldBeTakenFromTheFilterFactor() {
 
 
-        when(filterParameters.getGeneQuery()).thenReturn(GENE_QUERY);
+        when(sessionContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
         subject.searchForGeneIds(experimentMock);
-        verify(solrClientMock).findGeneIds(GENE_QUERY, experimentMock.getSpecies());
+        verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
 
     }
 

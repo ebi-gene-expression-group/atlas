@@ -51,7 +51,7 @@ public class WriteGeneProfilesCommandTest {
     @Mock
     private ObjectInputStream<GeneProfile> inputStreamMock;
     @Mock
-    private FilterParameters filterParametersMock;
+    private SessionContext sessionContextMock;
     @Mock
     private PrintWriter printWriterMock;
     @Mock
@@ -76,7 +76,7 @@ public class WriteGeneProfilesCommandTest {
                 createFactorValue("liver"),
                 createFactorValue("lung")));
 
-        when(filterParametersMock.getSelectedQueryFactors()).thenReturn(organismParts);
+        when(sessionContextMock.getSelectedQueryFactors()).thenReturn(organismParts);
 
         when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
                 .thenReturn(geneProfileMock2)
@@ -98,7 +98,7 @@ public class WriteGeneProfilesCommandTest {
     @Before
     public void initSubject() throws Exception {
         subject = new WriteGeneProfilesCommand(new NumberUtils());
-        subject.setFilteredParameters(filterParametersMock);
+        subject.setFilteredParameters(sessionContextMock);
         subject.setResponseWriter(printWriterMock);
     }
 
