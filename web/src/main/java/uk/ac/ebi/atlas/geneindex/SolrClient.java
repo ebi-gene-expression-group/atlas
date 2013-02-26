@@ -83,9 +83,10 @@ public class SolrClient {
     }
 
     public List<String> findGeneNameSuggestions(String geneName){
-            String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName);
 
-            return extractSuggestions(jsonString, geneName);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName);
+
+        return extractSuggestions(jsonString, geneName);
     }
 
     List<String> extractSuggestions(String jsonString, String term) {
@@ -142,20 +143,10 @@ public class SolrClient {
     }
 
     public List<String> findGenePropertySuggestions(String multiTermToken){
+
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken);
 
-        List<String> collations = extractCollations(jsonString);
-
-        if (collations.size() < 10){
-
-            String lastTerm = StringUtils.substringAfterLast(multiTermToken, " ");
-
-            List<String> lastTermSuggestions = extractSuggestions(jsonString, lastTerm);
-
-            collations.addAll(lastTermSuggestions);
-        }
-        return collations;
-
+        return extractCollations(jsonString);
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {

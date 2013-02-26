@@ -62,16 +62,6 @@ var searchFormModule = (function($) {
         return false;
     }
 
-    function extractLastIncludingDoubleQuotes( val ){
-        var splitByDoubleQuotes = val.split( /\s*"/),
-            numberOfDoubleQuotes = splitByDoubleQuotes.length -1;
-
-        if (!isEven(numberOfDoubleQuotes)){
-            return "\"" + splitByDoubleQuotes.pop();
-        }
-        return splitByDoubleQuotes.pop().split( /\s+/).pop();
-    }
-
     function extractLast( term , includeDoubleQuote) {
 
         var splitByDoubleQuotes = term.split( /\s*"/),
@@ -106,12 +96,8 @@ var searchFormModule = (function($) {
                 },
                 select: function( event, ui ) {
                     var selectedValue = ui.item.value.trim(),
-                        lastItem = extractLast(this.value, true);
-
-                    if (selectedValue.indexOf(" ") !== -1){
-                        selectedValue = "\"" + selectedValue + "\"";
-                    }
-                    this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue).concat(" ");
+                        lastItem = extractLast(this.value, false);
+                    this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue);
                     return false;
                 },
                 source:function (request, response) {
