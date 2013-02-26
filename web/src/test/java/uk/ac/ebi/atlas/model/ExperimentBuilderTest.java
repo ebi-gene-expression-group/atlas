@@ -13,8 +13,8 @@ import java.util.Collection;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -61,6 +61,7 @@ public class ExperimentBuilderTest {
         when(factorGroup2Mock.iterator()).thenReturn(IteratorUtils.EMPTY_ITERATOR);
 
         when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRunMocks)).thenReturn(experimentalFactorsBuilderMock);
+        when(experimentalFactorsBuilderMock.withMenuFilterFactorTypes(anySet())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
         subject = new ExperimentBuilder(experimentalFactorsBuilderMock);
 
@@ -83,7 +84,7 @@ public class ExperimentBuilderTest {
         //and
         verify(experimentalFactorsMock).getFactorName(DEFAULT_FILTER_FACTOR_TYPE);
         //and
-        assertThat(experiment.getMenuFilterFactorTypes(), contains(DEFAULT_FILTER_FACTOR_TYPE));
+
     }
 
 }

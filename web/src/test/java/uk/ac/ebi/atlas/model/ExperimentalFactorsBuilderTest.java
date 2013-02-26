@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,11 +30,11 @@ public class ExperimentalFactorsBuilderTest {
     private Factor factorWithType2DifferentValue = new Factor("TYPE2", "NAME2", "DIFFERENT_VALUE2");
     private Factor factorWithType3 = new Factor("TYPE3", "NAME3", "VALUE3");
     private FactorGroup factorGroup1 = new FactorSet().add(factorWithType2)
-                                                      .add(factorWithType1)
-                                                      .add(factorWithType3);
+            .add(factorWithType1)
+            .add(factorWithType3);
     private FactorGroup factorGroup2 = new FactorSet().add(factorWithType3)
-                                                      .add(factorWithType2DifferentValue)
-                                                      .add(factorWithType1);
+            .add(factorWithType2DifferentValue)
+            .add(factorWithType1);
 
 
     private Collection<ExperimentRun> experimentRunMocks;
@@ -46,7 +47,7 @@ public class ExperimentalFactorsBuilderTest {
 
 
         subject = new ExperimentalFactorsBuilder();
-        subject.withExperimentRuns(experimentRunMocks);
+        subject.withExperimentRuns(experimentRunMocks).withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"));
     }
 
 
@@ -61,7 +62,7 @@ public class ExperimentalFactorsBuilderTest {
     public void testFactorByNameIsCreated() {
         subject.create();
 
-        SortedSetMultimap<String,Factor> factorsByName = subject.getFactorsByName();
+        SortedSetMultimap<String, Factor> factorsByName = subject.getFactorsByName();
         assertThat(factorsByName.keySet(), contains("NAME1", "NAME2", "NAME3"));
         assertThat(factorsByName.get("NAME2"), contains(factorWithType2DifferentValue, factorWithType2));
     }
@@ -69,7 +70,7 @@ public class ExperimentalFactorsBuilderTest {
     @Test
     public void testFactorNamesByType() {
         subject.create();
-        Map<String,String> factorNamesByType = subject.getFactorNamesByType();
+        Map<String, String> factorNamesByType = subject.getFactorNamesByType();
 
         assertThat(factorNamesByType.keySet(), hasItems("TYPE1", "TYPE2", "TYPE3"));
         assertThat(factorNamesByType.get("TYPE1"), is("NAME1"));
@@ -84,10 +85,17 @@ public class ExperimentalFactorsBuilderTest {
         assertThat(coOccurringFactors.get(factorWithType1), contains(factorWithType2DifferentValue, factorWithType2, factorWithType3));
     }
 
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testCreateWithEmptyRun() throws Exception {
         subject.withExperimentRuns(null);
+        subject.withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"));
         subject.create();
+    }
 
+    @Test(expected = IllegalStateException.class)
+    public void testCreateWithNullMenuFilterFactorTypes() throws Exception {
+        subject.withExperimentRuns(experimentRunMocks);
+        subject.withMenuFilterFactorTypes(null);
+        subject.create();
     }
 }

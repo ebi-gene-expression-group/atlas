@@ -36,7 +36,6 @@ public class Experiment {
 
     private String defaultQueryFactorType;
     private Set<Factor> defaultFilterFactors;
-    private Set<String> menuFilterFactorTypes;
 
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
@@ -45,13 +44,12 @@ public class Experiment {
     private boolean hasExtraInfoFile;
 
 
-    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, Set<String> menuFilterFactorTypes, boolean hasExtraInfoFile) {
+    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
         this.description = description;
         this.species = species;
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
-        this.menuFilterFactorTypes = menuFilterFactorTypes;
         this.hasExtraInfoFile = hasExtraInfoFile;
         for (ExperimentRun experimentRun : experimentRuns) {
             this.experimentRuns.put(experimentRun.getAccession(), experimentRun);
@@ -91,10 +89,6 @@ public class Experiment {
 
     public Set<Factor> getDefaultFilterFactors() {
         return Collections.unmodifiableSet(defaultFilterFactors);
-    }
-
-    public Set<String> getMenuFilterFactorTypes() {
-        return Collections.unmodifiableSet(menuFilterFactorTypes);
     }
 
     public ExperimentalFactors getExperimentalFactors() {

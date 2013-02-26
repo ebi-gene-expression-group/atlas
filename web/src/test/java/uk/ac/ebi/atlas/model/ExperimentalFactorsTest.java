@@ -64,12 +64,12 @@ public class ExperimentalFactorsTest {
     private Factor factorWithType3 = new Factor("TYPE3", "NAME3", "VALUE3");
     private Factor factorWithType3DifferentValue = new Factor("TYPE3", "NAME3", "DIFFERENT_VALUE3");
     private FactorGroup factorGroup1 = new FactorSet().add(factorWithType2)
-                                                    .add(factorWithType1)
-                                                    .add(factorWithType3);
+            .add(factorWithType1)
+            .add(factorWithType3);
     private FactorGroup factorGroup2 = new FactorSet()
-                                                    .add(factorWithType3DifferentValue)
-                                                    .add(factorWithType2DifferentValue)
-                                                    .add(factorWithType1);
+            .add(factorWithType3DifferentValue)
+            .add(factorWithType2DifferentValue)
+            .add(factorWithType1);
 
 
     @Before
@@ -82,7 +82,7 @@ public class ExperimentalFactorsTest {
         experimentRunMocks = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
 
         ExperimentalFactorsBuilder builder = new ExperimentalFactorsBuilder();
-        subject = builder.withExperimentRuns(experimentRunMocks).create();
+        subject = builder.withExperimentRuns(experimentRunMocks).withMenuFilterFactorTypes(Sets.newHashSet("TYPE1", "TYPE2")).create();
     }
 
     @Test
@@ -111,6 +111,12 @@ public class ExperimentalFactorsTest {
         assertThat(factors, contains(factorWithType1, factorWithType2));
 
     }
+
+    @Test
+    public void getMenuFactorNames() {
+        assertThat(subject.getMenuFilterFactorNames(), contains("NAME1", "NAME2"));
+    }
+
 
     @Test
     public void testGetFilteredFactors() {

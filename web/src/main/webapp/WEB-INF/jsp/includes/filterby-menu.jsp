@@ -38,7 +38,7 @@
     <ul id="filterBy" style="display: none">
         <li><a>${filterMenuLabel}</a>
             <ul>
-                <c:forEach items="${filterFactorMenu.allFactorNames}" var="firstFactorName">
+                <c:forEach items="${menuFactorNames}" var="firstFactorName">
                     <li>
                         <a>${firstFactorName}</a>
                         <ul>
@@ -71,8 +71,9 @@
                                                                 <c:set var="lastFilterFactorMenu"
                                                                        value="${secondFilterFactorMenu.filterOutByFactor(secondFactor)}"/>
 
-                                                                <c:forEach items="${lastFilterFactorMenu.allFactorNames}"
-                                                                           var="queryFactorName">
+                                                                <c:forEach
+                                                                        items="${lastFilterFactorMenu.allFactorNames}"
+                                                                        var="queryFactorName">
                                                                     <c:set var="queryFactorType"
                                                                            value="${filterFactorMenu.resolveTypeForName(queryFactorName)}"/>
                                                                     <li data-serialized-factors='${lastFilterFactorMenu.getLink(queryFactorType, firstFactor, secondFactor)}'

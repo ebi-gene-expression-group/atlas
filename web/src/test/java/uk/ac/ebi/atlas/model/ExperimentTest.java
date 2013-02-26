@@ -85,6 +85,7 @@ public class ExperimentTest {
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
 
         when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRuns)).thenReturn(experimentalFactorsBuilderMock);
+        when(experimentalFactorsBuilderMock.withMenuFilterFactorTypes(anySet())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
 
         subject = new ExperimentBuilder(experimentalFactorsBuilderMock)
@@ -123,11 +124,6 @@ public class ExperimentTest {
     }
 
     @Test
-    public void getMenuFilterFactorTypes() {
-        assertThat(subject.getMenuFilterFactorTypes(), is(Collections.EMPTY_SET));
-    }
-
-    @Test
     public void getFactorGroupShouldDelegateToExperimentalRun() {
         //when
         subject.getFactorGroup(RUN_ACCESSION_1);
@@ -145,6 +141,7 @@ public class ExperimentTest {
 
         //then
         verify(experimentalFactorsMock).getFilteredFactors(filteredFactors);
+        assertThat(subject.getExperimentalFactors().getMenuFilterFactorNames(), is(Collections.EMPTY_SET));
     }
 
 }

@@ -43,11 +43,14 @@ public class ExperimentalFactors {
 
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
-    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByName, Map<String, String> factorNamesByType, Collection<FactorGroup> factorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors) {
+    private Set<String> menuFilterFactorTypes;
+
+    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByName, Map<String, String> factorNamesByType, Collection<FactorGroup> factorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes) {
         this.factorsByName = factorsByName;
         this.factorNamesByType = factorNamesByType;
         this.factorGroups = factorGroups;
         this.coOccurringFactors = coOccurringFactors;
+        this.menuFilterFactorTypes = menuFilterFactorTypes;
     }
 
     public String getFactorName(String type) {
@@ -83,13 +86,26 @@ public class ExperimentalFactors {
         for (FactorGroup factorGroup : factorGroups) {
 
             List<Factor> remainingFactors = factorGroup.remove(filterFactors);
-            if(remainingFactors.size() == 1) {
+            if (remainingFactors.size() == 1) {
                 factorsByType.add(remainingFactors.get(0));
             }
         }
 
-        return  factorsByType;
+        return factorsByType;
 
+    }
+
+    public SortedSet<String> getMenuFilterFactorNames() {
+
+        SortedSet<String> factorNames = Sets.newTreeSet();
+
+        for (String type : menuFilterFactorTypes) {
+
+            String factorName = getFactorName(type);
+            factorNames.add(factorName);
+        }
+
+        return factorNames;
     }
 
     public SortedSet<Factor> getAllFactors() {

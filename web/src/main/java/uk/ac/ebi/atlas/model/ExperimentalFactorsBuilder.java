@@ -26,21 +26,30 @@ public class ExperimentalFactorsBuilder {
 
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
+    private Set<String> menuFilterFactorTypes;
+
     public ExperimentalFactorsBuilder withExperimentRuns(Collection<ExperimentRun> experimentRuns) {
 
         this.experimentRuns = experimentRuns;
         return this;
     }
 
+    public ExperimentalFactorsBuilder withMenuFilterFactorTypes(Set<String> menuFilterFactorTypes) {
+
+        this.menuFilterFactorTypes = menuFilterFactorTypes;
+        return this;
+    }
+
     public ExperimentalFactors create() {
         checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
+        checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         Collection<FactorGroup> factorGroups = extractFactorGroups();
 
         for (FactorGroup factorGroup : factorGroups) {
             addFactorGroup(factorGroup);
         }
 
-        ExperimentalFactors experimentalFactors = new ExperimentalFactors(factorsByName, factorNamesByType, factorGroups, coOccurringFactors);
+        ExperimentalFactors experimentalFactors = new ExperimentalFactors(factorsByName, factorNamesByType, factorGroups, coOccurringFactors, menuFilterFactorTypes);
 
         return experimentalFactors;
     }
