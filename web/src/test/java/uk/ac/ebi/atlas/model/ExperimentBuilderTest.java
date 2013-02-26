@@ -47,11 +47,13 @@ public class ExperimentBuilderTest {
 
     private Collection<ExperimentRun> experimentRunMocks;
     private Set<Factor> defaultFilterFactors;
+    private Set<String> menuFilterFactorTypes;
 
     @Before
     public void setUp() throws Exception {
         when(defaultFilterFactorMock.getType()).thenReturn(DEFAULT_FILTER_FACTOR_TYPE);
         defaultFilterFactors = Sets.newHashSet(defaultFilterFactorMock);
+        menuFilterFactorTypes = Sets.newHashSet(DEFAULT_FILTER_FACTOR_TYPE);
         experimentRunMocks = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
         when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroup1Mock);
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroup2Mock);
@@ -66,6 +68,7 @@ public class ExperimentBuilderTest {
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(DEFAULT_QUERY_TYPE)
                 .withDefaultFilterFactors(defaultFilterFactors)
+                .withMenuFilterFactorTypes(menuFilterFactorTypes)
                 .withExperimentRuns(experimentRunMocks);
 
     }
@@ -80,7 +83,7 @@ public class ExperimentBuilderTest {
         //and
         verify(experimentalFactorsMock).getFactorName(DEFAULT_FILTER_FACTOR_TYPE);
         //and
-
+        assertThat(experiment.getMenuFilterFactorTypes(), contains(DEFAULT_FILTER_FACTOR_TYPE));
     }
 
 }

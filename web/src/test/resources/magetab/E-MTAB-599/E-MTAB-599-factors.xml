@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<factors-definition>
+    <defaultFilterFactors/>
+    <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
+    <menuFilterFactorTypes/>
+</factors-definition>

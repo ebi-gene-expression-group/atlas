@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<factors-definition>
+    <defaultFilterFactors>
+        <filterFactor>
+            <type>CELLULAR_COMPONENT</type>
+            <value>whole cell</value>
+        </filterFactor>
+        <filterFactor>
+            <type>MATERIAL_TYPE</type>
+            <value>total RNA</value>
+        </filterFactor>
+    </defaultFilterFactors>
+    <defaultQueryFactorType>CELL_LINE</defaultQueryFactorType>
+    <menuFilterFactorTypes>CELLULAR_COMPONENT, MATERIAL_TYPE, CELL_LINE</menuFilterFactorTypes>
+</factors-definition>
