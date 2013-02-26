@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.impl;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.SessionContextBuilder;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentalFactors;
@@ -43,7 +44,6 @@ public class FilterParametersTest {
 
     public static final String ORGANISM_PART = "ORGANISM_PART";
     public static final String CELL_LINE = "CELL_LINE";
-    private static final String EXPERIMENT_ACCESSION = "E-GEKO";
 
     private FilterParameters subject;
 
@@ -65,7 +65,9 @@ public class FilterParametersTest {
         when(experimentalFactorsMock.getFactorName(anyString())).thenReturn("X");
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
 
-        FilterParameters.Builder builder = new FilterParameters.Builder();
+        when(experimentMock.getFirstSpecies()).thenReturn("Homo sapiens");
+
+        SessionContextBuilder builder = new SessionContextBuilder(new FilterParameters());
 
         subject = builder.forExperiment(experimentMock)
                 .withFilterFactors(Sets.newHashSet("A:B", "C:D"))

@@ -22,10 +22,10 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.InvalidQueryException;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentalFactors;
@@ -48,13 +48,14 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
     private ExperimentsCache experimentsCache;
 
-    private FilterParameters filterParameters;
+    private SessionContext sessionContext;
 
     private SolrClient solrClient;
 
     @Inject
-    protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder) {
+    protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder, SessionContext sessionContext) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
+        this.sessionContext = sessionContext;
     }
 
     @Inject
@@ -67,8 +68,8 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         this.solrClient = solrClient;
     }
 
-    public void setFilteredParameters(FilterParameters filterParameters) {
-        this.filterParameters = filterParameters;
+    public void setFilteredParameters(SessionContext sessionContext) {
+        this.sessionContext = sessionContext;
     }
 
     @NotNull
@@ -78,23 +79,28 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
         Set<String> selectedGeneIds = null;
 
-        if (StringUtils.isNotBlank(filterParameters.getGeneQuery())) {
+        if (StringUtils.isNotBlank(sessionContext.getGeneQuery())) {
 
-            selectedGeneIds = searchForGeneIds(experiment);
-            if (selectedGeneIds.isEmpty()) {
-                return returnEmpty();
+            try {
+                selectedGeneIds = searchForGeneIds(experiment);
+                if (selectedGeneIds.isEmpty()) {
+                    return returnEmpty();
+                }
+            } catch (InvalidQueryException e) {
+                throw new GeneNotFoundException(e.getMessage());
+
             }
         }
 
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .createGeneProfileInputStream();
 
-        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, filterParameters.getSelectedQueryFactors())) {
+        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, sessionContext.getSelectedQueryFactors())) {
 
             ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-            SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(filterParameters.getSelectedFilterFactors());
-            return apply(filteredFactors, filterParameters.getSelectedQueryFactors(), inputStream);
+            SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(sessionContext.getSelectedFilterFactors());
+            return apply(filteredFactors, sessionContext.getSelectedQueryFactors(), inputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -104,16 +110,8 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
     protected Set<String> searchForGeneIds(Experiment experiment) {
 
-        Set<String> species = Sets.newHashSet(experiment.getSpecies());
+        return solrClient.findGeneIds(sessionContext.getGeneQuery(), sessionContext.getFilteredBySpecies());
 
-        String filteredBySpecies = filterParameters.getFilteredBySpecies();
-        if (!StringUtils.isEmpty(filteredBySpecies)) {
-            species.clear();
-            species.add(filteredBySpecies);
-
-        }
-
-        return solrClient.findGeneIds(filterParameters.getGeneQuery(), species);
     }
 
     protected abstract T apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException;

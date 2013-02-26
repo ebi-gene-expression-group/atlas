@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.geneindex;
 
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
@@ -52,7 +51,7 @@ public class JsonAutocompleteTest {
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         jsonAutocompleteEmptyResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.emptySuggestions.json");
 
-        subject = new SolrClient(mock(RestTemplate.class), mock(GenePropertyQueryBuilder.class));
+        subject = new SolrClient(mock(RestTemplate.class));
     }
 
     @Test

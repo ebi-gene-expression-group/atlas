@@ -26,15 +26,15 @@ import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.FilterParameters;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
+import uk.ac.ebi.atlas.commands.SessionContext;
+import uk.ac.ebi.atlas.commands.SessionContextBuilder;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.RankingParameters;
@@ -66,9 +66,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
     @Inject
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache, FilterParameters.Builder filterParameterBuilder,
+                                      ExperimentsCache experimentsCache, SessionContextBuilder sessionContextBuilder,
                                       GeneExpressionPrecondition geneExpressionPrecondition) {
-        super(filterParameterBuilder, experimentsCache, geneExpressionPrecondition);
+        super(sessionContextBuilder, experimentsCache, geneExpressionPrecondition);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
@@ -80,18 +80,19 @@ public class GeneProfilesPageController extends GeneProfilesController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        FilterParameters filterParameters = createFilterParameters(experimentAccession, preferences);
+        SessionContext sessionContext = updateSessionContext(experimentAccession, preferences);
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        model.addAttribute("formattedQueryFactorType", filterParameters.formattedQueryFactorType());
+        model.addAttribute("formattedQueryFactorType", sessionContext.formattedQueryFactorType());
 
-        Set<Factor> selectedFilterFactors = filterParameters.getSelectedFilterFactors();
+        Set<Factor> selectedFilterFactors = sessionContext.getSelectedFilterFactors();
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
         SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
+        Set<String> menuFilterFactorTypes = experiment.getMenuFilterFactorTypes();
 
         // this is currently required for the request preferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactors", allQueryFactors);
@@ -99,26 +100,18 @@ public class GeneProfilesPageController extends GeneProfilesController {
         // this is currently required for the request preferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
 
-        SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
+        Set<Factor> allFactors = experimentalFactors.getAllFactors();
 
-        if (!CollectionUtils.isEmpty(menuFactorNames)) {
+        FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, allFactors);
 
-            Set<Factor> menuFactors = experimentalFactors.getAllFactors();
-
-            FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, menuFactors);
-
-            model.addAttribute("filterFactorMenu", filterFactorMenu);
-
-            model.addAttribute("menuFactorNames", menuFactorNames);
-        }
+        model.addAttribute("filterFactorMenu", filterFactorMenu);
 
         model.addAttribute("selectedFilterFactors", selectedFilterFactors);
 
         if (!result.hasErrors()) {
 
-            prepareGeneExpressionPrecondition(experimentAccession, preferences, filterParameters);
 
-            rankCommand.setFilteredParameters(filterParameters);
+            prepareGeneExpressionPrecondition(experimentAccession, preferences, sessionContext);
 
             rankingParameters.setSpecific(preferences.isSpecific());
             rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
@@ -129,9 +122,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
                 model.addAttribute("geneProfiles", geneProfiles);
 
 
-                String species = findShownSpecie(experiment, filterParameters);
+                String species = sessionContext.getFilteredBySpecies();
 
-                if ("ORGANISM_PART".equals(filterParameters.getQueryFactorType())) {
+                if ("ORGANISM_PART".equals(sessionContext.getQueryFactorType())) {
                     model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
 
                     model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
@@ -141,16 +134,12 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
 
             } catch (GeneNotFoundException e) {
-                result.addError(new ObjectError("preferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
+                result.addError(new ObjectError("preferences", e.getMessage() + preferences.getGeneQuery() + "'"));
             }
 
         }
 
         return "experiment";
-    }
-
-    private String findShownSpecie(Experiment experiment, FilterParameters filterParameters) {
-        return experiment.isForSingleSpecie() ? experiment.getFirstSpecies() : filterParameters.getFilteredBySpecies();
     }
 
     String buildDownloadURL(HttpServletRequest request) {
