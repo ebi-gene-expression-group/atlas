@@ -161,7 +161,10 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         Set<String> results = new HashSet<>();
         List<Object> menuFilterFactorTypes = config.getList("menuFilterFactorTypes");
         for (Object o : menuFilterFactorTypes) {
-            results.add(o.toString());
+            String filterFactorType = (String) o;
+            if (filterFactorType.trim().length() > 0) {
+                results.add(filterFactorType);
+            }
         }
 
         return results;
