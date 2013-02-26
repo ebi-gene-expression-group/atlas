@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,7 @@ import java.util.Set;
 /*
     Overview: is a group of factors that combine together in an ExperimentRun
  */
-public interface FactorGroup extends Iterable<Factor> {
+public interface FactorGroup extends Iterable<Factor>, Serializable {
 
     public Factor getFactorByType(String type);
 

@@ -27,13 +27,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 //ToDo: This class in not just "expressionPrecondition", but also container for other request parameters. Maybe we need to create "GeneProfilePrecondition" class.
 @Named
 @Scope("session")
-public class GeneExpressionPrecondition implements Predicate<Expression> {
+public class GeneExpressionPrecondition implements Predicate<Expression>, Serializable {
 
     private double cutoff;
 

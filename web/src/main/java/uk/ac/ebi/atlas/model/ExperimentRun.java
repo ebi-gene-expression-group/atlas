@@ -2,13 +2,14 @@ package uk.ac.ebi.atlas.model;
 
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
 import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ExperimentRun implements Comparable<ExperimentRun> {
+public class ExperimentRun implements Comparable<ExperimentRun>, Serializable {
 
     private String runAccession;
     private FactorSet factorGroup = new FactorSet();
