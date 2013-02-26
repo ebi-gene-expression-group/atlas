@@ -28,12 +28,13 @@ import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-public class ExperimentalFactors {
+public class ExperimentalFactors implements Serializable {
 
     private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
 

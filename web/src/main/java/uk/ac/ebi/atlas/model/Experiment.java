@@ -22,12 +22,13 @@
 
 package uk.ac.ebi.atlas.model;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Experiment {
+public class Experiment implements Serializable {
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 

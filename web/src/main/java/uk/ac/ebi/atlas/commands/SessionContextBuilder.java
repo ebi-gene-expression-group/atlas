@@ -33,13 +33,14 @@ import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 @Named
 @Scope("session")
-public class SessionContextBuilder {
+public class SessionContextBuilder implements Serializable {
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private FilterParameters filterParameters;
@@ -47,7 +48,7 @@ public class SessionContextBuilder {
     private Set<String> queryFactorValues = Collections.EMPTY_SET;
     private Set<String> serializedFilterFactors = Collections.EMPTY_SET;
 
-    Experiment experiment;
+    private Experiment experiment;
 
     @Inject
     public SessionContextBuilder(FilterParameters filterParameters) {

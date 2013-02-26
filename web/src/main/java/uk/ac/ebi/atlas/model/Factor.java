@@ -24,12 +24,13 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Factor implements Comparable<Factor> {
+public class Factor implements Comparable<Factor>, Serializable {
 
     private String type;
 

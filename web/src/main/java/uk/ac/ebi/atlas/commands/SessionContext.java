@@ -24,9 +24,10 @@ package uk.ac.ebi.atlas.commands;
 
 import uk.ac.ebi.atlas.model.Factor;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public interface SessionContext {
+public interface SessionContext extends Serializable {
 
     public String getGeneQuery();
 
