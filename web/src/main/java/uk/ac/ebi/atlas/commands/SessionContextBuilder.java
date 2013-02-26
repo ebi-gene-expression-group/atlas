@@ -72,6 +72,8 @@ public class SessionContextBuilder implements Serializable {
     public SessionContextBuilder withFilterFactors(Set<String> serializedFilterFactors) {
         if (CollectionUtils.isNotEmpty(serializedFilterFactors)) {
             this.serializedFilterFactors = serializedFilterFactors;
+        } else {
+            this.serializedFilterFactors = Collections.EMPTY_SET;
         }
         return this;
     }
@@ -94,6 +96,8 @@ public class SessionContextBuilder implements Serializable {
     public SessionContextBuilder withQueryFactorValues(Set<String> queryFactorValuesString) {
         if (CollectionUtils.isNotEmpty(queryFactorValuesString)) {
             this.queryFactorValues = queryFactorValuesString;
+        } else {
+            this.queryFactorValues = Collections.EMPTY_SET;
         }
         return this;
     }
