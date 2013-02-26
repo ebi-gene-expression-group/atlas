@@ -28,9 +28,8 @@ public class SolrClientTest {
     @Before
     public void initSubject() {
         RestTemplate restTemplate = new RestTemplate();
-        GenePropertyQueryBuilder queryBuilder = new GenePropertyQueryBuilder();
 
-        subject = new SolrClient(restTemplate, queryBuilder);
+        subject = new SolrClient(restTemplate);
     }
 
     @Test

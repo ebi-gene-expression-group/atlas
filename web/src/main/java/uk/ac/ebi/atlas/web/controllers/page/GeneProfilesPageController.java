@@ -135,7 +135,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
 
             } catch (GeneNotFoundException e) {
-                result.addError(new ObjectError("preferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
+                result.addError(new ObjectError("preferences", e.getMessage() + preferences.getGeneQuery() + "'"));
             }
 
         }

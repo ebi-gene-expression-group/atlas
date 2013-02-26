@@ -26,6 +26,7 @@ import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.InvalidQueryException;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentalFactors;
@@ -80,9 +81,14 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
         if (StringUtils.isNotBlank(filterParameters.getGeneQuery())) {
 
-            selectedGeneIds = searchForGeneIds(experiment);
-            if (selectedGeneIds.isEmpty()) {
-                return returnEmpty();
+            try {
+                selectedGeneIds = searchForGeneIds(experiment);
+                if (selectedGeneIds.isEmpty()) {
+                    return returnEmpty();
+                }
+            } catch (InvalidQueryException e) {
+                throw new GeneNotFoundException(e.getMessage());
+
             }
         }
 

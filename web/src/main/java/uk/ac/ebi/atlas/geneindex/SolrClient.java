@@ -29,12 +29,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
 import java.util.*;
 
 @Named
@@ -46,7 +47,7 @@ public class SolrClient {
 
     private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
 
-    private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={query} " +
+    private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={conf}{query} " +
             "AND species:{organism}&start=0&rows=100000&fl=identifier&wt=json";
 
     private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q=\"{0}\"&wt=json&omitHeader=true&json.nl=arrarr";
@@ -57,12 +58,10 @@ public class SolrClient {
 
     private String serverURL;
 
-    private GenePropertyQueryBuilder queryBuilder;
 
     @Inject
-    public SolrClient(RestTemplate restTemplate, GenePropertyQueryBuilder queryBuilder) {
+    public SolrClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.queryBuilder = queryBuilder;
     }
 
     @Value("#{configuration['index.server.url']}")
@@ -71,10 +70,10 @@ public class SolrClient {
     }
 
     public Set<String> findGeneIds(String searchText, Set<String> organisms) {
-        String geneQuery = queryBuilder.buildQueryString(searchText);
+        String geneQuery = buildQueryAllTextString(searchText);
         String organismsQuery = buildSpeciesQuery(organisms);
 
-        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, geneQuery, organismsQuery);
+        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, "{!lucene q.op=OR df=alltext}", geneQuery, organismsQuery);
 
         List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS);
 
@@ -82,7 +81,7 @@ public class SolrClient {
 
     }
 
-    public List<String> findGeneNameSuggestions(String geneName){
+    public List<String> findGeneNameSuggestions(String geneName) {
 
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName);
 
@@ -92,15 +91,15 @@ public class SolrClient {
     List<String> extractSuggestions(String jsonString, String term) {
         JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
 
-        if (suggestionsElement !=null && suggestionsElement.isJsonArray()){
+        if (suggestionsElement != null && suggestionsElement.isJsonArray()) {
 
             JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
 
-            for(JsonElement suggestionElement : suggestionElements){
+            for (JsonElement suggestionElement : suggestionElements) {
 
                 JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
 
-                if (term.equalsIgnoreCase(suggestionEntry.get(0).getAsString())){
+                if (term.equalsIgnoreCase(suggestionEntry.get(0).getAsString())) {
                     JsonArray suggestions = suggestionEntry.get(1).getAsJsonObject().getAsJsonArray("suggestion");
                     Gson gson = new Gson();
                     return gson.fromJson(suggestions, List.class);
@@ -114,7 +113,7 @@ public class SolrClient {
 
     }
 
-    JsonElement extractSuggestionsElement(String jsonString){
+    JsonElement extractSuggestionsElement(String jsonString) {
         JsonObject spellCheckObject = new JsonParser().parse(jsonString).getAsJsonObject().getAsJsonObject("spellcheck");
         if (spellCheckObject != null) {
             return spellCheckObject.get("suggestions");
@@ -127,13 +126,13 @@ public class SolrClient {
 
         JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
 
-        if (suggestionsElement !=null && suggestionsElement.isJsonArray()){
+        if (suggestionsElement != null && suggestionsElement.isJsonArray()) {
 
             JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
 
-            for(JsonElement suggestionElement : suggestionElements){
+            for (JsonElement suggestionElement : suggestionElements) {
                 JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
-                if ("collation".equals(suggestionEntry.get(0).getAsString())){
+                if ("collation".equals(suggestionEntry.get(0).getAsString())) {
                     String suggestion = suggestionEntry.get(1).getAsJsonArray().get(0).getAsJsonArray().get(1).getAsString();
                     suggestionStrings.add(StringUtils.strip(suggestion, "\""));
                 }
@@ -142,7 +141,7 @@ public class SolrClient {
         return suggestionStrings;
     }
 
-    public List<String> findGenePropertySuggestions(String multiTermToken){
+    public List<String> findGenePropertySuggestions(String multiTermToken) {
 
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken);
 
@@ -158,6 +157,12 @@ public class SolrClient {
 
             return jsonResponse;
 
+        } catch (HttpClientErrorException e) {
+            if (HttpStatus.BAD_REQUEST.equals(e.getStatusCode())) {
+                throw new InvalidQueryException("Invalid gene query, please check syntax! ", e);
+            }
+            LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
+            throw e;
         } catch (RestClientException e) {
             LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
             throw e;
@@ -176,4 +181,11 @@ public class SolrClient {
         return result;
     }
 
+    String buildQueryAllTextString(String searchText) {
+        StringBuilder stringBuilder = new StringBuilder("(alltext:");
+        stringBuilder.append(searchText);
+        stringBuilder.append(")");
+
+        return stringBuilder.toString();
+    }
 }
