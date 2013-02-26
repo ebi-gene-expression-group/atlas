@@ -31,23 +31,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
-
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.isNotNull;
-import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.mock;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class SolrClientIT {
+
+    private static final String SPECIES = "homo sapiens";
 
     private static final String SOLR_REST_GENENAMES_QUERY_TEMPLATE = "suggest_genename?q={0}&wt=json&omitHeader=true";
 
@@ -72,7 +67,7 @@ public class SolrClientIT {
     @Test
     public void testGetJsonForMultiTermSuggestions() {
 
-        List<String> properties = subject.findGenePropertySuggestions("p b");
+        List<String> properties = subject.findGenePropertySuggestions("p b", SPECIES);
 
         assertThat(properties.size(), is(10));
         assertThat(properties, hasItems("p b", "p binding", "putative b"));

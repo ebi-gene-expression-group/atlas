@@ -34,7 +34,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
 import java.util.*;
 
 @Named
@@ -47,7 +46,7 @@ public class SolrClient {
     private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
 
     private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={query} " +
-            "AND species:{organism}&start=0&rows=100000&fl=identifier&wt=json";
+            "AND species:\"{organism}\"&start=0&rows=100000&fl=identifier&wt=json";
 
     private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q=\"{0}\"&wt=json&omitHeader=true&json.nl=arrarr";
 
@@ -70,11 +69,10 @@ public class SolrClient {
         this.serverURL = serverURL;
     }
 
-    public Set<String> findGeneIds(String searchText, Set<String> organisms) {
+    public Set<String> findGeneIds(String searchText, String species) {
         String geneQuery = queryBuilder.buildQueryString(searchText);
-        String organismsQuery = buildSpeciesQuery(organisms);
 
-        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, geneQuery, organismsQuery);
+        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, geneQuery, species);
 
         List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS);
 
@@ -82,9 +80,9 @@ public class SolrClient {
 
     }
 
-    public List<String> findGeneNameSuggestions(String geneName){
+    public List<String> findGeneNameSuggestions(String geneName, String species){
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName, species);
 
         return extractSuggestions(jsonString, geneName);
     }
@@ -142,9 +140,9 @@ public class SolrClient {
         return suggestionStrings;
     }
 
-    public List<String> findGenePropertySuggestions(String multiTermToken){
+    public List<String> findGenePropertySuggestions(String multiTermToken, String species){
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
 
         return extractCollations(jsonString);
     }
@@ -162,10 +160,6 @@ public class SolrClient {
             LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
             throw e;
         }
-    }
-
-    String buildSpeciesQuery(Set<String> organisms) {
-        return "(\"".concat(StringUtils.join(organisms, "\" OR \"").toLowerCase().concat("\")"));
     }
 
     Set<String> toUppercase(List<String> geneIds) {
