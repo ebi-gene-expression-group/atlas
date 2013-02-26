@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.base.Joiner;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,7 +93,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
         SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
-        Set<String> menuFilterFactorTypes = experiment.getMenuFilterFactorTypes();
 
         // this is currently required for the request preferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactors", allQueryFactors);
@@ -100,11 +100,18 @@ public class GeneProfilesPageController extends GeneProfilesController {
         // this is currently required for the request preferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
 
-        Set<Factor> allFactors = experimentalFactors.getAllFactors();
+        SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
 
-        FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, allFactors);
+        if (!CollectionUtils.isEmpty(menuFactorNames)) {
 
-        model.addAttribute("filterFactorMenu", filterFactorMenu);
+            Set<Factor> menuFactors = experimentalFactors.getAllFactors();
+
+            FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, menuFactors);
+
+            model.addAttribute("filterFactorMenu", filterFactorMenu);
+
+            model.addAttribute("menuFactorNames", menuFactorNames);
+        }
 
         model.addAttribute("selectedFilterFactors", selectedFilterFactors);
 
