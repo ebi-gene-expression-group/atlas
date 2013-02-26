@@ -183,7 +183,7 @@ public class SolrClient {
 
     String buildQueryAllTextString(String searchText) {
         StringBuilder stringBuilder = new StringBuilder("(alltext:");
-        stringBuilder.append(searchText);
+        stringBuilder.append(searchText.replace(":", ""));
         stringBuilder.append(")");
 
         return stringBuilder.toString();

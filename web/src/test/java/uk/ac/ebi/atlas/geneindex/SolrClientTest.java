@@ -46,6 +46,11 @@ public class SolrClientTest {
         assertThat(speciesQuery, containsString("species 2"));
     }
 
+    @Test
+    public void testBuildQueryAllTextString() {
+        String query = "GO:0008134 \"p53 binding\"";
+        assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO0008134 \"p53 binding\")"));
+    }
 
 
 }

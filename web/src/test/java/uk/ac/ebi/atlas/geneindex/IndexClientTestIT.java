@@ -22,7 +22,7 @@ public class IndexClientTestIT {
     @Inject
     private SolrClient subject;
 
-    private String query = "\"GO:0008134\" \"p53 binding\"";
+    private String query = "GO:0008134 \"p53 binding\"";
 
     private Set<String> species = Sets.newHashSet("Homo sapiens");
 
