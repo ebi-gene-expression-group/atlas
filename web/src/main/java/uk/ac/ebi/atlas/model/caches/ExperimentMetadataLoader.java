@@ -24,10 +24,13 @@ package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Sets;
+import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
+import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfiguration;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.ExperimentRun;
@@ -35,7 +38,6 @@ import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoader;
 import uk.ac.ebi.atlas.model.caches.magetab.MageTabLoaderBuilder;
 import uk.ac.ebi.atlas.model.readers.ExperimentDataTsvReader;
-import uk.ac.ebi.atlas.model.readers.ExperimentFactorsTsvReader;
 import uk.ac.ebi.atlas.model.readers.TsvReader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
@@ -57,7 +59,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
     private String extraInfoPathTemplate;
 
     private MageTabLoaderBuilder mageTabLoaderBuilder;
-    private TsvReader experimentFactorsTsvReader;
+    private ExperimentFactorsConfiguration experimentFactorsConfiguration;
 
     private ArrayExpressClient arrayExpressClient;
 
@@ -65,11 +67,11 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
 
     @Inject
-    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsTsvReader experimentFactorsTsvReader
+    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsConfiguration experimentFactorsConfiguration
             , ArrayExpressClient arrayExpressClient, ExperimentDataTsvReader experimentDataTsvReader) {
         this.mageTabLoaderBuilder = mageTabLoaderBuilder;
 
-        this.experimentFactorsTsvReader = experimentFactorsTsvReader;
+        this.experimentFactorsConfiguration = experimentFactorsConfiguration;
         this.arrayExpressClient = arrayExpressClient;
         this.experimentDataTsvReader = experimentDataTsvReader;
     }
@@ -77,9 +79,13 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
     @Override
     public Experiment load(String experimentAccession) throws ParseException, IOException {
 
-        String defaultQueryFactorType = parseDefaultQueryFactorType(experimentAccession);
+        XMLConfiguration factorsConfig = experimentFactorsConfiguration.forExperiment(experimentAccession);
 
-        Set<Factor> defaultFilterFactors = parseDefaultFilterFactors(experimentAccession);
+        String defaultQueryFactorType = parseDefaultQueryFactorType(factorsConfig);
+
+        Set<Factor> defaultFilterFactors = parseDefaultFilterFactors(factorsConfig);
+
+        Set<String> menuFilterFactorTypes = parseMenuFilterFactorTypes(factorsConfig);
 
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
 
@@ -94,10 +100,10 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
         MageTabLoader mageTabLoader = mageTabLoaderBuilder
-                                                        .forExperimentAccession(experimentAccession)
-                                                        .withRequiredFactorTypes(requiredFactorTypes)
-                                                        .withProcessedRunAccessions(processedRunAccessions)
-                                                        .build();
+                .forExperimentAccession(experimentAccession)
+                .withRequiredFactorTypes(requiredFactorTypes)
+                .withProcessedRunAccessions(processedRunAccessions)
+                .build();
 
         Collection<ExperimentRun> experimentRuns = mageTabLoader.getProcessedExperimentRuns();
 
@@ -105,6 +111,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
                 .withDescription(experimentName)
                 .withDefaultQueryType(defaultQueryFactorType)
                 .withDefaultFilterFactors(defaultFilterFactors)
+                .withMenuFilterFactorTypes(menuFilterFactorTypes)
                 .withExperimentRuns(experimentRuns)
                 .withExtraInfo(hasExtraInfoFile)
                 .create();
@@ -125,26 +132,39 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         return requiredFactorTypes;
     }
 
-    private Set<Factor> parseDefaultFilterFactors(String experimentAccession) {
-        Set<Factor> defaultFilterFactors = new HashSet<>();
+    private Set<Factor> parseDefaultFilterFactors(XMLConfiguration config) {
 
-        for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
-            if (line.length == 2) {
-                defaultFilterFactors.add(new Factor(line[0], line[1]));
-            }
+        Set<Factor> defaultFilterFactors = new HashSet<>();
+        List<HierarchicalConfiguration> fields =
+                config.configurationsAt("defaultFilterFactors.filterFactor");
+        for (HierarchicalConfiguration sub : fields) {
+            String factorType = sub.getString("type");
+            String factorValue = sub.getString("value");
+            defaultFilterFactors.add(new Factor(factorType, factorValue));
         }
+
         return defaultFilterFactors;
     }
 
-    private String parseDefaultQueryFactorType(String experimentAccession) {
+    private String parseDefaultQueryFactorType(XMLConfiguration config) {
 
-        for (String[] line : experimentFactorsTsvReader.readAll(experimentAccession)) {
-            if (line.length == 1) {
-                return line[0];
-            }
+        String defaultQueryFactorType = config.getString("defaultQueryFactorType");
+        if (defaultQueryFactorType == null || defaultQueryFactorType.trim().length() == 0) {
+            throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
         }
 
-        throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
+        return defaultQueryFactorType;
+    }
+
+    private Set<String> parseMenuFilterFactorTypes(XMLConfiguration config) {
+
+        Set<String> results = new HashSet<>();
+        List<Object> menuFilterFactorTypes = config.getList("menuFilterFactorTypes");
+        for (Object o : menuFilterFactorTypes) {
+            results.add(o.toString());
+        }
+
+        return results;
     }
 
     private String fetchExperimentName(String experimentAccession) {
@@ -156,7 +176,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         }
     }
 
-    protected Set<String> extractProcessedRunAccessions(String experimentAccession){
+    protected Set<String> extractProcessedRunAccessions(String experimentAccession) {
 
         String[] experimentRunHeaders = experimentDataTsvReader.readLine(experimentAccession, 0);
 

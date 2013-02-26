@@ -31,6 +31,7 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
@@ -43,6 +44,7 @@ public class ExperimentBuilder {
     private String defaultQueryType;
     private boolean hasExtraInfoFile;
     private Set<Factor> defaultFilterFactors;
+    private Set<String> menuFilterFactorTypes;
     private ExperimentalFactorsBuilder experimentalFactorsBuilder;
 
     @Inject
@@ -80,11 +82,18 @@ public class ExperimentBuilder {
         return this;
     }
 
+    public ExperimentBuilder withMenuFilterFactorTypes(Set<String> menuFilterFactorTypes) {
+        this.menuFilterFactorTypes = menuFilterFactorTypes;
+        return this;
+    }
+
     public Experiment create() {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
+        checkNotNull(defaultFilterFactors, "Please provide a set of filter factors");
+        checkNotNull(menuFilterFactorTypes, "Please provide a set of menu filter factor types");
 
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder.withExperimentRuns(experimentRuns).create();
 
@@ -93,7 +102,7 @@ public class ExperimentBuilder {
             defaultFilterFactor.setName(factorName);
         }
 
-        return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
+        return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors, menuFilterFactorTypes, hasExtraInfoFile);
     }
 
 

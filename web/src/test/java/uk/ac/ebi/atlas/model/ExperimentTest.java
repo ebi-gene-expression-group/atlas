@@ -92,6 +92,7 @@ public class ExperimentTest {
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(ORGANISM_PART)
                 .withDefaultFilterFactors(Collections.EMPTY_SET)
+                .withMenuFilterFactorTypes(Collections.EMPTY_SET)
                 .withExperimentRuns(experimentRuns)
                 .create();
 
@@ -119,6 +120,11 @@ public class ExperimentTest {
         subject.getDefaultQueryFactorType();
 
         assertThat(subject.getDefaultFilterFactors(), is(Collections.EMPTY_SET));
+    }
+
+    @Test
+    public void getMenuFilterFactorTypes() {
+        assertThat(subject.getMenuFilterFactorTypes(), is(Collections.EMPTY_SET));
     }
 
     @Test
