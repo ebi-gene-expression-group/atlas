@@ -105,7 +105,7 @@ public class WriteGeneProfilesCommandTest {
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(organismParts, inputStreamMock);
+        long count = subject.apply(organismParts, null ,inputStreamMock);
 
         verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 
