@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
-import uk.ac.ebi.atlas.commands.SessionContext;
-import uk.ac.ebi.atlas.commands.SessionContextBuilder;
+import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -51,11 +51,11 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
 
     @Inject
     public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
-                                          SessionContextBuilder sessionContextBuilder,
+                                          RequestContextBuilder requestContextBuilder,
                                           ExperimentsCache experimentsCache,
                                           GeneExpressionPrecondition geneExpressionPrecondition) {
 
-        super(sessionContextBuilder, experimentsCache, geneExpressionPrecondition);
+        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
@@ -70,7 +70,7 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-        SessionContext parameters = updateSessionContext(experimentAccession, preferences);
+        RequestContext parameters = initRequestContext(experimentAccession, preferences);
 
         prepareGeneExpressionPrecondition(experimentAccession, preferences, parameters);
 

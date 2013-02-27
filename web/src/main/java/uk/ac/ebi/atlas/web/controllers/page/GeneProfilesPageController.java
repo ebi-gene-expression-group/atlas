@@ -34,8 +34,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
-import uk.ac.ebi.atlas.commands.SessionContext;
-import uk.ac.ebi.atlas.commands.SessionContextBuilder;
+import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.RankingParameters;
@@ -67,9 +67,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
     @Inject
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache, SessionContextBuilder sessionContextBuilder,
+                                      ExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
                                       GeneExpressionPrecondition geneExpressionPrecondition) {
-        super(sessionContextBuilder, experimentsCache, geneExpressionPrecondition);
+        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
@@ -81,13 +81,13 @@ public class GeneProfilesPageController extends GeneProfilesController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        SessionContext sessionContext = updateSessionContext(experimentAccession, preferences);
+        RequestContext requestContext = initRequestContext(experimentAccession, preferences);
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        model.addAttribute("formattedQueryFactorType", sessionContext.formattedQueryFactorType());
+        model.addAttribute("formattedQueryFactorType", requestContext.formattedQueryFactorType());
 
-        Set<Factor> selectedFilterFactors = sessionContext.getSelectedFilterFactors();
+        Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -101,6 +101,11 @@ public class GeneProfilesPageController extends GeneProfilesController {
         model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
 
         SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
+
+        String species = requestContext.getFilteredBySpecies();
+
+        //required by autocomplete
+        model.addAttribute("species", species);
 
         if (!CollectionUtils.isEmpty(menuFactorNames)) {
 
@@ -118,7 +123,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
         if (!result.hasErrors()) {
 
 
-            prepareGeneExpressionPrecondition(experimentAccession, preferences, sessionContext);
+            prepareGeneExpressionPrecondition(experimentAccession, preferences, requestContext);
 
             rankingParameters.setSpecific(preferences.isSpecific());
             rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
@@ -128,10 +133,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
                 model.addAttribute("geneProfiles", geneProfiles);
 
-
-                String species = sessionContext.getFilteredBySpecies();
-
-                if ("ORGANISM_PART".equals(sessionContext.getQueryFactorType())) {
+                if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
 
                     model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));

@@ -43,8 +43,6 @@ import java.util.*;
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    static final String JSON_PATH_LAST_TERM_SUGGESTION = "$..suggestions[(@.length-1)].suggestion";
-
     private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
 
     private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={conf}{query} " +
@@ -82,7 +80,7 @@ public class SolrClient {
 
     public List<String> findGeneNameSuggestions(String geneName, String species){
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName, species);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName);
 
         return extractSuggestions(jsonString, geneName);
     }

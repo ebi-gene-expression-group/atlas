@@ -68,7 +68,7 @@ public class RankGeneProfilesCommandTest {
     private ExperimentalFactors experimentalFactors;
 
     @Mock
-    private SessionContext sessionContextMock;
+    private RequestContext requestContextMock;
 
     @Mock
     private RankingParameters rankingParametersMock;
@@ -86,12 +86,12 @@ public class RankGeneProfilesCommandTest {
     @Before
     public void initializeSubject() throws Exception {
 
-        when(sessionContextMock.getGeneQuery()).thenReturn("");
+        when(requestContextMock.getGeneQuery()).thenReturn("");
 
         // no filtering should be done here
         when(solrClientMock.findGeneIds(GENE_QUERY, SPECIES)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
-        when(sessionContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
+        when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
 
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactors);
 
@@ -112,9 +112,9 @@ public class RankGeneProfilesCommandTest {
 
         subject = new RankGeneProfilesCommand();
         subject.setSolrClient(solrClientMock);
-        subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock, sessionContextMock);
+        subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock, requestContextMock);
 
-        subject.setFilteredParameters(sessionContextMock);
+        subject.setFilteredParameters(requestContextMock);
         subject.setRankingParameters(rankingParametersMock);
 
         subject.setExperimentsCache(experimentsCacheMock);
@@ -163,7 +163,7 @@ public class RankGeneProfilesCommandTest {
 
     @Test
     public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GeneNotFoundException{
-        when(sessionContextMock.getGeneQuery()).thenReturn("");
+        when(requestContextMock.getGeneQuery()).thenReturn("");
         subject.apply(EXPERIMENT_ACCESSION);
         verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
     }
@@ -171,7 +171,7 @@ public class RankGeneProfilesCommandTest {
     @Test
     public void givenEmptyFilterFactorSpeciesShouldBeTakenFromExperiment() {
 
-        when(sessionContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
+        when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
         subject.searchForGeneIds(experimentMock);
         verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
 
@@ -181,7 +181,7 @@ public class RankGeneProfilesCommandTest {
     public void givenAFilterFactorHasTypeOrganismSpeciesShouldBeTakenFromTheFilterFactor() {
 
 
-        when(sessionContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
+        when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
         subject.searchForGeneIds(experimentMock);
         verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
 

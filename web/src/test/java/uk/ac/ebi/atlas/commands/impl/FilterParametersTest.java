@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.SessionContextBuilder;
+import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentalFactors;
@@ -67,7 +67,7 @@ public class FilterParametersTest {
 
         when(experimentMock.getFirstSpecies()).thenReturn("Homo sapiens");
 
-        SessionContextBuilder builder = new SessionContextBuilder(new FilterParameters());
+        RequestContextBuilder builder = new RequestContextBuilder(new FilterParameters());
 
         subject = builder.forExperiment(experimentMock)
                 .withFilterFactors(Sets.newHashSet("A:B", "C:D"))

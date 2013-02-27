@@ -31,7 +31,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.commands.SessionContext;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 
 import javax.inject.Inject;
@@ -45,28 +44,24 @@ public class AutocompleteController {
     private static final int MAX_NUMBER_OF_SUGGESTIONS = 10;
 
     private SolrClient solrClient;
-    private SessionContext sessionContext;
 
     @Inject
-    public AutocompleteController(SolrClient solrClient, SessionContext sessionContext){
+    public AutocompleteController(SolrClient solrClient){
         this.solrClient = solrClient;
-        this.sessionContext = sessionContext;
     }
 
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getTopSuggestions(@RequestParam(value = "query") String query){
+    public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species") String species){
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
 
-        String selectedSpecies = sessionContext.getFilteredBySpecies();
-
         if (!StringUtils.containsWhitespace(query)){
-            suggestions.addAll(solrClient.findGeneNameSuggestions(query, selectedSpecies));
+            suggestions.addAll(solrClient.findGeneNameSuggestions(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrClient.findGenePropertySuggestions(query, selectedSpecies));
+            suggestions.addAll(solrClient.findGenePropertySuggestions(query, species));
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);

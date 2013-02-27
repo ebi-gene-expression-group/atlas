@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 //ToDo: This class in not just "expressionPrecondition", but also container for other request parameters. Maybe we need to create "GeneProfilePrecondition" class.
+//ToDo: This needs to become a "request" scoped bean. Otherwise when user opens different experiments in different browser tabs the bean may become invalid (may contain data from different experiment loaded in other browser tab)...
 @Named
 @Scope("session")
 public class GeneExpressionPrecondition implements Predicate<Expression>, Serializable {

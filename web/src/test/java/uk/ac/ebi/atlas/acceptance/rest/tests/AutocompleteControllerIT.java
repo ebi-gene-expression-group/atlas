@@ -30,17 +30,17 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
 import java.util.List;
-import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 
 public class AutocompleteControllerIT {
 
     private static final String END_POINT_URL = "/gxa/json/suggestions";
 
 
-    private EndPoint subject = new EndPoint(END_POINT_URL,"query=ASP");
+    private EndPoint subject = new EndPoint(END_POINT_URL,"query=ASP&species=homo");
 
     @Test
     public void verifyHeader() {

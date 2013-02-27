@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 /*global $,jQuery,console,loadSliderAndPlot: false */
 /*jslint browser:true */
 /*jslint nomen: true*/
@@ -12,7 +34,8 @@
 var searchFormModule = (function($) {
     "use strict";
 
-    var _cutoff;
+    var _cutoff,
+        _species;
 
     function removeHttpParameters (string) {
         return string.split("?")[0];
@@ -62,17 +85,18 @@ var searchFormModule = (function($) {
         return false;
     }
 
-    function extractLast( term , includeDoubleQuote) {
+    function normalizeSpaces( term ){
+        return term.replace(/^\s+/, '').replace(/\s+$/, ' ');
+    }
+
+    function extractLast( term ) {
 
         var splitByDoubleQuotes = term.split( /\s*"/),
             numberOfDoubleQuotes = splitByDoubleQuotes.length - 1,
             lastItem = splitByDoubleQuotes.pop();
 
         if (!isEven(numberOfDoubleQuotes)){
-            if(includeDoubleQuote){
-                return "\"" + lastItem;
-            }
-            return lastItem;
+            return normalizeSpaces(lastItem);
         }
         return lastItem.split( /\s+/).pop();
     }
@@ -96,16 +120,19 @@ var searchFormModule = (function($) {
                 },
                 select: function( event, ui ) {
                     var selectedValue = ui.item.value.trim(),
-                        lastItem = extractLast(this.value, false);
+                        lastItem = extractLast(this.value);
                     this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue);
                     return false;
                 },
                 source:function (request, response) {
-                    var lastItem = extractLast( request.term, false );
+                    var lastItem = extractLast( request.term );
 
                     $.ajax({
                         url:'json/suggestions',
-                        data:{'query': lastItem},
+                        data:{
+                            'query': lastItem,
+                            'species': _species
+                        },
                         success:function (data) {
                             response(data);
                         },
@@ -118,8 +145,10 @@ var searchFormModule = (function($) {
     }
 
 
-    function init (cutoff, experimentAccession, watermarkLabel) {
+    function init (cutoff, experimentAccession, watermarkLabel, species) {
         _cutoff = cutoff;
+
+        _species = species;
 
         initButtons();
 

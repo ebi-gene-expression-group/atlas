@@ -27,7 +27,7 @@ import uk.ac.ebi.atlas.model.Factor;
 import java.io.Serializable;
 import java.util.Set;
 
-public interface SessionContext extends Serializable {
+public interface RequestContext extends Serializable {
 
     public String getGeneQuery();
 

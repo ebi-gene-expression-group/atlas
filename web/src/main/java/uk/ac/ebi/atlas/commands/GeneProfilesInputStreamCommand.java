@@ -48,14 +48,14 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
     private ExperimentsCache experimentsCache;
 
-    private SessionContext sessionContext;
+    private RequestContext requestContext;
 
     private SolrClient solrClient;
 
     @Inject
-    protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder, SessionContext sessionContext) {
+    protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder, RequestContext requestContext) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
-        this.sessionContext = sessionContext;
+        this.requestContext = requestContext;
     }
 
     @Inject
@@ -68,8 +68,8 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         this.solrClient = solrClient;
     }
 
-    public void setFilteredParameters(SessionContext sessionContext) {
-        this.sessionContext = sessionContext;
+    public void setFilteredParameters(RequestContext requestContext) {
+        this.requestContext = requestContext;
     }
 
     @NotNull
@@ -79,7 +79,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
         Set<String> selectedGeneIds = null;
 
-        if (StringUtils.isNotBlank(sessionContext.getGeneQuery())) {
+        if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
 
             try {
                 selectedGeneIds = searchForGeneIds(experiment);
@@ -95,12 +95,12 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         ObjectInputStream<GeneProfile> geneProfileInputStream = geneProfileInputStreamBuilder.forExperiment(experimentAccession)
                 .createGeneProfileInputStream();
 
-        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, sessionContext.getSelectedQueryFactors())) {
+        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 
             ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-            SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(sessionContext.getSelectedFilterFactors());
-            return apply(filteredFactors, sessionContext.getSelectedQueryFactors(), inputStream);
+            SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(requestContext.getSelectedFilterFactors());
+            return apply(filteredFactors, requestContext.getSelectedQueryFactors(), inputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -110,7 +110,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
     protected Set<String> searchForGeneIds(Experiment experiment) {
 
-        return solrClient.findGeneIds(sessionContext.getGeneQuery(), sessionContext.getFilteredBySpecies());
+        return solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
 
     }
 

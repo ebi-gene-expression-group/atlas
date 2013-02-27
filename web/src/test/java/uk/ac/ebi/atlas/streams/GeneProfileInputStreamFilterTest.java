@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.SessionContext;
+import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
@@ -70,7 +70,7 @@ public class GeneProfileInputStreamFilterTest {
     private Set<Factor> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
 
     @Mock
-    private SessionContext sessionContextMock;
+    private RequestContext requestContextMock;
 
     private GeneProfileInputStreamFilter subject;
 
@@ -83,7 +83,7 @@ public class GeneProfileInputStreamFilterTest {
         when(gene3ProfileMock.isExpressedOnAnyOf(factors)).thenReturn(true);
         when(gene3ProfileMock.getAllFactors()).thenReturn(Sets.newHashSet(new Factor("ORGANISM_PART", "", ORGANISM_PART_2)));
 
-        when(sessionContextMock.getSelectedFilterFactors()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
+        when(requestContextMock.getSelectedFilterFactors()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
 
     }
 

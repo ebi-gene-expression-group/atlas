@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
-import uk.ac.ebi.atlas.commands.SessionContextBuilder;
+import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
@@ -60,7 +60,7 @@ public class GeneProfilesPageControllerTest {
     private ExperimentsCache experimentCacheMock;
 
     @Mock
-    private SessionContextBuilder sessionContextBuilderMock;
+    private RequestContextBuilder requestContextBuilderMock;
 
     private GeneProfilesPageController subject;
 
@@ -72,7 +72,7 @@ public class GeneProfilesPageControllerTest {
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
 
         subject = new GeneProfilesPageController(null, rankCommandMock, applicationPropertiesMock,
-                experimentCacheMock, sessionContextBuilderMock, null);
+                experimentCacheMock, requestContextBuilderMock, null);
     }
 
     @Test

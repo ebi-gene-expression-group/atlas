@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.web.controllers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.SessionContext;
-import uk.ac.ebi.atlas.commands.SessionContextBuilder;
+import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -34,22 +34,22 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 @Scope("request")
 public class GeneProfilesController {
 
-    private SessionContextBuilder sessionContextBuilder;
+    private RequestContextBuilder requestContextBuilder;
     private ExperimentsCache experimentsCache;
     private GeneExpressionPrecondition geneExpressionPrecondition;
 
-    public GeneProfilesController(SessionContextBuilder sessionContextBuilder, ExperimentsCache experimentsCache,
+    public GeneProfilesController(RequestContextBuilder requestContextBuilder, ExperimentsCache experimentsCache,
                                   GeneExpressionPrecondition geneExpressionPrecondition) {
-        this.sessionContextBuilder = sessionContextBuilder;
+        this.requestContextBuilder = requestContextBuilder;
         this.experimentsCache = experimentsCache;
         this.geneExpressionPrecondition = geneExpressionPrecondition;
     }
 
-    protected SessionContext updateSessionContext(String experimentAccession, RequestPreferences preferences) {
+    protected RequestContext initRequestContext(String experimentAccession, RequestPreferences preferences) {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        return sessionContextBuilder.forExperiment(experiment)
+        return requestContextBuilder.forExperiment(experiment)
                 .withFilterFactors(preferences.getSerializedFilterFactors())
                 .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())
@@ -58,16 +58,16 @@ public class GeneProfilesController {
     }
 
     protected void prepareGeneExpressionPrecondition(String experimentAccession, RequestPreferences preferences,
-                                                    SessionContext sessionContext) {
+                                                    RequestContext requestContext) {
         geneExpressionPrecondition.setCutoff(preferences.getCutoff());
-        geneExpressionPrecondition.setFilterFactors(sessionContext.getSelectedFilterFactors());
+        geneExpressionPrecondition.setFilterFactors(requestContext.getSelectedFilterFactors());
         String queryFactorType = preferences.getQueryFactorType();
         if (StringUtils.isBlank(queryFactorType)) {
-            queryFactorType = sessionContext.getQueryFactorType();
+            queryFactorType = requestContext.getQueryFactorType();
         }
         geneExpressionPrecondition.setQueryFactorType(queryFactorType);
-        geneExpressionPrecondition.setSelectedQueryFactors(sessionContext.getSelectedQueryFactors());
+        geneExpressionPrecondition.setSelectedQueryFactors(requestContext.getSelectedQueryFactors());
         geneExpressionPrecondition.setSpecific(preferences.isSpecific());
-        geneExpressionPrecondition.setExperimentalFactors(experimentsCache.getExperiment(experimentAccession).getExperimentalFactors().getFilteredFactors(sessionContext.getSelectedFilterFactors()));
+        geneExpressionPrecondition.setExperimentalFactors(experimentsCache.getExperiment(experimentAccession).getExperimentalFactors().getFilteredFactors(requestContext.getSelectedFilterFactors()));
     }
 }

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.jayway.jsonpath.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +32,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.inject.Inject;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -52,16 +51,6 @@ public class SolrClientIT {
     @Before
     public void setUp() throws Exception {
 
-    }
-
-    @Test
-    public void testGetJsonResponseForGeneNameSuggestions() {
-
-        String jsonString = subject.getJsonResponse(SOLR_REST_GENENAMES_QUERY_TEMPLATE, "asp");
-
-        List<String> list = JsonPath.read(jsonString, SolrClient.JSON_PATH_LAST_TERM_SUGGESTION);
-        assertThat(list, is(not(empty())));
-        assertThat(list, hasItems("asp", "aspm"));
     }
 
     @Test

@@ -25,15 +25,15 @@ package uk.ac.ebi.atlas.commands.impl;
 import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.SessionContext;
+import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Named;
 import java.util.Set;
 
 @Named
-@Scope("session")
-public class FilterParameters implements SessionContext {
+@Scope("request")
+public class FilterParameters implements RequestContext {
 
     private String geneQuery;
 

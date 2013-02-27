@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.SessionContext;
+import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class AutocompleteControllerTest {
     private AutocompleteController subject;
 
     @Mock
-    private SessionContext sessionContextMock;
+    private RequestContext requestContextMock;
 
     @Mock
     private SolrClient solrClientMock;
@@ -60,16 +60,16 @@ public class AutocompleteControllerTest {
         when(solrClientMock.findGeneNameSuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
         when(solrClientMock.findGenePropertySuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
 
-        when(sessionContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
+        when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
 
-        subject = new AutocompleteController(solrClientMock, sessionContextMock);
+        subject = new AutocompleteController(solrClientMock);
 
     }
 
     @Test
     public void testGetTopSuggestions() throws Exception {
         //given
-        String jsonResponse = subject.getTopSuggestions(QUERY_STRING);
+        String jsonResponse = subject.getTopSuggestions(QUERY_STRING, SPECIES);
 
         //then
         assertThat(jsonResponse, is("[\"Value1\",\"Value2\"]"));

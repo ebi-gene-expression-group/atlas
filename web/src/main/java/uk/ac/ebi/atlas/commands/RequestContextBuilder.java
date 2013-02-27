@@ -39,8 +39,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Named
-@Scope("session")
-public class SessionContextBuilder implements Serializable {
+@Scope("request")
+public class RequestContextBuilder implements Serializable {
     public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private FilterParameters filterParameters;
@@ -51,16 +51,16 @@ public class SessionContextBuilder implements Serializable {
     private Experiment experiment;
 
     @Inject
-    public SessionContextBuilder(FilterParameters filterParameters) {
+    public RequestContextBuilder(FilterParameters filterParameters) {
         this.filterParameters = filterParameters;
     }
 
-    public SessionContextBuilder forExperiment(Experiment experiment) {
+    public RequestContextBuilder forExperiment(Experiment experiment) {
         this.experiment = experiment;
         return this;
     }
 
-    public SessionContextBuilder withQueryFactorType(String queryFactorType) {
+    public RequestContextBuilder withQueryFactorType(String queryFactorType) {
         if (StringUtils.isBlank(queryFactorType)) {
             filterParameters.setQueryFactorType(experiment.getDefaultQueryFactorType());
         } else {
@@ -69,7 +69,7 @@ public class SessionContextBuilder implements Serializable {
         return this;
     }
 
-    public SessionContextBuilder withFilterFactors(Set<String> serializedFilterFactors) {
+    public RequestContextBuilder withFilterFactors(Set<String> serializedFilterFactors) {
         if (CollectionUtils.isNotEmpty(serializedFilterFactors)) {
             this.serializedFilterFactors = serializedFilterFactors;
         } else {
@@ -88,12 +88,12 @@ public class SessionContextBuilder implements Serializable {
         throw new IllegalArgumentException("serialized Factor string should be colon separated between type and value.");
     }
 
-    public SessionContextBuilder withGeneQuery(String geneQuery) {
+    public RequestContextBuilder withGeneQuery(String geneQuery) {
         filterParameters.setGeneQuery(geneQuery);
         return this;
     }
 
-    public SessionContextBuilder withQueryFactorValues(Set<String> queryFactorValuesString) {
+    public RequestContextBuilder withQueryFactorValues(Set<String> queryFactorValuesString) {
         if (CollectionUtils.isNotEmpty(queryFactorValuesString)) {
             this.queryFactorValues = queryFactorValuesString;
         } else {
