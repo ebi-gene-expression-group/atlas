@@ -42,14 +42,14 @@ public class Factor implements Comparable<Factor>, Serializable {
         this(type, null, value);
     }
 
-    public Factor(String type, String name, String value) {
+    Factor(String type, String name, String value) {
 
         this.type = normalize(checkNotNull(type));
         this.name = name;
         this.value = checkNotNull(value);
     }
 
-    protected final String normalize(String type) {
+    public static String normalize(String type) {
         return type.replaceAll(" ", "_").toUpperCase();
     }
 

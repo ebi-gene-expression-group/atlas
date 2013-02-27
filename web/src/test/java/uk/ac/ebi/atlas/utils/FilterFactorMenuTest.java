@@ -50,13 +50,13 @@ public class FilterFactorMenuTest {
     private static final String MATERIAL_TYPE_NAME = "RNA type";
     private static final String CELLULAR_COMPONENT_NAME = "cellular component";
 
-    Factor firstFactor = new Factor(ORGANISM_PART, ORGANISM_PART_NAME, "liver");
-    Factor secondFactor = new Factor(ORGANISM_PART, ORGANISM_PART_NAME, "heart");
-    Factor thirdFactor = new Factor(ORGANISM_PART, ORGANISM_PART_NAME, "brain");
-    Factor forthFactor = new Factor(MATERIAL_TYPE, MATERIAL_TYPE_NAME, "long poly a rna");
-    Factor fifthFactor = new Factor(MATERIAL_TYPE, MATERIAL_TYPE_NAME, "total rna");
-    Factor sixthFactor = new Factor(CELLULAR_COMPONENT, CELLULAR_COMPONENT_NAME, "plasma");
-    Factor sevenFactor = new Factor(CELLULAR_COMPONENT, CELLULAR_COMPONENT_NAME, "whole cell");
+    Factor firstFactor = new Factor(ORGANISM_PART, "liver");
+    Factor secondFactor = new Factor(ORGANISM_PART, "heart");
+    Factor thirdFactor = new Factor(ORGANISM_PART, "brain");
+    Factor forthFactor = new Factor(MATERIAL_TYPE, "long poly a rna");
+    Factor fifthFactor = new Factor(MATERIAL_TYPE, "total rna");
+    Factor sixthFactor = new Factor(CELLULAR_COMPONENT, "plasma");
+    Factor sevenFactor = new Factor(CELLULAR_COMPONENT, "whole cell");
 
     @Mock
     ExperimentalFactors experimentalFactorsMock;

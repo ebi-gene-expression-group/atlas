@@ -52,8 +52,8 @@ public class ExperimentMetadataLoaderIT {
 
     @Test
     public void experimentRunShouldContainTheRightFactorsTest() throws Exception {
-        Factor organismFactor = new Factor("ORGANISM","organism","Mus musculus");
-        Factor organismPartFactor = new Factor("ORGANISM_PART","organism part","liver");
+        Factor organismFactor = new Factor("ORGANISM","Mus musculus");
+        Factor organismPartFactor = new Factor("ORGANISM_PART","liver");
         //given
         Experiment experiment = subject.load(EXPERIMENT_ACCESSION);
         //when
@@ -65,7 +65,7 @@ public class ExperimentMetadataLoaderIT {
 
     @Test
     public void illuminaBodymapExperimentRunShouldContainTheRightFactorsTest() throws Exception {
-        Factor organismPartFactor = new Factor("ORGANISM_PART","organism part","liver");
+        Factor organismPartFactor = new Factor("ORGANISM_PART","liver");
         //given
         Experiment experiment = subject.load("E-MTAB-513");
         //when

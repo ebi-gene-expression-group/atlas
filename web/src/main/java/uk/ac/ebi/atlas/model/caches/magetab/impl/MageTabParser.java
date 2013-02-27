@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.caches.magetab.impl;
 
 import com.google.common.collect.*;
+import javafx.collections.FXCollections;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,7 +96,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
     @Override
     public Collection<ExperimentRun> getProcessedExperimentRuns() {
-        return processedExperimentRuns;
+        return Collections.unmodifiableCollection(processedExperimentRuns);
     }
 
     protected Collection<ExperimentRun> extractProcessedExperimentRuns() throws IOException, ParseException {
@@ -133,7 +134,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
     @Override
     public Map<String, String> getFactorNamesByType() {
-        return factorNamesByType;
+        return Collections.unmodifiableMap(factorNamesByType);
     }
 
     Map<String, String> extractFactorNames() {
@@ -141,8 +142,9 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
         Map<String, String> namesByType = Maps.newHashMap();
         for (int i = 0; i < idf.experimentalFactorType.size(); i++) {
             String factorType = idf.experimentalFactorType.get(i);
-            if (requiredFactorTypes.contains(factorType)) {
-                namesByType.put(factorType, idf.experimentalFactorName.get(i));
+            String normalizedFactorType = Factor.normalize(factorType);
+            if (requiredFactorTypes.contains(normalizedFactorType)) {
+                namesByType.put(normalizedFactorType, idf.experimentalFactorName.get(i));
             }
         }
         return namesByType;
@@ -163,7 +165,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
         return species;
     }
 
-    //Required for testability - will be overridden to inject mock
     MAGETABInvestigation parseInvestigation() throws ParseException, IOException {
 
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
@@ -198,6 +199,46 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
 
     ExperimentRun buildExperimentRun(ScanNode scanNode, IDF idf) {
+
+        ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN));
+
+        Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
+
+        if (assayNodes.size() != 1) {
+            throw new IllegalStateException("No assay corresponds to ENA run " + experimentRun.getAccession());
+        }
+
+        AssayNode assayNode = assayNodes.iterator().next();
+
+        for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
+
+            String factorType = null;
+
+            List<String> experimentalFactorNames = idf.experimentalFactorName;
+            for (int i = 0; i < experimentalFactorNames.size(); i++) {
+                if (experimentalFactorNames.get(i).equals(factorValueAttribute.type)) {
+                    if (idf.experimentalFactorType.size() > i) {
+                        factorType = idf.experimentalFactorType.get(i);
+                        break;
+                    }
+                }
+            }
+            Factor factor = new Factor(factorType, factorValueAttribute.getAttributeValue());
+            if (requiredFactorTypes.contains(factor.getType())) {
+
+                experimentRun.addFactor(factor);
+            }
+        }
+
+        return experimentRun;
+    }
+
+
+//    factorValueAttribute.getAttributeType() is not just factor value, it contains factor value[cell line]...
+
+    /*
+
+    ExperimentRun buildExperimentRun(ScanNode scanNode, IDF idf) {
         checkState(factorNamesByType != null, "Please invoke the extractFactorNames method first");
         ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN));
 
@@ -213,7 +254,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
 
-
             String factorName = factorValueAttribute.getAttributeType();
 
             if(factorTypesByName.containsKey(factorName)){
@@ -227,6 +267,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         return experimentRun;
     }
-
+*/
 
 }

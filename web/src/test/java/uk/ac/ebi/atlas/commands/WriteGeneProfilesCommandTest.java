@@ -130,7 +130,7 @@ public class WriteGeneProfilesCommandTest {
     }
 
     private Factor createFactorValue(String value) {
-        return new Factor("ORG", null, value);
+        return new Factor("ORG", value);
     }
 
 

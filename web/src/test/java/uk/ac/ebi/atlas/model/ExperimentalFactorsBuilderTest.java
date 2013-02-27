@@ -25,10 +25,10 @@ public class ExperimentalFactorsBuilderTest {
     private ExperimentRun experimentRun1Mock;
     @Mock
     private ExperimentRun experimentRun2Mock;
-    private Factor factorWithType1 = new Factor("TYPE1", "NAME1", "VALUE1");
-    private Factor factorWithType2 = new Factor("TYPE2", "NAME2", "VALUE2");
-    private Factor factorWithType2DifferentValue = new Factor("TYPE2", "NAME2", "DIFFERENT_VALUE2");
-    private Factor factorWithType3 = new Factor("TYPE3", "NAME3", "VALUE3");
+    private Factor factorWithType1 = new Factor("TYPE1", "VALUE1");
+    private Factor factorWithType2 = new Factor("TYPE2", "VALUE2");
+    private Factor factorWithType2DifferentValue = new Factor("TYPE2", "DIFFERENT_VALUE2");
+    private Factor factorWithType3 = new Factor("TYPE3", "VALUE3");
     private FactorGroup factorGroup1 = new FactorSet().add(factorWithType2)
             .add(factorWithType1)
             .add(factorWithType3);
@@ -62,9 +62,9 @@ public class ExperimentalFactorsBuilderTest {
     public void testFactorByNameIsCreated() {
         subject.create();
 
-        SortedSetMultimap<String, Factor> factorsByName = subject.getFactorsByName();
-        assertThat(factorsByName.keySet(), contains("NAME1", "NAME2", "NAME3"));
-        assertThat(factorsByName.get("NAME2"), contains(factorWithType2DifferentValue, factorWithType2));
+        SortedSetMultimap<String, Factor> factorsByName = subject.getFactorsByType();
+        assertThat(factorsByName.keySet(), contains("TYPE1", "TYPE2", "TYPE3"));
+        assertThat(factorsByName.get("TYPE2"), contains(factorWithType2DifferentValue, factorWithType2));
     }
 
     @Test

@@ -54,10 +54,11 @@ public class FilterFactorMenu {
     public FilterFactorMenu filterOutByFactor(Factor factor) {
 
         checkNotNull(factor, "Cannot filter by null factor!");
-        checkNotNull(factor.getName(), "Factor should have a name!");
 
         Set<String> remainingNames = getAllFactorNames();
-        remainingNames.remove(factor.getName());
+        String factorName = experimentalFactors.getFactorName(factor.getType());
+
+        remainingNames.remove(factorName);
 
         Set<Factor> validFactors = Sets.newHashSet();
         for (String name : remainingNames) {
@@ -76,7 +77,8 @@ public class FilterFactorMenu {
         return Sets.filter(factors, new Predicate<Factor>() {
             @Override
             public boolean apply(Factor selectedFactor) {
-                return selectedFactor.getName().equals(name);
+                String factorName = experimentalFactors.getFactorName(selectedFactor.getType());
+                return factorName.equals(name);
             }
         });
     }
@@ -84,7 +86,8 @@ public class FilterFactorMenu {
     public SortedSet<String> getAllFactorNames() {
         SortedSet<String> remainingFactorNames = Sets.newTreeSet();
         for (Factor factor : factors) {
-            remainingFactorNames.add(factor.getName());
+            String factorName = experimentalFactors.getFactorName(factor.getType());
+            remainingFactorNames.add(factorName);
         }
         return remainingFactorNames;
     }

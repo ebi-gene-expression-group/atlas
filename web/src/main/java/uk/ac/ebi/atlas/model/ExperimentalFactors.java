@@ -36,7 +36,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class ExperimentalFactors implements Serializable {
 
-    private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
+    private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
     private Map<String, String> factorNamesByType = new HashMap<>();
 
@@ -46,8 +46,8 @@ public class ExperimentalFactors implements Serializable {
 
     private Set<String> menuFilterFactorTypes;
 
-    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByName, Map<String, String> factorNamesByType, Collection<FactorGroup> factorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes) {
-        this.factorsByName = factorsByName;
+    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType, Map<String, String> factorNamesByType, Collection<FactorGroup> factorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes) {
+        this.factorsByType = factorsByType;
         this.factorNamesByType = factorNamesByType;
         this.factorGroups = factorGroups;
         this.coOccurringFactors = coOccurringFactors;
@@ -68,11 +68,7 @@ public class ExperimentalFactors implements Serializable {
 
     public SortedSet<Factor> getFactorsByType(String type) {
 
-        String factorName = factorNamesByType.get(type);
-
-        checkArgument(factorName != null, "There is no factor with the given factor type");
-
-        return ImmutableSortedSet.copyOf(factorsByName.get(factorName));
+        return ImmutableSortedSet.copyOf(factorsByType.get(type));
 
     }
 
@@ -110,7 +106,7 @@ public class ExperimentalFactors implements Serializable {
     }
 
     public SortedSet<Factor> getAllFactors() {
-        return ImmutableSortedSet.copyOf(factorsByName.values());
+        return ImmutableSortedSet.copyOf(factorsByType.values());
     }
 
 }

@@ -16,13 +16,13 @@ public class ExperimentalFactorsBuilder {
 
     private Collection<ExperimentRun> experimentRuns;
 
-    private SortedSetMultimap<String, Factor> factorsByName = TreeMultimap.create();
+    private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
     private Map<String, String> factorNamesByType = new HashMap<>();
 
     private Collection<FactorGroup> factorGroups = new HashSet<>();
 
-    private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
+//    private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
@@ -49,7 +49,7 @@ public class ExperimentalFactorsBuilder {
             addFactorGroup(factorGroup);
         }
 
-        ExperimentalFactors experimentalFactors = new ExperimentalFactors(factorsByName, factorNamesByType, factorGroups, coOccurringFactors, menuFilterFactorTypes);
+        ExperimentalFactors experimentalFactors = new ExperimentalFactors(factorsByType, factorNamesByType, factorGroups, coOccurringFactors, menuFilterFactorTypes);
 
         return experimentalFactors;
     }
@@ -67,7 +67,6 @@ public class ExperimentalFactorsBuilder {
 
         for (Factor factor : factorGroup) {
 
-            factorsByName.put(factor.getName(), factor);
             factorsByType.put(factor.getType(), factor);
 
             addToFactorCombinations(factorGroup, factor);
@@ -82,8 +81,8 @@ public class ExperimentalFactorsBuilder {
         }
     }
 
-    SortedSetMultimap<String, Factor> getFactorsByName() {
-        return factorsByName;
+    SortedSetMultimap<String, Factor> getFactorsByType() {
+        return factorsByType;
     }
 
     Map<String, String> getFactorNamesByType() {

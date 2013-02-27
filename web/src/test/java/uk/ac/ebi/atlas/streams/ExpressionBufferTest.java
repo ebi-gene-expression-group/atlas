@@ -31,9 +31,9 @@ public class ExpressionBufferTest {
     @Before
     public void initializeSubject() {
 
-        Factor factor1 = new Factor("ORGANISM_PART", "org", "lung");
-        Factor factor2 = new Factor("ORGANISM_PART", "org", "liver");
-        Factor factor3 = new Factor("ORGANISM_PART", "org", "longue");
+        Factor factor1 = new Factor("ORGANISM_PART", "lung");
+        Factor factor2 = new Factor("ORGANISM_PART", "liver");
+        Factor factor3 = new Factor("ORGANISM_PART", "longue");
 
         // the only possible factor values here are the default ones
         List<FactorGroup> orderedAllFactorValues = new LinkedList<>();
