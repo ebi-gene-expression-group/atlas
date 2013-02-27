@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.caches.magetab.impl;
 
 import com.google.common.collect.*;
-import javafx.collections.FXCollections;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,7 +59,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
     private Collection<ExperimentRun> processedExperimentRuns;
 
     private Map<String, String> factorNamesByType;
-
 
 
     public MageTabParser forExperimentAccession(String experimentAccession) {
@@ -190,55 +188,14 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
         for (ScanNode scanNode : scanNodes) {
 
             if (scanNode.comments.keySet().contains(ENA_RUN)) {
-                ExperimentRun run = buildExperimentRun(scanNode, idf);
+                ExperimentRun run = buildExperimentRun(scanNode);
                 experimentRuns.add(run);
             }
         }
         return experimentRuns;
     }
 
-
-    ExperimentRun buildExperimentRun(ScanNode scanNode, IDF idf) {
-
-        ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN));
-
-        Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
-
-        if (assayNodes.size() != 1) {
-            throw new IllegalStateException("No assay corresponds to ENA run " + experimentRun.getAccession());
-        }
-
-        AssayNode assayNode = assayNodes.iterator().next();
-
-        for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
-
-            String factorType = null;
-
-            List<String> experimentalFactorNames = idf.experimentalFactorName;
-            for (int i = 0; i < experimentalFactorNames.size(); i++) {
-                if (experimentalFactorNames.get(i).equals(factorValueAttribute.type)) {
-                    if (idf.experimentalFactorType.size() > i) {
-                        factorType = idf.experimentalFactorType.get(i);
-                        break;
-                    }
-                }
-            }
-            Factor factor = new Factor(factorType, factorValueAttribute.getAttributeValue());
-            if (requiredFactorTypes.contains(factor.getType())) {
-
-                experimentRun.addFactor(factor);
-            }
-        }
-
-        return experimentRun;
-    }
-
-
-//    factorValueAttribute.getAttributeType() is not just factor value, it contains factor value[cell line]...
-
-    /*
-
-    ExperimentRun buildExperimentRun(ScanNode scanNode, IDF idf) {
+    ExperimentRun buildExperimentRun(ScanNode scanNode) {
         checkState(factorNamesByType != null, "Please invoke the extractFactorNames method first");
         ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN));
 
@@ -254,9 +211,9 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
 
-            String factorName = factorValueAttribute.getAttributeType();
+            String factorName = factorValueAttribute.type;
 
-            if(factorTypesByName.containsKey(factorName)){
+            if (factorTypesByName.containsKey(factorName)) {
 
                 Factor factor = new Factor(factorTypesByName.get(factorName), factorValueAttribute.getAttributeValue());
 
@@ -267,6 +224,6 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         return experimentRun;
     }
-*/
+
 
 }

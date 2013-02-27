@@ -93,6 +93,7 @@ public class FilterFactorMenu {
     }
 
     public String resolveTypeForName(String factorName) {
+
         for (Factor factor : getFactorsForFactorName(factorName)) {
             return factor.getType();
         }

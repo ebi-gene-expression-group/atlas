@@ -80,7 +80,7 @@
                     <div>
                         <form:select path="queryFactorValues" data-placeholder="(any ${formattedQueryFactorType}s)"
                                      tabindex="-1"
-                                     items="${allQueryFactorValues}"
+                                     items="${allQueryFactors}"
                                      cssStyle="width:300px"/>
                     </div>
                         <span>

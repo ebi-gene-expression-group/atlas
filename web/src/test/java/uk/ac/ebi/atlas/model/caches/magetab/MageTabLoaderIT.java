@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
@@ -31,7 +30,7 @@ public class MageTabLoaderIT {
     @Before
     public void setUp() throws Exception {
         subject = builder.forExperimentAccession("E-GEOD-26284")
-                .withRequiredFactorTypes(Sets.newHashSet("cell line", "cellular component", "material type"))
+                .withRequiredFactorTypes(Sets.newHashSet("CELL_LINE", "CELLULAR_COMPONENT", "MATERIAL_TYPE"))
                 .withProcessedRunAccessions(Collections.EMPTY_SET)
                 .build();
     }
@@ -39,13 +38,13 @@ public class MageTabLoaderIT {
     @Test
     public void testExtractFactorNames() throws Exception {
         //given
-        Map<String, String> factorNames = subject.getFactorNamesByType();
+        Map<String, String> factorNamesByType = subject.getFactorNamesByType();
 
         //then
-        assertThat(factorNames.keySet(), containsInAnyOrder("cell line", "cellular component", "material type"));
+        assertThat(factorNamesByType.keySet(), containsInAnyOrder("CELL_LINE", "CELLULAR_COMPONENT", "MATERIAL_TYPE"));
         //and
-        assertThat(factorNames.get("cell line"),is("cell line"));
-        assertThat(factorNames.get("cellular component"),is("cellular component"));
-        assertThat(factorNames.get("material type"),is("RNA type"));
+        assertThat(factorNamesByType.get("CELL_LINE"),is("cell line"));
+        assertThat(factorNamesByType.get("CELLULAR_COMPONENT"),is("cellular component"));
+        assertThat(factorNamesByType.get("MATERIAL_TYPE"),is("RNA type"));
     }
 }

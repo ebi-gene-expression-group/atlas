@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,9 +46,15 @@ public class ExperimentalFactorsBuilderTest {
         when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroup1);
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroup2);
 
+        Map<String, String> factorNameByType = new HashMap<>();
+        factorNameByType.put("TYPE1", "NAME1");
+        factorNameByType.put("TYPE2", "NAME2");
+        factorNameByType.put("TYPE3", "NAME3");
 
         subject = new ExperimentalFactorsBuilder();
-        subject.withExperimentRuns(experimentRunMocks).withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"));
+        subject.withExperimentRuns(experimentRunMocks)
+                .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"))
+        .withFactorNamesByType(factorNameByType);
     }
 
 
@@ -62,9 +69,9 @@ public class ExperimentalFactorsBuilderTest {
     public void testFactorByNameIsCreated() {
         subject.create();
 
-        SortedSetMultimap<String, Factor> factorsByName = subject.getFactorsByType();
-        assertThat(factorsByName.keySet(), contains("TYPE1", "TYPE2", "TYPE3"));
-        assertThat(factorsByName.get("TYPE2"), contains(factorWithType2DifferentValue, factorWithType2));
+        SortedSetMultimap<String, Factor> factorsByType = subject.getFactorsByType();
+        assertThat(factorsByType.keySet(), contains("TYPE1", "TYPE2", "TYPE3"));
+        assertThat(factorsByType.get("TYPE2"), contains(factorWithType2DifferentValue, factorWithType2));
     }
 
     @Test

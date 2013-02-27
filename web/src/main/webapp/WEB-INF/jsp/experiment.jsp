@@ -34,109 +34,109 @@
 
 <div class="container">
 
-<spring:hasBindErrors name="preferences">
-    <c:set var="isPreferenceError" value="true"/>
-</spring:hasBindErrors>
+    <spring:hasBindErrors name="preferences">
+        <c:set var="isPreferenceError" value="true"/>
+    </spring:hasBindErrors>
 
 
-<c:choose>
-    <c:when test="${empty geneProfiles}">
-        <c:if test="${not isPreferenceError}">
-            <div id="heatmap-message">
-                No expressions found above the expression level cutoff for the query.
-            </div>
-        </c:if>
-    </c:when>
-    <c:otherwise>
+    <c:choose>
+        <c:when test="${empty geneProfiles}">
+            <c:if test="${not isPreferenceError}">
+                <div id="heatmap-message">
+                    No expressions found above the expression level cutoff for the query.
+                </div>
+            </c:if>
+        </c:when>
+        <c:otherwise>
 
-        <div id="heatmap" style="overflow: auto; padding:15px;" class="row stickem-container">
+            <div id="heatmap" style="overflow: auto; padding:15px;" class="row stickem-container">
 
-            <div id="anatomogram" class="aside stickem double-click-noselection">
-                <table>
-                    <tr>
-                        <td style="padding-top: 15px; vertical-align:top">
+                <div id="anatomogram" class="aside stickem double-click-noselection">
+                    <table>
+                        <tr>
+                            <td style="padding-top: 15px; vertical-align:top">
                         <span id="sex-toggle">
                             <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
                                  style="width:20px;height:38px;padding:2px"
                                  src="resources/images/male_selected.png"/>
                         </span>
-                            <!--
-                            <span data-help-loc="#anatomogram"/>
-                            -->
-                        </td>
-                        <td>
-                            <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                                <!--
+                                <span data-help-loc="#anatomogram"/>
+                                -->
+                            </td>
+                            <td>
+                                <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-            <div id="heatmap-div" class="content" style="display:none;">
+                <div id="heatmap-div" class="content" style="display:none;">
 
-                <table>
-                    <tr>
-                        <td>
+                    <table>
+                        <tr>
+                            <td>
                         <span id="geneCount">Showing ${geneProfiles.size()}
                             of ${geneProfiles.getTotalResultCount()} genes found:
                         </span>
-                            <!--
-                                <span data-help-loc="#resultInfo"/>
-                            -->
-                        </td>
+                                <!--
+                                    <span data-help-loc="#resultInfo"/>
+                                -->
+                            </td>
 
-                        <td>
-                            <div style="float:right">
-                                <table style="font-size:10px; float: right" id="heatmap-legenda">
-                                    <tr>
-                                        <td>
+                            <td>
+                                <div style="float:right">
+                                    <table style="font-size:10px; float: right" id="heatmap-legenda">
+                                        <tr>
+                                            <td>
                                         <span style="display:none" class="gradient-level-min">
                                             <fmt:formatNumber type="number"
                                                               value="${geneProfiles.getMinExpressionLevel()}"
                                                               groupingUsed="false"/>
                                         </span>
-                                        </td>
-                                        <td width="200px">
-                                            <div style="
-                                                    overflow:auto;
-                                                    background-image:
-                                                    -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+                                            </td>
+                                            <td width="200px">
+                                                <div style="
+                                                        overflow:auto;
+                                                        background-image:
+                                                        -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
-                                                    background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                                        background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                                    background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                                        background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
-                                                    startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
-                                                &nbsp;
-                                            </div>
-                                        </td>
-                                        <td>
+                                                        filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
+                                                        startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                                    &nbsp;
+                                                </div>
+                                            </td>
+                                            <td>
                                         <span style="display:none" class="gradient-level-max">
                                             <fmt:formatNumber type="number"
                                                               value="${geneProfiles.getMaxExpressionLevel()}"
                                                               groupingUsed="false"/>
                                         </span>
-                                            <span data-help-loc="#gradient"/>
-                                        </td>
+                                                <span data-help-loc="#gradient"/>
+                                            </td>
 
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td colspan="2">
-                            <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
-                        </td>
-                    </tr>
-                </table>
+                        <tr>
+                            <td colspan="2">
+                                <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
 
-    </c:otherwise>
-</c:choose>
+        </c:otherwise>
+    </c:choose>
 
 </div>
 
@@ -194,7 +194,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             var formattedQueryFactorType = "${formattedQueryFactorType}";
 
-            var anyAnatomogramFile = "${maleAnatomogramFile}"+"${femaleAnatomogramFile}"
+            var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
             if ($.browser.msie && $.browser.version <= 8.0) {
 
@@ -235,7 +235,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(any ${formattedQueryFactorType}s)",'${species}');
+            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(any ${formattedQueryFactorType}s)", '${species}');
 
             helpTooltipsModule.init('experiment');
 

@@ -47,6 +47,8 @@ import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -118,7 +120,11 @@ public class GeneProfilesPageController extends GeneProfilesController {
             model.addAttribute("menuFactorNames", menuFactorNames);
         }
 
-        model.addAttribute("selectedFilterFactors", selectedFilterFactors);
+        Map<String, String> factorNameToValue = new HashMap<String, String>();
+        for (Factor selectedFilterFactor : selectedFilterFactors) {
+            factorNameToValue.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
+        }
+        model.addAttribute("selectedFilterFactors", factorNameToValue);
 
         if (!result.hasErrors()) {
 

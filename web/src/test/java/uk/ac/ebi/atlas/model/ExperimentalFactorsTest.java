@@ -33,6 +33,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,11 +60,11 @@ public class ExperimentalFactorsTest {
 
     private ExperimentalFactors subject;
 
-    private Factor factorWithType1 = new Factor("TYPE1", "NAME1", "VALUE1");
-    private Factor factorWithType2 = new Factor("TYPE2", "NAME2", "VALUE2");
-    private Factor factorWithType2DifferentValue = new Factor("TYPE2", "NAME2", "DIFFERENT_VALUE2");
-    private Factor factorWithType3 = new Factor("TYPE3", "NAME3", "VALUE3");
-    private Factor factorWithType3DifferentValue = new Factor("TYPE3", "NAME3", "DIFFERENT_VALUE3");
+    private Factor factorWithType1 = new Factor("TYPE1",  "VALUE1");
+    private Factor factorWithType2 = new Factor("TYPE2", "VALUE2");
+    private Factor factorWithType2DifferentValue = new Factor("TYPE2",  "DIFFERENT_VALUE2");
+    private Factor factorWithType3 = new Factor("TYPE3",  "VALUE3");
+    private Factor factorWithType3DifferentValue = new Factor("TYPE3", "DIFFERENT_VALUE3");
     private FactorGroup factorGroup1 = new FactorSet().add(factorWithType2)
             .add(factorWithType1)
             .add(factorWithType3);
@@ -81,8 +83,16 @@ public class ExperimentalFactorsTest {
 
         experimentRunMocks = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
 
+        Map<String, String> factorNameByType = new HashMap<>();
+        factorNameByType.put("TYPE1", "NAME1");
+        factorNameByType.put("TYPE2", "NAME2");
+        factorNameByType.put("TYPE3", "NAME3");
+
         ExperimentalFactorsBuilder builder = new ExperimentalFactorsBuilder();
-        subject = builder.withExperimentRuns(experimentRunMocks).withMenuFilterFactorTypes(Sets.newHashSet("TYPE1", "TYPE2")).create();
+        subject = builder.withExperimentRuns(experimentRunMocks)
+                .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1", "TYPE2"))
+                .withFactorNamesByType(factorNameByType)
+                .create();
     }
 
     @Test

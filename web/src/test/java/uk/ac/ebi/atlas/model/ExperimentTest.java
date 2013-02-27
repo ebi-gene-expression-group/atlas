@@ -86,6 +86,7 @@ public class ExperimentTest {
 
         when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRuns)).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withMenuFilterFactorTypes(anySet())).thenReturn(experimentalFactorsBuilderMock);
+        when(experimentalFactorsBuilderMock.withFactorNamesByType(anyMap())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
 
         subject = new ExperimentBuilder(experimentalFactorsBuilderMock)
@@ -94,6 +95,7 @@ public class ExperimentTest {
                 .withDefaultQueryType(ORGANISM_PART)
                 .withDefaultFilterFactors(Collections.EMPTY_SET)
                 .withMenuFilterFactorTypes(Collections.EMPTY_SET)
+                .withFactorNamesByType(Collections.EMPTY_MAP)
                 .withExperimentRuns(experimentRuns)
                 .create();
 

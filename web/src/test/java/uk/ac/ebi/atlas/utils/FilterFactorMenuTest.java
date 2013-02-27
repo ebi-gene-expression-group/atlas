@@ -45,7 +45,7 @@ public class FilterFactorMenuTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final String MATERIAL_TYPE = "MATERIAL_TYPE";
-    private static final String CELLULAR_COMPONENT = "CELLULAR COMPONENT";
+    private static final String CELLULAR_COMPONENT = "CELLULAR_COMPONENT";
     private static final String ORGANISM_PART_NAME = "organism part";
     private static final String MATERIAL_TYPE_NAME = "RNA type";
     private static final String CELLULAR_COMPONENT_NAME = "cellular component";
@@ -95,6 +95,10 @@ public class FilterFactorMenuTest {
 
         // whole cell with, heart, brain, long poly a rna, total rna
         when(experimentalFactorsMock.getCoOccurringFactors(sevenFactor)).thenReturn(putIntoSortedSet(secondFactor, thirdFactor, forthFactor, fifthFactor));
+
+        when(experimentalFactorsMock.getFactorName(ORGANISM_PART)).thenReturn(ORGANISM_PART_NAME);
+        when(experimentalFactorsMock.getFactorName(MATERIAL_TYPE)).thenReturn(MATERIAL_TYPE_NAME);
+        when(experimentalFactorsMock.getFactorName(CELLULAR_COMPONENT)).thenReturn(CELLULAR_COMPONENT_NAME);
 
         subject = new FilterFactorMenu(experimentalFactorsMock, allFactors);
     }

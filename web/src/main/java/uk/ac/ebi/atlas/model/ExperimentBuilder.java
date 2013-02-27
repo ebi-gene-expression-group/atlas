@@ -107,10 +107,6 @@ public class ExperimentBuilder {
                 .withFactorNamesByType(factorNamesByType)
                 .create();
 
-        for (Factor defaultFilterFactor : defaultFilterFactors) {
-            String factorName = experimentalFactors.getFactorName(defaultFilterFactor.getType());
-            defaultFilterFactor.setName(factorName);
-        }
 
         return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
     }
