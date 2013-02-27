@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.caches.magetab.impl;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,10 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -62,6 +58,10 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
     private Collection<ExperimentRun> processedExperimentRuns;
 
+    private Map<String, String> factorNamesByType;
+
+
+
     public MageTabParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
@@ -86,6 +86,9 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         investigation = parseInvestigation();
         scanNodes = investigation.SDRF.getNodes(ScanNode.class);
+
+        factorNamesByType = extractFactorNames();
+
         processedExperimentRuns = extractProcessedExperimentRuns();
         return this;
     }
@@ -126,6 +129,23 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
             return extractSpeciesFromSDRF();
         }
 
+    }
+
+    @Override
+    public Map<String, String> getFactorNamesByType() {
+        return factorNamesByType;
+    }
+
+    Map<String, String> extractFactorNames() {
+        IDF idf = investigation.IDF;
+        Map<String, String> namesByType = Maps.newHashMap();
+        for (int i = 0; i < idf.experimentalFactorType.size(); i++) {
+            String factorType = idf.experimentalFactorType.get(i);
+            if (requiredFactorTypes.contains(factorType)) {
+                namesByType.put(factorType, idf.experimentalFactorName.get(i));
+            }
+        }
+        return namesByType;
     }
 
     private Set<String> extractSpeciesFromSDRF() {
@@ -178,7 +198,7 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
 
     ExperimentRun buildExperimentRun(ScanNode scanNode, IDF idf) {
-
+        checkState(factorNamesByType != null, "Please invoke the extractFactorNames method first");
         ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN));
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
@@ -189,25 +209,19 @@ public class MageTabParser implements MageTabLoader, MageTabLoaderBuilder {
 
         AssayNode assayNode = assayNodes.iterator().next();
 
+        BiMap<String, String> factorTypesByName = HashBiMap.create(factorNamesByType).inverse();
+
         for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
 
-            String factorType = null;
 
-            String factorName = factorValueAttribute.type;
+            String factorName = factorValueAttribute.getAttributeType();
 
-            List<String> experimentalFactorNames = idf.experimentalFactorName;
-            for (int i = 0; i < experimentalFactorNames.size(); i++) {
-                if (experimentalFactorNames.get(i).equals(factorValueAttribute.type)) {
-                    if (idf.experimentalFactorType.size() > i) {
-                        factorType = idf.experimentalFactorType.get(i);
-                        break;
-                    }
-                }
-            }
-            Factor factor = new Factor(factorType, factorName, factorValueAttribute.getAttributeValue());
-            if (requiredFactorTypes.contains(factor.getType())) {
+            if(factorTypesByName.containsKey(factorName)){
+
+                Factor factor = new Factor(factorTypesByName.get(factorName), factorValueAttribute.getAttributeValue());
 
                 experimentRun.addFactor(factor);
+
             }
         }
 

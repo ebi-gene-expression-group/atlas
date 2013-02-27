@@ -83,7 +83,7 @@ public class RequestContextBuilder implements Serializable {
         if (split.length == 2) {
             ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
             String name = experimentalFactors.getFactorName(split[0]);
-            return new Factor(split[0], name, split[1]);
+            return new Factor(split[0], split[1]);
         }
         throw new IllegalArgumentException("serialized Factor string should be colon separated between type and value.");
     }

@@ -114,6 +114,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
                 .withMenuFilterFactorTypes(menuFilterFactorTypes)
                 .withExperimentRuns(experimentRuns)
                 .withExtraInfo(hasExtraInfoFile)
+                .withFactorNamesByType(mageTabLoader.getFactorNamesByType())
                 .create();
 
     }

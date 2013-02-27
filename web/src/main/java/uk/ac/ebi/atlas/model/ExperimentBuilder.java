@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -45,6 +46,7 @@ public class ExperimentBuilder {
     private Set<Factor> defaultFilterFactors;
     private Set<String> menuFilterFactorTypes;
     private ExperimentalFactorsBuilder experimentalFactorsBuilder;
+    private Map<String, String> factorNamesByType;
 
     @Inject
     ExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -86,6 +88,11 @@ public class ExperimentBuilder {
         return this;
     }
 
+    public ExperimentBuilder withFactorNamesByType(Map<String, String> factorNamesByType){
+        this.factorNamesByType = factorNamesByType;
+        return this;
+    }
+
     public Experiment create() {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
@@ -97,6 +104,7 @@ public class ExperimentBuilder {
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder
                 .withExperimentRuns(experimentRuns)
                 .withMenuFilterFactorTypes(menuFilterFactorTypes)
+                .withFactorNamesByType(factorNamesByType)
                 .create();
 
         for (Factor defaultFilterFactor : defaultFilterFactors) {

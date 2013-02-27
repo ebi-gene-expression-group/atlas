@@ -70,8 +70,6 @@ public class ExperimentalFactorsBuilder {
             factorsByName.put(factor.getName(), factor);
             factorsByType.put(factor.getType(), factor);
 
-            factorNamesByType.put(factor.getType(), factor.getName());
-
             addToFactorCombinations(factorGroup, factor);
         }
     }
@@ -94,5 +92,10 @@ public class ExperimentalFactorsBuilder {
 
     SortedSetMultimap<Factor, Factor> getCoOccurringFactors() {
         return coOccurringFactors;
+    }
+
+    public ExperimentalFactorsBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
+        this.factorNamesByType = factorNamesByType;
+        return this;
     }
 }
