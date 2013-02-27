@@ -145,10 +145,8 @@ public class FilterFactorMenuTest {
         Factor firstFactorMock = mock(Factor.class);
         Factor secondFactorMock = mock(Factor.class);
         when(firstFactorMock.getType()).thenReturn("firstFactorValueType");
-        when(firstFactorMock.getName()).thenReturn(null);
         when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
         when(secondFactorMock.getType()).thenReturn("secondFactorValueType");
-        when(firstFactorMock.getName()).thenReturn(null);
         when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
         Factor f1 = new Factor("hello", "world");
         Factor f2 = new Factor("hello1", "world1");

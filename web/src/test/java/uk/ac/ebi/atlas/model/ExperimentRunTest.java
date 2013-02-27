@@ -27,11 +27,9 @@ public class ExperimentRunTest {
     public void setUp() throws Exception {
 
         when(factorMock1.getType()).thenReturn("A_TYPE");
-        when(factorMock1.getName()).thenReturn("factor1");
         when(factorMock1.getValue()).thenReturn("value1");
 
         when(factorMock2.getType()).thenReturn("ORGANISM_PART");
-        when(factorMock2.getName()).thenReturn("org");
         when(factorMock2.getValue()).thenReturn(organismPart);
 
         subject = new ExperimentRun("RUN_ACCESSION")

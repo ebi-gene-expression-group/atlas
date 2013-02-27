@@ -17,7 +17,7 @@ public class ExpressionTest {
     @Before
     public void initSubject() {
 
-        Factor factor = new Factor("aType", "organ", "heart");
+        Factor factor = new Factor("aType", "heart");
 
         subject = new Expression(2.3, new FactorSet().add(factor));
     }

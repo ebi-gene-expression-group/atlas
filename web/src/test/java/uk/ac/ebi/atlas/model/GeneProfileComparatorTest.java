@@ -29,8 +29,8 @@ public class GeneProfileComparatorTest {
     @Mock
     private GeneProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
-    private Factor factor1 = new Factor("ORG", null, "heart");
-    private Factor factor2 = new Factor("ORG", null, "nose");
+    private Factor factor1 = new Factor("ORG", "heart");
+    private Factor factor2 = new Factor("ORG", "nose");
 
 
     private Set<Factor> selectedOrganismParts = Sets.newHashSet(factor1);

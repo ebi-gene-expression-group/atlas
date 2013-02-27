@@ -93,15 +93,15 @@ public class ExperimentalFactorsIT {
     @Test
     public void getValidCombinationsForFactorTest() {
 
-        Factor factor = new Factor("MATERIAL_TYPE", "RNA type", "total RNA");
+        Factor factor = new Factor("MATERIAL_TYPE", "total RNA");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(10));
-        factor = new Factor("MATERIAL_TYPE", "RNA type", "long polyA RNA");
+        factor = new Factor("MATERIAL_TYPE", "long polyA RNA");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(21));
-        factor = new Factor("CELLULAR_COMPONENT", "cellular component", "whole cell");
+        factor = new Factor("CELLULAR_COMPONENT", "whole cell");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(26));
-        factor = new Factor("CELL_LINE", "cell line", "IMR-90");
+        factor = new Factor("CELL_LINE", "IMR-90");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(5));
-        factor = new Factor("CELL_LINE", "cell line", "CD34-positive mobilized cell cell line");
+        factor = new Factor("CELL_LINE", "CD34-positive mobilized cell cell line");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(2));
     }
 

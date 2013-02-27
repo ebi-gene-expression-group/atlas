@@ -34,27 +34,16 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     private String type;
 
-    private String name;
-
     private String value;
 
     public Factor(String type, String value) {
-        this(type, null, value);
-    }
-
-    Factor(String type, String name, String value) {
-
         this.type = normalize(checkNotNull(type));
-        this.name = name;
         this.value = checkNotNull(value);
     }
 
+
     public static String normalize(String type) {
         return type.replaceAll(" ", "_").toUpperCase();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getValue() {
@@ -63,11 +52,6 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     public String getType() {
         return type;
-    }
-
-    public Factor setName(String name) {
-        this.name = name;
-        return this;
     }
 
     @Override
@@ -89,7 +73,6 @@ public class Factor implements Comparable<Factor>, Serializable {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("type", type)
-                .add("name", name)
                 .add("value", value)
                 .toString();
     }

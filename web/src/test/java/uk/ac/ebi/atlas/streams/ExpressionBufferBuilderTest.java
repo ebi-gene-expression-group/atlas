@@ -81,15 +81,12 @@ public class ExpressionBufferBuilderTest {
     public void initializeSubject() {
 
         when(factorMock1.getType()).thenReturn("ORGANISM_PART");
-        when(factorMock1.getName()).thenReturn("org");
         when(factorMock1.getValue()).thenReturn("heart");
 
         when(factorMock2.getType()).thenReturn("ORGANISM_PART");
-        when(factorMock2.getName()).thenReturn("org");
         when(factorMock2.getValue()).thenReturn("liver");
 
         when(factorMock3.getType()).thenReturn("ORGANISM_PART");
-        when(factorMock3.getName()).thenReturn("org");
         when(factorMock3.getValue()).thenReturn("lung");
 
         experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactor(factorMock1);

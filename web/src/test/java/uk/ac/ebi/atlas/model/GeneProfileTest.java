@@ -27,9 +27,9 @@ public class GeneProfileTest {
     private static String GENE_ID = "geneId_1";
     private static String GENE_NAME = "geneName_1";
 
-    private Factor factor1 = new Factor("ORGANISM_PART", "org", "nose");
-    private Factor factor2 = new Factor("ORGANISM_PART", "org", "trunk");
-    private Factor factor3 = new Factor("ORGANISM_PART", "org", "head");
+    private Factor factor1 = new Factor("ORGANISM_PART", "nose");
+    private Factor factor2 = new Factor("ORGANISM_PART", "trunk");
+    private Factor factor3 = new Factor("ORGANISM_PART", "head");
 
     private Expression expression_1 = new Expression(2.2D, new FactorSet().add(factor1));
     private Expression expression_2 = new Expression(3D, new FactorSet().add(factor2));
@@ -86,7 +86,7 @@ public class GeneProfileTest {
         assertThat(averageExpressionLevel, is(2.6005000000000003D));
 
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factor1, factor3,
-                new Factor("ORGANISM_PART", "org", "panz")));
+                new Factor("ORGANISM_PART", "nose")));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
 
