@@ -208,10 +208,10 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#slider-help").hide();//hide the slider help
             } else {
 
-                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}');
+                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${queryFactorType}', '${preferences.serializedFilterFactors}');
 
                 $("#queryFactorValues").change(function () {
-                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}');
+                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${queryFactorType}', '${preferences.serializedFilterFactors}');
                 });
 
                 //configurations required for any browser excepted IE version 8 or lower

@@ -74,7 +74,7 @@ public class FilterParametersTest {
         RequestContextBuilder builder = new RequestContextBuilder(new FilterParameters(), factorsConverter);
 
         subject = builder.forExperiment(experimentMock)
-                .withFilterFactors(Sets.newHashSet("A:B", "C:D"))
+                .withSerializedFilterFactors("A:B,C:D")
                 .build();
 
     }

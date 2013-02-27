@@ -97,10 +97,6 @@ public class GeneExpressionPrecondition implements Predicate<Expression>, Serial
         || expression.containsAll(filterFactors));
     }
 
-    public Set<Factor> getFilterFactors() {
-        return filterFactors;
-    }
-
     public void setExperimentalFactors(Set<Factor> allFactors) {
         this.allFactors = allFactors;
     }

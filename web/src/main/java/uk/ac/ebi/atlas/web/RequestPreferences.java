@@ -48,7 +48,7 @@ public class RequestPreferences {
     @Min(value = 0, message = "The expression level cutoff must be greater than 0")
     private Double cutoff = DEFAULT_CUTOFF;
 
-    private SortedSet<String> serializedFilterFactors;
+    private String serializedFilterFactors;
 
     private String queryFactorType;
 
@@ -83,11 +83,11 @@ public class RequestPreferences {
     }
 
 
-    public SortedSet<String> getSerializedFilterFactors() {
+    public String getSerializedFilterFactors() {
         return serializedFilterFactors;
     }
 
-    public void setSerializedFilterFactors(SortedSet<String> serializedFilterFactors) {
+    public void setSerializedFilterFactors(String serializedFilterFactors) {
         this.serializedFilterFactors = serializedFilterFactors;
     }
 

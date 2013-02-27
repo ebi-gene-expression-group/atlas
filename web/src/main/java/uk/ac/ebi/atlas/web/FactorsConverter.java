@@ -1,9 +1,34 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,22 +40,19 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 public class FactorsConverter {
 
-    public static final String SEPARATOR = ":";
+    private static final String SEPARATOR = ":";
 
     public String serializeFactors(Collection<Factor> factors) {
         List<String> serializedFactors = new ArrayList();
         for (Factor factor : factors) {
-            serializedFactors.add(serializeFactor(factor));
+            serializedFactors.add(factor.getType() + SEPARATOR + factor.getValue());
         }
         return StringUtils.join(serializedFactors, ",");
     }
 
-    public String serializeFactor(Factor factor) {
-        return  factor.getType() + SEPARATOR + factor.getValue();
-    }
-
-    public Set<Factor> deserialize(Set<String> serializedFactors) {
+    public Set<Factor> deserialize(String csvSerializedFactors) {
         Set<Factor> factors = Sets.newHashSet();
+        String[] serializedFactors = csvSerializedFactors.split(",");
         for (String serializedFactor: serializedFactors){
             String[] split = serializedFactor.split(SEPARATOR);
 

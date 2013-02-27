@@ -88,6 +88,9 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         model.addAttribute("experimentAccession", experimentAccession);
 
+        model.addAttribute("queryFactorType", requestContext.getQueryFactorType());
+
+        //ToDo: do we really need the factor type??? everywhere else we display factor name!!
         model.addAttribute("formattedQueryFactorType", requestContext.formattedQueryFactorType());
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
@@ -106,13 +109,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
         SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
 
         String species = requestContext.getFilteredBySpecies();
-
-        SortedSet<String> serializedFilteredFactors = new TreeSet();
-        for (Factor selectedFilterFactor : selectedFilterFactors) {
-            serializedFilteredFactors.add(factorsConverter.serializeFactor(selectedFilterFactor));
-        }
-
-        preferences.setSerializedFilterFactors(serializedFilteredFactors);
 
         //required by autocomplete
         model.addAttribute("species", species);

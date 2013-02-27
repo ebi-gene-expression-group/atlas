@@ -170,14 +170,16 @@ function showBarChartTooltip(x, y, contents) {
     });
 }
 
-function loadSliderAndPlot(cutoff, experimentAccession) {
+function loadSliderAndPlot(cutoff, experimentAccession, queryFactorType, serializeFilterFactors) {
     "use strict";
 
     var selectedQueryFactorValues = $("#queryFactorValues").val();
 
     $.ajax({
         url: "json/barchart/" + experimentAccession,
-        data: {queryFactorValues: selectedQueryFactorValues},
+        data: {queryFactorValues: selectedQueryFactorValues,
+               queryFactorType: queryFactorType,
+               serializedFilterFactors: serializeFilterFactors},
         datatype: 'json',
         success: function (data) {
 

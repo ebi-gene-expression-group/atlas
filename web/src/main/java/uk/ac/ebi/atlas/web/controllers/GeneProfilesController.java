@@ -50,7 +50,7 @@ public class GeneProfilesController {
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         return requestContextBuilder.forExperiment(experiment)
-                .withFilterFactors(preferences.getSerializedFilterFactors())
+                .withSerializedFilterFactors(preferences.getSerializedFilterFactors())
                 .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())
                 .withGeneQuery(preferences.getGeneQuery())

@@ -46,7 +46,7 @@ public class RequestContextBuilder implements Serializable {
     private FilterParameters filterParameters;
 
     private Set<String> queryFactorValues = Collections.EMPTY_SET;
-    private Set<String> serializedFilterFactors = Collections.EMPTY_SET;
+    private String serializedFilterFactors;
 
     private Experiment experiment;
 
@@ -72,12 +72,8 @@ public class RequestContextBuilder implements Serializable {
         return this;
     }
 
-    public RequestContextBuilder withFilterFactors(Set<String> serializedFilterFactors) {
-        if (CollectionUtils.isNotEmpty(serializedFilterFactors)) {
-            this.serializedFilterFactors = serializedFilterFactors;
-        } else {
-            this.serializedFilterFactors = Collections.EMPTY_SET;
-        }
+    public RequestContextBuilder withSerializedFilterFactors(String serializedFilterFactors) {
+        this.serializedFilterFactors = serializedFilterFactors;
         return this;
     }
 
@@ -98,7 +94,7 @@ public class RequestContextBuilder implements Serializable {
     public FilterParameters build() {
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
-        if (CollectionUtils.isEmpty(serializedFilterFactors)) {
+        if (StringUtils.isBlank(serializedFilterFactors)) {
             filterParameters.setSelectedFilterFactors(experiment.getDefaultFilterFactors());
         } else {
             Set<Factor> selectedFilterFactors = factorsConverter.deserialize(serializedFilterFactors);
