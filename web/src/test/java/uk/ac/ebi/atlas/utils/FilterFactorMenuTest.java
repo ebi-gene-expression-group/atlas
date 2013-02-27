@@ -36,8 +36,6 @@ import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -140,19 +138,5 @@ public class FilterFactorMenuTest {
         assertThat(subject.filterOutByFactor(sixthFactor).filterOutByFactor(firstFactor).getAllFactorNames(), contains(MATERIAL_TYPE_NAME));
     }
 
-    @Test
-    public void testGetJsonUrl() throws Exception {
-        Factor firstFactorMock = mock(Factor.class);
-        Factor secondFactorMock = mock(Factor.class);
-        when(firstFactorMock.getType()).thenReturn("firstFactorValueType");
-        when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
-        when(secondFactorMock.getType()).thenReturn("secondFactorValueType");
-        when(firstFactorMock.getValue()).thenReturn("firstFactorValueValue");
-        Factor f1 = new Factor("hello", "world");
-        Factor f2 = new Factor("hello1", "world1");
-
-        assertThat(subject.getJsonUrl("aType", f1, f2),
-                is("{\"queryFactorType\":\"aType\",\"filterFactorsURL\":\"HELLO:world,HELLO1:world1\"}"));
-    }
 
 }

@@ -31,12 +31,14 @@ import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.FactorsConverter;
 
 import javax.servlet.http.HttpServletRequest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -71,8 +73,10 @@ public class GeneProfilesPageControllerTest {
         when(httpServletRequestMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
 
+        FactorsConverter factorsConverter = mock(FactorsConverter.class);
+
         subject = new GeneProfilesPageController(null, rankCommandMock, applicationPropertiesMock,
-                experimentCacheMock, requestContextBuilderMock, null);
+                experimentCacheMock, requestContextBuilderMock, null, factorsConverter);
     }
 
     @Test

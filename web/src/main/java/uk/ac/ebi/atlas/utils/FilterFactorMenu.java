@@ -24,10 +24,12 @@ package uk.ac.ebi.atlas.utils;
 
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.web.FactorsConverter;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -36,11 +38,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FilterFactorMenu {
 
-    public static final String FACTOR_SEPARATOR = ":";
-
     private final SortedSet<Factor> factors = Sets.newTreeSet();
 
     private ExperimentalFactors experimentalFactors;
+    private FactorsConverter factorConverter;
 
     public FilterFactorMenu(ExperimentalFactors experimentalFactors, Set<Factor> setOfFactors) {
         this.experimentalFactors = experimentalFactors;
@@ -69,7 +70,9 @@ public class FilterFactorMenu {
         SortedSet<Factor> coOccurring = experimentalFactors.getCoOccurringFactors(factor);
         validFactors.retainAll(coOccurring);
 
-        return new FilterFactorMenu(experimentalFactors, validFactors);
+        FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, validFactors);
+        filterFactorMenu.setFactorConverter(factorConverter);
+        return filterFactorMenu;
     }
 
     public SortedSet<Factor> getFactorsForFactorName(final String name) {
@@ -113,32 +116,29 @@ public class FilterFactorMenu {
         return new FactorsCombination(queryFactorType, factors);
     }
 
+    public void setFactorConverter(FactorsConverter factorConverter) {
+        this.factorConverter = factorConverter;
+    }
+
+
     private final class FactorsCombination {
 
         private String queryFactorType;
 
-        private String filterFactorsURL = "";
+        private String serializedFactors;
 
-        FactorsCombination(String queryFT, Factor... factors) {
-            queryFactorType = queryFT;
-            for (Factor factor : factors) {
-                filterFactorsURL += serialize(factor) + ',';
-            }
-            filterFactorsURL = filterFactorsURL.substring(0, filterFactorsURL.length() - 1);
+        FactorsCombination(String queryFactorType, Factor... factors) {
+            this.queryFactorType = queryFactorType;
+            serializedFactors = factorConverter.serializeFactors(Lists.newArrayList(factors));
         }
 
         public String getQueryFactorType() {
             return queryFactorType;
         }
 
-        public String getFilterFactorsURL() {
-            return filterFactorsURL;
+        public String getSerializedFactors() {
+            return serializedFactors;
         }
 
     }
-
-    protected String serialize(Factor factor) {
-        return factor.getType() + FACTOR_SEPARATOR + factor.getValue();
-    }
-
 }

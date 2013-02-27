@@ -28,8 +28,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.impl.FilterParameters;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.web.FactorsConverter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -50,9 +50,12 @@ public class RequestContextBuilder implements Serializable {
 
     private Experiment experiment;
 
+    private FactorsConverter factorsConverter;
+
     @Inject
-    public RequestContextBuilder(FilterParameters filterParameters) {
+    public RequestContextBuilder(FilterParameters filterParameters, FactorsConverter factorsConverter) {
         this.filterParameters = filterParameters;
+        this.factorsConverter = factorsConverter;
     }
 
     public RequestContextBuilder forExperiment(Experiment experiment) {
@@ -78,16 +81,6 @@ public class RequestContextBuilder implements Serializable {
         return this;
     }
 
-    protected Factor buildFromSerializedFilterFactors(String serializedFilterFactors) {
-        String[] split = serializedFilterFactors.split(FACTOR_VALUE_SEPARATOR);
-        if (split.length == 2) {
-            ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-            String name = experimentalFactors.getFactorName(split[0]);
-            return new Factor(split[0], split[1]);
-        }
-        throw new IllegalArgumentException("serialized Factor string should be colon separated between type and value.");
-    }
-
     public RequestContextBuilder withGeneQuery(String geneQuery) {
         filterParameters.setGeneQuery(geneQuery);
         return this;
@@ -108,10 +101,8 @@ public class RequestContextBuilder implements Serializable {
         if (CollectionUtils.isEmpty(serializedFilterFactors)) {
             filterParameters.setSelectedFilterFactors(experiment.getDefaultFilterFactors());
         } else {
-            Set<Factor> selectedFilterFactors = new HashSet<Factor>();
-            for (String serializedFilterFactor : serializedFilterFactors) {
-                selectedFilterFactors.add(this.buildFromSerializedFilterFactors(serializedFilterFactor));
-            }
+            Set<Factor> selectedFilterFactors = factorsConverter.deserialize(serializedFilterFactors);
+
             filterParameters.setSelectedFilterFactors(selectedFilterFactors);
         }
 

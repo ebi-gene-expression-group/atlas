@@ -41,16 +41,14 @@ import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.FactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Controller
 @Scope("request")
@@ -66,16 +64,19 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private ExperimentsCache experimentsCache;
 
+    private FactorsConverter factorsConverter;
+
     @Inject
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
                                       ExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
-                                      GeneExpressionPrecondition geneExpressionPrecondition) {
+                                      GeneExpressionPrecondition geneExpressionPrecondition, FactorsConverter factorsConverter) {
         super(requestContextBuilder, experimentsCache, geneExpressionPrecondition);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
+        this.factorsConverter = factorsConverter;
     }
 
     @RequestMapping("/experiments/{experimentAccession}")
@@ -106,6 +107,13 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         String species = requestContext.getFilteredBySpecies();
 
+        SortedSet<String> serializedFilteredFactors = new TreeSet();
+        for (Factor selectedFilterFactor : selectedFilterFactors) {
+            serializedFilteredFactors.add(factorsConverter.serializeFactor(selectedFilterFactor));
+        }
+
+        preferences.setSerializedFilterFactors(serializedFilteredFactors);
+
         //required by autocomplete
         model.addAttribute("species", species);
 
@@ -114,13 +122,14 @@ public class GeneProfilesPageController extends GeneProfilesController {
             Set<Factor> menuFactors = experimentalFactors.getAllFactors();
 
             FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, menuFactors);
+            filterFactorMenu.setFactorConverter(factorsConverter);
 
             model.addAttribute("filterFactorMenu", filterFactorMenu);
 
             model.addAttribute("menuFactorNames", menuFactorNames);
         }
 
-        Map<String, String> factorNameToValue = new HashMap<String, String>();
+        Map<String, String> factorNameToValue = new HashMap();
         for (Factor selectedFilterFactor : selectedFilterFactors) {
             factorNameToValue.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
         }

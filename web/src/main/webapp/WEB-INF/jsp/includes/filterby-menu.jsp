@@ -103,10 +103,10 @@
         $("#filterBy").menu();
         $('li:not(:has(>ul))', 'ul#filterBy').on('click', function () {
             var json = $(this).attr('data-serialized-factors');
-            var obj = $.parseJSON(json);
-            $("#queryFactorType").val(obj.queryFactorType);
+            var factorsCombination = $.parseJSON(json);
+            $("#queryFactorType").val(factorsCombination.queryFactorType);
             $("#queryFactorValues").val(''); // clear previous selection
-            $("#serializedFilterFactors").val(obj.filterFactorsURL);
+            $("#serializedFilterFactors").val(factorsCombination.serializedFactors);
             $("form#prefForm").submit();
         });
         $("#filterBy").show();

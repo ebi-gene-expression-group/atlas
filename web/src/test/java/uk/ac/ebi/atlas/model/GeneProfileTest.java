@@ -86,7 +86,7 @@ public class GeneProfileTest {
         assertThat(averageExpressionLevel, is(2.6005000000000003D));
 
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factor1, factor3,
-                new Factor("ORGANISM_PART", "nose")));
+                new Factor("ORGANISM_PART", "leg")));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
 

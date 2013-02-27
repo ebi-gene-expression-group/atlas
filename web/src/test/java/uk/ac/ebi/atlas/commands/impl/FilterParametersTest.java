@@ -33,10 +33,12 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.FactorsConverter;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -67,7 +69,9 @@ public class FilterParametersTest {
 
         when(experimentMock.getFirstSpecies()).thenReturn("Homo sapiens");
 
-        RequestContextBuilder builder = new RequestContextBuilder(new FilterParameters());
+        FactorsConverter factorsConverter = mock(FactorsConverter.class);
+
+        RequestContextBuilder builder = new RequestContextBuilder(new FilterParameters(), factorsConverter);
 
         subject = builder.forExperiment(experimentMock)
                 .withFilterFactors(Sets.newHashSet("A:B", "C:D"))
