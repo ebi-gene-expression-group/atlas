@@ -39,7 +39,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Named
-@Scope("request")
+@Scope("prototype")
 public class RequestContextBuilder implements Serializable {
 
     private FilterParameters filterParameters;
@@ -104,7 +104,7 @@ public class RequestContextBuilder implements Serializable {
         return this;
     }
 
-    public FilterParameters build() {
+    public RequestContext build() {
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
         Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);

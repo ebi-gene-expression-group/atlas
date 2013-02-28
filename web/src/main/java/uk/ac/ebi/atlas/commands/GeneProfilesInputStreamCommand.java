@@ -53,9 +53,8 @@ public abstract class GeneProfilesInputStreamCommand<T> {
     private SolrClient solrClient;
 
     @Inject
-    protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder, RequestContext requestContext) {
+    protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
-        this.requestContext = requestContext;
     }
 
     @Inject
@@ -68,7 +67,8 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         this.solrClient = solrClient;
     }
 
-    public void setFilteredParameters(RequestContext requestContext) {
+    @Inject
+    public void setRequestContext(RequestContext requestContext) {
         this.requestContext = requestContext;
     }
 

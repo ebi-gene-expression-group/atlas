@@ -30,9 +30,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Set;
 
-//ToDo: This class in not just "expressionPrecondition", but also container for other request parameters. Maybe we need to create "GeneProfilePrecondition" class.
 @Named
-@Scope("request")
+@Scope("prototype")
 public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializable {
 
     private boolean specific;
@@ -47,9 +46,23 @@ public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializ
     @Override
     public boolean apply(GeneProfile geneProfile) {
 
+        if (geneProfile.isEmpty()){
+            return false;
+        }
+
         if (!specific || selectedQueryFactors.isEmpty()) {
             return true;
         }
+
+        return isOverExpressedInSelectedFactors(geneProfile);
+
+    }
+
+    boolean containsAnyExpression(GeneProfile geneProfile) {
+        return !geneProfile.isEmpty();
+    }
+
+    boolean isOverExpressedInSelectedFactors(GeneProfile geneProfile) {
 
         double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
         Set<Factor> remainingFactors = Sets.newHashSet(allQueryFactors);
@@ -58,17 +71,22 @@ public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializ
         double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);
 
         return (averageOnSelected / averageOnRest) >= 1;
+
     }
 
-    public void setSpecific(boolean specific) {
+
+    public GeneProfilePrecondition setSpecific(boolean specific) {
         this.specific = specific;
+        return this;
     }
 
-    public void setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
+    public GeneProfilePrecondition setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
+        return this;
     }
 
-    public void setAllQueryFactors(Set<Factor> allQueryFactors) {
+    public GeneProfilePrecondition setAllQueryFactors(Set<Factor> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
+        return this;
     }
 }

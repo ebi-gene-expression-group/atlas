@@ -74,8 +74,8 @@ public class GeneProfilesPageController extends GeneProfilesController {
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
                                       ExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
-                                      GeneExpressionPrecondition geneExpressionPrecondition, FilterFactorsConverter filterFactorsConverter) {
-        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition, filterFactorsConverter);
+                                      FilterFactorsConverter filterFactorsConverter) {
+        super(requestContextBuilder, experimentsCache, filterFactorsConverter);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
@@ -137,9 +137,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
         model.addAttribute("selectedFilterFactors", factorNameToValue);
 
         if (!result.hasErrors()) {
-
-
-            prepareGeneExpressionPrecondition(experimentAccession, preferences, requestContext);
 
             rankingParameters.setSpecific(preferences.isSpecific());
             rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());

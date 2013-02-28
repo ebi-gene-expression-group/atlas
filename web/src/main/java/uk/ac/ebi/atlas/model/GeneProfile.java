@@ -58,6 +58,10 @@ public class GeneProfile extends GeneExpressions {
         return expressions.values().size();
     }
 
+    public boolean isEmpty() {
+        return expressions.isEmpty();
+    }
+
     @Override
     public Iterator<Expression> iterator() {
         return expressions.values().iterator();
@@ -136,6 +140,8 @@ public class GeneProfile extends GeneExpressions {
 
         private GeneExpressionPrecondition geneExpressionPrecondition;
 
+        private GeneProfilePrecondition geneProfilePrecondition;
+
         private RequestContext requestContext;
 
         protected Builder() {
@@ -156,22 +162,32 @@ public class GeneProfile extends GeneExpressions {
             this.geneExpressionPrecondition = precondition;
         }
 
-        @PostConstruct
-        protected void initPreconditions() {
-            geneExpressionPrecondition.setCutoff(requestContext.getCutoff());
-            geneExpressionPrecondition.setFilterFactors(requestContext.getSelectedFilterFactors());
+        @Inject
+        public void setGeneProfilePrecondition(GeneProfilePrecondition precondition) {
+            this.geneProfilePrecondition = precondition;
+        }
+
+        //We can't do this @PostConstruct because at that time the RequestContext object hasn't yet been populated...
+        void initPreconditions() {
+            geneExpressionPrecondition.setCutoff(requestContext.getCutoff())
+                    .setFilterFactors(requestContext.getSelectedFilterFactors());
+            geneProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
+                    .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
+                    .setSpecific(requestContext.isSpecific());
         }
 
         public Builder forGeneId(String geneId) {
             this.geneProfile = new GeneProfile();
             geneProfile.setGeneNamesProvider(geneNamesProvider);
             geneProfile.setGeneId(geneId);
+            initPreconditions();
+
             return this;
         }
 
         public Builder addExpression(Expression expression) {
             checkState(geneProfile != null, "Please invoke forGeneID before create");
-            if (apply(expression)) {
+            if (geneExpressionPrecondition.apply(expression)) {
                 geneProfile.add(expression, requestContext.getQueryFactorType());
             }
             return this;
@@ -180,39 +196,10 @@ public class GeneProfile extends GeneExpressions {
         public GeneProfile create() {
             checkState(geneProfile != null, "Please invoke forGeneID before create");
 
-            return containsExpressions() && isOverExpressedInSelectedFactors() ? geneProfile : null;
+            return geneProfilePrecondition.apply(geneProfile) ? geneProfile : null;
         }
 
-        private boolean containsExpressions() {
-            return !geneProfile.expressions.isEmpty();
-        }
 
-        protected boolean isOverExpressedInSelectedFactors() {
-            Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
 
-            if (!requestContext.isSpecific() || selectedQueryFactors.isEmpty()) {
-                return true;
-            }
-
-            double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
-            Set<Factor> remainingFactors = Sets.newHashSet(requestContext.getAllQueryFactors());
-            remainingFactors.removeAll(selectedQueryFactors);
-
-            double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);
-
-            return (averageOnSelected / averageOnRest) >= 1;
-        }
-
-        //ToDo: from GeneExpressionPrecondition
-        public boolean apply(Expression expression) {
-
-            return expression.isGreaterThan(requestContext.getCutoff())
-                    && checkFilterFactors(expression);
-        }
-
-        protected boolean checkFilterFactors(Expression expression) {
-            return (CollectionUtils.isEmpty(requestContext.getSelectedFilterFactors())
-                    || expression.containsAll(requestContext.getSelectedFilterFactors()));
-        }
     }
 }

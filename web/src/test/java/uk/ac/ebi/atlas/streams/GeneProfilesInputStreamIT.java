@@ -28,7 +28,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.impl.FilterParameters;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
@@ -37,6 +40,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -48,37 +52,36 @@ public class GeneProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    @Inject
-    ExperimentsCache experimentsCache;
-
-    @Inject
-    private GeneExpressionPrecondition geneExpressionPrecondition;
-
-    @Inject
-    private GeneProfile.Builder geneProfileBuilder;
-
-
     private static final String GENE_ID_1 = "ENST00000000233";
     private static final String GENE_ID_2 = "ENST00000000412";
     private static final String GENE_ID_3 = "ENST00000000442";
 
-
     private URL dataFileURL;
+
+    @Inject
+    private GeneProfileInputStreamBuilder geneInputStreamBuilder;
+
+    @Inject
+    private FilterParameters filterParameters;
+
+    @Inject
+    private ExperimentsCache experimentsCache;
 
     private ObjectInputStream<GeneProfile> subject;
 
-    @PostConstruct
-    public void initSpringBeans() {
-        geneExpressionPrecondition.setQueryFactorType("ORGANISM_PART");
-    }
 
     @Before
     public void initSubject() throws Exception {
+        Experiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        filterParameters.setCutoff(0.5d);
+        filterParameters.setFilteredBySpecie("homo");
+        filterParameters.setQueryFactorType("ORGANISM_PART");
+        filterParameters.setSelectedFilterFactors(Collections.EMPTY_SET);
+        filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getAllFactors());
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
 
-        subject = new GeneProfileInputStreamBuilder(new ExpressionsBuffer.Builder(experimentsCache), geneProfileBuilder)
-                .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
+        subject = geneInputStreamBuilder.forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
                 .createGeneProfileInputStream();
 
     }
@@ -125,11 +128,7 @@ public class GeneProfilesInputStreamIT {
     @Test
     public void setCutoffChangesSpecificity() throws IOException {
 
-        geneExpressionPrecondition.setCutoff(20D);
-        //given
-        subject = new GeneProfileInputStreamBuilder(new ExpressionsBuffer.Builder(experimentsCache), geneProfileBuilder)
-                .forExperiment(EXPERIMENT_ACCESSION, dataFileURL.openStream())
-                .createGeneProfileInputStream();
+        filterParameters.setCutoff(20D);
 
         //when
         subject.readNext();

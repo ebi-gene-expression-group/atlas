@@ -98,7 +98,7 @@ public class WriteGeneProfilesCommandTest {
     @Before
     public void initSubject() throws Exception {
         subject = new WriteGeneProfilesCommand(new NumberUtils());
-        subject.setFilteredParameters(requestContextMock);
+        subject.setRequestContext(requestContextMock);
         subject.setResponseWriter(printWriterMock);
     }
 

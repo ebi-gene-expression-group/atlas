@@ -43,12 +43,14 @@ public class GeneExpressionPrecondition implements Predicate<Expression>, Serial
     public GeneExpressionPrecondition() {
     }
 
-    public void setFilterFactors(Set<Factor> filterFactors) {
+    public GeneExpressionPrecondition setFilterFactors(Set<Factor> filterFactors) {
         this.filterFactors = filterFactors;
+        return this;
     }
 
-    public void setCutoff(double cutoff) {
+    public GeneExpressionPrecondition setCutoff(double cutoff) {
         this.cutoff = cutoff;
+        return this;
     }
 
     @Override

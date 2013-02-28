@@ -56,7 +56,6 @@ public class BarChartTraderIT {
 
     @PostConstruct
     public void initSpringBeans() {
-        geneExpressionPrecondition.setQueryFactorType(ORGANISM_PART);
     }
 
     @Before

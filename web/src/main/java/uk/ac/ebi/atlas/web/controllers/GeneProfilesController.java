@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
@@ -37,14 +36,12 @@ public class GeneProfilesController {
 
     private RequestContextBuilder requestContextBuilder;
     private ExperimentsCache experimentsCache;
-    private GeneExpressionPrecondition geneExpressionPrecondition;
     private FilterFactorsConverter filterFactorsConverter;
 
     public GeneProfilesController(RequestContextBuilder requestContextBuilder, ExperimentsCache experimentsCache,
-                                  GeneExpressionPrecondition geneExpressionPrecondition, FilterFactorsConverter filterFactorsConverter) {
+                                  FilterFactorsConverter filterFactorsConverter) {
         this.requestContextBuilder = requestContextBuilder;
         this.experimentsCache = experimentsCache;
-        this.geneExpressionPrecondition = geneExpressionPrecondition;
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
@@ -68,16 +65,5 @@ public class GeneProfilesController {
                 .withCutoff(preferences.getCutoff())
                 .withSpecific(preferences.isSpecific())
                 .build();
-    }
-
-    protected void prepareGeneExpressionPrecondition(String experimentAccession, RequestPreferences preferences,
-                                                    RequestContext requestContext) {
-        geneExpressionPrecondition.setCutoff(preferences.getCutoff());
-        geneExpressionPrecondition.setFilterFactors(requestContext.getSelectedFilterFactors());
-
-        geneExpressionPrecondition.setQueryFactorType(requestContext.getQueryFactorType());
-        geneExpressionPrecondition.setSelectedQueryFactors(requestContext.getSelectedQueryFactors());
-        geneExpressionPrecondition.setSpecific(preferences.isSpecific());
-        geneExpressionPrecondition.setExperimentalFactors(experimentsCache.getExperiment(experimentAccession).getExperimentalFactors().getFilteredFactors(requestContext.getSelectedFilterFactors()));
     }
 }

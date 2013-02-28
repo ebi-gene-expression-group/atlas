@@ -32,7 +32,6 @@ import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
-import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
@@ -53,10 +52,9 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     @Inject
     public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
                                           RequestContextBuilder requestContextBuilder,
-                                          ExperimentsCache experimentsCache,
-                                          GeneExpressionPrecondition geneExpressionPrecondition, FilterFactorsConverter filterFactorsConverter) {
+                                          ExperimentsCache experimentsCache,FilterFactorsConverter filterFactorsConverter) {
 
-        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition, filterFactorsConverter);
+        super(requestContextBuilder, experimentsCache, filterFactorsConverter);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
@@ -73,11 +71,7 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-        RequestContext parameters = initRequestContext(experimentAccession, preferences);
-
-        prepareGeneExpressionPrecondition(experimentAccession, preferences, parameters);
-
-        writeGeneProfilesCommand.setFilteredParameters(parameters);
+        initRequestContext(experimentAccession, preferences);
 
         writeGeneProfilesCommand.setResponseWriter(response.getWriter());
 

@@ -112,9 +112,9 @@ public class RankGeneProfilesCommandTest {
 
         subject = new RankGeneProfilesCommand();
         subject.setSolrClient(solrClientMock);
-        subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock, requestContextMock);
+        subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
-        subject.setFilteredParameters(requestContextMock);
+        subject.setRequestContext(requestContextMock);
         subject.setRankingParameters(rankingParametersMock);
 
         subject.setExperimentsCache(experimentsCacheMock);
