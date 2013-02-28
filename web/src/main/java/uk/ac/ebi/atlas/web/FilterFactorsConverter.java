@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 
 import javax.inject.Named;
@@ -50,6 +49,11 @@ public class FilterFactorsConverter {
 
     public Set<Factor> deserialize(String csvSerializedFactors) {
         Set<Factor> factors = Sets.newHashSet();
+
+        if (StringUtils.isBlank(csvSerializedFactors)) {
+            return factors;
+        }
+
         String[] serializedFactors = csvSerializedFactors.split(",");
         for (String serializedFactor : serializedFactors) {
             String[] split = serializedFactor.split(SEPARATOR);
