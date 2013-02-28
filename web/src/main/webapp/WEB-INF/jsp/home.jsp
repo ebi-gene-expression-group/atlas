@@ -36,7 +36,7 @@
                 <c:forEach items="${experimentAccessions.get(specie)}" var="experimentAccession">
                     <c:set var="key" value="${experimentAccession}${specie}"/>
                     <li>
-                        <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentAccession}</a>
+                        <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentDisplayNames.get(experimentAccession)}</a>
                     </li>
                 </c:forEach>
             </ul>

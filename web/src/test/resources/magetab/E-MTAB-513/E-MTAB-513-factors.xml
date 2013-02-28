@@ -3,4 +3,5 @@
     <defaultFilterFactors/>
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes/>
+    <landingPageDisplayName>Illumina Body Map</landingPageDisplayName>
 </factors-definition>

@@ -12,4 +12,5 @@
     </defaultFilterFactors>
     <defaultQueryFactorType>CELL_LINE</defaultQueryFactorType>
     <menuFilterFactorTypes>CELLULAR_COMPONENT, MATERIAL_TYPE, CELL_LINE</menuFilterFactorTypes>
+    <landingPageDisplayName>ENCODE cell lines</landingPageDisplayName>
 </factors-definition>

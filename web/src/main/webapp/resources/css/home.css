@@ -31,7 +31,7 @@
 
 .species-navigation {
     font-family: "Trebuchet MS", sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-style: normal;
     font-weight: bold;
     letter-spacing: 1px;
@@ -87,9 +87,9 @@ a.species-icon {
     font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
-    width: 110px;
+    width: 150px;
     color: #736a5a;
-    padding: 3px;
+    padding: 2px;
     float: left;
     clear: both;
     text-shadow: 1px 1px 1px #fff;

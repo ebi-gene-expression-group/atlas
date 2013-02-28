@@ -3,4 +3,5 @@
     <defaultFilterFactors/>
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes/>
+    <landingPageDisplayName>Six tissues</landingPageDisplayName>
 </factors-definition>
