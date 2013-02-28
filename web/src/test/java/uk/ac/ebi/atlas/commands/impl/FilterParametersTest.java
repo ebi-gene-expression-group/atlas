@@ -22,9 +22,7 @@
 
 package uk.ac.ebi.atlas.commands.impl;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -35,8 +33,6 @@ import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.FactorsConverter;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -77,12 +73,6 @@ public class FilterParametersTest {
                 .withSerializedFilterFactors("A:B,C:D")
                 .build();
 
-    }
-
-    @Test
-    public void formatForDisplayShouldReplaceUnderscoresWithSpacesAndCapitilizeFirstLetter() {
-        assertThat(subject.formatForDisplay(ORGANISM_PART), is("Organism part"));
-        assertThat(subject.formatForDisplay(CELL_LINE), is("Cell line"));
     }
 
 }

@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.commands.impl;
 
 import com.google.common.base.Objects;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.model.Factor;
@@ -62,14 +61,6 @@ public class FilterParameters implements RequestContext {
 
     public String getQueryFactorType() {
         return queryFactorType;
-    }
-
-    public String formattedQueryFactorType() {
-        return formatForDisplay(queryFactorType);
-    }
-
-    protected String formatForDisplay(String queryFactorType) {
-        return StringUtils.capitalize(queryFactorType.replaceAll("_", " ").toLowerCase());
     }
 
     public String getFilteredBySpecies() {

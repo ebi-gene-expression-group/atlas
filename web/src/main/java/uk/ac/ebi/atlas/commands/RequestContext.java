@@ -37,8 +37,6 @@ public interface RequestContext extends Serializable {
 
     public String getQueryFactorType();
 
-    public String formattedQueryFactorType();
-
     public String getFilteredBySpecies();
 
 }
