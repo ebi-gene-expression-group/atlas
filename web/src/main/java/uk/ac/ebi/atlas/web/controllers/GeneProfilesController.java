@@ -65,6 +65,8 @@ public class GeneProfilesController {
                 .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())
                 .withGeneQuery(preferences.getGeneQuery())
+                .withCutoff(preferences.getCutoff())
+                .withSpecific(preferences.isSpecific())
                 .build();
     }
 
@@ -72,11 +74,8 @@ public class GeneProfilesController {
                                                     RequestContext requestContext) {
         geneExpressionPrecondition.setCutoff(preferences.getCutoff());
         geneExpressionPrecondition.setFilterFactors(requestContext.getSelectedFilterFactors());
-        String queryFactorType = preferences.getQueryFactorType();
-        if (StringUtils.isBlank(queryFactorType)) {
-            queryFactorType = requestContext.getQueryFactorType();
-        }
-        geneExpressionPrecondition.setQueryFactorType(queryFactorType);
+
+        geneExpressionPrecondition.setQueryFactorType(requestContext.getQueryFactorType());
         geneExpressionPrecondition.setSelectedQueryFactors(requestContext.getSelectedQueryFactors());
         geneExpressionPrecondition.setSpecific(preferences.isSpecific());
         geneExpressionPrecondition.setExperimentalFactors(experimentsCache.getExperiment(experimentAccession).getExperimentalFactors().getFilteredFactors(requestContext.getSelectedFilterFactors()));

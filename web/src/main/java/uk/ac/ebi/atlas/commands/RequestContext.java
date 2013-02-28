@@ -39,4 +39,9 @@ public interface RequestContext extends Serializable {
 
     public String getFilteredBySpecies();
 
+    public double getCutoff();
+
+    public boolean isSpecific();
+
+    public Set<Factor> getAllQueryFactors();
 }

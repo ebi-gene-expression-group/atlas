@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.impl.FilterParameters;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -48,12 +47,14 @@ public class RequestContextBuilder implements Serializable {
     private Set<String> queryFactorValues = Collections.EMPTY_SET;
     private String serializedFilterFactors;
 
-    private String experimentAccession;
-
     private Experiment experiment;
 
     private FilterFactorsConverter filterFactorsConverter;
     private ExperimentsCache experimentsCache;
+
+    private double cutoff;
+
+    private boolean specific;
 
     @Inject
     public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverter filterFactorsConverter, ExperimentsCache experimentsCache) {
@@ -63,17 +64,13 @@ public class RequestContextBuilder implements Serializable {
     }
 
     public RequestContextBuilder forExperiment(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
         this.experiment = experimentsCache.getExperiment(experimentAccession);
         return this;
     }
 
     public RequestContextBuilder withQueryFactorType(String queryFactorType) {
-        if (StringUtils.isBlank(queryFactorType)) {
-            filterParameters.setQueryFactorType(experiment.getDefaultQueryFactorType());
-        } else {
-            filterParameters.setQueryFactorType(queryFactorType);
-        }
+        filterParameters.setQueryFactorType(queryFactorType);
+
         return this;
     }
 
@@ -87,6 +84,17 @@ public class RequestContextBuilder implements Serializable {
         return this;
     }
 
+    public RequestContextBuilder withCutoff(double  cutoff) {
+        this.cutoff = cutoff;
+        return  this;
+    }
+
+    public RequestContextBuilder withSpecific(boolean  specific) {
+        this.specific = specific;
+        return this;
+    }
+
+
     public RequestContextBuilder withQueryFactorValues(Set<String> queryFactorValuesString) {
         if (CollectionUtils.isNotEmpty(queryFactorValuesString)) {
             this.queryFactorValues = queryFactorValuesString;
@@ -99,17 +107,12 @@ public class RequestContextBuilder implements Serializable {
     public FilterParameters build() {
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
-        if (StringUtils.isBlank(serializedFilterFactors)) {
-            filterParameters.setSelectedFilterFactors(experiment.getDefaultFilterFactors());
-        } else {
+        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
 
-            Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
-
-            filterParameters.setSelectedFilterFactors(selectedFilterFactors);
-        }
+        filterParameters.setSelectedFilterFactors(selectedFilterFactors);
 
         String filteredBySpecie = null;
-        for (Factor selectedFilterFactor : filterParameters.getSelectedFilterFactors()) {
+        for (Factor selectedFilterFactor : selectedFilterFactors) {
             if (selectedFilterFactor.getType().equalsIgnoreCase("organism")) {
                 filteredBySpecie = selectedFilterFactor.getValue().toLowerCase();
             }
@@ -125,6 +128,10 @@ public class RequestContextBuilder implements Serializable {
         }
         filterParameters.setSelectedQueryFactors(queryFactors);
 
+        filterParameters.setCutoff(cutoff);
+        filterParameters.setSpecific(specific);
+
+        filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors));
         return filterParameters;
     }
 }

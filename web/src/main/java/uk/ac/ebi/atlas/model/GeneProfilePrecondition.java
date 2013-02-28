@@ -23,45 +23,52 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Predicate;
-import org.apache.commons.collections.CollectionUtils;
+import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 //ToDo: This class in not just "expressionPrecondition", but also container for other request parameters. Maybe we need to create "GeneProfilePrecondition" class.
 @Named
 @Scope("request")
-public class GeneExpressionPrecondition implements Predicate<Expression>, Serializable {
+public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializable {
 
-    private double cutoff;
+    private boolean specific;
 
-    private Set<Factor> filterFactors = new HashSet<>();
+    private Set<Factor> selectedQueryFactors;
 
-    public GeneExpressionPrecondition() {
-    }
+    private Set<Factor> allQueryFactors;
 
-    public void setFilterFactors(Set<Factor> filterFactors) {
-        this.filterFactors = filterFactors;
-    }
-
-    public void setCutoff(double cutoff) {
-        this.cutoff = cutoff;
+    public GeneProfilePrecondition() {
     }
 
     @Override
-    public boolean apply(Expression expression) {
+    public boolean apply(GeneProfile geneProfile) {
 
-        return expression.isGreaterThan(cutoff)
-                && checkFilterFactors(expression);
+        if (!specific || selectedQueryFactors.isEmpty()) {
+            return true;
+        }
+
+        double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
+        Set<Factor> remainingFactors = Sets.newHashSet(allQueryFactors);
+        remainingFactors.removeAll(selectedQueryFactors);
+
+        double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);
+
+        return (averageOnSelected / averageOnRest) >= 1;
     }
 
-    protected boolean checkFilterFactors(Expression expression) {
-        return (CollectionUtils.isEmpty(filterFactors)
-        || expression.containsAll(filterFactors));
+    public void setSpecific(boolean specific) {
+        this.specific = specific;
     }
 
+    public void setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
+        this.selectedQueryFactors = selectedQueryFactors;
+    }
 
+    public void setAllQueryFactors(Set<Factor> allQueryFactors) {
+        this.allQueryFactors = allQueryFactors;
+    }
 }

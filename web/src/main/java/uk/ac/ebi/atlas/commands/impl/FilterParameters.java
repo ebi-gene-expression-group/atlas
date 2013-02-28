@@ -44,27 +44,57 @@ public class FilterParameters implements RequestContext {
 
     private String filteredBySpecie;
 
+    private double cutoff;
+
+    private boolean specific;
+
+    private Set<Factor> allQueryFactors;
+
     public FilterParameters() {
     }
 
+    @Override
     public String getGeneQuery() {
         return geneQuery;
     }
 
+    @Override
     public Set<Factor> getSelectedFilterFactors() {
         return selectedFilterFactors;
     }
 
+    @Override
     public Set<Factor> getSelectedQueryFactors() {
         return selectedQueryFactors;
     }
 
+    @Override
     public String getQueryFactorType() {
         return queryFactorType;
     }
 
+    @Override
     public String getFilteredBySpecies() {
         return filteredBySpecie;
+    }
+
+    @Override
+    public double getCutoff() {
+        return cutoff;
+    }
+
+    @Override
+    public boolean isSpecific() {
+        return specific;
+    }
+
+    @Override
+    public Set<Factor> getAllQueryFactors() {
+        return allQueryFactors;
+    }
+
+    public void setAllQueryFactors(Set<Factor> allQueryFactors) {
+        this.allQueryFactors = allQueryFactors;
     }
 
     public void setGeneQuery(String geneQuery) {
@@ -85,6 +115,14 @@ public class FilterParameters implements RequestContext {
 
     public void setFilteredBySpecie(String filteredBySpecie) {
         this.filteredBySpecie = filteredBySpecie;
+    }
+
+    public void setCutoff(double cutoff) {
+        this.cutoff = cutoff;
+    }
+
+    public void setSpecific(boolean specific) {
+        this.specific = specific;
     }
 
     @Override

@@ -3,8 +3,10 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
@@ -134,7 +136,14 @@ public class GeneProfile extends GeneExpressions {
 
         private GeneExpressionPrecondition geneExpressionPrecondition;
 
+        private RequestContext requestContext;
+
         protected Builder() {
+        }
+
+        @Inject
+        public void setRequestContext(RequestContext requestContext) {
+            this.requestContext = requestContext;
         }
 
         @Inject
@@ -147,6 +156,12 @@ public class GeneProfile extends GeneExpressions {
             this.geneExpressionPrecondition = precondition;
         }
 
+        @PostConstruct
+        protected void initPreconditions() {
+            geneExpressionPrecondition.setCutoff(requestContext.getCutoff());
+            geneExpressionPrecondition.setFilterFactors(requestContext.getSelectedFilterFactors());
+        }
+
         public Builder forGeneId(String geneId) {
             this.geneProfile = new GeneProfile();
             geneProfile.setGeneNamesProvider(geneNamesProvider);
@@ -156,8 +171,8 @@ public class GeneProfile extends GeneExpressions {
 
         public Builder addExpression(Expression expression) {
             checkState(geneProfile != null, "Please invoke forGeneID before create");
-            if (geneExpressionPrecondition.apply(expression)) {
-                geneProfile.add(expression, geneExpressionPrecondition.getQueryFactorType());
+            if (apply(expression)) {
+                geneProfile.add(expression, requestContext.getQueryFactorType());
             }
             return this;
         }
@@ -173,14 +188,14 @@ public class GeneProfile extends GeneExpressions {
         }
 
         protected boolean isOverExpressedInSelectedFactors() {
-            Set<Factor> selectedQueryFactors = geneExpressionPrecondition.getSelectedQueryFactors();
+            Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
 
-            if (!geneExpressionPrecondition.isSpecific() || selectedQueryFactors.isEmpty()) {
+            if (!requestContext.isSpecific() || selectedQueryFactors.isEmpty()) {
                 return true;
             }
 
             double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
-            Set<Factor> remainingFactors = Sets.newHashSet(geneExpressionPrecondition.getAllFactors());
+            Set<Factor> remainingFactors = Sets.newHashSet(requestContext.getAllQueryFactors());
             remainingFactors.removeAll(selectedQueryFactors);
 
             double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);
@@ -188,5 +203,16 @@ public class GeneProfile extends GeneExpressions {
             return (averageOnSelected / averageOnRest) >= 1;
         }
 
+        //ToDo: from GeneExpressionPrecondition
+        public boolean apply(Expression expression) {
+
+            return expression.isGreaterThan(requestContext.getCutoff())
+                    && checkFilterFactors(expression);
+        }
+
+        protected boolean checkFilterFactors(Expression expression) {
+            return (CollectionUtils.isEmpty(requestContext.getSelectedFilterFactors())
+                    || expression.containsAll(requestContext.getSelectedFilterFactors()));
+        }
     }
 }
