@@ -29,7 +29,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import uk.ac.ebi.atlas.model.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.web.FactorsConverter;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -41,7 +41,7 @@ public class FilterFactorMenu {
     private final SortedSet<Factor> factors = Sets.newTreeSet();
 
     private ExperimentalFactors experimentalFactors;
-    private FactorsConverter factorConverter;
+    private FilterFactorsConverter factorConverter;
 
     public FilterFactorMenu(ExperimentalFactors experimentalFactors, Set<Factor> setOfFactors) {
         this.experimentalFactors = experimentalFactors;
@@ -116,7 +116,7 @@ public class FilterFactorMenu {
         return new FactorsCombination(queryFactorType, factors);
     }
 
-    public void setFactorConverter(FactorsConverter factorConverter) {
+    public void setFactorConverter(FilterFactorsConverter factorConverter) {
         this.factorConverter = factorConverter;
     }
 
@@ -129,7 +129,7 @@ public class FilterFactorMenu {
 
         FactorsCombination(String queryFactorType, Factor... factors) {
             this.queryFactorType = queryFactorType;
-            serializedFactors = factorConverter.serializeFactors(Lists.newArrayList(factors));
+            serializedFactors = factorConverter.serialize(Lists.newArrayList(factors));
         }
 
         public String getQueryFactorType() {

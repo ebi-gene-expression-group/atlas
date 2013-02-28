@@ -26,7 +26,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.RequestPreferences;
@@ -47,9 +46,7 @@ public class GeneProfilesController {
 
     protected RequestContext initRequestContext(String experimentAccession, RequestPreferences preferences) {
 
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-        return requestContextBuilder.forExperiment(experiment)
+        return requestContextBuilder.forExperiment(experimentAccession)
                 .withSerializedFilterFactors(preferences.getSerializedFilterFactors())
                 .withQueryFactorType(preferences.getQueryFactorType())
                 .withQueryFactorValues(preferences.getQueryFactorValues())

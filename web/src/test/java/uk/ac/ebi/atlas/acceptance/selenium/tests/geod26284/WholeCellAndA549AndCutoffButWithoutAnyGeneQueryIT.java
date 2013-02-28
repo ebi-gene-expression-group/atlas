@@ -31,7 +31,7 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284
 
     @Override
     protected String getQueryFactorLabel() {
-        return "Material type";
+        return "RNA type";
     }
 
     @Override

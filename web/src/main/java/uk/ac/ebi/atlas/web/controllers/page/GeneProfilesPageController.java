@@ -41,7 +41,7 @@ import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.RankingParameters;
 import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.FactorsConverter;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 
@@ -67,19 +67,19 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private ExperimentsCache experimentsCache;
 
-    private FactorsConverter factorsConverter;
+    private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
     public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
                                       ExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
-                                      GeneExpressionPrecondition geneExpressionPrecondition, FactorsConverter factorsConverter) {
+                                      GeneExpressionPrecondition geneExpressionPrecondition, FilterFactorsConverter filterFactorsConverter) {
         super(requestContextBuilder, experimentsCache, geneExpressionPrecondition);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
-        this.factorsConverter = factorsConverter;
+        this.filterFactorsConverter = filterFactorsConverter;
     }
 
     @RequestMapping("/experiments/{experimentAccession}")
@@ -119,7 +119,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
             Set<Factor> menuFactors = experimentalFactors.getAllFactors();
 
             FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, menuFactors);
-            filterFactorMenu.setFactorConverter(factorsConverter);
+            filterFactorMenu.setFactorConverter(filterFactorsConverter);
 
             model.addAttribute("filterFactorMenu", filterFactorMenu);
 

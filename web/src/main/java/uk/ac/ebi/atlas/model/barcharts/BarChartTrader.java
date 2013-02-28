@@ -24,15 +24,11 @@ package uk.ac.ebi.atlas.model.barcharts;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.FactorGroup;
 
-import javax.inject.Named;
 import java.util.*;
 
-@Named("barChartTrader")
-@Scope("prototype")
 public class BarChartTrader {
 
     public static final int AVERAGE_GENES_IN_EXPERIMENT = 45000;
@@ -42,21 +38,18 @@ public class BarChartTrader {
 
     private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
 
-    protected BarChartTrader() {
-    }
-
     public BarChartTrader(NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes) {
         this.factorGroupGeneExpressionIndexes = factorGroupGeneExpressionIndexes;
     }
 
 
-    public NavigableMap<Double, Integer> getChart(Set<Factor> filterFactors, Set<Factor> selectedFactors) {
+    public NavigableMap<Double, Integer> getChart(Set<Factor> filterFactors, Set<Factor> selectedQueryFactors) {
 
         NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
 
         for (Double scaledCutoff : factorGroupGeneExpressionIndexes.navigableKeySet()) {
 
-            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(factorGroupGeneExpressionIndexes.get(scaledCutoff), filterFactors, selectedFactors));
+            barChartPoints.put(scaledCutoff, countGenesAboveCutoff(factorGroupGeneExpressionIndexes.get(scaledCutoff), filterFactors, selectedQueryFactors));
 
         }
 

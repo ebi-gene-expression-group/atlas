@@ -29,7 +29,9 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.impl.FilterParameters;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.web.FactorsConverter;
+import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.FilterFactorsConverterBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,25 +43,29 @@ import java.util.Set;
 @Named
 @Scope("request")
 public class RequestContextBuilder implements Serializable {
-    public static final String FACTOR_VALUE_SEPARATOR = ":";
 
     private FilterParameters filterParameters;
 
     private Set<String> queryFactorValues = Collections.EMPTY_SET;
     private String serializedFilterFactors;
 
+    private String experimentAccession;
+
     private Experiment experiment;
 
-    private FactorsConverter factorsConverter;
+    private FilterFactorsConverterBuilder filterFactorsConverterBuilder;
+    private ExperimentsCache experimentsCache;
 
     @Inject
-    public RequestContextBuilder(FilterParameters filterParameters, FactorsConverter factorsConverter) {
+    public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverterBuilder filterFactorsConverterBuilder, ExperimentsCache experimentsCache) {
+        this.experimentsCache = experimentsCache;
         this.filterParameters = filterParameters;
-        this.factorsConverter = factorsConverter;
+        this.filterFactorsConverterBuilder = filterFactorsConverterBuilder;
     }
 
-    public RequestContextBuilder forExperiment(Experiment experiment) {
-        this.experiment = experiment;
+    public RequestContextBuilder forExperiment(String experimentAccession) {
+        this.experimentAccession = experimentAccession;
+        this.experiment = experimentsCache.getExperiment(experimentAccession);
         return this;
     }
 
@@ -97,7 +103,9 @@ public class RequestContextBuilder implements Serializable {
         if (StringUtils.isBlank(serializedFilterFactors)) {
             filterParameters.setSelectedFilterFactors(experiment.getDefaultFilterFactors());
         } else {
-            Set<Factor> selectedFilterFactors = factorsConverter.deserialize(serializedFilterFactors);
+            FilterFactorsConverter filterFactorsConverter = filterFactorsConverterBuilder.forExperimentAccession(experimentAccession).build();
+
+            Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
 
             filterParameters.setSelectedFilterFactors(selectedFilterFactors);
         }
