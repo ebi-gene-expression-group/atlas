@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 
@@ -53,9 +54,9 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
                                           RequestContextBuilder requestContextBuilder,
                                           ExperimentsCache experimentsCache,
-                                          GeneExpressionPrecondition geneExpressionPrecondition) {
+                                          GeneExpressionPrecondition geneExpressionPrecondition, FilterFactorsConverter filterFactorsConverter) {
 
-        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition);
+        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition, filterFactorsConverter);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
@@ -63,6 +64,8 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     public void downloadGeneProfiles(@PathVariable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException, GeneNotFoundException {
+
+        initPreferences(preferences, experimentAccession);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 

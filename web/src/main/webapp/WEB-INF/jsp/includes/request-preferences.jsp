@@ -47,7 +47,7 @@
                     </td>
                 </c:if>
                 <td>
-                    <form:label cssStyle="text-transform: capitalize" path="queryFactorValues">${queryFactorName}</form:label>
+                    <form:label path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch"/>
                 </td>
                 <td style="width:100%;display:block">

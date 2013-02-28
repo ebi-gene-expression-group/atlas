@@ -31,7 +31,6 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.FilterFactorsConverterBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,14 +52,14 @@ public class RequestContextBuilder implements Serializable {
 
     private Experiment experiment;
 
-    private FilterFactorsConverterBuilder filterFactorsConverterBuilder;
+    private FilterFactorsConverter filterFactorsConverter;
     private ExperimentsCache experimentsCache;
 
     @Inject
-    public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverterBuilder filterFactorsConverterBuilder, ExperimentsCache experimentsCache) {
+    public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverter filterFactorsConverter, ExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
         this.filterParameters = filterParameters;
-        this.filterFactorsConverterBuilder = filterFactorsConverterBuilder;
+        this.filterFactorsConverter = filterFactorsConverter;
     }
 
     public RequestContextBuilder forExperiment(String experimentAccession) {
@@ -103,7 +102,6 @@ public class RequestContextBuilder implements Serializable {
         if (StringUtils.isBlank(serializedFilterFactors)) {
             filterParameters.setSelectedFilterFactors(experiment.getDefaultFilterFactors());
         } else {
-            FilterFactorsConverter filterFactorsConverter = filterFactorsConverterBuilder.forExperimentAccession(experimentAccession).build();
 
             Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
 

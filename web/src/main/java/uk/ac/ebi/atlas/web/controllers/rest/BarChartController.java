@@ -1,17 +1,18 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.FilterFactorsConverterBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -26,16 +27,12 @@ public class BarChartController {
 
     private BarChartTradersCache barChartTradersCache;
 
-    private ExperimentsCache experimentsCache;
-
-    private GeneExpressionPrecondition geneExpressionPrecondition;
-
-    private FilterFactorsConverterBuilder filterFilterFactorsConverterBuilder;
+    private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverterBuilder filterFilterFactorsConverterBuilder) {
+    public BarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter) {
         this.barChartTradersCache = barChartTradersCache;
-        this.filterFilterFactorsConverterBuilder = filterFilterFactorsConverterBuilder;
+        this.filterFactorsConverter = filterFilterFactorsConverter;
     }
 
     @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
@@ -53,8 +50,6 @@ public class BarChartController {
                 queryFactors.add(new Factor(queryFactorType, queryFactorValue));
             }
         }
-
-        FilterFactorsConverter filterFactorsConverter = filterFilterFactorsConverterBuilder.forExperimentAccession(experimentAccession).build();
 
         Set<Factor> filterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
 

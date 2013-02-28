@@ -48,7 +48,7 @@ public class FilterFactorsConverterTest {
     @Before
     public void setUp() throws Exception {
         Experiment experimentMock = mock(Experiment.class);
-        subject = new FilterFactorsConverter(experimentMock);
+        subject = new FilterFactorsConverter();
     }
 
     @Test

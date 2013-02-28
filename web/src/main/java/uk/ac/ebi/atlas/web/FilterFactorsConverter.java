@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,15 +35,10 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
+@Named
 public class FilterFactorsConverter {
 
     private static final String SEPARATOR = ":";
-
-    private Experiment experiment;
-
-    FilterFactorsConverter(Experiment experiment) {
-        this.experiment = experiment;
-    }
 
     public String serialize(Collection<Factor> factors) {
         List<String> serializedFactors = new ArrayList();
@@ -53,15 +49,6 @@ public class FilterFactorsConverter {
     }
 
     public Set<Factor> deserialize(String csvSerializedFactors) {
-        if (StringUtils.isBlank(csvSerializedFactors)) {
-            return experiment.getDefaultFilterFactors();
-        } else {
-            return deserializeFromString(csvSerializedFactors);
-        }
-
-    }
-
-    Set<Factor> deserializeFromString(String csvSerializedFactors) {
         Set<Factor> factors = Sets.newHashSet();
         String[] serializedFactors = csvSerializedFactors.split(",");
         for (String serializedFactor : serializedFactors) {
@@ -73,6 +60,5 @@ public class FilterFactorsConverter {
         }
         return factors;
     }
-
 
 }

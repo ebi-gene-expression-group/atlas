@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.base.Joiner;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,7 +75,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
                                       ApplicationProperties applicationProperties,
                                       ExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
                                       GeneExpressionPrecondition geneExpressionPrecondition, FilterFactorsConverter filterFactorsConverter) {
-        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition);
+        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition, filterFactorsConverter);
         this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
@@ -87,14 +88,17 @@ public class GeneProfilesPageController extends GeneProfilesController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+        initPreferences(preferences, experimentAccession);
+
         RequestContext requestContext = initRequestContext(experimentAccession, preferences);
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        model.addAttribute("queryFactorName", experimentalFactors.getFactorName(requestContext.getQueryFactorType()));
+        model.addAttribute("queryFactorName", StringUtils.capitalize(experimentalFactors.getFactorName(requestContext.getQueryFactorType())));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 

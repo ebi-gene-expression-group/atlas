@@ -24,18 +24,19 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfiguration;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Scope("request")
@@ -45,14 +46,19 @@ public class HomePageController {
 
     private ExperimentsCache experimentsCache;
 
-    private SortedSetMultimap<String, String> experimentAccessions = TreeMultimap.create();
+    private SortedSetMultimap<String, String> experimentAccessions;
 
     private Map<String, String> experimentLinks = new HashMap<>();
 
+    private SortedMap<String, String> experimentDisplayNames = new TreeMap<>();
+
+    private ExperimentFactorsConfiguration configuration;
+
     @Inject
-    public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
+    public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache, ExperimentFactorsConfiguration configuration) {
         this.properties = properties;
         this.experimentsCache = experimentsCache;
+        this.configuration = configuration;
     }
 
     @RequestMapping("/home")
@@ -62,6 +68,7 @@ public class HomePageController {
 
         model.addAttribute("experimentAccessions", experimentAccessions);
         model.addAttribute("experimentLinks", experimentLinks);
+        model.addAttribute("experimentDisplayNames", experimentDisplayNames);
 
         return "home";
     }
@@ -70,20 +77,53 @@ public class HomePageController {
     private void loadExperimentAccessionsBySpecie() {
 
         for (String experimentAccession : properties.getExperimentIdentifiers()) {
+            String displayName = parseDisplayNameForExperiment(experimentAccession);
+            experimentDisplayNames.put(experimentAccession, displayName);
+        }
+
+        Comparator<String> keyComparator = new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        };
+        // experiments should be sorted by their display name, not accession
+        Comparator<String> valueComparator = new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
+            }
+        };
+        experimentAccessions = TreeMultimap.create(keyComparator, valueComparator);
+
+        for (String experimentAccession : properties.getExperimentIdentifiers()) {
 
             Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             for (String specie : experiment.getSpecies()) {
                 experimentAccessions.put(specie, experimentAccession);
                 if (experiment.getSpecies().size() > 1) {
-                    experimentLinks.put(experimentAccession+specie, "?serializedFilterFactors=ORGANISM:" + specie);
+                    experimentLinks.put(experimentAccession + specie, "?serializedFilterFactors=ORGANISM:" + specie);
                 } else {
-                    experimentLinks.put(experimentAccession+specie, "");
+                    experimentLinks.put(experimentAccession + specie, "");
                 }
             }
 
         }
 
     }
+
+    private String parseDisplayNameForExperiment(String experimentAccession) {
+
+        XMLConfiguration xmlConfiguration = configuration.forExperiment(experimentAccession);
+        String displayName = xmlConfiguration.getString("landingPageDisplayName");
+        if (displayName != null && displayName.trim().length() > 0) {
+            return displayName;
+        } else {
+            return experimentAccession;
+        }
+
+    }
+
 
 }

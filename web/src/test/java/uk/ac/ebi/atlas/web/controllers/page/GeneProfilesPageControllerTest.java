@@ -73,10 +73,10 @@ public class GeneProfilesPageControllerTest {
         when(httpServletRequestMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
 
-        FilterFactorsConverter filterFactorsConverter = mock(FilterFactorsConverter.class);
+        FilterFactorsConverter filterFactorsConverterMock = mock(FilterFactorsConverter.class);
 
         subject = new GeneProfilesPageController(null, rankCommandMock, applicationPropertiesMock,
-                experimentCacheMock, requestContextBuilderMock, null, filterFactorsConverter);
+                experimentCacheMock, requestContextBuilderMock, null, filterFactorsConverterMock);
     }
 
     @Test

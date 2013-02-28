@@ -26,8 +26,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 @Scope("request")
@@ -36,12 +38,24 @@ public class GeneProfilesController {
     private RequestContextBuilder requestContextBuilder;
     private ExperimentsCache experimentsCache;
     private GeneExpressionPrecondition geneExpressionPrecondition;
+    private FilterFactorsConverter filterFactorsConverter;
 
     public GeneProfilesController(RequestContextBuilder requestContextBuilder, ExperimentsCache experimentsCache,
-                                  GeneExpressionPrecondition geneExpressionPrecondition) {
+                                  GeneExpressionPrecondition geneExpressionPrecondition, FilterFactorsConverter filterFactorsConverter) {
         this.requestContextBuilder = requestContextBuilder;
         this.experimentsCache = experimentsCache;
         this.geneExpressionPrecondition = geneExpressionPrecondition;
+        this.filterFactorsConverter = filterFactorsConverter;
+    }
+
+    protected void initPreferences(RequestPreferences preferences, String experimentAccession) {
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        if (StringUtils.isBlank(preferences.getQueryFactorType())) {
+            preferences.setQueryFactorType(experiment.getDefaultQueryFactorType());
+        }
+        if (StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
+            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(experiment.getDefaultFilterFactors()));
+        }
     }
 
     protected RequestContext initRequestContext(String experimentAccession, RequestPreferences preferences) {
