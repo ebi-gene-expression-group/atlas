@@ -96,7 +96,7 @@ var searchFormModule = (function($) {
             lastItem = splitByDoubleQuotes.pop();
 
         if (!isEven(numberOfDoubleQuotes)){
-            return normalizeSpaces(lastItem);
+            return lastItem;
         }
         return lastItem.split( /\s+/).pop();
     }
