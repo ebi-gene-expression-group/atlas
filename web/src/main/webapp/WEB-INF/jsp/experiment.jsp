@@ -192,8 +192,6 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             }
 
-            var formattedQueryFactorType = "${formattedQueryFactorType}";
-
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
             if ($.browser.msie && $.browser.version <= 8.0) {
@@ -208,10 +206,10 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#slider-help").hide();//hide the slider help
             } else {
 
-                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${queryFactorType}', '${preferences.serializedFilterFactors}');
+                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
 
                 $("#queryFactorValues").change(function () {
-                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${queryFactorType}', '${preferences.serializedFilterFactors}');
+                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
                 });
 
                 //configurations required for any browser excepted IE version 8 or lower
@@ -235,7 +233,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(any ${formattedQueryFactorType}s)", '${species}');
+            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(any ${queryFactorName}s)", '${species}');
 
             helpTooltipsModule.init('experiment');
 

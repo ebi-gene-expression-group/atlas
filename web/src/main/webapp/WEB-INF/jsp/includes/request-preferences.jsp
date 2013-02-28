@@ -47,7 +47,7 @@
                     </td>
                 </c:if>
                 <td>
-                    <form:label path="queryFactorValues">${formattedQueryFactorType}</form:label>
+                    <form:label cssStyle="text-transform: capitalize" path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch"/>
                 </td>
                 <td style="width:100%;display:block">
@@ -78,7 +78,7 @@
                 </c:if>
                 <td>
                     <div>
-                        <form:select path="queryFactorValues" data-placeholder="(any ${formattedQueryFactorType}s)"
+                        <form:select path="queryFactorValues" data-placeholder="(any ${queryFactorName}s)"
                                      tabindex="-1"
                                      items="${allQueryFactorValues}"
                                      cssStyle="width:300px"/>

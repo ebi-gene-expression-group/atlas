@@ -48,7 +48,10 @@ import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 @Controller
 @Scope("request")
@@ -88,16 +91,14 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        model.addAttribute("queryFactorType", requestContext.getQueryFactorType());
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        //ToDo: do we really need the factor type??? everywhere else we display factor name!!
-        model.addAttribute("formattedQueryFactorType", requestContext.formattedQueryFactorType());
+        model.addAttribute("queryFactorName", experimentalFactors.getFactorName(requestContext.getQueryFactorType()));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
         SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
 
         // this is currently required for the request preferences filter drop-down multi-selection box
