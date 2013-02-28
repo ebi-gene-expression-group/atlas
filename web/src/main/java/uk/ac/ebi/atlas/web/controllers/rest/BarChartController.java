@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
@@ -51,6 +52,12 @@ public class BarChartController {
 
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
+        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+
+        if (StringUtils.isBlank(queryFactorType)) {
+            queryFactorType = experiment.getDefaultQueryFactorType();
+        }
+
         Set<Factor> queryFactors = new HashSet<>();
         if (queryFactorValues != null) {
             for (String queryFactorValue : queryFactorValues) {
@@ -61,7 +68,7 @@ public class BarChartController {
         Set<Factor> filterFactors = Sets.newHashSet();
 
         if (StringUtils.isBlank(serializedFilterFactors)){
-            filterFactors = experimentsCache.getExperiment(experimentAccession).getDefaultFilterFactors();
+            filterFactors = experiment.getDefaultFilterFactors();
         } else {
             filterFactors = factorsConverter.deserialize(serializedFilterFactors);
         }
