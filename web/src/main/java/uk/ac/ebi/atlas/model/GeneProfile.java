@@ -167,7 +167,8 @@ public class GeneProfile extends GeneExpressions {
             this.geneProfilePrecondition = precondition;
         }
 
-        //We can't do this @PostConstruct because at that time the RequestContext object hasn't yet been populated...
+        //We can't do this @PostConstruct because @PostConstruct gets invoked when Controller is constructed,
+        // that is before the Controller actually executes the request method...
         void initPreconditions() {
             geneExpressionPrecondition.setCutoff(requestContext.getCutoff())
                     .setFilterFactors(requestContext.getSelectedFilterFactors());
