@@ -26,7 +26,7 @@
     height: 410px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: -400px;
+    margin-top: -410px;
 }
 
 .species-navigation {
@@ -79,14 +79,14 @@ a.species-icon {
     list-style: none;
     position: absolute;
     top: 30px;
-    left: 20px;
+    left: 5px;
     /*display: none;*/
 }
 
 .item ul li a {
     font-size: 14px;
     text-decoration: none;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     width: 150px;
     color: #736a5a;
     padding: 2px;

@@ -36,8 +36,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Scope("request")
@@ -47,11 +46,11 @@ public class HomePageController {
 
     private ExperimentsCache experimentsCache;
 
-    private SortedSetMultimap<String, String> experimentAccessions = TreeMultimap.create();
+    private SortedSetMultimap<String, String> experimentAccessions;
 
     private Map<String, String> experimentLinks = new HashMap<>();
 
-    private Map<String, String> experimentDisplayNames = new HashMap<>();
+    private SortedMap<String, String> experimentDisplayNames = new TreeMap<>();
 
     private ExperimentFactorsConfiguration configuration;
 
@@ -78,10 +77,28 @@ public class HomePageController {
     private void loadExperimentAccessionsBySpecie() {
 
         for (String experimentAccession : properties.getExperimentIdentifiers()) {
-
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
             String displayName = parseDisplayNameForExperiment(experimentAccession);
             experimentDisplayNames.put(experimentAccession, displayName);
+        }
+
+        Comparator<String> keyComparator = new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        };
+        // experiments should be sorted by their display name, not accession
+        Comparator<String> valueComparator = new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
+            }
+        };
+        experimentAccessions = TreeMultimap.create(keyComparator, valueComparator);
+
+        for (String experimentAccession : properties.getExperimentIdentifiers()) {
+
+            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             for (String specie : experiment.getSpecies()) {
                 experimentAccessions.put(specie, experimentAccession);
@@ -107,5 +124,6 @@ public class HomePageController {
         }
 
     }
+
 
 }
