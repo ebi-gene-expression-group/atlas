@@ -25,7 +25,7 @@ public class GeneProfile extends GeneExpressions {
 
     private SortedMap<Factor, Expression> expressions = new TreeMap<>();
 
-    private GeneProfile() {
+    GeneProfile() {
     }
 
     @Override
@@ -33,7 +33,7 @@ public class GeneProfile extends GeneExpressions {
         throw new UnsupportedOperationException("Please use the builder!");
     }
 
-    private GeneProfile add(Expression expression, String queryFactorType) {
+    protected GeneProfile add(Expression expression, String queryFactorType) {
 
         updateProfileExpression(expression.getLevel());
 
