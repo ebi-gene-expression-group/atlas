@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -59,7 +60,7 @@ public class BarChartController {
 
         Set<Factor> filterFactors = Sets.newHashSet();
 
-        if (serializedFilterFactors == null){
+        if (StringUtils.isBlank(serializedFilterFactors)){
             filterFactors = experimentsCache.getExperiment(experimentAccession).getDefaultFilterFactors();
         } else {
             filterFactors = factorsConverter.deserialize(serializedFilterFactors);
