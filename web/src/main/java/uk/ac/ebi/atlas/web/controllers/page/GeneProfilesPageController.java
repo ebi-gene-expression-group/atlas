@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.base.Joiner;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,7 +95,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        model.addAttribute("queryFactorName", experimentalFactors.getFactorName(requestContext.getQueryFactorType()));
+        model.addAttribute("queryFactorName", StringUtils.capitalize(experimentalFactors.getFactorName(requestContext.getQueryFactorType())));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
