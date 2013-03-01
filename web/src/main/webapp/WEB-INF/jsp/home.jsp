@@ -24,7 +24,7 @@
 
 <div class="species-navigation" id="species-nav">
 
-    <c:forEach items="${experimentAccessions.keySet()}" var="specie">
+    <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="specie">
 
         <div class="item">
             <img src="resources/images/home/${specie}.png" width="40" height="40"
@@ -33,7 +33,7 @@
 
             <h2>${specie}</h2>
             <ul>
-                <c:forEach items="${experimentAccessions.get(specie)}" var="experimentAccession">
+                <c:forEach items="${experimentAccessionsBySpecies.get(specie)}" var="experimentAccession">
                     <c:set var="key" value="${experimentAccession}${specie}"/>
                     <li>
                         <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentDisplayNames.get(experimentAccession)}</a>

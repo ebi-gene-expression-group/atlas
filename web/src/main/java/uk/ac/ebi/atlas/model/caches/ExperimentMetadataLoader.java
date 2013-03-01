@@ -26,6 +26,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -87,6 +88,8 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         Set<String> menuFilterFactorTypes = parseMenuFilterFactorTypes(factorsConfig);
 
+        String displayName = parseDisplayNameForExperiment(factorsConfig, experimentAccession);
+
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
 
         String experimentName = fetchExperimentName(experimentAccession);
@@ -115,6 +118,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
                 .withExperimentRuns(experimentRuns)
                 .withExtraInfo(hasExtraInfoFile)
                 .withFactorNamesByType(mageTabLoader.getFactorNamesByType())
+                .withDisplayName(displayName)
                 .create();
 
     }
@@ -131,6 +135,16 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
             requiredFactorTypes.add(defaultFilterFactor.getType());
         }
         return requiredFactorTypes;
+    }
+
+    private String parseDisplayNameForExperiment(XMLConfiguration config, String experimentAccession) {
+
+        String displayName = config.getString("landingPageDisplayName");
+        if (StringUtils.isNotBlank(displayName)) {
+            return displayName;
+        }
+        return experimentAccession;
+
     }
 
     private Set<Factor> parseDefaultFilterFactors(XMLConfiguration config) {

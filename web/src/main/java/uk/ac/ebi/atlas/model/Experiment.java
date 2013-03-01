@@ -38,6 +38,8 @@ public class Experiment implements Serializable {
     private String defaultQueryFactorType;
     private Set<Factor> defaultFilterFactors;
 
+    private String displayName;
+
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private ExperimentalFactors experimentalFactors;
@@ -45,8 +47,9 @@ public class Experiment implements Serializable {
     private boolean hasExtraInfoFile;
 
 
-    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
+    Experiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, String displayName, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
         this.description = description;
+        this.displayName = displayName;
         this.species = species;
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
@@ -55,6 +58,10 @@ public class Experiment implements Serializable {
         for (ExperimentRun experimentRun : experimentRuns) {
             this.experimentRuns.put(experimentRun.getAccession(), experimentRun);
         }
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public FactorGroup getFactorGroup(String experimentRunAccession) {

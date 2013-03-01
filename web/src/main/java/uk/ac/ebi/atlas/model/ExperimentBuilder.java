@@ -40,6 +40,7 @@ public class ExperimentBuilder {
 
     private Set<String> species;
     private String description;
+    private String displayName;
     private Collection<ExperimentRun> experimentRuns;
     private String defaultQueryType;
     private boolean hasExtraInfoFile;
@@ -88,8 +89,13 @@ public class ExperimentBuilder {
         return this;
     }
 
-    public ExperimentBuilder withFactorNamesByType(Map<String, String> factorNamesByType){
+    public ExperimentBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
         this.factorNamesByType = factorNamesByType;
+        return this;
+    }
+
+    public ExperimentBuilder withDisplayName(String displayName) {
+        this.displayName = displayName;
         return this;
     }
 
@@ -108,7 +114,7 @@ public class ExperimentBuilder {
                 .create();
 
 
-        return new Experiment(experimentalFactors, experimentRuns, description, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
+        return new Experiment(experimentalFactors, experimentRuns, description, displayName, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
     }
 
 

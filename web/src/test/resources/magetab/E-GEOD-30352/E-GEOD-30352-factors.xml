@@ -30,5 +30,5 @@
     </defaultFilterFactors>
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes>ORGANISM</menuFilterFactorTypes>
-    <landingPageDisplayName>Mammalian organs</landingPageDisplayName>
+    <landingPageDisplayName>Vertebrate tissues</landingPageDisplayName>
 </factors-definition>
