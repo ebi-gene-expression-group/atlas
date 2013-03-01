@@ -40,7 +40,7 @@ public class AutocompleteControllerIT {
     private static final String END_POINT_URL = "/gxa/json/suggestions";
 
 
-    private EndPoint subject = new EndPoint(END_POINT_URL,"query=ASP&species=homo");
+    private EndPoint subject = new EndPoint(END_POINT_URL,"query=ASP&species=homo sapiens");
 
     @Test
     public void verifyHeader() {
