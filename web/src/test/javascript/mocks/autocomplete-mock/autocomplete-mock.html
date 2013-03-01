@@ -97,8 +97,8 @@
                 $("#geneQuery").autocomplete({
                     source:function (request, response) {
                         $.ajax({
-                            'url':'http://ves-hx-75.ebi.ac.uk:8983/solr/suggest',
-                            'data':{'wt':'json', 'q':"alltext:" + request.term.toLowerCase()},
+                            'url':'http://ves-ebi-7f.ebi.ac.uk:8983/solr/suggest_genename',
+                            'data':{'wt':'json', 'q':request.term.toLowerCase()},
                             'success':function (data) {
                                 response(extract(data))
                             },
