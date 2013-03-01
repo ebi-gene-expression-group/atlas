@@ -78,11 +78,11 @@ data is available.</p>
 
 <h4><i>Specific</i> vs. <i>non&ndash;specific</i> search</h4>
 	
-<p>The default Baseline Atlas search reports first genes with more "specific" expression (with the <i>Specific</i> option selected by default). What we mean by this is outlined below:</p>
+<p>The default Baseline Atlas search reports genes with more "specific" expression (with the <i>Specific</i> option selected by default). What we mean by this is outlined below:</p>
 	
 	<ul>
 		<li>If the query contains <b>no experimental factor values</b>, the <i>Specific</i> search will report genes expressed in just <b>one</b> experimental factor value, then genes expressed in just <b>two</b> factor values, then three and so on, reporting any genes expressed in all the available factor values at the end of the list of results. Within each group of genes expressed in N factor values only, genes are sorted by the highest average FPKM across the N factor values in which they are expressed.</li>
-		<li>If the query contains <b>at least one</b> experimental factor value, the <i>Specific</i> search will promote genes with <b>higher average FPKM</b> in the <b>queried</b> factor value(s), and at the same time penalize genes with a higher average FPKM across the <b>non&ndash;queried</b> factor values. In other words, genes with the <b>greatest difference</b> in expression between queried and non&ndash;queried tissues will be pushed towards the top of the list.</li>
+		<li>If the query contains <b>at least one</b> experimental factor value, the <i>Specific</i> search will promote genes with <b>higher average FPKM</b> in the <b>queried</b> factor value(s), and at the same time penalize genes with a higher average FPKM across the <b>non&ndash;queried</b> factor values. This is done using the "fold difference" between the query and non-query FPKMs, calculated by dividing the average FPKM by the average FPKM of the non-query factor values. Genes with the <b>greatest fold difference</b> in expression between query and non&ndash;query factor values will be pushed towards the top of the list. Genes that have higher expression in non-query factor values than in the query factor values are not shown.</li>
   </ul>
   
   <p>If the <i>Specific</i> option is not selected, the Baseline Atlas search will <b>ignore</b> specificity of expression when ordering the results. In particular:</p>
@@ -90,8 +90,7 @@ data is available.</p>
   <ul>
 	  <li>If the query contains <b>no experimental factor values</b>, genes with the highest expression across <b>all</b> factor values will be reported first.</li>
 	  <li>If the query contains <b>at least one</b> experimental factor value, genes with higher FPKM across the <b>selected</b> factor values are reported first (expression levels across the non&ndash;selected factor values is <b>ignored</b> in the ordering of results).</li>
-  </ul>
-
+  </factor values
 
 
 
