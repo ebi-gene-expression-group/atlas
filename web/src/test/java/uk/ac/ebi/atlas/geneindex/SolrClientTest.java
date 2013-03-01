@@ -65,5 +65,14 @@ public class SolrClientTest {
         assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO0008134 \"p53 binding\")"));
     }
 
+    @Test
+    public void testExtractSuggestion(){
+        //given
+        String suggestion = subject.extractSuggestion("autocomplete_genename:\"musk\" AND species:\"mus musculus\"");
+
+        assertThat(suggestion, is("musk"));
+
+    }
+
 
 }

@@ -41,7 +41,7 @@ import java.util.List;
 @Scope("request")
 public class AutocompleteController {
 
-    private static final int MAX_NUMBER_OF_SUGGESTIONS = 10;
+    private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
 
     private SolrClient solrClient;
 

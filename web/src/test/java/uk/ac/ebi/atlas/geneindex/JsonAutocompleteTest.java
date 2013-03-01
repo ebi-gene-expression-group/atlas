@@ -33,8 +33,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -55,33 +54,10 @@ public class JsonAutocompleteTest {
     }
 
     @Test
-    public void shouldContainSuggestionsForEachTerm(){
-        List<String> suggestions = subject.extractSuggestions(jsonAutocompleteResponse, "b");
-        assertThat(suggestions.size(), is(greaterThan(10)));
-        assertThat(suggestions, hasItems("b", "binding", "beta"));
-
-        suggestions = subject.extractSuggestions(jsonAutocompleteResponse, "p");
-        assertThat(suggestions.size(), is(greaterThan(10)));
-        assertThat(suggestions, hasItems("p", "protein"));
-    }
-
-    @Test
-    public void shouldNotContainSuggestionsForUnknownTerms(){
-        List<String> suggestions = subject.extractSuggestions(jsonAutocompleteResponse, "z");
-        assertThat(suggestions, is(empty()));
-    }
-
-    @Test
-    public void shouldNotContainSuggestionsIfSuggestionsElementIsEmpty(){
-        List<String> suggestions = subject.extractSuggestions(jsonAutocompleteEmptyResponse, "z");
-        assertThat(suggestions, is(empty()));
-    }
-
-    @Test
     public void shouldContainCollations(){
         List<String> suggestions = subject.extractCollations(jsonAutocompleteResponse);
-        assertThat(suggestions.size(), is(10));
-        assertThat(suggestions, hasItems("p b", "p binding"));
+        assertThat(suggestions.size(), is(5));
+        assertThat(suggestions, contains("mus", "mus81", "musculus", "musk", "mustn1"));
     }
 
     @Test
