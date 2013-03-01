@@ -32,8 +32,8 @@ import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
-import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
 
@@ -52,10 +52,9 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     @Inject
     public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
                                           RequestContextBuilder requestContextBuilder,
-                                          ExperimentsCache experimentsCache,
-                                          GeneExpressionPrecondition geneExpressionPrecondition) {
+                                          ExperimentsCache experimentsCache,FilterFactorsConverter filterFactorsConverter) {
 
-        super(requestContextBuilder, experimentsCache, geneExpressionPrecondition);
+        super(requestContextBuilder, experimentsCache, filterFactorsConverter);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
@@ -64,17 +63,15 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException, GeneNotFoundException {
 
+        initPreferences(preferences, experimentAccession);
+
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
         response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "-gene-expression-profiles.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
-        RequestContext parameters = initRequestContext(experimentAccession, preferences);
-
-        prepareGeneExpressionPrecondition(experimentAccession, preferences, parameters);
-
-        writeGeneProfilesCommand.setFilteredParameters(parameters);
+        initRequestContext(experimentAccession, preferences);
 
         writeGeneProfilesCommand.setResponseWriter(response.getWriter());
 

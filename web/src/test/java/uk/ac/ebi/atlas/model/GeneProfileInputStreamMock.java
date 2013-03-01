@@ -22,15 +22,16 @@
 
 package uk.ac.ebi.atlas.model;
 
+import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyDouble;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -45,25 +46,38 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
     //of the final order required by the user stories, profiles with higher selectivity will be streamed last.
     public GeneProfileInputStreamMock(int streamSize) {
 
+        GeneNamesProvider geneNamesProviderMock = mock(GeneNamesProvider.class);
+
+        RequestContext requestContextMock = mock(RequestContext.class);
+        when(requestContextMock.getQueryFactorType()).thenReturn("ORGANISM_PART");
+
         GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
+        when(geneExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(geneExpressionPreconditionMock);
+        when(geneExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(geneExpressionPreconditionMock);
         when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);
-        when(geneExpressionPreconditionMock.getQueryFactorType()).thenReturn("factor_type");
+
+        GeneProfilePrecondition geneProfilePreconditionMock = mock(GeneProfilePrecondition.class);
+        when(geneProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
+        when(geneProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(geneProfilePreconditionMock);
+        when(geneProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
+        when(geneProfilePreconditionMock.apply(any(GeneProfile.class))).thenReturn(true);
 
         List<GeneProfile> geneProfiles = new ArrayList<GeneProfile>();
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder().forGeneId("" + i);
-            geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
+            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder(requestContextMock, geneNamesProviderMock,
+                    geneExpressionPreconditionMock, geneProfilePreconditionMock);
+            geneProfileBuilder.forGeneId("" + i);
 
             for (int j = 0; j < i; j++) {
 
                 Expression expressionMock = mock(Expression.class);
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
-                Factor factor = new Factor("factor_type", "factor_value" + (j + 1));
+                Factor factor = new Factor("ORGANISM_PART", "factor_value" + (j + 1));
                 when(expressionMock.getFactorGroup()).thenReturn(new FactorSet().add(factor));
-                when(expressionMock.getFactor("factor_type")).thenReturn(factor);
+                when(expressionMock.getFactor("ORGANISM_PART")).thenReturn(factor);
                 geneProfileBuilder.addExpression(expressionMock);
 
             }

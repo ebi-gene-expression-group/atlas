@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,7 @@ import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
 import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.web.FactorsConverter;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -28,19 +27,12 @@ public class BarChartController {
 
     private BarChartTradersCache barChartTradersCache;
 
-    private ExperimentsCache experimentsCache;
-
-    private GeneExpressionPrecondition geneExpressionPrecondition;
-
-    private FactorsConverter factorsConverter;
+    private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BarChartController(BarChartTradersCache barChartTradersCache, GeneExpressionPrecondition geneExpressionPrecondition,
-                              ExperimentsCache experimentsCache, FactorsConverter factorsConverter) {
+    public BarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter) {
         this.barChartTradersCache = barChartTradersCache;
-        this.geneExpressionPrecondition = geneExpressionPrecondition;
-        this.experimentsCache = experimentsCache;
-        this.factorsConverter = factorsConverter;
+        this.filterFactorsConverter = filterFilterFactorsConverter;
     }
 
     @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
@@ -52,12 +44,6 @@ public class BarChartController {
 
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-        if (StringUtils.isBlank(queryFactorType)) {
-            queryFactorType = experiment.getDefaultQueryFactorType();
-        }
-
         Set<Factor> queryFactors = new HashSet<>();
         if (queryFactorValues != null) {
             for (String queryFactorValue : queryFactorValues) {
@@ -65,13 +51,8 @@ public class BarChartController {
             }
         }
 
-        Set<Factor> filterFactors = Sets.newHashSet();
+        Set<Factor> filterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
 
-        if (StringUtils.isBlank(serializedFilterFactors)){
-            filterFactors = experiment.getDefaultFilterFactors();
-        } else {
-            filterFactors = factorsConverter.deserialize(serializedFilterFactors);
-        }
         NavigableMap<Double, Integer> chartData = barchartTrader.getChart(filterFactors, queryFactors);
 
         Gson gson = new Gson();

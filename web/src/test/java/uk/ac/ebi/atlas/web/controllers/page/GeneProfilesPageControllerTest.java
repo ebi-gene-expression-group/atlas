@@ -31,7 +31,7 @@ import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.FactorsConverter;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,10 +73,10 @@ public class GeneProfilesPageControllerTest {
         when(httpServletRequestMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
 
-        FactorsConverter factorsConverter = mock(FactorsConverter.class);
+        FilterFactorsConverter filterFactorsConverterMock = mock(FilterFactorsConverter.class);
 
-        subject = new GeneProfilesPageController(null, rankCommandMock, applicationPropertiesMock,
-                experimentCacheMock, requestContextBuilderMock, null, factorsConverter);
+        subject = new GeneProfilesPageController(rankCommandMock, applicationPropertiesMock,
+                experimentCacheMock, requestContextBuilderMock, filterFactorsConverterMock);
     }
 
     @Test

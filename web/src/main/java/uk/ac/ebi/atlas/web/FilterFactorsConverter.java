@@ -24,11 +24,8 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,11 +35,11 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
-public class FactorsConverter {
+public class FilterFactorsConverter {
 
     private static final String SEPARATOR = ":";
 
-    public String serializeFactors(Collection<Factor> factors) {
+    public String serialize(Collection<Factor> factors) {
         List<String> serializedFactors = new ArrayList();
         for (Factor factor : factors) {
             serializedFactors.add(factor.getType() + SEPARATOR + factor.getValue());
@@ -52,8 +49,13 @@ public class FactorsConverter {
 
     public Set<Factor> deserialize(String csvSerializedFactors) {
         Set<Factor> factors = Sets.newHashSet();
+
+        if (StringUtils.isBlank(csvSerializedFactors)) {
+            return factors;
+        }
+
         String[] serializedFactors = csvSerializedFactors.split(",");
-        for (String serializedFactor: serializedFactors){
+        for (String serializedFactor : serializedFactors) {
             String[] split = serializedFactor.split(SEPARATOR);
 
             checkState(split.length == 2, "serialized Factor string should be like TYPE:value");
@@ -62,6 +64,5 @@ public class FactorsConverter {
         }
         return factors;
     }
-
 
 }

@@ -30,9 +30,7 @@ import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileComparator;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.streams.RankingParameters;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
 
@@ -40,20 +38,12 @@ import java.util.*;
 @Scope("prototype")
 public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList> {
 
-    private RankingParameters rankingParameters;
-
-    @Inject
-    public void setRankingParameters(RankingParameters rankingParameters) {
-        this.rankingParameters = rankingParameters;
-    }
-
     @Override
-    protected GeneProfilesList apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) {
-        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(rankingParameters.isSpecific()
-                , selectedQueryFactors
-                , filteredFactors);
+    protected GeneProfilesList apply(RequestContext requestContext, ObjectInputStream<GeneProfile> inputStream) {
+        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
+                , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors());
 
-        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, rankingParameters.getHeatmapMatrixSize());
+        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, requestContext.getHeatmapMatrixSize());
 
         GeneProfile geneProfile;
 

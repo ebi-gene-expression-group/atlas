@@ -40,48 +40,17 @@ public class GeneExpressionPrecondition implements Predicate<Expression>, Serial
 
     private Set<Factor> filterFactors = new HashSet<>();
 
-    private String queryFactorType;
-
-    private Set<Factor> selectedQueryFactors;
-
-    private boolean isSpecific;
-
-    private Set<Factor> allFactors;
-
-
     public GeneExpressionPrecondition() {
     }
 
-    public void setFilterFactors(Set<Factor> filterFactors) {
+    public GeneExpressionPrecondition setFilterFactors(Set<Factor> filterFactors) {
         this.filterFactors = filterFactors;
+        return this;
     }
 
-    public void setCutoff(double cutoff) {
+    public GeneExpressionPrecondition setCutoff(double cutoff) {
         this.cutoff = cutoff;
-    }
-
-    public String getQueryFactorType() {
-        return queryFactorType;
-    }
-
-    public void setQueryFactorType(String queryFactorType) {
-        this.queryFactorType = queryFactorType;
-    }
-
-    public Set<Factor> getSelectedQueryFactors() {
-        return selectedQueryFactors;
-    }
-
-    public boolean isSpecific() {
-        return isSpecific;
-    }
-
-    public void setSpecific(boolean specific) {
-        isSpecific = specific;
-    }
-
-    public void setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
-        this.selectedQueryFactors = selectedQueryFactors;
+        return this;
     }
 
     @Override
@@ -96,11 +65,5 @@ public class GeneExpressionPrecondition implements Predicate<Expression>, Serial
         || expression.containsAll(filterFactors));
     }
 
-    public void setExperimentalFactors(Set<Factor> allFactors) {
-        this.allFactors = allFactors;
-    }
 
-    public Set<Factor> getAllFactors() {
-        return allFactors;
-    }
 }

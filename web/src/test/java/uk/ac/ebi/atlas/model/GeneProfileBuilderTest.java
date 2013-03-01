@@ -7,17 +7,39 @@ import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
+import java.util.Collections;
+import java.util.TreeSet;
+
+import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyDouble;
+import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GeneProfileBuilderTest {
 
-    public GeneProfile.Builder subject;
+    private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
+    private GeneProfile.Builder subject;
+
+    @Mock
+    private GeneProfilePrecondition geneProfilePreconditionMock;
+    @Mock
+    private GeneExpressionPrecondition geneExpressionPreconditionMock;
+
+    @Mock
+    private GeneNamesProvider geneNamesProviderMock;
+
+    @Mock
+    private RequestContext requestContextMock;
 
     @Mock
     private Expression expressionMock1;
@@ -25,9 +47,24 @@ public class GeneProfileBuilderTest {
     private Expression expressionMock2;
 
 
+
     @Before
     public void initSubject() {
-        subject = new GeneProfile.Builder();
+        subject = new GeneProfile.Builder(requestContextMock, geneNamesProviderMock,
+                geneExpressionPreconditionMock, geneProfilePreconditionMock);
+
+        when(requestContextMock.getCutoff()).thenReturn(0d);
+        when(requestContextMock.isSpecific()).thenReturn(true);
+        when(requestContextMock.getQueryFactorType()).thenReturn(QUERY_FACTOR_TYPE);
+        when(requestContextMock.getAllQueryFactors()).thenReturn(new TreeSet<Factor>());
+        when(requestContextMock.getFilteredBySpecies()).thenReturn("homo");
+        when(requestContextMock.getSelectedFilterFactors()).thenReturn(Collections.EMPTY_SET);
+
+        when(geneExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(geneExpressionPreconditionMock);
+        when(geneExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(geneExpressionPreconditionMock);
+        when(geneProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
+        when(geneProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
+        when(geneProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(geneProfilePreconditionMock);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -41,16 +78,8 @@ public class GeneProfileBuilderTest {
     }
 
     @Test
-    public void createShouldReturnNullIfNoneOfTheExpressionsSatisfyPreconditionWithoutSelectedQueryFactors() {
-        //given
-        GeneExpressionPrecondition geneExpressionPrecondition = mock(GeneExpressionPrecondition.class);
-        given(geneExpressionPrecondition.apply(Matchers.any(Expression.class))).willReturn(false);
-        //and
-        given(expressionMock1.isGreaterThan(0d)).willReturn(true);
-        given(expressionMock2.isGreaterThan(0d)).willReturn(true);
-
+    public void createShouldReturnNullIfNoneOfTheExpressionsSatisfyPreconditionsWithoutSelectedQueryFactors() {
         //when
-        subject.setGeneExpressionPrecondition(geneExpressionPrecondition);
         subject.forGeneId("Gene1")
                 .addExpression(expressionMock1)
                 .addExpression(expressionMock2);
@@ -61,17 +90,14 @@ public class GeneProfileBuilderTest {
     }
 
     @Test
-    public void createShouldReturnGeneProfileIfAtLeastOneExpressionSatisfiesPreconditionWithoutSelectedQueryFactors() {
+    public void createShouldReturnGeneProfileIfAtLeastOneExpressionSatisfiesPreconditionsWithoutSelectedQueryFactors() {
         //given
-        GeneExpressionPrecondition geneExpressionPrecondition = mock(GeneExpressionPrecondition.class);
-        given(geneExpressionPrecondition.apply(expressionMock1)).willReturn(true);
-        given(geneExpressionPrecondition.getQueryFactorType()).willReturn("factor_type");
+        given(geneExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(geneProfilePreconditionMock.apply(Matchers.any(GeneProfile.class))).willReturn(true);
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock2.isGreaterThan(0d)).willReturn(true);
-        given(expressionMock1.getFactor("factor_type")).willReturn(mock(Factor.class));
-        //when
-        subject.setGeneExpressionPrecondition(geneExpressionPrecondition);
+        given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(mock(Factor.class));
 
         subject.forGeneId("Gene1")
                 .addExpression(expressionMock1)
@@ -85,22 +111,17 @@ public class GeneProfileBuilderTest {
     @Test
     public void createShouldReturnGeneProfileIfOnlyOneExpressionPresentForPreconditionWithSelectedQueryFactors() {
         //given
-        Factor selectedFactorMock = new Factor("factor_type", "value1");
+        Factor selectedFactorMock = new Factor(QUERY_FACTOR_TYPE, "value1");
 
-        GeneExpressionPrecondition geneExpressionPrecondition = mock(GeneExpressionPrecondition.class);
-        given(geneExpressionPrecondition.apply(expressionMock1)).willReturn(true);
-        given(geneExpressionPrecondition.apply(expressionMock2)).willReturn(false);
-        given(geneExpressionPrecondition.getQueryFactorType()).willReturn("factor_type");
-        given(geneExpressionPrecondition.isSpecific()).willReturn(true);
-        given(geneExpressionPrecondition.getSelectedQueryFactors()).willReturn(Sets.newHashSet(selectedFactorMock));
+        given(geneExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(geneExpressionPreconditionMock.apply(expressionMock2)).willReturn(false);
+
+        given(geneProfilePreconditionMock.apply(Matchers.any(GeneProfile.class))).willReturn(true);
 
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock1.getLevel()).willReturn(5d);
-        given(expressionMock1.getFactor("factor_type")).willReturn(selectedFactorMock);
-
-        //when
-        subject.setGeneExpressionPrecondition(geneExpressionPrecondition);
+        given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(selectedFactorMock);
 
         subject.forGeneId("Gene1")
                 .addExpression(expressionMock1)
@@ -114,25 +135,19 @@ public class GeneProfileBuilderTest {
     @Test
     public void createShouldReturnGeneProfileIfAtLeastOneExpressionSatisfiesPreconditionWithSelectedQueryFactors() {
         //given
-        Factor selectedFactorMock = new Factor("factor_type", "value1");
-        Factor otherFactorMock = new Factor("factor_type", "value2");
+        Factor selectedFactorMock = new Factor(QUERY_FACTOR_TYPE, "value1");
+        Factor otherFactorMock = new Factor(QUERY_FACTOR_TYPE, "value2");
 
-        GeneExpressionPrecondition geneExpressionPrecondition = mock(GeneExpressionPrecondition.class);
-        given(geneExpressionPrecondition.apply(expressionMock1)).willReturn(true);
-        given(geneExpressionPrecondition.apply(expressionMock2)).willReturn(true);
-        given(geneExpressionPrecondition.getQueryFactorType()).willReturn("factor_type");
-        given(geneExpressionPrecondition.isSpecific()).willReturn(true);
-        given(geneExpressionPrecondition.getSelectedQueryFactors()).willReturn(Sets.newHashSet(selectedFactorMock));
-        given(geneExpressionPrecondition.getAllFactors()).willReturn(Sets.newHashSet(selectedFactorMock, otherFactorMock));
+        given(geneExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(geneExpressionPreconditionMock.apply(expressionMock2)).willReturn(true);
+        given(geneProfilePreconditionMock.apply(Matchers.any(GeneProfile.class))).willReturn(true);
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock1.getLevel()).willReturn(5d);
         given(expressionMock2.isGreaterThan(0d)).willReturn(true);
         given(expressionMock2.getLevel()).willReturn(3d);
-        given(expressionMock1.getFactor("factor_type")).willReturn(selectedFactorMock);
-        given(expressionMock2.getFactor("factor_type")).willReturn(otherFactorMock);
-        //when
-        subject.setGeneExpressionPrecondition(geneExpressionPrecondition);
+        given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(selectedFactorMock);
+        given(expressionMock2.getFactor(QUERY_FACTOR_TYPE)).willReturn(otherFactorMock);
 
         subject.forGeneId("Gene1")
                 .addExpression(expressionMock1)
@@ -140,39 +155,6 @@ public class GeneProfileBuilderTest {
 
         //then
         assertThat(subject.create().getGeneId(), is("Gene1"));
-
-    }
-
-    @Test
-    public void createShouldReturnNullIfExpressionAverageOfSelectedQueryFactorIsSmallerThanRest() {
-        //given
-        Factor selectedFactorMock = new Factor("factor_type", "value1");
-        Factor otherFactorMock = new Factor("factor_type", "value2");
-
-        GeneExpressionPrecondition geneExpressionPrecondition = mock(GeneExpressionPrecondition.class);
-        given(geneExpressionPrecondition.apply(expressionMock1)).willReturn(true);
-        given(geneExpressionPrecondition.apply(expressionMock2)).willReturn(true);
-        given(geneExpressionPrecondition.getQueryFactorType()).willReturn("factor_type");
-        given(geneExpressionPrecondition.isSpecific()).willReturn(true);
-        given(geneExpressionPrecondition.getSelectedQueryFactors()).willReturn(Sets.newHashSet(selectedFactorMock));
-        given(geneExpressionPrecondition.getAllFactors()).willReturn(Sets.newHashSet(selectedFactorMock, otherFactorMock));
-
-        //and
-        given(expressionMock1.isGreaterThan(0d)).willReturn(true);
-        given(expressionMock1.getLevel()).willReturn(5d);
-        given(expressionMock2.isGreaterThan(0d)).willReturn(true);
-        given(expressionMock2.getLevel()).willReturn(7d);
-        given(expressionMock1.getFactor("factor_type")).willReturn(selectedFactorMock);
-        given(expressionMock2.getFactor("factor_type")).willReturn(otherFactorMock);
-        //when
-        subject.setGeneExpressionPrecondition(geneExpressionPrecondition);
-
-        subject.forGeneId("Gene1")
-                .addExpression(expressionMock1)
-                .addExpression(expressionMock2);
-
-        //then
-        assertThat(subject.create(), is(nullValue()));
 
     }
 

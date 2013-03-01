@@ -53,7 +53,6 @@ public class GeneProfilesDownloadControllerIT {
 
     @Test
     public void verifyFirstLine() {
-        ResponseBody body = subject.getResponseBody();
 
         List<String> firstLine = subject.getRowValues(0);
 
@@ -65,7 +64,6 @@ public class GeneProfilesDownloadControllerIT {
 
     @Test
     public void verifySecondLine() {
-        ResponseBody body = subject.getResponseBody();
 
         List<String> secondLine = subject.getRowValues(1);
 

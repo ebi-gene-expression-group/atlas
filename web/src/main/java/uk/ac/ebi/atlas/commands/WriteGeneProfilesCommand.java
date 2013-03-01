@@ -53,15 +53,16 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     }
 
     @Override
-    protected Long apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException {
+    protected Long apply(RequestContext requestContext, ObjectInputStream<GeneProfile> inputStream) throws IOException {
         long count = 0;
-        SortedSet<String> factorValues = Factor.getValues(filteredFactors);
+        SortedSet<String> factorValues = Factor.getValues(requestContext.getAllQueryFactors());
+
         csvWriter.writeNext(buildCsvHeaders(factorValues));
 
         GeneProfile geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, filteredFactors));
+            csvWriter.writeNext(buildCsvRow(geneProfile, requestContext.getAllQueryFactors()));
         }
 
         csvWriter.flush();
