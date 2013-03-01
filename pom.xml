@@ -20,7 +20,8 @@
   ~ http://gxa.github.com/gxa
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.ac.ebi.gxa</groupId>
     <artifactId>atlas</artifactId>
@@ -42,15 +43,15 @@
         and are overridden in profiles for specific deployment environments-->
         <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
         <berkeley.schema.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/bdb-lime</berkeley.schema.location>
-        <solr.host>ves-hx-75</solr.host>
+        <solr.host>ves-ebi-7f</solr.host>
         <deploy.host>
             <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
         </deploy.host>
         <deploy.port>
             <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
         </deploy.port>
-        <integration.test.host />
-        <integration.test.portnumber />
+        <integration.test.host/>
+        <integration.test.portnumber/>
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
         <mail.smtp.host>mailtrap.io</mail.smtp.host>
@@ -166,7 +167,7 @@
                     <!-- http port -->
                     <port>9090</port>
                     <!-- optionnal path to a context file -->
-                    <contextFile />
+                    <contextFile/>
                     <!-- optionnal system propoerties you want to add -->
                     <systemProperties>
                     </systemProperties>
@@ -174,7 +175,7 @@
                     <useTestClasspath>false</useTestClasspath>
                     <!-- optionnal if you want to add some extra directories in the class loader -->
                     <additionalClasspathDirs>
-                        <additionalClasspathDir />
+                        <additionalClasspathDir/>
                     </additionalClasspathDirs>
                 </configuration>
             </plugin>
@@ -385,7 +386,7 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
-            <snapshots />
+            <snapshots/>
         </repository>
 
         <!--
@@ -441,7 +442,7 @@
                 <role>Developer</role>
             </roles>
             <timezone>0</timezone>
-            <properties />
+            <properties/>
         </developer>
         <developer>
             <id>nsklyar</id>
@@ -453,7 +454,7 @@
                 <role>Developer</role>
             </roles>
             <timezone>0</timezone>
-            <properties />
+            <properties/>
         </developer>
     </developers>
 
