@@ -26,41 +26,42 @@ import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Named;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Named
 @Scope("request")
 public class FilterParameters implements RequestContext {
 
-    private String geneQuery;
-
     private Set<Factor> selectedFilterFactors;
 
     private Set<Factor> selectedQueryFactors;
 
-    private String queryFactorType;
+    private String filteredBySpecies;
 
-    private String filteredBySpecie;
+    private SortedSet<Factor> allQueryFactors;
 
-    private double cutoff;
-
-    private boolean specific;
-
-    private Set<Factor> allQueryFactors;
+    private RequestPreferences requestPreferences;
 
     public FilterParameters() {
     }
 
     @Override
     public String getGeneQuery() {
-        return geneQuery;
+        return requestPreferences.getGeneQuery();
     }
 
     @Override
     public Set<Factor> getSelectedFilterFactors() {
         return selectedFilterFactors;
+    }
+
+    @Override
+    public Integer getHeatmapMatrixSize() {
+        return requestPreferences.getHeatmapMatrixSize();
     }
 
     @Override
@@ -70,35 +71,35 @@ public class FilterParameters implements RequestContext {
 
     @Override
     public String getQueryFactorType() {
-        return queryFactorType;
+        return requestPreferences.getQueryFactorType();
     }
 
     @Override
     public String getFilteredBySpecies() {
-        return filteredBySpecie;
+        return filteredBySpecies;
     }
 
     @Override
     public double getCutoff() {
-        return cutoff;
+        return requestPreferences.getCutoff();
     }
 
     @Override
     public boolean isSpecific() {
-        return specific;
+        return requestPreferences.isSpecific();
     }
 
     @Override
-    public Set<Factor> getAllQueryFactors() {
+    public SortedSet<Factor> getAllQueryFactors() {
         return allQueryFactors;
     }
 
-    public void setAllQueryFactors(Set<Factor> allQueryFactors) {
-        this.allQueryFactors = allQueryFactors;
+    public void setRequestPreferences(RequestPreferences requestPreferences) {
+        this.requestPreferences = requestPreferences;
     }
 
-    public void setGeneQuery(String geneQuery) {
-        this.geneQuery = geneQuery;
+    public void setAllQueryFactors(SortedSet<Factor> allQueryFactors) {
+        this.allQueryFactors = allQueryFactors;
     }
 
     public void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
@@ -109,28 +110,18 @@ public class FilterParameters implements RequestContext {
         this.selectedQueryFactors = selectedQueryFactors;
     }
 
-    public void setQueryFactorType(String queryFactorType) {
-        this.queryFactorType = queryFactorType;
-    }
-
-    public void setFilteredBySpecie(String filteredBySpecie) {
-        this.filteredBySpecie = filteredBySpecie;
-    }
-
-    public void setCutoff(double cutoff) {
-        this.cutoff = cutoff;
-    }
-
-    public void setSpecific(boolean specific) {
-        this.specific = specific;
+    public void setFilteredBySpecies(String filteredBySpecies) {
+        this.filteredBySpecies = filteredBySpecies;
     }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(this.getClass())
-                .add("geneQuery", geneQuery)
+                .add("requestPreferences", requestPreferences)
+                .add("allQueryFactors", allQueryFactors)
                 .add("selectedFilterFactors", selectedFilterFactors)
-                .add("queryFactorType", queryFactorType)
+                .add("filteredBySpecies", filteredBySpecies)
                 .toString();
     }
+
 }

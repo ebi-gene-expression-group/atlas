@@ -46,20 +46,15 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
     private GeneProfileInputStreamBuilder geneProfileInputStreamBuilder;
 
-    private ExperimentsCache experimentsCache;
-
     private RequestContext requestContext;
 
     private SolrClient solrClient;
 
+    //ToDo: verify if the following @Inject can be injected in the constructor of the abstract class
+
     @Inject
     protected void setGeneProfileInputStreamBuilder(GeneProfileInputStreamBuilder geneProfileInputStreamBuilder) {
         this.geneProfileInputStreamBuilder = geneProfileInputStreamBuilder;
-    }
-
-    @Inject
-    public void setExperimentsCache(ExperimentsCache experimentsCache) {
-        this.experimentsCache = experimentsCache;
     }
 
     @Inject
@@ -75,14 +70,12 @@ public abstract class GeneProfilesInputStreamCommand<T> {
     @NotNull
     public T apply(String experimentAccession) throws GeneNotFoundException {
 
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
-
         Set<String> selectedGeneIds = null;
 
         if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
 
             try {
-                selectedGeneIds = searchForGeneIds(experiment);
+                selectedGeneIds = searchForGeneIds();
                 if (selectedGeneIds.isEmpty()) {
                     return returnEmpty();
                 }
@@ -97,10 +90,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
         try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 
-            ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-
-            SortedSet<Factor> filteredFactors = experimentalFactors.getFilteredFactors(requestContext.getSelectedFilterFactors());
-            return apply(filteredFactors, requestContext.getSelectedQueryFactors(), inputStream);
+            return apply(requestContext, inputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -108,13 +98,13 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         }
     }
 
-    protected Set<String> searchForGeneIds(Experiment experiment) {
+    protected Set<String> searchForGeneIds() {
 
         return solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
 
     }
 
-    protected abstract T apply(SortedSet<Factor> filteredFactors, Set<Factor> selectedQueryFactors, ObjectInputStream<GeneProfile> inputStream) throws IOException;
+    protected abstract T apply(RequestContext requestContext, ObjectInputStream<GeneProfile> inputStream) throws IOException;
 
     protected abstract T returnEmpty() throws GeneNotFoundException;
 }

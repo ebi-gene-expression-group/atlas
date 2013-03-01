@@ -76,7 +76,7 @@ public class WriteGeneProfilesCommandTest {
                 createFactorValue("liver"),
                 createFactorValue("lung")));
 
-        when(requestContextMock.getSelectedQueryFactors()).thenReturn(organismParts);
+        when(requestContextMock.getAllQueryFactors()).thenReturn(organismParts);
 
         when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
                 .thenReturn(geneProfileMock2)
@@ -105,7 +105,7 @@ public class WriteGeneProfilesCommandTest {
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(organismParts, null ,inputStreamMock);
+        long count = subject.apply(requestContextMock ,inputStreamMock);
 
         verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 

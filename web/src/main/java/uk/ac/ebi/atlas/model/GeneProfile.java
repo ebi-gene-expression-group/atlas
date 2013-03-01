@@ -144,31 +144,18 @@ public class GeneProfile extends GeneExpressions {
 
         private RequestContext requestContext;
 
-        protected Builder() {
-        }
-
         @Inject
-        public void setRequestContext(RequestContext requestContext) {
+        protected Builder(RequestContext requestContext, GeneNamesProvider geneNamesProvider,
+                          GeneExpressionPrecondition geneExpressionPrecondition,
+                          GeneProfilePrecondition geneProfilePrecondition) {
             this.requestContext = requestContext;
-        }
-
-        @Inject
-        protected void setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
             this.geneNamesProvider = geneNamesProvider;
+            this.geneExpressionPrecondition = geneExpressionPrecondition;
+            this.geneProfilePrecondition = geneProfilePrecondition;
         }
 
-        @Inject
-        public void setGeneExpressionPrecondition(GeneExpressionPrecondition precondition) {
-            this.geneExpressionPrecondition = precondition;
-        }
-
-        @Inject
-        public void setGeneProfilePrecondition(GeneProfilePrecondition precondition) {
-            this.geneProfilePrecondition = precondition;
-        }
-
-        //We can't do this @PostConstruct because @PostConstruct gets invoked when Controller is constructed,
-        // that is before the Controller actually executes the request method...
+        //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
+        // , that is before the Controller actually executes the request, before the Controller initialize RequestContext
         void initPreconditions() {
             geneExpressionPrecondition.setCutoff(requestContext.getCutoff())
                     .setFilterFactors(requestContext.getSelectedFilterFactors());

@@ -39,7 +39,6 @@ import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
-import uk.ac.ebi.atlas.streams.RankingParameters;
 import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -62,8 +61,6 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private RankGeneProfilesCommand rankCommand;
 
-    private RankingParameters rankingParameters;
-
     private ApplicationProperties applicationProperties;
 
     private ExperimentsCache experimentsCache;
@@ -71,12 +68,12 @@ public class GeneProfilesPageController extends GeneProfilesController {
     private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public GeneProfilesPageController(RankingParameters rankingParameters, RankGeneProfilesCommand rankCommand,
+    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
                                       ExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
                                       FilterFactorsConverter filterFactorsConverter) {
+
         super(requestContextBuilder, experimentsCache, filterFactorsConverter);
-        this.rankingParameters = rankingParameters;
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.experimentsCache = experimentsCache;
@@ -98,7 +95,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        model.addAttribute("queryFactorName", StringUtils.capitalize(experimentalFactors.getFactorName(requestContext.getQueryFactorType())));
+        model.addAttribute("queryFactorName", StringUtils.capitalize(experimentalFactors.getFactorName(preferences.getQueryFactorType())));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
@@ -118,11 +115,13 @@ public class GeneProfilesPageController extends GeneProfilesController {
         //required by autocomplete
         model.addAttribute("species", species);
 
-        if (!CollectionUtils.isEmpty(menuFactorNames)) {
+        //ToDo: this stuff should be refactored, menu should be a separate REST service
+        if (!menuFactorNames.isEmpty()) {
 
             Set<Factor> menuFactors = experimentalFactors.getAllFactors();
 
             FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, menuFactors);
+
             filterFactorMenu.setFactorConverter(filterFactorsConverter);
 
             model.addAttribute("filterFactorMenu", filterFactorMenu);
@@ -130,6 +129,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
             model.addAttribute("menuFactorNames", menuFactorNames);
         }
 
+        //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
         Map<String, String> factorNameToValue = new HashMap();
         for (Factor selectedFilterFactor : selectedFilterFactors) {
             factorNameToValue.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
@@ -138,20 +138,19 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
         if (!result.hasErrors()) {
 
-            rankingParameters.setSpecific(preferences.isSpecific());
-            rankingParameters.setHeatmapMatrixSize(preferences.getHeatmapMatrixSize());
-
             try {
                 GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
 
                 model.addAttribute("geneProfiles", geneProfiles);
 
+                //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
 
                     model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
                 }
 
+                //ToDo: maybe this can be directly built client side in javascript or EL
                 model.addAttribute("downloadUrl", buildDownloadURL(request));
 
 

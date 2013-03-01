@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfileInputStreamMock;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
-import uk.ac.ebi.atlas.streams.RankingParameters;
 
 import java.util.List;
 
@@ -70,9 +69,6 @@ public class RankGeneProfilesCommandTest {
     @Mock
     private RequestContext requestContextMock;
 
-    @Mock
-    private RankingParameters rankingParametersMock;
-
     private ObjectInputStream<GeneProfile> largeInputStream;
 
     private ObjectInputStream<GeneProfile> smallInputStream;
@@ -99,8 +95,8 @@ public class RankGeneProfilesCommandTest {
 
         when(geneProfileInputStreamBuilderMock.forExperiment(EXPERIMENT_ACCESSION)).thenReturn(geneProfileInputStreamBuilderMock);
 
-        when(rankingParametersMock.getHeatmapMatrixSize()).thenReturn(100);
-        when(rankingParametersMock.isSpecific()).thenReturn(true);
+        when(requestContextMock.getHeatmapMatrixSize()).thenReturn(100);
+        when(requestContextMock.isSpecific()).thenReturn(true);
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -115,9 +111,6 @@ public class RankGeneProfilesCommandTest {
         subject.setGeneProfileInputStreamBuilder(geneProfileInputStreamBuilderMock);
 
         subject.setRequestContext(requestContextMock);
-        subject.setRankingParameters(rankingParametersMock);
-
-        subject.setExperimentsCache(experimentsCacheMock);
 
     }
 
@@ -148,7 +141,7 @@ public class RankGeneProfilesCommandTest {
 
 
         //given
-        given(rankingParametersMock.getHeatmapMatrixSize()).willReturn(3);
+        given(requestContextMock.getHeatmapMatrixSize()).willReturn(3);
         //and
         when(geneProfileInputStreamBuilderMock.createGeneProfileInputStream()).thenReturn(largeInputStream);
 
@@ -172,7 +165,7 @@ public class RankGeneProfilesCommandTest {
     public void givenEmptyFilterFactorSpeciesShouldBeTakenFromExperiment() {
 
         when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
-        subject.searchForGeneIds(experimentMock);
+        subject.searchForGeneIds();
         verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
 
     }
@@ -182,7 +175,7 @@ public class RankGeneProfilesCommandTest {
 
 
         when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
-        subject.searchForGeneIds(experimentMock);
+        subject.searchForGeneIds();
         verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
 
     }
@@ -191,7 +184,7 @@ public class RankGeneProfilesCommandTest {
     public void rankedObjectsShouldBeInAscendingOrder() throws Exception {
 
         //given
-        when(rankingParametersMock.isSpecific()).thenReturn(false);
+        when(requestContextMock.isSpecific()).thenReturn(false);
 
         //when
         List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);

@@ -12,11 +12,11 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
     private Set<Factor> selectedFactors;
     private Set<Factor> allFactors;
 
-    public GeneProfileComparator(boolean isSpecific, Set<Factor> selectFactors,
-                                 Set<Factor> allFactors) {
+    public GeneProfileComparator(boolean isSpecific, Set<Factor> selectQueryFactors,
+                                 Set<Factor> allQueryFactors) {
         this.isSpecific = isSpecific;
-        this.selectedFactors = selectFactors;
-        this.allFactors = allFactors;
+        this.selectedFactors = selectQueryFactors;
+        this.allFactors = allQueryFactors;
     }
 
     @Override

@@ -58,12 +58,7 @@ public class GeneProfilesController {
     protected RequestContext initRequestContext(String experimentAccession, RequestPreferences preferences) {
 
         return requestContextBuilder.forExperiment(experimentAccession)
-                .withSerializedFilterFactors(preferences.getSerializedFilterFactors())
-                .withQueryFactorType(preferences.getQueryFactorType())
-                .withQueryFactorValues(preferences.getQueryFactorValues())
-                .withGeneQuery(preferences.getGeneQuery())
-                .withCutoff(preferences.getCutoff())
-                .withSpecific(preferences.isSpecific())
-                .build();
+                                        .withPreferences(preferences)
+                                        .build();
     }
 }

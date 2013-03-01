@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Factor;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,6 +38,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Named
 @Scope("prototype")
@@ -44,17 +46,13 @@ public class RequestContextBuilder implements Serializable {
 
     private FilterParameters filterParameters;
 
-    private Set<String> queryFactorValues = Collections.EMPTY_SET;
-    private String serializedFilterFactors;
-
     private Experiment experiment;
 
     private FilterFactorsConverter filterFactorsConverter;
+
     private ExperimentsCache experimentsCache;
 
-    private double cutoff;
-
-    private boolean specific;
+    private RequestPreferences preferences;
 
     @Inject
     public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverter filterFactorsConverter, ExperimentsCache experimentsCache) {
@@ -68,49 +66,44 @@ public class RequestContextBuilder implements Serializable {
         return this;
     }
 
-    public RequestContextBuilder withQueryFactorType(String queryFactorType) {
-        filterParameters.setQueryFactorType(queryFactorType);
-
+    public RequestContextBuilder withPreferences(RequestPreferences preferences) {
+        this.preferences = preferences;
         return this;
     }
 
-    public RequestContextBuilder withSerializedFilterFactors(String serializedFilterFactors) {
-        this.serializedFilterFactors = serializedFilterFactors;
-        return this;
-    }
-
-    public RequestContextBuilder withGeneQuery(String geneQuery) {
-        filterParameters.setGeneQuery(geneQuery);
-        return this;
-    }
-
-    public RequestContextBuilder withCutoff(double  cutoff) {
-        this.cutoff = cutoff;
-        return  this;
-    }
-
-    public RequestContextBuilder withSpecific(boolean  specific) {
-        this.specific = specific;
-        return this;
-    }
-
-
-    public RequestContextBuilder withQueryFactorValues(Set<String> queryFactorValuesString) {
-        if (CollectionUtils.isNotEmpty(queryFactorValuesString)) {
-            this.queryFactorValues = queryFactorValuesString;
+    Set<String> getQueryFactorValues() {
+        if (CollectionUtils.isNotEmpty(preferences.getQueryFactorValues())) {
+            return preferences.getQueryFactorValues();
         } else {
-            this.queryFactorValues = Collections.EMPTY_SET;
+            return Collections.EMPTY_SET;
         }
-        return this;
     }
 
     public RequestContext build() {
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
-        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
+        filterParameters.setRequestPreferences(preferences);
+
+        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
 
         filterParameters.setSelectedFilterFactors(selectedFilterFactors);
 
+        String filteredBySpecie = getFilteredBySpecie(selectedFilterFactors);
+        filterParameters.setFilteredBySpecies(filteredBySpecie);
+
+        Set<Factor> queryFactors = new HashSet<Factor>();
+        for (String queryFactorValues : getQueryFactorValues()) {
+            queryFactors.add(new Factor(filterParameters.getQueryFactorType(), queryFactorValues));
+        }
+        filterParameters.setSelectedQueryFactors(queryFactors);
+
+        SortedSet<Factor> allQueryFactors = experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
+        filterParameters.setAllQueryFactors(allQueryFactors);
+
+        return filterParameters;
+    }
+
+    String getFilteredBySpecie(Set<Factor> selectedFilterFactors) {
         String filteredBySpecie = null;
         for (Factor selectedFilterFactor : selectedFilterFactors) {
             if (selectedFilterFactor.getType().equalsIgnoreCase("organism")) {
@@ -120,18 +113,7 @@ public class RequestContextBuilder implements Serializable {
         if (filteredBySpecie == null) {
             filteredBySpecie = experiment.getFirstSpecies().toLowerCase();
         }
-        filterParameters.setFilteredBySpecie(filteredBySpecie);
-
-        Set<Factor> queryFactors = new HashSet<Factor>();
-        for (String queryFactorValues : this.queryFactorValues) {
-            queryFactors.add(new Factor(filterParameters.getQueryFactorType(), queryFactorValues));
-        }
-        filterParameters.setSelectedQueryFactors(queryFactors);
-
-        filterParameters.setCutoff(cutoff);
-        filterParameters.setSpecific(specific);
-
-        filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors));
-        return filterParameters;
+        return filteredBySpecie;
     }
+
 }

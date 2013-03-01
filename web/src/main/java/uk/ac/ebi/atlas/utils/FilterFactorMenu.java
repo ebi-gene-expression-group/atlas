@@ -36,6 +36,8 @@ import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+//ToDo: to be refactored, this should be implemented as one single recursive buildMenu method in a stateful builder class - MenuBuilder.build would start the recursion on buildMenu.
+//ToDo: the recursive buildMenu method would build a composite structure - a Menu, where each MenuVoice references to a nested Menu and so on, until there are no more levels. At that point recursion must stop
 public class FilterFactorMenu {
 
     private final SortedSet<Factor> factors = Sets.newTreeSet();

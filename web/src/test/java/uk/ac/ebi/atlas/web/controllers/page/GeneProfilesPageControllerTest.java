@@ -75,7 +75,7 @@ public class GeneProfilesPageControllerTest {
 
         FilterFactorsConverter filterFactorsConverterMock = mock(FilterFactorsConverter.class);
 
-        subject = new GeneProfilesPageController(null, rankCommandMock, applicationPropertiesMock,
+        subject = new GeneProfilesPageController(rankCommandMock, applicationPropertiesMock,
                 experimentCacheMock, requestContextBuilderMock, filterFactorsConverterMock);
     }
 

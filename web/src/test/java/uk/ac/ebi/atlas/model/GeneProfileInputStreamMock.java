@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model;
 
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
     //of the final order required by the user stories, profiles with higher selectivity will be streamed last.
     public GeneProfileInputStreamMock(int streamSize) {
 
+        GeneNamesProvider geneNamesProviderMock = mock(GeneNamesProvider.class);
+
         RequestContext requestContextMock = mock(RequestContext.class);
         when(requestContextMock.getQueryFactorType()).thenReturn("ORGANISM_PART");
 
@@ -63,10 +66,8 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder();
-            geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
-            geneProfileBuilder.setGeneProfilePrecondition(geneProfilePreconditionMock);
-            geneProfileBuilder.setRequestContext(requestContextMock);
+            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder(requestContextMock, geneNamesProviderMock,
+                    geneExpressionPreconditionMock, geneProfilePreconditionMock);
             geneProfileBuilder.forGeneId("" + i);
 
             for (int j = 0; j < i; j++) {

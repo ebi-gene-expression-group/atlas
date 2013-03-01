@@ -26,6 +26,7 @@ import uk.ac.ebi.atlas.model.Factor;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.SortedSet;
 
 public interface RequestContext extends Serializable {
 
@@ -43,5 +44,7 @@ public interface RequestContext extends Serializable {
 
     public boolean isSpecific();
 
-    public Set<Factor> getAllQueryFactors();
+    public Integer getHeatmapMatrixSize();
+
+    public SortedSet<Factor> getAllQueryFactors();
 }

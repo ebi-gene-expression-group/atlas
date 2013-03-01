@@ -28,15 +28,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.impl.FilterParameters;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.web.RequestPreferences;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
@@ -69,14 +67,18 @@ public class GeneProfilesInputStreamIT {
 
     private ObjectInputStream<GeneProfile> subject;
 
+    RequestPreferences requestPreferences = new RequestPreferences();
 
     @Before
     public void initSubject() throws Exception {
+        requestPreferences.setCutoff(0.5d);
+        requestPreferences.setQueryFactorType("ORGANISM_PART");
+
         Experiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        filterParameters.setCutoff(0.5d);
-        filterParameters.setFilteredBySpecie("homo");
-        filterParameters.setQueryFactorType("ORGANISM_PART");
+        filterParameters.setRequestPreferences(requestPreferences);
+        filterParameters.setFilteredBySpecies("homo");
         filterParameters.setSelectedFilterFactors(Collections.EMPTY_SET);
+        filterParameters.setSelectedQueryFactors(Collections.EMPTY_SET);
         filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getAllFactors());
 
         dataFileURL = GeneProfilesInputStreamIT.class.getResource("testCSVReader-data.tab");
@@ -128,7 +130,7 @@ public class GeneProfilesInputStreamIT {
     @Test
     public void setCutoffChangesSpecificity() throws IOException {
 
-        filterParameters.setCutoff(20D);
+        requestPreferences.setCutoff(20D);
 
         //when
         subject.readNext();

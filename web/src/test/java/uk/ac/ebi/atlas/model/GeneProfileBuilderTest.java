@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +8,10 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import java.util.Collections;
+import java.util.TreeSet;
 
 import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.is;
@@ -33,6 +36,9 @@ public class GeneProfileBuilderTest {
     private GeneExpressionPrecondition geneExpressionPreconditionMock;
 
     @Mock
+    private GeneNamesProvider geneNamesProviderMock;
+
+    @Mock
     private RequestContext requestContextMock;
 
     @Mock
@@ -44,15 +50,13 @@ public class GeneProfileBuilderTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneProfile.Builder();
-        subject.setGeneProfilePrecondition(geneProfilePreconditionMock);
-        subject.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
-        subject.setRequestContext(requestContextMock);
+        subject = new GeneProfile.Builder(requestContextMock, geneNamesProviderMock,
+                geneExpressionPreconditionMock, geneProfilePreconditionMock);
 
         when(requestContextMock.getCutoff()).thenReturn(0d);
         when(requestContextMock.isSpecific()).thenReturn(true);
         when(requestContextMock.getQueryFactorType()).thenReturn(QUERY_FACTOR_TYPE);
-        when(requestContextMock.getAllQueryFactors()).thenReturn(Collections.EMPTY_SET);
+        when(requestContextMock.getAllQueryFactors()).thenReturn(new TreeSet<Factor>());
         when(requestContextMock.getFilteredBySpecies()).thenReturn("homo");
         when(requestContextMock.getSelectedFilterFactors()).thenReturn(Collections.EMPTY_SET);
 
