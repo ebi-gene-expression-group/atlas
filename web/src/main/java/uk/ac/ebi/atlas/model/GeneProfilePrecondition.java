@@ -58,10 +58,6 @@ public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializ
 
     }
 
-    boolean containsAnyExpression(GeneProfile geneProfile) {
-        return !geneProfile.isEmpty();
-    }
-
     boolean isOverExpressedInSelectedFactors(GeneProfile geneProfile) {
 
         double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
