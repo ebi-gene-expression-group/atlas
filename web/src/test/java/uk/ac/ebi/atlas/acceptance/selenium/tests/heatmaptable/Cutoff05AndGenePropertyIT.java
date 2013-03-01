@@ -58,7 +58,7 @@ public class Cutoff05AndGenePropertyIT extends SeleniumFixture {
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 69"));
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("0.6", "", "1", "", "", "0.6", "0.9", "1", "", "", "1", "", "", "8", "", "3"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "", "", "", "", "", "", "", "", "", "", "", "2", "", "0.7"));
     }
 
 }

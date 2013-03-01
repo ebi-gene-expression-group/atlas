@@ -45,7 +45,7 @@ public class GeneReverseSpecificityComparatorTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneProfileComparator(false, selectedOrganismParts, null);
+        subject = new GeneProfileComparator(false, selectedOrganismParts, null, 0.5);
     }
 
     @Test

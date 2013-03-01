@@ -16,8 +16,6 @@ import java.util.HashSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,6 +38,7 @@ public class GeneProfileTest {
 
     private GeneProfile subject;
 
+    private double cutoff  = 0.5;
     //private GeneProfile.Builder geneProfileBuilder;
 
     @Before
@@ -96,36 +95,4 @@ public class GeneProfileTest {
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
 
-    @Test
-    public void expressionLevelFoldChangeOn() {
-        double averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1,
-                factor3),
-                Sets.newHashSet(factor1, factor3, factor2));
-        assertThat(averageExpressionLevel, is(0.8668333333333335D));
-
-        averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1),
-                Sets.newHashSet(factor1, factor3, factor2));
-        assertThat(averageExpressionLevel, is(0.7332111314780871D));
-    }
-
-    @Test
-    public void expressionLevelFoldChangeOnWithZeroExpression() {
-
-        Expression expression_1 = new Expression(2D, new FactorSet().add(factor1));
-        Expression expression_2 = new Expression(0D, new FactorSet().add(factor2));
-        Expression expression_3 = new Expression(0D, new FactorSet().add(factor3));
-
-        subject = new GeneProfile().add(expression_1,QUERY_FACTOR_TYPE).add(expression_2,QUERY_FACTOR_TYPE).add(expression_3,QUERY_FACTOR_TYPE);
-
-        subject.setGeneNamesProvider(geneNamesProviderMock);
-
-        double averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1,
-                factor3),
-                Sets.newHashSet(factor1, factor3, factor2));
-        assertThat(averageExpressionLevel, is(1.0D));
-
-        averageExpressionLevel = (double) subject.getExpressionLevelFoldChangeOn(Sets.newHashSet(factor1),
-                Sets.newHashSet(factor1, factor3, factor2));
-        assertThat(averageExpressionLevel, is(2.0D));
-    }
 }

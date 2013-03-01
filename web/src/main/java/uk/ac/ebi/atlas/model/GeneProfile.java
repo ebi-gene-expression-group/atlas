@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
@@ -120,16 +119,6 @@ public class GeneProfile extends GeneExpressions {
         return null;
     }
 
-
-    public double getExpressionLevelFoldChangeOn(Set<Factor> selectedFactors, Set<Factor> allFactors) {
-        double averageExpressionLevelOnRemaining = getAverageExpressionLevelOn(Sets.difference(allFactors, selectedFactors));
-        double averageExpressionLevelOnSelected = getAverageExpressionLevelOn(selectedFactors);
-        if (allFactors.isEmpty() || averageExpressionLevelOnRemaining == 0) {
-            return averageExpressionLevelOnSelected;
-        }
-        return averageExpressionLevelOnSelected / averageExpressionLevelOnRemaining;
-    }
-
     @Named("geneProfileBuilder")
     @Scope("prototype")
     public static class Builder {
@@ -186,7 +175,6 @@ public class GeneProfile extends GeneExpressions {
 
             return geneProfilePrecondition.apply(geneProfile) ? geneProfile : null;
         }
-
 
 
     }
