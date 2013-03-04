@@ -81,7 +81,7 @@ public class SolrClient {
 
     public List<String> findGeneNameSuggestions(String geneName, String species){
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName, species);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, customEscape(geneName), species);
 
         List<String> collations = extractCollations(jsonString);
 
@@ -136,7 +136,7 @@ public class SolrClient {
 
     public List<String> findGenePropertySuggestions(String multiTermToken, String species){
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, customEscape(multiTermToken), species);
 
         return extractCollations(jsonString);
     }
@@ -176,9 +176,13 @@ public class SolrClient {
 
     String buildQueryAllTextString(String searchText) {
         StringBuilder stringBuilder = new StringBuilder("(alltext:");
-        stringBuilder.append(searchText.replace(":", ""));
+        stringBuilder.append(customEscape(searchText));
         stringBuilder.append(")");
 
         return stringBuilder.toString();
+    }
+
+    private String customEscape(String searchText) {
+        return searchText.replace(":", "\\:");
     }
 }
