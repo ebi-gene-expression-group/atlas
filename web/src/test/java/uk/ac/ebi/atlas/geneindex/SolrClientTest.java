@@ -63,6 +63,9 @@ public class SolrClientTest {
     public void testBuildQueryAllTextString() {
         String query = "GO:0008134 \"p53 binding\"";
         assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO\\:0008134 \"p53 binding\")"));
+
+        query = "GO:0008134 \"p53 binding";
+        assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO\\:0008134 \"p53 binding\")"));
     }
 
     @Test
@@ -72,6 +75,12 @@ public class SolrClientTest {
 
         assertThat(suggestion, is("musk"));
 
+    }
+
+    @Test
+    public void testMatchingDoubleQuotes(){
+        assertThat(subject.areQuotesMatching("hello \" boy"), is(false));
+        assertThat(subject.areQuotesMatching("hello \" boy \""), is(true));
     }
 
 
