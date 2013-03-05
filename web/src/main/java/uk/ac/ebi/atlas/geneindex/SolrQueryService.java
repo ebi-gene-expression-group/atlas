@@ -30,6 +30,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -39,12 +40,14 @@ import java.util.Set;
 @Named
 public class SolrQueryService {
 
+    @Value("#{configuration['index.server.url']}")
+    private String serverURL;
+
     private HttpSolrServer solrServer;
 
     @PostConstruct
     private void initServer(){
-        String url = "http://localhost:8983/solr";
-        solrServer = new HttpSolrServer( url );
+        solrServer = new HttpSolrServer( serverURL );
         solrServer.setMaxRetries(1); // defaults to 0.  > 1 not recommended.
         solrServer.setConnectionTimeout(2000); // 5 seconds to establish TCP
     }

@@ -52,9 +52,11 @@ public class SolrClient {
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
+    @Value("#{configuration['index.server.url']}")
+    private String serverURL;
+
     private RestTemplate restTemplate;
 
-    private String serverURL;
 
     private final SolrQueryService solrQueryService;
 
@@ -62,11 +64,6 @@ public class SolrClient {
     public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService) {
         this.restTemplate = restTemplate;
         this.solrQueryService = solrQueryService;
-    }
-
-    @Value("#{configuration['index.server.url']}")
-    public void setServerURL(String serverURL) {
-        this.serverURL = serverURL;
     }
 
     public Set<String> findGeneIds(String searchText, String species) {    

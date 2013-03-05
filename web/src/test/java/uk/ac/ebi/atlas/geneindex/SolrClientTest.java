@@ -33,6 +33,7 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
 
 public class SolrClientTest {
 
@@ -49,9 +50,7 @@ public class SolrClientTest {
 
     @Before
     public void initSubject() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        subject = new SolrClient(restTemplate);
+        subject = new SolrClient(mock(RestTemplate.class), mock(SolrQueryService.class));
     }
 
     @Test
