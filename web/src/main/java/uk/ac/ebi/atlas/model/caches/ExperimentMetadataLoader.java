@@ -24,14 +24,12 @@ package uk.ac.ebi.atlas.model.caches;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Sets;
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfiguration;
+import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfigurationLoader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.ExperimentRun;
@@ -46,7 +44,10 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder everytime the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
@@ -60,7 +61,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
     private String extraInfoPathTemplate;
 
     private MageTabLoaderBuilder mageTabLoaderBuilder;
-    private ExperimentFactorsConfiguration experimentFactorsConfiguration;
+    private ExperimentFactorsConfigurationLoader experimentFactorsConfigurationLoader;
 
     private ArrayExpressClient arrayExpressClient;
 
@@ -68,11 +69,11 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
 
     @Inject
-    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsConfiguration experimentFactorsConfiguration
+    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsConfigurationLoader experimentFactorsConfigurationLoader
             , ArrayExpressClient arrayExpressClient, ExperimentDataTsvReader experimentDataTsvReader) {
         this.mageTabLoaderBuilder = mageTabLoaderBuilder;
 
-        this.experimentFactorsConfiguration = experimentFactorsConfiguration;
+        this.experimentFactorsConfigurationLoader = experimentFactorsConfigurationLoader;
         this.arrayExpressClient = arrayExpressClient;
         this.experimentDataTsvReader = experimentDataTsvReader;
     }
@@ -80,17 +81,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
     @Override
     public Experiment load(String experimentAccession) throws ParseException, IOException {
 
-        XMLConfiguration factorsConfig = experimentFactorsConfiguration.forExperiment(experimentAccession);
-
-        String defaultQueryFactorType = parseDefaultQueryFactorType(factorsConfig);
-
-        Set<Factor> defaultFilterFactors = parseDefaultFilterFactors(factorsConfig);
-
-        Set<String> menuFilterFactorTypes = parseMenuFilterFactorTypes(factorsConfig);
-
-        String displayName = parseDisplayNameForExperiment(factorsConfig, experimentAccession);
-
-        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
+        ExperimentFactorsConfiguration factorsConfig = experimentFactorsConfigurationLoader.forExperiment(experimentAccession);
 
         String experimentName = fetchExperimentName(experimentAccession);
 
@@ -102,6 +93,11 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         ExperimentBuilder experimentBuilder = createExperimentBuilder();
 
+        String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
+        Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
+
+        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
+
         MageTabLoader mageTabLoader = mageTabLoaderBuilder
                 .forExperimentAccession(experimentAccession)
                 .withRequiredFactorTypes(requiredFactorTypes)
@@ -110,20 +106,20 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
         Collection<ExperimentRun> experimentRuns = mageTabLoader.getProcessedExperimentRuns();
 
-        return experimentBuilder.forSpecies(getSpecies(mageTabLoader, experimentRuns))
+        return experimentBuilder.forSpecies(getSpecies(mageTabLoader))
                 .withDescription(experimentName)
-                .withDefaultQueryType(defaultQueryFactorType)
+                .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
                 .withDefaultFilterFactors(defaultFilterFactors)
-                .withMenuFilterFactorTypes(menuFilterFactorTypes)
+                .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
                 .withExperimentRuns(experimentRuns)
                 .withExtraInfo(hasExtraInfoFile)
                 .withFactorNamesByType(mageTabLoader.getFactorNamesByType())
-                .withDisplayName(displayName)
+                .withDisplayName(factorsConfig.getDisplayNameForExperiment())
                 .create();
 
     }
 
-    private Set<String> getSpecies(MageTabLoader mageTabLoader, Collection<ExperimentRun> experimentRuns) {
+    private Set<String> getSpecies(MageTabLoader mageTabLoader) {
 
         return mageTabLoader.extractSpecies();
     }
@@ -135,54 +131,6 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
             requiredFactorTypes.add(defaultFilterFactor.getType());
         }
         return requiredFactorTypes;
-    }
-
-    private String parseDisplayNameForExperiment(XMLConfiguration config, String experimentAccession) {
-
-        String displayName = config.getString("landingPageDisplayName");
-        if (StringUtils.isNotBlank(displayName)) {
-            return displayName;
-        }
-        return experimentAccession;
-
-    }
-
-    private Set<Factor> parseDefaultFilterFactors(XMLConfiguration config) {
-
-        Set<Factor> defaultFilterFactors = new HashSet<>();
-        List<HierarchicalConfiguration> fields =
-                config.configurationsAt("defaultFilterFactors.filterFactor");
-        for (HierarchicalConfiguration sub : fields) {
-            String factorType = sub.getString("type");
-            String factorValue = sub.getString("value");
-            defaultFilterFactors.add(new Factor(factorType, factorValue));
-        }
-
-        return defaultFilterFactors;
-    }
-
-    private String parseDefaultQueryFactorType(XMLConfiguration config) {
-
-        String defaultQueryFactorType = config.getString("defaultQueryFactorType");
-        if (defaultQueryFactorType == null || defaultQueryFactorType.trim().length() == 0) {
-            throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
-        }
-
-        return defaultQueryFactorType;
-    }
-
-    private Set<String> parseMenuFilterFactorTypes(XMLConfiguration config) {
-
-        Set<String> results = new HashSet<>();
-        List<Object> menuFilterFactorTypes = config.getList("menuFilterFactorTypes");
-        for (Object o : menuFilterFactorTypes) {
-            String filterFactorType = (String) o;
-            if (filterFactorType.trim().length() > 0) {
-                results.add(filterFactorType);
-            }
-        }
-
-        return results;
     }
 
     private String fetchExperimentName(String experimentAccession) {

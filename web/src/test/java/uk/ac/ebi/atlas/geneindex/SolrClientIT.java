@@ -34,6 +34,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,9 +42,8 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class SolrClientIT {
 
-    private static final String SPECIES = "homo sapiens";
-
-    private static final String SOLR_REST_GENENAMES_QUERY_TEMPLATE = "suggest_genename?q={0}&wt=json&omitHeader=true";
+    private static final String HOMO_SAPIENS_SPECIES = "homo sapiens";
+    private static final String MUS_MUSCULUS_SPECIES = "mus musculus";
 
     @Inject
     private SolrClient subject;
@@ -53,12 +53,38 @@ public class SolrClientIT {
 
     }
 
+
     @Test
-    public void testGetJsonForMultiTermSuggestions() {
+    public void findGeneNameSuggestionsShouldSupportSingleTermQueries() {
 
-        List<String> properties = subject.findGenePropertySuggestions("p b", SPECIES);
+        List<String> properties = subject.findGeneNameSuggestions("p", HOMO_SAPIENS_SPECIES);
 
-        assertThat(properties.size(), is(10));
-        assertThat(properties, hasItems("p b", "p binding", "putative b"));
+        assertThat(properties.size(), is(15));
+        assertThat(properties, hasItems("p", "p2rx1", "p2rx2", "p2rx3"));
+    }
+
+    @Test
+    public void findGeneNameSuggestionsShouldNotContainSpeciesTerms() {
+
+        List<String> properties = subject.findGeneNameSuggestions("mus", MUS_MUSCULUS_SPECIES);
+
+        assertThat(properties, containsInAnyOrder("musk", "mus81", "mustn1"));
+    }
+
+    @Test
+    public void findGeneNameSuggestionsShouldNotSupportMultitermQueries() {
+
+        List<String> properties = subject.findGeneNameSuggestions("En p", HOMO_SAPIENS_SPECIES);
+
+        assertThat(properties.size(), is(0));
+    }
+
+    @Test
+    public void findGenePropertySuggestionsShouldSupportMultiTermQueries() {
+
+        List<String> properties = subject.findGenePropertySuggestions("p b", HOMO_SAPIENS_SPECIES);
+
+        assertThat(properties.size(), is(15));
+        assertThat(properties, hasItems("p b", "p binding", "protein binding"));
     }
 }

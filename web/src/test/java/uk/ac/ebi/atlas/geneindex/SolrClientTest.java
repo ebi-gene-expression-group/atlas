@@ -62,7 +62,25 @@ public class SolrClientTest {
     @Test
     public void testBuildQueryAllTextString() {
         String query = "GO:0008134 \"p53 binding\"";
-        assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO0008134 \"p53 binding\")"));
+        assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO\\:0008134 \"p53 binding\")"));
+
+        query = "GO:0008134 \"p53 binding";
+        assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO\\:0008134 \"p53 binding\")"));
+    }
+
+    @Test
+    public void testExtractSuggestion(){
+        //given
+        String suggestion = subject.extractSuggestion("autocomplete_genename:\"musk\" AND species:\"mus musculus\"");
+
+        assertThat(suggestion, is("musk"));
+
+    }
+
+    @Test
+    public void testMatchingDoubleQuotes(){
+        assertThat(subject.areQuotesMatching("hello \" boy"), is(false));
+        assertThat(subject.areQuotesMatching("hello \" boy \""), is(true));
     }
 
 
