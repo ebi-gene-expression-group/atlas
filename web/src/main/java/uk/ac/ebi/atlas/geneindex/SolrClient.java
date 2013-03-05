@@ -40,7 +40,6 @@ import javax.inject.Named;
 import java.util.*;
 
 @Named
-@Scope("prototype")
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
@@ -57,10 +56,12 @@ public class SolrClient {
 
     private String serverURL;
 
+    private final SolrQueryService solrQueryService;
 
     @Inject
-    public SolrClient(RestTemplate restTemplate) {
+    public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService) {
         this.restTemplate = restTemplate;
+        this.solrQueryService = solrQueryService;
     }
 
     @Value("#{configuration['index.server.url']}")
@@ -80,6 +81,8 @@ public class SolrClient {
     }
 
     public List<String> findGeneNameSuggestions(String geneName, String species){
+
+        //return solrQueryService.getGeneNames(customEscape(geneName), species);
 
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, customEscape(geneName), species);
 
