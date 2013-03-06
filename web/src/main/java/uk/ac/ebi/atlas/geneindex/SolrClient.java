@@ -38,10 +38,14 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Named
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
+
+    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("\\W");
 
     private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
 
@@ -89,6 +93,19 @@ public class SolrClient {
 
     }
 
+    public List<String> findGenePropertySuggestions(String multiTermToken, String species){
+
+        Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
+
+        if (notSpellCheckableMatcher.find()){
+            return Collections.EMPTY_LIST;
+        }
+
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, customEscape(multiTermToken), species);
+
+        return extractCollations(jsonString);
+    }
+
     List<String> removeSpeciesTerms(String species, List<String> collations) {
         Set<String> speciesTerms = Sets.newHashSet(species.toLowerCase().split(" "));
 
@@ -132,13 +149,6 @@ public class SolrClient {
     String extractSuggestion(String collation) {
         String normalizedCollation = StringUtils.replace(collation, "autocomplete_genename:", "");
         return StringUtils.split(normalizedCollation, "\"")[0];
-    }
-
-    public List<String> findGenePropertySuggestions(String multiTermToken, String species){
-
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, customEscape(multiTermToken), species);
-
-        return extractCollations(jsonString);
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {

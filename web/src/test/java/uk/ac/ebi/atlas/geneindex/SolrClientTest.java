@@ -25,32 +25,41 @@ package uk.ac.ebi.atlas.geneindex;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.utils.Files;
 
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.anyVararg;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class SolrClientTest {
 
     private SolrClient subject;
 
-    private String jsonSearchResponse;
+    @Mock
+    private RestTemplate restTemplateMock;
+
     private String jsonAutocompleteResponse;
 
     @Before
-    public void loadTestData() throws IOException {
-        jsonSearchResponse = Files.readTextFileFromClasspath(this.getClass(), "solrSearchResponse.json");
-        jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
-    }
-
-    @Before
     public void initSubject() {
-        subject = new SolrClient(mock(RestTemplate.class), mock(SolrQueryService.class));
+        jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
+        when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
+        subject = new SolrClient(restTemplateMock, mock(SolrQueryService.class));
     }
 
     @Test
@@ -80,6 +89,16 @@ public class SolrClientTest {
     public void testMatchingDoubleQuotes(){
         assertThat(subject.areQuotesMatching("hello \" boy"), is(false));
         assertThat(subject.areQuotesMatching("hello \" boy \""), is(true));
+    }
+
+    @Test
+    public void findGenePropertiesShouldReturnEmptyListWhenTermContainsNonSpellCheckableCharacters(){
+        assertThat(subject.findGenePropertySuggestions("hello > boy", "mus mus"), is(empty()) );
+    }
+
+    @Test
+    public void findGenePropertiesShouldNotReturnEmptyList(){
+        assertThat(subject.findGenePropertySuggestions("p53", "mus mus"), is(not(empty())) );
     }
 
 
