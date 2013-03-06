@@ -52,7 +52,7 @@ public class SolrQueryService {
         solrServer.setConnectionTimeout(2000); // 5 seconds to establish TCP
     }
 
-    public List<String> getGeneNames(String queryString) throws SolrServerException {
+    public List<String> getGeneIds(String queryString) throws SolrServerException {
         SolrQuery solrQuery = buildSolrQuery(queryString, "identifier");
 
         QueryResponse solrResponse = solrServer.query(solrQuery);
