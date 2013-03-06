@@ -24,10 +24,10 @@ package uk.ac.ebi.atlas.commons.configuration;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.nio.file.FileSystems;
@@ -35,34 +35,37 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 
 @Named
-public class ExperimentFactorsConfigurationLoader {
+public class ConfigurationTrader {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentFactorsConfigurationLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(ConfigurationTrader.class);
 
-    private String pathTemplate;
+    @Value("#{configuration['experiment.factors.path.template']}")
+    private String experimentalFactorsPathTemplate;
 
-    @Inject
-    public ExperimentFactorsConfigurationLoader(
-            @Value("#{configuration['experiment.experiment-factors.path.template']}")
-            String pathTemplate) {
-        this.pathTemplate = pathTemplate;
+    @Value("#{configuration['experiment.contrasts.path.template']}")
+    private String contrastsPathTemplate;
+
+    public ExperimentFactorsConfiguration getFactorsConfiguration(String experimentAccession) {
+        return new ExperimentFactorsConfiguration(forAccession(experimentalFactorsPathTemplate, experimentAccession), experimentAccession);
     }
 
-    public ExperimentFactorsConfiguration forExperiment(String experimentAccession) {
-        Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
+    public ContrastsConfiguration getContrastsConfiguration(String experimentAccession) {
 
+        XMLConfiguration xmlConfiguration = forAccession(contrastsPathTemplate, experimentAccession);
+        xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
+        return new ContrastsConfiguration(xmlConfiguration, experimentAccession);
+    }
+
+    private XMLConfiguration forAccession(String pathTemplate, String experimentAccession) {
+        String path = MessageFormat.format(pathTemplate, experimentAccession);
+        Path fileSystemPath = FileSystems.getDefault().getPath(path);
         try {
             File configFile = fileSystemPath.toFile();
-            XMLConfiguration config = new XMLConfiguration(configFile);
-            return new ExperimentFactorsConfiguration(config, experimentAccession);
+            return new XMLConfiguration(configFile);
         } catch (ConfigurationException cex) {
             LOGGER.error(cex.getMessage(), cex);
             throw new IllegalStateException("Cannot read configuration from path " + fileSystemPath.toString(), cex);
         }
-    }
-
-    private String getPathString(String experimentAccession) {
-        return MessageFormat.format(pathTemplate, experimentAccession);
     }
 
 }

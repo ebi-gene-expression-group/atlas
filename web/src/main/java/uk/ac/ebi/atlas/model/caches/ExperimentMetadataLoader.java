@@ -28,8 +28,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
+import uk.ac.ebi.atlas.commons.configuration.ConfigurationTrader;
 import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfiguration;
-import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfigurationLoader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentBuilder;
 import uk.ac.ebi.atlas.model.ExperimentRun;
@@ -61,7 +61,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
     private String extraInfoPathTemplate;
 
     private MageTabLoaderBuilder mageTabLoaderBuilder;
-    private ExperimentFactorsConfigurationLoader experimentFactorsConfigurationLoader;
+    private ConfigurationTrader configurationTrader;
 
     private ArrayExpressClient arrayExpressClient;
 
@@ -69,11 +69,11 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
 
 
     @Inject
-    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ExperimentFactorsConfigurationLoader experimentFactorsConfigurationLoader
+    public ExperimentMetadataLoader(MageTabLoaderBuilder mageTabLoaderBuilder, ConfigurationTrader configurationTrader
             , ArrayExpressClient arrayExpressClient, ExperimentDataTsvReader experimentDataTsvReader) {
         this.mageTabLoaderBuilder = mageTabLoaderBuilder;
 
-        this.experimentFactorsConfigurationLoader = experimentFactorsConfigurationLoader;
+        this.configurationTrader = configurationTrader;
         this.arrayExpressClient = arrayExpressClient;
         this.experimentDataTsvReader = experimentDataTsvReader;
     }
@@ -81,7 +81,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
     @Override
     public Experiment load(String experimentAccession) throws ParseException, IOException {
 
-        ExperimentFactorsConfiguration factorsConfig = experimentFactorsConfigurationLoader.forExperiment(experimentAccession);
+        ExperimentFactorsConfiguration factorsConfig = configurationTrader.getFactorsConfiguration(experimentAccession);
 
         String experimentName = fetchExperimentName(experimentAccession);
 
