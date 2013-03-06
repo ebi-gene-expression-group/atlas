@@ -1,12 +1,10 @@
 package uk.ac.ebi.atlas.commons.configuration;
 
 import com.google.common.collect.Sets;
-import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 public class ContrastsConfiguration {
@@ -22,25 +20,37 @@ public class ContrastsConfiguration {
         this.experimentAccession = experimentAccession;
     }
 
-    Set<String> getAssayAccessions(String id){
+    Set<String> getAssayAccessions(String id) {
         Set<String> assays = Sets.newHashSet();
-        List<Object> list = xmlConfiguration.getList("contrast_info.assasy_groups.assay_group[@id=" + id + "]/assay");
+        String[] list = xmlConfiguration.getStringArray("assay_groups/assay_group[@id=\'" + id + "\']/assay");
         for (Object assayObject : list) {
-            assays.add((String)assayObject);
+            assays.add((String) assayObject);
         }
         return assays;
     }
 
+    AssayGroup getAssayGroup(String id) {
+        return new AssayGroup(xmlConfiguration.getStringArray("assay_groups/assay_group[@id=\'" + id + "\']/assay"));
+
+    }
+
     public Set<Contrast> getContrasts() {
 
-        List contrastElements = xmlConfiguration.getList("contrast_info.contrasts");
-
         Set<Contrast> contrasts = Sets.newHashSet();
-        for(Iterator it = contrastElements.iterator(); it.hasNext();) {
-
-            HierarchicalConfiguration sub = (HierarchicalConfiguration) it.next();
-
+        String[] ids = xmlConfiguration.getStringArray("contrasts/contrast/@id");
+        for (String id : ids) {
+            Contrast contrast = getContrast(id);
+            contrasts.add(contrast);
         }
+
+
         return contrasts;
+    }
+
+    Contrast getContrast(String id) {
+        String name = xmlConfiguration.getString("contrasts/contrast[@id=\'" + id + "\']/name");
+        String reference = xmlConfiguration.getString("contrasts/contrast[@id=\'" + id + "\']/reference_assay_group");
+        String test = xmlConfiguration.getString("contrasts/contrast[@id=\'" + id + "\']/test_assay_group");
+        return new Contrast(id, getAssayGroup(reference), getAssayGroup(test), name);
     }
 }
