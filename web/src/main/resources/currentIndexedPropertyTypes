@@ -1,0 +1,39 @@
+description
+disease
+embl
+ensfamily
+ensfamily_description
+ensgene
+ensprotein
+enstranscript
+entrezgene
+flybase_gene_id
+flybase_transcript_id
+flybasename_gene
+flybasename_transcript
+genesigdbid
+go
+goterm
+hgnc_symbol
+interpro
+interproterm
+mgi_description
+mgi_id
+mgi_symbol
+mirbase_accession
+mirbase_id
+miRBase: Accession Number
+miRBase: Description
+miRBase: Gene Database
+miRBase: Gene Database ID
+miRBase: Matured miRNA
+miRBase: Pubmedid
+miRBase: Sequence
+ortholog
+refseq
+rgd
+rgd_symbol
+symbol
+synonym
+unigene
+uniprot
