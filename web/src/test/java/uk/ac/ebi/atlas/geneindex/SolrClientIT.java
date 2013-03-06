@@ -57,7 +57,7 @@ public class SolrClientIT {
     @Test
     public void findGeneNameSuggestionsShouldSupportSingleTermQueries() {
 
-        List<String> properties = subject.findGeneNameSuggestions("p", HOMO_SAPIENS_SPECIES);
+        List<String> properties = subject.findGeneIdSuggestions("p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
         assertThat(properties, hasItems("p", "p2rx1", "p2rx2", "p2rx3"));
@@ -66,7 +66,7 @@ public class SolrClientIT {
     @Test
     public void findGeneNameSuggestionsShouldNotContainSpeciesTerms() {
 
-        List<String> properties = subject.findGeneNameSuggestions("mus", MUS_MUSCULUS_SPECIES);
+        List<String> properties = subject.findGeneIdSuggestions("mus", MUS_MUSCULUS_SPECIES);
 
         assertThat(properties, containsInAnyOrder("musk", "mus81", "mustn1"));
     }
@@ -74,7 +74,7 @@ public class SolrClientIT {
     @Test
     public void findGeneNameSuggestionsShouldNotSupportMultitermQueries() {
 
-        List<String> properties = subject.findGeneNameSuggestions("En p", HOMO_SAPIENS_SPECIES);
+        List<String> properties = subject.findGeneIdSuggestions("En p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(0));
     }

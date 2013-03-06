@@ -57,7 +57,7 @@ public class AutocompleteControllerTest {
 
         List<String> suggestions = Lists.newArrayList("Value1", "Value2");
 
-        when(solrClientMock.findGeneNameSuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
+        when(solrClientMock.findGeneIdSuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
         when(solrClientMock.findGenePropertySuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
 
         when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);

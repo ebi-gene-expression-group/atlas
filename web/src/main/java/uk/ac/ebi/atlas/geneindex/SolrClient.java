@@ -81,7 +81,7 @@ public class SolrClient {
 
     }
 
-    public List<String> findGeneNameSuggestions(String geneName, String species){
+    public List<String> findGeneIdSuggestions(String geneName, String species){
 
         //return solrQueryService.getGeneNames(customEscape(geneName), species);
 

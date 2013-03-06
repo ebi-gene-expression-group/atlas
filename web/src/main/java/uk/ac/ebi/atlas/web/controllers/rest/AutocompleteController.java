@@ -57,7 +57,7 @@ public class AutocompleteController {
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
 
         if (!StringUtils.containsWhitespace(query)) {
-            suggestions.addAll(solrClient.findGeneNameSuggestions(query, species));
+            suggestions.addAll(solrClient.findGeneIdSuggestions(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
