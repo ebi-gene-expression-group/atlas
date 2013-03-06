@@ -57,11 +57,22 @@ public class SolrQueryService {
 
     public List<String> getGeneIds(String geneQuery, String species) throws SolrServerException {
 
-        String queryString = "{!lucene q.op=OR df=property_search} " + geneQuery + " AND species:\"" + species + "\"";
+        String queryString = buildGeneQuery(geneQuery, species);
 
-        SolrQuery solrQuery = buildSolrQuery(queryString, "identifier");
+        return getSolrResultsForQuery(queryString, "identifier", -1);
+    }
 
-        LOGGER.debug("<getGeneIds> processing solr query: " + solrQuery.toString());
+    public List<String> getGeneIdSuggestions(String geneName, String species) throws SolrServerException {
+
+        String queryString = buildCompositeIdentifierQuery(geneName, species);
+
+        return getSolrResultsForQuery(queryString, "property", 15);
+    }
+
+    private List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) throws SolrServerException {
+        SolrQuery solrQuery = buildSolrQuery(queryString, resultField, limitResults);
+
+        LOGGER.debug("<getSolrResultsForQuery> processing solr query: " + solrQuery.toString());
 
         QueryResponse solrResponse = solrServer.query(solrQuery);
 
@@ -74,26 +85,16 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    public List<String> getGeneIdSuggestions(String geneName, String species) throws SolrServerException {
+    private String buildGeneQuery(String query, String species) {
 
-        String queryString = buildCompositeIdentifierQuery(geneName, species);
+        StringBuilder sb = new StringBuilder();
+        sb.append("{!lucene q.op=OR df=property_search} ");
+        sb.append(query);
+        sb.append(" AND species:\"");
+        sb.append(species);
+        sb.append("\"&start=0&rows=100000");
+        return sb.toString();
 
-        SolrQuery solrQuery = buildSolrQuery(queryString, "property");
-
-        // only top 10 gene name suggestions
-        solrQuery.setFacetLimit(10);
-
-        LOGGER.debug("<getGeneIdSuggestions> processing solr query: " + solrQuery.toString());
-
-        QueryResponse solrResponse = solrServer.query(solrQuery);
-
-        List<String> geneNames = Lists.newArrayList();
-        if (solrResponse.getFacetFields().get(0).getValues() != null) {
-            for (FacetField.Count facetField : solrResponse.getFacetFields().get(0).getValues()) {
-                geneNames.add(facetField.getName());
-            }
-        }
-        return geneNames;
     }
 
     private String buildCompositeIdentifierQuery(String geneName, String species) {
@@ -118,13 +119,13 @@ public class SolrQueryService {
         return query.toString();
     }
 
-    SolrQuery buildSolrQuery(String queryString, String facedField) {
+    SolrQuery buildSolrQuery(String queryString, String facedField, int facetLimit) {
         SolrQuery solrQuery = new SolrQuery(queryString);
 
         solrQuery.addFacetField(facedField);
         solrQuery.setRows(0);
         solrQuery.setFacet(true);
-        solrQuery.setFacetLimit(-1);
+        solrQuery.setFacetLimit(facetLimit);
         solrQuery.setFacetMinCount(1);
         return solrQuery;
     }

@@ -39,7 +39,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Named
@@ -97,11 +96,11 @@ public class SolrClient {
 
     public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
 
-        Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
+        /* Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
 
         if (notSpellCheckableMatcher.find()) {
             return Collections.EMPTY_LIST;
-        }
+        }*/
 
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, customEscape(multiTermToken), species);
 
@@ -149,8 +148,7 @@ public class SolrClient {
     }
 
     String extractSuggestion(String collation) {
-        String normalizedCollation = StringUtils.replace(collation, "autocomplete_genename:", "");
-        return StringUtils.split(normalizedCollation, "\"")[0];
+        return StringUtils.split(collation, "\"")[0];
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {
