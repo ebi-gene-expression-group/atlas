@@ -118,7 +118,8 @@ public class ExperimentBuilder {
             displayName = experimentAccession;
         }
 
-        return new BaselineExperiment(experimentalFactors, experimentRuns, description, displayName, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
+        return new BaselineExperiment(experimentAccession, experimentalFactors, experimentRuns, description,
+                                      displayName, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
     }
 
 

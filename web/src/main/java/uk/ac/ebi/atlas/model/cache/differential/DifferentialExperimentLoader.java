@@ -23,12 +23,12 @@ public abstract class DifferentialExperimentLoader extends ExperimentLoader<Diff
 
 
     @Override
-    public DifferentialExperiment load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
+    public DifferentialExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
 
-        ContrastsConfiguration contrastsConfiguration = configurationTrader.getContrastsConfiguration(experimentAccession);
+        ContrastsConfiguration contrastsConfiguration = configurationTrader.getContrastsConfiguration(accession);
         Set<Contrast> contrasts = contrastsConfiguration.getContrasts();
 
-        return new DifferentialExperiment(contrasts, experimentDescription, hasExtraInfoFile);
+        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile);
 
     }
 }

@@ -3,33 +3,21 @@ package uk.ac.ebi.atlas.model.differential;
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
+import uk.ac.ebi.atlas.model.Experiment;
 
 import java.util.*;
 
-public class DifferentialExperiment {
+public class DifferentialExperiment extends Experiment{
 
     private SortedSet<Contrast> contrasts = Sets.newTreeSet(orderByDisplayName());
 
-    private String description;
-
-    private boolean hasExtraInfoFile;
-
-    public DifferentialExperiment(Set<Contrast> contrasts, String description, boolean hasExtraInfoFile) {
+    public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile) {
+        super(accession, description, hasExtraInfoFile);
         this.contrasts.addAll(contrasts);
-        this.description = description;
-        this.hasExtraInfoFile = hasExtraInfoFile;
     }
 
     public SortedSet<Contrast> getContrasts() {
         return Collections.unmodifiableSortedSet(contrasts);
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean hasExtraInfoFile() {
-        return hasExtraInfoFile;
     }
 
     private Comparator<Contrast> orderByDisplayName(){

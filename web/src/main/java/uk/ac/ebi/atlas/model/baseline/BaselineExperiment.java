@@ -22,46 +22,41 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import uk.ac.ebi.atlas.model.Experiment;
+
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class BaselineExperiment implements Serializable {
+public class BaselineExperiment extends Experiment {
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 
-    private String description;
     private Set<String> species;
 
     private String defaultQueryFactorType;
     private Set<Factor> defaultFilterFactors;
 
-    private String displayName;
-
     private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
 
     private ExperimentalFactors experimentalFactors;
 
-    private boolean hasExtraInfoFile;
 
+    BaselineExperiment(String accession, ExperimentalFactors experimentalFactors,
+                       Collection<ExperimentRun> experimentRuns, String description,
+                       String displayName, Set<String> species, String defaultQueryFactorType,
+                       Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
 
-    BaselineExperiment(ExperimentalFactors experimentalFactors, Collection<ExperimentRun> experimentRuns, String description, String displayName, Set<String> species, String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
-        this.description = description;
-        this.displayName = displayName;
+        super(accession, displayName, description, hasExtraInfoFile);
         this.species = species;
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
-        this.hasExtraInfoFile = hasExtraInfoFile;
         for (ExperimentRun experimentRun : experimentRuns) {
             this.experimentRuns.put(experimentRun.getAccession(), experimentRun);
         }
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 
     public FactorGroup getFactorGroup(String experimentRunAccession) {
@@ -87,10 +82,6 @@ public class BaselineExperiment implements Serializable {
         return species.iterator().next();
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public String getDefaultQueryFactorType() {
         return defaultQueryFactorType;
     }
@@ -101,14 +92,6 @@ public class BaselineExperiment implements Serializable {
 
     public ExperimentalFactors getExperimentalFactors() {
         return experimentalFactors;
-    }
-
-    public boolean isForSingleSpecie() {
-        return 1 == species.size();
-    }
-
-    public boolean hasExtraInfoFile() {
-        return hasExtraInfoFile;
     }
 
 }
