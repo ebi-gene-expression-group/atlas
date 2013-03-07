@@ -27,8 +27,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import uk.ac.ebi.atlas.model.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.Set;

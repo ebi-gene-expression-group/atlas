@@ -26,7 +26,7 @@ package uk.ac.ebi.atlas.streams;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.baseline.Expression;
 
 import java.io.IOException;
 

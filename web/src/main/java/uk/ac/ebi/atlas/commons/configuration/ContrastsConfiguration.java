@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Named;
 import java.util.Set;
+import java.util.SortedSet;
 
 public class ContrastsConfiguration {
 

@@ -22,16 +22,13 @@
 
 package uk.ac.ebi.atlas.web.interceptors;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.ui.Model;
 import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -49,7 +46,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
     public static final String STOP_WATCH = "stopWatch";
 
-    private ExperimentsCache experimentsCache;
+    private BaselineExperimentsCache experimentsCache;
     private ApplicationProperties applicationProperties;
 
     public ExperimentInterceptor() {
@@ -61,7 +58,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Inject
-    public void setExperimentsCache(ExperimentsCache experimentsCache) {
+    public void setExperimentsCache(BaselineExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
@@ -105,7 +102,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         String experimentAccession = (String) request.getAttribute(EXPERIMENT_ACCESSION);
 
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         Set<String> allSpecies = experiment.getSpecies();
 

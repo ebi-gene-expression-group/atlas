@@ -29,8 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -48,10 +48,10 @@ public class ExperimentDesignDownloadController {
     private static final Logger logger = Logger.getLogger(ExperimentDesignDownloadController.class);
 
     private ExperimentDesignTsvReader experimentDesignTsvReader;
-    private ExperimentsCache experimentsCache;
+    private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public ExperimentDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader, ExperimentsCache experimentsCache) {
+    public ExperimentDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache experimentsCache) {
         this.experimentDesignTsvReader = experimentDesignTsvReader;
         this.experimentsCache = experimentsCache;
     }
@@ -66,7 +66,7 @@ public class ExperimentDesignDownloadController {
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
         // get used runs from experiment
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
         Set<String> used = experiment.getExperimentRunAccessions();
 
         // modify header by adding new column

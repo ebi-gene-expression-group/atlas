@@ -29,7 +29,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
@@ -59,7 +59,7 @@ public class GeneProfilesPageControllerTest {
     private ApplicationProperties applicationPropertiesMock;
 
     @Mock
-    private ExperimentsCache experimentCacheMock;
+    private BaselineExperimentsCache experimentCacheMock;
 
     @Mock
     private RequestContextBuilder requestContextBuilderMock;

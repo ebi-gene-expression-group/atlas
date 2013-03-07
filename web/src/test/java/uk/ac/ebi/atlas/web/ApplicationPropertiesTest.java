@@ -27,8 +27,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
 import java.util.Properties;
 
@@ -50,13 +50,13 @@ public class ApplicationPropertiesTest {
     private static final String ANATOMOGRAM_PROPERTY_KEY = "organism.anatomogram.";
 
     @Mock
-    private Experiment homoSapiensExperimentMock;
+    private BaselineExperiment homoSapiensExperimentMock;
 
     @Mock
-    private Experiment mouseExperimentMock;
+    private BaselineExperiment mouseExperimentMock;
 
     @Mock
-    private ExperimentsCache experimentCacheMock;
+    private BaselineExperimentsCache experimentCacheMock;
 
     @Mock
     private Properties configurationMock;

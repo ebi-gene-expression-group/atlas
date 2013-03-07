@@ -28,8 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.model.readers.TsvReader;
 
@@ -45,10 +45,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExperimentDesignPageController {
 
     private final TsvReader experimentDesignTsvReader;
-    private final ExperimentsCache experimentsCache;
+    private final BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public ExperimentDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader, ExperimentsCache expCache) {
+    public ExperimentDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache expCache) {
         this.experimentDesignTsvReader = experimentDesignTsvReader;
         this.experimentsCache = expCache;
     }
@@ -104,7 +104,7 @@ public class ExperimentDesignPageController {
         model.addAttribute("tableData", gson.toJson(csvLines));
 
         // run accessions are used for highlighting
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
         String runAccessions = gson.toJson(experiment.getExperimentRunAccessions());
         model.addAttribute("runAccessions", runAccessions);
 

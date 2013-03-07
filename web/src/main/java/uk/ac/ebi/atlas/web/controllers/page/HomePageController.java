@@ -28,8 +28,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.annotation.PostConstruct;
@@ -44,7 +44,7 @@ public class HomePageController {
 
     private ApplicationProperties properties;
 
-    private ExperimentsCache experimentsCache;
+    private BaselineExperimentsCache experimentsCache;
 
     private SortedSetMultimap<String, String> experimentAccessionsBySpecies;
 
@@ -53,7 +53,7 @@ public class HomePageController {
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public HomePageController(ApplicationProperties properties, ExperimentsCache experimentsCache) {
+    public HomePageController(ApplicationProperties properties, BaselineExperimentsCache experimentsCache) {
         this.properties = properties;
         this.experimentsCache = experimentsCache;
     }
@@ -74,7 +74,7 @@ public class HomePageController {
     private void loadExperimentAccessionsBySpecie() {
 
         for (String experimentAccession : properties.getExperimentIdentifiers()) {
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+            BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
             experimentDisplayNames.put(experimentAccession, experiment.getDisplayName());
         }
 
@@ -95,7 +95,7 @@ public class HomePageController {
 
         for (String experimentAccession : properties.getExperimentIdentifiers()) {
 
-            Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+            BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             for (String specie : experiment.getSpecies()) {
                 experimentAccessionsBySpecies.put(specie, experimentAccession);

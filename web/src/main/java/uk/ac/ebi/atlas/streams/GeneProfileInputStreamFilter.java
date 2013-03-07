@@ -26,8 +26,8 @@ import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 
 import java.util.Set;
 

@@ -1,17 +1,13 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.GeneExpressionPrecondition;
-import uk.ac.ebi.atlas.model.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.caches.BarChartTradersCache;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
+import uk.ac.ebi.atlas.model.cache.baseline.BarChartTradersCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;

@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.model.differential;
 
-public class Contrast {
+public class Contrast{
     private String id;
     private AssayGroup referenceAssayGroup;
     private AssayGroup testAssayGroup;
@@ -40,4 +40,5 @@ public class Contrast {
                 ", displayName='" + displayName + '\'' +
                 '}';
     }
+
 }

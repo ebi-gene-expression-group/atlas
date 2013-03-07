@@ -28,8 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
 import java.util.SortedSet;

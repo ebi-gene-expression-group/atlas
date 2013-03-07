@@ -28,10 +28,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
 import java.util.Comparator;
 import java.util.List;
@@ -56,7 +56,7 @@ public class ExpressionBufferBuilderTest {
     private ExperimentRun experimentRun3;
 
     @Mock
-    private ExperimentsCache experimentsCacheMock;
+    private BaselineExperimentsCache experimentsCacheMock;
 
     @Mock
     private Factor factorMock1;
@@ -71,7 +71,7 @@ public class ExpressionBufferBuilderTest {
     //private ExperimentBuilder experimentBuilderMock;
 
     @Mock
-    private Experiment experimentMock;
+    private BaselineExperiment experimentMock;
 
     private ExpressionsBuffer.Builder subject;
 

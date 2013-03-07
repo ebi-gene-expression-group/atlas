@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.streams;
 
 import au.com.bytecode.opencsv.CSVReader;
-import uk.ac.ebi.atlas.model.GeneExpressions;
-import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
+import uk.ac.ebi.atlas.model.baseline.Expression;
 
 public class GeneExpressionsInputStream extends AbstractGeneExpressionsInputStream<GeneExpressions> {
 

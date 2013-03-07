@@ -14,7 +14,7 @@ public class DifferentialExpression {
         this.contrast = contrast;
     }
 
-    public double getpValue() {
+    public double getPValue() {
         return pValue;
     }
 
@@ -27,11 +27,11 @@ public class DifferentialExpression {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
 
-        DifferentialExpression that = (DifferentialExpression) o;
+        DifferentialExpression that = (DifferentialExpression) other;
 
         if (Double.compare(that.foldChange, foldChange) != 0) return false;
         if (Double.compare(that.pValue, pValue) != 0) return false;

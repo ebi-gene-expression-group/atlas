@@ -30,11 +30,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileInputStreamMock;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 
 import java.util.List;
@@ -58,10 +58,10 @@ public class RankGeneProfilesCommandTest {
     private SolrClient solrClientMock;
 
     @Mock
-    private ExperimentsCache experimentsCacheMock;
+    private BaselineExperimentsCache experimentsCacheMock;
 
     @Mock
-    private Experiment experimentMock;
+    private BaselineExperiment experimentMock;
 
     @Mock
     private ExperimentalFactors experimentalFactors;

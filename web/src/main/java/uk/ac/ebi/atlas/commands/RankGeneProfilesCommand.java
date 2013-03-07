@@ -26,10 +26,10 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.GeneProfileComparator;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.GeneProfileComparator;
+import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
 
 import javax.inject.Named;
 import java.util.Collections;

@@ -30,9 +30,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.impl.FilterParameters;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
@@ -63,7 +63,7 @@ public class GeneProfilesInputStreamIT {
     private FilterParameters filterParameters;
 
     @Inject
-    private ExperimentsCache experimentsCache;
+    private BaselineExperimentsCache experimentsCache;
 
     private ObjectInputStream<GeneProfile> subject;
 
@@ -74,7 +74,7 @@ public class GeneProfilesInputStreamIT {
         requestPreferences.setCutoff(0.5d);
         requestPreferences.setQueryFactorType("ORGANISM_PART");
 
-        Experiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        BaselineExperiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         filterParameters.setRequestPreferences(requestPreferences);
         filterParameters.setFilteredBySpecies("homo");
         filterParameters.setSelectedFilterFactors(Collections.EMPTY_SET);

@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.streams;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.Expression;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 
 import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
 

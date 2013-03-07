@@ -26,9 +26,9 @@ import com.google.common.base.Preconditions;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.impl.FilterParameters;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -46,16 +46,16 @@ public class RequestContextBuilder implements Serializable {
 
     private FilterParameters filterParameters;
 
-    private Experiment experiment;
+    private BaselineExperiment experiment;
 
     private FilterFactorsConverter filterFactorsConverter;
 
-    private ExperimentsCache experimentsCache;
+    private BaselineExperimentsCache experimentsCache;
 
     private RequestPreferences preferences;
 
     @Inject
-    public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverter filterFactorsConverter, ExperimentsCache experimentsCache) {
+    public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverter filterFactorsConverter, BaselineExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
         this.filterParameters = filterParameters;
         this.filterFactorsConverter = filterFactorsConverter;

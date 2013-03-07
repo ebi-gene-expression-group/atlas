@@ -24,8 +24,7 @@ package uk.ac.ebi.atlas.commons.configuration;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +38,7 @@ public class ExperimentFactorsConfiguration {
         this.config = config;
     }
 
-    public String getDisplayNameForExperiment() {
+    public String getExperimentDisplayName() {
         return config.getString("landingPageDisplayName");
     }
 

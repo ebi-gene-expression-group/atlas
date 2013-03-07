@@ -26,15 +26,14 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Set;
 import java.util.SortedSet;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;

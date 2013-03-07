@@ -28,26 +28,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Controller
 @Scope("request")
 public class AnnotationLoaderController {
 
-    private ExperimentsCache experimentsCache;
     private ApplicationProperties applicationProperties;
 
 
     @Inject
-    public AnnotationLoaderController(ApplicationProperties applicationProperties, ExperimentsCache experimentsCache, GeneNamesImportCommand geneNamesImportCommand) {
-        this.experimentsCache = experimentsCache;
+    public AnnotationLoaderController(ApplicationProperties applicationProperties, GeneNamesImportCommand geneNamesImportCommand) {
         this.applicationProperties = applicationProperties;
         this.geneNamesImportCommand = geneNamesImportCommand;
 

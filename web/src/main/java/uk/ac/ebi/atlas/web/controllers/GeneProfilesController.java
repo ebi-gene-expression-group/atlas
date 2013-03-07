@@ -26,8 +26,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -35,10 +35,10 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 public class GeneProfilesController {
 
     private RequestContextBuilder requestContextBuilder;
-    private ExperimentsCache experimentsCache;
+    private BaselineExperimentsCache experimentsCache;
     private FilterFactorsConverter filterFactorsConverter;
 
-    public GeneProfilesController(RequestContextBuilder requestContextBuilder, ExperimentsCache experimentsCache,
+    public GeneProfilesController(RequestContextBuilder requestContextBuilder, BaselineExperimentsCache experimentsCache,
                                   FilterFactorsConverter filterFactorsConverter) {
         this.requestContextBuilder = requestContextBuilder;
         this.experimentsCache = experimentsCache;
@@ -46,7 +46,7 @@ public class GeneProfilesController {
     }
 
     protected void initPreferences(RequestPreferences preferences, String experimentAccession) {
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
         if (StringUtils.isBlank(preferences.getQueryFactorType())) {
             preferences.setQueryFactorType(experiment.getDefaultQueryFactorType());
         }

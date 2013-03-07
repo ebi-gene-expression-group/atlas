@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.base.Joiner;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -37,8 +36,11 @@ import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
-import uk.ac.ebi.atlas.model.*;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -63,14 +65,14 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private ApplicationProperties applicationProperties;
 
-    private ExperimentsCache experimentsCache;
+    private BaselineExperimentsCache experimentsCache;
 
     private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
     public GeneProfilesPageController(RankGeneProfilesCommand rankCommand,
                                       ApplicationProperties applicationProperties,
-                                      ExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
+                                      BaselineExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
                                       FilterFactorsConverter filterFactorsConverter) {
 
         super(requestContextBuilder, experimentsCache, filterFactorsConverter);
@@ -85,7 +87,7 @@ public class GeneProfilesPageController extends GeneProfilesController {
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         initPreferences(preferences, experimentAccession);
 

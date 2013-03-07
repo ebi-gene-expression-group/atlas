@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
 import java.util.ArrayList;

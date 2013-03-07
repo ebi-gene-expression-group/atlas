@@ -5,8 +5,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.GeneExpressions;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;

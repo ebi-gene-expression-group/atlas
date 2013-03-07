@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
 
@@ -47,7 +47,7 @@ public class FilterFactorsConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        Experiment experimentMock = mock(Experiment.class);
+        BaselineExperiment experimentMock = mock(BaselineExperiment.class);
         subject = new FilterFactorsConverter();
     }
 

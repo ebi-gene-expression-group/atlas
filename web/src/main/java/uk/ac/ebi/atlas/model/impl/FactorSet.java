@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.model.impl;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import java.util.*;
 

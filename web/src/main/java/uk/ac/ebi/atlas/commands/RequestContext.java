@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import uk.ac.ebi.atlas.model.Factor;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.io.Serializable;
 import java.util.Set;

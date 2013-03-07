@@ -31,8 +31,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 
 import java.util.Set;
 

@@ -7,11 +7,11 @@ import com.google.common.collect.Ordering;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentRun;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.FactorGroup;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
+import uk.ac.ebi.atlas.model.baseline.Expression;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -67,7 +67,7 @@ class ExpressionsBuffer {
 
         private String experimentAccession;
 
-        private ExperimentsCache experimentsCache;
+        private BaselineExperimentsCache experimentsCache;
 
         private List<FactorGroup> orderedFactorGroups = new LinkedList<>();
 
@@ -75,7 +75,7 @@ class ExpressionsBuffer {
         private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found for Experiment {1}";
 
         @Inject
-        public Builder(ExperimentsCache experimentsCache) {
+        public Builder(BaselineExperimentsCache experimentsCache) {
 
             this.experimentsCache = experimentsCache;
 
@@ -116,7 +116,7 @@ class ExpressionsBuffer {
             for (String columnRun : columnRuns) {
                 columnRun = columnRun.trim();
 
-                Experiment experiment = experimentsCache.getExperiment(experimentAccession);
+                BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
                 checkNotNull(experiment, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, columnRun, experimentAccession));
 
                 return experiment.getFactorGroup(columnRun);

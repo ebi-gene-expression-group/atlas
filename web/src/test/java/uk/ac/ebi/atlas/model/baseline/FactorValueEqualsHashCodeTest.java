@@ -1,0 +1,21 @@
+package uk.ac.ebi.atlas.model.baseline;
+
+import junitx.extensions.EqualsHashCodeTestCase;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+
+public class FactorValueEqualsHashCodeTest extends EqualsHashCodeTestCase {
+
+    public FactorValueEqualsHashCodeTest(String name) {
+        super(name);
+    }
+
+    @Override
+    protected Object createInstance() throws Exception {
+        return new Factor("aType", "value");
+    }
+
+    @Override
+    protected Object createNotEqualInstance() throws Exception {
+        return new Factor("aType", "value_1");
+    }
+}

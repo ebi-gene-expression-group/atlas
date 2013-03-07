@@ -19,16 +19,20 @@
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
-    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.model.caches.BarChartTraderLoader">
+    <bean id="differentialExperimentLoader" class="uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentLoader">
+        <lookup-method name="createExperimentBuilder" bean="experimentBuilder"/>
+    </bean>
+
+    <bean id="baselineExperimentLoader" class="uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentLoader">
+        <lookup-method name="createExperimentBuilder" bean="experimentBuilder"/>
+    </bean>
+
+    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.model.cache.baseline.BarChartTraderLoader">
         <lookup-method name="createBitIndexBuilder" bean="bitIndexBuilder"/>
     </bean>
 
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
         <constructor-arg ref="httpClientConnectionManager"/>
-    </bean>
-
-    <bean id="experimentMetadataLoader" class="uk.ac.ebi.atlas.model.caches.ExperimentMetadataLoader">
-        <lookup-method name="createExperimentBuilder" bean="experimentBuilder"/>
     </bean>
 
     <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"

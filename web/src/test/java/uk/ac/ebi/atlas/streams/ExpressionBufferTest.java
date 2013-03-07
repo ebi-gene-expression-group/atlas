@@ -3,9 +3,9 @@ package uk.ac.ebi.atlas.streams;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.Expression;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.impl.FactorSet;
 
 import java.util.LinkedList;

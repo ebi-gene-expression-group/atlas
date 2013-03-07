@@ -29,10 +29,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
-import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
@@ -52,7 +51,7 @@ public class GeneProfilesDownloadController extends GeneProfilesController {
     @Inject
     public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
                                           RequestContextBuilder requestContextBuilder,
-                                          ExperimentsCache experimentsCache,FilterFactorsConverter filterFactorsConverter) {
+                                          BaselineExperimentsCache experimentsCache,FilterFactorsConverter filterFactorsConverter) {
 
         super(requestContextBuilder, experimentsCache, filterFactorsConverter);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;

@@ -30,10 +30,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.io.PrintWriter;
@@ -59,7 +59,7 @@ public class WriteGeneProfilesCommandTest {
     @Mock
     private GeneProfile geneProfileMock2;
     @Mock
-    private Experiment experimentMock;
+    private BaselineExperiment experimentMock;
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
 

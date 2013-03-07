@@ -27,11 +27,7 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.InvalidQueryException;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.Factor;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.model.caches.ExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
@@ -39,7 +35,6 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Set;
-import java.util.SortedSet;
 
 public abstract class GeneProfilesInputStreamCommand<T> {
     protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
