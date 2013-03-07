@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.differential;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 
 import java.util.Iterator;
@@ -18,5 +19,14 @@ public class AssayGroup implements Iterable<String>{
         return accessions.iterator();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return Objects.equal(this.getClass(), other.getClass())
+                && Objects.equal(this.accessions, ((AssayGroup) other).accessions);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(accessions);
+    }
 }

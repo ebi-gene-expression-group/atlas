@@ -61,9 +61,6 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     @Override
     public boolean equals(Object other) {
-        if (getClass() != other.getClass()) {
-            return false;
-        }
         return Objects.equal(this.getClass(), other.getClass())
                 && Objects.equal(this.type, ((Factor) other).type)
                 && Objects.equal(this.value, ((Factor) other).value);

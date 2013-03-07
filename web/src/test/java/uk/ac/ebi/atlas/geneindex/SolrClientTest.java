@@ -39,15 +39,6 @@ public class SolrClientTest {
 
     private SolrClient subject;
 
-    private String jsonSearchResponse;
-    private String jsonAutocompleteResponse;
-
-    @Before
-    public void loadTestData() throws IOException {
-        jsonSearchResponse = Files.readTextFileFromClasspath(this.getClass(), "solrSearchResponse.json");
-        jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
-    }
-
     @Before
     public void initSubject() {
         subject = new SolrClient(mock(RestTemplate.class), mock(SolrQueryService.class));
@@ -81,6 +72,5 @@ public class SolrClientTest {
         assertThat(subject.areQuotesMatching("hello \" boy"), is(false));
         assertThat(subject.areQuotesMatching("hello \" boy \""), is(true));
     }
-
 
 }

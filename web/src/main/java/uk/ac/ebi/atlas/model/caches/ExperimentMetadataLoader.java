@@ -107,6 +107,7 @@ public abstract class ExperimentMetadataLoader extends CacheLoader<String, Exper
         Collection<ExperimentRun> experimentRuns = mageTabLoader.getProcessedExperimentRuns();
 
         return experimentBuilder.forSpecies(getSpecies(mageTabLoader))
+                .withAccession(experimentAccession)
                 .withDescription(experimentName)
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
                 .withDefaultFilterFactors(defaultFilterFactors)

@@ -46,17 +46,18 @@ public class ConfigurationTrader {
     private String contrastsPathTemplate;
 
     public ExperimentFactorsConfiguration getFactorsConfiguration(String experimentAccession) {
-        return new ExperimentFactorsConfiguration(forAccession(experimentalFactorsPathTemplate, experimentAccession), experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(experimentalFactorsPathTemplate, experimentAccession);
+        return new ExperimentFactorsConfiguration(xmlConfiguration);
     }
 
     public ContrastsConfiguration getContrastsConfiguration(String experimentAccession) {
 
-        XMLConfiguration xmlConfiguration = forAccession(contrastsPathTemplate, experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(contrastsPathTemplate, experimentAccession);
         xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
-        return new ContrastsConfiguration(xmlConfiguration, experimentAccession);
+        return new ContrastsConfiguration(xmlConfiguration);
     }
 
-    private XMLConfiguration forAccession(String pathTemplate, String experimentAccession) {
+    private XMLConfiguration getXmlConfiguration(String pathTemplate, String experimentAccession) {
         String path = MessageFormat.format(pathTemplate, experimentAccession);
         Path fileSystemPath = FileSystems.getDefault().getPath(path);
         try {

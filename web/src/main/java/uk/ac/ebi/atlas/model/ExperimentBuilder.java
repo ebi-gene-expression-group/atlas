@@ -48,6 +48,7 @@ public class ExperimentBuilder {
     private Set<String> menuFilterFactorTypes;
     private ExperimentalFactorsBuilder experimentalFactorsBuilder;
     private Map<String, String> factorNamesByType;
+    private String experimentAccession;
 
     @Inject
     ExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -113,9 +114,16 @@ public class ExperimentBuilder {
                 .withFactorNamesByType(factorNamesByType)
                 .create();
 
+        if (StringUtils.isBlank(displayName)){
+            displayName = experimentAccession;
+        }
 
         return new Experiment(experimentalFactors, experimentRuns, description, displayName, species, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
     }
 
 
+    public ExperimentBuilder withAccession(String experimentAccession) {
+        this.experimentAccession = experimentAccession;
+        return this;
+    }
 }

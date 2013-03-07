@@ -34,21 +34,13 @@ import java.util.Set;
 public class ExperimentFactorsConfiguration {
 
     private XMLConfiguration config;
-    private String experimentAccession;
 
-    public ExperimentFactorsConfiguration(XMLConfiguration config, String experimentAccession) {
+    public ExperimentFactorsConfiguration(XMLConfiguration config) {
         this.config = config;
-        this.experimentAccession = experimentAccession;
     }
 
     public String getDisplayNameForExperiment() {
-
-         String displayName = config.getString("landingPageDisplayName");
-        if (StringUtils.isNotBlank(displayName)) {
-            return displayName;
-        }
-        return experimentAccession;
-
+        return config.getString("landingPageDisplayName");
     }
 
     public Set<Factor> getDefaultFilterFactors() {

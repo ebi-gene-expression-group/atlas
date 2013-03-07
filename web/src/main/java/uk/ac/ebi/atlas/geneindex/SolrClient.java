@@ -57,7 +57,6 @@ public class SolrClient {
 
     private RestTemplate restTemplate;
 
-
     private final SolrQueryService solrQueryService;
 
     @Inject
