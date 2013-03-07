@@ -72,23 +72,23 @@
             ],
             [
                 "collation",
-                "autocomplete_genename:\"mus\" AND species:\"mus musculus\""
+                "\"mus\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                "autocomplete_genename:\"mus81\" AND species:\"mus musculus\""
+                "\"mus81\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                "autocomplete_genename:\"musculus\" AND species:\"mus musculus\""
+                "\"musculus\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                "autocomplete_genename:\"musk\" AND species:\"mus musculus\""
+                "\"musk\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                "autocomplete_genename:\"mustn1\" AND species:\"mus musculus\""
+                "\"mustn1\" AND species:\"mus musculus\""
             ]
         ]
     },

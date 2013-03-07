@@ -43,8 +43,17 @@ public class SolrQueryService {
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
-    @Value("#{configuration['index.identifier.types']}")
+    @Value("#{configuration['index.types.name']}")
+    private String namePropertyTypes;
+
+    @Value("#{configuration['index.types.synonym']}")
+    private String synonymPropertyTypes;
+
+    @Value("#{configuration['index.types.identifier']}")
     private String identifierPropertyTypes;
+
+    @Value("#{configuration['index.types.description']}")
+    private String descriptionPropertyTypes;
 
     private HttpSolrServer solrServer;
 
@@ -62,12 +71,33 @@ public class SolrQueryService {
         return getSolrResultsForQuery(queryString, "identifier", -1);
     }
 
-    public List<String> getGeneIdSuggestions(String geneName, String species) throws SolrServerException {
+    public List<String> getGeneIdSuggestionsInName(String geneName, String species) throws SolrServerException {
 
-        String queryString = buildCompositeIdentifierQuery(geneName, species);
+        String[] propertyTypes = namePropertyTypes.trim().split(",");
 
-        return getSolrResultsForQuery(queryString, "property", 15);
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+
+        return getSolrResultsForQuery(queryString, "property_lower", 15);
     }
+
+    public List<String> getGeneIdSuggestionsInSynonym(String geneName, String species) throws SolrServerException {
+
+        String[] propertyTypes = synonymPropertyTypes.trim().split(",");
+
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+
+        return getSolrResultsForQuery(queryString, "property_lower", 15);
+    }
+
+    public List<String> getGeneIdSuggestionsInIdentifier(String geneName, String species) throws SolrServerException {
+
+        String[] propertyTypes = identifierPropertyTypes.trim().split(",");
+
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+
+        return getSolrResultsForQuery(queryString, "property_lower", 15);
+    }
+
 
     private List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) throws SolrServerException {
         SolrQuery solrQuery = buildSolrQuery(queryString, resultField, limitResults);
@@ -97,8 +127,7 @@ public class SolrQueryService {
 
     }
 
-    private String buildCompositeIdentifierQuery(String geneName, String species) {
-        String[] propertyTypes = identifierPropertyTypes.trim().split(",");
+    private String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("property_edgengram:\"");

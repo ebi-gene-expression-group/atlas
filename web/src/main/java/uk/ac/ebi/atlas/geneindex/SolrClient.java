@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,20 +38,14 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Named
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("\\W");
-
-    private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
-
-    private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={conf}{query} " +
-            "AND species:\"{organism}\"&start=0&rows=100000&fl=identifier&wt=json";
-
-    private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q=autocomplete_genename:\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w\\d ]");
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
@@ -60,7 +53,6 @@ public class SolrClient {
     private String serverURL;
 
     private RestTemplate restTemplate;
-
 
     private final SolrQueryService solrQueryService;
 
@@ -72,7 +64,7 @@ public class SolrClient {
 
     public Set<String> findGeneIds(String searchText, String species) {
 
-        String geneQuery = buildQueryAllTextString(searchText);
+        String geneQuery = buildQueryAllTextString(customEscape(searchText));
 
         try {
             return toUppercase(solrQueryService.getGeneIds(geneQuery, species));
@@ -83,41 +75,52 @@ public class SolrClient {
         return Collections.EMPTY_SET;
     }
 
-    public List<String> findGeneIdSuggestions(String geneName, String species) {
+    public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
         try {
-            return solrQueryService.getGeneIdSuggestions(customEscape(geneName), species);
+            return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
         } catch (SolrServerException e) {
-            LOGGER.error("<findGeneIfSuggestions> error querying solr service", e);
+            LOGGER.error("<findGeneIdSuggestionsInName> error querying solr service", e);
         }
 
         return Collections.EMPTY_LIST;
     }
 
+    public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInSynonym> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+    public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInIdentifier> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+
     public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
 
-        /* Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
+        Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
 
         if (notSpellCheckableMatcher.find()) {
             return Collections.EMPTY_LIST;
-        }*/
+        }
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, customEscape(multiTermToken), species);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
 
         return extractCollations(jsonString);
     }
-
-    List<String> removeSpeciesTerms(String species, List<String> collations) {
-        Set<String> speciesTerms = Sets.newHashSet(species.toLowerCase().split(" "));
-
-        for (Iterator iterator = collations.iterator(); iterator.hasNext(); ) {
-            if (speciesTerms.contains(iterator.next())) {
-                iterator.remove();
-            }
-        }
-        return collations;
-    }
-
 
     JsonElement extractSuggestionsElement(String jsonString) {
         JsonObject spellCheckObject = new JsonParser().parse(jsonString).getAsJsonObject().getAsJsonObject("spellcheck");
@@ -189,7 +192,7 @@ public class SolrClient {
         if (!areQuotesMatching(searchText)) {
             searchText = searchText + "\"";
         }
-        stringBuilder.append(customEscape(searchText));
+        stringBuilder.append(searchText);
         stringBuilder.append(")");
 
         return stringBuilder.toString();
