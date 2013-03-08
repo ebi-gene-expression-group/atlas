@@ -52,7 +52,7 @@ public abstract class TsvInputStream<T extends Iterable<?>> implements ObjectInp
 
     @Override
     public T readNext() {
-        T geneProfile;
+        T iterableProfile;
 
         do {
             String[] values = readCsvLine();
@@ -60,11 +60,11 @@ public abstract class TsvInputStream<T extends Iterable<?>> implements ObjectInp
             if (values == null) {
                 return null;
             }
-            geneProfile = buildObjectFromTsvValues(values);
+            iterableProfile = buildObjectFromTsvValues(values);
 
-        } while (geneProfile == null);
+        } while (iterableProfile == null);
 
-        return geneProfile;
+        return iterableProfile;
 
     }
 
