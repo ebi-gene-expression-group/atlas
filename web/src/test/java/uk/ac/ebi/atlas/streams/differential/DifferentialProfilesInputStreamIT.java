@@ -94,18 +94,13 @@ public class DifferentialProfilesInputStreamIT {
 
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
-        DifferentialProfile geneProfile;
 
-        for (int i = 0; i < 3; i++) {
-            //given
-            geneProfile = subject.readNext();
-            //then
-            assertThat(geneProfile, is(notNullValue()));
+        long countProfiles = 0;
+        while(subject.readNext() != null){
+            ++countProfiles;
         }
-        //given
-        geneProfile = subject.readNext();
-        //then
-        assertThat(geneProfile, is(nullValue()));
+
+        assertThat(countProfiles, is(24869L));
     }
 
 

@@ -50,9 +50,10 @@ public class GeneProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String GENE_ID_1 = "ENST00000000233";
-    private static final String GENE_ID_2 = "ENST00000000412";
-    private static final String GENE_ID_3 = "ENST00000000442";
+    private static final String GENE_ID_1 = "ENSG00000127720";
+    private static final String GENE_ID_2 = "ENSG00000244656";
+    private static final String GENE_ID_3 = "ENSG00000224440";
+    private static final String GENE_ID_6 = "ENSG00000266468";
 
     @Inject
     private TsvInputStreamBuilder geneInputStreamBuilder;
@@ -89,7 +90,7 @@ public class GeneProfilesInputStreamIT {
         GeneProfile geneProfile = subject.readNext();
         //then
         assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
-        assertThat(geneProfile.getSpecificity(), is(1));
+        assertThat(geneProfile.getSpecificity(), is(15));
         assertThat(geneProfile.iterator().hasNext(), is(true));
         //ToDo: GeneProfile needs a getter for Expressions
 
@@ -97,45 +98,41 @@ public class GeneProfilesInputStreamIT {
         geneProfile = subject.readNext();
         //then
         assertThat(geneProfile.getGeneId(), is(GENE_ID_2));
-        assertThat(geneProfile.getSpecificity(), is(3));
+        assertThat(geneProfile.getSpecificity(), is(1));
 
         geneProfile = subject.readNext();
 
         assertThat(geneProfile.getGeneId(), is(GENE_ID_3));
-        assertThat(geneProfile.getSpecificity(), is(2));
+        assertThat(geneProfile.getSpecificity(), is(1));
     }
 
 
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
-        GeneProfile geneProfile;
-
-        for (int i = 0; i < 3; i++) {
-            //given
-            geneProfile = subject.readNext();
-            //then
-            assertThat(geneProfile, is(notNullValue()));
+        long countProfiles = 0;
+        while(subject.readNext() != null){
+            ++countProfiles;
         }
-        //given
-        geneProfile = subject.readNext();
-        //then
-        assertThat(geneProfile, is(nullValue()));
+
+        assertThat(countProfiles, is(268L));
     }
 
     @Test
     public void setCutoffChangesSpecificity() throws IOException {
 
-        requestPreferences.setCutoff(20D);
+        requestPreferences.setCutoff(4D);
 
         //when
-        subject.readNext();
         GeneProfile geneProfile = subject.readNext();
+        //specificity that was 15 when cutoff was 0.5d now is 2
+        assertThat(geneProfile.getSpecificity(), is(1));
 
-        //then specificity of second gene should change
-        assertThat(geneProfile.getSpecificity(), is(2));
+        //then
+        subject.readNext();
+        subject.readNext();
 
-        //then third gene is not created since it has no expressions higher than cutoff.
-        assertThat(subject.readNext(), is(nullValue()));
+        //and next gene popping up after the third becomes the sixth, because 4th and 5th have lowern than 4D specificity.
+        assertThat(subject.readNext().getGeneId(), is(GENE_ID_6));
 
     }
 

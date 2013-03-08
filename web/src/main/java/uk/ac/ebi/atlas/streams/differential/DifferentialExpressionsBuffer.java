@@ -138,7 +138,7 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
         @Override
         public DifferentialExpressionsBuffer create() {
 
-            checkState(orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
+            checkState(!orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
 
             return new DifferentialExpressionsBuffer(orderedContrasts);
 
