@@ -150,7 +150,7 @@ public class SolrClientIT {
 
         //"mitochondrial enco
         List<String> properties = subject.findGenePropertySuggestions("mitochondrial enco", HOMO_SAPIENS_SPECIES);
-        assertThat(properties, contains("mitochondrially encoded"));
+        assertThat(properties, hasItems("mitochondrially encoded"));
 
     }
 
