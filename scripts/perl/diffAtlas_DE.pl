@@ -19,8 +19,6 @@ use warnings;
 use File::Basename;
 
 
-# flush after every print instead of every newline
-$| = 1;
 
 # assumes R scripts directory is in PATH
 my $mvaScript = "diffAtlas_mvaPlot.R";

@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
 # diffAtlas_DE_limma.R
 # Microarray differential expression statistics computation for the
 # Differential Atlas.
