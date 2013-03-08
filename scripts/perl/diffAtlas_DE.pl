@@ -277,7 +277,7 @@ sub readEreapConf {
 		elsif($line =~ /^mapper=(.*)/) { $mapper = $1; }
 		elsif($line =~ /^quant_method=(.*)/) { $qMethod = $1; }
 		elsif($line =~ /^de_method=(.*)/) { $deMethod = $1; }
-		elsif($line =~ /^#Contrasts/) { $inContrasts++; }
+		elsif($line =~ /^#\s*Contrasts/) { $inContrasts++; }
 		elsif($inContrasts && $line !~ /^contrasts/) {
 
 			$numContrasts++;
