@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.InvalidQueryException;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
-import uk.ac.ebi.atlas.streams.TsvInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.streams.baseline.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
@@ -39,7 +39,7 @@ import java.util.Set;
 public abstract class GeneProfilesInputStreamCommand<T> {
     protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
 
-    private TsvInputStreamBuilder tsvInputStreamBuilder;
+    private InputStreamFactory inputStreamFactory;
 
     private RequestContext requestContext;
 
@@ -48,8 +48,8 @@ public abstract class GeneProfilesInputStreamCommand<T> {
     //ToDo: verify if the following @Inject can be injected in the constructor of the abstract class
 
     @Inject
-    protected void setTsvInputStreamBuilder(TsvInputStreamBuilder tsvInputStreamBuilder) {
-        this.tsvInputStreamBuilder = tsvInputStreamBuilder;
+    protected void setInputStreamFactory(InputStreamFactory inputStreamFactory) {
+        this.inputStreamFactory = inputStreamFactory;
     }
 
     @Inject
@@ -80,7 +80,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
             }
         }
 
-        ObjectInputStream<GeneProfile> geneProfileInputStream = tsvInputStreamBuilder.createGeneProfileInputStream(experimentAccession);
+        ObjectInputStream<GeneProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experimentAccession);
 
         try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 

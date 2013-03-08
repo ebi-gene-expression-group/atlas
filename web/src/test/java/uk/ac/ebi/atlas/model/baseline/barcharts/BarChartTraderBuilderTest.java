@@ -35,7 +35,7 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.TsvInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import java.util.*;
 
@@ -77,7 +77,7 @@ public class BarChartTraderBuilderTest {
     private BaselineExperimentsCache experimentsCacheMock;
 
     @Mock
-    private TsvInputStreamBuilder tsvInputStreamBuilder;
+    private InputStreamFactory inputStreamFactory;
 
     @Mock
     private CutoffScale cutoffScale;
@@ -120,9 +120,9 @@ public class BarChartTraderBuilderTest {
         when(inputStream.readNext()).thenReturn(GENE_PROFILE_1).thenReturn(GENE_PROFILE_2).thenReturn(null);
 
         //mock stream builder
-        when(tsvInputStreamBuilder.createCompleteGeneProfileInputStream(anyString())).thenReturn(inputStream);
+        when(inputStreamFactory.createCompleteGeneProfileInputStream(anyString())).thenReturn(inputStream);
 
-        subject = new BitIndexBuilder(tsvInputStreamBuilder, cutoffScale);
+        subject = new BitIndexBuilder(inputStreamFactory, cutoffScale);
 
     }
 

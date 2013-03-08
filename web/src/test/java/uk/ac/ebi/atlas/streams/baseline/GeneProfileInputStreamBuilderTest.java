@@ -52,7 +52,7 @@
 //    private InputStream inputStreamMock;
 //
 //    @Mock
-//    private BaselineExpressionsBuffer.TsvInputStreamBuilder expressionsBufferBuilderMock;
+//    private BaselineExpressionsBuffer.InputStreamFactory expressionsBufferBuilderMock;
 //
 //    @Mock
 //    private BaselineExpressionsBuffer expressionsBufferMock;
@@ -60,7 +60,7 @@
 //
 //    private String[] headersMock = new String[]{"", "header_value_1", "header_value_2"};
 //
-//    private GeneProfilesInputStream.TsvInputStreamBuilder subject;
+//    private GeneProfilesInputStream.InputStreamFactory subject;
 //
 //    @Before
 //    public void initSubject() throws IOException {
@@ -73,7 +73,7 @@
 //
 //
 //        subject = new GeneProfilesInputStream
-//                .TsvInputStreamBuilder(expressionsBufferBuilderMock, null)
+//                .InputStreamFactory(expressionsBufferBuilderMock, null)
 //                .forExperiment("AN_EXPERIMENT", inputStreamMock);
 //    }
 //

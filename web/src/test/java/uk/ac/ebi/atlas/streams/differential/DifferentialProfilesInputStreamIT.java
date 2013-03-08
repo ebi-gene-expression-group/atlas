@@ -30,12 +30,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.streams.TsvInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -52,43 +54,39 @@ public class DifferentialProfilesInputStreamIT {
     private static final String GENE_ID_3 = "ENSMUSG00000084215";
 
     @Inject
-    private TsvInputStreamBuilder geneInputStreamBuilder;
-
-    @Inject
-    private DifferentialExperimentsCache experimentsCache;
+    private InputStreamFactory inputStreamFactory;
 
     private DifferentialProfilesInputStream subject;
 
-    RequestPreferences requestPreferences = new RequestPreferences();
-
     @Before
     public void initSubject() throws Exception {
-        requestPreferences.setCutoff(0.5d);
-        requestPreferences.setQueryFactorType("ORGANISM_PART");
-
-        DifferentialExperiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-
-        subject = geneInputStreamBuilder.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
-
+        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
     }
 
     @Test
     public void readNextShouldReturnNextExpression() throws IOException {
         //given
-        DifferentialProfile geneProfile = subject.readNext();
+        DifferentialProfile differentialProfile = subject.readNext();
         //then
-        assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
-        assertThat(geneProfile.iterator().hasNext(), is(true));
-        //ToDo: GeneProfile needs a getter for Expressions
+        assertThat(differentialProfile.getGeneId(), is(GENE_ID_1));
+        Iterator<DifferentialExpression> expressionsIterator = differentialProfile.iterator();
+        DifferentialExpression firstExpression = expressionsIterator.next();
+        assertThat(firstExpression.getContrast().getId(), is("g1_g2"));
+        assertThat(firstExpression.getFoldChange(), is(0.474360080385946D));
+        //and there are no more expressions
+        assertThat(expressionsIterator.hasNext(), is(false));
 
-        //given we poll twice more
-        geneProfile = subject.readNext();
+        //given we poll again
+        differentialProfile = subject.readNext();
         //then
-        assertThat(geneProfile.getGeneId(), is(GENE_ID_2));
+        assertThat(differentialProfile.getGeneId(), is(GENE_ID_2));
+        assertThat(differentialProfile.iterator().next().getFoldChange(), is(-0.0177584280774704));
 
-        geneProfile = subject.readNext();
+        differentialProfile = subject.readNext();
 
-        assertThat(geneProfile.getGeneId(), is(GENE_ID_3));
+        //given we poll again
+        assertThat(differentialProfile.getGeneId(), is(GENE_ID_3));
+        assertThat(differentialProfile.iterator().next().getFoldChange(), is(1.74803957316317));
     }
 
 

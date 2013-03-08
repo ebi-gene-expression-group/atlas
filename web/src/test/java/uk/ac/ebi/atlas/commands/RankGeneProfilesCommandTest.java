@@ -35,7 +35,7 @@ import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.TsvInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class RankGeneProfilesCommandTest {
     private static final String GENE_QUERY = "A GENE QUERY";
 
     @Mock
-    private TsvInputStreamBuilder tsvInputStreamBuilderMock;
+    private InputStreamFactory inputStreamFactoryMock;
 
     @Mock
     private SolrClient solrClientMock;
@@ -102,11 +102,11 @@ public class RankGeneProfilesCommandTest {
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
-        when(tsvInputStreamBuilderMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
+        when(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
 
         subject = new RankGeneProfilesCommand();
         subject.setSolrClient(solrClientMock);
-        subject.setTsvInputStreamBuilder(tsvInputStreamBuilderMock);
+        subject.setInputStreamFactory(inputStreamFactoryMock);
 
         subject.setRequestContext(requestContextMock);
 
@@ -117,14 +117,14 @@ public class RankGeneProfilesCommandTest {
         //when
         subject.apply(EXPERIMENT_ACCESSION);
         //then
-        verify(tsvInputStreamBuilderMock).createGeneProfileInputStream(EXPERIMENT_ACCESSION);
+        verify(inputStreamFactoryMock).createGeneProfileInputStream(EXPERIMENT_ACCESSION);
     }
 
 
     @Test
     public void givenAStreamWithLessExpressionsThanRankSizeTheCommandShouldReturnAllTheExpressions() throws Exception {
         //given
-        given(tsvInputStreamBuilderMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).willReturn(smallInputStream);
+        given(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).willReturn(smallInputStream);
         //when
         List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
 
@@ -140,7 +140,7 @@ public class RankGeneProfilesCommandTest {
         //given
         given(requestContextMock.getHeatmapMatrixSize()).willReturn(3);
         //and
-        when(tsvInputStreamBuilderMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
+        when(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
 
 
         //when

@@ -49,9 +49,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named("geneProfilesInputStreamBuilder")
 @Scope("prototype")
-public class TsvInputStreamBuilder {
+public class InputStreamFactory {
 
-    private static final Logger logger = Logger.getLogger(TsvInputStreamBuilder.class);
+    private static final Logger logger = Logger.getLogger(InputStreamFactory.class);
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineDataFileUrlTemplate;
@@ -65,7 +65,7 @@ public class TsvInputStreamBuilder {
 
 
     @Inject
-    public TsvInputStreamBuilder(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder, DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder, GeneProfile.Builder geneProfileBuilder) {
+    public InputStreamFactory(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder, DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder, GeneProfile.Builder geneProfileBuilder) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.differentialExpressionsBufferBuilder = differentialExpressionsBufferBuilder;
         this.geneProfileBuilder = geneProfileBuilder;

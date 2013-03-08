@@ -33,7 +33,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.TsvInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
@@ -56,13 +56,13 @@ public class GeneProfilesInputStreamIT {
     private static final String GENE_ID_6 = "ENSG00000266468";
 
     @Inject
-    private TsvInputStreamBuilder geneInputStreamBuilder;
+    private InputStreamFactory inputStreamFactory;
 
     @Inject
     private FilterParameters filterParameters;
 
     @Inject
-    private BaselineExperimentsCache experimentsCache;
+    private BaselineExperimentsCache baselineExperimentsCache;
 
     private ObjectInputStream<GeneProfile> subject;
 
@@ -73,14 +73,14 @@ public class GeneProfilesInputStreamIT {
         requestPreferences.setCutoff(0.5d);
         requestPreferences.setQueryFactorType("ORGANISM_PART");
 
-        BaselineExperiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         filterParameters.setRequestPreferences(requestPreferences);
         filterParameters.setFilteredBySpecies("homo");
         filterParameters.setSelectedFilterFactors(Collections.EMPTY_SET);
         filterParameters.setSelectedQueryFactors(Collections.EMPTY_SET);
         filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getAllFactors());
 
-        subject = geneInputStreamBuilder.createGeneProfileInputStream(EXPERIMENT_ACCESSION);
+        subject = inputStreamFactory.createGeneProfileInputStream(EXPERIMENT_ACCESSION);
 
     }
 
@@ -92,7 +92,6 @@ public class GeneProfilesInputStreamIT {
         assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
         assertThat(geneProfile.getSpecificity(), is(15));
         assertThat(geneProfile.iterator().hasNext(), is(true));
-        //ToDo: GeneProfile needs a getter for Expressions
 
         //given we poll twice more
         geneProfile = subject.readNext();
