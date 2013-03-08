@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.streams;
 
-public interface TsvRowBufferBuilder<T extends TsvRowBuffer> {
+public interface TsvRowBufferBuilder<T extends TsvRowBuffer<?>> {
 
     public TsvRowBufferBuilder forExperiment(String experimentAccession);
 

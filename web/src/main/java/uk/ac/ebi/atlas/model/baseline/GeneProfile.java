@@ -52,11 +52,6 @@ public class GeneProfile extends GeneExpressions {
     GeneProfile() {
     }
 
-    @Override
-    public void addExpression(BaselineExpression expression) {
-        throw new UnsupportedOperationException("Please use the builder!");
-    }
-
     protected GeneProfile add(BaselineExpression expression, String queryFactorType) {
 
         updateProfileExpression(expression.getLevel());
@@ -87,7 +82,7 @@ public class GeneProfile extends GeneExpressions {
     }
 
     @Override
-    public Iterator<BaselineExpression> iterator() {
+    public Iterator<BaselineExpression>  iterator() {
         return expressions.values().iterator();
     }
 

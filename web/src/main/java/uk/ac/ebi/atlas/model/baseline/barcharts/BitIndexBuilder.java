@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
-import uk.ac.ebi.atlas.streams.baseline.GeneProfileInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.TsvInputStreamBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,11 +47,11 @@ public class BitIndexBuilder {
 
     private CutoffScale cutoffScale;
 
-    private GeneProfileInputStreamBuilder geneProfilesInputStreamBuilder;
+    private TsvInputStreamBuilder geneProfilesInputStreamBuilder;
 
 
     @Inject
-    public BitIndexBuilder(GeneProfileInputStreamBuilder geneProfilesInputStreamBuilder
+    public BitIndexBuilder(TsvInputStreamBuilder geneProfilesInputStreamBuilder
             , CutoffScale cutoffScale) {
         this.cutoffScale = cutoffScale;
         this.geneProfilesInputStreamBuilder = geneProfilesInputStreamBuilder;
@@ -60,7 +60,7 @@ public class BitIndexBuilder {
     public BitIndexBuilder forExperiment(String experimentAccession) {
 
         try (ObjectInputStream<GeneExpressions> inputStream =
-                     geneProfilesInputStreamBuilder.forExperiment(experimentAccession).createCompleteGeneProfileInputStream()) {
+                     geneProfilesInputStreamBuilder.createCompleteGeneProfileInputStream(experimentAccession)) {
 
             populateGeneExpressionIndexes(inputStream);
 

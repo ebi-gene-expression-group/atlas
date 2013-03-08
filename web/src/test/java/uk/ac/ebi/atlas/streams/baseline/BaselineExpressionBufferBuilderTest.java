@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExpressionBufferBuilderTest {
+public class BaselineExpressionBufferBuilderTest {
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
     private static final String SPECIE = "homo sapiens";

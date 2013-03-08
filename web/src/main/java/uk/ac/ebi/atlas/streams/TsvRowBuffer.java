@@ -30,6 +30,9 @@ import static com.google.common.base.Preconditions.checkState;
 
 //ToDo: maybe it is possible to push up here more logic if I introduce a second generic argument for the type of objects that are in cyclic Iterator (FactorGroup / Contrast)
 public abstract class TsvRowBuffer<T> {
+
+    public static final int GENE_ID_COLUMN = 0;
+
     protected Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
     public TsvRowBuffer reload(String... values) {

@@ -30,7 +30,13 @@ import java.util.Map;
 
 public class DifferentialProfile implements Iterable<DifferentialExpression>{
 
+    private String geneId;
+
     private Map<Contrast, DifferentialExpression> differentialExpressions = Maps.newHashMap();
+
+    public DifferentialProfile(String geneId) {
+        this.geneId = geneId;
+    }
 
     public double getDifferentialExpression(Contrast contrast){
         return differentialExpressions.get(contrast).getPValue();
@@ -39,6 +45,10 @@ public class DifferentialProfile implements Iterable<DifferentialExpression>{
     public DifferentialProfile addExpression(DifferentialExpression expression){
         this.differentialExpressions.put(expression.getContrast(), expression);
         return this;
+    }
+
+    public String getGeneId() {
+        return geneId;
     }
 
     @Override

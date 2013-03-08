@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class GeneExpressionsInputStream extends TsvInputStream<GeneExpressions> {
 
-    protected GeneExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsBuffer.Builder expressionsBufferBuilder) {
+    public GeneExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsBuffer.Builder expressionsBufferBuilder) {
         super(csvReader, experimentAccession, expressionsBufferBuilder);
     }
 

@@ -53,8 +53,6 @@ public class BaselineExpressionsBuffer extends TsvRowBuffer<BaselineExpression> 
 
     private Iterator<FactorGroup> expectedFactorGroups;
 
-    public static final int GENE_ID_COLUMN = 0;
-
     protected BaselineExpressionsBuffer(List<FactorGroup> orderedFactorGroups) {
         this.expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }

@@ -56,10 +56,12 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
     }
 
     public DifferentialExpression poll() {
-        //ToDo: maybe we don't need poll here, the tsv structure is more complex than the one we have for baseline experiments
         String pValueString = differentialExpressionLevelsBuffer.poll();
+        if (pValueString == null) {
+            return null;
+        }
         String foldChangeString = differentialExpressionLevelsBuffer.poll();
-
+        checkState(foldChangeString != null, "missing fold change column in the analytics file");
         double pValue = parseDouble(pValueString);
         double foldChange = parseDouble(foldChangeString);
 

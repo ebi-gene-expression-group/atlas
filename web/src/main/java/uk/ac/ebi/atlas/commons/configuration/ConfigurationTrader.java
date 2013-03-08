@@ -42,7 +42,7 @@ public class ConfigurationTrader {
     @Value("#{configuration['experiment.factors.path.template']}")
     private String experimentalFactorsPathTemplate;
 
-    @Value("#{configuration['experiment.contrasts.path.template']}")
+    @Value("#{configuration['diff.experiment.contrasts.path.template']}")
     private String contrastsPathTemplate;
 
     public ExperimentFactorsConfiguration getFactorsConfiguration(String experimentAccession) {

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.baseline;
+package uk.ac.ebi.atlas.streams.differential;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,17 +28,14 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.impl.FilterParameters;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.streams.TsvInputStreamBuilder;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -46,24 +43,21 @@ import static org.hamcrest.Matchers.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class GeneProfilesInputStreamIT {
+public class DifferentialProfilesInputStreamIT {
 
-    public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    public static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
 
-    private static final String GENE_ID_1 = "ENST00000000233";
-    private static final String GENE_ID_2 = "ENST00000000412";
-    private static final String GENE_ID_3 = "ENST00000000442";
+    private static final String GENE_ID_1 = "ENSMUSG00000030105";
+    private static final String GENE_ID_2 = "ENSMUSG00000042428";
+    private static final String GENE_ID_3 = "ENSMUSG00000084215";
 
     @Inject
     private TsvInputStreamBuilder geneInputStreamBuilder;
 
     @Inject
-    private FilterParameters filterParameters;
+    private DifferentialExperimentsCache experimentsCache;
 
-    @Inject
-    private BaselineExperimentsCache experimentsCache;
-
-    private ObjectInputStream<GeneProfile> subject;
+    private DifferentialProfilesInputStream subject;
 
     RequestPreferences requestPreferences = new RequestPreferences();
 
@@ -72,24 +66,18 @@ public class GeneProfilesInputStreamIT {
         requestPreferences.setCutoff(0.5d);
         requestPreferences.setQueryFactorType("ORGANISM_PART");
 
-        BaselineExperiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        filterParameters.setRequestPreferences(requestPreferences);
-        filterParameters.setFilteredBySpecies("homo");
-        filterParameters.setSelectedFilterFactors(Collections.EMPTY_SET);
-        filterParameters.setSelectedQueryFactors(Collections.EMPTY_SET);
-        filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getAllFactors());
+        DifferentialExperiment experiment = experimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
-        subject = geneInputStreamBuilder.createGeneProfileInputStream(EXPERIMENT_ACCESSION);
+        subject = geneInputStreamBuilder.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
 
     }
 
     @Test
     public void readNextShouldReturnNextExpression() throws IOException {
         //given
-        GeneProfile geneProfile = subject.readNext();
+        DifferentialProfile geneProfile = subject.readNext();
         //then
         assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
-        assertThat(geneProfile.getSpecificity(), is(1));
         assertThat(geneProfile.iterator().hasNext(), is(true));
         //ToDo: GeneProfile needs a getter for Expressions
 
@@ -97,18 +85,16 @@ public class GeneProfilesInputStreamIT {
         geneProfile = subject.readNext();
         //then
         assertThat(geneProfile.getGeneId(), is(GENE_ID_2));
-        assertThat(geneProfile.getSpecificity(), is(3));
 
         geneProfile = subject.readNext();
 
         assertThat(geneProfile.getGeneId(), is(GENE_ID_3));
-        assertThat(geneProfile.getSpecificity(), is(2));
     }
 
 
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
-        GeneProfile geneProfile;
+        DifferentialProfile geneProfile;
 
         for (int i = 0; i < 3; i++) {
             //given
@@ -122,38 +108,5 @@ public class GeneProfilesInputStreamIT {
         assertThat(geneProfile, is(nullValue()));
     }
 
-    @Test
-    public void setCutoffChangesSpecificity() throws IOException {
-
-        requestPreferences.setCutoff(20D);
-
-        //when
-        subject.readNext();
-        GeneProfile geneProfile = subject.readNext();
-
-        //then specificity of second gene should change
-        assertThat(geneProfile.getSpecificity(), is(2));
-
-        //then third gene is not created since it has no expressions higher than cutoff.
-        assertThat(subject.readNext(), is(nullValue()));
-
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void givenTheReaderHasBeenClosedReadNextShouldThrowIllegalStateException() throws Exception {
-        //given
-        subject.close();
-        //when
-        subject.readNext();
-    }
-
-
-    @Test
-    public void closingTwiceShouldNotThrowException() throws Exception {
-        //given
-        subject.close();
-        //when
-        subject.close();
-    }
 
 }
