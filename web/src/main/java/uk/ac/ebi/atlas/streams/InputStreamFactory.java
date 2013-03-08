@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer;
 import uk.ac.ebi.atlas.streams.baseline.GeneExpressionsInputStream;
@@ -89,7 +88,7 @@ public class InputStreamFactory {
         return new GeneProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, geneProfileBuilder);
     }
 
-    public ObjectInputStream<GeneExpressions> createCompleteGeneProfileInputStream(String experimentAccession) {
+    public GeneExpressionsInputStream createGeneExpressionsInputStream(String experimentAccession) {
         CSVReader csvReader = buildCsvReader(experimentAccession, baselineDataFileUrlTemplate);
         return new GeneExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
     }

@@ -68,8 +68,7 @@ public class GeneProfileBuilderTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneProfile.Builder(requestContextMock, geneNamesProviderMock,
-                geneExpressionPreconditionMock, geneProfilePreconditionMock);
+        subject = new GeneProfile.Builder(requestContextMock, geneExpressionPreconditionMock, geneProfilePreconditionMock);
 
         when(requestContextMock.getCutoff()).thenReturn(0d);
         when(requestContextMock.isSpecific()).thenReturn(true);

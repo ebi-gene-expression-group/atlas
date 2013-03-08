@@ -66,7 +66,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder(requestContextMock, geneNamesProviderMock,
+            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder(requestContextMock,
                     geneExpressionPreconditionMock, geneProfilePreconditionMock);
             geneProfileBuilder.forGeneId("" + i);
 

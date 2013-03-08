@@ -24,18 +24,18 @@ package uk.ac.ebi.atlas.model.differential;
 
 
 import com.google.common.collect.Maps;
+import uk.ac.ebi.atlas.model.AbstractGeneProfile;
 
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.Map;
 
-public class DifferentialProfile implements Iterable<DifferentialExpression>{
+public class DifferentialProfile extends AbstractGeneProfile<DifferentialExpression>{
 
-    private String geneId;
 
     private Map<Contrast, DifferentialExpression> differentialExpressions = Maps.newHashMap();
 
     public DifferentialProfile(String geneId) {
-        this.geneId = geneId;
+        super(geneId);
     }
 
     public double getDifferentialExpression(Contrast contrast){
@@ -47,12 +47,8 @@ public class DifferentialProfile implements Iterable<DifferentialExpression>{
         return this;
     }
 
-    public String getGeneId() {
-        return geneId;
-    }
-
     @Override
-    public Iterator<DifferentialExpression> iterator() {
-        return differentialExpressions.values().iterator();
+    protected Collection<DifferentialExpression> getExpressions() {
+        return differentialExpressions.values();
     }
 }

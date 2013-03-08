@@ -47,7 +47,7 @@
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                             <fmt:param value="${geneProfile.geneId}"/>
                         </fmt:message>
-                        <a href='${genePageURL}' target='_blank'>${geneProfile.geneName}</a>
+                        <a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile.geneId)}</a>
                     </display:column>
 
                     <c:forEach var="factorValue" items="${allQueryFactors}">

@@ -26,6 +26,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -45,10 +46,12 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     private CSVWriter csvWriter;
 
     private NumberUtils numberUtils;
+    private GeneNamesProvider geneNamesProvider;
 
     @Inject
-    protected WriteGeneProfilesCommand(NumberUtils numberUtils) {
+    protected WriteGeneProfilesCommand(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
         this.numberUtils = numberUtils;
+        this.geneNamesProvider = geneNamesProvider;
     }
 
     @Override
@@ -86,7 +89,8 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         for (Factor factor : factors) {
             expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(factor));
         }
-        return buildCsvRow(new String[]{geneProfile.getGeneName(), geneProfile.getGeneId()}, expressionLevels);
+        String geneId = geneProfile.getGeneId();
+        return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), geneId}, expressionLevels);
     }
 
     protected String[] buildCsvRow(String[] rowHeaders, String[] values) {

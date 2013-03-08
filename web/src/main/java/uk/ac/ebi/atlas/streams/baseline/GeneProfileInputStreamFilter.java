@@ -51,7 +51,7 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
             @Override
             public boolean apply(GeneProfile profile) {
 
-                boolean checkGene = checkGeneId(profile.getGeneId(), profile.getGeneName());
+                boolean checkGene = checkGeneId(profile.getGeneId());
                 return checkGene && (CollectionUtils.isEmpty(queryFactors) || hasTheRightExpressionProfile(profile));
             }
 
@@ -62,10 +62,9 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
 
     }
 
-    private boolean checkGeneId(String geneId, String geneName) {
+    private boolean checkGeneId(String geneId) {
         return CollectionUtils.isEmpty(uppercaseGeneIDs)
-                || uppercaseGeneIDs.contains(geneId.toUpperCase())
-                || (geneName != null && uppercaseGeneIDs.contains(geneName.toUpperCase()));
+                || uppercaseGeneIDs.contains(geneId.toUpperCase());
     }
 
 }

@@ -26,30 +26,28 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
+import uk.ac.ebi.atlas.model.AbstractGeneProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-public class GeneProfile extends GeneExpressions {
-
-    private String geneId;
-
-    private GeneNamesProvider geneNamesProvider;
+public class GeneProfile extends AbstractGeneProfile<BaselineExpression> {
 
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
     private Map<Factor, BaselineExpression> expressions = new HashMap<>();
 
-    GeneProfile() {
+
+    public GeneProfile(String geneId) {
+        super(geneId);
     }
 
     protected GeneProfile add(BaselineExpression expression, String queryFactorType) {
@@ -60,30 +58,8 @@ public class GeneProfile extends GeneExpressions {
         return this;
     }
 
-    protected GeneProfile setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
-        this.geneNamesProvider = geneNamesProvider;
-        return this;
-    }
-
-    public String getGeneId() {
-        return geneId;
-    }
-
-    protected void setGeneId(String geneId) {
-        this.geneId = geneId;
-    }
-
     public int getSpecificity() {
         return expressions.values().size();
-    }
-
-    public boolean isEmpty() {
-        return expressions.isEmpty();
-    }
-
-    @Override
-    public Iterator<BaselineExpression>  iterator() {
-        return expressions.values().iterator();
     }
 
     public double getMaxExpressionLevel() {
@@ -126,20 +102,14 @@ public class GeneProfile extends GeneExpressions {
         return expression == null ? 0 : expression.getLevel();
     }
 
-    //we decided to lazy load rather then have an attribute because
-    // not always the name is used
-    public String getGeneName() {
-        if (geneNamesProvider != null) {
-            return geneNamesProvider.getGeneName(geneId);
-        }
-        return null;
+    @Override
+    protected Collection<BaselineExpression> getExpressions() {
+        return expressions.values();
     }
 
     @Named("geneProfileBuilder")
     @Scope("prototype")
     public static class Builder {
-
-        private GeneNamesProvider geneNamesProvider;
 
         private GeneProfile geneProfile;
 
@@ -150,11 +120,9 @@ public class GeneProfile extends GeneExpressions {
         private RequestContext requestContext;
 
         @Inject
-        protected Builder(RequestContext requestContext, GeneNamesProvider geneNamesProvider,
-                          GeneExpressionPrecondition geneExpressionPrecondition,
+        protected Builder(RequestContext requestContext, GeneExpressionPrecondition geneExpressionPrecondition,
                           GeneProfilePrecondition geneProfilePrecondition) {
             this.requestContext = requestContext;
-            this.geneNamesProvider = geneNamesProvider;
             this.geneExpressionPrecondition = geneExpressionPrecondition;
             this.geneProfilePrecondition = geneProfilePrecondition;
         }
@@ -170,9 +138,7 @@ public class GeneProfile extends GeneExpressions {
         }
 
         public Builder forGeneId(String geneId) {
-            this.geneProfile = new GeneProfile();
-            geneProfile.setGeneNamesProvider(geneNamesProvider);
-            geneProfile.setGeneId(geneId);
+            this.geneProfile = new GeneProfile(geneId);
             initPreconditions();
 
             return this;

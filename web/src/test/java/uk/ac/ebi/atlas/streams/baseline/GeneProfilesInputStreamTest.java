@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AbstractGeneProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
@@ -128,7 +129,7 @@ public class GeneProfilesInputStreamTest {
         //and
         given(csvReaderMock.readNext()).willReturn(null);
         //when
-        GeneProfile geneProfile = subject.readNext();
+        AbstractGeneProfile geneProfile = subject.readNext();
         //then
         verify(csvReaderMock, times(2)).readNext();
         //and

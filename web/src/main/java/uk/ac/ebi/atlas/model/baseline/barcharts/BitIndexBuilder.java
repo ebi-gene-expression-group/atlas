@@ -60,7 +60,7 @@ public class BitIndexBuilder {
     public BitIndexBuilder forExperiment(String experimentAccession) {
 
         try (ObjectInputStream<GeneExpressions> inputStream =
-                     geneProfilesInputStreamBuilder.createCompleteGeneProfileInputStream(experimentAccession)) {
+                     geneProfilesInputStreamBuilder.createGeneExpressionsInputStream(experimentAccession)) {
 
             populateGeneExpressionIndexes(inputStream);
 

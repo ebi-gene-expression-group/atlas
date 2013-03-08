@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -36,6 +35,7 @@ import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
+import uk.ac.ebi.atlas.streams.baseline.GeneExpressionsInputStream;
 
 import java.util.*;
 
@@ -86,7 +86,6 @@ public class BarChartTraderBuilderTest {
     private FactorGroup factorHashSet2;
     private FactorGroup factorHashSet3;
 
-    private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
     public static final GeneExpressions GENE_PROFILE_1 = mock(GeneExpressions.class);
     public static final GeneExpressions GENE_PROFILE_2 = mock(GeneExpressions.class);
 
@@ -116,11 +115,11 @@ public class BarChartTraderBuilderTest {
         initGeneProfile2();
 
         //Init input stream
-        ObjectInputStream<GeneExpressions> inputStream = mock(ObjectInputStream.class);
+        GeneExpressionsInputStream inputStream = mock(GeneExpressionsInputStream.class);
         when(inputStream.readNext()).thenReturn(GENE_PROFILE_1).thenReturn(GENE_PROFILE_2).thenReturn(null);
 
         //mock stream builder
-        when(inputStreamFactory.createCompleteGeneProfileInputStream(anyString())).thenReturn(inputStream);
+        when(inputStreamFactory.createGeneExpressionsInputStream(anyString())).thenReturn(inputStream);
 
         subject = new BitIndexBuilder(inputStreamFactory, cutoffScale);
 

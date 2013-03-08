@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -62,6 +63,8 @@ public class WriteGeneProfilesCommandTest {
     private BaselineExperiment experimentMock;
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
+    @Mock
+    private GeneNamesProvider geneNamesProviderMock;
 
     private WriteGeneProfilesCommand subject;
 
@@ -82,22 +85,22 @@ public class WriteGeneProfilesCommandTest {
                 .thenReturn(geneProfileMock2)
                 .thenReturn(null);
 
-        when(geneProfileMock1.getGeneName()).thenReturn("GN1");
         when(geneProfileMock1.getGeneId()).thenReturn("GI1");
         when(geneProfileMock1.getExpressionLevel(createFactorValue("brain"))).thenReturn(0.11d);
         when(geneProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
 
-        when(geneProfileMock2.getGeneName()).thenReturn("GN2");
         when(geneProfileMock2.getGeneId()).thenReturn("GI2");
         when(geneProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
         when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
+        when(geneNamesProviderMock.getGeneName("GI1")).thenReturn("GN1");
+        when(geneNamesProviderMock.getGeneName("GI2")).thenReturn("GN2");
     }
 
     @Before
     public void initSubject() throws Exception {
-        subject = new WriteGeneProfilesCommand(new NumberUtils());
+        subject = new WriteGeneProfilesCommand(new NumberUtils(), geneNamesProviderMock);
         subject.setRequestContext(requestContextMock);
         subject.setResponseWriter(printWriterMock);
     }

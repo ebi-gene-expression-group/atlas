@@ -46,7 +46,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
     public static final String STOP_WATCH = "stopWatch";
 
-    private BaselineExperimentsCache experimentsCache;
+    private BaselineExperimentsCache baselineExperimentsCache;
     private ApplicationProperties applicationProperties;
 
     public ExperimentInterceptor() {
@@ -58,8 +58,8 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Inject
-    public void setExperimentsCache(BaselineExperimentsCache experimentsCache) {
-        this.experimentsCache = experimentsCache;
+    public void setBaselineExperimentsCache(BaselineExperimentsCache baselineExperimentsCache) {
+        this.baselineExperimentsCache = baselineExperimentsCache;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         String experimentAccession = (String) request.getAttribute(EXPERIMENT_ACCESSION);
 
-        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
         Set<String> allSpecies = experiment.getSpecies();
 

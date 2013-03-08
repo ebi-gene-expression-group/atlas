@@ -66,24 +66,10 @@ public class GeneProfileTest {
     public void setUp() throws Exception {
         when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
 
-        subject = new GeneProfile();
+        subject = new GeneProfile(GENE_ID);
 
         subject.add(expression_1,QUERY_FACTOR_TYPE).add(expression_2,QUERY_FACTOR_TYPE).add(expression_3,QUERY_FACTOR_TYPE);
 
-        //geneProfileBuilder = new GeneProfile.Builder().forGeneId(GENE_ID);
-
-        //GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
-        //when(geneExpressionPreconditionMock.apply(any(BaselineExpression.class))).thenReturn(true);
-
-        //geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
-/*
-        subject = geneProfileBuilder
-                .addExpression(expression_1)
-                .addExpression(expression_2)
-                .addExpression(expression_3)
-                .create();
-*/
-        subject.setGeneNamesProvider(geneNamesProviderMock);
     }
 
     @Test

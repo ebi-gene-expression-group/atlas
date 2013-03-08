@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.baseline;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 
