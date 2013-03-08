@@ -22,10 +22,9 @@ use File::Basename;
 # flush after every print instead of every newline
 $| = 1;
 
-# Locations and names of R scripts
-my $Rdir = "../R/";
-my $mvaScript = $Rdir."diffAtlas_mvaPlot.R";
-my $limmaScript = $Rdir."diffAtlas_DE_limma.R";
+# assumes R scripts directory is in PATH
+my $mvaScript = "diffAtlas_mvaPlot.R";
+my $limmaScript = "diffAtlas_DE_limma.R";
 
 
 # Get commandline arguments
@@ -434,7 +433,7 @@ sub getDEresults {
 			print "Computing differential expression statistics for contrast \"", $atlasName, "\"...";
 
 			# Run limma script
-			my $R_limmaOutput = `Rscript $limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
+			my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
 	
 
 			# Check for errors.
@@ -496,7 +495,7 @@ sub makeMvaPlot {
 
 	print "Making MvA plot...";
 	# Create MvA plot with MvA plot script
-	my $R_mvaOutput = `Rscript $mvaScript $plotDataTempFile \"$atlasName\" $plotFile $techType 2>&1`;
+	my $R_mvaOutput = `$mvaScript $plotDataTempFile \"$atlasName\" $plotFile $techType 2>&1`;
 	if($R_mvaOutput =~ /error/i) {
 
 		# Report the error but don't worry about dying as we can live
