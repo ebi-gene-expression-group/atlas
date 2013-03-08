@@ -23,7 +23,7 @@ use File::Basename;
 $| = 1;
 
 # Locations and names of R scripts
-my $Rdir = "~/Atlas/git/atlas/scripts/R/";
+my $Rdir = "../R/";
 my $mvaScript = $Rdir."diffAtlas_mvaPlot.R";
 my $limmaScript = $Rdir."diffAtlas_DE_limma.R";
 
