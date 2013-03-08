@@ -85,10 +85,7 @@ diffAtlas_mvaPlot <<- function(plotDataFile, contrastName, plotFile, techType) {
 	# on lime. The trouble with this is that for some reason it creates a file
 	# called "Rplots.pdf". Also, it doesn't make as nice an image as on my
 	# MacBook (lower res).
-	#--------------------------------------------------
-	# ggsave(mvaPlot, file=plotFile, type="cairo")
-	#-------------------------------------------------- 
-	ggsave(mvaPlot, file=plotFile)
+	ggsave(mvaPlot, file=plotFile, type="cairo")
 }
 
 
