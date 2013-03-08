@@ -43,7 +43,8 @@ my $techType = ($ereapConfig ? "rnaseq" : "microarray");
 #          ->{ "mvaScript" } = "../R/diffAtlas_mvaPlot.R"
 #          ->{ "nameRoot" } = "E-MTAB-1066_A-AFFY-35"
 # "normExpr' and "limmaScript" only needed for microarray.
-my $fileHash->{ "mvaScript" } = $mvaScript;
+my $fileHash = {};
+$fileHash->{ "mvaScript" } = $mvaScript;
 if($techType eq "microarray") {
 	$fileHash->{ "limmaScript" } = $limmaScript;
 	$fileHash->{ "normExpr" } = $normExpr;
