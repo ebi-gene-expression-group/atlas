@@ -29,7 +29,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,7 +89,7 @@ public class ExperimentTest {
         when(experimentalFactorsBuilderMock.withFactorNamesByType(anyMap())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
 
-        subject = new ExperimentBuilder(experimentalFactorsBuilderMock)
+        subject = new BaselineExperimentBuilder(experimentalFactorsBuilderMock)
                 .forSpecies(Sets.newHashSet(SPECIE))
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(ORGANISM_PART)

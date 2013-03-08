@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Sets;
@@ -8,7 +30,10 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
@@ -22,17 +47,17 @@ public class GeneProfile extends GeneExpressions {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    private SortedMap<Factor, Expression> expressions = new TreeMap<>();
+    private Map<Factor, BaselineExpression> expressions = new HashMap<>();
 
     GeneProfile() {
     }
 
     @Override
-    public void addExpression(Expression expression) {
+    public void addExpression(BaselineExpression expression) {
         throw new UnsupportedOperationException("Please use the builder!");
     }
 
-    protected GeneProfile add(Expression expression, String queryFactorType) {
+    protected GeneProfile add(BaselineExpression expression, String queryFactorType) {
 
         updateProfileExpression(expression.getLevel());
 
@@ -62,7 +87,7 @@ public class GeneProfile extends GeneExpressions {
     }
 
     @Override
-    public Iterator<Expression> iterator() {
+    public Iterator<BaselineExpression> iterator() {
         return expressions.values().iterator();
     }
 
@@ -85,7 +110,7 @@ public class GeneProfile extends GeneExpressions {
 
     public boolean isExpressedOnAnyOf(Set<Factor> factors) {
         checkArgument(CollectionUtils.isNotEmpty(factors));
-        return Sets.intersection(this.getAllFactors(), factors).size() > 0;
+        return Sets.intersection(this.expressions.keySet(), factors).size() > 0;
     }
 
     public double getAverageExpressionLevelOn(Set<Factor> factors) {
@@ -101,12 +126,8 @@ public class GeneProfile extends GeneExpressions {
         return expressionLevel / factors.size();
     }
 
-    public Set<Factor> getAllFactors() {
-        return Collections.unmodifiableSet(this.expressions.keySet());
-    }
-
     public double getExpressionLevel(Factor factor) {
-        Expression expression = expressions.get(factor);
+        BaselineExpression expression = expressions.get(factor);
         return expression == null ? 0 : expression.getLevel();
     }
 
@@ -162,7 +183,7 @@ public class GeneProfile extends GeneExpressions {
             return this;
         }
 
-        public Builder addExpression(Expression expression) {
+        public Builder addExpression(BaselineExpression expression) {
             checkState(geneProfile != null, "Please invoke forGeneID before create");
             if (geneExpressionPrecondition.apply(expression)) {
                 geneProfile.add(expression, requestContext.getQueryFactorType());

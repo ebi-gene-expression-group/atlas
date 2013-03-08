@@ -35,7 +35,7 @@ import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.baseline.GeneProfileInputStreamBuilder;
 
 import java.util.List;
 

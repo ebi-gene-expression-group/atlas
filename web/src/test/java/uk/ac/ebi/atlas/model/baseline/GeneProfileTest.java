@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 //ToDo: this test is too complex. It's not really unit test on GeneProfile because it tests all the chain of builder , preconditions , etc....
 
 package uk.ac.ebi.atlas.model.baseline;
@@ -9,15 +31,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.model.baseline.Expression;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
-import uk.ac.ebi.atlas.model.impl.FactorSet;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.HashSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
@@ -35,9 +53,9 @@ public class GeneProfileTest {
     private Factor factor2 = new Factor(QUERY_FACTOR_TYPE, "trunk");
     private Factor factor3 = new Factor(QUERY_FACTOR_TYPE, "head");
 
-    private Expression expression_1 = new Expression(2.2D, new FactorSet().add(factor1));
-    private Expression expression_2 = new Expression(3D, new FactorSet().add(factor2));
-    private Expression expression_3 = new Expression(3.001D, new FactorSet().add(factor3));
+    private BaselineExpression expression_1 = new BaselineExpression(2.2D, new FactorSet().add(factor1));
+    private BaselineExpression expression_2 = new BaselineExpression(3D, new FactorSet().add(factor2));
+    private BaselineExpression expression_3 = new BaselineExpression(3.001D, new FactorSet().add(factor3));
 
     private GeneProfile subject;
 
@@ -55,7 +73,7 @@ public class GeneProfileTest {
         //geneProfileBuilder = new GeneProfile.Builder().forGeneId(GENE_ID);
 
         //GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
-        //when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);
+        //when(geneExpressionPreconditionMock.apply(any(BaselineExpression.class))).thenReturn(true);
 
         //geneProfileBuilder.setGeneExpressionPrecondition(geneExpressionPreconditionMock);
 /*
@@ -71,11 +89,6 @@ public class GeneProfileTest {
     @Test
     public void testGetGeneSpecificity() throws Exception {
         assertThat(subject.getSpecificity(), is(3));
-    }
-
-    @Test
-    public void getAllFactorValuesTest() {
-        assertThat(subject.getAllFactors(), containsInAnyOrder(factor1, factor2, factor3));
     }
 
     @Test

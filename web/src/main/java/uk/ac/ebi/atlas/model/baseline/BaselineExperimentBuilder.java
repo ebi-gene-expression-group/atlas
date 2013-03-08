@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ExperimentBuilder {
+public class BaselineExperimentBuilder {
 
     private Set<String> species;
     private String description;
@@ -51,51 +51,51 @@ public class ExperimentBuilder {
     private String experimentAccession;
 
     @Inject
-    ExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
+    BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
         this.experimentalFactorsBuilder = experimentalFactorsBuilder;
     }
 
-    public ExperimentBuilder forSpecies(Set<String> species) {
+    public BaselineExperimentBuilder forSpecies(Set<String> species) {
         this.species = species;
         return this;
     }
 
-    public ExperimentBuilder withDescription(String description) {
+    public BaselineExperimentBuilder withDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public ExperimentBuilder withExperimentRuns(Collection<ExperimentRun> experimentRuns) {
+    public BaselineExperimentBuilder withExperimentRuns(Collection<ExperimentRun> experimentRuns) {
         this.experimentRuns = experimentRuns;
         return this;
     }
 
-    public ExperimentBuilder withDefaultQueryType(String defaultQueryType) {
+    public BaselineExperimentBuilder withDefaultQueryType(String defaultQueryType) {
         this.defaultQueryType = defaultQueryType;
         return this;
     }
 
-    public ExperimentBuilder withDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
+    public BaselineExperimentBuilder withDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
         this.defaultFilterFactors = defaultFilterFactors;
         return this;
     }
 
-    public ExperimentBuilder withExtraInfo(boolean hasExtraInfoFile) {
+    public BaselineExperimentBuilder withExtraInfo(boolean hasExtraInfoFile) {
         this.hasExtraInfoFile = hasExtraInfoFile;
         return this;
     }
 
-    public ExperimentBuilder withMenuFilterFactorTypes(Set<String> menuFilterFactorTypes) {
+    public BaselineExperimentBuilder withMenuFilterFactorTypes(Set<String> menuFilterFactorTypes) {
         this.menuFilterFactorTypes = menuFilterFactorTypes;
         return this;
     }
 
-    public ExperimentBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
+    public BaselineExperimentBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
         this.factorNamesByType = factorNamesByType;
         return this;
     }
 
-    public ExperimentBuilder withDisplayName(String displayName) {
+    public BaselineExperimentBuilder withDisplayName(String displayName) {
         this.displayName = displayName;
         return this;
     }
@@ -123,7 +123,7 @@ public class ExperimentBuilder {
     }
 
 
-    public ExperimentBuilder withAccession(String experimentAccession) {
+    public BaselineExperimentBuilder withAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
     }

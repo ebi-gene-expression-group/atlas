@@ -26,7 +26,6 @@ import com.google.common.cache.CacheLoader;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.model.baseline.ExperimentBuilder;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
@@ -71,7 +70,5 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
             return "Error connecting to ArrayExpress!";
         }
     }
-
-    protected abstract ExperimentBuilder createExperimentBuilder();
 
 }

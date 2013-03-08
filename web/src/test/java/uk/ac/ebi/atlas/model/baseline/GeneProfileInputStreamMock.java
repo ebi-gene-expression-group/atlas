@@ -25,8 +25,7 @@ package uk.ac.ebi.atlas.model.baseline;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.model.baseline.*;
-import uk.ac.ebi.atlas.model.impl.FactorSet;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,7 +41,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
 
     //This will create a stream containing n Gene Profiles
     //Each Gene Profile will contain an increasing number of Expressions (1, 2, 3, ....)
-    //For each Gene Profile, each Expression will have an increasing Expression Level value (1, 2, 3, ...)
+    //For each Gene Profile, each BaselineExpression will have an increasing BaselineExpression Level value (1, 2, 3, ...)
     //To make the test more complete the profiles are streamed in an order that is the reverse
     //of the final order required by the user stories, profiles with higher selectivity will be streamed last.
     public GeneProfileInputStreamMock(int streamSize) {
@@ -55,7 +54,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
         GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
         when(geneExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(geneExpressionPreconditionMock);
         when(geneExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(geneExpressionPreconditionMock);
-        when(geneExpressionPreconditionMock.apply(any(Expression.class))).thenReturn(true);
+        when(geneExpressionPreconditionMock.apply(any(BaselineExpression.class))).thenReturn(true);
 
         GeneProfilePrecondition geneProfilePreconditionMock = mock(GeneProfilePrecondition.class);
         when(geneProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
@@ -73,7 +72,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
 
             for (int j = 0; j < i; j++) {
 
-                Expression expressionMock = mock(Expression.class);
+                BaselineExpression expressionMock = mock(BaselineExpression.class);
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
                 Factor factor = new Factor("ORGANISM_PART", "factor_value" + (j + 1));

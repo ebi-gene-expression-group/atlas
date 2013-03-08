@@ -20,44 +20,33 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams;
-
+package uk.ac.ebi.atlas.streams.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
-import uk.ac.ebi.atlas.model.baseline.Expression;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
+import uk.ac.ebi.atlas.streams.TsvInputStream;
 
-import static uk.ac.ebi.atlas.streams.ExpressionsBuffer.GENE_ID_COLUMN;
+public class GeneExpressionsInputStream extends TsvInputStream<GeneExpressions> {
 
-public class GeneProfilesInputStream extends AbstractGeneExpressionsInputStream<GeneProfile> {
-
-    private GeneProfile.Builder geneProfileBuilder;
-
-
-    public GeneProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , ExpressionsBuffer.Builder expressionsBufferBuilder
-            , GeneProfile.Builder geneProfileBuilder) {
-
+    protected GeneExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsBuffer.Builder expressionsBufferBuilder) {
         super(csvReader, experimentAccession, expressionsBufferBuilder);
-        this.geneProfileBuilder = geneProfileBuilder;
     }
 
-    protected GeneProfile buildGeneProfile(String[] values) {
+    @Override
+    protected GeneExpressions buildObjectFromTsvValues(String[] values) {
 
-        geneProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
-
+        GeneExpressions geneProfile = new GeneExpressions();
         //we need to reload because the first line can only be used to extract the gene ID
-        getExpressionsBuffer().reload(values);
+        getTsvRowBuffer().reload(values);
 
-        Expression expression;
+        BaselineExpression expression;
 
-        while ((expression = getExpressionsBuffer().poll()) != null) {
+        while ((expression = (BaselineExpression)getTsvRowBuffer().poll()) != null) {
 
-            geneProfileBuilder.addExpression(expression);
+            geneProfile.addExpression(expression);
         }
 
-        return geneProfileBuilder.create();
-
+        return geneProfile;
     }
-
 }

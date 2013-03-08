@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -34,7 +34,7 @@ import java.util.Set;
 //ToDo: This class in not just "expressionPrecondition", but also container for other request parameters. Maybe we need to create "GeneProfilePrecondition" class.
 @Named
 @Scope("request")
-public class GeneExpressionPrecondition implements Predicate<Expression>, Serializable {
+public class GeneExpressionPrecondition implements Predicate<BaselineExpression>, Serializable {
 
     private double cutoff;
 
@@ -54,13 +54,13 @@ public class GeneExpressionPrecondition implements Predicate<Expression>, Serial
     }
 
     @Override
-    public boolean apply(Expression expression) {
+    public boolean apply(BaselineExpression expression) {
 
         return expression.isGreaterThan(cutoff)
                 && checkFilterFactors(expression);
     }
 
-    protected boolean checkFilterFactors(Expression expression) {
+    protected boolean checkFilterFactors(BaselineExpression expression) {
         return (CollectionUtils.isEmpty(filterFactors)
         || expression.containsAll(filterFactors));
     }

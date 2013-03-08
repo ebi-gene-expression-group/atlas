@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -73,7 +73,7 @@ public class ExpressionBufferBuilderTest {
     @Mock
     private BaselineExperiment experimentMock;
 
-    private ExpressionsBuffer.Builder subject;
+    private BaselineExpressionsBuffer.Builder subject;
 
 
 
@@ -106,7 +106,7 @@ public class ExpressionBufferBuilderTest {
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
 
-        subject = new ExpressionsBuffer.Builder(experimentsCacheMock);
+        subject = new BaselineExpressionsBuffer.Builder(experimentsCacheMock);
     }
 
     @Test

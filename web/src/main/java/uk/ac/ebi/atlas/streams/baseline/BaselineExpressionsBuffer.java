@@ -1,4 +1,26 @@
-package uk.ac.ebi.atlas.streams;
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -8,10 +30,12 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-import uk.ac.ebi.atlas.model.baseline.Expression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.streams.TsvRowBuffer;
+import uk.ac.ebi.atlas.streams.TsvRowBufferBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,24 +45,23 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-class ExpressionsBuffer {
+public class BaselineExpressionsBuffer extends TsvRowBuffer<BaselineExpression> {
 
-    private static final Logger logger = Logger.getLogger(ExpressionsBuffer.class);
+    private static final Logger logger = Logger.getLogger(BaselineExpressionsBuffer.class);
 
     private static final String FACTOR_NOT_FOUND = "Factor value not found for Run Accessions {0} and Experiment Accession {1}";
-
-    private Queue<String> expressionLevelsBuffer = new LinkedList<>();
 
     private Iterator<FactorGroup> expectedFactorGroups;
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected ExpressionsBuffer(List<FactorGroup> orderedFactorGroups) {
+    protected BaselineExpressionsBuffer(List<FactorGroup> orderedFactorGroups) {
         this.expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 
 
-    public Expression poll() {
+    @Override
+    public BaselineExpression poll() {
         String expressionLevelString = expressionLevelsBuffer.poll();
 
         if (expressionLevelString == null) {
@@ -46,24 +69,12 @@ class ExpressionsBuffer {
         }
         double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new Expression(expressionLevel, expectedFactorGroups.next());
+        return new BaselineExpression(expressionLevel, expectedFactorGroups.next());
     }
 
-    public ExpressionsBuffer reload(String... values) {
-        checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
-
-        expressionLevelsBuffer.clear();
-
-        Collections.addAll(this.expressionLevelsBuffer, values);
-
-        expressionLevelsBuffer.poll();
-
-        return this;
-    }
-
-    @Named("expressionsBufferBuilder")
+    @Named
     @Scope("prototype")
-    public static class Builder {
+    public static class Builder implements TsvRowBufferBuilder<BaselineExpressionsBuffer> {
 
         private String experimentAccession;
 
@@ -81,6 +92,7 @@ class ExpressionsBuffer {
 
         }
 
+        @Override
         public Builder forExperiment(String experimentAccession) {
 
             this.experimentAccession = experimentAccession;
@@ -89,6 +101,7 @@ class ExpressionsBuffer {
 
         }
 
+        @Override
         public Builder withHeaders(String... tsvFileHeaders) {
 
             logger.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
@@ -125,11 +138,12 @@ class ExpressionsBuffer {
             throw new IllegalStateException(MessageFormat.format(FACTOR_NOT_FOUND, columnHeader, experimentAccession));
         }
 
-        public ExpressionsBuffer create() {
+        @Override
+        public BaselineExpressionsBuffer create() {
 
             checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
 
-            return new ExpressionsBuffer(orderedFactorGroups);
+            return new BaselineExpressionsBuffer(orderedFactorGroups);
 
         }
 

@@ -52,10 +52,10 @@
 //    private InputStream inputStreamMock;
 //
 //    @Mock
-//    private ExpressionsBuffer.GeneProfileInputStreamBuilder expressionsBufferBuilderMock;
+//    private BaselineExpressionsBuffer.GeneProfileInputStreamBuilder expressionsBufferBuilderMock;
 //
 //    @Mock
-//    private ExpressionsBuffer expressionsBufferMock;
+//    private BaselineExpressionsBuffer expressionsBufferMock;
 //
 //
 //    private String[] headersMock = new String[]{"", "header_value_1", "header_value_2"};

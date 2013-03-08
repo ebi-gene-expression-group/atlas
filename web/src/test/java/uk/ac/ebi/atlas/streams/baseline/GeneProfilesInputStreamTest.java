@@ -1,4 +1,26 @@
-package uk.ac.ebi.atlas.streams;
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.streams.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.junit.Before;
@@ -7,8 +29,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-import uk.ac.ebi.atlas.model.baseline.Expression;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 
 import java.io.IOException;
@@ -31,10 +53,10 @@ public class GeneProfilesInputStreamTest {
     private CSVReader csvReaderMock;
 
     @Mock
-    private ExpressionsBuffer.Builder expressionsBufferBuilderMock;
+    private BaselineExpressionsBuffer.Builder expressionsBufferBuilderMock;
 
     @Mock
-    private ExpressionsBuffer expressionsBufferMock;
+    private BaselineExpressionsBuffer expressionsBufferMock;
 
     private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
 
@@ -62,7 +84,7 @@ public class GeneProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
         GeneProfile.Builder geneProfileBuilderMock = mock(GeneProfile.Builder.class);
-        when(geneProfileBuilderMock.addExpression(any(Expression.class))).thenReturn(geneProfileBuilderMock);
+        when(geneProfileBuilderMock.addExpression(any(BaselineExpression.class))).thenReturn(geneProfileBuilderMock);
 
         subject = new GeneProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);
 
@@ -71,7 +93,7 @@ public class GeneProfilesInputStreamTest {
     @Test
     public void readNextShouldPollTheBuffer() throws Exception {
 
-        Expression expression = mock(Expression.class);
+        BaselineExpression expression = mock(BaselineExpression.class);
 
         //given
         given(expressionsBufferMock.poll())

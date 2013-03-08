@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model.baseline.barcharts;
 
 import com.google.common.collect.Iterators;
@@ -7,13 +29,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
-import uk.ac.ebi.atlas.model.baseline.Expression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.model.impl.FactorSet;
-import uk.ac.ebi.atlas.streams.GeneProfileInputStreamBuilder;
+import uk.ac.ebi.atlas.streams.baseline.GeneProfileInputStreamBuilder;
 
 import java.util.*;
 
@@ -106,42 +128,42 @@ public class BarChartTraderBuilderTest {
     }
 
     private GeneExpressions initGeneProfile1() {
-        Expression expression1 = mock(Expression.class);
+        BaselineExpression expression1 = mock(BaselineExpression.class);
         when(expression1.getLevel()).thenReturn(1d);
         when(expression1.getFactorGroup()).thenReturn(factorHashSet1);
 
 
-        Expression expression2 = mock(Expression.class);
+        BaselineExpression expression2 = mock(BaselineExpression.class);
         when(expression2.getLevel()).thenReturn(2d);
         when(expression2.getFactorGroup()).thenReturn(factorHashSet2);
 
-        Expression expression3 = mock(Expression.class);
+        BaselineExpression expression3 = mock(BaselineExpression.class);
         when(expression3.getLevel()).thenReturn(0d);
         when(expression3.getFactorGroup()).thenReturn(factorHashSet3);
 
 
-        Iterator<Expression> iterator = Iterators.forArray(expression1, expression2, expression3);
+        Iterator<BaselineExpression> iterator = Iterators.forArray(expression1, expression2, expression3);
         when(GENE_PROFILE_1.iterator()).thenReturn(iterator);
         return GENE_PROFILE_1;
     }
 
 
     private GeneExpressions initGeneProfile2() {
-        Expression expression21 = mock(Expression.class);
+        BaselineExpression expression21 = mock(BaselineExpression.class);
         when(expression21.getLevel()).thenReturn(3d);
         when(expression21.getFactorGroup()).thenReturn(factorHashSet1);
 
-        Expression expression22 = mock(Expression.class);
+        BaselineExpression expression22 = mock(BaselineExpression.class);
         when(expression22.getLevel()).thenReturn(2d);
         when(expression22.getFactorGroup()).thenReturn(factorHashSet2);
 
 
-        Expression expression23 = mock(Expression.class);
+        BaselineExpression expression23 = mock(BaselineExpression.class);
         when(expression23.getLevel()).thenReturn(1d);
         when(expression23.getFactorGroup()).thenReturn(factorHashSet3);
 
 
-        Iterator<Expression> iterator2 = Iterators.forArray(expression21, expression22, expression23);
+        Iterator<BaselineExpression> iterator2 = Iterators.forArray(expression21, expression22, expression23);
         when(GENE_PROFILE_2.iterator()).thenReturn(iterator2);
         return GENE_PROFILE_2;
     }

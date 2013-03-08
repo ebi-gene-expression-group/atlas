@@ -45,7 +45,7 @@ public class Experiment implements Serializable {
     }
 
     public String getDisplayName() {
-        return StringUtils.isNotBlank(displayName) ? displayName : accession;
+        return StringUtils.isNotBlank(displayName) ? displayName : getExperimentAccession();
     }
 
     public String getDescription() {
@@ -56,7 +56,7 @@ public class Experiment implements Serializable {
         return hasExtraInfoFile;
     }
 
-    public String getAccession(){
+    public String getExperimentAccession(){
         return accession;
     }
 }

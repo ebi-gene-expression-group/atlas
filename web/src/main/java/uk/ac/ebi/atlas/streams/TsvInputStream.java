@@ -26,27 +26,26 @@ package uk.ac.ebi.atlas.streams;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.Expression;
 
 import java.io.IOException;
 
-public abstract class AbstractGeneExpressionsInputStream<T extends Iterable<Expression>> implements ObjectInputStream<T> {
+public abstract class TsvInputStream<T extends Iterable<?>> implements ObjectInputStream<T> {
 
-    private static final Logger logger = Logger.getLogger(AbstractGeneExpressionsInputStream.class);
+    private static final Logger logger = Logger.getLogger(TsvInputStream.class);
 
     private CSVReader csvReader;
 
-    private ExpressionsBuffer expressionsBuffer;
+    private TsvRowBuffer tsvRowBuffer;
 
 
-    protected AbstractGeneExpressionsInputStream(CSVReader csvReader, String experimentAccession
-            , ExpressionsBuffer.Builder expressionsBufferBuilder) {
+    protected TsvInputStream(CSVReader csvReader, String experimentAccession
+            , TsvRowBufferBuilder tsvRowBufferBuilder) {
 
         this.csvReader = csvReader;
 
         //ToDo: find a way to move this out of constructor
         String[] dataFileHeaders = readCsvLine();
-        expressionsBuffer = expressionsBufferBuilder.forExperiment(experimentAccession)
+        tsvRowBuffer = tsvRowBufferBuilder.forExperiment(experimentAccession)
                 .withHeaders(dataFileHeaders).create();
     }
 
@@ -61,7 +60,7 @@ public abstract class AbstractGeneExpressionsInputStream<T extends Iterable<Expr
             if (values == null) {
                 return null;
             }
-            geneProfile = buildGeneProfile(values);
+            geneProfile = buildObjectFromTsvValues(values);
 
         } while (geneProfile == null);
 
@@ -79,16 +78,16 @@ public abstract class AbstractGeneExpressionsInputStream<T extends Iterable<Expr
         }
     }
 
-    protected abstract T buildGeneProfile(String[] values);
+    protected abstract T buildObjectFromTsvValues(String[] values);
 
-    protected ExpressionsBuffer getExpressionsBuffer() {
-        return expressionsBuffer;
+    protected TsvRowBuffer getTsvRowBuffer() {
+        return tsvRowBuffer;
     }
 
     @Override
     public void close() throws IOException {
         csvReader.close();
-        logger.debug("<close> close invoked on GeneProfilesInputStream");
+        logger.debug("<close> close invoked on TsvInputStream");
     }
 
 }

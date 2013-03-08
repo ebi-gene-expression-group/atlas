@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.*;
-import uk.ac.ebi.atlas.model.impl.FactorSet;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.Collection;
 import java.util.HashMap;

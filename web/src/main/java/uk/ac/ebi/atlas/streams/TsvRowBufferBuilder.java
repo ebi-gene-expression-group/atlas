@@ -20,21 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+public interface TsvRowBufferBuilder<T extends TsvRowBuffer> {
 
-public class GeneExpressions implements Iterable<BaselineExpression> {
-    Set<BaselineExpression> expressions = new HashSet<>();
+    public TsvRowBufferBuilder forExperiment(String experimentAccession);
 
-    @Override
-    public Iterator<BaselineExpression> iterator() {
-        return expressions.iterator();
-    }
+    public abstract TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
 
-    public void addExpression(BaselineExpression expression) {
-        expressions.add(expression);
-    }
+    public T create();
+
 }

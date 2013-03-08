@@ -28,7 +28,7 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.configuration.ConfigurationTrader;
 import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfiguration;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ExperimentBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
@@ -66,13 +66,13 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
     }
 
     @Override
-    public BaselineExperiment load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
+    protected BaselineExperiment load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
 
         ExperimentFactorsConfiguration factorsConfig = configurationTrader.getFactorsConfiguration(experimentAccession);
 
         Set<String> processedRunAccessions = extractProcessedRunAccessions(experimentAccession);
 
-        ExperimentBuilder experimentBuilder = createExperimentBuilder();
+        BaselineExperimentBuilder experimentBuilder = createExperimentBuilder();
 
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
@@ -135,5 +135,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
         }
         return processedRunAccessions;
     }
+
+    protected abstract BaselineExperimentBuilder createExperimentBuilder();
 
 }
