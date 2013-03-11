@@ -358,6 +358,9 @@ sub getDEresults {
 
 	if($techType eq "rnaseq") {
 
+		# use to check certain values are numeric.
+		use Scalar::Util qw(looks_like_number);
+
 		print "\nCollecting DESeq results...\n";
 		
 		foreach my $assayGroupPair (keys %{ $contrastHash }) {
@@ -401,13 +404,13 @@ sub getDEresults {
 					my $adjPval = $lineSplit[$adjpvalIdx];
 					# Ensure we get numbers for the things that are supposed to
 					# be numbers (weird prob with DESeq output).
-					unless($baseMean =~ /^\d/) {
+					unless(looks_like_number($baseMean)) {
 						die "\nDid not get numeric value for baseMean:\nGene ID: $geneID\nbaseMean: $baseMean\n";
 					}
-					unless($adjPval =~ /^\d/) {
+					unless(looks_like_number($adjPval)) {
 						die "\nDid not get numeric value for adjusted p-value:\nGene ID: $geneID\nadjusted p-value: $adjPval\n";
 					}
-					unless($logFC =~ /^-?\d/ || $logFC =~ /^-?Inf/) {
+					unless(looks_like_number($logFC)) {
 						die "\nDid not get numeric value for log2FoldChange:\nGene ID: $geneID\nlog2FoldChange: $logFC\n";
 					}
 					

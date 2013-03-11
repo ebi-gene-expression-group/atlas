@@ -32,7 +32,7 @@ diffAtlas_mvaPlot <<- function(plotDataFile, contrastName, plotFile, techType) {
 	} else if(techType == "rnaseq") {
 		
 		# x-axis label different for RNA-seq data
-		xAxisLabel = "normalized counts"
+		xAxisLabel = "average normalized count"
 	}
 
 
