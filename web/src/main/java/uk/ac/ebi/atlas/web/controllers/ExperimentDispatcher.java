@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
+import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.Set;
 
 /**
@@ -71,6 +73,8 @@ import java.util.Set;
 
 @Controller
 public class ExperimentDispatcher {
+
+    private static final String TSV_FILE_EXTENSION = ".tsv";
 
     public static final String EXPERIMENT_ATTRIBUTE = "experiment";
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
@@ -126,6 +130,13 @@ public class ExperimentDispatcher {
             experiment = differentialExperimentsCache.getExperiment(experimentAccession);
         }
         return experiment;
+    }
+
+    public static String buildDownloadURL(HttpServletRequest request) {
+        //It's important that here we use the original query string, not the forwarded one
+        String originalQueryString = ((HttpServletRequest)((HttpServletRequestWrapper) request).getRequest()).getQueryString();
+        return Joiner.on("?").skipNulls()
+                .join(new String[]{request.getRequestURI() + TSV_FILE_EXTENSION, originalQueryString}).toString();
     }
 
 }

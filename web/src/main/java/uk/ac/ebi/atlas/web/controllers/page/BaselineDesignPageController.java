@@ -67,10 +67,11 @@ public class BaselineDesignPageController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=baseline"})
-    public String showGeneProfiles(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+    public String showGeneProfiles(Model model, HttpServletRequest request) throws IOException {
+        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         // read contents from file
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
+        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getExperimentAccession()));
         // delete first line with table headers
         String[] headerLine = csvLines.remove(0);
 
@@ -102,13 +103,12 @@ public class BaselineDesignPageController {
         model.addAttribute("factors", gson.toJson(factors));
         model.addAttribute("tableData", gson.toJson(csvLines));
 
-        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         // run accessions are used for highlighting
         String runAccessions = gson.toJson(experiment.getExperimentRunAccessions());
         model.addAttribute("runAccessions", runAccessions);
 
         // add general experiment attributes to model
-        model.addAttribute("experimentAccession", experimentAccession);
+        model.addAttribute("experimentAccession", experiment.getExperimentAccession());
 
         return "experiment-experiment-design";
     }

@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.InvalidQueryException;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.streams.baseline.GeneProfileInputStreamFilter;
@@ -63,7 +64,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
     }
 
     @NotNull
-    public T apply(String experimentAccession) throws GeneNotFoundException {
+    public T apply(Experiment experiment) throws GeneNotFoundException {
 
         Set<String> selectedGeneIds = null;
 
@@ -80,7 +81,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
             }
         }
 
-        ObjectInputStream<GeneProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experimentAccession);
+        ObjectInputStream<GeneProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getExperimentAccession());
 
         try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 

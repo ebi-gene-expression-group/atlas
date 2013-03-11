@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.cache.differential;
 
+import com.google.common.collect.Sets;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.configuration.ConfigurationTrader;
 import uk.ac.ebi.atlas.commons.configuration.ContrastsConfiguration;
@@ -54,7 +55,7 @@ public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialE
         Set<Contrast> contrasts = contrastsConfiguration.getContrasts();
 
         //ToDo: we need to extract species ...
-        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, Collections.EMPTY_SET);
+        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, Sets.newHashSet("Homo sapiens"));
 
     }
 }

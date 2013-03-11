@@ -58,9 +58,6 @@ public class RankGeneProfilesCommandTest {
     private SolrClient solrClientMock;
 
     @Mock
-    private BaselineExperimentsCache experimentsCacheMock;
-
-    @Mock
     private BaselineExperiment experimentMock;
 
     @Mock
@@ -90,8 +87,7 @@ public class RankGeneProfilesCommandTest {
         when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
 
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactors);
-
-        when(experimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
+        when(experimentMock.getExperimentAccession()).thenReturn(EXPERIMENT_ACCESSION);
 
         when(requestContextMock.getHeatmapMatrixSize()).thenReturn(100);
         when(requestContextMock.isSpecific()).thenReturn(true);
@@ -115,7 +111,7 @@ public class RankGeneProfilesCommandTest {
     @Test
     public void commandBuildsGeneProfileInputStream() throws GeneNotFoundException{
         //when
-        subject.apply(EXPERIMENT_ACCESSION);
+        subject.apply(experimentMock);
         //then
         verify(inputStreamFactoryMock).createGeneProfileInputStream(EXPERIMENT_ACCESSION);
     }
@@ -126,7 +122,7 @@ public class RankGeneProfilesCommandTest {
         //given
         given(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).willReturn(smallInputStream);
         //when
-        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
+        List<GeneProfile> top3Objects = subject.apply(experimentMock);
 
         //then
         assertThat(top3Objects.size(), is(1));
@@ -144,7 +140,7 @@ public class RankGeneProfilesCommandTest {
 
 
         //when
-        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
+        List<GeneProfile> top3Objects = subject.apply(experimentMock);
 
         //then
         assertThat(top3Objects.size(), is(3));
@@ -154,7 +150,7 @@ public class RankGeneProfilesCommandTest {
     @Test
     public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GeneNotFoundException{
         when(requestContextMock.getGeneQuery()).thenReturn("");
-        subject.apply(EXPERIMENT_ACCESSION);
+        subject.apply(experimentMock);
         verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
     }
 
@@ -184,7 +180,7 @@ public class RankGeneProfilesCommandTest {
         when(requestContextMock.isSpecific()).thenReturn(false);
 
         //when
-        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
+        List<GeneProfile> top3Objects = subject.apply(experimentMock);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(5));
@@ -206,7 +202,7 @@ public class RankGeneProfilesCommandTest {
     public void rankedObjectsShouldBeInDescendingOrder() throws Exception {
 
         //when
-        List<GeneProfile> top3Objects = subject.apply(EXPERIMENT_ACCESSION);
+        List<GeneProfile> top3Objects = subject.apply(experimentMock);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(1));

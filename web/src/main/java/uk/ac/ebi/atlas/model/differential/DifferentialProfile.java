@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +38,14 @@ public class DifferentialProfile extends AbstractGeneProfile<DifferentialExpress
         super(geneId);
     }
 
+    public double getExpressionLevel(Contrast contrast){
+        return differentialExpressions.get(contrast).getPValue();
+    }
+    /*
     public double getDifferentialExpression(Contrast contrast){
         return differentialExpressions.get(contrast).getPValue();
     }
-
+*/
     public DifferentialProfile addExpression(DifferentialExpression expression){
         this.differentialExpressions.put(expression.getContrast(), expression);
         return this;
