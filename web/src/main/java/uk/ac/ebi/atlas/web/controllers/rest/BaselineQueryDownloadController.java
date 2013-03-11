@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
@@ -54,7 +53,7 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
     @Inject
     public BaselineQueryDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
                                            RequestContextBuilder requestContextBuilder,
-                                           BaselineExperimentsCache experimentsCache, FilterFactorsConverter filterFactorsConverter) {
+                                           FilterFactorsConverter filterFactorsConverter) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;

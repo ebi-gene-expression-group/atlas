@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,11 +30,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.RequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -48,25 +49,23 @@ public class BaselineDesignDownloadController {
     private static final Logger logger = Logger.getLogger(BaselineDesignDownloadController.class);
 
     private ExperimentDesignTsvReader experimentDesignTsvReader;
-    private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public BaselineDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache experimentsCache) {
+    public BaselineDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader) {
         this.experimentDesignTsvReader = experimentDesignTsvReader;
-        this.experimentsCache = experimentsCache;
     }
 
-    @RequestMapping("/experiments/{experimentAccession}/experiment-design.tsv")
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=baseline"})
     public void downloadGeneProfiles(@PathVariable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+            , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // read contents from file
         List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
+        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         // get used runs from experiment
-        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
         Set<String> used = experiment.getExperimentRunAccessions();
 
         // modify header by adding new column

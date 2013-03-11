@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +32,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.web.interceptors.ExperimentInterceptor;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -92,7 +89,6 @@ public class ExperimentDispatcher {
     }
 
     @RequestMapping(value ={ "/experiments/{experimentAccession}",
-                             "/experiments/{experimentAccession}.tsv",
                              "/experiments/{experimentAccession}/*" })
     public String dispatch(HttpServletRequest request, @PathVariable String experimentAccession, Model model) {
 

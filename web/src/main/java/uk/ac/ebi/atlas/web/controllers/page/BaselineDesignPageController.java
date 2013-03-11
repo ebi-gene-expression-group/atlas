@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.model.readers.TsvReader;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
 
@@ -45,12 +46,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class BaselineDesignPageController {
 
     private final TsvReader experimentDesignTsvReader;
-    private final BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public BaselineDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache expCache) {
+    public BaselineDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader) {
         this.experimentDesignTsvReader = experimentDesignTsvReader;
-        this.experimentsCache = expCache;
     }
 
     /**
@@ -67,8 +66,8 @@ public class BaselineDesignPageController {
         return map;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = "type=baseline")
-    public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=baseline"})
+    public String showGeneProfiles(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
 
         // read contents from file
         List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
@@ -103,8 +102,8 @@ public class BaselineDesignPageController {
         model.addAttribute("factors", gson.toJson(factors));
         model.addAttribute("tableData", gson.toJson(csvLines));
 
+        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         // run accessions are used for highlighting
-        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
         String runAccessions = gson.toJson(experiment.getExperimentRunAccessions());
         model.addAttribute("runAccessions", runAccessions);
 
