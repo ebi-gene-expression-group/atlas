@@ -404,7 +404,7 @@ sub getDEresults {
 					unless($baseMean =~ /^\d/) {
 						die "\nDid not get numeric value for baseMean:\nGene ID: $geneID\nbaseMean: $baseMean\n";
 					}
-					unless($padj =~ /^\d/) {
+					unless($adjPval =~ /^\d/) {
 						die "\nDid not get numeric value for adjusted p-value:\nGene ID: $geneID\nadjusted p-value: $adjPval\n";
 					}
 					unless($logFC =~ /^-?\d/ || $logFC =~ /^-?Inf/) {
