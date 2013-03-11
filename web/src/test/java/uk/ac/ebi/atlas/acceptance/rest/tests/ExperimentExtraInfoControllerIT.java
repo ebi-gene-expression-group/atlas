@@ -34,7 +34,7 @@ public class ExperimentExtraInfoControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-26284";
 
-    private static final String END_POINT_URL = "/gxa/experiments/".concat(EXPERIMENT_ACCESSION).concat("/extra-info.png");
+    private static final String END_POINT_URL = "/gxa/external-resources/".concat(EXPERIMENT_ACCESSION).concat("/extra-info.png");
 
     private EndPoint subject = new EndPoint(END_POINT_URL);
 

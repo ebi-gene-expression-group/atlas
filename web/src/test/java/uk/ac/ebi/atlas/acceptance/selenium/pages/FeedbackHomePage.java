@@ -24,18 +24,12 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import org.openqa.selenium.WebDriver;
 
-public class ExperimentDesignFeedbackPage extends FeedbackPage {
+public class FeedbackHomePage extends FeedbackPage {
 
-    public static String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private static final String DEFAULT_PAGE_URI = "/gxa/home";
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design";
-
-    public ExperimentDesignFeedbackPage(WebDriver driver) {
+    public FeedbackHomePage(WebDriver driver) {
         super(driver);
-    }
-
-    public ExperimentDesignFeedbackPage(WebDriver driver, String httpParameters) {
-        super(driver, httpParameters);
     }
 
     @Override

@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignFeedbackPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.FeedbackHomePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,10 +31,10 @@ import static org.hamcrest.Matchers.is;
 
 public class ExperimentDesignFeedbackIT extends SeleniumFixture {
 
-    private ExperimentDesignFeedbackPage subject;
+    private FeedbackHomePage subject;
 
     public void getStartingPage() {
-        subject = new ExperimentDesignFeedbackPage(driver);
+        subject = new FeedbackHomePage(driver);
         subject.get();
     }
 

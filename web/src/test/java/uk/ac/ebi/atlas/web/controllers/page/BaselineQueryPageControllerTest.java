@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -48,6 +49,9 @@ public class BaselineQueryPageControllerTest {
 
     private static final String REQUEST_PARAMETERS = "p1=1&p2=2";
     private static final String DOWNLOAD_URL = EXPERIMENT_URL + ".tsv?" + REQUEST_PARAMETERS;
+
+    @Mock
+    private HttpServletRequestWrapper httpServletRequestWrapperMock;
 
     @Mock
     private HttpServletRequest httpServletRequestMock;
@@ -70,7 +74,8 @@ public class BaselineQueryPageControllerTest {
     @Before
     public void initSubject() throws Exception {
         //given
-        when(httpServletRequestMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
+        when(httpServletRequestWrapperMock.getRequest()).thenReturn(httpServletRequestMock);
+        when(httpServletRequestWrapperMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
 
         FilterFactorsConverter filterFactorsConverterMock = mock(FilterFactorsConverter.class);
@@ -82,7 +87,7 @@ public class BaselineQueryPageControllerTest {
     @Test
     public void buildDownloadUrl() {
         //when
-        String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
+        String downloadUrl = subject.buildDownloadURL(httpServletRequestWrapperMock);
 
         //then
         assertThat(downloadUrl, is(DOWNLOAD_URL));
@@ -94,7 +99,7 @@ public class BaselineQueryPageControllerTest {
         given(httpServletRequestMock.getQueryString()).willReturn(null);
 
         //when
-        String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
+        String downloadUrl = subject.buildDownloadURL(httpServletRequestWrapperMock);
 
         //then
         assertThat(downloadUrl, is(EXPERIMENT_URL + ".tsv"));

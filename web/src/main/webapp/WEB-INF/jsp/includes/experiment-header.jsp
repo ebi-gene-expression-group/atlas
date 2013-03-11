@@ -42,7 +42,7 @@
             <div id="experimentDescription" style="font-weight: bold;">
                 ${experimentDescription}
                 <c:if test="${hasExtraInfo}">
-                    <a id="extra-info" href="experiments/${experimentAccession}/extra-info.png">
+                    <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
                         <img alt="more information" src="/gxa/resources/images/balloon-ellipsis-icon-left.png">
                     </a>
                 </c:if>
