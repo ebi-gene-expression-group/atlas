@@ -394,9 +394,15 @@ sub getDEresults {
 					# Use indices found above to get values (gene ID is always the
 					# very first element).
 					my $geneID = $lineSplit[0];
+
 					my $baseMean = $lineSplit[$basemeanIdx];
 					my $logFC = $lineSplit[$logfcIdx];
 					my $adjPval = $lineSplit[$adjpvalIdx];
+					# Ensure we get numbers for the things that are supposed to
+					# be numbers (weird prob with DESeq output).
+					unless($baseMean =~ /^\d/ && $logFC =~ /^-?\d/ && $adjPval =~ /^\d/) {
+						die "\nDid not get numeric value for all values expected to be numeric (baseMean, log2FoldChange, padj)\n";
+					}
 					
 					# Add to hash for file of all contrasts' results.
 					$diffExpRes->{ $geneID }->{ $assayGroupPair } = [ $adjPval, $logFC ];
