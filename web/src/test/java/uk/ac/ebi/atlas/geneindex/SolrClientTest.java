@@ -25,46 +25,68 @@ package uk.ac.ebi.atlas.geneindex;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.utils.Files;
 
-import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.IsNot.not;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SolrClientTest {
 
     private SolrClient subject;
 
+    @Mock
+    private RestTemplate restTemplateMock;
+
+    private String jsonAutocompleteResponse;
+
     @Before
     public void initSubject() {
-        subject = new SolrClient(mock(RestTemplate.class), mock(SolrQueryService.class));
+        jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
+        when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
+        subject = new SolrClient(restTemplateMock, mock(SolrQueryService.class));
     }
 
     @Test
-    public void toUppercaseShouldConvertAllStringsToUppercase(){
-        assertThat(subject.toUppercase(Lists.newArrayList("hEllo", "bOy")),containsInAnyOrder("HELLO", "BOY"));
+    public void toUppercaseShouldConvertAllStringsToUppercase() {
+        assertThat(subject.toUppercase(Lists.newArrayList("hEllo", "bOy")), containsInAnyOrder("HELLO", "BOY"));
     }
 
     @Test
     public void testBuildQueryAllTextString() {
         String query = "GO:0008134 \"p53 binding\"";
-        assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO\\:0008134 \"p53 binding\")"));
+        assertThat(subject.buildQueryAllTextString(query), is("(property_search:GO:0008134 \"p53 binding\")"));
 
         query = "GO:0008134 \"p53 binding";
-        assertThat(subject.buildQueryAllTextString(query), is("(alltext:GO\\:0008134 \"p53 binding)"));
+        assertThat(subject.buildQueryAllTextString(query), is("(property_search:GO:0008134 \"p53 binding)"));
     }
 
     @Test
-    public void testExtractSuggestion(){
+    public void testExtractSuggestion() {
         //given
-        String suggestion = subject.extractSuggestion("autocomplete_genename:\"musk\" AND species:\"mus musculus\"");
+        String suggestion = subject.extractSuggestion("\"musk\" AND species:\"mus musculus\"");
 
         assertThat(suggestion, is("musk"));
 
+    }
+
+    @Test
+    public void findGenePropertiesShouldReturnEmptyListWhenTermContainsNonSpellCheckableCharacters() {
+        assertThat(subject.findGenePropertySuggestions("hello > boy", "mus mus"), is(empty()));
+    }
+
+    @Test
+    public void findGenePropertiesShouldNotReturnEmptyList() {
+        assertThat(subject.findGenePropertySuggestions("p53", "mus mus"), is(not(empty())));
     }
 
 

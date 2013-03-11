@@ -22,14 +22,14 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.google.gson.*;
-import com.jayway.jsonpath.JsonPath;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -38,17 +38,14 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Named
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
-
-    private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={conf}{query} " +
-            "AND species:\"{organism}\"&start=0&rows=100000&fl=identifier&wt=json";
-
-    private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q=autocomplete_genename:\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
@@ -65,40 +62,65 @@ public class SolrClient {
         this.solrQueryService = solrQueryService;
     }
 
-    public Set<String> findGeneIds(String searchText, String species) {    
+    public Set<String> findGeneIds(String searchText, String species) {
 
-        String geneQuery = buildQueryAllTextString(searchText);
-        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, "{!lucene q.op=OR df=alltext}", geneQuery, species);
+        String geneQuery = buildQueryAllTextString(customEscape(searchText));
 
-        List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS);
-
-        return toUppercase(geneIds);
-
-    }
-
-    public List<String> findGeneNameSuggestions(String geneName, String species){
-
-        //return solrQueryService.getGeneNames(customEscape(geneName), species);
-
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, customEscape(geneName), species);
-
-        List<String> collations = extractCollations(jsonString);
-
-        return removeSpeciesTerms(species, collations);
-
-    }
-
-    List<String> removeSpeciesTerms(String species, List<String> collations) {
-        Set<String> speciesTerms = Sets.newHashSet(species.toLowerCase().split(" "));
-
-        for (Iterator iterator = collations.iterator(); iterator.hasNext(); ){
-            if(speciesTerms.contains(iterator.next())){
-                iterator.remove();
-            }
+        try {
+            return toUppercase(solrQueryService.getGeneIds(geneQuery, species));
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIds> error querying solr service", e);
         }
-        return collations;
+
+        return Collections.EMPTY_SET;
     }
 
+    public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInName> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+    public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInSynonym> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+    public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInIdentifier> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+
+    public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
+
+        Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
+
+        if (notSpellCheckableMatcher.find()) {
+            return Collections.EMPTY_LIST;
+        }
+
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
+
+        return extractCollations(jsonString);
+    }
 
     JsonElement extractSuggestionsElement(String jsonString) {
         JsonObject spellCheckObject = new JsonParser().parse(jsonString).getAsJsonObject().getAsJsonObject("spellcheck");
@@ -129,19 +151,11 @@ public class SolrClient {
     }
 
     String extractSuggestion(String collation) {
-        String normalizedCollation = StringUtils.replace(collation, "autocomplete_genename:", "");
-        return StringUtils.split(normalizedCollation, "\"")[0];
-    }
-
-    public List<String> findGenePropertySuggestions(String multiTermToken, String species){
-
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, customEscape(multiTermToken), species);
-
-        return extractCollations(jsonString);
+        return StringUtils.split(collation, "\"")[0];
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {
-        if(StringUtils.isBlank(arguments[0])){
+        if (StringUtils.isBlank(arguments[0])) {
             return "";
         }
 
@@ -174,8 +188,8 @@ public class SolrClient {
     }
 
     String buildQueryAllTextString(String searchText) {
-        StringBuilder stringBuilder = new StringBuilder("(alltext:");
-        stringBuilder.append(customEscape(searchText));
+        StringBuilder stringBuilder = new StringBuilder("(property_search:");
+        stringBuilder.append(searchText);
         stringBuilder.append(")");
 
         return stringBuilder.toString();

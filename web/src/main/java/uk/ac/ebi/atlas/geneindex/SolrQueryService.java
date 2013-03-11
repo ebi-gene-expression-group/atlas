@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,8 @@
 package uk.ac.ebi.atlas.geneindex;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
@@ -35,25 +34,75 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import java.util.List;
-import java.util.Set;
 
 @Named
 public class SolrQueryService {
 
+    private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
+
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
+
+    @Value("#{configuration['index.types.name']}")
+    private String namePropertyTypes;
+
+    @Value("#{configuration['index.types.synonym']}")
+    private String synonymPropertyTypes;
+
+    @Value("#{configuration['index.types.identifier']}")
+    private String identifierPropertyTypes;
+
+    @Value("#{configuration['index.types.description']}")
+    private String descriptionPropertyTypes;
 
     private HttpSolrServer solrServer;
 
     @PostConstruct
-    private void initServer(){
-        solrServer = new HttpSolrServer( serverURL );
+    private void initServer() {
+        solrServer = new HttpSolrServer(serverURL);
         solrServer.setMaxRetries(1); // defaults to 0.  > 1 not recommended.
         solrServer.setConnectionTimeout(2000); // 5 seconds to establish TCP
     }
 
-    public List<String> getGeneNames(String queryString) throws SolrServerException {
-        SolrQuery solrQuery = buildSolrQuery(queryString, "identifier");
+    public List<String> getGeneIds(String geneQuery, String species) throws SolrServerException {
+
+        String queryString = buildGeneQuery(geneQuery, species);
+
+        return getSolrResultsForQuery(queryString, "identifier", -1);
+    }
+
+    public List<String> getGeneIdSuggestionsInName(String geneName, String species) throws SolrServerException {
+
+        String[] propertyTypes = namePropertyTypes.trim().split(",");
+
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+
+        return getSolrResultsForQuery(queryString, "property_lower", 15);
+    }
+
+    public List<String> getGeneIdSuggestionsInSynonym(String geneName, String species) throws SolrServerException {
+
+        String[] propertyTypes = synonymPropertyTypes.trim().split(",");
+
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+
+        return getSolrResultsForQuery(queryString, "property_lower", 15);
+    }
+
+    public List<String> getGeneIdSuggestionsInIdentifier(String geneName, String species) throws SolrServerException {
+
+        String[] propertyTypes = identifierPropertyTypes.trim().split(",");
+
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+
+        return getSolrResultsForQuery(queryString, "property_lower", 15);
+    }
+
+
+    private List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) throws SolrServerException {
+        SolrQuery solrQuery = buildSolrQuery(queryString, resultField, limitResults);
+
+        LOGGER.debug("<getSolrResultsForQuery> processing solr query: " + solrQuery.toString());
 
         QueryResponse solrResponse = solrServer.query(solrQuery);
 
@@ -66,13 +115,46 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    SolrQuery buildSolrQuery(String queryString, String facedField) {
+    private String buildGeneQuery(String query, String species) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{!lucene q.op=OR df=property_search} ");
+        sb.append(query);
+        sb.append(" AND species:\"");
+        sb.append(species);
+        sb.append("\"&start=0&rows=100000");
+        return sb.toString();
+
+    }
+
+    private String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
+
+        StringBuilder query = new StringBuilder();
+        query.append("property_edgengram:\"");
+        query.append(geneName);
+        query.append("\" AND species:\"");
+        query.append(species);
+        query.append("\" AND (");
+        for (int i = 0; i < propertyTypes.length; i++) {
+            query.append("property_type:\"");
+            query.append(propertyTypes[i]);
+            if (i < propertyTypes.length - 1) {
+                query.append("\" OR ");
+            } else {
+                query.append("\"");
+            }
+        }
+        query.append(")");
+        return query.toString();
+    }
+
+    SolrQuery buildSolrQuery(String queryString, String facedField, int facetLimit) {
         SolrQuery solrQuery = new SolrQuery(queryString);
 
         solrQuery.addFacetField(facedField);
         solrQuery.setRows(0);
         solrQuery.setFacet(true);
-        solrQuery.setFacetLimit(-1);
+        solrQuery.setFacetLimit(facetLimit);
         solrQuery.setFacetMinCount(1);
         return solrQuery;
     }

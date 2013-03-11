@@ -54,10 +54,22 @@ public class AutocompleteController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species") String species) {
+        if (query.trim().length() == 0) {
+            return "";
+        }
+
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
 
         if (!StringUtils.containsWhitespace(query)) {
-            suggestions.addAll(solrClient.findGeneNameSuggestions(query, species));
+            suggestions.addAll(solrClient.findGeneIdSuggestionsInName(query, species));
+        }
+
+        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+            suggestions.addAll(solrClient.findGeneIdSuggestionsInSynonym(query, species));
+        }
+
+        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+            suggestions.addAll(solrClient.findGeneIdSuggestionsInIdentifier(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
