@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Objects;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Range;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
@@ -136,8 +137,17 @@ public class RequestPreferences {
     }
 
     public void setGeneQuery(String geneQuery) {
+        if (!areQuotesMatching(geneQuery)){
+            geneQuery = geneQuery + "\"";
+        }
         this.geneQuery = geneQuery;
     }
+
+    boolean areQuotesMatching(String searchText) {
+        int numberOfDoubelQuotes = StringUtils.countMatches(searchText, "\"");
+        return numberOfDoubelQuotes % 2 == 0;
+    }
+
 
     public String toString() {
         return Objects.toStringHelper(this.getClass())
