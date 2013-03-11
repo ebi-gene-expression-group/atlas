@@ -18,7 +18,8 @@ use warnings;
 
 use File::Basename;
 
-
+# Flush after every print not every newline
+$| = 1;
 
 # assumes R scripts directory is in PATH
 my $mvaScript = "diffAtlas_mvaPlot.R";
@@ -394,9 +395,21 @@ sub getDEresults {
 					# Use indices found above to get values (gene ID is always the
 					# very first element).
 					my $geneID = $lineSplit[0];
+
 					my $baseMean = $lineSplit[$basemeanIdx];
 					my $logFC = $lineSplit[$logfcIdx];
 					my $adjPval = $lineSplit[$adjpvalIdx];
+					# Ensure we get numbers for the things that are supposed to
+					# be numbers (weird prob with DESeq output).
+					unless($baseMean =~ /^\d/) {
+						die "\nDid not get numeric value for baseMean:\nGene ID: $geneID\nbaseMean: $baseMean\n";
+					}
+					unless($adjPval =~ /^\d/) {
+						die "\nDid not get numeric value for adjusted p-value:\nGene ID: $geneID\nadjusted p-value: $adjPval\n";
+					}
+					unless($logFC =~ /^-?\d/ || $logFC =~ /^-?Inf/) {
+						die "\nDid not get numeric value for log2FoldChange:\nGene ID: $geneID\nlog2FoldChange: $logFC\n";
+					}
 					
 					# Add to hash for file of all contrasts' results.
 					$diffExpRes->{ $geneID }->{ $assayGroupPair } = [ $adjPval, $logFC ];
