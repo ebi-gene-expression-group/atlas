@@ -37,8 +37,8 @@ public class DifferentialExperiment extends Experiment{
 
     private Map<String, Contrast> contrastsById = Maps.newHashMap();
 
-    public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile) {
-        super(accession, description, hasExtraInfoFile);
+    public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species) {
+        super(accession, description, hasExtraInfoFile, species);
         for (Contrast contrast: contrasts){
             this.contrastsById.put(contrast.getId(), contrast);
         }

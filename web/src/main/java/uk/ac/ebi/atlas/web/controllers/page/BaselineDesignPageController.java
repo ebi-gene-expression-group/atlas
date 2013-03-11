@@ -42,13 +42,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Controller
 @Scope("request")
-public class ExperimentDesignPageController {
+public class BaselineDesignPageController {
 
     private final TsvReader experimentDesignTsvReader;
     private final BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public ExperimentDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache expCache) {
+    public BaselineDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache expCache) {
         this.experimentDesignTsvReader = experimentDesignTsvReader;
         this.experimentsCache = expCache;
     }
@@ -67,7 +67,7 @@ public class ExperimentDesignPageController {
         return map;
     }
 
-    @RequestMapping("/experiments/{experimentAccession}/experiment-design")
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = "type=baseline")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
         // read contents from file

@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Set;
 
 @Named
@@ -52,7 +53,8 @@ public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialE
         ContrastsConfiguration contrastsConfiguration = configurationTrader.getContrastsConfiguration(accession);
         Set<Contrast> contrasts = contrastsConfiguration.getContrasts();
 
-        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile);
+        //ToDo: we need to extract species ...
+        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, Collections.EMPTY_SET);
 
     }
 }

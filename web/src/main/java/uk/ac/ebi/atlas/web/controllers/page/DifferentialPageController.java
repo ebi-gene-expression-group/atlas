@@ -22,52 +22,30 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import org.springframework.context.annotation.Scope;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
+import uk.ac.ebi.atlas.web.RequestPreferences;
+import uk.ac.ebi.atlas.web.interceptors.ExperimentInterceptor;
 
-import javax.inject.Inject;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
-@Scope("request")
-public class AnalysisMethodsPageController {
+public class DifferentialPageController {
 
-    private AnalysisMethodsTsvReader analysisMethodsTsvReader;
+    @RequestMapping(value = "/experiments/{experimentAccession}",
+                            params={"type=differential"})
+    public String showGeneProfiles(@PathVariable String experimentAccession
+            , @ModelAttribute("preferences") @Valid RequestPreferences preferences
+            , BindingResult result, Model model, HttpServletRequest request) {
 
-    @Inject
-    public AnalysisMethodsPageController(AnalysisMethodsTsvReader analysisMethodsTsvReader) {
-        this.analysisMethodsTsvReader = analysisMethodsTsvReader;
+
+        return "x";
     }
-
-    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")
-    public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
-
-        model.addAttribute("csvLines", analysisMethodsTsvReader.readAll(experimentAccession));
-
-        model.addAttribute("experimentAccession", experimentAccession);
-
-        return "experiment-analysis-methods";
-    }
-
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

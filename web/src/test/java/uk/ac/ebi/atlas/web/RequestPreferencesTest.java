@@ -73,4 +73,10 @@ public class RequestPreferencesTest {
         assertThat(subject.getHeatmapMatrixSize(), is(33));
     }
 
+    @Test
+    public void testMatchingDoubleQuotes(){
+        assertThat(subject.areQuotesMatching("hello \" boy"), is(false));
+        assertThat(subject.areQuotesMatching("hello \" boy \""), is(true));
+    }
+
 }

@@ -42,7 +42,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfilesPageControllerTest {
+public class BaselineQueryPageControllerTest {
 
     private static final String EXPERIMENT_URL = "http://x.y/z";
 
@@ -64,7 +64,7 @@ public class GeneProfilesPageControllerTest {
     @Mock
     private RequestContextBuilder requestContextBuilderMock;
 
-    private GeneProfilesPageController subject;
+    private BaselineQueryPageController subject;
 
 
     @Before
@@ -75,8 +75,8 @@ public class GeneProfilesPageControllerTest {
 
         FilterFactorsConverter filterFactorsConverterMock = mock(FilterFactorsConverter.class);
 
-        subject = new GeneProfilesPageController(rankCommandMock, applicationPropertiesMock,
-                experimentCacheMock, requestContextBuilderMock, filterFactorsConverterMock);
+        subject = new BaselineQueryPageController(rankCommandMock, applicationPropertiesMock,
+                requestContextBuilderMock, filterFactorsConverterMock);
     }
 
     @Test

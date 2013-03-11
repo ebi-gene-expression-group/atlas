@@ -25,23 +25,27 @@ package uk.ac.ebi.atlas.model;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Set;
 
 public class Experiment implements Serializable {
 
+    protected Set<String> species;
     private String accession;
     private String description;
     private String displayName;
     private boolean hasExtraInfoFile;
 
-    public Experiment(String accession, String displayName, String description, boolean hasExtraInfoFile) {
+    public Experiment(String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species) {
         this.accession = accession;
         this.displayName = displayName;
         this.description = description;
         this.hasExtraInfoFile = hasExtraInfoFile;
+        this.species = species;
     }
 
-    public Experiment(String accession, String description, boolean hasExtraInfoFile) {
-        this(accession, null, description, hasExtraInfoFile);
+    public Experiment(String accession, String description, boolean hasExtraInfoFile, Set<String> species) {
+        this(accession, null, description, hasExtraInfoFile, species);
     }
 
     public String getDisplayName() {
@@ -58,5 +62,13 @@ public class Experiment implements Serializable {
 
     public String getExperimentAccession(){
         return accession;
+    }
+
+    public Set<String> getSpecies() {
+        return Collections.unmodifiableSet(species);
+    }
+
+    public String getFirstSpecies() {
+        return species.iterator().next();
     }
 }

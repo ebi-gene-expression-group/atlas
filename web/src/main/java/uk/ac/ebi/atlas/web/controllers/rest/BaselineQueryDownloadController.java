@@ -31,38 +31,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
+import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class GeneProfilesDownloadController extends GeneProfilesController {
-    private static final Logger LOGGER = Logger.getLogger(GeneProfilesDownloadController.class);
+public class BaselineQueryDownloadController extends BaselineQueryController {
+    private static final Logger LOGGER = Logger.getLogger(BaselineQueryDownloadController.class);
 
     private WriteGeneProfilesCommand writeGeneProfilesCommand;
 
     @Inject
-    public GeneProfilesDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
-                                          RequestContextBuilder requestContextBuilder,
-                                          BaselineExperimentsCache experimentsCache,FilterFactorsConverter filterFactorsConverter) {
+    public BaselineQueryDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
+                                           RequestContextBuilder requestContextBuilder,
+                                           BaselineExperimentsCache experimentsCache, FilterFactorsConverter filterFactorsConverter) {
 
-        super(requestContextBuilder, experimentsCache, filterFactorsConverter);
+        super(requestContextBuilder, filterFactorsConverter);
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
-    @RequestMapping("/experiments/{experimentAccession}.tsv")
-    public void downloadGeneProfiles(@PathVariable String experimentAccession
+    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=baseline")
+    public void downloadGeneProfiles(HttpServletRequest request,
+              @PathVariable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException, GeneNotFoundException {
 
-        initPreferences(preferences, experimentAccession);
+        BaselineExperiment baselineExperiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        initPreferences(preferences, baselineExperiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 

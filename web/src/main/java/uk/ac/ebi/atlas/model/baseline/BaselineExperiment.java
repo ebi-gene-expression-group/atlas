@@ -34,8 +34,6 @@ public class BaselineExperiment extends Experiment {
 
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 
-    private Set<String> species;
-
     private String defaultQueryFactorType;
     private Set<Factor> defaultFilterFactors;
 
@@ -49,8 +47,7 @@ public class BaselineExperiment extends Experiment {
                        String displayName, Set<String> species, String defaultQueryFactorType,
                        Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
 
-        super(accession, displayName, description, hasExtraInfoFile);
-        this.species = species;
+        super(accession, displayName, description, hasExtraInfoFile, species);
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
@@ -72,14 +69,6 @@ public class BaselineExperiment extends Experiment {
 
     private ExperimentRun getExperimentRun(String experimentRunAccession) {
         return experimentRuns.get(experimentRunAccession);
-    }
-
-    public Set<String> getSpecies() {
-        return Collections.unmodifiableSet(species);
-    }
-
-    public String getFirstSpecies() {
-        return species.iterator().next();
     }
 
     public String getDefaultQueryFactorType() {

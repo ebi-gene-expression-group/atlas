@@ -19,14 +19,14 @@ import java.util.Set;
 
 @Controller
 @Scope("request")
-public class BarChartController {
+public class BaselineBarChartController {
 
     private BarChartTradersCache barChartTradersCache;
 
     private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter) {
+    public BaselineBarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter) {
         this.barChartTradersCache = barChartTradersCache;
         this.filterFactorsConverter = filterFilterFactorsConverter;
     }

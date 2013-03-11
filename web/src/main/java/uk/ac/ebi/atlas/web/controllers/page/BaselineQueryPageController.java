@@ -40,12 +40,12 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.GeneProfilesController;
+import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +57,7 @@ import java.util.SortedSet;
 
 @Controller
 @Scope("request")
-public class GeneProfilesPageController extends GeneProfilesController {
+public class BaselineQueryPageController extends BaselineQueryController {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
 
@@ -65,31 +65,28 @@ public class GeneProfilesPageController extends GeneProfilesController {
 
     private ApplicationProperties applicationProperties;
 
-    private BaselineExperimentsCache experimentsCache;
-
     private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public GeneProfilesPageController(RankGeneProfilesCommand rankCommand,
-                                      ApplicationProperties applicationProperties,
-                                      BaselineExperimentsCache experimentsCache, RequestContextBuilder requestContextBuilder,
-                                      FilterFactorsConverter filterFactorsConverter) {
+    public BaselineQueryPageController(RankGeneProfilesCommand rankCommand,
+                                       ApplicationProperties applicationProperties,
+                                       RequestContextBuilder requestContextBuilder,
+                                       FilterFactorsConverter filterFactorsConverter) {
 
-        super(requestContextBuilder, experimentsCache, filterFactorsConverter);
+        super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
-        this.experimentsCache = experimentsCache;
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
-    @RequestMapping("/experiments/{experimentAccession}")
+    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=baseline"})
     public String showGeneProfiles(@PathVariable String experimentAccession
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        initPreferences(preferences, experimentAccession);
+        initPreferences(preferences, experiment);
 
         RequestContext requestContext = initRequestContext(experimentAccession, preferences);
 

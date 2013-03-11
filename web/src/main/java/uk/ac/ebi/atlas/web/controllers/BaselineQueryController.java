@@ -27,31 +27,28 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 @Scope("request")
-public class GeneProfilesController {
+public abstract class BaselineQueryController {
 
     private RequestContextBuilder requestContextBuilder;
-    private BaselineExperimentsCache experimentsCache;
     private FilterFactorsConverter filterFactorsConverter;
 
-    public GeneProfilesController(RequestContextBuilder requestContextBuilder, BaselineExperimentsCache experimentsCache,
-                                  FilterFactorsConverter filterFactorsConverter) {
+    public BaselineQueryController(RequestContextBuilder requestContextBuilder,
+                                   FilterFactorsConverter filterFactorsConverter) {
         this.requestContextBuilder = requestContextBuilder;
-        this.experimentsCache = experimentsCache;
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
-    protected void initPreferences(RequestPreferences preferences, String experimentAccession) {
-        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+    protected void initPreferences(RequestPreferences preferences, BaselineExperiment baselineExperiment) {
+
         if (StringUtils.isBlank(preferences.getQueryFactorType())) {
-            preferences.setQueryFactorType(experiment.getDefaultQueryFactorType());
+            preferences.setQueryFactorType(baselineExperiment.getDefaultQueryFactorType());
         }
         if (StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
-            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(experiment.getDefaultFilterFactors()));
+            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getDefaultFilterFactors()));
         }
     }
 

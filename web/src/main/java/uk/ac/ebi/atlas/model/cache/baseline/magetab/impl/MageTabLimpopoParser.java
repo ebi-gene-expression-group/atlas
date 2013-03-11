@@ -18,6 +18,7 @@ import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
 
 import javax.inject.Named;
@@ -78,7 +79,7 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
     }
 
     @Override
-    public uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser build() throws IOException, ParseException {
+    public MageTabParser build() throws IOException, ParseException {
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
         checkState(CollectionUtils.isNotEmpty(requiredFactorTypes), "Please invoke withRequiredFactorTypes method to initialize the builder !");
 

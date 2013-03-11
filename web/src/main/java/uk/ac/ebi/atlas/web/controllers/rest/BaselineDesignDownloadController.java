@@ -44,14 +44,14 @@ import java.util.Set;
 
 @Controller
 @Scope("request")
-public class ExperimentDesignDownloadController {
-    private static final Logger logger = Logger.getLogger(ExperimentDesignDownloadController.class);
+public class BaselineDesignDownloadController {
+    private static final Logger logger = Logger.getLogger(BaselineDesignDownloadController.class);
 
     private ExperimentDesignTsvReader experimentDesignTsvReader;
     private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public ExperimentDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache experimentsCache) {
+    public BaselineDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader, BaselineExperimentsCache experimentsCache) {
         this.experimentDesignTsvReader = experimentDesignTsvReader;
         this.experimentsCache = experimentsCache;
     }

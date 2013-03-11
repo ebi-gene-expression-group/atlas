@@ -17,15 +17,15 @@ import java.io.OutputStream;
 import java.text.MessageFormat;
 
 @Controller
-public class ExperimentImageController {
+public class ExtraInfoImageController {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentImageController.class);
+    private static final Logger LOGGER = Logger.getLogger(ExtraInfoImageController.class);
 
     @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
 
     @ResponseBody
-    @RequestMapping("/experiments/{experimentAccession}/extra-info.png")
+    @RequestMapping(value = "/experiments/{experimentAccession}/extra-info.png", params="type")
     public void getImage(HttpServletResponse response, @PathVariable String experimentAccession){
 
         try{

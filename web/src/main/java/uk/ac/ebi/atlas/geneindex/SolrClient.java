@@ -175,18 +175,10 @@ public class SolrClient {
 
     String buildQueryAllTextString(String searchText) {
         StringBuilder stringBuilder = new StringBuilder("(alltext:");
-        if (!areQuotesMatching(searchText)){
-            searchText = searchText + "\"";
-        }
         stringBuilder.append(customEscape(searchText));
         stringBuilder.append(")");
 
         return stringBuilder.toString();
-    }
-
-    boolean areQuotesMatching(String searchText) {
-        int numberOfDoubelQuotes = StringUtils.countMatches(searchText, "\"");
-        return numberOfDoubelQuotes % 2 == 0;
     }
 
     private String customEscape(String searchText) {
