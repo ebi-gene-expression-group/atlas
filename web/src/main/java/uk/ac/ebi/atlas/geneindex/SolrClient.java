@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w\\d ]");
+    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
