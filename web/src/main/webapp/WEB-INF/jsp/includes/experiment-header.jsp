@@ -4,8 +4,11 @@
 
 <!-- Add fancyBox -->
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css"
+      type="text/css" media="screen"/>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
 
 
 <script>
@@ -14,18 +17,17 @@
 
             $("#extra-info").fancybox({
                 /*
-                beforeLoad: function(){
-                    this.title = "Look at this marvelous title... yes this is the title";
-                },*/
-                padding : 0,
-                openEffect	: 'elastic',
-                closeEffect	: 'elastic'
+                 beforeLoad: function(){
+                 this.title = "Look at this marvelous title... yes this is the title";
+                 },*/
+                padding:0,
+                openEffect:'elastic',
+                closeEffect:'elastic'
             });
 
         });
     })(jQuery);
 </script>
-
 
 
 <div id="helpContentTooltip" style='display:none'></div>
@@ -35,12 +37,15 @@
     <tr>
         <td style="width:140px;">
             <div class="experiment-accession">
-                <a href="experiments/${experimentAccession}">${experimentAccession}</a>
+                <a id="goto-ae"
+                   href="${applicationProperties.getArrayExpressURL(experimentAccession)}"
+                   title="ArrayExpress"
+                   target="_blank">${experimentAccession}</a>
             </div>
         </td>
         <td width="100%">
             <div id="experimentDescription" style="font-weight: bold;">
-                ${experimentDescription}
+                <a href="experiments/${experimentAccession}">${experimentDescription}</a>
                 <c:if test="${hasExtraInfo}">
                     <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
                         <img alt="more information" src="/gxa/resources/images/balloon-ellipsis-icon-left.png">
@@ -59,11 +64,6 @@
                 <a id="display-experiment-design" class="button-image"
                    title="Experiment Design" href="experiments/${experimentAccession}/experiment-design">
                     <img src="resources/images/experiment_design_icon.png"/></a>
-
-                <a id="goto-ae" class="button-image"
-                   href="${applicationProperties.getArrayExpressURL(experimentAccession)}" title="ArrayExpress"
-                   target="_blank">
-                    <img src="resources/images/ae2_icon.png"/></a>
 
             </div>
         </td>

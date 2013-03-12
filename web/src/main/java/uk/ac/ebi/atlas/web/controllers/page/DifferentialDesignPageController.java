@@ -22,32 +22,50 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Set;
 
 @Controller
 @Scope("request")
-public class BaselineDesignPageController extends ExperimentDesignPageController {
+public class DifferentialDesignPageController extends ExperimentDesignPageController {
 
     @Inject
-    public BaselineDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader) {
+    public DifferentialDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader) {
         super(experimentDesignTsvReader);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=BASELINE"})
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=DIFFERENTIAL"})
     public String showGeneProfiles(Model model, HttpServletRequest request) throws IOException {
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        extractExperimentDesign(model, experiment, experiment.getExperimentRunAccessions());
+        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        extractExperimentDesign(model, experiment, extractLibrariesFromDifferentialExperiment(experiment));
 
         return "experiment-experiment-design";
     }
+
+    private Set<String> extractLibrariesFromDifferentialExperiment(DifferentialExperiment experiment) {
+        Set<String> libraries = Sets.newHashSet();
+        for (Contrast contrast : experiment.getContrasts()) {
+            for (String library : contrast.getReferenceAssayGroup()) {
+                libraries.add(library);
+            }
+            for (String library : contrast.getTestAssayGroup()) {
+                libraries.add(library);
+            }
+        }
+
+        return libraries;
+    }
+
 }
