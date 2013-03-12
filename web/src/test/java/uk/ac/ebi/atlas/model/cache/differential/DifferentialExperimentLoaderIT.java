@@ -30,6 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.differential.AssayGroup;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
@@ -61,14 +62,26 @@ public class DifferentialExperimentLoaderIT {
 
         //then
         assertThat(experiment.getContrasts().size(), is(1));
-        assertThat(experiment.getContrasts().first().getId(), is("g1_g2"));
         assertThat(experiment.getContrasts().first().getDisplayName(), startsWith("genotype:'expressing"));
+    }
+
+    @Test
+    public void shouldContainGivenContrast() throws IOException, ParseException {
+        //given
+        DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
+
+        //when
+        Contrast contrast = experiment.getContrast("g1_g2");
+
+        //then
+        assertThat(contrast.getId(), is("g1_g2"));
+        assertThat(contrast.getDisplayName(), startsWith("genotype:'expressing"));
 
         AssayGroup expectedAssayGroup = new AssayGroup("SRR057596", "SRR057597", "SRR057598");
-        assertThat(experiment.getContrasts().first().getReferenceAssayGroup(), is(expectedAssayGroup));
+        assertThat(contrast.getReferenceAssayGroup(), is(expectedAssayGroup));
 
         expectedAssayGroup = new AssayGroup("SRR057599", "SRR057600", "SRR057601");
-        assertThat(experiment.getContrasts().first().getTestAssayGroup(), is(expectedAssayGroup));
+        assertThat(contrast.getTestAssayGroup(), is(expectedAssayGroup));
     }
 
     @Test

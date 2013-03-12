@@ -76,6 +76,11 @@
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>
                 </c:if>
+                <c:if test="${type eq 'differential'}">
+                    <td>
+                        hello boy
+                    </td>
+                </c:if>
                 <td>
                     <div>
                         <form:select path="queryFactorValues" data-placeholder="(any ${queryFactorName}s)"

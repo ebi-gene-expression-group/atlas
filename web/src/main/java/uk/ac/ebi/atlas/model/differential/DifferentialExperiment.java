@@ -48,7 +48,6 @@ public class DifferentialExperiment extends Experiment{
         SortedSet<Contrast> contrasts = Sets.newTreeSet(orderByDisplayName());
         contrasts.addAll(this.contrastsById.values());
         return contrasts;
-
     }
 
     public Contrast getContrast(String contrastId) {

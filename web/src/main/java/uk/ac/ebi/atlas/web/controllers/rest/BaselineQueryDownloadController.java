@@ -60,8 +60,7 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=baseline")
-    public void downloadGeneProfiles(HttpServletRequest request,
-              @PathVariable String experimentAccession
+    public void downloadGeneProfiles(HttpServletRequest request
             , @ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletResponse response) throws IOException, GeneNotFoundException {
 
@@ -71,15 +70,15 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "-gene-expression-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + baselineExperiment.getExperimentAccession() + "-gene-expression-profiles.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
-        initRequestContext(experimentAccession, preferences);
+        initRequestContext(baselineExperiment.getExperimentAccession(), preferences);
 
         writeGeneProfilesCommand.setResponseWriter(response.getWriter());
 
-        long genesCount = writeGeneProfilesCommand.apply(experimentAccession);
+        long genesCount = writeGeneProfilesCommand.apply(baselineExperiment);
 
         LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 

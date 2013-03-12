@@ -60,8 +60,6 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineQueryPageController extends BaselineQueryController {
 
-    private static final String TSV_FILE_EXTENSION = ".tsv";
-
     private RankGeneProfilesCommand rankCommand;
 
     private ApplicationProperties applicationProperties;
@@ -81,17 +79,16 @@ public class BaselineQueryPageController extends BaselineQueryController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=baseline"})
-    public String showGeneProfiles(@PathVariable String experimentAccession
-            , @ModelAttribute("preferences") @Valid RequestPreferences preferences
+    public String showGeneProfiles(@ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
         BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         initPreferences(preferences, experiment);
 
-        RequestContext requestContext = initRequestContext(experimentAccession, preferences);
+        RequestContext requestContext = initRequestContext(experiment.getExperimentAccession(), preferences);
 
-        model.addAttribute("experimentAccession", experimentAccession);
+        model.addAttribute("experimentAccession", experiment.getExperimentAccession());
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
@@ -139,7 +136,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
         if (!result.hasErrors()) {
 
             try {
-                GeneProfilesList geneProfiles = rankCommand.apply(experimentAccession);
+                GeneProfilesList geneProfiles = rankCommand.apply(experiment);
 
                 model.addAttribute("geneProfiles", geneProfiles);
 
@@ -151,7 +148,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
                 }
 
                 //ToDo: maybe this can be directly built client side in javascript or EL
-                model.addAttribute("downloadUrl", buildDownloadURL(request));
+                model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
 
 
             } catch (GeneNotFoundException e) {
@@ -163,12 +160,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
         return "experiment";
     }
 
-    String buildDownloadURL(HttpServletRequest request) {
-        //It's important that here we use the original query string, not the forwarded one
-        String originalQueryString = ((HttpServletRequest)((HttpServletRequestWrapper) request).getRequest()).getQueryString();
-        return Joiner.on("?").skipNulls()
-                .join(new String[]{request.getRequestURI() + TSV_FILE_EXTENSION, originalQueryString}).toString();
-    }
 }
 
 

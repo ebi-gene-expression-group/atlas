@@ -20,18 +20,13 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page;
+package uk.ac.ebi.atlas.web.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
-import uk.ac.ebi.atlas.commands.RequestContextBuilder;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -39,11 +34,10 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineQueryPageControllerTest {
+public class ExperimentDispatcherTest {
 
     private static final String EXPERIMENT_URL = "http://x.y/z";
 
@@ -56,38 +50,18 @@ public class BaselineQueryPageControllerTest {
     @Mock
     private HttpServletRequest httpServletRequestMock;
 
-    @Mock
-    private RankGeneProfilesCommand rankCommandMock;
-
-    @Mock
-    private ApplicationProperties applicationPropertiesMock;
-
-    @Mock
-    private BaselineExperimentsCache experimentCacheMock;
-
-    @Mock
-    private RequestContextBuilder requestContextBuilderMock;
-
-    private BaselineQueryPageController subject;
-
-
     @Before
     public void initSubject() throws Exception {
         //given
         when(httpServletRequestWrapperMock.getRequest()).thenReturn(httpServletRequestMock);
         when(httpServletRequestWrapperMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getQueryString()).thenReturn(REQUEST_PARAMETERS);
-
-        FilterFactorsConverter filterFactorsConverterMock = mock(FilterFactorsConverter.class);
-
-        subject = new BaselineQueryPageController(rankCommandMock, applicationPropertiesMock,
-                requestContextBuilderMock, filterFactorsConverterMock);
     }
 
     @Test
     public void buildDownloadUrl() {
         //when
-        String downloadUrl = subject.buildDownloadURL(httpServletRequestWrapperMock);
+        String downloadUrl = ExperimentDispatcher.buildDownloadURL(httpServletRequestWrapperMock);
 
         //then
         assertThat(downloadUrl, is(DOWNLOAD_URL));
@@ -99,9 +73,8 @@ public class BaselineQueryPageControllerTest {
         given(httpServletRequestMock.getQueryString()).willReturn(null);
 
         //when
-        String downloadUrl = subject.buildDownloadURL(httpServletRequestWrapperMock);
+        String downloadUrl = ExperimentDispatcher.buildDownloadURL(httpServletRequestWrapperMock);
 
         //then
         assertThat(downloadUrl, is(EXPERIMENT_URL + ".tsv"));
-    }
-}
+    }}

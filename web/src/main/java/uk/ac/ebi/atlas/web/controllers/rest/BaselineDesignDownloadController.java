@@ -56,15 +56,15 @@ public class BaselineDesignDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=baseline"})
-    public void downloadGeneProfiles(@PathVariable String experimentAccession
-            , @ModelAttribute("preferences") @Valid RequestPreferences preferences
+    public void downloadGeneProfiles(@ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
         // read contents from file
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
+        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getExperimentAccession()));
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
-        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         // get used runs from experiment
         Set<String> used = experiment.getExperimentRunAccessions();
 
@@ -87,7 +87,7 @@ public class BaselineDesignDownloadController {
             newCsvLines.add(newArray);
         }
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "-experiment-design.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getExperimentAccession() + "-experiment-design.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
