@@ -29,7 +29,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -80,8 +79,6 @@ public class ExperimentDispatcher {
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
-    private static final String BASELINE_EXPERIMENT_TYPE = "baseline";
-    private static final String DIFFERENTIAL_TYPE = "differential";
 
     private BaselineExperimentsCache baselineExperimentsCache;
     private DifferentialExperimentsCache differentialExperimentsCache;
