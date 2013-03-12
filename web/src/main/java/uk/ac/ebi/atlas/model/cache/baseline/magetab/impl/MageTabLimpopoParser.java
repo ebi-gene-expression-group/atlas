@@ -1,66 +1,69 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model.cache.baseline.magetab.impl;
 
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
-import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
+import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
 
 import javax.inject.Named;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.text.MessageFormat;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser, MageTabParserBuilder {
-
-    private static final Logger LOGGER = Logger.getLogger(RankGeneProfilesCommand.class);
+public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser, MageTabParserBuilder {
 
     private static final String SPECIES_FACTOR_TYPE = "ORGANISM";
 
-    @Value("#{configuration['experiment.magetab.idf.url.template']}")
-    private String idfUrlTemplate;
-
-    @Value("#{configuration['experiment.magetab.idf.path.template']}")
-    private String idfPathTemplate;
-
     private Set<String> processedRunAccessions;
-
-    private String experimentAccession;
 
     private static final String ENA_RUN = "ENA_RUN";
 
-    private Collection<ScanNode> scanNodes;
-
     private Set<String> requiredFactorTypes;
-
-    private MAGETABInvestigation investigation;
 
     private Collection<ExperimentRun> processedExperimentRuns;
 
     private Map<String, String> factorNamesByType;
 
+    private Collection<ScanNode> scanNodes;
 
+    private String experimentAccession;
+
+    @Override
     public MageTabLimpopoParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
@@ -83,8 +86,7 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
         checkState(CollectionUtils.isNotEmpty(requiredFactorTypes), "Please invoke withRequiredFactorTypes method to initialize the builder !");
 
-        investigation = parseInvestigation();
-        scanNodes = investigation.SDRF.getNodes(ScanNode.class);
+        scanNodes = extractScanNodes(experimentAccession);
 
         factorNamesByType = extractFactorNames();
 
@@ -99,7 +101,7 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
 
     protected Collection<ExperimentRun> extractProcessedExperimentRuns() throws IOException, ParseException {
 
-        Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
+        Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, getInvestigation().IDF);
 
         Collection<ExperimentRun> processedExperimentRuns = Lists.newArrayList();
 
@@ -125,7 +127,7 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
             }
             return species;
         } else {
-            return extractSpeciesFromSDRF();
+            return extractSpeciesFromSDRF(scanNodes);
         }
 
     }
@@ -136,7 +138,7 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
     }
 
     Map<String, String> extractFactorNames() {
-        IDF idf = investigation.IDF;
+        IDF idf = getInvestigation().IDF;
         Map<String, String> namesByType = Maps.newHashMap();
         for (int i = 0; i < idf.experimentalFactorType.size(); i++) {
             String factorType = idf.experimentalFactorType.get(i);
@@ -146,39 +148,6 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
             }
         }
         return namesByType;
-    }
-
-    private Set<String> extractSpeciesFromSDRF() {
-        Set<String> species = Sets.newHashSet();
-        for (ScanNode scanNode : scanNodes) {
-            SourceNode firstScanNode = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class).iterator().next();
-
-            for (CharacteristicsAttribute characteristic : firstScanNode.characteristics) {
-                if (characteristic.type.equalsIgnoreCase("ORGANISM")) {
-                    species.add(characteristic.getAttributeValue());
-                }
-            }
-
-        }
-        return species;
-    }
-
-    MAGETABInvestigation parseInvestigation() throws ParseException, IOException {
-
-        String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
-        LOGGER.info("<parseInvestigation> idfFileLocation = " + idfFileLocation);
-
-        MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
-        File idfFile = new File(idfFileLocation);
-        if (idfFile.exists()) {
-            LOGGER.info("<parseInvestigation> investigation file exists on the filesystem, going to use it");
-            return mageTabParser.parse(idfFile);
-        } else {
-            LOGGER.info("<parseInvestigation> investigation file not found on the filesystem, going to use online file");
-            URL idfFileURL = new URL(MessageFormat.format(idfUrlTemplate, experimentAccession));
-            return mageTabParser.parse(idfFileURL);
-        }
-
     }
 
     Collection<ExperimentRun> extractAllExperimentRunsFromSdrf(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {

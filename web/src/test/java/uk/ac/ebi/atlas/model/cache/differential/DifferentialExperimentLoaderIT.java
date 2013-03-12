@@ -36,8 +36,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import javax.inject.Inject;
 import java.io.IOException;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -53,6 +52,15 @@ public class DifferentialExperimentLoaderIT {
 
     @Before
     public void initSubject() throws IOException, ParseException {
+    }
+
+    @Test
+    public void shouldHaveExactlyOneSpecies() throws IOException, ParseException {
+        //given
+        DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
+
+        //then
+        assertThat(experiment.getSpecies(), contains("Mus musculus"));
     }
 
     @Test

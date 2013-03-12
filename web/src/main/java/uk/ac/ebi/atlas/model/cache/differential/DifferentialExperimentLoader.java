@@ -22,10 +22,11 @@
 
 package uk.ac.ebi.atlas.model.cache.differential;
 
-import com.google.common.collect.Sets;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.configuration.ConfigurationTrader;
 import uk.ac.ebi.atlas.commons.configuration.ContrastsConfiguration;
+import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
+import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParserBuilder;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -33,17 +34,18 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Set;
 
 @Named
 public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialExperiment> {
 
+    private MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder;
 
     private ConfigurationTrader configurationTrader;
 
     @Inject
-    public DifferentialExperimentLoader(ConfigurationTrader configurationTrader){
+    public DifferentialExperimentLoader(MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder, ConfigurationTrader configurationTrader) {
+        this.mageTabSpeciesParserBuilder = mageTabSpeciesParserBuilder;
         this.configurationTrader = configurationTrader;
     }
 
@@ -54,8 +56,10 @@ public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialE
         ContrastsConfiguration contrastsConfiguration = configurationTrader.getContrastsConfiguration(accession);
         Set<Contrast> contrasts = contrastsConfiguration.getContrasts();
 
-        //ToDo: we need to extract species ...
-        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, Sets.newHashSet("Homo sapiens"));
+        MageTabSpeciesParser mageTabSpeciesParser = mageTabSpeciesParserBuilder.forExperimentAccession(accession).build();
+        Set<String> species = mageTabSpeciesParser.extractSpecies();
+
+        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species);
 
     }
 }
