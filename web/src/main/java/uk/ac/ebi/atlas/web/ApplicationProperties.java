@@ -59,8 +59,12 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
-    public Set<String> getExperimentIdentifiers() {
-        return Sets.newHashSet(configurationProperties.getProperty("experiment.identifiers").trim().split(","));
+    public Set<String> getBaselineExperimentsIdentifiers() {
+        return Sets.newHashSet(configurationProperties.getProperty("baseline.experiment.identifiers").trim().split(","));
+    }
+
+    public Set<String> getDifferentialExperimentsIdentifiers() {
+        return Sets.newHashSet(configurationProperties.getProperty("differential.experiment.identifiers").trim().split(","));
     }
 
     public Set<String> getBiomartDatasetIdentifiers() {

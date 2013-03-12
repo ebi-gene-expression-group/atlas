@@ -27,8 +27,8 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.RequestPreferences;
@@ -55,14 +55,14 @@ public class BaselineDesignDownloadController {
         this.experimentDesignTsvReader = experimentDesignTsvReader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=baseline"})
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=BASELINE"})
     public void downloadGeneProfiles(@ModelAttribute("preferences") @Valid RequestPreferences preferences
             , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         // read contents from file
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getExperimentAccession()));
+        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getAccession()));
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
         // get used runs from experiment
@@ -87,7 +87,7 @@ public class BaselineDesignDownloadController {
             newCsvLines.add(newArray);
         }
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getExperimentAccession() + "-experiment-design.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-experiment-design.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 

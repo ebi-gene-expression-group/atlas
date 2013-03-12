@@ -30,13 +30,16 @@ import java.util.Set;
 
 public class Experiment implements Serializable {
 
+    private ExperimentType type;
+
     protected Set<String> species;
     private String accession;
     private String description;
     private String displayName;
     private boolean hasExtraInfoFile;
 
-    public Experiment(String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species) {
+    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species) {
+        this.type = type;
         this.accession = accession;
         this.displayName = displayName;
         this.description = description;
@@ -44,12 +47,16 @@ public class Experiment implements Serializable {
         this.species = species;
     }
 
-    public Experiment(String accession, String description, boolean hasExtraInfoFile, Set<String> species) {
-        this(accession, null, description, hasExtraInfoFile, species);
+    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species) {
+        this(type, accession, null, description, hasExtraInfoFile, species);
+    }
+
+    public ExperimentType getType(){
+        return type;
     }
 
     public String getDisplayName() {
-        return StringUtils.isNotBlank(displayName) ? displayName : getExperimentAccession();
+        return StringUtils.isNotBlank(displayName) ? displayName : getAccession();
     }
 
     public String getDescription() {
@@ -60,7 +67,7 @@ public class Experiment implements Serializable {
         return hasExtraInfoFile;
     }
 
-    public String getExperimentAccession(){
+    public String getAccession(){
         return accession;
     }
 
@@ -71,4 +78,5 @@ public class Experiment implements Serializable {
     public String getFirstSpecies() {
         return species.iterator().next();
     }
+
 }

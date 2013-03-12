@@ -34,7 +34,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import java.util.List;
@@ -87,7 +86,7 @@ public class RankGeneProfilesCommandTest {
         when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
 
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactors);
-        when(experimentMock.getExperimentAccession()).thenReturn(EXPERIMENT_ACCESSION);
+        when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
 
         when(requestContextMock.getHeatmapMatrixSize()).thenReturn(100);
         when(requestContextMock.isSpecific()).thenReturn(true);

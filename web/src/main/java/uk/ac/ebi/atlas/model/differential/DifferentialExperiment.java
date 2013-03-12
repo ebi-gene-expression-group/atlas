@@ -27,6 +27,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class DifferentialExperiment extends Experiment{
     private Map<String, Contrast> contrastsById = Maps.newHashMap();
 
     public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species) {
-        super(accession, description, hasExtraInfoFile, species);
+        super(ExperimentType.DIFFERENTIAL, accession, description, hasExtraInfoFile, species);
         for (Contrast contrast: contrasts){
             this.contrastsById.put(contrast.getId(), contrast);
         }

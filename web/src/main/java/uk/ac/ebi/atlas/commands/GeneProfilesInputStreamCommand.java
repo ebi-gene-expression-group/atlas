@@ -81,7 +81,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
             }
         }
 
-        ObjectInputStream<GeneProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getExperimentAccession());
+        ObjectInputStream<GeneProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
 
         try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 

@@ -36,6 +36,7 @@ import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RankDifferentialProfilesCommand;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -64,7 +65,7 @@ public class DifferentialQueryPageController {
     }
 
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=differential"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
