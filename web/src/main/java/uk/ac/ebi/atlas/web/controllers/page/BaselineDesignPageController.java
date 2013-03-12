@@ -26,8 +26,8 @@ import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.model.readers.TsvReader;
@@ -66,12 +66,12 @@ public class BaselineDesignPageController {
         return map;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=baseline"})
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=BASELINE"})
     public String showGeneProfiles(Model model, HttpServletRequest request) throws IOException {
         BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         // read contents from file
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getExperimentAccession()));
+        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getAccession()));
         // delete first line with table headers
         String[] headerLine = csvLines.remove(0);
 
@@ -108,7 +108,7 @@ public class BaselineDesignPageController {
         model.addAttribute("runAccessions", runAccessions);
 
         // add general experiment attributes to model
-        model.addAttribute("experimentAccession", experiment.getExperimentAccession());
+        model.addAttribute("experimentAccession", experiment.getAccession());
 
         return "experiment-experiment-design";
     }

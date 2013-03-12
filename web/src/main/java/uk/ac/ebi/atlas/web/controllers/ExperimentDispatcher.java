@@ -80,6 +80,8 @@ public class ExperimentDispatcher {
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
+    private static final String BASELINE_EXPERIMENT_TYPE = "baseline";
+    private static final String DIFFERENTIAL_TYPE = "differential";
 
     private BaselineExperimentsCache baselineExperimentsCache;
     private DifferentialExperimentsCache differentialExperimentsCache;
@@ -96,11 +98,15 @@ public class ExperimentDispatcher {
                              "/experiments/{experimentAccession}/*" })
     public String dispatch(HttpServletRequest request, @PathVariable String experimentAccession, Model model) {
 
-        if (!applicationProperties.getExperimentIdentifiers().contains(experimentAccession)) {
+        Experiment experiment;
+
+        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)) {
+            experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+        } else if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)){
+            experiment = differentialExperimentsCache.getExperiment(experimentAccession);
+        } else {
             throw new ResourceNotFoundException();
         }
-
-        Experiment experiment = getExperiment(experimentAccession);
 
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
@@ -117,20 +123,10 @@ public class ExperimentDispatcher {
 
         String requestURL = StringUtils.substringAfter(requestURI,contextPath);
 
-        return "forward:" + requestURL + "?type=" + getExperimentType(experiment);
+        return "forward:" + requestURL + "?type=" + experiment.getType();
     }
 
-    private String getExperimentType(Experiment experiment) {
-        return experiment instanceof BaselineExperiment ?  "baseline" : "differential";
-    }
 
-    Experiment getExperiment(String experimentAccession) {
-        Experiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
-        if (experiment == null) {
-            experiment = differentialExperimentsCache.getExperiment(experimentAccession);
-        }
-        return experiment;
-    }
 
     public static String buildDownloadURL(HttpServletRequest request) {
         //It's important that here we use the original query string, not the forwarded one

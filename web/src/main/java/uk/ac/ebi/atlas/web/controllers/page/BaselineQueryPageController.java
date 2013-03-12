@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -30,12 +29,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneNotFoundException;
 import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -49,7 +48,6 @@ import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +76,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=baseline"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=BASELINE"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid RequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
@@ -86,9 +84,9 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
         initPreferences(preferences, experiment);
 
-        RequestContext requestContext = initRequestContext(experiment.getExperimentAccession(), preferences);
+        RequestContext requestContext = initRequestContext(experiment.getAccession(), preferences);
 
-        model.addAttribute("experimentAccession", experiment.getExperimentAccession());
+        model.addAttribute("experimentAccession", experiment.getAccession());
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 

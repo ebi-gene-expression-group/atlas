@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -47,7 +48,7 @@ public class BaselineExperiment extends Experiment {
                        String displayName, Set<String> species, String defaultQueryFactorType,
                        Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
 
-        super(accession, displayName, description, hasExtraInfoFile, species);
+        super(ExperimentType.BASELINE, accession, displayName, description, hasExtraInfoFile, species);
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
