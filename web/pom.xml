@@ -334,6 +334,16 @@
             <artifactId>commons-configuration</artifactId>
             <version>1.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.2.3</version>
+        </dependency>
     </dependencies>
 
 </project>

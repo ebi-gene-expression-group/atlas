@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Comparator;
@@ -11,12 +12,16 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
     private boolean isSpecific;
     private Set<Factor> selectedFactors;
     private Set<Factor> allFactors;
+    private double cutoff;
+
 
     public GeneProfileComparator(boolean isSpecific, Set<Factor> selectQueryFactors,
-                                 Set<Factor> allQueryFactors) {
+                                 Set<Factor> allQueryFactors, double cutoff) {
         this.isSpecific = isSpecific;
         this.selectedFactors = selectQueryFactors;
         this.allFactors = allQueryFactors;
+        //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
+        this.cutoff = cutoff > 0? cutoff: 0.09;
     }
 
     @Override
@@ -34,8 +39,8 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
 
-            return naturalOrdering.compare(firstGeneProfile.getExpressionLevelFoldChangeOn(selectedFactors, allFactors),
-                    otherGeneProfile.getExpressionLevelFoldChangeOn(selectedFactors, allFactors));
+            return naturalOrdering.compare(getExpressionLevelFoldChangeOn(firstGeneProfile),
+                    getExpressionLevelFoldChangeOn(otherGeneProfile));
         }
 
         // A2
@@ -56,5 +61,21 @@ public class GeneProfileComparator implements Comparator<GeneProfile> {
                 otherGeneProfile.getAverageExpressionLevelOn(averageOn));
     }
 
+    public double getExpressionLevelFoldChangeOn(GeneProfile geneProfile) {
+
+        double averageExpressionLevelOnSelected = geneProfile.getAverageExpressionLevelOn(selectedFactors);
+
+        Sets.SetView<Factor> remainingFactors = Sets.difference(allFactors, selectedFactors);
+        double averageExpressionLevelOnRemaining = geneProfile.getAverageExpressionLevelOn(remainingFactors);
+
+        if (averageExpressionLevelOnRemaining == 0) {
+            if (!remainingFactors.isEmpty()) {
+                return averageExpressionLevelOnSelected / (cutoff / remainingFactors.size());
+            } else {
+                return averageExpressionLevelOnSelected;
+            }
+        }
+        return averageExpressionLevelOnSelected / averageExpressionLevelOnRemaining;
+    }
 
 }

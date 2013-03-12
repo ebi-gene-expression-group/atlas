@@ -32,7 +32,10 @@ import uk.ac.ebi.atlas.model.GeneProfileComparator;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Queue;
+import java.util.Set;
 
 @Named("rankGeneProfiles")
 @Scope("prototype")
@@ -41,7 +44,7 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     @Override
     protected GeneProfilesList apply(RequestContext requestContext, ObjectInputStream<GeneProfile> inputStream) {
         Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
-                , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors());
+                , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors(), requestContext.getCutoff());
 
         Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, requestContext.getHeatmapMatrixSize());
 
@@ -70,8 +73,8 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
     }
 
     protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
-                                                               Set<Factor> allFactors) {
-        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactors, allFactors)).reverse();
+                                                               Set<Factor> allFactors, double cutoff) {
+        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactors, allFactors, cutoff)).reverse();
     }
 
     protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> geneProfileComparator, int heatmapMatrixSize) {

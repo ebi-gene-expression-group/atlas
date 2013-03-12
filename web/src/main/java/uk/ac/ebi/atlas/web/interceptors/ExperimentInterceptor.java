@@ -107,13 +107,13 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
         Experiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        Set<String> species = experiment.getSpecies();
+        Set<String> allSpecies = experiment.getSpecies();
 
         if (modelAndView != null) { //it is null for REST services
 
             Map modelMap = modelAndView.getModel();
 
-            modelMap.put("species", StringUtils.join(species, ", "));
+            modelMap.put("allSpecies", StringUtils.join(allSpecies, ", "));
 
             modelMap.put("experimentDescription", experiment.getDescription());
 

@@ -2,347 +2,98 @@
     "spellcheck":{
         "suggestions":[
             [
-                "p",
+                "mus",
                 {
-                    "numFound":29,
-                    "startOffset":0,
-                    "endOffset":1,
+                    "numFound":19,
+                    "startOffset":23,
+                    "endOffset":26,
                     "suggestion":[
-                        "p",
-                        "protein",
-                        "process",
-                        "putative",
-                        "precursor",
-                        "peptide",
-                        "pathway",
-                        "plasma",
-                        "predicted",
-                        "positive",
-                        "pseudogene",
-                        "polymerase",
-                        "phosphorylation",
-                        "peptidase",
-                        "prot",
-                        "promoter",
-                        "proliferation",
-                        "proteolysis",
-                        "phosphatase",
-                        "phosphorus",
-                        "perception",
-                        "processing",
-                        "protease",
-                        "phosphate",
-                        "phospholipid",
-                        "peptidyl",
-                        "plant",
-                        "pombase",
-                        "polypeptide"
+                        "mus",
+                        "mus-101",
+                        "mus-81",
+                        "mus101",
+                        "mus201",
+                        "mus205",
+                        "mus209",
+                        "mus210",
+                        "mus301",
+                        "mus304",
+                        "mus308",
+                        "mus309",
+                        "mus312",
+                        "mus7",
+                        "mus81",
+                        "musculus",
+                        "musk",
+                        "muskelin",
+                        "mustn1"
                     ]
                 }
             ],
             [
-                "b",
+                "mus",
                 {
-                    "numFound":29,
-                    "startOffset":2,
-                    "endOffset":3,
+                    "numFound":19,
+                    "startOffset":41,
+                    "endOffset":44,
                     "suggestion":[
-                        "b",
-                        "binding",
-                        "beta",
-                        "by",
-                        "biosynthetic",
-                        "biological",
-                        "box",
-                        "body",
-                        "bounded",
-                        "blood",
-                        "based",
-                        "btb",
-                        "behavior",
-                        "brain",
-                        "bonds",
-                        "basic",
-                        "bacterium",
-                        "barrel",
-                        "bone",
-                        "biogenesis",
-                        "biosynthesis",
-                        "branching",
-                        "bacterial",
-                        "b30.2/spry",
-                        "band",
-                        "bud",
-                        "break",
-                        "basal",
-                        "bmp"
+                        "mus",
+                        "mus-101",
+                        "mus-81",
+                        "mus101",
+                        "mus201",
+                        "mus205",
+                        "mus209",
+                        "mus210",
+                        "mus301",
+                        "mus304",
+                        "mus308",
+                        "mus309",
+                        "mus312",
+                        "mus7",
+                        "mus81",
+                        "musculus",
+                        "musk",
+                        "muskelin",
+                        "mustn1"
+                    ]
+                }
+            ],
+            [
+                "musculus",
+                {
+                    "numFound":1,
+                    "startOffset":45,
+                    "endOffset":53,
+                    "suggestion":[
+                        "musculus"
                     ]
                 }
             ],
             [
                 "collation",
-                [
-                    [
-                        "collationQuery",
-                        "p b"
-                    ],
-                    [
-                        "hits",
-                        242386
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "p"
-                            ],
-                            [
-                                "b",
-                                "b"
-                            ]
-                        ]
-                    ]
-                ]
+                "\"mus\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                [
-                    [
-                        "collationQuery",
-                        "p binding"
-                    ],
-                    [
-                        "hits",
-                        369465
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "p"
-                            ],
-                            [
-                                "b",
-                                "binding"
-                            ]
-                        ]
-                    ]
-                ]
+                "\"mus81\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                [
-                    [
-                        "collationQuery",
-                        "protein b"
-                    ],
-                    [
-                        "hits",
-                        521622
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "protein"
-                            ],
-                            [
-                                "b",
-                                "b"
-                            ]
-                        ]
-                    ]
-                ]
+                "\"musculus\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                [
-                    [
-                        "collationQuery",
-                        "p beta"
-                    ],
-                    [
-                        "hits",
-                        169477
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "p"
-                            ],
-                            [
-                                "b",
-                                "beta"
-                            ]
-                        ]
-                    ]
-                ]
+                "\"musk\" AND species:\"mus musculus\""
             ],
             [
                 "collation",
-                [
-                    [
-                        "collationQuery",
-                        "process b"
-                    ],
-                    [
-                        "hits",
-                        238195
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "process"
-                            ],
-                            [
-                                "b",
-                                "b"
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            [
-                "collation",
-                [
-                    [
-                        "collationQuery",
-                        "protein binding"
-                    ],
-                    [
-                        "hits",
-                        528622
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "protein"
-                            ],
-                            [
-                                "b",
-                                "binding"
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            [
-                "collation",
-                [
-                    [
-                        "collationQuery",
-                        "p by"
-                    ],
-                    [
-                        "hits",
-                        169072
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "p"
-                            ],
-                            [
-                                "b",
-                                "by"
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            [
-                "collation",
-                [
-                    [
-                        "collationQuery",
-                        "process binding"
-                    ],
-                    [
-                        "hits",
-                        351621
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "process"
-                            ],
-                            [
-                                "b",
-                                "binding"
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            [
-                "collation",
-                [
-                    [
-                        "collationQuery",
-                        "protein beta"
-                    ],
-                    [
-                        "hits",
-                        499930
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "protein"
-                            ],
-                            [
-                                "b",
-                                "beta"
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            [
-                "collation",
-                [
-                    [
-                        "collationQuery",
-                        "putative b"
-                    ],
-                    [
-                        "hits",
-                        199556
-                    ],
-                    [
-                        "misspellingsAndCorrections",
-                        [
-                            [
-                                "p",
-                                "putative"
-                            ],
-                            [
-                                "b",
-                                "b"
-                            ]
-                        ]
-                    ]
-                ]
+                "\"mustn1\" AND species:\"mus musculus\""
             ]
         ]
     },
     "response":{
-        "numFound":242386,
+        "numFound":45910,
         "start":0,
         "docs":[
 

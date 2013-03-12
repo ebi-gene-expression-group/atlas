@@ -22,47 +22,70 @@
 
 package uk.ac.ebi.atlas.commons.configuration;
 
-import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.model.Factor;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.File;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@Named
 public class ExperimentFactorsConfiguration {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentFactorsConfiguration.class);
+    private XMLConfiguration config;
+    private String experimentAccession;
 
-    private String pathTemplate;
-
-    @Inject
-    public ExperimentFactorsConfiguration(
-            @Value("#{configuration['experiment.experiment-factors.path.template']}")
-            String pathTemplate) {
-        this.pathTemplate = pathTemplate;
+    public ExperimentFactorsConfiguration(XMLConfiguration config, String experimentAccession) {
+        this.config = config;
+        this.experimentAccession = experimentAccession;
     }
 
-    public XMLConfiguration forExperiment(String experimentAccession) {
-        Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
+    public String getDisplayNameForExperiment() {
 
-        try {
-            File configFile = fileSystemPath.toFile();
-            XMLConfiguration config = new XMLConfiguration(configFile);
-            return config;
-        } catch (ConfigurationException cex) {
-            LOGGER.error(cex.getMessage(), cex);
-            throw new IllegalStateException("Cannot read configuration from path " + fileSystemPath.toString(), cex);
+         String displayName = config.getString("landingPageDisplayName");
+        if (StringUtils.isNotBlank(displayName)) {
+            return displayName;
         }
+        return experimentAccession;
+
     }
 
-    private String getPathString(String experimentAccession) {
-        return MessageFormat.format(pathTemplate, experimentAccession);
+    public Set<Factor> getDefaultFilterFactors() {
+
+        Set<Factor> defaultFilterFactors = new HashSet<>();
+        List<HierarchicalConfiguration> fields =
+                config.configurationsAt("defaultFilterFactors.filterFactor");
+        for (HierarchicalConfiguration sub : fields) {
+            String factorType = sub.getString("type");
+            String factorValue = sub.getString("value");
+            defaultFilterFactors.add(new Factor(factorType, factorValue));
+        }
+
+        return defaultFilterFactors;
     }
 
+    public String getDefaultQueryFactorType() {
+
+        String defaultQueryFactorType = config.getString("defaultQueryFactorType");
+        if (defaultQueryFactorType == null || defaultQueryFactorType.trim().length() == 0) {
+            throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
+        }
+
+        return defaultQueryFactorType;
+    }
+
+    public Set<String> getMenuFilterFactorTypes() {
+
+        Set<String> results = new HashSet<>();
+        List<Object> menuFilterFactorTypes = config.getList("menuFilterFactorTypes");
+        for (Object o : menuFilterFactorTypes) {
+            String filterFactorType = (String) o;
+            if (filterFactorType.trim().length() > 0) {
+                results.add(filterFactorType);
+            }
+        }
+
+        return results;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,23 +41,35 @@ import java.util.List;
 @Scope("request")
 public class AutocompleteController {
 
-    private static final int MAX_NUMBER_OF_SUGGESTIONS = 10;
+    private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
 
     private SolrClient solrClient;
 
     @Inject
-    public AutocompleteController(SolrClient solrClient){
+    public AutocompleteController(SolrClient solrClient) {
         this.solrClient = solrClient;
     }
 
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species") String species){
+    public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species") String species) {
+        if (query.trim().length() == 0) {
+            return "";
+        }
+
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
 
-        if (!StringUtils.containsWhitespace(query)){
-            suggestions.addAll(solrClient.findGeneNameSuggestions(query, species));
+        if (!StringUtils.containsWhitespace(query)) {
+            suggestions.addAll(solrClient.findGeneIdSuggestionsInName(query, species));
+        }
+
+        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+            suggestions.addAll(solrClient.findGeneIdSuggestionsInSynonym(query, species));
+        }
+
+        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+            suggestions.addAll(solrClient.findGeneIdSuggestionsInIdentifier(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
@@ -66,8 +78,8 @@ public class AutocompleteController {
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);
 
-        if (topSuggestions.size() > MAX_NUMBER_OF_SUGGESTIONS){
-            topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);
+        if (topSuggestions.size() > MAX_NUMBER_OF_SUGGESTIONS) {
+            topSuggestions = topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);
         }
 
         Gson gson = new Gson();

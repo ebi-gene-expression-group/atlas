@@ -22,13 +22,14 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.Lists;
-import com.google.gson.*;
-import com.jayway.jsonpath.JsonPath;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -37,77 +38,88 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Named
-@Scope("prototype")
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    private static final String JSON_PATH_GENE_IDENTIFIERS = "$.response.docs[*].identifier";
+    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
 
-    private static final String SOLR_SEARCH_QUERY_TEMPLATE = "select?q={conf}{query} " +
-            "AND species:\"{organism}\"&start=0&rows=100000&fl=identifier&wt=json";
+    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
-    private static final String SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE = "suggest_genename?q=\"{0}\"&wt=json&omitHeader=true&json.nl=arrarr";
-
-    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+    @Value("#{configuration['index.server.url']}")
+    private String serverURL;
 
     private RestTemplate restTemplate;
 
-    private String serverURL;
-
+    private final SolrQueryService solrQueryService;
 
     @Inject
-    public SolrClient(RestTemplate restTemplate) {
+    public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService) {
         this.restTemplate = restTemplate;
+        this.solrQueryService = solrQueryService;
     }
 
-    @Value("#{configuration['index.server.url']}")
-    public void setServerURL(String serverURL) {
-        this.serverURL = serverURL;
-    }
+    public Set<String> findGeneIds(String searchText, String species) {
 
-    public Set<String> findGeneIds(String searchText, String species) {    
+        String geneQuery = buildQueryAllTextString(customEscape(searchText));
 
-        String geneQuery = buildQueryAllTextString(searchText);
-        String jsonString = getJsonResponse(SOLR_SEARCH_QUERY_TEMPLATE, "{!lucene q.op=OR df=alltext}", geneQuery, species);
-
-        List<String> geneIds = JsonPath.read(jsonString, JSON_PATH_GENE_IDENTIFIERS);
-
-        return toUppercase(geneIds);
-
-    }
-
-    public List<String> findGeneNameSuggestions(String geneName, String species){
-
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_GENENAMES_TEMPLATE, geneName);
-
-        return extractSuggestions(jsonString, geneName);
-    }
-
-    List<String> extractSuggestions(String jsonString, String term) {
-        JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
-
-        if (suggestionsElement != null && suggestionsElement.isJsonArray()) {
-
-            JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
-
-            for (JsonElement suggestionElement : suggestionElements) {
-
-                JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
-
-                if (term.equalsIgnoreCase(suggestionEntry.get(0).getAsString())) {
-                    JsonArray suggestions = suggestionEntry.get(1).getAsJsonObject().getAsJsonArray("suggestion");
-                    Gson gson = new Gson();
-                    return gson.fromJson(suggestions, List.class);
-                }
-
-            }
-
+        try {
+            return toUppercase(solrQueryService.getGeneIds(geneQuery, species));
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIds> error querying solr service", e);
         }
 
-        return Lists.newArrayList();
+        return Collections.EMPTY_SET;
+    }
 
+    public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInName> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+    public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInSynonym> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+    public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
+
+        try {
+            return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findGeneIdSuggestionsInIdentifier> error querying solr service", e);
+        }
+
+        return Collections.EMPTY_LIST;
+    }
+
+
+    public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
+
+        Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
+
+        if (notSpellCheckableMatcher.find()) {
+            return Collections.EMPTY_LIST;
+        }
+
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
+
+        return extractCollations(jsonString);
     }
 
     JsonElement extractSuggestionsElement(String jsonString) {
@@ -130,22 +142,23 @@ public class SolrClient {
             for (JsonElement suggestionElement : suggestionElements) {
                 JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
                 if ("collation".equals(suggestionEntry.get(0).getAsString())) {
-                    String suggestion = suggestionEntry.get(1).getAsJsonArray().get(0).getAsJsonArray().get(1).getAsString();
-                    suggestionStrings.add(StringUtils.strip(suggestion, "\""));
+                    String collation = suggestionEntry.get(1).getAsString();
+                    suggestionStrings.add(extractSuggestion(collation));
                 }
             }
         }
         return suggestionStrings;
     }
 
-    public List<String> findGenePropertySuggestions(String multiTermToken, String species){
-
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
-
-        return extractCollations(jsonString);
+    String extractSuggestion(String collation) {
+        return StringUtils.split(collation, "\"")[0];
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {
+        if (StringUtils.isBlank(arguments[0])) {
+            return "";
+        }
+
         try {
 
             String jsonResponse = restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
@@ -175,10 +188,14 @@ public class SolrClient {
     }
 
     String buildQueryAllTextString(String searchText) {
-        StringBuilder stringBuilder = new StringBuilder("(alltext:");
-        stringBuilder.append(searchText.replace(":", ""));
+        StringBuilder stringBuilder = new StringBuilder("(property_search:");
+        stringBuilder.append(searchText);
         stringBuilder.append(")");
 
         return stringBuilder.toString();
+    }
+
+    private String customEscape(String searchText) {
+        return searchText.replace(":", "\\:");
     }
 }

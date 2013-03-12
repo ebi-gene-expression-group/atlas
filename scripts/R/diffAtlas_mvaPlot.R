@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
 
 # diffAtlas_mvaPlot()
 #  - Create an "MvA" plot (average intensity against log2 fold change), and write it to a file.
@@ -32,7 +32,7 @@ diffAtlas_mvaPlot <<- function(plotDataFile, contrastName, plotFile, techType) {
 	} else if(techType == "rnaseq") {
 		
 		# x-axis label different for RNA-seq data
-		xAxisLabel = "normalized counts"
+		xAxisLabel = "average normalized count"
 	}
 
 

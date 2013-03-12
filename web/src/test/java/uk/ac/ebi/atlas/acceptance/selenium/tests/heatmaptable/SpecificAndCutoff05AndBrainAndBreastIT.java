@@ -34,8 +34,8 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
             + "&specific=true";
-    private static final String HIGHER_RANKING_GENE = "GPD2";
-    private static final String LOWER_RANKING_GENE = "PLEKHB2";
+    private static final String HIGHER_RANKING_GENE = "DSCC1";
+    private static final String LOWER_RANKING_GENE = "GPD2";
 
     protected HeatmapTablePage subject;
 
@@ -56,11 +56,11 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SeleniumFixture {
         double lowerRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageFpkm(30, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
 
         //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(10.5D));
-        assertThat(higherRankingGeneAverageFpkmOnRemainingFactors, is(7.142857142857143D));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1.45D));
+        assertThat(higherRankingGeneAverageFpkmOnRemainingFactors, is(0.9857142857142858D));
         //and
-        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(33.0D));
-        assertThat(lowerRankingGeneAverageFpkmOnRemainingFactors, is(22.785714285714285D));
+        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(10.5D));
+        assertThat(lowerRankingGeneAverageFpkmOnRemainingFactors, is(7.142857142857143D));
 
         //and average fpkm is greater for gene at row 29 than gene at row 30
         assertThat(higherRankingGeneAverageFpkmOnSelectedFactors / higherRankingGeneAverageFpkmOnRemainingFactors,

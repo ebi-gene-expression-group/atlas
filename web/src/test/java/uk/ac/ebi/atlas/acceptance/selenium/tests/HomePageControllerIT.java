@@ -75,7 +75,7 @@ public class HomePageControllerIT extends SeleniumFixture {
     @Test
     public void checkMouseExperimentLink() {
         List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(5);
-        assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Mus%20musculus"));
-        assertThat(allExperimentLinksOfSpecies.get(1), containsString("experiments/E-MTAB-599"));
+        assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-MTAB-599"));
+        assertThat(allExperimentLinksOfSpecies.get(1), containsString("experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Mus%20musculus"));
     }
 }
