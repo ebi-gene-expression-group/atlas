@@ -56,6 +56,10 @@
         </td>
         <td width="130px" style="float:right">
             <div style="text-align:right">
+                <a id="display-experiment" class="button-image"
+                   title="Experiment Page" href="experiments/${experimentAccession}">
+                    <img src="resources/images/experiment_page_small.png"/></a>
+
                 <a id="display-analysis-methods" class="button-image" title="Analysis Methods"
                    href="experiments/${experimentAccession}/analysis-methods">
                     <img style="width:23px;height:23px"
