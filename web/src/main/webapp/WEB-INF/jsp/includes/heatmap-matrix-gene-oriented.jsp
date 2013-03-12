@@ -50,29 +50,40 @@
                         <a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile.geneId)}</a>
                     </display:column>
 
-                    <c:forEach var="factorValue" items="${allQueryFactors}">
+                    <c:forEach var="queryFactor" items="${allQueryFactors}">
 
                         <c:set var="expressionLevel"
-                               value="${geneProfile.getExpressionLevel(factorValue)}"/>
+                               value="${geneProfile.getExpressionLevel(queryFactor)}"/>
 
-                        <c:if test="${expressionLevel != 0}">
+                        <c:choose>
+                            <c:when test="${expressionLevel != 0}">
+                                <c:choose>
+                                    <c:when test="${type eq 'BASELINE'}">
+                                        <c:set var="cellColour"
+                                               value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="cellColour" value="yellow"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:set var="style" value="background-color:${cellColour}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="style" value=""/>
+                            </c:otherwise>
+                        </c:choose>
 
-                            <c:set var="cellColour"
-                                   value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
-
-                            <c:set var="style" value="background-color:${cellColour}"/>
-
-                        </c:if>
+                        <c:set var="columnHeader" value = "${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div tableHeaderCell data-organism-part='${factorValue.value}' class='rotate_text' title='${factorValue.value}'></div>"
+                                title="<div tableHeaderCell data-organism-part='${columnHeader}' class='rotate_text' title='${columnHeader}'></div>"
                                 headerClass='rotated_cell'
-                                style="${expressionLevel !=0 ? style : ''}">
+                                style="${style}">
 
-                            <c:if test="${expressionLevel != 0}">
+                            <c:if test="${not empty style}">
 
                                 <div class="hide_cell"
-                                     data-organism-part="${factorValue.value}" data-color="${cellColour}">
+                                     data-organism-part="${columnHeader}" data-color="${cellColour}">
                                     <fmt:formatNumber type="number"
                                                       maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                       value="${expressionLevel}" groupingUsed="false"/>

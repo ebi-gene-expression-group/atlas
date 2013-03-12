@@ -138,6 +138,9 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
                 model.addAttribute("geneProfiles", geneProfiles);
 
+                model.addAttribute("minExpressionLevel", geneProfiles.getMinExpressionLevel());
+                model.addAttribute("maxExpressionLevel", geneProfiles.getMaxExpressionLevel());
+
                 //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));

@@ -77,55 +77,14 @@
                     <table>
                         <tr>
                             <td>
-                        <span id="geneCount">Showing ${geneProfiles.size()}
-                            of ${geneProfiles.getTotalResultCount()} genes found:
-                        </span>
-                                <!--
-                                    <span data-help-loc="#resultInfo"/>
-                                -->
+                                <span id="geneCount">Showing ${geneProfiles.size()}
+                                    of ${geneProfiles.getTotalResultCount()} genes found:
+                                </span>
                             </td>
-
                             <td>
-                                <div style="float:right">
-                                    <table style="font-size:10px; float: right" id="heatmap-legenda">
-                                        <tr>
-                                            <td>
-                                        <span style="display:none" class="gradient-level-min">
-                                            <fmt:formatNumber type="number"
-                                                              value="${geneProfiles.getMinExpressionLevel()}"
-                                                              groupingUsed="false"/>
-                                        </span>
-                                            </td>
-                                            <td width="200px">
-                                                <div style="
-                                                        overflow:auto;
-                                                        background-image:
-                                                        -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
-
-                                                        background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
-
-                                                        background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
-
-                                                        filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
-                                                        startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
-                                                    &nbsp;
-                                                </div>
-                                            </td>
-                                            <td>
-                                        <span style="display:none" class="gradient-level-max">
-                                            <fmt:formatNumber type="number"
-                                                              value="${geneProfiles.getMaxExpressionLevel()}"
-                                                              groupingUsed="false"/>
-                                        </span>
-                                                <span data-help-loc="#gradient"/>
-                                            </td>
-
-                                        </tr>
-                                    </table>
-                                </div>
+                                <c:import url="includes/gradient-legend.jsp"/>
                             </td>
                         </tr>
-
                         <tr>
                             <td colspan="2">
                                 <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
@@ -217,8 +176,8 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var allQueryFactorValues = [${allQueryFactors.size()}];
-            <c:forEach varStatus="i" var="firstFactor" items="${allQueryFactors}">
-                allQueryFactorValues[${i.index}] = '${firstFactor.value}';
+            <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
+                allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
             </c:forEach>
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length)  {

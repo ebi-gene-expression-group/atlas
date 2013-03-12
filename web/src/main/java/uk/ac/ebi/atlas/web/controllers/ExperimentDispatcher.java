@@ -79,6 +79,7 @@ public class ExperimentDispatcher {
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
+    private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
 
     private BaselineExperimentsCache baselineExperimentsCache;
     private DifferentialExperimentsCache differentialExperimentsCache;
@@ -108,6 +109,8 @@ public class ExperimentDispatcher {
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
         Set<String> allSpecies = experiment.getSpecies();
+
+        model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
 
         model.addAttribute(ALL_SPECIES_ATTRIBUTE, StringUtils.join(allSpecies, ", "));
 

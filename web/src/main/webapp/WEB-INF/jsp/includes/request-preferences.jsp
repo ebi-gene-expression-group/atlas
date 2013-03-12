@@ -76,7 +76,7 @@
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>
                 </c:if>
-                <c:if test="${type eq 'differential'}">
+                <c:if test="${type eq 'DIFFERENTIAL'}">
                     <td>
                         hello boy
                     </td>
