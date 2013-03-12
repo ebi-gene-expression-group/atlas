@@ -45,7 +45,8 @@
         </td>
         <td width="100%">
             <div id="experimentDescription" style="font-weight: bold;">
-                <a href="experiments/${experimentAccession}">${experimentDescription}</a>
+                <a id="goto-experiment" title="Experiment Page"
+                   href="experiments/${experimentAccession}">${experimentDescription}</a>
                 <c:if test="${hasExtraInfo}">
                     <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
                         <img alt="more information" src="/gxa/resources/images/balloon-ellipsis-icon-left.png">
@@ -56,6 +57,10 @@
         </td>
         <td width="130px" style="float:right">
             <div style="text-align:right">
+                <a id="display-experiment" class="button-image"
+                   title="Experiment Page" href="experiments/${experimentAccession}">
+                    <img src="resources/images/experiment_page_small.png"/></a>
+
                 <a id="display-analysis-methods" class="button-image" title="Analysis Methods"
                    href="experiments/${experimentAccession}/analysis-methods">
                     <img style="width:23px;height:23px"
