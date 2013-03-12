@@ -1,7 +1,6 @@
-function initExperimentHeaderButtons(){
+function initExperimentHeaderButtons() {
 
     $('#display-analysis-methods').button().tooltip();
     $('#display-experiment-design').button().tooltip();
-    $('#goto-ae').button().tooltip();
-
+    $('#goto-ae').tooltip();
 }
