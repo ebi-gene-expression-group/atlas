@@ -34,8 +34,7 @@
 var searchFormModule = (function($) {
     "use strict";
 
-    var _cutoff,
-        _species;
+    var _species;
 
     function removeHttpParameters (string) {
         return string.split("?")[0];
@@ -145,8 +144,7 @@ var searchFormModule = (function($) {
     }
 
 
-    function init (cutoff, experimentAccession, watermarkLabel, species) {
-        _cutoff = cutoff;
+    function init (watermarkLabel, species) {
 
         _species = species;
 
