@@ -90,7 +90,8 @@
                         <span>
                             <form:checkbox id="specific"
                                            path="specific"
-                                           label="Specific"></form:checkbox>
+                                           label="Specific"
+                                            disabled="${type eq 'DIFFERENTIAL' ? true : false}"></form:checkbox>
                         </span>
                     <span data-help-loc="#specific" style="display:inline-block"/>
                 </td>
