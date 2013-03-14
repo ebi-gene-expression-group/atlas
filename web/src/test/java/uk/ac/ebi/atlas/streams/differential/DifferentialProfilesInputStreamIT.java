@@ -45,9 +45,9 @@ public class DifferentialProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
 
-    private static final String GENE_ID_1 = "ENSMUSG00000030105";
-    private static final String GENE_ID_2 = "ENSMUSG00000042428";
-    private static final String GENE_ID_3 = "ENSMUSG00000084215";
+    private static final String GENE_ID_1 = "ENSMUSG00000050370";
+    private static final String GENE_ID_2 = "ENSMUSG00000024799";
+    private static final String GENE_ID_3 = "ENSMUSG00000018930";
 
     @Inject
     private InputStreamFactory inputStreamFactory;
@@ -74,9 +74,9 @@ public class DifferentialProfilesInputStreamIT {
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_1));
         assertThat(differentialProfile.getSpecificity(), is(1));
         double expressionLevel = differentialProfile.getExpressionLevel(contrast);
-        assertThat(expressionLevel, is(1.0));
+        assertThat(expressionLevel, is(1.70428798138445E-6));
         DifferentialExpression differentialExpression = differentialProfile.getExpression(contrast);
-        assertThat(differentialExpression.getFoldChange(), is(0.474360080385946));
+        assertThat(differentialExpression.getFoldChange(), is(3.01033089730209));
 
         //given we poll again
         differentialProfile = subject.readNext();
@@ -84,8 +84,10 @@ public class DifferentialProfilesInputStreamIT {
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_2));
         assertThat(differentialProfile.getSpecificity(), is(1));
         expressionLevel = differentialProfile.getExpressionLevel(contrast);
+        assertThat(expressionLevel, is(0.0137444998099392));
+
         differentialExpression = differentialProfile.getExpression(contrast);
-        assertThat(differentialExpression.getFoldChange(), is(-0.0177584280774704));
+        assertThat(differentialExpression.getFoldChange(), is(-1.15843751459071));
 
         differentialProfile = subject.readNext();
 
@@ -93,9 +95,9 @@ public class DifferentialProfilesInputStreamIT {
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_3));
         assertThat(differentialProfile.getSpecificity(), is(1));
         expressionLevel = differentialProfile.getExpressionLevel(contrast);
-        assertThat(expressionLevel, is(1.0));
+        assertThat(expressionLevel, is(0.00188954906204623));
         differentialExpression = differentialProfile.getExpression(contrast);
-        assertThat(differentialExpression.getFoldChange(), is(1.74803957316317));
+        assertThat(differentialExpression.getFoldChange(), is(3.2943463328998));
 
     }
 
@@ -108,7 +110,7 @@ public class DifferentialProfilesInputStreamIT {
             ++countProfiles;
         }
 
-        assertThat(countProfiles, is(24869L));
+        assertThat(countProfiles, is(49L));
     }
 
 
