@@ -71,17 +71,17 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
     }
 
 
-    public BaselineProfilePrecondition setSpecific(boolean specific) {
+    BaselineProfilePrecondition setSpecific(boolean specific) {
         this.specific = specific;
         return this;
     }
 
-    public BaselineProfilePrecondition setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
+    BaselineProfilePrecondition setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
         return this;
     }
 
-    public BaselineProfilePrecondition setAllQueryFactors(Set<Factor> allQueryFactors) {
+    BaselineProfilePrecondition setAllQueryFactors(Set<Factor> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }

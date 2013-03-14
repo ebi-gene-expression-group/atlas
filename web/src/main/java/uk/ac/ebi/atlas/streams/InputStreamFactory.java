@@ -28,6 +28,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
@@ -93,9 +95,11 @@ public class InputStreamFactory {
         return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
     }
 
-    public DifferentialProfilesInputStream createDifferentialProfileInputStream(String experimentAccession) {
+    public DifferentialProfilesInputStream createDifferentialProfileInputStream(String experimentAccession, double cutoff, Regulation regulation) {
         CSVReader csvReader = buildCsvReader(experimentAccession, differentialDataFileUrlTemplate);
-        return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder);
+        DifferentialExpressionPrecondition differentialExpressionPrecondition = new DifferentialExpressionPrecondition();
+        differentialExpressionPrecondition.setCutoff(cutoff).setRegulation(regulation);
+        return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, differentialExpressionPrecondition);
     }
 
 }

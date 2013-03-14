@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
@@ -24,5 +25,5 @@
 
 
 <div class="filters-frame">
-    <div class="filter-name">UP/DOWN</div>
+    <form:radiobuttons path="regulation" items="${regulationValues}" cssStyle="display: block;" />
 </div>

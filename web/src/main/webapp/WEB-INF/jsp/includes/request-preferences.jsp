@@ -40,9 +40,9 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
-                <c:if test="${selectedFilterFactors.size() > 0}">
+                <c:if test="${selectedFilterFactors.size() > 0 || type eq 'DIFFERENTIAL'}">
                     <td>
-                        <label>Filtered by</label>
+                        <label>${type eq 'BASELINE' ? 'Filtered by' : 'Differential'}</label>
                         <span data-help-loc="#filterBy"></span>
                     </td>
                 </c:if>
@@ -74,6 +74,11 @@
                 <c:if test="${selectedFilterFactors.size() > 0}">
                     <td>
                         <c:import url="includes/filterby-menu.jsp"/>
+                    </td>
+                </c:if>
+                <c:if test="${type eq 'DIFFERENTIAL'}">
+                    <td>
+                        <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
                 <td>

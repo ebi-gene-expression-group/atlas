@@ -39,6 +39,7 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -78,6 +79,7 @@ public class DifferentialQueryPageController {
         SortedSet<Contrast> contrasts = differentialExperiment.getContrasts();
 
         model.addAttribute("allQueryFactors", contrasts);
+        model.addAttribute("regulationValues", Regulation.values());
 
         if(contrasts.size() == 1){
             preferences.setQueryFactorValues(getContrastNames(contrasts));
@@ -95,7 +97,7 @@ public class DifferentialQueryPageController {
                 }
 
                 RankDifferentialProfilesCommand rankCommand =
-                        new RankDifferentialProfilesCommand(selectedQueryContrasts, preferences.getCutoff(), preferences.getHeatmapMatrixSize(),
+                        new RankDifferentialProfilesCommand(selectedQueryContrasts, preferences.getCutoff(), preferences.getRegulation(), preferences.getHeatmapMatrixSize(),
                                 preferences.getGeneQuery(), solrClient, differentialExperiment.getSpecies().iterator().next(),inputStreamFactory);
 
                 GeneProfilesList<DifferentialProfile> differentialProfiles = rankCommand.execute(differentialExperiment);

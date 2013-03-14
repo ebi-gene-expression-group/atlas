@@ -20,32 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web;
+package uk.ac.ebi.atlas.model.differential;
 
 
-import uk.ac.ebi.atlas.model.differential.Regulation;
+public enum Regulation {
 
-public class DifferentialRequestPreferences extends RequestPreferences{
-
-    private static final double DEFAULT_CUTOFF = 0.05d;
-    private Regulation regulation = Regulation.UP_DOWN;
-
-    @Override
-    public Double getDefaultCutoff(){
-        return DEFAULT_CUTOFF;
-    }
-
-    @Override
-    protected String getDefaultGeneQuery(){
-        return "";
-    }
-
-    public Regulation getRegulation(){
-        return regulation;
-    }
-
-    public void setRegulation(Regulation regulation) {
-        this.regulation = regulation;
-    }
+    UP, DOWN, UP_DOWN
 
 }

@@ -38,7 +38,7 @@ public class DifferentialExpression implements GeneExpression{
         this.contrast = contrast;
     }
 
-    double getPValue() {
+    private double getPValue() {
         return pValue;
     }
 

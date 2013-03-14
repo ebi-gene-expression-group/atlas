@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.streams.differential;
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 import uk.ac.ebi.atlas.streams.TsvRowBuffer;
@@ -32,10 +33,14 @@ import uk.ac.ebi.atlas.streams.TsvRowBuffer;
 public class DifferentialProfilesInputStream extends TsvInputStream<DifferentialProfile> {
 
 
+    private DifferentialExpressionPrecondition differentialExpressionPrecondition;
+
     public DifferentialProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , DifferentialExpressionsBuffer.Builder expressionsBufferBuilder) {
+            , DifferentialExpressionsBuffer.Builder expressionsBufferBuilder
+            , DifferentialExpressionPrecondition differentialExpressionPrecondition) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
+        this.differentialExpressionPrecondition = differentialExpressionPrecondition;
     }
 
     @Override
@@ -44,7 +49,7 @@ public class DifferentialProfilesInputStream extends TsvInputStream<Differential
         //we need to reload because the first line can only be used to extract the gene ID
         getTsvRowBuffer().reload(values);
 
-        DifferentialProfile differentialProfile = new DifferentialProfile(values[TsvRowBuffer.GENE_ID_COLUMN]);
+        DifferentialProfile differentialProfile = new DifferentialProfile(values[TsvRowBuffer.GENE_ID_COLUMN], differentialExpressionPrecondition);
 
         DifferentialExpression expression;
 

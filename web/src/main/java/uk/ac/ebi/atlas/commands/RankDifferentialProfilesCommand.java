@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
@@ -48,15 +49,17 @@ public class RankDifferentialProfilesCommand{
 
     private Set<Contrast> selectedContrasts;
     private double cutoff;
+    private Regulation regulation;
     private int rankingSize;
     private String geneQuery;
     private SolrClient solrClient;
     private String species;
     private InputStreamFactory inputStreamFactory;
 
-    public RankDifferentialProfilesCommand(Set<Contrast> selectedContrasts, double cutoff, int rankingSize, String geneQuery, SolrClient solrClient, String species, InputStreamFactory inputStreamFactory){
+    public RankDifferentialProfilesCommand(Set<Contrast> selectedContrasts, double cutoff, Regulation regulation, int rankingSize, String geneQuery, SolrClient solrClient, String species, InputStreamFactory inputStreamFactory){
         this.selectedContrasts = selectedContrasts;
         this.cutoff = cutoff;
+        this.regulation = regulation;
         this.rankingSize = rankingSize;
         this.geneQuery = geneQuery;
         this.solrClient = solrClient;
@@ -74,7 +77,7 @@ public class RankDifferentialProfilesCommand{
 
         }
 
-        ObjectInputStream<DifferentialProfile> geneProfileInputStream = inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession());
+        ObjectInputStream<DifferentialProfile> geneProfileInputStream = inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession(), cutoff, regulation);
 
         try (ObjectInputStream<DifferentialProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, selectedContrasts)) {
 

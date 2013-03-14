@@ -27,8 +27,11 @@ import uk.ac.ebi.atlas.model.GeneProfile;
 
 public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
 
-    public DifferentialProfile(String geneId) {
+    private DifferentialExpressionPrecondition expressionPrecondition;
+
+    public DifferentialProfile(String geneId, DifferentialExpressionPrecondition expressionPrecondition) {
         super(geneId);
+        this.expressionPrecondition = expressionPrecondition;
     }
 
     @Override
@@ -37,9 +40,11 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
     }
 
     public DifferentialProfile addExpression(DifferentialExpression expression){
-        //use cutoff precondition here
-        this.addExpression(expression.getContrast(), expression);
+        if (expressionPrecondition.apply(expression)){
+            this.addExpression(expression.getContrast(), expression);
+        }
         return this;
     }
+
 
 }

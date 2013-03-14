@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -54,7 +55,7 @@ public class RankDifferentialProfilesCommandTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new RankDifferentialProfilesCommand(null, 0D, 10, null, null, null,null);
+        subject = new RankDifferentialProfilesCommand(null, 0D, Regulation.UP_DOWN, 10, null, null, null, null);
 
         when(differentialProfileMock1.getMinExpressionLevel()).thenReturn(3D);
         when(differentialProfileMock2.getMinExpressionLevel()).thenReturn(5D);

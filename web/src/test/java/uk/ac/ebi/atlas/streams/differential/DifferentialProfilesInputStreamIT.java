@@ -29,10 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
@@ -64,7 +61,7 @@ public class DifferentialProfilesInputStreamIT {
 
     @Before
     public void initSubject() throws Exception {
-        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
+        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION, 0.05D, Regulation.UP_DOWN);
         DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         contrast = differentialExperiment.getContrasts().first();
     }
