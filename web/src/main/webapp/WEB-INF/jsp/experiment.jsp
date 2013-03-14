@@ -153,7 +153,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
-            if ($.browser.msie && $.browser.version <= 8.0) {
+            if (($.browser.msie && $.browser.version <= 8.0) || '${type}'==='DIFFERENTIAL' ) {
 
                 //configurations required for any IE 8 or lower browser
 
@@ -192,7 +192,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            searchFormModule.init(${preferences.cutoff}, '${experimentAccession}', "(any ${queryFactorName}s)", '${species}');
+            searchFormModule.init(${preferences.cutoff}, "(any ${queryFactorName}s)", '${species}');
 
             helpTooltipsModule.init('experiment');
 
