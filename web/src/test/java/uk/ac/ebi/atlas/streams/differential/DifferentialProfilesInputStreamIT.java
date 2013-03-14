@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,18 +29,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -56,11 +55,18 @@ public class DifferentialProfilesInputStreamIT {
     @Inject
     private InputStreamFactory inputStreamFactory;
 
+    @Inject
+    private DifferentialExperimentsCache differentialExperimentsCache;
+
     private DifferentialProfilesInputStream subject;
+    private Contrast contrast;
+
 
     @Before
     public void initSubject() throws Exception {
         subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
+        DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        contrast = differentialExperiment.getContrasts().first();
     }
 
     @Test
@@ -69,24 +75,31 @@ public class DifferentialProfilesInputStreamIT {
         DifferentialProfile differentialProfile = subject.readNext();
         //then
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_1));
-        Iterator<DifferentialExpression> expressionsIterator = differentialProfile.iterator();
-        DifferentialExpression firstExpression = expressionsIterator.next();
-        assertThat(firstExpression.getContrast().getId(), is("g1_g2"));
-        assertThat(firstExpression.getFoldChange(), is(0.474360080385946D));
-        //and there are no more expressions
-        assertThat(expressionsIterator.hasNext(), is(false));
+        assertThat(differentialProfile.getSpecificity(), is(1));
+        double expressionLevel = differentialProfile.getExpressionLevel(contrast);
+        assertThat(expressionLevel, is(1.0));
+        DifferentialExpression differentialExpression = differentialProfile.getExpression(contrast);
+        assertThat(differentialExpression.getFoldChange(), is(0.474360080385946));
 
         //given we poll again
         differentialProfile = subject.readNext();
         //then
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_2));
-        assertThat(differentialProfile.iterator().next().getFoldChange(), is(-0.0177584280774704));
+        assertThat(differentialProfile.getSpecificity(), is(1));
+        expressionLevel = differentialProfile.getExpressionLevel(contrast);
+        differentialExpression = differentialProfile.getExpression(contrast);
+        assertThat(differentialExpression.getFoldChange(), is(-0.0177584280774704));
 
         differentialProfile = subject.readNext();
 
         //given we poll again
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_3));
-        assertThat(differentialProfile.iterator().next().getFoldChange(), is(1.74803957316317));
+        assertThat(differentialProfile.getSpecificity(), is(1));
+        expressionLevel = differentialProfile.getExpressionLevel(contrast);
+        assertThat(expressionLevel, is(1.0));
+        differentialExpression = differentialProfile.getExpression(contrast);
+        assertThat(differentialExpression.getFoldChange(), is(1.74803957316317));
+
     }
 
 

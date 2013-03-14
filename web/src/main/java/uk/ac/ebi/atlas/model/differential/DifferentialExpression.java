@@ -1,6 +1,30 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model.differential;
 
-public class DifferentialExpression {
+import uk.ac.ebi.atlas.model.GeneExpression;
+
+public class DifferentialExpression implements GeneExpression{
 
     private double pValue;
 
@@ -14,7 +38,7 @@ public class DifferentialExpression {
         this.contrast = contrast;
     }
 
-    public double getPValue() {
+    double getPValue() {
         return pValue;
     }
 
@@ -28,8 +52,12 @@ public class DifferentialExpression {
 
     @Override
     public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null || getClass() != other.getClass()) return false;
+        if (this == other) {
+            return true;
+        }
+        if ((null == other) || (getClass() != other.getClass())) {
+            return false;
+        }
 
         DifferentialExpression that = (DifferentialExpression) other;
 
@@ -50,5 +78,10 @@ public class DifferentialExpression {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + contrast.hashCode();
         return result;
+    }
+
+    @Override
+    public double getLevel() {
+        return getPValue();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,10 +29,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AbstractGeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 
 import java.io.IOException;
 
@@ -45,7 +45,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfilesInputStreamTest {
+public class BaselineProfilesInputStreamTest {
 
     public static final String RUN_ACCESSION_1 = "RUN_ACCESSION_1";
     public static final String RUN_ACCESSION_2 = "RUN_ACCESSION_2";
@@ -61,7 +61,7 @@ public class GeneProfilesInputStreamTest {
 
     private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
 
-    private GeneProfilesInputStream subject;
+    private BaselineProfilesInputStream subject;
 
 
     @Before
@@ -84,10 +84,10 @@ public class GeneProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headers)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
-        GeneProfile.Builder geneProfileBuilderMock = mock(GeneProfile.Builder.class);
+        BaselineProfile.Builder geneProfileBuilderMock = mock(BaselineProfile.Builder.class);
         when(geneProfileBuilderMock.addExpression(any(BaselineExpression.class))).thenReturn(geneProfileBuilderMock);
 
-        subject = new GeneProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);
+        subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);
 
     }
 
@@ -129,7 +129,7 @@ public class GeneProfilesInputStreamTest {
         //and
         given(csvReaderMock.readNext()).willReturn(null);
         //when
-        AbstractGeneProfile geneProfile = subject.readNext();
+        GeneProfile geneProfile = subject.readNext();
         //then
         verify(csvReaderMock, times(2)).readNext();
         //and

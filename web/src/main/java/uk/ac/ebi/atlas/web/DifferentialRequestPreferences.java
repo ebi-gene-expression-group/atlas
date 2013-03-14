@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,21 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.web;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
-public class GeneExpressions implements Iterable<BaselineExpression> {
-    Set<BaselineExpression> expressions = new HashSet<>();
+public class DifferentialRequestPreferences extends RequestPreferences{
+
+    private static final double DEFAULT_CUTOFF = 0.05d;
 
     @Override
-    public Iterator<BaselineExpression> iterator() {
-        return expressions.iterator();
+    public Double getDefaultCutoff(){
+        return DEFAULT_CUTOFF;
     }
 
-    public void addExpression(BaselineExpression expression) {
-        expressions.add(expression);
+    @Override
+    protected String getDefaultGeneQuery(){
+        return "";
     }
+
 }

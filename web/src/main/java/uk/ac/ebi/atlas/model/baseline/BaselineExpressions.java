@@ -20,26 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.model.baseline;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
-import uk.ac.ebi.atlas.model.GeneProfile;
-
-public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
-
-    public DifferentialProfile(String geneId) {
-        super(geneId);
-    }
+public class BaselineExpressions implements Iterable<BaselineExpression> {
+    Set<BaselineExpression> expressions = new HashSet<>();
 
     @Override
-    public DifferentialExpression getExpression(Contrast contrast){
-        return super.getExpression(contrast);
+    public Iterator<BaselineExpression> iterator() {
+        return expressions.iterator();
     }
 
-    public DifferentialProfile addExpression(DifferentialExpression expression){
-        //use cutoff precondition here
-        this.addExpression(expression.getContrast(), expression);
-        return this;
+    public void addExpression(BaselineExpression expression) {
+        expressions.add(expression);
     }
-
 }

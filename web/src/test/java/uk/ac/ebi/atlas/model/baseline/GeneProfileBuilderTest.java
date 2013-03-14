@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,12 +46,12 @@ import static org.mockito.Mockito.when;
 public class GeneProfileBuilderTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
-    private GeneProfile.Builder subject;
+    private BaselineProfile.Builder subject;
 
     @Mock
-    private GeneProfilePrecondition geneProfilePreconditionMock;
+    private BaselineProfilePrecondition baselineProfilePreconditionMock;
     @Mock
-    private GeneExpressionPrecondition geneExpressionPreconditionMock;
+    private BaselineExpressionPrecondition baselineExpressionPreconditionMock;
 
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
@@ -68,7 +68,7 @@ public class GeneProfileBuilderTest {
 
     @Before
     public void initSubject() {
-        subject = new GeneProfile.Builder(requestContextMock, geneExpressionPreconditionMock, geneProfilePreconditionMock);
+        subject = new BaselineProfile.Builder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
 
         when(requestContextMock.getCutoff()).thenReturn(0d);
         when(requestContextMock.isSpecific()).thenReturn(true);
@@ -77,11 +77,11 @@ public class GeneProfileBuilderTest {
         when(requestContextMock.getFilteredBySpecies()).thenReturn("homo");
         when(requestContextMock.getSelectedFilterFactors()).thenReturn(Collections.EMPTY_SET);
 
-        when(geneExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(geneExpressionPreconditionMock);
-        when(geneExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(geneExpressionPreconditionMock);
-        when(geneProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
-        when(geneProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
-        when(geneProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(geneProfilePreconditionMock);
+        when(baselineExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(baselineExpressionPreconditionMock);
+        when(baselineExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(baselineExpressionPreconditionMock);
+        when(baselineProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
+        when(baselineProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
+        when(baselineProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(baselineProfilePreconditionMock);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -109,8 +109,8 @@ public class GeneProfileBuilderTest {
     @Test
     public void createShouldReturnGeneProfileIfAtLeastOneExpressionSatisfiesPreconditionsWithoutSelectedQueryFactors() {
         //given
-        given(geneExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
-        given(geneProfilePreconditionMock.apply(Matchers.any(GeneProfile.class))).willReturn(true);
+        given(baselineExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(baselineProfilePreconditionMock.apply(Matchers.any(BaselineProfile.class))).willReturn(true);
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock2.isGreaterThan(0d)).willReturn(true);
@@ -130,10 +130,10 @@ public class GeneProfileBuilderTest {
         //given
         Factor selectedFactorMock = new Factor(QUERY_FACTOR_TYPE, "value1");
 
-        given(geneExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
-        given(geneExpressionPreconditionMock.apply(expressionMock2)).willReturn(false);
+        given(baselineExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(baselineExpressionPreconditionMock.apply(expressionMock2)).willReturn(false);
 
-        given(geneProfilePreconditionMock.apply(Matchers.any(GeneProfile.class))).willReturn(true);
+        given(baselineProfilePreconditionMock.apply(Matchers.any(BaselineProfile.class))).willReturn(true);
 
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
@@ -155,9 +155,9 @@ public class GeneProfileBuilderTest {
         Factor selectedFactorMock = new Factor(QUERY_FACTOR_TYPE, "value1");
         Factor otherFactorMock = new Factor(QUERY_FACTOR_TYPE, "value2");
 
-        given(geneExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
-        given(geneExpressionPreconditionMock.apply(expressionMock2)).willReturn(true);
-        given(geneProfilePreconditionMock.apply(Matchers.any(GeneProfile.class))).willReturn(true);
+        given(baselineExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(baselineExpressionPreconditionMock.apply(expressionMock2)).willReturn(true);
+        given(baselineProfilePreconditionMock.apply(Matchers.any(BaselineProfile.class))).willReturn(true);
         //and
         given(expressionMock1.isGreaterThan(0d)).willReturn(true);
         given(expressionMock1.getLevel()).willReturn(5d);

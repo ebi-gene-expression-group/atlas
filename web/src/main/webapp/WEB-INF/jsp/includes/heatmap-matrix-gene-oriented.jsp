@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%--
-  ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -76,17 +76,21 @@
                         <c:set var="columnHeader" value = "${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div tableHeaderCell data-organism-part='${columnHeader}' class='rotate_text' title='${columnHeader}'></div>"
+                                title="<div tableHeaderCell data-organism-part=\"${columnHeader}\" class=\"rotate_text\" title=\"${columnHeader}\"></div>"
                                 headerClass='rotated_cell'
                                 style="${style}">
 
-                            <c:if test="${not empty style}">
+                            <c:if test="${expressionLevel != 0}">
+                                <c:if test="${type eq 'BASELINE'}">
+                                    <fmt:formatNumber type="number"
+                                                      maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
+                                                      value="${expressionLevel}" groupingUsed="false"
+                                                      var="expressionLevel"/>
+                                </c:if>
 
                                 <div class="hide_cell"
                                      data-organism-part="${columnHeader}" data-color="${cellColour}">
-                                    <fmt:formatNumber type="number"
-                                                      maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
-                                                      value="${expressionLevel}" groupingUsed="false"/>
+                                        ${expressionLevel}
                                 </div>
 
                             </c:if>

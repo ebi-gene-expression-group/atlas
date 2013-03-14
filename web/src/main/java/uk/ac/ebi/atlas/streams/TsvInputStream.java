@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import java.io.IOException;
 
-public abstract class TsvInputStream<T extends Iterable<?>> implements ObjectInputStream<T> {
+public abstract class TsvInputStream<T> implements ObjectInputStream {
 
     private static final Logger logger = Logger.getLogger(TsvInputStream.class);
 
@@ -52,7 +52,7 @@ public abstract class TsvInputStream<T extends Iterable<?>> implements ObjectInp
 
     @Override
     public T readNext() {
-        T iterableProfile;
+        T geneProfile;
 
         do {
             String[] values = readCsvLine();
@@ -60,11 +60,11 @@ public abstract class TsvInputStream<T extends Iterable<?>> implements ObjectInp
             if (values == null) {
                 return null;
             }
-            iterableProfile = buildObjectFromTsvValues(values);
+            geneProfile = buildObjectFromTsvValues(values);
 
-        } while (iterableProfile == null);
+        } while (geneProfile == null);
 
-        return iterableProfile;
+        return geneProfile;
 
     }
 

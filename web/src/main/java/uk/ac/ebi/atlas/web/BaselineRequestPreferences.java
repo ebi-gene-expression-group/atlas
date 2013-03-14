@@ -20,26 +20,34 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.web;
+
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 
-import uk.ac.ebi.atlas.model.GeneProfile;
+public class BaselineRequestPreferences extends RequestPreferences{
 
-public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
+    private static final double DEFAULT_CUTOFF = 0.5d;
+    private static final String DEFAULT_GENE_QUERY = "protein_coding";
 
-    public DifferentialProfile(String geneId) {
-        super(geneId);
+    private NumberUtils numberUtils = new NumberUtils();
+
+    @Override
+    protected String getDefaultGeneQuery(){
+        return DEFAULT_GENE_QUERY;
     }
 
     @Override
-    public DifferentialExpression getExpression(Contrast contrast){
-        return super.getExpression(contrast);
+    public Double getDefaultCutoff(){
+        return DEFAULT_CUTOFF;
     }
 
-    public DifferentialProfile addExpression(DifferentialExpression expression){
-        //use cutoff precondition here
-        this.addExpression(expression.getContrast(), expression);
-        return this;
+    @Override
+    public void setCutoff(Double cutoff){
+        if(cutoff != null) {
+            cutoff = numberUtils.round(cutoff);
+        }
+        super.setCutoff(cutoff);
     }
 
 }

@@ -42,17 +42,17 @@ import static org.mockito.Mockito.when;
 public class FilterFactorMenuTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
-    private static final String MATERIAL_TYPE = "MATERIAL_TYPE";
+    private static final String RNA = "RNA";
     private static final String CELLULAR_COMPONENT = "CELLULAR_COMPONENT";
     private static final String ORGANISM_PART_NAME = "organism part";
-    private static final String MATERIAL_TYPE_NAME = "RNA type";
+    private static final String RNA_TYPE_NAME = "RNA";
     private static final String CELLULAR_COMPONENT_NAME = "cellular component";
 
     Factor firstFactor = new Factor(ORGANISM_PART, "liver");
     Factor secondFactor = new Factor(ORGANISM_PART, "heart");
     Factor thirdFactor = new Factor(ORGANISM_PART, "brain");
-    Factor forthFactor = new Factor(MATERIAL_TYPE, "long poly a rna");
-    Factor fifthFactor = new Factor(MATERIAL_TYPE, "total rna");
+    Factor forthFactor = new Factor(RNA, "long poly a rna");
+    Factor fifthFactor = new Factor(RNA, "total rna");
     Factor sixthFactor = new Factor(CELLULAR_COMPONENT, "plasma");
     Factor sevenFactor = new Factor(CELLULAR_COMPONENT, "whole cell");
 
@@ -95,7 +95,7 @@ public class FilterFactorMenuTest {
         when(experimentalFactorsMock.getCoOccurringFactors(sevenFactor)).thenReturn(putIntoSortedSet(secondFactor, thirdFactor, forthFactor, fifthFactor));
 
         when(experimentalFactorsMock.getFactorName(ORGANISM_PART)).thenReturn(ORGANISM_PART_NAME);
-        when(experimentalFactorsMock.getFactorName(MATERIAL_TYPE)).thenReturn(MATERIAL_TYPE_NAME);
+        when(experimentalFactorsMock.getFactorName(RNA)).thenReturn(RNA_TYPE_NAME);
         when(experimentalFactorsMock.getFactorName(CELLULAR_COMPONENT)).thenReturn(CELLULAR_COMPONENT_NAME);
 
         subject = new FilterFactorMenu(experimentalFactorsMock, allFactors);
@@ -103,7 +103,7 @@ public class FilterFactorMenuTest {
 
     @Test
     public void testFirstFactorLevel() {
-        assertThat(subject.getFactors(), contains(sixthFactor, sevenFactor, forthFactor, fifthFactor, thirdFactor, secondFactor, firstFactor));
+        assertThat(subject.getFactors(), contains(sixthFactor, sevenFactor, thirdFactor, secondFactor, firstFactor, forthFactor, fifthFactor));
     }
 
     @Test
@@ -133,9 +133,9 @@ public class FilterFactorMenuTest {
 
     @Test
     public void testGetAllFactorNames() {
-        assertThat(subject.getAllFactorNames(), contains(MATERIAL_TYPE_NAME, CELLULAR_COMPONENT_NAME, ORGANISM_PART_NAME));
-        assertThat(subject.filterOutByFactor(firstFactor).getAllFactorNames(), contains(MATERIAL_TYPE_NAME, CELLULAR_COMPONENT_NAME));
-        assertThat(subject.filterOutByFactor(sixthFactor).filterOutByFactor(firstFactor).getAllFactorNames(), contains(MATERIAL_TYPE_NAME));
+        assertThat(subject.getAllFactorNames(), contains(RNA_TYPE_NAME, CELLULAR_COMPONENT_NAME, ORGANISM_PART_NAME));
+        assertThat(subject.filterOutByFactor(firstFactor).getAllFactorNames(), contains(RNA_TYPE_NAME, CELLULAR_COMPONENT_NAME));
+        assertThat(subject.filterOutByFactor(sixthFactor).filterOutByFactor(firstFactor).getAllFactorNames(), contains(RNA_TYPE_NAME));
     }
 
 

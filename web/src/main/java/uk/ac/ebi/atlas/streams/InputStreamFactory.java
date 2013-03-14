@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer;
-import uk.ac.ebi.atlas.streams.baseline.GeneExpressionsInputStream;
-import uk.ac.ebi.atlas.streams.baseline.GeneProfilesInputStream;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
+import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
 import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBuffer;
 import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesInputStream;
 
@@ -60,11 +60,11 @@ public class InputStreamFactory {
 
     private BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder;
     private DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder;
-    private GeneProfile.Builder geneProfileBuilder;
+    private BaselineProfile.Builder geneProfileBuilder;
 
 
     @Inject
-    public InputStreamFactory(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder, DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder, GeneProfile.Builder geneProfileBuilder) {
+    public InputStreamFactory(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder, DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder, BaselineProfile.Builder geneProfileBuilder) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.differentialExpressionsBufferBuilder = differentialExpressionsBufferBuilder;
         this.geneProfileBuilder = geneProfileBuilder;
@@ -83,14 +83,14 @@ public class InputStreamFactory {
         }
     }
 
-    public ObjectInputStream<GeneProfile> createGeneProfileInputStream(String experimentAccession) {
+    public ObjectInputStream<BaselineProfile> createGeneProfileInputStream(String experimentAccession) {
         CSVReader csvReader = buildCsvReader(experimentAccession, baselineDataFileUrlTemplate);
-        return new GeneProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, geneProfileBuilder);
+        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, geneProfileBuilder);
     }
 
-    public GeneExpressionsInputStream createGeneExpressionsInputStream(String experimentAccession) {
+    public BaselineExpressionsInputStream createGeneExpressionsInputStream(String experimentAccession) {
         CSVReader csvReader = buildCsvReader(experimentAccession, baselineDataFileUrlTemplate);
-        return new GeneExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
+        return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
     }
 
     public DifferentialProfilesInputStream createDifferentialProfileInputStream(String experimentAccession) {

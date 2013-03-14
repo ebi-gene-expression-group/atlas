@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfileTest {
+public class BaselineProfileTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
     @Mock
@@ -57,7 +57,7 @@ public class GeneProfileTest {
     private BaselineExpression expression_2 = new BaselineExpression(3D, new FactorSet().add(factor2));
     private BaselineExpression expression_3 = new BaselineExpression(3.001D, new FactorSet().add(factor3));
 
-    private GeneProfile subject;
+    private BaselineProfile subject;
 
     private double cutoff  = 0.5;
     //private GeneProfile.Builder geneProfileBuilder;
@@ -66,7 +66,7 @@ public class GeneProfileTest {
     public void setUp() throws Exception {
         when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
 
-        subject = new GeneProfile(GENE_ID);
+        subject = new BaselineProfile(GENE_ID);
 
         subject.add(expression_1,QUERY_FACTOR_TYPE).add(expression_2,QUERY_FACTOR_TYPE).add(expression_3,QUERY_FACTOR_TYPE);
 

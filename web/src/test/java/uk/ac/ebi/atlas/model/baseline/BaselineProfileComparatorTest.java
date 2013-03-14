@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Sets;
@@ -7,9 +29,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
-import uk.ac.ebi.atlas.model.baseline.GeneProfileComparator;
 
 import java.util.Set;
 
@@ -20,20 +39,20 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfileComparatorTest {
+public class BaselineProfileComparatorTest {
 
-    private GeneProfileComparator subject;
+    private BaselineProfileComparator subject;
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
 
     @Mock
-    private GeneProfile geneWithSpecificity1;
+    private BaselineProfile geneWithSpecificity1;
 
     @Mock
-    private GeneProfile geneWithSpecificity16;
+    private BaselineProfile geneWithSpecificity16;
 
     @Mock
-    private GeneProfile geneWithSpecificity16AndSmallerExpressionLevel;
+    private BaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
     private Factor factor1 = new Factor(QUERY_FACTOR_TYPE, "nose");
     private Factor factor2 = new Factor(QUERY_FACTOR_TYPE, "trunk");
@@ -65,7 +84,7 @@ public class GeneProfileComparatorTest {
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
 
-        subject = new GeneProfileComparator(true, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(true, null, allOrganismParts, cutoff);
 
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
@@ -78,7 +97,7 @@ public class GeneProfileComparatorTest {
     @Test
     public void highSpecificityShouldPreceedLowSpecificity() {
 
-        subject = new GeneProfileComparator(true, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(true, null, allOrganismParts, cutoff);
 
         //when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -91,7 +110,7 @@ public class GeneProfileComparatorTest {
     @Test
     public void sameSpecificityShouldBeSortedByExpressionLevel() {
 
-        subject = new GeneProfileComparator(true, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(true, null, allOrganismParts, cutoff);
 
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity16AndSmallerExpressionLevel);
@@ -105,7 +124,7 @@ public class GeneProfileComparatorTest {
     @Test
     public void higherAverageAcrossAllTissues() {
 
-        subject = new GeneProfileComparator(false, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(false, null, allOrganismParts, cutoff);
 
         // when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -118,7 +137,7 @@ public class GeneProfileComparatorTest {
     @Test
     public void higherAverageAcrossSelectedTissues() {
 
-        subject = new GeneProfileComparator(false, selectedOrganismParts, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, cutoff);
 
         // when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -130,7 +149,7 @@ public class GeneProfileComparatorTest {
 
     @Test
     public void testGetExpressionLevelFoldChangeOnForSpecificity1ShouldIncreaseExpLevel() {
-        subject = new GeneProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
+        subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
 
         double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity1);
         assertThat(averageExpressionLevel, Matchers.is(10d));
@@ -140,7 +159,7 @@ public class GeneProfileComparatorTest {
 
     @Test
     public void testGetExpressionLevelFoldChangeOnForCutoff0() {
-        subject = new GeneProfileComparator(false, selectedOrganismParts, allOrganismParts, 0d);
+        subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0d);
 
         double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity1);
         assertThat(averageExpressionLevel, is(55.55555555555556));
@@ -149,7 +168,7 @@ public class GeneProfileComparatorTest {
 
     @Test
     public void testGetExpressionLevelFoldChangeOnForSpecificityGraterThen1() {
-        subject = new GeneProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
+        subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
 
         double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity16);
         assertThat(averageExpressionLevel, is(2.0));

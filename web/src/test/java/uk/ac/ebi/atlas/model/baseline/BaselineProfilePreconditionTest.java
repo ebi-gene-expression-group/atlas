@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,9 +34,9 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfilePreconditionTest {
+public class BaselineProfilePreconditionTest {
 
-    private GeneExpressionPrecondition subject;
+    private BaselineExpressionPrecondition subject;
 
     private Factor factor1 = new Factor("type1", "value1");
     private Factor factor2 = new Factor("type2", "value2");
@@ -57,7 +57,7 @@ public class GeneProfilePreconditionTest {
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(true);
 
         //when
-        subject = new GeneExpressionPrecondition();
+        subject = new BaselineExpressionPrecondition();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
 
         //then
@@ -68,7 +68,7 @@ public class GeneProfilePreconditionTest {
     public void checkLimitingFactorsShouldSucceedWhenNoLimitingFactorSetIsProvided() throws Exception {
 
         //given
-        subject = new GeneExpressionPrecondition();
+        subject = new BaselineExpressionPrecondition();
 
         //then
         assertThat(subject.checkFilterFactors(expressionMock), is(true));
@@ -78,7 +78,7 @@ public class GeneProfilePreconditionTest {
     public void applyShouldFailExpressionDoesntContainAllLimitingFactors() throws Exception {
 
         //given
-        subject = new GeneExpressionPrecondition();
+        subject = new BaselineExpressionPrecondition();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
 
@@ -90,7 +90,7 @@ public class GeneProfilePreconditionTest {
     public void applyShouldSucceedIfLevelIsGreaterThanCutoff() throws Exception {
 
         //given
-        subject = new GeneExpressionPrecondition();
+        subject = new BaselineExpressionPrecondition();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         subject.setCutoff(1d);
 

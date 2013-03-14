@@ -28,10 +28,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
-import uk.ac.ebi.atlas.web.RequestPreferences;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -56,7 +55,7 @@ public class BaselineDesignDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=BASELINE"})
-    public void downloadGeneProfiles(@ModelAttribute("preferences") @Valid RequestPreferences preferences
+    public void downloadGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);

@@ -61,14 +61,14 @@ public class ExperimentalFactorsIT {
     public void getFactorsByTypeTest() {
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        assertThat(experimentalFactors.getFactorsByType("MATERIAL_TYPE").size(), is(3));
+        assertThat(experimentalFactors.getFactorsByType("RNA").size(), is(3));
         assertThat(experimentalFactors.getFactorsByType("CELL_LINE").size(), is(23));
         assertThat(experimentalFactors.getFactorsByType("CELLULAR_COMPONENT").size(), is(6));
     }
 
     @Test
     public void getCellLineFilteredFactorsTest() {
-        Factor filterFactor1 = new Factor("MATERIAL_TYPE", "total RNA");
+        Factor filterFactor1 = new Factor("RNA", "total RNA");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
         SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2));
@@ -93,9 +93,9 @@ public class ExperimentalFactorsIT {
     @Test
     public void getValidCombinationsForFactorTest() {
 
-        Factor factor = new Factor("MATERIAL_TYPE", "total RNA");
+        Factor factor = new Factor("RNA", "total RNA");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(10));
-        factor = new Factor("MATERIAL_TYPE", "long polyA RNA");
+        factor = new Factor("RNA", "long polyA RNA");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(21));
         factor = new Factor("CELLULAR_COMPONENT", "whole cell");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(26));
@@ -109,7 +109,7 @@ public class ExperimentalFactorsIT {
     @Test
     public void getCellularComponentFilteredFactorsTest() {
         Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
-        Factor filterFactor2 = new Factor("MATERIAL_TYPE", "total RNA");
+        Factor filterFactor2 = new Factor("RNA", "total RNA");
 
         SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2));
 

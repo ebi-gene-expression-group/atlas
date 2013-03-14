@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 @Scope("request")
 public abstract class BaselineQueryController {
@@ -42,7 +42,7 @@ public abstract class BaselineQueryController {
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
-    protected void initPreferences(RequestPreferences preferences, BaselineExperiment baselineExperiment) {
+    protected void initPreferences(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
 
         if (StringUtils.isBlank(preferences.getQueryFactorType())) {
             preferences.setQueryFactorType(baselineExperiment.getDefaultQueryFactorType());
@@ -52,7 +52,7 @@ public abstract class BaselineQueryController {
         }
     }
 
-    protected RequestContext initRequestContext(String experimentAccession, RequestPreferences preferences) {
+    protected RequestContext initRequestContext(String experimentAccession, BaselineRequestPreferences preferences) {
 
         return requestContextBuilder.forExperiment(experimentAccession)
                                         .withPreferences(preferences)

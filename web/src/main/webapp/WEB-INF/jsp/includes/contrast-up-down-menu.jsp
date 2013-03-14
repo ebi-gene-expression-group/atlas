@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!--
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
   ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,20 +20,9 @@
   ~ downloads and documentation, please see:
   ~
   ~ http://gxa.github.com/gxa
-  -->
+  --%>
 
-<factors-definition>
-    <defaultFilterFactors>
-        <filterFactor>
-            <type>CELLULAR_COMPONENT</type>
-            <value>whole cell</value>
-        </filterFactor>
-        <filterFactor>
-            <type>RNA</type>
-            <value>total RNA</value>
-        </filterFactor>
-    </defaultFilterFactors>
-    <defaultQueryFactorType>CELL_LINE</defaultQueryFactorType>
-    <menuFilterFactorTypes>CELLULAR_COMPONENT, RNA, CELL_LINE</menuFilterFactorTypes>
-    <landingPageDisplayName>ENCODE cell lines</landingPageDisplayName>
-</factors-definition>
+
+<div class="filters-frame">
+    <div class="filter-name">UP/DOWN</div>
+</div>

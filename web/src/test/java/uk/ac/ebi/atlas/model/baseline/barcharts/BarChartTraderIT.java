@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpressionPrecondition;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneExpressionPrecondition;
 import uk.ac.ebi.atlas.model.cache.baseline.BarChartTradersCache;
 
 import javax.annotation.PostConstruct;
@@ -50,7 +50,7 @@ public class BarChartTraderIT {
     private BarChartTradersCache barChartTradersCache;
 
     @Inject
-    private GeneExpressionPrecondition geneExpressionPrecondition;
+    private BaselineExpressionPrecondition baselineExpressionPrecondition;
     private BarChartTrader subject;
 
 

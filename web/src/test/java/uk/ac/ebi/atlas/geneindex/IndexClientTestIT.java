@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +27,14 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.startsWith;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -48,7 +49,7 @@ public class IndexClientTestIT {
     private static final String SPECIES = "homo sapiens";
 
     @Test
-    public void testFindGeneIdJsonValidQuery() throws URISyntaxException {
+    public void testFindGeneIdJsonValidQuery() throws URISyntaxException, GenesNotFoundException {
         //given
         Set<String> result = subject.findGeneIds(QUERY, SPECIES);
 
@@ -57,15 +58,13 @@ public class IndexClientTestIT {
     }
 
 
-    @Test
-    public void testFindGeneIdJsonNotExistingQuery() throws URISyntaxException {
+    @Test(expected = GenesNotFoundException.class)
+    public void testFindGeneIdJsonNotExistingQuery() throws URISyntaxException, GenesNotFoundException {
         //given
         String query = "\"NOT THERE\"";
 
         Set<String> result = subject.findGeneIds(query, SPECIES);
 
-        //no genes are found
-        assertThat(result, is(empty()));
     }
 
 

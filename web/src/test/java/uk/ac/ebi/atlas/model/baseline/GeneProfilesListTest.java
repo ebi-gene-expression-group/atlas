@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Lists;
@@ -6,8 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
-import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -16,22 +37,18 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GeneProfilesListTest {
 
-    private static final String GENE_ID_1 = "T1";
-    private static final String GENE_ID_3 = "T3";
-    private static final String GENE_ID_4 = "T4";
+    @Mock
+    BaselineProfile profile_1;
+    @Mock
+    BaselineProfile profile_2;
+    @Mock
+    BaselineProfile profile_3;
+    @Mock
+    BaselineProfile profile_4;
+    @Mock
+    BaselineProfile profile_5;
 
-    @Mock
-    GeneProfile profile_1;
-    @Mock
-    GeneProfile profile_2;
-    @Mock
-    GeneProfile profile_3;
-    @Mock
-    GeneProfile profile_4;
-    @Mock
-    GeneProfile profile_5;
-
-    private GeneProfilesList subject;
+    private GeneProfilesList<BaselineProfile> subject;
 
     @Before
     public void setUp() throws Exception {
@@ -41,33 +58,8 @@ public class GeneProfilesListTest {
     }
 
     @Test
-    public void testGetTop() throws Exception {
-        //when
-        GeneProfilesList topProfiles = subject.getTop(3);
-        //then
-        assertThat(topProfiles, hasSize(3));
-        //and
-        assertThat(topProfiles, contains(profile_5, profile_3, profile_4));
-    }
-
-    @Test
-    public void testGetTopWhenListIsSmallerThanRequestedAmountOfExpressions() throws Exception {
-        //when
-        GeneProfilesList topProfiles = subject.getTop(6);
-        //then
-        assertThat(topProfiles, hasSize(5));
-        //and
-        assertThat(topProfiles, contains(profile_5, profile_3, profile_4, profile_1, profile_2));
-    }
-
-    @Test
-    public void testGetTopWhenListIsEqualToRequestedAmountOfExpressions() throws Exception {
-        //when
-        GeneProfilesList topProfiles = subject.getTop(5);
-        //then
-        assertThat(topProfiles, hasSize(5));
-        //and
-        assertThat(topProfiles, contains(profile_5, profile_3, profile_4, profile_1, profile_2));
+    public void testList() throws Exception {
+        assertThat(subject, contains(profile_5, profile_3, profile_4, profile_1, profile_2));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -79,14 +71,14 @@ public class GeneProfilesListTest {
 
     public void sublistTest() throws Exception {
         //when
-        GeneProfilesList geneProfiles = subject.subList(0, 3);
+        GeneProfilesList<BaselineProfile> geneProfiles = subject.subList(0, 3);
         //then
         assertThat(geneProfiles, contains(profile_5, profile_3, profile_4));
     }
 
     public void sublistShouldReturnEntireListWhenTopIndexLargerThanListSize() throws Exception {
         //when
-        GeneProfilesList geneProfiles = subject.subList(0, 7);
+        GeneProfilesList<BaselineProfile> geneProfiles = subject.subList(0, 7);
         //then
         assertThat(geneProfiles, hasSize(5));
     }

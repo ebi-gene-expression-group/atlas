@@ -25,13 +25,13 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3AA549&queryFactorType=MATERIAL_TYPE");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3AA549&queryFactorType=RNA");
         subject.get();
     }
 
     @Override
     protected String getQueryFactorLabel() {
-        return "RNA type";
+        return "RNA";
     }
 
     @Override

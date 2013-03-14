@@ -25,68 +25,98 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
-import uk.ac.ebi.atlas.model.baseline.GeneProfileComparator;
-import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
+import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
-import javax.inject.Named;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
 import java.util.Set;
 
-@Named
+//@Named
 public class RankDifferentialProfilesCommand{
+    protected static final Logger logger = Logger.getLogger(GeneProfilesInputStreamCommand.class);
 
-    public DifferentialProfilesList execute(DifferentialExperiment experiment) throws GeneNotFoundException{
+    private Set<Contrast> selectedContrasts;
+    private double cutoff;
+    private int rankingSize;
+    private String geneQuery;
+    private SolrClient solrClient;
+    private String species;
+    private InputStreamFactory inputStreamFactory;
 
-        DifferentialProfilesList differentialProfilesList= new DifferentialProfilesList();
-        /*
-        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
-                , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors(), requestContext.getCutoff());
+    public RankDifferentialProfilesCommand(Set<Contrast> selectedContrasts, double cutoff, int rankingSize, String geneQuery, SolrClient solrClient, String species, InputStreamFactory inputStreamFactory){
+        this.selectedContrasts = selectedContrasts;
+        this.cutoff = cutoff;
+        this.rankingSize = rankingSize;
+        this.geneQuery = geneQuery;
+        this.solrClient = solrClient;
+        this.species = species;
+        this.inputStreamFactory = inputStreamFactory;
+    }
 
-        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, requestContext.getHeatmapMatrixSize());
+    public GeneProfilesList<DifferentialProfile> execute(DifferentialExperiment experiment) throws GenesNotFoundException {
 
-        GeneProfile geneProfile;
+        Set<String> selectedGeneIds = null;
 
-        int geneCount = 0;
+        if(StringUtils.isNotBlank(geneQuery)){
 
-        while ((geneProfile = inputStream.readNext()) != null) {
-            rankingQueue.add(geneProfile);
-            geneCount++;
+            selectedGeneIds = solrClient.findGeneIds(geneQuery, species);
+
         }
 
-        GeneProfilesList list = new GeneProfilesList(rankingQueue);
+        ObjectInputStream<DifferentialProfile> geneProfileInputStream = inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession());
 
-        Collections.sort(list, geneProfileComparator);
+        try (ObjectInputStream<DifferentialProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, selectedContrasts)) {
 
-        list.setTotalResultCount(geneCount);
-        */
-        differentialProfilesList.add(new DifferentialProfile("X12").addExpression(new DifferentialExpression(1.1,2.2, experiment.getContrasts().first())));
-        differentialProfilesList.add(new DifferentialProfile("Y21").addExpression(new DifferentialExpression(0.1,0.2, experiment.getContrasts().first())));
 
-        return differentialProfilesList;
+            Queue<DifferentialProfile> rankingQueue = buildRankingQueue();
+
+            DifferentialProfile differentialProfile;
+
+            int geneCount = 0;
+
+            while ((differentialProfile = inputStream.readNext()) != null) {
+                rankingQueue.add(differentialProfile);
+                geneCount++;
+            }
+
+            GeneProfilesList<DifferentialProfile> list = new GeneProfilesList(rankingQueue);
+
+            Collections.sort(list, buildGeneProfileComparator());
+
+            list.setTotalResultCount(geneCount);
+
+            return list;
+
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+            throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
+        }
 
     }
 
-    protected GeneProfilesList returnEmpty() throws GeneNotFoundException {
-        throw new GeneNotFoundException("No genes found matching query: '");
+    Ordering<DifferentialProfile> buildGeneProfileComparator() {
+        return Ordering.natural().onResultOf(new Function<DifferentialProfile, Double>() {
+            @Override
+            public Double apply(DifferentialProfile differentialProfile) {
+                return differentialProfile.getMinExpressionLevel();
+            }
+        });
     }
 
-    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
-                                                               Set<Factor> allFactors, double cutoff) {
-        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactors, allFactors, cutoff)).reverse();
-    }
-
-    protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> geneProfileComparator, int heatmapMatrixSize) {
-        return MinMaxPriorityQueue.orderedBy(geneProfileComparator).maximumSize(heatmapMatrixSize).create();
+    protected Queue<DifferentialProfile> buildRankingQueue() {
+        Comparator<DifferentialProfile> differentialProfileComparator = buildGeneProfileComparator();
+        return MinMaxPriorityQueue.orderedBy(differentialProfileComparator).maximumSize(rankingSize).create();
     }
 
 

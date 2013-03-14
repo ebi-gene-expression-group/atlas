@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,28 +20,28 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.baseline;
+package uk.ac.ebi.atlas.streams;
 
 import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.GeneProfile;
 
 import java.util.Set;
 
-public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GeneProfile> {
+public class GeneProfileInputStreamFilter<K, T extends GeneProfile> extends ObjectInputStreamFilter {
 
     private Set<String> uppercaseGeneIDs;
 
-    private Set<Factor> queryFactors;
+    private Set<K> queryConditions;
 
-    public GeneProfileInputStreamFilter(ObjectInputStream<GeneProfile> geneProfileInputStream, Set<String> uppercaseGeneIDs, Set<Factor> queryFactors) {
+    public GeneProfileInputStreamFilter(ObjectInputStream<T> geneProfileInputStream
+                                        , Set<String> uppercaseGeneIDs, Set<K> queryConditions) {
         super(geneProfileInputStream);
 
         this.uppercaseGeneIDs = uppercaseGeneIDs;
-        this.queryFactors = queryFactors;
+        this.queryConditions = queryConditions;
     }
 
     @Override
@@ -52,11 +52,11 @@ public class GeneProfileInputStreamFilter extends ObjectInputStreamFilter<GenePr
             public boolean apply(GeneProfile profile) {
 
                 boolean checkGene = checkGeneId(profile.getGeneId());
-                return checkGene && (CollectionUtils.isEmpty(queryFactors) || hasTheRightExpressionProfile(profile));
+                return checkGene && (CollectionUtils.isEmpty(queryConditions) || hasTheRightExpressionProfile(profile));
             }
 
             private boolean hasTheRightExpressionProfile(GeneProfile geneProfile) {
-                return geneProfile.isExpressedOnAnyOf(queryFactors);
+                return geneProfile.isExpressedOnAnyOf(queryConditions);
             }
         };
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializable {
+public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, Serializable {
 
     private boolean specific;
 
@@ -40,13 +40,13 @@ public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializ
 
     private Set<Factor> allQueryFactors;
 
-    public GeneProfilePrecondition() {
+    public BaselineProfilePrecondition() {
     }
 
     @Override
-    public boolean apply(GeneProfile geneProfile) {
+    public boolean apply(BaselineProfile baselineProfile) {
 
-        if (geneProfile.isEmpty()){
+        if (baselineProfile.isEmpty()){
             return false;
         }
 
@@ -54,34 +54,34 @@ public class GeneProfilePrecondition implements Predicate<GeneProfile>, Serializ
             return true;
         }
 
-        return isOverExpressedInSelectedFactors(geneProfile);
+        return isOverExpressedInSelectedFactors(baselineProfile);
 
     }
 
-    boolean isOverExpressedInSelectedFactors(GeneProfile geneProfile) {
+    boolean isOverExpressedInSelectedFactors(BaselineProfile baselineProfile) {
 
-        double averageOnSelected = geneProfile.getAverageExpressionLevelOn(selectedQueryFactors);
+        double averageOnSelected = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
         Set<Factor> remainingFactors = Sets.newHashSet(allQueryFactors);
         remainingFactors.removeAll(selectedQueryFactors);
 
-        double averageOnRest = geneProfile.getAverageExpressionLevelOn(remainingFactors);
+        double averageOnRest = baselineProfile.getAverageExpressionLevelOn(remainingFactors);
 
         return (averageOnSelected / averageOnRest) >= 1;
 
     }
 
 
-    public GeneProfilePrecondition setSpecific(boolean specific) {
+    public BaselineProfilePrecondition setSpecific(boolean specific) {
         this.specific = specific;
         return this;
     }
 
-    public GeneProfilePrecondition setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
+    public BaselineProfilePrecondition setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
         return this;
     }
 
-    public GeneProfilePrecondition setAllQueryFactors(Set<Factor> allQueryFactors) {
+    public BaselineProfilePrecondition setAllQueryFactors(Set<Factor> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }

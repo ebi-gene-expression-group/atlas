@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
@@ -59,7 +59,7 @@ public class BitIndexBuilder {
 
     public BitIndexBuilder forExperiment(String experimentAccession) {
 
-        try (ObjectInputStream<GeneExpressions> inputStream =
+        try (ObjectInputStream<BaselineExpressions> inputStream =
                      geneProfilesInputStreamBuilder.createGeneExpressionsInputStream(experimentAccession)) {
 
             populateGeneExpressionIndexes(inputStream);
@@ -72,19 +72,19 @@ public class BitIndexBuilder {
 
     }
 
-    protected void populateGeneExpressionIndexes(ObjectInputStream<GeneExpressions> inputStream) {
+    protected void populateGeneExpressionIndexes(ObjectInputStream<BaselineExpressions> inputStream) {
         int geneIndexPosition = 0;
 
-        GeneExpressions geneProfile;
+        BaselineExpressions baselineExpressions;
 
-        while ((geneProfile = inputStream.readNext()) != null) {
-            addGeneToIndexes(geneProfile, geneIndexPosition++);
+        while ((baselineExpressions = inputStream.readNext()) != null) {
+            addGeneToIndexes(baselineExpressions, geneIndexPosition++);
         }
     }
 
-    protected void addGeneToIndexes(GeneExpressions geneProfile, int geneIndexPosition) {
+    protected void addGeneToIndexes(BaselineExpressions baselineExpressions, int geneIndexPosition) {
 
-        for (BaselineExpression expression : geneProfile) {
+        for (BaselineExpression expression : baselineExpressions) {
 
             SortedSet<Double> cutoffsSmallerThanExpression = cutoffScale.getValuesSmallerThan(expression.getLevel());
 

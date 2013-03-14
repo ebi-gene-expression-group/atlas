@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,8 +40,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@Scope("request")
+@Scope("request") //if we make it singleton it gets initialized during deployment, that means deployment become slow
 public class HomePageController {
+    private static final Logger LOGGER = Logger.getLogger(HomePageController.class);
 
     private ApplicationProperties properties;
 
@@ -74,8 +76,15 @@ public class HomePageController {
     private void loadExperimentAccessionsBySpecie() {
 
         for (String experimentAccession : properties.getBaselineExperimentsIdentifiers()) {
-            BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
-            experimentDisplayNames.put(experimentAccession, experiment.getDisplayName());
+            String displayName = null;
+            try{
+                displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
+            }catch(RuntimeException e){ //we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
+                LOGGER.error(e.getMessage(), e);
+                displayName = experimentAccession;
+            }
+
+            experimentDisplayNames.put(experimentAccession, displayName);
         }
 
         Comparator<String> keyComparator = new Comparator<String>() {
@@ -95,15 +104,19 @@ public class HomePageController {
 
         for (String experimentAccession : properties.getBaselineExperimentsIdentifiers()) {
 
-            BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+            try{
+                BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            for (String specie : experiment.getSpecies()) {
-                experimentAccessionsBySpecies.put(specie, experimentAccession);
-                if (experiment.getSpecies().size() > 1) {
-                    experimentLinks.put(experimentAccession + specie, "?serializedFilterFactors=ORGANISM:" + specie);
-                } else {
-                    experimentLinks.put(experimentAccession + specie, "");
+                for (String specie : experiment.getSpecies()) {
+                    experimentAccessionsBySpecies.put(specie, experimentAccession);
+                    if (experiment.getSpecies().size() > 1) {
+                        experimentLinks.put(experimentAccession + specie, "?serializedFilterFactors=ORGANISM:" + specie);
+                    } else {
+                        experimentLinks.put(experimentAccession + specie, "");
+                    }
                 }
+            }catch(RuntimeException e){ //we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
+                LOGGER.error(e.getMessage(), e);
             }
 
         }

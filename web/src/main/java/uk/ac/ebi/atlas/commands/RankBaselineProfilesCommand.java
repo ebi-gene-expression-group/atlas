@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,10 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
-import uk.ac.ebi.atlas.model.baseline.GeneProfileComparator;
-import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
 
 import javax.inject.Named;
 import java.util.Collections;
@@ -39,21 +39,21 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList> {
+public class RankBaselineProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList> {
 
     @Override
-    protected GeneProfilesList apply(RequestContext requestContext, ObjectInputStream<GeneProfile> inputStream) {
-        Comparator<GeneProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
+    protected GeneProfilesList<BaselineProfile> apply(RequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) {
+        Comparator<BaselineProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
                 , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors(), requestContext.getCutoff());
 
-        Queue<GeneProfile> rankingQueue = buildRankingQueue(geneProfileComparator, requestContext.getHeatmapMatrixSize());
+        Queue<BaselineProfile> rankingQueue = buildRankingQueue(geneProfileComparator, requestContext.getHeatmapMatrixSize());
 
-        GeneProfile geneProfile;
+        BaselineProfile baselineProfile;
 
         int geneCount = 0;
 
-        while ((geneProfile = inputStream.readNext()) != null) {
-            rankingQueue.add(geneProfile);
+        while ((baselineProfile = inputStream.readNext()) != null) {
+            rankingQueue.add(baselineProfile);
             geneCount++;
         }
 
@@ -67,17 +67,12 @@ public class RankGeneProfilesCommand extends GeneProfilesInputStreamCommand<Gene
 
     }
 
-    @Override
-    protected GeneProfilesList returnEmpty() throws GeneNotFoundException {
-        throw new GeneNotFoundException("No genes found matching query: '");
-    }
-
-    protected Ordering<GeneProfile> buildGeneProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
+    protected Ordering<BaselineProfile> buildGeneProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
                                                                Set<Factor> allFactors, double cutoff) {
-        return Ordering.from(new GeneProfileComparator(isSpecific, selectedQueryFactors, allFactors, cutoff)).reverse();
+        return Ordering.from(new BaselineProfileComparator(isSpecific, selectedQueryFactors, allFactors, cutoff)).reverse();
     }
 
-    protected Queue<GeneProfile> buildRankingQueue(Comparator<GeneProfile> geneProfileComparator, int heatmapMatrixSize) {
+    protected Queue<BaselineProfile> buildRankingQueue(Comparator<BaselineProfile> geneProfileComparator, int heatmapMatrixSize) {
         return MinMaxPriorityQueue.orderedBy(geneProfileComparator).maximumSize(heatmapMatrixSize).create();
     }
 

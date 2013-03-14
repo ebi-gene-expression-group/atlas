@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,11 @@ package uk.ac.ebi.atlas.commands;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneindex.InvalidQueryException;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -38,7 +37,7 @@ import java.io.IOException;
 import java.util.Set;
 
 public abstract class GeneProfilesInputStreamCommand<T> {
-    protected static final Logger logger = Logger.getLogger(RankGeneProfilesCommand.class);
+    protected static final Logger logger = Logger.getLogger(GeneProfilesInputStreamCommand.class);
 
     private InputStreamFactory inputStreamFactory;
 
@@ -64,26 +63,19 @@ public abstract class GeneProfilesInputStreamCommand<T> {
     }
 
     @NotNull
-    public T apply(Experiment experiment) throws GeneNotFoundException {
+    public T apply(Experiment experiment) throws GenesNotFoundException {
 
         Set<String> selectedGeneIds = null;
 
-        if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
+        if(StringUtils.isNotBlank(requestContext.getGeneQuery())){
 
-            try {
-                selectedGeneIds = searchForGeneIds();
-                if (selectedGeneIds.isEmpty()) {
-                    return returnEmpty();
-                }
-            } catch (InvalidQueryException e) {
-                throw new GeneNotFoundException(e.getMessage());
+            selectedGeneIds = solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
 
-            }
         }
 
-        ObjectInputStream<GeneProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
+        ObjectInputStream<BaselineProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
 
-        try (ObjectInputStream<GeneProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
+        try (ObjectInputStream<BaselineProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 
             return apply(requestContext, inputStream);
 
@@ -93,13 +85,6 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         }
     }
 
-    protected Set<String> searchForGeneIds() {
+    protected abstract T apply(RequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException;
 
-        return solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
-
-    }
-
-    protected abstract T apply(RequestContext requestContext, ObjectInputStream<GeneProfile> inputStream) throws IOException;
-
-    protected abstract T returnEmpty() throws GeneNotFoundException;
 }

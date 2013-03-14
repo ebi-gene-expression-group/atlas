@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Range;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -33,28 +32,22 @@ import javax.validation.constraints.Size;
 import java.util.SortedSet;
 
 
-public class RequestPreferences {
+public abstract class RequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
-    static final double DEFAULT_CUTOFF = 0.5d;
-    private static final String DEFAULT_GENE_QUERY_STRING = "protein_coding";
-
-    private NumberUtils numberUtils = new NumberUtils();
-
 
     @Size(max = 900,
             message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
-    private String geneQuery = DEFAULT_GENE_QUERY_STRING;
+    private String geneQuery = getDefaultGeneQuery();
 
     @Min(value = 0, message = "The expression level cutoff must be greater than 0")
-    private Double cutoff = DEFAULT_CUTOFF;
+    private Double cutoff = getDefaultCutoff();
 
     private String serializedFilterFactors;
 
-    private String queryFactorType;
-
     private SortedSet<String> queryFactorValues;
 
+    private String queryFactorType;
 
     @NotNull
     @Range(min = 0, max = 1000)
@@ -66,13 +59,8 @@ public class RequestPreferences {
 
     private boolean displayGeneDistribution;
 
-
-    public String getQueryFactorType() {
-        return queryFactorType;
-    }
-
-    public void setQueryFactorType(String type) {
-        this.queryFactorType = type;
+    public RequestPreferences(){
+      //  customInitializations();
     }
 
     public SortedSet<String> getQueryFactorValues() {
@@ -83,6 +71,13 @@ public class RequestPreferences {
         this.queryFactorValues = queryFactorValues;
     }
 
+    public String getQueryFactorType() {
+        return queryFactorType;
+    }
+
+    public void setQueryFactorType(String type) {
+        this.queryFactorType = type;
+    }
 
     public String getSerializedFilterFactors() {
         return serializedFilterFactors;
@@ -111,9 +106,13 @@ public class RequestPreferences {
     public Double getCutoff() {
         return this.cutoff;
     }
+    //must be public because the jsp needs to access it
+    public abstract Double getDefaultCutoff();
+
+    protected abstract String getDefaultGeneQuery();
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = cutoff != null ? numberUtils.round(cutoff) : DEFAULT_CUTOFF;
+        this.cutoff = cutoff != null ? cutoff : getDefaultCutoff();
     }
 
     public boolean isSpecific() {
@@ -144,8 +143,8 @@ public class RequestPreferences {
     }
 
     boolean areQuotesMatching(String searchText) {
-        int numberOfDoubelQuotes = StringUtils.countMatches(searchText, "\"");
-        return numberOfDoubelQuotes % 2 == 0;
+        int numberOfDoubleQuotes = StringUtils.countMatches(searchText, "\"");
+        return numberOfDoubleQuotes % 2 == 0;
     }
 
 
@@ -153,7 +152,6 @@ public class RequestPreferences {
         return Objects.toStringHelper(this.getClass())
                 .add("geneQuery", geneQuery)
                 .add("queryFactorType", queryFactorType)
-                .add("queryFactorValues", queryFactorValues)
                 .add("cutoff", cutoff)
                 .add("serializedFilterFactors", serializedFilterFactors)
                 .toString();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
@@ -44,7 +44,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankGeneProfilesCommandTest {
+public class RankBaselineProfilesCommandTest {
 
     private static final String SPECIES = "Species 1";
     private static final String EXPERIMENT_ACCESSION = "ANY_EXPERIMENT_ACCESSION";
@@ -65,13 +65,13 @@ public class RankGeneProfilesCommandTest {
     @Mock
     private RequestContext requestContextMock;
 
-    private ObjectInputStream<GeneProfile> largeInputStream;
+    private ObjectInputStream<BaselineProfile> largeInputStream;
 
-    private ObjectInputStream<GeneProfile> smallInputStream;
+    private ObjectInputStream<BaselineProfile> smallInputStream;
 
-    private RankGeneProfilesCommand subject;
+    private RankBaselineProfilesCommand subject;
 
-    public RankGeneProfilesCommandTest() {
+    public RankBaselineProfilesCommandTest() {
     }
 
     //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
@@ -99,7 +99,7 @@ public class RankGeneProfilesCommandTest {
 
         when(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
 
-        subject = new RankGeneProfilesCommand();
+        subject = new RankBaselineProfilesCommand();
         subject.setSolrClient(solrClientMock);
         subject.setInputStreamFactory(inputStreamFactoryMock);
 
@@ -108,7 +108,7 @@ public class RankGeneProfilesCommandTest {
     }
 
     @Test
-    public void commandBuildsGeneProfileInputStream() throws GeneNotFoundException{
+    public void commandBuildsGeneProfileInputStream() throws GenesNotFoundException {
         //when
         subject.apply(experimentMock);
         //then
@@ -121,7 +121,7 @@ public class RankGeneProfilesCommandTest {
         //given
         given(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).willReturn(smallInputStream);
         //when
-        List<GeneProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
 
         //then
         assertThat(top3Objects.size(), is(1));
@@ -139,7 +139,7 @@ public class RankGeneProfilesCommandTest {
 
 
         //when
-        List<GeneProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
 
         //then
         assertThat(top3Objects.size(), is(3));
@@ -147,30 +147,12 @@ public class RankGeneProfilesCommandTest {
     }
 
     @Test
-    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GeneNotFoundException{
+    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GenesNotFoundException {
         when(requestContextMock.getGeneQuery()).thenReturn("");
         subject.apply(experimentMock);
         verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
     }
 
-    @Test
-    public void givenEmptyFilterFactorSpeciesShouldBeTakenFromExperiment() {
-
-        when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
-        subject.searchForGeneIds();
-        verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
-
-    }
-
-    @Test
-    public void givenAFilterFactorHasTypeOrganismSpeciesShouldBeTakenFromTheFilterFactor() {
-
-
-        when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
-        subject.searchForGeneIds();
-        verify(solrClientMock).findGeneIds(GENE_QUERY, SPECIES);
-
-    }
 
     @Test
     public void rankedObjectsShouldBeInAscendingOrder() throws Exception {
@@ -179,7 +161,7 @@ public class RankGeneProfilesCommandTest {
         when(requestContextMock.isSpecific()).thenReturn(false);
 
         //when
-        List<GeneProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(5));
@@ -201,7 +183,7 @@ public class RankGeneProfilesCommandTest {
     public void rankedObjectsShouldBeInDescendingOrder() throws Exception {
 
         //when
-        List<GeneProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(1));

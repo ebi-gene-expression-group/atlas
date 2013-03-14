@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.io.PrintWriter;
@@ -50,15 +50,15 @@ import static org.mockito.Mockito.when;
 public class WriteGeneProfilesCommandTest {
 
     @Mock
-    private ObjectInputStream<GeneProfile> inputStreamMock;
+    private ObjectInputStream<BaselineProfile> inputStreamMock;
     @Mock
     private RequestContext requestContextMock;
     @Mock
     private PrintWriter printWriterMock;
     @Mock
-    private GeneProfile geneProfileMock1;
+    private BaselineProfile baselineProfileMock1;
     @Mock
-    private GeneProfile geneProfileMock2;
+    private BaselineProfile baselineProfileMock2;
     @Mock
     private BaselineExperiment experimentMock;
     @Mock
@@ -81,16 +81,16 @@ public class WriteGeneProfilesCommandTest {
 
         when(requestContextMock.getAllQueryFactors()).thenReturn(organismParts);
 
-        when(inputStreamMock.readNext()).thenReturn(geneProfileMock1)
-                .thenReturn(geneProfileMock2)
+        when(inputStreamMock.readNext()).thenReturn(baselineProfileMock1)
+                .thenReturn(baselineProfileMock2)
                 .thenReturn(null);
 
-        when(geneProfileMock1.getGeneId()).thenReturn("GI1");
-        when(geneProfileMock1.getExpressionLevel(createFactorValue("brain"))).thenReturn(0.11d);
-        when(geneProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
+        when(baselineProfileMock1.getGeneId()).thenReturn("GI1");
+        when(baselineProfileMock1.getExpressionLevel(createFactorValue("brain"))).thenReturn(0.11d);
+        when(baselineProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
 
-        when(geneProfileMock2.getGeneId()).thenReturn("GI2");
-        when(geneProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
+        when(baselineProfileMock2.getGeneId()).thenReturn("GI2");
+        when(baselineProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
         when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);

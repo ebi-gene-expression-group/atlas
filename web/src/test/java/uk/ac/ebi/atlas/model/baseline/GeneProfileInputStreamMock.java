@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,9 +35,9 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile> {
+public class GeneProfileInputStreamMock implements ObjectInputStream<BaselineProfile> {
 
-    private Iterator<GeneProfile> geneProfilesIterator;
+    private Iterator<BaselineProfile> geneProfilesIterator;
 
     //This will create a stream containing n Gene Profiles
     //Each Gene Profile will contain an increasing number of Expressions (1, 2, 3, ....)
@@ -51,23 +51,23 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
         RequestContext requestContextMock = mock(RequestContext.class);
         when(requestContextMock.getQueryFactorType()).thenReturn("ORGANISM_PART");
 
-        GeneExpressionPrecondition geneExpressionPreconditionMock = mock(GeneExpressionPrecondition.class);
-        when(geneExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(geneExpressionPreconditionMock);
-        when(geneExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(geneExpressionPreconditionMock);
-        when(geneExpressionPreconditionMock.apply(any(BaselineExpression.class))).thenReturn(true);
+        BaselineExpressionPrecondition baselineExpressionPreconditionMock = mock(BaselineExpressionPrecondition.class);
+        when(baselineExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(baselineExpressionPreconditionMock);
+        when(baselineExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(baselineExpressionPreconditionMock);
+        when(baselineExpressionPreconditionMock.apply(any(BaselineExpression.class))).thenReturn(true);
 
-        GeneProfilePrecondition geneProfilePreconditionMock = mock(GeneProfilePrecondition.class);
-        when(geneProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
-        when(geneProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(geneProfilePreconditionMock);
-        when(geneProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(geneProfilePreconditionMock);
-        when(geneProfilePreconditionMock.apply(any(GeneProfile.class))).thenReturn(true);
+        BaselineProfilePrecondition baselineProfilePreconditionMock = mock(BaselineProfilePrecondition.class);
+        when(baselineProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
+        when(baselineProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(baselineProfilePreconditionMock);
+        when(baselineProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
+        when(baselineProfilePreconditionMock.apply(any(BaselineProfile.class))).thenReturn(true);
 
-        List<GeneProfile> geneProfiles = new ArrayList<GeneProfile>();
+        List<BaselineProfile> baselineProfiles = new ArrayList<BaselineProfile>();
 
         for (int i = streamSize; i > 0; i--) {
 
-            GeneProfile.Builder geneProfileBuilder = new GeneProfile.Builder(requestContextMock,
-                    geneExpressionPreconditionMock, geneProfilePreconditionMock);
+            BaselineProfile.Builder geneProfileBuilder = new BaselineProfile.Builder(requestContextMock,
+                    baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
             geneProfileBuilder.forGeneId("" + i);
 
             for (int j = 0; j < i; j++) {
@@ -82,14 +82,14 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<GeneProfile
 
             }
 
-            geneProfiles.add(geneProfileBuilder.create());
+            baselineProfiles.add(geneProfileBuilder.create());
         }
 
-        geneProfilesIterator = geneProfiles.iterator();
+        geneProfilesIterator = baselineProfiles.iterator();
     }
 
     @Override
-    public GeneProfile readNext() {
+    public BaselineProfile readNext() {
         if (geneProfilesIterator.hasNext()) {
             return geneProfilesIterator.next();
         }

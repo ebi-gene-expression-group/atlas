@@ -27,13 +27,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.GeneNotFoundException;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -61,8 +60,8 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=BASELINE")
     public void downloadGeneProfiles(HttpServletRequest request
-            , @ModelAttribute("preferences") @Valid RequestPreferences preferences
-            , HttpServletResponse response) throws IOException, GeneNotFoundException {
+            , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+            , HttpServletResponse response) throws IOException {
 
         BaselineExperiment baselineExperiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
@@ -78,9 +77,15 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
         writeGeneProfilesCommand.setResponseWriter(response.getWriter());
 
-        long genesCount = writeGeneProfilesCommand.apply(baselineExperiment);
+        try {
 
-        LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
+            long genesCount = writeGeneProfilesCommand.apply(baselineExperiment);
+            LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
+
+        } catch (GenesNotFoundException e) {
+            LOGGER.info("<downloadGeneProfiles> no genes found");
+        }
+
 
 
     }

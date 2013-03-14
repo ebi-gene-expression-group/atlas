@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
@@ -55,16 +55,16 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     }
 
     @Override
-    protected Long apply(RequestContext requestContext, ObjectInputStream<GeneProfile> inputStream) throws IOException {
+    protected Long apply(RequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException {
         long count = 0;
         SortedSet<String> factorValues = Factor.getValues(requestContext.getAllQueryFactors());
 
         csvWriter.writeNext(buildCsvHeaders(factorValues));
 
-        GeneProfile geneProfile;
-        while ((geneProfile = inputStream.readNext()) != null) {
+        BaselineProfile baselineProfile;
+        while ((baselineProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, requestContext.getAllQueryFactors()));
+            csvWriter.writeNext(buildCsvRow(baselineProfile, requestContext.getAllQueryFactors()));
         }
 
         csvWriter.flush();
@@ -73,23 +73,17 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
         return count;
     }
 
-
-    @Override
-    protected Long returnEmpty() {
-        return 0L;
-    }
-
     protected String[] buildCsvHeaders(SortedSet<String> factorValues) {
         return buildCsvRow(new String[]{"Gene name", "Gene Id"}, factorValues.toArray(new String[factorValues.size()]));
     }
 
-    protected String[] buildCsvRow(final GeneProfile geneProfile, SortedSet<Factor> factors) {
+    protected String[] buildCsvRow(final BaselineProfile baselineProfile, SortedSet<Factor> factors) {
         String[] expressionLevels = new String[factors.size()];
         int i = 0;
         for (Factor factor : factors) {
-            expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(factor));
+            expressionLevels[i++] = numberUtils.removeTrailingZero(baselineProfile.getExpressionLevel(factor));
         }
-        String geneId = geneProfile.getGeneId();
+        String geneId = baselineProfile.getGeneId();
         return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), geneId}, expressionLevels);
     }
 

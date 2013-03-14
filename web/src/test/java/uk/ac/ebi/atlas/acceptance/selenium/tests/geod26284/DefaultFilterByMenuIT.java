@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.is;
 public class DefaultFilterByMenuIT extends SeleniumFixture {
 
     public static final String TOTAL_RNA = "total RNA";
-    public static final String RNA_TYPE = "RNA type";
+    public static final String RNA_TYPE = "RNA";
     public static final String WHOLE_CELL = "whole cell";
     public static final String CELLULAR_COMPONENT = "cellular component";
     public static final String CELL_LINE = "cell line";

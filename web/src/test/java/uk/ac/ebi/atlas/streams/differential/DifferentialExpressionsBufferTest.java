@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,13 +70,13 @@ public class DifferentialExpressionsBufferTest {
         //when
         DifferentialExpression expression = subject.poll();
         //then we expect first expression
-        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_1)));
+        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_1)));
         assertThat(expression.getFoldChange(), is(Double.valueOf(FOLD_CHANGE_1)));
         assertThat(expression.getContrast(), is(contrast1Mock));
 
         //given we poll again
         expression = subject.poll();
-        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.MIN_VALUE));
         assertThat(expression.getContrast(), is(contrast2Mock));
 
@@ -112,7 +112,7 @@ public class DifferentialExpressionsBufferTest {
         //and we poll
         DifferentialExpression expression = subject.poll();
         //then we expect to find the new values
-        assertThat(expression.getPValue(), is(1d));
+        assertThat(expression.getLevel(), is(1d));
     }
 
     @Test(expected = IllegalStateException.class)

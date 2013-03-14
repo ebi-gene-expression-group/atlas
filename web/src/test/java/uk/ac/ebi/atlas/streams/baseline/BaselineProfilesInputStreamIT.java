@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,9 +31,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.impl.FilterParameters;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
@@ -41,12 +42,12 @@ import java.io.IOException;
 import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class GeneProfilesInputStreamIT {
+public class BaselineProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
@@ -64,9 +65,9 @@ public class GeneProfilesInputStreamIT {
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
-    private ObjectInputStream<GeneProfile> subject;
+    private ObjectInputStream<BaselineProfile> subject;
 
-    RequestPreferences requestPreferences = new RequestPreferences();
+    RequestPreferences requestPreferences = new BaselineRequestPreferences();
 
     @Before
     public void initSubject() throws Exception {
@@ -87,22 +88,21 @@ public class GeneProfilesInputStreamIT {
     @Test
     public void readNextShouldReturnNextExpression() throws IOException {
         //given
-        GeneProfile geneProfile = subject.readNext();
+        BaselineProfile baselineProfile = subject.readNext();
         //then
-        assertThat(geneProfile.getGeneId(), is(GENE_ID_1));
-        assertThat(geneProfile.getSpecificity(), is(15));
-        assertThat(geneProfile.iterator().hasNext(), is(true));
+        assertThat(baselineProfile.getGeneId(), is(GENE_ID_1));
+        assertThat(baselineProfile.getSpecificity(), is(15));
 
         //given we poll twice more
-        geneProfile = subject.readNext();
+        baselineProfile = subject.readNext();
         //then
-        assertThat(geneProfile.getGeneId(), is(GENE_ID_2));
-        assertThat(geneProfile.getSpecificity(), is(1));
+        assertThat(baselineProfile.getGeneId(), is(GENE_ID_2));
+        assertThat(baselineProfile.getSpecificity(), is(1));
 
-        geneProfile = subject.readNext();
+        baselineProfile = subject.readNext();
 
-        assertThat(geneProfile.getGeneId(), is(GENE_ID_3));
-        assertThat(geneProfile.getSpecificity(), is(1));
+        assertThat(baselineProfile.getGeneId(), is(GENE_ID_3));
+        assertThat(baselineProfile.getSpecificity(), is(1));
     }
 
 
@@ -122,9 +122,9 @@ public class GeneProfilesInputStreamIT {
         requestPreferences.setCutoff(4D);
 
         //when
-        GeneProfile geneProfile = subject.readNext();
+        BaselineProfile baselineProfile = subject.readNext();
         //specificity that was 15 when cutoff was 0.5d now is 2
-        assertThat(geneProfile.getSpecificity(), is(1));
+        assertThat(baselineProfile.getSpecificity(), is(1));
 
         //then
         subject.readNext();

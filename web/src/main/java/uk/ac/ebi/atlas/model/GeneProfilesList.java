@@ -1,4 +1,26 @@
-package uk.ac.ebi.atlas.model.baseline;
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.model;
 
 
 import java.util.ArrayList;
@@ -6,30 +28,14 @@ import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class GeneProfilesList extends ArrayList<GeneProfile> {
+public class GeneProfilesList<T extends GeneProfile> extends ArrayList<T> {
 
     private static final long serialVersionUID = -1678371004778942235L;
 
     private Integer totalResultCount = 0;
 
-    public GeneProfilesList(Collection<GeneProfile> collection) {
+    public GeneProfilesList(Collection<T> collection) {
         super(collection);
-    }
-
-    public GeneProfilesList() {
-    }
-
-    public GeneProfilesList getTop(int size) {
-        return subList(0, size);
-    }
-
-    public Double getExpressionLevel(String geneId, Factor factor) {
-        for (GeneProfile geneProfile : this) {
-            if (geneId.equalsIgnoreCase(geneProfile.getGeneId())) {
-                return geneProfile.getExpressionLevel(factor);
-            }
-        }
-        return null;
     }
 
     @Override
@@ -43,7 +49,7 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
 
     public double getMaxExpressionLevel() {
         double maxExpressionLevel = 0;
-        for (GeneProfile geneProfile : this) {
+        for (T geneProfile : this) {
             if (maxExpressionLevel < geneProfile.getMaxExpressionLevel()) {
                 maxExpressionLevel = geneProfile.getMaxExpressionLevel();
             }
@@ -53,7 +59,7 @@ public class GeneProfilesList extends ArrayList<GeneProfile> {
 
     public double getMinExpressionLevel() {
         double minExpressionLevel = Double.MAX_VALUE;
-        for (GeneProfile geneProfile : this) {
+        for (T geneProfile : this) {
             if (geneProfile.getMinExpressionLevel() < minExpressionLevel) {
                 minExpressionLevel = geneProfile.getMinExpressionLevel();
             }

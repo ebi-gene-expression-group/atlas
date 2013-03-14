@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%--
-  ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
-                <c:if test="${selectedFilterFactors.size() > 0}">
+                <c:if test="${selectedFilterFactors.size() > 0 || type eq 'DIFFERENTIAL'}">
                     <td>
                         <label>Filtered by</label>
                         <span data-help-loc="#filterBy"></span>
@@ -78,15 +78,19 @@
                 </c:if>
                 <c:if test="${type eq 'DIFFERENTIAL'}">
                     <td>
-                        hello boy
+                        <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
                 <td>
                     <div>
+                        <c:set var="isSingleContrast" value="${type eq 'DIFFERENTIAL' && allQueryFactors.size() == 1}"/>
+                        <c:set var="itemLabel" value="${type eq 'DIFFERENTIAL'? 'displayName' : 'value'}"/>
+                        <c:set var="itemValue" value="${type eq 'DIFFERENTIAL'? 'id' : 'value'}"/>
                         <form:select path="queryFactorValues" data-placeholder="(any ${queryFactorName}s)"
                                      tabindex="-1"
-                                     items="${allQueryFactorValues}"
-                                     cssStyle="width:300px"/>
+                                     items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
+                                     cssStyle="width:300px"
+                                     disabled="${isSingleContrast ? true : false}"/>
                     </div>
                         <span>
                             <form:checkbox id="specific"

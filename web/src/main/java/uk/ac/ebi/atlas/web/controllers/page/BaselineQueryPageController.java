@@ -30,19 +30,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.GeneNotFoundException;
-import uk.ac.ebi.atlas.commands.RankGeneProfilesCommand;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commands.RequestContextBuilder;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfilesList;
 import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -58,14 +57,14 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineQueryPageController extends BaselineQueryController {
 
-    private RankGeneProfilesCommand rankCommand;
+    private RankBaselineProfilesCommand rankCommand;
 
     private ApplicationProperties applicationProperties;
 
     private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BaselineQueryPageController(RankGeneProfilesCommand rankCommand,
+    public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
                                        ApplicationProperties applicationProperties,
                                        RequestContextBuilder requestContextBuilder,
                                        FilterFactorsConverter filterFactorsConverter) {
@@ -77,7 +76,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=BASELINE"})
-    public String showGeneProfiles(@ModelAttribute("preferences") @Valid RequestPreferences preferences
+    public String showGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
         BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -99,9 +98,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
         // this is currently required for the request preferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactors", allQueryFactors);
-
-        // this is currently required for the request preferences filter drop-down multi-selection box
-        model.addAttribute("allQueryFactorValues", Factor.getValues(allQueryFactors));
 
         SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
 
@@ -152,8 +148,8 @@ public class BaselineQueryPageController extends BaselineQueryController {
                 model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
 
 
-            } catch (GeneNotFoundException e) {
-                result.addError(new ObjectError("preferences", e.getMessage() + preferences.getGeneQuery() + "'"));
+            } catch (GenesNotFoundException e) {
+                result.addError(new ObjectError("preferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
             }
 
         }

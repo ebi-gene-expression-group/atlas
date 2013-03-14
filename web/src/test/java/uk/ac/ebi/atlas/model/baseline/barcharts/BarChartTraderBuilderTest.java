@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,13 +29,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.GeneExpressionsInputStream;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 
 import java.util.*;
 
@@ -86,8 +86,8 @@ public class BarChartTraderBuilderTest {
     private FactorGroup factorHashSet2;
     private FactorGroup factorHashSet3;
 
-    public static final GeneExpressions GENE_PROFILE_1 = mock(GeneExpressions.class);
-    public static final GeneExpressions GENE_PROFILE_2 = mock(GeneExpressions.class);
+    public static final BaselineExpressions GENE_PROFILE_1 = mock(BaselineExpressions.class);
+    public static final BaselineExpressions GENE_PROFILE_2 = mock(BaselineExpressions.class);
 
 
     @Before
@@ -115,7 +115,7 @@ public class BarChartTraderBuilderTest {
         initGeneProfile2();
 
         //Init input stream
-        GeneExpressionsInputStream inputStream = mock(GeneExpressionsInputStream.class);
+        BaselineExpressionsInputStream inputStream = mock(BaselineExpressionsInputStream.class);
         when(inputStream.readNext()).thenReturn(GENE_PROFILE_1).thenReturn(GENE_PROFILE_2).thenReturn(null);
 
         //mock stream builder
@@ -125,7 +125,7 @@ public class BarChartTraderBuilderTest {
 
     }
 
-    private GeneExpressions initGeneProfile1() {
+    private BaselineExpressions initGeneProfile1() {
         BaselineExpression expression1 = mock(BaselineExpression.class);
         when(expression1.getLevel()).thenReturn(1d);
         when(expression1.getFactorGroup()).thenReturn(factorHashSet1);
@@ -146,7 +146,7 @@ public class BarChartTraderBuilderTest {
     }
 
 
-    private GeneExpressions initGeneProfile2() {
+    private BaselineExpressions initGeneProfile2() {
         BaselineExpression expression21 = mock(BaselineExpression.class);
         when(expression21.getLevel()).thenReturn(3d);
         when(expression21.getFactorGroup()).thenReturn(factorHashSet1);

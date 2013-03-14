@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,21 +22,31 @@
 
 package uk.ac.ebi.atlas.streams.baseline;
 
+
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.GeneExpressions;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
-public class GeneExpressionsInputStream extends TsvInputStream<GeneExpressions> {
+import static uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer.GENE_ID_COLUMN;
 
-    public GeneExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsBuffer.Builder expressionsBufferBuilder) {
+public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile> {
+
+    private BaselineProfile.Builder baselineProfileBuilder;
+
+
+    public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
+            , BaselineExpressionsBuffer.Builder expressionsBufferBuilder
+            , BaselineProfile.Builder baselineProfileBuilder) {
+
         super(csvReader, experimentAccession, expressionsBufferBuilder);
+        this.baselineProfileBuilder = baselineProfileBuilder;
     }
 
-    @Override
-    protected GeneExpressions buildObjectFromTsvValues(String[] values) {
+    protected BaselineProfile buildObjectFromTsvValues(String[] values) {
 
-        GeneExpressions geneProfile = new GeneExpressions();
+        baselineProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
+
         //we need to reload because the first line can only be used to extract the gene ID
         getTsvRowBuffer().reload(values);
 
@@ -44,9 +54,11 @@ public class GeneExpressionsInputStream extends TsvInputStream<GeneExpressions> 
 
         while ((expression = (BaselineExpression)getTsvRowBuffer().poll()) != null) {
 
-            geneProfile.addExpression(expression);
+            baselineProfileBuilder.addExpression(expression);
         }
 
-        return geneProfile;
+        return baselineProfileBuilder.create();
+
     }
+
 }

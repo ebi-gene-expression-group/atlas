@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=MATERIAL_TYPE%3Along+polyA+RNA%2CCELLULAR_COMPONENT%3Anucleus&queryFactorType=CELL_LINE");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=RNA%3Along+polyA+RNA%2CCELLULAR_COMPONENT%3Anucleus&queryFactorType=CELL_LINE");
         subject.get();
     }
 

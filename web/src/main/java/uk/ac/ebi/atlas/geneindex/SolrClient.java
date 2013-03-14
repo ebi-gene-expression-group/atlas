@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -62,17 +62,18 @@ public class SolrClient {
         this.solrQueryService = solrQueryService;
     }
 
-    public Set<String> findGeneIds(String searchText, String species) {
-
-        String geneQuery = buildQueryAllTextString(customEscape(searchText));
-
+    public Set<String> findGeneIds(String searchText, String species) throws GenesNotFoundException {
         try {
-            return toUppercase(solrQueryService.getGeneIds(geneQuery, species));
+            String geneQuery = buildQueryAllTextString(customEscape(searchText));
+            List<String> geneIds = solrQueryService.getGeneIds(geneQuery, species);
+            if (geneIds.isEmpty()){
+                throw new GenesNotFoundException("No genes found for searchText = " + searchText + ", species = " + species);
+            }
+            return toUppercase(geneIds);
         } catch (SolrServerException e) {
             LOGGER.error("<findGeneIds> error querying solr service", e);
+            throw new IllegalStateException(e);
         }
-
-        return Collections.EMPTY_SET;
     }
 
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
@@ -81,9 +82,9 @@ public class SolrClient {
             return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
         } catch (SolrServerException e) {
             LOGGER.error("<findGeneIdSuggestionsInName> error querying solr service", e);
+            return Collections.EMPTY_LIST;
         }
 
-        return Collections.EMPTY_LIST;
     }
 
     public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
@@ -92,9 +93,9 @@ public class SolrClient {
             return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
         } catch (SolrServerException e) {
             LOGGER.error("<findGeneIdSuggestionsInSynonym> error querying solr service", e);
+            return Collections.EMPTY_LIST;
         }
 
-        return Collections.EMPTY_LIST;
     }
 
     public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
@@ -103,9 +104,9 @@ public class SolrClient {
             return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
         } catch (SolrServerException e) {
             LOGGER.error("<findGeneIdSuggestionsInIdentifier> error querying solr service", e);
+            return Collections.EMPTY_LIST;
         }
 
-        return Collections.EMPTY_LIST;
     }
 
 
@@ -155,22 +156,13 @@ public class SolrClient {
     }
 
     String getJsonResponse(String restQueryTemplate, String... arguments) {
-        if (StringUtils.isBlank(arguments[0])) {
-            return "";
-        }
-
         try {
-
-            String jsonResponse = restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
-
-            LOGGER.debug("<getJsonResponse> response size (characters) = " + jsonResponse.length() + ", arguments: " + Arrays.toString(arguments));
-
-            return jsonResponse;
+            if (StringUtils.isBlank(arguments[0])) {
+                return "";
+            }
+            return restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
 
         } catch (HttpClientErrorException e) {
-            if (HttpStatus.BAD_REQUEST.equals(e.getStatusCode())) {
-                throw new InvalidQueryException("Invalid gene query, please check syntax! ", e);
-            }
             LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
             throw e;
         } catch (RestClientException e) {

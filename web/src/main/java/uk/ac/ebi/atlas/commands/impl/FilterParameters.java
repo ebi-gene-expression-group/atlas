@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.commands.impl;
 import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
@@ -35,6 +36,8 @@ import java.util.SortedSet;
 @Named
 @Scope("request")
 public class FilterParameters implements RequestContext {
+
+    private ExperimentType experimentType;
 
     private Set<Factor> selectedFilterFactors;
 
@@ -124,4 +127,11 @@ public class FilterParameters implements RequestContext {
                 .toString();
     }
 
+    public ExperimentType getExperimentType() {
+        return experimentType;
+    }
+
+    public void setExperimentType(ExperimentType experimentType) {
+        this.experimentType = experimentType;
+    }
 }

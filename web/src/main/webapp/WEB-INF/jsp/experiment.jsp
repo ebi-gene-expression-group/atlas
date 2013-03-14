@@ -1,5 +1,5 @@
 <%--
-  ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -192,7 +192,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
                 $("#heatmap-div").removeClass();
             }
 
-            searchFormModule.init(${preferences.cutoff}, "(any ${queryFactorName}s)", '${species}');
+            searchFormModule.init("(any ${queryFactorName}s)", '${species}', '${preferences.defaultCutoff}');
 
             helpTooltipsModule.init('experiment');
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.baseline;
+package uk.ac.ebi.atlas.streams;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
@@ -31,8 +31,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneProfile;
 
 import java.util.Set;
 
@@ -49,10 +50,10 @@ public class GeneProfileInputStreamFilterTest {
     private ObjectInputStream<GeneProfile> inputStreamMock;
 
     @Mock
-    private GeneProfile gene1ProfileMock;
+    private BaselineProfile gene1ProfileMock;
 
     @Mock
-    private GeneProfile gene3ProfileMock;
+    private BaselineProfile gene3ProfileMock;
 
     private Set<String> geneIDs = Sets.newHashSet("GENE1", "GENE2");
 

@@ -20,26 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.commands;
 
+public class GenesNotFoundException extends Exception {
 
-import uk.ac.ebi.atlas.model.GeneProfile;
-
-public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
-
-    public DifferentialProfile(String geneId) {
-        super(geneId);
-    }
-
-    @Override
-    public DifferentialExpression getExpression(Contrast contrast){
-        return super.getExpression(contrast);
-    }
-
-    public DifferentialProfile addExpression(DifferentialExpression expression){
-        //use cutoff precondition here
-        this.addExpression(expression.getContrast(), expression);
-        return this;
+    public GenesNotFoundException(String message){
+        super(message);
     }
 
 }

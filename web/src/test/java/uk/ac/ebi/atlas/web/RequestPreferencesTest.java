@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ public class RequestPreferencesTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new RequestPreferences();
+        subject = new BaselineRequestPreferences();
     }
 
     @Test
