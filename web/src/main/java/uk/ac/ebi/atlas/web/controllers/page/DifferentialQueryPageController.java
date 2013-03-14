@@ -85,8 +85,10 @@ public class DifferentialQueryPageController {
             preferences.setQueryFactorValues(getContrastNames(contrasts));
         }
 
+        String species = differentialExperiment.getFirstSpecies();
+
         //required by autocomplete
-        model.addAttribute("species", differentialExperiment.getSpecies());
+        model.addAttribute("species", species);
         if (!result.hasErrors()) {
 
             try {
@@ -98,7 +100,7 @@ public class DifferentialQueryPageController {
 
                 RankDifferentialProfilesCommand rankCommand =
                         new RankDifferentialProfilesCommand(selectedQueryContrasts, preferences.getCutoff(), preferences.getRegulation(), preferences.getHeatmapMatrixSize(),
-                                preferences.getGeneQuery(), solrClient, differentialExperiment.getSpecies().iterator().next(),inputStreamFactory);
+                                preferences.getGeneQuery(), solrClient, species, inputStreamFactory);
 
                 GeneProfilesList<DifferentialProfile> differentialProfiles = rankCommand.execute(differentialExperiment);
 

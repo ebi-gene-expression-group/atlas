@@ -64,10 +64,11 @@ public class SolrClient {
 
     public Set<String> findGeneIds(String searchText, String species) throws GenesNotFoundException {
         try {
+            String lowercaseSpecies = species.toLowerCase();
             String geneQuery = buildQueryAllTextString(customEscape(searchText));
-            List<String> geneIds = solrQueryService.getGeneIds(geneQuery, species);
+            List<String> geneIds = solrQueryService.getGeneIds(geneQuery, lowercaseSpecies);
             if (geneIds.isEmpty()){
-                throw new GenesNotFoundException("No genes found for searchText = " + searchText + ", species = " + species);
+                throw new GenesNotFoundException("No genes found for searchText = " + searchText + ", species = " + lowercaseSpecies);
             }
             return toUppercase(geneIds);
         } catch (SolrServerException e) {
@@ -79,7 +80,7 @@ public class SolrClient {
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
         try {
-            return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
+            return solrQueryService.getGeneIdSuggestionsInName(geneName, species.toLowerCase());
         } catch (SolrServerException e) {
             LOGGER.error("<findGeneIdSuggestionsInName> error querying solr service", e);
             return Collections.EMPTY_LIST;
@@ -90,7 +91,7 @@ public class SolrClient {
     public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
 
         try {
-            return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
+            return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species.toLowerCase());
         } catch (SolrServerException e) {
             LOGGER.error("<findGeneIdSuggestionsInSynonym> error querying solr service", e);
             return Collections.EMPTY_LIST;
@@ -101,7 +102,7 @@ public class SolrClient {
     public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
 
         try {
-            return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
+            return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species.toLowerCase());
         } catch (SolrServerException e) {
             LOGGER.error("<findGeneIdSuggestionsInIdentifier> error querying solr service", e);
             return Collections.EMPTY_LIST;
@@ -118,7 +119,7 @@ public class SolrClient {
             return Collections.EMPTY_LIST;
         }
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
+        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species.toLowerCase());
 
         return extractCollations(jsonString);
     }
