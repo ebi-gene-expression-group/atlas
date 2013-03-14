@@ -40,7 +40,7 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
-                <c:if test="${selectedFilterFactors.size() > 0 || type eq 'DIFFERENTIAL'}">
+                <c:if test="${selectedFilterFactors.size() > 0}">
                     <td>
                         <label>Filtered by</label>
                         <span data-help-loc="#filterBy"></span>
@@ -51,7 +51,7 @@
                     <span data-help-loc="#factorSearch"/>
                 </td>
                 <td style="width:100%;display:block">
-                    <form:label path="cutoff">Expression level cutoff</form:label>
+                    <form:label path="cutoff">${type eq 'BASELINE' ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
                     <span data-help-loc="#cutoff"/>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
@@ -74,11 +74,6 @@
                 <c:if test="${selectedFilterFactors.size() > 0}">
                     <td>
                         <c:import url="includes/filterby-menu.jsp"/>
-                    </td>
-                </c:if>
-                <c:if test="${type eq 'DIFFERENTIAL'}">
-                    <td>
-                        <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
                 <td>
