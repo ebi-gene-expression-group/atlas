@@ -2,13 +2,13 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class SearchFormIT extends SeleniumFixture {
+public class SearchFormIT extends SinglePageSeleniumFixture {
 
     private HeatmapTableWithSearchFormPage subject;
 

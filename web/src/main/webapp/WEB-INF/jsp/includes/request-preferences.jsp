@@ -40,15 +40,15 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
-                <c:if test="${selectedFilterFactors.size() > 0 || type eq 'DIFFERENTIAL'}">
                     <td>
-                        <label>${type eq 'BASELINE' ? 'Filtered by' : 'Differential'}</label>
-                        <span data-help-loc="#filterBy"></span>
+                        <c:if test="${selectedFilterFactors.size() > 0}">
+                            <label>Filtered by</label>
+                            <span data-help-loc="#filterBy"></span>
+                        </c:if>
                     </td>
-                </c:if>
                 <td>
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
-                    <span data-help-loc="#factorSearch"/>
+                    <span data-help-loc="#factorSearch${type eq 'DIFFERENTIAL' ? '-differential':''}"/>
                 </td>
                 <td style="width:100%;display:block">
                     <form:label path="cutoff">${type eq 'BASELINE' ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
@@ -98,7 +98,7 @@
                                            label="Specific"
                                             disabled="${type eq 'DIFFERENTIAL' ? true : false}"></form:checkbox>
                         </span>
-                    <span data-help-loc="#specific" style="display:inline-block"/>
+                    <span data-help-loc="#specific${type eq 'DIFFERENTIAL' ? '-differential':''}" style="display:inline-block"/>
                 </td>
                 <td>
                     <div>

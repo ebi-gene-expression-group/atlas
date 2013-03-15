@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
 import org.junit.Assert;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class DefaultFilterByMenuIT extends SeleniumFixture {
+public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
 
     public static final String TOTAL_RNA = "total RNA";
     public static final String RNA_TYPE = "RNA";

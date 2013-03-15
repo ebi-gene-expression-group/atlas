@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import java.util.List;
 
@@ -32,18 +32,15 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SpecificAndOrganismPartIT extends SeleniumFixture {
+public class SpecificAndOrganismPartIT extends SinglePageSeleniumFixture {
+
+    private static final String E_MTAB_599_ACCESSION = "E-MTAB-599";
+    private static final String HTTP_PARAMETERS = "specific=true&geneQuery=Cyp2d10+Tdo2+Serpina1d+Apoh+Albumin&queryFactorValues=liver&_queryFactorValues=1&cutoff=0.5";
 
     private HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver,
-                "specific=true&geneQuery=Cyp2d10+Tdo2+Serpina1d+Apoh+Albumin&queryFactorValues=liver&_queryFactorValues=1&cutoff=0.5") {
-            @Override
-            protected String getPageURI() {
-                return "/gxa/experiments/E-MTAB-599";
-            }
-        };
+        subject = new HeatmapTablePage(driver, E_MTAB_599_ACCESSION, HTTP_PARAMETERS);
         subject.get();
     }
 

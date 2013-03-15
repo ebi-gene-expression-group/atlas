@@ -23,11 +23,8 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.AtlasPage;
+import org.openqa.selenium.NoSuchElementException;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -35,59 +32,54 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AnatomogramIT extends SeleniumFixture {
 
-    AtlasPage subject;
+    private static final String E_GEOD_30352_ACCESSION = "E-GEOD-30352";
+    private static final String E_GEOD_26284_ACCESSION = "E-GEOD-26284";
+    private static final String E_MTAB_513_ACCESSION = "E-MTAB-513";
 
-    public void getStartingPage() {
+    private HeatmapTablePage getPage(String experimentAccession, String params){
+        HeatmapTablePage heatmapTablePage = new HeatmapTablePage(driver, experimentAccession, params);
+        heatmapTablePage.get();
+        return heatmapTablePage;
     }
 
-    private void initStartingPage(final String url) {
-        subject = new AtlasPage(driver) {
-            @Override
-            protected String getPageURI() {
-                return url;
-            }
-        };
-        subject.get();
+    private boolean isAnatomogramElementFound(String experimentAccession, String params) {
+        return getPage(experimentAccession, params).getAnatomogram().isDisplayed();
     }
 
-    private boolean isAnotomogramElementFound() {
-        return driver.findElements(By.id("anatomogram")).size() > 0;
-    }
-
-    @Test
-    public void testAnotomogramIsThereForHomoSapiensExp() {
-        initStartingPage("/gxa/experiments/E-GEOD-30352");
-        assertThat(isAnotomogramElementFound(), is(true));
-    }
-
-
-    @Test
-    public void testAnotomogramIsNotThereForMultiSpeciesExpForChicken() {
-        initStartingPage("/gxa/experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Gallus+gallus&queryFactorType=ORGANISM_PART&geneQuery=");
-        assertThat(isAnotomogramElementFound(), is(false));
+    private boolean isAnatomogramElementFound(String experimentAccession) {
+        return isAnatomogramElementFound(experimentAccession, "");
     }
 
     @Test
-    public void testAnotomogramIsThereForMultiSpeciesExpForHomoSapiens() {
-        initStartingPage("/gxa/experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Homo+sapiens&queryFactorType=ORGANISM_PART&geneQuery=");
-        assertThat(isAnotomogramElementFound(), is(true));
+    public void testAnatomogramIsThereForHomoSapiensExp() {
+        assertThat(isAnatomogramElementFound(E_GEOD_30352_ACCESSION), is(true));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testAnatomogramIsNotThereForMultiSpeciesExpForChicken() {
+        String gallusParams = "serializedFilterFactors=ORGANISM:Gallus+gallus&queryFactorType=ORGANISM_PART&geneQuery=";
+        isAnatomogramElementFound(E_GEOD_30352_ACCESSION, gallusParams);
     }
 
     @Test
-    public void testAnotomogramIsNotThereForMultiSpeciesExpForOrganismPartFiltering() {
-        initStartingPage("/gxa/experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM_PART:liver&queryFactorType=ORGANISM&geneQuery=");
-        assertThat(isAnotomogramElementFound(), is(false));
+    public void testAnatomogramIsThereForMultiSpeciesExpForHomoSapiens() {
+        String homoSapiensParams = "serializedFilterFactors=ORGANISM:Homo+sapiens&queryFactorType=ORGANISM_PART&geneQuery=";
+        assertThat(isAnatomogramElementFound(E_GEOD_30352_ACCESSION, homoSapiensParams), is(true));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testAnatomogramIsNotThereForMultiSpeciesExpForOrganismPartFiltering() {
+        String nullSpeciesParams = "serializedFilterFactors=ORGANISM_PART:liver&queryFactorType=ORGANISM&geneQuery=";
+        isAnatomogramElementFound(E_GEOD_30352_ACCESSION, nullSpeciesParams);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testAnatomogramIsNotThereForCellTypeExperiment() {
+        isAnatomogramElementFound(E_GEOD_26284_ACCESSION);
     }
 
     @Test
-    public void testAnotomogramIsNotThereForCellTypeExperiment() {
-        initStartingPage("/gxa/experiments/E-GEOD-26284&geneQuery=");
-        assertThat(isAnotomogramElementFound(), is(false));
-    }
-
-    @Test
-    public void testAnotomogramIsThereForSingleSpeciesExp() {
-        initStartingPage("/gxa/experiments/E-MTAB-513?geneQuery=");
-        assertThat(isAnotomogramElementFound(), is(true));
+    public void testAnatomogramIsThereForSingleSpeciesExp() {
+        assertThat(isAnatomogramElementFound(E_MTAB_513_ACCESSION), is(true));
     }
 }

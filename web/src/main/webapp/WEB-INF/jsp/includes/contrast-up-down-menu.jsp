@@ -24,6 +24,6 @@
   --%>
 
 
-<div class="filters-frame">
-    <form:radiobuttons path="regulation" items="${regulationValues}" cssStyle="display: block;" />
+<div>
+    <form:radiobuttons path="regulation" element="div"  items="${regulationValues}" />
 </div>

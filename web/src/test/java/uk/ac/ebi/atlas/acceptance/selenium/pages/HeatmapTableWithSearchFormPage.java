@@ -11,8 +11,6 @@ import java.util.List;
 
 public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
 
-    protected static final String DEFAULT_PAGE_URI = "/gxa/experiments/E-MTAB-513";
-
     @FindBy(id = "geneQuery")
     private WebElement geneQuery;
 
@@ -39,9 +37,8 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
         super(driver, parameters);
     }
 
-    @Override
-    protected String getPageURI() {
-        return DEFAULT_PAGE_URI;
+    public HeatmapTableWithSearchFormPage(WebDriver driver, String experimentAccession, String httpParameters) {
+        super(driver, experimentAccession, httpParameters);
     }
 
     public String getGeneQuery() {

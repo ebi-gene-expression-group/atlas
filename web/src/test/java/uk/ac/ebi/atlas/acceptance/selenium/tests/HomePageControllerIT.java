@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HomePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-public class HomePageControllerIT extends SeleniumFixture {
+public class HomePageControllerIT extends SinglePageSeleniumFixture {
 
     private HomePage subject;
 

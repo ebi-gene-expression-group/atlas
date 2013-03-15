@@ -11,9 +11,9 @@ import java.util.List;
 
 public class HeatmapTablePage extends TablePage {
 
-    public static String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private static final String DEFAULT_EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION;
+    private static final String PAGE_LOCATION = "/gxa/experiments/";
 
     @FindBy(id = "heatmap-table")
     private WebElement heatmapTable;
@@ -36,6 +36,11 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(xpath = "//label[@for='queryFactorValues']")
     private WebElement queryFactorLabel;
 
+    @FindBy(id = "anatomogram")
+    private WebElement anatomogram;
+
+    private String experimentAccession = DEFAULT_EXPERIMENT_ACCESSION;
+
     public HeatmapTablePage(WebDriver driver) {
         super(driver);
     }
@@ -43,6 +48,12 @@ public class HeatmapTablePage extends TablePage {
     public HeatmapTablePage(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);
     }
+
+    public HeatmapTablePage(WebDriver driver, String experimentAccession, String httpParameters) {
+        super(driver, httpParameters);
+        this.experimentAccession = experimentAccession;
+    }
+
 
     protected WebElement getHeatmapTable() {
         return heatmapTable;
@@ -68,7 +79,7 @@ public class HeatmapTablePage extends TablePage {
 
     @Override
     protected String getPageURI() {
-        return DEFAULT_PAGE_URI;
+        return PAGE_LOCATION + experimentAccession;
     }
 
     public List<String> getFirstGeneProfile() {
@@ -158,5 +169,9 @@ public class HeatmapTablePage extends TablePage {
             }
         }
         return averageFpkm / factors.length;
+    }
+
+    public WebElement getAnatomogram(){
+        return anatomogram;
     }
 }

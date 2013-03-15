@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public abstract class Geod26284HeatmapTableTests extends SeleniumFixture {
+public abstract class Geod26284HeatmapTableTests extends SinglePageSeleniumFixture {
 
     protected HeatmapTablePage subject;
 

@@ -25,23 +25,21 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
 import org.junit.Before;
 import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SeleniumFixture {
+public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SinglePageSeleniumFixture {
 
+    private static final String E_GEOD_26284_ACCESSION = "E-GEOD-26284";
     private HeatmapTableWithSearchFormAndBarChartPage subject;
 
-    public void getStartingPage() {
-        subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, "geneQuery=") {
-            @Override
-            protected String getPageURI() {
-                return "/gxa/experiments/E-GEOD-26284";
-            }
-        };
+    @Override
+    protected void getStartingPage() {
+        subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, E_GEOD_26284_ACCESSION, null);
         subject.get();
     }
 

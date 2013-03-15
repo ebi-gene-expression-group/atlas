@@ -3,12 +3,12 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
 
-public class NoGenesAboveSpecifiedCutoffIT extends SeleniumFixture {
+public class NoGenesAboveSpecifiedCutoffIT extends SinglePageSeleniumFixture {
 
     private HeatmapTableWithSearchFormPage subject;
 

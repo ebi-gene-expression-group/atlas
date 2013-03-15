@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
+import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
+
 public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {

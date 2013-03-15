@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -50,6 +50,7 @@ public class Geod26284HeatmapTablePage extends HeatmapTablePage {
         super(driver, httpParameters);
     }
 
+    @Override
     protected String getPageURI() {
         return "/gxa/experiments/E-GEOD-26284";
     }

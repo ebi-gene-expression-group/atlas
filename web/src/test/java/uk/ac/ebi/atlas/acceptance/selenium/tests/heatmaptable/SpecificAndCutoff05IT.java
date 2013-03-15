@@ -24,13 +24,13 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SpecificAndCutoff05IT extends SeleniumFixture {
+public class SpecificAndCutoff05IT extends SinglePageSeleniumFixture {
 
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&specific=true";

@@ -56,6 +56,10 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
         super(driver, parameters);
     }
 
+    public HeatmapTableWithSearchFormAndBarChartPage(WebDriver driver, String experimentAccession, String httpParameters) {
+        super(driver, experimentAccession, httpParameters);
+    }
+
     public void clickDisplayChartButton(){
         displayChartButton.click();
         waitForAjaxDataToLoad();
