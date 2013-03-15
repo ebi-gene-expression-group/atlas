@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -42,7 +43,7 @@ import java.util.Set;
 public class RankBaselineProfilesCommand extends GeneProfilesInputStreamCommand<GeneProfilesList> {
 
     @Override
-    protected GeneProfilesList<BaselineProfile> apply(RequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) {
+    protected GeneProfilesList<BaselineProfile> apply(BaselineRequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) {
         Comparator<BaselineProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
                 , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors(), requestContext.getCutoff());
 

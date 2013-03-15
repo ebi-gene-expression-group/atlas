@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
@@ -48,7 +48,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<BaselinePro
 
         GeneNamesProvider geneNamesProviderMock = mock(GeneNamesProvider.class);
 
-        RequestContext requestContextMock = mock(RequestContext.class);
+        BaselineRequestContext requestContextMock = mock(BaselineRequestContext.class);
         when(requestContextMock.getQueryFactorType()).thenReturn("ORGANISM_PART");
 
         BaselineExpressionPrecondition baselineExpressionPreconditionMock = mock(BaselineExpressionPrecondition.class);
@@ -66,7 +66,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<BaselinePro
 
         for (int i = streamSize; i > 0; i--) {
 
-            BaselineProfile.Builder geneProfileBuilder = new BaselineProfile.Builder(requestContextMock,
+            BaselineProfile.BaselineProfileBuilder geneProfileBuilder = new BaselineProfile.BaselineProfileBuilder(requestContextMock,
                     baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
             geneProfileBuilder.forGeneId("" + i);
 

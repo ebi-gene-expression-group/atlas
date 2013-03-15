@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -63,7 +64,7 @@ public class RankBaselineProfilesCommandTest {
     private ExperimentalFactors experimentalFactors;
 
     @Mock
-    private RequestContext requestContextMock;
+    private BaselineRequestContext requestContextMock;
 
     private ObjectInputStream<BaselineProfile> largeInputStream;
 

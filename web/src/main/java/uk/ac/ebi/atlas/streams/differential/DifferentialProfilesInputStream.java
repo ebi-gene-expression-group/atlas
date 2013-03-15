@@ -25,22 +25,22 @@ package uk.ac.ebi.atlas.streams.differential;
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile.DifferentialProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 import uk.ac.ebi.atlas.streams.TsvRowBuffer;
 
 public class DifferentialProfilesInputStream extends TsvInputStream<DifferentialProfile> {
 
 
-    private DifferentialExpressionPrecondition differentialExpressionPrecondition;
+    private DifferentialProfileBuilder differentialProfileBuilder;
 
     public DifferentialProfilesInputStream(CSVReader csvReader, String experimentAccession
             , DifferentialExpressionsBuffer.Builder expressionsBufferBuilder
-            , DifferentialExpressionPrecondition differentialExpressionPrecondition) {
+            , DifferentialProfileBuilder differentialProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
-        this.differentialExpressionPrecondition = differentialExpressionPrecondition;
+        this.differentialProfileBuilder = differentialProfileBuilder;
     }
 
     @Override
@@ -49,21 +49,17 @@ public class DifferentialProfilesInputStream extends TsvInputStream<Differential
         //we need to reload because the first line can only be used to extract the gene ID
         getTsvRowBuffer().reload(values);
 
-        DifferentialProfile differentialProfile = new DifferentialProfile(values[TsvRowBuffer.GENE_ID_COLUMN], differentialExpressionPrecondition);
+        differentialProfileBuilder.forGeneId(values[TsvRowBuffer.GENE_ID_COLUMN]);
 
         DifferentialExpression expression;
 
         while ((expression = (DifferentialExpression)getTsvRowBuffer().poll()) != null) {
 
-            differentialProfile.addExpression(expression);
+            differentialProfileBuilder.addExpression(expression);
 
         }
 
-        if(differentialProfile.isEmpty()) {
-            return null;
-        }
-
-        return differentialProfile;
+        return differentialProfileBuilder.create();
 
     }
 }

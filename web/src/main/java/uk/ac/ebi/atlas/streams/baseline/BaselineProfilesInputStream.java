@@ -32,12 +32,12 @@ import static uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer.GENE_ID
 
 public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile> {
 
-    private BaselineProfile.Builder baselineProfileBuilder;
+    private BaselineProfile.BaselineProfileBuilder baselineProfileBuilder;
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
             , BaselineExpressionsBuffer.Builder expressionsBufferBuilder
-            , BaselineProfile.Builder baselineProfileBuilder) {
+            , BaselineProfile.BaselineProfileBuilder baselineProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
         this.baselineProfileBuilder = baselineProfileBuilder;

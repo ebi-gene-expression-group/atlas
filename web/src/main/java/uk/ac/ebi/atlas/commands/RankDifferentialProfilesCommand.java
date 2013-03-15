@@ -27,43 +27,37 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
 import java.util.Set;
 
-//@Named
+@Named
+@Scope("prototype")
 public class RankDifferentialProfilesCommand{
     protected static final Logger logger = Logger.getLogger(GeneProfilesInputStreamCommand.class);
 
-    private Set<Contrast> selectedContrasts;
-    private double cutoff;
-    private Regulation regulation;
-    private int rankingSize;
-    private String geneQuery;
     private SolrClient solrClient;
-    private String species;
     private InputStreamFactory inputStreamFactory;
+    private DifferentialRequestContext requestContext;
 
-    public RankDifferentialProfilesCommand(Set<Contrast> selectedContrasts, double cutoff, Regulation regulation, int rankingSize, String geneQuery, SolrClient solrClient, String species, InputStreamFactory inputStreamFactory){
-        this.selectedContrasts = selectedContrasts;
-        this.cutoff = cutoff;
-        this.regulation = regulation;
-        this.rankingSize = rankingSize;
-        this.geneQuery = geneQuery;
+    @Inject
+    public RankDifferentialProfilesCommand(DifferentialRequestContext requestContext, SolrClient solrClient, InputStreamFactory inputStreamFactory){
+        this.requestContext = requestContext;
         this.solrClient = solrClient;
-        this.species = species;
         this.inputStreamFactory = inputStreamFactory;
     }
 
@@ -71,15 +65,16 @@ public class RankDifferentialProfilesCommand{
 
         Set<String> selectedGeneIds = null;
 
-        if(StringUtils.isNotBlank(geneQuery)){
+        if(StringUtils.isNotBlank(requestContext.getGeneQuery())){
 
-            selectedGeneIds = solrClient.findGeneIds(geneQuery, species);
+            selectedGeneIds = solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
 
         }
 
-        ObjectInputStream<DifferentialProfile> geneProfileInputStream = inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession(), cutoff, regulation);
+        ObjectInputStream<DifferentialProfile> geneProfileInputStream =
+                inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession());
 
-        try (ObjectInputStream<DifferentialProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, selectedContrasts)) {
+        try (ObjectInputStream<DifferentialProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 
 
             Queue<DifferentialProfile> rankingQueue = buildRankingQueue();
@@ -119,7 +114,7 @@ public class RankDifferentialProfilesCommand{
 
     protected Queue<DifferentialProfile> buildRankingQueue() {
         Comparator<DifferentialProfile> differentialProfileComparator = buildGeneProfileComparator();
-        return MinMaxPriorityQueue.orderedBy(differentialProfileComparator).maximumSize(rankingSize).create();
+        return MinMaxPriorityQueue.orderedBy(differentialProfileComparator).maximumSize(requestContext.getHeatmapMatrixSize()).create();
     }
 
 

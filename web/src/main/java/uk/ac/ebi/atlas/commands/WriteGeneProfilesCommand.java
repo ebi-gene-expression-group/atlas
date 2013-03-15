@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.commands;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -55,7 +56,7 @@ public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Lon
     }
 
     @Override
-    protected Long apply(RequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException {
+    protected Long apply(BaselineRequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException {
         long count = 0;
         SortedSet<String> factorValues = Factor.getValues(requestContext.getAllQueryFactors());
 

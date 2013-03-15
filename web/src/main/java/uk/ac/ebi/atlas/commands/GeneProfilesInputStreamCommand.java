@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.commands;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -41,7 +42,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
 
     private InputStreamFactory inputStreamFactory;
 
-    private RequestContext requestContext;
+    private BaselineRequestContext requestContext;
 
     private SolrClient solrClient;
 
@@ -58,7 +59,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
     }
 
     @Inject
-    public void setRequestContext(RequestContext requestContext) {
+    public void setRequestContext(BaselineRequestContext requestContext) {
         this.requestContext = requestContext;
     }
 
@@ -85,6 +86,6 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         }
     }
 
-    protected abstract T apply(RequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException;
+    protected abstract T apply(BaselineRequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException;
 
 }

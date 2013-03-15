@@ -33,14 +33,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankDifferentialProfilesCommand;
-import uk.ac.ebi.atlas.commands.RequestContextBuilder;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -54,55 +53,47 @@ import java.util.SortedSet;
 @Scope("request")
 public class DifferentialQueryPageController {
 
-    //private RequestContextBuilder requestContextBuilder;
-    private SolrClient solrClient;
-    private InputStreamFactory inputStreamFactory;
+    private DifferentialRequestContextBuilder requestContextBuilder;
+    private RankDifferentialProfilesCommand rankDifferentialProfilesCommand;
 
     @Inject
-    public DifferentialQueryPageController(RequestContextBuilder requestContextBuilder, SolrClient solrClient, InputStreamFactory inputStreamFactory){
-      //  this.requestContextBuilder = requestContextBuilder;
-        this.solrClient = solrClient;
-        this.inputStreamFactory = inputStreamFactory;
+    public DifferentialQueryPageController(DifferentialRequestContextBuilder requestContextBuilder,
+                                           RankDifferentialProfilesCommand rankDifferentialProfilesCommand){
+        this.requestContextBuilder = requestContextBuilder;
+        this.rankDifferentialProfilesCommand = rankDifferentialProfilesCommand;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-
         DifferentialExperiment differentialExperiment = (DifferentialExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
-        //requestContextBuilder.forExperiment(differentialExperiment.getAccession()).withPreferences(preferences).build();
-
-        model.addAttribute("queryFactorName", "Contrast");
 
         SortedSet<Contrast> contrasts = differentialExperiment.getContrasts();
 
         model.addAttribute("allQueryFactors", contrasts);
-        model.addAttribute("regulationValues", Regulation.values());
 
+        //if there is only one contrast we want to preselect it... from Robert feedback
         if(contrasts.size() == 1){
             preferences.setQueryFactorValues(getContrastNames(contrasts));
         }
 
-        String species = differentialExperiment.getFirstSpecies();
+        RequestContext requestContext = requestContextBuilder.forExperiment(differentialExperiment)
+                             .withPreferences(preferences).build();
 
         //required by autocomplete
-        model.addAttribute("species", species);
+        model.addAttribute("species", requestContext.getFilteredBySpecies());
+
+        model.addAttribute("queryFactorName", "Contrast");
+
+        model.addAttribute("allQueryFactors", contrasts);
+        model.addAttribute("regulationValues", Regulation.values());
+
         if (!result.hasErrors()) {
 
             try {
 
-                Set<Contrast> selectedQueryContrasts = Sets.newHashSet();
-                for (String queryContrastId : preferences.getQueryFactorValues()){
-                    selectedQueryContrasts.add(differentialExperiment.getContrast(queryContrastId));
-                }
-
-                RankDifferentialProfilesCommand rankCommand =
-                        new RankDifferentialProfilesCommand(selectedQueryContrasts, preferences.getCutoff(), preferences.getRegulation(), preferences.getHeatmapMatrixSize(),
-                                preferences.getGeneQuery(), solrClient, species, inputStreamFactory);
-
-                GeneProfilesList<DifferentialProfile> differentialProfiles = rankCommand.execute(differentialExperiment);
+                GeneProfilesList<DifferentialProfile> differentialProfiles = rankDifferentialProfilesCommand.execute(differentialExperiment);
 
                 model.addAttribute("geneProfiles", differentialProfiles);
 

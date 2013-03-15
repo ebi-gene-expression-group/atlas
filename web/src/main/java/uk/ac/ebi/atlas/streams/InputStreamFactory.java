@@ -28,8 +28,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
@@ -62,14 +61,19 @@ public class InputStreamFactory {
 
     private BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder;
     private DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder;
-    private BaselineProfile.Builder geneProfileBuilder;
+    private BaselineProfile.BaselineProfileBuilder baselineProfileBuilder;
+    private DifferentialProfile.DifferentialProfileBuilder differentialProfileBuilder;
 
 
     @Inject
-    public InputStreamFactory(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder, DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder, BaselineProfile.Builder geneProfileBuilder) {
+    public InputStreamFactory(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder
+                            , DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder
+                            , BaselineProfile.BaselineProfileBuilder baselineProfileBuilder
+                            , DifferentialProfile.DifferentialProfileBuilder differentialProfileBuilder) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.differentialExpressionsBufferBuilder = differentialExpressionsBufferBuilder;
-        this.geneProfileBuilder = geneProfileBuilder;
+        this.baselineProfileBuilder = baselineProfileBuilder;
+        this.differentialProfileBuilder = differentialProfileBuilder;
 
     }
 
@@ -87,7 +91,7 @@ public class InputStreamFactory {
 
     public ObjectInputStream<BaselineProfile> createGeneProfileInputStream(String experimentAccession) {
         CSVReader csvReader = buildCsvReader(experimentAccession, baselineDataFileUrlTemplate);
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, geneProfileBuilder);
+        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, baselineProfileBuilder);
     }
 
     public BaselineExpressionsInputStream createGeneExpressionsInputStream(String experimentAccession) {
@@ -95,11 +99,9 @@ public class InputStreamFactory {
         return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
     }
 
-    public DifferentialProfilesInputStream createDifferentialProfileInputStream(String experimentAccession, double cutoff, Regulation regulation) {
+    public DifferentialProfilesInputStream createDifferentialProfileInputStream(String experimentAccession) {
         CSVReader csvReader = buildCsvReader(experimentAccession, differentialDataFileUrlTemplate);
-        DifferentialExpressionPrecondition differentialExpressionPrecondition = new DifferentialExpressionPrecondition();
-        differentialExpressionPrecondition.setCutoff(cutoff).setRegulation(regulation);
-        return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, differentialExpressionPrecondition);
+        return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, differentialProfileBuilder);
     }
 
 }

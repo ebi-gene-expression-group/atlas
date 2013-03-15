@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
@@ -45,17 +46,22 @@ public class RankDifferentialProfilesCommandTest {
     private RankDifferentialProfilesCommand subject;
 
     @Mock
-    DifferentialProfile differentialProfileMock1;
+    private DifferentialRequestContext requestContext;
 
     @Mock
-    DifferentialProfile differentialProfileMock2;
+    private DifferentialProfile differentialProfileMock1;
 
     @Mock
-    DifferentialProfile differentialProfileMock3;
+    private DifferentialProfile differentialProfileMock2;
+
+    @Mock
+    private DifferentialProfile differentialProfileMock3;
 
     @Before
     public void setUp() throws Exception {
-        subject = new RankDifferentialProfilesCommand(null, 0D, Regulation.UP_DOWN, 10, null, null, null, null);
+        when(requestContext.getRegulation()).thenReturn(Regulation.UP_DOWN);
+
+        subject = new RankDifferentialProfilesCommand(requestContext, null, null);
 
         when(differentialProfileMock1.getMinExpressionLevel()).thenReturn(3D);
         when(differentialProfileMock2.getMinExpressionLevel()).thenReturn(5D);

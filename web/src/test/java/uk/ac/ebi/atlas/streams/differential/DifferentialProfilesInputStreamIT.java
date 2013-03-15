@@ -28,9 +28,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.context.impl.DifferentialRequestContextImpl;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -63,19 +65,30 @@ public class DifferentialProfilesInputStreamIT {
     @Inject
     private DifferentialExperimentsCache differentialExperimentsCache;
 
+    @Inject
+    private DifferentialRequestContextImpl differentialRequestContext;
+
     private DifferentialProfilesInputStream subject;
+
     private Contrast contrast;
 
+    private DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
 
     @Before
     public void initSubject() throws Exception {
+        differentialRequestContext.setRequestPreferences(differentialRequestPreferences);
+
+        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
+
         DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+
         contrast = differentialExperiment.getContrasts().first();
     }
 
     @Test
     public void readNextWithUpDownRegulation() throws IOException {
-        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION, 0.05D, Regulation.UP_DOWN);
+        differentialRequestContext.setRegulation(Regulation.UP_DOWN);
+
 
         //given
         DifferentialProfile differentialProfile = subject.readNext();
@@ -112,7 +125,7 @@ public class DifferentialProfilesInputStreamIT {
 
     @Test
     public void readNextWithUpRegulation() throws IOException {
-        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION, 0.05D, Regulation.UP);
+        differentialRequestContext.setRegulation(Regulation.UP);
 
         //given
         DifferentialProfile differentialProfile = subject.readNext();
@@ -150,7 +163,8 @@ public class DifferentialProfilesInputStreamIT {
 
     @Test
     public void readNextWithDownRegulation() throws IOException {
-        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION, 0.05D, Regulation.DOWN);
+        differentialRequestContext.setRegulation(Regulation.DOWN);
+
 
         //given
         DifferentialProfile differentialProfile = subject.readNext();
@@ -187,7 +201,8 @@ public class DifferentialProfilesInputStreamIT {
 
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
-        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION, 0.05D, Regulation.UP_DOWN);
+        differentialRequestContext.setRegulation(Regulation.UP_DOWN);
+
 
         long countProfiles = 0;
         while(subject.readNext() != null){

@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -68,7 +68,7 @@ public class GeneProfileInputStreamFilterTest {
     private Set<Factor> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
 
     @Mock
-    private RequestContext requestContextMock;
+    private BaselineRequestContext requestContextMock;
 
     private GeneProfileInputStreamFilter subject;
 

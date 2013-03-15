@@ -44,10 +44,9 @@ public abstract class RequestPreferences {
     private Double cutoff = getDefaultCutoff();
 
     private String serializedFilterFactors;
+    private String queryFactorType;
 
     private SortedSet<String> queryFactorValues;
-
-    private String queryFactorType;
 
     @NotNull
     @Range(min = 0, max = 1000)

@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import java.util.Collections;
@@ -46,7 +46,7 @@ import static org.mockito.Mockito.when;
 public class GeneProfileBuilderTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
-    private BaselineProfile.Builder subject;
+    private BaselineProfile.BaselineProfileBuilder subject;
 
     @Mock
     private BaselineProfilePrecondition baselineProfilePreconditionMock;
@@ -57,7 +57,7 @@ public class GeneProfileBuilderTest {
     private GeneNamesProvider geneNamesProviderMock;
 
     @Mock
-    private RequestContext requestContextMock;
+    private BaselineRequestContext requestContextMock;
 
     @Mock
     private BaselineExpression expressionMock1;
@@ -68,7 +68,7 @@ public class GeneProfileBuilderTest {
 
     @Before
     public void initSubject() {
-        subject = new BaselineProfile.Builder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
+        subject = new BaselineProfile.BaselineProfileBuilder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
 
         when(requestContextMock.getCutoff()).thenReturn(0d);
         when(requestContextMock.isSpecific()).thenReturn(true);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,21 +20,19 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.impl.FilterParameters;
+import uk.ac.ebi.atlas.commands.context.impl.BaselineRequestContextImpl;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,31 +40,28 @@ import java.util.SortedSet;
 
 @Named
 @Scope("prototype")
-public class RequestContextBuilder implements Serializable {
+public class BaselineRequestContextBuilder {
 
-    private FilterParameters filterParameters;
+    private BaselineRequestContextImpl requestContext;
 
     private BaselineExperiment experiment;
 
     private FilterFactorsConverter filterFactorsConverter;
 
-    private BaselineExperimentsCache experimentsCache;
-
-    private RequestPreferences preferences;
+    protected RequestPreferences preferences;
 
     @Inject
-    public RequestContextBuilder(FilterParameters filterParameters, FilterFactorsConverter filterFactorsConverter, BaselineExperimentsCache experimentsCache) {
-        this.experimentsCache = experimentsCache;
-        this.filterParameters = filterParameters;
+    public BaselineRequestContextBuilder(BaselineRequestContextImpl requestContext, FilterFactorsConverter filterFactorsConverter) {
+        this.requestContext = requestContext;
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
-    public RequestContextBuilder forExperiment(String experimentAccession) {
-        this.experiment = experimentsCache.getExperiment(experimentAccession);
+    public BaselineRequestContextBuilder forExperiment(BaselineExperiment experiment) {
+        this.experiment = experiment;
         return this;
     }
 
-    public RequestContextBuilder withPreferences(RequestPreferences preferences) {
+    public BaselineRequestContextBuilder withPreferences(RequestPreferences preferences) {
         this.preferences = preferences;
         return this;
     }
@@ -79,28 +74,28 @@ public class RequestContextBuilder implements Serializable {
         }
     }
 
-    public RequestContext build() {
+    public BaselineRequestContext build() {
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
-        filterParameters.setRequestPreferences(preferences);
+        requestContext.setRequestPreferences(preferences);
 
         Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
 
-        filterParameters.setSelectedFilterFactors(selectedFilterFactors);
+        requestContext.setSelectedFilterFactors(selectedFilterFactors);
 
         String filteredBySpecie = getFilteredBySpecie(selectedFilterFactors);
-        filterParameters.setFilteredBySpecies(filteredBySpecie);
+        requestContext.setFilteredBySpecies(filteredBySpecie);
 
         Set<Factor> queryFactors = new HashSet<Factor>();
         for (String queryFactorValues : getQueryFactorValues()) {
-            queryFactors.add(new Factor(filterParameters.getQueryFactorType(), queryFactorValues));
+            queryFactors.add(new Factor(requestContext.getQueryFactorType(), queryFactorValues));
         }
-        filterParameters.setSelectedQueryFactors(queryFactors);
+        requestContext.setSelectedQueryFactors(queryFactors);
 
         SortedSet<Factor> allQueryFactors = experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
-        filterParameters.setAllQueryFactors(allQueryFactors);
+        requestContext.setAllQueryFactors(allQueryFactors);
 
-        return filterParameters;
+        return requestContext;
     }
 
     String getFilteredBySpecie(Set<Factor> selectedFilterFactors) {

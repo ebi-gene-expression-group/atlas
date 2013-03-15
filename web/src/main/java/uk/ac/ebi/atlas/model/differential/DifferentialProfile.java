@@ -23,15 +23,20 @@
 package uk.ac.ebi.atlas.model.differential;
 
 
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
 
-    private DifferentialExpressionPrecondition expressionPrecondition;
 
-    public DifferentialProfile(String geneId, DifferentialExpressionPrecondition expressionPrecondition) {
+    public DifferentialProfile(String geneId) {
         super(geneId);
-        this.expressionPrecondition = expressionPrecondition;
     }
 
     @Override
@@ -39,11 +44,60 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
         return super.getExpression(contrast);
     }
 
-    public DifferentialProfile addExpression(DifferentialExpression expression){
-        if (expressionPrecondition.apply(expression)){
-            this.addExpression(expression.getContrast(), expression);
-        }
+    DifferentialProfile add(DifferentialExpression expression){
+        this.addExpression(expression.getContrast(), expression);
         return this;
+    }
+
+    @Named
+    @Scope("prototype")
+    public static class DifferentialProfileBuilder {
+
+        private DifferentialProfile differentialProfile;
+
+        private DifferentialExpressionPrecondition differentialExpressionPrecondition;
+
+        private DifferentialRequestContext requestContext;
+
+        @Inject
+        protected DifferentialProfileBuilder(DifferentialRequestContext requestContext
+                                        , DifferentialExpressionPrecondition differentialExpressionPrecondition) {
+            this.requestContext = requestContext;
+            this.differentialExpressionPrecondition = differentialExpressionPrecondition;
+        }
+
+        //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
+        // , that is before the Controller actually executes the request, before the Controller initialize RequestContext
+        void initPreconditions() {
+            differentialExpressionPrecondition.setCutoff(requestContext.getCutoff()).setRegulation(requestContext.getRegulation());
+        }
+
+        public DifferentialProfileBuilder forGeneId(String geneId) {
+            this.differentialProfile = new DifferentialProfile(geneId);
+            initPreconditions();
+
+            return this;
+        }
+
+        public DifferentialProfileBuilder addExpression(DifferentialExpression expression) {
+            checkState(differentialProfile != null, "Please invoke forGeneID before create");
+            if (differentialExpressionPrecondition.apply(expression)){
+                differentialProfile.add(expression);
+            }
+            return this;
+        }
+
+        public DifferentialProfile create() {
+            checkState(differentialProfile != null, "Please invoke forGeneID before create");
+
+            if (differentialProfile.isEmpty()){
+                return null;
+            }
+
+            return differentialProfile;
+        }
+
+
     }
 
 

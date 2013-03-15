@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class AutocompleteControllerTest {
     private AutocompleteController subject;
 
     @Mock
-    private RequestContext requestContextMock;
+    private BaselineRequestContext requestContextMock;
 
     @Mock
     private SolrClient solrClientMock;

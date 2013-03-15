@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
-import uk.ac.ebi.atlas.commands.RequestContext;
-import uk.ac.ebi.atlas.commands.RequestContextBuilder;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -66,7 +66,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
     @Inject
     public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
                                        ApplicationProperties applicationProperties,
-                                       RequestContextBuilder requestContextBuilder,
+                                       BaselineRequestContextBuilder requestContextBuilder,
                                        FilterFactorsConverter filterFactorsConverter) {
 
         super(requestContextBuilder, filterFactorsConverter);
@@ -83,7 +83,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
         initPreferences(preferences, experiment);
 
-        RequestContext requestContext = initRequestContext(experiment.getAccession(), preferences);
+        BaselineRequestContext requestContext = initRequestContext(experiment, preferences);
 
         model.addAttribute("experimentAccession", experiment.getAccession());
 

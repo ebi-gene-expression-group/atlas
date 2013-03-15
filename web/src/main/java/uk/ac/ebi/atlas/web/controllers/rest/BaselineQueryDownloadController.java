@@ -28,8 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RequestContextBuilder;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -51,7 +51,7 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
     @Inject
     public BaselineQueryDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
-                                           RequestContextBuilder requestContextBuilder,
+                                           BaselineRequestContextBuilder requestContextBuilder,
                                            FilterFactorsConverter filterFactorsConverter) {
 
         super(requestContextBuilder, filterFactorsConverter);
@@ -73,7 +73,7 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-        initRequestContext(baselineExperiment.getAccession(), preferences);
+        initRequestContext(baselineExperiment, preferences);
 
         writeGeneProfilesCommand.setResponseWriter(response.getWriter());
 

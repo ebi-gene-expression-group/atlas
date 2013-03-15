@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,31 +20,13 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.context;
 
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import java.io.Serializable;
-import java.util.Set;
-import java.util.SortedSet;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
-public interface RequestContext extends Serializable {
+public interface DifferentialRequestContext extends RequestContext {
 
-    public String getGeneQuery();
+    public Regulation getRegulation();
 
-    public Set<Factor> getSelectedFilterFactors();
-
-    public Set<Factor> getSelectedQueryFactors();
-
-    public String getQueryFactorType();
-
-    public String getFilteredBySpecies();
-
-    public double getCutoff();
-
-    public boolean isSpecific();
-
-    public Integer getHeatmapMatrixSize();
-
-    public SortedSet<Factor> getAllQueryFactors();
 }

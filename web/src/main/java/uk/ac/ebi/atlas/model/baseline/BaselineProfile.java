@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.RequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import javax.inject.Inject;
@@ -37,15 +37,15 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
         super(geneId);
     }
 
-    protected BaselineProfile add(BaselineExpression expression, String queryFactorType) {
+    BaselineProfile add(BaselineExpression expression, String queryFactorType) {
 
         this.addExpression(expression.getFactor(queryFactorType), expression);
         return this;
     }
 
-    @Named("geneProfileBuilder")
+    @Named
     @Scope("prototype")
-    public static class Builder {
+    public static class BaselineProfileBuilder {
 
         private BaselineProfile baselineProfile;
 
@@ -53,11 +53,11 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
 
         private BaselineProfilePrecondition baselineProfilePrecondition;
 
-        private RequestContext requestContext;
+        private BaselineRequestContext requestContext;
 
         @Inject
-        protected Builder(RequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
-                          BaselineProfilePrecondition baselineProfilePrecondition) {
+        protected BaselineProfileBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
+                                         BaselineProfilePrecondition baselineProfilePrecondition) {
             this.requestContext = requestContext;
             this.baselineExpressionPrecondition = baselineExpressionPrecondition;
             this.baselineProfilePrecondition = baselineProfilePrecondition;
@@ -73,14 +73,14 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
                     .setSpecific(requestContext.isSpecific());
         }
 
-        public Builder forGeneId(String geneId) {
+        public BaselineProfileBuilder forGeneId(String geneId) {
             this.baselineProfile = new BaselineProfile(geneId);
             initPreconditions();
 
             return this;
         }
 
-        public Builder addExpression(BaselineExpression expression) {
+        public BaselineProfileBuilder addExpression(BaselineExpression expression) {
             checkState(baselineProfile != null, "Please invoke forGeneID before create");
             if (baselineExpressionPrecondition.apply(expression)) {
                 baselineProfile.add(expression, requestContext.getQueryFactorType());
