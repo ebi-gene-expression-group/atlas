@@ -25,5 +25,5 @@
 
 
 <div>
-    <form:radiobuttons path="regulation" element="div"  items="${regulationValues}" />
+    <form:radiobuttons path="regulation" element="div" itemLabel="label" items="${regulationValues}" />
 </div>

@@ -25,6 +25,16 @@ package uk.ac.ebi.atlas.model.differential;
 
 public enum Regulation {
 
-    UP, DOWN, UP_DOWN
+    UP("up"), DOWN("down"), UP_DOWN("up/down");
 
+    private String label;
+
+    private Regulation(String label){
+
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }
