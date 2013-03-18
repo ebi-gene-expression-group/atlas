@@ -25,15 +25,13 @@ package uk.ac.ebi.atlas.model;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Experiment implements Serializable {
 
     private ExperimentType type;
 
-    protected Set<String> species;
+    protected SortedSet<String> species;
     protected Map<String, String> speciesMapping;
     private String accession;
     private String description;
@@ -46,7 +44,7 @@ public class Experiment implements Serializable {
         this.displayName = displayName;
         this.description = description;
         this.hasExtraInfoFile = hasExtraInfoFile;
-        this.species = species;
+        this.species = new TreeSet<>(species);
         this.speciesMapping = speciesMapping;
     }
 
