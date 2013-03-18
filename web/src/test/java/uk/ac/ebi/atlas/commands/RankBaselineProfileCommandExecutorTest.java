@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,35 +29,21 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankBaselineProfilesCommandTest {
+public class RankBaselineProfileCommandExecutorTest {
 
     private static final String SPECIES = "Species 1";
-    private static final String EXPERIMENT_ACCESSION = "ANY_EXPERIMENT_ACCESSION";
-    private static final String GENE_QUERY = "A GENE QUERY";
-
-    @Mock
-    private InputStreamFactory inputStreamFactoryMock;
-
-    @Mock
-    private SolrClient solrClientMock;
-
-    @Mock
-    private BaselineExperiment experimentMock;
 
     @Mock
     private ExperimentalFactors experimentalFactors;
@@ -72,7 +57,7 @@ public class RankBaselineProfilesCommandTest {
 
     private RankBaselineProfileCommandExecutor subject;
 
-    public RankBaselineProfilesCommandTest() {
+    public RankBaselineProfileCommandExecutorTest() {
     }
 
     //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
@@ -81,13 +66,9 @@ public class RankBaselineProfilesCommandTest {
 
         when(requestContextMock.getGeneQuery()).thenReturn("");
 
-        // no filtering should be done here
-        when(solrClientMock.findGeneIds(GENE_QUERY, SPECIES)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
         when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
 
-        when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactors);
-        when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
 
         when(requestContextMock.getHeatmapMatrixSize()).thenReturn(100);
         when(requestContextMock.isSpecific()).thenReturn(true);
@@ -98,21 +79,9 @@ public class RankBaselineProfilesCommandTest {
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
-        when(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
-
         subject = new RankBaselineProfileCommandExecutor(requestContextMock);
 
     }
-
-    //ToDo: move into GeneProfilesInputStreamCommandTest
-//    @Test
-//    public void commandBuildsGeneProfileInputStream() throws GenesNotFoundException {
-//        //when
-//        subject.apply(experimentMock);
-//        //then
-//        verify(inputStreamFactoryMock).createGeneProfileInputStream(EXPERIMENT_ACCESSION);
-//    }
-
 
     @Test
     public void givenAStreamWithLessExpressionsThanRankSizeTheCommandShouldReturnAllTheExpressions() throws Exception {
@@ -127,7 +96,6 @@ public class RankBaselineProfilesCommandTest {
     @Test
     public void givenRankingSizeOf3TheCommandWillAlwaysReturnAtMax3Expressions() throws Exception {
 
-
         //given
         given(requestContextMock.getHeatmapMatrixSize()).willReturn(3);
 
@@ -138,15 +106,6 @@ public class RankBaselineProfilesCommandTest {
         assertThat(top3Objects.size(), is(3));
 
     }
-
-    //ToDo: move into GeneProfilesInputStreamCommandTest
-//    @Test
-//    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GenesNotFoundException {
-//        when(requestContextMock.getGeneQuery()).thenReturn("");
-//        subject.apply(experimentMock);
-//        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
-//    }
-
 
     @Test
     public void rankedObjectsShouldBeInAscendingOrder() throws Exception {

@@ -48,7 +48,7 @@ import java.util.Set;
 @Named
 @Scope("prototype")
 public class RankDifferentialProfilesCommand{
-    protected static final Logger logger = Logger.getLogger(GeneProfilesInputStreamCommand.class);
+    protected static final Logger logger = Logger.getLogger(RankDifferentialProfilesCommand.class);
 
     private SolrClient solrClient;
     private InputStreamFactory inputStreamFactory;
