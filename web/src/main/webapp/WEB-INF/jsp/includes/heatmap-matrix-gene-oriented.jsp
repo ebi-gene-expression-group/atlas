@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -81,15 +82,30 @@
                                 style="${style}">
 
                             <c:if test="${expressionLevel != 0}">
-                                <c:if test="${type eq 'BASELINE'}">
-                                    <fmt:formatNumber type="number"
-                                                      maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
-                                                      value="${expressionLevel}" groupingUsed="false"
-                                                      var="expressionLevel"/>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${type eq 'BASELINE'}">
+                                        <fmt:formatNumber type="number"
+                                                          maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
+                                                          value="${expressionLevel}" groupingUsed="false"
+                                                          var="expressionLevel"/>
+                                    </c:when>
+                                    <c:when test="${type eq 'DIFFERENTIAL'}">
+                                        <c:choose>
+                                            <c:when test="${geneProfile.getExpression(queryFactor).notApplicable}">
+                                                <c:set var="foldChange" value="N/A"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <fmt:formatNumber type="number"
+                                                                  maxFractionDigits="2"
+                                                                  value="${geneProfile.getExpression(queryFactor).foldChange}" groupingUsed="false"
+                                                                  var="foldChange"/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                </c:choose>
 
-                                <div class="hide_cell"
-                                     data-organism-part="${columnHeader}" data-color="${cellColour}">
+                                <div class="hide_cell" ${type eq 'DIFFERENTIAL' ? 'data-fold-change="'.concat(foldChange).concat('"'):''}
+                                data-organism-part="${columnHeader}" data-color="${cellColour}">
                                         ${expressionLevel}
                                 </div>
 
