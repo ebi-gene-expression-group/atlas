@@ -70,7 +70,7 @@ public class RankBaselineProfilesCommandTest {
 
     private ObjectInputStream<BaselineProfile> smallInputStream;
 
-    private RankBaselineProfilesCommand subject;
+    private RankBaselineProfileCommandExecutor subject;
 
     public RankBaselineProfilesCommandTest() {
     }
@@ -100,29 +100,24 @@ public class RankBaselineProfilesCommandTest {
 
         when(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
 
-        subject = new RankBaselineProfilesCommand();
-        subject.setSolrClient(solrClientMock);
-        subject.setInputStreamFactory(inputStreamFactoryMock);
-
-        subject.setRequestContext(requestContextMock);
+        subject = new RankBaselineProfileCommandExecutor(requestContextMock);
 
     }
 
-    @Test
-    public void commandBuildsGeneProfileInputStream() throws GenesNotFoundException {
-        //when
-        subject.apply(experimentMock);
-        //then
-        verify(inputStreamFactoryMock).createGeneProfileInputStream(EXPERIMENT_ACCESSION);
-    }
+    //ToDo: move into GeneProfilesInputStreamCommandTest
+//    @Test
+//    public void commandBuildsGeneProfileInputStream() throws GenesNotFoundException {
+//        //when
+//        subject.apply(experimentMock);
+//        //then
+//        verify(inputStreamFactoryMock).createGeneProfileInputStream(EXPERIMENT_ACCESSION);
+//    }
 
 
     @Test
     public void givenAStreamWithLessExpressionsThanRankSizeTheCommandShouldReturnAllTheExpressions() throws Exception {
-        //given
-        given(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).willReturn(smallInputStream);
         //when
-        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.execute(smallInputStream);
 
         //then
         assertThat(top3Objects.size(), is(1));
@@ -135,24 +130,22 @@ public class RankBaselineProfilesCommandTest {
 
         //given
         given(requestContextMock.getHeatmapMatrixSize()).willReturn(3);
-        //and
-        when(inputStreamFactoryMock.createGeneProfileInputStream(EXPERIMENT_ACCESSION)).thenReturn(largeInputStream);
-
 
         //when
-        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.execute(largeInputStream);
 
         //then
         assertThat(top3Objects.size(), is(3));
 
     }
 
-    @Test
-    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GenesNotFoundException {
-        when(requestContextMock.getGeneQuery()).thenReturn("");
-        subject.apply(experimentMock);
-        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
-    }
+    //ToDo: move into GeneProfilesInputStreamCommandTest
+//    @Test
+//    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GenesNotFoundException {
+//        when(requestContextMock.getGeneQuery()).thenReturn("");
+//        subject.apply(experimentMock);
+//        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
+//    }
 
 
     @Test
@@ -162,7 +155,7 @@ public class RankBaselineProfilesCommandTest {
         when(requestContextMock.isSpecific()).thenReturn(false);
 
         //when
-        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.execute(largeInputStream);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(5));
@@ -184,7 +177,7 @@ public class RankBaselineProfilesCommandTest {
     public void rankedObjectsShouldBeInDescendingOrder() throws Exception {
 
         //when
-        List<BaselineProfile> top3Objects = subject.apply(experimentMock);
+        List<BaselineProfile> top3Objects = subject.execute(largeInputStream);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(1));

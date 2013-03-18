@@ -55,6 +55,7 @@
     color: #3D3D3D;
     background-color: white;
     vertical-align: middle;
+    text-align: center;
     border: 1px solid #cdcdcd;
     height: 25px;
     width: 25px;
@@ -62,10 +63,14 @@
 
 .table-grid .header-cell {
     background-color: #FAFAFA;
+    border: 1px solid #cdcdcd;
+    white-space: nowrap;
     font-weight: bold;
     width: auto !important;
+    padding-top: 1px;
     padding-left: 5px;
     padding-right: 5px;
+    text-align: left;
 }
 
 .table-grid .header-cell:hover, .table-grid th:hover {

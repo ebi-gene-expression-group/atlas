@@ -58,6 +58,23 @@ function initHeatmapDisplayValueToggle() {
         }
     });
 
+    $("#heatmap-table td:has(div[data-fold-change])").attr('title','').tooltip(
+        {
+            tooltipClass: "help-tooltip",
+            content:function(callback) {
+                        var foldChange = $(this).find("div").attr("data-fold-change"),
+                            expressionLevel = $(this).find("div").text().trim();
+
+                        return "<table class='table-grid'>"+
+                            "<thead><th class='header-cell'>P-value</th><th class='header-cell'>Log2-fold Change</th></thead>" +
+                            "<tbody><tr><td>" + expressionLevel + "</td><td>"+ foldChange +"</td></tr></tbody>" +
+                            "</table>";
+                    }
+
+
+
+        });
+
     $('#download-profiles-link').button().tooltip();
 
     $("#sort-toggle").button().

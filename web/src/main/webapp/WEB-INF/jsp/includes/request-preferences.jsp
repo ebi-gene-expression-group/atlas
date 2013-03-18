@@ -40,18 +40,19 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
-                    <td>
-                        <c:if test="${selectedFilterFactors.size() > 0}">
-                            <label>Filtered by</label>
-                            <span data-help-loc="#filterBy"></span>
-                        </c:if>
-                    </td>
+                <td>
+                    <c:if test="${selectedFilterFactors.size() > 0}">
+                        <label>Filtered by</label>
+                        <span data-help-loc="#filterBy"></span>
+                    </c:if>
+                </td>
                 <td>
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch${type eq 'DIFFERENTIAL' ? '-differential':''}"/>
                 </td>
                 <td style="width:100%;display:block">
-                    <form:label path="cutoff">${type eq 'BASELINE' ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
+                    <form:label
+                            path="cutoff">${type eq 'BASELINE' ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
                     <span data-help-loc="#cutoff"/>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
@@ -68,7 +69,8 @@
             <tr>
                 <td>
                     <div>
-                        <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="3" cols="30"></form:textarea>
+                        <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="3"
+                                       cols="30"></form:textarea>
                     </div>
                 </td>
                 <c:if test="${selectedFilterFactors.size() > 0}">
@@ -86,7 +88,7 @@
                         <c:set var="isSingleContrast" value="${type eq 'DIFFERENTIAL' && allQueryFactors.size() == 1}"/>
                         <c:set var="itemLabel" value="${type eq 'DIFFERENTIAL'? 'displayName' : 'value'}"/>
                         <c:set var="itemValue" value="${type eq 'DIFFERENTIAL'? 'id' : 'value'}"/>
-                        <form:select path="queryFactorValues" data-placeholder="(any ${queryFactorName}s)"
+                        <form:select path="queryFactorValues" data-placeholder="(Any ${queryFactorName})"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
                                      cssStyle="width:300px"
@@ -96,9 +98,10 @@
                             <form:checkbox id="specific"
                                            path="specific"
                                            label="Specific"
-                                            disabled="${type eq 'DIFFERENTIAL' ? true : false}"></form:checkbox>
+                                           disabled="${type eq 'DIFFERENTIAL' ? true : false}"></form:checkbox>
                         </span>
-                    <span data-help-loc="#specific${type eq 'DIFFERENTIAL' ? '-differential':''}" style="display:inline-block"/>
+                    <span data-help-loc="#specific${type eq 'DIFFERENTIAL' ? '-differential':''}"
+                          style="display:inline-block"/>
                 </td>
                 <td>
                     <div>

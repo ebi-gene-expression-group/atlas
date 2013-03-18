@@ -38,8 +38,8 @@ public class DifferentialExperiment extends Experiment {
 
     private Map<String, Contrast> contrastsById = Maps.newHashMap();
 
-    public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species) {
-        super(ExperimentType.DIFFERENTIAL, accession, description, hasExtraInfoFile, species);
+    public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping) {
+        super(ExperimentType.DIFFERENTIAL, accession, description, hasExtraInfoFile, species, speciesMapping);
         for (Contrast contrast : contrasts) {
             this.contrastsById.put(contrast.getId(), contrast);
         }
@@ -56,9 +56,9 @@ public class DifferentialExperiment extends Experiment {
     }
 
     public SortedSet<String> getContrastIds() {
-        return Sets.newTreeSet(contrastsById.keySet());
-    }
-
+            return Sets.newTreeSet(contrastsById.keySet());
+        }
+    
     private Comparator<Contrast> orderByDisplayName() {
         return Ordering.natural().onResultOf(new Function<Contrast, Comparable>() {
             @Override

@@ -46,6 +46,10 @@ public class DifferentialExpression implements GeneExpression{
         return foldChange;
     }
 
+    public boolean isNotApplicable(){
+        return getFoldChange() == Double.MAX_VALUE || getFoldChange() == Double.MIN_VALUE;
+    }
+
     public Contrast getContrast() {
         return contrast;
     }

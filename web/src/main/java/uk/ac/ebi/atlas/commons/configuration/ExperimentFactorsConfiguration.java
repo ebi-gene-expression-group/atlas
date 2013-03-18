@@ -26,9 +26,7 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ExperimentFactorsConfiguration {
 
@@ -78,5 +76,19 @@ public class ExperimentFactorsConfiguration {
         }
 
         return results;
+    }
+
+    public Map<String, String> getSpeciesMapping() {
+
+        Map<String, String> mapping = new HashMap<>();
+        List<HierarchicalConfiguration> fields =
+                config.configurationsAt("speciesMapping.mapping");
+        for (HierarchicalConfiguration sub : fields) {
+            String samples = sub.getString("samples").toLowerCase();
+            String genes = sub.getString("genes").toLowerCase();
+            mapping.put(samples, genes);
+        }
+
+        return mapping;
     }
 }

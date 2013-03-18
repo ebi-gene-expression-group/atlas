@@ -25,33 +25,34 @@ package uk.ac.ebi.atlas.model;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 public class Experiment implements Serializable {
 
     private ExperimentType type;
 
-    protected Set<String> species;
+    protected SortedSet<String> species;
+    protected Map<String, String> speciesMapping;
     private String accession;
     private String description;
     private String displayName;
     private boolean hasExtraInfoFile;
 
-    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species) {
+    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping) {
         this.type = type;
         this.accession = accession;
         this.displayName = displayName;
         this.description = description;
         this.hasExtraInfoFile = hasExtraInfoFile;
-        this.species = species;
+        this.species = new TreeSet<>(species);
+        this.speciesMapping = speciesMapping;
     }
 
-    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species) {
-        this(type, accession, null, description, hasExtraInfoFile, species);
+    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping) {
+        this(type, accession, null, description, hasExtraInfoFile, species, speciesMapping);
     }
 
-    public ExperimentType getType(){
+    public ExperimentType getType() {
         return type;
     }
 
@@ -67,7 +68,7 @@ public class Experiment implements Serializable {
         return hasExtraInfoFile;
     }
 
-    public String getAccession(){
+    public String getAccession() {
         return accession;
     }
 
@@ -77,6 +78,10 @@ public class Experiment implements Serializable {
 
     public String getFirstSpecies() {
         return species.iterator().next();
+    }
+
+    public Map<String, String> getSpeciesMapping() {
+        return Collections.unmodifiableMap(speciesMapping);
     }
 
 }
