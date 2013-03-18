@@ -36,6 +36,16 @@ public class NumberUtils {
     private static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
     private static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
 
+    // P-values less than 10E-10 are shown as '< 10^-10'
+    private static final Double MIN_REPORTED_VALUE = 1E-10d;
+    private static final String TEN = "10";
+    private static final String MULTIPLY_HTML_CODE = " × ";
+    private static final String E_PATTERN = "#.##E0";
+    private static final String E = "E";
+    private static final String SUP_PRE = "<span style=\"vertical-align: super;\">";
+    private static final String SUP_POST = "</span>";
+
+
     public String removeTrailingZero(double value) {
         NumberFormat format = new DecimalFormat("0.####");
         return format.format(value);
@@ -45,4 +55,34 @@ public class NumberUtils {
         return MathUtils.round(value, value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
                 : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE);
     }
+
+    public String htmlFormatDouble(double number) {
+        return (number >0 && number < MIN_REPORTED_VALUE) ? "<" + formatNumber(MIN_REPORTED_VALUE) : formatNumber(number);
+
+    }
+
+    String formatNumber(double number) {
+
+        DecimalFormat df = new DecimalFormat(E_PATTERN);
+        // Examples values of auxFormat: 6.2E-3, 0E0
+        String auxFormat = df.format(number);
+
+        // We now convert this format to 6.2*10^-3 (and 0 in the case of 0E0 specifically)
+        String[] formatParts = auxFormat.split(E);
+        String mantissa = formatParts[0]; // in 6.2E-3, mantissa = 6.2
+        int exponent = Integer.parseInt(formatParts[1]); // in 6.2E-3, exponent= -3
+        if (exponent >= -3 && exponent <= 0) {
+            return new DecimalFormat("#.###").format(number);
+        }
+
+        return new StringBuilder()
+                .append(mantissa)
+                .append(MULTIPLY_HTML_CODE)
+                .append(TEN)
+                .append(SUP_PRE)
+                .append(exponent)
+                .append(SUP_POST).toString();
+    }
+
+
 }
