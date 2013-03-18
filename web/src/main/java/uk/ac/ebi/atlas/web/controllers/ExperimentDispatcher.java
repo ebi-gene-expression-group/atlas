@@ -127,7 +127,7 @@ public class ExperimentDispatcher {
     }
 
 
-
+    //ToDo: this method maybe should go somewhere else, indeed it is required by both Baseline and Differential Query Page Controllers
     public static String buildDownloadURL(HttpServletRequest request) {
         //It's important that here we use the original query string, not the forwarded one
         String originalQueryString = ((HttpServletRequest)((HttpServletRequestWrapper) request).getRequest()).getQueryString();
