@@ -22,80 +22,37 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import au.com.bytecode.opencsv.CSVWriter;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.SortedSet;
-
-import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Named("streamGeneProfiles")
 @Scope("prototype")
 public class WriteGeneProfilesCommand extends GeneProfilesInputStreamCommand<Long> {
 
-    private CSVWriter csvWriter;
-
-    private NumberUtils numberUtils;
-    private GeneNamesProvider geneNamesProvider;
+    private GeneProfilesTSVWriter geneProfileWriter;
 
     @Inject
-    protected WriteGeneProfilesCommand(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
-        this.numberUtils = numberUtils;
-        this.geneNamesProvider = geneNamesProvider;
+    public WriteGeneProfilesCommand(GeneProfilesTSVWriter geneProfileWriter) {
+        this.geneProfileWriter = geneProfileWriter;
     }
 
     @Override
     protected Long apply(BaselineRequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException {
-        long count = 0;
-        SortedSet<String> factorValues = Factor.getValues(requestContext.getAllQueryFactors());
 
-        csvWriter.writeNext(buildCsvHeaders(factorValues));
-
-        BaselineProfile baselineProfile;
-        while ((baselineProfile = inputStream.readNext()) != null) {
-            ++count;
-            csvWriter.writeNext(buildCsvRow(baselineProfile, requestContext.getAllQueryFactors()));
-        }
-
-        csvWriter.flush();
-        csvWriter.close();
-
-        return count;
+        return geneProfileWriter.apply(inputStream, Factor.getValues(requestContext.getAllQueryFactors()), requestContext.getAllQueryFactors());
     }
 
-    protected String[] buildCsvHeaders(SortedSet<String> factorValues) {
-        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, factorValues.toArray(new String[factorValues.size()]));
-    }
-
-    protected String[] buildCsvRow(final BaselineProfile baselineProfile, SortedSet<Factor> factors) {
-        String[] expressionLevels = new String[factors.size()];
-        int i = 0;
-        for (Factor factor : factors) {
-            expressionLevels[i++] = numberUtils.removeTrailingZero(baselineProfile.getExpressionLevel(factor));
-        }
-        String geneId = baselineProfile.getGeneId();
-        return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), geneId}, expressionLevels);
-    }
-
-    protected String[] buildCsvRow(String[] rowHeaders, String[] values) {
-
-        return ArrayUtils.addAll(rowHeaders, values);
-
-    }
 
     public void setResponseWriter(PrintWriter responseWriter) {
-        csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER);
+        geneProfileWriter.setResponseWriter(responseWriter);
     }
 
 }

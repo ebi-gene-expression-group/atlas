@@ -30,14 +30,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.commands.GeneProfilesInputStreamCommand1;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
+import uk.ac.ebi.atlas.commands.RankBaselineProfileCommandExecutor;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.utils.FilterFactorMenu;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -57,21 +61,28 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineQueryPageController extends BaselineQueryController {
 
-    private RankBaselineProfilesCommand rankCommand;
+    private RankBaselineProfileCommandExecutor rankCommand;
+
+    private GeneProfilesInputStreamCommand1<GeneProfilesList, ObjectInputStream<BaselineProfile>> geneProfilesInputStreamCommand1;
+
+    private InputStreamFactory inputStreamFactory;
+
 
     private ApplicationProperties applicationProperties;
 
     private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
+    public BaselineQueryPageController(RankBaselineProfileCommandExecutor rankCommand,
                                        ApplicationProperties applicationProperties,
                                        BaselineRequestContextBuilder requestContextBuilder,
-                                       FilterFactorsConverter filterFactorsConverter) {
+                                       GeneProfilesInputStreamCommand1 geneProfilesInputStreamCommand1, InputStreamFactory inputStreamFactory, FilterFactorsConverter filterFactorsConverter) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
+        this.geneProfilesInputStreamCommand1 = geneProfilesInputStreamCommand1;
+        this.inputStreamFactory = inputStreamFactory;
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
@@ -130,7 +141,9 @@ public class BaselineQueryPageController extends BaselineQueryController {
         if (!result.hasErrors()) {
 
             try {
-                GeneProfilesList geneProfiles = rankCommand.apply(experiment);
+                ObjectInputStream<BaselineProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
+                geneProfilesInputStreamCommand1.setCommandExecutor(rankCommand);
+                GeneProfilesList geneProfiles = geneProfilesInputStreamCommand1.apply(geneProfileInputStream);
 
                 model.addAttribute("geneProfiles", geneProfiles);
 

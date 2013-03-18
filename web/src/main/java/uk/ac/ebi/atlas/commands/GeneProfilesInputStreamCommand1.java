@@ -24,35 +24,31 @@ package uk.ac.ebi.atlas.commands;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Set;
 
-public abstract class GeneProfilesInputStreamCommand<T> {
-    protected static final Logger logger = Logger.getLogger(GeneProfilesInputStreamCommand.class);
+import static com.google.common.base.Preconditions.checkNotNull;
 
-    private InputStreamFactory inputStreamFactory;
+@Named
+@Scope("request")
+public class GeneProfilesInputStreamCommand1<T, K extends ObjectInputStream> {
+    protected static final Logger logger = Logger.getLogger(GeneProfilesInputStreamCommand1.class);
 
-    private BaselineRequestContext requestContext;
+    private RequestContext requestContext;
 
     private SolrClient solrClient;
 
-    //ToDo: verify if the following @Inject can be injected in the constructor of the abstract class
-
-
-    @Inject
-    protected void setInputStreamFactory(InputStreamFactory inputStreamFactory) {
-        this.inputStreamFactory = inputStreamFactory;
-    }
+    private CommandExecutor<T, K> commandExecutor;
 
     @Inject
     public void setSolrClient(SolrClient solrClient) {
@@ -65,21 +61,21 @@ public abstract class GeneProfilesInputStreamCommand<T> {
     }
 
     @NotNull
-    public T apply(Experiment experiment) throws GenesNotFoundException {
+    public T apply(K geneProfileInputStream) throws GenesNotFoundException {
+
+        checkNotNull(commandExecutor, "Command executor was not set!");
 
         Set<String> selectedGeneIds = null;
 
-        if(StringUtils.isNotBlank(requestContext.getGeneQuery())){
+        if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
 
             selectedGeneIds = solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
 
         }
 
-        ObjectInputStream<BaselineProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
+        try (ObjectInputStream<K> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 
-        try (ObjectInputStream<BaselineProfile> inputStream = new GeneProfileInputStreamFilter(geneProfileInputStream, selectedGeneIds, requestContext.getSelectedQueryFactors())) {
-
-            return apply(requestContext, inputStream);
+            return commandExecutor.execute(inputStream);
 
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -87,6 +83,7 @@ public abstract class GeneProfilesInputStreamCommand<T> {
         }
     }
 
-    protected abstract T apply(BaselineRequestContext requestContext, ObjectInputStream<BaselineProfile> inputStream) throws IOException;
-
+    public void setCommandExecutor(CommandExecutor commandExecutor) {
+        this.commandExecutor = commandExecutor;
+    }
 }

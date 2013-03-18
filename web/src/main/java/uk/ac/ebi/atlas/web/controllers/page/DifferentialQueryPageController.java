@@ -73,9 +73,9 @@ public class DifferentialQueryPageController {
 
         model.addAttribute("allQueryFactors", contrasts);
 
-        //if there is only one contrast we want to preselect it... from Robert feedback
+//        if there is only one contrast we want to preselect it... from Robert feedback
         if(contrasts.size() == 1){
-            preferences.setQueryFactorValues(getContrastNames(contrasts));
+            preferences.setQueryFactorValues(differentialExperiment.getContrastIds());
         }
 
         RequestContext requestContext = requestContextBuilder.forExperiment(differentialExperiment)
@@ -109,7 +109,7 @@ public class DifferentialQueryPageController {
         return "experiment";
     }
 
-    SortedSet<String> getContrastNames(Set<Contrast> contrasts){
+    SortedSet<String> getContrastIds(Set<Contrast> contrasts){
         SortedSet<String> contrastNames = Sets.newTreeSet();
         for (Contrast contrast: contrasts){
             contrastNames.add(contrast.getId());

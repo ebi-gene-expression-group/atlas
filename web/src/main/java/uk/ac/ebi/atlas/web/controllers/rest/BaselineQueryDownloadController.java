@@ -27,10 +27,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.commands.GeneProfilesInputStreamCommand1;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
+import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommandExecutor;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
@@ -47,15 +51,22 @@ import java.io.IOException;
 public class BaselineQueryDownloadController extends BaselineQueryController {
     private static final Logger LOGGER = Logger.getLogger(BaselineQueryDownloadController.class);
 
-    private WriteGeneProfilesCommand writeGeneProfilesCommand;
+    private GeneProfilesInputStreamCommand1<Long, ObjectInputStream<BaselineProfile>> geneProfilesInputStreamCommand1;
+
+    private WriteGeneProfilesCommandExecutor writeGeneProfilesCommandExecutor;
+
+    private InputStreamFactory inputStreamFactory;
+
 
     @Inject
-    public BaselineQueryDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
+    public BaselineQueryDownloadController(GeneProfilesInputStreamCommand1<Long, ObjectInputStream<BaselineProfile>> geneProfilesInputStreamCommand1,
                                            BaselineRequestContextBuilder requestContextBuilder,
-                                           FilterFactorsConverter filterFactorsConverter) {
+                                           FilterFactorsConverter filterFactorsConverter, WriteGeneProfilesCommandExecutor writeGeneProfilesCommandExecutor, InputStreamFactory inputStreamFactory) {
 
         super(requestContextBuilder, filterFactorsConverter);
-        this.writeGeneProfilesCommand = writeGeneProfilesCommand;
+        this.geneProfilesInputStreamCommand1 = geneProfilesInputStreamCommand1;
+        this.writeGeneProfilesCommandExecutor = writeGeneProfilesCommandExecutor;
+        this.inputStreamFactory = inputStreamFactory;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=BASELINE")
@@ -63,29 +74,32 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
             , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        BaselineExperiment baselineExperiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        initPreferences(preferences, baselineExperiment);
+        initPreferences(preferences, experiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + baselineExperiment.getAccession() + "-gene-expression-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-gene-expression-profiles.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
-        initRequestContext(baselineExperiment, preferences);
+        initRequestContext(experiment, preferences);
 
-        writeGeneProfilesCommand.setResponseWriter(response.getWriter());
+        ObjectInputStream<BaselineProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
+
+        writeGeneProfilesCommandExecutor.setResponseWriter(response.getWriter());
+        geneProfilesInputStreamCommand1.setCommandExecutor(writeGeneProfilesCommandExecutor);
 
         try {
 
-            long genesCount = writeGeneProfilesCommand.apply(baselineExperiment);
+            long genesCount = geneProfilesInputStreamCommand1.apply(geneProfileInputStream);
+
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 
         } catch (GenesNotFoundException e) {
             LOGGER.info("<downloadGeneProfiles> no genes found");
         }
-
 
 
     }
