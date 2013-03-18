@@ -33,10 +33,7 @@ import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Named
 @Scope("prototype")
@@ -80,7 +77,6 @@ public class BaselineRequestContextBuilder {
         requestContext.setRequestPreferences(preferences);
 
         Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
-
         requestContext.setSelectedFilterFactors(selectedFilterFactors);
 
         String filteredBySpecie = getFilteredBySpecie(selectedFilterFactors);
@@ -107,6 +103,10 @@ public class BaselineRequestContextBuilder {
         }
         if (filteredBySpecie == null) {
             filteredBySpecie = experiment.getFirstSpecies().toLowerCase();
+        }
+        Map<String, String> speciesMapping = experiment.getSpeciesMapping();
+        if (speciesMapping.containsKey(filteredBySpecie)) {
+            filteredBySpecie = speciesMapping.get(filteredBySpecie);
         }
         return filteredBySpecie;
     }

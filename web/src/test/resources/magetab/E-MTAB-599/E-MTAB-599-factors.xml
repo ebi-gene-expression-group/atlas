@@ -26,4 +26,5 @@
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes/>
     <landingPageDisplayName>Six tissues</landingPageDisplayName>
+    <speciesMapping/>
 </factors-definition>

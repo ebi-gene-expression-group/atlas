@@ -39,10 +39,7 @@ import uk.ac.ebi.atlas.model.readers.TsvReader;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder everytime the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
@@ -76,6 +73,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
 
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
+        Map<String, String> speciesMapping = factorsConfig.getSpeciesMapping();
 
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
 
@@ -97,6 +95,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
                 .withExtraInfo(hasExtraInfoFile)
                 .withFactorNamesByType(mageTabParser.getFactorNamesByType())
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
+                .withSpeciesMapping(speciesMapping)
                 .create();
 
     }

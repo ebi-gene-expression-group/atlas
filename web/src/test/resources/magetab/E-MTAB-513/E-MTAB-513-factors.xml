@@ -26,4 +26,5 @@
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes/>
     <landingPageDisplayName>Illumina Body Map</landingPageDisplayName>
+    <speciesMapping/>
 </factors-definition>

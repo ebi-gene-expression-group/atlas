@@ -97,6 +97,7 @@ public class ExperimentTest {
                 .withMenuFilterFactorTypes(Collections.EMPTY_SET)
                 .withFactorNamesByType(Collections.EMPTY_MAP)
                 .withExperimentRuns(experimentRuns)
+                .withSpeciesMapping(Collections.EMPTY_MAP)
                 .create();
 
 
@@ -115,6 +116,11 @@ public class ExperimentTest {
     @Test
     public void testSpecies() {
         assertThat(subject.getFirstSpecies(), is(SPECIE));
+    }
+
+    @Test
+    public void testSpeciesMapping() {
+        assertThat(subject.getSpeciesMapping(), is(Collections.EMPTY_MAP));
     }
 
     @Test

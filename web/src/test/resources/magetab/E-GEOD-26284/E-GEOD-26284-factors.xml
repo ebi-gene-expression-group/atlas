@@ -35,4 +35,5 @@
     <defaultQueryFactorType>CELL_LINE</defaultQueryFactorType>
     <menuFilterFactorTypes>CELLULAR_COMPONENT, RNA, CELL_LINE</menuFilterFactorTypes>
     <landingPageDisplayName>ENCODE cell lines</landingPageDisplayName>
+    <speciesMapping/>
 </factors-definition>
