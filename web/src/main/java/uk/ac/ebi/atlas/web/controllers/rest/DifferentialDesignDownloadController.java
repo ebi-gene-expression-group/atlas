@@ -20,35 +20,55 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page;
+package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class DifferentialDesignPageController extends ExperimentDesignPageController {
+public class DifferentialDesignDownloadController extends ExperimentDesignDownloadController {
 
     @Inject
-    public DifferentialDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader) {
+    public DifferentialDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader) {
         super(experimentDesignTsvReader);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=DIFFERENTIAL"})
-    public String showExperimentDesign(Model model, HttpServletRequest request) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        extractExperimentDesign(model, experiment, experiment.getLibrariesFromContrasts());
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=DIFFERENTIAL"})
+    public void downloadExperimentDesign(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+            , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        return "experiment-experiment-design";
+        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        extractExperimentDesign(response, experiment.getAccession(), experiment.getLibrariesFromContrasts());
+
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
