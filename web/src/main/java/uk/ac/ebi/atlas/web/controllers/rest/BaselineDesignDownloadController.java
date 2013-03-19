@@ -22,8 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import au.com.bytecode.opencsv.CSVWriter;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,65 +36,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 @Scope("request")
-public class BaselineDesignDownloadController {
-    private static final Logger logger = Logger.getLogger(BaselineDesignDownloadController.class);
-
-    private ExperimentDesignTsvReader experimentDesignTsvReader;
+public class BaselineDesignDownloadController extends ExperimentDesignDownloadController {
 
     @Inject
     public BaselineDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader) {
-        this.experimentDesignTsvReader = experimentDesignTsvReader;
+        super(experimentDesignTsvReader);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=BASELINE"})
-    public void downloadGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+    public void downloadExperimentDesign(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
-        // read contents from file
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getAccession()));
-        List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
-
-        // get used runs from experiment
-        Set<String> used = experiment.getExperimentRunAccessions();
-
-        // modify header by adding new column
-        String[] header = csvLines.remove(0);
-        String[] newHeader = new String[header.length + 1];
-        System.arraycopy(header, 0, newHeader, 0, header.length);
-        newHeader[header.length] = "Analysed";
-        newCsvLines.add(newHeader);
-
-        // copy content and add used field
-        for (String[] array : csvLines) {
-            String[] newArray = new String[array.length + 1];
-            System.arraycopy(array, 0, newArray, 0, array.length);
-            if (used.contains(newArray[0])) {
-                newArray[array.length] = "Yes";
-            } else {
-                newArray[array.length] = "No";
-            }
-            newCsvLines.add(newArray);
-        }
-
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-experiment-design.tsv\"");
-
-        response.setContentType("text/plain; charset=utf-8");
-
-        CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', CSVWriter.NO_QUOTE_CHARACTER);
-        csvWriter.writeAll(newCsvLines);
-
-        logger.debug("<downloadExperimentDesign> streamed " + newCsvLines.size() + " rows");
-
-        csvWriter.flush();
-        csvWriter.close();
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        extractExperimentDesign(response, experiment.getAccession(), experiment.getExperimentRunAccessions());
 
     }
 
