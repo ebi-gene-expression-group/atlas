@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.model.cache.baseline.magetab;
 
 import com.google.common.collect.Sets;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -48,17 +47,14 @@ public class MageTabParserIT {
 
     private MageTabParser subject;
 
+    @Test
+    public void testExtractFactorNamesGEOD26284() throws Exception {
 
-    @Before
-    public void setUp() throws Exception {
         subject = builder.forExperimentAccession("E-GEOD-26284")
                 .withRequiredFactorTypes(Sets.newHashSet("CELL_LINE", "CELLULAR_COMPONENT", "RNA"))
                 .withProcessedRunAccessions(Collections.EMPTY_SET)
                 .build();
-    }
 
-    @Test
-    public void testExtractFactorNames() throws Exception {
         //given
         Map<String, String> factorNamesByType = subject.getFactorNamesByType();
 
@@ -68,5 +64,23 @@ public class MageTabParserIT {
         Assert.assertThat(factorNamesByType.get("CELL_LINE"), is("Cell Line"));
         Assert.assertThat(factorNamesByType.get("CELLULAR_COMPONENT"), is("Cellular Component"));
         Assert.assertThat(factorNamesByType.get("RNA"), is("RNA"));
+    }
+
+    @Test
+    public void testExtractFactorNamesMTAB599() throws Exception {
+
+        subject = builder.forExperimentAccession("E-MTAB-599")
+                .withRequiredFactorTypes(Sets.newHashSet("ORGANISM_PART"))
+                .withProcessedRunAccessions(Collections.EMPTY_SET)
+                .build();
+
+        //given
+        Map<String, String> factorNamesByType = subject.getFactorNamesByType();
+
+        //then
+        Assert.assertThat(factorNamesByType.keySet(), containsInAnyOrder("ORGANISM_PART"));
+        //and
+        Assert.assertThat(factorNamesByType.get("ORGANISM_PART"), is("Organism Part"));
+
     }
 }

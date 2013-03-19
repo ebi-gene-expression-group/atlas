@@ -89,7 +89,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
 
         scanNodes = extractScanNodes(experimentAccession);
 
-        factorNamesByType = transformFactorNames(extractFactorNames());
+        factorNamesByType = transformFactorNames(extractPreservedFactorTypes());
 
         processedExperimentRuns = extractProcessedExperimentRuns();
         return this;
@@ -157,6 +157,19 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
             }
         }
         return namesByType;
+    }
+
+    Map<String, String> extractPreservedFactorTypes() {
+        IDF idf = getInvestigation().IDF;
+        Map<String, String> preservedByType = Maps.newHashMap();
+        for (int i = 0; i < idf.experimentalFactorType.size(); i++) {
+            String factorType = idf.experimentalFactorType.get(i);
+            String normalizedFactorType = Factor.normalize(factorType);
+            if (requiredFactorTypes.contains(normalizedFactorType)) {
+                preservedByType.put(normalizedFactorType, factorType);
+            }
+        }
+        return preservedByType;
     }
 
     protected String prettifyFactorType(String factorType) {
