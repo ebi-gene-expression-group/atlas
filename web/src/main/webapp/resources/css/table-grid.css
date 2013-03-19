@@ -59,6 +59,7 @@
     border: 1px solid #cdcdcd;
     height: 25px;
     width: 25px;
+    white-space: nowrap;
 }
 
 .table-grid .header-cell {
