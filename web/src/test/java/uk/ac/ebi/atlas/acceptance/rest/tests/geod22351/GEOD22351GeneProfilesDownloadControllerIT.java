@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.acceptance.rest.tests.geod22351;
 
 
 import com.jayway.restassured.response.Response;
@@ -33,9 +33,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GeneProfilesDownloadControllerIT {
+public class GEOD22351GeneProfilesDownloadControllerIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-22351.tsv");
 
     @Test
     public void verifyHeader() {
@@ -57,7 +57,7 @@ public class GeneProfilesDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Gene name", "Gene Id", "adipose", "adrenal", "brain", "breast", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid")
+                contains("Gene name", "Gene Id", "g1_g2.p-value", "g1_g2.log2foldchange")
         );
 
     }
@@ -68,7 +68,7 @@ public class GeneProfilesDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("METTL25", "ENSG00000127720", "0", "2", "0.7", "2", "0.9", "2", "5", "4", "4", "0.9", "2", "3", "3", "1", "3", "3")
+                contains("Ch25h", "ENSMUSG00000050370", "1.70428798138445E-6", "3.01033089730209")
         );
 
     }
@@ -78,7 +78,7 @@ public class GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(160));
+        assertThat(lines.length, is(50));
     }
 
 }

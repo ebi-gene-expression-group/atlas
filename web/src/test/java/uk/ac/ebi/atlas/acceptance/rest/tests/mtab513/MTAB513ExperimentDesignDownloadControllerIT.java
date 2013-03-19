@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.acceptance.rest.tests.mtab513;
 
 
 import com.jayway.restassured.response.Response;
@@ -33,7 +33,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ExperimentDesignDownloadControllerIT {
+public class MTAB513ExperimentDesignDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513/experiment-design.tsv");
 

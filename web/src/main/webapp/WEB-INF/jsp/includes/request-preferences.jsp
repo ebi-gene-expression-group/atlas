@@ -40,12 +40,18 @@
                     <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
+
+                <c:if test="${type eq 'DIFFERENTIAL'}">
+                    <td> <!-- empty placeholder above Contrasts --> </td>
+                </c:if>
+
                 <c:if test="${selectedFilterFactors.size() > 0}">
                     <td>
                         <label>Filtered by</label>
                         <span data-help-loc="#filterBy"></span>
                     </td>
                 </c:if>
+
                 <td>
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch${type eq 'DIFFERENTIAL' ? '-differential':''}"/>
