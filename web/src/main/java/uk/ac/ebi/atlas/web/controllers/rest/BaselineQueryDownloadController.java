@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneProfilesInputStreamCommand;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommandExecutor;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -84,11 +85,12 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-        initRequestContext(experiment, preferences);
+        BaselineRequestContext requestContext = initRequestContext(experiment, preferences);
 
         ObjectInputStream<BaselineProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
 
         writeGeneProfilesCommandExecutor.setResponseWriter(response.getWriter());
+        geneProfilesInputStreamCommand.setRequestContext(requestContext);
         geneProfilesInputStreamCommand.setCommandExecutor(writeGeneProfilesCommandExecutor);
 
         try {

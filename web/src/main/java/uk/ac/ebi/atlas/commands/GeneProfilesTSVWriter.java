@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.SortedSet;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
@@ -44,7 +46,7 @@ public class GeneProfilesTSVWriter<T extends GeneProfile, K> {
 
     private CSVWriter csvWriter;
 
-    private NumberUtils numberUtils;
+    protected NumberUtils numberUtils;
     private GeneNamesProvider geneNamesProvider;
 
     @Inject
@@ -71,17 +73,28 @@ public class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     }
 
     protected String[] buildCsvHeaders(SortedSet<String> factorValues) {
-        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, factorValues.toArray(new String[factorValues.size()]));
+        List<String> columnNames = buildColumnNames(factorValues);
+        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, columnNames.toArray(new String[columnNames.size()]));
     }
 
-    protected String[] buildCsvRow(final T baselineProfile, SortedSet<K> factors) {
+    protected String[] buildCsvRow(final T geneProfile, SortedSet<K> factors) {
+        String[] expressionLevels = buildExpressionsRow(geneProfile, factors);
+
+        String geneId = geneProfile.getGeneId();
+        return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), geneId}, expressionLevels);
+    }
+
+    protected List<String> buildColumnNames(SortedSet<String> conditionNames) {
+        return Lists.newArrayList(conditionNames);
+    }
+
+    protected String[] buildExpressionsRow(T geneProfile, SortedSet<K> factors) {
         String[] expressionLevels = new String[factors.size()];
         int i = 0;
         for (K factor : factors) {
-            expressionLevels[i++] = numberUtils.removeTrailingZero(baselineProfile.getExpressionLevel(factor));
+            expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(factor));
         }
-        String geneId = baselineProfile.getGeneId();
-        return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), geneId}, expressionLevels);
+        return expressionLevels;
     }
 
     protected String[] buildCsvRow(String[] rowHeaders, String[] values) {

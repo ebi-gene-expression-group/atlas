@@ -54,7 +54,7 @@ public class GeneProfilesInputStreamCommand<T, K extends ObjectInputStream> {
         this.solrClient = solrClient;
     }
 
-    @Inject
+//    @Inject
     public void setRequestContext(RequestContext requestContext) {
         this.requestContext = requestContext;
     }

@@ -143,6 +143,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
             try {
                 ObjectInputStream<BaselineProfile> geneProfileInputStream = inputStreamFactory.createGeneProfileInputStream(experiment.getAccession());
                 geneProfilesInputStreamCommand.setCommandExecutor(rankCommand);
+                geneProfilesInputStreamCommand.setRequestContext(requestContext);
                 GeneProfilesList geneProfiles = geneProfilesInputStreamCommand.apply(geneProfileInputStream);
 
                 model.addAttribute("geneProfiles", geneProfiles);

@@ -103,6 +103,7 @@ public class DifferentialQueryPageController {
             try {
 
                 DifferentialProfilesInputStream inputStream = inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession());
+                geneProfilesInputStreamCommand.setRequestContext(requestContext);
                 geneProfilesInputStreamCommand.setCommandExecutor(commandExecutor);
 
                 GeneProfilesList<DifferentialProfile> differentialProfiles = geneProfilesInputStreamCommand.apply(inputStream);
