@@ -75,13 +75,16 @@ public class NumberUtils {
             return new DecimalFormat("#.###").format(number);
         }
 
-        return new StringBuilder()
-                .append(mantissa)
-                .append(MULTIPLY_HTML_CODE)
-                .append(TEN)
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if(! "1".equals(mantissa)){
+            stringBuilder.append(mantissa).append(MULTIPLY_HTML_CODE);
+        }
+        stringBuilder.append(TEN)
                 .append(SUP_PRE)
                 .append(exponent)
-                .append(SUP_POST).toString();
+                .append(SUP_POST);
+        return stringBuilder.toString();
     }
 
 

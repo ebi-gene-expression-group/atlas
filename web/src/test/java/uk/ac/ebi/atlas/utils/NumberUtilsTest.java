@@ -53,7 +53,7 @@ public class NumberUtilsTest {
     public void testhtmlFormatDouble() {
         assertThat(subject.htmlFormatDouble(0.0d), is("0"));
 
-        assertThat(subject.htmlFormatDouble(1.2E-11d), is("<1 × 10<span style=\"vertical-align: super;\">-10</span>"));
+        assertThat(subject.htmlFormatDouble(1.2E-11d), is("<10<span style=\"vertical-align: super;\">-10</span>"));
         assertThat(subject.htmlFormatDouble(-1.2E-11d), is("-1.2 × 10<span style=\"vertical-align: super;\">-11</span>"));
 
         assertThat(subject.htmlFormatDouble(1.2E-5d), is("1.2 × 10<span style=\"vertical-align: super;\">-5</span>"));
@@ -65,7 +65,7 @@ public class NumberUtilsTest {
         assertThat(subject.htmlFormatDouble(123.567d), is("1.24 × 10<span style=\"vertical-align: super;\">2</span>"));
         assertThat(subject.htmlFormatDouble(-123.567d), is("-1.24 × 10<span style=\"vertical-align: super;\">2</span>"));
 
-        assertThat(subject.htmlFormatDouble(10.0d), is("1 × 10<span style=\"vertical-align: super;\">1</span>"));
+        assertThat(subject.htmlFormatDouble(10.0d), is("10<span style=\"vertical-align: super;\">1</span>"));
         assertThat(subject.htmlFormatDouble(-10.0d), is("-1 × 10<span style=\"vertical-align: super;\">1</span>"));
 
         assertThat(subject.htmlFormatDouble(10.123d), is("1.01 × 10<span style=\"vertical-align: super;\">1</span>"));
