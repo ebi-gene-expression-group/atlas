@@ -30,19 +30,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.GeneProfilesInputStreamCommand;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankDifferentialProfilesExecutor;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesInputStream;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -58,18 +54,11 @@ public class DifferentialQueryPageController {
     private DifferentialRequestContextBuilder requestContextBuilder;
     private RankDifferentialProfilesExecutor commandExecutor;
 
-    private GeneProfilesInputStreamCommand<GeneProfilesList<DifferentialProfile>, ObjectInputStream<DifferentialProfile>> geneProfilesInputStreamCommand;
-
-    private InputStreamFactory inputStreamFactory;
-
-
     @Inject
     public DifferentialQueryPageController(DifferentialRequestContextBuilder requestContextBuilder,
-                                           RankDifferentialProfilesExecutor rankDifferentialProfilesCommandExecutor, GeneProfilesInputStreamCommand<GeneProfilesList<DifferentialProfile>, ObjectInputStream<DifferentialProfile>> geneProfilesInputStreamCommand, InputStreamFactory inputStreamFactory){
+                                           RankDifferentialProfilesExecutor rankDifferentialProfilesCommandExecutor){
         this.requestContextBuilder = requestContextBuilder;
         this.commandExecutor = rankDifferentialProfilesCommandExecutor;
-        this.geneProfilesInputStreamCommand = geneProfilesInputStreamCommand;
-        this.inputStreamFactory = inputStreamFactory;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
@@ -101,12 +90,7 @@ public class DifferentialQueryPageController {
         if (!result.hasErrors()) {
 
             try {
-
-                DifferentialProfilesInputStream inputStream = inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession());
-                geneProfilesInputStreamCommand.setRequestContext(requestContext);
-                geneProfilesInputStreamCommand.setCommandExecutor(commandExecutor);
-
-                GeneProfilesList<DifferentialProfile> differentialProfiles = geneProfilesInputStreamCommand.apply(inputStream);
+                GeneProfilesList<DifferentialProfile> differentialProfiles = commandExecutor.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", differentialProfiles);
 

@@ -27,16 +27,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.GeneProfilesInputStreamCommand;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommandExecutor;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.context.RequestContext;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesInputStream;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -55,18 +49,12 @@ public class DifferentialDownloadController {
 
     private WriteDifferentialProfilesCommandExecutor writeGeneProfilesCommandExecutor;
 
-    private InputStreamFactory inputStreamFactory;
-
-    private GeneProfilesInputStreamCommand<Long, ObjectInputStream<DifferentialProfile>> geneProfilesInputStreamCommand;
-
     @Inject
     public DifferentialDownloadController(
-            DifferentialRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommandExecutor writeGeneProfilesCommandExecutor, InputStreamFactory inputStreamFactory, GeneProfilesInputStreamCommand<Long, ObjectInputStream<DifferentialProfile>> geneProfilesInputStreamCommand) {
+            DifferentialRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommandExecutor writeGeneProfilesCommandExecutor) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommandExecutor = writeGeneProfilesCommandExecutor;
-        this.inputStreamFactory = inputStreamFactory;
-        this.geneProfilesInputStreamCommand = geneProfilesInputStreamCommand;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
@@ -84,19 +72,15 @@ public class DifferentialDownloadController {
         response.setContentType("text/plain; charset=utf-8");
 
 
-        RequestContext requestContext = requestContextBuilder.forExperiment(experiment)
+        requestContextBuilder.forExperiment(experiment)
                 .withPreferences(preferences).build();
 
         writeGeneProfilesCommandExecutor.setResponseWriter(response.getWriter());
         writeGeneProfilesCommandExecutor.setExperiment(experiment);
-        geneProfilesInputStreamCommand.setRequestContext(requestContext);
-        geneProfilesInputStreamCommand.setCommandExecutor(writeGeneProfilesCommandExecutor);
-
-        DifferentialProfilesInputStream inputStream = inputStreamFactory.createDifferentialProfileInputStream(experiment.getAccession());
 
         try {
 
-            long genesCount = geneProfilesInputStreamCommand.apply(inputStream);
+            long genesCount = writeGeneProfilesCommandExecutor.execute(experiment.getAccession());
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 
         } catch (GenesNotFoundException e) {

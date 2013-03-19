@@ -44,6 +44,7 @@ public class RequestContextImpl implements RequestContext {
         return requestPreferences.getHeatmapMatrixSize();
     }
 
+    //ToDo: interface uses generics!!!
     public Set getSelectedQueryFactors() {
         return selectedQueryFactors;
     }

@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
@@ -38,7 +39,7 @@ import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfilesInputStreamCommandTest {
+public class AbstractCommandExecutorTest {
 
     private static final String SPECIES = "Species 1";
     private static final String GENE_QUERY = "A GENE QUERY";
@@ -55,9 +56,9 @@ public class GeneProfilesInputStreamCommandTest {
 
     private ObjectInputStream<BaselineProfile> largeInputStream;
 
-    private GeneProfilesInputStreamCommand<GeneProfilesList, ObjectInputStream<BaselineProfile>> subject;
+    private AbstractCommandExecutor<GeneProfilesList, BaselineProfile> subject;
 
-    public GeneProfilesInputStreamCommandTest() {
+    public AbstractCommandExecutorTest() {
     }
 
     //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
@@ -72,10 +73,23 @@ public class GeneProfilesInputStreamCommandTest {
                 //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
 
-        subject = new GeneProfilesInputStreamCommand<>();
+        subject = new AbstractCommandExecutor<GeneProfilesList, BaselineProfile>() {
+            @Override
+            protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
+                return largeInputStream;
+            }
+
+            @Override
+            protected RequestContext getRequestContext() {
+                return requestContextMock;
+            }
+
+            @Override
+            protected GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream) {
+                return null;
+            }
+        };
         subject.setSolrClient(solrClientMock);
-        subject.setRequestContext(requestContextMock);
-        subject.setCommandExecutor(commandExecutorMock);
 
     }
 
@@ -84,7 +98,7 @@ public class GeneProfilesInputStreamCommandTest {
 
         when(requestContextMock.getGeneQuery()).thenReturn("");
 
-        subject.apply(largeInputStream);
+        subject.execute("");
 
         verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
     }

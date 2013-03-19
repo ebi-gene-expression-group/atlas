@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.commands;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -14,7 +15,7 @@ import java.io.PrintWriter;
 
 @Named
 @Scope("request")
-public class WriteGeneProfilesCommandExecutor implements CommandExecutor<Long, BaselineProfile> {
+public class WriteGeneProfilesCommandExecutor extends AbstractCommandExecutor<Long, BaselineProfile> implements CommandExecutor<Long> {
 
     protected static final Logger logger = Logger.getLogger(WriteGeneProfilesCommandExecutor.class);
 
@@ -29,7 +30,7 @@ public class WriteGeneProfilesCommandExecutor implements CommandExecutor<Long, B
     }
 
     @Override
-    public Long execute(ObjectInputStream<BaselineProfile> inputStream) {
+    protected Long execute(ObjectInputStream<BaselineProfile> inputStream) {
         try {
             return geneProfileWriter.apply(inputStream, Factor.getValues(requestContext.getAllQueryFactors()), requestContext.getAllQueryFactors());
         } catch (IOException e) {
@@ -43,5 +44,13 @@ public class WriteGeneProfilesCommandExecutor implements CommandExecutor<Long, B
         geneProfileWriter.setResponseWriter(responseWriter);
     }
 
+    @Override
+    protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
+        return inputStreamFactory.createGeneProfileInputStream(experimentAccession);
+    }
 
+    @Override
+    protected RequestContext getRequestContext() {
+        return requestContext;
+    }
 }

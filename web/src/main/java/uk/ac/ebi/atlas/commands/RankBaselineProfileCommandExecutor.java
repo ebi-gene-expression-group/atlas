@@ -4,6 +4,7 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -19,9 +20,10 @@ import java.util.Set;
 
 @Named
 @Scope("request")
-public class RankBaselineProfileCommandExecutor implements CommandExecutor<GeneProfilesList, BaselineProfile> {
+public class RankBaselineProfileCommandExecutor extends AbstractCommandExecutor<GeneProfilesList, BaselineProfile> implements CommandExecutor<GeneProfilesList> {
 
     private BaselineRequestContext requestContext;
+
 
     @Inject
     public RankBaselineProfileCommandExecutor(BaselineRequestContext requestContext) {
@@ -29,7 +31,7 @@ public class RankBaselineProfileCommandExecutor implements CommandExecutor<GeneP
     }
 
     @Override
-    public GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream) {
+    protected GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream) {
         Comparator<BaselineProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
                 , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors(), requestContext.getCutoff());
 
@@ -63,4 +65,13 @@ public class RankBaselineProfileCommandExecutor implements CommandExecutor<GeneP
         return MinMaxPriorityQueue.orderedBy(geneProfileComparator).maximumSize(heatmapMatrixSize).create();
     }
 
+    @Override
+    protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
+        return inputStreamFactory.createGeneProfileInputStream(experimentAccession);
+    }
+
+    @Override
+    protected RequestContext getRequestContext() {
+        return requestContext;
+    }
 }
