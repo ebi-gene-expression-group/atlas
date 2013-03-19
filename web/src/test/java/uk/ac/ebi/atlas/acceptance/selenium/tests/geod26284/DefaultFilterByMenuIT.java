@@ -38,8 +38,8 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
     public static final String TOTAL_RNA = "total RNA";
     public static final String RNA_TYPE = "RNA";
     public static final String WHOLE_CELL = "whole cell";
-    public static final String CELLULAR_COMPONENT = "cellular component";
-    public static final String CELL_LINE = "cell line";
+    public static final String CELLULAR_COMPONENT = "Cellular Component";
+    public static final String CELL_LINE = "Cell Line";
     public static final String LONG_NON_POLYA_RNA = "long non-polyA RNA";
     public static final String LONG_POLYA_RNA = "long polyA RNA";
     public static final String SK_N_SH_RA = "SK-N-SH_RA";
@@ -60,50 +60,50 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
 
     @Test
     public void verifyFilterByMenuFirstLabels() {
-        assertThat(subject.getFilterByMenuText(0), is(RNA_TYPE));
-        assertThat(subject.getFilterByMenuText(1), is(CELL_LINE));
-        assertThat(subject.getFilterByMenuText(2), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(0), is(CELL_LINE));
+        assertThat(subject.getFilterByMenuText(1), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(2), is(RNA_TYPE));
     }
 
     @Test
     public void verifyFilterByMenuFirstFirstLabels() {
-        assertThat(subject.getFilterByMenuText(new int[]{0, 0}), is(LONG_NON_POLYA_RNA));
-        assertThat(subject.getFilterByMenuText(new int[]{0, 1}), is(LONG_POLYA_RNA));
-        assertThat(subject.getFilterByMenuText(new int[]{0, 2}), is(TOTAL_RNA));
+        assertThat(subject.getFilterByMenuText(new int[]{0, 0}), is(A_549));
+        assertThat(subject.getFilterByMenuText(new int[]{0, 22}), is(H_MSC_AT_CELL_LINE));
     }
 
     @Test
     public void verifyFilterByMenuFirstSecondLabels() {
-        assertThat(subject.getFilterByMenuText(new int[]{1, 0}), is(A_549));
-        assertThat(subject.getFilterByMenuText(new int[]{1, 22}), is(H_MSC_AT_CELL_LINE));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 0}), is("chromatin"));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 1}), is("cytosol"));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 2}), is("nucleolus"));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 3}), is("nucleoplasm"));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 4}), is("nucleus"));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 5}), is(WHOLE_CELL));
     }
 
     @Test
     public void verifyFilterByMenuFirstThirdLabels() {
-        assertThat(subject.getFilterByMenuText(new int[]{2, 0}), is("chromatin"));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 1}), is("cytosol"));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 2}), is("nucleolus"));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 3}), is("nucleoplasm"));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 4}), is("nucleus"));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5}), is(WHOLE_CELL));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 0}), is(LONG_NON_POLYA_RNA));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 1}), is(LONG_POLYA_RNA));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 2}), is(TOTAL_RNA));
     }
 
     @Test
     public void verifyFilterByMenuFirstFirstFirstLabels() {
-        assertThat(subject.getFilterByMenuText(new int[]{0, 0, 0}), is(CELL_LINE));
-        assertThat(subject.getFilterByMenuText(new int[]{0, 0, 1}), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(new int[]{0, 0, 0}), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(new int[]{0, 0, 1}), is(RNA_TYPE));
     }
 
     @Test
     public void verifyFilterByMenuFirstSecondFirstLabels() {
-        assertThat(subject.getFilterByMenuText(new int[]{1, 0, 0}), is(RNA_TYPE));
-        assertThat(subject.getFilterByMenuText(new int[]{1, 0, 1}), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 0, 0}), is(CELL_LINE));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 0, 1}), is(RNA_TYPE));
     }
 
     @Test
     public void verifyFilterByMenuFirstThirdFirstLabels() {
-        assertThat(subject.getFilterByMenuText(new int[]{2, 0, 0}), is(RNA_TYPE));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 0, 1}), is(CELL_LINE));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 0, 0}), is(CELL_LINE));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 0, 1}), is(CELLULAR_COMPONENT));
     }
 
     @Test
@@ -131,38 +131,38 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
 
     @Test
     public void verifyRNAtypeTotalRNACellularComponentWholeCellClick() {
-        assertThat(subject.getFilterByMenuText(0), is(RNA_TYPE));
-        assertThat(subject.getFilterByMenuText(new int[]{0, 2}), is(TOTAL_RNA));
-        assertThat(subject.getFilterByMenuText(new int[]{0, 2, 1}), is(CELLULAR_COMPONENT));
-        assertThat(subject.getFilterByMenuText(new int[]{0, 2, 1, 3}), is(WHOLE_CELL));
+        assertThat(subject.getFilterByMenuText(2), is(RNA_TYPE));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 2}), is(TOTAL_RNA));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 2, 1}), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 2, 1, 3}), is(WHOLE_CELL));
 
         // this should correspond to the experiment settings
-        subject.clickFilterByMenuElement(new int[]{0, 2, 1, 3});
+        subject.clickFilterByMenuElement(new int[]{2, 2, 1, 3});
         verifyDefaultTop9SelectedGenes();
         verifyDefaultHeatmapHeaders();
     }
 
     @Test
     public void verifyCellularComponentWholeCellRNAtypeTotalRNAClick() {
-        assertThat(subject.getFilterByMenuText(2), is(CELLULAR_COMPONENT));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5}), is(WHOLE_CELL));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5, 0}), is(RNA_TYPE));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5, 0, 2}), is(TOTAL_RNA));
+        assertThat(subject.getFilterByMenuText(1), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 5}), is(WHOLE_CELL));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 5, 1}), is(RNA_TYPE));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 5, 1, 2}), is(TOTAL_RNA));
 
         // this should correspond to the experiment settings
-        subject.clickFilterByMenuElement(new int[]{2, 5, 0, 2});
+        subject.clickFilterByMenuElement(new int[]{1, 5, 1, 2});
         verifyDefaultTop9SelectedGenes();
         verifyDefaultHeatmapHeaders();
     }
 
     @Test
     public void verifyCellularComponentWholeCellRNAtypeLongNonPolyARNAClick() {
-        assertThat(subject.getFilterByMenuText(2), is(CELLULAR_COMPONENT));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5}), is(WHOLE_CELL));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5, 0}), is(RNA_TYPE));
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5, 0, 0}), is(LONG_NON_POLYA_RNA));
+        assertThat(subject.getFilterByMenuText(1), is(CELLULAR_COMPONENT));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 5}), is(WHOLE_CELL));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 5, 1}), is(RNA_TYPE));
+        assertThat(subject.getFilterByMenuText(new int[]{1, 5, 1, 0}), is(LONG_NON_POLYA_RNA));
 
-        subject.clickFilterByMenuElement(new int[]{2, 5, 0, 0});
+        subject.clickFilterByMenuElement(new int[]{1, 5, 1, 0});
 
         //then
         Assert.assertThat(subject.getFactorValueHeaders(), contains(A_549, "AG445", "BJ", "CD14-positive...", "CD20-positive B...", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell line", "HeLa-S3", "HepG2", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", SK_N_SH_RA));
@@ -178,21 +178,19 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
 
     @Test
     public void verifyAlwaysUsingLastMenuElementClick() {
-        assertThat(subject.getFilterByMenuText(new int[]{2, 5, 1, 22}), is(H_MSC_AT_CELL_LINE));
+        assertThat(subject.getFilterByMenuText(new int[]{2, 2, 1, 3}), is(WHOLE_CELL));
 
         // always the last index
-        subject.clickFilterByMenuElement(new int[]{2, 5, 1, 22});
+        subject.clickFilterByMenuElement(new int[]{2, 2, 1, 3});
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), contains(TOTAL_RNA));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains("CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"));
 
         //when we extract top 9 from heatmap
         List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
 
         //then
-        Assert.assertThat(selectedGenes, contains(
-                "TMSB10", "Y_RNA", "CALU", "ARHGAP1", "IL13RA1", "VTI1B", "SNX27", "BMI1", "B3GNT1"
-        ));
+        Assert.assertThat(selectedGenes, contains("RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"));
 
     }
 

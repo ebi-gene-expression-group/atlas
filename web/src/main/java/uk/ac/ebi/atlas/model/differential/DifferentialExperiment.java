@@ -55,6 +55,10 @@ public class DifferentialExperiment extends Experiment {
         return this.contrastsById.get(contrastId);
     }
 
+    public SortedSet<String> getContrastIds() {
+            return Sets.newTreeSet(contrastsById.keySet());
+        }
+    
     private Comparator<Contrast> orderByDisplayName() {
         return Ordering.natural().onResultOf(new Function<Contrast, Comparable>() {
             @Override

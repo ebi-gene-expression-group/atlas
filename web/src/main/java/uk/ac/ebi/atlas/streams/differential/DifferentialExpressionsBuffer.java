@@ -70,10 +70,10 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
 
     double parseDouble(String pValueString) {
         if(pValueString.equalsIgnoreCase("inf")){
-            return Double.MAX_VALUE;
+            return Double.POSITIVE_INFINITY;
         }
         if(pValueString.equalsIgnoreCase("-inf")){
-            return Double.MIN_VALUE;
+            return Double.NEGATIVE_INFINITY;
         }
         return Double.parseDouble(pValueString);
     }

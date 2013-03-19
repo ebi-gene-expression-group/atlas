@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +31,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankDifferentialProfilesCommand;
+import uk.ac.ebi.atlas.commands.RankDifferentialProfilesExecutor;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
@@ -46,7 +45,6 @@ import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Set;
 import java.util.SortedSet;
 
 @Controller
@@ -54,31 +52,31 @@ import java.util.SortedSet;
 public class DifferentialQueryPageController {
 
     private DifferentialRequestContextBuilder requestContextBuilder;
-    private RankDifferentialProfilesCommand rankDifferentialProfilesCommand;
+    private RankDifferentialProfilesExecutor commandExecutor;
 
     @Inject
     public DifferentialQueryPageController(DifferentialRequestContextBuilder requestContextBuilder,
-                                           RankDifferentialProfilesCommand rankDifferentialProfilesCommand){
+                                           RankDifferentialProfilesExecutor rankDifferentialProfilesCommandExecutor){
         this.requestContextBuilder = requestContextBuilder;
-        this.rankDifferentialProfilesCommand = rankDifferentialProfilesCommand;
+        this.commandExecutor = rankDifferentialProfilesCommandExecutor;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        DifferentialExperiment differentialExperiment = (DifferentialExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        DifferentialExperiment experiment = (DifferentialExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        SortedSet<Contrast> contrasts = differentialExperiment.getContrasts();
+        SortedSet<Contrast> contrasts = experiment.getContrasts();
 
         model.addAttribute("allQueryFactors", contrasts);
 
-        //if there is only one contrast we want to preselect it... from Robert feedback
+//        if there is only one contrast we want to preselect it... from Robert feedback
         if(contrasts.size() == 1){
-            preferences.setQueryFactorValues(getContrastNames(contrasts));
+            preferences.setQueryFactorValues(experiment.getContrastIds());
         }
 
-        RequestContext requestContext = requestContextBuilder.forExperiment(differentialExperiment)
+        RequestContext requestContext = requestContextBuilder.forExperiment(experiment)
                              .withPreferences(preferences).build();
 
         //required by autocomplete
@@ -92,8 +90,7 @@ public class DifferentialQueryPageController {
         if (!result.hasErrors()) {
 
             try {
-
-                GeneProfilesList<DifferentialProfile> differentialProfiles = rankDifferentialProfilesCommand.execute(differentialExperiment);
+                GeneProfilesList<DifferentialProfile> differentialProfiles = commandExecutor.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", differentialProfiles);
 
@@ -108,14 +105,5 @@ public class DifferentialQueryPageController {
 
         return "experiment";
     }
-
-    SortedSet<String> getContrastNames(Set<Contrast> contrasts){
-        SortedSet<String> contrastNames = Sets.newTreeSet();
-        for (Contrast contrast: contrasts){
-            contrastNames.add(contrast.getId());
-        }
-        return contrastNames;
-    }
-
 
 }

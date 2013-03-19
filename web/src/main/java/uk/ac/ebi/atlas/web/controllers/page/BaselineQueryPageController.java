@@ -31,7 +31,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
+import uk.ac.ebi.atlas.commands.RankBaselineProfileCommandExecutor;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
@@ -57,14 +57,15 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineQueryPageController extends BaselineQueryController {
 
-    private RankBaselineProfilesCommand rankCommand;
+    private RankBaselineProfileCommandExecutor rankCommand;
+
 
     private ApplicationProperties applicationProperties;
 
     private FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
+    public BaselineQueryPageController(RankBaselineProfileCommandExecutor rankCommand,
                                        ApplicationProperties applicationProperties,
                                        BaselineRequestContextBuilder requestContextBuilder,
                                        FilterFactorsConverter filterFactorsConverter) {
@@ -72,6 +73,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
+
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
@@ -130,7 +132,8 @@ public class BaselineQueryPageController extends BaselineQueryController {
         if (!result.hasErrors()) {
 
             try {
-                GeneProfilesList geneProfiles = rankCommand.apply(experiment);
+
+                GeneProfilesList geneProfiles = rankCommand.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", geneProfiles);
 

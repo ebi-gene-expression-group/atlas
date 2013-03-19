@@ -48,7 +48,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WriteGeneProfilesCommandTest {
+public class GeneProfilesTSVWriterTest {
 
     @Mock
     private ObjectInputStream<BaselineProfile> inputStreamMock;
@@ -67,7 +67,7 @@ public class WriteGeneProfilesCommandTest {
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
 
-    private WriteGeneProfilesCommand subject;
+    private GeneProfilesTSVWriter subject;
 
     private SortedSet<Factor> organismParts;
 
@@ -101,15 +101,14 @@ public class WriteGeneProfilesCommandTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new WriteGeneProfilesCommand(new NumberUtils(), geneNamesProviderMock);
-        subject.setRequestContext(requestContextMock);
+        subject = new GeneProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock);
         subject.setResponseWriter(printWriterMock);
     }
 
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(requestContextMock ,inputStreamMock);
+        long count = subject.apply(inputStreamMock, Factor.getValues(organismParts), organismParts);
 
         verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 

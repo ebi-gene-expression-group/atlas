@@ -33,7 +33,7 @@ public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQueryIT extends 
 
     @Override
     protected String getQueryFactorLabel() {
-        return "Cell line";
+        return "Cell Line";
     }
 
     @Override

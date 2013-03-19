@@ -43,7 +43,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RankDifferentialProfilesCommandTest {
 
-    private RankDifferentialProfilesCommand subject;
+    private RankDifferentialProfilesExecutor subject;
 
     @Mock
     private DifferentialRequestContext requestContext;
@@ -61,7 +61,7 @@ public class RankDifferentialProfilesCommandTest {
     public void setUp() throws Exception {
         when(requestContext.getRegulation()).thenReturn(Regulation.UP_DOWN);
 
-        subject = new RankDifferentialProfilesCommand(requestContext, null, null);
+        subject = new RankDifferentialProfilesExecutor(requestContext);
 
         when(differentialProfileMock1.getMinExpressionLevel()).thenReturn(3D);
         when(differentialProfileMock2.getMinExpressionLevel()).thenReturn(5D);

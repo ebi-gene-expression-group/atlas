@@ -28,7 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommand;
+import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommandExecutor;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -47,15 +47,15 @@ import java.io.IOException;
 public class BaselineQueryDownloadController extends BaselineQueryController {
     private static final Logger LOGGER = Logger.getLogger(BaselineQueryDownloadController.class);
 
-    private WriteGeneProfilesCommand writeGeneProfilesCommand;
+    private WriteGeneProfilesCommandExecutor writeGeneProfilesCommandExecutor;
+
 
     @Inject
-    public BaselineQueryDownloadController(WriteGeneProfilesCommand writeGeneProfilesCommand,
-                                           BaselineRequestContextBuilder requestContextBuilder,
-                                           FilterFactorsConverter filterFactorsConverter) {
+    public BaselineQueryDownloadController( BaselineRequestContextBuilder requestContextBuilder,
+                                           FilterFactorsConverter filterFactorsConverter, WriteGeneProfilesCommandExecutor writeGeneProfilesCommandExecutor) {
 
         super(requestContextBuilder, filterFactorsConverter);
-        this.writeGeneProfilesCommand = writeGeneProfilesCommand;
+        this.writeGeneProfilesCommandExecutor = writeGeneProfilesCommandExecutor;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=BASELINE")
@@ -63,29 +63,29 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
             , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        BaselineExperiment baselineExperiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        initPreferences(preferences, baselineExperiment);
+        initPreferences(preferences, experiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + baselineExperiment.getAccession() + "-gene-expression-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-gene-expression-profiles.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
-        initRequestContext(baselineExperiment, preferences);
+        initRequestContext(experiment, preferences);
 
-        writeGeneProfilesCommand.setResponseWriter(response.getWriter());
+        writeGeneProfilesCommandExecutor.setResponseWriter(response.getWriter());
 
         try {
 
-            long genesCount = writeGeneProfilesCommand.apply(baselineExperiment);
+            long genesCount = writeGeneProfilesCommandExecutor.execute(experiment.getAccession());
+
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 
         } catch (GenesNotFoundException e) {
             LOGGER.info("<downloadGeneProfiles> no genes found");
         }
-
 
 
     }

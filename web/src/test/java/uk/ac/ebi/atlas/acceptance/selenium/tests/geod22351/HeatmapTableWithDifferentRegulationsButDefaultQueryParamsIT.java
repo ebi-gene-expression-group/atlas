@@ -31,21 +31,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableWithDifferentRegulationsButDefaultQueryParams extends SeleniumFixture {
+public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
 
     private static final String E_GEOD_22351_ACCESSION = "E-GEOD-22351";
     protected HeatmapTablePage subject;
 
     @Test
-    public void verifyQueryFactorLableAndHeatmapHeaders(){
+    public void verifyQueryFactorLableAndHeatmapHeaders() {
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
 
@@ -62,7 +59,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParams extends S
         assertThat(subject.getGeneCount(), containsString("of 40"));
 
         assertThat(subject.getSelectedGenes().size(), is(40));
-        assertThat(subject.getSelectedGenes().subList(0,3), contains("Gpnmb","Cst7","Itgax"));
+        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
@@ -78,7 +75,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParams extends S
         assertThat(subject.getGeneCount(), containsString("of 9"));
 
         assertThat(subject.getSelectedGenes().size(), is(9));
-        assertThat(subject.getSelectedGenes().subList(0,3), contains("Gm15512", "Pla2g3", "Pmp2"));
+        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gm15512", "Pla2g3", "Pmp2"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("6.61 × 10-5"));
@@ -94,7 +91,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParams extends S
         assertThat(subject.getGeneCount(), containsString("of 49"));
 
         assertThat(subject.getSelectedGenes().size(), is(49));
-        assertThat(subject.getSelectedGenes().subList(0,3), contains("Gpnmb","Cst7","Itgax"));
+        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));

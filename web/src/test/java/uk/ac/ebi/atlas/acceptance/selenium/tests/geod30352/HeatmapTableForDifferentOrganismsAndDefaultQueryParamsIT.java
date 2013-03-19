@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends SeleniumFixture {
+public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsIT extends SeleniumFixture {
 
     private static final String E_GEOD_30352_ACCESSION = "E-GEOD-30352";
     protected HeatmapTablePage subject;
@@ -40,7 +40,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Pan%20paniscus");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(6));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
@@ -51,7 +51,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Pan%20troglodytes");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(6));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
@@ -62,7 +62,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Pongo%20pygmaeus");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(5));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
@@ -73,7 +73,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Gallus%20gallus");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(6));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("brain"));
@@ -84,7 +84,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Gorilla%20gorilla");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(6));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
@@ -95,7 +95,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Homo%20sapiens");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(8));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
@@ -106,7 +106,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Macaca%20mulatta");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(6));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("brain"));
@@ -117,7 +117,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Monodelphis%20domestica");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(6));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("brain"));
@@ -128,7 +128,7 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParams extends Sele
         subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Mus%20musculus");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Organism part"));
+        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(6));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("brain"));
