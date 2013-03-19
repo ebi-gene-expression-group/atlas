@@ -77,7 +77,7 @@ public class DifferentialExpressionsBufferTest {
         //given we poll again
         expression = subject.poll();
         assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_2)));
-        assertThat(expression.getFoldChange(), is(Double.MIN_VALUE));
+        assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
 
 
