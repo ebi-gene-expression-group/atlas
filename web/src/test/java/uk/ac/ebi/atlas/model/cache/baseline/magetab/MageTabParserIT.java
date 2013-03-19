@@ -65,8 +65,8 @@ public class MageTabParserIT {
         //then
         Assert.assertThat(factorNamesByType.keySet(), containsInAnyOrder("CELL_LINE", "CELLULAR_COMPONENT", "RNA"));
         //and
-        Assert.assertThat(factorNamesByType.get("CELL_LINE"), is("cell line"));
-        Assert.assertThat(factorNamesByType.get("CELLULAR_COMPONENT"), is("cellular component"));
+        Assert.assertThat(factorNamesByType.get("CELL_LINE"), is("Cell Line"));
+        Assert.assertThat(factorNamesByType.get("CELLULAR_COMPONENT"), is("Cellular Component"));
         Assert.assertThat(factorNamesByType.get("RNA"), is("RNA"));
     }
 }
