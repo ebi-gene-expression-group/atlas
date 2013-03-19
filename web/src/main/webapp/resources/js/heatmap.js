@@ -67,7 +67,7 @@ function initHeatmapDisplayValueToggle() {
 
                         return "<table class='table-grid'>"+
                             "<thead><th class='header-cell'>P-value</th><th class='header-cell'>Log2-fold Change</th></thead>" +
-                            "<tbody><tr><td>" + expressionLevel + "</td><td>"+ foldChange +"</td></tr></tbody>" +
+                            "<tbody><tr><td style='padding:6px'>" + expressionLevel + "</td><td style='padding:6px'>"+ foldChange +"</td></tr></tbody>" +
                             "</table>";
                     }
 

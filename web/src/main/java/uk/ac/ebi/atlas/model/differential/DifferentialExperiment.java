@@ -68,4 +68,18 @@ public class DifferentialExperiment extends Experiment {
         });
     }
 
+    public Set<String> getLibrariesFromContrasts() {
+        Set<String> libraries = Sets.newHashSet();
+        for (Contrast contrast : getContrasts()) {
+            for (String library : contrast.getReferenceAssayGroup()) {
+                libraries.add(library);
+            }
+            for (String library : contrast.getTestAssayGroup()) {
+                libraries.add(library);
+            }
+        }
+
+        return libraries;
+    }
+
 }

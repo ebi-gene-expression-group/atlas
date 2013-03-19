@@ -106,7 +106,7 @@
 
                                 <div class="hide_cell" ${type eq 'DIFFERENTIAL' ? 'data-fold-change="'.concat(foldChange).concat('"'):''}
                                 data-organism-part="${columnHeader}" data-color="${cellColour}">
-                                        ${expressionLevel}
+                                        ${type eq 'DIFFERENTIAL' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
 
                             </c:if>

@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.cache.baseline.magetab.impl;
 
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.velocity.util.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
@@ -88,10 +89,18 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
 
         scanNodes = extractScanNodes(experimentAccession);
 
-        factorNamesByType = extractFactorNames();
+        factorNamesByType = transformFactorNames(extractFactorNames());
 
         processedExperimentRuns = extractProcessedExperimentRuns();
         return this;
+    }
+
+    protected Map<String, String> transformFactorNames(Map<String, String> map) {
+        Map<String, String> result = new HashMap<>();
+        for (String key : map.keySet()) {
+            result.put(key, prettifyFactorType(map.get(key)));
+        }
+        return result;
     }
 
     @Override
@@ -150,6 +159,34 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
         return namesByType;
     }
 
+    protected String prettifyFactorType(String factorType) {
+        StringBuilder result = new StringBuilder();
+        String[] split = factorType.replaceAll("_", " ").split(" ");
+        for (String token : split) {
+            int nbUpperCase = countUpperCaseLetters(token);
+            if (nbUpperCase > 1) {
+                result.append(token);
+            } else {
+                token = token.toLowerCase();
+                token = StringUtils.capitalizeFirstLetter(token);
+                result.append(token);
+            }
+            result.append(" ");
+        }
+
+        return result.toString().trim();
+    }
+
+    protected int countUpperCaseLetters(String token) {
+        int nbUpperCase = 0;
+        for (int i = 0; i < token.length(); i++) {
+            if (Character.isUpperCase(token.charAt(i))) {
+                nbUpperCase++;
+            }
+        }
+        return nbUpperCase;
+    }
+
     Collection<ExperimentRun> extractAllExperimentRunsFromSdrf(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {
 
         Collection<ExperimentRun> experimentRuns = new ArrayList<>();
@@ -176,7 +213,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
 
         AssayNode assayNode = assayNodes.iterator().next();
 
-        BiMap<String, String> factorTypesByName = HashBiMap.create(factorNamesByType).inverse();
+        BiMap<String, String> factorTypesByName = HashBiMap.create(extractFactorNames()).inverse();
 
         for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
 
