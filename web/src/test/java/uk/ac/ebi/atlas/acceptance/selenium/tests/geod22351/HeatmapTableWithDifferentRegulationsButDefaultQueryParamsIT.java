@@ -23,6 +23,12 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod22351;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
@@ -92,6 +98,17 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
         assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
+    }
+
+    @Test
+    public void heatmapCellTooltipTest(){
+        subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
+        subject.get();
+
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0), is("P-value"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(1), startsWith("Log2-fold"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0), is("<10-10"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(1), is("2.73"));
     }
 
 }

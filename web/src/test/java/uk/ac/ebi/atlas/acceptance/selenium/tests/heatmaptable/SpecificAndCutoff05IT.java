@@ -50,8 +50,8 @@ public class SpecificAndCutoff05IT extends SinglePageSeleniumFixture {
         //given
         subject.clickDisplayLevelsButton();
 
-        double higherRankingGeneFpkm = subject.getMaxFpkm(1);
-        double lowerRankingGeneFpkm = subject.getMaxFpkm(2);
+        double higherRankingGeneFpkm = subject.getMaxExpressionLevel(1);
+        double lowerRankingGeneFpkm = subject.getMaxExpressionLevel(2);
 
         //then
         assertThat(higherRankingGeneFpkm, is(69D));

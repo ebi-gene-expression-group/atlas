@@ -63,7 +63,7 @@ function initHeatmapDisplayValueToggle() {
             tooltipClass: "help-tooltip",
             content:function(callback) {
                         var foldChange = $(this).find("div").attr("data-fold-change"),
-                            expressionLevel = $(this).find("div").text().trim();
+                            expressionLevel = $(this).find("div").html();
 
                         return "<table class='table-grid'>"+
                             "<thead><th class='header-cell'>P-value</th><th class='header-cell'>Log2-fold Change</th></thead>" +

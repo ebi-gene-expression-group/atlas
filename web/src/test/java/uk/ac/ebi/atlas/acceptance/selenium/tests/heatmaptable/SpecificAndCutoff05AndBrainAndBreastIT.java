@@ -50,10 +50,10 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFi
         //given
         subject.clickDisplayLevelsButton();
 
-        double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(29, "brain", "breast");
-        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageFpkm(30, "brain", "breast");
-        double higherRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageFpkm(29, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
-        double lowerRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageFpkm(30, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
+        double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageExpressionLevel(29, "brain", "breast");
+        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageExpressionLevel(30, "brain", "breast");
+        double higherRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageExpressionLevel(29, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
+        double lowerRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageExpressionLevel(30, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
 
         //then
         assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1.45D));

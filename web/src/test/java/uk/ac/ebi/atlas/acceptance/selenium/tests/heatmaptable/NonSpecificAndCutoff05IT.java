@@ -36,7 +36,7 @@ public class NonSpecificAndCutoff05IT extends SinglePageSeleniumFixture {
         assertThat(higherRankingGeneAverageFpkm, is(greaterThan(lowerRankingGeneAverageFpkm)));
 
         //and max fpkm is greater for gene at row 11 than gene at row 10
-        assertThat(subject.getMaxFpkm(11), is(greaterThan(subject.getMaxFpkm(10))));
+        assertThat(subject.getMaxExpressionLevel(11), is(greaterThan(subject.getMaxExpressionLevel(10))));
 
         //gene at row 11 follows gene at row 10
         assertThat(subject.getGeneThatRanksAt(10), is(HIGHER_RANKING_GENE));
