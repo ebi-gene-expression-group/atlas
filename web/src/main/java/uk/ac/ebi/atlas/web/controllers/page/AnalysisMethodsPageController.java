@@ -28,8 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.readers.TsvReader;
-import uk.ac.ebi.atlas.model.readers.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
 
 import javax.inject.Inject;
 import java.io.IOException;

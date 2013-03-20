@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.readers;
+package uk.ac.ebi.atlas.commons.readers;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 
-public class AnalysisMethodsTsvReaderTest {
+public class TsvReaderTest {
 
     private static final String PATH_TEMPLATE = "A_PATH_TEMPLATE";
 

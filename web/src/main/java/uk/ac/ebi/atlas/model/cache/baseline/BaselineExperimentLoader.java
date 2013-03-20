@@ -28,6 +28,8 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.configuration.ConfigurationTrader;
 import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfiguration;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
@@ -35,8 +37,6 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
-import uk.ac.ebi.atlas.model.readers.TsvReader;
-import uk.ac.ebi.atlas.model.readers.TsvReaderImpl;
 
 import javax.inject.Inject;
 import java.io.IOException;

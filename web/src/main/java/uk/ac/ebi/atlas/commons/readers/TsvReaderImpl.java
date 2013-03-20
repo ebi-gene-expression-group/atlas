@@ -20,12 +20,10 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.readers;
+package uk.ac.ebi.atlas.commons.readers;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
-import com.google.common.collect.SortedSetMultimap;
-import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -68,20 +66,6 @@ public class TsvReaderImpl implements TsvReader {
     @Override
     public List<String[]> readAll(String experimentAccession) {
         return readAndFilter(experimentAccession, new IsNotComment());
-    }
-
-    @Override
-    public List<String[]> readAllComments(String experimentAccession) {
-        return readAndFilter(experimentAccession, new IsComment());
-    }
-
-    @Override
-    public SortedSetMultimap<String, String> readAllCommentsAsMap(String experimentAccession) {
-        SortedSetMultimap<String, String> comments = TreeMultimap.create();
-        for (String[] row : readAllComments(experimentAccession)) {
-            comments.put(row[0].replaceFirst("#*", "").trim(), row[1].trim());
-        }
-        return comments;
     }
 
     protected List<String[]> readAndFilter(String experimentAccession, Predicate<String> acceptanceCriteria) {

@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
-import uk.ac.ebi.atlas.model.readers.TsvReader;
-import uk.ac.ebi.atlas.model.readers.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

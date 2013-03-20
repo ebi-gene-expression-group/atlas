@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.readers;
+package uk.ac.ebi.atlas.commons.readers;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 
-public class AnalysisMethodsTsvReaderIT {
+public class TsvReaderIT {
 
     private static final String PATH_TEMPLATE = "web/src/test/resources/magetab/{0}/{0}-analysis-methods.tsv";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
