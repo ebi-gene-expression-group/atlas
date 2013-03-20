@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.MinMaxPriorityQueue;
@@ -6,7 +28,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -20,7 +42,7 @@ import java.util.Set;
 
 @Named
 @Scope("request")
-public class RankBaselineProfileCommandExecutor extends AbstractCommandExecutor<GeneProfilesList, BaselineProfile> implements CommandExecutor<GeneProfilesList> {
+public class RankBaselineProfileCommandExecutor extends AbstractCommandExecutor<BaselineProfilesList, BaselineProfile> implements CommandExecutor<BaselineProfilesList> {
 
     private BaselineRequestContext requestContext;
 
@@ -31,7 +53,7 @@ public class RankBaselineProfileCommandExecutor extends AbstractCommandExecutor<
     }
 
     @Override
-    protected GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream) {
+    protected BaselineProfilesList execute(ObjectInputStream<BaselineProfile> inputStream) {
         Comparator<BaselineProfile> geneProfileComparator = buildGeneProfileComparator(requestContext.isSpecific()
                 , requestContext.getSelectedQueryFactors(), requestContext.getAllQueryFactors(), requestContext.getCutoff());
 
@@ -46,7 +68,7 @@ public class RankBaselineProfileCommandExecutor extends AbstractCommandExecutor<
             geneCount++;
         }
 
-        GeneProfilesList list = new GeneProfilesList(rankingQueue);
+        BaselineProfilesList list = new BaselineProfilesList(rankingQueue);
 
         Collections.sort(list, geneProfileComparator);
 

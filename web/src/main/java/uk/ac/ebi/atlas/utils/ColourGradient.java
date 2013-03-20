@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Preconditions;
@@ -22,8 +44,8 @@ public class ColourGradient {
     protected static final double SCALE_EXPONENTIAL = 3;
 
     // Heat map colour settings.
-    private Color highValueColour;
-    private Color lowValueColour;
+    private Color defaultHighValueColour;
+    private Color defaultLowValueColour;
     private Color blankValueColour;
 
     private double colourScale;
@@ -37,8 +59,8 @@ public class ColourGradient {
                           @Value("#{configuration['gradient.blankColour']}") Color blankColour,
                           @Value("#{configuration['gradient.colourScale']}") double colourScale) {
 
-        this.lowValueColour = startColour;
-        this.highValueColour = endColour;
+        this.defaultLowValueColour = startColour;
+        this.defaultHighValueColour = endColour;
         this.blankValueColour = blankColour;
         this.colourScale = colourScale;
         this.colourDistance = calculateColourDistance();
@@ -55,12 +77,12 @@ public class ColourGradient {
     }
 
     public void setLowValueColour(Color colour) {
-        this.lowValueColour = colour;
+        this.defaultLowValueColour = colour;
         this.colourDistance = calculateColourDistance();
     }
 
     public void setHighValueColour(Color colour) {
-        this.highValueColour = colour;
+        this.defaultHighValueColour = colour;
         this.colourDistance = calculateColourDistance();
     }
 
@@ -70,20 +92,51 @@ public class ColourGradient {
 
     public String getGradientColour(String data, String min, String max) {
 
+        return getGradientColour(data, min, max, defaultLowValueColour, defaultHighValueColour);
+
+    }
+
+    public String getGradientColour(String data, String min, String max, String lowValueColourName, String highValueColourName) {
+        // try to get a color by name using reflection
+        Color lowValueColour = getColourByName(lowValueColourName);
+        Color highValueColour = getColourByName(highValueColourName);
+        return getGradientColour(data, min, max, lowValueColour, highValueColour);
+    }
+
+    public Color getColourByName(String colourName){
+        try {
+            return (Color)Color.class.getField(colourName).get(null);
+        } catch (NoSuchFieldException e) {
+            throw new IllegalArgumentException("NoSuchFieldException during the identification of colour: " + colourName);
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("IllegalAccessException during the identification of colour: " + colourName);
+        }
+    }
+
+    String getGradientColour(String data, String min, String max, Color lowValueColour, Color highValueColour) {
+
         if (StringUtils.isEmpty(data)) {
             return colorToHexString(blankValueColour);
         }
-        Color cellColour = getGradientColour(parseDouble(data), parseDouble(min), parseDouble(max));
+        Color cellColour = getGradientColour(parseDouble(data), parseDouble(min), parseDouble(max), lowValueColour, highValueColour);
 
         return colorToHexString(cellColour);
     }
 
+    public String getHexByColourName(String colourName) {
+        return colorToHexString(getColourByName(colourName));
+    }
+
     public String getMaxColour() {
-        return colorToHexString(highValueColour);
+        return colorToHexString(defaultHighValueColour);
     }
 
     public String getMinColour() {
-        return colorToHexString(lowValueColour);
+        return colorToHexString(defaultLowValueColour);
+    }
+
+    protected Color getGradientColour(double value, double min, double max) {
+        return getGradientColour(value, min, max, defaultLowValueColour, defaultHighValueColour);
     }
 
 
@@ -92,7 +145,7 @@ public class ColourGradient {
     * values.
     */
 
-    protected Color getGradientColour(double value, double min, double max) {
+    protected Color getGradientColour(double value, double min, double max, Color lowValueColour, Color highValueColour) {
 
         if (value == max) {
             return highValueColour;
@@ -100,7 +153,7 @@ public class ColourGradient {
 
         double percentPosition = calculatePercentPosition(value, min, max);
 
-        if (value == 0 || Double.isNaN(percentPosition) || Double.isInfinite(percentPosition)) {
+        if (Double.isNaN(percentPosition) || Double.isInfinite(percentPosition)) {
             return blankValueColour;
         }
 
@@ -185,12 +238,12 @@ public class ColourGradient {
     */
     // made final because called in constructor
     protected final int calculateColourDistance() {
-        int r1 = lowValueColour.getRed();
-        int g1 = lowValueColour.getGreen();
-        int b1 = lowValueColour.getBlue();
-        int r2 = highValueColour.getRed();
-        int g2 = highValueColour.getGreen();
-        int b2 = highValueColour.getBlue();
+        int r1 = defaultLowValueColour.getRed();
+        int g1 = defaultLowValueColour.getGreen();
+        int b1 = defaultLowValueColour.getBlue();
+        int r2 = defaultHighValueColour.getRed();
+        int g2 = defaultHighValueColour.getGreen();
+        int b2 = defaultHighValueColour.getBlue();
 
         colourDistance = Math.abs(r1 - r2);
         colourDistance += Math.abs(g1 - g2);

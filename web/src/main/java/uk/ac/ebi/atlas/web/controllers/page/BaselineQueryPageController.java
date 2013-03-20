@@ -34,7 +34,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankBaselineProfileCommandExecutor;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -133,7 +133,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
             try {
 
-                GeneProfilesList geneProfiles = rankCommand.execute(experiment.getAccession());
+                BaselineProfilesList geneProfiles = rankCommand.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", geneProfiles);
 

@@ -35,6 +35,11 @@ import static com.google.common.base.Preconditions.checkState;
 public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
 
 
+    private double maxUpRegulatedExpressionLevel = 0D;
+    private double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
+    private double maxDownRegulatedExpressionLevel = 0D;
+    private double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
+
     public DifferentialProfile(String geneId) {
         super(geneId);
     }
@@ -48,6 +53,55 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
         this.addExpression(expression.getContrast(), expression);
         return this;
     }
+
+    public double getMaxUpRegulatedExpressionLevel() {
+        return maxUpRegulatedExpressionLevel;
+    }
+
+    public double getMinUpRegulatedExpressionLevel() {
+        return minUpRegulatedExpressionLevel;
+    }
+
+    public double getMaxDownRegulatedExpressionLevel() {
+        return maxDownRegulatedExpressionLevel;
+    }
+
+    public double getMinDownRegulatedExpressionLevel() {
+        return minDownRegulatedExpressionLevel;
+    }
+
+    @Override
+    protected void updateProfileExpression(DifferentialExpression differentialExpression) {
+        if (differentialExpression.isOverExpressed()){
+            updateUpRegulatedProfileExpression(differentialExpression.getLevel());
+        } else {
+            updateDownRegulatedProfileExpression(differentialExpression.getLevel());
+        }
+    }
+
+    void updateUpRegulatedProfileExpression(double expressionLevel){
+        if (maxUpRegulatedExpressionLevel < expressionLevel) {
+            maxUpRegulatedExpressionLevel = expressionLevel;
+        }
+        if (expressionLevel < minUpRegulatedExpressionLevel) {
+            minUpRegulatedExpressionLevel = expressionLevel;
+        }
+    }
+
+    void updateDownRegulatedProfileExpression(double expressionLevel){
+        if (maxDownRegulatedExpressionLevel < expressionLevel) {
+            maxDownRegulatedExpressionLevel = expressionLevel;
+        }
+        if (expressionLevel < minDownRegulatedExpressionLevel) {
+            minDownRegulatedExpressionLevel = expressionLevel;
+        }
+    }
+
+    public double getMinExpressionLevel() {
+        return minUpRegulatedExpressionLevel < minDownRegulatedExpressionLevel ?
+                minUpRegulatedExpressionLevel : minDownRegulatedExpressionLevel;
+    }
+
 
     @Named
     @Scope("prototype")

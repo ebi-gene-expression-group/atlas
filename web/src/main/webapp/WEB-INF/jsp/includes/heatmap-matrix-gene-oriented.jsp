@@ -64,7 +64,16 @@
                                                value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
                                     </c:when>
                                     <c:otherwise>
-                                        <c:set var="cellColour" value="yellow"/>
+                                        <c:choose>
+                                            <c:when test="${geneProfile.getExpression(queryFactor).overExpressed}">
+                                                <c:set var="cellColour"
+                                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="cellColour"
+                                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:otherwise>
                                 </c:choose>
                                 <c:set var="style" value="background-color:${cellColour}"/>

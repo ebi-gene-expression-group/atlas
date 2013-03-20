@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -48,12 +49,12 @@ public class GeneProfilesListTest {
     @Mock
     BaselineProfile profile_5;
 
-    private GeneProfilesList<BaselineProfile> subject;
+    private BaselineProfilesList subject;
 
     @Before
     public void setUp() throws Exception {
 
-        subject = new GeneProfilesList(Lists.newArrayList(profile_5, profile_3, profile_4, profile_1, profile_2));
+        subject = new BaselineProfilesList(Lists.newArrayList(profile_5, profile_3, profile_4, profile_1, profile_2));
 
     }
 

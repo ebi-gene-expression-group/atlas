@@ -32,6 +32,8 @@ import javax.inject.Named;
 import static com.google.common.base.Preconditions.checkState;
 
 public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
+    private double maxExpressionLevel = 0;
+    private double minExpressionLevel = Double.MAX_VALUE;
 
     public BaselineProfile(String geneId) {
         super(geneId);
@@ -42,6 +44,25 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
         this.addExpression(expression.getFactor(queryFactorType), expression);
         return this;
     }
+
+    public double getMaxExpressionLevel() {
+        return maxExpressionLevel;
+    }
+
+    public double getMinExpressionLevel() {
+        return minExpressionLevel;
+    }
+
+    @Override
+    protected void updateProfileExpression(BaselineExpression geneExpression) {
+        if (maxExpressionLevel < geneExpression.getLevel()) {
+            maxExpressionLevel = geneExpression.getLevel();
+        }
+        if (geneExpression.getLevel() < minExpressionLevel) {
+            minExpressionLevel = geneExpression.getLevel();
+        }
+    }
+
 
     @Named
     @Scope("prototype")

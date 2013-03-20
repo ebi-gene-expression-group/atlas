@@ -34,9 +34,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 //K is the Condition type (i.e. Factor or Contrast),
 //T is the Expression type (Baseline Expression or DifferentialExpression)
 public abstract class GeneProfile<K, T extends GeneExpression> {
-    private double maxExpressionLevel = 0;
-    private double minExpressionLevel = Double.MAX_VALUE;
-
     private Map<K, T> expressionsByCondition = new HashMap<>();
 
     private String geneId;
@@ -75,23 +72,7 @@ public abstract class GeneProfile<K, T extends GeneExpression> {
         return expression == null ? 0 : expression.getLevel();
     }
 
-
-    public double getMaxExpressionLevel() {
-        return maxExpressionLevel;
-    }
-
-    public double getMinExpressionLevel() {
-        return minExpressionLevel;
-    }
-
-    protected final void updateProfileExpression(double level) {
-        if (maxExpressionLevel < level) {
-            maxExpressionLevel = level;
-        }
-        if (level < minExpressionLevel) {
-            minExpressionLevel = level;
-        }
-    }
+    protected abstract void updateProfileExpression(T geneExpression);
 
     public boolean isExpressedOnAnyOf(Set<K> conditions) {
         checkArgument(CollectionUtils.isNotEmpty(conditions));
@@ -99,7 +80,7 @@ public abstract class GeneProfile<K, T extends GeneExpression> {
     }
 
     protected GeneProfile addExpression(K condition, T geneExpression){
-        updateProfileExpression(geneExpression.getLevel());
+        updateProfileExpression(geneExpression);
         this.expressionsByCondition.put(condition, geneExpression);
         return this;
     }

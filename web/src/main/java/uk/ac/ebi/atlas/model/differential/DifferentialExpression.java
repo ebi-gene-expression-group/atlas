@@ -46,8 +46,9 @@ public class DifferentialExpression implements GeneExpression{
         return foldChange;
     }
 
+    //ToDo: Try to replace with INFINITE_POSITIVE and NEGATIVE
     public boolean isNotApplicable(){
-        return getFoldChange() == Double.MAX_VALUE || getFoldChange() == Double.MIN_VALUE;
+        return (getFoldChange() == Double.MAX_VALUE) || (getFoldChange() == Double.MIN_VALUE);
     }
 
     public Contrast getContrast() {
@@ -87,5 +88,13 @@ public class DifferentialExpression implements GeneExpression{
     @Override
     public double getLevel() {
         return getPValue();
+    }
+
+    public boolean isOverExpressed() {
+        return foldChange > 0;
+    }
+
+    public boolean isUnderExpressed() {
+        return foldChange < 0;
     }
 }

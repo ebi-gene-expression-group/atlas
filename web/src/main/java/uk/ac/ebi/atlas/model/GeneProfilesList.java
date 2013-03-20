@@ -47,26 +47,6 @@ public class GeneProfilesList<T extends GeneProfile> extends ArrayList<T> {
         return new GeneProfilesList(super.subList(fromIndex, toIndex));
     }
 
-    public double getMaxExpressionLevel() {
-        double maxExpressionLevel = 0;
-        for (T geneProfile : this) {
-            if (maxExpressionLevel < geneProfile.getMaxExpressionLevel()) {
-                maxExpressionLevel = geneProfile.getMaxExpressionLevel();
-            }
-        }
-        return maxExpressionLevel;
-    }
-
-    public double getMinExpressionLevel() {
-        double minExpressionLevel = Double.MAX_VALUE;
-        for (T geneProfile : this) {
-            if (geneProfile.getMinExpressionLevel() < minExpressionLevel) {
-                minExpressionLevel = geneProfile.getMinExpressionLevel();
-            }
-        }
-        return minExpressionLevel;
-    }
-
     public Integer getTotalResultCount() {
         return totalResultCount;
     }

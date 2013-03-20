@@ -35,24 +35,22 @@ public class DifferentialExpressionPrecondition implements Predicate<Differentia
 
     @Override
     public boolean apply(DifferentialExpression differentialExpression) {
-        double expressionLevel = differentialExpression.getLevel();
-        double foldChange = differentialExpression.getFoldChange();
 
         if (Regulation.UP == regulation){
-            return isOverexpressed(expressionLevel, foldChange);
+            return isOverexpressed(differentialExpression);
         }
         if (Regulation.DOWN == regulation){
-            return isUnderExpressed(expressionLevel, foldChange);
+            return isUnderExpressed(differentialExpression);
         }
-        return isUnderExpressed(expressionLevel, foldChange) || isOverexpressed(expressionLevel, foldChange);
+        return isUnderExpressed(differentialExpression) || isOverexpressed(differentialExpression);
     }
 
-    private boolean isOverexpressed(double level, double foldChange) {
-        return level <= cutoff && foldChange > 0;
+    private boolean isOverexpressed(DifferentialExpression differentialExpression) {
+        return differentialExpression.getLevel() <= cutoff && differentialExpression.isOverExpressed();
     }
 
-    private boolean isUnderExpressed(double level, double foldChange){
-        return level <= cutoff && foldChange < 0;
+    private boolean isUnderExpressed(DifferentialExpression differentialExpression){
+        return differentialExpression.getLevel() <= cutoff && differentialExpression.isUnderExpressed();
     }
 
 
