@@ -19,8 +19,8 @@ function initHeatmapDisplayValueToggle() {
         $("div[data-color]").each(function () {
             showCellValue(this);
         });
-        $(".gradient-level-min").attr("style", '');
-        $(".gradient-level-max").attr("style", '');
+        $(".gradient-level-min").attr("style", 'white-space: nowrap;');
+        $(".gradient-level-max").attr("style", 'white-space: nowrap;');
     }
 
     function hideValues(button) {
@@ -28,8 +28,8 @@ function initHeatmapDisplayValueToggle() {
         $("div[data-color]").each(function () {
             hideCellValue(this);
         });
-        $(".gradient-level-min").css("display","none");
-        $(".gradient-level-max").css("display","none");
+        $(".gradient-level-min").css("display", "none");
+        $(".gradient-level-max").css("display", "none");
     }
 
     $("#display-levels").button()
@@ -58,18 +58,18 @@ function initHeatmapDisplayValueToggle() {
         }
     });
 
-    $("#heatmap-table td:has(div[data-fold-change])").attr('title','').tooltip(
+    $("#heatmap-table td:has(div[data-fold-change])").attr('title', '').tooltip(
         {
-            tooltipClass: "help-tooltip",
-            content:function(callback) {
-                        var foldChange = $(this).find("div").attr("data-fold-change"),
-                            expressionLevel = $(this).find("div").html();
+            tooltipClass:"help-tooltip",
+            content:function (callback) {
+                var foldChange = $(this).find("div").attr("data-fold-change"),
+                    expressionLevel = $(this).find("div").html();
 
-                        return "<table class='table-grid'>"+
-                            "<thead><th class='header-cell'>P-value</th><th class='header-cell'>Log2-fold Change</th></thead>" +
-                            "<tbody><tr><td style='padding:6px'>" + expressionLevel + "</td><td style='padding:6px'>"+ foldChange +"</td></tr></tbody>" +
-                            "</table>";
-                    }
+                return "<table class='table-grid'>" +
+                    "<thead><th class='header-cell'>P-value</th><th class='header-cell'>Log2-fold Change</th></thead>" +
+                    "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + expressionLevel + "</span></td><td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
+                    "</table>";
+            }
 
 
 
