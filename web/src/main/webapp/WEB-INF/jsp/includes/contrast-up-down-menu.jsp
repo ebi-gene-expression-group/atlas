@@ -24,6 +24,6 @@
   --%>
 
 
-<div>
-    <form:radiobuttons path="regulation" element="div" itemLabel="label" items="${regulationValues}" />
+<div style="width: 100px;">
+    <form:radiobuttons path="regulation" element="div" itemLabel="label" items="${regulationValues}"/>
 </div>
