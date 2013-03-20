@@ -47,6 +47,7 @@ public class TsvReaderImpl implements TsvReader {
 
     @Override
     public String[] readLine(String experimentAccession, long lineIndex) {
+
         Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
 
         try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
