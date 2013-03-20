@@ -22,12 +22,12 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -42,8 +42,9 @@ import java.io.IOException;
 public class DifferentialDesignDownloadController extends ExperimentDesignDownloadController {
 
     @Inject
-    public DifferentialDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader) {
-        super(experimentDesignTsvReader);
+    public DifferentialDesignDownloadController(@Value("#{configuration['experiment.experiment-design.path.template']}")
+                                                String pathTemplate) {
+        super(pathTemplate);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=DIFFERENTIAL"})

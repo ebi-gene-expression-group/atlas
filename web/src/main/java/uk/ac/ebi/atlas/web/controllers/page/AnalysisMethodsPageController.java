@@ -22,12 +22,14 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.readers.AnalysisMethodsTsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -36,11 +38,12 @@ import java.io.IOException;
 @Scope("request")
 public class AnalysisMethodsPageController {
 
-    private AnalysisMethodsTsvReader analysisMethodsTsvReader;
+    private TsvReader analysisMethodsTsvReader;
 
     @Inject
-    public AnalysisMethodsPageController(AnalysisMethodsTsvReader analysisMethodsTsvReader) {
-        this.analysisMethodsTsvReader = analysisMethodsTsvReader;
+    public AnalysisMethodsPageController(@Value("#{configuration['experiment.analysis-method.path.template']}")
+                                         String pathTemplate) {
+        this.analysisMethodsTsvReader = new TsvReaderImpl(pathTemplate);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")

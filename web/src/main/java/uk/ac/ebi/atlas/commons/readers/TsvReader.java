@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,22 +20,15 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.readers;
+package uk.ac.ebi.atlas.commons.readers;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named
-public class ExperimentDesignTsvReader extends AbstractTsvReader {
+public interface TsvReader {
 
-    @Inject
-    protected ExperimentDesignTsvReader(
-                        @Value("#{configuration['experiment.experiment-design.path.template']}")
-                        String pathTemplate
-                                       ){
-        super(pathTemplate);
-    }
+    String[] readLine(String experimentAccession, long lineIndex);
+
+    List<String[]> readAll(String experimentAccession);
 
 }

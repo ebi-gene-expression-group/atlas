@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
-import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,10 +37,10 @@ public abstract class ExperimentDesignDownloadController {
 
     private static final Logger logger = Logger.getLogger(DifferentialDesignDownloadController.class);
 
-    private ExperimentDesignTsvReader experimentDesignTsvReader;
+    private TsvReader experimentDesignTsvReader;
 
-    public ExperimentDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader) {
-        this.experimentDesignTsvReader = experimentDesignTsvReader;
+    public ExperimentDesignDownloadController(String pathTemplate) {
+        this.experimentDesignTsvReader = new TsvReaderImpl(pathTemplate);
     }
 
     protected void extractExperimentDesign(HttpServletResponse response, String accession, Set<String> used) throws IOException {

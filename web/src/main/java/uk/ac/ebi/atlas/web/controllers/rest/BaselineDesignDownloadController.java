@@ -22,12 +22,12 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -42,8 +42,9 @@ import java.io.IOException;
 public class BaselineDesignDownloadController extends ExperimentDesignDownloadController {
 
     @Inject
-    public BaselineDesignDownloadController(ExperimentDesignTsvReader experimentDesignTsvReader) {
-        super(experimentDesignTsvReader);
+    public BaselineDesignDownloadController(@Value("#{configuration['experiment.experiment-design.path.template']}")
+                                            String pathTemplate) {
+        super(pathTemplate);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=BASELINE"})
