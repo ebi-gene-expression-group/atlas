@@ -22,12 +22,12 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -39,8 +39,9 @@ import java.io.IOException;
 public class BaselineDesignPageController extends ExperimentDesignPageController {
 
     @Inject
-    public BaselineDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader) {
-        super(experimentDesignTsvReader);
+    public BaselineDesignPageController(@Value("#{configuration['experiment.experiment-design.path.template']}")
+                                        String pathTemplate) {
+        super(pathTemplate);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=BASELINE"})

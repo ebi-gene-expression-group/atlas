@@ -11,19 +11,18 @@ public class AnalysisMethodsTsvReaderIT {
     private static final String PATH_TEMPLATE = "web/src/test/resources/magetab/{0}/{0}-analysis-methods.tsv";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private AnalysisMethodsTsvReader subject;
+    private TsvReader subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new AnalysisMethodsTsvReader(PATH_TEMPLATE);
+        subject = new TsvReaderImpl(PATH_TEMPLATE);
     }
 
     @Test
-    public void readLine(){
+    public void readLine() {
         String[] firstLine = subject.readLine(EXPERIMENT_ACCESSION, 0L);
         assertThat(firstLine, arrayContaining("# Pipeline version", "0.1.6"));
     }
-
 
 
 }

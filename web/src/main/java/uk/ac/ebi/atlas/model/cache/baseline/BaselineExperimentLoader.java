@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.cache.baseline;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.configuration.ConfigurationTrader;
 import uk.ac.ebi.atlas.commons.configuration.ExperimentFactorsConfiguration;
@@ -34,14 +35,14 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
-import uk.ac.ebi.atlas.model.readers.ExperimentDataTsvReader;
 import uk.ac.ebi.atlas.model.readers.TsvReader;
+import uk.ac.ebi.atlas.model.readers.TsvReaderImpl;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.*;
 
-//Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder everytime the load method is invoked
+//Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder every time the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
 public abstract class BaselineExperimentLoader extends ExperimentLoader<BaselineExperiment> {
 
@@ -55,11 +56,11 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
 
     @Inject
     public BaselineExperimentLoader(MageTabParserBuilder mageTabParserBuilder, ConfigurationTrader configurationTrader
-            , ExperimentDataTsvReader experimentDataTsvReader) {
+            , @Value("#{configuration['experiment.magetab.path.template']}") String pathTemplate) {
         this.mageTabParserBuilder = mageTabParserBuilder;
         this.configurationTrader = configurationTrader;
 
-        this.experimentDataTsvReader = experimentDataTsvReader;
+        this.experimentDataTsvReader = new TsvReaderImpl(pathTemplate);
     }
 
     @Override

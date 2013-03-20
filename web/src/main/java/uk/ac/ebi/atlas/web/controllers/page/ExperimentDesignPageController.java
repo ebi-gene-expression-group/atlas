@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.web.controllers.page;
 import com.google.gson.Gson;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.readers.ExperimentDesignTsvReader;
 import uk.ac.ebi.atlas.model.readers.TsvReader;
+import uk.ac.ebi.atlas.model.readers.TsvReaderImpl;
 
 import java.util.*;
 
@@ -37,8 +37,8 @@ public abstract class ExperimentDesignPageController {
 
     private final TsvReader experimentDesignTsvReader;
 
-    public ExperimentDesignPageController(ExperimentDesignTsvReader experimentDesignTsvReader) {
-        this.experimentDesignTsvReader = experimentDesignTsvReader;
+    public ExperimentDesignPageController(String pathTemplate) {
+        this.experimentDesignTsvReader = new TsvReaderImpl(pathTemplate);
     }
 
     protected void extractExperimentDesign(Model model, Experiment experiment, Set<String> libraries) {

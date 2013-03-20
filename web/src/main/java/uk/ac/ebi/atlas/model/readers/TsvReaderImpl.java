@@ -37,24 +37,24 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractTsvReader implements TsvReader {
+public class TsvReaderImpl implements TsvReader {
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractTsvReader.class);
+    private static final Logger LOGGER = Logger.getLogger(TsvReaderImpl.class);
 
     private String pathTemplate;
 
-    protected AbstractTsvReader(String pathTemplate) {
+    public TsvReaderImpl(String pathTemplate) {
         this.pathTemplate = pathTemplate;
     }
 
     @Override
-    public String[] readLine(String experimentAccession, long lineIndex){
+    public String[] readLine(String experimentAccession, long lineIndex) {
         Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
 
         try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
-            CSVReader csvReader = new CSVReader(reader, '\t')) {
+             CSVReader csvReader = new CSVReader(reader, '\t')) {
             String[] line = null;
-            for (int i = 0; i <= lineIndex; i++){
+            for (int i = 0; i <= lineIndex; i++) {
                 line = csvReader.readNext();
             }
             return line;
@@ -76,10 +76,10 @@ public abstract class AbstractTsvReader implements TsvReader {
     }
 
     @Override
-    public SortedSetMultimap<String, String> readAllCommentsAsMap(String experimentAccession){
+    public SortedSetMultimap<String, String> readAllCommentsAsMap(String experimentAccession) {
         SortedSetMultimap<String, String> comments = TreeMultimap.create();
-        for (String[] row: readAllComments(experimentAccession)){
-            comments.put(row[0].replaceFirst("#*","").trim(),row[1].trim());
+        for (String[] row : readAllComments(experimentAccession)) {
+            comments.put(row[0].replaceFirst("#*", "").trim(), row[1].trim());
         }
         return comments;
     }
@@ -89,10 +89,10 @@ public abstract class AbstractTsvReader implements TsvReader {
         Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
 
         try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
-            CSVReader csvReader = new CSVReader(reader, '\t')) {
+             CSVReader csvReader = new CSVReader(reader, '\t')) {
             List<String[]> rows = new ArrayList<>();
-            for (String[] row: csvReader.readAll()){
-                if (acceptanceCriteria.apply(row[0])){
+            for (String[] row : csvReader.readAll()) {
+                if (acceptanceCriteria.apply(row[0])) {
                     rows.add(row);
                 }
             }
@@ -120,7 +120,7 @@ public abstract class AbstractTsvReader implements TsvReader {
         }
     }
 
-    private String getPathString(String experimentAccession){
+    private String getPathString(String experimentAccession) {
         return MessageFormat.format(pathTemplate, experimentAccession);
     }
 

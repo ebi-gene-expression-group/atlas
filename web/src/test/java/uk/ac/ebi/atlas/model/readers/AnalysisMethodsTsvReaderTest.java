@@ -11,7 +11,7 @@ public class AnalysisMethodsTsvReaderTest {
 
     private static final String PATH_TEMPLATE = "A_PATH_TEMPLATE";
 
-    private AnalysisMethodsTsvReader subject = new AnalysisMethodsTsvReader(PATH_TEMPLATE);
+    private TsvReader subject = new TsvReaderImpl(PATH_TEMPLATE);
 
     @Before
     public void setUp() throws Exception {
@@ -19,10 +19,10 @@ public class AnalysisMethodsTsvReaderTest {
     }
 
     @Test
-    public void testIsComment(){
-        AbstractTsvReader.IsComment isCommentPredicate = new AnalysisMethodsTsvReader.IsComment();
-        assertThat(isCommentPredicate.apply("  #  Xyz"),is(true));
-        assertThat(isCommentPredicate.apply(" #Xyz"),is(true));
-        assertThat(isCommentPredicate.apply("#Xyz"),is(true));
+    public void testIsComment() {
+        TsvReaderImpl.IsComment isCommentPredicate = new TsvReaderImpl.IsComment();
+        assertThat(isCommentPredicate.apply("  #  Xyz"), is(true));
+        assertThat(isCommentPredicate.apply(" #Xyz"), is(true));
+        assertThat(isCommentPredicate.apply("#Xyz"), is(true));
     }
 }
