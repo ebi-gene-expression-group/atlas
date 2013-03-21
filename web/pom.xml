@@ -145,7 +145,7 @@
         <dependency>
             <groupId>uk.ac.ebi.arrayexpress2</groupId>
             <artifactId>limpopo</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
             <exclusions>
                 <exclusion>
                     <artifactId>log4j</artifactId>
@@ -262,7 +262,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <scope>compile</scope>
-            <version>4.2.2</version>
+            <version>4.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.2.3</version>
         </dependency>
 
         <dependency>
@@ -331,7 +336,7 @@
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
-            <version>1.8</version>
+            <version>1.9</version>
         </dependency>
         <dependency>
         	<groupId>commons-jxpath</groupId>
@@ -342,11 +347,6 @@
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
             <version>3.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>4.2.3</version>
         </dependency>
     </dependencies>
 
