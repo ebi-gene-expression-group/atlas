@@ -26,6 +26,9 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 
 import java.util.Collection;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class DifferentialProfilesList extends GeneProfilesList<DifferentialProfile> {
 
 
@@ -36,9 +39,7 @@ public class DifferentialProfilesList extends GeneProfilesList<DifferentialProfi
     public double getMaxUpRegulatedExpressionLevel(){
         double maxUpRegulatedExpressionLevel = 0;
         for (DifferentialProfile differentialProfile : this) {
-            if (maxUpRegulatedExpressionLevel < differentialProfile.getMaxUpRegulatedExpressionLevel()) {
-                maxUpRegulatedExpressionLevel = differentialProfile.getMaxUpRegulatedExpressionLevel();
-            }
+            maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, differentialProfile.getMaxUpRegulatedExpressionLevel());
         }
         return maxUpRegulatedExpressionLevel != 0 ? maxUpRegulatedExpressionLevel : Double.NaN;
     }
@@ -46,9 +47,7 @@ public class DifferentialProfilesList extends GeneProfilesList<DifferentialProfi
     public double getMinUpRegulatedExpressionLevel(){
         double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
-            if (differentialProfile.getMinUpRegulatedExpressionLevel() < minUpRegulatedExpressionLevel) {
-                minUpRegulatedExpressionLevel = differentialProfile.getMinUpRegulatedExpressionLevel();
-            }
+            minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, differentialProfile.getMinUpRegulatedExpressionLevel());
         }
         return minUpRegulatedExpressionLevel != Double.MAX_VALUE ? minUpRegulatedExpressionLevel : Double.NaN;
     }
@@ -57,9 +56,7 @@ public class DifferentialProfilesList extends GeneProfilesList<DifferentialProfi
     public double getMaxDownRegulatedExpressionLevel(){
         double maxDownRegulatedExpressionLevel = 0;
         for (DifferentialProfile differentialProfile : this) {
-            if (maxDownRegulatedExpressionLevel < differentialProfile.getMaxDownRegulatedExpressionLevel()) {
-                maxDownRegulatedExpressionLevel = differentialProfile.getMaxDownRegulatedExpressionLevel();
-            }
+            maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, differentialProfile.getMaxDownRegulatedExpressionLevel());
         }
         return maxDownRegulatedExpressionLevel != 0 ? maxDownRegulatedExpressionLevel : Double.NaN;
     }
@@ -67,9 +64,7 @@ public class DifferentialProfilesList extends GeneProfilesList<DifferentialProfi
     public double getMinDownRegulatedExpressionLevel(){
         double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
-            if (differentialProfile.getMinDownRegulatedExpressionLevel() < minDownRegulatedExpressionLevel) {
-                minDownRegulatedExpressionLevel = differentialProfile.getMinDownRegulatedExpressionLevel();
-            }
+            minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, differentialProfile.getMinDownRegulatedExpressionLevel());
         }
         return minDownRegulatedExpressionLevel != Double.MAX_VALUE ? minDownRegulatedExpressionLevel : Double.NaN;
     }

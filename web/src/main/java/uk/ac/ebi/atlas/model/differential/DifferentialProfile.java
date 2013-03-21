@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.differential;
 
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
@@ -31,6 +32,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import static com.google.common.base.Preconditions.checkState;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
 
@@ -74,32 +77,24 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
     protected void updateProfileExpression(DifferentialExpression differentialExpression) {
         if (differentialExpression.isOverExpressed()){
             updateUpRegulatedProfileExpression(differentialExpression.getLevel());
-        } else {
+        }
+        if (differentialExpression.isUnderExpressed()){
             updateDownRegulatedProfileExpression(differentialExpression.getLevel());
         }
     }
 
     void updateUpRegulatedProfileExpression(double expressionLevel){
-        if (maxUpRegulatedExpressionLevel < expressionLevel) {
-            maxUpRegulatedExpressionLevel = expressionLevel;
-        }
-        if (expressionLevel < minUpRegulatedExpressionLevel) {
-            minUpRegulatedExpressionLevel = expressionLevel;
-        }
+        maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, expressionLevel);
+        minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, expressionLevel);
     }
 
     void updateDownRegulatedProfileExpression(double expressionLevel){
-        if (maxDownRegulatedExpressionLevel < expressionLevel) {
-            maxDownRegulatedExpressionLevel = expressionLevel;
-        }
-        if (expressionLevel < minDownRegulatedExpressionLevel) {
-            minDownRegulatedExpressionLevel = expressionLevel;
-        }
+        maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, expressionLevel);
+        minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, expressionLevel);
     }
 
-    public double getMinExpressionLevel() {
-        return minUpRegulatedExpressionLevel < minDownRegulatedExpressionLevel ?
-                minUpRegulatedExpressionLevel : minDownRegulatedExpressionLevel;
+    public double getMinExpressionLevel() { //only required for the heatmap table ranking
+        return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
 
