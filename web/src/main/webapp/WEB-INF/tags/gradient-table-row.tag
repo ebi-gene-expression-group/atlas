@@ -33,7 +33,7 @@
         </span>
     </td>
     <td width="200px">
-        <div style="
+        <div class="color-gradient" style="
                 overflow:auto;
                 background-image:
                 -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));

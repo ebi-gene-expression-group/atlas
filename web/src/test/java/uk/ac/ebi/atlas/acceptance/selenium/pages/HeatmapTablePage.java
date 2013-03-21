@@ -45,7 +45,7 @@ public class HeatmapTablePage extends TablePage {
     private WebElement anatomogram;
 
     @FindBy(id = "heatmap-legenda")
-    private List<WebElement> heatmapTableLegend;
+    private WebElement heatmapTableLegend;
 
     private String experimentAccession = DEFAULT_EXPERIMENT_ACCESSION;
 
@@ -83,24 +83,23 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getGradientMinLabels() {
         List<String> result = new ArrayList<>();
-        for (WebElement legend : heatmapTableLegend) {
-            result.add(legend.findElement(By.className("gradient-level-min")).getText());
+        for (WebElement element : heatmapTableLegend.findElements(By.className("gradient-level-min"))) {
+            result.add(element.getText());
         }
         return result;
     }
 
     public List<String> getGradientMaxLabels() {
         List<String> result = new ArrayList<>();
-        for (WebElement legend : heatmapTableLegend) {
-            result.add(legend.findElement(By.className("gradient-level-max")).getText());
+        for (WebElement element : heatmapTableLegend.findElements(By.className("gradient-level-max"))) {
+            result.add(element.getText());
         }
         return result;
     }
 
     public List<String> getGradientStartColor() {
         List<String> result = new ArrayList<>();
-        for (WebElement legend : heatmapTableLegend) {
-            WebElement element = legend.findElement(By.className("color-gradient"));
+        for (WebElement element : heatmapTableLegend.findElements(By.className("color-gradient"))) {
             String style = element.getCssValue("background-image");
             style = style.substring(style.indexOf("rgb(") + 4, style.indexOf("), "));
             result.add(style);
@@ -110,8 +109,7 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getGradientEndColor() {
         List<String> result = new ArrayList<>();
-        for (WebElement legend : heatmapTableLegend) {
-            WebElement element = legend.findElement(By.className("color-gradient"));
+        for (WebElement element : heatmapTableLegend.findElements(By.className("color-gradient"))) {
             String style = element.getCssValue("background-image");
             style = style.substring(style.lastIndexOf("rgb(") + 4, style.lastIndexOf("))"));
             result.add(style);
