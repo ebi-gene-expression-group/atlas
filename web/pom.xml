@@ -97,7 +97,7 @@
             <plugin>
                 <groupId>com.github.searls</groupId>
                 <artifactId>jasmine-maven-plugin</artifactId>
-                <version>1.2.0.0</version>
+                <version>1.3.1.0</version>
                 <extensions>true</extensions>
                 <executions>
                     <execution>
@@ -141,7 +141,6 @@
 
     <!-- Project dependencies -->
     <dependencies>
-
         <!--limpopo MAGET-Tab investigation-->
         <dependency>
             <groupId>uk.ac.ebi.arrayexpress2</groupId>
