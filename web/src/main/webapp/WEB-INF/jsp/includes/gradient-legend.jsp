@@ -65,7 +65,8 @@
                 </table>
             </c:when>
             <c:otherwise>
-                <c:if test="${(preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN')}">
+                <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
+                                and geneProfiles.getMinDownRegulatedExpressionLevel() != 'NaN'}">
                     <c:set var="minExpressionLevel"
                            value="${numberUtils.htmlFormatDouble(geneProfiles.getMinDownRegulatedExpressionLevel())}"/>
                     <c:set var="maxExpressionLevel"
@@ -102,7 +103,8 @@
                         </tr>
                     </table>
                 </c:if>
-                <c:if test="${(preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN')}">
+                <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))
+                                and geneProfiles.getMinUpRegulatedExpressionLevel() != 'NaN'}">
                     <c:set var="minExpressionLevel"
                            value="${numberUtils.htmlFormatDouble(geneProfiles.getMinUpRegulatedExpressionLevel())}"/>
                     <c:set var="maxExpressionLevel"
