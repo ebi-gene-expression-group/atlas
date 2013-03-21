@@ -25,47 +25,46 @@
   --%>
 
 <div style="float:right; padding-left: 100px">
-    <c:choose>
-        <c:when test="${type eq 'BASELINE'}">
-            <c:set var="minExpressionLevel" value="${geneProfiles.getMinExpressionLevel()}"/>
-            <c:set var="maxExpressionLevel" value="${geneProfiles.getMaxExpressionLevel()}"/>
-            <table style="font-size:10px; float: right" id="heatmap-legenda">
-                <tr>
-                    <td>
+    <div style="float:left">
+        <c:choose>
+            <c:when test="${type eq 'BASELINE'}">
+                <c:set var="minExpressionLevel" value="${geneProfiles.getMinExpressionLevel()}"/>
+                <c:set var="maxExpressionLevel" value="${geneProfiles.getMaxExpressionLevel()}"/>
+                <table style="font-size:10px;" id="heatmap-legenda">
+                    <tr>
+                        <td>
                         <span style="display:none" class="gradient-level-min">
                             <fmt:formatNumber type="number"
                                               value="${minExpressionLevel}"
                                               groupingUsed="false"/>
                         </span>
-                    </td>
-                    <td width="200px">
-                        <div style="
-                                overflow:auto;
-                                background-image:
-                                -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
+                        </td>
+                        <td width="200px">
+                            <div style="
+                                    overflow:auto;
+                                    background-image:
+                                    -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
 
-                                background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                    background-image: -moz-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
+                                    background-image: -o-linear-gradient(left, ${colourGradient.minColour}, ${colourGradient.maxColour});
 
-                                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
-                                startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
-                            &nbsp;
-                        </div>
-                    </td>
-                    <td>
+                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
+                                    startColorstr=${colourGradient.minColour},endColorstr=${colourGradient.maxColour});">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
                         <span style="display:none" class="gradient-level-max">
                             <fmt:formatNumber type="number"
                                               value="${maxExpressionLevel}"
                                               groupingUsed="false"/>
                         </span>
-                        <span data-help-loc="#gradient"/>
-                    </td>
-                </tr>
-            </table>
-        </c:when>
-        <c:otherwise>
-            <table style="font-size:10px; float: right" id="heatmap-legenda">
+                        </td>
+                    </tr>
+                </table>
+            </c:when>
+            <c:otherwise>
                 <c:if test="${(preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN')}">
                     <c:set var="minExpressionLevel"
                            value="${numberUtils.htmlFormatDouble(geneProfiles.getMinDownRegulatedExpressionLevel())}"/>
@@ -73,34 +72,35 @@
                            value="${numberUtils.htmlFormatDouble(geneProfiles.getMaxDownRegulatedExpressionLevel())}"/>
                     <c:set var="lowValueColour" value="${colourGradient.getHexByColourName('lightGray')}"/>
                     <c:set var="highValueColour" value="${colourGradient.getHexByColourName('blue')}"/>
-                    <tr>
-                        <td>
+                    <table style="font-size:10px;" id="heatmap-legenda">
+                        <tr>
+                            <td>
                                 <span style="display:none" class="gradient-level-min">
                                         ${maxExpressionLevel}
                                 </span>
-                        </td>
-                        <td width="200px">
-                            <div style="
-                                    overflow:auto;
-                                    background-image:
-                                    -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
+                            </td>
+                            <td width="200px">
+                                <div style="
+                                        overflow:auto;
+                                        background-image:
+                                        -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
 
-                                    background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});
+                                        background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});
 
-                                    background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour});
+                                        background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour});
 
-                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
-                                    startColorstr=${lowValueColour},endColorstr=${highValueColour});">
-                                &nbsp;
-                            </div>
-                        </td>
-                        <td>
+                                        filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
+                                        startColorstr=${lowValueColour},endColorstr=${highValueColour});">
+                                    &nbsp;
+                                </div>
+                            </td>
+                            <td>
                                 <span style="display:none" class="gradient-level-max">
                                         ${minExpressionLevel}
                                 </span>
-                            <span data-help-loc="#gradient"/>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </table>
                 </c:if>
                 <c:if test="${(preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN')}">
                     <c:set var="minExpressionLevel"
@@ -109,11 +109,12 @@
                            value="${numberUtils.htmlFormatDouble(geneProfiles.getMaxUpRegulatedExpressionLevel())}"/>
                     <c:set var="lowValueColour" value="${colourGradient.getHexByColourName('pink')}"/>
                     <c:set var="highValueColour" value="${colourGradient.getHexByColourName('red')}"/>
+                    <table style="font-size:10px;" id="heatmap-legenda">
                     <tr>
                         <td>
-                                <span style="display:none" class="gradient-level-min">
-                                        ${maxExpressionLevel}
-                                </span>
+                            <span style="display:none" class="gradient-level-min">
+                                    ${maxExpressionLevel}
+                            </span>
                         </td>
                         <td width="200px">
                             <div style="
@@ -131,16 +132,17 @@
                             </div>
                         </td>
                         <td>
-                                <span style="display:none" class="gradient-level-max">
-                                        ${minExpressionLevel}
-                                </span>
-                            <c:if test="${preferences.regulation != 'UP_DOWN'}">
-                                <span data-help-loc="#gradient"/>
-                            </c:if>
+                            <span style="display:none" class="gradient-level-max">
+                                    ${minExpressionLevel}
+                            </span>
                         </td>
                     </tr>
+                </table>
                 </c:if>
-            </table>
-        </c:otherwise>
-    </c:choose>
+            </c:otherwise>
+        </c:choose>
+
+    </div>
+
+    <div data-help-loc="#gradient" style="float:left;"/>
 </div>

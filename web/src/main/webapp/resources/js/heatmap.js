@@ -60,7 +60,12 @@ function initHeatmapDisplayValueToggle() {
 
     $("#heatmap-table td:has(div[data-fold-change])").attr('title', '').tooltip(
         {
+            open: function( event, ui ) {
+                var colour = $(this).find("div").attr("data-color");
+                ui.tooltip.css('background',colour);
+            },
             tooltipClass:"help-tooltip",
+
             content:function (callback) {
                 var foldChange = $(this).find("div").attr("data-fold-change"),
                     expressionLevel = $(this).find("div").html();
