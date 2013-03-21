@@ -71,29 +71,8 @@ public class ColourGradient {
         return colourDistance;
     }
 
-    protected void setColourScale(double colourScale) {
-        this.colourScale = colourScale;
-
-    }
-
-    public void setLowValueColour(Color colour) {
-        this.defaultLowValueColour = colour;
-        this.colourDistance = calculateColourDistance();
-    }
-
-    public void setHighValueColour(Color colour) {
-        this.defaultHighValueColour = colour;
-        this.colourDistance = calculateColourDistance();
-    }
-
-    public void setBlankValueColour(Color colour) {
-        this.blankValueColour = colour;
-    }
-
     public String getGradientColour(String data, String min, String max) {
-
         return getGradientColour(data, min, max, defaultLowValueColour, defaultHighValueColour);
-
     }
 
     public String getGradientColour(String data, String min, String max, String lowValueColourName, String highValueColourName) {
@@ -125,14 +104,6 @@ public class ColourGradient {
 
     public String getHexByColourName(String colourName) {
         return colorToHexString(getColourByName(colourName));
-    }
-
-    public String getMaxColour() {
-        return colorToHexString(defaultHighValueColour);
-    }
-
-    public String getMinColour() {
-        return colorToHexString(defaultLowValueColour);
     }
 
     protected Color getGradientColour(double value, double min, double max) {

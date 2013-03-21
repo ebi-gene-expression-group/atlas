@@ -20,21 +20,7 @@ public class ColourGradientTest {
 
     @Test
     public void calculateColourDistance() throws Exception {
-        subject.setLowValueColour(new Color(255, 0, 0));
-        subject.setHighValueColour(new Color(255, 255, 255));
         assertThat(subject.getColourDistance(), is(510));
-
-        subject.setLowValueColour(new Color(0, 0, 0));
-        subject.setHighValueColour(new Color(255, 255, 255));
-        assertThat(subject.getColourDistance(), is(765));
-
-        subject.setLowValueColour(new Color(255, 255, 255));
-        subject.setHighValueColour(new Color(255, 255, 255));
-        assertThat(subject.getColourDistance(), is(0));
-
-        subject.setLowValueColour(new Color(255, 255, 255));
-        subject.setHighValueColour(new Color(0, 0, 0));
-        assertThat(subject.calculateColourDistance(), is(765));
     }
 
     @Test
@@ -48,9 +34,7 @@ public class ColourGradientTest {
     public void getColourPositionLogScale() throws Exception {
 
         //given
-        subject.setColourScale(ColourGradient.SCALE_LOGARITHMIC);
-
-
+        this.subject = new ColourGradient(Color.WHITE, Color.RED, Color.WHITE, ColourGradient.SCALE_LOGARITHMIC);
 
         assertThat(subject.getColourPosition(0.5), is(414));
         assertThat(subject.getColourPosition(0.0), is(0));
@@ -60,7 +44,7 @@ public class ColourGradientTest {
     @Test
     public void getColourPositionLinearScale() throws Exception {
         //given
-        subject.setColourScale(ColourGradient.SCALE_LINEAR);
+        this.subject = new ColourGradient(Color.WHITE, Color.RED, Color.WHITE, ColourGradient.SCALE_LINEAR);
 
         assertThat(subject.getColourPosition(0.5), is(255));
         assertThat(subject.getColourPosition(0.0), is(0));
@@ -102,16 +86,33 @@ public class ColourGradientTest {
 
     @Test
     public void getCellColourStringWithEmptyData() throws Exception {
-        subject.setLowValueColour(Color.white);
-        subject.setHighValueColour(Color.red);
         subject.getGradientColour(null, "1", "5");
         assertThat(subject.getGradientColour(null, "1", "5"), is("#FFFFFF"));
     }
 
-    public void getColourShouldReturnHighLevelColourWhenValueEqualsToMaxLevel(){
+    @Test
+    public void getColourShouldReturnLowLevelColourWhenValueEqualsToMinLevel(){
         Color color = subject.getGradientColour(2, 2, 300);
-        assertThat(subject.colorToHexString(color), is(subject.getMaxColour()));
+        assertThat(color, is(Color.WHITE));
     }
 
+    @Test
+    public void getColourShouldReturnHighLevelColourWhenValueEqualsToMaxLevel(){
+        Color color = subject.getGradientColour(300, 2, 300);
+        assertThat(color, is(Color.RED));
+    }
+
+    @Test
+    public void getColourByNameTest(){
+        assertThat(subject.getColourByName("blue"), is(Color.BLUE));
+        assertThat(subject.getColourByName("pink"), is(Color.PINK));
+        assertThat(subject.getColourByName("lightGray"), is(Color.LIGHT_GRAY));
+    }
+
+    @Test
+    public void getHexByColourByNameTest(){
+        assertThat(subject.getHexByColourName("blue"), is("#0000FF"));
+        assertThat(subject.getHexByColourName("pink"), is("#FFAFAF"));
+    }
 
 }
