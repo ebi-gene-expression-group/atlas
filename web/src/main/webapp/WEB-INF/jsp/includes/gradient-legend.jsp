@@ -40,7 +40,7 @@
                         </span>
                         </td>
                         <td width="200px">
-                            <div style="
+                            <div class="color-gradient" style="
                                     overflow:auto;
                                     background-image:
                                     -webkit-gradient(linear, left top, right top,color-stop(0, ${colourGradient.minColour}), color-stop(1, ${colourGradient.maxColour}));
@@ -81,7 +81,7 @@
                                 </span>
                             </td>
                             <td width="200px">
-                                <div style="
+                                <div class="color-gradient" style="
                                         overflow:auto;
                                         background-image:
                                         -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
@@ -112,34 +112,34 @@
                     <c:set var="lowValueColour" value="${colourGradient.getHexByColourName('pink')}"/>
                     <c:set var="highValueColour" value="${colourGradient.getHexByColourName('red')}"/>
                     <table style="font-size:10px;" id="heatmap-legenda">
-                    <tr>
-                        <td>
+                        <tr>
+                            <td>
                             <span style="display:none" class="gradient-level-min">
                                     ${maxExpressionLevel}
                             </span>
-                        </td>
-                        <td width="200px">
-                            <div style="
-                                    overflow:auto;
-                                    background-image:
-                                    -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
+                            </td>
+                            <td width="200px">
+                                <div class="color-gradient" style="
+                                        overflow:auto;
+                                        background-image:
+                                        -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
 
-                                    background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});
+                                        background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});
 
-                                    background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour});
+                                        background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour});
 
-                                    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=1,
-                                    startColorstr=${lowValueColour},endColorstr=${highValueColour});">
-                                &nbsp;
-                            </div>
-                        </td>
-                        <td>
+                                        filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=1,
+                                        startColorstr=${lowValueColour},endColorstr=${highValueColour});">
+                                    &nbsp;
+                                </div>
+                            </td>
+                            <td>
                             <span style="display:none" class="gradient-level-max">
                                     ${minExpressionLevel}
                             </span>
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </c:if>
             </c:otherwise>
         </c:choose>

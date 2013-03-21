@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,6 +44,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "anatomogram")
     private WebElement anatomogram;
 
+    @FindBy(id = "heatmap-legenda")
+    private List<WebElement> heatmapTableLegend;
+
     private String experimentAccession = DEFAULT_EXPERIMENT_ACCESSION;
 
     public HeatmapTablePage(WebDriver driver) {
@@ -75,6 +79,44 @@ public class HeatmapTablePage extends TablePage {
 
     public String getQueryFactorLabel() {
         return queryFactorLabel.getText();
+    }
+
+    public List<String> getGradientMinLabels() {
+        List<String> result = new ArrayList<>();
+        for (WebElement legend : heatmapTableLegend) {
+            result.add(legend.findElement(By.className("gradient-level-min")).getText());
+        }
+        return result;
+    }
+
+    public List<String> getGradientMaxLabels() {
+        List<String> result = new ArrayList<>();
+        for (WebElement legend : heatmapTableLegend) {
+            result.add(legend.findElement(By.className("gradient-level-max")).getText());
+        }
+        return result;
+    }
+
+    public List<String> getGradientStartColor() {
+        List<String> result = new ArrayList<>();
+        for (WebElement legend : heatmapTableLegend) {
+            WebElement element = legend.findElement(By.className("color-gradient"));
+            String style = element.getCssValue("background-image");
+            style = style.substring(style.indexOf("rgb(") + 4, style.indexOf("), "));
+            result.add(style);
+        }
+        return result;
+    }
+
+    public List<String> getGradientEndColor() {
+        List<String> result = new ArrayList<>();
+        for (WebElement legend : heatmapTableLegend) {
+            WebElement element = legend.findElement(By.className("color-gradient"));
+            String style = element.getCssValue("background-image");
+            style = style.substring(style.lastIndexOf("rgb(") + 4, style.lastIndexOf("))"));
+            result.add(style);
+        }
+        return result;
     }
 
     public String getDownloadExpressionProfilesLink() {
@@ -113,7 +155,6 @@ public class HeatmapTablePage extends TablePage {
     public String getDisplayLevelsButtonValue() {
         return displayLevelsButton.getText();
     }
-
 
     public boolean areGradientLevelsHidden() {
         String style = gradientLevelsMin.getAttribute("style");
@@ -175,7 +216,7 @@ public class HeatmapTablePage extends TablePage {
         return averageFpkm / factors.length;
     }
 
-    public WebElement getAnatomogram(){
+    public WebElement getAnatomogram() {
         return anatomogram;
     }
 
@@ -183,7 +224,7 @@ public class HeatmapTablePage extends TablePage {
         return this.getCell(heatmapTable, profileIndex + 1, expressionIndex + 2);
     }
 
-    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedIndex){
+    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedIndex) {
         hoverOnElement(getGeneProfileCell(0, 0));
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedIndex + 1) + "]");
@@ -192,7 +233,7 @@ public class HeatmapTablePage extends TablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getDifferentialExperimentTooltipTableCell(int zeroBasedIndex){
+    public String getDifferentialExperimentTooltipTableCell(int zeroBasedIndex) {
         hoverOnElement(getGeneProfileCell(0, 0));
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedIndex + 1) + "]");
@@ -201,7 +242,7 @@ public class HeatmapTablePage extends TablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-    private void hoverOnElement(WebElement webElement){
+    private void hoverOnElement(WebElement webElement) {
         Action builder;
         Actions hover = new Actions(driver);
         hover.moveToElement(webElement);
