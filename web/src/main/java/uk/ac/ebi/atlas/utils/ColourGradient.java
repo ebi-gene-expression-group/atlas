@@ -50,9 +50,6 @@ public class ColourGradient {
 
     private double colourScale;
 
-    // How many RGB steps there are between the high and low colours.
-    private int colourDistance;
-
     @Inject
     public ColourGradient(@Value("#{configuration['gradient.startColour']}") Color startColour,
                           @Value("#{configuration['gradient.endColour']}") Color endColour,
@@ -63,23 +60,18 @@ public class ColourGradient {
         this.defaultHighValueColour = endColour;
         this.blankValueColour = blankColour;
         this.colourScale = colourScale;
-        this.colourDistance = calculateColourDistance();
-
     }
 
-    protected int getColourDistance() {
-        return colourDistance;
+    public String getGradientColour(double value, double min, double max) {
+        return colorToHexString(getGradientColour(value, min, max, defaultLowValueColour, defaultHighValueColour));
     }
 
-    public String getGradientColour(String data, String min, String max) {
-        return getGradientColour(data, min, max, defaultLowValueColour, defaultHighValueColour);
-    }
+    public String getGradientColour(double value, double min, double max, String lowValueColourName, String highValueColourName) {
 
-    public String getGradientColour(String data, String min, String max, String lowValueColourName, String highValueColourName) {
-        // try to get a color by name using reflection
         Color lowValueColour = getColourByName(lowValueColourName);
         Color highValueColour = getColourByName(highValueColourName);
-        return getGradientColour(data, min, max, lowValueColour, highValueColour);
+
+        return colorToHexString(getGradientColour(value, min, max, lowValueColour, highValueColour));
     }
 
     public Color getColourByName(String colourName){
@@ -92,30 +84,14 @@ public class ColourGradient {
         }
     }
 
-    String getGradientColour(String data, String min, String max, Color lowValueColour, Color highValueColour) {
-
-        if (StringUtils.isEmpty(data)) {
-            return colorToHexString(blankValueColour);
-        }
-        Color cellColour = getGradientColour(parseDouble(data), parseDouble(min), parseDouble(max), lowValueColour, highValueColour);
-
-        return colorToHexString(cellColour);
-    }
-
     public String getHexByColourName(String colourName) {
         return colorToHexString(getColourByName(colourName));
     }
-
-    protected Color getGradientColour(double value, double min, double max) {
-        return getGradientColour(value, min, max, defaultLowValueColour, defaultHighValueColour);
-    }
-
 
     /*
     * Determines what colour a heat map cell should be based upon the cell
     * values.
     */
-
     protected Color getGradientColour(double value, double min, double max, Color lowValueColour, Color highValueColour) {
 
         if (value == max) {
@@ -129,7 +105,7 @@ public class ColourGradient {
         }
 
         // Which colour group does that put us in.
-        int colourPosition = getColourPosition(percentPosition);
+        int colourPosition = getColourPosition(percentPosition, lowValueColour, highValueColour);
 
         return calculateColorForPosition(colourPosition, lowValueColour, highValueColour);
     }
@@ -183,8 +159,10 @@ public class ColourGradient {
     * depending on the colour scale used: LINEAR, LOGARITHMIC, EXPONENTIAL.
     */
 
-    protected int getColourPosition(double percentPosition) {
+    protected int getColourPosition(double percentPosition, Color lowValueColour, Color highValueColour) {
         Preconditions.checkArgument(percentPosition >= 0 && percentPosition <= 1);
+
+        int colourDistance = calculateColourDistance(lowValueColour, highValueColour);
 
         return (int) Math.round(colourDistance * Math.pow(percentPosition, colourScale));
     }
@@ -207,20 +185,15 @@ public class ColourGradient {
     * and the other using an RGB coding with 0-255 values for each of red,
     * green and blue. So the maximum colour distance is 255 + 255 + 255.
     */
-    // made final because called in constructor
-    protected final int calculateColourDistance() {
-        int r1 = defaultLowValueColour.getRed();
-        int g1 = defaultLowValueColour.getGreen();
-        int b1 = defaultLowValueColour.getBlue();
-        int r2 = defaultHighValueColour.getRed();
-        int g2 = defaultHighValueColour.getGreen();
-        int b2 = defaultHighValueColour.getBlue();
+    protected int calculateColourDistance(Color lowValueColour, Color highValueColour) {
+        int r1 = lowValueColour.getRed();
+        int g1 = lowValueColour.getGreen();
+        int b1 = lowValueColour.getBlue();
+        int r2 = highValueColour.getRed();
+        int g2 = highValueColour.getGreen();
+        int b2 = highValueColour.getBlue();
 
-        colourDistance = Math.abs(r1 - r2);
-        colourDistance += Math.abs(g1 - g2);
-        colourDistance += Math.abs(b1 - b2);
-
-        return colourDistance;
+        return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
     }
 
     protected String colorToHexString(Color colour) {
