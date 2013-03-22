@@ -61,10 +61,10 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
             return null;
         }
         String foldChangeString = differentialExpressionLevelsBuffer.poll();
+        checkState(foldChangeString != null, "missing fold change column in the analytics file");
         if ("NA".equalsIgnoreCase(pValueString)){
             return poll();
         }
-        checkState(foldChangeString != null, "missing fold change column in the analytics file");
         double pValue = parseDouble(pValueString);
         double foldChange = parseDouble(foldChangeString);
 
