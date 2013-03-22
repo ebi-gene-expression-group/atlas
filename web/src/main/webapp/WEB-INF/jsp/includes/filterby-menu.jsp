@@ -38,59 +38,49 @@
     <ul id="filterBy" style="display: none">
         <li><a>${filterMenuLabel}</a>
             <ul>
-                <c:forEach items="${menuFactorNames}" var="firstFactorName">
-                    <li>
-                        <a>${firstFactorName}</a>
-                        <ul>
-                            <c:forEach items="${filterFactorMenu.getFactorsForFactorName(firstFactorName)}"
-                                       var="queryFactor">
-                                <c:set var="secondFilterFactorMenu"
-                                       value="${filterFactorMenu.filterOutByFactor(queryFactor)}"/>
-                                <c:choose>
-                                    <c:when test="${secondFilterFactorMenu.allFactorNames.size() == 1}">
-                                        <c:forEach items="${secondFilterFactorMenu.allFactorNames}"
-                                                   var="queryFactorName">
-                                            <c:set var="queryFactorType"
-                                                   value="${filterFactorMenu.resolveTypeForName(queryFactorName)}"/>
-                                            <li data-serialized-factors='${secondFilterFactorMenu.getLink(queryFactorType, queryFactor)}'
-                                                style="text-decoration: underline; cursor: pointer;">${queryFactor.value}</li>
-                                        </c:forEach>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li>
-                                            <a>${queryFactor.value}</a>
-                                            <ul>
-                                                <c:forEach items="${secondFilterFactorMenu.allFactorNames}"
-                                                           var="secondFactorName">
-                                                    <li>
-                                                        <a>${secondFactorName}</a>
-                                                        <ul>
-                                                            <c:forEach
-                                                                    items="${secondFilterFactorMenu.getFactorsForFactorName(secondFactorName)}"
-                                                                    var="secondFactor">
-                                                                <c:set var="lastFilterFactorMenu"
-                                                                       value="${secondFilterFactorMenu.filterOutByFactor(secondFactor)}"/>
-
-                                                                <c:forEach
-                                                                        items="${lastFilterFactorMenu.allFactorNames}"
-                                                                        var="queryFactorName">
-                                                                    <c:set var="queryFactorType"
-                                                                           value="${filterFactorMenu.resolveTypeForName(queryFactorName)}"/>
-                                                                    <li data-serialized-factors='${lastFilterFactorMenu.getLink(queryFactorType, queryFactor, secondFactor)}'
-                                                                        style="text-decoration: underline; cursor: pointer;">${secondFactor.value}</li>
+                <c:forEach items="${filterFactorMenu}" var="firstFactorName">
+                    <c:if test="${menuFactorNames.contains(firstFactorName.displayName)}">
+                        <li>
+                            <a>${firstFactorName.displayName}</a>
+                            <ul>
+                                <c:forEach items="${firstFactorName.children}" var="firstFactorValue">
+                                    <c:set var="secondFilterFactorMenu" value="${firstFactorValue.children}"/>
+                                    <c:choose>
+                                        <c:when test="${secondFilterFactorMenu.size() == 1}">
+                                            <c:forEach items="${secondFilterFactorMenu}" var="secondFactorName">
+                                                <li data-serialized-factors='${filterFactorMenuBuilder.getLink(secondFactorName.type, firstFactorValue.factor)}'
+                                                    style="text-decoration: underline; cursor: pointer;">${firstFactorValue.displayName}</li>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li>
+                                                <a>${firstFactorValue.displayName}</a>
+                                                <ul>
+                                                    <c:forEach items="${secondFilterFactorMenu}" var="secondFactorName">
+                                                        <li>
+                                                            <a>${secondFactorName.displayName}</a>
+                                                            <ul>
+                                                                <c:forEach items="${secondFactorName.children}"
+                                                                           var="secondFactorValue">
+                                                                    <c:set var="thirdFilterFactorMenu"
+                                                                           value="${secondFactorValue.children}"/>
+                                                                    <c:forEach items="${thirdFilterFactorMenu}"
+                                                                               var="thirdFactorName">
+                                                                        <li data-serialized-factors='${filterFactorMenuBuilder.getLink(thirdFactorName.type, firstFactorValue.factor, secondFactorValue.factor)}'
+                                                                            style="text-decoration: underline; cursor: pointer;">${secondFactorValue.displayName}</li>
+                                                                    </c:forEach>
                                                                 </c:forEach>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </li>
-
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </ul>
-                    </li>
+                                                            </ul>
+                                                        </li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                    </c:if>
                 </c:forEach>
             </ul>
         </li>
