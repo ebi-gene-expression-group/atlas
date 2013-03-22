@@ -165,8 +165,6 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             if ('${type}'==='DIFFERENTIAL' ) {
 
-                //configurations required for any IE 8 or lower browser
-
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
