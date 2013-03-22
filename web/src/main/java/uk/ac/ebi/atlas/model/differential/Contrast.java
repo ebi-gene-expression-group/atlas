@@ -1,6 +1,11 @@
 package uk.ac.ebi.atlas.model.differential;
 
-public class Contrast{
+import com.google.common.base.Function;
+import com.google.common.collect.Ordering;
+
+import java.util.Comparator;
+
+public class Contrast {
     private String id;
     private AssayGroup referenceAssayGroup;
     private AssayGroup testAssayGroup;
@@ -41,4 +46,12 @@ public class Contrast{
                 '}';
     }
 
+    public static Comparator<Contrast> orderByDisplayName() {
+        return Ordering.natural().onResultOf(new Function<Contrast, Comparable>() {
+            @Override
+            public Comparable apply(Contrast contrast) {
+                return contrast.getDisplayName();
+            }
+        });
+    }
 }
