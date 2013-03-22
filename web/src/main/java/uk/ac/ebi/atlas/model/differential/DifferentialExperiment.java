@@ -22,14 +22,11 @@
 
 package uk.ac.ebi.atlas.model.differential;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -46,7 +43,7 @@ public class DifferentialExperiment extends Experiment {
     }
 
     public SortedSet<Contrast> getContrasts() {
-        SortedSet<Contrast> contrasts = Sets.newTreeSet(orderByDisplayName());
+        SortedSet<Contrast> contrasts = Sets.newTreeSet(Contrast.orderByDisplayName());
         contrasts.addAll(this.contrastsById.values());
         return contrasts;
     }
@@ -56,16 +53,7 @@ public class DifferentialExperiment extends Experiment {
     }
 
     public SortedSet<String> getContrastIds() {
-            return Sets.newTreeSet(contrastsById.keySet());
-        }
-    
-    private Comparator<Contrast> orderByDisplayName() {
-        return Ordering.natural().onResultOf(new Function<Contrast, Comparable>() {
-            @Override
-            public Comparable apply(Contrast contrast) {
-                return contrast.getDisplayName();
-            }
-        });
+        return Sets.newTreeSet(contrastsById.keySet());
     }
 
     public Set<String> getLibrariesFromContrasts() {

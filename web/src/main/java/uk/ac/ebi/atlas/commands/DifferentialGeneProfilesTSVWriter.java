@@ -45,7 +45,7 @@ public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Dif
         return expressionLevels;
     }
 
-    private String getValueToString(double value) {
+    protected String getValueToString(double value) {
         if (Double.isInfinite(value)) {
             return "NA";
         }
