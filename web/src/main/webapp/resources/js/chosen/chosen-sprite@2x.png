@@ -6,7 +6,7 @@
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# githubog: http://ogp.me/ns/fb/githubog#">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>chosen/chosen/chosen-sprite.png at master · harvesthq/chosen</title>
+        <title>chosen/chosen/chosen-sprite@2x.png at master · harvesthq/chosen</title>
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub" />
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub" />
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
@@ -34,7 +34,7 @@
       
       <meta http-equiv="x-pjax-version" content="581859cfff990c09f7c9d19575e3e6f4">
 
-        <link data-pjax-transient rel='permalink' href='/harvesthq/chosen/blob/29a5ac11a67451d1b8bb6e525857cf35587334a2/chosen/chosen-sprite.png'>
+        <link data-pjax-transient rel='permalink' href='/harvesthq/chosen/blob/29a5ac11a67451d1b8bb6e525857cf35587334a2/chosen/chosen-sprite%402x.png'>
     <meta property="og:title" content="chosen"/>
     <meta property="og:type" content="githubog:gitrepository"/>
     <meta property="og:url" content="https://github.com/harvesthq/chosen"/>
@@ -322,67 +322,67 @@
 
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/abstract-chosen/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="abstract-chosen" rel="nofollow" title="abstract-chosen">abstract-chosen</a>
+                  <a href="/harvesthq/chosen/blob/abstract-chosen/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="abstract-chosen" rel="nofollow" title="abstract-chosen">abstract-chosen</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/add_all_options/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="add_all_options" rel="nofollow" title="add_all_options">add_all_options</a>
+                  <a href="/harvesthq/chosen/blob/add_all_options/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="add_all_options" rel="nofollow" title="add_all_options">add_all_options</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/add_testing/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="add_testing" rel="nofollow" title="add_testing">add_testing</a>
+                  <a href="/harvesthq/chosen/blob/add_testing/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="add_testing" rel="nofollow" title="add_testing">add_testing</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/compress-retina-images/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="compress-retina-images" rel="nofollow" title="compress-retina-images">compress-retina-images</a>
+                  <a href="/harvesthq/chosen/blob/compress-retina-images/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="compress-retina-images" rel="nofollow" title="compress-retina-images">compress-retina-images</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/disable-search-option/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="disable-search-option" rel="nofollow" title="disable-search-option">disable-search-option</a>
+                  <a href="/harvesthq/chosen/blob/disable-search-option/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="disable-search-option" rel="nofollow" title="disable-search-option">disable-search-option</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/focus_input/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="focus_input" rel="nofollow" title="focus_input">focus_input</a>
+                  <a href="/harvesthq/chosen/blob/focus_input/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="focus_input" rel="nofollow" title="focus_input">focus_input</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/gh-pages/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="gh-pages" rel="nofollow" title="gh-pages">gh-pages</a>
+                  <a href="/harvesthq/chosen/blob/gh-pages/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="gh-pages" rel="nofollow" title="gh-pages">gh-pages</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/harvest_experimental/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="harvest_experimental" rel="nofollow" title="harvest_experimental">harvest_experimental</a>
+                  <a href="/harvesthq/chosen/blob/harvest_experimental/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="harvest_experimental" rel="nofollow" title="harvest_experimental">harvest_experimental</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/js_error_trace/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="js_error_trace" rel="nofollow" title="js_error_trace">js_error_trace</a>
+                  <a href="/harvesthq/chosen/blob/js_error_trace/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="js_error_trace" rel="nofollow" title="js_error_trace">js_error_trace</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/js_style_fix/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="js_style_fix" rel="nofollow" title="js_style_fix">js_style_fix</a>
+                  <a href="/harvesthq/chosen/blob/js_style_fix/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="js_style_fix" rel="nofollow" title="js_style_fix">js_style_fix</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target selected">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/master/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="master" rel="nofollow" title="master">master</a>
+                  <a href="/harvesthq/chosen/blob/master/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="master" rel="nofollow" title="master">master</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/search_contains/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="search_contains" rel="nofollow" title="search_contains">search_contains</a>
+                  <a href="/harvesthq/chosen/blob/search_contains/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="search_contains" rel="nofollow" title="search_contains">search_contains</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/search_improvements/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="search_improvements" rel="nofollow" title="search_improvements">search_improvements</a>
+                  <a href="/harvesthq/chosen/blob/search_improvements/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="search_improvements" rel="nofollow" title="search_improvements">search_improvements</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/select-title-support/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="select-title-support" rel="nofollow" title="select-title-support">select-title-support</a>
+                  <a href="/harvesthq/chosen/blob/select-title-support/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="select-title-support" rel="nofollow" title="select-title-support">select-title-support</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/show-hide-events/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="show-hide-events" rel="nofollow" title="show-hide-events">show-hide-events</a>
+                  <a href="/harvesthq/chosen/blob/show-hide-events/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="show-hide-events" rel="nofollow" title="show-hide-events">show-hide-events</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/single-select-focus-fix/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="single-select-focus-fix" rel="nofollow" title="single-select-focus-fix">single-select-focus-fix</a>
+                  <a href="/harvesthq/chosen/blob/single-select-focus-fix/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="single-select-focus-fix" rel="nofollow" title="single-select-focus-fix">single-select-focus-fix</a>
                 </div> <!-- /.select-menu-item -->
             </div>
 
@@ -395,63 +395,63 @@
 
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.12/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.12" rel="nofollow" title="v0.9.12">v0.9.12</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.12/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.12" rel="nofollow" title="v0.9.12">v0.9.12</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.11/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.11" rel="nofollow" title="v0.9.11">v0.9.11</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.11/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.11" rel="nofollow" title="v0.9.11">v0.9.11</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.10/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.10" rel="nofollow" title="v0.9.10">v0.9.10</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.10/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.10" rel="nofollow" title="v0.9.10">v0.9.10</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.9/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.9" rel="nofollow" title="v0.9.9">v0.9.9</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.9/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.9" rel="nofollow" title="v0.9.9">v0.9.9</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.8/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.8" rel="nofollow" title="v0.9.8">v0.9.8</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.8/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.8" rel="nofollow" title="v0.9.8">v0.9.8</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.7/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.7" rel="nofollow" title="v0.9.7">v0.9.7</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.7/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.7" rel="nofollow" title="v0.9.7">v0.9.7</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.6/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.6" rel="nofollow" title="v0.9.6">v0.9.6</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.6/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.6" rel="nofollow" title="v0.9.6">v0.9.6</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.5/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.5" rel="nofollow" title="v0.9.5">v0.9.5</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.5/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.5" rel="nofollow" title="v0.9.5">v0.9.5</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.4/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.4" rel="nofollow" title="v0.9.4">v0.9.4</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.4/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.4" rel="nofollow" title="v0.9.4">v0.9.4</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.3/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.3" rel="nofollow" title="v0.9.3">v0.9.3</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.3/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.3" rel="nofollow" title="v0.9.3">v0.9.3</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.2/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.2" rel="nofollow" title="v0.9.2">v0.9.2</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.2/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.2" rel="nofollow" title="v0.9.2">v0.9.2</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9.1/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.1" rel="nofollow" title="v0.9.1">v0.9.1</a>
+                  <a href="/harvesthq/chosen/blob/v0.9.1/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9.1" rel="nofollow" title="v0.9.1">v0.9.1</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/v0.9/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9" rel="nofollow" title="v0.9">v0.9</a>
+                  <a href="/harvesthq/chosen/blob/v0.9/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="v0.9" rel="nofollow" title="v0.9">v0.9</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/semver/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="semver" rel="nofollow" title="semver">semver</a>
+                  <a href="/harvesthq/chosen/blob/semver/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="semver" rel="nofollow" title="semver">semver</a>
                 </div> <!-- /.select-menu-item -->
                 <div class="select-menu-item js-navigation-item js-navigation-target ">
                   <span class="select-menu-item-icon mini-icon mini-icon-confirm"></span>
-                  <a href="/harvesthq/chosen/blob/0.9/chosen/chosen-sprite.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="0.9" rel="nofollow" title="0.9">0.9</a>
+                  <a href="/harvesthq/chosen/blob/0.9/chosen/chosen-sprite@2x.png" class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target" data-name="0.9" rel="nofollow" title="0.9">0.9</a>
                 </div> <!-- /.select-menu-item -->
             </div>
 
@@ -486,8 +486,8 @@
           
 
 
-<!-- blob contrib key: blob_contributors:v21:67695558b399235419c442897ee68d18 -->
-<!-- blob contrib frag key: views10/v8/blob_contributors:v21:67695558b399235419c442897ee68d18 -->
+<!-- blob contrib key: blob_contributors:v21:b48bff3408ba03b1d0240f8712986a1c -->
+<!-- blob contrib frag key: views10/v8/blob_contributors:v21:b48bff3408ba03b1d0240f8712986a1c -->
 
 
 <div id="slider">
@@ -496,7 +496,7 @@
       <p title="This is a placeholder element" class="js-history-link-replace hidden"></p>
 
         <div class="breadcrumb">
-          <span class='bold'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/harvesthq/chosen" class="js-slide-to" data-branch="master" data-direction="back" itemscope="url"><span itemprop="title">chosen</span></a></span></span><span class="separator"> / </span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/harvesthq/chosen/tree/master/chosen" class="js-slide-to" data-branch="master" data-direction="back" itemscope="url"><span itemprop="title">chosen</span></a></span><span class="separator"> / </span><strong class="final-path">chosen-sprite.png</strong> <span class="js-zeroclipboard zeroclipboard-button" data-clipboard-text="chosen/chosen-sprite.png" data-copied-hint="copied!" title="copy to clipboard"><span class="mini-icon mini-icon-clipboard"></span></span>
+          <span class='bold'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/harvesthq/chosen" class="js-slide-to" data-branch="master" data-direction="back" itemscope="url"><span itemprop="title">chosen</span></a></span></span><span class="separator"> / </span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/harvesthq/chosen/tree/master/chosen" class="js-slide-to" data-branch="master" data-direction="back" itemscope="url"><span itemprop="title">chosen</span></a></span><span class="separator"> / </span><strong class="final-path">chosen-sprite@2x.png</strong> <span class="js-zeroclipboard zeroclipboard-button" data-clipboard-text="chosen/chosen-sprite@2x.png" data-copied-hint="copied!" title="copy to clipboard"><span class="mini-icon mini-icon-clipboard"></span></span>
         </div>
 
       <a href="/harvesthq/chosen/find/master" class="js-slide-to" data-hotkey="t" style="display:none">Show File Finder</a>
@@ -512,13 +512,9 @@
     </div>
 
     <div class="participation">
-      <p class="quickstat"><a href="#blob_contributors_box" rel="facebox"><strong>6</strong> contributors</a></p>
-          <a class="avatar tooltipped downwards" title="mlharvest" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite.png?author=mlharvest"><img height="20" src="https://secure.gravatar.com/avatar/380d97d4b833387569b06e1824d4d8b5?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
-    <a class="avatar tooltipped downwards" title="pfiller" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite.png?author=pfiller"><img height="20" src="https://secure.gravatar.com/avatar/3755621de8c950890bf0e8f38156b57d?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
-    <a class="avatar tooltipped downwards" title="jameskoster" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite.png?author=jameskoster"><img height="20" src="https://secure.gravatar.com/avatar/babdd787a9577a0e615246ac79cf2826?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
-    <a class="avatar tooltipped downwards" title="binarycode" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite.png?author=binarycode"><img height="20" src="https://secure.gravatar.com/avatar/1af4140eb4d111a775b42a8656e90468?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
-    <a class="avatar tooltipped downwards" title="kristerkari" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite.png?author=kristerkari"><img height="20" src="https://secure.gravatar.com/avatar/2a8dbe5e246cf844376da5c8e413d16c?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
-    <a class="avatar tooltipped downwards" title="aziz" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite.png?author=aziz"><img height="20" src="https://secure.gravatar.com/avatar/33bfc61845ba1e6eaf9a67f4d16c51e4?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
+      <p class="quickstat"><a href="#blob_contributors_box" rel="facebox"><strong>2</strong> contributors</a></p>
+          <a class="avatar tooltipped downwards" title="jameskoster" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite%402x.png?author=jameskoster"><img height="20" src="https://secure.gravatar.com/avatar/babdd787a9577a0e615246ac79cf2826?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
+    <a class="avatar tooltipped downwards" title="mlharvest" href="/harvesthq/chosen/commits/master/chosen/chosen-sprite%402x.png?author=mlharvest"><img height="20" src="https://secure.gravatar.com/avatar/380d97d4b833387569b06e1824d4d8b5?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="20" /></a>
 
 
     </div>
@@ -526,28 +522,12 @@
       <h2>Users on GitHub who have contributed to this file</h2>
       <ul class="facebox-user-list">
         <li>
-          <img height="24" src="https://secure.gravatar.com/avatar/380d97d4b833387569b06e1824d4d8b5?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="24" />
-          <a href="/mlharvest">mlharvest</a>
-        </li>
-        <li>
-          <img height="24" src="https://secure.gravatar.com/avatar/3755621de8c950890bf0e8f38156b57d?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="24" />
-          <a href="/pfiller">pfiller</a>
-        </li>
-        <li>
           <img height="24" src="https://secure.gravatar.com/avatar/babdd787a9577a0e615246ac79cf2826?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="24" />
           <a href="/jameskoster">jameskoster</a>
         </li>
         <li>
-          <img height="24" src="https://secure.gravatar.com/avatar/1af4140eb4d111a775b42a8656e90468?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="24" />
-          <a href="/binarycode">binarycode</a>
-        </li>
-        <li>
-          <img height="24" src="https://secure.gravatar.com/avatar/2a8dbe5e246cf844376da5c8e413d16c?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="24" />
-          <a href="/kristerkari">kristerkari</a>
-        </li>
-        <li>
-          <img height="24" src="https://secure.gravatar.com/avatar/33bfc61845ba1e6eaf9a67f4d16c51e4?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="24" />
-          <a href="/aziz">aziz</a>
+          <img height="24" src="https://secure.gravatar.com/avatar/380d97d4b833387569b06e1824d4d8b5?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="24" />
+          <a href="/mlharvest">mlharvest</a>
         </li>
       </ul>
     </div>
@@ -557,7 +537,7 @@
     </div><!-- ./.frame-meta -->
 
     <div class="frames">
-      <div class="frame" data-permalink-url="/harvesthq/chosen/blob/29a5ac11a67451d1b8bb6e525857cf35587334a2/chosen/chosen-sprite.png" data-title="chosen/chosen/chosen-sprite.png at master · harvesthq/chosen · GitHub" data-type="blob">
+      <div class="frame" data-permalink-url="/harvesthq/chosen/blob/29a5ac11a67451d1b8bb6e525857cf35587334a2/chosen/chosen-sprite%402x.png" data-title="chosen/chosen/chosen-sprite@2x.png at master · harvesthq/chosen · GitHub" data-type="blob">
 
         <div id="files" class="bubble">
           <div class="file">
@@ -565,19 +545,19 @@
               <div class="info">
                 <span class="icon"><b class="mini-icon mini-icon-text-file"></b></span>
                 <span class="mode" title="File Mode">file</span>
-                <span>0.646 kb</span>
+                <span>0.872 kb</span>
               </div>
               <div class="actions">
                 <div class="button-group">
-                  <a href="/harvesthq/chosen/raw/master/chosen/chosen-sprite.png" class="button minibutton " id="raw-url">Raw</a>
-                  <a href="/harvesthq/chosen/commits/master/chosen/chosen-sprite.png" class="button minibutton " rel="nofollow">History</a>
+                  <a href="/harvesthq/chosen/raw/master/chosen/chosen-sprite%402x.png" class="button minibutton " id="raw-url">Raw</a>
+                  <a href="/harvesthq/chosen/commits/master/chosen/chosen-sprite%402x.png" class="button minibutton " rel="nofollow">History</a>
                 </div><!-- /.button-group -->
               </div><!-- /.actions -->
 
             </div>
                 <div class="data type-text js-blob-data">
       <div class="image js-image">
-          <span class="border-wrap"><img src="/harvesthq/chosen/blob/master/chosen/chosen-sprite.png?raw=true" /></span>
+          <span class="border-wrap"><img src="/harvesthq/chosen/blob/master/chosen/chosen-sprite@2x.png?raw=true" /></span>
       </div>
   </div>
 
@@ -661,7 +641,7 @@
       <hr class="footer-divider">
 
 
-    <p class="right">&copy; 2013 <span title="0.08202s from fe4.rs.github.com">GitHub</span>, Inc. All rights reserved.</p>
+    <p class="right">&copy; 2013 <span title="0.08440s from fe4.rs.github.com">GitHub</span>, Inc. All rights reserved.</p>
     <a class="left" href="https://github.com/">
       <span class="mega-icon mega-icon-invertocat"></span>
     </a>
@@ -708,7 +688,7 @@
 
     
     
-    <span id='server_response_time' data-time='0.08269' data-host='fe4'></span>
+    <span id='server_response_time' data-time='0.08493' data-host='fe4'></span>
     
   </body>
 </html>
