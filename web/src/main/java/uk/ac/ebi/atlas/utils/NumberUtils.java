@@ -39,7 +39,7 @@ public class NumberUtils {
     // P-values less than 10E-10 are shown as '< 10^-10'
     private static final Double MIN_REPORTED_VALUE = 1E-10d;
     private static final String TEN = "10";
-    private static final String MULTIPLY_HTML_CODE = " × ";
+    private static final String MULTIPLY_HTML_CODE = " \u00D7 ";
     private static final String E_PATTERN = "#.##E0";
     private static final String E = "E";
     private static final String SUP_PRE = "<span style=\"vertical-align: super;\">";
