@@ -559,7 +559,7 @@ sub writeResults {
 		foreach my $assayGroupPair (keys %{ $contrastHash }) {
 
 			my $statsString = "";
-			if(exists($diffExpRes->{ $id }->{ $assayGroupPair } {
+			if(exists($diffExpRes->{ $id }->{ $assayGroupPair })) {
 				$statsString = join "\t", @{ $diffExpRes->{ $id }->{ $assayGroupPair }};
 			} else {
 
