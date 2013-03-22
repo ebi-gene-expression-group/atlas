@@ -23,15 +23,12 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.awt.*;
-
-import static java.lang.Double.parseDouble;
 
 @Named("colourGradient")
 @Scope("prototype")
@@ -66,12 +63,16 @@ public class ColourGradient {
         return colorToHexString(getGradientColour(value, min, max, defaultLowValueColour, defaultHighValueColour));
     }
 
-    public String getGradientColour(double value, double min, double max, String lowValueColourName, String highValueColourName) {
+    public String getGradientColour(double value, double min, double max, String lowValueColourString, String highValueColourString) {
 
-        Color lowValueColour = getColourByName(lowValueColourName);
-        Color highValueColour = getColourByName(highValueColourName);
+        Color lowValueColour = lowValueColourString.startsWith("#")? getColourByHex(lowValueColourString):getColourByName(lowValueColourString);
+        Color highValueColour = highValueColourString.startsWith("#")? getColourByHex(highValueColourString):getColourByName(highValueColourString);
 
         return colorToHexString(getGradientColour(value, min, max, lowValueColour, highValueColour));
+    }
+
+    private Color getColourByHex(String color) {
+        return Color.decode(color);
     }
 
     public Color getColourByName(String colourName){
