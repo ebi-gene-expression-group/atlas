@@ -135,25 +135,35 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
     });
 </script>
 
+
+<script type="text/javascript">
+<!--[if IE]>
+    //disable vertical header in IE
+    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
+    <![endif]-->
+</script>
+
+<script type="text/javascript">
+    <!--[if lte IE 8]>
+        $("#anatomogram").remove();
+        $("#heatmap-div").removeClass();
+        $("#gene-distribution-button").hide();//hide the bar chart button
+        $("#gene-distribution-panel").hide();//hide the bar chart
+        $("#slider-range-max").hide();//hide the cutoff slider
+        $("#slider-help").hide();//hide the slider help
+    <![endif]-->
+</script>
+
 <script>
 
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
         $(document).ready(function () {
 
-            //disable vertical header and anatomogram in IE
-            if ($.browser.msie) {
-
-                //configuration required for any IE browser
-
-                $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
-                $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell)');
-
-            }
-
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
-            if (($.browser.msie && $.browser.version <= 8.0) || '${type}'==='DIFFERENTIAL' ) {
+            if ('${type}'==='DIFFERENTIAL' ) {
 
                 //configurations required for any IE 8 or lower browser
 
