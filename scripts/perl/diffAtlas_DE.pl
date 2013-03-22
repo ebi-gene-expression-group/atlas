@@ -558,7 +558,21 @@ sub writeResults {
 		# the same order as the headers.
 		foreach my $assayGroupPair (keys %{ $contrastHash }) {
 
-			my $statsString = join "\t", @{ $diffExpRes->{ $id }->{ $assayGroupPair }};
+			my $statsString = "";
+			if(exists($diffExpRes->{ $id }->{ $assayGroupPair })) {
+				$statsString = join "\t", @{ $diffExpRes->{ $id }->{ $assayGroupPair }};
+			} else {
+
+				# Some genes are excluded if their counts are zero across all
+				# assays. If there is more than one contrast in the experiment,
+				# assays in one contrast may have non-zero counts while assays
+				# in another contrast all have zero counts. In this case, we
+				# have DESeq statistics results for one contrast and none for
+				# the other. Where we don't have any results, we will put "NA"
+				# values into the results file.
+				if($techType eq "rnaseq") { $statsString = "NA\tNA"; }
+				else { $statsString = "NA\tNA\tNA"; }
+			}
 			printf(RESFILE "\t$statsString");
 		}
 	}
