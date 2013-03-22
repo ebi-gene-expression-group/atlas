@@ -38,7 +38,8 @@ import uk.ac.ebi.atlas.model.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.utils.FilterFactorMenu;
+import uk.ac.ebi.atlas.utils.FilterFactorMenuBuilder;
+import uk.ac.ebi.atlas.utils.FilterFactorMenuVoice;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -59,29 +60,28 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
     private RankBaselineProfileCommandExecutor rankCommand;
 
-
     private ApplicationProperties applicationProperties;
 
-    private FilterFactorsConverter filterFactorsConverter;
+    private FilterFactorMenuBuilder filterFactorMenuBuilder;
 
     @Inject
     public BaselineQueryPageController(RankBaselineProfileCommandExecutor rankCommand,
                                        ApplicationProperties applicationProperties,
                                        BaselineRequestContextBuilder requestContextBuilder,
-                                       FilterFactorsConverter filterFactorsConverter) {
+                                       FilterFactorsConverter filterFactorsConverter,
+                                       FilterFactorMenuBuilder filterFactorMenuBuilder) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
-
-        this.filterFactorsConverter = filterFactorsConverter;
+        this.filterFactorMenuBuilder = filterFactorMenuBuilder;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=BASELINE"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=BASELINE"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        BaselineExperiment experiment = (BaselineExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         initPreferences(preferences, experiment);
 
@@ -94,7 +94,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
         model.addAttribute("queryFactorName", StringUtils.capitalize(experimentalFactors.getFactorName(preferences.getQueryFactorType())));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
-
 
         SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
 
@@ -113,9 +112,10 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
             Set<Factor> menuFactors = experimentalFactors.getAllFactors();
 
-            FilterFactorMenu filterFactorMenu = new FilterFactorMenu(experimentalFactors, menuFactors);
-
-            filterFactorMenu.setFactorConverter(filterFactorsConverter);
+            SortedSet<FilterFactorMenuVoice> filterFactorMenu = filterFactorMenuBuilder
+                    .withExperimentalFactors(experimentalFactors)
+                    .forFilterFactors(menuFactors)
+                    .build();
 
             model.addAttribute("filterFactorMenu", filterFactorMenu);
 
