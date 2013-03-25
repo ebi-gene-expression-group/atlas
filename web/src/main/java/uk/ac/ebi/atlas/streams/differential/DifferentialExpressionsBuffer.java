@@ -62,7 +62,7 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
         }
         String foldChangeString = differentialExpressionLevelsBuffer.poll();
         checkState(foldChangeString != null, "missing fold change column in the analytics file");
-        if ("NA".equalsIgnoreCase(pValueString)){
+        if ("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString)) {
             return poll();
         }
         double pValue = parseDouble(pValueString);
@@ -72,10 +72,10 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
     }
 
     double parseDouble(String value) {
-        if(value.equalsIgnoreCase("inf")){
+        if (value.equalsIgnoreCase("inf")) {
             return Double.POSITIVE_INFINITY;
         }
-        if(value.equalsIgnoreCase("-inf")){
+        if (value.equalsIgnoreCase("-inf")) {
             return Double.NEGATIVE_INFINITY;
         }
         return Double.parseDouble(value);
@@ -129,7 +129,7 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
             List<String> columnHeaders = Arrays.asList(ArrayUtils.remove(tsvFileHeaders, GENE_ID_COLUMN));
 
             for (String columnHeader : columnHeaders) {
-                if (columnHeader.endsWith(".p-value")){
+                if (columnHeader.endsWith(".p-value")) {
                     String contrastId = StringUtils.substringBefore(columnHeader, ".");
                     orderedContrasts.add(experiment.getContrast(contrastId));
                 }

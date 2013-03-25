@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.streams.differential;
 
 import com.google.common.collect.Lists;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -128,5 +129,26 @@ public class DifferentialExpressionsBufferTest {
         //then we expect an IllegalArgumentException
     }
 
+    @Test
+    public void skipNALines() {
+
+        subject.reload("T1", "NA", "NA");
+
+        DifferentialExpression expression = subject.poll();
+
+        assertThat(expression, is(CoreMatchers.nullValue()));
+
+        subject.reload("T1", "1", "NA");
+
+        expression = subject.poll();
+
+        assertThat(expression, is(CoreMatchers.nullValue()));
+
+        subject.reload("T1", "NA", "1");
+
+        expression = subject.poll();
+
+        assertThat(expression, is(CoreMatchers.nullValue()));
+    }
 
 }
