@@ -104,7 +104,7 @@
                             <form:checkbox id="specific"
                                            path="specific"
                                            label="Specific"
-                                           disabled="${type eq 'DIFFERENTIAL' ? true : false}"></form:checkbox>
+                                           disabled="${isSingleContrast ? true : false}"></form:checkbox>
                         </span>
                     <span data-help-loc="#specific${type eq 'DIFFERENTIAL' ? '-differential':''}"
                           style="display:inline-block"/>
