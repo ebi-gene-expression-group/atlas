@@ -178,7 +178,7 @@
 
     $(".genename").tooltip({content:function (callback) {
         var identifier = $(this).attr("id");
-        $("#genenametooltip-content").load("json/genenametooltip?identifier=" + identifier,
+        $("#genenametooltip-content").load("rest/genenametooltip?identifier=" + identifier,
                 function (response, status, xhr) {
                     var tooltipContent;
                     if (status === "error") {

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 
 import javax.inject.Inject;
+import java.util.Collection;
 
 @Controller
 @Scope("request")
@@ -45,14 +46,36 @@ public class GeneNameTooltipController {
         this.solrClient = solrClient;
     }
 
-    @RequestMapping(value = "/json/genenametooltip", method = RequestMethod.GET, produces = "text/html")
+    @RequestMapping(value = "/rest/genenametooltip", method = RequestMethod.GET, produces = "text/html")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTopSuggestions(@RequestParam(value = "identifier") String identifier) {
 
         Multimap<String, String> multimap = solrClient.fetchTooltipProperties(identifier);
-        return multimap.toString();
 
+        StringBuilder sb = new StringBuilder();
+        sb.append(formatGeneSymbol(multimap.get("symbol")));
+        sb.append(" ");
+        sb.append(formatSynonymsAndIdentifier(multimap.get("synonym"), identifier));
+
+        return sb.toString();
+
+    }
+
+    private String formatGeneSymbol(Collection<String> symbols) {
+        String symbol = symbols.iterator().next();
+        return "<div style=\"font-size: 18\">" + symbol + "</div>";
+    }
+
+    private String formatSynonymsAndIdentifier(Collection<String> synonyms, String identifier) {
+        StringBuilder sb = new StringBuilder("<div style=\"font-size:14\">(");
+        for (String synonym : synonyms) {
+            sb.append(synonym);
+            sb.append(", ");
+        }
+        sb.append(identifier);
+        sb.append(")</div>");
+        return sb.toString();
     }
 
 }
