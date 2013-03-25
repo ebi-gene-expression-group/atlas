@@ -186,7 +186,7 @@
                         callback(tooltipContent);
                         return;
                     }
-                    tooltipContent = $(this).text();
+                    tooltipContent = $(this).html();
                     if (!tooltipContent) {
                         tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
                     }

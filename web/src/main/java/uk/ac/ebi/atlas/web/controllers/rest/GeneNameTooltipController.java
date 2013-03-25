@@ -49,7 +49,7 @@ public class GeneNameTooltipController {
     @RequestMapping(value = "/rest/genenametooltip", method = RequestMethod.GET, produces = "text/html")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getTopSuggestions(@RequestParam(value = "identifier") String identifier) {
+    public String getTooltipAsHTML(@RequestParam(value = "identifier") String identifier) {
 
         Multimap<String, String> multimap = solrClient.fetchTooltipProperties(identifier);
 
@@ -57,7 +57,8 @@ public class GeneNameTooltipController {
         sb.append(formatGeneSymbol(multimap.get("symbol")));
         sb.append(" ");
         sb.append(formatSynonymsAndIdentifier(multimap.get("synonym"), identifier));
-
+        sb.append("<br>");
+        sb.append(formatGoTerms(multimap.get("goterm")));
         return sb.toString();
 
     }
@@ -75,6 +76,19 @@ public class GeneNameTooltipController {
         }
         sb.append(identifier);
         sb.append(")</div>");
+        return sb.toString();
+    }
+
+    private String formatGoTerms(Collection<String> goterms) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div style=\"font-size: 18\">Gene Ontology Term:</div>");
+        sb.append("<div style=\"font-size:14\">");
+        for (String synonym : goterms) {
+            sb.append(synonym);
+            sb.append(", ");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("</div>");
         return sb.toString();
     }
 
