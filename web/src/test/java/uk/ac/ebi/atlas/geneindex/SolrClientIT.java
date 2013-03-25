@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Multimap;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +54,20 @@ public class SolrClientIT {
     @Before
     public void setUp() throws Exception {
 
+    }
+
+    @Test
+    public void testFetchTooltipProperties() throws Exception {
+
+        // given
+        Multimap<String, String> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
+
+        assertThat(properties.size(), Matchers.is(25));
+        assertThat(properties.get("symbol"), contains("ASPM"));
+        assertThat(properties.get("synonym").size(), Matchers.is(5));
+        assertThat(properties.get("synonym"), Matchers.hasItems("Calmbp1", "MCPH5", "ASP"));
+        assertThat(properties.get("goterm"), Matchers.hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
+        assertThat(properties.get("interproterm"), Matchers.hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
     }
 
     @Test

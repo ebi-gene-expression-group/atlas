@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -48,7 +47,8 @@
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                             <fmt:param value="${geneProfile.geneId}"/>
                         </fmt:message>
-                        <a href='${genePageURL}' target='_blank'>${geneNamesProvider.getGeneName(geneProfile.geneId)}</a>
+                        <a class="genename" id="${geneProfile.geneId}" href='${genePageURL}' target='_blank'
+                           title="">${geneNamesProvider.getGeneName(geneProfile.geneId)}</a>
                     </display:column>
 
                     <c:forEach var="queryFactor" items="${allQueryFactors}">
@@ -83,7 +83,8 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <c:set var="columnHeader" value = "${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
+                        <c:set var="columnHeader"
+                               value="${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
                                 title="<div tableHeaderCell data-organism-part=\"${columnHeader}\" class=\"rotate_text\" title=\"${columnHeader}\"></div>"
@@ -106,7 +107,8 @@
                                             <c:otherwise>
                                                 <fmt:formatNumber type="number"
                                                                   maxFractionDigits="2"
-                                                                  value="${geneProfile.getExpression(queryFactor).foldChange}" groupingUsed="false"
+                                                                  value="${geneProfile.getExpression(queryFactor).foldChange}"
+                                                                  groupingUsed="false"
                                                                   var="foldChange"/>
                                             </c:otherwise>
                                         </c:choose>
@@ -114,7 +116,7 @@
                                 </c:choose>
 
                                 <div class="hide_cell" ${type eq 'DIFFERENTIAL' ? 'data-fold-change="'.concat(foldChange).concat('"'):''}
-                                data-organism-part="${columnHeader}" data-color="${cellColour}">
+                                     data-organism-part="${columnHeader}" data-color="${cellColour}">
                                         ${type eq 'DIFFERENTIAL' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
 
@@ -143,6 +145,8 @@
         </tr>
         </tbody>
     </table>
+
+    <div id="genenametooltip-content"/>
 </div>
 
 <script type="text/javascript">
@@ -171,6 +175,26 @@
         }
         return result;
     }
+
+    $(".genename").tooltip({content:function (callback) {
+        var identifier = $(this).attr("id");
+        $("#genenametooltip-content").load("rest/genenametooltip?identifier=" + identifier,
+                function (response, status, xhr) {
+                    var tooltipContent;
+                    if (status === "error") {
+                        tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
+                        callback(tooltipContent);
+                        return;
+                    }
+                    tooltipContent = $(this).html();
+                    if (!tooltipContent) {
+                        tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
+                    }
+                    callback(tooltipContent);
+                }
+        );
+    }
+    });
 
     //required for the positioning of the stuff that must go inside the top-left corner header cell
     //$("#tooltip-span").parent().addClass("heatmap-matrix-top-left-corner");

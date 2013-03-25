@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Multimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -52,6 +53,9 @@ public class SolrClient {
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
+    @Value("#{configuration['index.types.tooltip']}")
+    private String tooltipPropertyTypes;
+
     private RestTemplate restTemplate;
 
     private final SolrQueryService solrQueryService;
@@ -62,12 +66,25 @@ public class SolrClient {
         this.solrQueryService = solrQueryService;
     }
 
+    public Multimap<String, String> fetchTooltipProperties(String identifier) {
+
+        String[] propertyTypes = tooltipPropertyTypes.trim().split(",");
+
+        try {
+            return solrQueryService.fetchProperties(identifier, propertyTypes);
+        } catch (SolrServerException e) {
+            LOGGER.error("<fetchProperties> error querying solr service", e);
+            throw new IllegalStateException(e);
+        }
+
+    }
+
     public Set<String> findGeneIds(String searchText, String species) throws GenesNotFoundException {
         try {
             String lowercaseSpecies = species.toLowerCase();
             String geneQuery = buildQueryAllTextString(customEscape(searchText));
             List<String> geneIds = solrQueryService.getGeneIds(geneQuery, lowercaseSpecies);
-            if (geneIds.isEmpty()){
+            if (geneIds.isEmpty()) {
                 throw new GenesNotFoundException("No genes found for searchText = " + searchText + ", species = " + lowercaseSpecies);
             }
             return toUppercase(geneIds);
