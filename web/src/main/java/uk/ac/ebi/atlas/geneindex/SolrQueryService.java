@@ -22,13 +22,16 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
@@ -62,6 +65,13 @@ public class SolrQueryService {
         solrServer = new HttpSolrServer(serverURL);
         solrServer.setMaxRetries(1); // defaults to 0.  > 1 not recommended.
         solrServer.setConnectionTimeout(2000); // 5 seconds to establish TCP
+    }
+
+    public Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) throws SolrServerException {
+
+        String queryString = buildCompositeQueryIdentifier(identifier, propertyTypes);
+
+        return querySolrForProperties(queryString, 100);
     }
 
     public List<String> getGeneIds(String geneQuery, String species) throws SolrServerException {
@@ -98,6 +108,24 @@ public class SolrQueryService {
         return getSolrResultsForQuery(queryString, "property_lower", 15);
     }
 
+    private Multimap<String, String> querySolrForProperties(String queryString, int limitResults) throws SolrServerException {
+        SolrQuery solrQuery = new SolrQuery(queryString);
+        solrQuery.setRows(limitResults);
+        solrQuery.setFields("property", "property_type");
+
+        LOGGER.debug("<querySolrForProperties> processing solr query: " + solrQuery.toString());
+
+        QueryResponse solrResponse = solrServer.query(solrQuery);
+
+        Multimap<String, String> results = HashMultimap.create();
+        for (SolrDocument document : solrResponse.getResults()) {
+            String key = document.getFieldValue("property_type").toString();
+            String value = document.getFieldValue("property").toString();
+            results.put(key, value);
+        }
+
+        return results;
+    }
 
     private List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) throws SolrServerException {
         SolrQuery solrQuery = buildSolrQuery(queryString, resultField, limitResults);
@@ -125,6 +153,25 @@ public class SolrQueryService {
         sb.append("\"&start=0&rows=100000");
         return sb.toString();
 
+    }
+
+    private String buildCompositeQueryIdentifier(String identifier, String[] propertyTypes) {
+
+        StringBuilder query = new StringBuilder();
+        query.append("identifier:\"");
+        query.append(identifier);
+        query.append("\" AND (");
+        for (int i = 0; i < propertyTypes.length; i++) {
+            query.append("property_type:\"");
+            query.append(propertyTypes[i]);
+            if (i < propertyTypes.length - 1) {
+                query.append("\" OR ");
+            } else {
+                query.append("\"");
+            }
+        }
+        query.append(")");
+        return query.toString();
     }
 
     private String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
@@ -158,6 +205,5 @@ public class SolrQueryService {
         solrQuery.setFacetMinCount(1);
         return solrQuery;
     }
-
 
 }
