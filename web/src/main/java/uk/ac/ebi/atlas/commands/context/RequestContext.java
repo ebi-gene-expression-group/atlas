@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.commands.context;
 
 import java.io.Serializable;
 import java.util.Set;
-
+import java.util.SortedSet;
 
 
 public interface RequestContext<T> extends Serializable {
@@ -40,4 +40,5 @@ public interface RequestContext<T> extends Serializable {
 
     boolean isSpecific();
 
+    public SortedSet<T> getAllQueryFactors();
 }

@@ -22,12 +22,14 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 import static java.lang.Math.max;
@@ -53,6 +55,19 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
 
     public double getMinExpressionLevel() {
         return minExpressionLevel;
+    }
+
+    public double getAverageExpressionLevelOn(Set<Factor> conditions) {
+        double expressionLevel = 0D;
+
+        if (CollectionUtils.isEmpty(conditions)) {
+            return expressionLevel;
+        }
+
+        for (Factor condition : conditions) {
+            expressionLevel += getExpressionLevel(condition);
+        }
+        return expressionLevel / conditions.size();
     }
 
     @Override

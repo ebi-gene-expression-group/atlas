@@ -23,9 +23,10 @@
 package uk.ac.ebi.atlas.commands.context;
 
 
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
-public interface DifferentialRequestContext extends RequestContext {
+public interface DifferentialRequestContext extends RequestContext<Contrast> {
 
     public Regulation getRegulation();
 
