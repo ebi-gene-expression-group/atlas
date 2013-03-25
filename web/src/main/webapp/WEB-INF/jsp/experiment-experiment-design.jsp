@@ -24,29 +24,44 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div id="table-caption"><b>Experiment Design</b></div>
+<form:form method="get" commandName="preferences" id="prefForm">
 
-<div id="toolbar">Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" name="isOnlyAnalysed" checked="yes"/>
-</div>
+    <div id="table-caption"><b>Experiment Design</b></div>
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
+    <div id="toolbar">Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" name="isOnlyAnalysed"
+                                                 checked="yes"/>
+        <c:if test="${type eq 'DIFFERENTIAL'}">
+            <div>
+                <form:select path="selectedContrast" items="${contrasts}" itemValue="id" itemLabel="displayName"
+                             cssStyle="width:300px"/>
+            </div>
+        </c:if>
+    </div>
 
-</table>
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
 
-<p></p>
+    </table>
 
-<div id="download-button"><a id="download-experiment-design-link" title="Download experiment design"
-                             class="button-image" style="margin-bottom:5px"
-                             href="experiments/${experimentAccession}/experiment-design.tsv" target="_blank">
-    <img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>
-</div>
-<div id="help-placeholder" style="display: none"></div>
+    <p></p>
+
+    <div id="download-button"><a id="download-experiment-design-link" title="Download experiment design"
+                                 class="button-image" style="margin-bottom:5px"
+                                 href="experiments/${experimentAccession}/experiment-design.tsv" target="_blank">
+        <img id="download-experiment-design" alt="Download experiment design"
+             src="resources/images/download_blue_small.png"></a>
+    </div>
+    <div id="help-placeholder" style="display: none"></div>
+
+</form:form>
 
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/experimentDesignModule.js"></script>
 
@@ -59,9 +74,17 @@
 
     (function ($) {
         $(document).ready(function () {
-            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
+            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors}, "Select contrast");
 
             helpTooltipsModule.init('experiment-design');
+
+            <c:if test="${type eq 'DIFFERENTIAL'}">
+            $("#selectedContrast").chosen();
+
+            $('#selectedContrast').change(function () {
+                $('#prefForm').submit();
+            });
+            </c:if>
         });
     })(jQuery);
 
