@@ -30,7 +30,6 @@ import uk.ac.ebi.atlas.commands.context.impl.DifferentialRequestContextImpl;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,14 +43,11 @@ public class DifferentialRequestContextBuilder {
 
     private DifferentialExperiment experiment;
 
-    private FilterFactorsConverter filterFactorsConverter;
-
     protected DifferentialRequestPreferences preferences;
 
     @Inject
-    public DifferentialRequestContextBuilder(DifferentialRequestContextImpl requestContext, FilterFactorsConverter filterFactorsConverter) {
+    public DifferentialRequestContextBuilder(DifferentialRequestContextImpl requestContext) {
         this.requestContext = requestContext;
-        this.filterFactorsConverter = filterFactorsConverter;
     }
 
     public DifferentialRequestContextBuilder forExperiment(DifferentialExperiment experiment) {
@@ -75,12 +71,14 @@ public class DifferentialRequestContextBuilder {
 
         requestContext.setFilteredBySpecies(experiment.getFirstSpecies());
 
+        requestContext.setAllQueryFactors(experiment.getContrasts());
+
         return requestContext;
     }
 
     Set<Contrast> getSelectedQueryContrasts() {
         if(CollectionUtils.isEmpty(preferences.getQueryFactorValues())){
-            return experiment.getContrasts();
+            return Sets.newHashSet();
         }
 
         Set<Contrast> selectedQueryContrasts = Sets.newHashSet();

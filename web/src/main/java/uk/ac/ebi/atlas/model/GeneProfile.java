@@ -54,19 +54,6 @@ public abstract class GeneProfile<K, T extends GeneExpression> {
         return expressionsByCondition.size();
     }
 
-    public double getAverageExpressionLevelOn(Set<K> conditions) {
-        double expressionLevel = 0D;
-
-        if (CollectionUtils.isEmpty(conditions)) {
-            return expressionLevel;
-        }
-
-        for (K condition : conditions) {
-            expressionLevel += getExpressionLevel(condition);
-        }
-        return expressionLevel / conditions.size();
-    }
-
     public double getExpressionLevel(K condition) {
         GeneExpression expression = expressionsByCondition.get(condition);
         return expression == null ? 0 : expression.getLevel();
@@ -79,13 +66,14 @@ public abstract class GeneProfile<K, T extends GeneExpression> {
         return Sets.intersection(this.expressionsByCondition.keySet(), conditions).size() > 0;
     }
 
-    protected GeneProfile addExpression(K condition, T geneExpression){
+    protected GeneProfile addExpression(K condition, T geneExpression) {
         updateProfileExpression(geneExpression);
         this.expressionsByCondition.put(condition, geneExpression);
         return this;
     }
 
-    protected T getExpression(K contrast) {
+    public T getExpression(K contrast) {
         return expressionsByCondition.get(contrast);
     }
+
 }

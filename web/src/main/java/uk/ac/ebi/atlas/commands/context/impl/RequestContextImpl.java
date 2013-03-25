@@ -28,13 +28,15 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 
-public class RequestContextImpl implements RequestContext {
+public class RequestContextImpl<T> implements RequestContext<T> {
     protected RequestPreferences requestPreferences;
     private ExperimentType experimentType;
-    private Set selectedQueryFactors;
+    private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
+    private SortedSet<T> allQueryFactors;
 
     public String getGeneQuery() {
         return requestPreferences.getGeneQuery();
@@ -44,8 +46,7 @@ public class RequestContextImpl implements RequestContext {
         return requestPreferences.getHeatmapMatrixSize();
     }
 
-    //ToDo: interface uses generics!!!
-    public Set getSelectedQueryFactors() {
+    public Set<T> getSelectedQueryFactors() {
         return selectedQueryFactors;
     }
 
@@ -59,6 +60,15 @@ public class RequestContextImpl implements RequestContext {
 
     public boolean isSpecific() {
         return requestPreferences.isSpecific();
+    }
+
+    @Override
+    public SortedSet<T> getAllQueryFactors() {
+        return this.allQueryFactors;
+    }
+
+    public void setAllQueryFactors(SortedSet<T> allQueryFactors) {
+        this.allQueryFactors = allQueryFactors;
     }
 
     public void setSelectedQueryFactors(Set selectedQueryFactors) {

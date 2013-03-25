@@ -29,15 +29,12 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
 import java.util.Set;
-import java.util.SortedSet;
 
 @Named
 @Scope("request")
-public class BaselineRequestContextImpl extends RequestContextImpl implements BaselineRequestContext {
+public class BaselineRequestContextImpl extends RequestContextImpl<Factor> implements BaselineRequestContext {
 
     private Set<Factor> selectedFilterFactors;
-
-    private SortedSet<Factor> allQueryFactors;
 
     public BaselineRequestContextImpl() {
     }
@@ -51,16 +48,6 @@ public class BaselineRequestContextImpl extends RequestContextImpl implements Ba
     public String getQueryFactorType() {
         return requestPreferences.getQueryFactorType();
     }
-
-    @Override
-    public SortedSet<Factor> getAllQueryFactors() {
-        return allQueryFactors;
-    }
-
-    public void setAllQueryFactors(SortedSet<Factor> allQueryFactors) {
-        this.allQueryFactors = allQueryFactors;
-    }
-
     public void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
         this.selectedFilterFactors = selectedFilterFactors;
     }
@@ -68,7 +55,6 @@ public class BaselineRequestContextImpl extends RequestContextImpl implements Ba
     @Override
     public String toString(){
         return Objects.toStringHelper(this.getClass())
-                .add("allQueryFactors", allQueryFactors)
                 .add("selectedFilterFactors", selectedFilterFactors).toString();
     }
 
