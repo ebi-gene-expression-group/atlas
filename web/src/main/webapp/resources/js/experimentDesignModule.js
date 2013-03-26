@@ -16,9 +16,9 @@ var experimentDesignTableModule = (function ($) {
             startCount = startCount + 1;
 
             aoColumnDefs[startCount] = {
-                "sClass": "center bb",
-                "sTitle": value,
-                "aTargets": [ startCount ]
+                "sClass":"center bb",
+                "sTitle":value,
+                "aTargets":[ startCount ]
             };
 
         }
@@ -28,9 +28,19 @@ var experimentDesignTableModule = (function ($) {
     /* populate all sub categories */
     function initColumnDefs() {
         var aoColumnDefs = [];
-        aoColumnDefs[0] = { "sClass": "assays bb br bl", "sTitle": _assayHeader + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets": [ 0 ]};
+        aoColumnDefs[0] = { "sClass":"assays bb br bl", "sTitle":_assayHeader + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
 
         initColumn(aoColumnDefs, _samples, 0);
+
+        /* for IE7 & IE8 */
+        Object.keys = Object.keys || function (o) {
+            var result = [];
+            for (var name in o) {
+                if (o.hasOwnProperty(name))
+                    result.push(name);
+            }
+            return result;
+        };
 
         initColumn(aoColumnDefs, _factors, Object.keys(_samples).length);
 
@@ -63,13 +73,13 @@ var experimentDesignTableModule = (function ($) {
         };
 
         var oTable = $('#experiment-design-table').dataTable({
-            "aaData": _dataSet,
-            "aoColumnDefs": initColumnDefs(),
-            "bPaginate": false,
-            "bScrollCollapse": true,
-            "sScrollY": calcDataTableHeight(),
-            "sScrollX": calcDataTableWidth(),
-            "sDom": 'i<"download">f<"clear">t'
+            "aaData":_dataSet,
+            "aoColumnDefs":initColumnDefs(),
+            "bPaginate":false,
+            "bScrollCollapse":true,
+            "sScrollY":calcDataTableHeight(),
+            "sScrollX":calcDataTableWidth(),
+            "sDom":'i<"download">f<"clear">t'
         });
 
         $('div.download').html($('#download-button'));
@@ -113,7 +123,7 @@ var experimentDesignTableModule = (function ($) {
     }
 
     return {
-        init: _init
+        init:_init
     };
 
 }(jQuery));
