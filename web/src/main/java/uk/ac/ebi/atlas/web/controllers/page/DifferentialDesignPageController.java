@@ -57,7 +57,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageContro
     public String showExperimentDesign(@ModelAttribute("preferences") @Valid ContrastRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        extractExperimentDesign(model, experiment, experiment.getLibrariesFromContrasts());
+        extractExperimentDesign(model, experiment.getAccession(), experiment.getLibrariesFromContrasts());
 
         model.addAttribute("contrasts", experiment.getContrasts());
 

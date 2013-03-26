@@ -26,14 +26,13 @@ import com.google.gson.Gson;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
-import uk.ac.ebi.atlas.model.Experiment;
 
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public abstract class ExperimentDesignPageController {
+public class ExperimentDesignPageController {
 
     private final TsvReader experimentDesignTsvReader;
 
@@ -41,9 +40,9 @@ public abstract class ExperimentDesignPageController {
         this.experimentDesignTsvReader = new TsvReaderImpl(pathTemplate);
     }
 
-    protected void extractExperimentDesign(Model model, Experiment experiment, Set<String> libraries) {
+    protected void extractExperimentDesign(Model model, String experimentAccession, Set<String> libraries) {
         // read contents from file
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experiment.getAccession()));
+        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
         // delete first line with table headers
         String[] headerLine = csvLines.remove(0);
 
@@ -80,13 +79,13 @@ public abstract class ExperimentDesignPageController {
         model.addAttribute("runAccessions", runAccessions);
 
         // add general experiment attributes to model
-        model.addAttribute("experimentAccession", experiment.getAccession());
+        model.addAttribute("experimentAccession", experimentAccession);
     }
 
     /**
      * Extracts subcategories for a given category within the header line
      */
-    private static Map<String, Integer> extractSubcategories(String[] headerLine, String category) {
+    protected Map<String, Integer> extractSubcategories(String[] headerLine, String category) {
         Map<String, Integer> map = new TreeMap<>();
         for (int i = 1; i < headerLine.length; i++) {
             // cleanup of misplaced white space characters
@@ -99,7 +98,7 @@ public abstract class ExperimentDesignPageController {
         return map;
     }
 
-    private static Map<Integer, Integer> createReorderMapping(Map<String, Integer> samples, Map<String, Integer> factors) {
+    protected Map<Integer, Integer> createReorderMapping(Map<String, Integer> samples, Map<String, Integer> factors) {
         Map<Integer, Integer> mapping = new HashMap<>(1 + samples.size() + factors.size());
         // run accession always at first column
         mapping.put(0, 0);
