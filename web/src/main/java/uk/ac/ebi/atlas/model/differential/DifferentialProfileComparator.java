@@ -79,7 +79,7 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
     private int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
                                  Set<Contrast> averageOn) {
 
-        Ordering<Comparable> naturalOrdering = Ordering.natural();
+        Ordering<Double> naturalOrdering = Ordering.natural();
         double averageExpressionLevelOn1 = firstProfile.getAverageExpressionLevelOn(averageOn, regulation);
         double averageExpressionLevelOn2 = otherProfile.getAverageExpressionLevelOn(averageOn, regulation);
         return naturalOrdering.compare(averageExpressionLevelOn1,

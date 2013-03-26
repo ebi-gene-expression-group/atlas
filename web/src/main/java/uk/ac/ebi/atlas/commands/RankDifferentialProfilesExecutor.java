@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.base.Function;
 import com.google.common.collect.MinMaxPriorityQueue;
 import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
@@ -31,6 +30,7 @@ import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
@@ -81,12 +81,14 @@ public class RankDifferentialProfilesExecutor extends AbstractCommandExecutor<Di
     }
 
     Ordering<DifferentialProfile> buildGeneProfileComparator() {
-        return Ordering.natural().onResultOf(new Function<DifferentialProfile, Double>() {
-            @Override
-            public Double apply(DifferentialProfile differentialProfile) {
-                return differentialProfile.getMinExpressionLevel();
-            }
-        });
+//        return Ordering.natural().onResultOf(new Function<DifferentialProfile, Double>() {
+//            @Override
+//            public Double apply(DifferentialProfile differentialProfile) {
+//                return differentialProfile.getMinExpressionLevel();
+//            }
+//        });
+        return Ordering.from(new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
+                requestContext.getAllQueryFactors(), requestContext.getCutoff(), requestContext.getRegulation()));
     }
 
     protected Queue<DifferentialProfile> buildRankingQueue() {

@@ -42,6 +42,10 @@ import java.util.List;
 public class SolrQueryService {
 
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
+    private static final int PROPERTY_VALUES_LIMIT = 1000;
+    private static final int CONNECTION_TIMEOUT = 2000;
+    private static final int MAX_RETRIES = 1;
+    private static final int DEFAULT_LIMIT = 15;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -63,15 +67,15 @@ public class SolrQueryService {
     @PostConstruct
     private void initServer() {
         solrServer = new HttpSolrServer(serverURL);
-        solrServer.setMaxRetries(1); // defaults to 0.  > 1 not recommended.
-        solrServer.setConnectionTimeout(2000); // 5 seconds to establish TCP
+        solrServer.setMaxRetries(MAX_RETRIES); // defaults to 0.  > 1 not recommended.
+        solrServer.setConnectionTimeout(CONNECTION_TIMEOUT); // 5 seconds to establish TCP
     }
 
     public Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) throws SolrServerException {
 
         String queryString = buildCompositeQueryIdentifier(identifier, propertyTypes);
 
-        return querySolrForProperties(queryString, 100);
+        return querySolrForProperties(queryString, PROPERTY_VALUES_LIMIT);
     }
 
     public List<String> getGeneIds(String geneQuery, String species) throws SolrServerException {
@@ -87,7 +91,7 @@ public class SolrQueryService {
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes);
 
-        return getSolrResultsForQuery(queryString, "property_lower", 15);
+        return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
     }
 
     public List<String> getGeneIdSuggestionsInSynonym(String geneName, String species) throws SolrServerException {
@@ -96,7 +100,7 @@ public class SolrQueryService {
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes);
 
-        return getSolrResultsForQuery(queryString, "property_lower", 15);
+        return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
     }
 
     public List<String> getGeneIdSuggestionsInIdentifier(String geneName, String species) throws SolrServerException {
@@ -105,7 +109,7 @@ public class SolrQueryService {
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes);
 
-        return getSolrResultsForQuery(queryString, "property_lower", 15);
+        return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
     }
 
     private Multimap<String, String> querySolrForProperties(String queryString, int limitResults) throws SolrServerException {

@@ -146,8 +146,12 @@
         </tbody>
     </table>
 
-    <div id="genenametooltip-content"/>
 </div>
+
+<div id="genenametooltip-content" style="display: none"/>
+
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/highlight.js"></script>
 
 <script type="text/javascript">
 
@@ -176,25 +180,57 @@
         return result;
     }
 
-    $(".genename").tooltip({content:function (callback) {
-        var identifier = $(this).attr("id");
-        $("#genenametooltip-content").load("rest/genenametooltip?identifier=" + identifier,
-                function (response, status, xhr) {
-                    var tooltipContent;
-                    if (status === "error") {
-                        tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
-                        callback(tooltipContent);
-                        return;
-                    }
-                    tooltipContent = $(this).html();
-                    if (!tooltipContent) {
-                        tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
-                    }
-                    callback(tooltipContent);
-                }
-        );
-    }
+    $(".genename").mouseout(
+            function(){
+                $(this).tooltip("close");
+            }
+    );
+
+    $(".genename").tooltip({
+        position: { my: "left+120 top", at: "left top", collision: "flipfit" },
+        hide:false,
+        show:false,
+
+        content:function (callback) {
+
+                        var identifier = $(this).attr("id");
+                        var geneName = $(this).text().trim();
+                        $("#genenametooltip-content").load(
+
+                                "rest/genename-tooltip?geneName=" + geneName + "&identifier=" + identifier,
+
+                                function (response, status, xhr) {
+                                    var tooltipContent;
+                                    if (status === "error") {
+                                        tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
+                                        callback(tooltipContent);
+                                        return;
+                                    }
+
+                                    var geneQuery = '${preferences.geneQuery}';
+                                    if(geneQuery){
+                                        var words = [];
+                                        geneQuery.replace(/"([^"]*)"|(\S+)/g,
+                                                    function(m,g1,g2){
+                                                        if (g1 || g2){
+                                                            words.push(g1 || g2);
+                                                        }
+                                                    });
+
+                                        $(this).highlight(words);
+
+                                    }
+
+                                    tooltipContent = $(this).html();
+                                    if (!tooltipContent) {
+                                        tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
+                                    }
+                                    callback(tooltipContent);
+                                }
+                        );
+        }
     });
+
 
     //required for the positioning of the stuff that must go inside the top-left corner header cell
     //$("#tooltip-span").parent().addClass("heatmap-matrix-top-left-corner");
