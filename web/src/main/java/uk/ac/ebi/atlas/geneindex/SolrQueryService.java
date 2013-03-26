@@ -82,7 +82,7 @@ public class SolrQueryService {
 
         String queryString = buildGeneQuery(geneQuery, species);
 
-        return getSolrResultsForQuery(queryString, "identifier", -1);
+        return fetchGeneIdentifiersFromSolr(queryString);
     }
 
     public List<String> getGeneIdSuggestionsInName(String geneName, String species) throws SolrServerException {
@@ -110,6 +110,20 @@ public class SolrQueryService {
         String queryString = buildCompositeQuery(geneName, species, propertyTypes);
 
         return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
+    }
+
+    private List<String> fetchGeneIdentifiersFromSolr(String queryString) throws SolrServerException {
+        List<String> results = Lists.newArrayList();
+
+        SolrQuery query = new SolrQuery(queryString);
+        query.setFields("identifier");
+        query.setRows(0);
+
+        QueryResponse solrResponse = solrServer.query(query);
+        for (SolrDocument doc : solrResponse.getResults()) {
+            results.add(doc.getFieldValue("identifier").toString());
+        }
+        return results;
     }
 
     private Multimap<String, String> querySolrForProperties(String queryString, int limitResults) throws SolrServerException {
