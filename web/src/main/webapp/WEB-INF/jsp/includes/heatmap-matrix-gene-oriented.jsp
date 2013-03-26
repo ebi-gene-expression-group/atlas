@@ -186,6 +186,12 @@
             }
     );
 
+    $(".genename").mouseleave(
+            function(){
+                $(this).tooltip("close");
+            }
+    );
+
     $(".genename").tooltip({
         position: { my: "left+120 top", at: "left top", collision: "flipfit" },
         hide:false,
