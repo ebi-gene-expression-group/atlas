@@ -23,13 +23,19 @@
 package uk.ac.ebi.atlas.commands;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
+import java.util.*;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -55,34 +61,32 @@ public class RankDifferentialProfilesCommandTest {
 
         subject = new RankDifferentialProfilesExecutor(requestContext);
 
-        when(differentialProfileMock1.getAverageExpressionLevelOn(null, Regulation.UP_DOWN)).thenReturn(3D);
+        when(differentialProfileMock1.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(3D);
         when(differentialProfileMock1.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
-        when(differentialProfileMock2.getAverageExpressionLevelOn(null, Regulation.UP_DOWN)).thenReturn(5D);
+        when(differentialProfileMock2.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(5D);
         when(differentialProfileMock2.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
-        when(differentialProfileMock3.getAverageExpressionLevelOn(null, Regulation.UP_DOWN)).thenReturn(2D);
+        when(differentialProfileMock3.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(2D);
         when(differentialProfileMock3.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
 
     }
 
     //ToDo: move this test to comparator test
-//    @Test
-//    public void comparatorShouldSortByLowestPValueFirst() throws Exception {
-//        //given
-//        Comparator comparator = subject.buildGeneProfileComparator();
-//
-//        //when
-//        SortedSet<DifferentialProfile> profiles = new TreeSet<DifferentialProfile>(comparator);
-//        profiles.add(differentialProfileMock1);
-//        profiles.add(differentialProfileMock2);
-//        profiles.add(differentialProfileMock3);
-//
-//        //then
-//        Iterator<DifferentialProfile> profilesIterator = profiles.iterator();
-//        for (DifferentialProfile profile : profiles) {
-//            System.out.println("profile = " + profile);
-//        }
-//        assertThat(profilesIterator.next(), is(differentialProfileMock3));
-//        assertThat(profilesIterator.next(), is(differentialProfileMock1));
-//        assertThat(profilesIterator.next(), is(differentialProfileMock2));
-//    }
+    @Test
+    public void comparatorShouldSortByLowestPValueFirst() throws Exception {
+        //given
+        Comparator comparator = subject.buildGeneProfileComparator();
+
+        //when
+        SortedSet<DifferentialProfile> profiles = new TreeSet<DifferentialProfile>(comparator);
+        profiles.add(differentialProfileMock1);
+        profiles.add(differentialProfileMock2);
+        profiles.add(differentialProfileMock3);
+
+        //then
+        Iterator<DifferentialProfile> profilesIterator = profiles.iterator();
+
+        assertThat(profilesIterator.next(), is(differentialProfileMock3));
+        assertThat(profilesIterator.next(), is(differentialProfileMock1));
+        assertThat(profilesIterator.next(), is(differentialProfileMock2));
+    }
 }
