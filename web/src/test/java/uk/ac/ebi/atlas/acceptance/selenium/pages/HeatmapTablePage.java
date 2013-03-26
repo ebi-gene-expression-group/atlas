@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -222,22 +224,51 @@ public class HeatmapTablePage extends TablePage {
         return this.getCell(heatmapTable, profileIndex + 1, expressionIndex + 2);
     }
 
-    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedIndex) {
+    protected WebElement getGeneAnchor(int profileIndex) {
+        return this.getGeneAnchor(heatmapTable, profileIndex + 1);
+    }
+
+    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedTooltipTableHeaderIndex) {
         hoverOnElement(getGeneProfileCell(0, 0));
 
-        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedIndex + 1) + "]");
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getDifferentialExperimentTooltipTableCell(int zeroBasedIndex) {
+    public String getDifferentialExperimentTooltipTableCell(int zeroBasedTooltipTableCellIndex) {
         hoverOnElement(getGeneProfileCell(0, 0));
 
-        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedIndex + 1) + "]");
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedTooltipTableCellIndex + 1) + "]");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
+    }
+
+    public String getGenePropertyTooltipContent(int zeroBasedProfileIndex) {
+        WebElement geneProfileHeaderCell = getGeneAnchor(zeroBasedProfileIndex);
+        hoverOnElement(geneProfileHeaderCell);
+
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+    }
+
+    public List<String> getGenePropertyTooltipHighlightedTerms(int zeroBasedProfileIndex) {
+        WebElement geneProfileHeaderCell = getGeneAnchor(zeroBasedProfileIndex);
+        hoverOnElement(geneProfileHeaderCell);
+
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='highlight']");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        List<WebElement> highlightedTermElements = driver.findElements(byTooltipClass);
+        List<String> highlightedTerms = Lists.newArrayList();
+        for (WebElement highlightedTermElement: highlightedTermElements){
+            highlightedTerms.add(highlightedTermElement.getText());
+        }
+        return highlightedTerms;
     }
 
     private void hoverOnElement(WebElement webElement) {
