@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Multimap;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
@@ -49,10 +50,6 @@ import java.util.Collection;
 @Scope("request")
 public class GeneNameTooltipController {
     private static final Logger LOGGER = Logger.getLogger(GeneNameTooltipController.class);
-
-    private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
-    private static final String INTERPRO_TERMS_LABEL = "Interpro terms: ";
-    private static final String GO_TERMS_LABEL = "Gene ontology terms: ";
 
     private SolrClient solrClient;
 
@@ -87,16 +84,16 @@ public class GeneNameTooltipController {
 
         String synonyms = buildSynonyms(identifier, multimap);
 
-        String goTerms = Joiner.on(", ").join(multimap.get("goterm"));
+        String goTerms = toCsv(multimap.get("goterm"));
 
-        String goTermLabel = !goTerms.isEmpty() ? GO_TERMS_LABEL : "";
+        String interproTerms = toCsv(multimap.get("interproterm"));
 
-        String interproTerms = Joiner.on(", ").join(multimap.get("interproterm"));
+        return MessageFormat.format(htmlTemplate, geneName, synonyms, goTerms, interproTerms);
 
-        String interproTermLabel = !interproTerms.isEmpty() ? INTERPRO_TERMS_LABEL : "";
+    }
 
-        return MessageFormat.format(htmlTemplate, geneName, synonyms, goTermLabel, goTerms, interproTermLabel, interproTerms);
-
+    String toCsv(Collection<String> values){
+        return CollectionUtils.isEmpty(values) ? "NA" : Joiner.on(", ").join(values);
     }
 
     private String buildSynonyms(String identifier, Multimap<String, String> multimap) {
