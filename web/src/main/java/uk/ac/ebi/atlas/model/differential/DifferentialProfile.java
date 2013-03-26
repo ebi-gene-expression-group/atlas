@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.differential;
 
 
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
@@ -172,14 +173,22 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
         public DifferentialProfile create() {
             checkState(differentialProfile != null, "Please invoke forGeneID before create");
 
-            if (differentialProfile.isEmpty()) {
+            if (differentialProfile.isEmpty() || !isAveragePiValueSmallerInSelectedContrasts(differentialProfile)) {
                 return null;
             }
 
             return differentialProfile;
         }
 
+        //ToDo: maybe create DifferentialProfilePrecondition
+        protected boolean isAveragePiValueSmallerInSelectedContrasts(DifferentialProfile profile) {
+            double averageOnSelected = profile.getAverageExpressionLevelOn(requestContext.getSelectedQueryFactors(), requestContext.getRegulation());
+            Set<Contrast> remainingFactors = Sets.newHashSet(requestContext.getAllQueryFactors());
+            remainingFactors.removeAll(requestContext.getSelectedQueryFactors());
+            double averageOnRemaining = profile.getAverageExpressionLevelOn(remainingFactors, requestContext.getRegulation());
 
+            return averageOnRemaining == 0 || averageOnSelected < averageOnRemaining;
+        }
     }
 
 
