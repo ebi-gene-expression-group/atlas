@@ -48,7 +48,7 @@ public abstract class AbstractCommandExecutor<T, K> implements CommandExecutor<T
 
         if (StringUtils.isNotBlank(getRequestContext().getGeneQuery())) {
 
-            selectedGeneIds = solrClient.findGeneIds(getRequestContext().getGeneQuery(), getRequestContext().getFilteredBySpecies());
+            selectedGeneIds = solrClient.findGeneIds(getRequestContext().getGeneQuery(), getRequestContext().isExactMatch(), getRequestContext().getFilteredBySpecies());
 
         }
         return selectedGeneIds;

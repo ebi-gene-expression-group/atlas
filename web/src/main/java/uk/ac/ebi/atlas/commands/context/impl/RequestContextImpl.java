@@ -63,6 +63,11 @@ public class RequestContextImpl<T> implements RequestContext<T> {
     }
 
     @Override
+    public boolean isExactMatch() {
+        return requestPreferences.isExactMatch();
+    }
+
+    @Override
     public SortedSet<T> getAllQueryFactors() {
         return this.allQueryFactors;
     }

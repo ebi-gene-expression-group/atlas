@@ -68,7 +68,7 @@ public class AbstractCommandExecutorTest {
         when(requestContextMock.getGeneQuery()).thenReturn("");
 
         // no filtering should be done here
-        when(solrClientMock.findGeneIds(GENE_QUERY, SPECIES)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
+        when(solrClientMock.findGeneIds(GENE_QUERY, false, SPECIES)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
                 //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -100,7 +100,7 @@ public class AbstractCommandExecutorTest {
 
         subject.execute("");
 
-        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, SPECIES);
+        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, false, SPECIES);
     }
 
 

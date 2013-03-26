@@ -54,6 +54,8 @@ public abstract class RequestPreferences {
 
     private boolean specific = true;
 
+    private boolean exactMatch = true;
+
     private boolean displayLevels;
 
     private boolean displayGeneDistribution;
@@ -153,7 +155,16 @@ public abstract class RequestPreferences {
                 .add("queryFactorType", queryFactorType)
                 .add("cutoff", cutoff)
                 .add("serializedFilterFactors", serializedFilterFactors)
+                .add("specific", specific)
+                .add("exactMatch", exactMatch)
                 .toString();
     }
 
+    public boolean isExactMatch() {
+        return exactMatch;
+    }
+
+    public void setExactMatch(boolean exactMatch) {
+        this.exactMatch = exactMatch;
+    }
 }
