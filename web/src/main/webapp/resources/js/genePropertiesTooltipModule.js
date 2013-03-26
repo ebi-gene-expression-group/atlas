@@ -63,7 +63,7 @@ var genePropertiesTooltipModule = (function($) {
             content:function (callback) {
 
                 var identifier = $(this).attr("id"),
-                    geneName = $(this).text().trim();
+                    geneName = $.trim($(this).text());
 
                 $("#genenametooltip-content").load(
 
