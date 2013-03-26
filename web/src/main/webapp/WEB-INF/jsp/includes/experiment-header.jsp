@@ -55,22 +55,27 @@
             </div>
             <div>Organism(s): ${allSpecies}</div>
         </td>
-        <td width="130px" style="float:right">
-            <div style="text-align:right">
-                <a id="display-experiment" class="button-image"
-                   title="Experiment Page" href="experiments/${experimentAccession}">
-                    <img src="resources/images/experiment_page_small.png"/></a>
-
-                <a id="display-analysis-methods" class="button-image" title="Analysis Methods"
-                   href="experiments/${experimentAccession}/analysis-methods">
-                    <img style="width:23px;height:23px"
-                         src="resources/images/analysis_icon.png"/></a>
-
-                <a id="display-experiment-design" class="button-image"
-                   title="Experiment Design" href="experiments/${experimentAccession}/experiment-design">
-                    <img src="resources/images/experiment_design_icon.png"/></a>
-
-            </div>
+        <td width="130px">
+            <table cellpadding="2" cellspacing="0" border="0" style="float:right">
+                <tr>
+                    <td>
+                        <a id="display-experiment" class="button-image"
+                           title="Experiment Page" href="experiments/${experimentAccession}">
+                            <img src="resources/images/experiment_page_small.png"/></a>
+                    </td>
+                    <td>
+                        <a id="display-analysis-methods" class="button-image" title="Analysis Methods"
+                           href="experiments/${experimentAccession}/analysis-methods">
+                            <img style="width:23px;height:23px"
+                                 src="resources/images/analysis_icon.png"/></a>
+                    </td>
+                    <td>
+                        <a id="display-experiment-design" class="button-image"
+                           title="Experiment Design" href="experiments/${experimentAccession}/experiment-design">
+                            <img src="resources/images/experiment_design_icon.png"/></a>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
     </tbody>
