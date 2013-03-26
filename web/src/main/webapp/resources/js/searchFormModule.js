@@ -143,6 +143,13 @@ var searchFormModule = (function($) {
             });
     }
 
+    function disableCarriageReturn(){
+        $("#geneQuery").keypress(function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+            }
+        });
+    }
 
     function init (watermarkLabel, species, defaultCutoff) {
 
@@ -155,6 +162,8 @@ var searchFormModule = (function($) {
         initSelectBox(watermarkLabel);
 
         initAutocomplete();
+
+        disableCarriageReturn();
 
     }
 
