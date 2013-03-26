@@ -62,8 +62,7 @@ public class SolrClientIT {
         // given
         Multimap<String, String> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
 
-        assertThat(properties.size(), Matchers.is(25));
-        assertThat(properties.get("symbol"), contains("ASPM"));
+        assertThat(properties.size(), Matchers.is(24));
         assertThat(properties.get("synonym").size(), Matchers.is(5));
         assertThat(properties.get("synonym"), Matchers.hasItems("Calmbp1", "MCPH5", "ASP"));
         assertThat(properties.get("goterm"), Matchers.hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));

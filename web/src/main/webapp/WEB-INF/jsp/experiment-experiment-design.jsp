@@ -35,24 +35,25 @@
     <div id="toolbar">
         <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
             <tr>
-                <td style="padding: 0px;">Show Analysed only?</td>
-                <td style="padding: 0px;"><input type="checkbox" id="isOnlyAnalysed" name="isOnlyAnalysed"
-                                                 checked="yes"/></td>
+                <td style="vertical-align: middle; padding: 0px;">Show Analysed only?</td>
+                <td style="vertical-align: middle; padding: 0px;"><input type="checkbox" id="isOnlyAnalysed"
+                                                                         name="isOnlyAnalysed"
+                                                                         checked="yes"/></td>
             </tr>
         </table>
 
         <c:if test="${type eq 'DIFFERENTIAL'}">
-            <table cellpadding="0" cellspacing="0" border="0" style="float: right; padding-bottom: 10px;">
+            <table cellpadding="0" cellspacing="0" border="0" style="float: right; padding: 0px 3px 10px 0px; ">
                 <tr>
-                    <td style="padding: 0px 10px 0px 0px;">
-                        <form:label path="selectedContrast" cssStyle="vertical-align: top;">Contrast: </form:label>
-                        <form:select path="selectedContrast" cssStyle="width:300px;" items="${contrasts}" itemValue="id"
+                    <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
+                        <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Contrast: </form:label>
+                        <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
                                      itemLabel="displayName"/>
                     </td>
-                    <td style="padding: 0px;">Reference:</td>
-                    <td style="padding: 0px; background-color:#FFC266;width:20px;">&nbsp;</td>
-                    <td style="padding: 0px 0px 0px 4px;">Test:</td>
-                    <td style="padding: 0px; background-color:#82CDCD;width:20px;">&nbsp;</td>
+                    <td style="vertical-align: middle; padding: 0px 4px 0px 0px;">Reference:</td>
+                    <td style="vertical-align: middle; padding: 0px; background-color:#FFC266;width:20px;">&nbsp;</td>
+                    <td style="vertical-align: middle; padding: 0px 4px 0px 10px;">Test:</td>
+                    <td style="vertical-align: middle; padding: 0px; background-color:#82CDCD;width:20px;">&nbsp;</td>
                 </tr>
             </table>
         </c:if>

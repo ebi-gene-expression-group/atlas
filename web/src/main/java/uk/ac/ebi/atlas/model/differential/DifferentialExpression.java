@@ -52,15 +52,10 @@ public class DifferentialExpression implements GeneExpression{
     }
 
     public boolean isForRegulation(Regulation regulation) {
-        if (Regulation.UP_DOWN.equals(regulation)) {
-            return true;
-        }
-        if(Regulation.UP.equals(regulation) && isOverExpressed()) {
-            return true;
-        } else if (Regulation.DOWN.equals(regulation) && isUnderExpressed()){
-            return true;
-        }
-        return false;
+        return Regulation.UP_DOWN.equals(regulation)
+                || Regulation.UP.equals(regulation) && isOverExpressed()
+                || Regulation.DOWN.equals(regulation) && isUnderExpressed();
+
     }
 
     public Contrast getContrast() {
