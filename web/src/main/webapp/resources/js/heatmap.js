@@ -23,6 +23,19 @@ function initHeatmapDisplayValueToggle() {
         $(".gradient-level-max").attr("style", 'white-space: nowrap;');
     }
 
+    function restrictSize(s, maxSize) {
+        var result = s;
+        if (result.length > maxSize) {
+            result = result.substring(0, maxSize);
+            if (result.lastIndexOf(" ") > maxSize - 5) {
+                result = result.substring(0, result.lastIndexOf(" "));
+            }
+            result = result + "...";
+        }
+        return result;
+    }
+
+
     function hideValues(button) {
         $(button).button('option', 'label', 'Display levels');
         $("div[data-color]").each(function () {
@@ -95,5 +108,20 @@ function initHeatmapDisplayValueToggle() {
     ).attr("title", " ").tooltip();
 
     $("#heatmap-div").show();
+
+    //heatmap headers tooltips
+    $("[tableHeaderCell]")
+        .tooltip()
+        .each(function () {
+            if ($.browser.msie) {
+                $(this).append($(this).attr("data-organism-part"));
+            } else {
+                var organismPartName = $(this).attr("data-organism-part");
+                organismPartName = restrictSize(organismPartName, 17);
+                $(this).append(organismPartName);
+            }
+        });
+
+
 
 }
