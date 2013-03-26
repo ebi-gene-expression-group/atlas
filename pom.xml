@@ -35,6 +35,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
         <json-path.version>0.8.1</json-path.version>
+        <test.integration.pattern>**/*IT.java</test.integration.pattern>
         <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
         <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
         <!-- default values for configuration properties,
@@ -145,6 +146,7 @@
                     </systemProperties>
                     <includes>
                         <include>${test.acceptance.pattern}</include>
+                        <include>${test.integration.pattern}</include>
                     </includes>
                     <reportsDirectory>${surefire.and.failsafe.report.dir}</reportsDirectory>
                 </configuration>

@@ -78,9 +78,9 @@ public class SolrQueryService {
         return querySolrForProperties(queryString, PROPERTY_VALUES_LIMIT);
     }
 
-    public List<String> getGeneIds(String geneQuery, String species) throws SolrServerException {
+    public List<String> getGeneIds(String geneQuery, boolean exactMatch, String species) throws SolrServerException {
 
-        String queryString = buildGeneQuery(geneQuery, species);
+        String queryString = buildGeneQuery(geneQuery, exactMatch, species);
 
         return getSolrResultsForQuery(queryString, "identifier", -1);
     }
@@ -134,7 +134,7 @@ public class SolrQueryService {
         solrQuery.setRows(limitResults);
         solrQuery.setFields("property", "property_type");
 
-        LOGGER.debug("<querySolrForProperties> processing solr query: " + solrQuery.toString());
+        LOGGER.debug("<querySolrForProperties> processing solr query: " + solrQuery.getQuery());
 
         QueryResponse solrResponse = solrServer.query(solrQuery);
 
@@ -151,7 +151,7 @@ public class SolrQueryService {
     private List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) throws SolrServerException {
         SolrQuery solrQuery = buildSolrQuery(queryString, resultField, limitResults);
 
-        LOGGER.debug("<getSolrResultsForQuery> processing solr query: " + solrQuery.toString());
+        LOGGER.debug("<getSolrResultsForQuery> processing solr query: " + solrQuery.getQuery());
 
         QueryResponse solrResponse = solrServer.query(solrQuery);
 
@@ -164,10 +164,10 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    private String buildGeneQuery(String query, String species) {
+    private String buildGeneQuery(String query, boolean exactMatch, String species) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("{!lucene q.op=OR df=property_search} ");
+        sb.append("{!lucene q.op=OR df=" + (exactMatch? "property_lower":"property_search") + "} ");
         sb.append(query);
         sb.append(" AND species:\"");
         sb.append(species);

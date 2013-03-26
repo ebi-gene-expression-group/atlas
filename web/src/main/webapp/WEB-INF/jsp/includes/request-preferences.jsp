@@ -75,9 +75,15 @@
             <tr>
                 <td>
                     <div>
-                        <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="3"
+                        <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="2"
                                        cols="30"></form:textarea>
                     </div>
+                    <span>
+                        <form:checkbox id="exactMatch"
+                                       path="exactMatch"
+                                       label="Exact match"/>
+                    </span>
+
                 </td>
                 <c:if test="${selectedFilterFactors.size() > 0}">
                     <td>
@@ -100,12 +106,12 @@
                                      cssStyle="width:300px"
                                      disabled="${isSingleContrast ? true : false}"/>
                     </div>
-                        <span>
-                            <form:checkbox id="specific"
-                                           path="specific"
-                                           label="Specific"
-                                           disabled="${isSingleContrast ? true : false}"></form:checkbox>
-                        </span>
+                    <span>
+                        <form:checkbox id="specific"
+                                       path="specific"
+                                       label="Specific"
+                                       disabled="${isSingleContrast ? true : false}"/>
+                    </span>
                     <span data-help-loc="#specific${type eq 'DIFFERENTIAL' ? '-differential':''}"
                           style="display:inline-block"/>
                 </td>

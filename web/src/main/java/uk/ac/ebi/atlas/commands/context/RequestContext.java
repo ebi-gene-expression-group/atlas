@@ -40,5 +40,7 @@ public interface RequestContext<T> extends Serializable {
 
     boolean isSpecific();
 
+    boolean isExactMatch();
+
     public SortedSet<T> getAllQueryFactors();
 }

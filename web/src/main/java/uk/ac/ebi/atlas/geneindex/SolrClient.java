@@ -79,11 +79,11 @@ public class SolrClient {
 
     }
 
-    public Set<String> findGeneIds(String searchText, String species) throws GenesNotFoundException {
+    public Set<String> findGeneIds(String searchText, boolean exactMatch, String species) throws GenesNotFoundException {
         try {
             String lowercaseSpecies = species.toLowerCase();
             String geneQuery = buildQueryAllTextString(customEscape(searchText));
-            List<String> geneIds = solrQueryService.getGeneIds(geneQuery, lowercaseSpecies);
+            List<String> geneIds = solrQueryService.getGeneIds(geneQuery, exactMatch, lowercaseSpecies);
             if (geneIds.isEmpty()) {
                 throw new GenesNotFoundException("No genes found for searchText = " + searchText + ", species = " + lowercaseSpecies);
             }

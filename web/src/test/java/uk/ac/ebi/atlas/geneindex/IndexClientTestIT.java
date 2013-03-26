@@ -51,7 +51,7 @@ public class IndexClientTestIT {
     @Test
     public void testFindGeneIdJsonValidQuery() throws URISyntaxException, GenesNotFoundException {
         //given
-        Set<String> result = subject.findGeneIds(QUERY, SPECIES);
+        Set<String> result = subject.findGeneIds(QUERY, false, SPECIES);
 
         //some genes are found
         assertThat(result.iterator().next(), startsWith("ENSG"));
@@ -63,7 +63,7 @@ public class IndexClientTestIT {
         //given
         String query = "\"NOT THERE\"";
 
-        Set<String> result = subject.findGeneIds(query, SPECIES);
+        Set<String> result = subject.findGeneIds(query, false, SPECIES);
 
     }
 
