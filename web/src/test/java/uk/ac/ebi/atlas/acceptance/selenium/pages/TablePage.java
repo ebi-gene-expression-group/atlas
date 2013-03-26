@@ -19,6 +19,7 @@ abstract class TablePage extends AtlasPage {
     private static final String LAST_ROW_CELLS_XPATH = "tbody/tr[last()]/td";
     private static final String LAST_COLUMN_CELLS_XPATH = "tbody//td[last()]";
     private static final String FIRST_COLUMN_CELLS_XPATH = "tbody//td[1]";
+    private static final String GENE_ANCHOR_XPATH_TEMPLATE = "tbody//td[1]/a";
     private static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
     private static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
     private static final String TABLE_HEADERS_XPATH = "thead/tr/th";
@@ -103,6 +104,11 @@ abstract class TablePage extends AtlasPage {
 
     protected WebElement getCell(WebElement table, int rowIndex, int columnIndex) {
         String xPath = String.format(CELL_XPATH_TEMPLATE, rowIndex, columnIndex);
+        return getCell(table, xPath);
+    }
+
+    protected WebElement getGeneAnchor(WebElement table, int geneProfileIndex) {
+        String xPath = String.format(GENE_ANCHOR_XPATH_TEMPLATE, geneProfileIndex);
         return getCell(table, xPath);
     }
 

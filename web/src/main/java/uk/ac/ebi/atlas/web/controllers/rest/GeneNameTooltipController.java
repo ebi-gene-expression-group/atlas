@@ -23,73 +23,88 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Multimap;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBuffer;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.Collection;
 
 @Controller
 @Scope("request")
 public class GeneNameTooltipController {
-
-    private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
+    private static final Logger LOGGER = Logger.getLogger(GeneNameTooltipController.class);
 
     private SolrClient solrClient;
+
+    @Value("classpath:/html-templates/geneNameTooltipTemplate.html")
+    private Resource htmlTemplateResource;
+
+    private String htmlTemplate;
 
     @Inject
     public GeneNameTooltipController(SolrClient solrClient) {
         this.solrClient = solrClient;
     }
 
-    @RequestMapping(value = "/rest/genenametooltip", method = RequestMethod.GET, produces = "text/html")
+    @PostConstruct
+    void initTemplate(){
+        try(InputStream is = htmlTemplateResource.getInputStream()) {
+            htmlTemplate = IOUtils.toString(is);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @RequestMapping(value = "/rest/genename-tooltip", method = RequestMethod.GET, produces = "text/html")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getTooltipAsHTML(@RequestParam(value = "identifier") String identifier) {
+    public String getTooltipContent(@RequestParam(value = "geneName") String geneName,
+                                    @RequestParam(value = "identifier") String identifier) {
+
 
         Multimap<String, String> multimap = solrClient.fetchTooltipProperties(identifier);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(formatGeneSymbol(multimap.get("symbol")));
-        sb.append(" ");
-        sb.append(formatSynonymsAndIdentifier(multimap.get("synonym"), identifier));
-        sb.append("<br>");
-        sb.append(formatGoTerms(multimap.get("goterm")));
-        return sb.toString();
+        String synonyms = buildSynonyms(identifier, multimap);
+
+        String goTerms = toCsv(multimap.get("goterm"));
+
+        String interproTerms = toCsv(multimap.get("interproterm"));
+
+        return MessageFormat.format(htmlTemplate, geneName, synonyms, goTerms, interproTerms);
 
     }
 
-    private String formatGeneSymbol(Collection<String> symbols) {
-        String symbol = symbols.iterator().next();
-        return "<div style=\"font-size: 18\">" + symbol + "</div>";
+    String toCsv(Collection<String> values){
+        return CollectionUtils.isEmpty(values) ? "NA" : Joiner.on(", ").join(values);
     }
 
-    private String formatSynonymsAndIdentifier(Collection<String> synonyms, String identifier) {
-        StringBuilder sb = new StringBuilder("<div style=\"font-size:14\">(");
-        for (String synonym : synonyms) {
-            sb.append(synonym);
-            sb.append(", ");
+    private String buildSynonyms(String identifier, Multimap<String, String> multimap) {
+
+        String synonyms = Joiner.on(", ").join(multimap.get("synonym"));
+
+        if (synonyms.isEmpty()){
+            return identifier;
         }
-        sb.append(identifier);
-        sb.append(")</div>");
-        return sb.toString();
-    }
 
-    private String formatGoTerms(Collection<String> goterms) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div style=\"font-size: 18\">Gene Ontology Term:</div>");
-        sb.append("<div style=\"font-size:14\">");
-        for (String synonym : goterms) {
-            sb.append(synonym);
-            sb.append(", ");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        sb.append("</div>");
-        return sb.toString();
+        return Joiner.on(", ").join(synonyms, identifier);
     }
 
 }

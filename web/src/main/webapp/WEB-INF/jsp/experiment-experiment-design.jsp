@@ -32,13 +32,30 @@
 
     <div id="table-caption"><b>Experiment Design</b></div>
 
-    <div id="toolbar">Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" name="isOnlyAnalysed"
-                                                 checked="yes"/>
+    <div id="toolbar">
+        <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
+            <tr>
+                <td style="vertical-align: middle; padding: 0px;">Show Analysed only?</td>
+                <td style="vertical-align: middle; padding: 0px;"><input type="checkbox" id="isOnlyAnalysed"
+                                                                         name="isOnlyAnalysed"
+                                                                         checked="yes"/></td>
+            </tr>
+        </table>
+
         <c:if test="${type eq 'DIFFERENTIAL'}">
-            <div>
-                <form:select path="selectedContrast" items="${contrasts}" itemValue="id" itemLabel="displayName"
-                             cssStyle="width:300px"/>
-            </div>
+            <table cellpadding="0" cellspacing="0" border="0" style="float: right; padding: 0px 3px 10px 0px; ">
+                <tr>
+                    <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
+                        <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Contrast: </form:label>
+                        <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
+                                     itemLabel="displayName"/>
+                    </td>
+                    <td style="vertical-align: middle; padding: 0px 4px 0px 0px;">Reference:</td>
+                    <td style="vertical-align: middle; padding: 0px; background-color:#FFC266;width:20px;">&nbsp;</td>
+                    <td style="vertical-align: middle; padding: 0px 4px 0px 10px;">Test:</td>
+                    <td style="vertical-align: middle; padding: 0px; background-color:#82CDCD;width:20px;">&nbsp;</td>
+                </tr>
+            </table>
         </c:if>
     </div>
 
@@ -60,8 +77,6 @@
 
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
 <script type="text/javascript" language="javascript"
         src="${pageContext.request.contextPath}/resources/js/experimentDesignModule.js"></script>
 
@@ -74,15 +89,23 @@
 
     (function ($) {
         $(document).ready(function () {
-            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors}, "Select contrast");
+            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
 
             helpTooltipsModule.init('experiment-design');
 
             <c:if test="${type eq 'DIFFERENTIAL'}">
-            $("#selectedContrast").chosen();
-
             $('#selectedContrast').change(function () {
                 $('#prefForm').submit();
+            });
+
+            $('#experiment-design-table').find('tr').each(function (index) {
+                var accession = $(this).find('td:first-child').text();
+                if (jQuery.inArray(accession, ${referenceAssays}) > -1) {
+                    $(this).find('td').css("background-color", "#FFC266");
+                }
+                if (jQuery.inArray(accession, ${testAssays}) > -1) {
+                    $(this).find('td').css("background-color", "#82CDCD");
+                }
             });
             </c:if>
         });

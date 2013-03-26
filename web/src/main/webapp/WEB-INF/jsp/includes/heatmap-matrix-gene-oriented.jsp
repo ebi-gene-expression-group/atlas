@@ -146,57 +146,17 @@
         </tbody>
     </table>
 
-    <div id="genenametooltip-content"/>
 </div>
+
+<div id="genenametooltip-content" style="display: none"/>
+
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/highlight.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
 
 <script type="text/javascript">
 
-    var tableHeaderDivs = $("[tableHeaderCell]");
-    tableHeaderDivs.tooltip();
-
-    $.each(tableHeaderDivs, function () {
-        if ($.browser.msie) {
-            $(this).append($(this).attr("data-organism-part"));
-        } else {
-            var organismPartName = $(this).attr("data-organism-part");
-            organismPartName = restrictSize(organismPartName, 17);
-            $(this).append(organismPartName);
-        }
-    });
-
-    function restrictSize(s, maxSize) {
-        var result = s;
-        if (result.length > maxSize) {
-            result = result.substring(0, maxSize);
-            if (result.lastIndexOf(" ") > maxSize - 5) {
-                result = result.substring(0, result.lastIndexOf(" "));
-            }
-            result = result + "...";
-        }
-        return result;
-    }
-
-    $(".genename").tooltip({content:function (callback) {
-        var identifier = $(this).attr("id");
-        $("#genenametooltip-content").load("rest/genenametooltip?identifier=" + identifier,
-                function (response, status, xhr) {
-                    var tooltipContent;
-                    if (status === "error") {
-                        tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
-                        callback(tooltipContent);
-                        return;
-                    }
-                    tooltipContent = $(this).html();
-                    if (!tooltipContent) {
-                        tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
-                    }
-                    callback(tooltipContent);
-                }
-        );
-    }
-    });
-
-    //required for the positioning of the stuff that must go inside the top-left corner header cell
-    //$("#tooltip-span").parent().addClass("heatmap-matrix-top-left-corner");
+    genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
 </script>

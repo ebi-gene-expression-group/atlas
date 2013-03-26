@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -31,6 +33,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.ContrastRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -63,8 +66,12 @@ public class DifferentialDesignPageController extends ExperimentDesignPageContro
             contrastId = experiment.getContrasts().first().getId();
         }
 
-        System.out.println(contrastId);
+        // does the serialisation to JSON
+        Gson gson = new Gson();
 
+        Contrast contrast = experiment.getContrast(contrastId);
+        model.addAttribute("referenceAssays", gson.toJson(Sets.newHashSet(contrast.getReferenceAssayGroup())));
+        model.addAttribute("testAssays", gson.toJson(Sets.newHashSet(contrast.getTestAssayGroup())));
 
         return "experiment-experiment-design";
     }
