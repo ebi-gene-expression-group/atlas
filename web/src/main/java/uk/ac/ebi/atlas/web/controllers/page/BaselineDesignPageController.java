@@ -47,7 +47,7 @@ public class BaselineDesignPageController extends ExperimentDesignPageController
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=BASELINE"})
     public String showExperimentDesign(Model model, HttpServletRequest request) throws IOException {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        extractExperimentDesign(model, experiment, experiment.getExperimentRunAccessions());
+        extractExperimentDesign(model, experiment.getAccession(), experiment.getExperimentRunAccessions());
 
         return "experiment-experiment-design";
     }

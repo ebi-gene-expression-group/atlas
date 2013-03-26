@@ -82,7 +82,7 @@ public class SolrQueryService {
 
         String queryString = buildGeneQuery(geneQuery, exactMatch, species);
 
-        return fetchGeneIdentifiersFromSolr(queryString);
+        return getSolrResultsForQuery(queryString, "identifier", -1);
     }
 
     public List<String> getGeneIdSuggestionsInName(String geneName, String species) throws SolrServerException {
@@ -117,12 +117,15 @@ public class SolrQueryService {
 
         SolrQuery query = new SolrQuery(queryString);
         query.setFields("identifier");
-        query.setRows(0);
+        query.setRows(100000);
+
+        LOGGER.debug("<fetchGeneIdentifiersFromSolr> processing solr query: " + query.toString());
 
         QueryResponse solrResponse = solrServer.query(query);
         for (SolrDocument doc : solrResponse.getResults()) {
             results.add(doc.getFieldValue("identifier").toString());
         }
+
         return results;
     }
 
