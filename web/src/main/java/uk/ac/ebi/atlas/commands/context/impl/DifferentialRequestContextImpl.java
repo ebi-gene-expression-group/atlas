@@ -25,13 +25,14 @@ package uk.ac.ebi.atlas.commands.context.impl;
 import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import javax.inject.Named;
 
 @Named
 @Scope("request")
-public class DifferentialRequestContextImpl extends RequestContextImpl implements DifferentialRequestContext {
+public class DifferentialRequestContextImpl extends RequestContextImpl<Contrast> implements DifferentialRequestContext {
 
     private Regulation regulation;
 
@@ -51,6 +52,5 @@ public class DifferentialRequestContextImpl extends RequestContextImpl implement
         return Objects.toStringHelper(this.getClass())
                 .add("regulation", regulation).toString();
     }
-
 
 }

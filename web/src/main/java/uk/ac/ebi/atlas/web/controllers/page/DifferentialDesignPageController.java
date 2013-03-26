@@ -22,16 +22,22 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.web.ContrastRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
@@ -44,10 +50,21 @@ public class DifferentialDesignPageController extends ExperimentDesignPageContro
         super(pathTemplate);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=DIFFERENTIAL"})
-    public String showExperimentDesign(Model model, HttpServletRequest request) throws IOException {
+    @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=DIFFERENTIAL"})
+    public String showExperimentDesign(@ModelAttribute("preferences") @Valid ContrastRequestPreferences preferences
+            , BindingResult result, Model model, HttpServletRequest request) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         extractExperimentDesign(model, experiment, experiment.getLibrariesFromContrasts());
+
+        model.addAttribute("contrasts", experiment.getContrasts());
+
+        String contrastId = preferences.getSelectedContrast();
+        if (StringUtils.isBlank(contrastId)) {
+            contrastId = experiment.getContrasts().first().getId();
+        }
+
+        System.out.println(contrastId);
+
 
         return "experiment-experiment-design";
     }

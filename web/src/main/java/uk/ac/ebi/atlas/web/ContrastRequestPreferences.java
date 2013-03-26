@@ -20,25 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands.context;
+package uk.ac.ebi.atlas.web;
 
-import java.io.Serializable;
-import java.util.Set;
-import java.util.SortedSet;
+public class ContrastRequestPreferences {
 
+    private String selectedContrast;
 
-public interface RequestContext<T> extends Serializable {
-    String getGeneQuery();
+    public String getSelectedContrast() {
+        return selectedContrast;
+    }
 
-    Set<T> getSelectedQueryFactors();
-
-    String getFilteredBySpecies();
-
-    double getCutoff();
-
-    Integer getHeatmapMatrixSize();
-
-    boolean isSpecific();
-
-    public SortedSet<T> getAllQueryFactors();
+    public void setSelectedContrast(String selectedContrast) {
+        this.selectedContrast = selectedContrast;
+    }
 }

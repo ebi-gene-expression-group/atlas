@@ -29,16 +29,17 @@ import static org.junit.Assert.assertThat;
 
 public class NumberUtilsTest {
 
+    private static final String MULTIPLY = "\u00D7";
     private NumberUtils subject = new NumberUtils();
 
     @Test
     public void testhtmlFormatDoubleWithLargeNumber() {
-        assertThat(subject.htmlFormatDouble(9969209968386869000000000000000000000.000d), is("9.97 × 10<span style=\"vertical-align: super;\">36</span>"));
+        assertThat(subject.htmlFormatDouble(9969209968386869000000000000000000000.000d), is("9.97 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">36</span>"));
     }
 
     @Test
     public void testhtmlFormatDoubleWithLargeExponential() {
-        assertThat(subject.htmlFormatDouble(9.97e36d), is("9.97 × 10<span style=\"vertical-align: super;\">36</span>"));
+        assertThat(subject.htmlFormatDouble(9.97e36d), is("9.97 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">36</span>"));
     }
 
     @Test
@@ -54,25 +55,25 @@ public class NumberUtilsTest {
         assertThat(subject.htmlFormatDouble(0.0d), is("0"));
 
         assertThat(subject.htmlFormatDouble(1.2E-11d), is("<10<span style=\"vertical-align: super;\">-10</span>"));
-        assertThat(subject.htmlFormatDouble(-1.2E-11d), is("-1.2 × 10<span style=\"vertical-align: super;\">-11</span>"));
+        assertThat(subject.htmlFormatDouble(-1.2E-11d), is("-1.2 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">-11</span>"));
 
-        assertThat(subject.htmlFormatDouble(1.2E-5d), is("1.2 × 10<span style=\"vertical-align: super;\">-5</span>"));
-        assertThat(subject.htmlFormatDouble(-1.2E-5d), is("-1.2 × 10<span style=\"vertical-align: super;\">-5</span>"));
+        assertThat(subject.htmlFormatDouble(1.2E-5d), is("1.2 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">-5</span>"));
+        assertThat(subject.htmlFormatDouble(-1.2E-5d), is("-1.2 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">-5</span>"));
 
-        assertThat(subject.htmlFormatDouble(123.456d), is("1.23 × 10<span style=\"vertical-align: super;\">2</span>"));
-        assertThat(subject.htmlFormatDouble(-123.456d), is("-1.23 × 10<span style=\"vertical-align: super;\">2</span>"));
+        assertThat(subject.htmlFormatDouble(123.456d), is("1.23 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">2</span>"));
+        assertThat(subject.htmlFormatDouble(-123.456d), is("-1.23 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">2</span>"));
 
-        assertThat(subject.htmlFormatDouble(123.567d), is("1.24 × 10<span style=\"vertical-align: super;\">2</span>"));
-        assertThat(subject.htmlFormatDouble(-123.567d), is("-1.24 × 10<span style=\"vertical-align: super;\">2</span>"));
+        assertThat(subject.htmlFormatDouble(123.567d), is("1.24 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">2</span>"));
+        assertThat(subject.htmlFormatDouble(-123.567d), is("-1.24 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">2</span>"));
 
         assertThat(subject.htmlFormatDouble(10.0d), is("10<span style=\"vertical-align: super;\">1</span>"));
-        assertThat(subject.htmlFormatDouble(-10.0d), is("-1 × 10<span style=\"vertical-align: super;\">1</span>"));
+        assertThat(subject.htmlFormatDouble(-10.0d), is("-1 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">1</span>"));
 
-        assertThat(subject.htmlFormatDouble(10.123d), is("1.01 × 10<span style=\"vertical-align: super;\">1</span>"));
-        assertThat(subject.htmlFormatDouble(-10.123d), is("-1.01 × 10<span style=\"vertical-align: super;\">1</span>"));
+        assertThat(subject.htmlFormatDouble(10.123d), is("1.01 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">1</span>"));
+        assertThat(subject.htmlFormatDouble(-10.123d), is("-1.01 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">1</span>"));
 
-        assertThat(subject.htmlFormatDouble(10.623d), is("1.06 × 10<span style=\"vertical-align: super;\">1</span>"));
-        assertThat(subject.htmlFormatDouble(-10.623d), is("-1.06 × 10<span style=\"vertical-align: super;\">1</span>"));
+        assertThat(subject.htmlFormatDouble(10.623d), is("1.06 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">1</span>"));
+        assertThat(subject.htmlFormatDouble(-10.623d), is("-1.06 " + MULTIPLY + " 10<span style=\"vertical-align: super;\">1</span>"));
 
         assertThat(subject.htmlFormatDouble(0.123d), is("0.123"));
         assertThat(subject.htmlFormatDouble(-0.123d), is("-0.123"));

@@ -25,13 +25,12 @@ package uk.ac.ebi.atlas.commands.context;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
-import java.util.SortedSet;
 
-public interface BaselineRequestContext extends RequestContext {
+public interface BaselineRequestContext extends RequestContext<Factor> {
 
     public Set<Factor> getSelectedFilterFactors();
 
     public String getQueryFactorType();
 
-    public SortedSet<Factor> getAllQueryFactors();
+//    public SortedSet<Factor> getAllQueryFactors();
 }

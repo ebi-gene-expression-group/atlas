@@ -28,13 +28,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -63,11 +61,16 @@ public class RankDifferentialProfilesCommandTest {
 
         subject = new RankDifferentialProfilesExecutor(requestContext);
 
-        when(differentialProfileMock1.getMinExpressionLevel()).thenReturn(3D);
-        when(differentialProfileMock2.getMinExpressionLevel()).thenReturn(5D);
-        when(differentialProfileMock3.getMinExpressionLevel()).thenReturn(2D);
+        when(differentialProfileMock1.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(3D);
+        when(differentialProfileMock1.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+        when(differentialProfileMock2.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(5D);
+        when(differentialProfileMock2.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+        when(differentialProfileMock3.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(2D);
+        when(differentialProfileMock3.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+
     }
 
+    //ToDo: move this test to comparator test
     @Test
     public void comparatorShouldSortByLowestPValueFirst() throws Exception {
         //given
@@ -81,6 +84,7 @@ public class RankDifferentialProfilesCommandTest {
 
         //then
         Iterator<DifferentialProfile> profilesIterator = profiles.iterator();
+
         assertThat(profilesIterator.next(), is(differentialProfileMock3));
         assertThat(profilesIterator.next(), is(differentialProfileMock1));
         assertThat(profilesIterator.next(), is(differentialProfileMock2));
