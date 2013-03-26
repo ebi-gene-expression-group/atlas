@@ -23,12 +23,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod22351;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
@@ -78,7 +72,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gm15512", "Pla2g3", "Pmp2"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("6.61 × 10-5"));
+        assertThat(subject.getGeneProfile(1).get(0), is("6.61"+ " \u00D7 " + "10-5"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
         assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
