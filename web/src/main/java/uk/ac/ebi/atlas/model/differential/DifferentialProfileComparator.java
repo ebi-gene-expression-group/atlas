@@ -35,11 +35,10 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
     private Set<Contrast> selectedFactors;
     private Set<Contrast> allFactors;
     private Regulation regulation;
-    private double cutoff;
 
 
     public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectQueryFactors,
-                                         Set<Contrast> allQueryFactors, double cutoff, Regulation regulation) {
+                                         Set<Contrast> allQueryFactors, Regulation regulation) {
         this.isSpecific = isSpecific;
         this.selectedFactors = selectQueryFactors;
         this.allFactors = allQueryFactors;
@@ -62,8 +61,8 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
 
-            return naturalOrdering.compare(getExpressionLevelFoldChangeOn(firstProfile),
-                    getExpressionLevelFoldChangeOn(otherProfile));
+            return naturalOrdering.compare(getAveragesSum(firstProfile),
+                    getAveragesSum(otherProfile));
         }
 
         // A2
@@ -76,7 +75,7 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
 
     }
 
-    private int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
+    protected int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
                                  Set<Contrast> averageOn) {
 
         Ordering<Double> naturalOrdering = Ordering.natural();
@@ -86,21 +85,14 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
                 averageExpressionLevelOn2);
     }
 
-    public double getExpressionLevelFoldChangeOn(DifferentialProfile Profile) {
+    public double getAveragesSum(DifferentialProfile profile) {
 
-        double averageExpressionLevelOnSelected = Profile.getAverageExpressionLevelOn(selectedFactors, regulation);
+        double averageExpressionLevelOnSelected = profile.getAverageExpressionLevelOn(selectedFactors, regulation);
 
         Sets.SetView<Contrast> remainingFactors = Sets.difference(allFactors, selectedFactors);
-        double averageExpressionLevelOnRemaining = Profile.getAverageExpressionLevelOn(remainingFactors, regulation);
+        double averageExpressionLevelOnRemaining = profile.getAverageExpressionLevelOn(remainingFactors, regulation);
 
-        if (averageExpressionLevelOnRemaining == 0) {
-            if (!remainingFactors.isEmpty()) {
-                return averageExpressionLevelOnSelected / (cutoff / remainingFactors.size());
-            } else {
-                return averageExpressionLevelOnSelected;
-            }
-        }
-        return averageExpressionLevelOnSelected / averageExpressionLevelOnRemaining;
+        return averageExpressionLevelOnSelected + averageExpressionLevelOnRemaining ;
     }
 
 }
