@@ -30,10 +30,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
 
 public class ExperimentDesignPageControllerIT {
@@ -63,9 +65,25 @@ public class ExperimentDesignPageControllerIT {
         Map<String, Object> map = model.asMap();
         assertThat(((String) map.get("assayHeader")), is("Run"));
 
-        Type type = new TypeToken<Map<String, Integer>>() {
+        // and
+        Type stringIntegerMapType = new TypeToken<Map<String, Integer>>() {
         }.getType();
-        Map<String, Integer> samples = gson.fromJson((String) map.get("samples"), type);
+        Map<String, Integer> samples = gson.fromJson((String) map.get("samples"), stringIntegerMapType);
         assertThat(samples.get("Organism"), is(1));
+        Map<String, Integer> factors = gson.fromJson((String) map.get("factors"), stringIntegerMapType);
+        assertThat(factors.get("strain or line"), is(2));
+
+        // and
+        Type listStringArrayType = new TypeToken<List<String[]>>() {
+        }.getType();
+        List<String[]> data = gson.fromJson((String) map.get("tableData"), listStringArrayType);
+        assertThat(data.get(0), hasItemInArray("SRR504179"));
+        assertThat(data.get(data.size() - 1), hasItemInArray("SRR576329"));
+
+        // and
+        assertThat((String) map.get("runAccessions"), is(gson.toJson(LIBRARIES)));
+
+        // and
+        assertThat((String) map.get("experimentAccession"), is(EXPERIMENT_ACCESSION));
     }
 }
