@@ -32,14 +32,32 @@
 
     <div id="table-caption"><b>Experiment Design</b></div>
 
-    <div id="toolbar">Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" name="isOnlyAnalysed"
-                                                 checked="yes"/>
+    <div id="toolbar">
         <c:if test="${type eq 'DIFFERENTIAL'}">
-            <div>
-                <form:select path="selectedContrast" items="${contrasts}" itemValue="id" itemLabel="displayName"
-                             cssStyle="width:300px"/>
+            <div id="contrasts">
+                <table style="float: left;">
+                    <tr>
+                        <td style="vertical-align: middle;"><form:label
+                                path="selectedContrast">Contrast:</form:label></td>
+                        <td><form:select path="selectedContrast" items="${contrasts}" itemValue="id"
+                                         itemLabel="displayName"
+                                         cssStyle="width:300px"/></td>
+                    </tr>
+                </table>
+                <table style="float: right;">
+                    <tr>
+                        <td>Reference:</td>
+                        <td style="background-color:#FFBBBB;width:25px;height:15px;">&nbsp;</td>
+                        <td>Test:</td>
+                        <td style="background-color:#CCCCFF;width:25px;height:15px;">&nbsp;</td>
+                    </tr>
+                </table>
             </div>
         </c:if>
+        <div style="clear: both;">
+            Show Analysed only? <input type="checkbox" id="isOnlyAnalysed" name="isOnlyAnalysed"
+                                       checked="yes"/>
+        </div>
     </div>
 
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
@@ -74,7 +92,7 @@
 
     (function ($) {
         $(document).ready(function () {
-            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors}, "Select contrast");
+            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
 
             helpTooltipsModule.init('experiment-design');
 
@@ -83,6 +101,16 @@
 
             $('#selectedContrast').change(function () {
                 $('#prefForm').submit();
+            });
+
+            $('#experiment-design-table').find('tr').each(function (index) {
+                var accession = $(this).find('td:first-child').text();
+                if (jQuery.inArray(accession, ${referenceAssays}) > -1) {
+                    $(this).find('td').css("background-color", "#FFBBBB");
+                }
+                if (jQuery.inArray(accession, ${testAssays}) > -1) {
+                    $(this).find('td').css("background-color", "#CCCCFF");
+                }
             });
             </c:if>
         });
