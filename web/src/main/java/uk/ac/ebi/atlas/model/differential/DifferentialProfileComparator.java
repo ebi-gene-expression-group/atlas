@@ -35,15 +35,17 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
     private Set<Contrast> selectedFactors;
     private Set<Contrast> allFactors;
     private Regulation regulation;
+    private double cutoff = 0.05;
 
 
     public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectQueryFactors,
-                                         Set<Contrast> allQueryFactors, Regulation regulation) {
+                                         Set<Contrast> allQueryFactors, Regulation regulation, double cutoff) {
         this.isSpecific = isSpecific;
         this.selectedFactors = selectQueryFactors;
         this.allFactors = allQueryFactors;
         //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
         this.regulation = regulation;
+        this.cutoff = cutoff;
     }
 
     @Override
@@ -60,9 +62,8 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
 
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
-
-            return naturalOrdering.compare(getAveragesSum(firstProfile),
-                    getAveragesSum(otherProfile));
+            return naturalOrdering.reverse().compare(getExpressionLevelFoldChangeOn(firstProfile),
+                    getExpressionLevelFoldChangeOn(otherProfile));
         }
 
         // A2
@@ -85,14 +86,17 @@ public class DifferentialProfileComparator implements Comparator<DifferentialPro
                 averageExpressionLevelOn2);
     }
 
-    public double getAveragesSum(DifferentialProfile profile) {
+    public double getExpressionLevelFoldChangeOn(DifferentialProfile profile) {
 
         double averageExpressionLevelOnSelected = profile.getAverageExpressionLevelOn(selectedFactors, regulation);
 
         Sets.SetView<Contrast> remainingFactors = Sets.difference(allFactors, selectedFactors);
         double averageExpressionLevelOnRemaining = profile.getAverageExpressionLevelOn(remainingFactors, regulation);
+        if (averageExpressionLevelOnRemaining == 0) {
+            averageExpressionLevelOnRemaining = cutoff;
+        }
 
-        return averageExpressionLevelOnSelected + averageExpressionLevelOnRemaining ;
+        return averageExpressionLevelOnRemaining / averageExpressionLevelOnSelected;
     }
 
 }
