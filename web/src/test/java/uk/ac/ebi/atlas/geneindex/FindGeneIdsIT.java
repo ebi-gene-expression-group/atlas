@@ -34,7 +34,7 @@ import java.net.URISyntaxException;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -44,26 +44,42 @@ public class FindGeneIdsIT {
     @Inject
     private SolrClient subject;
 
-    private static final String QUERY = "GO:0008134 \"p53 binding\"";
-
     private static final String SPECIES = "homo sapiens";
 
     @Test
-    public void testFindGeneIdJsonValidQuery() throws URISyntaxException, GenesNotFoundException {
+    public void findGeneIdsWithoutExactMatchTest() throws URISyntaxException, GenesNotFoundException {
         //given
-        Set<String> result = subject.findGeneIds(QUERY, false, SPECIES);
+        String geneQuery = "GO:0008134 \"p53 binding\"";
+        //when
+        Set<String> result = subject.findGeneIds(geneQuery, false, SPECIES);
 
         //some genes are found
-        assertThat(result.iterator().next(), startsWith("ENSG"));
+        assertThat(result, hasItems("ENSG00000131759", "ENSG00000112592") );
+        assertThat(result.size(), is(greaterThan(300)) );
+        assertThat(result.size(), is(lessThan(600)) );
+
     }
 
+    @Test
+    public void findGeneIdsWithExactMatchTest() throws URISyntaxException, GenesNotFoundException {
+        //given
+        String geneQuery = "ENSG00000131759 \"mRNA splicing, via spliceosome\"";
+        //when
+        Set<String> result = subject.findGeneIds(geneQuery, true, SPECIES);
+
+        //some genes are found
+        assertThat(result, hasItems("ENSG00000131759", "ENSG00000084072") );
+        assertThat(result.size(), is(greaterThan(190)) );
+        assertThat(result.size(), is(lessThan(210)) );
+
+    }
 
     @Test(expected = GenesNotFoundException.class)
-    public void testFindGeneIdJsonNotExistingQuery() throws URISyntaxException, GenesNotFoundException {
+    public void shouldThrowExceptionWhenThereIsNoMatchingId() throws URISyntaxException, GenesNotFoundException {
         //given
         String query = "\"NOT THERE\"";
 
-        Set<String> result = subject.findGeneIds(query, false, SPECIES);
+        subject.findGeneIds(query, false, SPECIES);
 
     }
 
