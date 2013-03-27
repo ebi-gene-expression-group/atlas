@@ -167,12 +167,15 @@ public class SolrQueryService {
     String buildGeneQuery(String query, boolean exactMatch, String species) {
         String propertyName = exactMatch? "property_lower":"property_search";
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("{!lucene q.op=OR df=" + propertyName + "} ");
-        sb.append("("+ propertyName +":").append(query).append(")");
-        sb.append(" AND species:\"");
-        sb.append(species);
-        sb.append("\"&start=0&rows=100000");
+        String escapedGeneQuery = customEscape(query);
+
+        StringBuilder sb =
+                new StringBuilder()
+                    .append("{!lucene q.op=OR df=" + propertyName + "} ")
+                    .append("("+ propertyName +":").append(escapedGeneQuery).append(")")
+                    .append(" AND species:\"")
+                    .append(species)
+                    .append("\"&start=0&rows=100000");
         return sb.toString();
 
     }
@@ -228,4 +231,8 @@ public class SolrQueryService {
         return solrQuery;
     }
 
+
+    private String customEscape(String searchText) {
+        return searchText.replace(":", "\\:");
+    }
 }

@@ -196,7 +196,4 @@ public class SolrClient {
         return result;
     }
 
-    private String customEscape(String searchText) {
-        return searchText.replace(":", "\\:");
-    }
 }
