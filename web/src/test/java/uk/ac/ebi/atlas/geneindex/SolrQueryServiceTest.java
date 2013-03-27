@@ -44,10 +44,12 @@ public class SolrQueryServiceTest {
 
     @Test
     public void testBuildQueryAllTextString() {
-        String query = "GO:0008134 \"p53 binding\"";
+        String query = "GO:0008134 \"p53 binding";
+        assertThat(subject.buildGeneQuery(query, false, "sapiens"), containsString("(property_search:GO\\:0008134 \"p53 binding)"));
+
+        query = query + "\"";
+
         assertThat(subject.buildGeneQuery(query, false, "sapiens"), containsString("(property_search:GO\\:0008134 \"p53 binding\")"));
 
-        query = "GO:0008134 \"p53 binding";
-        assertThat(subject.buildGeneQuery(query, false, "sapiens"), containsString("(property_search:GO\\:0008134 \"p53 binding)"));
     }
 }

@@ -22,49 +22,44 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Multimap;
+import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
-import java.net.URISyntaxException;
-import java.util.Set;
+import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class IndexClientTestIT {
+public class FetchTooltipPropertiesIT {
 
     @Inject
     private SolrClient subject;
 
-    private static final String QUERY = "GO:0008134 \"p53 binding\"";
-
-    private static final String SPECIES = "homo sapiens";
 
     @Test
-    public void testFindGeneIdJsonValidQuery() throws URISyntaxException, GenesNotFoundException {
-        //given
-        Set<String> result = subject.findGeneIds(QUERY, false, SPECIES);
+    public void testFetchTooltipProperties() throws Exception {
 
-        //some genes are found
-        assertThat(result.iterator().next(), startsWith("ENSG"));
-    }
+        // given
+        Multimap<String, String> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
 
-
-    @Test(expected = GenesNotFoundException.class)
-    public void testFindGeneIdJsonNotExistingQuery() throws URISyntaxException, GenesNotFoundException {
-        //given
-        String query = "\"NOT THERE\"";
-
-        Set<String> result = subject.findGeneIds(query, false, SPECIES);
-
+        assertThat(properties.size(), Matchers.is(24));
+        assertThat(properties.get("synonym").size(), Matchers.is(5));
+        assertThat(properties.get("synonym"), Matchers.hasItems("Calmbp1", "MCPH5", "ASP"));
+        assertThat(properties.get("goterm"), Matchers.hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
+        assertThat(properties.get("interproterm"), Matchers.hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
     }
 
 
