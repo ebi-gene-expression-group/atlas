@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.streams.differential;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +37,7 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -83,6 +85,11 @@ public class DifferentialProfilesInputStreamIT {
         DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
         contrast = differentialExperiment.getContrasts().first();
+
+        TreeSet<Contrast> allQueryFactors = Sets.newTreeSet(Contrast.orderByDisplayName());
+        allQueryFactors.add(contrast);
+        differentialRequestContext.setAllQueryFactors(allQueryFactors);
+        differentialRequestContext.setSelectedQueryFactors(Sets.newHashSet());
     }
 
     @Test
