@@ -35,7 +35,7 @@ import static org.junit.Assert.assertThat;
 public class SpecificAndOrganismPartIT extends SinglePageSeleniumFixture {
 
     private static final String E_MTAB_599_ACCESSION = "E-MTAB-599";
-    private static final String HTTP_PARAMETERS = "specific=true&geneQuery=Cyp2d10+Tdo2+Serpina1d+Apoh+Albumin&queryFactorValues=liver&_queryFactorValues=1&cutoff=0.5";
+    private static final String HTTP_PARAMETERS = "exactMatch=false&specific=true&geneQuery=Cyp2d10+Tdo2+Serpina1d+Apoh+Albumin&queryFactorValues=liver&_queryFactorValues=1&cutoff=0.5";
 
     private HeatmapTablePage subject;
 
