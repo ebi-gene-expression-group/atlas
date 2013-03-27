@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.genequery;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
@@ -42,7 +42,7 @@ public class GenePropertiesTooltipIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void averageFpkmShouldDetermineRanking() {
+    public void matchingGeneQueryTermsShouldBeHighlighted() {
         //given
         String tooltipContent = subject.getGenePropertyTooltipContent(0);
 
