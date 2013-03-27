@@ -21,6 +21,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,7 +48,15 @@ public class DifferentialGeneProfilesTSVWriterTest {
 
     @Test
     public void testBuildColumnNames() throws Exception {
-        List<String> columnNames = subject.buildColumnNames(Sets.newTreeSet(Sets.newHashSet("cond1", "cond2")));
+        Contrast contrast1 = mock(Contrast.class);
+        when(contrast1.getDisplayName()).thenReturn("cond1");
+        Contrast contrast2 = mock(Contrast.class);
+        when(contrast2.getDisplayName()).thenReturn("cond2");
+
+        TreeSet<Contrast> conditions = Sets.newTreeSet(Contrast.orderByDisplayName());
+        conditions.add(contrast1);
+        conditions.add(contrast2);
+        List<String> columnNames = subject.buildColumnNames(conditions);
         assertThat(columnNames.size(), is(4));
         assertThat(columnNames, contains("cond1.p-value", "cond1.log2foldchange", "cond2.p-value", "cond2.log2foldchange"));
     }

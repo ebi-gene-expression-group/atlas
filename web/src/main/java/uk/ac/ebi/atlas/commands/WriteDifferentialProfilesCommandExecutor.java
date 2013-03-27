@@ -60,7 +60,7 @@ public class WriteDifferentialProfilesCommandExecutor extends AbstractCommandExe
     @Override
     protected Long execute(ObjectInputStream<DifferentialProfile> inputStream) {
         try {
-            return geneProfileWriter.apply(inputStream, experiment.getContrastIds(), experiment.getContrasts());
+            return geneProfileWriter.apply(inputStream, experiment.getContrasts());
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
