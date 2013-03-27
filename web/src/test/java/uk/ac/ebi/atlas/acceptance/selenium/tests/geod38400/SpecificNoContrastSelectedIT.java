@@ -34,40 +34,42 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         assertThat(subject.getSelectedGenes().subList(0, 3), contains("AT1G33840", "AT1G33850", "AT3G54770"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(2), is("<10-10"));
+        assertThat(subject.getGeneProfile(1).get(1), is("<10-10"));
 
     }
 
-//    @Test
-//    public void verifyResultsWithRegulationDown() {
-//        subject = new HeatmapTablePage(driver, E_E_GEOD_38400_ACCESSION, "regulation=DOWN&displayLevels=true");
-//        subject.get();
-//        assertThat(subject.getGeneCount(), containsString("of 9"));
-//
-//        assertThat(subject.getSelectedGenes().size(), is(9));
-//        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gm15512", "Pla2g3", "Pmp2"));
-//
-//        assertThat(subject.getGeneProfile(1).size(), is(1));
-//        assertThat(subject.getGeneProfile(1).get(0), is("6.61"+ " \u00D7 " + "10-5"));
-//
-//        assertThat(subject.getLastGeneProfile().size(), is(1));
-//        assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
-//    }
-//
-//    @Test
-//    public void verifyResultsWithRegulationUpDown() {
-//        subject = new HeatmapTablePage(driver, E_E_GEOD_38400_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
-//        subject.get();
-//        assertThat(subject.getGeneCount(), containsString("of 49"));
-//
-//        assertThat(subject.getSelectedGenes().size(), is(49));
-//        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
-//
-//        assertThat(subject.getGeneProfile(1).size(), is(1));
-//        assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
-//
-//        assertThat(subject.getLastGeneProfile().size(), is(1));
-//        assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
-//    }
+    @Test
+    public void verifyResultsWithRegulationDown() {
+        subject = new HeatmapTablePage(driver, E_E_GEOD_38400_ACCESSION, "regulation=DOWN&displayLevels=true");
+        subject.get();
+        assertThat(subject.getGeneCount(), containsString("of 15"));
+
+        assertThat(subject.getSelectedGenes().size(), is(15));
+        assertThat(subject.getSelectedGenes().subList(0, 3), contains("AT2G40030", "AT2G07733", "AT5G40450"));
+
+        assertThat(subject.getGeneProfile(1).size(), is(3));
+        assertThat(subject.getGeneProfile(1).get(1), is("4.25"+ " \u00D7 " + "10-5"));
+
+        assertThat(subject.getLastGeneProfile().size(), is(3));
+        assertThat(subject.getLastGeneProfile().get(0), is("7.29"+ " \u00D7 " + "10-6"));
+        assertThat(subject.getLastGeneProfile().get(1), is("3.22"+ " \u00D7 " + "10-4"));
+    }
+
+    @Test
+    public void verifyResultsWithRegulationUpDown() {
+        subject = new HeatmapTablePage(driver, E_E_GEOD_38400_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
+        subject.get();
+        assertThat(subject.getGeneCount(), containsString("of 51"));
+
+        assertThat(subject.getSelectedGenes().size(), is(50));
+        assertThat(subject.getSelectedGenes().subList(0, 3), contains("AT1G33840", "AT1G33850", "AT3G54770"));
+
+        assertThat(subject.getGeneProfile(1).size(), is(3));
+        assertThat(subject.getGeneProfile(1).get(1), is("<10-10"));
+
+        assertThat(subject.getLastGeneProfile().size(), is(3));
+        assertThat(subject.getLastGeneProfile().get(0), is("7.29"+ " \u00D7 " + "10-6"));
+        assertThat(subject.getLastGeneProfile().get(1), is("3.22"+ " \u00D7 " + "10-4"));
+    }
 
 }

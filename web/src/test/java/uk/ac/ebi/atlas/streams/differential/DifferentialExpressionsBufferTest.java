@@ -151,4 +151,16 @@ public class DifferentialExpressionsBufferTest {
         assertThat(expression, is(CoreMatchers.nullValue()));
     }
 
+    @Test
+    public void skipNALinesKeepsCorrespondingContrasts() {
+
+        subject.reload("T1", "NA", "1", P_VAL_2, "-Inf");
+
+        DifferentialExpression expression = subject.poll();
+
+        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
+        assertThat(expression.getContrast(), is(contrast2Mock));
+    }
+
 }
