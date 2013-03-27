@@ -82,7 +82,7 @@ public class SolrQueryService {
 
         String queryString = buildGeneQuery(geneQuery, exactMatch, species);
 
-        return getSolrResultsForQuery(queryString, "identifier", -1);
+        return fetchGeneIdentifiersFromSolr(queryString);
     }
 
     public List<String> getGeneIdSuggestionsInName(String geneName, String species) throws SolrServerException {
