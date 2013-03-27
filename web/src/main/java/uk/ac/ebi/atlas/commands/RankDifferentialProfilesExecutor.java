@@ -82,7 +82,7 @@ public class RankDifferentialProfilesExecutor extends AbstractCommandExecutor<Di
 
     Ordering<DifferentialProfile> buildGeneProfileComparator() {
         return Ordering.from(new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
-                requestContext.getAllQueryFactors(), requestContext.getRegulation()));
+                requestContext.getAllQueryFactors(), requestContext.getRegulation(), requestContext.getCutoff()));
     }
 
     protected Queue<DifferentialProfile> buildRankingQueue() {

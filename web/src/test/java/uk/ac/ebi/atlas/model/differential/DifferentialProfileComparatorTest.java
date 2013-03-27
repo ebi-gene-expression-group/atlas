@@ -11,6 +11,7 @@ import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.mockito.Mockito.when;
 
@@ -40,13 +41,13 @@ public class DifferentialProfileComparatorTest {
         allContrasts = Sets.newHashSet(contrastMock1, contrastMock2, contrastMock3);
         selectedContrasts = Sets.newHashSet(contrastMock1);
 
-        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP);
+        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP, 0.05);
     }
 
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
         //when
-        subject = new DifferentialProfileComparator(true, null, allContrasts, Regulation.UP);
+        subject = new DifferentialProfileComparator(true, null, allContrasts, Regulation.UP, 0.05);
 
         when(profileMock1.getSpecificity(Regulation.UP)).thenReturn(1);
         when(profileMock2.getSpecificity(Regulation.UP)).thenReturn(2);
@@ -71,17 +72,17 @@ public class DifferentialProfileComparatorTest {
 
         int comparison = subject.compare(profileMock1, profileMock2);
         // then
-        assertThat(comparison, is(lessThan(0)));
+        assertThat(comparison, is(greaterThanOrEqualTo(0)));
 
     }
 
     @Test
-    public void testGetAveragesSum() throws Exception {
+    public void testGetExpressionLevelFoldChangeOn() throws Exception {
         //when
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts, Regulation.UP)).thenReturn(0.01);
         when(profileMock1.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock2, contrastMock3), Regulation.UP)).thenReturn(0.02);
 
         //then
-        assertThat(subject.getAveragesSum(profileMock1), is(0.03));
+        assertThat(subject.getExpressionLevelFoldChangeOn(profileMock1), is(2D));
     }
 }
