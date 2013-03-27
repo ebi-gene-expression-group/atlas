@@ -2,22 +2,35 @@ package uk.ac.ebi.atlas.commons.readers;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class TsvReaderIT {
 
-    private static final String PATH_TEMPLATE = "web/src/test/resources/magetab/{0}/{0}-analysis-methods.tsv";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+
+    @Value("#{configuration['experiment.analysis-method.path.template']}")
+    private String analysisMethodsTemplate;
+
+    @Value("#{configuration['experiment.experiment-design.path.template']}")
+    private String experimentDesignTemplate;
 
     private TsvReader subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new TsvReaderImpl(PATH_TEMPLATE);
+        subject = new TsvReaderImpl(analysisMethodsTemplate);
     }
 
     @Test
@@ -43,7 +56,7 @@ public class TsvReaderIT {
     public void readExpDesignAll() {
 
         // given
-        subject = new TsvReaderImpl("web/src/test/resources/magetab/{0}/ExpDesign-{0}.tsv");
+        subject = new TsvReaderImpl(experimentDesignTemplate);
         List<String[]> result = subject.readAll(EXPERIMENT_ACCESSION);
         String[] firstLine = result.get(0);
         String[] lastLine = result.get(result.size() - 1);
