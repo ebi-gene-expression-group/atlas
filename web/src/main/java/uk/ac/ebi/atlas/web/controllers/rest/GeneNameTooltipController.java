@@ -27,6 +27,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Multimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -78,32 +79,37 @@ public class GeneNameTooltipController {
     public String getTooltipContent(@RequestParam(value = "geneName") String geneName,
                                     @RequestParam(value = "identifier") String identifier) {
 
-
         Multimap<String, String> multimap = solrClient.fetchTooltipProperties(identifier);
 
         String synonyms = buildSynonyms(identifier, multimap);
 
-        String goTerms = toCsv(multimap.get("goterm"));
+        String goTerms = toCsv(multimap.get("goterm"), true);
 
-        String interproTerms = toCsv(multimap.get("interproterm"));
+        String interproTerms = toCsv(multimap.get("interproterm"), true);
 
         return MessageFormat.format(htmlTemplate, geneName, synonyms, goTerms, interproTerms);
 
     }
 
-    String toCsv(Collection<String> values){
-        return CollectionUtils.isEmpty(values) ? "NA" : WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + ", " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
+    String toCsv(Collection<String> values, boolean handleNotApplicable){
+        if (CollectionUtils.isEmpty(values) && !handleNotApplicable) {
+            return StringUtils.EMPTY;
+        }
+        return CollectionUtils.isEmpty(values) ?
+                "NA" : WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " , " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
     }
 
     private String buildSynonyms(String identifier, Multimap<String, String> multimap) {
 
-        String synonyms = Joiner.on(", ").join(multimap.get("synonym"));
+        String synonyms = toCsv(multimap.get("synonym"), false);
+
+        identifier = WORD_SPAN_OPEN + identifier + WORD_SPAN_CLOSE;
 
         if (synonyms.isEmpty()){
             return identifier;
         }
 
-        return Joiner.on(", ").join(synonyms, identifier);
+        return Joiner.on(" , ").join(synonyms, identifier);
     }
 
 }
