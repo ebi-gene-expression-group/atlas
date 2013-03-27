@@ -164,11 +164,12 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    private String buildGeneQuery(String query, boolean exactMatch, String species) {
+    String buildGeneQuery(String query, boolean exactMatch, String species) {
+        String propertyName = exactMatch? "property_lower":"property_search";
 
         StringBuilder sb = new StringBuilder();
-        sb.append("{!lucene q.op=OR df=" + (exactMatch? "property_lower":"property_search") + "} ");
-        sb.append(query);
+        sb.append("{!lucene q.op=OR df=" + propertyName + "} ");
+        sb.append("("+ propertyName +":").append(query).append(")");
         sb.append(" AND species:\"");
         sb.append(species);
         sb.append("\"&start=0&rows=100000");
@@ -195,7 +196,7 @@ public class SolrQueryService {
         return query.toString();
     }
 
-    private String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
+    String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("property_edgengram:\"");

@@ -79,13 +79,12 @@ public class SolrClient {
 
     }
 
-    public Set<String> findGeneIds(String searchText, boolean exactMatch, String species) throws GenesNotFoundException {
+    public Set<String> findGeneIds(String geneQuery, boolean exactMatch, String species) throws GenesNotFoundException {
         try {
             String lowercaseSpecies = species.toLowerCase();
-            String geneQuery = buildQueryAllTextString(customEscape(searchText));
             List<String> geneIds = solrQueryService.getGeneIds(geneQuery, exactMatch, lowercaseSpecies);
             if (geneIds.isEmpty()) {
-                throw new GenesNotFoundException("No genes found for searchText = " + searchText + ", species = " + lowercaseSpecies);
+                throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + lowercaseSpecies);
             }
             return toUppercase(geneIds);
         } catch (SolrServerException e) {
@@ -195,14 +194,6 @@ public class SolrClient {
             result.add(geneId.toUpperCase());
         }
         return result;
-    }
-
-    String buildQueryAllTextString(String searchText) {
-        StringBuilder stringBuilder = new StringBuilder("(property_search:");
-        stringBuilder.append(searchText);
-        stringBuilder.append(")");
-
-        return stringBuilder.toString();
     }
 
     private String customEscape(String searchText) {
