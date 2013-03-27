@@ -36,7 +36,7 @@ public class ExperimentDesignTablePage extends TablePage {
     private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design";
 
     @FindBy(id = "experiment-design-table")
-    private WebElement experimentDesignTable;
+    protected WebElement experimentDesignTable;
 
     @FindBy(id = "experiment-design-table_info")
     private WebElement experimentDesignTableInfo;
