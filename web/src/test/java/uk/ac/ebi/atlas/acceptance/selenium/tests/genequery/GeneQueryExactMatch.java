@@ -23,9 +23,12 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genequery;
 
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
@@ -33,20 +36,21 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 public class GeneQueryExactMatch extends SeleniumFixture {
 
     private static final String E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH = "geneQuery=binding%20%22mRNA%20splicing,%20via%20spliceosome%22&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
     private static final String E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH = "geneQuery=%22mitochondrially+encoded+ATP+synthase+8%22&exactMatch=true&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&queryFactorValues=liver&_queryFactorValues=1&specific=true&cutoff=0.5";
-    private static final String E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH_WITH_UNQUOTED_TERMS = "geneQuery=%22mitochondrially+encoded+ATP+synthase+8%22&exactMatch=true&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&queryFactorValues=liver&_queryFactorValues=1&specific=true&cutoff=0.5";
+    private static final String E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH_WITH_UNQUOTED_TERMS = "geneQuery=mitochondrially+encoded+ATP+synthase+8&exactMatch=true&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&queryFactorValues=liver&_queryFactorValues=1&specific=true&cutoff=0.5";
 
-    protected HeatmapTablePage subject;
+    protected HeatmapTableWithSearchFormPage subject;
 
     @Test
     public void shouldReturnOnlyGenesWithPropertyValuesExactlyMatchingToAtLeastOneOfTheProvidedGeneQueryTerms() {
         //given
-        subject = new HeatmapTablePage(driver, E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH);
+        subject = new HeatmapTableWithSearchFormPage(driver, E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH);
         //when
         subject.get();
 
@@ -59,7 +63,7 @@ public class GeneQueryExactMatch extends SeleniumFixture {
     @Test
     public void shouldReturnOnlyOneGene() {
         //given
-        subject = new HeatmapTablePage(driver, "E-MTAB-599", E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH);
+        subject = new HeatmapTableWithSearchFormPage(driver, "E-MTAB-599", E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH);
         //when
         subject.get();
 
@@ -71,13 +75,12 @@ public class GeneQueryExactMatch extends SeleniumFixture {
     @Test
     public void shouldReturnNoGene() {
         //given
-        subject = new HeatmapTablePage(driver, "E-MTAB-599", E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH_WITH_UNQUOTED_TERMS);
+        subject = new HeatmapTableWithSearchFormPage(driver, "E-MTAB-599", E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH_WITH_UNQUOTED_TERMS);
         //when
         subject.get();
 
         //then
-        assertThat(subject.getSelectedGenes().size(), is(0));
-
+        subject.getHeatmapMessage();
     }
 
 }
