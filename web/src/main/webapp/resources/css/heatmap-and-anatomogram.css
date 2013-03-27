@@ -60,5 +60,9 @@
     position: relative;
     display: table;
     height: 100%;
-    width:100%;
+    width: 100%;
+}
+
+.pvalue-tooltip-styling {
+    padding: 2px;
 }
