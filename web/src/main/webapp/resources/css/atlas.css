@@ -223,3 +223,9 @@ a.help-icon {
     display:inline-block;
     text-align: left;
 }
+
+.property-value-markup {
+
+    background-color: rgb(196, 196, 196);
+
+}

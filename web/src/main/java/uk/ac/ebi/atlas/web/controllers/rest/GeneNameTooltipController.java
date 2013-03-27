@@ -27,8 +27,6 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Multimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -37,7 +35,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBuffer;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -50,6 +47,8 @@ import java.util.Collection;
 @Scope("request")
 public class GeneNameTooltipController {
     private static final Logger LOGGER = Logger.getLogger(GeneNameTooltipController.class);
+    private static final String WORD_SPAN_OPEN = "<span class='property-value-markup'>";
+    private static final String WORD_SPAN_CLOSE = "</span>";
 
     private SolrClient solrClient;
 
@@ -93,7 +92,7 @@ public class GeneNameTooltipController {
     }
 
     String toCsv(Collection<String> values){
-        return CollectionUtils.isEmpty(values) ? "NA" : Joiner.on(", ").join(values);
+        return CollectionUtils.isEmpty(values) ? "NA" : WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + ", " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
     }
 
     private String buildSynonyms(String identifier, Multimap<String, String> multimap) {
