@@ -46,9 +46,11 @@ public abstract class AbstractCommandExecutor<T, K> implements CommandExecutor<T
     private Set<String> getSelectedGeneIds() throws GenesNotFoundException {
         Set<String> selectedGeneIds = null;
 
-        if (StringUtils.isNotBlank(getRequestContext().getGeneQuery())) {
+        RequestContext requestContext = getRequestContext();
 
-            selectedGeneIds = solrClient.findGeneIds(getRequestContext().getGeneQuery(), getRequestContext().isExactMatch(), getRequestContext().getFilteredBySpecies());
+        if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
+
+            selectedGeneIds = solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.isExactMatch(), requestContext.getFilteredBySpecies());
 
         }
         return selectedGeneIds;

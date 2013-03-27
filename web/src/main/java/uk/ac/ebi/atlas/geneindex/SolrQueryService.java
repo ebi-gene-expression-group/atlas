@@ -164,14 +164,18 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    private String buildGeneQuery(String query, boolean exactMatch, String species) {
+    String buildGeneQuery(String query, boolean exactMatch, String species) {
+        String propertyName = exactMatch? "property_lower":"property_search";
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("{!lucene q.op=OR df=" + (exactMatch? "property_lower":"property_search") + "} ");
-        sb.append(query);
-        sb.append(" AND species:\"");
-        sb.append(species);
-        sb.append("\"&start=0&rows=100000");
+        String escapedGeneQuery = customEscape(query);
+
+        StringBuilder sb =
+                new StringBuilder()
+                    .append("{!lucene q.op=OR df=" + propertyName + "} ")
+                    .append("("+ propertyName +":").append(escapedGeneQuery).append(")")
+                    .append(" AND species:\"")
+                    .append(species)
+                    .append("\"&start=0&rows=100000");
         return sb.toString();
 
     }
@@ -195,7 +199,7 @@ public class SolrQueryService {
         return query.toString();
     }
 
-    private String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
+    String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("property_edgengram:\"");
@@ -227,4 +231,8 @@ public class SolrQueryService {
         return solrQuery;
     }
 
+
+    private String customEscape(String searchText) {
+        return searchText.replace(":", "\\:");
+    }
 }

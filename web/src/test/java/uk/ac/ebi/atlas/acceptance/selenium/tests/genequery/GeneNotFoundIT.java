@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.selenium.tests;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.genequery;
 
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;

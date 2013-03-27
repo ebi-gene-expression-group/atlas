@@ -32,49 +32,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public abstract class SeleniumFixture {
-
-    private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
-
-    //Uncomment this if you want to use local firefox browser
-    //protected FirefoxDriver driver;
-
-    //comment this if you want to use local firefox browser
-    protected WebDriver driver;
+public class SeleniumFixture extends SinglePageSeleniumFixture{
 
 
-    @Before
-    public void bootstrapTest() {
-        initializeFirefoxDriver();
+    @Override
+    protected void getStartingPage() {
+        //do nothing... test classes extending this fixture are responsible of instantiating and using Page classes
     }
-
-    @After
-    public void closeDriver() {
-        driver.quit();
-    }
-
-    private void initializeFirefoxDriver() {
-
-        //uncomment this if you want to use local firefox driver
-        //this.driver = new FirefoxDriver();
-
-
-        //comment this if you want to use local firefox browser
-        try {
-
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            capabilities.setJavascriptEnabled(true);
-            capabilities.setBrowserName("firefox");
-
-            this.driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
-
-        } catch (MalformedURLException e) {
-
-            e.printStackTrace();
-
-        }
-        //
-
-    }
-
 }

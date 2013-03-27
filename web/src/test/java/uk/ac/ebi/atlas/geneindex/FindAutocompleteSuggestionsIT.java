@@ -43,31 +43,13 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class SolrClientIT {
+public class FindAutocompleteSuggestionsIT {
 
     private static final String HOMO_SAPIENS_SPECIES = "homo sapiens";
     private static final String MUS_MUSCULUS_SPECIES = "mus musculus";
 
     @Inject
     private SolrClient subject;
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @Test
-    public void testFetchTooltipProperties() throws Exception {
-
-        // given
-        Multimap<String, String> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
-
-        assertThat(properties.size(), Matchers.is(24));
-        assertThat(properties.get("synonym").size(), Matchers.is(5));
-        assertThat(properties.get("synonym"), Matchers.hasItems("Calmbp1", "MCPH5", "ASP"));
-        assertThat(properties.get("goterm"), Matchers.hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
-        assertThat(properties.get("interproterm"), Matchers.hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
-    }
 
     @Test
     public void findGeneNameSuggestionsForPartialGeneNames() {
