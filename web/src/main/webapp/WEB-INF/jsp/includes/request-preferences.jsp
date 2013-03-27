@@ -103,7 +103,7 @@
                         <form:select path="queryFactorValues" data-placeholder="(Any ${queryFactorName})"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
-                                     cssStyle="width:300px"
+                                     cssStyle="width:300px;"
                                      disabled="${isSingleContrast ? true : false}"/>
                     </div>
                     <span>

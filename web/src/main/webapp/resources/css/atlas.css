@@ -24,6 +24,10 @@
     background-color: white;
 }
 
+.chzn-choices {
+    min-height: 48px;
+}
+
 .barchart-tooltip {
     position: fixed;
     border: 2px solid rgb(238, 195, 46);
