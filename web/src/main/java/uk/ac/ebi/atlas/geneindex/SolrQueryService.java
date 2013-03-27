@@ -112,11 +112,14 @@ public class SolrQueryService {
         return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
     }
 
-    private List<String> fetchGeneIdentifiersFromSolr(String queryString) throws SolrServerException {
+    List<String> fetchGeneIdentifiersFromSolr(String queryString) throws SolrServerException {
         List<String> results = Lists.newArrayList();
 
         SolrQuery query = new SolrQuery(queryString);
         query.setFields("identifier");
+        query.setParam("group", true);
+        query.setParam("group.field", "identifier");
+        query.setParam("group.main", true);
         query.setRows(100000);
 
         LOGGER.debug("<fetchGeneIdentifiersFromSolr> processing solr query: " + query.toString());
@@ -129,7 +132,7 @@ public class SolrQueryService {
         return results;
     }
 
-    private Multimap<String, String> querySolrForProperties(String queryString, int limitResults) throws SolrServerException {
+    Multimap<String, String> querySolrForProperties(String queryString, int limitResults) throws SolrServerException {
         SolrQuery solrQuery = new SolrQuery(queryString);
         solrQuery.setRows(limitResults);
         solrQuery.setFields("property", "property_type");
@@ -148,7 +151,7 @@ public class SolrQueryService {
         return results;
     }
 
-    private List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) throws SolrServerException {
+    List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) throws SolrServerException {
         SolrQuery solrQuery = buildSolrQuery(queryString, resultField, limitResults);
 
         LOGGER.debug("<getSolrResultsForQuery> processing solr query: " + solrQuery.getQuery());
@@ -165,22 +168,22 @@ public class SolrQueryService {
     }
 
     String buildGeneQuery(String query, boolean exactMatch, String species) {
-        String propertyName = exactMatch? "property_lower":"property_search";
+        String propertyName = exactMatch ? "property_lower" : "property_search";
 
         String escapedGeneQuery = customEscape(query);
 
         StringBuilder sb =
                 new StringBuilder()
-                    .append("{!lucene q.op=OR df=" + propertyName + "} ")
-                    .append("("+ propertyName +":").append(escapedGeneQuery).append(")")
-                    .append(" AND species:\"")
-                    .append(species)
-                    .append("\"&start=0&rows=100000");
+                        .append("{!lucene q.op=OR df=" + propertyName + "} ")
+                        .append("(" + propertyName + ":").append(escapedGeneQuery).append(")")
+                        .append(" AND species:\"")
+                        .append(species)
+                        .append("\"");
         return sb.toString();
 
     }
 
-    private String buildCompositeQueryIdentifier(String identifier, String[] propertyTypes) {
+    String buildCompositeQueryIdentifier(String identifier, String[] propertyTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("identifier:\"");
@@ -232,7 +235,7 @@ public class SolrQueryService {
     }
 
 
-    private String customEscape(String searchText) {
+    String customEscape(String searchText) {
         return searchText.replace(":", "\\:");
     }
 }
