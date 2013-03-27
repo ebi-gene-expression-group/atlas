@@ -26,8 +26,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class SolrQueryServiceTest {
@@ -47,9 +45,9 @@ public class SolrQueryServiceTest {
     @Test
     public void testBuildQueryAllTextString() {
         String query = "GO:0008134 \"p53 binding\"";
-        assertThat(subject.buildGeneQuery(query, false, "sapiens"), containsString("(property_search:GO:0008134 \"p53 binding\")"));
+        assertThat(subject.buildGeneQuery(query, false, "sapiens"), containsString("(property_search:GO\\:0008134 \"p53 binding\")"));
 
         query = "GO:0008134 \"p53 binding";
-        assertThat(subject.buildGeneQuery(query, false, "sapiens"), containsString("(property_search:GO:0008134 \"p53 binding)"));
+        assertThat(subject.buildGeneQuery(query, false, "sapiens"), containsString("(property_search:GO\\:0008134 \"p53 binding)"));
     }
 }
