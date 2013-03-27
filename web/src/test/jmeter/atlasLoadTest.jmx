@@ -365,6 +365,13 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">geneQuery</stringProp>
               </elementProp>
+              <elementProp name="exactMatch" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">false</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">exactMatch</stringProp>
+              </elementProp>
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain"></stringProp>
@@ -425,6 +432,13 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">geneQuery</stringProp>
               </elementProp>
+              <elementProp name="exactMatch" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">false</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">exactMatch</stringProp>
+              </elementProp>
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain"></stringProp>
@@ -479,7 +493,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="geneQuery" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">ENSG00000127720, ENSG00000244656, ENSG00000224440, ENSG00000261140, ENSG00000221200, ENSG00000266468, ENSG00000237787, ENSG00000051596, ENSG00000250532, ENSG00000236211, ENSG00000228738, ENSG00000252559, ENSG00000214684, ENSG00000236118, ENSG00000213697, ENSG00000135541, ENSG00000252927, ENSG00000143376, ENSG00000212066, ENSG00000256006, ENSG00000258324, ENSG00000206917, ENSG00000172172, ENSG00000100218, ENSG00000262864, ENSG00000199273, ENSG00000225937, ENSG00000132604, ENSG00000111218, ENSG00000254025, ENSG00000142185, ENSG00000228682, ENSG00000162676, ENSG00000131724, ENSG00000259444, ENSG00000224647, ENSG00000258527, ENSG00000213417, ENSG00000232842, ENSG00000257711, ENSG00000235293, ENSG00000263587, ENSG00000112812, ENSG00000263861, ENSG00000258050</stringProp>
+                <stringProp name="Argument.value">ENSG00000127720 ENSG00000244656 ENSG00000224440 ENSG00000261140 ENSG00000221200 ENSG00000266468 ENSG00000237787 ENSG00000051596 ENSG00000250532 ENSG00000236211 ENSG00000228738 ENSG00000252559 ENSG00000214684 ENSG00000236118 ENSG00000213697 ENSG00000135541 ENSG00000252927 ENSG00000143376 ENSG00000212066 ENSG00000256006 ENSG00000258324 ENSG00000206917 ENSG00000172172 ENSG00000100218 ENSG00000262864 ENSG00000199273 ENSG00000225937 ENSG00000132604 ENSG00000111218 ENSG00000254025 ENSG00000142185 ENSG00000228682 ENSG00000162676 ENSG00000131724 ENSG00000259444 ENSG00000224647 ENSG00000258527 ENSG00000213417 ENSG00000232842 ENSG00000257711 ENSG00000235293 ENSG00000263587 ENSG00000112812 ENSG00000263861 ENSG00000258050</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">geneQuery</stringProp>
