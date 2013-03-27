@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 

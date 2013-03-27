@@ -7,6 +7,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 
@@ -48,5 +51,6 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
     protected void isLoaded() throws Error {
         String url = driver.getCurrentUrl();
         assertThat(url, endsWith(Joiner.on("?").skipNulls().join(getPageURI(), httpParameters)));
+
     }
 }
