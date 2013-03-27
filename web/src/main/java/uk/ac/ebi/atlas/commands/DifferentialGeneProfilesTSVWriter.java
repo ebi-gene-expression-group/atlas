@@ -23,11 +23,11 @@ public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Dif
     }
 
     @Override
-    protected List<String> buildColumnNames(SortedSet<String> conditionNames) {
+    protected List<String> buildColumnNames(SortedSet<Contrast> conditions) {
         List<String> columnNames = new ArrayList<>();
-        for (String conditionName : conditionNames) {
-            columnNames.add(conditionName + ".p-value");
-            columnNames.add(conditionName + ".log2foldchange");
+        for (Contrast condition : conditions) {
+            columnNames.add(condition.getDisplayName() + ".p-value");
+            columnNames.add(condition.getDisplayName() + ".log2foldchange");
         }
 
         return columnNames;
@@ -35,12 +35,17 @@ public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Dif
 
     @Override
     protected String[] buildExpressionsRow(final DifferentialProfile geneProfile, SortedSet<Contrast> contrasts) {
-        String[] expressionLevels = new String[contrasts.size()*2];
+        String[] expressionLevels = new String[contrasts.size() * 2];
         int i = 0;
         for (Contrast contrast : contrasts) {
             DifferentialExpression expression = geneProfile.getExpression(contrast);
-            expressionLevels[i++] = getValueToString(expression.getLevel());
-            expressionLevels[i++] = getValueToString(expression.getFoldChange());
+            if (expression != null) {
+                expressionLevels[i++] = getValueToString(expression.getLevel());
+                expressionLevels[i++] = getValueToString(expression.getFoldChange());
+            } else {
+                expressionLevels[i++] = "NA";
+                expressionLevels[i++] = "NA";
+            }
         }
         return expressionLevels;
     }

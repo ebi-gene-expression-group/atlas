@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +66,7 @@ public class GeneProfilesTSVWriterTest {
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
 
-    private GeneProfilesTSVWriter subject;
+    private BaselineProfilesTSVWriter subject;
 
     private SortedSet<Factor> organismParts;
 
@@ -101,14 +100,14 @@ public class GeneProfilesTSVWriterTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new GeneProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock);
+        subject = new BaselineProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock);
         subject.setResponseWriter(printWriterMock);
     }
 
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(inputStreamMock, Factor.getValues(organismParts), organismParts);
+        long count = subject.apply(inputStreamMock, organismParts);
 
         verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 
@@ -122,8 +121,8 @@ public class GeneProfilesTSVWriterTest {
 
     @Test
     public void buildCsvHeadersTest() {
-        String[] headers = subject.buildCsvHeaders(Sets.newTreeSet(Lists.newArrayList("adipose", "brain")));
-        assertThat(headers, is(new String[]{"Gene name", "Gene Id", "adipose", "brain"}));
+        String[] headers = subject.buildCsvHeaders(organismParts);
+        assertThat(headers, is(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"}));
     }
 
     @Test

@@ -6,7 +6,6 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,12 +18,12 @@ public class WriteGeneProfilesCommandExecutor extends AbstractCommandExecutor<Lo
 
     protected static final Logger logger = Logger.getLogger(WriteGeneProfilesCommandExecutor.class);
 
-    private GeneProfilesTSVWriter geneProfileWriter;
+    private BaselineProfilesTSVWriter geneProfileWriter;
 
     private BaselineRequestContext requestContext;
 
     @Inject
-    public WriteGeneProfilesCommandExecutor(GeneProfilesTSVWriter geneProfileWriter, BaselineRequestContext requestContext) {
+    public WriteGeneProfilesCommandExecutor(BaselineProfilesTSVWriter geneProfileWriter, BaselineRequestContext requestContext) {
         this.geneProfileWriter = geneProfileWriter;
         this.requestContext = requestContext;
     }
@@ -32,7 +31,7 @@ public class WriteGeneProfilesCommandExecutor extends AbstractCommandExecutor<Lo
     @Override
     protected Long execute(ObjectInputStream<BaselineProfile> inputStream) {
         try {
-            return geneProfileWriter.apply(inputStream, Factor.getValues(requestContext.getAllQueryFactors()), requestContext.getAllQueryFactors());
+            return geneProfileWriter.apply(inputStream, requestContext.getAllQueryFactors());
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");

@@ -23,16 +23,13 @@
 package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -40,9 +37,7 @@ import java.util.SortedSet;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
-@Named("geneProfileWriter")
-@Scope("prototype")
-public class GeneProfilesTSVWriter<T extends GeneProfile, K> {
+public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
 
     private CSVWriter csvWriter;
 
@@ -55,10 +50,10 @@ public class GeneProfilesTSVWriter<T extends GeneProfile, K> {
         this.geneNamesProvider = geneNamesProvider;
     }
 
-    protected Long apply(ObjectInputStream<T> inputStream, SortedSet<String> conditionNames, SortedSet<K> conditions) throws IOException {
+    protected Long apply(ObjectInputStream<T> inputStream, SortedSet<K> conditions) throws IOException {
         long count = 0;
 
-        csvWriter.writeNext(buildCsvHeaders(conditionNames));
+        csvWriter.writeNext(buildCsvHeaders(conditions));
 
         T geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
@@ -72,7 +67,7 @@ public class GeneProfilesTSVWriter<T extends GeneProfile, K> {
         return count;
     }
 
-    protected String[] buildCsvHeaders(SortedSet<String> factorValues) {
+    protected String[] buildCsvHeaders(SortedSet<K> factorValues) {
         List<String> columnNames = buildColumnNames(factorValues);
         return buildCsvRow(new String[]{"Gene name", "Gene Id"}, columnNames.toArray(new String[columnNames.size()]));
     }
@@ -84,9 +79,7 @@ public class GeneProfilesTSVWriter<T extends GeneProfile, K> {
         return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), geneId}, expressionLevels);
     }
 
-    protected List<String> buildColumnNames(SortedSet<String> conditionNames) {
-        return Lists.newArrayList(conditionNames);
-    }
+    protected abstract List<String> buildColumnNames(SortedSet<K> conditionNames);
 
     protected String[] buildExpressionsRow(T geneProfile, SortedSet<K> factors) {
         String[] expressionLevels = new String[factors.size()];
