@@ -79,9 +79,10 @@ public class ExperimentDesignPageControllerIT {
         Type stringIntegerMapType = new TypeToken<Map<String, Integer>>() {
         }.getType();
         Map<String, Integer> samples = gson.fromJson((String) map.get("samples"), stringIntegerMapType);
-        assertThat(samples.get("Organism"), is(1));
+        assertThat(samples.get("ecotype"), is(1));
+        assertThat(samples.get("Organism"), is(2));
         Map<String, Integer> factors = gson.fromJson((String) map.get("factors"), stringIntegerMapType);
-        assertThat(factors.get("strain or line"), is(2));
+        assertThat(factors.get("genotype"), is(3));
 
         // and
         Type listStringArrayType = new TypeToken<List<String[]>>() {
