@@ -73,11 +73,11 @@ function initHeatmapDisplayValueToggle() {
 
     $("#heatmap-table td:has(div[data-fold-change])").attr('title', '').tooltip(
         {
-            open: function( event, ui ) {
+            open:function (event, ui) {
                 var colour = $(this).find("div").attr("data-color");
-                ui.tooltip.css('background',colour);
+                ui.tooltip.css('background', colour);
             },
-            tooltipClass:"help-tooltip",
+            tooltipClass:"help-tooltip pvalue-tooltip-styling",
 
             content:function (callback) {
                 var foldChange = $(this).find("div").attr("data-fold-change"),
@@ -121,7 +121,6 @@ function initHeatmapDisplayValueToggle() {
                 $(this).append(organismPartName);
             }
         });
-
 
 
 }

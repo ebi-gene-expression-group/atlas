@@ -14,9 +14,9 @@ public class DifferentialExpressionTest {
         DifferentialExpression expression = new DifferentialExpression(1.0, -1.0, null);
 
         //then
-        assertThat(expression.isForRegulation(Regulation.UP_DOWN), is(true));
-        assertThat(expression.isForRegulation(Regulation.UP), is(false));
-        assertThat(expression.isForRegulation(Regulation.DOWN), is(true));
+        assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
+        assertThat(expression.isRegulatedLike(Regulation.UP), is(false));
+        assertThat(expression.isRegulatedLike(Regulation.DOWN), is(true));
     }
 
     @Test
@@ -25,9 +25,9 @@ public class DifferentialExpressionTest {
         DifferentialExpression expression = new DifferentialExpression(1.0, 1.0, null);
 
         //then
-        assertThat(expression.isForRegulation(Regulation.UP_DOWN), is(true));
-        assertThat(expression.isForRegulation(Regulation.UP), is(true));
-        assertThat(expression.isForRegulation(Regulation.DOWN), is(false));
+        assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
+        assertThat(expression.isRegulatedLike(Regulation.UP), is(true));
+        assertThat(expression.isRegulatedLike(Regulation.DOWN), is(false));
     }
 
 }
