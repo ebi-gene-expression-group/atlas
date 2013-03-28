@@ -112,12 +112,12 @@ public class DifferentialProfileTest {
     @Test
     public void getAverageExpressionLevelOnShouldReturnAverageValueOfOneExpression() throws Exception {
         //given
-        given(differentialExpressionMock1.isForRegulation(Regulation.DOWN)).willReturn(true);
+        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
-        given(differentialExpressionMock2.isForRegulation(Regulation.DOWN)).willReturn(false);
+        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(false);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
@@ -133,12 +133,12 @@ public class DifferentialProfileTest {
     @Test
     public void getAverageExpressionLevelOnShouldReturnAverageValueOfBoth() throws Exception {
         //given
-        given(differentialExpressionMock1.isForRegulation(Regulation.DOWN)).willReturn(true);
+        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
-        given(differentialExpressionMock2.isForRegulation(Regulation.DOWN)).willReturn(true);
+        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(0.5D);
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);

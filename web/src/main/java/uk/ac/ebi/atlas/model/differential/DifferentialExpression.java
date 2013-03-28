@@ -51,7 +51,7 @@ public class DifferentialExpression implements GeneExpression{
         return (getFoldChange() == Double.MAX_VALUE) || (getFoldChange() == Double.MIN_VALUE);
     }
 
-    public boolean isForRegulation(Regulation regulation) {
+    public boolean isRegulatedLike(Regulation regulation) {
         return Regulation.UP_DOWN.equals(regulation)
                 || Regulation.UP.equals(regulation) && isOverExpressed()
                 || Regulation.DOWN.equals(regulation) && isUnderExpressed();

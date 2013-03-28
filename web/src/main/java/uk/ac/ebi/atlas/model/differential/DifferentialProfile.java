@@ -87,7 +87,7 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
 
         for (Contrast condition : conditions) {
             DifferentialExpression expression = getExpression(condition);
-            if (expression != null && expression.isForRegulation(regulation)) {
+            if (expression != null && expression.isRegulatedLike(regulation)) {
                 expressionLevel += expression.getLevel();
             }
         }
