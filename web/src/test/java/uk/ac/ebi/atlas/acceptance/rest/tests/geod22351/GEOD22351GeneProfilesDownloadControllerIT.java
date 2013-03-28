@@ -57,7 +57,7 @@ public class GEOD22351GeneProfilesDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Gene name", "Gene Id", "g1_g2.p-value", "g1_g2.log2foldchange")
+                contains("Gene name", "Gene Id", "genotype:'expressing human TDP-43' vs 'non transgenic'.p-value", "genotype:'expressing human TDP-43' vs 'non transgenic'.log2foldchange")
         );
 
     }
