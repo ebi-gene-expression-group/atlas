@@ -70,6 +70,9 @@ public class AnnotationEnvironment {
 
     @PostConstruct
     public void initBerkeleyReadonly() {
+        //first init DBs in with read/write access in a case db doesn't exists
+        initBerkeleyDatabase(false);
+        close();
         initBerkeleyDatabase(true);
     }
 
@@ -155,6 +158,7 @@ public class AnnotationEnvironment {
     @PreDestroy
     public void close() {
         geneNameDatabase.close();
+        designElementDatabase.close();
         environment.close();
         logger.info("<close> gene name database successfully closed");
     }

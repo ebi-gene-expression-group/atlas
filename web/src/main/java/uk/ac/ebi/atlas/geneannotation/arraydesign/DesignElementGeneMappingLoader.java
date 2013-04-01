@@ -76,7 +76,7 @@ public class DesignElementGeneMappingLoader {
     }
 
     protected ObjectValueTransactionWorker<String, Map.Entry<String, String>> getStringEntryObjectValueTransactionWorker() {
-        return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>() {
+        return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>(annotationEnvironment.geneDesignElementsToGeneNames()) {
                 @Override
                 protected String getValue() {
                     return getRow().getValue();
@@ -97,7 +97,8 @@ public class DesignElementGeneMappingLoader {
     protected Map<String, String> convertJson(String jsonString) {
         Gson gson = new Gson();
         Type mapType = new TypeToken<Map<String, String>>(){}.getType();
-        return gson.fromJson(jsonString, mapType);
+        Map<String, String> allMap = gson.fromJson(jsonString, mapType);
+        return gson.fromJson(allMap.get("exportText"), mapType);
     }
 
 
