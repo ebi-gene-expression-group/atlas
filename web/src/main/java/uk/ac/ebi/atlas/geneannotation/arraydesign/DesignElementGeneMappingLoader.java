@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.geneannotation.arraydesign;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.sleepycat.collections.TransactionRunner;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
@@ -42,20 +43,14 @@ public class DesignElementGeneMappingLoader {
 
 
     protected void loadAnnotations(Map<String, String> designElements,
-                                   ObjectValueTransactionWorker transactionWorker) {
-
-        String[] row;
+                                   ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker) {
 
         transactionRunner = annotationEnvironment.getTransactionRunner();
-
-        for (Map.Entry<String, String> stringStringEntry : designElements.entrySet()) {
-            row = stringStringEntry.
-        }
-
         try {
-            while ((row = annotationsInputStream.readNext()) != null) {
-                transactionRunner.run(transactionWorker.setRow(row));
+            for (Map.Entry<String, String> deName : designElements.entrySet()) {
+                transactionRunner.run(transactionWorker.setRow(deName));
             }
+
         } catch (Exception e) {
             throw new IllegalStateException("Exception while loading annotations.", e);
         }
@@ -70,36 +65,38 @@ public class DesignElementGeneMappingLoader {
 
         turnOffReadonly();
 
-        ObjectValueTransactionWorker<String> transactionWorker = new ObjectValueTransactionWorker<String>(annotationEnvironment.geneDesignElementsToGeneNames()) {
-
-            @Override
-            protected String getValue() {
-                return null;
-            }
-
-            @Override
-            protected String getKey() {
-                return null;
-            }
-
-            @Override
-            protected boolean isEmptyValue(String value) {
-                return false;
-            }
-        };
+        ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker = getStringEntryObjectValueTransactionWorker();
 
 
-        loadAnnotations(annotationsInputStream, transactionWorker);
+        loadAnnotations(designElements, transactionWorker);
 
 
         turnOnReadOnly();
 
     }
 
-    private Map<String, String> convertJson(String jsonString) {
+    protected ObjectValueTransactionWorker<String, Map.Entry<String, String>> getStringEntryObjectValueTransactionWorker() {
+        return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>() {
+                @Override
+                protected String getValue() {
+                    return getRow().getValue();
+                }
+
+                @Override
+                protected String getKey() {
+                    return getRow().getKey();
+                }
+
+                @Override
+                protected boolean isEmptyValue(String value) {
+                    return StringUtils.isBlank(value);
+                }
+            };
+    }
+
+    protected Map<String, String> convertJson(String jsonString) {
         Gson gson = new Gson();
-        Type mapType = new TypeToken<Map<String, String>>() {
-        }.getType();
+        Type mapType = new TypeToken<Map<String, String>>(){}.getType();
         return gson.fromJson(jsonString, mapType);
     }
 

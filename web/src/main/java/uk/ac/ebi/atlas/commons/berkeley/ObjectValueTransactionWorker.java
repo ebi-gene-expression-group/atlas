@@ -32,6 +32,9 @@ public abstract class ObjectValueTransactionWorker<V, T> implements TransactionW
 
     private T row;
 
+    protected ObjectValueTransactionWorker() {
+    }
+
     public ObjectValueTransactionWorker setRow(T row) {
         // this copy has been suggested by Sonar
         this.row = row;

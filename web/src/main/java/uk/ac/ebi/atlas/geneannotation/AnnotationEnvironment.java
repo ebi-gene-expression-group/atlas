@@ -109,10 +109,21 @@ public class AnnotationEnvironment {
     }
 
     public Database setupDatabase(boolean readonly, String dbName) {
-        DatabaseConfig dbConfig = new DatabaseConfig();
-        dbConfig.setAllowCreate(!readonly);
-        dbConfig.setReadOnly(readonly);
-        return environment.openDatabase(null, dbName, dbConfig);
+        try {
+            DatabaseConfig dbConfig = new DatabaseConfig();
+            dbConfig.setAllowCreate(!readonly);
+            dbConfig.setReadOnly(readonly);
+            return environment.openDatabase(null, dbName, dbConfig);
+        } catch (DatabaseNotFoundException e) {
+            Database database = setupDatabase(false, dbName);
+            if(readonly) {
+                database.close();
+                return  setupDatabase(readonly, dbName);
+            } else {
+                return database;
+            }
+        }
+
     }
 
 
