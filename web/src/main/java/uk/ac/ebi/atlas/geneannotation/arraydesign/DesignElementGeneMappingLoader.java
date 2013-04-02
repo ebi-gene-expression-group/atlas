@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
 import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
+import uk.ac.ebi.atlas.utils.DesignElementKeyGenerator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -65,7 +66,7 @@ public class DesignElementGeneMappingLoader {
 
         turnOffReadonly();
 
-        ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker = getStringEntryObjectValueTransactionWorker();
+        ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker = getTransactionWorker(arrayDesign);
 
 
         loadAnnotations(designElements, transactionWorker);
@@ -75,7 +76,7 @@ public class DesignElementGeneMappingLoader {
 
     }
 
-    protected ObjectValueTransactionWorker<String, Map.Entry<String, String>> getStringEntryObjectValueTransactionWorker() {
+    protected ObjectValueTransactionWorker<String, Map.Entry<String, String>> getTransactionWorker(final String arrayDesignAccession) {
         return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>(annotationEnvironment.geneDesignElementsToGeneNames()) {
                 @Override
                 protected String getValue() {
@@ -84,7 +85,7 @@ public class DesignElementGeneMappingLoader {
 
                 @Override
                 protected String getKey() {
-                    return getRow().getKey();
+                    return DesignElementKeyGenerator.getKey(arrayDesignAccession, getRow().getKey());
                 }
 
                 @Override

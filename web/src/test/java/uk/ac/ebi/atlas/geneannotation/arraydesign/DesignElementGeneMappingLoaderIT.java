@@ -6,8 +6,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
+import uk.ac.ebi.atlas.utils.DesignElementKeyGenerator;
 
 import javax.inject.Inject;
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,10 +36,12 @@ public class DesignElementGeneMappingLoaderIT {
 
         ConcurrentMap<String,String> map = annotationEnvironment.geneDesignElementsToGeneNames();
         assertThat(map.size(), is(greaterThan(20000)));
+        assertThat(map.get(DesignElementKeyGenerator.getKey(AD_ACCESSION, "209575_at")), is("ENSG00000243646"));
     }
 
     @Test
     public void testConvertJson() throws Exception {
-        subject.convertJson("");
+        Map<String,String> map = subject.convertJson("{\"exportText\":\"{209575_at:ENSG00000243646,1553147_at:ENSG00000164188}\"}");
+        assertThat(map.size(), is(2));
     }
 }
