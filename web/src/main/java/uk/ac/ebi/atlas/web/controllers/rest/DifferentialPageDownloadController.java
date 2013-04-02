@@ -28,8 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommandExecutor;
-import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -42,16 +42,16 @@ import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class DifferentialDownloadController {
-    private static final Logger LOGGER = Logger.getLogger(DifferentialDownloadController.class);
+public class DifferentialPageDownloadController {
+    private static final Logger LOGGER = Logger.getLogger(DifferentialPageDownloadController.class);
 
-    private final DifferentialRequestContextBuilder requestContextBuilder;
+    private final RnaSeqRequestContextBuilder requestContextBuilder;
 
-    private WriteDifferentialProfilesCommandExecutor writeGeneProfilesCommandExecutor;
+    private WriteDifferentialProfilesCommand writeGeneProfilesCommandExecutor;
 
     @Inject
-    public DifferentialDownloadController(
-            DifferentialRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommandExecutor writeGeneProfilesCommandExecutor) {
+    public DifferentialPageDownloadController(
+            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommandExecutor) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommandExecutor = writeGeneProfilesCommandExecutor;

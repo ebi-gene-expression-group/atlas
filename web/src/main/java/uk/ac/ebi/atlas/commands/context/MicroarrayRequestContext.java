@@ -20,43 +20,31 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands.context.impl;
+package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
-import java.util.Set;
 
 @Named
 @Scope("request")
-public class BaselineRequestContextImpl extends RequestContextImpl<Factor> implements BaselineRequestContext {
+public class MicroarrayRequestContext extends DifferentialRequestContext {
 
-    private Set<Factor> selectedFilterFactors;
 
-    public BaselineRequestContextImpl() {
-    }
-
-    @Override
-    public Set<Factor> getSelectedFilterFactors() {
-        return selectedFilterFactors;
-    }
-
-    @Override
-    public String getQueryFactorType() {
-        return requestPreferences.getQueryFactorType();
-    }
-    public void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
-        this.selectedFilterFactors = selectedFilterFactors;
-    }
+    private String arrayDesignName;
 
     @Override
     public String toString(){
         return Objects.toStringHelper(this.getClass())
-                .add("selectedFilterFactors", selectedFilterFactors).toString();
+                .add("arrayDesignName", arrayDesignName).toString();
     }
 
+    public void setArrayDesignAccession(String arrayDesignName) {
+        this.arrayDesignName = arrayDesignName;
+    }
 
+    public String getArrayDesignName() {
+        return arrayDesignName;
+    }
 }

@@ -22,25 +22,84 @@
 
 package uk.ac.ebi.atlas.commands.context;
 
-import java.io.Serializable;
+import com.google.common.base.Objects;
+import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
+
 import java.util.Set;
 import java.util.SortedSet;
 
 
-public interface RequestContext<T> extends Serializable {
-    String getGeneQuery();
+public class RequestContext<T, K extends ExperimentPageRequestPreferences> {
+    protected K requestPreferences;
+    private ExperimentType experimentType;
+    private Set<T> selectedQueryFactors;
+    private String filteredBySpecies;
+    private SortedSet<T> allQueryFactors;
 
-    Set<T> getSelectedQueryFactors();
+    public String getGeneQuery() {
+        return requestPreferences.getGeneQuery();
+    }
 
-    String getFilteredBySpecies();
+    public Integer getHeatmapMatrixSize() {
+        return requestPreferences.getHeatmapMatrixSize();
+    }
 
-    double getCutoff();
+    public Set<T> getSelectedQueryFactors() {
+        return selectedQueryFactors;
+    }
 
-    Integer getHeatmapMatrixSize();
+    public String getFilteredBySpecies() {
+        return filteredBySpecies;
+    }
 
-    boolean isSpecific();
+    public double getCutoff() {
+        return requestPreferences.getCutoff();
+    }
 
-    boolean isExactMatch();
+    public boolean isSpecific() {
+        return requestPreferences.isSpecific();
+    }
 
-    public SortedSet<T> getAllQueryFactors();
+    public boolean isExactMatch() {
+        return requestPreferences.isExactMatch();
+    }
+
+    public SortedSet<T> getAllQueryFactors() {
+        return this.allQueryFactors;
+    }
+
+    public void setAllQueryFactors(SortedSet<T> allQueryFactors) {
+        this.allQueryFactors = allQueryFactors;
+    }
+
+    public void setSelectedQueryFactors(Set selectedQueryFactors) {
+        this.selectedQueryFactors = selectedQueryFactors;
+    }
+
+    public void setFilteredBySpecies(String filteredBySpecies) {
+        this.filteredBySpecies = filteredBySpecies;
+    }
+
+    public ExperimentType getExperimentType() {
+        return experimentType;
+    }
+
+    public void setExperimentType(ExperimentType experimentType) {
+        this.experimentType = experimentType;
+    }
+
+    public void setRequestPreferences(K requestPreferences) {
+        this.requestPreferences = requestPreferences;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this.getClass())
+                .add("requestPreferences", requestPreferences)
+                .add("filteredBySpecies", filteredBySpecies)
+                .toString();
+    }
+
+
 }

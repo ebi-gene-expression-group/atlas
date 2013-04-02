@@ -25,6 +25,6 @@ package uk.ac.ebi.atlas.model;
 
 public enum ExperimentType {
 
-    DIFFERENTIAL, BASELINE
+    BASELINE, DIFFERENTIAL, MICROARRAY
 
 }

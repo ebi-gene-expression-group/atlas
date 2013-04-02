@@ -28,14 +28,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.context.impl.BaselineRequestContextImpl;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -60,14 +59,14 @@ public class BaselineProfilesInputStreamIT {
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    private BaselineRequestContextImpl filterParameters;
+    private BaselineRequestContext filterParameters;
 
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
     private ObjectInputStream<BaselineProfile> subject;
 
-    RequestPreferences requestPreferences = new BaselineRequestPreferences();
+    private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
     @Before
     public void initSubject() throws Exception {
@@ -81,7 +80,7 @@ public class BaselineProfilesInputStreamIT {
         filterParameters.setSelectedQueryFactors(Collections.EMPTY_SET);
         filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getAllFactors());
 
-        subject = inputStreamFactory.createGeneProfileInputStream(EXPERIMENT_ACCESSION);
+        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION);
 
     }
 

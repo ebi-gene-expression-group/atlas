@@ -20,19 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.web;
 
+public class DifferentialDesignRequestPreferences {
 
-public class MicroarrayExpression extends DifferentialExpression{
+    private String selectedContrast;
 
-    private double tStatistic;
-
-    public MicroarrayExpression(double pValue, double foldChange, double tStatistic, Contrast contrast) {
-        super(pValue, foldChange, contrast);
-        this.tStatistic = tStatistic;
+    public String getSelectedContrast() {
+        return selectedContrast;
     }
 
-    public double getTStatistic() {
-        return tStatistic;
+    public void setSelectedContrast(String selectedContrast) {
+        this.selectedContrast = selectedContrast;
     }
 }

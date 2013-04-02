@@ -25,28 +25,18 @@ package uk.ac.ebi.atlas.commands.context;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.impl.DifferentialRequestContextImpl;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Set;
 
-@Named
-@Scope("prototype")
-public class DifferentialRequestContextBuilder {
-
-    private DifferentialRequestContextImpl requestContext;
-
+public class DifferentialRequestContextBuilder<T extends DifferentialRequestContext, K extends DifferentialRequestPreferences> {
+    protected T requestContext;
+    protected K requestPreferences;
     private DifferentialExperiment experiment;
 
-    protected DifferentialRequestPreferences preferences;
-
-    @Inject
-    public DifferentialRequestContextBuilder(DifferentialRequestContextImpl requestContext) {
+    public DifferentialRequestContextBuilder(T requestContext) {
         this.requestContext = requestContext;
     }
 
@@ -55,19 +45,17 @@ public class DifferentialRequestContextBuilder {
         return this;
     }
 
-    public DifferentialRequestContextBuilder withPreferences(DifferentialRequestPreferences preferences) {
-        this.preferences = preferences;
+    public DifferentialRequestContextBuilder withPreferences(K requestPreferences) {
+        this.requestPreferences = requestPreferences;
         return this;
     }
 
-    public DifferentialRequestContext build() {
+    public T build() {
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
-        requestContext.setRequestPreferences(preferences);
+        requestContext.setRequestPreferences(requestPreferences);
 
         requestContext.setSelectedQueryFactors(getSelectedQueryContrasts());
-
-        requestContext.setRegulation(preferences.getRegulation());
 
         requestContext.setFilteredBySpecies(experiment.getFirstSpecies());
 
@@ -77,15 +65,14 @@ public class DifferentialRequestContextBuilder {
     }
 
     Set<Contrast> getSelectedQueryContrasts() {
-        if(CollectionUtils.isEmpty(preferences.getQueryFactorValues())){
+        if(CollectionUtils.isEmpty(requestPreferences.getQueryFactorValues())){
             return Sets.newHashSet();
         }
 
         Set<Contrast> selectedQueryContrasts = Sets.newHashSet();
-        for (String queryContrastId : preferences.getQueryFactorValues()){
+        for (String queryContrastId : requestPreferences.getQueryFactorValues()){
             selectedQueryContrasts.add(experiment.getContrast(queryContrastId));
         }
         return selectedQueryContrasts;
     }
-
 }

@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -41,10 +41,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RankDifferentialProfilesCommandTest {
 
-    private RankDifferentialProfilesExecutor subject;
+    private RankRnaSeqProfilesCommand subject;
 
     @Mock
-    private DifferentialRequestContext requestContext;
+    private RnaSeqRequestContext requestContextMock;
 
     @Mock
     private DifferentialProfile differentialProfileMock1;
@@ -57,9 +57,9 @@ public class RankDifferentialProfilesCommandTest {
 
     @Before
     public void setUp() throws Exception {
-        when(requestContext.getRegulation()).thenReturn(Regulation.UP_DOWN);
+        when(requestContextMock.getRegulation()).thenReturn(Regulation.UP_DOWN);
 
-        subject = new RankDifferentialProfilesExecutor(requestContext);
+        subject = new RankRnaSeqProfilesCommand(requestContextMock);
 
         when(differentialProfileMock1.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(3D);
         when(differentialProfileMock1.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
@@ -74,7 +74,7 @@ public class RankDifferentialProfilesCommandTest {
     @Test
     public void comparatorShouldSortByLowestPValueFirst() throws Exception {
         //given
-        Comparator comparator = subject.buildGeneProfileComparator();
+        Comparator comparator = subject.createGeneProfileComparator(requestContextMock);
 
         //when
         SortedSet<DifferentialProfile> profiles = new TreeSet<DifferentialProfile>(comparator);

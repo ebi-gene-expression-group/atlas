@@ -20,13 +20,25 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.utils;
+package uk.ac.ebi.atlas.model.differential.microarray;
 
-public class SeleniumFixture extends SinglePageSeleniumFixture{
+import com.google.common.collect.Sets;
+import org.apache.commons.configuration.XMLConfiguration;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperimentConfiguration;
 
+import java.util.List;
+import java.util.SortedSet;
 
-    @Override
-    protected void getStartingPage() {
-        //do nothing... test classes extending this fixture are responsible of instantiating and using Page classes
+public class MicroarrayExperimentConfiguration extends DifferentialExperimentConfiguration{
+
+    private SortedSet<String> arrayDesignNames;
+
+    public MicroarrayExperimentConfiguration(XMLConfiguration xmlConfiguration) {
+        super(xmlConfiguration);
+        this.arrayDesignNames = Sets.newTreeSet((List)xmlConfiguration.getList("analytics/array_design"));
+    }
+
+    public SortedSet<String> getArrayDesignNames(){
+        return arrayDesignNames;
     }
 }

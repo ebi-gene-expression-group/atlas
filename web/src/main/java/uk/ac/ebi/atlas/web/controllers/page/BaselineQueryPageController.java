@@ -31,11 +31,12 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankBaselineProfileCommandExecutor;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.model.BaselineProfilesList;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.utils.FilterFactorMenuBuilder;
@@ -58,14 +59,14 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineQueryPageController extends BaselineQueryController {
 
-    private RankBaselineProfileCommandExecutor rankCommand;
+    private RankBaselineProfilesCommand rankCommand;
 
     private ApplicationProperties applicationProperties;
 
     private FilterFactorMenuBuilder filterFactorMenuBuilder;
 
     @Inject
-    public BaselineQueryPageController(RankBaselineProfileCommandExecutor rankCommand,
+    public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
                                        ApplicationProperties applicationProperties,
                                        BaselineRequestContextBuilder requestContextBuilder,
                                        FilterFactorsConverter filterFactorsConverter,
@@ -78,7 +79,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=BASELINE"})
-    public String showGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+    public String showBaselineExperimentGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -97,7 +98,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
         SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
 
-        // this is currently required for the request preferences filter drop-down multi-selection box
+        // this is currently required for the request requestPreferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactors", allQueryFactors);
 
         SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
@@ -133,12 +134,9 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
             try {
 
-                BaselineProfilesList geneProfiles = rankCommand.execute(experiment.getAccession());
+                GeneProfilesList<BaselineProfile> geneProfiles = rankCommand.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", geneProfiles);
-
-                model.addAttribute("minExpressionLevel", geneProfiles.getMinExpressionLevel());
-                model.addAttribute("maxExpressionLevel", geneProfiles.getMaxExpressionLevel());
 
                 //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
@@ -152,7 +150,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
 
             } catch (GenesNotFoundException e) {
-                result.addError(new ObjectError("preferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
+                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
             }
 
         }

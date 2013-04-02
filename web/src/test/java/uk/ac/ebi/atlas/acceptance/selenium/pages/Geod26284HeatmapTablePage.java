@@ -29,7 +29,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import java.util.ArrayList;
 import java.util.Arrays;

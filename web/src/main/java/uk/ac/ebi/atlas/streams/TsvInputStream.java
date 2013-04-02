@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import java.io.IOException;
 
-public abstract class TsvInputStream<T> implements ObjectInputStream {
+public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
 
     private static final Logger logger = Logger.getLogger(TsvInputStream.class);
 

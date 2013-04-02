@@ -22,34 +22,31 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.MinMaxPriorityQueue;
-import com.google.common.collect.Ordering;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
 
 @Named
 @Scope("prototype")
-public class RankDifferentialProfilesExecutor extends AbstractCommandExecutor<DifferentialProfilesList, DifferentialProfile> implements CommandExecutor<DifferentialProfilesList> {
-
-    private DifferentialRequestContext requestContext;
+public class RankRnaSeqProfilesCommand extends RankProfilesCommand<DifferentialProfilesList, DifferentialProfile> {
 
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    public RankDifferentialProfilesExecutor(DifferentialRequestContext requestContext) {
-        this.requestContext = requestContext;
+    public RankRnaSeqProfilesCommand(RnaSeqRequestContext requestContext) {
+        super(requestContext);
     }
 
     @Inject
@@ -57,46 +54,20 @@ public class RankDifferentialProfilesExecutor extends AbstractCommandExecutor<Di
         this.inputStreamFactory = inputStreamFactory;
     }
 
+    @Override
+    protected DifferentialProfilesList createGeneProfilesList(Queue<DifferentialProfile> geneProfiles) {
+        return new DifferentialProfilesList(geneProfiles);
+    }
 
     @Override
-    protected DifferentialProfilesList execute(ObjectInputStream<DifferentialProfile> inputStream) {
-        Queue<DifferentialProfile> rankingQueue = buildRankingQueue();
-
-        DifferentialProfile differentialProfile;
-
-        int geneCount = 0;
-
-        while ((differentialProfile = inputStream.readNext()) != null) {
-            rankingQueue.add(differentialProfile);
-            geneCount++;
-        }
-
-        DifferentialProfilesList list = new DifferentialProfilesList(rankingQueue);
-
-        Collections.sort(list, buildGeneProfileComparator());
-
-        list.setTotalResultCount(geneCount);
-
-        return list;
-    }
-
-    Ordering<DifferentialProfile> buildGeneProfileComparator() {
-        return Ordering.from(new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
-                requestContext.getAllQueryFactors(), requestContext.getRegulation(), requestContext.getCutoff()));
-    }
-
-    protected Queue<DifferentialProfile> buildRankingQueue() {
-        Comparator<DifferentialProfile> differentialProfileComparator = buildGeneProfileComparator();
-        return MinMaxPriorityQueue.orderedBy(differentialProfileComparator).maximumSize(requestContext.getHeatmapMatrixSize()).create();
+    protected Comparator<DifferentialProfile> createGeneProfileComparator(RequestContext requestContext) {
+        Regulation regulation = ((DifferentialRequestContext) requestContext).getRegulation();
+        return new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
+                requestContext.getAllQueryFactors(), regulation, requestContext.getCutoff());
     }
 
     @Override
     protected ObjectInputStream<DifferentialProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createDifferentialProfileInputStream(experimentAccession);
-    }
-
-    @Override
-    protected RequestContext getRequestContext() {
-        return requestContext;
     }
 }

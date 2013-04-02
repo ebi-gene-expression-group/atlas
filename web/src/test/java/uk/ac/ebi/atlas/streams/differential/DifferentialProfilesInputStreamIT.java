@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.context.impl.DifferentialRequestContextImpl;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
@@ -68,7 +68,7 @@ public class DifferentialProfilesInputStreamIT {
     private DifferentialExperimentsCache differentialExperimentsCache;
 
     @Inject
-    private DifferentialRequestContextImpl differentialRequestContext;
+    private RnaSeqRequestContext differentialRequestContext;
 
     private DifferentialProfilesInputStream subject;
 

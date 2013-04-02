@@ -28,7 +28,8 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 public class ExperimentExtraInfoControllerIT {
 

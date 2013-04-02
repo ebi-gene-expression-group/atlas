@@ -12,13 +12,19 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Set;
 
-public abstract class AbstractCommandExecutor<T, K> implements CommandExecutor<T> {
+public abstract class AbstractCommand<T, K> implements Command<T> {
 
-    protected static final Logger logger = Logger.getLogger(AbstractCommandExecutor.class);
+    protected static final Logger LOGGER = Logger.getLogger(AbstractCommand.class);
 
     private SolrClient solrClient;
 
-    protected InputStreamFactory inputStreamFactory;
+    private InputStreamFactory inputStreamFactory;
+
+    private RequestContext requestContext;
+
+    protected AbstractCommand(RequestContext requestContext){
+        this.requestContext = requestContext;
+    }
 
     @Inject
     public void setInputStreamFactory(InputStreamFactory inputStreamFactory) {
@@ -33,20 +39,18 @@ public abstract class AbstractCommandExecutor<T, K> implements CommandExecutor<T
     public T execute(String experimentAccession) throws GenesNotFoundException {
         Set<String> selectedGeneIds = getSelectedGeneIds();
 
-        try (ObjectInputStream<K> inputStream = new GeneProfileInputStreamFilter(createInputStream(experimentAccession), selectedGeneIds, getRequestContext().getSelectedQueryFactors())) {
+        try (ObjectInputStream<K> inputStream = new GeneProfileInputStreamFilter(createInputStream(experimentAccession), selectedGeneIds, requestContext.getSelectedQueryFactors())) {
 
-            return execute(inputStream);
+            return execute(inputStream, requestContext);
 
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
     }
 
-    private Set<String> getSelectedGeneIds() throws GenesNotFoundException {
+    Set<String> getSelectedGeneIds() throws GenesNotFoundException {
         Set<String> selectedGeneIds = null;
-
-        RequestContext requestContext = getRequestContext();
 
         if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
 
@@ -58,7 +62,5 @@ public abstract class AbstractCommandExecutor<T, K> implements CommandExecutor<T
 
     protected abstract ObjectInputStream<K> createInputStream(String experimentAccession);
 
-    protected abstract RequestContext getRequestContext();
-
-    protected abstract T execute(ObjectInputStream<K> inputStream);
+    protected abstract T execute(ObjectInputStream<K> inputStream, RequestContext requestContext);
 }

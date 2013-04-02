@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.web.ContrastRequestPreferences;
+import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -54,7 +54,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageContro
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=DIFFERENTIAL"})
-    public String showExperimentDesign(@ModelAttribute("preferences") @Valid ContrastRequestPreferences preferences
+    public String showExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         extractExperimentDesign(model, experiment.getAccession(), experiment.getLibrariesFromContrasts());

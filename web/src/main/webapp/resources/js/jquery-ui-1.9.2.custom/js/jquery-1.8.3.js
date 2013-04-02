@@ -3749,7 +3749,7 @@ var cachedruns,
 	// Prefer arguments not in parens/brackets,
 	//   then attribute selectors and non-pseudos (denoted by :),
 	//   then anything else
-	// These preferences are here to reduce the number of selectors
+	// These requestPreferences are here to reduce the number of selectors
 	//   needing tokenize in the PSEUDO preFilter
 	pseudos = ":(" + characterEncoding + ")(?:\\((?:(['\"])((?:\\\\.|[^\\\\])*?)\\2|([^()[\\]]*|(?:(?:" + attributes + ")|[^:]|\\\\.)*|.*))\\)|)",
 

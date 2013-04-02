@@ -23,20 +23,11 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genequery;
 
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.openqa.selenium.NoSuchElementException;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 public class GeneQueryExactMatch extends SeleniumFixture {

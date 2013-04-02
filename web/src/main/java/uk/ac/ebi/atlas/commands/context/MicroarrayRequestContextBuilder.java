@@ -22,40 +22,33 @@
 
 package uk.ac.ebi.atlas.commands.context;
 
-import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
+import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Set;
 
 @Named
-@Scope("request")
-public class BaselineRequestContext extends RequestContext<Factor, BaselineRequestPreferences> {
+@Scope("prototype")
+public class MicroarrayRequestContextBuilder extends DifferentialRequestContextBuilder<MicroarrayRequestContext, MicroarrayRequestPreferences> {
 
-    private Set<Factor> selectedFilterFactors;
+    protected String arrayDesignAccesion;
 
-    public BaselineRequestContext() {
+    @Inject
+    public MicroarrayRequestContextBuilder(MicroarrayRequestContext requestContext) {
+        super(requestContext);
     }
 
-    public Set<Factor> getSelectedFilterFactors() {
-        return selectedFilterFactors;
+    public MicroarrayRequestContextBuilder withArrayDesignAccession(String arrayDesignAccession) {
+        this.arrayDesignAccesion = arrayDesignAccession;
+        return this;
     }
 
-    public String getQueryFactorType() {
-        return requestPreferences.getQueryFactorType();
-    }
+    public MicroarrayRequestContext build() {
+        super.build();
+        requestContext.setArrayDesignAccession(arrayDesignAccesion);
 
-    public void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
-        this.selectedFilterFactors = selectedFilterFactors;
+        return requestContext;
     }
-
-    @Override
-    public String toString(){
-        return Objects.toStringHelper(this.getClass())
-                .add("selectedFilterFactors", selectedFilterFactors).toString();
-    }
-
 
 }

@@ -20,37 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands.context.impl;
+package uk.ac.ebi.atlas.commands.context;
 
-import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import javax.inject.Named;
 
 @Named
 @Scope("request")
-public class DifferentialRequestContextImpl extends RequestContextImpl<Contrast> implements DifferentialRequestContext {
+public class RnaSeqRequestContext extends DifferentialRequestContext {
 
-    private Regulation regulation;
-
-    public DifferentialRequestContextImpl() {
-    }
-
-    public Regulation getRegulation() {
-        return regulation;
-    }
-
-    public void setRegulation(Regulation regulation) {
-        this.regulation = regulation;
-    }
-
-    @Override
-    public String toString(){
-        return Objects.toStringHelper(this.getClass())
-                .add("regulation", regulation).toString();
+    public RnaSeqRequestContext() {
     }
 
 }

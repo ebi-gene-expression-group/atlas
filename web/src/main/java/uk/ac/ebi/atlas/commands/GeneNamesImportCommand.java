@@ -27,7 +27,6 @@ import uk.ac.ebi.atlas.geneannotation.GeneAnnotationLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 import java.util.Set;
 
 @Named("geneNameUpdateCommand")

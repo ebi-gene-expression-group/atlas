@@ -33,7 +33,6 @@ import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 

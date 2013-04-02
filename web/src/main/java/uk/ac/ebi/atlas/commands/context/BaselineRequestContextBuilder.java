@@ -25,11 +25,10 @@ package uk.ac.ebi.atlas.commands.context;
 import com.google.common.base.Preconditions;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.impl.BaselineRequestContextImpl;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.RequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,16 +38,16 @@ import java.util.*;
 @Scope("prototype")
 public class BaselineRequestContextBuilder {
 
-    private BaselineRequestContextImpl requestContext;
+    private BaselineRequestContext requestContext;
 
     private BaselineExperiment experiment;
 
     private FilterFactorsConverter filterFactorsConverter;
 
-    protected RequestPreferences preferences;
+    protected BaselineRequestPreferences preferences;
 
     @Inject
-    public BaselineRequestContextBuilder(BaselineRequestContextImpl requestContext, FilterFactorsConverter filterFactorsConverter) {
+    public BaselineRequestContextBuilder(BaselineRequestContext requestContext, FilterFactorsConverter filterFactorsConverter) {
         this.requestContext = requestContext;
         this.filterFactorsConverter = filterFactorsConverter;
     }
@@ -58,7 +57,7 @@ public class BaselineRequestContextBuilder {
         return this;
     }
 
-    public BaselineRequestContextBuilder withPreferences(RequestPreferences preferences) {
+    public BaselineRequestContextBuilder withPreferences(BaselineRequestPreferences preferences) {
         this.preferences = preferences;
         return this;
     }

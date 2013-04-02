@@ -28,7 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteGeneProfilesCommandExecutor;
+import uk.ac.ebi.atlas.commands.WriteBaselineProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -47,15 +47,15 @@ import java.io.IOException;
 public class BaselineQueryDownloadController extends BaselineQueryController {
     private static final Logger LOGGER = Logger.getLogger(BaselineQueryDownloadController.class);
 
-    private WriteGeneProfilesCommandExecutor writeGeneProfilesCommandExecutor;
+    private WriteBaselineProfilesCommand writeBaselineProfilesCommand;
 
 
     @Inject
     public BaselineQueryDownloadController( BaselineRequestContextBuilder requestContextBuilder,
-                                           FilterFactorsConverter filterFactorsConverter, WriteGeneProfilesCommandExecutor writeGeneProfilesCommandExecutor) {
+                                           FilterFactorsConverter filterFactorsConverter, WriteBaselineProfilesCommand writeBaselineProfilesCommand) {
 
         super(requestContextBuilder, filterFactorsConverter);
-        this.writeGeneProfilesCommandExecutor = writeGeneProfilesCommandExecutor;
+        this.writeBaselineProfilesCommand = writeBaselineProfilesCommand;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=BASELINE")
@@ -75,11 +75,11 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
         initRequestContext(experiment, preferences);
 
-        writeGeneProfilesCommandExecutor.setResponseWriter(response.getWriter());
+        writeBaselineProfilesCommand.setResponseWriter(response.getWriter());
 
         try {
 
-            long genesCount = writeGeneProfilesCommandExecutor.execute(experiment.getAccession());
+            long genesCount = writeBaselineProfilesCommand.execute(experiment.getAccession());
 
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 

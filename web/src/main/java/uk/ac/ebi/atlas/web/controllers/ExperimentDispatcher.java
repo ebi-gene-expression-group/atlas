@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -83,12 +84,15 @@ public class ExperimentDispatcher {
 
     private BaselineExperimentsCache baselineExperimentsCache;
     private DifferentialExperimentsCache differentialExperimentsCache;
+    private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ApplicationProperties applicationProperties;
 
     @Inject
-    private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, DifferentialExperimentsCache differentialExperimentsCache, ApplicationProperties applicationProperties){
+    private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, DifferentialExperimentsCache differentialExperimentsCache,
+                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties){
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.differentialExperimentsCache = differentialExperimentsCache;
+        this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.applicationProperties = applicationProperties;
     }
 
@@ -98,13 +102,7 @@ public class ExperimentDispatcher {
 
         Experiment experiment;
 
-        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)) {
-            experiment = baselineExperimentsCache.getExperiment(experimentAccession);
-        } else if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)){
-            experiment = differentialExperimentsCache.getExperiment(experimentAccession);
-        } else {
-            throw new ResourceNotFoundException();
-        }
+        experiment = getExperiment(experimentAccession);
 
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
@@ -124,6 +122,21 @@ public class ExperimentDispatcher {
         String requestURL = StringUtils.substringAfter(requestURI,contextPath);
 
         return "forward:" + requestURL + "?type=" + experiment.getType();
+    }
+
+    Experiment getExperiment(String experimentAccession) {
+        Experiment experiment;
+        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)) {
+            return baselineExperimentsCache.getExperiment(experimentAccession);
+        }
+        if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)){
+            return differentialExperimentsCache.getExperiment(experimentAccession);
+        }
+        if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)){
+            return microarrayExperimentsCache.getExperiment(experimentAccession);
+        }
+        throw new ResourceNotFoundException();
+
     }
 
 

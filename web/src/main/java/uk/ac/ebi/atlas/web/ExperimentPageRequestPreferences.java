@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
 import java.util.SortedSet;
 
 
-public abstract class RequestPreferences {
+public abstract class ExperimentPageRequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
@@ -60,7 +60,7 @@ public abstract class RequestPreferences {
 
     private boolean displayGeneDistribution;
 
-    public RequestPreferences(){
+    public ExperimentPageRequestPreferences(){
       //  customInitializations();
     }
 

@@ -20,19 +20,18 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commons.configuration;
+package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.*;
 
-public class ExperimentFactorsConfiguration {
+public class BaselineExperimentConfiguration {
 
     private XMLConfiguration config;
 
-    public ExperimentFactorsConfiguration(XMLConfiguration config) {
+    public BaselineExperimentConfiguration(XMLConfiguration config) {
         this.config = config;
     }
 

@@ -24,11 +24,12 @@ package uk.ac.ebi.atlas.commands;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,28 +38,33 @@ import java.io.PrintWriter;
 
 @Named
 @Scope("prototype")
-public class WriteDifferentialProfilesCommandExecutor extends AbstractCommandExecutor<Long, DifferentialProfile> implements CommandExecutor<Long> {
+public class WriteDifferentialProfilesCommand extends AbstractCommand<Long, DifferentialProfile> implements Command<Long> {
 
-    protected static final Logger logger = Logger.getLogger(WriteDifferentialProfilesCommandExecutor.class);
+    protected static final Logger logger = Logger.getLogger(WriteDifferentialProfilesCommand.class);
 
     private DifferentialGeneProfilesTSVWriter geneProfileWriter;
 
-    private DifferentialRequestContext requestContext;
-
     private DifferentialExperiment experiment;
+    private InputStreamFactory inputStreamFactory;
 
     @Inject
-    public WriteDifferentialProfilesCommandExecutor(DifferentialGeneProfilesTSVWriter geneProfileWriter) {
+    public void setInputStreamFactory(InputStreamFactory inputStreamFactory) {
+        this.inputStreamFactory = inputStreamFactory;
+    }
+
+    @Inject
+    public WriteDifferentialProfilesCommand(DifferentialGeneProfilesTSVWriter geneProfileWriter, RnaSeqRequestContext requestContext) {
+        super(requestContext);
         this.geneProfileWriter = geneProfileWriter;
     }
 
-    @Inject
-    public void setRequestContext(DifferentialRequestContext requestContext) {
-        this.requestContext = requestContext;
+    @Override
+    protected ObjectInputStream<DifferentialProfile> createInputStream(String experimentAccession) {
+        return inputStreamFactory.createDifferentialProfileInputStream(experimentAccession);
     }
 
     @Override
-    protected Long execute(ObjectInputStream<DifferentialProfile> inputStream) {
+    protected Long execute(ObjectInputStream<DifferentialProfile> inputStream, RequestContext requestContext) {
         try {
             return geneProfileWriter.apply(inputStream, experiment.getContrasts());
         } catch (IOException e) {
@@ -76,13 +82,4 @@ public class WriteDifferentialProfilesCommandExecutor extends AbstractCommandExe
         this.experiment = experiment;
     }
 
-    @Override
-    protected ObjectInputStream<DifferentialProfile> createInputStream(String experimentAccession) {
-        return inputStreamFactory.createDifferentialProfileInputStream(experimentAccession);
-    }
-
-    @Override
-    protected RequestContext getRequestContext() {
-        return requestContext;
-    }
 }

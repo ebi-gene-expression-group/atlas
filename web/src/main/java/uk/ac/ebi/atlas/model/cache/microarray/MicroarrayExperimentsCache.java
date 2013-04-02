@@ -20,12 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.cache.baseline;
+package uk.ac.ebi.atlas.model.cache.microarray;
 
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,25 +33,25 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class BaselineExperimentsCache {
+public class MicroarrayExperimentsCache {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentsCache.class);
+    private static final Logger logger = Logger.getLogger(MicroarrayExperimentsCache.class);
 
-    private LoadingCache<String, BaselineExperiment> experiments;
+    private LoadingCache<String, MicroarrayExperiment> experiments;
 
     @Inject
-    @Named("baselineExperimentsLoadingCache")//this is the name of the implementation being injected, required because LoadingCache is an interface
-    public BaselineExperimentsCache(LoadingCache<String, BaselineExperiment> experiments) {
+    @Named("microarrayExperimentsLoadingCache")//this is the name of the implementation being injected, required because LoadingCache is an interface
+    public MicroarrayExperimentsCache(LoadingCache<String, MicroarrayExperiment> experiments) {
         this.experiments = experiments;
     }
 
-    public BaselineExperiment getExperiment(String experimentAccession) {
+    public MicroarrayExperiment getExperiment(String experimentAccession) {
         try {
 
             return experiments.get(experimentAccession);
 
         } catch (ExecutionException e) {
-            LOGGER.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
         }
     }

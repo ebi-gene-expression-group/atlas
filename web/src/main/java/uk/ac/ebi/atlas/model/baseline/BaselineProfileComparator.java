@@ -49,38 +49,36 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     @Override
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
-        Ordering<Comparable> naturalOrdering = Ordering.natural();
 
         // A1:
         if (isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
-            Ordering<Comparable> specificityOrdering = naturalOrdering.reverse();
-            int order = specificityOrdering.compare(firstBaselineProfile.getSpecificity(), otherBaselineProfile.getSpecificity());
-            return 0 != order ? order : compareOnAverage(firstBaselineProfile, otherBaselineProfile, allFactors);
+            int order = Integer.compare(firstBaselineProfile.getSpecificity(), otherBaselineProfile.getSpecificity());
+            return 0 != order ? order : compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allFactors);
         }
 
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
-
-            return naturalOrdering.compare(getExpressionLevelFoldChangeOn(firstBaselineProfile),
+            //reverse because we want lower values to come first;
+            return Ordering.natural().reverse().compare(getExpressionLevelFoldChangeOn(firstBaselineProfile),
                     getExpressionLevelFoldChangeOn(otherBaselineProfile));
         }
 
         // A2
         if (!isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
-            return compareOnAverage(firstBaselineProfile, otherBaselineProfile, allFactors);
+            return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allFactors);
         }
 
         //B2
-        return compareOnAverage(firstBaselineProfile, otherBaselineProfile, selectedFactors);
+        return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, selectedFactors);
 
     }
 
-    private int compareOnAverage(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile,
-                                 Set<Factor> averageOn) {
+    private int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile,
+                                                Set<Factor> factors) {
 
-        Ordering<Comparable> naturalOrdering = Ordering.natural();
-        return naturalOrdering.compare(firstBaselineProfile.getAverageExpressionLevelOn(averageOn),
-                otherBaselineProfile.getAverageExpressionLevelOn(averageOn));
+        Ordering<Comparable> naturalOrdering = Ordering.natural().reverse();
+        return naturalOrdering.compare(firstBaselineProfile.getAverageExpressionLevelOn(factors),
+                otherBaselineProfile.getAverageExpressionLevelOn(factors));
     }
 
     public double getExpressionLevelFoldChangeOn(BaselineProfile baselineProfile) {

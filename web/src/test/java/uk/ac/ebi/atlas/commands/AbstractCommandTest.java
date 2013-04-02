@@ -39,7 +39,7 @@ import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AbstractCommandExecutorTest {
+public class AbstractCommandTest {
 
     private static final String SPECIES = "Species 1";
     private static final String GENE_QUERY = "A GENE QUERY";
@@ -52,13 +52,13 @@ public class AbstractCommandExecutorTest {
     private BaselineRequestContext requestContextMock;
 
     @Mock
-    private CommandExecutor commandExecutorMock;
+    private Command commandMock;
 
     private ObjectInputStream<BaselineProfile> largeInputStream;
 
-    private AbstractCommandExecutor<GeneProfilesList, BaselineProfile> subject;
+    private AbstractCommand<GeneProfilesList, BaselineProfile> subject;
 
-    public AbstractCommandExecutorTest() {
+    public AbstractCommandTest() {
     }
 
     //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
@@ -70,22 +70,17 @@ public class AbstractCommandExecutorTest {
         // no filtering should be done here
         when(solrClientMock.findGeneIds(GENE_QUERY, false, SPECIES)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
 
-                //a stream with 5 profile of 2 expressions
+        //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
 
-        subject = new AbstractCommandExecutor<GeneProfilesList, BaselineProfile>() {
+        subject = new AbstractCommand<GeneProfilesList, BaselineProfile>(requestContextMock) {
             @Override
             protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
                 return largeInputStream;
             }
 
             @Override
-            protected RequestContext getRequestContext() {
-                return requestContextMock;
-            }
-
-            @Override
-            protected GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream) {
+            protected GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream, RequestContext requestContext) {
                 return null;
             }
         };

@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.web;
 
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
-public class DifferentialRequestPreferences extends RequestPreferences{
+public class DifferentialRequestPreferences extends ExperimentPageRequestPreferences {
 
     private static final double DEFAULT_CUTOFF = 0.05d;
     private Regulation regulation = Regulation.UP_DOWN;

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commons.configuration;
+package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -29,11 +29,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
-import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.ConfigurationTrader;
 
 import javax.inject.Inject;
-import java.util.Set;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
@@ -42,17 +40,17 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class ContrastsConfigurationIT {
+public class DifferentialExperimentConfigurationIT {
 
 
     @Inject
     private ConfigurationTrader configurationTrader;
 
-    private ContrastsConfiguration subject;
+    private DifferentialExperimentConfiguration subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = configurationTrader.getContrastsConfiguration("E-GEOD-22351");
+        subject = configurationTrader.getDifferentialExperimentConfiguration("E-GEOD-22351");
     }
 
     @Test
@@ -69,8 +67,4 @@ public class ContrastsConfigurationIT {
         assertThat(Sets.newHashSet(contrast.getTestAssayGroup()), containsInAnyOrder("SRR057599", "SRR057600", "SRR057601"));
     }
 
-    @Test
-    public void testGetContrasts() throws Exception {
-
-    }
 }

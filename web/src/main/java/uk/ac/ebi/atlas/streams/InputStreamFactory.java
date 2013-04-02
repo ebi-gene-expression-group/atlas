@@ -54,10 +54,13 @@ public class InputStreamFactory {
     private static final Logger logger = Logger.getLogger(InputStreamFactory.class);
 
     @Value("#{configuration['experiment.magetab.path.template']}")
-    private String baselineDataFileUrlTemplate;
+    private String baselineExperimentDataFileUrlTemplate;
 
     @Value("#{configuration['diff.experiment.data.path.template']}")
-    private String differentialDataFileUrlTemplate;
+    private String differentialExperimentDataFileUrlTemplate;
+
+    @Value("#{configuration['microarray.experiment.data.path.template']}")
+    private String microarrayExperimentDataFileUrlTemplate;
 
     private BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder;
     private DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder;
@@ -77,10 +80,9 @@ public class InputStreamFactory {
 
     }
 
-    CSVReader buildCsvReader(String experimentAccession, String tsvFileUrlTemplate) {
-        String tsvFileUrl = MessageFormat.format(tsvFileUrlTemplate, experimentAccession);
+    CSVReader buildCsvReader(String tsvFileURL) {
         try {
-            Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileUrl));
+            Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileURL));
             Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
             return new CSVReader(dataFileReader, '\t');
          } catch (IOException e) {
@@ -89,18 +91,27 @@ public class InputStreamFactory {
         }
     }
 
-    public ObjectInputStream<BaselineProfile> createGeneProfileInputStream(String experimentAccession) {
-        CSVReader csvReader = buildCsvReader(experimentAccession, baselineDataFileUrlTemplate);
+    public ObjectInputStream<BaselineProfile> createBaselineProfileInputStream(String experimentAccession) {
+        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
+        CSVReader csvReader = buildCsvReader(tsvFileURL);
         return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, baselineProfileBuilder);
     }
 
     public BaselineExpressionsInputStream createGeneExpressionsInputStream(String experimentAccession) {
-        CSVReader csvReader = buildCsvReader(experimentAccession, baselineDataFileUrlTemplate);
+        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
+        CSVReader csvReader = buildCsvReader(tsvFileURL);
         return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
     }
 
     public DifferentialProfilesInputStream createDifferentialProfileInputStream(String experimentAccession) {
-        CSVReader csvReader = buildCsvReader(experimentAccession, differentialDataFileUrlTemplate);
+        String tsvFileURL = MessageFormat.format(differentialExperimentDataFileUrlTemplate, experimentAccession);
+        CSVReader csvReader = buildCsvReader(tsvFileURL);
+        return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, differentialProfileBuilder);
+    }
+
+    public DifferentialProfilesInputStream createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
+        String tsvFileURL = MessageFormat.format(microarrayExperimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
+        CSVReader csvReader = buildCsvReader(tsvFileURL);
         return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, differentialProfileBuilder);
     }
 

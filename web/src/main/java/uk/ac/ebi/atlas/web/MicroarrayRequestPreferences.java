@@ -22,15 +22,18 @@
 
 package uk.ac.ebi.atlas.web;
 
-public class ContrastRequestPreferences {
 
-    private String selectedContrast;
+public class MicroarrayRequestPreferences extends DifferentialRequestPreferences{
 
-    public String getSelectedContrast() {
-        return selectedContrast;
+    private String arrayDesignAccession;
+
+    public String getArrayDesignAccession() {
+        return arrayDesignAccession;
     }
 
-    public void setSelectedContrast(String selectedContrast) {
-        this.selectedContrast = selectedContrast;
+    public void setArrayDesignName(String arrayDesignAccession) {
+        this.arrayDesignAccession = arrayDesignAccession;
     }
+
+
 }

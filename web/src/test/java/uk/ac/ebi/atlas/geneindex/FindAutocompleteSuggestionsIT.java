@@ -22,9 +22,6 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.Multimap;
-import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

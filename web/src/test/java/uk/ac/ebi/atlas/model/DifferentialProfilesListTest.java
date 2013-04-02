@@ -35,7 +35,6 @@ import java.util.Collection;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.isNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialProfilesListTest {

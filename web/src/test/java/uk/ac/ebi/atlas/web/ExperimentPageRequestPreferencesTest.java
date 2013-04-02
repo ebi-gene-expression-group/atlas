@@ -33,9 +33,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RequestPreferencesTest {
+public class ExperimentPageRequestPreferencesTest {
 
-    private RequestPreferences subject;
+    private ExperimentPageRequestPreferences subject;
 
     @Mock
     private NumberUtils numberUtilsMock;
@@ -66,7 +66,7 @@ public class RequestPreferencesTest {
         //given
         subject.setHeatmapMatrixSize(null);
         //then
-        assertThat(subject.getHeatmapMatrixSize(), is(RequestPreferences.DEFAULT_NUMBER_OF_RANKED_GENES));
+        assertThat(subject.getHeatmapMatrixSize(), is(ExperimentPageRequestPreferences.DEFAULT_NUMBER_OF_RANKED_GENES));
         //and given
         subject.setHeatmapMatrixSize(33);
         //then

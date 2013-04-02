@@ -20,13 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.utils;
+package uk.ac.ebi.atlas.commands.context;
 
-public class SeleniumFixture extends SinglePageSeleniumFixture{
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 
-    @Override
-    protected void getStartingPage() {
-        //do nothing... test classes extending this fixture are responsible of instantiating and using Page classes
+@Named
+@Scope("prototype")
+public class RnaSeqRequestContextBuilder extends DifferentialRequestContextBuilder<RnaSeqRequestContext, DifferentialRequestPreferences> {
+
+    @Inject
+    public RnaSeqRequestContextBuilder(RnaSeqRequestContext requestContext) {
+        super(requestContext);
     }
+
 }

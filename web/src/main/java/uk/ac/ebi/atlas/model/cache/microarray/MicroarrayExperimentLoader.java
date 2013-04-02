@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.cache.differential;
+package uk.ac.ebi.atlas.model.cache.microarray;
 
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
@@ -28,37 +28,40 @@ import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParserBuilder;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperimentConfiguration;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Named
-public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialExperiment> {
+public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExperiment> {
 
     private MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder;
 
     private ConfigurationTrader configurationTrader;
 
     @Inject
-    public DifferentialExperimentLoader(MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder, ConfigurationTrader configurationTrader) {
+    public MicroarrayExperimentLoader(MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder, ConfigurationTrader configurationTrader) {
         this.mageTabSpeciesParserBuilder = mageTabSpeciesParserBuilder;
         this.configurationTrader = configurationTrader;
     }
 
     @Override
-    protected DifferentialExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
+    protected MicroarrayExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
 
-        DifferentialExperimentConfiguration differentialExperimentConfiguration = configurationTrader.getDifferentialExperimentConfiguration(accession);
-        Set<Contrast> contrasts = differentialExperimentConfiguration.getContrasts();
+        MicroarrayExperimentConfiguration microarrayExperimentConfiguration = configurationTrader.getMicroarrayExperimentConfiguration(accession);
+        Set<Contrast> contrasts = microarrayExperimentConfiguration.getContrasts();
 
         MageTabSpeciesParser mageTabSpeciesParser = mageTabSpeciesParserBuilder.forExperimentAccession(accession).build();
         Set<String> species = mageTabSpeciesParser.extractSpecies();
 
-        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species);
+        SortedSet<String> arrayDesignNames = microarrayExperimentConfiguration.getArrayDesignNames();
+
+        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames);
 
     }
 }

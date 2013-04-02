@@ -90,7 +90,7 @@ public class BaselineProfileComparatorTest {
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
 
         //then
-        assertThat(comparison, is(lessThan(0)));
+        assertThat(comparison, is(greaterThan(0)));
 
     }
 
@@ -103,7 +103,7 @@ public class BaselineProfileComparatorTest {
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
 
         //then
-        assertThat(comparison, is(greaterThan(0)));
+        assertThat(comparison, is(lessThan(0)));
 
     }
 
@@ -116,7 +116,7 @@ public class BaselineProfileComparatorTest {
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity16AndSmallerExpressionLevel);
 
         // then
-        assertThat(comparison, is(greaterThan(0)));
+        assertThat(comparison, is(lessThan(0)));
 
     }
 
@@ -130,7 +130,7 @@ public class BaselineProfileComparatorTest {
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
 
         // then
-        assertThat(comparison, is(lessThan(0)));
+        assertThat(comparison, is(greaterThan(0)));
 
     }
 
@@ -143,7 +143,7 @@ public class BaselineProfileComparatorTest {
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
 
         // then
-        assertThat(comparison, is(greaterThan(0)));
+        assertThat(comparison, is(lessThan(0)));
 
     }
 

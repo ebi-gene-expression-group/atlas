@@ -31,14 +31,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -48,26 +48,32 @@ import java.util.SortedSet;
 
 @Controller
 @Scope("request")
-public class DifferentialQueryPageController {
+public class MicroarrayQueryPageController{
 
-    private RnaSeqRequestContextBuilder differentialRequestContextBuilder;
-    private RankRnaSeqProfilesCommand command;
+    private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
+    private RankRnaSeqProfilesCommand rankDifferentialProfilesCommand;
 
     @Inject
-    public DifferentialQueryPageController(RnaSeqRequestContextBuilder differentialRequestContextBuilder,
-                                           RankRnaSeqProfilesCommand rankDifferentialProfilesCommand){
-        this.differentialRequestContextBuilder = differentialRequestContextBuilder;
-        this.command = rankDifferentialProfilesCommand;
+    public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder, RankRnaSeqProfilesCommand rankDifferentialProfilesCommand) {
+        this.microarrayRequestContextBuilder = requestContextBuilder;
+        this.rankDifferentialProfilesCommand = rankDifferentialProfilesCommand;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
-    public String showDifferentialExperimentGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
-            , BindingResult result, Model model, HttpServletRequest request) {
+    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=MICROARRAY"})
+    public String showMicroarrayExperimentGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+                                        , BindingResult result, Model model, HttpServletRequest request) {
 
-        DifferentialExperiment experiment = (DifferentialExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        MicroarrayExperiment experiment = (MicroarrayExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        RequestContext requestContext = differentialRequestContextBuilder.forExperiment(experiment)
+//      if there is only one array design we want to preselect it...
+        if(experiment.getArrayDesignAccessions().size() == 1){
+            preferences.setArrayDesignName(experiment.getArrayDesignAccessions().first());
+        }
+
+        RequestContext requestContext = microarrayRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(preferences).build();
+
+        ////////////////From here the code is duplicated with DifferentialQueryPageController
 
         SortedSet<Contrast> contrasts = experiment.getContrasts();
 
@@ -89,7 +95,7 @@ public class DifferentialQueryPageController {
         if (!result.hasErrors()) {
 
             try {
-                GeneProfilesList<DifferentialProfile> differentialProfiles = command.execute(experiment.getAccession());
+                GeneProfilesList<DifferentialProfile> differentialProfiles = rankDifferentialProfilesCommand.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", differentialProfiles);
 
@@ -103,6 +109,7 @@ public class DifferentialQueryPageController {
         }
 
         return "experiment";
+
     }
 
 }

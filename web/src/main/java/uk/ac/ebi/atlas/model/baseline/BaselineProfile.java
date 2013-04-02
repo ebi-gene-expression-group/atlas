@@ -57,17 +57,17 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
         return minExpressionLevel;
     }
 
-    public double getAverageExpressionLevelOn(Set<Factor> conditions) {
+    public double getAverageExpressionLevelOn(Set<Factor> factors) {
         double expressionLevel = 0D;
 
-        if (CollectionUtils.isEmpty(conditions)) {
+        if (CollectionUtils.isEmpty(factors)) {
             return expressionLevel;
         }
 
-        for (Factor condition : conditions) {
+        for (Factor condition : factors) {
             expressionLevel += getExpressionLevel(condition);
         }
-        return expressionLevel / conditions.size();
+        return expressionLevel / factors.size();
     }
 
     @Override

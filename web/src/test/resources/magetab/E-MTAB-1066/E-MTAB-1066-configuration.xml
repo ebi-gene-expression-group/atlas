@@ -1,0 +1,58 @@
+<!--
+  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  ~
+  ~ For further details of the Gene Expression Atlas project, including source code,
+  ~ downloads and documentation, please see:
+  ~
+  ~ http://gxa.github.com/gxa
+  -->
+
+<configuration>
+    <analytics>
+        <array_design>
+            A-AFFY-35
+        </array_design>
+        <assay_groups>
+            <assay_group id="g1">
+                <assay>C1</assay>
+                <assay>C3</assay>
+                <assay>C2</assay>
+            </assay_group>
+            <assay_group id="g2">
+                <assay>WT3</assay>
+                <assay>WT1</assay>
+                <assay>WT2</assay>
+            </assay_group>
+            <assay_group id="g3">
+                <assay>K3</assay>
+                <assay>K2</assay>
+                <assay>K1</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1">
+                <name>genotype:'cycC mutant' vs 'wild type'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g2_g3">
+                <name>genotype:'cdk8 mutant' vs 'wild type'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

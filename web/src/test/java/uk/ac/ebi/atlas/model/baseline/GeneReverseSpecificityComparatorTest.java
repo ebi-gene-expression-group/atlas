@@ -72,22 +72,18 @@ public class GeneReverseSpecificityComparatorTest {
     }
 
     @Test
-    public void highSpecificityShouldFollowLowSpecificity() {
+    public void lowSpecificityShouldFollowHighSpecificity() {
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
 
         //then
-        assertThat(comparison, is(greaterThan(0)));
+        assertThat(comparison, is(lessThan(0)));
 
-    }
-
-    @Test
-    public void lowSpecificityShouldPreceedHighSpecificity() {
         //when
-        int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
+        comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
 
         //then
-        assertThat(comparison, is(lessThan(0)));
+        assertThat(comparison, is(greaterThan(0)));
 
     }
 

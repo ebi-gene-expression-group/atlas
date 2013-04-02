@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -59,20 +60,28 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
+    public String getFeedbackEmailAddress() {
+        return configurationProperties.getProperty("feedback.email");
+    }
+
     public Set<String> getBaselineExperimentsIdentifiers() {
-        return Sets.newHashSet(configurationProperties.getProperty("baseline.experiment.identifiers").trim().split(","));
+        return getStringValues("baseline.experiment.identifiers");
     }
 
     public Set<String> getDifferentialExperimentsIdentifiers() {
-        return Sets.newHashSet(configurationProperties.getProperty("differential.experiment.identifiers").trim().split(","));
+        return getStringValues("differential.experiment.identifiers");
+    }
+
+    public Set<String> getMicroarrayExperimentsIdentifiers() {
+        return getStringValues("microarray.experiment.identifiers");
     }
 
     public Set<String> getBiomartDatasetIdentifiers() {
-        return Sets.newHashSet(configurationProperties.getProperty("biomart.dataset.names").trim().split(","));
+        return getStringValues("biomart.dataset.names");
     }
 
-    public String getFeedbackEmailAddress() {
-        return configurationProperties.getProperty("feedback.email");
+    private HashSet<String> getStringValues(String propertyKey) {
+        return Sets.newHashSet(configurationProperties.getProperty(propertyKey).trim().split(","));
     }
 
 }

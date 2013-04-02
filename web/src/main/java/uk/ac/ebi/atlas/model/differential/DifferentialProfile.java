@@ -27,6 +27,7 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import javax.inject.Inject;
@@ -143,7 +144,7 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
         private DifferentialRequestContext requestContext;
 
         @Inject
-        protected DifferentialProfileBuilder(DifferentialRequestContext requestContext
+        protected DifferentialProfileBuilder(RnaSeqRequestContext requestContext
                 , DifferentialExpressionPrecondition differentialExpressionPrecondition) {
             this.requestContext = requestContext;
             this.differentialExpressionPrecondition = differentialExpressionPrecondition;

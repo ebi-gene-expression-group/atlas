@@ -41,7 +41,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankBaselineProfileCommandExecutorTest {
+public class RankBaselineProfilesCommandTest {
 
     private static final String SPECIES = "Species 1";
 
@@ -55,9 +55,9 @@ public class RankBaselineProfileCommandExecutorTest {
 
     private ObjectInputStream<BaselineProfile> smallInputStream;
 
-    private RankBaselineProfileCommandExecutor subject;
+    private RankBaselineProfilesCommand subject;
 
-    public RankBaselineProfileCommandExecutorTest() {
+    public RankBaselineProfilesCommandTest() {
     }
 
     //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
@@ -79,14 +79,14 @@ public class RankBaselineProfileCommandExecutorTest {
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
-        subject = new RankBaselineProfileCommandExecutor(requestContextMock);
+        subject = new RankBaselineProfilesCommand(requestContextMock);
 
     }
 
     @Test
     public void givenAStreamWithLessExpressionsThanRankSizeTheCommandShouldReturnAllTheExpressions() throws Exception {
         //when
-        List<BaselineProfile> top3Objects = subject.execute(smallInputStream);
+        List<BaselineProfile> top3Objects = subject.execute(smallInputStream, requestContextMock);
 
         //then
         assertThat(top3Objects.size(), is(1));
@@ -100,7 +100,7 @@ public class RankBaselineProfileCommandExecutorTest {
         given(requestContextMock.getHeatmapMatrixSize()).willReturn(3);
 
         //when
-        List<BaselineProfile> top3Objects = subject.execute(largeInputStream);
+        List<BaselineProfile> top3Objects = subject.execute(largeInputStream, requestContextMock);
 
         //then
         assertThat(top3Objects.size(), is(3));
@@ -114,7 +114,7 @@ public class RankBaselineProfileCommandExecutorTest {
         when(requestContextMock.isSpecific()).thenReturn(false);
 
         //when
-        List<BaselineProfile> top3Objects = subject.execute(largeInputStream);
+        List<BaselineProfile> top3Objects = subject.execute(largeInputStream, requestContextMock);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(5));
@@ -136,7 +136,7 @@ public class RankBaselineProfileCommandExecutorTest {
     public void rankedObjectsShouldBeInDescendingOrder() throws Exception {
 
         //when
-        List<BaselineProfile> top3Objects = subject.execute(largeInputStream);
+        List<BaselineProfile> top3Objects = subject.execute(largeInputStream, requestContextMock);
 
         //and
         assertThat(top3Objects.get(0).getSpecificity(), is(1));

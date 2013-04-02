@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import junitx.extensions.EqualsHashCodeTestCase;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
 public class FactorValueEqualsHashCodeTest extends EqualsHashCodeTestCase {
 

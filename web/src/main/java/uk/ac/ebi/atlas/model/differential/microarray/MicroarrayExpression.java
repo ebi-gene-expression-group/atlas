@@ -20,26 +20,22 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.model.differential.microarray;
 
 
-import java.util.Map;
-import java.util.Set;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
-public class MicroarrayExperiment extends DifferentialExperiment{
+public class MicroarrayExpression extends DifferentialExpression {
 
-    private String arrayDesignName;
+    private double tStatistic;
 
-    public MicroarrayExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile,
-                                Set<String> species, Map<String, String> speciesMapping, String arrayDesignName) {
-
-        super(accession, contrasts, description, hasExtraInfoFile, species, speciesMapping);
-        this.arrayDesignName = arrayDesignName;
-
+    public MicroarrayExpression(double pValue, double foldChange, double tStatistic, Contrast contrast) {
+        super(pValue, foldChange, contrast);
+        this.tStatistic = tStatistic;
     }
 
-    public String getArrayDesignName() {
-        return arrayDesignName;
+    public double getTStatistic() {
+        return tStatistic;
     }
-
 }
