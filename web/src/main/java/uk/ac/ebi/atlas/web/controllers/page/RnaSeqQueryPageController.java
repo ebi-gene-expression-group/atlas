@@ -47,6 +47,11 @@ public class RnaSeqQueryPageController extends DifferentialQueryPageRequestHandl
         super(rnaSeqRequestContextBuilder, rnaSeqRankProfilesCommand);
     }
 
+    @Override
+    protected void initExtraRequestPreferences(DifferentialRequestPreferences requestPreferences, DifferentialExperiment experiment) {
+        //No extra initalizations required
+    }
+
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {

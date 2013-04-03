@@ -26,11 +26,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.RankProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -54,13 +52,16 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
         this.rankProfilesCommand = rankProfilesCommand;
     }
 
-    protected void initRequestPreferences(K requestPreferences, T experiment){
-        //      if there is only one contrast we want to preselect it... from Robert feedback
+    private void initRequestPreferences(K requestPreferences, T experiment){
+        //if there is only one contrast we want to preselect it... from Robert feedback
         if(experiment.getContrasts().size() == 1){
             requestPreferences.setQueryFactorValues(experiment.getContrastIds());
         }
+        initExtraRequestPreferences(requestPreferences, experiment);
 
     }
+
+    protected abstract void initExtraRequestPreferences(K requestPreferences, T experiment);
 
     public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
 
