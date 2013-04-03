@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -137,7 +136,7 @@ public class ExperimentDispatcher {
         }
         if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)){
             MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
-            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, Lists.newArrayList("A-AFFY-37", "A-AFFY-44"));
+            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
             return microarrayExperiment;
         }
         throw new ResourceNotFoundException();

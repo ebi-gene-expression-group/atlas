@@ -52,20 +52,9 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
         this.rankProfilesCommand = rankProfilesCommand;
     }
 
-    private void initRequestPreferences(K requestPreferences, T experiment){
-        //if there is only one contrast we want to preselect it... from Robert feedback
-        if(experiment.getContrasts().size() == 1){
-            requestPreferences.setQueryFactorValues(experiment.getContrastIds());
-        }
-        initExtraRequestPreferences(requestPreferences, experiment);
-
-    }
-
-    protected abstract void initExtraRequestPreferences(K requestPreferences, T experiment);
-
     public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
 
-        T experiment = (T)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         initRequestPreferences(requestPreferences, experiment);
 
@@ -102,8 +91,19 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
         return "experiment";
     }
 
+    private void initRequestPreferences(K requestPreferences, T experiment) {
+        //if there is only one contrast we want to preselect it... from Robert feedback
+        if (experiment.getContrasts().size() == 1) {
+            requestPreferences.setQueryFactorValues(experiment.getContrastIds());
+        }
+        initExtraRequestPreferences(requestPreferences, experiment);
 
-    private  DifferentialRequestContext initRequestContext(T experiment, DifferentialRequestPreferences requestPreferences){
+    }
+
+    protected abstract void initExtraRequestPreferences(K requestPreferences, T experiment);
+
+
+    private DifferentialRequestContext initRequestContext(T experiment, DifferentialRequestPreferences requestPreferences) {
         return differentialRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences).build();
 
