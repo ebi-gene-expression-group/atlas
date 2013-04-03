@@ -24,13 +24,13 @@ package uk.ac.ebi.atlas.commands;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
@@ -40,30 +40,32 @@ import java.util.Queue;
 
 @Named
 @Scope("prototype")
-public class RankRnaSeqProfilesCommand extends RankProfilesCommand<DifferentialProfilesList, RnaSeqProfile> {
+public class RankMicroarrayProfilesCommand extends RankProfilesCommand<DifferentialProfilesList, MicroarrayProfile> {
 
     private InputStreamFactory inputStreamFactory;
+    private MicroarrayRequestContext requestContext;
 
     @Inject
-    public RankRnaSeqProfilesCommand(RnaSeqRequestContext requestContext, InputStreamFactory inputStreamFactory) {
+    public RankMicroarrayProfilesCommand(MicroarrayRequestContext requestContext, InputStreamFactory inputStreamFactory) {
         super(requestContext);
+        this.requestContext = requestContext;
         this.inputStreamFactory = inputStreamFactory;
     }
 
     @Override
-    protected DifferentialProfilesList createGeneProfilesList(Queue<RnaSeqProfile> geneProfiles) {
+    protected DifferentialProfilesList createGeneProfilesList(Queue<MicroarrayProfile> geneProfiles) {
         return new DifferentialProfilesList(geneProfiles);
     }
 
     @Override
-    protected Comparator<RnaSeqProfile> createGeneProfileComparator(RequestContext requestContext) {
+    protected Comparator<MicroarrayProfile> createGeneProfileComparator(RequestContext requestContext) {
         Regulation regulation = ((DifferentialRequestContext) requestContext).getRegulation();
         return new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
                 requestContext.getAllQueryFactors(), regulation, requestContext.getCutoff());
     }
 
     @Override
-    protected ObjectInputStream<RnaSeqProfile> createInputStream(String experimentAccession) {
-        return inputStreamFactory.createDifferentialProfileInputStream(experimentAccession);
+    protected ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
+        return inputStreamFactory.createMicroarrayProfileInputStream(experimentAccession, requestContext.getArrayDesignName());
     }
 }

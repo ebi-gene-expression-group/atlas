@@ -47,14 +47,14 @@ public class DifferentialPageDownloadController {
 
     private final RnaSeqRequestContextBuilder requestContextBuilder;
 
-    private WriteDifferentialProfilesCommand writeGeneProfilesCommandExecutor;
+    private WriteDifferentialProfilesCommand writeGeneProfilesCommand;
 
     @Inject
     public DifferentialPageDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommandExecutor) {
+            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand) {
 
         this.requestContextBuilder = requestContextBuilder;
-        this.writeGeneProfilesCommandExecutor = writeGeneProfilesCommandExecutor;
+        this.writeGeneProfilesCommand = writeGeneProfilesCommand;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
@@ -72,15 +72,14 @@ public class DifferentialPageDownloadController {
         response.setContentType("text/plain; charset=utf-8");
 
 
-        requestContextBuilder.forExperiment(experiment)
-                .withPreferences(preferences).build();
+        requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
 
-        writeGeneProfilesCommandExecutor.setResponseWriter(response.getWriter());
-        writeGeneProfilesCommandExecutor.setExperiment(experiment);
+        writeGeneProfilesCommand.setResponseWriter(response.getWriter());
+        writeGeneProfilesCommand.setExperiment(experiment);
 
         try {
 
-            long genesCount = writeGeneProfilesCommandExecutor.execute(experiment.getAccession());
+            long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 
         } catch (GenesNotFoundException e) {

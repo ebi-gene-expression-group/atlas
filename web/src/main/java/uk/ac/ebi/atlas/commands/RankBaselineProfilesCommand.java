@@ -42,14 +42,11 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
 
     private InputStreamFactory inputStreamFactory;
 
-    @Inject
-    public void setInputStreamFactory(InputStreamFactory inputStreamFactory) {
-        this.inputStreamFactory = inputStreamFactory;
-    }
 
     @Inject
-    public RankBaselineProfilesCommand(BaselineRequestContext requestContext) {
+    public RankBaselineProfilesCommand(BaselineRequestContext requestContext, InputStreamFactory inputStreamFactory) {
         super(requestContext);
+        this.inputStreamFactory = inputStreamFactory;
     }
 
     @Override

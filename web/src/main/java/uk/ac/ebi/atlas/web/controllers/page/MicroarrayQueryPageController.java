@@ -30,9 +30,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
+import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
@@ -51,16 +51,16 @@ import java.util.SortedSet;
 public class MicroarrayQueryPageController{
 
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
-    private RankRnaSeqProfilesCommand rankDifferentialProfilesCommand;
+    private RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand;
 
     @Inject
-    public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder, RankRnaSeqProfilesCommand rankDifferentialProfilesCommand) {
+    public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder, RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand) {
         this.microarrayRequestContextBuilder = requestContextBuilder;
-        this.rankDifferentialProfilesCommand = rankDifferentialProfilesCommand;
+        this.rankMicroarrayProfilesCommand = rankMicroarrayProfilesCommand;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=MICROARRAY"})
-    public String showMicroarrayExperimentGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+    public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
                                         , BindingResult result, Model model, HttpServletRequest request) {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -70,10 +70,10 @@ public class MicroarrayQueryPageController{
             preferences.setArrayDesignName(experiment.getArrayDesignAccessions().first());
         }
 
-        RequestContext requestContext = microarrayRequestContextBuilder.forExperiment(experiment)
+        MicroarrayRequestContext requestContext = microarrayRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(preferences).build();
 
-        ////////////////From here the code is duplicated with DifferentialQueryPageController
+        ////////////////From here the code is exact duplicate of DifferentialQueryPageController
 
         SortedSet<Contrast> contrasts = experiment.getContrasts();
 
@@ -95,7 +95,7 @@ public class MicroarrayQueryPageController{
         if (!result.hasErrors()) {
 
             try {
-                GeneProfilesList<DifferentialProfile> differentialProfiles = rankDifferentialProfilesCommand.execute(experiment.getAccession());
+                GeneProfilesList<DifferentialProfile> differentialProfiles = rankMicroarrayProfilesCommand.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", differentialProfiles);
 

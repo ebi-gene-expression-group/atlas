@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import java.util.List;
 
@@ -50,6 +51,9 @@ public class RankBaselineProfilesCommandTest {
 
     @Mock
     private BaselineRequestContext requestContextMock;
+
+    @Mock
+    private InputStreamFactory inputStreamFactoryMock;
 
     private ObjectInputStream<BaselineProfile> largeInputStream;
 
@@ -79,7 +83,7 @@ public class RankBaselineProfilesCommandTest {
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
-        subject = new RankBaselineProfilesCommand(requestContextMock);
+        subject = new RankBaselineProfilesCommand(requestContextMock, inputStreamFactoryMock);
 
     }
 

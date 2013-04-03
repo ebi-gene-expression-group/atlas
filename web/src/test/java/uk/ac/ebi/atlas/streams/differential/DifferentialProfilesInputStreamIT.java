@@ -30,8 +30,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
-import uk.ac.ebi.atlas.model.differential.*;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -70,7 +75,7 @@ public class DifferentialProfilesInputStreamIT {
     @Inject
     private RnaSeqRequestContext differentialRequestContext;
 
-    private DifferentialProfilesInputStream subject;
+    private ObjectInputStream<RnaSeqProfile> subject;
 
     private Contrast contrast;
 
@@ -98,7 +103,7 @@ public class DifferentialProfilesInputStreamIT {
 
 
         //given
-        DifferentialProfile differentialProfile = subject.readNext();
+        RnaSeqProfile differentialProfile = subject.readNext();
         //then
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_UPDOWN_1));
         assertThat(differentialProfile.getSpecificity(), is(1));
@@ -135,7 +140,7 @@ public class DifferentialProfilesInputStreamIT {
         differentialRequestContext.setRegulation(Regulation.UP);
 
         //given
-        DifferentialProfile differentialProfile = subject.readNext();
+        RnaSeqProfile differentialProfile = subject.readNext();
         //then
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_UP_1));
         assertThat(differentialProfile.getSpecificity(), is(1));
@@ -174,7 +179,7 @@ public class DifferentialProfilesInputStreamIT {
 
 
         //given
-        DifferentialProfile differentialProfile = subject.readNext();
+        RnaSeqProfile differentialProfile = subject.readNext();
         //then
         assertThat(differentialProfile.getGeneId(), is(GENE_ID_DOWN_1));
         assertThat(differentialProfile.getSpecificity(), is(1));

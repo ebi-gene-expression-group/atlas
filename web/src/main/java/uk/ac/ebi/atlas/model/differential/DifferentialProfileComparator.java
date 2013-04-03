@@ -29,7 +29,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.Comparator;
 import java.util.Set;
 
-public class DifferentialProfileComparator implements Comparator<DifferentialProfile> {
+public class DifferentialProfileComparator<T extends DifferentialProfile> implements Comparator<T> {
 
     private boolean isSpecific;
     private Set<Contrast> selectedFactors;

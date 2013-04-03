@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import java.util.SortedSet;
 
 @Named("differentialProfileWriter")
 @Scope("prototype")
-public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<DifferentialProfile, Contrast> {
+public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<RnaSeqProfile, Contrast> {
 
     @Inject
     protected DifferentialGeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
@@ -34,7 +34,7 @@ public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Dif
     }
 
     @Override
-    protected String[] buildExpressionsRow(final DifferentialProfile geneProfile, SortedSet<Contrast> contrasts) {
+    protected String[] buildExpressionsRow(final RnaSeqProfile geneProfile, SortedSet<Contrast> contrasts) {
         String[] expressionLevels = new String[contrasts.size() * 2];
         int i = 0;
         for (Contrast contrast : contrasts) {

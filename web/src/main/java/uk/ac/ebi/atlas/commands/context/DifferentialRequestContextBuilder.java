@@ -40,12 +40,12 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
         this.requestContext = requestContext;
     }
 
-    public DifferentialRequestContextBuilder forExperiment(DifferentialExperiment experiment) {
+    public DifferentialRequestContextBuilder<T,K> forExperiment(DifferentialExperiment experiment) {
         this.experiment = experiment;
         return this;
     }
 
-    public DifferentialRequestContextBuilder withPreferences(K requestPreferences) {
+    public DifferentialRequestContextBuilder<T,K> withPreferences(K requestPreferences) {
         this.requestPreferences = requestPreferences;
         return this;
     }

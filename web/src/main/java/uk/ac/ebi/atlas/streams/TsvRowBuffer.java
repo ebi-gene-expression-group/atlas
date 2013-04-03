@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.streams;
 
+import uk.ac.ebi.atlas.model.GeneExpression;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -29,23 +31,27 @@ import java.util.Queue;
 import static com.google.common.base.Preconditions.checkState;
 
 //ToDo: maybe it is possible to push up here more logic if I introduce a second generic argument for the type of objects that are in cyclic Iterator (FactorGroup / Contrast)
-public abstract class TsvRowBuffer<T> {
+public abstract class TsvRowBuffer<T extends GeneExpression> {
 
     public static final int GENE_ID_COLUMN = 0;
 
-    protected Queue<String> expressionLevelsBuffer = new LinkedList<>();
+    private Queue<String> tsvRow = new LinkedList<>();
+
 
     public TsvRowBuffer reload(String... values) {
-        checkState(this.expressionLevelsBuffer.isEmpty(), "Reload must be invoked only when readNext returns null");
+        checkState(this.tsvRow.isEmpty(), "Reload must be invoked only when readNext returns null");
 
-        expressionLevelsBuffer.clear();
+        Collections.addAll(this.tsvRow, values);
 
-        Collections.addAll(this.expressionLevelsBuffer, values);
-
-        expressionLevelsBuffer.poll();
+        tsvRow.poll();
 
         return this;
     }
 
-    public abstract T poll();
+    public T poll(){
+        return pollExpression(tsvRow);
+    }
+
+    public abstract T pollExpression(Queue<String> expressionLevelsBuffer);
+
 }

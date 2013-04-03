@@ -5,30 +5,23 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Set;
 
-public abstract class AbstractCommand<T, K> implements Command<T> {
+public abstract class AbstractCommand<T, K extends GeneProfile> implements Command<T> {
 
     protected static final Logger LOGGER = Logger.getLogger(AbstractCommand.class);
 
     private SolrClient solrClient;
 
-    private InputStreamFactory inputStreamFactory;
-
     private RequestContext requestContext;
 
     protected AbstractCommand(RequestContext requestContext){
         this.requestContext = requestContext;
-    }
-
-    @Inject
-    public void setInputStreamFactory(InputStreamFactory inputStreamFactory) {
-        this.inputStreamFactory = inputStreamFactory;
     }
 
     @Inject

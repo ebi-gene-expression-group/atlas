@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
@@ -38,35 +38,33 @@ import java.io.PrintWriter;
 
 @Named
 @Scope("prototype")
-public class WriteDifferentialProfilesCommand extends AbstractCommand<Long, DifferentialProfile> implements Command<Long> {
+public class WriteDifferentialProfilesCommand extends AbstractCommand<Long, RnaSeqProfile> implements Command<Long> {
 
     protected static final Logger logger = Logger.getLogger(WriteDifferentialProfilesCommand.class);
 
-    private DifferentialGeneProfilesTSVWriter geneProfileWriter;
+    private DifferentialGeneProfilesTSVWriter geneProfileTsvWriter;
 
     private DifferentialExperiment experiment;
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    public void setInputStreamFactory(InputStreamFactory inputStreamFactory) {
+    public WriteDifferentialProfilesCommand(DifferentialGeneProfilesTSVWriter geneProfileTsvWriter,
+                                            RnaSeqRequestContext requestContext,
+                                            InputStreamFactory inputStreamFactory) {
+        super(requestContext);
+        this.geneProfileTsvWriter = geneProfileTsvWriter;
         this.inputStreamFactory = inputStreamFactory;
     }
 
-    @Inject
-    public WriteDifferentialProfilesCommand(DifferentialGeneProfilesTSVWriter geneProfileWriter, RnaSeqRequestContext requestContext) {
-        super(requestContext);
-        this.geneProfileWriter = geneProfileWriter;
-    }
-
     @Override
-    protected ObjectInputStream<DifferentialProfile> createInputStream(String experimentAccession) {
+    protected ObjectInputStream<RnaSeqProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createDifferentialProfileInputStream(experimentAccession);
     }
 
     @Override
-    protected Long execute(ObjectInputStream<DifferentialProfile> inputStream, RequestContext requestContext) {
+    protected Long execute(ObjectInputStream<RnaSeqProfile> inputStream, RequestContext requestContext) {
         try {
-            return geneProfileWriter.apply(inputStream, experiment.getContrasts());
+            return geneProfileTsvWriter.apply(inputStream, experiment.getContrasts());
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
@@ -75,7 +73,7 @@ public class WriteDifferentialProfilesCommand extends AbstractCommand<Long, Diff
 
 
     public void setResponseWriter(PrintWriter responseWriter) {
-        geneProfileWriter.setResponseWriter(responseWriter);
+        geneProfileTsvWriter.setResponseWriter(responseWriter);
     }
 
     public void setExperiment(DifferentialExperiment experiment) {

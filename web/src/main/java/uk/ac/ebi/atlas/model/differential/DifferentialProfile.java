@@ -25,13 +25,10 @@ package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.EnumMap;
 import java.util.Set;
 
@@ -39,7 +36,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpression> {
+public class DifferentialProfile<T extends DifferentialExpression> extends GeneProfile<Contrast, T> {
 
 
     private double maxUpRegulatedExpressionLevel = 0D;
@@ -53,7 +50,7 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
         super(geneId);
     }
 
-    DifferentialProfile add(DifferentialExpression expression) {
+    DifferentialProfile add(T expression) {
         this.addExpression(expression.getContrast(), expression);
         return this;
     }
@@ -133,19 +130,17 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
     }
 
 
-    @Named
-    @Scope("prototype")
-    public static class DifferentialProfileBuilder {
+    public abstract static class DifferentialProfileBuilder<T extends DifferentialProfile, K extends DifferentialRequestContext> {
 
-        private DifferentialProfile differentialProfile;
+        private T differentialProfile;
+
+        private K requestContext;
 
         private DifferentialExpressionPrecondition differentialExpressionPrecondition;
 
-        private DifferentialRequestContext requestContext;
-
         @Inject
-        protected DifferentialProfileBuilder(RnaSeqRequestContext requestContext
-                , DifferentialExpressionPrecondition differentialExpressionPrecondition) {
+        protected DifferentialProfileBuilder(K requestContext
+                                            , DifferentialExpressionPrecondition differentialExpressionPrecondition) {
             this.requestContext = requestContext;
             this.differentialExpressionPrecondition = differentialExpressionPrecondition;
         }
@@ -157,11 +152,13 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
         }
 
         public DifferentialProfileBuilder forGeneId(String geneId) {
-            this.differentialProfile = new DifferentialProfile(geneId);
+            this.differentialProfile = createProfile(geneId);
             initPreconditions();
 
             return this;
         }
+
+        protected abstract T createProfile(String geneId);
 
         public DifferentialProfileBuilder addExpression(DifferentialExpression expression) {
             checkState(differentialProfile != null, "Please invoke forGeneID before create");
@@ -171,7 +168,7 @@ public class DifferentialProfile extends GeneProfile<Contrast, DifferentialExpre
             return this;
         }
 
-        public DifferentialProfile create() {
+        public T create() {
             checkState(differentialProfile != null, "Please invoke forGeneID before create");
 
             if (differentialProfile.isEmpty() || !isAveragePiValueSmallerInSelectedContrasts(differentialProfile)) {

@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class DifferentialGeneProfilesTSVWriterTest {
     private GeneNamesProvider geneNamesProviderMock;
 
     @Mock
-    private DifferentialProfile geneProfileMock;
+    private RnaSeqProfile geneProfileMock;
 
     @Mock
     private DifferentialExpression expressionMock;

@@ -99,7 +99,7 @@
                                                           value="${expressionLevel}" groupingUsed="false"
                                                           var="expressionLevel"/>
                                     </c:when>
-                                    <c:when test="${type eq 'DIFFERENTIAL'}">
+                                    <c:when test="${type != 'BASELINE'}">
                                         <c:choose>
                                             <c:when test="${geneProfile.getExpression(queryFactor).notApplicable}">
                                                 <c:set var="foldChange" value="N/A"/>
@@ -115,9 +115,9 @@
                                     </c:when>
                                 </c:choose>
 
-                                <div class="hide_cell" ${type eq 'DIFFERENTIAL' ? 'data-fold-change="'.concat(foldChange).concat('"'):''}
+                                <div class="hide_cell" ${type != 'BASELINE' ? 'data-fold-change="'.concat(foldChange).concat('"'):''}
                                      data-organism-part="${columnHeader}" data-color="${cellColour}">
-                                        ${type eq 'DIFFERENTIAL' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
+                                        ${type != 'BASELINE' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
 
                             </c:if>

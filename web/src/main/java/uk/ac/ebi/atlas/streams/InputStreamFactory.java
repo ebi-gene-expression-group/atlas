@@ -27,13 +27,20 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile.BaselineProfileBuilder;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile.MicroarrayProfileBuilder;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile.RnaSeqProfileBuilder;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
 import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBuffer;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesInputStream;
+import uk.ac.ebi.atlas.streams.differential.RnaSeqProfilesInputStream;
+import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsBuffer;
+import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfilesInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -64,19 +71,25 @@ public class InputStreamFactory {
 
     private BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder;
     private DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder;
-    private BaselineProfile.BaselineProfileBuilder baselineProfileBuilder;
-    private DifferentialProfile.DifferentialProfileBuilder differentialProfileBuilder;
+    private MicroarrayExpressionsBuffer.Builder microarrayExpressionsBufferBuilder;
+    private BaselineProfileBuilder baselineProfileBuilder;
+    private MicroarrayProfileBuilder microarrayProfileBuilder;
+    private RnaSeqProfileBuilder rnaSeqProfileBuilder;
 
 
     @Inject
     public InputStreamFactory(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder
                             , DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder
-                            , BaselineProfile.BaselineProfileBuilder baselineProfileBuilder
-                            , DifferentialProfile.DifferentialProfileBuilder differentialProfileBuilder) {
+                            , MicroarrayExpressionsBuffer.Builder microarrayExpressionsBufferBuilder
+                            , BaselineProfileBuilder baselineProfileBuilder
+                            , MicroarrayProfileBuilder microarrayProfileBuilder
+                            , RnaSeqProfileBuilder rnaSeqProfileBuilder) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.differentialExpressionsBufferBuilder = differentialExpressionsBufferBuilder;
+        this.microarrayExpressionsBufferBuilder = microarrayExpressionsBufferBuilder;
         this.baselineProfileBuilder = baselineProfileBuilder;
-        this.differentialProfileBuilder = differentialProfileBuilder;
+        this.microarrayProfileBuilder = microarrayProfileBuilder;
+        this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
 
     }
 
@@ -97,22 +110,23 @@ public class InputStreamFactory {
         return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, baselineProfileBuilder);
     }
 
-    public BaselineExpressionsInputStream createGeneExpressionsInputStream(String experimentAccession) {
+    public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = buildCsvReader(tsvFileURL);
         return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
     }
 
-    public DifferentialProfilesInputStream createDifferentialProfileInputStream(String experimentAccession) {
+    public ObjectInputStream<RnaSeqProfile> createDifferentialProfileInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(differentialExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = buildCsvReader(tsvFileURL);
-        return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, differentialProfileBuilder);
+        return new RnaSeqProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, rnaSeqProfileBuilder);
     }
 
-    public DifferentialProfilesInputStream createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
+    //ToDo: to be implemented...
+    public ObjectInputStream<MicroarrayProfile> createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
         String tsvFileURL = MessageFormat.format(microarrayExperimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
         CSVReader csvReader = buildCsvReader(tsvFileURL);
-        return new DifferentialProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, differentialProfileBuilder);
+        return new MicroarrayProfilesInputStream(csvReader, experimentAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder);
     }
 
 }

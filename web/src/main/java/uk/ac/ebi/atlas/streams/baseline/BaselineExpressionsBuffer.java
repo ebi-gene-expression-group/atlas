@@ -59,8 +59,8 @@ public class BaselineExpressionsBuffer extends TsvRowBuffer<BaselineExpression> 
 
 
     @Override
-    public BaselineExpression poll() {
-        String expressionLevelString = expressionLevelsBuffer.poll();
+    public BaselineExpression pollExpression(Queue<String> tsvRow) {
+        String expressionLevelString = tsvRow.poll();
 
         if (expressionLevelString == null) {
             return null;

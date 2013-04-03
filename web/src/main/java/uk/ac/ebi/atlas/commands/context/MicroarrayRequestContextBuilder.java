@@ -32,23 +32,17 @@ import javax.inject.Named;
 @Scope("prototype")
 public class MicroarrayRequestContextBuilder extends DifferentialRequestContextBuilder<MicroarrayRequestContext, MicroarrayRequestPreferences> {
 
-    protected String arrayDesignAccesion;
 
     @Inject
     public MicroarrayRequestContextBuilder(MicroarrayRequestContext requestContext) {
         super(requestContext);
     }
 
-    public MicroarrayRequestContextBuilder withArrayDesignAccession(String arrayDesignAccession) {
-        this.arrayDesignAccesion = arrayDesignAccession;
+    @Override
+    public MicroarrayRequestContextBuilder withPreferences(MicroarrayRequestPreferences requestPreferences) {
+        super.withPreferences(requestPreferences);
+        requestContext.setArrayDesignAccession(requestPreferences.getArrayDesignAccession());
         return this;
-    }
-
-    public MicroarrayRequestContext build() {
-        super.build();
-        requestContext.setArrayDesignAccession(arrayDesignAccesion);
-
-        return requestContext;
     }
 
 }

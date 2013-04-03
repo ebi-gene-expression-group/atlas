@@ -42,7 +42,7 @@
             </tr>
         </table>
 
-        <c:if test="${type eq 'DIFFERENTIAL'}">
+        <c:if test="${type != 'BASELINE'}">
             <table cellpadding="0" cellspacing="0" border="0" style="float: right; padding: 0px 3px 10px 0px; ">
                 <tr>
                     <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
@@ -93,7 +93,7 @@
 
             helpTooltipsModule.init('experiment-design');
 
-            <c:if test="${type eq 'DIFFERENTIAL'}">
+            <c:if test="${type != 'BASELINE'}">
             $('#selectedContrast').change(function () {
                 $('#prefForm').submit();
             });

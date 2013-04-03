@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,17 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.differential;
+package uk.ac.ebi.atlas.streams.differential.microarray;
 
 import com.google.common.collect.Iterables;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.streams.TsvRowBuffer;
 import uk.ac.ebi.atlas.streams.TsvRowBufferBuilder;
 
@@ -40,32 +40,41 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpression> {
+//ToDo: duplicate code with DifferentialExpressionsBuffer
+public class MicroarrayExpressionsBuffer extends TsvRowBuffer<MicroarrayExpression> {
 
-    private static final Logger logger = Logger.getLogger(DifferentialExpressionsBuffer.class);
+    private static final Logger logger = Logger.getLogger(MicroarrayExpressionsBuffer.class);
 
     private Iterator<Contrast> expectedContrasts;
 
-    DifferentialExpressionsBuffer(List<Contrast> orderedContrasts) {
+    MicroarrayExpressionsBuffer(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
     }
 
-    public DifferentialExpression pollExpression(Queue<String> tsvRow) {
+    public MicroarrayExpression pollExpression(Queue<String> tsvRow) {
         String pValueString = tsvRow.poll();
         if (pValueString == null) {
             return null;
         }
+
+        String tStatisticString = tsvRow.poll();
+        checkState(tStatisticString != null, "missing tStatistic column in the analytics file");
+
         String foldChangeString = tsvRow.poll();
         checkState(foldChangeString != null, "missing fold change column in the analytics file");
-        if ("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString)) {
+
+
+        if ("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(tStatisticString) || "NA".equalsIgnoreCase(foldChangeString)) {
             expectedContrasts.next();
             return pollExpression(tsvRow);
         }
+
         double pValue = parseDouble(pValueString);
+        double tStatistic = parseDouble(tStatisticString);
         double foldChange = parseDouble(foldChangeString);
 
         Contrast contrast = expectedContrasts.next();
-        return new DifferentialExpression(pValue, foldChange, contrast);
+        return new MicroarrayExpression(pValue, foldChange, tStatistic, contrast);
     }
 
     double parseDouble(String value) {
@@ -84,12 +93,12 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
 
         private String experimentAccession;
 
-        private DifferentialExperimentsCache experimentsCache;
+        private MicroarrayExperimentsCache experimentsCache;
 
         private List<Contrast> orderedContrasts = new LinkedList<>();
 
         @Inject
-        public Builder(DifferentialExperimentsCache experimentsCache) {
+        public Builder(MicroarrayExperimentsCache experimentsCache) {
 
             this.experimentsCache = experimentsCache;
 
@@ -111,7 +120,7 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
 
             checkState(experimentAccession != null, "Builder not properly initialized!");
 
-            DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+            MicroarrayExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
             List<String> columnHeaders = Arrays.asList(ArrayUtils.remove(tsvFileHeaders, GENE_ID_COLUMN));
 
@@ -126,11 +135,11 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
         }
 
         @Override
-        public DifferentialExpressionsBuffer create() {
+        public MicroarrayExpressionsBuffer create() {
 
             checkState(!orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
 
-            return new DifferentialExpressionsBuffer(orderedContrasts);
+            return new MicroarrayExpressionsBuffer(orderedContrasts);
 
         }
 

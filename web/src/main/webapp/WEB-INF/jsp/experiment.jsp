@@ -163,7 +163,7 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
 
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
-            if ('${type}'==='DIFFERENTIAL' ) {
+            if ('${type}'!=='BASELINE' ) {
 
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();

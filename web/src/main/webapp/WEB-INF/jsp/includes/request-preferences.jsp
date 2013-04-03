@@ -41,7 +41,7 @@
                     <span data-help-loc="#geneSearch"/>
                 </td>
 
-                <c:if test="${type eq 'DIFFERENTIAL'}">
+                <c:if test="${type != 'BASELINE'}">
                     <td> <!-- empty placeholder above Contrasts --> </td>
                 </c:if>
 
@@ -54,7 +54,7 @@
 
                 <td>
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
-                    <span data-help-loc="#factorSearch${type eq 'DIFFERENTIAL' ? '-differential':''}"/>
+                    <span data-help-loc="#factorSearch${type eq 'BASELINE' ? '' : '-differential'}"/>
                 </td>
                 <td style="width:100%;display:block">
                     <form:label
@@ -90,16 +90,16 @@
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>
                 </c:if>
-                <c:if test="${type eq 'DIFFERENTIAL'}">
+                <c:if test="${type != 'BASELINE'}">
                     <td>
                         <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
                 <td>
                     <div>
-                        <c:set var="isSingleContrast" value="${type eq 'DIFFERENTIAL' && allQueryFactors.size() == 1}"/>
-                        <c:set var="itemLabel" value="${type eq 'DIFFERENTIAL'? 'displayName' : 'value'}"/>
-                        <c:set var="itemValue" value="${type eq 'DIFFERENTIAL'? 'id' : 'value'}"/>
+                        <c:set var="isSingleContrast" value="${(type != 'BASELINE') && allQueryFactors.size() == 1}"/>
+                        <c:set var="itemLabel" value="${type eq 'BASELINE'? 'value' : 'displayName'}"/>
+                        <c:set var="itemValue" value="${type eq 'BASELINE'? 'value' : 'id'}"/>
                         <form:select path="queryFactorValues" data-placeholder="(Any ${queryFactorName})"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
@@ -112,7 +112,7 @@
                                        label="Specific"
                                        disabled="${isSingleContrast ? true : false}"/>
                     </span>
-                    <span data-help-loc="#specific${type eq 'DIFFERENTIAL' ? '-differential':''}"
+                    <span data-help-loc="#specific${type != 'BASELINE' ? '' : '-differential'}"
                           style="display:inline-block"/>
                 </td>
                 <td>

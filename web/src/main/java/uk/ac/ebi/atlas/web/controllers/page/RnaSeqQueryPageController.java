@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
-import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
@@ -47,18 +46,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.SortedSet;
 
-public abstract class DifferentialQueryPageController<T extends DifferentialRequestContextBuilder, K extends RankRnaSeqProfilesCommand> {
+@Controller
+@Scope("request")
+public class RnaSeqQueryPageController {
 
-    private T differentialRequestContextBuilder;
-    private K command;
+    private RnaSeqRequestContextBuilder differentialRequestContextBuilder;
+    private RankRnaSeqProfilesCommand command;
 
     @Inject
-    public DifferentialQueryPageController(T differentialRequestContextBuilder,
-                                           K rankDifferentialProfilesCommand){
+    public RnaSeqQueryPageController(RnaSeqRequestContextBuilder differentialRequestContextBuilder,
+                                     RankRnaSeqProfilesCommand rankDifferentialProfilesCommand){
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.command = rankDifferentialProfilesCommand;
     }
 
+    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 

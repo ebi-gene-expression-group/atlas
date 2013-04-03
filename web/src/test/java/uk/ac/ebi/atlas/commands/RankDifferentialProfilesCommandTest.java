@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import java.util.*;
 
@@ -53,13 +54,16 @@ public class RankDifferentialProfilesCommandTest {
     private DifferentialProfile differentialProfileMock2;
 
     @Mock
+    private InputStreamFactory inputStreamFactoryMock;
+
+    @Mock
     private DifferentialProfile differentialProfileMock3;
 
     @Before
     public void setUp() throws Exception {
         when(requestContextMock.getRegulation()).thenReturn(Regulation.UP_DOWN);
 
-        subject = new RankRnaSeqProfilesCommand(requestContextMock);
+        subject = new RankRnaSeqProfilesCommand(requestContextMock, inputStreamFactoryMock);
 
         when(differentialProfileMock1.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(3D);
         when(differentialProfileMock1.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);

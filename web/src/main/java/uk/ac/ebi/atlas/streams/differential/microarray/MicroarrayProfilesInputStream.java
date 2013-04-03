@@ -20,46 +20,49 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.differential;
+package uk.ac.ebi.atlas.streams.differential.microarray;
 
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile.DifferentialProfileBuilder;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 import uk.ac.ebi.atlas.streams.TsvRowBuffer;
 
-public class DifferentialProfilesInputStream extends TsvInputStream<DifferentialProfile> {
+
+//ToDo: duplicated code with DifferentialProfileInputStream
+public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProfile> {
 
 
-    private DifferentialProfileBuilder differentialProfileBuilder;
+    private MicroarrayProfileBuilder microarrayProfileBuilder;
 
-    public DifferentialProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , DifferentialExpressionsBuffer.Builder expressionsBufferBuilder
-            , DifferentialProfileBuilder differentialProfileBuilder) {
+    public MicroarrayProfilesInputStream(CSVReader csvReader, String experimentAccession
+            , MicroarrayExpressionsBuffer.Builder expressionsBufferBuilder
+            , MicroarrayProfileBuilder microarrayProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
-        this.differentialProfileBuilder = differentialProfileBuilder;
+        this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 
     @Override
-    protected DifferentialProfile buildObjectFromTsvValues(String[] values) {
+    protected MicroarrayProfile buildObjectFromTsvValues(String[] values) {
 
         //we need to reload because the first line can only be used to extract the gene ID
         getTsvRowBuffer().reload(values);
 
-        differentialProfileBuilder.forGeneId(values[TsvRowBuffer.GENE_ID_COLUMN]);
+        microarrayProfileBuilder.forGeneId(values[TsvRowBuffer.GENE_ID_COLUMN]);
 
         DifferentialExpression expression;
 
-        while ((expression = (DifferentialExpression)getTsvRowBuffer().poll()) != null) {
+        while ((expression = (MicroarrayExpression)getTsvRowBuffer().poll()) != null) {
 
-            differentialProfileBuilder.addExpression(expression);
+            microarrayProfileBuilder.addExpression(expression);
 
         }
 
-        return differentialProfileBuilder.create();
+        return microarrayProfileBuilder.create();
 
     }
 }
