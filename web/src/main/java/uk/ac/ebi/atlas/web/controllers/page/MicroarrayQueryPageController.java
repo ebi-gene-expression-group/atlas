@@ -37,7 +37,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-//ToDo: duplicated code with RnaSeqQueryPageController
 @Controller
 @Scope("request")
 public class MicroarrayQueryPageController extends DifferentialQueryPageRequestHandling<MicroarrayExperiment, MicroarrayRequestPreferences> {
