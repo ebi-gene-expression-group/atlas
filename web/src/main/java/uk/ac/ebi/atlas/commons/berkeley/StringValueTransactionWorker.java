@@ -26,7 +26,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.concurrent.ConcurrentMap;
 
-public class StringValueTransactionWorker extends ObjectValueTransactionWorker<String> {
+public class StringValueTransactionWorker extends ObjectValueTransactionWorker<String, String[]> {
 
     public StringValueTransactionWorker(ConcurrentMap<String, String> map) {
         super(map);

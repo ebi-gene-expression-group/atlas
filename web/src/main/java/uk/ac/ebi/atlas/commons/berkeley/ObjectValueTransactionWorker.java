@@ -24,28 +24,26 @@ package uk.ac.ebi.atlas.commons.berkeley;
 
 import com.sleepycat.collections.TransactionWorker;
 
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
 
-public abstract class ObjectValueTransactionWorker<V> implements TransactionWorker {
-
-    // changed to private by Sonar recommendation
-    private String[] row;
+public abstract class ObjectValueTransactionWorker<V, T> implements TransactionWorker {
 
     private ConcurrentMap<String, V> map;
 
-    protected ObjectValueTransactionWorker(ConcurrentMap<String, V> map) {
-        this.map = map;
-    }
+    private T row;
 
-    public ObjectValueTransactionWorker setRow(String[] row) {
+    public ObjectValueTransactionWorker setRow(T row) {
         // this copy has been suggested by Sonar
-        this.row = Arrays.copyOf(row, row.length);
+        this.row = row;
         return this;
     }
 
-    protected String[] getRow() {
+    protected T getRow() {
         return row;
+    }
+
+    protected ObjectValueTransactionWorker(ConcurrentMap<String, V> map) {
+        this.map = map;
     }
 
     @Override
