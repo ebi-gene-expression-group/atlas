@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -78,6 +79,7 @@ public class ExperimentDispatcher {
 
     public static final String EXPERIMENT_ATTRIBUTE = "experiment";
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
+    private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
@@ -102,7 +104,7 @@ public class ExperimentDispatcher {
 
         Experiment experiment;
 
-        experiment = getExperiment(experimentAccession);
+        experiment = getExperiment(experimentAccession, model);
 
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
@@ -124,8 +126,8 @@ public class ExperimentDispatcher {
         return "forward:" + requestURL + "?type=" + experiment.getType();
     }
 
-    Experiment getExperiment(String experimentAccession) {
-        Experiment experiment;
+    //ToDo: refactor - create different methods for diff experiment types
+    Experiment getExperiment(String experimentAccession, Model model) {
         if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)) {
             return baselineExperimentsCache.getExperiment(experimentAccession);
         }
@@ -133,7 +135,9 @@ public class ExperimentDispatcher {
             return differentialExperimentsCache.getExperiment(experimentAccession);
         }
         if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)){
-            return microarrayExperimentsCache.getExperiment(experimentAccession);
+            MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
+            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+            return microarrayExperiment;
         }
         throw new ResourceNotFoundException();
 

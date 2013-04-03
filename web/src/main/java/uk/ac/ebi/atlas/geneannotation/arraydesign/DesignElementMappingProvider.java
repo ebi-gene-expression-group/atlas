@@ -17,7 +17,7 @@ public class DesignElementMappingProvider {
 
     public String getEnsGeneId(String arrayDesign, String designElement) {
         String value = annotationEnvironment.geneDesignElementsToGeneNames().get(DesignElementKeyGenerator.getKey(arrayDesign, designElement));
-        return value == null ? designElement : value;
+        return value == null ? "" : value;
     }
 
 }

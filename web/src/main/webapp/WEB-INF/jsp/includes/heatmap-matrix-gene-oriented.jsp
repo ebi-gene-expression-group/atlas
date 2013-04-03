@@ -44,12 +44,29 @@
                                 </div>"
                             class="header-cell">
 
+                        <c:choose>
+                            <c:when test="${type eq 'MICROARRAY'}">
+                                <c:set var="geneId" value="${designElementMappingProvider.getEnsGeneId(preferences.arrayDesignAccession, geneProfile.geneId)}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="geneId" value="${geneProfile.geneId}"/>
+                            </c:otherwise>
+                        </c:choose>
+
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
-                            <fmt:param value="${geneProfile.geneId}"/>
+                            <fmt:param value="${geneId}"/>
                         </fmt:message>
-                        <a class="genename" id="${geneProfile.geneId}" href='${genePageURL}' target='_blank'
-                           title="">${geneNamesProvider.getGeneName(geneProfile.geneId)}</a>
+
+
+                        <a class="genename" id="${geneId}" href='${genePageURL}' target='_blank'
+                           title="">${geneNamesProvider.getGeneName(geneId)}</a>
                     </display:column>
+
+                    <c:if test="${type eq 'MICROARRAY'}">
+                        <display:column title="">
+                            ${geneProfile.geneId}
+                        </display:column>
+                    </c:if>
 
                     <c:forEach var="queryFactor" items="${allQueryFactors}">
 
