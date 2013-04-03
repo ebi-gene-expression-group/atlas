@@ -20,9 +20,9 @@
                  beforeLoad: function(){
                  this.title = "Look at this marvelous title... yes this is the title";
                  },*/
-                padding:0,
-                openEffect:'elastic',
-                closeEffect:'elastic'
+                padding: 0,
+                openEffect: 'elastic',
+                closeEffect: 'elastic'
             });
 
         });
@@ -54,6 +54,14 @@
                 </c:if>
             </div>
             <div>Organism(s): ${allSpecies}</div>
+            <c:if test="${allArrayDesigns!=null}">
+                <div>Array Design(s):
+                    <c:forEach items="${allArrayDesigns}" var="arrayDesign">
+                        <a id="${arrayDesign}" href="http://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesign}" target='_blank'
+                           title="">${arrayDesign}</a>
+                    </c:forEach>
+                </div>
+            </c:if>
         </td>
         <td width="130px">
             <table cellpadding="2" cellspacing="0" border="0" style="float:right">
