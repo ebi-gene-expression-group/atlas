@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementGeneMappingLoader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -39,15 +40,17 @@ public class AnnotationLoaderController {
 
     private ApplicationProperties applicationProperties;
 
+    private GeneNamesImportCommand geneNamesImportCommand;
+
+    private DesignElementGeneMappingLoader designElementLoader;
 
     @Inject
-    public AnnotationLoaderController(ApplicationProperties applicationProperties, GeneNamesImportCommand geneNamesImportCommand) {
+    public AnnotationLoaderController(ApplicationProperties applicationProperties, GeneNamesImportCommand geneNamesImportCommand, DesignElementGeneMappingLoader designElementLoader) {
         this.applicationProperties = applicationProperties;
         this.geneNamesImportCommand = geneNamesImportCommand;
 
+        this.designElementLoader = designElementLoader;
     }
-
-    private GeneNamesImportCommand geneNamesImportCommand;
 
     @RequestMapping("/updateAnnotations")
     @ResponseBody
@@ -66,6 +69,14 @@ public class AnnotationLoaderController {
 
     }
 
+    @RequestMapping("/updateDesignElements")
+    @ResponseBody
+    public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign) {
+    //ToDo: maybe create Command similar to GeneNamesImportCommand
+        designElementLoader.loadMappings(arrayDesign);
+
+        return "Updated";
+    }
 
 }
 

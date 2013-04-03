@@ -47,16 +47,20 @@ public class AnnotationEnvironment {
 
     private static final String GENES_DB = "genes.db";
 
+    private static final String DESIGN_ELEMENTS_DB = "de.db";
+
     private File environmentDirectory;
 
     private Environment environment;
 
     private Database geneNameDatabase;
 
+    private Database designElementDatabase;
+
     @Inject
     public AnnotationEnvironment(@Value("#{configuration['genename.bdb.location']}") String environmentLocation) {
         environmentDirectory = new File(environmentLocation);
-        if(!environmentDirectory.exists()){
+        if (!environmentDirectory.exists()) {
             boolean result = environmentDirectory.mkdirs();
             if (!result) {
                 throw new IllegalStateException("Cannot create directory for BDB in " + environmentLocation);
@@ -66,14 +70,18 @@ public class AnnotationEnvironment {
 
     @PostConstruct
     public void initBerkeleyReadonly() {
+        //first init DBs in with read/write access in a case db doesn't exists
+        initBerkeleyDatabase(false);
+        close();
         initBerkeleyDatabase(true);
     }
 
     public void initBerkeleyDatabase(boolean readonly) {
-        try{
+        try {
             setupEnvironment(readonly);
             setupGeneNameDatabase(readonly);
-        } catch(EnvironmentNotFoundException e){
+            setupDesignElementDatabase(readonly);
+        } catch (EnvironmentNotFoundException e) {
             initBerkeleyDatabase(false);
             close();
             initBerkeleyDatabase(readonly);
@@ -81,7 +89,7 @@ public class AnnotationEnvironment {
 
     }
 
-    private EnvironmentConfig createEnvironmentConfig(boolean readOnly){
+    private EnvironmentConfig createEnvironmentConfig(boolean readOnly) {
         EnvironmentConfig envConfig = new EnvironmentConfig();
 
         envConfig.setTransactional(!readOnly);
@@ -96,11 +104,31 @@ public class AnnotationEnvironment {
     }
 
     public void setupGeneNameDatabase(boolean readonly) {
-        DatabaseConfig dbConfig = new DatabaseConfig();
-        dbConfig.setAllowCreate(!readonly);
-        dbConfig.setReadOnly(readonly);
-        geneNameDatabase = environment.openDatabase(null, GENES_DB, dbConfig);
+        geneNameDatabase = setupDatabase(readonly, GENES_DB);
     }
+
+    public void setupDesignElementDatabase(boolean readonly) {
+        designElementDatabase = setupDatabase(readonly, DESIGN_ELEMENTS_DB);
+    }
+
+    public Database setupDatabase(boolean readonly, String dbName) {
+        try {
+            DatabaseConfig dbConfig = new DatabaseConfig();
+            dbConfig.setAllowCreate(!readonly);
+            dbConfig.setReadOnly(readonly);
+            return environment.openDatabase(null, dbName, dbConfig);
+        } catch (DatabaseNotFoundException e) {
+            Database database = setupDatabase(false, dbName);
+            if(readonly) {
+                database.close();
+                return  setupDatabase(readonly, dbName);
+            } else {
+                return database;
+            }
+        }
+
+    }
+
 
     //@Bean(name="geneNames") injecting StoredMap is too fragile, clients may cache it and it may become invalid if underlying database is closed and reopen at runtime
     public ConcurrentMap<String, String> geneNames() {
@@ -109,21 +137,28 @@ public class AnnotationEnvironment {
         return new StoredMap<>(geneNameDatabase, keyBinding, dataBinding, true);
     }
 
+    public ConcurrentMap<String, String> geneDesignElementsToGeneNames() {
+        TupleBinding<String> keyBinding = TupleBinding.getPrimitiveBinding(String.class);
+        TupleBinding<String> dataBinding = TupleBinding.getPrimitiveBinding(String.class);
+        return new StoredMap<>(designElementDatabase, keyBinding, dataBinding, true);
+    }
+
     public TransactionRunner getTransactionRunner() {
         return new TransactionRunner(environment);
     }
 
-    public Environment getEnvironment() {
-        return environment;
-    }
-
-    public Database getGeneNameDatabase() {
-        return geneNameDatabase;
-    }
+//    public Environment getEnvironment() {
+//        return environment;
+//    }
+//
+//    public Database getGeneNameDatabase() {
+//        return geneNameDatabase;
+//    }
 
     @PreDestroy
     public void close() {
         geneNameDatabase.close();
+        designElementDatabase.close();
         environment.close();
         logger.info("<close> gene name database successfully closed");
     }

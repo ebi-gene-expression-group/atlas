@@ -79,7 +79,7 @@ public class GeneAnnotationLoader {
 
             turnOffReadonly();
 
-            ObjectValueTransactionWorker<String> transactionWorker =
+            ObjectValueTransactionWorker<String, String[]> transactionWorker =
                     new StringValueTransactionWorker(annotationEnvironment.geneNames());
 
 
