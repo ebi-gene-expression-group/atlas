@@ -26,89 +26,41 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.SortedSet;
 
+//ToDo: duplicated code with RnaSeqQueryPageController
 @Controller
 @Scope("request")
-public class MicroarrayQueryPageController{
-
-    private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
-    private RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand;
+public class MicroarrayQueryPageController extends DifferentialQueryPageRequestHandling<MicroarrayExperiment, MicroarrayRequestPreferences> {
 
     @Inject
     public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder, RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand) {
-        this.microarrayRequestContextBuilder = requestContextBuilder;
-        this.rankMicroarrayProfilesCommand = rankMicroarrayProfilesCommand;
+        super(requestContextBuilder, rankMicroarrayProfilesCommand);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=MICROARRAY"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
                                         , BindingResult result, Model model, HttpServletRequest request) {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment)request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        return super.showGeneProfiles(preferences, result, model, request);
 
-//      if there is only one array design we want to preselect it...
+    }
+
+    @Override
+    protected void initRequestPreferences(MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment){
+        //      if there is only one array design we want to preselect it...
         if(experiment.getArrayDesignAccessions().size() == 1){
-            preferences.setArrayDesignName(experiment.getArrayDesignAccessions().first());
+            requestPreferences.setArrayDesignName(experiment.getArrayDesignAccessions().first());
         }
-
-        MicroarrayRequestContext requestContext = microarrayRequestContextBuilder.forExperiment(experiment)
-                .withPreferences(preferences).build();
-
-        ////////////////From here the code is exact duplicate of DifferentialQueryPageController
-
-        SortedSet<Contrast> contrasts = experiment.getContrasts();
-
-        model.addAttribute("allQueryFactors", contrasts);
-
-//      if there is only one contrast we want to preselect it... from Robert feedback
-        if(contrasts.size() == 1){
-            preferences.setQueryFactorValues(experiment.getContrastIds());
-        }
-
-        //required by autocomplete
-        model.addAttribute("species", requestContext.getFilteredBySpecies());
-
-        model.addAttribute("queryFactorName", "Contrast");
-
-        model.addAttribute("allQueryFactors", contrasts);
-        model.addAttribute("regulationValues", Regulation.values());
-
-        if (!result.hasErrors()) {
-
-            try {
-                GeneProfilesList<DifferentialProfile> differentialProfiles = rankMicroarrayProfilesCommand.execute(experiment.getAccession());
-
-                model.addAttribute("geneProfiles", differentialProfiles);
-
-                model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
-
-
-            } catch (GenesNotFoundException e) {
-                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
-            }
-
-        }
-
-        return "experiment";
 
     }
 

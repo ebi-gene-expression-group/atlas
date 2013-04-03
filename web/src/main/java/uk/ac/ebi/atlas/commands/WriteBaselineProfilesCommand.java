@@ -48,7 +48,6 @@ public class WriteBaselineProfilesCommand extends AbstractCommand<Long, Baseline
         }
     }
 
-
     public void setResponseWriter(PrintWriter responseWriter) {
         baselineProfilesTSVWriter.setResponseWriter(responseWriter);
     }
