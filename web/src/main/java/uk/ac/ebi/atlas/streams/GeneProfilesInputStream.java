@@ -19,23 +19,24 @@
  *
  * http://gxa.github.com/gxa
  */
-
-package uk.ac.ebi.atlas.streams.baseline;
+/*
+package uk.ac.ebi.atlas.streams;
 
 
 import au.com.bytecode.opencsv.CSVReader;
+import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.streams.TsvInputStream;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer;
 
 import static uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer.GENE_ID_COLUMN;
 
-public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile> {
+public class GeneProfilesInputStream<T extends GeneProfile> extends TsvInputStream<T> {
 
-    private BaselineProfile.BaselineProfileBuilder baselineProfileBuilder;
+    private GeneProfileBuilder geneProfileBuilder;
 
 
-    public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
+    public GeneProfilesInputStream(CSVReader csvReader, String experimentAccession
             , BaselineExpressionsBuffer.Builder expressionsBufferBuilder
             , BaselineProfile.BaselineProfileBuilder baselineProfileBuilder) {
 
@@ -62,3 +63,4 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile>
     }
 
 }
+*/

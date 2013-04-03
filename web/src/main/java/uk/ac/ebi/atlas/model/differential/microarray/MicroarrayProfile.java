@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,8 +42,8 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
     public static class MicroarrayProfileBuilder extends DifferentialProfileBuilder<MicroarrayProfile, MicroarrayRequestContext> {
 
         @Inject
-        protected MicroarrayProfileBuilder(MicroarrayRequestContext requestContext, DifferentialExpressionPrecondition differentialExpressionPrecondition) {
-            super(requestContext, differentialExpressionPrecondition);
+        protected MicroarrayProfileBuilder(MicroarrayRequestContext requestContext) {
+            super(requestContext);
         }
 
         @Override

@@ -137,18 +137,30 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
         private K requestContext;
 
         private DifferentialExpressionPrecondition differentialExpressionPrecondition;
+        private DifferentialProfilePrecondition differentialProfilePrecondition;
 
         @Inject
-        protected DifferentialProfileBuilder(K requestContext
-                                            , DifferentialExpressionPrecondition differentialExpressionPrecondition) {
-            this.requestContext = requestContext;
+        public void setDifferentialExpressionPrecondition(DifferentialExpressionPrecondition differentialExpressionPrecondition) {
             this.differentialExpressionPrecondition = differentialExpressionPrecondition;
+        }
+
+        @Inject
+        public void setDifferentialProfilePrecondition(DifferentialProfilePrecondition differentialProfilePrecondition) {
+            this.differentialProfilePrecondition = differentialProfilePrecondition;
+        }
+
+        protected DifferentialProfileBuilder(K requestContext) {
+            this.requestContext = requestContext;
         }
 
         //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
         // , that is before the Controller actually executes the request, before the Controller initialize RequestContext
         void initPreconditions() {
             differentialExpressionPrecondition.setCutoff(requestContext.getCutoff()).setRegulation(requestContext.getRegulation());
+
+            differentialProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
+                    .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
+                    .setRegulation(requestContext.getRegulation());
         }
 
         public DifferentialProfileBuilder forGeneId(String geneId) {
@@ -171,22 +183,9 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
         public T create() {
             checkState(differentialProfile != null, "Please invoke forGeneID before create");
 
-            if (differentialProfile.isEmpty() || !isAveragePiValueSmallerInSelectedContrasts(differentialProfile)) {
-                return null;
-            }
-
-            return differentialProfile;
+            return differentialProfilePrecondition.apply(differentialProfile)? differentialProfile : null;
         }
 
-        //ToDo: maybe create DifferentialProfilePrecondition
-        protected boolean isAveragePiValueSmallerInSelectedContrasts(DifferentialProfile profile) {
-            double averageOnSelected = profile.getAverageExpressionLevelOn(requestContext.getSelectedQueryFactors(), requestContext.getRegulation());
-            Set<Contrast> remainingFactors = Sets.newHashSet(requestContext.getAllQueryFactors());
-            remainingFactors.removeAll(requestContext.getSelectedQueryFactors());
-            double averageOnRemaining = profile.getAverageExpressionLevelOn(remainingFactors, requestContext.getRegulation());
-
-            return averageOnRemaining == 0 || averageOnSelected < averageOnRemaining;
-        }
     }
 
 
