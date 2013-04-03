@@ -40,15 +40,13 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialExpressionsBufferTest {
 
-    private static final String GENE_ID = "ENST00000000233";
-
     public static final String P_VAL_1 = "1";
     public static final String FOLD_CHANGE_1 = "0.474360080385946";
 
     public static final String P_VAL_2 = "1";
     public static final String FOLD_CHANGE_2 = "-Inf";
 
-    private static final String[] TWO_CONTRASTS = new String[]{GENE_ID, P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
+    private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
 
     private DifferentialExpressionsBuffer subject;
 
@@ -109,7 +107,7 @@ public class DifferentialExpressionsBufferTest {
             run = subject.poll();
         } while (run != null);
         //and we reload again with new values
-        subject.reload("T1", "1", "2");
+        subject.reload("1", "2");
         //and we poll
         DifferentialExpression expression = subject.poll();
         //then we expect to find the new values
@@ -132,19 +130,19 @@ public class DifferentialExpressionsBufferTest {
     @Test
     public void skipNALines() {
 
-        subject.reload("T1", "NA", "NA");
+        subject.reload("NA", "NA");
 
         DifferentialExpression expression = subject.poll();
 
         assertThat(expression, is(CoreMatchers.nullValue()));
 
-        subject.reload("T1", "1", "NA");
+        subject.reload("1", "NA");
 
         expression = subject.poll();
 
         assertThat(expression, is(CoreMatchers.nullValue()));
 
-        subject.reload("T1", "NA", "1");
+        subject.reload("NA", "1");
 
         expression = subject.poll();
 
@@ -154,7 +152,7 @@ public class DifferentialExpressionsBufferTest {
     @Test
     public void skipNALinesKeepsCorrespondingContrasts() {
 
-        subject.reload("T1", "NA", "1", P_VAL_2, "-Inf");
+        subject.reload("NA", "1", P_VAL_2, "-Inf");
 
         DifferentialExpression expression = subject.poll();
 

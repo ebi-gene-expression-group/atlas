@@ -23,26 +23,17 @@
 package uk.ac.ebi.atlas.streams.differential;
 
 import com.google.common.collect.Iterables;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.streams.TsvRowBuffer;
-import uk.ac.ebi.atlas.streams.TsvRowBufferBuilder;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
 public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpression> {
-
-    private static final Logger logger = Logger.getLogger(DifferentialExpressionsBuffer.class);
 
     private Iterator<Contrast> expectedContrasts;
 
@@ -78,61 +69,5 @@ public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpr
         return Double.parseDouble(value);
     }
 
-    @Named
-    @Scope("prototype")
-    public static class Builder implements TsvRowBufferBuilder {
 
-        private String experimentAccession;
-
-        private DifferentialExperimentsCache experimentsCache;
-
-        private List<Contrast> orderedContrasts = new LinkedList<>();
-
-        @Inject
-        public Builder(DifferentialExperimentsCache experimentsCache) {
-
-            this.experimentsCache = experimentsCache;
-
-        }
-
-        @Override
-        public Builder forExperiment(String experimentAccession) {
-
-            this.experimentAccession = experimentAccession;
-
-            return this;
-
-        }
-
-        @Override
-        public Builder withHeaders(String... tsvFileHeaders) {
-
-            logger.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
-
-            checkState(experimentAccession != null, "Builder not properly initialized!");
-
-            DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-            List<String> columnHeaders = Arrays.asList(ArrayUtils.remove(tsvFileHeaders, GENE_ID_COLUMN));
-
-            for (String columnHeader : columnHeaders) {
-                if (columnHeader.endsWith(".p-value")) {
-                    String contrastId = StringUtils.substringBefore(columnHeader, ".");
-                    orderedContrasts.add(experiment.getContrast(contrastId));
-                }
-            }
-
-            return this;
-        }
-
-        @Override
-        public DifferentialExpressionsBuffer create() {
-
-            checkState(!orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
-
-            return new DifferentialExpressionsBuffer(orderedContrasts);
-
-        }
-
-    }
 }

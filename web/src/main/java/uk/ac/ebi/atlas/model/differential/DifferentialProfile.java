@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.model.differential;
 
 
-import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;

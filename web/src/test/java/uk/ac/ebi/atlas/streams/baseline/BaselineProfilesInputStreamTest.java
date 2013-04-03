@@ -54,12 +54,13 @@ public class BaselineProfilesInputStreamTest {
     private CSVReader csvReaderMock;
 
     @Mock
-    private BaselineExpressionsBuffer.Builder expressionsBufferBuilderMock;
+    private BaselineExpressionsBufferBuilder expressionsBufferBuilderMock;
 
     @Mock
     private BaselineExpressionsBuffer expressionsBufferMock;
 
     private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
+    private String[] expressionLevelsWithoutGeneIdColumn = new String[]{"2.22222", "0.11111"};
 
     private BaselineProfilesInputStream subject;
 
@@ -74,6 +75,7 @@ public class BaselineProfilesInputStreamTest {
         given(experimentRuns2Mock.getAccession()).willReturn(RUN_ACCESSION_2);
 
         String [] headers = new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2};
+        String [] headersWithoutGeneIdColumn = new String[]{RUN_ACCESSION_1, RUN_ACCESSION_2};
 
         given(csvReaderMock.readNext())
                 .willReturn(headers)
@@ -81,7 +83,7 @@ public class BaselineProfilesInputStreamTest {
                 .willReturn(null);
 
         given(expressionsBufferBuilderMock.forExperiment(anyString())).willReturn(expressionsBufferBuilderMock);
-        given(expressionsBufferBuilderMock.withHeaders(headers)).willReturn(expressionsBufferBuilderMock);
+        given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
         BaselineProfile.BaselineProfileBuilder geneProfileBuilderMock = mock(BaselineProfile.BaselineProfileBuilder.class);
@@ -117,7 +119,7 @@ public class BaselineProfilesInputStreamTest {
         //then
         verify(csvReaderMock, times(3)).readNext();
         //and
-        inOrder.verify(expressionsBufferMock).reload(expressionLevels);
+        inOrder.verify(expressionsBufferMock).reload(expressionLevelsWithoutGeneIdColumn);
         inOrder.verify(expressionsBufferMock).poll();
     }
 

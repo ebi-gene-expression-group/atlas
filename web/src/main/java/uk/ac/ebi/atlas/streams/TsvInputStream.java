@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.streams;
 
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
@@ -32,6 +33,8 @@ import java.io.IOException;
 public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
 
     private static final Logger logger = Logger.getLogger(TsvInputStream.class);
+
+    public static final int GENE_ID_COLUMN = 0;
 
     private CSVReader csvReader;
 
@@ -43,10 +46,10 @@ public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
 
         this.csvReader = csvReader;
 
-        //ToDo: find a way to move this out of constructor
-        String[] dataFileHeaders = readCsvLine();
+        String[] firstCsvLine = readCsvLine();
+        String[] headersWithoutGeneIdColumn = (String[])ArrayUtils.remove(firstCsvLine, GENE_ID_COLUMN);
         tsvRowBuffer = tsvRowBufferBuilder.forExperiment(experimentAccession)
-                .withHeaders(dataFileHeaders).create();
+                .withHeaders(headersWithoutGeneIdColumn).create();
     }
 
 

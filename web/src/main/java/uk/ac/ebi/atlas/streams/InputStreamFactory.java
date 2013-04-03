@@ -34,12 +34,12 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile.RnaSeqProfileBuilder;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBufferBuilder;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
-import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBuffer;
+import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBufferBuilder;
 import uk.ac.ebi.atlas.streams.differential.RnaSeqProfilesInputStream;
-import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsBuffer;
+import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsBufferBuilder;
 import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfilesInputStream;
 
 import javax.inject.Inject;
@@ -69,18 +69,18 @@ public class InputStreamFactory {
     @Value("#{configuration['microarray.experiment.data.path.template']}")
     private String microarrayExperimentDataFileUrlTemplate;
 
-    private BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder;
-    private DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder;
-    private MicroarrayExpressionsBuffer.Builder microarrayExpressionsBufferBuilder;
+    private BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder;
+    private DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder;
+    private MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder;
     private BaselineProfileBuilder baselineProfileBuilder;
     private MicroarrayProfileBuilder microarrayProfileBuilder;
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
 
 
     @Inject
-    public InputStreamFactory(BaselineExpressionsBuffer.Builder baselineExpressionsBufferBuilder
-                            , DifferentialExpressionsBuffer.Builder differentialExpressionsBufferBuilder
-                            , MicroarrayExpressionsBuffer.Builder microarrayExpressionsBufferBuilder
+    public InputStreamFactory(BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder
+                            , DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder
+                            , MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder
                             , BaselineProfileBuilder baselineProfileBuilder
                             , MicroarrayProfileBuilder microarrayProfileBuilder
                             , RnaSeqProfileBuilder rnaSeqProfileBuilder) {

@@ -44,12 +44,10 @@ import static org.mockito.Mockito.*;
 public class BaselineExpressionBufferBuilderTest {
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
-    private static final String SPECIE = "homo sapiens";
 
     private static final String RUN_ACCESSION_1 = "ENS0";
     private static final String RUN_ACCESSION_2 = "ENS1";
     private static final String RUN_ACCESSION_3 = "ENS2";
-    private static final String DESCRIPTION = "A_DESCRIPTION";
 
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
@@ -67,13 +65,10 @@ public class BaselineExpressionBufferBuilderTest {
     @Mock
     private Factor factorMock3;
 
-    //@Mock
-    //private ExperimentBuilder experimentBuilderMock;
-
     @Mock
     private BaselineExperiment experimentMock;
 
-    private BaselineExpressionsBuffer.Builder subject;
+    private BaselineExpressionsBufferBuilder subject;
 
 
 
@@ -93,20 +88,9 @@ public class BaselineExpressionBufferBuilderTest {
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(factorMock2);
         experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(factorMock3);
 
-        //when(experimentBuilderMock.create()).thenReturn(experimentMock);
-        /*
-        Experiment experiment = new ExperimentBuilder(mock(ExperimentalFactors.class))
-                .forSpecies(SPECIE)
-                .withDescription(DESCRIPTION)
-                .withDefaultQueryType(factorMock1.getType())
-                .withDefaultFilterFactors(Collections.EMPTY_SET)
-                .withExperimentRuns(Lists.newArrayList(experimentRun1, experimentRun2, experimentRun3))
-                .create();
-*/
-
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
 
-        subject = new BaselineExpressionsBuffer.Builder(experimentsCacheMock);
+        subject = new BaselineExpressionsBufferBuilder(experimentsCacheMock);
     }
 
     @Test
@@ -114,7 +98,7 @@ public class BaselineExpressionBufferBuilderTest {
 
         //when
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
-        subject.withHeaders("G1", "ENS1", "ENS2");
+        subject.withHeaders("ENS1", "ENS2");
         //then
         verify(experimentsCacheMock, times(2)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
 

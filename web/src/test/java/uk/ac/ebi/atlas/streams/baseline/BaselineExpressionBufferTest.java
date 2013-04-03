@@ -39,13 +39,11 @@ import static org.junit.Assert.assertThat;
 
 public class BaselineExpressionBufferTest {
 
-    private static final String GENE_ID = "ENST00000000233";
-
     public static final String EXPRESSION_LEVEL_1 = "0";
 
     public static final String EXPRESSION_LEVEL_2 = "42.9134";
     public static final String EXPRESSION_LEVEL_3 = "0.0001";
-    private static final String[] THREE_EXPRESSION_LEVELS = new String[]{GENE_ID, EXPRESSION_LEVEL_1, EXPRESSION_LEVEL_2, EXPRESSION_LEVEL_3};
+    private static final String[] THREE_EXPRESSION_LEVELS = new String[]{EXPRESSION_LEVEL_1, EXPRESSION_LEVEL_2, EXPRESSION_LEVEL_3};
 
     private BaselineExpressionsBuffer subject;
 
@@ -113,7 +111,7 @@ public class BaselineExpressionBufferTest {
             run = subject.poll();
         } while (run != null);
         //and we reload again with new values
-        subject.reload("T1", "1", "2", "3");
+        subject.reload("1", "2", "3");
         //and we poll
         BaselineExpression expression = subject.poll();
         //then we expect to find the new values

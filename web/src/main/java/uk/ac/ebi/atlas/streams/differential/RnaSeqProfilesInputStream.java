@@ -24,11 +24,11 @@ package uk.ac.ebi.atlas.streams.differential;
 
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile.RnaSeqProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
-import uk.ac.ebi.atlas.streams.TsvRowBuffer;
 
 public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile> {
 
@@ -36,7 +36,7 @@ public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile> {
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
 
     public RnaSeqProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , DifferentialExpressionsBuffer.Builder expressionsBufferBuilder
+            , DifferentialExpressionsBufferBuilder expressionsBufferBuilder
             , RnaSeqProfileBuilder rnaSeqProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
@@ -46,10 +46,10 @@ public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile> {
     @Override
     protected RnaSeqProfile buildObjectFromTsvValues(String[] values) {
 
-        //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(values);
+        rnaSeqProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
 
-        rnaSeqProfileBuilder.forGeneId(values[TsvRowBuffer.GENE_ID_COLUMN]);
+        //we need to reload because the first line can only be used to extract the gene ID
+        getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
 
         DifferentialExpression expression;
 

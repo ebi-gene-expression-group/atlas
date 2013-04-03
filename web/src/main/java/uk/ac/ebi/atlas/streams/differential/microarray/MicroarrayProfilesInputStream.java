@@ -24,22 +24,21 @@ package uk.ac.ebi.atlas.streams.differential.microarray;
 
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
-import uk.ac.ebi.atlas.streams.TsvRowBuffer;
 
 
-//ToDo: duplicated code with DifferentialProfileInputStream
 public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProfile> {
 
 
     private MicroarrayProfileBuilder microarrayProfileBuilder;
 
     public MicroarrayProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , MicroarrayExpressionsBuffer.Builder expressionsBufferBuilder
+            , MicroarrayExpressionsBufferBuilder expressionsBufferBuilder
             , MicroarrayProfileBuilder microarrayProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
@@ -49,10 +48,10 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
     @Override
     protected MicroarrayProfile buildObjectFromTsvValues(String[] values) {
 
-        //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(values);
+        microarrayProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
 
-        microarrayProfileBuilder.forGeneId(values[TsvRowBuffer.GENE_ID_COLUMN]);
+        //we need to reload because the first line can only be used to extract the gene ID
+        getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
 
         DifferentialExpression expression;
 

@@ -24,8 +24,6 @@ package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilePrecondition;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
 import java.util.Set;

@@ -24,11 +24,10 @@ package uk.ac.ebi.atlas.streams.baseline;
 
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
-
-import static uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBuffer.GENE_ID_COLUMN;
 
 public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile> {
 
@@ -36,7 +35,7 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile>
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , BaselineExpressionsBuffer.Builder expressionsBufferBuilder
+            , BaselineExpressionsBufferBuilder expressionsBufferBuilder
             , BaselineProfile.BaselineProfileBuilder baselineProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
@@ -45,10 +44,10 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile>
 
     protected BaselineProfile buildObjectFromTsvValues(String[] values) {
 
-        //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(values);
-
         baselineProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
+
+        //we need to reload because the first line can only be used to extract the gene ID
+        getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
 
         BaselineExpression expression;
 

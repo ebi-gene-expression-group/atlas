@@ -30,10 +30,8 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-//ToDo: maybe it is possible to push up here more logic if I introduce a second generic argument for the type of objects that are in cyclic Iterator (FactorGroup / Contrast)
 public abstract class TsvRowBuffer<T extends GeneExpression> {
 
-    public static final int GENE_ID_COLUMN = 0;
 
     private Queue<String> tsvRow = new LinkedList<>();
 
@@ -42,8 +40,6 @@ public abstract class TsvRowBuffer<T extends GeneExpression> {
         checkState(this.tsvRow.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         Collections.addAll(this.tsvRow, values);
-
-        tsvRow.poll();
 
         return this;
     }
