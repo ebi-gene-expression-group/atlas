@@ -25,11 +25,9 @@ package uk.ac.ebi.atlas.model.differential;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
-import javax.inject.Named;
 import java.util.Set;
 
-@Named
-public class DifferentialProfilePrecondition implements Predicate<DifferentialProfile> {
+public abstract class DifferentialProfilePrecondition<T extends DifferentialProfile> implements Predicate<T> {
 
     private Set<Contrast> selectedQueryFactors;
     private Regulation regulation;
@@ -50,7 +48,7 @@ public class DifferentialProfilePrecondition implements Predicate<DifferentialPr
         return this;
     }
 
-    public boolean apply(DifferentialProfile profile) {
+    public boolean apply(T profile) {
         if (profile.isEmpty()){
             return false;
         }
@@ -58,17 +56,20 @@ public class DifferentialProfilePrecondition implements Predicate<DifferentialPr
         double averageExpressionLevelOnSelectedFactors = averageExpressionLevelOnSelectedFactors(profile);
         double averageExpressionLevelOnNonSelectedFactors = averageExpressionLevelOnNonSelectedFactors(profile);
 
-        return averageExpressionLevelOnNonSelectedFactors == 0 ||
-               averageExpressionLevelOnSelectedFactors < averageExpressionLevelOnNonSelectedFactors;
+        boolean moreSignificantInSelectedConditions = averageExpressionLevelOnNonSelectedFactors == 0 ||
+                averageExpressionLevelOnSelectedFactors < averageExpressionLevelOnNonSelectedFactors;
+
+        return moreSignificantInSelectedConditions && applyExtraConditions(profile);
     }
 
-    private double averageExpressionLevelOnSelectedFactors(DifferentialProfile profile) {
+    private double averageExpressionLevelOnSelectedFactors(T profile) {
         return profile.getAverageExpressionLevelOn(selectedQueryFactors, regulation);
     }
 
-    private double averageExpressionLevelOnNonSelectedFactors(DifferentialProfile profile) {
+    private double averageExpressionLevelOnNonSelectedFactors(T profile) {
         Set<Contrast> remainingFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
         return profile.getAverageExpressionLevelOn(remainingFactors, regulation);
     }
 
+    protected abstract boolean applyExtraConditions(T profile);
 }

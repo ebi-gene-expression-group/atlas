@@ -136,15 +136,14 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
         private K requestContext;
 
         private DifferentialExpressionPrecondition differentialExpressionPrecondition;
-        private DifferentialProfilePrecondition differentialProfilePrecondition;
+        private DifferentialProfilePrecondition<T> differentialProfilePrecondition;
 
         @Inject
         public void setDifferentialExpressionPrecondition(DifferentialExpressionPrecondition differentialExpressionPrecondition) {
             this.differentialExpressionPrecondition = differentialExpressionPrecondition;
         }
 
-        @Inject
-        public void setDifferentialProfilePrecondition(DifferentialProfilePrecondition differentialProfilePrecondition) {
+        public void setDifferentialProfilePrecondition(DifferentialProfilePrecondition<T> differentialProfilePrecondition) {
             this.differentialProfilePrecondition = differentialProfilePrecondition;
         }
 
@@ -160,7 +159,10 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
             differentialProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
                     .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
                     .setRegulation(requestContext.getRegulation());
+            initExtraProfilePreconditions(differentialProfilePrecondition, requestContext);
         }
+
+        protected abstract void initExtraProfilePreconditions(DifferentialProfilePrecondition<T> differentialProfilePrecondition, K requestContext);
 
         public DifferentialProfileBuilder forGeneId(String geneId) {
             this.differentialProfile = createProfile(geneId);
