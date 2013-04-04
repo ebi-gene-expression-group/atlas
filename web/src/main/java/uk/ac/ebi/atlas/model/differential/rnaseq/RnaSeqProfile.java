@@ -26,6 +26,8 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
+import uk.ac.ebi.atlas.model.differential.RnaSeqProfilePrecondition;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,8 +44,18 @@ public class RnaSeqProfile extends DifferentialProfile<DifferentialExpression> {
     public static class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfile, RnaSeqRequestContext> {
 
         @Inject
+        public void setDifferentialProfilePrecondition(RnaSeqProfilePrecondition differentialProfilePrecondition) {
+            super.setDifferentialProfilePrecondition(differentialProfilePrecondition);
+        }
+
+        @Inject
         protected RnaSeqProfileBuilder(RnaSeqRequestContext requestContext) {
             super(requestContext);
+        }
+
+        @Override
+        protected void initExtraProfilePreconditions(DifferentialProfilePrecondition<RnaSeqProfile> differentialProfilePrecondition, RnaSeqRequestContext requestContext) {
+
         }
 
         @Override
