@@ -60,18 +60,18 @@ public class DifferentialExperiment extends Experiment {
         return Sets.newTreeSet(contrastsById.keySet());
     }
 
-    public Set<String> getLibrariesFromContrasts() {
-        Set<String> libraries = Sets.newHashSet();
+    public Set<String> getAssayAccessions() {
+        Set<String> assayAccessions = Sets.newHashSet();
         for (Contrast contrast : getContrasts()) {
-            for (String library : contrast.getReferenceAssayGroup()) {
-                libraries.add(library);
+            for (String assayAccession : contrast.getReferenceAssayGroup()) {
+                assayAccessions.add(assayAccession);
             }
-            for (String library : contrast.getTestAssayGroup()) {
-                libraries.add(library);
+            for (String assayAccession : contrast.getTestAssayGroup()) {
+                assayAccessions.add(assayAccession);
             }
         }
 
-        return libraries;
+        return assayAccessions;
     }
 
 }

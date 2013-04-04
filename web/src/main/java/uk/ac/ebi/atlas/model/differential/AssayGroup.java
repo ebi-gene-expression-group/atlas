@@ -8,25 +8,25 @@ import java.util.Set;
 
 public class AssayGroup implements Iterable<String>{
 
-    private Set<String> accessions;
+    private Set<String> assayAccessions;
 
-    public AssayGroup(String... accessions) {
-        this.accessions = Sets.newHashSet(accessions);
+    public AssayGroup(String... assayAccessions) {
+        this.assayAccessions = Sets.newHashSet(assayAccessions);
     }
 
     @Override
     public Iterator<String> iterator() {
-        return accessions.iterator();
+        return assayAccessions.iterator();
     }
 
     @Override
     public boolean equals(Object other) {
         return Objects.equal(this.getClass(), other.getClass())
-                && Objects.equal(this.accessions, ((AssayGroup) other).accessions);
+                && Objects.equal(this.assayAccessions, ((AssayGroup) other).assayAccessions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(accessions);
+        return Objects.hashCode(assayAccessions);
     }
 }

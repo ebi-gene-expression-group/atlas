@@ -30,17 +30,17 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class ExperimentDesignPageControllerTest {
+public class BaselineDesignPageConrollerTest {
 
     private static final String PATH_TEMPLATE = "A_PATH_TEMPLATE";
 
     private static final String[] HEADER_LINE = new String[]{"Assay", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]"};
 
-    private ExperimentDesignPageController subject;
+    private ExperimentDesignPageRequestHandler subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentDesignPageController(PATH_TEMPLATE);
+        subject = new BaselineDesignPageController();
     }
 
     @Test

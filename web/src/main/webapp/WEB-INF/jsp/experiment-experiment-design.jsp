@@ -36,8 +36,8 @@
         <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
             <tr>
                 <td style="vertical-align: middle; padding: 0px;">Show Analysed only?</td>
-                <td style="vertical-align: middle; padding: 0px;"><input type="checkbox" id="isOnlyAnalysed"
-                                                                         name="isOnlyAnalysed"
+                <td style="vertical-align: middle; padding: 0px;"><input type="checkbox" id="showOnlyAnalysedRuns"
+                                                                         name="showOnlyAnalysedRuns"
                                                                          checked="yes"/></td>
             </tr>
         </table>

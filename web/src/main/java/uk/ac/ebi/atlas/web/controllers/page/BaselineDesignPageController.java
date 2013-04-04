@@ -22,33 +22,34 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Set;
 
 @Controller
 @Scope("request")
-public class BaselineDesignPageController extends ExperimentDesignPageController {
-
-    @Inject
-    public BaselineDesignPageController(@Value("#{configuration['experiment.experiment-design.path.template']}")
-                                        String pathTemplate) {
-        super(pathTemplate);
-    }
+public class BaselineDesignPageController extends ExperimentDesignPageRequestHandler<BaselineExperiment> {
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=BASELINE"})
     public String showExperimentDesign(Model model, HttpServletRequest request) throws IOException {
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        extractExperimentDesign(model, experiment.getAccession(), experiment.getExperimentRunAccessions());
 
-        return "experiment-experiment-design";
+        return handleRequest(model, request);
+
+    }
+
+    @Override
+    protected void extendModel(Model model, BaselineExperiment experiment) {
+        //No need to add extra attributes to the model, parent template method does enough
+    }
+
+    @Override
+    protected Set<String> getAnalysedRowsAccessions(BaselineExperiment experiment) {
+        return experiment.getExperimentRunAccessions();
     }
 }

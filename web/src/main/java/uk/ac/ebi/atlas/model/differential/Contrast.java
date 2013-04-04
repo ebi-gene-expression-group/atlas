@@ -9,9 +9,7 @@ public class Contrast {
     private String id;
     private AssayGroup referenceAssayGroup;
     private AssayGroup testAssayGroup;
-
     private String displayName;
-
 
     public Contrast(String id, AssayGroup referenceAssayGroup, AssayGroup testAssayGroup, String displayName) {
         this.id = id;

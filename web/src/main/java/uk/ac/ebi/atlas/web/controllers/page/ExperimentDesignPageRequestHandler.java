@@ -23,32 +23,51 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ExperimentDesignPageController {
+public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
-    private final TsvReader experimentDesignTsvReader;
+    private static final String SAMPLE_COLUMN_HEADER = "Sample Characteristics";
+    private static final String FACTOR_COLUMN_HEADER = "Factor Values";
 
-    public ExperimentDesignPageController(String pathTemplate) {
-        this.experimentDesignTsvReader = new TsvReaderImpl(pathTemplate);
+    @Value("#{configuration['experiment.experiment-design.path.template']}")
+    private String pathTemplate;
+
+    private TsvReader experimentDesignTsvReader;
+
+    @PostConstruct
+    private void initTsvReader(){
+        experimentDesignTsvReader = new TsvReaderImpl(pathTemplate);
     }
 
-    protected void extractExperimentDesign(Model model, String experimentAccession, Set<String> libraries) {
-        // read contents from file
+    public String handleRequest(Model model, HttpServletRequest request) {
+        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        String experimentAccession = experiment.getAccession();
+
         List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
+
         // delete first line with table headers
         String[] headerLine = csvLines.remove(0);
 
         // split header line into samples and factors
-        Map<String, Integer> samples = extractSubcategories(headerLine, "Sample Characteristics");
-        Map<String, Integer> factors = extractSubcategories(headerLine, "Factor Values");
+        Map<String, Integer> samples = extractSubcategories(headerLine, SAMPLE_COLUMN_HEADER);
+        Map<String, Integer> factors = extractSubcategories(headerLine, FACTOR_COLUMN_HEADER);
 
         // reorder lines according to new header
         Map<Integer, Integer> mapping = createReorderMapping(samples, factors);
@@ -74,13 +93,25 @@ public class ExperimentDesignPageController {
         model.addAttribute("factors", gson.toJson(factors));
         model.addAttribute("tableData", gson.toJson(csvLines));
 
-        // run accessions are used for highlighting
-        String runAccessions = gson.toJson(libraries);
+        //analysed row accessions are added to the model separately,
+        //because design table rows can be hidden or shown depending if they are or not part of the analysed subset
+        String runAccessions = gson.toJson(getAnalysedRowsAccessions(experiment));
         model.addAttribute("runAccessions", runAccessions);
 
         // add general experiment attributes to model
         model.addAttribute("experimentAccession", experimentAccession);
+
+
+        extendModel(model, experiment);
+
+
+        return "experiment-experiment-design";
+
     }
+
+    protected abstract void extendModel(Model model, T experiment);
+
+    protected abstract Set<String> getAnalysedRowsAccessions(T experiment);
 
     /**
      * Extracts subcategories for a given category within the header line

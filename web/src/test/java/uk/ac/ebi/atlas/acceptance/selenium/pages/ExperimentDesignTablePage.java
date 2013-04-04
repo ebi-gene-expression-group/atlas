@@ -41,7 +41,7 @@ public class ExperimentDesignTablePage extends TablePage {
     @FindBy(id = "experiment-design-table_info")
     private WebElement experimentDesignTableInfo;
 
-    @FindBy(id = "isOnlyAnalysed")
+    @FindBy(id = "showOnlyAnalysedRuns")
     private WebElement onlyAnalysedBox;
 
     @FindBy(id = "download-experiment-design-link")

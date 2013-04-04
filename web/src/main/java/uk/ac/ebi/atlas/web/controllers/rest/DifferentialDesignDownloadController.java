@@ -52,7 +52,7 @@ public class DifferentialDesignDownloadController extends ExperimentDesignDownlo
             , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        extractExperimentDesign(response, experiment.getAccession(), experiment.getLibrariesFromContrasts());
+        extractExperimentDesign(response, experiment.getAccession(), experiment.getAssayAccessions());
 
     }
 

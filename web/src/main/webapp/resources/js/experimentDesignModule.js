@@ -52,15 +52,16 @@ var experimentDesignTableModule = (function ($) {
         /* Custom filtering function which will filter analysed runs */
         $.fn.dataTableExt.afnFiltering.push(
             function (oSettings, aData, iDataIndex) {
-                var only = $('#isOnlyAnalysed').is(':checked');
-                if (!only || jQuery.inArray(aData[0], _runAccessions) > -1) {
+                var showAllRuns = ! $('#showOnlyAnalysedRuns').is(':checked');
+                var runAccession = aData[0];
+                if (showAllRuns || jQuery.inArray(runAccession, _runAccessions) > -1) {
                     return true;
                 }
                 return false;
             }
         );
 
-        $('#isOnlyAnalysed').click(function () {
+        $('#showOnlyAnalysedRuns').click(function () {
             oTable.fnDraw();
         });
 
@@ -68,6 +69,7 @@ var experimentDesignTableModule = (function ($) {
         var calcDataTableHeight = function () {
             return $window.height() - 270;
         };
+
         var calcDataTableWidth = function () {
             return $('#contents').width() - 100;
         };

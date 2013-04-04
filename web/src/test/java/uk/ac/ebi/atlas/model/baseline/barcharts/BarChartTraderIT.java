@@ -51,6 +51,7 @@ public class BarChartTraderIT {
 
     @Inject
     private BaselineExpressionPrecondition baselineExpressionPrecondition;
+
     private BarChartTrader subject;
 
 

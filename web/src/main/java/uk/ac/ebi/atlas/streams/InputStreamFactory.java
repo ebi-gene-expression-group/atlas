@@ -122,7 +122,6 @@ public class InputStreamFactory {
         return new RnaSeqProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, rnaSeqProfileBuilder);
     }
 
-    //ToDo: to be implemented...
     public ObjectInputStream<MicroarrayProfile> createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
         String tsvFileURL = MessageFormat.format(microarrayExperimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
         CSVReader csvReader = buildCsvReader(tsvFileURL);

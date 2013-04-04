@@ -33,7 +33,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
+import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
@@ -42,11 +50,13 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class ExperimentDesignPageControllerIT {
+public class DifferentialDesignPageControllerIT {
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String experimentDesignTemplate;
@@ -54,20 +64,30 @@ public class ExperimentDesignPageControllerIT {
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-38400";
     private static final Set<String> LIBRARIES = Sets.newHashSet("SRR504179", "SRR504180", "SRR504181", "SRR504182", "SRR504183", "SRR504184", "SRR504185", "SRR504186", "SRR504187", "SRR576327", "SRR576328", "SRR576329");
 
-    private ExperimentDesignPageController subject;
+    @Inject
+    private DifferentialDesignPageController subject;
+
+    @Inject
+    private DifferentialExperimentsCache differentialExperimentsCache;
+
+    private HttpServletRequest requestMock;
+    private DifferentialDesignRequestPreferences preferencesMock;
 
     Model model = new BindingAwareModelMap();
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentDesignPageController(experimentDesignTemplate);
+        requestMock = mock(HttpServletRequest.class);
+        preferencesMock = mock(DifferentialDesignRequestPreferences.class);
+        DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(differentialExperiment);
     }
 
     @Test
-    public void testExtractExperimentDesign() {
+    public void testExtractExperimentDesign() throws IOException {
 
         // given
-        subject.extractExperimentDesign(model, EXPERIMENT_ACCESSION, LIBRARIES);
+        subject.showRnaSeqExperimentDesign(preferencesMock, model, requestMock);
 
         Gson gson = new Gson();
 
