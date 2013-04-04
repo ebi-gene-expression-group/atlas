@@ -36,7 +36,7 @@ public class DesignElementMappingProviderTest {
     public void testGetEnsGeneId() throws Exception {
         assertThat(subject.getEnsGeneId("ad1", "de1"), is("g1"));
 
-        assertThat(subject.getEnsGeneId("ad1", "not there"), is("not there"));
+        assertThat(subject.getEnsGeneId("ad1", "not there"), is(""));
 
     }
 }
