@@ -83,25 +83,25 @@ public class GeneNameTooltipController {
 
         String synonyms = buildSynonyms(identifier, multimap);
 
-        String goTerms = toCsv(multimap.get("goterm"), true);
+        String goTerms = format(multimap.get("goterm"), true);
 
-        String interproTerms = toCsv(multimap.get("interproterm"), true);
+        String interproTerms = format(multimap.get("interproterm"), true);
 
         return MessageFormat.format(htmlTemplate, geneName, synonyms, goTerms, interproTerms);
 
     }
 
-    String toCsv(Collection<String> values, boolean handleNotApplicable){
+    String format(Collection<String> values, boolean handleNotApplicable){
         if (CollectionUtils.isEmpty(values) && !handleNotApplicable) {
             return StringUtils.EMPTY;
         }
         return CollectionUtils.isEmpty(values) ?
-                "NA" : WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " , " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
+                "NA" : WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
     }
 
     private String buildSynonyms(String identifier, Multimap<String, String> multimap) {
 
-        String synonyms = toCsv(multimap.get("synonym"), false);
+        String synonyms = format(multimap.get("synonym"), false);
 
         identifier = WORD_SPAN_OPEN + identifier + WORD_SPAN_CLOSE;
 

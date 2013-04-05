@@ -39,7 +39,7 @@
             <div class="experiment-accession">
                 <a id="goto-ae"
                    href="${applicationProperties.getArrayExpressURL(experimentAccession)}"
-                   title="ArrayExpress"
+                   title="View experiment in ArrayExpress"
                    target="_blank">${experimentAccession}</a>
             </div>
         </td>
@@ -57,8 +57,8 @@
             <c:if test="${allArrayDesigns!=null}">
                 <div>Array Design(s):
                     <c:forEach items="${allArrayDesigns}" var="arrayDesign">
-                        <a id="${arrayDesign}" href="http://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesign}" target='_blank'
-                           title="">${arrayDesign}</a>
+                        <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
+                           href="http://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesign}" target='_blank'>${arrayDesign}</a>
                     </c:forEach>
                 </div>
             </c:if>

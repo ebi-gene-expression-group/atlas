@@ -66,7 +66,7 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/experiment-header-buttons.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
 
@@ -74,7 +74,7 @@
         (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
             $(document).ready(function () {
 
-                initExperimentHeaderButtons();
+                initExperimentPageButtonsAndTooltips();
 
             });
         })(jQuery);
