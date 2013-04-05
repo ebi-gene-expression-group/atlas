@@ -109,7 +109,7 @@ public class GeneNameTooltipController {
             return identifier;
         }
 
-        return Joiner.on(" , ").join(synonyms, identifier);
+        return Joiner.on(" ").join(synonyms, identifier);
     }
 
 }
