@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +37,7 @@ public class DesignElementMappingProviderTest {
     public void testGetEnsGeneId() throws Exception {
         assertThat(subject.getEnsGeneId("ad1", "de1"), is("g1"));
 
-        assertThat(subject.getEnsGeneId("ad1", "not there"), is(""));
+        assertThat(subject.getEnsGeneId("ad1", "not there"), is(nullValue()));
 
     }
 }
