@@ -24,10 +24,14 @@ package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
+import org.springframework.context.annotation.Scope;
 
+import javax.inject.Named;
 import java.util.Set;
 
-public abstract class DifferentialProfilePrecondition<T extends DifferentialProfile> implements Predicate<T> {
+@Named
+@Scope("prototype")
+public class DifferentialProfilePrecondition implements Predicate<DifferentialProfile> {
 
     private Set<Contrast> selectedQueryFactors;
     private Regulation regulation;
@@ -48,7 +52,7 @@ public abstract class DifferentialProfilePrecondition<T extends DifferentialProf
         return this;
     }
 
-    public boolean apply(T profile) {
+    public boolean apply(DifferentialProfile profile) {
         if (profile.isEmpty()){
             return false;
         }
@@ -59,17 +63,16 @@ public abstract class DifferentialProfilePrecondition<T extends DifferentialProf
         boolean moreSignificantInSelectedConditions = averageExpressionLevelOnNonSelectedFactors == 0 ||
                 averageExpressionLevelOnSelectedFactors < averageExpressionLevelOnNonSelectedFactors;
 
-        return moreSignificantInSelectedConditions && applyExtraConditions(profile);
+        return moreSignificantInSelectedConditions;
     }
 
-    private double averageExpressionLevelOnSelectedFactors(T profile) {
+    private double averageExpressionLevelOnSelectedFactors(DifferentialProfile profile) {
         return profile.getAverageExpressionLevelOn(selectedQueryFactors, regulation);
     }
 
-    private double averageExpressionLevelOnNonSelectedFactors(T profile) {
+    private double averageExpressionLevelOnNonSelectedFactors(DifferentialProfile profile) {
         Set<Contrast> remainingFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
         return profile.getAverageExpressionLevelOn(remainingFactors, regulation);
     }
 
-    protected abstract boolean applyExtraConditions(T profile);
 }

@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile.BaselineProfileBuilder;
@@ -75,15 +76,17 @@ public class InputStreamFactory {
     private BaselineProfileBuilder baselineProfileBuilder;
     private MicroarrayProfileBuilder microarrayProfileBuilder;
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
+    private DesignElementMappingProvider designElementMappingProvider;
 
 
     @Inject
-    public InputStreamFactory(BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder
-                            , DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder
-                            , MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder
-                            , BaselineProfileBuilder baselineProfileBuilder
-                            , MicroarrayProfileBuilder microarrayProfileBuilder
-                            , RnaSeqProfileBuilder rnaSeqProfileBuilder) {
+    public InputStreamFactory(BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder,
+                                DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder,
+                                MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder,
+                                BaselineProfileBuilder baselineProfileBuilder,
+                                MicroarrayProfileBuilder microarrayProfileBuilder,
+                                RnaSeqProfileBuilder rnaSeqProfileBuilder,
+                                DesignElementMappingProvider designElementMappingProvider) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.differentialExpressionsBufferBuilder = differentialExpressionsBufferBuilder;
         this.microarrayExpressionsBufferBuilder = microarrayExpressionsBufferBuilder;
@@ -91,6 +94,7 @@ public class InputStreamFactory {
         this.microarrayProfileBuilder = microarrayProfileBuilder;
         this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
 
+        this.designElementMappingProvider = designElementMappingProvider;
     }
 
     CSVReader buildCsvReader(String tsvFileURL) {
@@ -125,7 +129,7 @@ public class InputStreamFactory {
     public ObjectInputStream<MicroarrayProfile> createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
         String tsvFileURL = MessageFormat.format(microarrayExperimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
         CSVReader csvReader = buildCsvReader(tsvFileURL);
-        return new MicroarrayProfilesInputStream(csvReader, experimentAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder);
+        return new MicroarrayProfilesInputStream(csvReader, experimentAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder, designElementMappingProvider, arrayDesignAccession);
     }
 
 }

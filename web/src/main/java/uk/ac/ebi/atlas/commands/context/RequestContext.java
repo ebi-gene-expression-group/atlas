@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Set;
@@ -32,7 +31,6 @@ import java.util.SortedSet;
 
 public class RequestContext<T, K extends ExperimentPageRequestPreferences> {
     protected K requestPreferences;
-    private ExperimentType experimentType;
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
     private SortedSet<T> allQueryFactors;
@@ -79,14 +77,6 @@ public class RequestContext<T, K extends ExperimentPageRequestPreferences> {
 
     public void setFilteredBySpecies(String filteredBySpecies) {
         this.filteredBySpecies = filteredBySpecies;
-    }
-
-    public ExperimentType getExperimentType() {
-        return experimentType;
-    }
-
-    public void setExperimentType(ExperimentType experimentType) {
-        this.experimentType = experimentType;
     }
 
     public void setRequestPreferences(K requestPreferences) {

@@ -29,7 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -38,18 +38,20 @@ import java.io.IOException;
 @Scope("request")
 public class AnalysisMethodsPageController {
 
-    private TsvReader analysisMethodsTsvReader;
+    private TsvReader tsvReader;
 
     @Inject
-    public AnalysisMethodsPageController(@Value("#{configuration['experiment.analysis-method.path.template']}")
+    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder,
+                                         @Value("#{configuration['experiment.analysis-method.path.template']}")
                                          String pathTemplate) {
-        this.analysisMethodsTsvReader = new TsvReaderImpl(pathTemplate);
+
+        this.tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
 
-        model.addAttribute("csvLines", analysisMethodsTsvReader.readAll(experimentAccession));
+        model.addAttribute("csvLines", tsvReader.readAll(experimentAccession));
 
         model.addAttribute("experimentAccession", experimentAccession);
 

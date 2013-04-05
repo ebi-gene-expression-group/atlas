@@ -7,30 +7,33 @@ var experimentDesignTableModule = (function ($) {
 
     var _dataSet,
         _runAccessions,
-        _samples,
-        _factors,
-        _assayHeader;
+        _sampleHeaders,
+        _factorHeaders,
+        _assayHeaders;
 
-    function initColumn(aoColumnDefs, values, startCount) {
+    function initColumns(aoColumnDefs, values, startingFromColumnIndex) {
         for (var value in values) {
-            startCount = startCount + 1;
-
-            aoColumnDefs[startCount] = {
+            aoColumnDefs[startingFromColumnIndex] = {
                 "sClass":"center bb",
-                "sTitle":value,
-                "aTargets":[ startCount ]
+                "sTitle":values[value],
+                "aTargets":[ startingFromColumnIndex ]
             };
+            ++startingFromColumnIndex;
 
         }
-        aoColumnDefs[startCount].sClass = "center bb br";
+        aoColumnDefs[startingFromColumnIndex-1].sClass = "center bb br";
     }
 
     /* populate all sub categories */
     function initColumnDefs() {
         var aoColumnDefs = [];
-        aoColumnDefs[0] = { "sClass":"assays bb br bl", "sTitle":_assayHeader + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
+        for (var i = 0; i < _assayHeaders.length; i++){
+            aoColumnDefs[i] = { "sClass":"assays bb", "sTitle":_assayHeaders[i] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ i ]};
+        }
+        aoColumnDefs[0].sClass = "assays bb bl";
+        aoColumnDefs[i-1].sClass = "assays bb br";
 
-        initColumn(aoColumnDefs, _samples, 0);
+        initColumns(aoColumnDefs, _sampleHeaders, _assayHeaders.length);
 
         /* for IE7 & IE8 */
         Object.keys = Object.keys || function (o) {
@@ -42,7 +45,7 @@ var experimentDesignTableModule = (function ($) {
             return result;
         };
 
-        initColumn(aoColumnDefs, _factors, Object.keys(_samples).length);
+        initColumns(aoColumnDefs, _factorHeaders, _assayHeaders.length + _sampleHeaders.length);
 
         return aoColumnDefs;
     }
@@ -105,20 +108,21 @@ var experimentDesignTableModule = (function ($) {
             .insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */
-        $('#samplesHeader').attr('colspan', Object.keys(_samples).length);
-        $('#factorsHeader').attr('colspan', Object.keys(_factors).length);
+        $('#assaysHeader').attr('colspan', Object.keys(_assayHeaders).length);
+        $('#samplesHeader').attr('colspan', Object.keys(_sampleHeaders).length);
+        $('#factorsHeader').attr('colspan', Object.keys(_factorHeaders).length);
 
 
         $('#download-experiment-design-link').button().tooltip();
 
     }
 
-    function _init(assayHeader, dataSet, runAccessions, samples, factors) {
+    function _init(assayHeaders, dataSet, runAccessions, sampleHeaders, factorHeaders) {
         _dataSet = dataSet;
         _runAccessions = runAccessions;
-        _samples = samples;
-        _factors = factors;
-        _assayHeader = assayHeader;
+        _sampleHeaders = sampleHeaders;
+        _factorHeaders = factorHeaders;
+        _assayHeaders = assayHeaders;
 
 
         _initExperimentDesignTable();

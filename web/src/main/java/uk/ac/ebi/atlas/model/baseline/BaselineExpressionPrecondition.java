@@ -31,9 +31,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-//ToDo: This class in not just "expressionPrecondition", but also container for other request parameters. Maybe we need to create "GeneProfilePrecondition" class.
 @Named
-@Scope("request")
+@Scope("prototype")
 public class BaselineExpressionPrecondition implements Predicate<BaselineExpression>, Serializable {
 
     private double cutoff;

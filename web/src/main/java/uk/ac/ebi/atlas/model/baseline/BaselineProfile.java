@@ -110,7 +110,6 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
         public BaselineProfileBuilder forGeneId(String geneId) {
             this.baselineProfile = new BaselineProfile(geneId);
             initPreconditions();
-
             return this;
         }
 

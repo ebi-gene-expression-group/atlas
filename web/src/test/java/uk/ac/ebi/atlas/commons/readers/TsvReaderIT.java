@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,11 +27,14 @@ public class TsvReaderIT {
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String experimentDesignTemplate;
 
+    @Inject
+    private TsvReaderBuilder tsvReaderBuilder;
+
     private TsvReader subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new TsvReaderImpl(analysisMethodsTemplate);
+        subject = tsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate).build();
     }
 
     @Test
@@ -56,7 +60,7 @@ public class TsvReaderIT {
     public void readExpDesignAll() {
 
         // given
-        subject = new TsvReaderImpl(experimentDesignTemplate);
+        subject = tsvReaderBuilder.forTsvFilePathTemplate(experimentDesignTemplate).build();
         List<String[]> result = subject.readAll(EXPERIMENT_ACCESSION);
         String[] firstLine = result.get(0);
         String[] lastLine = result.get(result.size() - 1);

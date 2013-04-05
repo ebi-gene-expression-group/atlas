@@ -1,3 +1,4 @@
+/*
 package uk.ac.ebi.atlas.model.differential;
 
 import org.springframework.context.annotation.Scope;
@@ -14,3 +15,4 @@ public class RnaSeqProfilePrecondition extends DifferentialProfilePrecondition<R
         return true;
     }
 }
+*/

@@ -36,7 +36,6 @@ import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -48,8 +47,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -93,16 +91,13 @@ public class DifferentialDesignPageControllerIT {
 
         // then
         Map<String, Object> map = model.asMap();
-        assertThat(((String) map.get("assayHeader")), is("Run"));
+        assertThat(((String) map.get("assayHeaders")), is("[\"Run\"]"));
 
         // and
-        Type stringIntegerMapType = new TypeToken<Map<String, Integer>>() {
-        }.getType();
-        Map<String, Integer> samples = gson.fromJson((String) map.get("samples"), stringIntegerMapType);
-        assertThat(samples.get("ecotype"), is(1));
-        assertThat(samples.get("Organism"), is(2));
-        Map<String, Integer> factors = gson.fromJson((String) map.get("factors"), stringIntegerMapType);
-        assertThat(factors.get("genotype"), is(3));
+        String[] samples = gson.fromJson((String) map.get("sampleHeaders"), String[].class);
+        assertThat(samples, arrayContaining("Organism", "ecotype"));
+        String[] factors = gson.fromJson((String) map.get("factorHeaders"), String[].class);
+        assertThat(factors, arrayContaining("genotype"));
 
         // and
         Type listStringArrayType = new TypeToken<List<String[]>>() {

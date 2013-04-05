@@ -24,28 +24,40 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public abstract class ExperimentDesignDownloadController {
+public abstract class ExperimentDesignDownloadController<T extends Experiment> {
 
     private static final Logger logger = Logger.getLogger(DifferentialDesignDownloadController.class);
 
-    private TsvReader experimentDesignTsvReader;
+    @Value("#{configuration['experiment.experiment-design.path.template']}")
+    private String pathTemplate;
 
-    public ExperimentDesignDownloadController(String pathTemplate) {
-        this.experimentDesignTsvReader = new TsvReaderImpl(pathTemplate);
+    private TsvReader tsvReader;
+
+    @Inject
+    private void setTsvReaderBuilder(TsvReaderBuilder tsvReaderBuilder){
+        this.tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
     }
 
-    protected void extractExperimentDesign(HttpServletResponse response, String accession, Set<String> used) throws IOException {
+
+    protected void extractExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
         // read contents from file
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(accession));
+        List<String[]> csvLines = new ArrayList<>(tsvReader.readAll(experiment.getAccession()));
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
         // modify header by adding new column
@@ -59,7 +71,7 @@ public abstract class ExperimentDesignDownloadController {
         for (String[] array : csvLines) {
             String[] newArray = new String[array.length + 1];
             System.arraycopy(array, 0, newArray, 0, array.length);
-            if (used.contains(newArray[0])) {
+            if (getAnalysedRowsAccessions(experiment).contains(newArray[0])) {
                 newArray[array.length] = "Yes";
             } else {
                 newArray[array.length] = "No";
@@ -67,7 +79,7 @@ public abstract class ExperimentDesignDownloadController {
             newCsvLines.add(newArray);
         }
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + accession + "-experiment-design.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-experiment-design.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
@@ -79,4 +91,7 @@ public abstract class ExperimentDesignDownloadController {
         csvWriter.flush();
         csvWriter.close();
     }
+
+    protected abstract Set<String> getAnalysedRowsAccessions(T experiment);
+
 }

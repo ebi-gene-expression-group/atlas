@@ -22,40 +22,35 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Set;
 
 @Controller
 @Scope("request")
-public class BaselineDesignDownloadController extends ExperimentDesignDownloadController {
-
-    @Inject
-    public BaselineDesignDownloadController(@Value("#{configuration['experiment.experiment-design.path.template']}")
-                                            String pathTemplate) {
-        super(pathTemplate);
-    }
+public class BaselineDesignDownloadController extends ExperimentDesignDownloadController<BaselineExperiment> {
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=BASELINE"})
     public void downloadExperimentDesign(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        extractExperimentDesign(response, experiment.getAccession(), experiment.getExperimentRunAccessions());
+        extractExperimentDesign(request, response);
 
     }
 
+    @Override
+    protected Set<String> getAnalysedRowsAccessions(BaselineExperiment experiment) {
+        return experiment.getExperimentRunAccessions();
+    }
 }
 
 

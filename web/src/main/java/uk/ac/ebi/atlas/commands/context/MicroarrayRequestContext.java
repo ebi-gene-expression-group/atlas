@@ -32,19 +32,19 @@ import javax.inject.Named;
 public class MicroarrayRequestContext extends DifferentialRequestContext {
 
 
-    private String arrayDesignName;
+    private String arrayDesignAccession;
 
     @Override
     public String toString(){
         return Objects.toStringHelper(this.getClass())
-                .add("arrayDesignName", arrayDesignName).toString();
+                .add("arrayDesignAccession", arrayDesignAccession).toString();
     }
 
-    public void setArrayDesignAccession(String arrayDesignName) {
-        this.arrayDesignName = arrayDesignName;
+    public void setArrayDesignAccession(String arrayDesignAccession) {
+        this.arrayDesignAccession = arrayDesignAccession;
     }
 
-    public String getArrayDesignName() {
-        return arrayDesignName;
+    public String getArrayDesignAccession() {
+        return arrayDesignAccession;
     }
 }

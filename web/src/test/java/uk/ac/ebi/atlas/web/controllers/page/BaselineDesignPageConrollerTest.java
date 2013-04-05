@@ -32,8 +32,6 @@ import static org.hamcrest.Matchers.is;
 
 public class BaselineDesignPageConrollerTest {
 
-    private static final String PATH_TEMPLATE = "A_PATH_TEMPLATE";
-
     private static final String[] HEADER_LINE = new String[]{"Assay", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]"};
 
     private ExperimentDesignPageRequestHandler subject;
@@ -47,7 +45,7 @@ public class BaselineDesignPageConrollerTest {
     public void testExtractSubcategoriesSamples() {
 
         // given
-        Map<String, Integer> map = subject.extractSubcategories(HEADER_LINE, "Sample Characteristics");
+        Map<String, Integer> map = subject.extractHeaderIndexes(HEADER_LINE, ExperimentDesignPageRequestHandler.SAMPLE_COLUMN_HEADER_PATTERN);
 
         // then
         assertThat(map.size(), is(4));
@@ -61,7 +59,7 @@ public class BaselineDesignPageConrollerTest {
     public void testExtractSubcategoriesFactors() {
 
         // given
-        Map<String, Integer> map = subject.extractSubcategories(HEADER_LINE, "Factor Values");
+        Map<String, Integer> map = subject.extractHeaderIndexes(HEADER_LINE, ExperimentDesignPageRequestHandler.FACTOR_COLUMN_HEADER_PATTERN);
 
         // then
         assertThat(map.size(), is(1));
@@ -72,19 +70,18 @@ public class BaselineDesignPageConrollerTest {
     public void testCreateReorderMapping() {
 
         // split header line into samples and factors
-        Map<String, Integer> samples = subject.extractSubcategories(HEADER_LINE, "Sample Characteristics");
-        Map<String, Integer> factors = subject.extractSubcategories(HEADER_LINE, "Factor Values");
+        Map<String, Integer> samples = subject.extractHeaderIndexes(HEADER_LINE, ExperimentDesignPageRequestHandler.SAMPLE_COLUMN_HEADER_PATTERN);
+        Map<String, Integer> factors = subject.extractHeaderIndexes(HEADER_LINE, ExperimentDesignPageRequestHandler.FACTOR_COLUMN_HEADER_PATTERN);
 
         // given
         Map<Integer, Integer> mapping = subject.createReorderMapping(samples, factors);
 
         // then
-        assertThat(mapping.size(), is(6));
-        assertThat(mapping.get(0), is(0)); // run
-        assertThat(mapping.get(1), is(2)); // age
-        assertThat(mapping.get(2), is(4)); // biosource provider
-        assertThat(mapping.get(3), is(1)); // organism
-        assertThat(mapping.get(4), is(3)); // sex
-        assertThat(mapping.get(5), is(5)); // organism part
+        assertThat(mapping.size(), is(5));
+        assertThat(mapping.get(0), is(2)); // age
+        assertThat(mapping.get(1), is(4)); // biosource provider
+        assertThat(mapping.get(2), is(1)); // organism
+        assertThat(mapping.get(3), is(3)); // sex
+        assertThat(mapping.get(4), is(5)); // organism part
     }
 }

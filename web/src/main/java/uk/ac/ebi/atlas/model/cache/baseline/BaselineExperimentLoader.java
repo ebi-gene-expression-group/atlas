@@ -27,7 +27,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
@@ -51,12 +51,16 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
 
 
     @Inject
-    public BaselineExperimentLoader(MageTabParserBuilder mageTabParserBuilder, ConfigurationTrader configurationTrader
-            , @Value("#{configuration['experiment.magetab.path.template']}") String pathTemplate) {
+    public BaselineExperimentLoader(TsvReaderBuilder tsvReaderBuilder,
+                                    MageTabParserBuilder mageTabParserBuilder,
+                                    ConfigurationTrader configurationTrader,
+                                    @Value("#{configuration['experiment.magetab.path.template']}")
+                                    String pathTemplate) {
+
         this.mageTabParserBuilder = mageTabParserBuilder;
         this.configurationTrader = configurationTrader;
 
-        this.experimentDataTsvReader = new TsvReaderImpl(pathTemplate);
+        this.experimentDataTsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
     }
 
     @Override

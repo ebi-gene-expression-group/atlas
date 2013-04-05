@@ -44,14 +44,7 @@
                                 </div>"
                             class="header-cell">
 
-                        <c:choose>
-                            <c:when test="${type eq 'MICROARRAY'}">
-                                <c:set var="geneId" value="${designElementMappingProvider.getEnsGeneId(preferences.arrayDesignAccession, geneProfile.geneId)}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="geneId" value="${geneProfile.geneId}"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <c:set var="geneId" value="${geneProfile.geneId}"/>
 
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                             <fmt:param value="${geneId}"/>
@@ -64,7 +57,7 @@
 
                     <c:if test="${type eq 'MICROARRAY'}">
                         <display:column title="">
-                            ${geneProfile.geneId}
+                            ${geneProfile.designElementName}
                         </display:column>
                     </c:if>
 

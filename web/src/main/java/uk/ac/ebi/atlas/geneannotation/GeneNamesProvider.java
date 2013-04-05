@@ -36,10 +36,6 @@ public class GeneNamesProvider {
         this.annotationEnvironment = annotationEnvironment;
     }
 
-    /*  We can't just inject the StoredMap, it would be like caching a DB cursor rather than a Connection.
-        For example it fails if you refresh the annotation environment by closing the database and reopening, thing that now we do in order to
-        keep the database in readonly mode and only open it in write mode when an annotation update is requested.
-    */
     public String getGeneName(String ensGeneId) {
         String value = annotationEnvironment.geneNames().get(ensGeneId);
         return value == null ? ensGeneId : value;

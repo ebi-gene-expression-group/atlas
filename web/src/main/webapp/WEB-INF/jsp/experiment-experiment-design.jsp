@@ -89,7 +89,7 @@
 
     (function ($) {
         $(document).ready(function () {
-            experimentDesignTableModule.init('${assayHeader}', ${tableData}, ${runAccessions}, ${samples}, ${factors});
+            experimentDesignTableModule.init(${assayHeaders}, ${tableData}, ${runAccessions}, ${sampleHeaders}, ${factorHeaders});
 
             helpTooltipsModule.init('experiment-design');
 

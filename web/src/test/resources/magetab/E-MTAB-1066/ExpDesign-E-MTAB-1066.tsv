@@ -1,10 +1,10 @@
 Assay	Array	Sample Characteristics[developmental stage]	Factor Values[genotype]	Sample Characteristics[organism]	Sample Characteristics[strain or line]
-C1	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster	s
-C2	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster	b
-C3	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster	k
-K1	A-AFFY-35	3rd instar larva	cdk8 mutant,w1118; +; cdk8K185	Drosophila melanogaster	n
-K2	A-AFFY-35	3rd instar larva	cdk8 mutant,w1118; +; cdk8K185	Drosophila melanogaster	n
-K3	A-AFFY-35	3rd instar larva	cdk8 mutant,w1118; +; cdk8K185	Drosophila melanogaster	6
+C1	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster	
+C2	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster	
+C3	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster	
+K1	A-AFFY-35	3rd instar larva	cdk8 mutant,w1118; +; cdk8K185	Drosophila melanogaster	
+K2	A-AFFY-35	3rd instar larva	cdk8 mutant,w1118; +; cdk8K185	Drosophila melanogaster	
+K3	A-AFFY-35	3rd instar larva	cdk8 mutant,w1118; +; cdk8K185	Drosophila melanogaster	
 WT1	A-AFFY-35	3rd instar larva	wild type	Drosophila melanogaster	Oregon R
 WT2	A-AFFY-35	3rd instar larva	wild type	Drosophila melanogaster	Oregon R
 WT3	A-AFFY-35	3rd instar larva	wild type	Drosophila melanogaster	Oregon R

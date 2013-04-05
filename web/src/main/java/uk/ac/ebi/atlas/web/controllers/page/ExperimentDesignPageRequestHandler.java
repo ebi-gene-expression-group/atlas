@@ -23,36 +23,35 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderImpl;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
-    private static final String SAMPLE_COLUMN_HEADER = "Sample Characteristics";
-    private static final String FACTOR_COLUMN_HEADER = "Factor Values";
+    static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristics\\[(.*?)\\]\\s*");
+    static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Values\\[(.*?)\\]\\s*");
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;
 
-    private TsvReader experimentDesignTsvReader;
+    private TsvReaderBuilder tsvReaderBuilder;
 
-    @PostConstruct
-    private void initTsvReader(){
-        experimentDesignTsvReader = new TsvReaderImpl(pathTemplate);
+    @Inject
+    void setTsvReaderBuilder(TsvReaderBuilder tsvReaderBuilder){
+        this.tsvReaderBuilder = tsvReaderBuilder;
     }
 
     public String handleRequest(Model model, HttpServletRequest request) {
@@ -60,37 +59,37 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
         String experimentAccession = experiment.getAccession();
 
-        List<String[]> csvLines = new ArrayList<>(experimentDesignTsvReader.readAll(experimentAccession));
+        TsvReader tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
 
-        // delete first line with table headers
+        List<String[]> csvLines = new ArrayList<>(tsvReader.readAll(experimentAccession));
+
         String[] headerLine = csvLines.remove(0);
 
-        // split header line into samples and factors
-        Map<String, Integer> samples = extractSubcategories(headerLine, SAMPLE_COLUMN_HEADER);
-        Map<String, Integer> factors = extractSubcategories(headerLine, FACTOR_COLUMN_HEADER);
+        Map<String, Integer> sampleHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
+        Map<String, Integer> factorHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
 
         // reorder lines according to new header
-        Map<Integer, Integer> mapping = createReorderMapping(samples, factors);
+        Map<Integer, Integer> mapping = createReorderMapping(sampleHeaderIndexes, factorHeaderIndexes);
+
+        int startIndex = headerLine.length - (sampleHeaderIndexes.size() + factorHeaderIndexes.size());
 
         for (String[] line : csvLines) {
-            String[] copy = Arrays.copyOf(line, line.length);
-            for (int j = 0; j < copy.length; j++) {
-                Integer value = mapping.get(j);
-                checkNotNull(value, "No mapping found for ExpDesign column " + j);
+            String[] copy = Arrays.copyOf(line, headerLine.length);
+            for (int j = 0 ; j < mapping.size(); j++) {
+                Integer columnIndex = mapping.get(j);
+                checkNotNull(columnIndex, "No mapping found for ExpDesign column " + j);
                 // here re-ordering of each line
-                checkElementIndex(j, line.length, "ExpDesign column " + j + " is outside legal range.");
-                checkElementIndex(value, copy.length, "Mapped index for ExpDesign column " + j + " is " + value + ", but is outside legal range.");
-                line[j] = copy[value];
+                line[j + startIndex] = copy[columnIndex];
             }
         }
 
         // does the serialisation to JSON
         Gson gson = new Gson();
-
         // add table data to model
-        model.addAttribute("assayHeader", headerLine[0]);
-        model.addAttribute("samples", gson.toJson(samples));
-        model.addAttribute("factors", gson.toJson(factors));
+        String[] assayHeaders = (String[])ArrayUtils.subarray(headerLine, 0, startIndex);
+        model.addAttribute("assayHeaders", gson.toJson(assayHeaders));
+        model.addAttribute("sampleHeaders", gson.toJson(sampleHeaderIndexes.keySet()));
+        model.addAttribute("factorHeaders", gson.toJson(factorHeaderIndexes.keySet()));
         model.addAttribute("tableData", gson.toJson(csvLines));
 
         //analysed row accessions are added to the model separately,
@@ -113,27 +112,30 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
     protected abstract Set<String> getAnalysedRowsAccessions(T experiment);
 
-    /**
-     * Extracts subcategories for a given category within the header line
-     */
-    protected Map<String, Integer> extractSubcategories(String[] headerLine, String category) {
+
+    protected Map<String, Integer> extractHeaderIndexes(String[] columnHeaders, Pattern columnHeaderPattern) {
         Map<String, Integer> map = new TreeMap<>();
-        for (int i = 1; i < headerLine.length; i++) {
-            // cleanup of misplaced white space characters
-            headerLine[i] = headerLine[i].trim();
-            if (headerLine[i].startsWith(category)) {
-                String subcategory = headerLine[i].substring(category.length() + 1, headerLine[i].length() - 1);
-                map.put(subcategory, i);
+        for (int i = 0; i < columnHeaders.length; i++) {
+            String matchingHeaderContent = extractMatchingContent(columnHeaders[i],columnHeaderPattern);
+            if (matchingHeaderContent != null) {
+                map.put(matchingHeaderContent, i);
             }
         }
         return map;
     }
 
+    static String extractMatchingContent(String string, Pattern pattern){
+        Matcher matcher = pattern.matcher(string);
+        if (matcher.matches()){
+            return matcher.group(1);
+        }
+        return null;
+    }
+
     protected Map<Integer, Integer> createReorderMapping(Map<String, Integer> samples, Map<String, Integer> factors) {
-        Map<Integer, Integer> mapping = new HashMap<>(1 + samples.size() + factors.size());
-        // run accession always at first column
-        mapping.put(0, 0);
-        int i = 1;
+        Map<Integer, Integer> mapping = new HashMap<>(samples.size() + factors.size());
+
+        int i = 0;
         for (Integer value : samples.values()) {
             mapping.put(i, value);
             i++;

@@ -24,10 +24,12 @@ package uk.ac.ebi.atlas.model.differential;
 
 
 import com.google.common.base.Predicate;
+import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
 
 @Named
+@Scope("prototype")
 public class DifferentialExpressionPrecondition implements Predicate<DifferentialExpression> {
 
     private Regulation regulation;

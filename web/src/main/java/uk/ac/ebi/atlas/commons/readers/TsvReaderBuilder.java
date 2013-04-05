@@ -20,36 +20,33 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential.rnaseq;
+package uk.ac.ebi.atlas.commons.readers;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-public class RnaSeqProfile extends DifferentialProfile<DifferentialExpression> {
+@Named
+@Scope("prototype")
+public class TsvReaderBuilder {
 
+    private TsvReaderImpl tsvReader;
 
-    public RnaSeqProfile(String geneId) {
-        super(geneId);
+    @Inject
+    private TsvReaderBuilder(TsvReaderImpl tsvReader){
+        this.tsvReader = tsvReader;
     }
 
-    @Named
-    @Scope("prototype")
-    public static class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfile, RnaSeqRequestContext> {
-
-        @Inject
-        protected RnaSeqProfileBuilder(RnaSeqRequestContext requestContext) {
-            super(requestContext);
-        }
-
-        @Override
-        protected RnaSeqProfile createProfile(String geneId) {
-            return new RnaSeqProfile(geneId);
-        }
+    public TsvReaderBuilder forTsvFilePathTemplate(String tsvFilePathTemplate){
+        this.tsvReader.setPathTemplate(tsvFilePathTemplate);
+        return this;
     }
+
+    public TsvReader build(){
+        return tsvReader;
+    }
+
 
 }

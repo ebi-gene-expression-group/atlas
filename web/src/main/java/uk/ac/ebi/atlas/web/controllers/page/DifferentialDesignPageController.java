@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -45,14 +44,14 @@ import java.util.Set;
 @Scope("request")
 public class DifferentialDesignPageController extends ExperimentDesignPageRequestHandler<DifferentialExperiment> {
 
-    private DifferentialDesignRequestPreferences preferences;
+    private String contrastId;
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=DIFFERENTIAL"})
     public String showRnaSeqExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
             , Model model, HttpServletRequest request) throws IOException {
 
-        this.preferences = preferences;
+        contrastId = preferences.getSelectedContrast();
         return handleRequest(model, request);
     }
 
@@ -60,7 +59,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
     public String showMicroarrayExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
             , Model model, HttpServletRequest request) throws IOException {
 
-        this.preferences = preferences;
+        contrastId = preferences.getSelectedContrast();
         return handleRequest(model, request);
     }
 
@@ -74,7 +73,6 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
 
         model.addAttribute("contrasts", experiment.getContrasts());
 
-        String contrastId = preferences.getSelectedContrast();
         if (StringUtils.isBlank(contrastId)) {
             contrastId = experiment.getContrasts().first().getId();
         }

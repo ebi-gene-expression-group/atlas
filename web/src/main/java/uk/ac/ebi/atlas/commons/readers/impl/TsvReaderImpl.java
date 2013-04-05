@@ -20,12 +20,15 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commons.readers;
+package uk.ac.ebi.atlas.commons.readers.impl;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
+import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
@@ -35,13 +38,18 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+@Named
+@Scope("prototype")
 public class TsvReaderImpl implements TsvReader {
 
     private static final Logger LOGGER = Logger.getLogger(TsvReaderImpl.class);
 
     private String pathTemplate;
 
-    public TsvReaderImpl(String pathTemplate) {
+    TsvReaderImpl() {
+    }
+
+    public void setPathTemplate(String pathTemplate){
         this.pathTemplate = pathTemplate;
     }
 

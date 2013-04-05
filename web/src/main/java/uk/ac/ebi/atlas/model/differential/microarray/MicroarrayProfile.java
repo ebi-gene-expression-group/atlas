@@ -25,40 +25,48 @@ package uk.ac.ebi.atlas.model.differential.microarray;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
-import uk.ac.ebi.atlas.model.differential.MicroarrayProfilePrecondition;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
 
-    public MicroarrayProfile(String geneId) {
+    private final String designElementName;
+
+    public MicroarrayProfile(String geneId, String designElementName) {
         super(geneId);
+        this.designElementName = designElementName;
+    }
+
+    //It's used in jsp EL
+    public String getDesignElementName(){
+        return designElementName;
     }
 
     @Named
     @Scope("prototype")
     public static class MicroarrayProfileBuilder extends DifferentialProfileBuilder<MicroarrayProfile, MicroarrayRequestContext> {
 
+        private String designElementName;
+
         @Inject
         protected MicroarrayProfileBuilder(MicroarrayRequestContext requestContext) {
             super(requestContext);
         }
 
-        @Inject
-        public void setDifferentialProfilePrecondition(MicroarrayProfilePrecondition differentialProfilePrecondition) {
-            super.setDifferentialProfilePrecondition(differentialProfilePrecondition);
+        @Override
+        public MicroarrayProfileBuilder forGeneId(String geneId){
+            return (MicroarrayProfileBuilder)super.forGeneId(geneId);
         }
 
-        @Override
-        protected void initExtraProfilePreconditions(DifferentialProfilePrecondition<MicroarrayProfile> precondition, MicroarrayRequestContext requestContext) {
-            ((MicroarrayProfilePrecondition) precondition).setArrayDesignAcc(requestContext.getArrayDesignName());
+        public MicroarrayProfileBuilder withDesignElementName(String designElementName){
+            this.designElementName = designElementName;
+            return this;
         }
 
         @Override
         protected MicroarrayProfile createProfile(String geneId) {
-            return new MicroarrayProfile(geneId);
+            return new MicroarrayProfile(geneId, designElementName);
         }
     }
 }

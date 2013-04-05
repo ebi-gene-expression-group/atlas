@@ -23,12 +23,14 @@
 package uk.ac.ebi.atlas.model.differential;
 
 
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
 import javax.inject.Inject;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -124,26 +126,29 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
         minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, expressionLevel);
     }
 
-    public double getMinExpressionLevel() { //only required for the heatmap table ranking
+    public double getMinExpressionLevel() {
         return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
 
     public abstract static class DifferentialProfileBuilder<T extends DifferentialProfile, K extends DifferentialRequestContext> {
 
-        private T differentialProfile;
-
         private K requestContext;
 
+        private String geneId;
+
+        private List<DifferentialExpression> expressions = Lists.newArrayList();
+
         private DifferentialExpressionPrecondition differentialExpressionPrecondition;
-        private DifferentialProfilePrecondition<T> differentialProfilePrecondition;
+        private DifferentialProfilePrecondition differentialProfilePrecondition;
 
         @Inject
-        public void setDifferentialExpressionPrecondition(DifferentialExpressionPrecondition differentialExpressionPrecondition) {
+        private void setDifferentialExpressionPrecondition(DifferentialExpressionPrecondition differentialExpressionPrecondition) {
             this.differentialExpressionPrecondition = differentialExpressionPrecondition;
         }
 
-        public void setDifferentialProfilePrecondition(DifferentialProfilePrecondition<T> differentialProfilePrecondition) {
+        @Inject
+        private void setDifferentialProfilePrecondition(DifferentialProfilePrecondition differentialProfilePrecondition) {
             this.differentialProfilePrecondition = differentialProfilePrecondition;
         }
 
@@ -159,32 +164,42 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
             differentialProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
                     .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
                     .setRegulation(requestContext.getRegulation());
-            initExtraProfilePreconditions(differentialProfilePrecondition, requestContext);
-        }
 
-        protected abstract void initExtraProfilePreconditions(DifferentialProfilePrecondition<T> differentialProfilePrecondition, K requestContext);
+    }
+
 
         public DifferentialProfileBuilder forGeneId(String geneId) {
-            this.differentialProfile = createProfile(geneId);
+            this.geneId = geneId;
             initPreconditions();
-
             return this;
         }
 
         protected abstract T createProfile(String geneId);
 
         public DifferentialProfileBuilder addExpression(DifferentialExpression expression) {
-            checkState(differentialProfile != null, "Please invoke forGeneID before create");
+            checkState(geneId != null, "Please invoke forGeneID before create");
             if (differentialExpressionPrecondition.apply(expression)) {
-                differentialProfile.add(expression);
+                expressions.add(expression);
             }
             return this;
         }
 
         public T create() {
-            checkState(differentialProfile != null, "Please invoke forGeneID before create");
-
+            checkState(geneId != null, "Please invoke forGeneId before create");
+            T differentialProfile = createProfile(geneId);
+            for(DifferentialExpression expression:expressions){
+                differentialProfile.add(expression);
+            }
+            resetBuilder();
             return differentialProfilePrecondition.apply(differentialProfile)? differentialProfile : null;
+        }
+
+        //this is only a temporary ugly workaround to patch previous even more buggish implementation...
+        //Builder should not support multiple creations...
+        //new instance of builder should be used everytime an object has to be built.
+        private void resetBuilder(){
+           this.expressions = Lists.newArrayList();
+           this.geneId = null;
         }
 
     }

@@ -35,6 +35,7 @@ public class MicroarrayExpression extends DifferentialExpression {
         this.tStatistic = tStatistic;
     }
 
+    //It's used in jsp EL
     public double getTStatistic() {
         return tStatistic;
     }
