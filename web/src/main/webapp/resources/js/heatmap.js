@@ -45,6 +45,17 @@ function initHeatmapDisplayValueToggle() {
         $(".gradient-level-max").css("display", "none");
     }
 
+    function buildHeatmapCellTooltip(expressionLevel, tstatistic, foldChange){
+        return "<table class='table-grid'><thead><th class='header-cell'>Adjusted P-value</th>" +
+            (tstatistic !== undefined ? "<th class='header-cell'>T-statistic</th>" : "") +
+            "<th class='header-cell'>Log2-fold Change</th></thead>" +
+            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + expressionLevel + "</span></td>" +
+            (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
+
+            "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
+            "</table>";
+    }
+
     $("#display-levels").button()
         .toggle(
         function () {
@@ -80,18 +91,20 @@ function initHeatmapDisplayValueToggle() {
             tooltipClass:"help-tooltip pvalue-tooltip-styling",
 
             content:function (callback) {
-                var foldChange = $(this).find("div").attr("data-fold-change"),
-                    expressionLevel = $(this).find("div").html();
+                var expressionLevel = $(this).find("div").html(),
+                    foldChange = $(this).find("div").attr("data-fold-change"),
+                    tstatistic = $(this).find("div").attr("data-tstatistic");
 
-                return "<table class='table-grid'>" +
-                    "<thead><th class='header-cell'>P-value</th><th class='header-cell'>Log2-fold Change</th></thead>" +
-                    "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + expressionLevel + "</span></td><td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
-                    "</table>";
+
+                return buildHeatmapCellTooltip(expressionLevel, tstatistic, foldChange);
             }
 
 
 
         });
+
+
+
 
     $('#download-profiles-link').button().tooltip();
 
