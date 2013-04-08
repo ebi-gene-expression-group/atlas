@@ -56,6 +56,7 @@ var genePropertiesTooltipModule = (function($) {
     function initTooltip(queryString){
 
         $(".genename").tooltip({
+            tooltipClass:"genename-tooltip",
             position: { my: "left+120 top", at: "left top", collision: "flipfit" },
             hide:false,
             show:false,

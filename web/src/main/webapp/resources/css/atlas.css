@@ -178,7 +178,6 @@ a:active {
     border: 1px solid #2777A5!important;
     padding: 4px;
     max-width: 400px!important;
-    text-align: justify;
     color: #2777A5;
     border-radius: 4px;
     font: 10px Verdana, Helvetica, Arial, sans-serif;
@@ -228,4 +227,8 @@ a.help-icon {
 
     background-color: rgb(223, 213, 213);
 
+}
+
+.genename-tooltip {
+    text-align: justify;
 }
