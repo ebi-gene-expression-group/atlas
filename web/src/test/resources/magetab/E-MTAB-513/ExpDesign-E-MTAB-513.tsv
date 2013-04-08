@@ -1,4 +1,4 @@
-Assay	Sample Characteristics[organism]	Sample Characteristics[age]	Sample Characteristics[sex]	Sample Characteristics[biosource provider]	Factor Values[organism part]
+Run	Sample Characteristics[organism]	Sample Characteristics[age]	Sample Characteristics[sex]	Sample Characteristics[biosource provider]	Factor Values[organism part]
 ERR030872	Homo sapiens	60	female	Human thyroid total RNA, lot 0908003	thyroid
 ERR030873	Homo sapiens	19	male	Human testes total RNA, lot 05060392	testes
 ERR030874	Homo sapiens	47	female	Human ovary total RNA, lot 0812002	ovary

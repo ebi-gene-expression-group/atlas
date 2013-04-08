@@ -66,7 +66,7 @@ public class TsvReaderIT {
         String[] lastLine = result.get(result.size() - 1);
 
         // then
-        assertThat(firstLine, arrayContaining("Assay", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]"));
+        assertThat(firstLine, arrayContaining("Run", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]"));
         assertThat(lastLine, arrayContaining("ERR030871", "Homo sapiens", "  ", "  ", "  ", "16 Tissues mixture "));
     }
 }
