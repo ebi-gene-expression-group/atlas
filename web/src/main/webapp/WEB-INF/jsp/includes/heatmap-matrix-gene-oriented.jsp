@@ -120,14 +120,22 @@
                                                                   value="${geneProfile.getExpression(queryFactor).foldChange}"
                                                                   groupingUsed="false"
                                                                   var="foldChange"/>
+                                                <c:if test="${type == 'MICROARRAY'}">
+                                                    <fmt:formatNumber type="number"
+                                                                      maxFractionDigits="2"
+                                                                      value="${geneProfile.getExpression(queryFactor).tstatistic}"
+                                                                      groupingUsed="false"
+                                                                      var="tstatistic"/>
+                                                </c:if>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:when>
                                 </c:choose>
 
-                                <div class="hide_cell" ${type != 'BASELINE' ? 'data-fold-change="'.concat(foldChange).concat('"'):''}
-                                     data-organism-part="${columnHeader}" data-color="${cellColour}">
-                                        ${type != 'BASELINE' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
+                                <div class="hide_cell" ${type == 'MICROARRAY' ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                                                       ${type != 'BASELINE' ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
+                                                        data-organism-part="${columnHeader}" data-color="${cellColour}">
+                                                       ${type != 'BASELINE' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
 
                             </c:if>

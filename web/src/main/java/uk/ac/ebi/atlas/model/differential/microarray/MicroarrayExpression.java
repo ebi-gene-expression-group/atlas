@@ -28,15 +28,15 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
 public class MicroarrayExpression extends DifferentialExpression {
 
-    private double tStatistic;
+    private double tstatistic;
 
-    public MicroarrayExpression(double pValue, double foldChange, double tStatistic, Contrast contrast) {
+    public MicroarrayExpression(double pValue, double foldChange, double tstatistic, Contrast contrast) {
         super(pValue, foldChange, contrast);
-        this.tStatistic = tStatistic;
+        this.tstatistic = tstatistic;
     }
 
     //It's used in jsp EL
-    public double getTStatistic() {
-        return tStatistic;
+    public double getTstatistic() {
+        return tstatistic;
     }
 }

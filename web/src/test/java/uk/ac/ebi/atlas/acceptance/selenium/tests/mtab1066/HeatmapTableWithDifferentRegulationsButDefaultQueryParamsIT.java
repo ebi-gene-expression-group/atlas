@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod22351;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.mtab1066;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
@@ -33,23 +33,13 @@ import static org.junit.Assert.assertThat;
 
 public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
 
-    private static final String E_GEOD_22351_ACCESSION = "E-GEOD-22351";
+    private static final String E_MTAB_1066_ACCESSION = "E-MTAB-1066";
     protected HeatmapTablePage subject;
 
-    @Test
-    public void verifyQueryFactorLableAndHeatmapHeaders() {
-        subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP&displayLevels=true");
-        subject.get();
-
-        assertThat(subject.getQueryFactorLabel(), is("Contrast"));
-
-        assertThat(subject.getFactorValueHeaders().size(), is(1));
-        assertThat(subject.getFactorValueHeaders().get(0), startsWith("genotype"));
-    }
-
+/*
     @Test
     public void verifyResultsWithRegulationUp() {
-        subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP&displayLevels=true");
+        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 40"));
 
@@ -65,7 +55,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
 
     @Test
     public void verifyResultsWithRegulationDown() {
-        subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=DOWN&displayLevels=true");
+        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=DOWN&displayLevels=true");
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 9"));
 
@@ -81,7 +71,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
 
     @Test
     public void verifyResultsWithRegulationUpDown() {
-        subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
+        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 49"));
 
@@ -94,16 +84,18 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getLastGeneProfile().size(), is(1));
         assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
     }
-
+*/
     @Test
     public void heatmapCellTooltipTest(){
-        subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
+        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
 
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, ExperimentType.DIFFERENTIAL), is("Adjusted P-value"));
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 1, ExperimentType.DIFFERENTIAL), startsWith("Log2-fold"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, ExperimentType.DIFFERENTIAL), is("<10-10"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 1, ExperimentType.DIFFERENTIAL), is("2.73"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(1, 0, ExperimentType.MICROARRAY), is("Adjusted P-value"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(1, 1, ExperimentType.MICROARRAY), is("T-statistic"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(1, 2, ExperimentType.MICROARRAY), startsWith("Log2-fold"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(1, 0, ExperimentType.MICROARRAY), is("8.36 × 10-6"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(1, 1, ExperimentType.MICROARRAY), is("-19.16"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(1, 2, ExperimentType.MICROARRAY), is("-1.56"));
     }
 
 }

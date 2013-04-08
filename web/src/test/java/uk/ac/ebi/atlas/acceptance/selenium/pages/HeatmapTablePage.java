@@ -10,6 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -219,16 +220,24 @@ public class HeatmapTablePage extends TablePage {
         return anatomogram;
     }
 
-    protected WebElement getGeneProfileCell(int profileIndex, int expressionIndex) {
-        return this.getCell(heatmapTable, profileIndex + 1, expressionIndex + 2);
+    protected WebElement getGeneProfileCell(int profileIndex, int expressionIndex, ExperimentType experimentType) {
+        int firstProfileCellPosition;
+        if (ExperimentType.MICROARRAY == experimentType){
+            firstProfileCellPosition = 3;
+        } else {
+            firstProfileCellPosition = 2;
+        }
+
+        return getCell(heatmapTable, profileIndex + 1, expressionIndex + firstProfileCellPosition);
     }
 
     protected WebElement getGeneAnchor(int profileIndex) {
-        return this.getGeneAnchor(heatmapTable, profileIndex + 1);
+        return getGeneAnchor(heatmapTable, profileIndex + 1);
     }
 
-    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedTooltipTableHeaderIndex) {
-        hoverOnElement(getGeneProfileCell(0, 0));
+    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex, ExperimentType experimentType) {
+        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex, experimentType);
+        hoverOnElement(firstGeneProfileCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
@@ -236,8 +245,8 @@ public class HeatmapTablePage extends TablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getDifferentialExperimentTooltipTableCell(int zeroBasedTooltipTableCellIndex) {
-        hoverOnElement(getGeneProfileCell(0, 0));
+    public String getDifferentialExperimentTooltipTableCell(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableCellIndex, ExperimentType experimentType) {
+        hoverOnElement(getGeneProfileCell(0, zeroBasedExpressionLevelIndex, experimentType));
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedTooltipTableCellIndex + 1) + "]");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
