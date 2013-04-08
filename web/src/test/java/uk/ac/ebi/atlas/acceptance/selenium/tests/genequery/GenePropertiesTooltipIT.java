@@ -26,6 +26,8 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
@@ -48,7 +50,8 @@ public class GenePropertiesTooltipIT extends SinglePageSeleniumFixture {
 
         //then
         assertThat(tooltipContent, containsString("ACTL7A"));
-        assertThat(tooltipContent, subject.getGenePropertyTooltipHighlightedTerms(0), hasItems("protein","Actin-like"));
+        List<String> highlightedTerms = subject.getGenePropertyTooltipHighlightedTerms(0);
+        assertThat(highlightedTerms , hasItems("protein","Actin-like"));
 
     }
 

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -21,6 +22,9 @@ public class HeatmapTablePage extends TablePage {
     private static final String DEFAULT_EXPERIMENT_ACCESSION = "E-MTAB-513";
 
     private static final String PAGE_LOCATION = "/gxa/experiments/";
+
+    @FindBy(id = "arrayDesignAccession")
+    private WebElement arrayDesignAccession;
 
     @FindBy(id = "heatmap-table")
     private WebElement heatmapTable;
@@ -52,7 +56,7 @@ public class HeatmapTablePage extends TablePage {
     private String experimentAccession = DEFAULT_EXPERIMENT_ACCESSION;
 
     public HeatmapTablePage(WebDriver driver) {
-        super(driver);
+        this(driver, null);
     }
 
     public HeatmapTablePage(WebDriver driver, String httpParameters) {
@@ -60,10 +64,18 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public HeatmapTablePage(WebDriver driver, String experimentAccession, String httpParameters) {
-        super(driver, httpParameters);
+        this(driver, httpParameters);
         this.experimentAccession = experimentAccession;
     }
 
+    protected int getGeneExpressionStartingRowIndex(){
+        try{
+            driver.findElement(By.id("arrayDesignAccession")).getAttribute("value");
+            return 2; //MicroarrayExperiment, we have two columns before expression level cells
+        } catch(NoSuchElementException e){
+            return 1; //Other experiment types, we have one column before expression level cells
+        }
+    }
 
     protected WebElement getHeatmapTable() {
         return heatmapTable;
@@ -72,7 +84,7 @@ public class HeatmapTablePage extends TablePage {
     public List<String> getFactorValueHeaders() {
         List<String> queryFactorValues = getTableHeaders(heatmapTable);
         //and we need to remove the last header value, because is related to the organism part column
-        return queryFactorValues.subList(1, queryFactorValues.size());
+        return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size());
     }
 
     public List<String> getSelectedGenes() {
@@ -130,18 +142,18 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getFirstGeneProfile() {
         List<String> firstTableRow = getRowValues(heatmapTable, 1);
-        return firstTableRow.subList(1, firstTableRow.size());
+        return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
     }
 
     public List<String> getGeneProfile(int rowIndex) {
         List<String> rowValues = getRowValues(heatmapTable, rowIndex);
-        return rowValues.subList(1, rowValues.size());
+        return rowValues.subList(getGeneExpressionStartingRowIndex(), rowValues.size());
     }
 
 
     public List<String> getLastGeneProfile() {
         List<String> firstTableRow = getLastRowValues(heatmapTable);
-        return firstTableRow.subList(1, firstTableRow.size());
+        return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
     }
 
     public String getGeneCount() {
@@ -164,7 +176,7 @@ public class HeatmapTablePage extends TablePage {
 
     public Boolean areExpressionLevelsHidden() {
         //we get the cell at index 1 because at index 0 we have the gene name
-        WebElement firstExpressionLevelCell = this.getNonEmptyCellsFromFirstTableRow(heatmapTable).get(1);
+        WebElement firstExpressionLevelCell = this.getNonEmptyCellsFromFirstTableRow(heatmapTable).get(getGeneExpressionStartingRowIndex());
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
         return div.getAttribute("class").contains("hide_cell");
     }
@@ -220,15 +232,8 @@ public class HeatmapTablePage extends TablePage {
         return anatomogram;
     }
 
-    protected WebElement getGeneProfileCell(int profileIndex, int expressionIndex, ExperimentType experimentType) {
-        int firstProfileCellPosition;
-        if (ExperimentType.MICROARRAY == experimentType){
-            firstProfileCellPosition = 3;
-        } else {
-            firstProfileCellPosition = 2;
-        }
-
-        return getCell(heatmapTable, profileIndex + 1, expressionIndex + firstProfileCellPosition);
+    protected WebElement getGeneProfileCell(int profileIndex, int expressionIndex) {
+        return getCell(heatmapTable, profileIndex + 1, expressionIndex + getGeneExpressionStartingRowIndex() + 1);
     }
 
     protected WebElement getGeneAnchor(int profileIndex) {
@@ -236,7 +241,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public String getDifferentialExperimentTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex, ExperimentType experimentType) {
-        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex, experimentType);
+        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex);
         hoverOnElement(firstGeneProfileCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
@@ -246,7 +251,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public String getDifferentialExperimentTooltipTableCell(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableCellIndex, ExperimentType experimentType) {
-        hoverOnElement(getGeneProfileCell(0, zeroBasedExpressionLevelIndex, experimentType));
+        hoverOnElement(getGeneProfileCell(0, zeroBasedExpressionLevelIndex));
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedTooltipTableCellIndex + 1) + "]");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
@@ -258,7 +263,7 @@ public class HeatmapTablePage extends TablePage {
         WebElement geneProfileHeaderCell = getGeneAnchor(zeroBasedProfileIndex);
         hoverOnElement(geneProfileHeaderCell);
 
-        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']");
+        By byTooltipClass = By.className("genename-tooltip");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
@@ -269,7 +274,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnElement(geneProfileHeaderCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='highlight']");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        WebDriverWait wait = new WebDriverWait(driver, 3L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         List<WebElement> highlightedTermElements = driver.findElements(byTooltipClass);
         List<String> highlightedTerms = Lists.newArrayList();
