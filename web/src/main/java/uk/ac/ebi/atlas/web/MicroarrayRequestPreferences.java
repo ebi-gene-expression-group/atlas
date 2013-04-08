@@ -23,7 +23,9 @@
 package uk.ac.ebi.atlas.web;
 
 
-public class MicroarrayRequestPreferences extends DifferentialRequestPreferences{
+import com.google.common.base.Objects;
+
+public class MicroarrayRequestPreferences extends DifferentialRequestPreferences {
 
     private String arrayDesignAccession;
 
@@ -31,9 +33,14 @@ public class MicroarrayRequestPreferences extends DifferentialRequestPreferences
         return arrayDesignAccession;
     }
 
-    public void setArrayDesignName(String arrayDesignAccession) {
+    public void setArrayDesignAccession(String arrayDesignAccession) {
         this.arrayDesignAccession = arrayDesignAccession;
     }
 
-
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(super.toString())
+                .add("arrayDesignAccession", arrayDesignAccession)
+                .toString();
+    }
 }

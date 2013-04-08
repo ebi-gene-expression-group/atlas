@@ -46,9 +46,9 @@ public class MicroarrayQueryPageController extends DifferentialQueryPageRequestH
         super(requestContextBuilder, rankMicroarrayProfilesCommand);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=MICROARRAY"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
-                                        , BindingResult result, Model model, HttpServletRequest request) {
+            , BindingResult result, Model model, HttpServletRequest request) {
 
         return super.showGeneProfiles(preferences, result, model, request);
 
@@ -57,8 +57,8 @@ public class MicroarrayQueryPageController extends DifferentialQueryPageRequestH
     @Override
     protected void initExtraRequestPreferences(MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
         //      if there is only one array design we want to preselect it...
-        if(experiment.getArrayDesignAccessions().size() == 1){
-            requestPreferences.setArrayDesignName(experiment.getArrayDesignAccessions().first());
+        if (experiment.getArrayDesignAccessions().size() == 1) {
+            requestPreferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
         }
     }
 
