@@ -21,17 +21,18 @@ var experimentDesignTableModule = (function ($) {
             ++startingFromColumnIndex;
 
         }
-        aoColumnDefs[startingFromColumnIndex-1].sClass = "center bb br";
+        aoColumnDefs[startingFromColumnIndex - 1].sClass = "center bb br";
     }
 
     /* populate all sub categories */
     function initColumnDefs() {
         var aoColumnDefs = [];
-        for (var i = 0; i < _assayHeaders.length; i++){
-            aoColumnDefs[i] = { "sClass":"assays bb", "sTitle":_assayHeaders[i] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ i ]};
+        if (_assayHeaders.length === 1) {
+            aoColumnDefs[0] = { "sClass":"assays bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
+        } else {
+            aoColumnDefs[0] = { "sClass":"assays bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[1] = { "sClass":"assays bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
         }
-        aoColumnDefs[0].sClass = "assays bb bl";
-        aoColumnDefs[i-1].sClass = "assays bb br";
 
         initColumns(aoColumnDefs, _sampleHeaders, _assayHeaders.length);
 
@@ -55,7 +56,7 @@ var experimentDesignTableModule = (function ($) {
         /* Custom filtering function which will filter analysed runs */
         $.fn.dataTableExt.afnFiltering.push(
             function (oSettings, aData, iDataIndex) {
-                var showAllRuns = ! $('#showOnlyAnalysedRuns').is(':checked');
+                var showAllRuns = !$('#showOnlyAnalysedRuns').is(':checked');
                 var runAccession = aData[0];
                 if (showAllRuns || jQuery.inArray(runAccession, _runAccessions) > -1) {
                     return true;

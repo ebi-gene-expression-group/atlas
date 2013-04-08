@@ -1,4 +1,4 @@
-Assay	Sample Characteristics[biosource provider]	Sample Characteristics[developmental stage]	Sample Characteristics[genotype]	Sample Characteristics[organism]	Factor Values[organism part]	Sample Characteristics[strain or line]
+Run	Sample Characteristics[biosource provider]	Sample Characteristics[developmental stage]	Sample Characteristics[genotype]	Sample Characteristics[organism]	Factor Values[organism part]	Sample Characteristics[strain or line]
 ERR032217	Jackson laboratory	adult	wild type	Mus musculus	thymus	DBAxC57BL/6J
 ERR032212	Jackson laboratory	adult	wild type	Mus musculus	spleen	DBAxC57BL/6J
 ERR032227	Jackson laboratory	adult	wild type	Mus musculus	heart	DBAxC57BL/6J
