@@ -44,13 +44,13 @@ var genePropertiesTooltipModule = (function($) {
 
     function getWords(geneQuery){
         var words = [];
-        geneQuery.replace(/"([^"]*)"|(\S+)/g,
+
+        queryString.replace(/"([^"]*)"|(\S+)/g,
             function(m,g1,g2){
                 if (g1 || g2){
                     words.push(g1 || g2);
                 }
             });
-        return words;
     }
 
     function initTooltip(queryString){
@@ -80,13 +80,6 @@ var genePropertiesTooltipModule = (function($) {
 
                         if(queryString){
                             var words = [];
-                            queryString.replace(/"([^"]*)"|(\S+)/g,
-                                function(m,g1,g2){
-                                    if (g1 || g2){
-                                        words.push(g1 || g2);
-                                    }
-                                });
-
                             $(this).highlight(getWords(queryString));
 
                         }
