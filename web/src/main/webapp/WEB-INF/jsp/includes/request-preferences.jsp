@@ -30,9 +30,11 @@
         <form:hidden path="serializedFilterFactors"/>
         <form:hidden path="queryFactorType"/>
         <form:hidden path="heatmapMatrixSize"/>
-        <form:hidden path="arrayDesignAccession"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
+        <c:if test="${type == 'MICROARRAY'}">
+            <form:hidden path="arrayDesignAccession"/>
+        </c:if>
 
         <form:errors path="*" cssClass="error"/>
         <table class="form-grid">

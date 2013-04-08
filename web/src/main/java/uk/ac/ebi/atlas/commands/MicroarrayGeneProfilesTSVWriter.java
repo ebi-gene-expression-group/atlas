@@ -65,7 +65,7 @@ public class MicroarrayGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Micro
             if (expression != null) {
                 expressionLevels[i++] = getValueToString(expression.getLevel());
                 expressionLevels[i++] = getValueToString(expression.getFoldChange());
-                expressionLevels[i++] = getValueToString(expression.getTStatistic());
+                expressionLevels[i++] = getValueToString(expression.getTstatistic());
             } else {
                 expressionLevels[i++] = "NA";
                 expressionLevels[i++] = "NA";
