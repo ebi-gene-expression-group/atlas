@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.download;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
@@ -18,7 +18,7 @@ import java.util.SortedSet;
 public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<RnaSeqProfile, Contrast> {
 
     @Inject
-    protected DifferentialGeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
+    public DifferentialGeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
         super(numberUtils, geneNamesProvider);
     }
 

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.download;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
@@ -40,7 +40,7 @@ import java.util.SortedSet;
 public class MicroarrayGeneProfilesTSVWriter extends GeneProfilesTSVWriter<MicroarrayProfile, Contrast> {
 
     @Inject
-    protected MicroarrayGeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
+    public MicroarrayGeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
         super(numberUtils, geneNamesProvider);
     }
 

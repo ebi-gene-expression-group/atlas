@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
@@ -17,7 +17,7 @@ import java.util.SortedSet;
 public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor> {
 
     @Inject
-    protected BaselineProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
+    public BaselineProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
         super(numberUtils, geneNamesProvider);
     }
 

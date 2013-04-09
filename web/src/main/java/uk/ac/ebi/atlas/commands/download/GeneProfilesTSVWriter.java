@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
@@ -45,12 +45,12 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     private GeneNamesProvider geneNamesProvider;
 
     @Inject
-    protected GeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
+    public GeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
         this.numberUtils = numberUtils;
         this.geneNamesProvider = geneNamesProvider;
     }
 
-    protected Long apply(ObjectInputStream<T> inputStream, SortedSet<K> conditions) throws IOException {
+    public Long apply(ObjectInputStream<T> inputStream, SortedSet<K> conditions) throws IOException {
         long count = 0;
 
         csvWriter.writeNext(buildCsvHeaders(conditions));

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;

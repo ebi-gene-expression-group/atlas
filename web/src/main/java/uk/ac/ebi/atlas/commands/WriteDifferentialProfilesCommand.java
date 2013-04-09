@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.commands.download.DifferentialGeneProfilesTSVWriter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
