@@ -72,12 +72,18 @@ public class AnnotationLoaderController {
     @RequestMapping("/updateDesignElements")
     @ResponseBody
     public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign) {
-    //ToDo: maybe create Command similar to GeneNamesImportCommand
+        //ToDo: maybe create Command similar to GeneNamesImportCommand
         designElementLoader.loadMappings(arrayDesign);
 
         return "Updated";
     }
 
+    @RequestMapping("/updateAllArrayDesigns")
+    @ResponseBody
+    public String updateAllArrayDesigns() {
+        designElementLoader.loadMappings(applicationProperties.getArrayDesignAccessions());
+        return "Updated";
+    }
 }
 
 

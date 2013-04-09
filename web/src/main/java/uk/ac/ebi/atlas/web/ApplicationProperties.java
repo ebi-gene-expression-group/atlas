@@ -80,6 +80,10 @@ public class ApplicationProperties {
         return getStringValues("biomart.dataset.names");
     }
 
+    public Set<String> getArrayDesignAccessions() {
+        return getStringValues("arraydesign.accessions");
+    }
+
     private HashSet<String> getStringValues(String propertyKey) {
         return Sets.newHashSet(configurationProperties.getProperty(propertyKey).trim().split(","));
     }
