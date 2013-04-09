@@ -56,7 +56,7 @@
                     </display:column>
 
                     <c:if test="${type eq 'MICROARRAY'}">
-                        <display:column title="">
+                        <display:column title="" class="design-element">
                             ${geneProfile.designElementName}
                         </display:column>
                     </c:if>

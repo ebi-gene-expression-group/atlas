@@ -79,13 +79,6 @@ var genePropertiesTooltipModule = (function($) {
                         }
 
                         if(queryString){
-                            var words = [];
-                            queryString.replace(/"([^"]*)"|(\S+)/g,
-                                function(m,g1,g2){
-                                    if (g1 || g2){
-                                        words.push(g1 || g2);
-                                    }
-                                });
 
                             $(this).highlight(getWords(queryString));
 

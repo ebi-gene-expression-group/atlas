@@ -60,7 +60,7 @@ public class ExperimentDesignTablePage extends TablePage {
     private WebElement thirdColumnHeader;
 
     public ExperimentDesignTablePage(WebDriver driver) {
-        super(driver);
+        this(driver, null);
     }
 
     public ExperimentDesignTablePage(WebDriver driver, String httpParameters) {
