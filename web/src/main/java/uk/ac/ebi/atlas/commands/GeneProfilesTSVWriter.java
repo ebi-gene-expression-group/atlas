@@ -69,14 +69,22 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
 
     protected String[] buildCsvHeaders(SortedSet<K> factorValues) {
         List<String> columnNames = buildColumnNames(factorValues);
-        return buildCsvRow(new String[]{"Gene name", "Gene Id"}, columnNames.toArray(new String[columnNames.size()]));
+        return buildCsvRow(new String[]{"Gene name", getSecondColumnName()}, columnNames.toArray(new String[columnNames.size()]));
+    }
+
+    protected String getSecondColumnName() {
+        return "Gene Id";
     }
 
     protected String[] buildCsvRow(final T geneProfile, SortedSet<K> factors) {
         String[] expressionLevels = buildExpressionsRow(geneProfile, factors);
 
         String geneId = geneProfile.getGeneId();
-        return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), geneId}, expressionLevels);
+        return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), getSecondColumnValue(geneProfile)}, expressionLevels);
+    }
+
+    protected String getSecondColumnValue(T geneProfile) {
+        return geneProfile.getGeneId();
     }
 
     protected abstract List<String> buildColumnNames(SortedSet<K> conditionNames);

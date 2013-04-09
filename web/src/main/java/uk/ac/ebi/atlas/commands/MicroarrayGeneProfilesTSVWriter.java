@@ -82,4 +82,13 @@ public class MicroarrayGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Micro
         return Double.toString(value);
     }
 
+    @Override
+    protected String getSecondColumnName() {
+        return "Design Element";
+    }
+
+    @Override
+    protected String getSecondColumnValue(MicroarrayProfile geneProfile) {
+        return geneProfile.getDesignElementName();
+    }
 }
