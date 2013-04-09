@@ -40,7 +40,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
     public void verifyResultsWithRegulationUp() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 74"));
+        assertThat(subject.getGeneCount(), containsString("of 72"));
 
         assertThat(subject.getSelectedGenes().size(), is(50));
         assertThat(subject.getSelectedGenes().subList(0, 3), contains("Irc", "CG8303", "Ykt6"));
@@ -50,15 +50,33 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getGeneProfile(1).get(1), is("4.32 × 10-4"));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("0.002"));
-        assertThat(subject.getLastGeneProfile().get(1), is("0.003"));
+        assertThat(subject.getLastGeneProfile().get(0), is("0.004"));
+        assertThat(subject.getLastGeneProfile().get(1), is("6.23 × 10-4"));
     }
 
     @Test
     public void verifyResultsWithRegulationDown() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=DOWN&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 113"));
+        assertThat(subject.getGeneCount(), containsString("of 104"));
+
+        assertThat(subject.getSelectedGenes().size(), is(50));
+        assertThat(subject.getSelectedGenes().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
+
+        assertThat(subject.getGeneProfile(1).size(), is(2));
+        assertThat(subject.getGeneProfile(1).get(0), is(""));
+        assertThat(subject.getGeneProfile(1).get(1), is("8.36" + " \u00D7 " + "10-6"));
+
+        assertThat(subject.getLastGeneProfile().size(), is(2));
+        assertThat(subject.getLastGeneProfile().get(0), is("0.043"));
+        assertThat(subject.getLastGeneProfile().get(1), is(""));
+    }
+
+    @Test
+    public void verifyResultsWithRegulationUpDown() {
+        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
+        subject.get();
+        assertThat(subject.getGeneCount(), containsString("of 175"));
 
         assertThat(subject.getSelectedGenes().size(), is(50));
         assertThat(subject.getSelectedGenes().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
@@ -69,29 +87,11 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
         assertThat(subject.getLastGeneProfile().get(0), is(""));
-        assertThat(subject.getLastGeneProfile().get(1), is("0.04"));
+        assertThat(subject.getLastGeneProfile().get(1), is("0.022"));
     }
 
     @Test
-    public void verifyResultsWithRegulationUpDown() {
-        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
-        subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 186"));
-
-        assertThat(subject.getSelectedGenes().size(), is(50));
-        assertThat(subject.getSelectedGenes().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
-
-        assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is(""));
-        assertThat(subject.getGeneProfile(1).get(1), is("8.36" + " \u00D7 " + "10-6"));
-
-        assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("0.022"));
-        assertThat(subject.getLastGeneProfile().get(1), is(""));
-    }
-
-    @Test
-    public void heatmapCellTooltipTest(){
+    public void heatmapCellTooltipTest() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
 

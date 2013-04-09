@@ -78,7 +78,7 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, greaterThan(170));
+        assertThat(lines.length, is(176));
     }
 
 }
