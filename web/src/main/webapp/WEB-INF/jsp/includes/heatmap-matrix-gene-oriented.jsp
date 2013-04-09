@@ -37,8 +37,8 @@
                     <display:column
                             title="
                                 <div class='heatmap-matrix-top-left-corner'>
-                                <span id='tooltip-span' style='display:block;position:absolute;top:0%;margin:5px' data-help-loc='#heatMapTableCellInfo'></span>
-                                <button style='margin-top:38%;margin-left:5px;margin-right:5px;' id='display-levels' />
+                                <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
+                                <button id='display-levels' />
                                     <label for='display-levels'>Display levels</label>
                                 </button>
                                 </div>"
@@ -49,7 +49,6 @@
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                             <fmt:param value="${geneId}"/>
                         </fmt:message>
-
 
                         <a class="genename" id="${geneId}" href='${genePageURL}' target='_blank'
                            title="">${geneNamesProvider.getGeneName(geneId)}</a>
@@ -174,6 +173,17 @@
         src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
 
 <script type="text/javascript">
+
+    //add custom header cells
+    $($("#heatmap-table thead")).append("<tr><td class='header-cell'>Gene</td>${type == 'MICROARRAY' ? "<td class='header-cell'>Design Element</td>" : "" }</tr>");
+
+    <c:if test="${type == 'MICROARRAY'}">
+        $("#heatmap-table thead tr th:eq(1)").remove();
+        $("#heatmap-table thead tr th:eq(0)").attr("colspan",2)
+    </c:if>
+
+    //add rowspan to factor headers
+    $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
 
     genePropertiesTooltipModule.init('${preferences.geneQuery}');
 

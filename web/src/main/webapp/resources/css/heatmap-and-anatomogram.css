@@ -59,8 +59,21 @@
 .heatmap-matrix-top-left-corner {
     position: relative;
     display: table;
-    height: 100%;
+    height: 90px;
     width: 100%;
+}
+
+#display-levels {
+    margin-top:30px;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+#tooltip-span {
+    display:block;
+    position:absolute;
+    top:0%;
+    margin:5px;
 }
 
 .pvalue-tooltip-styling {
