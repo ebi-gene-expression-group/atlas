@@ -31,7 +31,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.download.AnalyticsDataWriter;
 import uk.ac.ebi.atlas.commands.download.DifferentialExperimentFullDataWriter;
+import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -52,6 +54,7 @@ public class DifferentialPageDownloadController {
     private WriteDifferentialProfilesCommand writeGeneProfilesCommand;
 
     private DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter;
+    private AnalyticsDataWriter analyticsDataWriter;
 
     @Value("#{configuration['diff.experiment.raw-counts.path.template']}")
     private String differentialExperimentRawCountsFileUrlTemplate;
@@ -61,11 +64,12 @@ public class DifferentialPageDownloadController {
 
     @Inject
     public DifferentialPageDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand, DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter) {
+            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand, DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter, AnalyticsDataWriter analyticsDataWriter) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
         this.differentialExperimentFullDataWriter = differentialExperimentFullDataWriter;
+        this.analyticsDataWriter = analyticsDataWriter;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
@@ -101,31 +105,34 @@ public class DifferentialPageDownloadController {
 
     @RequestMapping(value = "/experiments/{experimentAccession}/raw-counts.tsv", params = "type=DIFFERENTIAL")
     public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        writeAllData(request, response, "-raw-counts.tsv", differentialExperimentRawCountsFileUrlTemplate);
+        differentialExperimentFullDataWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
+        writeAllData(response, experiment.getAccession(), differentialExperimentFullDataWriter, "-raw-counts.tsv");
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=DIFFERENTIAL")
     public void downloadAllAnalytics(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        writeAllData(request, response, "-all-analytics.tsv", differentialExperimentAnalyticsFileUrlTemplate);
+        analyticsDataWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
+        analyticsDataWriter.setExperiment(experiment);
+        writeAllData(response, experiment.getAccession(), analyticsDataWriter, "-all-analytics.tsv");
 
     }
 
-    private void writeAllData(HttpServletRequest request,
-                              HttpServletResponse response,
-                              String fileExtension,
-                               String fileUrlTemplate) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    private void writeAllData(HttpServletResponse response,
+                              String experimentAccession,
+                              ExpressionsWriter writer,
+                              String fileExtension) throws IOException {
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + fileExtension + "\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + "\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
-        differentialExperimentFullDataWriter.setResponseWriter(response.getWriter());
-        differentialExperimentFullDataWriter.setFileUrlTemplate(fileUrlTemplate);
+        writer.setResponseWriter(response.getWriter());
 
-        long genesCount = differentialExperimentFullDataWriter.write(experiment.getAccession());
+        long genesCount = writer.write(experimentAccession);
         LOGGER.info("<download" + fileExtension + "> streamed " + genesCount + " gene expression profiles");
     }
 }

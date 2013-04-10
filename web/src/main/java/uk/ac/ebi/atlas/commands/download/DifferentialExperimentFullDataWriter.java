@@ -14,7 +14,7 @@ public class DifferentialExperimentFullDataWriter extends ExpressionsWriter {
     public static final String GENE_ID = "Gene Id";
 
     @Inject
-    public DifferentialExperimentFullDataWriter(GeneNamesProvider geneNamesProvider, CsvReaderBuilder csvReaderBuilder) {
+    public DifferentialExperimentFullDataWriter(CsvReaderBuilder csvReaderBuilder, GeneNamesProvider geneNamesProvider) {
         super(csvReaderBuilder, geneNamesProvider);
     }
 

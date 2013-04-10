@@ -46,7 +46,7 @@ public class RnaSeqRawCountsWriterTest {
 
         when(geneNamesProviderMock.getGeneName("ens1")).thenReturn("name1");
 
-        subject = new DifferentialExperimentFullDataWriter(geneNamesProviderMock, csvReaderBuilderMock);
+        subject = new DifferentialExperimentFullDataWriter(csvReaderBuilderMock, geneNamesProviderMock);
         subject.setResponseWriter(printWriterMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
     }
