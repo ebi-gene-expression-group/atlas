@@ -96,7 +96,7 @@
                                value="${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div tableHeaderCell data-organism-part=\"${columnHeader}\" class=\"rotate_text\" title=\"${columnHeader}\"></div>"
+                                title="<div data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
                                 headerClass='rotated_cell'
                                 style="${style}">
 
@@ -149,7 +149,6 @@
                 <div style="float:left">
                     <!--
                      <button id="download-profiles" class="button-image" value="D"></button>
-
                     -->
                     <a id="download-profiles-link"
                        title="Top 50 genes displayed on page. Download results to see the rest." href="${downloadUrl}"
@@ -179,6 +178,8 @@
     initHeatmapDisplayValueToggle();
 
     initHeatmapCustomHeaders(${type == 'MICROARRAY'});
+
+    initMAPlotButtons(${preferences.cutoff == '0.05' && empty preferences.geneQuery});
 
     genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
