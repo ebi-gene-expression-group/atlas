@@ -42,18 +42,11 @@ import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBufferBuilder
 import uk.ac.ebi.atlas.streams.differential.RnaSeqProfilesInputStream;
 import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsBufferBuilder;
 import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfilesInputStream;
+import uk.ac.ebi.atlas.utils.CsvReaderBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.MessageFormat;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named("geneProfilesInputStreamBuilder")
 @Scope("prototype")
@@ -78,15 +71,16 @@ public class InputStreamFactory {
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
     private DesignElementMappingProvider designElementMappingProvider;
 
+    private CsvReaderBuilder csvReaderBuilder;
 
     @Inject
     public InputStreamFactory(BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder,
-                                DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder,
-                                MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder,
-                                BaselineProfileBuilder baselineProfileBuilder,
-                                MicroarrayProfileBuilder microarrayProfileBuilder,
-                                RnaSeqProfileBuilder rnaSeqProfileBuilder,
-                                DesignElementMappingProvider designElementMappingProvider) {
+                              DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder,
+                              MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder,
+                              BaselineProfileBuilder baselineProfileBuilder,
+                              MicroarrayProfileBuilder microarrayProfileBuilder,
+                              RnaSeqProfileBuilder rnaSeqProfileBuilder,
+                              DesignElementMappingProvider designElementMappingProvider, CsvReaderBuilder csvReaderBuilder) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.differentialExpressionsBufferBuilder = differentialExpressionsBufferBuilder;
         this.microarrayExpressionsBufferBuilder = microarrayExpressionsBufferBuilder;
@@ -95,40 +89,31 @@ public class InputStreamFactory {
         this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
 
         this.designElementMappingProvider = designElementMappingProvider;
+        this.csvReaderBuilder = csvReaderBuilder;
     }
 
-    CSVReader buildCsvReader(String tsvFileURL) {
-        try {
-            Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileURL));
-            Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
-            return new CSVReader(dataFileReader, '\t');
-         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error while building GeneProfileInputStream.", e);
-        }
-    }
 
     public ObjectInputStream<BaselineProfile> createBaselineProfileInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
-        CSVReader csvReader = buildCsvReader(tsvFileURL);
+        CSVReader csvReader = csvReaderBuilder.buildCsvReader(tsvFileURL);
         return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, baselineProfileBuilder);
     }
 
     public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
-        CSVReader csvReader = buildCsvReader(tsvFileURL);
+        CSVReader csvReader = csvReaderBuilder.buildCsvReader(tsvFileURL);
         return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder);
     }
 
     public ObjectInputStream<RnaSeqProfile> createDifferentialProfileInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(differentialExperimentDataFileUrlTemplate, experimentAccession);
-        CSVReader csvReader = buildCsvReader(tsvFileURL);
+        CSVReader csvReader = csvReaderBuilder.buildCsvReader(tsvFileURL);
         return new RnaSeqProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, rnaSeqProfileBuilder);
     }
 
     public ObjectInputStream<MicroarrayProfile> createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
         String tsvFileURL = MessageFormat.format(microarrayExperimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
-        CSVReader csvReader = buildCsvReader(tsvFileURL);
+        CSVReader csvReader = csvReaderBuilder.buildCsvReader(tsvFileURL);
         return new MicroarrayProfilesInputStream(csvReader, experimentAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder, designElementMappingProvider, arrayDesignAccession);
     }
 

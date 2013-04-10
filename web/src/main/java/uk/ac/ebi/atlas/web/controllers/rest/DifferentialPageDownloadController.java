@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.download.DifferentialExperimentFullDataWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -49,12 +51,18 @@ public class DifferentialPageDownloadController {
 
     private WriteDifferentialProfilesCommand writeGeneProfilesCommand;
 
+    private DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter;
+
+    @Value("#{configuration['diff.experiment.row-counts.path.template']}")
+    private String differentialExperimentRowCountsFileUrlTemplate;
+
     @Inject
     public DifferentialPageDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand) {
+            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand, DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
+        this.differentialExperimentFullDataWriter = differentialExperimentFullDataWriter;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
@@ -86,7 +94,27 @@ public class DifferentialPageDownloadController {
             LOGGER.info("<downloadGeneProfiles> no genes found");
         }
 
-
     }
 
+    @RequestMapping(value = "/experiments/{experimentAccession}-raw-counts.tsv", params = "type=DIFFERENTIAL")
+    public void downloadRowCounts(HttpServletRequest request
+            , @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
+            , HttpServletResponse response) throws IOException {
+
+        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+
+        LOGGER.info("<downloadRowCounts> received download request for requestPreferences: " + preferences);
+
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-row-counts.tsv\"");
+
+        response.setContentType("text/plain; charset=utf-8");
+
+        differentialExperimentFullDataWriter.setResponseWriter(response.getWriter());
+        differentialExperimentFullDataWriter.setFileUrlTemplate(differentialExperimentRowCountsFileUrlTemplate);
+
+        long genesCount = differentialExperimentFullDataWriter.write(experiment.getAccession());
+        LOGGER.info("<downloadRowCounts> streamed " + genesCount + "gene expression profiles");
+
+    }
 }

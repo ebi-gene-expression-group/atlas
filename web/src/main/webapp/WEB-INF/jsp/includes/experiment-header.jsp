@@ -86,7 +86,7 @@
                     <c:if test="${type eq 'DIFFERENTIAL'}">
                         <td>
                             <a id="download-raw" class="button-image" title="Download all raw counts for the experiment"
-                               href="#">
+                               href="${rowDownloadUrl}">
                                 <img src="resources/images/download_blue_small_raw.png"/></a>
                         </td>
                     </c:if>

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.base.Joiner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -43,6 +44,7 @@ import java.util.SortedSet;
 
 public abstract class DifferentialQueryPageRequestHandling<T extends DifferentialExperiment, K extends DifferentialRequestPreferences> {
 
+    private static final String TSV_RAW_FILE_EXTENSION = "-raw-counts.tsv" ;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private RankProfilesCommand<GeneProfilesList, GeneProfile> rankProfilesCommand;
 
@@ -81,6 +83,8 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
 
                 model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
 
+                model.addAttribute("rowDownloadUrl", buildDownloadRowUrl(request));
+
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery() + "'"));
@@ -107,6 +111,11 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
         return differentialRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences).build();
 
+    }
+
+    private String buildDownloadRowUrl(HttpServletRequest request) {
+        return Joiner.on("?").skipNulls()
+                        .join(new String[]{request.getRequestURI() + TSV_RAW_FILE_EXTENSION}).toString();
     }
 
 }
