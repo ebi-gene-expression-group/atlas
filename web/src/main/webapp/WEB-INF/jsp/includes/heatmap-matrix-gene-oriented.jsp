@@ -174,24 +174,23 @@
         src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
 <script type="text/javascript">
+    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+        $(document).ready(function () {
 
-    var isMicroarray = ${type == 'MICROARRAY'};
+            genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
-    initHeatmapDisplayValueToggle();
+            initHeatmapDisplayValueToggle();
 
-    initHeatmapCustomHeaders(isMicroarray);
+            var isMicroarray = ${type == "MICROARRAY"};
 
-    var isDefaultPreferences = ${preferences.cutoff == '0.05' && empty preferences.geneQuery};
+            initHeatmapCustomHeaders(isMicroarray);
 
-    if(isMicroarray){
+            var isDefaultPreferences = ${preferences.cutoff == '0.05' && empty preferences.geneQuery};
 
-        initMaPlotButtons(isDefaultPreferences, '${experimentAccession}', '${preferences.arrayDesignAccession}');
+            var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
 
-    } else {
+            initMaPlotButtons(isDefaultPreferences, '${experimentAccession}', arrayDesignAccession);
 
-        initMaPlotButtons(isDefaultPreferences, ${experimentAccession});
-
-    }
-    genePropertiesTooltipModule.init('${preferences.geneQuery}');
-
+        });
+    })(jQuery);
 </script>

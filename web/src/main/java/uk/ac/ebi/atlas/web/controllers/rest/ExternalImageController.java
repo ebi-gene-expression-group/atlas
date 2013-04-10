@@ -63,11 +63,12 @@ public class ExternalImageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{contrastName}/MaPlot.png")
+    @RequestMapping(value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{contrastName}/ma-plot.png")
     public void streamMicroarrayMaPlotImage(HttpServletResponse response, @PathVariable String experimentAccession,
                          @PathVariable String arrayDesignAccession, @PathVariable String contrastName){
 
         String microarrayMaPlotImageLocation = MessageFormat.format(microarrayPathTemplate, experimentAccession,
+                                                                    arrayDesignAccession,
                                                                     contrastName);
 
         streamExternalImage(response, microarrayMaPlotImageLocation);
@@ -75,7 +76,7 @@ public class ExternalImageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/MaPlot.png")
+    @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/ma-plot.png")
     public void streamRnaSeqMaPlotImage(HttpServletResponse response, @PathVariable String experimentAccession
                                         , @PathVariable String contrastName){
 
@@ -89,7 +90,6 @@ public class ExternalImageController {
 
     protected void streamExternalImage(HttpServletResponse response, String extraInfoFileLocation) {
         try{
-
 
             File extraInfoFile = new File(extraInfoFileLocation);
             BufferedImage image = ImageIO.read(extraInfoFile);

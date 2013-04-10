@@ -31,7 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-public class ExperimentExtraInfoControllerIT {
+public class ExternalImageControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-26284";
 
