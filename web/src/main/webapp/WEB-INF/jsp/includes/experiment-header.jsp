@@ -20,9 +20,9 @@
                  beforeLoad: function(){
                  this.title = "Look at this marvelous title... yes this is the title";
                  },*/
-                padding: 0,
-                openEffect: 'elastic',
-                closeEffect: 'elastic'
+                padding:0,
+                openEffect:'elastic',
+                closeEffect:'elastic'
             });
 
         });
@@ -58,7 +58,8 @@
                 <div>Array Design(s):
                     <c:forEach items="${allArrayDesigns}" var="arrayDesign">
                         <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
-                           href="http://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesign}" target='_blank'>${arrayDesign}</a>
+                           href="http://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesign}"
+                           target='_blank'>${arrayDesign}</a>
                     </c:forEach>
                 </div>
             </c:if>
@@ -82,6 +83,29 @@
                            title="Experiment Design" href="experiments/${experimentAccession}/experiment-design">
                             <img src="resources/images/experiment_design_icon.png"/></a>
                     </td>
+                    <c:if test="${type eq 'DIFFERENTIAL'}">
+                        <td>
+                            <a id="download-raw" class="button-image" title="Download all raw counts for the experiment"
+                               href="#">
+                                <img src="resources/images/download_blue_small_raw.png"/></a>
+                        </td>
+                    </c:if>
+                    <c:if test="${type eq 'MICROARRAY'}">
+                        <td>
+                            <a id="download-normalized" class="button-image"
+                               title="Download all normalized expressions for the experiment"
+                               href="#">
+                                <img src="resources/images/download_blue_small_normalized.png"/></a>
+                        </td>
+                    </c:if>
+                    <c:if test="${type != 'BASELINE'}">
+                        <td>
+                            <a id="download-analytics" class="button-image"
+                               title="Download all analytics for the experiment"
+                               href="#">
+                                <img src="resources/images/download_blue_small_analytics.png"/></a>
+                        </td>
+                    </c:if>
                 </tr>
             </table>
         </td>
