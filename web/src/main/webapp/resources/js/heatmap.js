@@ -158,14 +158,39 @@ function initHeatmapCustomHeaders(isMicroarray){
     $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
 }
 
-function initMAPlotButtons(areButtonsEnabled){
+function initMaPlotButtons(areButtonsEnabled, experimentAccession, arrayDesignAccession){
     "use strict";
     if (areButtonsEnabled){
-        var thElement = $(".factor-header").parent();
-        thElement.css("width","60px");
-        $(".factor-header").css("float","left");
-        $(".factor-header").css("top","38px");
-        thElement.append("<a href='' class='ma-button button-image' title='Click to view MA plot for the contrast across all genes'><img src='resources/images/maplot-button.png'/></a>");
+        var thElements = $(".factor-header").parent();
+        thElements.css("width","60px");
+        $(".factor-header").css("transform-origin");
+        $(".factor-header").css("top","57px");
+
+
+        $(thElements).each(function(){
+            var contrastName = $(this).children().attr("data-contrast-name");
+
+            var maPlotURL = 'external-resources/' + experimentAccession + '/' + (arrayDesignAccession !== null ? arrayDesignAccession + '/' : '' ) + contrastName + '/ma-plot.png';
+            //append a button div now
+            $(this).append("<div style='text-align:right;padding-right:3px'><a href='" + maPlotURL + "' class='ma-button button-image' title='Click to view MA plot for the contrast across all genes'><img src='resources/images/maplot-button.png'/></a></div>");
+
+        });
+
         $(".ma-button").tooltip().button();
+
+        // Add fancyBox
+
+        $(".ma-button").fancybox({
+            /*
+             beforeLoad: function(){
+             this.title = "Look at this marvelous title... yes this is the title";
+             },*/
+            padding:0,
+            openEffect:'elastic',
+            closeEffect:'elastic'
+        });
+
+
+
     }
 }

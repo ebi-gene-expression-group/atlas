@@ -96,7 +96,7 @@
                                value="${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
+                                title="<div ${type != 'BASELINE' ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''} data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
                                 headerClass='rotated_cell'
                                 style="${style}">
 
@@ -174,13 +174,23 @@
         src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
 <script type="text/javascript">
+    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+        $(document).ready(function () {
 
-    initHeatmapDisplayValueToggle();
+            genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
-    initHeatmapCustomHeaders(${type == 'MICROARRAY'});
+            initHeatmapDisplayValueToggle();
 
-    initMAPlotButtons(${preferences.cutoff == '0.05' && empty preferences.geneQuery});
+            var isMicroarray = ${type == "MICROARRAY"};
 
-    genePropertiesTooltipModule.init('${preferences.geneQuery}');
+            initHeatmapCustomHeaders(isMicroarray);
 
+            var isDefaultPreferences = ${preferences.cutoff == '0.05' && empty preferences.geneQuery};
+
+            var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
+
+            initMaPlotButtons(isDefaultPreferences, '${experimentAccession}', arrayDesignAccession);
+
+        });
+    })(jQuery);
 </script>

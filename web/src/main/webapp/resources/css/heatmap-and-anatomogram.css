@@ -59,12 +59,12 @@
 .heatmap-matrix-top-left-corner {
     position: relative;
     display: table;
-    height: 90px;
+    height: 110px;
     width: 100%;
 }
 
 #display-levels {
-    margin-top:30px;
+    margin-top:40px;
     margin-left:5px;
     margin-right:5px;
 }
