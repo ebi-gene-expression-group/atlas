@@ -44,6 +44,8 @@ import java.util.SortedSet;
 public abstract class DifferentialQueryPageRequestHandling<T extends DifferentialExperiment, K extends DifferentialRequestPreferences> {
 
     private static final String TSV_RAW_FILE_EXTENSION = "/raw-counts.tsv";
+    private static final String TSV_ANALYTICS_FILE_EXTENSION = "/all-analytics.tsv";
+
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private RankProfilesCommand<GeneProfilesList, GeneProfile> rankProfilesCommand;
 
@@ -84,6 +86,8 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
 
                 model.addAttribute("rawDownloadUrl", buildDownloadRawUrl(request));
 
+                model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
+
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery() + "'"));
@@ -114,6 +118,10 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
 
     private String buildDownloadRawUrl(HttpServletRequest request) {
         return request.getRequestURI() + TSV_RAW_FILE_EXTENSION;
+    }
+
+    private String buildDownloadAllAnalyticsUrl(HttpServletRequest request) {
+        return request.getRequestURI() + TSV_ANALYTICS_FILE_EXTENSION;
     }
 
 }

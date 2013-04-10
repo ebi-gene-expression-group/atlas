@@ -56,6 +56,9 @@ public class DifferentialPageDownloadController {
     @Value("#{configuration['diff.experiment.raw-counts.path.template']}")
     private String differentialExperimentRawCountsFileUrlTemplate;
 
+    @Value("#{configuration['diff.experiment.data.path.template']}")
+    private String differentialExperimentAnalyticsFileUrlTemplate;
+
     @Inject
     public DifferentialPageDownloadController(
             RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand, DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter) {
@@ -99,17 +102,30 @@ public class DifferentialPageDownloadController {
     @RequestMapping(value = "/experiments/{experimentAccession}/raw-counts.tsv", params = "type=DIFFERENTIAL")
     public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        writeAllData(request, response, "-raw-counts.tsv", differentialExperimentRawCountsFileUrlTemplate);
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=DIFFERENTIAL")
+    public void downloadAllAnalytics(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        writeAllData(request, response, "-all-analytics.tsv", differentialExperimentAnalyticsFileUrlTemplate);
+
+    }
+
+    private void writeAllData(HttpServletRequest request,
+                              HttpServletResponse response,
+                              String fileExtension,
+                               String fileUrlTemplate) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-raw-counts.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + fileExtension + "\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
         differentialExperimentFullDataWriter.setResponseWriter(response.getWriter());
-        differentialExperimentFullDataWriter.setFileUrlTemplate(differentialExperimentRawCountsFileUrlTemplate);
+        differentialExperimentFullDataWriter.setFileUrlTemplate(fileUrlTemplate);
 
         long genesCount = differentialExperimentFullDataWriter.write(experiment.getAccession());
-        LOGGER.info("<downloadRawCounts> streamed " + genesCount + " gene expression profiles");
-
+        LOGGER.info("<download" + fileExtension + "> streamed " + genesCount + " gene expression profiles");
     }
 }

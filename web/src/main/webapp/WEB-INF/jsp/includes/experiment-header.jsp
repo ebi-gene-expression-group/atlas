@@ -75,7 +75,7 @@
                         <td>
                             <a id="download-analytics" class="button-image"
                                title="Download all analytics for the experiment"
-                               href="#">
+                               href="${analyticsDownloadUrl}">
                                 <img src="resources/images/download_blue_small_analytics.png"/></a>
                         </td>
                     </c:if>
