@@ -96,7 +96,7 @@
                                value="${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
+                                title="<div ${type != 'BASELINE' ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''} data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
                                 headerClass='rotated_cell'
                                 style="${style}">
 
@@ -175,12 +175,23 @@
 
 <script type="text/javascript">
 
+    var isMicroarray = ${type == 'MICROARRAY'};
+
     initHeatmapDisplayValueToggle();
 
-    initHeatmapCustomHeaders(${type == 'MICROARRAY'});
+    initHeatmapCustomHeaders(isMicroarray);
 
-    initMAPlotButtons(${preferences.cutoff == '0.05' && empty preferences.geneQuery});
+    var isDefaultPreferences = ${preferences.cutoff == '0.05' && empty preferences.geneQuery};
 
+    if(isMicroarray){
+
+        initMaPlotButtons(isDefaultPreferences, '${experimentAccession}', '${preferences.arrayDesignAccession}');
+
+    } else {
+
+        initMaPlotButtons(isDefaultPreferences, ${experimentAccession});
+
+    }
     genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
 </script>

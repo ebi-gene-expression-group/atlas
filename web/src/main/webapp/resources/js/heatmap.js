@@ -158,14 +158,21 @@ function initHeatmapCustomHeaders(isMicroarray){
     $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
 }
 
-function initMAPlotButtons(areButtonsEnabled){
+function initMaPlotButtons(areButtonsEnabled, experimentAccession){
+    "use strict";
+    initMaPlotButtons(areButtonsEnabled, experimentAccession, null);
+}
+
+function initMaPlotButtons(areButtonsEnabled, experimentAccession, arrayDesignAccession){
     "use strict";
     if (areButtonsEnabled){
         var thElement = $(".factor-header").parent();
         thElement.css("width","60px");
-        $(".factor-header").css("float","left");
-        $(".factor-header").css("top","38px");
-        thElement.append("<a href='' class='ma-button button-image' title='Click to view MA plot for the contrast across all genes'><img src='resources/images/maplot-button.png'/></a>");
+        $(".factor-header").css("transform-origin");
+        $(".factor-header").css("top","57px");
+        //append a button div now
+        thElement.append("<div style='text-align:right;padding-right:3px'><a href='external-resources/' class='ma-button button-image' title='Click to view MA plot for the contrast across all genes'><img src='resources/images/maplot-button.png'/></a></div>");
+
         $(".ma-button").tooltip().button();
     }
 }
