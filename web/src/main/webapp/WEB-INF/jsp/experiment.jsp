@@ -125,8 +125,6 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -203,8 +201,6 @@ src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"><
             searchFormModule.init("(any ${queryFactorName}s)", '${species}', '${preferences.defaultCutoff}');
 
             helpTooltipsModule.init('experiment');
-
-            initHeatmapDisplayValueToggle();
 
             $('.container').stickem();
         });

@@ -171,19 +171,14 @@
         src="${pageContext.request.contextPath}/resources/js/highlight.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
 
 <script type="text/javascript">
 
-    //add custom header cells
-    $($("#heatmap-table thead")).append("<tr><td class='header-cell'>Gene</td>${type == 'MICROARRAY' ? "<td class='header-cell'>Design Element</td>" : "" }</tr>");
+    initHeatmapDisplayValueToggle();
 
-    <c:if test="${type == 'MICROARRAY'}">
-        $("#heatmap-table thead tr th:eq(1)").remove();
-        $("#heatmap-table thead tr th:eq(0)").attr("colspan",2)
-    </c:if>
-
-    //add rowspan to factor headers
-    $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
+    initHeatmapCustomHeaders(${type == 'MICROARRAY'});
 
     genePropertiesTooltipModule.init('${preferences.geneQuery}');
 

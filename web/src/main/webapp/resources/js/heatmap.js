@@ -135,5 +135,23 @@ function initHeatmapDisplayValueToggle() {
             }
         });
 
+}
 
+function initHeatmapCustomHeaders(isMicroarray){
+    //add custom header cells for gene name and design element
+    $($("#heatmap-table thead"))
+        .append("<tr><td class='header-cell'>Gene</td>" +
+            (isMicroarray ? "<td class='header-cell'>Design Element</td>" : "" ) +
+            "</tr>");
+
+    //add display levels cell colspan
+    if (isMicroarray){
+
+        $("#heatmap-table thead tr th:eq(1)").remove();
+        $("#heatmap-table thead tr th:eq(0)").attr("colspan",2);
+
+    }
+
+    //add rowspan to factor headers
+    $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
 }
