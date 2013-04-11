@@ -34,12 +34,16 @@ public class AnalyticsDataWriter extends ExpressionsWriter {
 
         String[] headerWithoutFirstElement = ArrayUtils.remove(header, 0);
         for (String columnHeader : headerWithoutFirstElement) {
-            String contrastId = StringUtils.substringBefore(columnHeader, ".");
-            String displayName = experiment.getContrast(contrastId).getDisplayName();
-            result.add(StringUtils.replace(columnHeader, contrastId, displayName));
+            result.add(replaceContrastIdWithName(columnHeader));
         }
 
         return result.toArray(new String[result.size()]);
+    }
+
+    protected String replaceContrastIdWithName(String columnHeader) {
+        String contrastId = StringUtils.substringBefore(columnHeader, ".");
+        String displayName = experiment.getContrast(contrastId).getDisplayName();
+        return StringUtils.replace(columnHeader, contrastId, displayName);
     }
 
     public void setExperiment(DifferentialExperiment experiment) {
