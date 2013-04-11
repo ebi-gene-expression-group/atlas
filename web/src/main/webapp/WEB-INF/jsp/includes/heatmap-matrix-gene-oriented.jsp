@@ -171,7 +171,7 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/heatmapModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -179,17 +179,19 @@
 
             genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
-            initHeatmapDisplayValueToggle();
+            if (${type == "BASELINE"}){
 
-            var isMicroarray = ${type == "MICROARRAY"};
+                heatmapModule.initBaselineHeatmap('${experimentAccession}');
 
-            initHeatmapCustomHeaders(isMicroarray);
+            } else if (${type == "MICROARRAY"}){
 
-            var isDefaultPreferences = ${preferences.cutoff == '0.05' && empty preferences.geneQuery};
+                var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
 
-            var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
+                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', arrayDesignAccession, ${preferences.cutoff}, '${preferences.geneQuery}');
 
-            initMaPlotButtons(isDefaultPreferences, '${experimentAccession}', arrayDesignAccession);
+            } else {
+                heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
+            }
 
         });
     })(jQuery);
