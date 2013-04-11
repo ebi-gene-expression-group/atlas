@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import static org.junit.Assert.assertThat;
 
 public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFixture {
 
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+
     private static final String HTTP_PARAMETERS = "cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
             + "&specific=false";
@@ -42,7 +44,7 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, HTTP_PARAMETERS);
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, HTTP_PARAMETERS);
         subject.get();
     }
 

@@ -20,31 +20,31 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.mtab1066;
 
+import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithMaPlotButtonsPage;
+import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.endsWith;
+import static org.junit.Assert.assertThat;
 
-public class ExperimentTitleIT extends SinglePageSeleniumFixture {
+public class MaPlotButtonsIT extends SeleniumFixture {
 
-    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private static final String E_MTAB_1066_ACCESSION = "E-MTAB-1066";
+    protected HeatmapTableWithMaPlotButtonsPage subject;
 
-    private HeatmapTablePage subject;
-
-    public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
+    @Before
+    public void initSubject(){
+        subject = new HeatmapTableWithMaPlotButtonsPage(driver, E_MTAB_1066_ACCESSION);
         subject.get();
     }
 
     @Test
-    public void testTitle() {
-        assertThat(subject.getExperimentDescription(), startsWith("RNA-Seq of human individual tissues and mixture of 16 " +
-                "tissues (Illumina Body Map)"));
+    public void verifyButtonClick() {
+        HeatmapTableWithMaPlotButtonsPage page = subject.clickMaPlotButton(0);
+        assertThat(page.getMaPlotImageAnchor(), endsWith("E-MTAB-1066/A-AFFY-35/g2_g3/ma-plot.png"));
     }
-
 
 }

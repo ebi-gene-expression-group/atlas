@@ -39,7 +39,7 @@ import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AbstractCommandTest {
+public class GeneProfilesQueryCommandTest {
 
     private static final String SPECIES = "Species 1";
     private static final String GENE_QUERY = "A GENE QUERY";
@@ -56,9 +56,9 @@ public class AbstractCommandTest {
 
     private ObjectInputStream<BaselineProfile> largeInputStream;
 
-    private AbstractCommand<GeneProfilesList, BaselineProfile> subject;
+    private GeneProfilesQueryCommand<GeneProfilesList, BaselineProfile> subject;
 
-    public AbstractCommandTest() {
+    public GeneProfilesQueryCommandTest() {
     }
 
     //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
@@ -73,7 +73,7 @@ public class AbstractCommandTest {
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
 
-        subject = new AbstractCommand<GeneProfilesList, BaselineProfile>(requestContextMock) {
+        subject = new GeneProfilesQueryCommand<GeneProfilesList, BaselineProfile>(requestContextMock) {
             @Override
             protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
                 return largeInputStream;
