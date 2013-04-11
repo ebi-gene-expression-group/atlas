@@ -73,6 +73,12 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "heatmap-legenda")
     private WebElement heatmapTableLegend;
 
+    @FindBy(xpath = "//thead/tr/td[1]")
+    private WebElement geneColumnHeader;
+
+    @FindBy(xpath = "//thead/tr/td[2]")
+    private WebElement designElementHeader;
+
     private String experimentAccession;
 
 
@@ -311,5 +317,13 @@ public class HeatmapTablePage extends TablePage {
         hover.moveToElement(webElement);
         builder = hover.build();
         builder.perform();
+    }
+
+    public String getGeneColumnHeader() {
+        return geneColumnHeader.getText();
+    }
+
+    public String getDesignElementHeader() {
+        return designElementHeader.getText();
     }
 }
