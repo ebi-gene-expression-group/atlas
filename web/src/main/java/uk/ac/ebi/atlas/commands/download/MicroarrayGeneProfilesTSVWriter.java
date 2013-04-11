@@ -84,7 +84,7 @@ public class MicroarrayGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Micro
 
     @Override
     protected String getSecondColumnName() {
-        return "Design Element";
+        return HeaderBuilder.DESIGN_ELEMENT;
     }
 
     @Override

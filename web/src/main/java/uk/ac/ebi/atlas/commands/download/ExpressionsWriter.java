@@ -41,7 +41,7 @@ public abstract class ExpressionsWriter {
 
             String[] inputLine;
             while ((inputLine = csvReader.readNext()) != null) {
-                String[] outputLine = ArrayUtils.addAll(new String[]{geneNamesProvider.getGeneName(inputLine[0])}, inputLine);
+                String[] outputLine = ArrayUtils.addAll(new String[]{getGeneName(inputLine[0])}, inputLine);
                 csvWriter.writeNext(outputLine);
                 lineCount++;
             }
@@ -55,13 +55,16 @@ public abstract class ExpressionsWriter {
         return lineCount;
     }
 
+    protected String getGeneName(String accession) {
+        return geneNamesProvider.getGeneName(accession);
+    }
+
     protected CSVReader getCsvReader(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(fileUrlTemplate, experimentAccession);
         return csvReaderBuilder.buildCsvReader(tsvFileURL);
     }
 
     protected abstract String[] buildHeader(String[] header);
-
 
     public void setFileUrlTemplate(String fileUrlTemplate) {
         this.fileUrlTemplate = fileUrlTemplate;

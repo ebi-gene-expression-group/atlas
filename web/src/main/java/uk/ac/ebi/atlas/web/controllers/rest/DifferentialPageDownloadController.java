@@ -31,9 +31,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.download.AnalyticsDataWriter;
-import uk.ac.ebi.atlas.commands.download.DifferentialExperimentFullDataWriter;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
+import uk.ac.ebi.atlas.commands.download.RnaSeqAnalyticsDataWriter;
+import uk.ac.ebi.atlas.commands.download.RnaSeqRawDataWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -53,8 +53,8 @@ public class DifferentialPageDownloadController {
 
     private WriteDifferentialProfilesCommand writeGeneProfilesCommand;
 
-    private DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter;
-    private AnalyticsDataWriter analyticsDataWriter;
+    private RnaSeqRawDataWriter rnaSeqRawDataWriter;
+    private RnaSeqAnalyticsDataWriter rnaSeqAnalyticsDataWriter;
 
     @Value("#{configuration['diff.experiment.raw-counts.path.template']}")
     private String differentialExperimentRawCountsFileUrlTemplate;
@@ -64,12 +64,12 @@ public class DifferentialPageDownloadController {
 
     @Inject
     public DifferentialPageDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand, DifferentialExperimentFullDataWriter differentialExperimentFullDataWriter, AnalyticsDataWriter analyticsDataWriter) {
+            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand, RnaSeqRawDataWriter rnaSeqRawDataWriter, RnaSeqAnalyticsDataWriter rnaSeqAnalyticsDataWriter) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
-        this.differentialExperimentFullDataWriter = differentialExperimentFullDataWriter;
-        this.analyticsDataWriter = analyticsDataWriter;
+        this.rnaSeqRawDataWriter = rnaSeqRawDataWriter;
+        this.rnaSeqAnalyticsDataWriter = rnaSeqAnalyticsDataWriter;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
@@ -107,17 +107,17 @@ public class DifferentialPageDownloadController {
     public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        differentialExperimentFullDataWriter.setFileUrlTemplate(differentialExperimentRawCountsFileUrlTemplate);
-        writeAllData(response, experiment.getAccession(), differentialExperimentFullDataWriter, "-raw-counts.tsv");
+        rnaSeqRawDataWriter.setFileUrlTemplate(differentialExperimentRawCountsFileUrlTemplate);
+        writeAllData(response, experiment.getAccession(), rnaSeqRawDataWriter, "-raw-counts.tsv");
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=DIFFERENTIAL")
     public void downloadAllAnalytics(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        analyticsDataWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
-        analyticsDataWriter.setExperiment(experiment);
-        writeAllData(response, experiment.getAccession(), analyticsDataWriter, "-all-analytics.tsv");
+        rnaSeqAnalyticsDataWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
+        rnaSeqAnalyticsDataWriter.setExperiment(experiment);
+        writeAllData(response, experiment.getAccession(), rnaSeqAnalyticsDataWriter, "-all-analytics.tsv");
 
     }
 
