@@ -6,12 +6,11 @@ import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.utils.CsvReaderBuilder;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Named
-public abstract class MicroarrayDataWriter extends ExpressionsWriter {
+//@Named
+public abstract class MicroarrayDataWriter extends ExpressionsWriterImpl {
 
 
     private GeneNamesProvider geneNamesProvider;

@@ -6,9 +6,8 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.utils.CsvReaderBuilder;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named
+//@Named
 public class RnaSeqAnalyticsDataWriter extends ExpressionsWriter {
 
     @Value("#{configuration['diff.experiment.data.path.template']}")

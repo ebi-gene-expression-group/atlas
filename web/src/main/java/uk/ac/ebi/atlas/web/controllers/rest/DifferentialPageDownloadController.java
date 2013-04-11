@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,9 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.download.AllDataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
-import uk.ac.ebi.atlas.commands.download.RnaSeqAnalyticsDataWriter;
-import uk.ac.ebi.atlas.commands.download.RnaSeqRawDataWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -53,23 +51,16 @@ public class DifferentialPageDownloadController {
 
     private WriteDifferentialProfilesCommand writeGeneProfilesCommand;
 
-    private RnaSeqRawDataWriter rnaSeqRawDataWriter;
-    private RnaSeqAnalyticsDataWriter rnaSeqAnalyticsDataWriter;
-
-    @Value("#{configuration['diff.experiment.raw-counts.path.template']}")
-    private String differentialExperimentRawCountsFileUrlTemplate;
-
-    @Value("#{configuration['diff.experiment.data.path.template']}")
-    private String differentialExperimentAnalyticsFileUrlTemplate;
+    private AllDataWriterFactory allDataWriterFactory;
 
     @Inject
     public DifferentialPageDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand, RnaSeqRawDataWriter rnaSeqRawDataWriter, RnaSeqAnalyticsDataWriter rnaSeqAnalyticsDataWriter) {
+            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand
+            , AllDataWriterFactory allDataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
-        this.rnaSeqRawDataWriter = rnaSeqRawDataWriter;
-        this.rnaSeqAnalyticsDataWriter = rnaSeqAnalyticsDataWriter;
+        this.allDataWriterFactory = allDataWriterFactory;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
@@ -107,17 +98,16 @@ public class DifferentialPageDownloadController {
     public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        rnaSeqRawDataWriter.setFileUrlTemplate(differentialExperimentRawCountsFileUrlTemplate);
-        writeAllData(response, experiment.getAccession(), rnaSeqRawDataWriter, "-raw-counts.tsv");
+        writeAllData(response, experiment.getAccession(), allDataWriterFactory.getRnaSeqRawDataWriter(), "-raw-counts.tsv");
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=DIFFERENTIAL")
     public void downloadAllAnalytics(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        rnaSeqAnalyticsDataWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
-        rnaSeqAnalyticsDataWriter.setExperiment(experiment);
-        writeAllData(response, experiment.getAccession(), rnaSeqAnalyticsDataWriter, "-all-analytics.tsv");
+        allDataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment);
+
+        writeAllData(response, experiment.getAccession(), allDataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment), "-all-analytics.tsv");
 
     }
 
