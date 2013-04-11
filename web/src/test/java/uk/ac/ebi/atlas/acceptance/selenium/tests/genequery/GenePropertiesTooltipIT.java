@@ -34,12 +34,14 @@ import static org.junit.Assert.assertThat;
 
 public class GenePropertiesTooltipIT extends SinglePageSeleniumFixture {
 
+    private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+
     private static final String HTTP_PARAMETERS = "geneQuery=protein+coding+%22actin-like%22+bile+acid&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
 
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, HTTP_PARAMETERS);
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, HTTP_PARAMETERS);
         subject.get();
     }
 

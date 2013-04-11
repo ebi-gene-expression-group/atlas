@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
 
-public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends GeneProfile> extends AbstractCommand<T,K> {
+public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends GeneProfile> extends GeneProfilesQueryCommand<T,K> {
 
     @Inject
     public RankProfilesCommand(RequestContext requestContext) {

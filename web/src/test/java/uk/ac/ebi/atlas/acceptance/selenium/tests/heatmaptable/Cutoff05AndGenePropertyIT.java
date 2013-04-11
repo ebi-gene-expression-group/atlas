@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import static org.junit.Assert.assertThat;
 
 public class Cutoff05AndGenePropertyIT extends SinglePageSeleniumFixture {
 
+    private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
@@ -40,21 +42,21 @@ public class Cutoff05AndGenePropertyIT extends SinglePageSeleniumFixture {
 
     @Test
     public void verifyResultOnSinglePropertyQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=&cutoff=0.5");
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "geneQuery=&cutoff=0.5");
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 268"));
     }
 
     @Test
     public void verifyResultOnMultiplePropertyQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=&cutoff=0.5");
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "geneQuery=&cutoff=0.5");
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 268"));
     }
 
     @Test
     public void verifyResultOnMultiplePropertyAndOrganismPartQuery() {
-        subject = new HeatmapTablePage(driver, "geneQuery=&queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "geneQuery=&queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 69"));
         subject.clickDisplayLevelsButton();

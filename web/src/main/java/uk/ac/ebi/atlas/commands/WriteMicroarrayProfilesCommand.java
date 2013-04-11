@@ -39,7 +39,7 @@ import java.io.PrintWriter;
 
 @Named
 @Scope("prototype")
-public class WriteMicroarrayProfilesCommand extends AbstractCommand<Long, MicroarrayProfile> implements Command<Long> {
+public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Long, MicroarrayProfile> implements Command<Long> {
 
     protected static final Logger logger = Logger.getLogger(WriteMicroarrayProfilesCommand.class);
 

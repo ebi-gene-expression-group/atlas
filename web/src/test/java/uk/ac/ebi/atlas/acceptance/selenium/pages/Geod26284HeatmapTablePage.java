@@ -36,17 +36,19 @@ import java.util.List;
 
 public class Geod26284HeatmapTablePage extends HeatmapTablePage {
 
+    private static final String EXPERIMENT_ACCESSION = "E-GEOD-26284";
+
     private static final String XPATH_TEMPLATE = "ul/li[%d]";
 
     @FindBy(xpath = "//ul[@id = 'filterBy']/li")
     private WebElement filterByMenu;
-
+/*
     public Geod26284HeatmapTablePage(WebDriver driver) {
         super(driver);
     }
-
+*/
     public Geod26284HeatmapTablePage(WebDriver driver, String httpParameters) {
-        super(driver, httpParameters);
+        super(driver, EXPERIMENT_ACCESSION, httpParameters);
     }
 
     @Override
