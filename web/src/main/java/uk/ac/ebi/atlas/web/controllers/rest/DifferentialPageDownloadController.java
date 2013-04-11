@@ -107,7 +107,7 @@ public class DifferentialPageDownloadController {
     public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        differentialExperimentFullDataWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
+        differentialExperimentFullDataWriter.setFileUrlTemplate(differentialExperimentRawCountsFileUrlTemplate);
         writeAllData(response, experiment.getAccession(), differentialExperimentFullDataWriter, "-raw-counts.tsv");
     }
 
