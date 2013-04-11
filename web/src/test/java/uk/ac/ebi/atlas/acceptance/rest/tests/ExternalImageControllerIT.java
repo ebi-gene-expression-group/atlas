@@ -35,7 +35,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.mockito.Matchers.eq;
 
 
 public class ExternalImageControllerIT {
@@ -77,7 +76,7 @@ public class ExternalImageControllerIT {
         byte[] responseBodyForContrast2 = new EndPoint(url).getResponse().getBody().asByteArray();
         assertThat(responseBodyForContrast2, is(notNullValue()));
 
-        assertThat(responseBodyForContrast1.length, is(not(eq(responseBodyForContrast2.length))));
+        assertThat(responseBodyForContrast1.length, is(not(responseBodyForContrast2.length)));
 
     }
 
