@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.commands.download;
 
-public interface HeaderBuilder {
+interface HeaderBuilder {
 
     String GENE_NAME = "Gene name";
     String GENE_ID = "Gene Id";

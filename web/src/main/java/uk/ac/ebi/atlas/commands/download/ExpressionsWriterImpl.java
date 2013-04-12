@@ -12,7 +12,7 @@ import java.text.MessageFormat;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
-public class ExpressionsWriterImpl implements ExpressionsWriter {
+class ExpressionsWriterImpl implements ExpressionsWriter {
 
 
     private CsvReaderBuilder csvReaderBuilder;

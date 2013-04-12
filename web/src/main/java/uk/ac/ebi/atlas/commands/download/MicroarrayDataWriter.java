@@ -10,7 +10,7 @@ import java.text.MessageFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class MicroarrayDataWriter extends ExpressionsWriterImpl {
+class MicroarrayDataWriter extends ExpressionsWriterImpl {
 
 
     private GeneNamesProvider geneNamesProvider;

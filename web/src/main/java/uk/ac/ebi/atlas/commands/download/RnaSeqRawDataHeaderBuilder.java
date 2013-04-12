@@ -2,10 +2,7 @@ package uk.ac.ebi.atlas.commands.download;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import javax.inject.Named;
-
-@Named
-public class RnaSeqRawDataHeaderBuilder implements HeaderBuilder {
+class RnaSeqRawDataHeaderBuilder implements HeaderBuilder {
 
     @Override
     public String[] buildHeader(String[] header) {

@@ -11,7 +11,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-public class AnalyticsDataHeaderBuilder implements HeaderBuilder {
+class AnalyticsDataHeaderBuilder implements HeaderBuilder {
     private DifferentialExperiment experiment;
 
 
