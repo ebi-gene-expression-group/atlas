@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
+import org.apache.commons.collections.FastHashMap;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -34,49 +35,29 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @Scope("request")
 public class RankedGeneTranscriptsController {
 
-    private BarChartTradersCache barChartTradersCache;
 
-    private FilterFactorsConverter filterFactorsConverter;
 
-    @Inject
-    public RankedGeneTranscriptsController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter) {
-        this.barChartTradersCache = barChartTradersCache;
-        this.filterFactorsConverter = filterFilterFactorsConverter;
-    }
-
-    @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/transcripts/{geneId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getMap(HttpServletRequest request, @PathVariable String experimentAccession,
-                         @RequestParam(value = "queryFactorValues[]", required = false) Set<String> queryFactorValues,
-                         @RequestParam String queryFactorType, @RequestParam(required = false) String serializedFilterFactors) {
+    public String getRankedTranscripts(HttpServletRequest request, @PathVariable String geneId,
+                         @RequestParam(value = "rankingSize", required = true) Integer rankingSize) {
 
-        BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
+        SortedMap<String, Double> transcriptRates = new TreeMap();
 
-        Set<Factor> queryFactors = new HashSet<>();
-        if (queryFactorValues != null) {
-            for (String queryFactorValue : queryFactorValues) {
-                queryFactors.add(new Factor(queryFactorType, queryFactorValue));
-            }
+        for(int i = 0; i < rankingSize; i++){
+            transcriptRates.put("ENST00000" + (i + 1), 100d/(rankingSize + 1));
         }
+        transcriptRates.put("Others", 100 - (100d/(rankingSize+1))*rankingSize);
 
-        Set<Factor> filterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
 
-        NavigableMap<Double, Integer> chartData = barchartTrader.getChart(filterFactors, queryFactors);
-
-        Gson gson = new Gson();
-
-        // changed to more generic Map interface as per Sonar recommendation
-        return gson.toJson(chartData, Map.class);
+        return new Gson().toJson(transcriptRates, Map.class);
 
     }
 

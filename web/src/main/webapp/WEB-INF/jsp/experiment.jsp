@@ -108,12 +108,14 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/flot-v07/jquery.flot.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/flot/jquery.flot.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/flot/jquery.flot.pie.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
 <!--[if lte IE 8]>
 <script language="JavaScript" type="text/javascript"
-src="${pageContext.request.contextPath}/resources/js/flot-v07/excanvas.min.js"></script>
+src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></script>
 <![endif]-->
 
 <script language="JavaScript" type="text/javascript"

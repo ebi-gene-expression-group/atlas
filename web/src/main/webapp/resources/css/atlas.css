@@ -224,11 +224,17 @@ a.help-icon {
 }
 
 .property-value-markup {
-
+    text-align:center;
     background-color: rgb(223, 213, 213);
 
 }
 
 .genename-tooltip {
     text-align: justify;
+}
+
+.pieLabel {
+    font-size: 12px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    color:white;
 }

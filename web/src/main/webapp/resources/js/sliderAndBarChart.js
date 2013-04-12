@@ -136,7 +136,7 @@ function plotCutoffBarChart(selectedQueryFactorValues, data, magnifiedScaledCuto
 
     return $.plot($("#gene-distribution"), [ data ], {
         series : {
-            highlightColor : "red",
+            //highlightColor : "rgb(240,205,95)",
 
             label : buildLegendaText(selectedQueryFactorValues),
 

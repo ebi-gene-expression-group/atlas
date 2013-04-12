@@ -164,16 +164,24 @@
 
 </div>
 
-<div id="transcript-breakdown" style="display:none;width: 500px;height:350px;padding:20px;">
-    <p>
-        Expression Level Breakdown for ENS.... (X transcripts)
+<style>
+    .fancybox-lock .fancybox-overlay {
+        overflow: hidden;
+    }
+
+    .fancybox-lock {
+        overflow: hidden;
+    }
+</style>
+
+<div id="transcript-breakdown" style="display:none;height: 320px;width: 430px; padding-top:10px">
+    <p style = "text-align: center">
+        Expression Level Breakdown for ENS.... (X transcripts) on liver
     </p>
     <div>
-        <div style="float:left;">
-            <div>
-                <img src="resources/images/MockPieChart.png"/>
-            </div>
+        <div id="transcripts-pie" style="padding-top:10px;width: 420px;height:250px;line-height: 1.2em;">
         </div>
+        <!--
         <div style="float:right;width:120px;">
             <ul>
 
@@ -216,6 +224,7 @@
                 </li>
             </ul>
         </div>
+        -->
     </div>
 </div>
 

@@ -56,11 +56,56 @@ var heatmapModule = (function($) {
 
         $("#heatmap-table td:has(div[data-color])").click(function () {
 
+            //click will have to use $.ajax, with all the following code that will be executed in the "success:" callback
+
+            //... but for now we just use mock data
+
+            //this is mock data in the format returned by our rest controller.
+            var transcriptRates = {"ENST000001":25.0,"ENST000003":25.0,"ENST000002":25.0,"Others":25.0};
+
+            var data = [],
+                index = 0;
+            $.each(transcriptRates, function(key, value){
+                                                        data[index++] = {label: key , data: value};
+                                                        });
+            $.plot('#transcripts-pie', data, {
+                series: {
+                    pie: {
+                        show: true,
+                        radius:1,
+                        label: {
+                            style: {color: "white"},
+                            radius: 3/5,
+                            show: true,
+                            formatter: function(label, series){
+                                return  series.percent + "%";},
+                            background: {
+                                opacity: 0.5
+                            }
+                        }
+                    }
+                },
+                legend: {
+
+                    show: true,
+                    labelFormatter: function(label){
+                        return label === "Others" ? "Others" :
+                                                    "<a href='http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642' target='_blank'>" +
+                                                    label + "</a>";
+                    }
+                }
+            });
+
             $.fancybox({href : '#transcript-breakdown',
                                     padding:0,
                                     openEffect:'elastic',
-                                    closeEffect:'elastic'
-                                    });
+                                    closeEffect:'elastic',
+                                    helpers: {
+                                        overlay : {
+                                            locked: false
+                                        }
+                                    }
+                          });
             /* uncomment this to restore expression level visualization
             var div = $(this).find("div");
             if (div.hasClass("hide_cell")) {
