@@ -20,22 +20,26 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential.microarray;
+package uk.ac.ebi.atlas.model.differential.rnaseq;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfileBuilder;
 
-public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
+import javax.inject.Inject;
+import javax.inject.Named;
 
-    private final String designElementName;
+@Named
+@Scope("prototype")
+public class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfile, RnaSeqRequestContext> {
 
-    public MicroarrayProfile(String geneId, String designElementName) {
-        super(geneId);
-        this.designElementName = designElementName;
+    @Inject
+    protected RnaSeqProfileBuilder(RnaSeqRequestContext requestContext) {
+        super(requestContext);
     }
 
-    //It's used in jsp EL
-    public String getDesignElementName() {
-        return designElementName;
+    @Override
+    protected RnaSeqProfile createProfile(String geneId) {
+        return new RnaSeqProfile(geneId);
     }
-
 }

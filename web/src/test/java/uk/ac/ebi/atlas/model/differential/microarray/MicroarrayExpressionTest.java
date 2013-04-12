@@ -22,20 +22,34 @@
 
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 
-public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-    private final String designElementName;
+@RunWith(MockitoJUnitRunner.class)
+public class MicroarrayExpressionTest {
 
-    public MicroarrayProfile(String geneId, String designElementName) {
-        super(geneId);
-        this.designElementName = designElementName;
+    public static final double P_VALUE = 0.05;
+    public static final int FOLD_CHANGE = 14;
+    public static final double TSTATISTIC = 0.6;
+    @Mock
+    Contrast contrastMock;
+
+    MicroarrayExpression subject;
+
+    @Before
+    public void setUp() throws Exception {
+        subject = new MicroarrayExpression(P_VALUE, FOLD_CHANGE, TSTATISTIC, contrastMock);
     }
 
-    //It's used in jsp EL
-    public String getDesignElementName() {
-        return designElementName;
+    @Test
+    public void testGetTstatistic() throws Exception {
+        assertThat(subject.getTstatistic(), is(TSTATISTIC));
     }
-
 }
