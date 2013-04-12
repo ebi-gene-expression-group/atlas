@@ -37,23 +37,23 @@ public class DifferentialProfilePrecondition implements Predicate<DifferentialPr
     private Regulation regulation;
     private Set<Contrast> allQueryFactors;
 
-    DifferentialProfilePrecondition setSelectedQueryFactors(Set<Contrast> selectedQueryFactors) {
+    protected DifferentialProfilePrecondition setSelectedQueryFactors(Set<Contrast> selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
         return this;
     }
 
-    DifferentialProfilePrecondition setAllQueryFactors(Set<Contrast> allQueryFactors) {
+    protected DifferentialProfilePrecondition setAllQueryFactors(Set<Contrast> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }
 
-    DifferentialProfilePrecondition setRegulation(Regulation regulation) {
+    protected DifferentialProfilePrecondition setRegulation(Regulation regulation) {
         this.regulation = regulation;
         return this;
     }
 
     public boolean apply(DifferentialProfile profile) {
-        if (profile.isEmpty()){
+        if (profile.isEmpty()) {
             return false;
         }
 

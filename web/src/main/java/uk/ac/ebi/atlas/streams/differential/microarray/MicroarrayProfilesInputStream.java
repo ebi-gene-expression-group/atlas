@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile.MicroarrayProfileBuilder;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 
@@ -59,9 +59,9 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
 
         String designElementName = values[GENE_ID_COLUMN];
 
-        String geneId = designElementMappingProvider.getEnsGeneId(arrayDesignAccession,designElementName);
+        String geneId = designElementMappingProvider.getEnsGeneId(arrayDesignAccession, designElementName);
 
-        if(StringUtils.isBlank(geneId)){
+        if (StringUtils.isBlank(geneId)) {
             return null;
         }
 
@@ -72,7 +72,7 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
 
         DifferentialExpression expression;
 
-        while ((expression = (MicroarrayExpression)getTsvRowBuffer().poll()) != null) {
+        while ((expression = (MicroarrayExpression) getTsvRowBuffer().poll()) != null) {
 
             microarrayProfileBuilder.addExpression(expression);
 

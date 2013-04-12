@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
-public class GeneQueryExactMatch extends SeleniumFixture {
+public class GeneQueryExactMatchIT extends SeleniumFixture {
 
     private static final String E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH = "geneQuery=binding%20%22mRNA%20splicing,%20via%20spliceosome%22&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
     private static final String E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH = "geneQuery=%22mitochondrially+encoded+ATP+synthase+8%22&exactMatch=true&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&queryFactorValues=liver&_queryFactorValues=1&specific=true&cutoff=0.5";
@@ -41,7 +41,7 @@ public class GeneQueryExactMatch extends SeleniumFixture {
     @Test
     public void shouldReturnOnlyGenesWithPropertyValuesExactlyMatchingToAtLeastOneOfTheProvidedGeneQueryTerms() {
         //given
-        subject = new HeatmapTableWithSearchFormPage(driver, E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH);
+        subject = new HeatmapTableWithSearchFormPage(driver, "E-MTAB-513", E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH);
         //when
         subject.get();
 

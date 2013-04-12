@@ -22,12 +22,7 @@
 
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
 
@@ -39,34 +34,8 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
     }
 
     //It's used in jsp EL
-    public String getDesignElementName(){
+    public String getDesignElementName() {
         return designElementName;
     }
 
-    @Named
-    @Scope("prototype")
-    public static class MicroarrayProfileBuilder extends DifferentialProfileBuilder<MicroarrayProfile, MicroarrayRequestContext> {
-
-        private String designElementName;
-
-        @Inject
-        protected MicroarrayProfileBuilder(MicroarrayRequestContext requestContext) {
-            super(requestContext);
-        }
-
-        @Override
-        public MicroarrayProfileBuilder forGeneId(String geneId){
-            return (MicroarrayProfileBuilder)super.forGeneId(geneId);
-        }
-
-        public MicroarrayProfileBuilder withDesignElementName(String designElementName){
-            this.designElementName = designElementName;
-            return this;
-        }
-
-        @Override
-        protected MicroarrayProfile createProfile(String geneId) {
-            return new MicroarrayProfile(geneId, designElementName);
-        }
-    }
 }

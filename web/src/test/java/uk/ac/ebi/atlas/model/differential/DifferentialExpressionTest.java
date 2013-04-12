@@ -1,12 +1,63 @@
 package uk.ac.ebi.atlas.model.differential;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DifferentialExpressionTest {
 
+    public static final double PVALUE = 0.0005;
+    public static final double FOLD_CHANGE = 42.0;
+    @Mock
+    Contrast contrastMock;
+
+    DifferentialExpression subject;
+
+    @Before
+    public void setUp() throws Exception {
+        subject = new DifferentialExpression(PVALUE, FOLD_CHANGE, contrastMock);
+    }
+
+    @Test
+    public void testGetFoldChange() {
+        assertThat(subject.getFoldChange(), is(FOLD_CHANGE));
+    }
+
+    @Test
+    public void testGetLevel() {
+        assertThat(subject.getLevel(), is(PVALUE));
+    }
+
+    @Test
+    public void testGetContrast() {
+        assertThat(subject.getContrast(), is(contrastMock));
+    }
+
+    @Test
+    public void testIsNotApplicable() {
+        assertThat(subject.isNotApplicable(), is(false));
+    }
+
+    @Test
+    public void testEquals() {
+        assertThat(subject.equals(new DifferentialExpression(PVALUE, FOLD_CHANGE, contrastMock)), is(true));
+    }
+
+    @Test
+    public void testIsOverExpressed() {
+        assertThat(subject.isOverExpressed(), is(true));
+    }
+
+    @Test
+    public void testIsUnderExpressed() {
+        assertThat(subject.isUnderExpressed(), is(false));
+    }
 
     @Test
     public void testUnderExpressedGeneIsForRegulation() throws Exception {

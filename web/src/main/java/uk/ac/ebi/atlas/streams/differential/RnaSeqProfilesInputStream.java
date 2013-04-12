@@ -27,7 +27,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile.RnaSeqProfileBuilder;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile> {
@@ -53,7 +53,7 @@ public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile> {
 
         DifferentialExpression expression;
 
-        while ((expression = (DifferentialExpression)getTsvRowBuffer().poll()) != null) {
+        while ((expression = (DifferentialExpression) getTsvRowBuffer().poll()) != null) {
 
             rnaSeqProfileBuilder.addExpression(expression);
 

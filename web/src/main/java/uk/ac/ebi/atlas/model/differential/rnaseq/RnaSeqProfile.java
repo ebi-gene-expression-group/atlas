@@ -22,34 +22,14 @@
 
 package uk.ac.ebi.atlas.model.differential.rnaseq;
 
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 public class RnaSeqProfile extends DifferentialProfile<DifferentialExpression> {
 
 
     public RnaSeqProfile(String geneId) {
         super(geneId);
-    }
-
-    @Named
-    @Scope("prototype")
-    public static class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfile, RnaSeqRequestContext> {
-
-        @Inject
-        protected RnaSeqProfileBuilder(RnaSeqRequestContext requestContext) {
-            super(requestContext);
-        }
-
-        @Override
-        protected RnaSeqProfile createProfile(String geneId) {
-            return new RnaSeqProfile(geneId);
-        }
     }
 
 }

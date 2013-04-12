@@ -23,15 +23,10 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkState;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -76,57 +71,4 @@ public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
         minExpressionLevel = min(minExpressionLevel, geneExpression.getLevel());
     }
 
-
-    @Named
-    @Scope("prototype")
-    public static class BaselineProfileBuilder {
-
-        private BaselineProfile baselineProfile;
-
-        private BaselineExpressionPrecondition baselineExpressionPrecondition;
-
-        private BaselineProfilePrecondition baselineProfilePrecondition;
-
-        private BaselineRequestContext requestContext;
-
-        @Inject
-        protected BaselineProfileBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
-                                         BaselineProfilePrecondition baselineProfilePrecondition) {
-            this.requestContext = requestContext;
-            this.baselineExpressionPrecondition = baselineExpressionPrecondition;
-            this.baselineProfilePrecondition = baselineProfilePrecondition;
-        }
-
-        //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
-        // , that is before the Controller actually executes the request, before the Controller initialize RequestContext
-        void initPreconditions() {
-            baselineExpressionPrecondition.setCutoff(requestContext.getCutoff())
-                    .setFilterFactors(requestContext.getSelectedFilterFactors());
-            baselineProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
-                    .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
-                    .setSpecific(requestContext.isSpecific());
-        }
-
-        public BaselineProfileBuilder forGeneId(String geneId) {
-            this.baselineProfile = new BaselineProfile(geneId);
-            initPreconditions();
-            return this;
-        }
-
-        public BaselineProfileBuilder addExpression(BaselineExpression expression) {
-            checkState(baselineProfile != null, "Please invoke forGeneID before create");
-            if (baselineExpressionPrecondition.apply(expression)) {
-                baselineProfile.add(expression, requestContext.getQueryFactorType());
-            }
-            return this;
-        }
-
-        public BaselineProfile create() {
-            checkState(baselineProfile != null, "Please invoke forGeneID before create");
-
-            return baselineProfilePrecondition.apply(baselineProfile) ? baselineProfile : null;
-        }
-
-
-    }
 }

@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfileBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 
 import java.io.IOException;
@@ -74,8 +74,8 @@ public class BaselineProfilesInputStreamTest {
         given(experimentRuns1Mock.getAccession()).willReturn(RUN_ACCESSION_1);
         given(experimentRuns2Mock.getAccession()).willReturn(RUN_ACCESSION_2);
 
-        String [] headers = new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2};
-        String [] headersWithoutGeneIdColumn = new String[]{RUN_ACCESSION_1, RUN_ACCESSION_2};
+        String[] headers = new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2};
+        String[] headersWithoutGeneIdColumn = new String[]{RUN_ACCESSION_1, RUN_ACCESSION_2};
 
         given(csvReaderMock.readNext())
                 .willReturn(headers)
@@ -86,7 +86,7 @@ public class BaselineProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
 
-        BaselineProfile.BaselineProfileBuilder geneProfileBuilderMock = mock(BaselineProfile.BaselineProfileBuilder.class);
+        BaselineProfileBuilder geneProfileBuilderMock = mock(BaselineProfileBuilder.class);
         when(geneProfileBuilderMock.addExpression(any(BaselineExpression.class))).thenReturn(geneProfileBuilderMock);
 
         subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);

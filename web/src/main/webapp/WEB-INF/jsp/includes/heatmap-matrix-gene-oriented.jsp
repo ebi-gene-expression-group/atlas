@@ -164,6 +164,61 @@
 
 </div>
 
+<div id="transcript-breakdown" style="display:none;width: 500px;height:350px;padding:20px;">
+    <p>
+        Expression Level Breakdown for ENS.... (X transcripts)
+    </p>
+    <div>
+        <div style="float:left;">
+            <div>
+                <img src="resources/images/MockPieChart.png"/>
+            </div>
+        </div>
+        <div style="float:right;width:120px;">
+            <ul>
+
+                <style>
+                    #transcript-breakdown ul {
+                        list-style: none;
+                        margin-left: 0;
+                        padding-left: 0;
+                    }
+
+                    #transcript-breakdown li {
+                        padding-left: 1em;
+                        text-indent: -1em;
+                    }
+                    #transcript-breakdown li:before {
+                        font-size: 18px;
+                        content: '\25A0';
+                        color:green;
+                        padding-right: 5px;
+                    }
+                </style>
+
+                <li>
+                    <a href="http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642" target="_blank">
+                        Transcript 1
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642" target="_blank">
+                        Transcript 2
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642" target="_blank">
+                        Transcript 3
+                    </a>
+                </li>
+                <li>
+                        Others
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div id="genenametooltip-content" style="display: none"/>
 
 <script language="JavaScript" type="text/javascript"
@@ -171,7 +226,7 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/heatmap.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/heatmapModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -179,17 +234,19 @@
 
             genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
-            initHeatmapDisplayValueToggle();
+            if (${type == "BASELINE"}){
 
-            var isMicroarray = ${type == "MICROARRAY"};
+                heatmapModule.initBaselineHeatmap('${experimentAccession}');
 
-            initHeatmapCustomHeaders(isMicroarray);
+            } else if (${type == "MICROARRAY"}){
 
-            var isDefaultPreferences = ${preferences.cutoff == '0.05' && empty preferences.geneQuery};
+                var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
 
-            var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
+                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', arrayDesignAccession, ${preferences.cutoff}, '${preferences.geneQuery}');
 
-            initMaPlotButtons(isDefaultPreferences, '${experimentAccession}', arrayDesignAccession);
+            } else {
+                heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
+            }
 
         });
     })(jQuery);
