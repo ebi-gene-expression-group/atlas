@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.mtab1066;
 
 import org.junit.Test;
-import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
