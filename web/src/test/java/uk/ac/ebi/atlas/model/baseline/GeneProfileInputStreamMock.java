@@ -66,7 +66,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<BaselinePro
 
         for (int i = streamSize; i > 0; i--) {
 
-            BaselineProfile.BaselineProfileBuilder geneProfileBuilder = new BaselineProfile.BaselineProfileBuilder(requestContextMock,
+            BaselineProfileBuilder geneProfileBuilder = new BaselineProfileBuilder(requestContextMock,
                     baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
             geneProfileBuilder.forGeneId("" + i);
 

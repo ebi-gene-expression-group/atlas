@@ -46,7 +46,7 @@ import static org.mockito.Mockito.when;
 public class GeneProfileBuilderTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
-    private BaselineProfile.BaselineProfileBuilder subject;
+    private BaselineProfileBuilder subject;
 
     @Mock
     private BaselineProfilePrecondition baselineProfilePreconditionMock;
@@ -65,10 +65,9 @@ public class GeneProfileBuilderTest {
     private BaselineExpression expressionMock2;
 
 
-
     @Before
     public void initSubject() {
-        subject = new BaselineProfile.BaselineProfileBuilder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
+        subject = new BaselineProfileBuilder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
 
         when(requestContextMock.getCutoff()).thenReturn(0d);
         when(requestContextMock.isSpecific()).thenReturn(true);

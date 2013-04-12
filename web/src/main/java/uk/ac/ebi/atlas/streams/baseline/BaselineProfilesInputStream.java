@@ -27,16 +27,17 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile> {
 
-    private BaselineProfile.BaselineProfileBuilder baselineProfileBuilder;
+    private BaselineProfileBuilder baselineProfileBuilder;
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
             , BaselineExpressionsBufferBuilder expressionsBufferBuilder
-            , BaselineProfile.BaselineProfileBuilder baselineProfileBuilder) {
+            , BaselineProfileBuilder baselineProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
         this.baselineProfileBuilder = baselineProfileBuilder;
@@ -51,7 +52,7 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile>
 
         BaselineExpression expression;
 
-        while ((expression = (BaselineExpression)getTsvRowBuffer().poll()) != null) {
+        while ((expression = (BaselineExpression) getTsvRowBuffer().poll()) != null) {
 
             baselineProfileBuilder.addExpression(expression);
         }

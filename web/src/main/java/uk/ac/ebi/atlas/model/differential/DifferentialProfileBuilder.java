@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.model.differential;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 
-import javax.inject.Inject;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -41,18 +40,12 @@ public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, 
     private DifferentialExpressionPrecondition differentialExpressionPrecondition;
     private DifferentialProfilePrecondition differentialProfilePrecondition;
 
-    @Inject
-    private void setDifferentialExpressionPrecondition(DifferentialExpressionPrecondition differentialExpressionPrecondition) {
-        this.differentialExpressionPrecondition = differentialExpressionPrecondition;
-    }
-
-    @Inject
-    private void setDifferentialProfilePrecondition(DifferentialProfilePrecondition differentialProfilePrecondition) {
-        this.differentialProfilePrecondition = differentialProfilePrecondition;
-    }
-
-    protected DifferentialProfileBuilder(K requestContext) {
+    protected DifferentialProfileBuilder(K requestContext,
+                                         DifferentialExpressionPrecondition differentialExpressionPrecondition,
+                                         DifferentialProfilePrecondition differentialProfilePrecondition) {
         this.requestContext = requestContext;
+        this.differentialExpressionPrecondition = differentialExpressionPrecondition;
+        this.differentialProfilePrecondition = differentialProfilePrecondition;
     }
 
     //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
