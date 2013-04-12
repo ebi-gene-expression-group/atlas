@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.download.AllDataWriterFactory;
+import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -44,17 +46,22 @@ import java.io.IOException;
 @Scope("request")
 public class MicroarrayPageDownloadController {
     private static final Logger LOGGER = Logger.getLogger(MicroarrayPageDownloadController.class);
+    private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
+    private static final String ANALYTICS_TSV = "-analytics.tsv";
 
     private final MicroarrayRequestContextBuilder requestContextBuilder;
 
     private WriteMicroarrayProfilesCommand writeGeneProfilesCommand;
 
+    private AllDataWriterFactory allDataWriterFactory;
+
     @Inject
     public MicroarrayPageDownloadController(
-            MicroarrayRequestContextBuilder requestContextBuilder, WriteMicroarrayProfilesCommand writeGeneProfilesCommand) {
+            MicroarrayRequestContextBuilder requestContextBuilder, WriteMicroarrayProfilesCommand writeGeneProfilesCommand, AllDataWriterFactory allDataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
+        this.allDataWriterFactory = allDataWriterFactory;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=MICROARRAY")
@@ -64,9 +71,8 @@ public class MicroarrayPageDownloadController {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        if (preferences.getArrayDesignAccession() == null) {
-            preferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
-        }
+        preferences.setArrayDesignAccession(getSelectedArrayDesign(preferences, experiment));
+
 
         String arrayDesign = preferences.getArrayDesignAccession();
 
@@ -75,7 +81,6 @@ public class MicroarrayPageDownloadController {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "_" + arrayDesign + "-gene-expression-profiles.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
-
 
         requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
 
@@ -91,6 +96,59 @@ public class MicroarrayPageDownloadController {
             LOGGER.info("<downloadMicroarrayGeneProfiles> no genes found");
         }
 
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = "type=MICROARRAY")
+    public void downloadRawCounts(HttpServletRequest request
+            , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+            , HttpServletResponse response) throws IOException {
+
+        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        String selectedArrayDesign = getSelectedArrayDesign(preferences, experiment);
+
+        prepareResponse(response, experiment.getAccession(), selectedArrayDesign, NORMALIZED_EXPRESSIONS_TSV);
+
+        ExpressionsWriter writer = allDataWriterFactory.getMicroarrayRawDataWriter(experiment,
+                selectedArrayDesign,
+                response.getWriter());
+
+        long genesCount = writer.write();
+
+        LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=MICROARRAY")
+    public void downloadAllAnalytics(HttpServletRequest request
+            , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+            , HttpServletResponse response) throws IOException {
+
+        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        String selectedArrayDesign = getSelectedArrayDesign(preferences, experiment);
+
+        prepareResponse(response, experiment.getAccession(), selectedArrayDesign, ANALYTICS_TSV);
+
+        ExpressionsWriter writer = allDataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
+                selectedArrayDesign,
+                response.getWriter());
+
+
+        long genesCount = writer.write();
+
+        LOGGER.info("<download" + ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
+    }
+
+
+    private String getSelectedArrayDesign(MicroarrayRequestPreferences preferences, MicroarrayExperiment experiment) {
+        String arrayDesignAccession = preferences.getArrayDesignAccession();
+        return arrayDesignAccession == null ? experiment.getArrayDesignAccessions().first() : arrayDesignAccession;
+    }
+
+    private void prepareResponse(HttpServletResponse response, String experimentAccession, String arrayDesignAccession, String fileExtension) {
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "_" + arrayDesignAccession + fileExtension + "\"");
+
+        response.setContentType("text/plain; charset=utf-8");
     }
 
 }

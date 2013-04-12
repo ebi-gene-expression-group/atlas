@@ -67,7 +67,7 @@
                         <td>
                             <a id="download-normalized" class="button-image"
                                title="Download all normalized expressions for the experiment"
-                               href="#">
+                               href="${normalizedUrl}">
                                 <img src="resources/images/download_blue_small_normalized.png"/></a>
                         </td>
                     </c:if>

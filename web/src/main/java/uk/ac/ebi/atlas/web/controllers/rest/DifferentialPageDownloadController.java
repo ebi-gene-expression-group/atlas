@@ -46,6 +46,8 @@ import java.io.IOException;
 @Scope("request")
 public class DifferentialPageDownloadController {
     private static final Logger LOGGER = Logger.getLogger(DifferentialPageDownloadController.class);
+    private static final String ALL_ANALYTICS_TSV = "-analytics.tsv";
+    private static final String RAW_COUNTS_TSV = "-raw-counts.tsv";
 
     private final RnaSeqRequestContextBuilder requestContextBuilder;
 
@@ -98,31 +100,30 @@ public class DifferentialPageDownloadController {
     public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        writeAllData(response, experiment.getAccession(), allDataWriterFactory.getRnaSeqRawDataWriter(), "-raw-counts.tsv");
+        prepareResponse(response, experiment.getAccession(), RAW_COUNTS_TSV);
+
+        ExpressionsWriter rnaSeqRawDataWriter = allDataWriterFactory.getRnaSeqRawDataWriter(experiment, response.getWriter());
+
+        long genesCount = rnaSeqRawDataWriter.write();
+                LOGGER.info("<download" + RAW_COUNTS_TSV + "> streamed " + genesCount + " gene expression profiles");
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=DIFFERENTIAL")
     public void downloadAllAnalytics(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        allDataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment);
+        prepareResponse(response, experiment.getAccession(), ALL_ANALYTICS_TSV);
 
-        writeAllData(response, experiment.getAccession(), allDataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment), "-all-analytics.tsv");
+        ExpressionsWriter rnaSeqAnalyticsDataWriter = allDataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment, response.getWriter());
+
+        long genesCount = rnaSeqAnalyticsDataWriter.write();
+        LOGGER.info("<download" + ALL_ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
 
     }
 
-    private void writeAllData(HttpServletResponse response,
-                              String experimentAccession,
-                              ExpressionsWriter writer,
-                              String fileExtension) throws IOException {
-
+    private void prepareResponse(HttpServletResponse response, String experimentAccession, String fileExtension) {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + "\"");
 
         response.setContentType("text/plain; charset=utf-8");
-
-        writer.setResponseWriter(response.getWriter());
-
-        long genesCount = writer.write(experimentAccession);
-        LOGGER.info("<download" + fileExtension + "> streamed " + genesCount + " gene expression profiles");
     }
 }

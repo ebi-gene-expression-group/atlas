@@ -35,7 +35,7 @@ public class RnaSeqRawCountsWriterTest {
     private String[] header = {"Gene", "SRR057596", "SRR057597", "SRR057598"};
     private String[] line = {"ens1", "1", "0", "10.5"};
 
-    private RnaSeqRawDataWriter subject;
+    private ExpressionsWriterImpl subject;
 
     @Before
     public void initSubject() throws Exception {
@@ -48,9 +48,10 @@ public class RnaSeqRawCountsWriterTest {
 
         RnaSeqRawDataHeaderBuilder headerBuilder = new RnaSeqRawDataHeaderBuilder();
 
-        subject = new RnaSeqRawDataWriter(csvReaderBuilderMock, geneNamesProviderMock, headerBuilder);
-        subject.setResponseWriter(printWriterMock);
+        subject = new ExpressionsWriterImpl(csvReaderBuilderMock, geneNamesProviderMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
+        subject.setHeaderBuilder(headerBuilder);
+        subject.setResponseWriter(printWriterMock);
     }
 
     @Test
@@ -61,7 +62,8 @@ public class RnaSeqRawCountsWriterTest {
 
     @Test
     public void testWrite() throws Exception {
-        Long count = subject.write("Exp1");
+        subject.setExperimentAccession("Exp1");
+        Long count = subject.write();
 
         verify(printWriterMock).write("Gene name\tGene Id\tSRR057596\tSRR057597\tSRR057598\n", 0, 48);
 

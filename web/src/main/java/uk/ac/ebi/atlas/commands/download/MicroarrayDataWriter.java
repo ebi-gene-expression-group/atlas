@@ -6,10 +6,10 @@ import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.utils.CsvReaderBuilder;
 
 import javax.inject.Inject;
+import java.text.MessageFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//@Named
 public class MicroarrayDataWriter extends ExpressionsWriterImpl {
 
 
@@ -34,5 +34,10 @@ public class MicroarrayDataWriter extends ExpressionsWriterImpl {
 
     public void setArrayDesignAccession(String arrayDesignAccession) {
         this.arrayDesignAccession = arrayDesignAccession;
+    }
+
+    @Override
+    protected String formatUrl(String fileUrlTemplate, String experimentAccession) {
+        return MessageFormat.format(fileUrlTemplate, experimentAccession, arrayDesignAccession);
     }
 }

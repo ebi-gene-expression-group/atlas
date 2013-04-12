@@ -44,6 +44,8 @@ import java.util.SortedSet;
 public abstract class DifferentialQueryPageRequestHandling<T extends DifferentialExperiment, K extends DifferentialRequestPreferences> {
 
     private static final String TSV_RAW_FILE_EXTENSION = "/raw-counts.tsv";
+    private static final String TSV_NORMALIZED_FILE_EXTENSION = "/normalized.tsv";
+
     private static final String TSV_ANALYTICS_FILE_EXTENSION = "/all-analytics.tsv";
 
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
@@ -86,6 +88,8 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
 
                 model.addAttribute("rawDownloadUrl", buildDownloadRawUrl(request));
 
+                model.addAttribute("normalizedUrl", buildDownloadNormalizedDataUrl(request));
+
                 model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
 
 
@@ -123,5 +127,10 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
     private String buildDownloadAllAnalyticsUrl(HttpServletRequest request) {
         return request.getRequestURI() + TSV_ANALYTICS_FILE_EXTENSION;
     }
+
+    private String buildDownloadNormalizedDataUrl(HttpServletRequest request) {
+        return request.getRequestURI() + TSV_NORMALIZED_FILE_EXTENSION;
+    }
+
 
 }
