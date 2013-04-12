@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 //@Named
-public abstract class MicroarrayDataWriter extends ExpressionsWriterImpl {
+public class MicroarrayDataWriter extends ExpressionsWriterImpl {
 
 
     private GeneNamesProvider geneNamesProvider;

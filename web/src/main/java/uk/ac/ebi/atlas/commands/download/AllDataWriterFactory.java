@@ -56,11 +56,25 @@ public class AllDataWriterFactory {
     }
 
 
-    public ExpressionsWriter getMicroarrayAnalyticsDataWriter() {
-        return null;
+    public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment, String arrayDesignAccession) {
+        MicroarrayAnalyticsDataHeaderBuilder headerBuilder = new MicroarrayAnalyticsDataHeaderBuilder();
+        headerBuilder.setExperiment(experiment);
+
+        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(csvReaderBuilder, geneNamesProvider, designElementMappingProvider);
+        microarrayDataWriter.setHeaderBuilder(headerBuilder);
+        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+
+        return microarrayDataWriter;
+
     }
 
-    public ExpressionsWriter getMicroarrayRawDataWriter() {
-        return null;
+    public ExpressionsWriter getMicroarrayRawDataWriter(String arrayDesignAccession) {
+        MicroarrayNormalizedDataHeaderBuilder headerBuilder = new MicroarrayNormalizedDataHeaderBuilder();
+
+        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(csvReaderBuilder, geneNamesProvider, designElementMappingProvider);
+        microarrayDataWriter.setHeaderBuilder(headerBuilder);
+        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+
+        return microarrayDataWriter;
     }
 }
