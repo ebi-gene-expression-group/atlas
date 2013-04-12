@@ -55,12 +55,20 @@ var heatmapModule = (function($) {
     function initHeatmapCellsClickHandling(){ //binds heatmap cells click handler
 
         $("#heatmap-table td:has(div[data-color])").click(function () {
+
+            $.fancybox({href : '#transcript-breakdown',
+                                    padding:0,
+                                    openEffect:'elastic',
+                                    closeEffect:'elastic'
+                                    });
+            /* uncomment this to restore expression level visualization
             var div = $(this).find("div");
             if (div.hasClass("hide_cell")) {
                 showCellText(div);
             } else if (div.hasClass("show_cell")) {
                 hideCellText(div);
             }
+            */
         });
     }
 
