@@ -174,12 +174,12 @@
     }
 </style>
 
-<div id="transcript-breakdown" style="display:none;height: 320px;width: 430px; padding-top:10px">
+<div id="transcript-breakdown" style="display:none;height: 320px;width: 450px; padding-top:10px">
     <p style = "text-align: center">
         Expression Level Breakdown for ENS.... (X transcripts) on liver
     </p>
     <div>
-        <div id="transcripts-pie" style="padding-top:10px;width: 420px;height:250px;line-height: 1.2em;">
+        <div id="transcripts-pie" style="padding-top:10px;width: 440px;height:250px;line-height: 1.2em;">
         </div>
         <!--
         <div style="float:right;width:120px;">
