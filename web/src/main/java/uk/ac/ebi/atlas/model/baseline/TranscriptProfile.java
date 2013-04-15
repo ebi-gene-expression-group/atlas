@@ -21,4 +21,8 @@ public class TranscriptProfile {
     public List<Double> getExpressions() {
         return Collections.unmodifiableList(expressions);
     }
+
+    public double getExpression(int index) {
+        return expressions.get(index);
+    }
 }
