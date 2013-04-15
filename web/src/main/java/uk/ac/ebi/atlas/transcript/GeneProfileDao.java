@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.transcript;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatementCallback;
@@ -21,6 +22,8 @@ import java.sql.SQLException;
 @Scope("prototype")
 public class GeneProfileDao {
 
+    private static final Logger LOGGER = Logger.getLogger(GeneProfileDao.class);
+
     @Inject
     private DataSource dataSource;
 
@@ -40,25 +43,25 @@ public class GeneProfileDao {
 
         JdbcTemplate template = new JdbcTemplate(dataSource);
 
-        template.execute(
-                "INSERT INTO experiment_transcripts VALUES (?, ?, ?)",
-                new AbstractLobCreatingPreparedStatementCallback(lobhandler) {
-                    protected void setValues(PreparedStatement ps, LobCreator lobCreator)
-                            throws SQLException {
+        template.execute("INSERT INTO experiment_transcripts VALUES (?, ?, ?)",
+                    new AbstractLobCreatingPreparedStatementCallback(lobhandler) {
+                        protected void setValues(PreparedStatement ps, LobCreator lobCreator)
+                                throws SQLException {
 
-                        ps.setString(1, experimentAccession);
-                        ps.setString(2, geneId);
+                            ps.setString(1, experimentAccession);
+                            ps.setString(2, geneId);
 
-                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
-                            objectOutputStream.writeObject(profiles);
-                            objectOutputStream.flush();
-                            lobCreator.setBlobAsBytes(ps, 3, byteArrayOutputStream.toByteArray());
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
+                                objectOutputStream.writeObject(profiles);
+                                objectOutputStream.flush();
+                                lobCreator.setBlobAsBytes(ps, 3, byteArrayOutputStream.toByteArray());
+                            } catch (IOException e) {
+                                LOGGER.error(e.getMessage(), e);
+                                throw new IllegalStateException(e);
+                            }
                         }
                     }
-                }
         );
     }
 }
