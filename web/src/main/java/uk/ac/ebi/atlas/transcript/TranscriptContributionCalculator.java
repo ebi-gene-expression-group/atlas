@@ -7,27 +7,29 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
-//@Named
+@Named
 public class TranscriptContributionCalculator {
 
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
     protected static final String OTHERS = "OTHERS";
 
-    private GeneProfileDao geneProfileDao;
+    private GeneProfileDaoMock geneProfileDao;
 
     private BaselineExperimentsCache experimentsCache;
 
-//    @Inject
-    public TranscriptContributionCalculator(GeneProfileDao geneProfileDao, BaselineExperimentsCache experimentsCache) {
+    @Inject
+    public TranscriptContributionCalculator(GeneProfileDaoMock geneProfileDao, BaselineExperimentsCache experimentsCache) {
         this.geneProfileDao = geneProfileDao;
         this.experimentsCache = experimentsCache;
     }
 
     public Map<String, Double> getTranscriptContributions(String geneId, String experimentAccession, Factor factor) {
 
-        List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(geneId, experimentAccession));
+        List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(experimentAccession, geneId));
 
         int factorIndex = getFactorIndex(experimentAccession, factor);
 
@@ -53,7 +55,7 @@ public class TranscriptContributionCalculator {
 
         for (TranscriptProfile transcriptProfile : transcriptProfiles) {
             if (count++ < TOP_TRANSCRIPTS_NUMBER) {
-                result.put(transcriptProfile.getIdentifier(), transcriptProfile.getExpression(factorIndex));
+                result.put(transcriptProfile.getTranscriptId(), transcriptProfile.getExpression(factorIndex));
             } else {
                 sum += transcriptProfile.getExpression(factorIndex);
             }
