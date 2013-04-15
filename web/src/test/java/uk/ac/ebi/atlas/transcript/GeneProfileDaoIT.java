@@ -20,49 +20,57 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.utils;
+package uk.ac.ebi.atlas.transcript;
 
+import com.google.common.collect.Lists;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
+import uk.ac.ebi.atlas.model.baseline.TranscriptProfiles;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class H2DataAccessIT {
+public class GeneProfileDaoIT {
+
+    @Inject
+    private GeneProfileDao subject;
 
     @Inject
     DataSource dataSource;
 
-    JdbcTemplate template;
+    private TranscriptProfiles testData;
 
-    @PostConstruct
+    @Before
     public void setup() {
-        template = new JdbcTemplate(dataSource);
+        TranscriptProfile profile = new TranscriptProfile("identifier", Lists.newArrayList(1.0, 2.0, 0.0));
+        testData = new TranscriptProfiles(Lists.newArrayList(profile));
     }
 
+    @After
+    public void tearDown() {
+        JdbcTemplate template = new JdbcTemplate(dataSource);
+        template.execute("delete from experiment_transcripts");
+    }
 
     @Test
-    public void testNonEmptyDataSource() {
-        assertThat(dataSource, is(not(nullValue())));
+    public void testGetTranscriptProfiles() throws Exception {
+
     }
 
     @Test
-    public void testCount() throws SQLException {
-        int count = template.queryForObject("select count(*) from experiment_transcripts", Integer.class);
-        assertThat(count, is(greaterThanOrEqualTo(0)));
+    public void testAddTranscriptProfiles() throws Exception {
+
+        subject.addTranscriptProfiles("accession", "geneId", testData);
+
     }
-
-
 }

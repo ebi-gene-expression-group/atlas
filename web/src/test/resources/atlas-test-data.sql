@@ -1,1 +1,1 @@
-INSERT INTO experiment_transcripts VALUES ('1','1','1','BLOB');
+INSERT INTO experiment_transcripts VALUES ('1','1',null);

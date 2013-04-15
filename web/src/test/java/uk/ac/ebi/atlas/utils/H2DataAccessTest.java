@@ -53,7 +53,7 @@ public class H2DataAccessTest {
         JdbcTemplate template = new JdbcTemplate(db);
         List<String> result = template.query("select * from experiment_transcripts", new RowMapper<String>() {
             public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return rs.getString("transcript_id");
+                return rs.getString("gene_id");
             }
         });
         assertThat(result.size(), is(1));
