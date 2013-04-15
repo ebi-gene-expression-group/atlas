@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 /*global $,jQuery,console,loadSliderAndPlot: false */
 /*jslint browser:true */
 /*jslint nomen: true*/
@@ -52,68 +74,73 @@ var heatmapModule = (function($) {
 
     }
 
-    function initHeatmapCellsClickHandling(){ //binds heatmap cells click handler
+    function initHeatmapCellsClickHandling(experimentAccession){ //binds heatmap cells click handler
+
+        function buildPlotData(transcriptRates) {
+            var data = [],
+                index = 0;
+            $.each(transcriptRates, function (key, value) {
+                data[index++] = {label: key, data: value};
+            });
+            return data;
+        }
 
         $("#heatmap-table td:has(div[data-color])").click(function () {
 
-            //click will have to use $.ajax, with all the following code that will be executed in the "success:" callback
+            //we need to identify gene and factorType for the cell being clicked
+            var factorType = $(this).find("div").attr("data-organism-part"),
+                geneId = $(this).parent().find("td a:eq(0)").attr("id");
 
-            //... but for now we just use mock data
+            $.ajax({
+                url: "json/transcripts/" + experimentAccession + "/" + geneId + "/" + factorType,
+                datatype: 'json',
+                success: function (data) {
+                    data = buildPlotData(data);
 
-            //this is mock data in the format returned by our rest controller.
-            var transcriptRates = {"ENST000001":25.0,"ENST000003":25.0,"ENST000002":25.0,"Others":25.0};
+                    $.plot('#transcripts-pie', data, {
+                        series: {
+                            pie: {
+                                show: true,
+                                radius:1,
+                                label: {
+                                    style: {color: "white"},
+                                    radius: 3/5,
+                                    show: true,
+                                    formatter: function(label, series){
+                                        return  series.percent + "%";},
+                                    background: {
+                                        opacity: 0.5
+                                    }
+                                }
+                            }
+                        },
+                        legend: {
 
-            var data = [],
-                index = 0;
-            $.each(transcriptRates, function(key, value){
-                                                        data[index++] = {label: key , data: value};
-                                                        });
-            $.plot('#transcripts-pie', data, {
-                series: {
-                    pie: {
-                        show: true,
-                        radius:1,
-                        label: {
-                            style: {color: "white"},
-                            radius: 3/5,
                             show: true,
-                            formatter: function(label, series){
-                                return  series.percent + "%";},
-                            background: {
-                                opacity: 0.5
+                            labelFormatter: function(label){
+                                return label === "Others" ? "Others" :
+                                    "<a href='http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642' target='_blank'>" +
+                                        label + "</a>";
                             }
                         }
-                    }
-                },
-                legend: {
+                    });
 
-                    show: true,
-                    labelFormatter: function(label){
-                        return label === "Others" ? "Others" :
-                                                    "<a href='http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642' target='_blank'>" +
-                                                    label + "</a>";
-                    }
+                    $.fancybox({href : '#transcript-breakdown',
+                        padding:0,
+                        openEffect:'elastic',
+                        closeEffect:'elastic',
+                        helpers: {
+                            overlay : {
+                                locked: false
+                            }
+                        }
+                    });
+
                 }
+            }).fail(function( data ) {
+                    console.log( "ERROR:  " + data );
             });
 
-            $.fancybox({href : '#transcript-breakdown',
-                                    padding:0,
-                                    openEffect:'elastic',
-                                    closeEffect:'elastic',
-                                    helpers: {
-                                        overlay : {
-                                            locked: false
-                                        }
-                                    }
-                          });
-            /* uncomment this to restore expression level visualization
-            var div = $(this).find("div");
-            if (div.hasClass("hide_cell")) {
-                showCellText(div);
-            } else if (div.hasClass("show_cell")) {
-                hideCellText(div);
-            }
-            */
         });
     }
 
@@ -231,7 +258,7 @@ var heatmapModule = (function($) {
 
     function initHeatmap(experimentAccession, differentialParameters){
 
-        initHeatmapCellsClickHandling();
+        initHeatmapCellsClickHandling(experimentAccession);
         initHeatmapCellsTooltip();
         initDownloadButton();
         initDisplayLevelsButton();
