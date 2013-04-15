@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -30,6 +31,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,7 +55,10 @@ public class BaselineExperimentTest {
     ExperimentRun runMock2;
 
     @Mock
-    FactorGroup factorGroupMock;
+    FactorGroup factorGroupMock1;
+
+    @Mock
+    FactorGroup factorGroupMock2;
 
     @Mock
     Factor factorMock;
@@ -64,9 +69,9 @@ public class BaselineExperimentTest {
 
     @Before
     public void setUp() throws Exception {
-        when(runMock1.getFactorGroup()).thenReturn(factorGroupMock);
+        when(runMock1.getFactorGroup()).thenReturn(factorGroupMock1);
         when(runMock1.getAccession()).thenReturn(RUN_ACCESSION1);
-        when(runMock2.getFactorGroup()).thenReturn(factorGroupMock);
+        when(runMock2.getFactorGroup()).thenReturn(factorGroupMock2);
         when(runMock2.getAccession()).thenReturn(RUN_ACCESSION2);
 
         subject = new BaselineExperiment("accession", experimentalFactorsMock,
@@ -79,7 +84,7 @@ public class BaselineExperimentTest {
 
     @Test
     public void testGetFactorGroup() throws Exception {
-        assertThat(subject.getFactorGroup(RUN_ACCESSION1), is(factorGroupMock));
+        assertThat(subject.getFactorGroup(RUN_ACCESSION1), is(factorGroupMock1));
     }
 
     @Test
@@ -100,5 +105,12 @@ public class BaselineExperimentTest {
     @Test
     public void testGetExperimentalFactors() throws Exception {
         assertThat(subject.getExperimentalFactors(), is(experimentalFactorsMock));
+    }
+
+    @Test
+    public void testCreateOrderedFactorGroups() throws Exception {
+        List<FactorGroup> orderedFactorGroups = subject.createOrderedFactorGroups(Lists.newArrayList(RUN_ACCESSION2, RUN_ACCESSION1));
+
+        assertThat(orderedFactorGroups, contains(factorGroupMock2, factorGroupMock1));
     }
 }

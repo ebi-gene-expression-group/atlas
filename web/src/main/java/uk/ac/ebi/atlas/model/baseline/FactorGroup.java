@@ -41,4 +41,5 @@ public interface FactorGroup extends Iterable<Factor>, Serializable {
 
     public List<Factor> remove(Collection<Factor> factors);
 
+    public boolean contains(Factor factor);
 }

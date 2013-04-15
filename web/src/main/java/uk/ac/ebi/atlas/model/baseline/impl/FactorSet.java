@@ -92,4 +92,11 @@ public class FactorSet implements FactorGroup {
 
         return allFactors;
     }
+
+    @Override
+    public boolean contains(Factor factor) {
+        return factorsByType.containsValue(factor);
+    }
+
+
 }

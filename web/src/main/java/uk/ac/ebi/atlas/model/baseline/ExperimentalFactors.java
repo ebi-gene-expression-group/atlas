@@ -42,6 +42,8 @@ public class ExperimentalFactors implements Serializable {
 
     private Set<String> menuFilterFactorTypes;
 
+    private List<FactorGroup> orderedFactorGroups;
+
     ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType, Map<String, String> factorNamesByType, Collection<FactorGroup> factorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes) {
         this.factorsByType = factorsByType;
         this.factorNamesByType.putAll(factorNamesByType);
@@ -112,4 +114,16 @@ public class ExperimentalFactors implements Serializable {
         return ImmutableSortedSet.copyOf(factorsByType.values());
     }
 
+    public void setOrderedFactorGroups(List<FactorGroup> orderedFactorGroups) {
+        this.orderedFactorGroups = orderedFactorGroups;
+    }
+
+    public int getFactorIndex(Factor factor) {
+        for (FactorGroup factorGroup : orderedFactorGroups) {
+            if (factorGroup.contains(factor)) {
+                return orderedFactorGroups.indexOf(factorGroup);
+            }
+        }
+        return -1;
+    }
 }

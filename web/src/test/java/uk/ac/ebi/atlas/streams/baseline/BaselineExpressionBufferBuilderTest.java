@@ -100,7 +100,7 @@ public class BaselineExpressionBufferBuilderTest {
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
         subject.withHeaders("ENS1", "ENS2");
         //then
-        verify(experimentsCacheMock, times(2)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
+        verify(experimentsCacheMock, times(1)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
 
     }
 
