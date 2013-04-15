@@ -236,7 +236,7 @@ sub readEreapConf {
 			my $assayGroups = (split "=", $line)[1];
 
 			# join assay group numbers with an underscore.
-			my $assayGroupPair = join "_", (split " ", $assayGroups);
+			my $agPair = join "_", (split " ", $assayGroups);
 			# use assay group string as key in hash, add eREAP's contrast name
 			# under "ereap" key.
 			my $contrastName = (split "=", $line)[0];
@@ -249,10 +249,10 @@ sub readEreapConf {
 			
 			# Add DESeq filename to hash, as long as already have an entry for
 			# this contrast. If not, die.
-			if(exists($contrastHash->{ "rnaseq" }->{ $assayGroupPair })) {
-				$contrastHash->{ "rnaseq" }->{ $assayGroupPair }->{ "deseqFile" } = $deseqFile;
+			if(exists($contrastHash->{ "rnaseq" }->{ $agPair })) {
+				$contrastHash->{ "rnaseq" }->{ $agPair }->{ "deseqFile" } = $deseqFile;
 			} else {
-				die "\nDidn't have contrast \"$contrastName\" ($assayGroupPair) in Atlas XML.\n";
+				die "\nDidn't have contrast \"$contrastName\" ($agPair) in Atlas XML.\n";
 			}
 
 		}
@@ -267,14 +267,14 @@ sub readEreapConf {
 	unless($numContrasts == 1) { print "s"; }
 	print " found in eREAP config:\n";
 	
-	foreach my $assayGroupPair (keys %{ $contrastHash->{ "rnaseq"} }) {
-		if(exists($contrastHash->{ "rnaseq" }->{ $assayGroupPair }->{ "deseqFile" })) {
+	foreach my $agPair (keys %{ $contrastHash->{ "rnaseq"} }) {
+		if(exists($contrastHash->{ "rnaseq" }->{ $agPair }->{ "deseqFile" })) {
 
-			my $contrastName = basename($contrastHash->{ "rnaseq" }->{ $assayGroupPair }->{ "deseqFile" });
+			my $contrastName = basename($contrastHash->{ "rnaseq" }->{ $agPair }->{ "deseqFile" });
 			$contrastName =~ s/\.genes_de\.tsv//;
 			print "\t$contrastName\n";
 		} else {
-			die "Contrast \"", $contrastHash->{ "rnaseq" }->{ $assayGroupPair }->{ "atlasName "}, "\" ($assayGroupPair) was not found in eREAP config.\n";
+			die "Contrast \"", $contrastHash->{ "rnaseq" }->{ $agPair }->{ "atlasName "}, "\" ($agPair) was not found in eREAP config.\n";
 		}
 	}
 	print "\n";
@@ -315,10 +315,10 @@ sub getDEresults {
 			print "\nCollecting DESeq results...\n";
 			
 			# Get results for each contrast
-			foreach my $assayGroupPair (keys %{ $contrastHash->{ "rnaseq" } }) {
+			foreach my $agPair (keys %{ $contrastHash->{ "rnaseq" } }) {
 
-				my $deseqFile = $contrastHash->{ "rnaseq" }->{ $assayGroupPair }->{ "deseqFile" };
-				my $atlasName = $contrastHash->{ "rnaseq" }->{ $assayGroupPair }->{ "atlasName" };
+				my $deseqFile = $contrastHash->{ "rnaseq" }->{ $agPair }->{ "deseqFile" };
+				my $atlasName = $contrastHash->{ "rnaseq" }->{ $agPair }->{ "atlasName" };
 			
 				# Need to get column indices of "baseMean", "log2FoldChange", and "padj" in DESeq results.
 				my ($basemeanIdx, $logfcIdx, $adjpvalIdx);
@@ -367,7 +367,7 @@ sub getDEresults {
 						}
 						
 						# Add to hash for file of all contrasts' results.
-						$diffExpRes->{ $geneID }->{ $assayGroupPair } = [ $adjPval, $logFC ];
+						$diffExpRes->{ $geneID }->{ $agPair } = [ $adjPval, $logFC ];
 						# Add to file for MvA plot.
 						printf(PLOTDATA "\n$geneID\t$baseMean\t$logFC\t$adjPval");
 					}
@@ -377,11 +377,11 @@ sub getDEresults {
 				print "done\n";
 
 				# Filename for MvA plot
-				my $plotFile = "$exptAcc-".$assayGroupPair."-mvaPlot.png";
+				my $plotFile = "$exptAcc-".$agPair."-mvaPlot.png";
 				# Create MvA
 				makeMvaPlot("rnaseq", $plotFile, $plotDataTempFile, $atlasName, $mvaScript);
 			
-			} # foreach my $assayGroupPair (keys %{ $contrastHash->{ "rnaseq" } })
+			} # foreach my $agPair (keys %{ $contrastHash->{ "rnaseq" } })
 		
 		} # if($platform eq "rnaseq")
 
@@ -392,26 +392,82 @@ sub getDEresults {
 			my $limmaResTempFile = ".limma_res.txt";
 			print "\n";
 
-			# Normalized expressions filename
-			my $normExpr = $exptAcc."_".$platform."-normalized-expressions.tsv";
-			unless(-e $normExpr) {
-				die "Can't find normalized expressions matrix \"$normExpr\"\n";
-			}
 			
 			# Get results for each contrast.
-			foreach my $assayGroupPair (keys %{ $contrastHash->{ $platform } }) {
+			foreach my $agPair (keys %{ $contrastHash->{ $platform } }) {
 
-				my $atlasName = $contrastHash->{ $platform }->{ $assayGroupPair }->{ "atlasName" };
+				
+				my $atlasName = $contrastHash->{ $platform }->{ $agPair }->{ "atlasName" };
+				
+				# Variables for normalized expressions and average intensities
+				# filenames (only need $aValues if we have a 2-colour design.
+				my ($normExpr, $aValues);
+				
+				# Work out whether this is a 2-colour design or not. We can't
+				# necessarily go by array design accession because some array
+				# designs can be used for 1-colour and 2-colour designs.
+				# First see if the arrays of test and reference assay
+				# accessions are the same length. If not this can't be
+				# 2-colour.
+				if(@{ $contrastHash->{ $platform }->{ $agPair }->{ "reference"} } == @{ $contrastHash->{ $platform }->{ $agPair }->{ "test" } }) {
+					
+					# Next strip any ".Cy3" and ".Cy5" from the ends of each assay
+					# accession, and then compare the accessions. After
+					# removing ".Cy3" and ".Cy5", the arrays of assay
+					# accessions should be identical for a 2-colour design.
+					my @refAssaysNoCy = sort(stripCy(@{ $contrastHash->{ $platform }->{ $agPair }->{ "reference" } })); 
+					my @testAssaysNoCy = sort(stripCy(@{ $contrastHash->{ $platform }->{ $agPair }->{ "test" } }));
+			
+					my $same = 1;
+					my $c = 0;
+					foreach my $refAssay (@refAssaysNoCy) {
+						
+						if($refAssay ne $testAssaysNoCy[$c]) {
+
+							$same = 0;
+						}
+						$c++;
+					}
+					# if the two arrays of assay accessions are the same, we
+					# can assume we have a 2-colour design.
+					if($same) {
+
+						print "Contrast \"$atlasName\" has 2-colour design.\n";
+
+						# $normExpr gets filename for log-fold-changes
+						$normExpr = $exptAcc."_".$platform."-log-fold-changes.tsv";
+						$aValues = $exptAcc."_".$platform."-average-intensities.tsv";
+					}
+				}
+				
+				# If $aValues is still undef, that means this is a single-colour design.
+				unless($aValues) {
+
+					print "Contrast \"$atlasName\" has 1-colour design.\n";
+
+					# Normalized expressions filename
+					$normExpr = $exptAcc."_".$platform."-normalized-expressions.tsv";
+					unless(-e $normExpr) {
+						die "Can't find normalized expressions matrix \"$normExpr\"\n";
+					}
+				}
+				
+				
 				
 				# Reference and test assay accessions for limma script
-				my $refAssays = join ",", @{ $contrastHash->{ $platform }->{ $assayGroupPair }->{ "reference" }};
-				my $testAssays = join ",", @{ $contrastHash->{ $platform }->{ $assayGroupPair }->{ "test" }};
+				my $refAssays = join ",", @{ $contrastHash->{ $platform }->{ $agPair }->{ "reference" }};
+				my $testAssays = join ",", @{ $contrastHash->{ $platform }->{ $agPair }->{ "test" }};
 
 				print "Computing differential expression statistics for contrast \"", $atlasName, "\"...";
 
-				# Run limma script
-				my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
-		
+				if($aValues) {
+
+					my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile $aValues 2>&1`;
+				}
+				else {
+					# Run limma script
+					my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
+				}
 
 				# Check for errors. This does not catch warnings.
 				if($R_limmaOutput =~ /error/i) {
@@ -441,14 +497,14 @@ sub getDEresults {
 						
 						# Add array [p-value, t-statistic, logFoldChange] to hash for this
 						# design element for this contrast.
-						$diffExpRes->{ $designElement }->{ $assayGroupPair } = \@lineSplit;
+						$diffExpRes->{ $designElement }->{ $agPair } = \@lineSplit;
 					}
 				}
 				close(LIMMARES);
 
 
 				# Filename for MvA plot
-				my $plotFile = $exptAcc."_".$platform."-".$assayGroupPair."-mvaPlot.png";
+				my $plotFile = $exptAcc."_".$platform."-".$agPair."-mvaPlot.png";
 				# Create MvA
 				makeMvaPlot("microarray", $plotFile, $plotDataTempFile, $atlasName, $mvaScript);
 			}
@@ -514,10 +570,10 @@ sub writeResults {
 	# Write column headers
 	if($platform eq "rnaseq") { printf(RESFILE "Gene ID"); }
 	else { printf(RESFILE "Design Element"); }
-	foreach my $assayGroupPair (keys %{ $contrastHash->{ $platform } }) {
-		printf(RESFILE "\t$assayGroupPair.p-value");
-		unless($platform eq "rnaseq") { printf(RESFILE "\t$assayGroupPair.t-statistic"); }
-		printf(RESFILE "\t$assayGroupPair.log2foldchange");
+	foreach my $agPair (keys %{ $contrastHash->{ $platform } }) {
+		printf(RESFILE "\t$agPair.p-value");
+		unless($platform eq "rnaseq") { printf(RESFILE "\t$agPair.t-statistic"); }
+		printf(RESFILE "\t$agPair.log2foldchange");
 	}
 
 	# Write statistics
@@ -527,11 +583,11 @@ sub writeResults {
 
 		# Use ordering of assay group pairs from %contrastHash so stats are in
 		# the same order as the headers.
-		foreach my $assayGroupPair (keys %{ $contrastHash->{ $platform } }) {
+		foreach my $agPair (keys %{ $contrastHash->{ $platform } }) {
 
 			my $statsString = "";
-			if(exists($diffExpRes->{ $id }->{ $assayGroupPair })) {
-				$statsString = join "\t", @{ $diffExpRes->{ $id }->{ $assayGroupPair }};
+			if(exists($diffExpRes->{ $id }->{ $agPair })) {
+				$statsString = join "\t", @{ $diffExpRes->{ $id }->{ $agPair }};
 			} else {
 
 				# Some genes are excluded if their counts are zero across all
@@ -547,4 +603,22 @@ sub writeResults {
 			printf(RESFILE "\t$statsString");
 		}
 	}
+}
+			
+
+
+
+
+# stripCy
+# 	- remove ".Cy3" or ".Cy5" from ends of assay names.
+sub stripCy {
+				
+	my @assayNames = @_;
+	my @assayNamesNoCy = ();
+	foreach my $assayName (@assayNames) {
+
+		$assayName =~ s/\.Cy\d$//;
+		push @assayNamesNoCy, $assayName;
+	}
+	return @assayNamesNoCy;
 }
