@@ -33,9 +33,6 @@ import java.util.List;
 
 public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithSearchFormPage{
 
-    private static final String XPATH_LAST_YAXIS_TICK = "//div[@class='yAxis y1Axis']/div[@class='tickLabel'][last()]";
-    private static final String XPATH_LAST_XAXIS_TICK = "//div[@class='xAxis x1Axis']/div[@class='tickLabel'][last()]";
-
     @FindBy(id = "geneCount")
     private WebElement geneCountDiv;
 
@@ -66,8 +63,8 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
-                String lastYTick = webDriver.findElement(By.xpath(XPATH_LAST_YAXIS_TICK)).getText();
-                String lastXTick = webDriver.findElement(By.xpath(XPATH_LAST_XAXIS_TICK)).getText();
+                String lastYTick = webDriver.findElement(By.className("y1Axis")).findElement(By.className("tickLabel")).getText();
+                String lastXTick = webDriver.findElement(By.className("x1Axis")).findElement(By.className("tickLabel")).getText();
                 return !lastXTick.isEmpty() && !lastYTick.isEmpty();
             }
         });
