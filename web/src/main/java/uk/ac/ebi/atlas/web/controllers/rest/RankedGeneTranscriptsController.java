@@ -23,19 +23,17 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
-import org.apache.commons.collections.FastHashMap;
+import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.cache.baseline.BarChartTradersCache;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 @Controller
 @Scope("request")
@@ -43,18 +41,29 @@ public class RankedGeneTranscriptsController {
 
 
 
-    @RequestMapping(value = "/json/transcripts/{geneId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/transcripts/{experimentAccession}/{geneId}/{factor}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getRankedTranscripts(HttpServletRequest request, @PathVariable String geneId,
-                         @RequestParam(value = "rankingSize", required = true) Integer rankingSize) {
+    public String getRankedTranscripts(HttpServletRequest request, @PathVariable String experimentAccession,
+                                       @PathVariable String geneId,
+                                       @PathVariable String factor,
+                                        @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
 
         SortedMap<String, Double> transcriptRates = new TreeMap();
 
+        //Following code is just to generate random ranking, don't keep it seriously!
+
+        double topTranscriptsTotalPercentage = 0;
         for(int i = 0; i < rankingSize; i++){
-            transcriptRates.put("ENST00000" + (i + 1), 100d/(rankingSize + 1));
+            double randomPortion = (100d - RandomUtils.nextInt(50))/(rankingSize + 1);
+            randomPortion = MathUtils.round(randomPortion, 2);
+
+            transcriptRates.put("ENST00000" + (i + 1), randomPortion);
+            topTranscriptsTotalPercentage += randomPortion;
         }
-        transcriptRates.put("Others", 100 - (100d/(rankingSize+1))*rankingSize);
+
+        double othersPortion = 100 - topTranscriptsTotalPercentage;
+        transcriptRates.put("Others", othersPortion);
 
 
         return new Gson().toJson(transcriptRates, Map.class);
