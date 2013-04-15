@@ -59,10 +59,9 @@ public class H2DataAccessIT {
     }
 
     @Test
-    public void testInsertRow() throws SQLException {
-        int i = template.update(
-                "insert into experiment_transcripts VALUES ('2','2','2','BLOB')");
-        assertThat(i, is(1));
+    public void testCount() throws SQLException {
+        int count = template.queryForObject("select count(*) from experiment_transcripts", Integer.class);
+        assertThat(count, is(greaterThanOrEqualTo(0)));
     }
 
 
