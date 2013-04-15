@@ -81,4 +81,6 @@
         <jdbc:script location="classpath:atlas-schema.sql"/>
     </jdbc:initialize-database>
 
+    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
+
 </beans>
