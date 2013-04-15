@@ -119,11 +119,16 @@ var heatmapModule = (function($) {
                             show: true,
                             labelFormatter: function(label){
                                 return label === "Others" ? "Others" :
-                                    "<a href='http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642' target='_blank'>" +
+                                    "<a href='http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=" + geneId + ";t=" + label + "' target='_blank'>" +
                                         label + "</a>";
                             }
                         }
                     });
+
+                    $('#transcript-breakdown-title').text(
+                        "Expression Level Breakdown for " + geneId + " (3 transcripts) on " + factorType
+                    );
+
 
                     $.fancybox({href : '#transcript-breakdown',
                         padding:0,

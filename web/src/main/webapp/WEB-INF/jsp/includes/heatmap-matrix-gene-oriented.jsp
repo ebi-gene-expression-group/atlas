@@ -175,56 +175,12 @@
 </style>
 
 <div id="transcript-breakdown" style="display:none;height: 320px;width: 450px; padding-top:10px">
-    <p style = "text-align: center">
-        Expression Level Breakdown for ENS.... (X transcripts) on liver
+    <p id="transcript-breakdown-title" style = "text-align: center">
+        ...
     </p>
     <div>
         <div id="transcripts-pie" style="padding-top:10px;width: 440px;height:250px;line-height: 1.2em;">
         </div>
-        <!--
-        <div style="float:right;width:120px;">
-            <ul>
-
-                <style>
-                    #transcript-breakdown ul {
-                        list-style: none;
-                        margin-left: 0;
-                        padding-left: 0;
-                    }
-
-                    #transcript-breakdown li {
-                        padding-left: 1em;
-                        text-indent: -1em;
-                    }
-                    #transcript-breakdown li:before {
-                        font-size: 18px;
-                        content: '\25A0';
-                        color:green;
-                        padding-right: 5px;
-                    }
-                </style>
-
-                <li>
-                    <a href="http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642" target="_blank">
-                        Transcript 1
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642" target="_blank">
-                        Transcript 2
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=ENSG00000006042;t=ENST00000394642" target="_blank">
-                        Transcript 3
-                    </a>
-                </li>
-                <li>
-                        Others
-                </li>
-            </ul>
-        </div>
-        -->
     </div>
 </div>
 
