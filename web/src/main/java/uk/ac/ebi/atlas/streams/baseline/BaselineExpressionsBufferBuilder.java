@@ -24,6 +24,8 @@ package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -82,26 +84,27 @@ public class BaselineExpressionsBufferBuilder implements TsvRowBufferBuilder<Bas
 
         List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
 
-        for (String columnHeader : columnHeaders) {
+        initOrderedFactorGroups(columnHeaders);
 
-            orderedFactorGroups.add(getFactorGroup(columnHeader, experimentAccession));
-
-        }
         readyToCreate = true;
 
         return this;
     }
 
+    protected void initOrderedFactorGroups(List<String> columnHeaders) {
 
-    private FactorGroup getFactorGroup(String columnHeader, String experimentAccession) {
-
-        String firstRunAccession = StringUtils.substringBefore(columnHeader, ",").trim();
+        List<String> firstRunAccessions = Lists.newArrayList(Collections2.transform(columnHeaders, new Function<String, String>() {
+            @Override
+            public String apply(String columnHeader) {
+                return StringUtils.substringBefore(columnHeader, ",").trim();
+            }
+        }));
 
         BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-        return experiment.getFactorGroup(firstRunAccession);
+        orderedFactorGroups = experiment.createOrderedFactorGroups(firstRunAccessions);
 
     }
+
 
     @Override
     public BaselineExpressionsBuffer create() {

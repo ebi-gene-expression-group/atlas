@@ -83,4 +83,14 @@ public class BaselineExperiment extends Experiment {
         return experimentalFactors;
     }
 
+    public List<FactorGroup> createOrderedFactorGroups(List<String> runAccessions) {
+        List<FactorGroup> orderedFactorGroups = new ArrayList<>();
+        for (String runAccession : runAccessions) {
+            orderedFactorGroups.add(getFactorGroup(runAccession));
+        }
+
+        experimentalFactors.setOrderedFactorGroups(orderedFactorGroups);
+
+        return orderedFactorGroups;
+    }
 }
