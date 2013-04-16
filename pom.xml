@@ -43,7 +43,7 @@
         and are overridden in profiles for specific deployment environments-->
         <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
         <berkeley.schema.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/bdb-lime</berkeley.schema.location>
-        <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2-lime</h2.database.location>
+        <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2-lime/atlas</h2.database.location>
         <solr.host>ves-ebi-7f</solr.host>
         <gxa.server.url>http://wwwdev.ebi.ac.uk/gxa</gxa.server.url>
         <deploy.host>
@@ -557,7 +557,7 @@
             <properties>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
                 <berkeley.schema.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/bdb</berkeley.schema.location>
-                <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2</h2.database.location>
+                <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2/atlas</h2.database.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
@@ -578,7 +578,7 @@
                 -->
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <berkeley.schema.location>${data.files.location}/bdb</berkeley.schema.location>
-                <h2.database.location>${user.home}/ATLAS3.TEST/data/h2</h2.database.location>
+                <h2.database.location>${user.home}/ATLAS3.TEST/data/h2/atlas</h2.database.location>
 
             </properties>
         </profile>
