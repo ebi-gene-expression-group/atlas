@@ -23,11 +23,9 @@
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Lists;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -60,12 +58,6 @@ public class GeneProfileDaoIT {
         TranscriptProfile transcriptProfile1 = new TranscriptProfile("A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
         TranscriptProfile transcriptProfile2 = new TranscriptProfile("A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 0D));
         transcriptProfiles = new TranscriptProfiles(Lists.newArrayList(transcriptProfile1, transcriptProfile2));
-    }
-
-    @After
-    public void tearDown() {
-        JdbcTemplate template = new JdbcTemplate(dataSource);
-        template.execute("delete from experiment_transcripts");
     }
 
     @Test
