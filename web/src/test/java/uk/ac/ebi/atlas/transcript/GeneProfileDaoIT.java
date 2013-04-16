@@ -65,8 +65,8 @@ public class GeneProfileDaoIT {
     @Test
     public void testAddTranscriptProfiles() throws Exception {
 
-        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
-        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile2);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile2);
 
         Collection<TranscriptProfile> deserializedTranscriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID);
 
@@ -77,7 +77,7 @@ public class GeneProfileDaoIT {
     @Test
     public void testFailsToFindNotExistingTranscriptProfile() throws Exception {
 
-        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
 
         Collection<TranscriptProfile> transcriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, "not valid");
 
