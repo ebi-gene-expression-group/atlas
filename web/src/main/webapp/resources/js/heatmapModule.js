@@ -93,7 +93,12 @@ var heatmapModule = (function($) {
                 geneId = $(this).parent().find("td a:eq(0)").attr("id");
 
             $.ajax({
-                url: "json/transcripts/" + experimentAccession + "/" + geneId + "/" + factorType + "/" + factorValue,
+                url: "json/transcripts/" + experimentAccession,
+                data:{
+                    'geneId': geneId,
+                    'factorType': factorType,
+                    'factorValue' : factorValue
+                },
                 datatype: 'json',
                 success: function (data) {
                     data = buildPlotData(data);

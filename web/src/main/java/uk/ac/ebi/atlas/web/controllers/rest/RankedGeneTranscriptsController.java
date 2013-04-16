@@ -22,7 +22,10 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -45,38 +48,43 @@ public class RankedGeneTranscriptsController {
         this.transcriptContributionCalculator = transcriptContributionCalculator;
     }
 
-    @RequestMapping(value = "/json/transcripts/{experimentAccession}/{geneId}/{factorType}/{factorValue}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/transcripts/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getRankedTranscripts(HttpServletRequest request, @PathVariable String experimentAccession,
-                                       @PathVariable String geneId,
-                                       @PathVariable String factorValue,
-                                       @PathVariable String factorType,
+                                       @RequestParam("geneId") String geneId,
+                                       @RequestParam("factorType") String factorType,
+                                       @RequestParam("factorValue") String factorValue,
                                        @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
 
         Factor factor = new Factor(factorType, factorValue);
 
-        Map<String, Double> transcriptRates = transcriptContributionCalculator.getTranscriptContributions(geneId, experimentAccession, factor);
+        Map<String, Double> transcriptExpressions = transcriptContributionCalculator.getTranscriptContributions(geneId, experimentAccession, factor);
 
-//        SortedMap<String, Double> transcriptRates = new TreeMap();
-//
-//        //Following code is just to generate random ranking, don't keep it seriously!
-//
-//        double topTranscriptsTotalPercentage = 0;
-//        for(int i = 0; i < rankingSize; i++){
-//            double randomPortion = (100d - RandomUtils.nextInt(50))/(rankingSize + 1);
-//            randomPortion = MathUtils.round(randomPortion, 2);
-//
-//            transcriptRates.put("ENST00000" + (i + 1), randomPortion);
-//            topTranscriptsTotalPercentage += randomPortion;
-//        }
-//
-//        double othersPortion = 100 - topTranscriptsTotalPercentage;
-//        transcriptRates.put("Others", othersPortion);
+        Double totalExpression = 0D;
 
+        for (Double transcriptExpression: transcriptExpressions.values()){
+            totalExpression += transcriptExpression;
+        }
+
+        Map<String, Double> transcriptRates = Maps.transformValues(transcriptExpressions, new PercentageFunction(totalExpression));
 
         return new Gson().toJson(transcriptRates, Map.class);
 
+    }
+
+    private class PercentageFunction implements Function<Double, Double>{
+
+        private Double totalExpression;
+
+        public PercentageFunction(Double totalExpression){
+            this.totalExpression = totalExpression;
+        }
+
+        @Override
+        public Double apply(java.lang.Double aDouble) {
+            return MathUtils.round((aDouble / totalExpression) * 100, 1);
+        }
     }
 
 }
