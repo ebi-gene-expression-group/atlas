@@ -22,9 +22,13 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class TranscriptProfiles implements Iterable<TranscriptProfile>, Serializable {
 
@@ -37,5 +41,32 @@ public class TranscriptProfiles implements Iterable<TranscriptProfile>, Serializ
     @Override
     public Iterator<TranscriptProfile> iterator() {
         return transcriptProfiles.iterator();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TranscriptProfiles other = (TranscriptProfiles) obj;
+
+        return Objects.equals(transcriptProfiles, other.transcriptProfiles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transcriptProfiles);
+    }
+
+    public String toJson(){
+        return new Gson().toJson(this);
+    }
+
+    public static TranscriptProfiles fromJson(String jsonString){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.fromJson(jsonString, TranscriptProfiles.class);
     }
 }

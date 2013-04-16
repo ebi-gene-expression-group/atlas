@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.Lists;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +31,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
+import uk.ac.ebi.atlas.model.baseline.TranscriptProfiles;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,14 +41,20 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+
 public class H2DataAccessTest {
+
     private EmbeddedDatabase db;
+
+    private TranscriptProfiles transcriptProfiles;
 
     @Before
     public void setUp() {
         // creates a HSQL in-memory db populated from default scripts classpath:schema.sql and classpath:test-data.sql
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         db = builder.setType(EmbeddedDatabaseType.H2).addScript("atlas-schema.sql").addScript("atlas-test-data.sql").build();
+
+
     }
 
     @Test

@@ -22,9 +22,12 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class TranscriptProfile implements Serializable {
 
@@ -48,4 +51,24 @@ public class TranscriptProfile implements Serializable {
     public double getExpression(int index) {
         return expressions.get(index);
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TranscriptProfile other = (TranscriptProfile) obj;
+
+        return Objects.equals(transcriptId, other.transcriptId)
+                && Objects.equals(expressions, other.expressions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transcriptId, expressions);
+    }
+
 }

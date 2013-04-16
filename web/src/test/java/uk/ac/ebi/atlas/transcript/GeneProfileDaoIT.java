@@ -37,23 +37,29 @@ import uk.ac.ebi.atlas.model.baseline.TranscriptProfiles;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class GeneProfileDaoIT {
 
+    private static final String EXPERIMENT_ACCESSION = "experiment_accession";
+    private static final String GENE_ID = "geneId";
     @Inject
     private GeneProfileDao subject;
 
     @Inject
     DataSource dataSource;
 
-    private TranscriptProfiles testData;
+    private TranscriptProfiles transcriptProfiles;
 
     @Before
     public void setup() {
-        TranscriptProfile profile = new TranscriptProfile("identifier", Lists.newArrayList(1.0, 2.0, 0.0));
-        testData = new TranscriptProfiles(Lists.newArrayList(profile));
+        TranscriptProfile transcriptProfile1 = new TranscriptProfile("A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
+        TranscriptProfile transcriptProfile2 = new TranscriptProfile("A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 0D));
+        transcriptProfiles = new TranscriptProfiles(Lists.newArrayList(transcriptProfile1, transcriptProfile2));
     }
 
     @After
@@ -63,14 +69,13 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void testGetTranscriptProfiles() throws Exception {
-
-    }
-
-    @Test
     public void testAddTranscriptProfiles() throws Exception {
 
-        subject.addTranscriptProfiles("accession", "geneId", testData);
+        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfiles);
+
+        TranscriptProfiles deserializedTranscriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID);
+
+        assertThat(deserializedTranscriptProfiles, is(transcriptProfiles));
 
     }
 }

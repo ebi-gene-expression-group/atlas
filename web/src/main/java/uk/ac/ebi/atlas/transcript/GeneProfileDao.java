@@ -1,8 +1,11 @@
 package uk.ac.ebi.atlas.transcript;
 
+import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatementCallback;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.jdbc.support.lob.LobHandler;
@@ -15,7 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 
 @Named
@@ -34,34 +39,21 @@ public class GeneProfileDao {
 
         JdbcTemplate template = new JdbcTemplate(dataSource);
 
-        return template.queryForObject("select transcript_profiles where experiment_accession = ? and gene_id = ?",
-                new String[]{experimentAccession, geneId},
-                TranscriptProfiles.class);
-    }
+        return template.queryForObject("select transcript_profiles from experiment_transcripts where experiment_accession = ? and gene_id = ?",
+                    new String[]{experimentAccession, geneId},
+                    new RowMapper<TranscriptProfiles>() {
+                        public TranscriptProfiles mapRow(ResultSet rs, int rowNum) throws SQLException {
+                            return TranscriptProfiles.fromJson(rs.getString("transcript_profiles"));
+                        }
+                    });
+        }
 
     public void addTranscriptProfiles(final String experimentAccession, final String geneId, final TranscriptProfiles profiles) throws IOException {
 
-        JdbcTemplate template = new JdbcTemplate(dataSource);
-
-        template.execute("INSERT INTO experiment_transcripts VALUES (?, ?, ?)",
-                    new AbstractLobCreatingPreparedStatementCallback(lobhandler) {
-                        protected void setValues(PreparedStatement ps, LobCreator lobCreator)
-                                throws SQLException {
-
-                            ps.setString(1, experimentAccession);
-                            ps.setString(2, geneId);
-
-                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
-                                objectOutputStream.writeObject(profiles);
-                                objectOutputStream.flush();
-                                lobCreator.setBlobAsBytes(ps, 3, byteArrayOutputStream.toByteArray());
-                            } catch (IOException e) {
-                                LOGGER.error(e.getMessage(), e);
-                                throw new IllegalStateException(e);
-                            }
-                        }
-                    }
-        );
+        Map<String, Object> insertParameters = Maps.newHashMap();
+        insertParameters.put("experiment_accession", experimentAccession);
+        insertParameters.put("gene_id", geneId);
+        insertParameters.put("transcript_profiles", profiles.toJson());
+        new SimpleJdbcInsert(dataSource).withTableName("experiment_transcripts").execute(insertParameters);
     }
 }

@@ -1,1 +1,1 @@
-INSERT INTO experiment_transcripts VALUES ('1','1',null);
+INSERT INTO experiment_transcripts VALUES ('1','1','{"transcriptProfiles":[{"transcriptId":"A_TRANSCRIPT_ID_1","expressions":[2.0,3.0]},{"transcriptId":"A_TRANSCRIPT_ID_2","expressions":[1.0,0.0]}]}');
