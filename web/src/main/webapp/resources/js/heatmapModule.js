@@ -127,7 +127,7 @@ var heatmapModule = (function($) {
                     });
 
                     $('#transcript-breakdown-title').text(
-                        "Expression Level Breakdown for " + geneId + " (3 transcripts) on " + factorValue
+                        "Expression Level Breakdown for " + geneId + " (X transcripts) on " + factorValue
                     );
 
 
