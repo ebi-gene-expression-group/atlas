@@ -124,6 +124,6 @@ public class ExperimentalFactors implements Serializable {
                 return orderedFactorGroups.indexOf(factorGroup);
             }
         }
-        return -1;
+        throw new IllegalStateException("Factor is not found in experiment: " + factor);
     }
 }
