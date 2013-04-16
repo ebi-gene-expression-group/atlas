@@ -54,10 +54,11 @@ public class TranscriptContributionCalculator {
         double sum = 0d;
 
         for (TranscriptProfile transcriptProfile : transcriptProfiles) {
-            if (count++ < TOP_TRANSCRIPTS_NUMBER) {
-                result.put(transcriptProfile.getTranscriptId(), transcriptProfile.getExpression(factorIndex));
+            double expression = transcriptProfile.getExpression(factorIndex);
+            if (count++ < TOP_TRANSCRIPTS_NUMBER && expression > 0d) {
+                result.put(transcriptProfile.getTranscriptId(), expression);
             } else {
-                sum += transcriptProfile.getExpression(factorIndex);
+                sum += expression;
             }
         }
 
