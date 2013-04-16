@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
-import uk.ac.ebi.atlas.utils.TsvReaderBuilder;
+import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,21 +46,21 @@ public class TranscriptProfilesLoader {
 
     private String transcriptFileUrlTemplate;
 
-    private TsvReaderBuilder tsvReaderBuilder;
+    private TsvReaderUtils tsvReaderUtils;
 
     private GeneProfileDao geneProfileDao;
 
     @Inject
-    public TranscriptProfilesLoader(TsvReaderBuilder tsvReaderBuilder, GeneProfileDao geneProfileDao,
+    public TranscriptProfilesLoader(TsvReaderUtils tsvReaderUtils, GeneProfileDao geneProfileDao,
                                     @Value("#{configuration['experiment.transcripts.path.template']}") String transcriptFileUrlTemplate) {
-        this.tsvReaderBuilder = tsvReaderBuilder;
+        this.tsvReaderUtils = tsvReaderUtils;
         this.geneProfileDao = geneProfileDao;
         this.transcriptFileUrlTemplate = transcriptFileUrlTemplate;
     }
 
     public int load(String experimentAccession) {
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
-        try (CSVReader csvReader = tsvReaderBuilder.build(fileURL)) {
+        try (CSVReader csvReader = tsvReaderUtils.build(fileURL)) {
 
             csvReader.readNext();//skip header line
 

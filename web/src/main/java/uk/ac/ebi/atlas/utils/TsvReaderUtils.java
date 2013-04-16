@@ -14,9 +14,9 @@ import java.nio.file.Path;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-public class TsvReaderBuilder {
+public class TsvReaderUtils {
 
-    private static final Logger logger = Logger.getLogger(TsvReaderBuilder.class);
+    private static final Logger logger = Logger.getLogger(TsvReaderUtils.class);
 
     public CSVReader build(String tsvFileURL) {
         try {
