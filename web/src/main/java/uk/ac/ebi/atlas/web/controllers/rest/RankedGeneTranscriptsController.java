@@ -52,7 +52,7 @@ public class RankedGeneTranscriptsController {
                                        @PathVariable String geneId,
                                        @PathVariable String factorValue,
                                        @PathVariable String factorType,
-                                        @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
+                                       @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
 
         Factor factor = new Factor(factorType, factorValue);
 

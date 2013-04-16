@@ -35,7 +35,7 @@ public class TranscriptContributionCalculator {
 
         Collections.sort(transcriptProfiles, getReverseTranscriptProfileComparator(factorIndex));
 
-        Map<String, Double> result = createTopThreeTranscriptsMap(transcriptProfiles, factorIndex);
+        Map<String, Double> result = createTopTranscriptsMap(transcriptProfiles, factorIndex);
         return result;
     }
 
@@ -47,7 +47,7 @@ public class TranscriptContributionCalculator {
         return experimentalFactors.getFactorIndex(factor);
     }
 
-    protected Map<String, Double> createTopThreeTranscriptsMap(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
+    protected Map<String, Double> createTopTranscriptsMap(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
         Map<String, Double> result = new HashMap<>(4);
 
         int count = 0;

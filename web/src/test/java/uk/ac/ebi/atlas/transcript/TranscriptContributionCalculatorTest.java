@@ -68,7 +68,7 @@ public class TranscriptContributionCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile4, profile3, profile2, profile1);
 
         //when
-        Map<String, Double> topThreeTranscriptsMap = subject.createTopThreeTranscriptsMap(transcriptProfiles, 1);
+        Map<String, Double> topThreeTranscriptsMap = subject.createTopTranscriptsMap(transcriptProfiles, 1);
 
         //then
         assertThat(topThreeTranscriptsMap.keySet(), containsInAnyOrder("T4", "T3", "T2", TranscriptContributionCalculator.OTHERS));
@@ -82,7 +82,7 @@ public class TranscriptContributionCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile4, profile2);
 
         //when
-        Map<String, Double> topThreeTranscriptsMap = subject.createTopThreeTranscriptsMap(transcriptProfiles, 1);
+        Map<String, Double> topThreeTranscriptsMap = subject.createTopTranscriptsMap(transcriptProfiles, 1);
 
         //then
         assertThat(topThreeTranscriptsMap.keySet(), containsInAnyOrder("T4", "T2"));
