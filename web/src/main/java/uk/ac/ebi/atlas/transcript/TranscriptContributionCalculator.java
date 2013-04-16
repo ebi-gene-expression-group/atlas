@@ -48,24 +48,26 @@ public class TranscriptContributionCalculator {
     }
 
     protected Map<String, Double> createTopTranscriptsMap(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
-        Map<String, Double> result = new HashMap<>(4);
+        Map<String, Double> topTranscripts = new HashMap<>();
 
-        int count = 0;
         double sum = 0d;
 
-        for (TranscriptProfile transcriptProfile : transcriptProfiles) {
+        for (int i = 0; i < transcriptProfiles.size(); i++) {
+            TranscriptProfile transcriptProfile = transcriptProfiles.get(i);
             double expression = transcriptProfile.getExpression(factorIndex);
-            if (count++ < TOP_TRANSCRIPTS_NUMBER && expression > 0d) {
-                result.put(transcriptProfile.getTranscriptId(), expression);
+            if (i < TOP_TRANSCRIPTS_NUMBER) {
+                if(expression > 0d) {
+                    topTranscripts.put(transcriptProfile.getTranscriptId(), expression);
+                }
             } else {
                 sum += expression;
             }
         }
 
         if (sum > 0d) {
-            result.put(OTHERS, sum);
+            topTranscripts.put(OTHERS, sum);
         }
-        return result;
+        return topTranscripts;
     }
 
     protected Comparator<TranscriptProfile> getReverseTranscriptProfileComparator(final int selectedIndex) {
