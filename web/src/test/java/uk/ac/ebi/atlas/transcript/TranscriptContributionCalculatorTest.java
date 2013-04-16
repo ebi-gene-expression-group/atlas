@@ -59,8 +59,8 @@ public class TranscriptContributionCalculatorTest {
         Map<String, Double> topThreeTranscriptsMap = subject.createTopThreeTranscriptsMap(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptsMap.keySet(), contains("T4", "T3", "T2", TranscriptContributionCalculator.OTHERS));
-        assertThat(topThreeTranscriptsMap.values(), contains(4d, 3d, 2d, 1d));
+        assertThat(topThreeTranscriptsMap.keySet(), containsInAnyOrder("T4", "T3", "T2", TranscriptContributionCalculator.OTHERS));
+        assertThat(topThreeTranscriptsMap.values(), containsInAnyOrder(4d, 3d, 2d, 1d));
 
     }
 
@@ -73,8 +73,8 @@ public class TranscriptContributionCalculatorTest {
         Map<String, Double> topThreeTranscriptsMap = subject.createTopThreeTranscriptsMap(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptsMap.keySet(), contains("T4", "T2"));
-        assertThat(topThreeTranscriptsMap.values(), contains(4d, 2d));
+        assertThat(topThreeTranscriptsMap.keySet(), containsInAnyOrder("T4", "T2"));
+        assertThat(topThreeTranscriptsMap.values(), containsInAnyOrder(4d, 2d));
     }
 
     @Test
