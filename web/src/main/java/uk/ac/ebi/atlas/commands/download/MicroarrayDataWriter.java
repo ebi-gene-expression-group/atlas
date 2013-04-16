@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.commands.download;
 import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
-import uk.ac.ebi.atlas.utils.CsvReaderBuilder;
+import uk.ac.ebi.atlas.utils.TsvReaderBuilder;
 
 import javax.inject.Inject;
 import java.text.MessageFormat;
@@ -19,8 +19,8 @@ class MicroarrayDataWriter extends ExpressionsWriterImpl {
     private String arrayDesignAccession;
 
     @Inject
-    public MicroarrayDataWriter(CsvReaderBuilder csvReaderBuilder, GeneNamesProvider geneNamesProvider, DesignElementMappingProvider designElementMappingProvider) {
-        super(csvReaderBuilder, geneNamesProvider);
+    public MicroarrayDataWriter(TsvReaderBuilder tsvReaderBuilder, GeneNamesProvider geneNamesProvider, DesignElementMappingProvider designElementMappingProvider) {
+        super(tsvReaderBuilder, geneNamesProvider);
         this.geneNamesProvider = geneNamesProvider;
         this.designElementMappingProvider = designElementMappingProvider;
     }

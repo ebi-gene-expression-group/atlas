@@ -31,6 +31,8 @@ import static org.junit.Assert.assertThat;
 
 public class TranscriptProfileTest {
 
+    private static final String JSON_STRING = "{\"transcriptId\":\"A_TRANSCRIPT_ID\",\"expressions\":[2.0,3.0]}";
+
     private TranscriptProfile subject;
 
     @Before
@@ -38,4 +40,13 @@ public class TranscriptProfileTest {
         this.subject = new TranscriptProfile("A_TRANSCRIPT_ID", Lists.newArrayList(2D, 3D));
     }
 
+    @Test
+    public void toJsonShouldReturnJsonRepresentation() throws Exception {
+        assertThat(subject.toJson(), is(JSON_STRING));
+    }
+
+    @Test
+    public void fromJsonShouldDeserializeTranscriptProfiles() throws Exception {
+        assertThat(subject.fromJson(JSON_STRING), is(subject));
+    }
 }

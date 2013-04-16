@@ -30,12 +30,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
-import uk.ac.ebi.atlas.model.baseline.TranscriptProfiles;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -51,23 +53,35 @@ public class GeneProfileDaoIT {
     @Inject
     DataSource dataSource;
 
-    private TranscriptProfiles transcriptProfiles;
+    private TranscriptProfile transcriptProfile1 = new TranscriptProfile("A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
+    private TranscriptProfile transcriptProfile2 = new TranscriptProfile("A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
+
 
     @Before
     public void setup() {
-        TranscriptProfile transcriptProfile1 = new TranscriptProfile("A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
-        TranscriptProfile transcriptProfile2 = new TranscriptProfile("A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 0D));
-        transcriptProfiles = new TranscriptProfiles(Lists.newArrayList(transcriptProfile1, transcriptProfile2));
+
     }
 
     @Test
     public void testAddTranscriptProfiles() throws Exception {
 
-        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfiles);
+        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
+        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile2);
 
-        TranscriptProfiles deserializedTranscriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID);
+        Collection<TranscriptProfile> deserializedTranscriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID);
 
-        assertThat(deserializedTranscriptProfiles, is(transcriptProfiles));
+        assertThat(deserializedTranscriptProfiles, containsInAnyOrder(transcriptProfile1, transcriptProfile2));
+
+    }
+
+    @Test
+    public void testFailsToFindNotExistingTranscriptProfile() throws Exception {
+
+        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
+
+        Collection<TranscriptProfile> transcriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, "not valid");
+
+        assertThat(transcriptProfiles, is(empty()));
 
     }
 }

@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.*;
 public class TranscriptContributionCalculatorTest {
 
     @Mock
-    private GeneProfileDaoMock geneProfileDaoMock;
+    private GeneProfileDao geneProfileDaoMock;
 
     @Mock
     private BaselineExperimentsCache experimentsCacheMock;

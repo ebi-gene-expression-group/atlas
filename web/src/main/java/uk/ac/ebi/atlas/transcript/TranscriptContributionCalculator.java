@@ -17,12 +17,12 @@ public class TranscriptContributionCalculator {
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
     protected static final String OTHERS = "OTHERS";
 
-    private GeneProfileDaoMock geneProfileDao;
+    private GeneProfileDao geneProfileDao;
 
     private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public TranscriptContributionCalculator(GeneProfileDaoMock geneProfileDao, BaselineExperimentsCache experimentsCache) {
+    public TranscriptContributionCalculator(GeneProfileDao geneProfileDao, BaselineExperimentsCache experimentsCache) {
         this.geneProfileDao = geneProfileDao;
         this.experimentsCache = experimentsCache;
     }
