@@ -117,7 +117,6 @@ sub readAtlasXML {
 	
 	# load XML::Simple with strict mode -- gives helpful error messages.
 	use XML::Simple qw(:strict);
-	use Data::Dumper;
 	
 	print "\nReading Atlas XML config from $atlasXML...\n";
 	# xml contains assay group and contrast definitions parsed from XML file, for each <analytics> section.
@@ -460,13 +459,14 @@ sub getDEresults {
 
 				print "Computing differential expression statistics for contrast \"", $atlasName, "\"...";
 
+				my $R_limmaOutput;
 				if($aValues) {
 
-					my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile $aValues 2>&1`;
+					$R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile $aValues 2>&1`;
 				}
 				else {
 					# Run limma script
-					my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
+					$R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
 				}
 
 				# Check for errors. This does not catch warnings.
