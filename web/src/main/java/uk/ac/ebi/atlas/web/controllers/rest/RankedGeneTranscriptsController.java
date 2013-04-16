@@ -29,11 +29,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.transcript.TranscriptContributionCalculator;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -47,19 +45,16 @@ public class RankedGeneTranscriptsController {
         this.transcriptContributionCalculator = transcriptContributionCalculator;
     }
 
-    @RequestMapping(value = "/json/transcripts/{experimentAccession}/{geneId}/{factorValue}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/transcripts/{experimentAccession}/{geneId}/{factorType}/{factorValue}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getRankedTranscripts(HttpServletRequest request, @PathVariable String experimentAccession,
                                        @PathVariable String geneId,
                                        @PathVariable String factorValue,
-                                       @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                       @PathVariable String factorType,
                                         @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
 
-
-//        String queryFactorType = preferences.getQueryFactorType();
-        String queryFactorType = "organism part";
-        Factor factor = new Factor(queryFactorType, factorValue);
+        Factor factor = new Factor(factorType, factorValue);
 
         Map<String, Double> transcriptRates = transcriptContributionCalculator.getTranscriptContributions(geneId, experimentAccession, factor);
 

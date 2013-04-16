@@ -41,16 +41,6 @@ public class TranscriptContributionCalculatorTest {
     }
 
     @Test
-    public void testGetTranscriptContributions() throws Exception {
-
-    }
-
-    @Test
-    public void testGetFactorIndex() throws Exception {
-
-    }
-
-    @Test
     public void testCreateTopThreeTranscriptsMapWithMoreThan3Transcripts() throws Exception {
         //given
         transcriptProfiles = Lists.newArrayList(profile4, profile3, profile2, profile1);
