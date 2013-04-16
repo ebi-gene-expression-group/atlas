@@ -70,6 +70,7 @@ public class TranscriptProfilesLoader {
                 TranscriptProfile transcriptProfile = createTranscriptProfile(line);
                 String geneId  = line[GENE_ID_COLUMN_INDEX];
                 geneProfileDao.addTranscriptProfile(experimentAccession, geneId, transcriptProfile);
+                count++;
             }
             return count;
 

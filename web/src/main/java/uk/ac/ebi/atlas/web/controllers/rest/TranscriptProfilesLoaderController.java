@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
@@ -43,9 +43,9 @@ public class TranscriptProfilesLoaderController {
         this.transcriptProfileLoader = transcriptProfileLoader;
     }
 
-    @RequestMapping("/loadTranscriptProfiles?experimentAccession")
+    @RequestMapping("/loadTranscriptProfiles/{experimentAccession}")
     @ResponseBody
-    public String updateAnnotations(@RequestParam("experimentAccession") String experimentAccession) {
+    public String updateAnnotations(@PathVariable("experimentAccession") String experimentAccession) {
 
         int count = transcriptProfileLoader.load(experimentAccession);
 
