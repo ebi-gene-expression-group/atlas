@@ -4,7 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.utils.TsvReaderBuilder;
+import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,7 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 class ExpressionsWriterImpl implements ExpressionsWriter {
 
 
-    private TsvReaderBuilder tsvReaderBuilder;
+    private TsvReaderUtils tsvReaderUtils;
     private GeneNamesProvider geneNamesProvider;
     private CSVWriter csvWriter;
 
@@ -25,8 +25,8 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
 
     private String experimentAccession;
 
-    public ExpressionsWriterImpl(TsvReaderBuilder tsvReaderBuilder, GeneNamesProvider geneNamesProvider) {
-        this.tsvReaderBuilder = tsvReaderBuilder;
+    public ExpressionsWriterImpl(TsvReaderUtils tsvReaderUtils, GeneNamesProvider geneNamesProvider) {
+        this.tsvReaderUtils = tsvReaderUtils;
         this.geneNamesProvider = geneNamesProvider;
     }
 
@@ -77,7 +77,7 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
 
     protected CSVReader getCsvReader(String experimentAccession) {
         String tsvFileURL = formatUrl(fileUrlTemplate, experimentAccession);
-        return tsvReaderBuilder.build(tsvFileURL);
+        return tsvReaderUtils.build(tsvFileURL);
     }
 
     protected String formatUrl(String fileUrlTemplate, String experimentAccession) {

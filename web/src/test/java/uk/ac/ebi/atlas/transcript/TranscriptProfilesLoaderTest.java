@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
-import uk.ac.ebi.atlas.utils.TsvReaderBuilder;
+import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -44,7 +44,7 @@ public class TranscriptProfilesLoaderTest {
     @Mock
     private CSVReader csvReaderMock;
     @Mock
-    private TsvReaderBuilder tsvReaderBuilderMock;
+    private TsvReaderUtils tsvReaderUtilsMock;
     @Mock
     private GeneProfileDao geneProfileDaoMock;
 
@@ -54,9 +54,9 @@ public class TranscriptProfilesLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        when(tsvReaderBuilderMock.build(contains(EXPERIMENT_ACCESSION))).thenReturn(csvReaderMock);
+        when(tsvReaderUtilsMock.build(contains(EXPERIMENT_ACCESSION))).thenReturn(csvReaderMock);
 
-        subject = new TranscriptProfilesLoader(tsvReaderBuilderMock, geneProfileDaoMock, "A_URL_TEMPLATE_MOCK {0}");
+        subject = new TranscriptProfilesLoader(tsvReaderUtilsMock, geneProfileDaoMock, "A_URL_TEMPLATE_MOCK {0}");
     }
 
     @Test

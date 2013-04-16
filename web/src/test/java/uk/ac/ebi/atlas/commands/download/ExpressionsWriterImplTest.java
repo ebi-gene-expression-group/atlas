@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.utils.TsvReaderBuilder;
+import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
 import java.io.PrintWriter;
 
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class ExpressionsWriterImplTest {
 
     @Mock
-    private TsvReaderBuilder tsvReaderBuilderMock;
+    private TsvReaderUtils tsvReaderUtilsMock;
 
     @Mock
     private PrintWriter printWriterMock;
@@ -39,7 +39,7 @@ public class ExpressionsWriterImplTest {
 
     @Before
     public void initSubject() throws Exception {
-        when(tsvReaderBuilderMock.build(anyString())).thenReturn(csvReaderMock);
+        when(tsvReaderUtilsMock.build(anyString())).thenReturn(csvReaderMock);
         when(csvReaderMock.readNext()).thenReturn(header)
                 .thenReturn(line)
                 .thenReturn(null);
@@ -48,7 +48,7 @@ public class ExpressionsWriterImplTest {
 
         RnaSeqRawDataHeaderBuilder headerBuilder = new RnaSeqRawDataHeaderBuilder();
 
-        subject = new ExpressionsWriterImpl(tsvReaderBuilderMock, geneNamesProviderMock);
+        subject = new ExpressionsWriterImpl(tsvReaderUtilsMock, geneNamesProviderMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
         subject.setHeaderBuilder(headerBuilder);
         subject.setResponseWriter(printWriterMock);
