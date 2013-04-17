@@ -103,4 +103,12 @@ public class GeneProfileDaoIT {
         assertThat(records, is(4));
 
     }
+
+    @Test
+    public void deleteTranscriptProfilesForNonExistingExperiment() {
+
+        int records = subject.deleteTranscriptProfilesForExperiment("BLA");
+        assertThat(records, is(0));
+
+    }
 }

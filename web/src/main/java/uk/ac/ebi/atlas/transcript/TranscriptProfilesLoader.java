@@ -59,6 +59,8 @@ public class TranscriptProfilesLoader {
     }
 
     public int load(String experimentAccession) {
+        geneProfileDao.deleteTranscriptProfilesForExperiment(experimentAccession);
+
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
         try (CSVReader csvReader = tsvReaderUtils.build(fileURL)) {
 
@@ -66,9 +68,9 @@ public class TranscriptProfilesLoader {
 
             int count = 0;
             String[] line;
-            while((line = csvReader.readNext()) != null ) {
+            while ((line = csvReader.readNext()) != null) {
                 TranscriptProfile transcriptProfile = createTranscriptProfile(line);
-                String geneId  = line[GENE_ID_COLUMN_INDEX];
+                String geneId = line[GENE_ID_COLUMN_INDEX];
                 geneProfileDao.addTranscriptProfile(experimentAccession, geneId, transcriptProfile);
                 count++;
             }
@@ -83,9 +85,9 @@ public class TranscriptProfilesLoader {
 
     TranscriptProfile createTranscriptProfile(String[] line) {
         String transcriptId = line[1];
-        String[] expressionStrings = (String[])ArrayUtils.subarray(line, 2, line.length);
+        String[] expressionStrings = (String[]) ArrayUtils.subarray(line, 2, line.length);
         List<Double> expressionLevels = Lists.newArrayList();
-        for (String expressionString : expressionStrings){
+        for (String expressionString : expressionStrings) {
             expressionLevels.add(Double.parseDouble(expressionString));
         }
         return new TranscriptProfile(transcriptId, expressionLevels);
