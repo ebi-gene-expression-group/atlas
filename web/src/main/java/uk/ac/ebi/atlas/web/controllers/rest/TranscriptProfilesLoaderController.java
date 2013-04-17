@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,9 +48,14 @@ public class TranscriptProfilesLoaderController {
     @ResponseBody
     public String updateAnnotations(@PathVariable("experimentAccession") String experimentAccession) {
 
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
         int count = transcriptProfileLoader.load(experimentAccession);
 
-        return "Inserted " + count + " transcript profiles";
+        stopWatch.stop();
+
+        return "Inserted " + count + " transcript profiles and took " + stopWatch.getLastTaskInfo().getTimeSeconds() + "secs";
     }
 
 }

@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Collection;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -69,6 +70,18 @@ public class GeneProfileDaoIT {
     }
 
     @Test
+    public void testAddTranscriptProfiles() {
+
+        List<TranscriptProfile> profiles = Lists.newArrayList(transcriptProfile3, transcriptProfile4);
+        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, profiles);
+
+        Collection<TranscriptProfile> transcriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_2);
+
+        assertThat(transcriptProfiles, containsInAnyOrder(transcriptProfile3, transcriptProfile4));
+
+    }
+
+    @Test
     public void testDeserializeTranscriptProfiles() {
 
         Collection<TranscriptProfile> deserializedTranscriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID);
@@ -87,7 +100,7 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void deleteTranscriptProfilesForGeneId() {
+    public void testDeleteTranscriptProfilesForGeneId() {
 
         int records = subject.deleteTranscriptProfilesForExperimentAndGene(EXPERIMENT_ACCESSION, GENE_ID);
         assertThat(records, is(2));
@@ -95,7 +108,7 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void deleteTranscriptProfilesForExperiment() {
+    public void testDeleteTranscriptProfilesForExperiment() {
 
         subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile3);
         subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile4);
@@ -106,7 +119,7 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void deleteTranscriptProfilesForNonExistingExperiment() {
+    public void testDeleteTranscriptProfilesForNonExistingExperiment() {
 
         int records = subject.deleteTranscriptProfilesForExperiment("BLA");
         assertThat(records, is(0));
