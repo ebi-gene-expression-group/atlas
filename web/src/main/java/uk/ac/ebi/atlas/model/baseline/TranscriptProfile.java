@@ -22,9 +22,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -72,12 +69,4 @@ public class TranscriptProfile implements Serializable {
         return Objects.hash(transcriptId, expressions);
     }
 
-    public String toJson() {
-        return new Gson().toJson(this);
-    }
-
-    public static TranscriptProfile fromJson(String jsonString) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.fromJson(jsonString, TranscriptProfile.class);
-    }
 }

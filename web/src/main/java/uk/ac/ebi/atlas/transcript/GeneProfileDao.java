@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.transcript;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -33,10 +34,11 @@ import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.io.IOException;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 
@@ -45,30 +47,48 @@ import java.util.Map;
 public class GeneProfileDao {
 
     private static final Logger LOGGER = Logger.getLogger(GeneProfileDao.class);
+    public static final String TRANSCRIPT_PROFILE_QUERY = "SELECT transcript_id, transcript_expressions FROM experiment_transcripts WHERE experiment_accession = ? AND gene_id = ?";
 
     @Inject
     private DataSource dataSource;
-
 
     public Collection<TranscriptProfile> getTranscriptProfiles(String experimentAccession, String geneId) {
 
         JdbcTemplate template = new JdbcTemplate(dataSource);
 
-        return template.query("select transcript_profile from experiment_transcripts where experiment_accession = ? and gene_id = ?",
+        return template.query(TRANSCRIPT_PROFILE_QUERY,
                 new String[]{experimentAccession, geneId},
                 new RowMapper<TranscriptProfile>() {
                     public TranscriptProfile mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        return TranscriptProfile.fromJson(rs.getString("transcript_profile"));
+                        String transcript_id = rs.getString("transcript_id");
+                        Array array = rs.getArray("transcript_expressions");
+                        Double[] expressions = (Double[]) array.getArray();
+                        TranscriptProfile profile = new TranscriptProfile(transcript_id, Lists.newArrayList(expressions));
+                        array.free();
+                        return profile;
                     }
                 });
     }
 
-    public void addTranscriptProfile(final String experimentAccession, final String geneId, TranscriptProfile profile) throws IOException {
-
+    public void addTranscriptProfile(String experimentAccession, String geneId, TranscriptProfile profile) {
         Map<String, Object> insertParameters = Maps.newHashMap();
         insertParameters.put("experiment_accession", experimentAccession);
         insertParameters.put("gene_id", geneId);
-        insertParameters.put("transcript_profile", profile.toJson());
+        insertParameters.put("transcript_id", profile.getTranscriptId());
+        List<Double> expressions = profile.getExpressions();
+        insertParameters.put("transcript_expressions", expressions.toArray(new Double[expressions.size()]));
         new SimpleJdbcInsert(dataSource).withTableName("experiment_transcripts").execute(insertParameters);
+    }
+
+    public int deleteTranscriptProfilesForExperimentAndGene(String experimentAccession, String geneId) {
+        JdbcTemplate delete = new JdbcTemplate(dataSource);
+        return delete.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ? AND gene_id = ?",
+                new Object[]{experimentAccession, geneId});
+    }
+
+    public int deleteTranscriptProfilesForExperiment(String experimentAccession) {
+        JdbcTemplate delete = new JdbcTemplate(dataSource);
+        return delete.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ?",
+                new Object[]{experimentAccession});
     }
 }
