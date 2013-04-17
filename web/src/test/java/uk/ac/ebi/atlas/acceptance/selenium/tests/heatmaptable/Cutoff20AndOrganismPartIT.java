@@ -54,14 +54,14 @@ public class Cutoff20AndOrganismPartIT extends SinglePageSeleniumFixture {
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "776", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
+        assertThat(subject.getFirstGeneProfile(), contains("", "766", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("", "238", "", "", "", "", "", "", ""
-                , "388", "", "", "", "", "", ""));
+        assertThat(subject.getLastGeneProfile(), contains("", "186", "", "", "", "", "", "", ""
+                , "386", "", "", "", "", "", ""));
     }
 
     @Test

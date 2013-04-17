@@ -58,7 +58,7 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
         double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageExpressionLevel(2, "brain", "breast");
 
         //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1023.5));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1024.0));
 
         //then
         assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(535.5));
