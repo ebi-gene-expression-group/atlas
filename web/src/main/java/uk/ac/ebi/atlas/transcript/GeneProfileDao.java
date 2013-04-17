@@ -37,6 +37,7 @@ import javax.sql.DataSource;
 import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,8 @@ public class GeneProfileDao {
                     public TranscriptProfile mapRow(ResultSet rs, int rowNum) throws SQLException {
                         String transcript_id = rs.getString("transcript_id");
                         Array array = rs.getArray("transcript_expressions");
-                        Double[] expressions = (Double[]) array.getArray();
+                        Object[] resultArray = (Object[]) array.getArray();
+                        Double[] expressions =  Arrays.copyOf(resultArray, resultArray.length, Double[].class);
                         TranscriptProfile profile = new TranscriptProfile(transcript_id, Lists.newArrayList(expressions));
                         array.free();
                         return profile;
