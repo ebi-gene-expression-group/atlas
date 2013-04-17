@@ -90,7 +90,8 @@ var heatmapModule = (function($) {
             //we need to identify gene and factorType for the cell being clicked
             var factorValue = $(this).find("div").attr("data-organism-part"),
                 factorType = $("#queryFactorType").attr("value"),
-                geneId = $(this).parent().find("td a:eq(0)").attr("id");
+                geneId = $(this).parent().find("td a:eq(0)").attr("id"),
+                geneName = $(this).parent().find("td a:eq(0)").text();
 
             $.ajax({
                 url: "json/transcripts/" + experimentAccession,
@@ -101,7 +102,8 @@ var heatmapModule = (function($) {
                 },
                 datatype: 'json',
                 success: function (data) {
-                    data = buildPlotData(data);
+                    var totalCount = data[0];
+                    data = buildPlotData($.parseJSON(data[1]));
 
                     $.plot('#transcripts-pie', data, {
                         series: {
@@ -132,7 +134,7 @@ var heatmapModule = (function($) {
                     });
 
                     $('#transcript-breakdown-title').text(
-                        "Expression Level Breakdown for " + geneId + " (X transcripts) on " + factorValue
+                        "Expression Level Breakdown for " + geneName + " (" + geneId + ") " + " (" + totalCount+ " transcripts) on " + factorValue
                     );
 
 

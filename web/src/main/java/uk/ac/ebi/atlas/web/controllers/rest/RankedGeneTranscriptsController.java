@@ -22,9 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import com.google.common.base.Function;
 import com.google.gson.Gson;
-import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -35,6 +33,8 @@ import uk.ac.ebi.atlas.transcript.TranscriptsContribution;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -61,27 +61,14 @@ public class RankedGeneTranscriptsController {
 
         TranscriptsContribution transcriptsContribution = transcriptContributionCalculator.getTranscriptsContribution(geneId, experimentAccession, factor);
 
-        //ToDo: this task of generating rates should be done in the calculator or somewhere else but still used by the calculator and not here.
-        //ToDo: Calculator should just return an object wrapping the ordered sorted rates map (OTHER must be the last) and the total number of transcript profiles, including also all 0 profiles
+        Gson gson = new Gson();
 
-        //ToDo: Javascript will have to be modified to extract the profiles count AND the data map from the json representation of this new object
+        List<String> contributionData = new ArrayList<>();
+        contributionData.add(String.valueOf(transcriptsContribution.getTotalTranscriptCount()));
+        Map<String, Double> transcriptPercentageRates = transcriptsContribution.getTranscriptPercentageRates();
+        contributionData.add(gson.toJson(transcriptPercentageRates, Map.class));
+        return gson.toJson(contributionData, List.class);
 
-        return new Gson().toJson(transcriptsContribution.getTranscriptPercentageRates(), Map.class);
-
-    }
-
-    private class PercentageFunction implements Function<Double, Double>{
-
-        private Double totalExpression;
-
-        public PercentageFunction(Double totalExpression){
-            this.totalExpression = totalExpression;
-        }
-
-        @Override
-        public Double apply(java.lang.Double aDouble) {
-            return MathUtils.round((aDouble / totalExpression) * 100, 1);
-        }
     }
 
 }
