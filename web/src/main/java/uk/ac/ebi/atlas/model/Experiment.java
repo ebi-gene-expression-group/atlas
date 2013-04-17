@@ -57,7 +57,10 @@ public class Experiment implements Serializable {
     }
 
     public String getDisplayName() {
-        return StringUtils.isNotBlank(displayName) ? displayName : getAccession();
+        if (StringUtils.isNotBlank(displayName)){
+            return getDisplayName();
+        }
+        return getAccession();
     }
 
     public String getDescription() {

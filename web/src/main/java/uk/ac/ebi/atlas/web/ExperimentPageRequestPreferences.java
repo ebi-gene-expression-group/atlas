@@ -101,7 +101,9 @@ public abstract class ExperimentPageRequestPreferences {
     }
 
     public void setHeatmapMatrixSize(Integer heatmapMatrixSize) {
-        this.heatmapMatrixSize = heatmapMatrixSize != null ? heatmapMatrixSize : DEFAULT_NUMBER_OF_RANKED_GENES;
+        if (heatmapMatrixSize != null) {
+            this.heatmapMatrixSize = heatmapMatrixSize;
+        }
     }
 
     public Double getCutoff() {
@@ -113,7 +115,9 @@ public abstract class ExperimentPageRequestPreferences {
     protected abstract String getDefaultGeneQuery();
 
     public void setCutoff(Double cutoff) {
-        this.cutoff = cutoff != null ? cutoff : getDefaultCutoff();
+        if (cutoff != null) {
+            this.cutoff = cutoff;
+        }
     }
 
     public boolean isSpecific() {

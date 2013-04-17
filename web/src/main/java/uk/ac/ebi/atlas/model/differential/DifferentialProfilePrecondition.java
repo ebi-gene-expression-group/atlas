@@ -60,10 +60,9 @@ public class DifferentialProfilePrecondition implements Predicate<DifferentialPr
         double averageExpressionLevelOnSelectedFactors = averageExpressionLevelOnSelectedFactors(profile);
         double averageExpressionLevelOnNonSelectedFactors = averageExpressionLevelOnNonSelectedFactors(profile);
 
-        boolean moreSignificantInSelectedConditions = averageExpressionLevelOnNonSelectedFactors == 0 ||
+        return averageExpressionLevelOnNonSelectedFactors == 0 ||
                 averageExpressionLevelOnSelectedFactors < averageExpressionLevelOnNonSelectedFactors;
 
-        return moreSignificantInSelectedConditions;
     }
 
     private double averageExpressionLevelOnSelectedFactors(DifferentialProfile profile) {

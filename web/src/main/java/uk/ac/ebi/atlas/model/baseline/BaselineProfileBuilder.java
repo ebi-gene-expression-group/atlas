@@ -61,7 +61,7 @@ public class BaselineProfileBuilder {
     }
 
     public BaselineProfileBuilder forGeneId(String geneId) {
-        this.baselineProfile = new BaselineProfile(geneId);
+        baselineProfile = new BaselineProfile(geneId);
         initPreconditions();
         return this;
     }
@@ -77,7 +77,10 @@ public class BaselineProfileBuilder {
     public BaselineProfile create() {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
 
-        return baselineProfilePrecondition.apply(baselineProfile) ? baselineProfile : null;
+        if (baselineProfilePrecondition.apply(baselineProfile)){
+            return baselineProfile;
+        }
+        return null;
     }
 
 

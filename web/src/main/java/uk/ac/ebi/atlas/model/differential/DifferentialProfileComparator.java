@@ -32,17 +32,17 @@ import java.util.Set;
 public class DifferentialProfileComparator<T extends DifferentialProfile> implements Comparator<T> {
 
     private boolean isSpecific;
-    private Set<Contrast> selectedFactors;
-    private Set<Contrast> allFactors;
+    private Set<Contrast> selectedQueryFactors;
+    private Set<Contrast> allQueryFactors;
     private Regulation regulation;
     private double cutoff = 0.05;
 
 
-    public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectQueryFactors,
+    public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectedQueryFactors,
                                          Set<Contrast> allQueryFactors, Regulation regulation, double cutoff) {
         this.isSpecific = isSpecific;
-        this.selectedFactors = selectQueryFactors;
-        this.allFactors = allQueryFactors;
+        this.selectedQueryFactors = selectedQueryFactors;
+        this.allQueryFactors = allQueryFactors;
         //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
         this.regulation = regulation;
         this.cutoff = cutoff;
@@ -51,28 +51,29 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     @Override
     public int compare(DifferentialProfile firstProfile, DifferentialProfile otherProfile) {
 
-        Ordering<Comparable> naturalOrdering = Ordering.natural();
-
         // A1:
-        if (isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
-            Ordering<Comparable> specificityOrdering = naturalOrdering;
-            int order = specificityOrdering.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
-            return 0 != order ? order : compareOnAverage(firstProfile, otherProfile, allFactors);
+        if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
+            int comparison = Integer.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
+            if (0 == comparison){
+                comparison = compareOnAverage(firstProfile, otherProfile, allQueryFactors);
+            }
+            return comparison;
         }
 
         // B1:
-        if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
-            return naturalOrdering.reverse().compare(getExpressionLevelFoldChangeOn(firstProfile),
-                    getExpressionLevelFoldChangeOn(otherProfile));
+        if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
+            return Ordering.natural().reverse().compare(
+                                                    getExpressionLevelFoldChangeOn(firstProfile),
+                                                    getExpressionLevelFoldChangeOn(otherProfile));
         }
 
         // A2
-        if (!isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
-            return compareOnAverage(firstProfile, otherProfile, allFactors);
+        if (!isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
+            return compareOnAverage(firstProfile, otherProfile, allQueryFactors);
         }
 
         //B2
-        return compareOnAverage(firstProfile, otherProfile, selectedFactors);
+        return compareOnAverage(firstProfile, otherProfile, selectedQueryFactors);
 
     }
 
@@ -87,9 +88,9 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     public double getExpressionLevelFoldChangeOn(DifferentialProfile profile) {
 
-        double averageExpressionLevelOnSelected = profile.getAverageExpressionLevelOn(selectedFactors, regulation);
+        double averageExpressionLevelOnSelected = profile.getAverageExpressionLevelOn(selectedQueryFactors, regulation);
 
-        Sets.SetView<Contrast> remainingFactors = Sets.difference(allFactors, selectedFactors);
+        Sets.SetView<Contrast> remainingFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
         double averageExpressionLevelOnRemaining = profile.getAverageExpressionLevelOn(remainingFactors, regulation);
         if (averageExpressionLevelOnRemaining == 0) {
             averageExpressionLevelOnRemaining = cutoff;

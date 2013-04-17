@@ -65,8 +65,8 @@ public class GeneNameTooltipController {
 
     @PostConstruct
     void initTemplate(){
-        try(InputStream is = htmlTemplateResource.getInputStream()) {
-            htmlTemplate = IOUtils.toString(is);
+        try(InputStream inputStream = htmlTemplateResource.getInputStream()) {
+            htmlTemplate = IOUtils.toString(inputStream);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
@@ -91,15 +91,14 @@ public class GeneNameTooltipController {
 
     }
 
-    String format(Collection<String> values, boolean handleNotApplicable){
-        if (CollectionUtils.isEmpty(values) && !handleNotApplicable) {
-            return StringUtils.EMPTY;
+    String format(Collection<String> values, boolean returnEmptyValuesAsNA){
+        if (CollectionUtils.isEmpty(values)){
+            return returnEmptyValuesAsNA ? "NA" : StringUtils.EMPTY;
         }
-        return CollectionUtils.isEmpty(values) ?
-                "NA" : WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
+        return WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
     }
 
-    private String buildSynonyms(String identifier, Multimap<String, String> multimap) {
+    String buildSynonyms(String identifier, Multimap<String, String> multimap) {
 
         String synonyms = format(multimap.get("synonym"), false);
 

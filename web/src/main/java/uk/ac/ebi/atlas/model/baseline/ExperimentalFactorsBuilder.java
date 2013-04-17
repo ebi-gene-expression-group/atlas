@@ -69,9 +69,8 @@ public class ExperimentalFactorsBuilder {
             addFactorGroup(factorGroup);
         }
 
-        ExperimentalFactors experimentalFactors = new ExperimentalFactors(factorsByType, factorNamesByType, factorGroups, coOccurringFactors, menuFilterFactorTypes);
-
-        return experimentalFactors;
+        return new ExperimentalFactors( factorsByType, factorNamesByType, factorGroups,
+                                        coOccurringFactors, menuFilterFactorTypes);
     }
 
     Collection<FactorGroup> extractFactorGroups() {

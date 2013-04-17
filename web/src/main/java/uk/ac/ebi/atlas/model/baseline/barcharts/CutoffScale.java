@@ -30,6 +30,8 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static org.h2.mvstore.DataUtils.checkArgument;
+
 @Named("cutoffScale")
 @Scope("singleton")
 public class CutoffScale {
@@ -46,55 +48,59 @@ public class CutoffScale {
     public SortedSet<Double> getValuesSmallerThan(double expressionLevel){
 
         SortedSet<Double> scaledValues = new TreeSet<>();
-        int i = 0;
-        do{
 
-            double scaledValue = getNthValue(i++);
-            if (expressionLevel > scaledValue){
-                scaledValues.add(scaledValue);
-                continue;
+        for (int i = 0; i < MAX_NUMBER_OF_VALUES; i++){
+
+            double scaledValue = getNthValue(i);
+            if (expressionLevel <= scaledValue){
+                return scaledValues;
             }
-            break;
-
-        } while(i< MAX_NUMBER_OF_VALUES);
+            scaledValues.add(scaledValue);
+        }
 
         return scaledValues;
     }
 
     public double getNthValue(int position) {
 
-        if (position > 0) {
+        checkArgument(position >= 0, "position must be >= 0 ");
 
-            Double nthValue = magnifiedScale.get(position);
+        if (position == 0) {
+            return 0;
+        }
 
-            if (nthValue == null) {
+        Double nthValue = magnifiedScale.get(position);
 
+        if (nthValue == null) {
 
-                int remainder = position % 9;
+            nthValue = calculateNthScaledValue(position);
 
-                if (remainder != 0) {
-                    int power = (position / 9) - DEFAULT_NUMBER_OF_FRACTIONAL_DIGITS;
-                    nthValue = Math.pow(10, power) * remainder;
-                } else {
-                    int power = (position / 9) - (DEFAULT_NUMBER_OF_FRACTIONAL_DIGITS + 1);
-                    nthValue = Math.pow(10, power) * 9;
-                }
-
-                if(nthValue > 1){
-                    nthValue = Math.floor(nthValue);
-                }
-
-                nthValue = (Math.floor(nthValue * 10))/ 10;
-
-                magnifiedScale.put(position, nthValue);
-
-            }
-
-            return nthValue;
+            magnifiedScale.put(position, nthValue);
 
         }
 
-        return 0;
+        return nthValue;
+
+    }
+
+    private Double calculateNthScaledValue(int position) {
+        Double nthValue;
+        int remainder = position % 9;
+
+        if (remainder != 0) {
+            int power = (position / 9) - DEFAULT_NUMBER_OF_FRACTIONAL_DIGITS;
+            nthValue = Math.pow(10, power) * remainder;
+        } else {
+            int power = (position / 9) - (DEFAULT_NUMBER_OF_FRACTIONAL_DIGITS + 1);
+            nthValue = Math.pow(10, power) * 9;
+        }
+
+        if(nthValue > 1){
+            nthValue = Math.floor(nthValue);
+        }
+
+        nthValue = (Math.floor(nthValue * 10))/ 10;
+        return nthValue;
     }
 
 }

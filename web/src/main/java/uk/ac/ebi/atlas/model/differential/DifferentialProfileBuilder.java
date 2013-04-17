@@ -82,7 +82,10 @@ public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, 
             differentialProfile.add(expression);
         }
         resetBuilder();
-        return differentialProfilePrecondition.apply(differentialProfile) ? differentialProfile : null;
+        if (differentialProfilePrecondition.apply(differentialProfile)){
+            return differentialProfile;
+        }
+        return null;
     }
 
     //this is only a temporary ugly workaround to patch previous even more buggish implementation...

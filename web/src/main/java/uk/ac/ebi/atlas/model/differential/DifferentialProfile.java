@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.differential;
 
 
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
@@ -34,20 +35,21 @@ import static java.lang.Math.min;
 
 public class DifferentialProfile<T extends DifferentialExpression> extends GeneProfile<Contrast, T> {
 
-
     private double maxUpRegulatedExpressionLevel = 0D;
     private double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
     private double maxDownRegulatedExpressionLevel = 0D;
     private double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
 
-    private EnumMap<Regulation, Integer> specificityForRegulation = new EnumMap(Regulation.class);
+    private int downRegulatedExpressionsCount;
+    private int upRegulatedExpressionsCount;
+
 
     public DifferentialProfile(String geneId) {
         super(geneId);
     }
 
     DifferentialProfile add(T expression) {
-        this.addExpression(expression.getContrast(), expression);
+        addExpression(expression.getContrast(), expression);
         return this;
     }
 
@@ -68,8 +70,13 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
     }
 
     public int getSpecificity(Regulation regulation) {
-        Integer specificity = specificityForRegulation.get(regulation);
-        return specificity == null ? 0 : specificity;
+        if(Regulation.UP == regulation){
+            return upRegulatedExpressionsCount;
+        }
+        if(Regulation.DOWN == regulation){
+            return downRegulatedExpressionsCount;
+        }
+        return getSpecificity();
     }
 
     public double getAverageExpressionLevelOn(Set<Contrast> conditions, Regulation regulation) {
@@ -93,22 +100,11 @@ public class DifferentialProfile<T extends DifferentialExpression> extends GeneP
     protected void updateProfileExpression(DifferentialExpression differentialExpression) {
         if (differentialExpression.isOverExpressed()) {
             updateUpRegulatedProfileExpression(differentialExpression.getLevel());
-            updateSpecificityForRegulation(Regulation.UP);
-        }
-
-        if (differentialExpression.isUnderExpressed()) {
+            upRegulatedExpressionsCount++;
+        } else if (differentialExpression.isUnderExpressed()) {
             updateDownRegulatedProfileExpression(differentialExpression.getLevel());
-            updateSpecificityForRegulation(Regulation.DOWN);
+            downRegulatedExpressionsCount++;
         }
-        updateSpecificityForRegulation(Regulation.UP_DOWN);
-    }
-
-    private void updateSpecificityForRegulation(Regulation regulation) {
-        Integer specificity = specificityForRegulation.get(regulation);
-        if (specificity == null) {
-            specificity = 0;
-        }
-        specificityForRegulation.put(regulation, specificity + 1);
     }
 
     void updateUpRegulatedProfileExpression(double expressionLevel) {

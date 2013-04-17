@@ -138,8 +138,7 @@ public class FilterFactorMenuBuilder {
     }
 
     public String getLink(String queryFactorType, Factor... factors) {
-        String link = getJsonUrl(queryFactorType, factors);
-        return link;
+        return getJsonUrl(queryFactorType, factors);
     }
 
     protected String getJsonUrl(String queryFactorType, Factor... factors) {
