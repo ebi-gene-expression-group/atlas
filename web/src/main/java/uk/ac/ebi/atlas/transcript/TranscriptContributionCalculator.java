@@ -9,7 +9,9 @@ import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Named
 public class TranscriptContributionCalculator {
@@ -27,7 +29,7 @@ public class TranscriptContributionCalculator {
         this.experimentsCache = experimentsCache;
     }
 
-    public Map<String, Double> getTranscriptContributions(String geneId, String experimentAccession, Factor factor) {
+    public TranscriptsContribution getTranscriptsContribution(String geneId, String experimentAccession, Factor factor) {
 
         List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(experimentAccession, geneId));
 
@@ -35,8 +37,7 @@ public class TranscriptContributionCalculator {
 
         Collections.sort(transcriptProfiles, getReverseTranscriptProfileComparator(factorIndex));
 
-        Map<String, Double> result = createTopTranscriptsMap(transcriptProfiles, factorIndex);
-        return result;
+        return createTranscriptsContribution(transcriptProfiles, factorIndex);
     }
 
     protected int getFactorIndex(String experimentAccession, Factor factor) {
@@ -47,8 +48,10 @@ public class TranscriptContributionCalculator {
         return experimentalFactors.getFactorIndex(factor);
     }
 
-    protected Map<String, Double> createTopTranscriptsMap(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
-        Map<String, Double> topTranscripts = new HashMap<>();
+    protected TranscriptsContribution createTranscriptsContribution(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
+        TranscriptsContribution transcriptsContribution = new TranscriptsContribution();
+
+        transcriptsContribution.setTotalTranscriptCount(transcriptProfiles.size());
 
         double sum = 0d;
 
@@ -56,8 +59,8 @@ public class TranscriptContributionCalculator {
             TranscriptProfile transcriptProfile = transcriptProfiles.get(i);
             double expression = transcriptProfile.getExpression(factorIndex);
             if (i < TOP_TRANSCRIPTS_NUMBER) {
-                if(expression > 0d) {
-                    topTranscripts.put(transcriptProfile.getTranscriptId(), expression);
+                if (expression > 0d) {
+                    transcriptsContribution.put(transcriptProfile.getTranscriptId(), expression);
                 }
             } else {
                 sum += expression;
@@ -65,9 +68,10 @@ public class TranscriptContributionCalculator {
         }
 
         if (sum > 0d) {
-            topTranscripts.put(OTHERS, sum);
+            transcriptsContribution.put(OTHERS, sum);
         }
-        return topTranscripts;
+
+        return transcriptsContribution;
     }
 
     protected Comparator<TranscriptProfile> getReverseTranscriptProfileComparator(final int selectedIndex) {

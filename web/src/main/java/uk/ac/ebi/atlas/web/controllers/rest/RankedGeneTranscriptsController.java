@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
@@ -32,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.transcript.TranscriptContributionCalculator;
+import uk.ac.ebi.atlas.transcript.TranscriptsContribution;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -59,21 +59,14 @@ public class RankedGeneTranscriptsController {
 
         Factor factor = new Factor(factorType, factorValue);
 
-        Map<String, Double> transcriptExpressions = transcriptContributionCalculator.getTranscriptContributions(geneId, experimentAccession, factor);
-
-        Double totalExpression = 0D;
-
-        for (Double transcriptExpression: transcriptExpressions.values()){
-            totalExpression += transcriptExpression;
-        }
+        TranscriptsContribution transcriptsContribution = transcriptContributionCalculator.getTranscriptsContribution(geneId, experimentAccession, factor);
 
         //ToDo: this task of generating rates should be done in the calculator or somewhere else but still used by the calculator and not here.
         //ToDo: Calculator should just return an object wrapping the ordered sorted rates map (OTHER must be the last) and the total number of transcript profiles, including also all 0 profiles
 
         //ToDo: Javascript will have to be modified to extract the profiles count AND the data map from the json representation of this new object
-        Map<String, Double> transcriptRates = Maps.transformValues(transcriptExpressions, new PercentageFunction(totalExpression));
 
-        return new Gson().toJson(transcriptRates, Map.class);
+        return new Gson().toJson(transcriptsContribution.getTranscriptPercentageRates(), Map.class);
 
     }
 

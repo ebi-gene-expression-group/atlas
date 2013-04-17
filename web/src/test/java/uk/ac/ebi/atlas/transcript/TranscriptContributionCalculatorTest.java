@@ -33,7 +33,6 @@ import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -68,11 +67,11 @@ public class TranscriptContributionCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile4, profile3, profile2, profile1);
 
         //when
-        Map<String, Double> topThreeTranscriptsMap = subject.createTopTranscriptsMap(transcriptProfiles, 1);
+        TranscriptsContribution topThreeTranscriptsMap = subject.createTranscriptsContribution(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptsMap.keySet(), containsInAnyOrder("T4", "T3", "T2", TranscriptContributionCalculator.OTHERS));
-        assertThat(topThreeTranscriptsMap.values(), containsInAnyOrder(4d, 3d, 2d, 1d));
+        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().keySet(), contains("T4", "T3", "T2", TranscriptContributionCalculator.OTHERS));
+        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().values(), containsInAnyOrder(40d, 30d, 20d, 10d));
 
     }
 
@@ -82,11 +81,11 @@ public class TranscriptContributionCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile4, profile2);
 
         //when
-        Map<String, Double> topThreeTranscriptsMap = subject.createTopTranscriptsMap(transcriptProfiles, 1);
+        TranscriptsContribution topThreeTranscriptsMap = subject.createTranscriptsContribution(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptsMap.keySet(), containsInAnyOrder("T4", "T2"));
-        assertThat(topThreeTranscriptsMap.values(), containsInAnyOrder(4d, 2d));
+        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().keySet(), containsInAnyOrder("T4", "T2"));
+        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().values(), containsInAnyOrder(66.7d, 33.3d));
     }
 
     @Test
