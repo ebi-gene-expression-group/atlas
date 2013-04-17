@@ -41,7 +41,7 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
 
     protected ArrayExpressClient arrayExpressClient;
 
-    public ExperimentLoader() {
+    protected ExperimentLoader() {
     }
 
     @Inject

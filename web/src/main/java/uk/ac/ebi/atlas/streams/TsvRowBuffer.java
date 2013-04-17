@@ -48,6 +48,6 @@ public abstract class TsvRowBuffer<T extends GeneExpression> {
         return pollExpression(tsvRow);
     }
 
-    public abstract T pollExpression(Queue<String> expressionLevelsBuffer);
+    protected abstract T pollExpression(Queue<String> expressionLevelsBuffer);
 
 }

@@ -44,7 +44,7 @@ public class BaselineRequestContextBuilder {
 
     private FilterFactorsConverter filterFactorsConverter;
 
-    protected BaselineRequestPreferences preferences;
+    private BaselineRequestPreferences preferences;
 
     @Inject
     public BaselineRequestContextBuilder(BaselineRequestContext requestContext, FilterFactorsConverter filterFactorsConverter) {

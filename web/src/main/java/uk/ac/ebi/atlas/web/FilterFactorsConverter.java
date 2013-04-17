@@ -40,7 +40,7 @@ public class FilterFactorsConverter {
     private static final String SEPARATOR = ":";
 
     public String serialize(Collection<Factor> factors) {
-        List<String> serializedFactors = new ArrayList();
+        List<String> serializedFactors = new ArrayList<>();
         for (Factor factor : factors) {
             serializedFactors.add(factor.getType() + SEPARATOR + factor.getValue());
         }

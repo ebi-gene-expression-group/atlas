@@ -36,7 +36,7 @@ import java.util.Set;
 
 public abstract class GeneProfilesQueryCommand<T, K extends GeneProfile> implements Command<T> {
 
-    protected static final Logger LOGGER = Logger.getLogger(GeneProfilesQueryCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(GeneProfilesQueryCommand.class);
 
     private SolrClient solrClient;
 

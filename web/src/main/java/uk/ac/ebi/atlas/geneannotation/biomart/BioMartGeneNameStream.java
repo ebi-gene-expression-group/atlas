@@ -57,7 +57,7 @@ public class BioMartGeneNameStream implements ObjectInputStream<String[]> {
 
     }
 
-    public void setCsvReader(CSVReader csvReader) {
+    void setCsvReader(CSVReader csvReader) {
         this.csvReader = csvReader;
     }
 

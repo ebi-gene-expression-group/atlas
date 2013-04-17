@@ -102,9 +102,7 @@ public class ExperimentDispatcher {
                              "/experiments/{experimentAccession}/*" })
     public String dispatch(HttpServletRequest request, @PathVariable String experimentAccession, Model model) {
 
-        Experiment experiment;
-
-        experiment = getExperiment(experimentAccession, model);
+        Experiment experiment = getExperiment(experimentAccession, model);
 
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
@@ -136,10 +134,12 @@ public class ExperimentDispatcher {
         }
         if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)){
             MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
+
             model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+
             return microarrayExperiment;
         }
-        throw new ResourceNotFoundException();
+        throw new ResourceNotFoundException("Experiment not found with accession: " + experimentAccession);
 
     }
 

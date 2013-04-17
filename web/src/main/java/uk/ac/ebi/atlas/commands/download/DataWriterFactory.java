@@ -11,7 +11,7 @@ import javax.inject.Named;
 import java.io.PrintWriter;
 
 @Named
-public class AllDataWriterFactory {
+public class DataWriterFactory {
 
     @Value("#{configuration['diff.experiment.raw-counts.path.template']}")
     private String differentialExperimentRawCountsFileUrlTemplate;
@@ -32,7 +32,7 @@ public class AllDataWriterFactory {
 
 
     @Inject
-    public AllDataWriterFactory(TsvReaderUtils tsvReaderUtils, GeneNamesProvider geneNamesProvider, DesignElementMappingProvider designElementMappingProvider) {
+    public DataWriterFactory(TsvReaderUtils tsvReaderUtils, GeneNamesProvider geneNamesProvider, DesignElementMappingProvider designElementMappingProvider) {
         this.tsvReaderUtils = tsvReaderUtils;
         this.geneNamesProvider = geneNamesProvider;
         this.designElementMappingProvider = designElementMappingProvider;

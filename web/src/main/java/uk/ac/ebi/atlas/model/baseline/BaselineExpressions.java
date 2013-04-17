@@ -27,7 +27,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class BaselineExpressions implements Iterable<BaselineExpression> {
-    Set<BaselineExpression> expressions = new HashSet<>();
+
+    private Set<BaselineExpression> expressions = new HashSet<>();
 
     @Override
     public Iterator<BaselineExpression> iterator() {

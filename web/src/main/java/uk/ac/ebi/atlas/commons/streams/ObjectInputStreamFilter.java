@@ -32,7 +32,7 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
 
     private ObjectInputStream<T> inputStream;
 
-    public ObjectInputStreamFilter(ObjectInputStream<T> inputStream) {
+    protected ObjectInputStreamFilter(ObjectInputStream<T> inputStream) {
         this.inputStream = inputStream;
     }
 

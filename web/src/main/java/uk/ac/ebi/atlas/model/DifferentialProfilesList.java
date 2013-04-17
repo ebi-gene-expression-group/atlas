@@ -32,7 +32,7 @@ import static java.lang.Math.min;
 public class DifferentialProfilesList<T extends DifferentialProfile> extends GeneProfilesList<T> {
 
 
-    public DifferentialProfilesList(Collection collection) {
+    public DifferentialProfilesList(Collection<T> collection) {
         super(collection);
     }
 

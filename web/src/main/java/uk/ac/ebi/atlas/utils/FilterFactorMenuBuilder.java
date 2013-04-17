@@ -58,7 +58,7 @@ public class FilterFactorMenuBuilder {
     }
 
     public FilterFactorMenuBuilder forFilterFactors(Set<Factor> setOfFactor) {
-        this.factors = new TreeSet(setOfFactor);
+        this.factors = new TreeSet<>(setOfFactor);
         return this;
     }
 

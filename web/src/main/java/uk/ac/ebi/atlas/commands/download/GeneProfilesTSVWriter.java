@@ -45,16 +45,16 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     private GeneNamesProvider geneNamesProvider;
 
     @Inject
-    public GeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
+    protected GeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
         this.numberUtils = numberUtils;
         this.geneNamesProvider = geneNamesProvider;
     }
 
     public Long apply(ObjectInputStream<T> inputStream, SortedSet<K> conditions) throws IOException {
-        long count = 0;
 
         csvWriter.writeNext(buildCsvHeaders(conditions));
 
+        long count = 0;
         T geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;

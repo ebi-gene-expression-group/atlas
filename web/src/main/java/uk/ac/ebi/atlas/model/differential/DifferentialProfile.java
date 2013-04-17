@@ -23,11 +23,9 @@
 package uk.ac.ebi.atlas.model.differential;
 
 
-import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.GeneProfile;
 
-import java.util.EnumMap;
 import java.util.Set;
 
 import static java.lang.Math.max;

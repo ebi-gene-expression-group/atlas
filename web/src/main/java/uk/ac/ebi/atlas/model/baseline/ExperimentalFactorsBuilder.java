@@ -74,7 +74,7 @@ public class ExperimentalFactorsBuilder {
     }
 
     Collection<FactorGroup> extractFactorGroups() {
-        Collection<FactorGroup> factorGroups = new ArrayList();
+        Collection<FactorGroup> factorGroups = new ArrayList<>();
         for (ExperimentRun experimentRun : experimentRuns) {
             factorGroups.add(experimentRun.getFactorGroup());
         }

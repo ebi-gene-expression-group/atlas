@@ -35,6 +35,7 @@ import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -76,7 +77,7 @@ public class MageTabLimpopoUtils {
         return species;
     }
 
-    MAGETABInvestigation parseInvestigation(String experimentAccession) throws ParseException, IOException {
+    MAGETABInvestigation parseInvestigation(String experimentAccession) throws ParseException, MalformedURLException {
 
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
         LOGGER.info("<parseInvestigation> idfFileLocation = " + idfFileLocation);

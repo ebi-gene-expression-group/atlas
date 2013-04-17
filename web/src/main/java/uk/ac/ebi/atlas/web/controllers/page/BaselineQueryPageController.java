@@ -124,7 +124,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
         }
 
         //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
-        Map<String, String> factorNameToValue = new HashMap();
+        Map<String, String> factorNameToValue = new HashMap<>();
         for (Factor selectedFilterFactor : selectedFilterFactors) {
             factorNameToValue.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
         }

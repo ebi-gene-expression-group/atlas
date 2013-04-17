@@ -175,15 +175,12 @@ public class SolrClient {
     String getJsonResponse(String restQueryTemplate, String... arguments) {
         try {
             if (StringUtils.isBlank(arguments[0])) {
-                return "";
+                return StringUtils.EMPTY;
             }
             return restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
 
-        } catch (HttpClientErrorException e) {
-            LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
-            throw e;
         } catch (RestClientException e) {
-            LOGGER.error("<getJsonResponse> error connecting to the solr service: " + serverURL, e);
+            LOGGER.error(e.getMessage(), e);
             throw e;
         }
     }

@@ -60,7 +60,7 @@ public abstract class ExperimentPageRequestPreferences {
 
     private boolean displayGeneDistribution;
 
-    public ExperimentPageRequestPreferences(){
+    protected ExperimentPageRequestPreferences(){
       //  customInitializations();
     }
 
