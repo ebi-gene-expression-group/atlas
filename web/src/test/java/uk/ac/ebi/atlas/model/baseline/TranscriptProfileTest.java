@@ -33,25 +33,31 @@ import static org.junit.Assert.assertThat;
 public class TranscriptProfileTest {
 
     public static final String TRANSCRIPT_ID = "A_TRANSCRIPT_ID";
+    public static final String GENE_ID = "GENE_ID";
     private TranscriptProfile subject;
 
     @Before
     public void setUp() throws Exception {
-        this.subject = new TranscriptProfile(TRANSCRIPT_ID, Lists.newArrayList(2D, 3D));
+        this.subject = new TranscriptProfile(GENE_ID, TRANSCRIPT_ID, Lists.newArrayList(2D, 3D));
     }
 
     @Test
-    public void testGetTranscriptId() throws Exception {
+    public void testGetGeneId() {
+        assertThat(subject.getGeneId(), is(GENE_ID));
+    }
+
+    @Test
+    public void testGetTranscriptId() {
         assertThat(subject.getTranscriptId(), is(TRANSCRIPT_ID));
     }
 
     @Test
-    public void testGetExpressions() throws Exception {
+    public void testGetExpressions() {
         assertThat(subject.getExpressions(), contains(2D, 3D));
     }
 
     @Test
-    public void testGetExpression() throws Exception {
+    public void testGetExpression() {
         assertThat(subject.getExpression(0), is(2D));
     }
 }

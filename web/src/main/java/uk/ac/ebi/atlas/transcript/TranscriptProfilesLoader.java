@@ -43,6 +43,7 @@ public class TranscriptProfilesLoader {
 
     private static final Logger LOGGER = Logger.getLogger(TranscriptProfilesLoader.class);
     private static final int GENE_ID_COLUMN_INDEX = 0;
+    public static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
 
     private String transcriptFileUrlTemplate;
 
@@ -70,8 +71,7 @@ public class TranscriptProfilesLoader {
             String[] line;
             while ((line = csvReader.readNext()) != null) {
                 TranscriptProfile transcriptProfile = createTranscriptProfile(line);
-                String geneId = line[GENE_ID_COLUMN_INDEX];
-                geneProfileDao.addTranscriptProfile(experimentAccession, geneId, transcriptProfile);
+                geneProfileDao.addTranscriptProfile(experimentAccession, transcriptProfile);
                 count++;
             }
             return count;
@@ -84,12 +84,13 @@ public class TranscriptProfilesLoader {
     }
 
     TranscriptProfile createTranscriptProfile(String[] line) {
-        String transcriptId = line[1];
+        String geneId = line[GENE_ID_COLUMN_INDEX];
+        String transcriptId = line[TRANSCRIPT_ID_COLUMN_INDEX];
         String[] expressionStrings = (String[]) ArrayUtils.subarray(line, 2, line.length);
         List<Double> expressionLevels = Lists.newArrayList();
         for (String expressionString : expressionStrings) {
             expressionLevels.add(Double.parseDouble(expressionString));
         }
-        return new TranscriptProfile(transcriptId, expressionLevels);
+        return new TranscriptProfile(geneId, transcriptId, expressionLevels);
     }
 }

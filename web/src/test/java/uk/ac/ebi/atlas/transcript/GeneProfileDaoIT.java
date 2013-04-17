@@ -54,16 +54,17 @@ public class GeneProfileDaoIT {
     @Inject
     DataSource dataSource;
 
-    private TranscriptProfile transcriptProfile1 = new TranscriptProfile("A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
-    private TranscriptProfile transcriptProfile2 = new TranscriptProfile("A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
-
+    private TranscriptProfile transcriptProfile1 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
+    private TranscriptProfile transcriptProfile2 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
+    private TranscriptProfile transcriptProfile3 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
+    private TranscriptProfile transcriptProfile4 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
 
     @Before
     public void setup() {
 
         subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile2);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile1);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile2);
 
     }
 
@@ -96,8 +97,8 @@ public class GeneProfileDaoIT {
     @Test
     public void deleteTranscriptProfilesForExperiment() {
 
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID_2, transcriptProfile1);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID_2, transcriptProfile2);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile3);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile4);
 
         int records = subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
         assertThat(records, is(4));
