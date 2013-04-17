@@ -1,1 +1,0 @@
-INSERT INTO experiment_transcripts VALUES ('1','1',null);

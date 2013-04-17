@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.utils.CsvReaderBuilder;
+import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,14 +26,14 @@ public class AllDataWriterFactory {
     private String microarrayExperimentNormalizedFileUrlTemplate;
 
 
-    private CsvReaderBuilder csvReaderBuilder;
+    private TsvReaderUtils tsvReaderUtils;
     private GeneNamesProvider geneNamesProvider;
     private DesignElementMappingProvider designElementMappingProvider;
 
 
     @Inject
-    public AllDataWriterFactory(CsvReaderBuilder csvReaderBuilder, GeneNamesProvider geneNamesProvider, DesignElementMappingProvider designElementMappingProvider) {
-        this.csvReaderBuilder = csvReaderBuilder;
+    public AllDataWriterFactory(TsvReaderUtils tsvReaderUtils, GeneNamesProvider geneNamesProvider, DesignElementMappingProvider designElementMappingProvider) {
+        this.tsvReaderUtils = tsvReaderUtils;
         this.geneNamesProvider = geneNamesProvider;
         this.designElementMappingProvider = designElementMappingProvider;
     }
@@ -44,7 +44,7 @@ public class AllDataWriterFactory {
         final AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
         headerBuilder.setExperiment(experiment);
 
-        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(csvReaderBuilder, geneNamesProvider);
+        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(tsvReaderUtils, geneNamesProvider);
         expressionsWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
         initWriter(expressionsWriter, experiment.getAccession(), responseWriter, headerBuilder);
 
@@ -55,7 +55,7 @@ public class AllDataWriterFactory {
 
         RnaSeqRawDataHeaderBuilder headerBuilder = new RnaSeqRawDataHeaderBuilder();
 
-        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(csvReaderBuilder, geneNamesProvider);
+        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(tsvReaderUtils, geneNamesProvider);
         expressionsWriter.setFileUrlTemplate(differentialExperimentRawCountsFileUrlTemplate);
 
         initWriter(expressionsWriter, experiment.getAccession(), responseWriter, headerBuilder);
@@ -68,7 +68,7 @@ public class AllDataWriterFactory {
         MicroarrayAnalyticsDataHeaderBuilder headerBuilder = new MicroarrayAnalyticsDataHeaderBuilder();
         headerBuilder.setExperiment(experiment);
 
-        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(csvReaderBuilder, geneNamesProvider, designElementMappingProvider);
+        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(tsvReaderUtils, geneNamesProvider, designElementMappingProvider);
         microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentAnalyticsFileUrlTemplate);
 
@@ -81,7 +81,7 @@ public class AllDataWriterFactory {
     public ExpressionsWriter getMicroarrayRawDataWriter(DifferentialExperiment experiment, String arrayDesignAccession, PrintWriter responseWriter) {
         MicroarrayNormalizedDataHeaderBuilder headerBuilder = new MicroarrayNormalizedDataHeaderBuilder();
 
-        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(csvReaderBuilder, geneNamesProvider, designElementMappingProvider);
+        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(tsvReaderUtils, geneNamesProvider, designElementMappingProvider);
         microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentNormalizedFileUrlTemplate);
 

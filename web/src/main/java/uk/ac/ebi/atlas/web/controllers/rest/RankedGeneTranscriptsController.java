@@ -22,52 +22,73 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
-import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.transcript.TranscriptContributionCalculator;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 @Controller
 @Scope("request")
 public class RankedGeneTranscriptsController {
 
+    private TranscriptContributionCalculator transcriptContributionCalculator;
 
+    @Inject
+    public RankedGeneTranscriptsController(TranscriptContributionCalculator transcriptContributionCalculator) {
+        this.transcriptContributionCalculator = transcriptContributionCalculator;
+    }
 
-    @RequestMapping(value = "/json/transcripts/{experimentAccession}/{geneId}/{factor}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/transcripts/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getRankedTranscripts(HttpServletRequest request, @PathVariable String experimentAccession,
-                                       @PathVariable String geneId,
-                                       @PathVariable String factor,
-                                        @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
+                                       @RequestParam("geneId") String geneId,
+                                       @RequestParam("factorType") String factorType,
+                                       @RequestParam("factorValue") String factorValue,
+                                       @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
 
-        SortedMap<String, Double> transcriptRates = new TreeMap();
+        Factor factor = new Factor(factorType, factorValue);
 
-        //Following code is just to generate random ranking, don't keep it seriously!
+        Map<String, Double> transcriptExpressions = transcriptContributionCalculator.getTranscriptContributions(geneId, experimentAccession, factor);
 
-        double topTranscriptsTotalPercentage = 0;
-        for(int i = 0; i < rankingSize; i++){
-            double randomPortion = (100d - RandomUtils.nextInt(50))/(rankingSize + 1);
-            randomPortion = MathUtils.round(randomPortion, 2);
+        Double totalExpression = 0D;
 
-            transcriptRates.put("ENST00000" + (i + 1), randomPortion);
-            topTranscriptsTotalPercentage += randomPortion;
+        for (Double transcriptExpression: transcriptExpressions.values()){
+            totalExpression += transcriptExpression;
         }
 
-        double othersPortion = 100 - topTranscriptsTotalPercentage;
-        transcriptRates.put("Others", othersPortion);
+        //ToDo: this task of generating rates should be done in the calculator or somewhere else but still used by the calculator and not here.
+        //ToDo: Calculator should just return an object wrapping the ordered sorted rates map (OTHER must be the last) and the total number of transcript profiles, including also all 0 profiles
 
+        //ToDo: Javascript will have to be modified to extract the profiles count AND the data map from the json representation of this new object
+        Map<String, Double> transcriptRates = Maps.transformValues(transcriptExpressions, new PercentageFunction(totalExpression));
 
         return new Gson().toJson(transcriptRates, Map.class);
 
+    }
+
+    private class PercentageFunction implements Function<Double, Double>{
+
+        private Double totalExpression;
+
+        public PercentageFunction(Double totalExpression){
+            this.totalExpression = totalExpression;
+        }
+
+        @Override
+        public Double apply(java.lang.Double aDouble) {
+            return MathUtils.round((aDouble / totalExpression) * 100, 1);
+        }
     }
 
 }

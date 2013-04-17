@@ -14,11 +14,11 @@ import java.nio.file.Path;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-public class CsvReaderBuilder {
+public class TsvReaderUtils {
 
-    private static final Logger logger = Logger.getLogger(CsvReaderBuilder.class);
+    private static final Logger logger = Logger.getLogger(TsvReaderUtils.class);
 
-    public CSVReader buildCsvReader(String tsvFileURL) {
+    public CSVReader build(String tsvFileURL) {
         try {
             Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileURL));
             Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));

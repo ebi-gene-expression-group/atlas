@@ -1,21 +1,43 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.transcript;
 
+import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatementCallback;
-import org.springframework.jdbc.support.lob.LobCreator;
-import org.springframework.jdbc.support.lob.LobHandler;
-import uk.ac.ebi.atlas.model.baseline.TranscriptProfiles;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Map;
 
 
 @Named
@@ -27,41 +49,26 @@ public class GeneProfileDao {
     @Inject
     private DataSource dataSource;
 
-    @Inject
-    private LobHandler lobhandler;
 
-    public TranscriptProfiles getTranscriptProfiles(String experimentAccession, String geneId) {
+    public Collection<TranscriptProfile> getTranscriptProfiles(String experimentAccession, String geneId) {
 
         JdbcTemplate template = new JdbcTemplate(dataSource);
 
-        return template.queryForObject("select transcript_profiles where experiment_accession = ? and gene_id = ?",
+        return template.query("select transcript_profile from experiment_transcripts where experiment_accession = ? and gene_id = ?",
                 new String[]{experimentAccession, geneId},
-                TranscriptProfiles.class);
+                new RowMapper<TranscriptProfile>() {
+                    public TranscriptProfile mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        return TranscriptProfile.fromJson(rs.getString("transcript_profile"));
+                    }
+                });
     }
 
-    public void addTranscriptProfiles(final String experimentAccession, final String geneId, final TranscriptProfiles profiles) throws IOException {
+    public void addTranscriptProfile(final String experimentAccession, final String geneId, TranscriptProfile profile) throws IOException {
 
-        JdbcTemplate template = new JdbcTemplate(dataSource);
-
-        template.execute("INSERT INTO experiment_transcripts VALUES (?, ?, ?)",
-                    new AbstractLobCreatingPreparedStatementCallback(lobhandler) {
-                        protected void setValues(PreparedStatement ps, LobCreator lobCreator)
-                                throws SQLException {
-
-                            ps.setString(1, experimentAccession);
-                            ps.setString(2, geneId);
-
-                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
-                                objectOutputStream.writeObject(profiles);
-                                objectOutputStream.flush();
-                                lobCreator.setBlobAsBytes(ps, 3, byteArrayOutputStream.toByteArray());
-                            } catch (IOException e) {
-                                LOGGER.error(e.getMessage(), e);
-                                throw new IllegalStateException(e);
-                            }
-                        }
-                    }
-        );
+        Map<String, Object> insertParameters = Maps.newHashMap();
+        insertParameters.put("experiment_accession", experimentAccession);
+        insertParameters.put("gene_id", geneId);
+        insertParameters.put("transcript_profile", profile.toJson());
+        new SimpleJdbcInsert(dataSource).withTableName("experiment_transcripts").execute(insertParameters);
     }
 }

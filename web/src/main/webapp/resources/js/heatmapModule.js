@@ -88,11 +88,17 @@ var heatmapModule = (function($) {
         $("#heatmap-table td:has(div[data-color])").click(function () {
 
             //we need to identify gene and factorType for the cell being clicked
-            var factorType = $(this).find("div").attr("data-organism-part"),
+            var factorValue = $(this).find("div").attr("data-organism-part"),
+                factorType = $("#queryFactorType").attr("value"),
                 geneId = $(this).parent().find("td a:eq(0)").attr("id");
 
             $.ajax({
-                url: "json/transcripts/" + experimentAccession + "/" + geneId + "/" + factorType,
+                url: "json/transcripts/" + experimentAccession,
+                data:{
+                    'geneId': geneId,
+                    'factorType': factorType,
+                    'factorValue' : factorValue
+                },
                 datatype: 'json',
                 success: function (data) {
                     data = buildPlotData(data);
@@ -126,7 +132,7 @@ var heatmapModule = (function($) {
                     });
 
                     $('#transcript-breakdown-title').text(
-                        "Expression Level Breakdown for " + geneId + " (3 transcripts) on " + factorType
+                        "Expression Level Breakdown for " + geneId + " (X transcripts) on " + factorValue
                     );
 
 
