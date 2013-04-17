@@ -50,8 +50,8 @@ public class BaselineProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String GENE_ID_1 = "ENSG00000127720";
-    private static final String GENE_ID_2 = "ENSG00000244656";
+    private static final String GENE_ID_2 = "ENSG00000127720";
+    private static final String GENE_ID_1 = "ENSG00000244656";
     private static final String GENE_ID_3 = "ENSG00000224440";
     private static final String GENE_ID_6 = "ENSG00000266468";
 
@@ -90,13 +90,13 @@ public class BaselineProfilesInputStreamIT {
         BaselineProfile baselineProfile = subject.readNext();
         //then
         assertThat(baselineProfile.getGeneId(), is(GENE_ID_1));
-        assertThat(baselineProfile.getSpecificity(), is(15));
+        assertThat(baselineProfile.getSpecificity(), is(1));
 
         //given we poll twice more
         baselineProfile = subject.readNext();
         //then
         assertThat(baselineProfile.getGeneId(), is(GENE_ID_2));
-        assertThat(baselineProfile.getSpecificity(), is(1));
+        assertThat(baselineProfile.getSpecificity(), is(15));
 
         baselineProfile = subject.readNext();
 
@@ -108,11 +108,11 @@ public class BaselineProfilesInputStreamIT {
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
         long countProfiles = 0;
-        while(subject.readNext() != null){
+        while (subject.readNext() != null) {
             ++countProfiles;
         }
 
-        assertThat(countProfiles, is(268L));
+        assertThat(countProfiles, is(264L));
     }
 
     @Test

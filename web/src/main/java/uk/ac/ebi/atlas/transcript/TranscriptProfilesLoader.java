@@ -35,6 +35,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -43,6 +44,8 @@ public class TranscriptProfilesLoader {
 
     private static final Logger LOGGER = Logger.getLogger(TranscriptProfilesLoader.class);
     private static final int GENE_ID_COLUMN_INDEX = 0;
+    public static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
+    public static final int BATCH_SIZE = 1000;
 
     private String transcriptFileUrlTemplate;
 
@@ -66,14 +69,23 @@ public class TranscriptProfilesLoader {
 
             csvReader.readNext();//skip header line
 
+            List<TranscriptProfile> transcriptProfilesBatch = new ArrayList<>(BATCH_SIZE);
+
             int count = 0;
             String[] line;
             while ((line = csvReader.readNext()) != null) {
                 TranscriptProfile transcriptProfile = createTranscriptProfile(line);
-                String geneId = line[GENE_ID_COLUMN_INDEX];
-                geneProfileDao.addTranscriptProfile(experimentAccession, geneId, transcriptProfile);
+                transcriptProfilesBatch.add(transcriptProfile);
+                if (count % BATCH_SIZE == 0) {
+                    geneProfileDao.addTranscriptProfiles(experimentAccession, transcriptProfilesBatch);
+                    transcriptProfilesBatch.clear();
+                }
                 count++;
             }
+            if (transcriptProfilesBatch.size() > 0) {
+                geneProfileDao.addTranscriptProfiles(experimentAccession, transcriptProfilesBatch);
+            }
+
             return count;
 
         } catch (IOException e) {
@@ -84,12 +96,13 @@ public class TranscriptProfilesLoader {
     }
 
     TranscriptProfile createTranscriptProfile(String[] line) {
-        String transcriptId = line[1];
+        String geneId = line[GENE_ID_COLUMN_INDEX];
+        String transcriptId = line[TRANSCRIPT_ID_COLUMN_INDEX];
         String[] expressionStrings = (String[]) ArrayUtils.subarray(line, 2, line.length);
         List<Double> expressionLevels = Lists.newArrayList();
         for (String expressionString : expressionStrings) {
             expressionLevels.add(Double.parseDouble(expressionString));
         }
-        return new TranscriptProfile(transcriptId, expressionLevels);
+        return new TranscriptProfile(geneId, transcriptId, expressionLevels);
     }
 }

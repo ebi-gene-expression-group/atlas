@@ -50,7 +50,8 @@ public class TranscriptProfilesLoaderTest {
 
     private TranscriptProfilesLoader subject;
     private static final String TRANSCRIPT_ID = "TRANSCRIPT_ID";
-    private static final String[] A_CSV_LINE = new String[]{"A_GENE_ID", TRANSCRIPT_ID, "0.11", "1.3242", "0", "0.0003"};
+    public static final String A_GENE_ID = "A_GENE_ID";
+    private static final String[] A_CSV_LINE = new String[]{A_GENE_ID, TRANSCRIPT_ID, "0.11", "1.3242", "0", "0.0003"};
 
     @Before
     public void setUp() throws Exception {
@@ -62,13 +63,13 @@ public class TranscriptProfilesLoaderTest {
     @Test
     public void testLoad() throws Exception {
         subject.load(EXPERIMENT_ACCESSION);
-        verify(csvReaderMock,times(2)).readNext();
+        verify(csvReaderMock, times(2)).readNext();
         verify(csvReaderMock).close();
     }
 
     @Test
     public void testCreateTranscriptProfile() throws Exception {
         TranscriptProfile transcriptProfile = subject.createTranscriptProfile(A_CSV_LINE);
-        assertThat(transcriptProfile, is(new TranscriptProfile(TRANSCRIPT_ID, Lists.newArrayList(0.11D, 1.3242D, 0D, 0.0003D))));
+        assertThat(transcriptProfile, is(new TranscriptProfile(A_GENE_ID, TRANSCRIPT_ID, Lists.newArrayList(0.11D, 1.3242D, 0D, 0.0003D))));
     }
 }

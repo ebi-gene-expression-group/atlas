@@ -40,6 +40,8 @@ import static org.hamcrest.Matchers.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TranscriptContributionCalculatorTest {
 
+    public static final String GENE_ID = "geneId";
+
     @Mock
     private GeneProfileDao geneProfileDaoMock;
 
@@ -50,10 +52,10 @@ public class TranscriptContributionCalculatorTest {
 
     private List<TranscriptProfile> transcriptProfiles;
 
-    private TranscriptProfile profile1 = new TranscriptProfile("T1", Lists.newArrayList(1d, 1d, 3d));
-    private TranscriptProfile profile2 = new TranscriptProfile("T2", Lists.newArrayList(1d, 2d, 3d));
-    private TranscriptProfile profile3 = new TranscriptProfile("T3", Lists.newArrayList(1d, 3d, 3d));
-    private TranscriptProfile profile4 = new TranscriptProfile("T4", Lists.newArrayList(1d, 4d, 3d));
+    private TranscriptProfile profile1 = new TranscriptProfile(GENE_ID, "T1", Lists.newArrayList(1d, 1d, 3d));
+    private TranscriptProfile profile2 = new TranscriptProfile(GENE_ID, "T2", Lists.newArrayList(1d, 2d, 3d));
+    private TranscriptProfile profile3 = new TranscriptProfile(GENE_ID, "T3", Lists.newArrayList(1d, 3d, 3d));
+    private TranscriptProfile profile4 = new TranscriptProfile(GENE_ID, "T4", Lists.newArrayList(1d, 4d, 3d));
 
     @Before
     public void initSubject() throws Exception {

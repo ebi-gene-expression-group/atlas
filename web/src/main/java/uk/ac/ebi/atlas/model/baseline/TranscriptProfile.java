@@ -29,13 +29,20 @@ import java.util.Objects;
 
 public class TranscriptProfile implements Serializable {
 
+    private String geneId;
+
     private String transcriptId;
 
     private List<Double> expressions;
 
-    public TranscriptProfile(String transcriptId, List<Double> expressions) {
+    public TranscriptProfile(String geneId, String transcriptId, List<Double> expressions) {
+        this.geneId = geneId;
         this.transcriptId = transcriptId;
         this.expressions = expressions;
+    }
+
+    public String getGeneId() {
+        return geneId;
     }
 
     public String getTranscriptId() {
@@ -60,13 +67,13 @@ public class TranscriptProfile implements Serializable {
         }
         final TranscriptProfile other = (TranscriptProfile) obj;
 
-        return Objects.equals(transcriptId, other.transcriptId)
+        return Objects.equals(geneId, other.geneId) && Objects.equals(transcriptId, other.transcriptId)
                 && Objects.equals(expressions, other.expressions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transcriptId, expressions);
+        return Objects.hash(geneId, transcriptId, expressions);
     }
 
 }

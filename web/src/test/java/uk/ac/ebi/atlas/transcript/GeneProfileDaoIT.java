@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Collection;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -54,16 +55,29 @@ public class GeneProfileDaoIT {
     @Inject
     DataSource dataSource;
 
-    private TranscriptProfile transcriptProfile1 = new TranscriptProfile("A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
-    private TranscriptProfile transcriptProfile2 = new TranscriptProfile("A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
-
+    private TranscriptProfile transcriptProfile1 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
+    private TranscriptProfile transcriptProfile2 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
+    private TranscriptProfile transcriptProfile3 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
+    private TranscriptProfile transcriptProfile4 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
 
     @Before
     public void setup() {
 
         subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile2);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile1);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile2);
+
+    }
+
+    @Test
+    public void testAddTranscriptProfiles() {
+
+        List<TranscriptProfile> profiles = Lists.newArrayList(transcriptProfile3, transcriptProfile4);
+        subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, profiles);
+
+        Collection<TranscriptProfile> transcriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_2);
+
+        assertThat(transcriptProfiles, containsInAnyOrder(transcriptProfile3, transcriptProfile4));
 
     }
 
@@ -86,7 +100,7 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void deleteTranscriptProfilesForGeneId() {
+    public void testDeleteTranscriptProfilesForGeneId() {
 
         int records = subject.deleteTranscriptProfilesForExperimentAndGene(EXPERIMENT_ACCESSION, GENE_ID);
         assertThat(records, is(2));
@@ -94,10 +108,10 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void deleteTranscriptProfilesForExperiment() {
+    public void testDeleteTranscriptProfilesForExperiment() {
 
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID_2, transcriptProfile1);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID_2, transcriptProfile2);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile3);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile4);
 
         int records = subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
         assertThat(records, is(4));
@@ -105,7 +119,7 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void deleteTranscriptProfilesForNonExistingExperiment() {
+    public void testDeleteTranscriptProfilesForNonExistingExperiment() {
 
         int records = subject.deleteTranscriptProfilesForExperiment("BLA");
         assertThat(records, is(0));

@@ -22,22 +22,19 @@
 
 package uk.ac.ebi.atlas.transcript;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.Array;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +45,10 @@ import java.util.Map;
 public class GeneProfileDao {
 
     private static final Logger LOGGER = Logger.getLogger(GeneProfileDao.class);
-    public static final String TRANSCRIPT_PROFILE_QUERY = "SELECT transcript_id, transcript_expressions FROM experiment_transcripts WHERE experiment_accession = ? AND gene_id = ?";
+    public static final String TRANSCRIPT_PROFILE_QUERY = "SELECT gene_id, transcript_id, transcript_expressions " +
+            "FROM experiment_transcripts WHERE experiment_accession = ? AND gene_id = ?";
+    public static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO experiment_transcripts " +
+            "(experiment_accession, gene_id, transcript_id, transcript_expressions) VALUES (?, ?, ?, ?)";
 
     @Inject
     private DataSource dataSource;
@@ -59,23 +59,35 @@ public class GeneProfileDao {
 
         return template.query(TRANSCRIPT_PROFILE_QUERY,
                 new String[]{experimentAccession, geneId},
-                new RowMapper<TranscriptProfile>() {
-                    public TranscriptProfile mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        String transcript_id = rs.getString("transcript_id");
-                        Array array = rs.getArray("transcript_expressions");
-                        Object[] resultArray = (Object[]) array.getArray();
-                        Double[] expressions =  Arrays.copyOf(resultArray, resultArray.length, Double[].class);
-                        TranscriptProfile profile = new TranscriptProfile(transcript_id, Lists.newArrayList(expressions));
-                        array.free();
-                        return profile;
-                    }
-                });
+                new TranscriptProfileRowMapper());
     }
 
-    public void addTranscriptProfile(String experimentAccession, String geneId, TranscriptProfile profile) {
+    public void addTranscriptProfiles(final String experimentAccession, final List<TranscriptProfile> profiles) {
+
+        JdbcTemplate template = new JdbcTemplate(dataSource);
+        template.batchUpdate(TRANSCRIPT_PROFILE_INSERT, new BatchPreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                TranscriptProfile profile = profiles.get(i);
+                ps.setString(1, experimentAccession);
+                ps.setString(2, profile.getGeneId());
+                ps.setString(3, profile.getTranscriptId());
+                List<Double> expressions = profile.getExpressions();
+                ps.setObject(4, expressions.toArray(new Double[expressions.size()]));
+            }
+
+            @Override
+            public int getBatchSize() {
+                return profiles.size();
+            }
+        });
+    }
+
+    public void addTranscriptProfile(String experimentAccession, TranscriptProfile profile) {
         Map<String, Object> insertParameters = Maps.newHashMap();
         insertParameters.put("experiment_accession", experimentAccession);
-        insertParameters.put("gene_id", geneId);
+        insertParameters.put("gene_id", profile.getGeneId());
         insertParameters.put("transcript_id", profile.getTranscriptId());
         List<Double> expressions = profile.getExpressions();
         insertParameters.put("transcript_expressions", expressions.toArray(new Double[expressions.size()]));
