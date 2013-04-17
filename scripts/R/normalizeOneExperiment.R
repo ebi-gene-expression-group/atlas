@@ -49,21 +49,24 @@ normalizeOneExperiment <- function(files, outFile, scans, mode) {
 			print("Averaging duplicated probes")
 			ma <- avereps(ma, ID=ma$genes$ProbeName)
 
-			# data frames for M-values and A-values
+			# data frames for M-values and A-values. Put rownames (design
+			# element IDs) as the first column and name it
+			# "DesignElementAccession".
 			mValues <- data.frame(ma$M)
+			mValues <- data.frame(cbind(rownames(mValues), mValues))
+			colnames(mValues) <- c("DesignElementAccession", scans)
 			aValues <- data.frame(ma$A)
+			aValues <- data.frame(cbind(rownames(aValues), aValues))
+			colnames(aValues) <- c("DesignElementAccession", scans)
 
+			# Filename for A-values
 			outFile_A = gsub(".txt", "_A.txt", outFile)
 
 			print("Writing M-values and A-values")
-			# write scan names to output files for M-values (outFile) and A-values (outFile_A).
-			len = length(scans)
-			write(c("Scan REF", scans), outFile, ncolumns = len+1, sep = "\t")
-			write(c("Scan REF", scans), outFile_A, ncolumns = len+1, sep="\t")
-
+			
 			# write M-values and A-values, without column names because we already wrote them above.
-			write.table(ma$M, file=outFile, sep="\t", quote=FALSE, row.names=TRUE, col.names=FALSE, append=TRUE)
-			write.table(ma$A, file=outFile_A, sep="\t", quote=FALSE, row.names=TRUE, col.names=FALSE, append=TRUE)
+			write.table(mValues, file=outFile, sep="\t", quote=FALSE, row.names=FALSE)
+			write.table(aValues, file=outFile_A, sep="\t", quote=FALSE, row.names=FALSE)
 		
 			return("2-colour normalization complete")
 		}
@@ -179,27 +182,19 @@ normalizeOneExperiment <- function(files, outFile, scans, mode) {
 			return(sorted)
 		}
 
-		# shortFileNames is vector of CEL filenames with /path/to/files/ stripped off (i.e. just base names)
+		# shortFileNames is vector of CEL filenames with /path/to/files/ stripped off (i.e. just base names).
 		shortFileNames <- gsub(".+/", "", files)
 		
-		# Create a vector of scan names in the correct order with relSort()
+		# Create a vector of scan names in the correct order with relSort().
 		scansSorted <- relSort(scans, shortFileNames, sampleNames(eSet))
 		
-
-		# Write the normalized data matrix in eSet to a tab-delimited textfile
-		# (filename in 'outFile').
-		
-		# First make some headers for the columns.
-		# How many columns do we need
-		len <- length(sampleNames(eSet))
-		# Write the scan names after sorting
-		write(c("Scan REF", scansSorted), outFile, ncolumns = len+1, sep = "\t")
-		
-		# Now write the normalized and summarized expression values (accessed
-		# via 'exprs(eSet)') to the outFile. The left-most column is the
-		# probe set IDs. Leave out the column names (col.names=FALSE) as we
-		# already put some in above.
-		write.table(exprs(eSet), file = outFile, sep = "\t", quote = FALSE, row.names = TRUE, col.names = FALSE, append = TRUE)
+		# Normalized expressions to data frame.
+		normExprs <- exprs(eSet)
+		# Add row names as a column and give it col name "DesignElementAccession".
+		normExprs <- data.frame(cbind(rownames(normExprs), normExprs))
+	    colnames(normExprs) <- c("DesignElementAccession", scansSorted)
+		# Write to file.
+		write.table(normExprs, file = outFile, sep = "\t", quote = FALSE, row.names=FALSE)
 	
 	})
 

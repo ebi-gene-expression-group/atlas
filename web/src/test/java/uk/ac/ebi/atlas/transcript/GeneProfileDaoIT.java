@@ -47,6 +47,7 @@ public class GeneProfileDaoIT {
 
     private static final String EXPERIMENT_ACCESSION = "experiment_accession";
     private static final String GENE_ID = "geneId";
+    public static final String GENE_ID_2 = "geneID2";
     @Inject
     private GeneProfileDao subject;
 
@@ -60,13 +61,14 @@ public class GeneProfileDaoIT {
     @Before
     public void setup() {
 
+        subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile2);
+
     }
 
     @Test
-    public void testAddTranscriptProfiles() throws Exception {
-
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile2);
+    public void testDeserializeTranscriptProfiles() {
 
         Collection<TranscriptProfile> deserializedTranscriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID);
 
@@ -75,13 +77,30 @@ public class GeneProfileDaoIT {
     }
 
     @Test
-    public void testFailsToFindNotExistingTranscriptProfile() throws Exception {
-
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID, transcriptProfile1);
+    public void testFailsToFindNotExistingTranscriptProfile() {
 
         Collection<TranscriptProfile> transcriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, "not valid");
 
         assertThat(transcriptProfiles, is(empty()));
+
+    }
+
+    @Test
+    public void deleteTranscriptProfilesForGeneId() {
+
+        int records = subject.deleteTranscriptProfilesForExperimentAndGene(EXPERIMENT_ACCESSION, GENE_ID);
+        assertThat(records, is(2));
+
+    }
+
+    @Test
+    public void deleteTranscriptProfilesForExperiment() {
+
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID_2, transcriptProfile1);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, GENE_ID_2, transcriptProfile2);
+
+        int records = subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
+        assertThat(records, is(4));
 
     }
 }

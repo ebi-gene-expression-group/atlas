@@ -27,26 +27,31 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
 public class TranscriptProfileTest {
 
-    private static final String JSON_STRING = "{\"transcriptId\":\"A_TRANSCRIPT_ID\",\"expressions\":[2.0,3.0]}";
-
+    public static final String TRANSCRIPT_ID = "A_TRANSCRIPT_ID";
     private TranscriptProfile subject;
 
     @Before
     public void setUp() throws Exception {
-        this.subject = new TranscriptProfile("A_TRANSCRIPT_ID", Lists.newArrayList(2D, 3D));
+        this.subject = new TranscriptProfile(TRANSCRIPT_ID, Lists.newArrayList(2D, 3D));
     }
 
     @Test
-    public void toJsonShouldReturnJsonRepresentation() throws Exception {
-        assertThat(subject.toJson(), is(JSON_STRING));
+    public void testGetTranscriptId() throws Exception {
+        assertThat(subject.getTranscriptId(), is(TRANSCRIPT_ID));
     }
 
     @Test
-    public void fromJsonShouldDeserializeTranscriptProfiles() throws Exception {
-        assertThat(subject.fromJson(JSON_STRING), is(subject));
+    public void testGetExpressions() throws Exception {
+        assertThat(subject.getExpressions(), contains(2D, 3D));
+    }
+
+    @Test
+    public void testGetExpression() throws Exception {
+        assertThat(subject.getExpression(0), is(2D));
     }
 }
