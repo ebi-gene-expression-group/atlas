@@ -38,9 +38,15 @@ diffAtlas_mvaPlot <<- function(plotDataFile, contrastName, plotFile, techType) {
 
 	# Order of colours to give to ggplot matters -- the first element of the
 	# vector is used for the first design element in the data frame.
-	if(madf$sig[1] == "DE") { pointColours = c("red", "dimgrey") }
-	else { pointColours = c("dimgrey", "red") }
-	
+	if(madf$sig[1] == "DE") { 
+		pointColours = c("red", "dimgrey") 
+		labels = c("DE", "non-DE")
+	}
+	else { 
+		pointColours = c("dimgrey", "red") 
+		labels = c("non-DE", "DE")
+	}
+
 	# load ggplot2
 	library(ggplot2)
 
@@ -50,11 +56,11 @@ diffAtlas_mvaPlot <<- function(plotDataFile, contrastName, plotFile, techType) {
 	#  - Use geom_jitter() to reduce "overplotting" so that we can see points
 	#    that overlap easier. pass it alpha value for transparency of points
 	#    (lower=more transparent) and size for point size.
-	mvaPlot <- ggplot(madf, aes(x=avgExpr, y=logFC, colour=sig)) + geom_jitter(alpha=0.8, size=1) +
+	mvaPlot <- ggplot(madf, aes(x=avgExpr, y=logFC, colour=factor(adjPval < 0.05))) + geom_jitter(alpha=0.8, size=1) +
 		
 		# Apply the colours to the points in the plot. What's in the "name"
 		# argument ends up as the title of the legend/key.
-		scale_colour_manual(name="DE call (FDR < 0.05):", values=pointColours) +
+		scale_colour_manual(name="DE call (FDR < 0.05):", values=pointColours, labels=labels) +
 		
 		# Remove the default grey grid background to the plot and legend; add
 		# back the axis lines.
