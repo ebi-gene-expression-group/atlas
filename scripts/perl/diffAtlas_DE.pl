@@ -117,7 +117,6 @@ sub readAtlasXML {
 	
 	# load XML::Simple with strict mode -- gives helpful error messages.
 	use XML::Simple qw(:strict);
-	use Data::Dumper;
 	
 	print "\nReading Atlas XML config from $atlasXML...\n";
 	# xml contains assay group and contrast definitions parsed from XML file, for each <analytics> section.
@@ -438,6 +437,13 @@ sub getDEresults {
 						$normExpr = $exptAcc."_".$platform."-log-fold-changes.tsv";
 						$aValues = $exptAcc."_".$platform."-average-intensities.tsv";
 					}
+					# If the ref and test assays are not identical after
+					# removing ".Cy3" and ".Cy5" and the array design is
+					# A-AGIL-28, die because we can't handle single-colour
+					# designs on this array yet.
+					elsif($platform eq "A-AGIL-28") {
+						die "Looks like A-AGIL-28 but not two-colour design. Please verify that this experiment has a two-colour design.\n";
+					}
 				}
 				
 				# If $aValues is still undef, that means this is a single-colour design.
@@ -460,13 +466,15 @@ sub getDEresults {
 
 				print "Computing differential expression statistics for contrast \"", $atlasName, "\"...";
 
+				my $R_limmaOutput;
+				
 				if($aValues) {
-
-					my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile $aValues 2>&1`;
+					
+					$R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile $aValues 2>&1`;
 				}
 				else {
 					# Run limma script
-					my $R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
+					$R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
 				}
 
 				# Check for errors. This does not catch warnings.
@@ -501,6 +509,8 @@ sub getDEresults {
 					}
 				}
 				close(LIMMARES);
+				# clean up
+				`rm $limmaResTempFile`;
 
 
 				# Filename for MvA plot
