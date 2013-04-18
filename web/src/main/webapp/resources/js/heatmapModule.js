@@ -102,17 +102,20 @@ var heatmapModule = (function($) {
                 },
                 datatype: 'json',
                 success: function (data) {
-                    var totalCount = data[0];
-                    data = buildPlotData($.parseJSON(data[1]));
+                    var totalCount = data[0],
+                        plotData = buildPlotData($.parseJSON(data[1]));
 
-                    $.plot('#transcripts-pie', data, {
+
+
+
+                    $.plot('#transcripts-pie', plotData, {
                         series: {
                             pie: {
                                 show: true,
                                 radius:1,
                                 label: {
                                     style: {color: "white"},
-                                    radius: 3/5,
+                                    radius: plotData.length === 1 ? 0 : 3/5,
                                     show: true,
                                     formatter: function(label, series){
                                         return  series.percent + "%";},
