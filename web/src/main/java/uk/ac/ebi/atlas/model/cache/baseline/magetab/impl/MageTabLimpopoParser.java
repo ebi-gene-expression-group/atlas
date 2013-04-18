@@ -108,7 +108,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
         return Collections.unmodifiableCollection(processedExperimentRuns);
     }
 
-    protected Collection<ExperimentRun> extractProcessedExperimentRuns() throws IOException, ParseException {
+    protected Collection<ExperimentRun> extractProcessedExperimentRuns() {
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, getInvestigation().IDF);
 
@@ -200,7 +200,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
         return nbUpperCase;
     }
 
-    Collection<ExperimentRun> extractAllExperimentRunsFromSdrf(Collection<ScanNode> scanNodes, IDF idf) throws ParseException {
+    Collection<ExperimentRun> extractAllExperimentRunsFromSdrf(Collection<ScanNode> scanNodes, IDF idf) {
 
         Collection<ExperimentRun> experimentRuns = new ArrayList<>();
 

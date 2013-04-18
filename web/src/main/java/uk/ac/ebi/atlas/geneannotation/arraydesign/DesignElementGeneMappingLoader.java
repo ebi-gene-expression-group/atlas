@@ -44,7 +44,7 @@ public class DesignElementGeneMappingLoader {
     }
 
 
-    protected void loadAnnotations(Map<String, String> designElements,
+    void loadAnnotations(Map<String, String> designElements,
                                    ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker) {
 
         transactionRunner = annotationEnvironment.getTransactionRunner();
@@ -94,7 +94,7 @@ public class DesignElementGeneMappingLoader {
 
     }
 
-    protected ObjectValueTransactionWorker<String, Map.Entry<String, String>> getTransactionWorker(final String arrayDesignAccession) {
+    ObjectValueTransactionWorker<String, Map.Entry<String, String>> getTransactionWorker(final String arrayDesignAccession) {
         return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>(annotationEnvironment.geneDesignElementsToGeneNames()) {
             @Override
             protected String getValue() {

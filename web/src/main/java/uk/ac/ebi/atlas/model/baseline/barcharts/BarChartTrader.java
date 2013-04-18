@@ -42,7 +42,6 @@ public class BarChartTrader {
         this.factorGroupGeneExpressionIndexes = factorGroupGeneExpressionIndexes;
     }
 
-
     public NavigableMap<Double, Integer> getChart(Set<Factor> filterFactors, Set<Factor> selectedQueryFactors) {
 
         NavigableMap<Double, Integer> barChartPoints = new TreeMap<>();
@@ -59,11 +58,13 @@ public class BarChartTrader {
     protected int countGenesAboveCutoff(Map<FactorGroup, BitSet> geneBitSets, Set<Factor> filterFactors, Set<Factor> selectedFactors) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
-        for (FactorGroup bitSetFactors : geneBitSets.keySet()) {
-            if ((CollectionUtils.isEmpty(filterFactors) || bitSetFactors.containsAll(filterFactors))
-                    && (CollectionUtils.isEmpty(selectedFactors) || bitSetFactors.overlapsWith(selectedFactors))) {
-                //add
-                expressedGenesBitSet.or(geneBitSets.get(bitSetFactors));
+        for (FactorGroup factorGroup : geneBitSets.keySet()) {
+
+            boolean factorGroupContainsAllFilterFactors = CollectionUtils.isEmpty(filterFactors) || factorGroup.containsAll(filterFactors);
+            boolean factorGroupOverlapsSelectedFactors = CollectionUtils.isEmpty(selectedFactors) || factorGroup.overlapsWith(selectedFactors);
+
+            if (factorGroupContainsAllFilterFactors && factorGroupOverlapsSelectedFactors) {
+                expressedGenesBitSet.or(geneBitSets.get(factorGroup));
             }
         }
         return expressedGenesBitSet.cardinality();

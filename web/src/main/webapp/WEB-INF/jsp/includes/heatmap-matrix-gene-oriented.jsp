@@ -174,12 +174,12 @@
     }
 </style>
 
-<div id="transcript-breakdown" style="display:none;height: 320px;width: 450px; padding-top:10px">
+<div id="transcript-breakdown" style="display:none;height: 320px;width: 600px; padding-top:10px">
     <p id="transcript-breakdown-title" style = "text-align: center">
         ...
     </p>
     <div>
-        <div id="transcripts-pie" style="padding-top:10px;width: 440px;height:250px;line-height: 1.2em;">
+        <div id="transcripts-pie" style="padding-top:10px;width: 590px;height:250px;line-height: 1.2em;">
         </div>
     </div>
 </div>

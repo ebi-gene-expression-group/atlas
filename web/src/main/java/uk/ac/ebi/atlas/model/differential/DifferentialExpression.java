@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.differential;
 
+import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.GeneExpression;
 
 public class DifferentialExpression implements GeneExpression{
@@ -63,33 +64,24 @@ public class DifferentialExpression implements GeneExpression{
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (this == other) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if ((null == other) || (getClass() != other.getClass())) {
+        if ((null == object) || (getClass() != object.getClass())) {
             return false;
         }
 
-        DifferentialExpression that = (DifferentialExpression) other;
+        DifferentialExpression other = (DifferentialExpression) object;
 
-        if (Double.compare(that.foldChange, foldChange) != 0) return false;
-        if (Double.compare(that.pValue, pValue) != 0) return false;
-        if (!contrast.equals(that.contrast)) return false;
-
-        return true;
+        return  Objects.equal(foldChange, other.foldChange) &&
+                Objects.equal(pValue, other.pValue) &&
+                Objects.equal(contrast,other.contrast);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        temp = pValue != +0.0d ? Double.doubleToLongBits(pValue) : 0L;
-        result = (int) (temp ^ (temp >>> 32));
-        temp = foldChange != +0.0d ? Double.doubleToLongBits(foldChange) : 0L;
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + contrast.hashCode();
-        return result;
+        return Objects.hashCode(pValue, foldChange, contrast);
     }
 
     @Override

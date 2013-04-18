@@ -42,7 +42,7 @@ import java.util.*;
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
 public abstract class BaselineExperimentLoader extends ExperimentLoader<BaselineExperiment> {
 
-    public static final int GENE_ID_COLUMN = 0;
+    private static final int GENE_ID_COLUMN = 0;
 
     private MageTabParserBuilder mageTabParserBuilder;
 
@@ -51,7 +51,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
 
 
     @Inject
-    public BaselineExperimentLoader(TsvReaderBuilder tsvReaderBuilder,
+    protected BaselineExperimentLoader(TsvReaderBuilder tsvReaderBuilder,
                                     MageTabParserBuilder mageTabParserBuilder,
                                     ConfigurationTrader configurationTrader,
                                     @Value("#{configuration['experiment.magetab.path.template']}")
@@ -115,7 +115,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
         return requiredFactorTypes;
     }
 
-    protected Set<String> extractProcessedRunAccessions(String experimentAccession) {
+    Set<String> extractProcessedRunAccessions(String experimentAccession) {
 
         String[] experimentRunHeaders = experimentDataTsvReader.readLine(experimentAccession, 0);
 

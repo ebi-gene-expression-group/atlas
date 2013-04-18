@@ -65,23 +65,24 @@ public class ColourGradient {
 
     public String getGradientColour(double value, double min, double max, String lowValueColourString, String highValueColourString) {
 
-        Color lowValueColour = lowValueColourString.startsWith("#")? getColourByHex(lowValueColourString):getColourByName(lowValueColourString);
-        Color highValueColour = highValueColourString.startsWith("#")? getColourByHex(highValueColourString):getColourByName(highValueColourString);
+        Color lowValueColour = getColor(lowValueColourString);
+        Color highValueColour = getColor(highValueColourString);
 
         return colorToHexString(getGradientColour(value, min, max, lowValueColour, highValueColour));
     }
 
-    private Color getColourByHex(String color) {
-        return Color.decode(color);
+    private Color getColor(String colourString) {
+        if (colourString.startsWith("#")) {
+            return Color.decode(colourString);
+        }
+        return getColourByName(colourString);
     }
 
     public Color getColourByName(String colourName){
         try {
             return (Color)Color.class.getField(colourName).get(null);
-        } catch (NoSuchFieldException e) {
-            throw new IllegalArgumentException("NoSuchFieldException during the identification of colour: " + colourName);
-        } catch (IllegalAccessException e) {
-            throw new IllegalArgumentException("IllegalAccessException during the identification of colour: " + colourName);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 

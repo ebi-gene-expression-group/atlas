@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class BarChartTradersCache {
 
-    private static final Logger logger = Logger.getLogger(BarChartTradersCache.class);
+    private static final Logger LOGGER = Logger.getLogger(BarChartTradersCache.class);
 
     private LoadingCache<String, BarChartTrader> barchartTraders;
 
@@ -51,7 +51,7 @@ public class BarChartTradersCache {
             return barchartTraders.get(experimentAccession);
 
         } catch (ExecutionException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Exception while loading histogram data from file: " + e.getMessage(),
                     e.getCause());
         }

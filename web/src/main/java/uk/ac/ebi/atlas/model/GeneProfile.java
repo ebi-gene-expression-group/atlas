@@ -38,7 +38,7 @@ public abstract class GeneProfile<K, T extends GeneExpression> {
 
     private String geneId;
 
-    public GeneProfile(String geneId) {
+    protected GeneProfile(String geneId) {
         this.geneId = geneId;
     }
 

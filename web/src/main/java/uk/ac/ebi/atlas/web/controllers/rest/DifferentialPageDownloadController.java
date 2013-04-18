@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.download.AllDataWriterFactory;
+import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -53,16 +53,16 @@ public class DifferentialPageDownloadController {
 
     private WriteDifferentialProfilesCommand writeGeneProfilesCommand;
 
-    private AllDataWriterFactory allDataWriterFactory;
+    private DataWriterFactory dataWriterFactory;
 
     @Inject
     public DifferentialPageDownloadController(
             RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand
-            , AllDataWriterFactory allDataWriterFactory) {
+            , DataWriterFactory dataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
-        this.allDataWriterFactory = allDataWriterFactory;
+        this.dataWriterFactory = dataWriterFactory;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
@@ -102,7 +102,7 @@ public class DifferentialPageDownloadController {
 
         prepareResponse(response, experiment.getAccession(), RAW_COUNTS_TSV);
 
-        ExpressionsWriter rnaSeqRawDataWriter = allDataWriterFactory.getRnaSeqRawDataWriter(experiment, response.getWriter());
+        ExpressionsWriter rnaSeqRawDataWriter = dataWriterFactory.getRnaSeqRawDataWriter(experiment, response.getWriter());
 
         long genesCount = rnaSeqRawDataWriter.write();
                 LOGGER.info("<download" + RAW_COUNTS_TSV + "> streamed " + genesCount + " gene expression profiles");
@@ -114,7 +114,7 @@ public class DifferentialPageDownloadController {
 
         prepareResponse(response, experiment.getAccession(), ALL_ANALYTICS_TSV);
 
-        ExpressionsWriter rnaSeqAnalyticsDataWriter = allDataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment, response.getWriter());
+        ExpressionsWriter rnaSeqAnalyticsDataWriter = dataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment, response.getWriter());
 
         long genesCount = rnaSeqAnalyticsDataWriter.write();
         LOGGER.info("<download" + ALL_ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");

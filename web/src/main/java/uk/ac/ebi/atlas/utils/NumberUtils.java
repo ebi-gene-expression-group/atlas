@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.primitives.Doubles;
 import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
 
@@ -52,13 +53,14 @@ public class NumberUtils {
     }
 
     public double round(double value) {
-        return MathUtils.round(value, value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
-                : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE);
+        int numberOfFractionalDigits = value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
+                                                  : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE;
+        return MathUtils.round(value, numberOfFractionalDigits);
     }
 
     public String htmlFormatDouble(double number) {
-        return (number >0 && number < MIN_REPORTED_VALUE) ? "<" + formatNumber(MIN_REPORTED_VALUE) : formatNumber(number);
-
+        return (number > 0 && number < MIN_REPORTED_VALUE) ? "<" + formatNumber(MIN_REPORTED_VALUE)
+                                                           : formatNumber(number);
     }
 
     String formatNumber(double number) {

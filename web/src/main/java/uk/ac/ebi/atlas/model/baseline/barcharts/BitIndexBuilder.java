@@ -72,7 +72,7 @@ public class BitIndexBuilder {
 
     }
 
-    protected void populateGeneExpressionIndexes(ObjectInputStream<BaselineExpressions> inputStream) {
+    void populateGeneExpressionIndexes(ObjectInputStream<BaselineExpressions> inputStream) {
         int geneIndexPosition = 0;
 
         BaselineExpressions baselineExpressions;

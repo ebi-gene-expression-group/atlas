@@ -32,7 +32,7 @@ import static java.lang.Math.min;
 public class DifferentialProfilesList<T extends DifferentialProfile> extends GeneProfilesList<T> {
 
 
-    public DifferentialProfilesList(Collection collection) {
+    public DifferentialProfilesList(Collection<T> collection) {
         super(collection);
     }
 
@@ -41,7 +41,7 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
         for (DifferentialProfile differentialProfile : this) {
             maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, differentialProfile.getMaxUpRegulatedExpressionLevel());
         }
-        return maxUpRegulatedExpressionLevel != 0 ? maxUpRegulatedExpressionLevel : Double.NaN;
+        return maxUpRegulatedExpressionLevel == 0 ? Double.NaN : maxUpRegulatedExpressionLevel;
     }
 
     public double getMinUpRegulatedExpressionLevel(){
@@ -49,7 +49,7 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
         for (DifferentialProfile differentialProfile : this) {
             minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, differentialProfile.getMinUpRegulatedExpressionLevel());
         }
-        return minUpRegulatedExpressionLevel != Double.MAX_VALUE ? minUpRegulatedExpressionLevel : Double.NaN;
+        return minUpRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : minUpRegulatedExpressionLevel;
     }
 
 
@@ -58,7 +58,7 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
         for (DifferentialProfile differentialProfile : this) {
             maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, differentialProfile.getMaxDownRegulatedExpressionLevel());
         }
-        return maxDownRegulatedExpressionLevel != 0 ? maxDownRegulatedExpressionLevel : Double.NaN;
+        return maxDownRegulatedExpressionLevel == 0 ? Double.NaN : maxDownRegulatedExpressionLevel;
     }
 
     public double getMinDownRegulatedExpressionLevel(){
@@ -66,6 +66,6 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
         for (DifferentialProfile differentialProfile : this) {
             minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, differentialProfile.getMinDownRegulatedExpressionLevel());
         }
-        return minDownRegulatedExpressionLevel != Double.MAX_VALUE ? minDownRegulatedExpressionLevel : Double.NaN;
+        return minDownRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : minDownRegulatedExpressionLevel;
     }
 }

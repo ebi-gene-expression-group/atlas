@@ -77,7 +77,7 @@ public class TsvReaderImpl implements TsvReader {
         return readAndFilter(experimentAccession, new IsNotComment());
     }
 
-    protected List<String[]> readAndFilter(String experimentAccession, Predicate<String> acceptanceCriteria) {
+    List<String[]> readAndFilter(String experimentAccession, Predicate<String> acceptanceCriteria) {
 
         Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
 

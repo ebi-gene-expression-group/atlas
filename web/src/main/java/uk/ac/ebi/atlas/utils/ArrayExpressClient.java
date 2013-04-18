@@ -42,15 +42,15 @@ public class ArrayExpressClient {
         try {
             Builder parser = new Builder();
             Document doc = parser.build(new StringReader(experimentXML));
-            return parseValue(doc, EXPERIMENT_NAME_XPATH);
+            return parseValue(doc);
 
         } catch (ParsingException | IOException ex) {
             throw new IllegalStateException("Cannot access ArrayExpress", ex);
         }
     }
 
-    private String parseValue(Document doc, String xpathQuery) {
-        Nodes nodes = doc.query(xpathQuery);
+    private String parseValue(Document doc) {
+        Nodes nodes = doc.query(EXPERIMENT_NAME_XPATH);
         Preconditions.checkState(nodes.size() == 1, "Experiment name cannot be fetched from ArrayExpress");
 
         return nodes.get(0).getValue();

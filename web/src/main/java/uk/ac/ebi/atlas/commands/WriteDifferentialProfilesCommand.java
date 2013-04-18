@@ -41,7 +41,7 @@ import java.io.PrintWriter;
 @Scope("prototype")
 public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<Long, RnaSeqProfile> implements Command<Long> {
 
-    protected static final Logger logger = Logger.getLogger(WriteDifferentialProfilesCommand.class);
+    private static final Logger logger = Logger.getLogger(WriteDifferentialProfilesCommand.class);
 
     private DifferentialGeneProfilesTSVWriter geneProfileTsvWriter;
 

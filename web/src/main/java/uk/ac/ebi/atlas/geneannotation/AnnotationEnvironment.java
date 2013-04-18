@@ -78,9 +78,9 @@ public class AnnotationEnvironment {
 
     public void initBerkeleyDatabase(boolean readonly) {
         try {
-            setupEnvironment(readonly);
-            setupGeneNameDatabase(readonly);
-            setupDesignElementDatabase(readonly);
+            initEnvironment(readonly);
+            initGeneNameDatabase(readonly);
+            initDesignElementDatabase(readonly);
         } catch (EnvironmentNotFoundException e) {
             initBerkeleyDatabase(false);
             close();
@@ -99,19 +99,20 @@ public class AnnotationEnvironment {
         return envConfig;
     }
 
-    private void setupEnvironment(boolean readonly) {
-        environment = new Environment(environmentDirectory, createEnvironmentConfig(readonly));
+    private void initEnvironment(boolean readonly) {
+        EnvironmentConfig environmentConfig = createEnvironmentConfig(readonly);
+        environment = new Environment(environmentDirectory, environmentConfig);
     }
 
-    public void setupGeneNameDatabase(boolean readonly) {
+    private void initGeneNameDatabase(boolean readonly) {
         geneNameDatabase = setupDatabase(readonly, GENES_DB);
     }
 
-    public void setupDesignElementDatabase(boolean readonly) {
+    private void initDesignElementDatabase(boolean readonly) {
         designElementDatabase = setupDatabase(readonly, DESIGN_ELEMENTS_DB);
     }
 
-    public Database setupDatabase(boolean readonly, String dbName) {
+    Database setupDatabase(boolean readonly, String dbName) {
         try {
             DatabaseConfig dbConfig = new DatabaseConfig();
             dbConfig.setAllowCreate(!readonly);

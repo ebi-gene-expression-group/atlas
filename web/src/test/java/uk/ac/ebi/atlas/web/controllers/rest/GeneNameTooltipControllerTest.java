@@ -1,0 +1,89 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.web.controllers.rest;
+
+import com.google.common.collect.Lists;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.geneindex.SolrClient;
+
+import java.util.Collection;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+@RunWith(MockitoJUnitRunner.class)
+public class GeneNameTooltipControllerTest {
+
+    private GeneNameTooltipController subject;
+
+    @Mock
+    private SolrClient solrClientMock;
+
+    @Before
+    public void setUp() throws Exception {
+        subject = new GeneNameTooltipController(solrClientMock);
+    }
+
+    @Test
+    public void buildSynonyms() throws Exception {
+
+    }
+
+    @Test
+    public void formatShouldWrapValuesInSpanElements() throws Exception {
+
+        Collection<String> values = Lists.newArrayList("VALUE_1", "VALUE_2");
+
+        String formattedValues = subject.format(values, true);
+
+        assertThat(formattedValues, is(
+                                        "<span class='property-value-markup'>VALUE_1</span>" +
+                                        " " +
+                                        "<span class='property-value-markup'>VALUE_2</span>"));
+    }
+
+    @Test
+    public void formatCanBeConfiguredToReturnEmptyStringWhenValuesIsEmpty() throws Exception {
+
+        Collection<String> values = Lists.newArrayList();
+
+        String formattedValues = subject.format(values, false);
+
+        assertThat(formattedValues, is(""));
+    }
+
+    @Test
+    public void formatCanBeConfiguredToReturnNAWhenValuesIsEmpty() throws Exception {
+
+        Collection<String> values = Lists.newArrayList();
+
+        String formattedValues = subject.format(values, true);
+
+        assertThat(formattedValues, is("NA"));
+    }
+
+}

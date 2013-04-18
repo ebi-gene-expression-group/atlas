@@ -30,7 +30,6 @@ import javax.inject.Named;
 @Scope("prototype")
 public class EmailMessage {
 
-    // changed to private by Sonar recommendation
     private String sender;
     private String recipient;
     private String body;

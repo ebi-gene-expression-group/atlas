@@ -44,7 +44,7 @@ public class BaselineRequestContextBuilder {
 
     private FilterFactorsConverter filterFactorsConverter;
 
-    protected BaselineRequestPreferences preferences;
+    private BaselineRequestPreferences preferences;
 
     @Inject
     public BaselineRequestContextBuilder(BaselineRequestContext requestContext, FilterFactorsConverter filterFactorsConverter) {
@@ -65,9 +65,8 @@ public class BaselineRequestContextBuilder {
     Set<String> getQueryFactorValues() {
         if (CollectionUtils.isNotEmpty(preferences.getQueryFactorValues())) {
             return preferences.getQueryFactorValues();
-        } else {
-            return Collections.EMPTY_SET;
         }
+        return Collections.EMPTY_SET;
     }
 
     public BaselineRequestContext build() {

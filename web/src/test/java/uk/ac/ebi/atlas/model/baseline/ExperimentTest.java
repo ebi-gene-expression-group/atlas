@@ -42,6 +42,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentTest {
 
+    private static final String DISPLAY_NAME = "DISPLAY NAME";
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
 
@@ -98,6 +99,7 @@ public class ExperimentTest {
                 .withFactorNamesByType(Collections.EMPTY_MAP)
                 .withExperimentRuns(experimentRuns)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
+                .withDisplayName(DISPLAY_NAME)
                 .create();
 
 
@@ -150,6 +152,11 @@ public class ExperimentTest {
         //then
         verify(experimentalFactorsMock).getFilteredFactors(filteredFactors);
         assertThat(subject.getExperimentalFactors().getMenuFilterFactorNames(), is(Collections.EMPTY_SET));
+    }
+
+    @Test
+    public void testGetDisplayName(){
+        assertThat(subject.getDisplayName(), is(DISPLAY_NAME));
     }
 
 }

@@ -15,33 +15,33 @@ class AnalyticsDataHeaderBuilder implements HeaderBuilder {
     private DifferentialExperiment experiment;
 
 
-     @Override
-     public String[] buildHeader(String[] header) {
-         checkNotNull(experiment, "Experiment should be not null!");
+    @Override
+    public String[] buildHeader(String[] header) {
+        checkNotNull(experiment, "Experiment should be not null!");
 
-         List<String> result = new ArrayList<>();
-         result.add(GENE_NAME);
-         result.add(getSecondColumnName());
+        List<String> result = new ArrayList<>();
+        result.add(GENE_NAME);
+        result.add(getSecondColumnName());
 
-         String[] headerWithoutFirstElement = ArrayUtils.remove(header, 0);
-         for (String columnHeader : headerWithoutFirstElement) {
-             result.add(replaceContrastIdWithName(columnHeader));
-         }
+        String[] headerWithoutFirstElement = ArrayUtils.remove(header, 0);
+        for (String columnHeader : headerWithoutFirstElement) {
+            result.add(replaceContrastIdWithName(columnHeader));
+        }
 
-         return result.toArray(new String[result.size()]);
-     }
+        return result.toArray(new String[result.size()]);
+    }
 
-     protected String replaceContrastIdWithName(String columnHeader) {
-         String contrastId = StringUtils.substringBefore(columnHeader, ".");
-         String displayName = experiment.getContrast(contrastId).getDisplayName();
-         return StringUtils.replace(columnHeader, contrastId, displayName);
-     }
+    protected String replaceContrastIdWithName(String columnHeader) {
+        String contrastId = StringUtils.substringBefore(columnHeader, ".");
+        String displayName = experiment.getContrast(contrastId).getDisplayName();
+        return StringUtils.replace(columnHeader, contrastId, displayName);
+    }
 
-     public void setExperiment(DifferentialExperiment experiment) {
-         this.experiment = experiment;
-     }
+    public void setExperiment(DifferentialExperiment experiment) {
+        this.experiment = experiment;
+    }
 
-    protected String getSecondColumnName() {
+    String getSecondColumnName() {
         return GENE_ID;
     }
 }

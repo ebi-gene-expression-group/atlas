@@ -40,7 +40,7 @@ import java.io.PrintWriter;
 @Scope("request")
 public class WriteBaselineProfilesCommand extends GeneProfilesQueryCommand<Long, BaselineProfile> implements Command<Long> {
 
-    protected static final Logger LOGGER = Logger.getLogger(WriteBaselineProfilesCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(WriteBaselineProfilesCommand.class);
 
     private BaselineProfilesTSVWriter baselineProfilesTSVWriter;
     private InputStreamFactory inputStreamFactory;

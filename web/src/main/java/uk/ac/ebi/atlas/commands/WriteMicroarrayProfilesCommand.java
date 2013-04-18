@@ -41,7 +41,7 @@ import java.io.PrintWriter;
 @Scope("prototype")
 public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Long, MicroarrayProfile> implements Command<Long> {
 
-    protected static final Logger logger = Logger.getLogger(WriteMicroarrayProfilesCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(WriteMicroarrayProfilesCommand.class);
 
     private MicroarrayGeneProfilesTSVWriter geneProfileTsvWriter;
     private MicroarrayRequestContext requestContext;
@@ -69,7 +69,7 @@ public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Lon
         try {
             return geneProfileTsvWriter.apply(inputStream, experiment.getContrasts());
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
     }

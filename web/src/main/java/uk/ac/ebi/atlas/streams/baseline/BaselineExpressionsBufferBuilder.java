@@ -91,7 +91,7 @@ public class BaselineExpressionsBufferBuilder implements TsvRowBufferBuilder<Bas
         return this;
     }
 
-    protected void initOrderedFactorGroups(List<String> columnHeaders) {
+    void initOrderedFactorGroups(List<String> columnHeaders) {
 
         List<String> firstRunAccessions = Lists.newArrayList(Collections2.transform(columnHeaders, new Function<String, String>() {
             @Override

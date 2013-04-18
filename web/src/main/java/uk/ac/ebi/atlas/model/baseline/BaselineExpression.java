@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.GeneExpression;
 
 import java.util.Set;
@@ -58,34 +59,23 @@ public class BaselineExpression implements GeneExpression {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
 
-        BaselineExpression that = (BaselineExpression) o;
+        BaselineExpression other = (BaselineExpression) object;
 
-        if (Double.compare(that.level, level) != 0) {
-            return false;
-        }
-        if (!factorGroup.equals(that.factorGroup)) {
-            return false;
-        }
-
-        return true;
+        return Objects.equal(level, other.level) &&
+               Objects.equal(factorGroup, other.factorGroup);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        temp = level != +0.0d ? Double.doubleToLongBits(level) : 0L;
-        result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + factorGroup.hashCode();
-        return result;
+        return Objects.hashCode(level, factorGroup);
     }
 
     public boolean containsAll(Set<Factor> factors) {

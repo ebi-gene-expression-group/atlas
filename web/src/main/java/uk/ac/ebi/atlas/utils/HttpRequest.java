@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.base.Charsets;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -31,9 +32,9 @@ import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 
-// this is purely utility class and can go into the utils package
 public class HttpRequest {
 
     private HttpRequest() {
@@ -41,15 +42,15 @@ public class HttpRequest {
     }
 
     public static InputStream httpPost(org.apache.http.client.HttpClient httpClient, String url, List<? extends NameValuePair> params) throws IOException {
-        HttpPost httppost = new HttpPost(url);
-        httppost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-        HttpResponse response = httpClient.execute(httppost);
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+        HttpResponse response = httpClient.execute(httpPost);
 
         int statusCode = response.getStatusLine().getStatusCode();
-        if (statusCode != HttpStatus.SC_OK) {
-            throw new IOException("Server returned invalid response: [status_code = " + statusCode + "; url = " + url + "]");
+        if (statusCode == HttpStatus.SC_OK) {
+            return response.getEntity().getContent();
         }
-        return response.getEntity().getContent();
+        throw new IOException("Server returned invalid response: [status_code = " + statusCode + "; url = " + url + "]");
     }
 
 }

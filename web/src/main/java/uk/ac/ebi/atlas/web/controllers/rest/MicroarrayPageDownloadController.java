@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.WriteMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.download.AllDataWriterFactory;
+import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -53,15 +53,15 @@ public class MicroarrayPageDownloadController {
 
     private WriteMicroarrayProfilesCommand writeGeneProfilesCommand;
 
-    private AllDataWriterFactory allDataWriterFactory;
+    private DataWriterFactory dataWriterFactory;
 
     @Inject
     public MicroarrayPageDownloadController(
-            MicroarrayRequestContextBuilder requestContextBuilder, WriteMicroarrayProfilesCommand writeGeneProfilesCommand, AllDataWriterFactory allDataWriterFactory) {
+            MicroarrayRequestContextBuilder requestContextBuilder, WriteMicroarrayProfilesCommand writeGeneProfilesCommand, DataWriterFactory dataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.writeGeneProfilesCommand = writeGeneProfilesCommand;
-        this.allDataWriterFactory = allDataWriterFactory;
+        this.dataWriterFactory = dataWriterFactory;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=MICROARRAY")
@@ -109,7 +109,7 @@ public class MicroarrayPageDownloadController {
 
         prepareResponse(response, experiment.getAccession(), selectedArrayDesign, NORMALIZED_EXPRESSIONS_TSV);
 
-        ExpressionsWriter writer = allDataWriterFactory.getMicroarrayRawDataWriter(experiment,
+        ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
                 selectedArrayDesign,
                 response.getWriter());
 
@@ -129,7 +129,7 @@ public class MicroarrayPageDownloadController {
 
         prepareResponse(response, experiment.getAccession(), selectedArrayDesign, ANALYTICS_TSV);
 
-        ExpressionsWriter writer = allDataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
+        ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
                 selectedArrayDesign,
                 response.getWriter());
 

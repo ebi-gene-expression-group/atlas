@@ -29,7 +29,10 @@ class MicroarrayDataWriter extends ExpressionsWriterImpl {
     protected String getGeneName(String accession) {
         checkNotNull(arrayDesignAccession, "Array design should not be null");
         String ensGeneId = designElementMappingProvider.getEnsGeneId(arrayDesignAccession, accession);
-        return StringUtils.isNotBlank(ensGeneId) ? geneNamesProvider.getGeneName(ensGeneId): "";
+        if (StringUtils.isNotBlank(ensGeneId)){
+            return geneNamesProvider.getGeneName(ensGeneId);
+        }
+        return StringUtils.EMPTY;
     }
 
     public void setArrayDesignAccession(String arrayDesignAccession) {

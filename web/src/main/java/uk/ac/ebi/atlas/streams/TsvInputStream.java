@@ -34,7 +34,7 @@ public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
 
     private static final Logger logger = Logger.getLogger(TsvInputStream.class);
 
-    public static final int GENE_ID_COLUMN = 0;
+    protected static final int GENE_ID_COLUMN = 0;
 
     private CSVReader csvReader;
 

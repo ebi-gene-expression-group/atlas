@@ -71,11 +71,8 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
         for (String[] array : csvLines) {
             String[] newArray = new String[array.length + 1];
             System.arraycopy(array, 0, newArray, 0, array.length);
-            if (getAnalysedRowsAccessions(experiment).contains(newArray[0])) {
-                newArray[array.length] = "Yes";
-            } else {
-                newArray[array.length] = "No";
-            }
+            boolean isRunAnalysed = getAnalysedRowsAccessions(experiment).contains(newArray[0]);
+            newArray[array.length] = isRunAnalysed? "Yes" : "No";
             newCsvLines.add(newArray);
         }
 

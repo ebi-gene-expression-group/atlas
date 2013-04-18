@@ -60,11 +60,10 @@ public class GeneAnnotationLoader {
     protected void loadAnnotations(ObjectInputStream<String[]> annotationsInputStream,
                                    ObjectValueTransactionWorker transactionWorker) {
 
-        String[] row;
-
         transactionRunner = annotationEnvironment.getTransactionRunner();
 
         try {
+            String[] row;
             while ((row = annotationsInputStream.readNext()) != null) {
                 transactionRunner.run(transactionWorker.setRow(row));
             }

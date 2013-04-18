@@ -31,19 +31,23 @@ import java.util.Set;
 
 public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
+    private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.09;
+
     private boolean isSpecific;
-    private Set<Factor> selectedFactors;
-    private Set<Factor> allFactors;
-    private double cutoff;
+    private Set<Factor> selectedQueryFactors;
+    private Set<Factor> allQueryFactors;
+    private double cutoffDivisor = CUTOFF_DIVISOR_DEFAULT_VALUE;
 
 
-    public BaselineProfileComparator(boolean isSpecific, Set<Factor> selectQueryFactors,
+    public BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
                                      Set<Factor> allQueryFactors, double cutoff) {
         this.isSpecific = isSpecific;
-        this.selectedFactors = selectQueryFactors;
-        this.allFactors = allQueryFactors;
-        //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
-        this.cutoff = cutoff > 0? cutoff: 0.09;
+        this.selectedQueryFactors = selectedQueryFactors;
+        this.allQueryFactors = allQueryFactors;
+
+        if(cutoff != 0){
+            cutoffDivisor = cutoff;
+        }
     }
 
     @Override
@@ -51,25 +55,25 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
 
         // A1:
-        if (isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
+        if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
             int order = Integer.compare(firstBaselineProfile.getSpecificity(), otherBaselineProfile.getSpecificity());
-            return 0 != order ? order : compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allFactors);
+            return 0 != order ? order : compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allQueryFactors);
         }
 
         // B1:
-        if (isSpecific && !CollectionUtils.isEmpty(selectedFactors)) {
+        if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
             //reverse because we want lower values to come first;
             return Ordering.natural().reverse().compare(getExpressionLevelFoldChangeOn(firstBaselineProfile),
                     getExpressionLevelFoldChangeOn(otherBaselineProfile));
         }
 
         // A2
-        if (!isSpecific && CollectionUtils.isEmpty(selectedFactors)) {
-            return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allFactors);
+        if (!isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
+            return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allQueryFactors);
         }
 
         //B2
-        return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, selectedFactors);
+        return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, selectedQueryFactors);
 
     }
 
@@ -83,17 +87,17 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     public double getExpressionLevelFoldChangeOn(BaselineProfile baselineProfile) {
 
-        double averageExpressionLevelOnSelected = baselineProfile.getAverageExpressionLevelOn(selectedFactors);
+        double averageExpressionLevelOnSelected = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
 
-        Sets.SetView<Factor> remainingFactors = Sets.difference(allFactors, selectedFactors);
+        Sets.SetView<Factor> remainingFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
         double averageExpressionLevelOnRemaining = baselineProfile.getAverageExpressionLevelOn(remainingFactors);
 
         if (averageExpressionLevelOnRemaining == 0) {
-            if (!remainingFactors.isEmpty()) {
-                return averageExpressionLevelOnSelected / (cutoff / remainingFactors.size());
-            } else {
+            if (remainingFactors.isEmpty()) {
                 return averageExpressionLevelOnSelected;
             }
+            return averageExpressionLevelOnSelected / (cutoffDivisor / remainingFactors.size());
+
         }
         return averageExpressionLevelOnSelected / averageExpressionLevelOnRemaining;
     }
