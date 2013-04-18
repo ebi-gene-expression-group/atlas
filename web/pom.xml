@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2008-2010 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -387,9 +387,9 @@
             <version>3.6.0</version>
         </dependency>
         <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
         </dependency>
     </dependencies>
 
