@@ -74,7 +74,7 @@ var heatmapModule = (function($) {
 
     }
 
-    function initHeatmapCellsClickHandling(experimentAccession){ //binds heatmap cells click handler
+    function initHeatmapCellsClickHandling(experimentAccession, species){ //binds heatmap cells click handler
 
         function buildPlotData(transcriptRates) {
             var data = [],
@@ -105,8 +105,7 @@ var heatmapModule = (function($) {
                     var totalCount = data[0],
                         plotData = buildPlotData($.parseJSON(data[1]));
 
-
-
+                    species = species.replace(" ", "_");
 
                     $.plot('#transcripts-pie', plotData, {
                         series: {
@@ -118,7 +117,6 @@ var heatmapModule = (function($) {
                                     radius: plotData.length === 1 ? 0 : 3/5,
                                     show: true,
                                     formatter: function(label, series){
-//                                        return Math.round(series.percent).toFixed(1) + "%";},
                                         return series.data[0][1] + "%";},
                                     background: {
                                         opacity: 0.5
@@ -131,15 +129,15 @@ var heatmapModule = (function($) {
                             show: true,
                             labelFormatter: function(label){
                                 return label === "Others" ? "Others" :
-                                    "<a href='http://www.ensembl.org/Homo_sapiens/Transcript/Summary?g=" + geneId + ";t=" + label + "' target='_blank'>" +
+                                    "<a href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t=" + label + "' target='_blank'>" +
                                         label + "</a>";
                             }
                         }
                     });
 
-                    $('#transcript-breakdown-title').text(
-                        "Expression Level Breakdown for " + geneName + " (" + geneId + ") " + " (" + totalCount+ " transcripts) on " + factorValue
-                    );
+                    $('#transcript-breakdown-title').html("Expression Level Breakdown for " +
+                                                "<a href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId + "' target='_blank'>" +
+                                                geneName + "</a>" + " (" + totalCount + " transcripts) on " + factorValue);
 
 
                     $.fancybox({href : '#transcript-breakdown',
@@ -275,7 +273,10 @@ var heatmapModule = (function($) {
 
     function initHeatmap(experimentAccession, differentialParameters){
 
-        initHeatmapCellsClickHandling(experimentAccession);
+        if (differentialParameters && differentialParameters.species) {
+            initHeatmapCellsClickHandling(experimentAccession, differentialParameters.species);
+        }
+
         initHeatmapCellsTooltip();
         initDownloadButton();
         initDisplayLevelsButton();
@@ -295,8 +296,8 @@ var heatmapModule = (function($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession){
-        initHeatmap(experimentAccession);
+    function initBaselineHeatmap(experimentAccession, species){
+        initHeatmap(experimentAccession, {species: species});
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery){
