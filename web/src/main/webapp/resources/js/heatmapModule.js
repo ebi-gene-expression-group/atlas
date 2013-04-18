@@ -80,7 +80,7 @@ var heatmapModule = (function($) {
             var data = [],
                 index = 0;
             $.each(transcriptRates, function (key, value) {
-                data[index++] = {label: key, data: value};
+                data[index++] = {label: key, data: value.toFixed(1)};
             });
             return data;
         }
@@ -115,7 +115,8 @@ var heatmapModule = (function($) {
                                     radius: 3/5,
                                     show: true,
                                     formatter: function(label, series){
-                                        return  series.percent + "%";},
+//                                        return Math.round(series.percent).toFixed(1) + "%";},
+                                        return series.data[0][1] + "%";},
                                     background: {
                                         opacity: 0.5
                                     }

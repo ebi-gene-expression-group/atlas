@@ -17,7 +17,6 @@ import java.util.List;
 public class TranscriptContributionCalculator {
 
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
-    protected static final String OTHERS = "OTHERS";
 
     private GeneProfileDao geneProfileDao;
 
@@ -68,7 +67,7 @@ public class TranscriptContributionCalculator {
         }
 
         if (sum > 0d) {
-            transcriptsContribution.put(OTHERS, sum);
+            transcriptsContribution.put(TranscriptsContribution.OTHERS, sum);
         }
 
         return transcriptsContribution;

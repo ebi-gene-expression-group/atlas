@@ -72,7 +72,7 @@ public class TranscriptContributionCalculatorTest {
         TranscriptsContribution topThreeTranscriptsMap = subject.createTranscriptsContribution(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().keySet(), contains("T4", "T3", "T2", TranscriptContributionCalculator.OTHERS));
+        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().keySet(), contains("T4", "T3", "T2", TranscriptsContribution.OTHERS));
         assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().values(), containsInAnyOrder(40d, 30d, 20d, 10d));
 
     }
