@@ -25,5 +25,6 @@
     <root>
         <level value="DEBUG"/>
         <appender-ref ref="atlas"/>
+        <appender-ref ref="console"/>
     </root>
 </log4j:configuration>
