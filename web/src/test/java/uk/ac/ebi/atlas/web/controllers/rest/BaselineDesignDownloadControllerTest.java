@@ -79,6 +79,7 @@ public class BaselineDesignDownloadControllerTest {
         when(tsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
         subject = new BaselineDesignDownloadController(tsvReaderBuilderMock);
+        subject.initializeTsvReader();
     }
 
     @Test

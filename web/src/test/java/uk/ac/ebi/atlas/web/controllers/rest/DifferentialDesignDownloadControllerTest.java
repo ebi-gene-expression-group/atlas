@@ -80,6 +80,7 @@ public class DifferentialDesignDownloadControllerTest {
         when(tsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
         subject = new DifferentialDesignDownloadController(tsvReaderBuilderMock);
+        subject.initializeTsvReader();
 
         List<String[]> designs = Lists.newArrayList();
         designs.add(new String[]{"header1", "header2", "header3"});
