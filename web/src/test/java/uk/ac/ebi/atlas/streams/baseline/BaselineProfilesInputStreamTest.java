@@ -84,7 +84,7 @@ public class BaselineProfilesInputStreamTest {
 
         given(expressionsBufferBuilderMock.forExperiment(anyString())).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
-        given(expressionsBufferBuilderMock.create()).willReturn(expressionsBufferMock);
+        given(expressionsBufferBuilderMock.build()).willReturn(expressionsBufferMock);
 
         BaselineProfileBuilder geneProfileBuilderMock = mock(BaselineProfileBuilder.class);
         when(geneProfileBuilderMock.addExpression(any(BaselineExpression.class))).thenReturn(geneProfileBuilderMock);

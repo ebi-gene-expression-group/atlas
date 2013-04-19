@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.commons.collections.CollectionUtils;
@@ -38,15 +39,21 @@ public class ExperimentalFactorsBuilder {
 
     private Collection<ExperimentRun> experimentRuns;
 
-    private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
-
     private Map<String, String> factorNamesByType = new HashMap<>();
 
-    private Collection<FactorGroup> factorGroups = new HashSet<>();
-
-    private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
+    private List<FactorGroup> orderedFactorGroups;
 
     private Set<String> menuFilterFactorTypes;
+
+    public ExperimentalFactorsBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
+        this.factorNamesByType = factorNamesByType;
+        return this;
+    }
+
+    public ExperimentalFactorsBuilder withOrderedFactorGroups(List<FactorGroup> orderedFactorGroups) {
+        this.orderedFactorGroups = orderedFactorGroups;
+        return this;
+    }
 
     public ExperimentalFactorsBuilder withExperimentRuns(Collection<ExperimentRun> experimentRuns) {
 
@@ -63,57 +70,46 @@ public class ExperimentalFactorsBuilder {
     public ExperimentalFactors create() {
         checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
-        Collection<FactorGroup> factorGroups = extractFactorGroups();
 
-        for (FactorGroup factorGroup : factorGroups) {
-            addFactorGroup(factorGroup);
-        }
+        SortedSetMultimap<String, Factor> factorsByType = buildFactorsByType();
+        SortedSetMultimap<Factor, Factor> coOccurringFactors = buildCoOccurringFactors();
 
-        return new ExperimentalFactors( factorsByType, factorNamesByType, factorGroups,
+        return new ExperimentalFactors( factorsByType, factorNamesByType, orderedFactorGroups,
                                         coOccurringFactors, menuFilterFactorTypes);
     }
 
-    Collection<FactorGroup> extractFactorGroups() {
-        Collection<FactorGroup> factorGroups = new ArrayList<>();
-        for (ExperimentRun experimentRun : experimentRuns) {
-            factorGroups.add(experimentRun.getFactorGroup());
-        }
-        return factorGroups;
-    }
+    SortedSetMultimap<String, Factor> buildFactorsByType() {
 
-    void addFactorGroup(FactorGroup factorGroup) {
-        factorGroups.add(factorGroup);
+        SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
-        for (Factor factor : factorGroup) {
+        for (FactorGroup factorGroup : orderedFactorGroups) {
 
-            factorsByType.put(factor.getType(), factor);
+            for (Factor factor : factorGroup) {
 
-            addToFactorCombinations(factorGroup, factor);
-        }
-    }
+                factorsByType.put(factor.getType(), factor);
 
-    void addToFactorCombinations(FactorGroup factorGroup, Factor factor) {
-        for (Factor value : factorGroup) {
-            if (!value.equals(factor)) {
-                coOccurringFactors.put(factor, value);
             }
         }
-    }
-
-    SortedSetMultimap<String, Factor> getFactorsByType() {
         return factorsByType;
     }
 
-    Map<String, String> getFactorNamesByType() {
-        return factorNamesByType;
-    }
 
-    SortedSetMultimap<Factor, Factor> getCoOccurringFactors() {
+    SortedSetMultimap<Factor, Factor> buildCoOccurringFactors() {
+
+        SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
+
+        for (FactorGroup factorGroup : orderedFactorGroups) {
+
+            for (Factor factor : factorGroup) {
+
+                for (Factor value : factorGroup) {
+                    if (!value.equals(factor)) {
+                        coOccurringFactors.put(factor, value);
+                    }
+                }
+            }
+        }
         return coOccurringFactors;
     }
 
-    public ExperimentalFactorsBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
-        this.factorNamesByType = factorNamesByType;
-        return this;
-    }
 }

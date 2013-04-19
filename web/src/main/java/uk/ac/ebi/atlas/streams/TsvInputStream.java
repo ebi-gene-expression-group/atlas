@@ -49,7 +49,7 @@ public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
         String[] firstCsvLine = readCsvLine();
         String[] headersWithoutGeneIdColumn = (String[])ArrayUtils.remove(firstCsvLine, GENE_ID_COLUMN);
         tsvRowBuffer = tsvRowBufferBuilder.forExperiment(experimentAccession)
-                .withHeaders(headersWithoutGeneIdColumn).create();
+                .withHeaders(headersWithoutGeneIdColumn).build();
     }
 
 

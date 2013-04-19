@@ -49,15 +49,9 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineExpressionsBufferBuilder implements TsvRowBufferBuilder<BaselineExpressionsBuffer> {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionsBufferBuilder.class);
-
     private String experimentAccession;
 
     private BaselineExperimentsCache experimentsCache;
-
-    private List<FactorGroup> orderedFactorGroups = new LinkedList<>();
-
-    private boolean readyToCreate;
 
     @Inject
     public BaselineExpressionsBufferBuilder(BaselineExperimentsCache experimentsCache) {
@@ -77,44 +71,20 @@ public class BaselineExpressionsBufferBuilder implements TsvRowBufferBuilder<Bas
 
     @Override
     public BaselineExpressionsBufferBuilder withHeaders(String... tsvFileHeaders) {
-
-        LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
-
-        checkState(experimentAccession != null, "Builder not properly initialized!");
-
-        List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
-
-        initOrderedFactorGroups(columnHeaders);
-
-        readyToCreate = true;
-
+        //We don't need to process the headers for Baseline
+        //because orderedFactorGroups is already available from BaselineExperiment
         return this;
     }
 
-    void initOrderedFactorGroups(List<String> columnHeaders) {
-
-        List<String> firstRunAccessions = Lists.newArrayList(Collections2.transform(columnHeaders, new Function<String, String>() {
-            @Override
-            public String apply(String columnHeader) {
-                return StringUtils.substringBefore(columnHeader, ",").trim();
-            }
-        }));
-
-        BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
-        orderedFactorGroups = experiment.createOrderedFactorGroups(firstRunAccessions);
-
-    }
-
-
     @Override
-    public BaselineExpressionsBuffer create() {
+    public BaselineExpressionsBuffer build() {
+        checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
-        checkState(readyToCreate, "Builder state not ready for creating the ExpressionBuffer");
+        BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
-        return new BaselineExpressionsBuffer(orderedFactorGroups);
+        return new BaselineExpressionsBuffer(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
 
     }
-
 
     Predicate<ExperimentRun> isExperimentRunRequired(final List<String> orderedRunAccessions) {
         return new Predicate<ExperimentRun>() {
@@ -123,19 +93,6 @@ public class BaselineExpressionsBufferBuilder implements TsvRowBufferBuilder<Bas
                 return orderedRunAccessions.contains(experimentRun.getAccession());
             }
         };
-    }
-
-
-    Comparator<ExperimentRun> experimentRunComparator(final List<String> orderedRunAccessions) {
-
-        return Ordering.natural().onResultOf(new Function<ExperimentRun, Integer>() {
-            @Override
-            public Integer apply(ExperimentRun experimentRun) {
-                int orderIndexOfRun = orderedRunAccessions.indexOf(experimentRun.getAccession());
-                checkState(orderIndexOfRun >= 0, "Illegal state, experimentRun with accession = " + experimentRun.getAccession() + "is not included in ordered run accessions : " + orderedRunAccessions);
-                return orderIndexOfRun;
-            }
-        });
     }
 
 }

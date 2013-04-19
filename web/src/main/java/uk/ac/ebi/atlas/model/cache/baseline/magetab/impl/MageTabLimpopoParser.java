@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.cache.baseline.magetab.impl;
 
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.velocity.util.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -56,7 +57,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
 
     private Set<String> requiredFactorTypes;
 
-    private Collection<ExperimentRun> processedExperimentRuns;
+    private Map<String, ExperimentRun> processedExperimentRuns;
 
     private Map<String, String> factorNamesByType;
 
@@ -104,19 +105,19 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
     }
 
     @Override
-    public Collection<ExperimentRun> getProcessedExperimentRuns() {
-        return Collections.unmodifiableCollection(processedExperimentRuns);
+    public Map<String, ExperimentRun> getProcessedExperimentRuns() {
+        return MapUtils.unmodifiableMap(processedExperimentRuns);
     }
 
-    protected Collection<ExperimentRun> extractProcessedExperimentRuns() {
+    protected Map<String, ExperimentRun> extractProcessedExperimentRuns() {
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, getInvestigation().IDF);
 
-        Collection<ExperimentRun> processedExperimentRuns = Lists.newArrayList();
+        Map<String, ExperimentRun> processedExperimentRuns = Maps.newHashMap();
 
         for (ExperimentRun experimentRun : allExperimentRuns) {
             if (processedRunAccessions.contains(experimentRun.getAccession())) {
-                processedExperimentRuns.add(experimentRun);
+                processedExperimentRuns.put(experimentRun.getAccession(), experimentRun);
             }
         }
         return processedExperimentRuns;
@@ -128,16 +129,16 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
         if (requiredFactorTypes.contains(SPECIES_FACTOR_TYPE)) {
 
             Set<String> species = Sets.newHashSet();
-            for (ExperimentRun experimentRun : processedExperimentRuns) {
+            for (ExperimentRun experimentRun : processedExperimentRuns.values()) {
                 String organism = experimentRun.getFactorByType(SPECIES_FACTOR_TYPE).getValue();
                 if (organism != null) {
                     species.add(organism);
                 }
             }
             return species;
-        } else {
-            return extractSpeciesFromSDRF(scanNodes);
         }
+
+        return extractSpeciesFromSDRF(scanNodes);
 
     }
 

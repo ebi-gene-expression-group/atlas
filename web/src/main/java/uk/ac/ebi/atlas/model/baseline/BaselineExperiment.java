@@ -35,25 +35,24 @@ public class BaselineExperiment extends Experiment {
     private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 
     private String defaultQueryFactorType;
+
     private Set<Factor> defaultFilterFactors;
 
-    private Map<String, ExperimentRun> experimentRuns = new HashMap<>();
+    private Map<String, ExperimentRun> experimentRuns;
 
     private ExperimentalFactors experimentalFactors;
 
 
     BaselineExperiment(String accession, ExperimentalFactors experimentalFactors,
-                       Collection<ExperimentRun> experimentRuns, String description,
-                       String displayName, Set<String> species, Map<String, String> speciesMapping, String defaultQueryFactorType,
-                       Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
+                       Map<String, ExperimentRun> experimentRuns, String description,
+                       String displayName, Set<String> species, Map<String, String> speciesMapping,
+                       String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
 
         super(ExperimentType.BASELINE, accession, displayName, description, hasExtraInfoFile, species, speciesMapping);
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
-        for (ExperimentRun experimentRun : experimentRuns) {
-            this.experimentRuns.put(experimentRun.getAccession(), experimentRun);
-        }
+        this.experimentRuns = experimentRuns;
     }
 
     public FactorGroup getFactorGroup(String experimentRunAccession) {
@@ -81,16 +80,5 @@ public class BaselineExperiment extends Experiment {
 
     public ExperimentalFactors getExperimentalFactors() {
         return experimentalFactors;
-    }
-
-    public List<FactorGroup> createOrderedFactorGroups(List<String> runAccessions) {
-        List<FactorGroup> orderedFactorGroups = new ArrayList<>();
-        for (String runAccession : runAccessions) {
-            orderedFactorGroups.add(getFactorGroup(runAccession));
-        }
-
-        experimentalFactors.setOrderedFactorGroups(orderedFactorGroups);
-
-        return orderedFactorGroups;
     }
 }

@@ -28,6 +28,6 @@ public interface TsvRowBufferBuilder<T extends TsvRowBuffer<?>> {
 
     public abstract TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
 
-    public T create();
+    public T build();
 
 }

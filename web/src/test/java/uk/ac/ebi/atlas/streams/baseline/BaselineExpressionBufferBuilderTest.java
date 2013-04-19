@@ -30,10 +30,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
-import java.util.Comparator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,7 +51,6 @@ public class BaselineExpressionBufferBuilderTest {
 
     private ExperimentRun experimentRun1;
     private ExperimentRun experimentRun2;
-    private ExperimentRun experimentRun3;
 
     @Mock
     private BaselineExperimentsCache experimentsCacheMock;
@@ -67,6 +66,10 @@ public class BaselineExpressionBufferBuilderTest {
 
     @Mock
     private BaselineExperiment experimentMock;
+
+    @Mock
+    ExperimentalFactors experimentalFactorsMock;
+
 
     private BaselineExpressionsBufferBuilder subject;
 
@@ -86,50 +89,31 @@ public class BaselineExpressionBufferBuilderTest {
 
         experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactor(factorMock1);
         experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(factorMock2);
-        experimentRun3 = new ExperimentRun(RUN_ACCESSION_3).addFactor(factorMock3);
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
+        when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
 
         subject = new BaselineExpressionsBufferBuilder(experimentsCacheMock);
-    }
-
-    @Test
-    public void builderShouldFetchExperimentRunsFromACache() {
-
-        //when
-        subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
-        subject.withHeaders("ENS1", "ENS2");
-        //then
-        verify(experimentsCacheMock, times(1)).getExperiment(MOCK_EXPERIMENT_ACCESSION);
-
     }
 
     @Test(expected = IllegalStateException.class)
     public void createThrowsExceptionGivenThatExperimentAccessionHasNotBeenProvided() {
         //when
-        subject.create();
+        subject.build();
     }
 
     @Test(expected = IllegalStateException.class)
     public void createThrowsExceptionGivenThatOrderedHeadersHaveNotBeenProvided() {
         //when
-        subject.create();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void withHeadersThrowsExceptionWhenExperimentAccessionIsNotSet() {
-        //when
-        subject.create();
+        subject.build();
     }
 
     @Test
     public void createShouldSucceedWhenSpecificationHasBeenSet() {
-        //given
-        String[] headers = new String[]{"", RUN_ACCESSION_2, RUN_ACCESSION_3};
         //when
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
         //then
-        assertThat(subject.withHeaders(headers).create(), is(notNullValue()));
+        assertThat(subject.build(), is(notNullValue()));
     }
 
     @Test
@@ -150,30 +134,6 @@ public class BaselineExpressionBufferBuilderTest {
         boolean isRequired = subject.isExperimentRunRequired(orderSpecification).apply(experimentRun1);
         //then
         assertThat(isRequired, is(false));
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void experimentRunComparatorThrowsExceptionWhenExperimentRunAccessionIsNotInTheOrderedListOfKnownAccessions() {
-        //given
-        List<String> orderedRunAccessions = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
-        //and
-        Comparator<ExperimentRun> experimentRunsComparator = subject.experimentRunComparator(orderedRunAccessions);
-        //when
-        experimentRunsComparator.compare(experimentRun2, experimentRun1);
-        //then expect IllegalStateExceptionToBeThrown;
-    }
-
-    @Test
-    public void experimentRunComparatorShouldOrderByPositionInTheListOfOrderedRunAccessions() {
-        //given
-        List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_3, RUN_ACCESSION_2);
-        //and
-        Comparator<ExperimentRun> experimentRunsComparator = subject.experimentRunComparator(orderSpecification);
-        //then
-        assertThat(experimentRunsComparator.compare(experimentRun2, experimentRun3), is(greaterThan(0)));
-        //and
-        assertThat(experimentRunsComparator.compare(experimentRun3, experimentRun2), is(lessThan(0)));
-
     }
 
 }
