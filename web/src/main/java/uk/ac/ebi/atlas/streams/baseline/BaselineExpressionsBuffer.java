@@ -36,7 +36,7 @@ public class BaselineExpressionsBuffer extends TsvRowBuffer<BaselineExpression> 
     private Iterator<FactorGroup> expectedFactorGroups;
 
     protected BaselineExpressionsBuffer(List<FactorGroup> orderedFactorGroups) {
-        this.expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
+        expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 
 

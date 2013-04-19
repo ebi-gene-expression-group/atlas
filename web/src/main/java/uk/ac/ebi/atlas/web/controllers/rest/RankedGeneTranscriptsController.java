@@ -68,6 +68,7 @@ public class RankedGeneTranscriptsController {
         Map<String, Double> transcriptPercentageRates = transcriptsContribution.getTranscriptPercentageRates();
         contributionData.add(gson.toJson(transcriptPercentageRates, Map.class));
         return gson.toJson(contributionData, List.class);
+        //return gson.toJson(transcriptsContribution);
 
     }
 

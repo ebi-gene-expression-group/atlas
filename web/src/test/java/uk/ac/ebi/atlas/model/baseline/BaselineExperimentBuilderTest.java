@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -31,6 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,22 +52,23 @@ public class BaselineExperimentBuilderTest {
     public static final String DISPLAY_NAME = "displayName";
     public static final String RUN_ACCESSION1 = "run1";
     public static final String RUN_ACCESSION2 = "run2";
-    BaselineExperimentBuilder subject;
+
+    private BaselineExperimentBuilder subject;
 
     @Mock
-    ExperimentRun runMock1;
+    private ExperimentRun runMock1;
 
     @Mock
-    ExperimentRun runMock2;
+    private ExperimentRun runMock2;
 
     @Mock
-    FactorGroup factorGroupMock;
+    private FactorGroup factorGroupMock;
 
-    Factor factor;
+    private Factor factor;
 
-    Map<String, String> nameMap = Maps.newHashMap();
+    private Map<String, String> nameMap = Maps.newHashMap();
 
-    Map<String, String> speciesMap = Maps.newHashMap();
+    private Map<String, String> speciesMap = Maps.newHashMap();
 
     @Before
     public void setUp() throws Exception {
@@ -88,13 +91,20 @@ public class BaselineExperimentBuilderTest {
     @Test
     public void testCreate() throws Exception {
 
+        Map<String, ExperimentRun> experimentRunsMock = Maps.newHashMap();
+        experimentRunsMock.put(runMock1.getAccession(), runMock1);
+        experimentRunsMock.put(runMock2.getAccession(), runMock2);
+
+        List<FactorGroup> orderedFactorGroupsMock = Lists.newArrayList();
+
         BaselineExperiment experiment = subject.forSpecies(Sets.newHashSet(SPECIES))
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDefaultFilterFactors(Sets.newHashSet(factor))
                 .withDefaultQueryType(FACTOR_TYPE)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
-                .withExperimentRuns(Sets.newHashSet(runMock1, runMock2))
+                .withOrderedFactorGroups(orderedFactorGroupsMock)
+                .withExperimentRuns(experimentRunsMock)
                 .withExtraInfo(false)
                 .withMenuFilterFactorTypes(Sets.newHashSet(FACTOR_TYPE))
                 .withFactorNamesByType(nameMap)

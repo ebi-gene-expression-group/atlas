@@ -88,7 +88,7 @@ public class MicroarrayExpressionsBufferBuilder implements TsvRowBufferBuilder {
     }
 
     @Override
-    public MicroarrayExpressionsBuffer create() {
+    public MicroarrayExpressionsBuffer build() {
 
         checkState(!orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
 

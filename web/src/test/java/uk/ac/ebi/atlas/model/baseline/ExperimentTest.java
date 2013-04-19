@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,9 +31,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -77,7 +76,6 @@ public class ExperimentTest {
 
     @Before
     public void initializeSubject() {
-        ArrayList<ExperimentRun> experimentRuns = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
 
         when(experimentRun1Mock.getAccession()).thenReturn(RUN_ACCESSION_1);
         when(experimentRun2Mock.getAccession()).thenReturn(RUN_ACCESSION_2);
@@ -85,23 +83,32 @@ public class ExperimentTest {
         when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroupMock1);
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
 
-        when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRuns)).thenReturn(experimentalFactorsBuilderMock);
+        Map<String, ExperimentRun> experimentRunsMock = Maps.newHashMap();
+        experimentRunsMock.put(experimentRun1Mock.getAccession(), experimentRun1Mock);
+        experimentRunsMock.put(experimentRun2Mock.getAccession(), experimentRun2Mock);
+
+        List<FactorGroup> orderedFactorGroups = Lists.newArrayList(factorGroupMock1, factorGroupMock2);
+
+        when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRunsMock.values()))
+                                            .thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withMenuFilterFactorTypes(anySet())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withFactorNamesByType(anyMap())).thenReturn(experimentalFactorsBuilderMock);
+        when(experimentalFactorsBuilderMock.withOrderedFactorGroups(orderedFactorGroups)).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
+
 
         subject = new BaselineExperimentBuilder(experimentalFactorsBuilderMock)
                 .forSpecies(Sets.newHashSet(SPECIE))
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(ORGANISM_PART)
+                .withOrderedFactorGroups(orderedFactorGroups)
                 .withDefaultFilterFactors(Collections.EMPTY_SET)
                 .withMenuFilterFactorTypes(Collections.EMPTY_SET)
                 .withFactorNamesByType(Collections.EMPTY_MAP)
-                .withExperimentRuns(experimentRuns)
+                .withExperimentRuns(experimentRunsMock)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)
                 .create();
-
 
     }
 
