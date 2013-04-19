@@ -53,19 +53,20 @@ public class GeneNameTooltipController {
 
     private SolrClient solrClient;
 
-    @Value("classpath:/html-templates/geneNameTooltipTemplate.html")
     private Resource htmlTemplateResource;
 
     private String htmlTemplate;
 
     @Inject
-    public GeneNameTooltipController(SolrClient solrClient) {
+    public GeneNameTooltipController(SolrClient solrClient,
+                                     @Value("classpath:/html-templates/geneNameTooltipTemplate.html") Resource htmlTemplateResource) {
         this.solrClient = solrClient;
+        this.htmlTemplateResource = htmlTemplateResource;
     }
 
     @PostConstruct
-    void initTemplate(){
-        try(InputStream inputStream = htmlTemplateResource.getInputStream()) {
+    void initTemplate() {
+        try (InputStream inputStream = htmlTemplateResource.getInputStream()) {
             htmlTemplate = IOUtils.toString(inputStream);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
@@ -91,8 +92,8 @@ public class GeneNameTooltipController {
 
     }
 
-    String format(Collection<String> values, boolean returnEmptyValuesAsNA){
-        if (CollectionUtils.isEmpty(values)){
+    String format(Collection<String> values, boolean returnEmptyValuesAsNA) {
+        if (CollectionUtils.isEmpty(values)) {
             return returnEmptyValuesAsNA ? "NA" : StringUtils.EMPTY;
         }
         return WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
@@ -104,7 +105,7 @@ public class GeneNameTooltipController {
 
         identifier = WORD_SPAN_OPEN + identifier + WORD_SPAN_CLOSE;
 
-        if (synonyms.isEmpty()){
+        if (synonyms.isEmpty()) {
             return identifier;
         }
 
