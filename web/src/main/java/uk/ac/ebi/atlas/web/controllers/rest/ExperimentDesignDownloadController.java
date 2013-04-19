@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -47,11 +47,16 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
 
     private TsvReader tsvReader;
 
-    @Inject
-    private void setTsvReaderBuilder(TsvReaderBuilder tsvReaderBuilder){
+    private TsvReaderBuilder tsvReaderBuilder;
+
+    @PostConstruct
+    protected void initializeTsvReader() {
         this.tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
     }
 
+    public ExperimentDesignDownloadController(TsvReaderBuilder tsvReaderBuilder) {
+        this.tsvReaderBuilder = tsvReaderBuilder;
+    }
 
     protected void extractExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
         T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -72,7 +77,7 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
             String[] newArray = new String[array.length + 1];
             System.arraycopy(array, 0, newArray, 0, array.length);
             boolean isRunAnalysed = getAnalysedRowsAccessions(experiment).contains(newArray[0]);
-            newArray[array.length] = isRunAnalysed? "Yes" : "No";
+            newArray[array.length] = isRunAnalysed ? "Yes" : "No";
             newCsvLines.add(newArray);
         }
 

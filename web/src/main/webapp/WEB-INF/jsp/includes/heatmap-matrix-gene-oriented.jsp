@@ -201,7 +201,7 @@
 
             if (${type == "BASELINE"}){
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}');
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}');
 
             } else if (${type == "MICROARRAY"}){
 
