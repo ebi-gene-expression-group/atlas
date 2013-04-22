@@ -37,6 +37,11 @@ public class RankedGeneTranscriptsIT {
 
     private static final String E_MTAB_599_URL_TEMPLATE = "/gxa/json/transcripts/E-MTAB-599";
 
+    private static final String E_GEOD_30352_URL_TEMPLATE = "/gxa/json/transcripts/E-GEOD-30352";
+
+    private static final String E_GEOD_26284_URL_TEMPLATE = "/gxa/json/transcripts/E-GEOD-26284";
+
+
     //This will be the new format when we will do better json marshalling
     //private static final String RESULT_1 = "{\"totalTranscriptCount\":1,\"transcriptExpressions\":{\"ENST00000390503\":7332.0}}";
 
@@ -129,6 +134,39 @@ public class RankedGeneTranscriptsIT {
 
     }
 
+    @Test
+    public void testEGEOD26284RankedGeneTranscripts() {
+        EndPoint subject = new EndPoint(E_GEOD_26284_URL_TEMPLATE, "geneId=ENSG00000142185&factorType=CELL_LINE" +
+                "&factorValue=CD34-positive mobilized cell cell line" +
+                "&selectedFilterFactorsJson=[{\"type\":\"RNA\",\"value\":\"total RNA\"},{\"type\":\"CELLULAR_COMPONENT\",\"value\":\"whole cell\"}]");
+
+        ResponseBody responseBody = responseAssertions(subject);
+
+        assertThat(responseBody.asString(), is("[\"7\",\"{\\\"ENST00000490982\\\":38.5,\\\"ENST00000397928\\\":30.8,\\\"ENST00000397932\\\":23.1,\\\"OTHERS\\\":7.599999999999994}\"]"));
+
+
+        subject = new EndPoint(E_GEOD_26284_URL_TEMPLATE, "geneId=ENSG00000131652&factorType=CELL_LINE" +
+                "&factorValue=IMR-90" +
+                "&selectedFilterFactorsJson=[{\"type\":\"RNA\",\"value\":\"total RNA\"},{\"type\":\"CELLULAR_COMPONENT\",\"value\":\"whole cell\"}]");
+
+        responseBody = responseAssertions(subject);
+
+        assertThat(responseBody.asString(), is("[\"10\",\"{\\\"ENST00000326266\\\":83.3,\\\"ENST00000253952\\\":16.700000000000003}\"]"));
+
+    }
+/*
+    @Test
+    public void testEGEOD30352RankedGeneTranscriptsFourTranscripts() {
+        EndPoint subject = new EndPoint(E_GEOD_30352_URL_TEMPLATE, "geneId=ENSG00000100253&factorType=ORGANISM_PART" +
+                "&factorValue=kidney&selectedFilterFactorsJson=[]");
+
+        ResponseBody responseBody = responseAssertions(subject);
+
+        assertThat(responseBody.asString(), is("[\"7\",\"{\\\"ENSMUST00000163767\\\":60.5,\\\"ENSMUST00000074225\\\":18.4,\\\"ENSMUST00000165262\\\":15.8,\\\"OTHERS\\\":5.299999999999997}\"]"));
+
+
+    }
+*/
     private ResponseBody responseAssertions(EndPoint endPoint) {
         Response response = endPoint.getResponse();
 
