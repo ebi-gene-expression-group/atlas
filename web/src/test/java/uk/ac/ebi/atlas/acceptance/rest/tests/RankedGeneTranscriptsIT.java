@@ -84,7 +84,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("[\"20\",\"{\\\"ENST00000377456\\\":43.5,\\\"ENST00000421826\\\":26.1,\\\"ENST00000492575\\\":26.1,\\\"OTHERS\\\":4.300000000000011}\"]"));
+        assertThat(responseBody.asString(), is("[\"20\",\"{\\\"ENST00000377456\\\":43.5,\\\"ENST00000421826\\\":26.1,\\\"ENST00000492575\\\":26.1,\\\"Others\\\":4.300000000000011}\"]"));
 
 
     }
@@ -129,7 +129,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("[\"7\",\"{\\\"ENSMUST00000163767\\\":60.5,\\\"ENSMUST00000074225\\\":18.4,\\\"ENSMUST00000165262\\\":15.8,\\\"OTHERS\\\":5.299999999999997}\"]"));
+        assertThat(responseBody.asString(), is("[\"7\",\"{\\\"ENSMUST00000163767\\\":60.5,\\\"ENSMUST00000074225\\\":18.4,\\\"ENSMUST00000165262\\\":15.8,\\\"Others\\\":5.299999999999997}\"]"));
 
 
     }
@@ -142,7 +142,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("[\"7\",\"{\\\"ENST00000490982\\\":38.5,\\\"ENST00000397928\\\":30.8,\\\"ENST00000397932\\\":23.1,\\\"OTHERS\\\":7.599999999999994}\"]"));
+        assertThat(responseBody.asString(), is("[\"7\",\"{\\\"ENST00000490982\\\":38.5,\\\"ENST00000397928\\\":30.8,\\\"ENST00000397932\\\":23.1,\\\"Others\\\":7.599999999999994}\"]"));
 
 
         subject = new EndPoint(E_GEOD_26284_URL_TEMPLATE, "geneId=ENSG00000131652&factorType=CELL_LINE" +
