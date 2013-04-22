@@ -59,6 +59,6 @@ public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geo
 
     @Override
     protected String getGeneCount() {
-        return "50";
+        return "48";
     }
 }

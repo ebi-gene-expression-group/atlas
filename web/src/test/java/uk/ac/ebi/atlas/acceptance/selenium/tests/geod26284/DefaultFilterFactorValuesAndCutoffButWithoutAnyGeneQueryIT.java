@@ -58,6 +58,6 @@ public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQueryIT extends 
 
     @Override
     protected String getGeneCount() {
-        return "31";
+        return "30";
     }
 }

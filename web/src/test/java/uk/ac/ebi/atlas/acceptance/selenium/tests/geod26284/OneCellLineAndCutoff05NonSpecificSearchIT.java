@@ -49,7 +49,7 @@ public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapT
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"123", "288", "695", "1023", "490"};
+        return new String[]{"122", "287", "689", "1011", "486"};
     }
 
     @Override
@@ -59,7 +59,7 @@ public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapT
 
     @Override
     protected String getGeneCount() {
-        return "25";
+        return "24";
     }
 
 }

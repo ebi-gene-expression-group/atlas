@@ -98,7 +98,7 @@ public class ExperimentalFactorsIT {
         factor = new Factor("RNA", "long polyA RNA");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(21));
         factor = new Factor("CELLULAR_COMPONENT", "whole cell");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(25));
+        assertThat(subject.getCoOccurringFactors(factor).size(), is(26));
         factor = new Factor("CELL_LINE", "IMR-90");
         assertThat(subject.getCoOccurringFactors(factor).size(), is(5));
         factor = new Factor("CELL_LINE", "CD34-positive mobilized cell cell line");

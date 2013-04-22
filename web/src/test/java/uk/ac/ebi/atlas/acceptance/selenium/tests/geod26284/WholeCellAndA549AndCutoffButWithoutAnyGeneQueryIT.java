@@ -38,7 +38,7 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"AC011293.1", "C6orf203", "7SK", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10"};
+        return new String[]{"AC011293.1", "7SK", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10", "CALU"};
     }
 
     @Override
@@ -48,17 +48,17 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"297", ""};
+        return new String[]{"294", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"74", "1202"};
+        return new String[]{"14", "105"};
     }
 
     @Override
     protected String getGeneCount() {
-        return "32";
+        return "31";
     }
 
 }
