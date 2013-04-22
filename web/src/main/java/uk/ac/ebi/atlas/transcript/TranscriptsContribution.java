@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class TranscriptsContribution {
 
-    protected static final String OTHERS = "OTHERS";
+    protected static final String OTHERS = "Others";
     private int totalTranscriptCount;
 
     private LinkedHashMap<String, Double> transcriptExpressions = new LinkedHashMap<>();

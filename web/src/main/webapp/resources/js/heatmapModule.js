@@ -119,7 +119,7 @@ var heatmapModule = (function($) {
                                     radius: plotData.length === 1 ? 0 : 3/5,
                                     show: true,
                                     formatter: function(label, series){
-                                        return series.data[0][1] + "%";},
+                                        return "<span style='display:none'>" + series.data[0][1] + "%</span>";},
                                     background: {
                                         opacity: 0.5
                                     }
@@ -131,15 +131,19 @@ var heatmapModule = (function($) {
                             show: true,
                             labelFormatter: function(label){
                                 return label === "Others" ? "Others" :
-                                    "<a href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t=" + label + "' target='_blank'>" +
+                                    "<a href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t="
+                                        + label + "' target='_blank'" + "title='View transcript in Ensembl'" + ">" +
                                         label + "</a>";
                             }
                         }
                     });
 
+                    var s = '';
+                    if (totalCount > 1) {s = 's'};
                     $('#transcript-breakdown-title').html("Expression Level Breakdown for " +
-                                                "<a href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId + "' target='_blank'>" +
-                                                geneName + "</a>" + " (" + totalCount + " transcripts) on " + factorValue);
+                        "<a href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
+                        "' target='_blank'" + "title='View gene in Ensembl'" + ">" +
+                        geneName + "</a>" + " (" + totalCount + " transcript" + s + ") in " + factorValue);
 
 
                     $.fancybox({href : '#transcript-breakdown',
