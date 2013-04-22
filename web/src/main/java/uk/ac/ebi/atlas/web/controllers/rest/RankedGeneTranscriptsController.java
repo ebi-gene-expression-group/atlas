@@ -23,17 +23,21 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.transcript.TranscriptContributionCalculator;
 import uk.ac.ebi.atlas.transcript.TranscriptsContribution;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -55,13 +59,19 @@ public class RankedGeneTranscriptsController {
                                        @RequestParam("geneId") String geneId,
                                        @RequestParam("factorType") String factorType,
                                        @RequestParam("factorValue") String factorValue,
+                                       @RequestParam("selectedFilterFactorsJson") String selectedFilterFactorsJson,
                                        @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
 
-        Factor factor = new Factor(factorType, factorValue);
-
-        TranscriptsContribution transcriptsContribution = transcriptContributionCalculator.getTranscriptsContribution(geneId, experimentAccession, factor);
-
         Gson gson = new Gson();
+
+        Factor selectedQueryFactor = new Factor(factorType, factorValue);
+        FactorSet selectedFactorGroup = new FactorSet().add(selectedQueryFactor);
+        Type factorsCollectionType = new TypeToken<Collection<Factor>>(){}.getType();
+        Collection<Factor> selectedFilterFactors = gson.fromJson(selectedFilterFactorsJson, factorsCollectionType);
+        selectedFactorGroup.addAll(selectedFilterFactors);
+
+        TranscriptsContribution transcriptsContribution = transcriptContributionCalculator.getTranscriptsContribution(geneId, experimentAccession, selectedFactorGroup);
+
 
         List<String> contributionData = new ArrayList<>();
         contributionData.add(String.valueOf(transcriptsContribution.getTotalTranscriptCount()));

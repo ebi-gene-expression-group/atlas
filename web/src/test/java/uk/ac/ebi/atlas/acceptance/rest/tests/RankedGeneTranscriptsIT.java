@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 
 public class RankedGeneTranscriptsIT {
 
@@ -40,7 +39,7 @@ public class RankedGeneTranscriptsIT {
 
     @Test
     public void responseForExtraInfoImageShouldBeNonEmpty() {
-        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000211855&factorType=ORGANISM_PART&factorValue=leukocyte");
+        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000211855&factorType=ORGANISM_PART&factorValue=leukocyte&selectedFilterFactorsJson=[]");
 
         ResponseBody responseBody = responseAssertions(subject);
 

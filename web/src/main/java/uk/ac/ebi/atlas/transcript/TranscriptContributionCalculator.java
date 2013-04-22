@@ -1,9 +1,31 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
@@ -28,23 +50,23 @@ public class TranscriptContributionCalculator {
         this.experimentsCache = experimentsCache;
     }
 
-    public TranscriptsContribution getTranscriptsContribution(String geneId, String experimentAccession, Factor factor) {
+    public TranscriptsContribution getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup) {
 
         List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(experimentAccession, geneId));
 
-        int factorIndex = getFactorIndex(experimentAccession, factor);
+        int factorIndex = getFactorIndex(experimentAccession, factorGroup);
 
         Collections.sort(transcriptProfiles, getReverseTranscriptProfileComparator(factorIndex));
 
         return createTranscriptsContribution(transcriptProfiles, factorIndex);
     }
 
-    protected int getFactorIndex(String experimentAccession, Factor factor) {
+    protected int getFactorIndex(String experimentAccession, FactorGroup factorGroup) {
 
         BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        return experimentalFactors.getFactorIndex(factor);
+        return experimentalFactors.getFactorIndex(factorGroup);
     }
 
     protected TranscriptsContribution createTranscriptsContribution(List<TranscriptProfile> transcriptProfiles, int factorIndex) {

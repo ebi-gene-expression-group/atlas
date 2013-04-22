@@ -112,16 +112,11 @@ public class ExperimentalFactors implements Serializable {
         return ImmutableSortedSet.copyOf(factorsByType.values());
     }
 
-    public int getFactorIndex(Factor factor) {
-        for (FactorGroup factorGroup : orderedFactorGroups) {
-            if (factorGroup.contains(factor)) {
-                return orderedFactorGroups.indexOf(factorGroup);
-            }
-        }
-        throw new IllegalStateException("Factor is not found in experiment: " + factor);
+    public int getFactorIndex(FactorGroup factorGroup) {
+        return orderedFactorGroups.indexOf(factorGroup);
     }
 
     public List<FactorGroup> getOrderedFactorGroups(){
-        return orderedFactorGroups;
+        return ImmutableList.copyOf(orderedFactorGroups);
     }
 }

@@ -201,7 +201,9 @@
 
             if (${type == "BASELINE"}){
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}');
+                var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"}
+
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}' , selectedFilterFactorsJson);
 
             } else if (${type == "MICROARRAY"}){
 
