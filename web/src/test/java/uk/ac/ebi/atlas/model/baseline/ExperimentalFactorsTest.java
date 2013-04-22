@@ -32,10 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -45,7 +42,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentalFactorsTest {
 
-    private static final String DEFAULT_QUERY_FACTOR_TYPE = "A query factor type";
     private static final String DEFAULT_FILTER_FACTOR_TYPE = "A filter factor type";
 
     @Mock
@@ -89,8 +85,10 @@ public class ExperimentalFactorsTest {
         factorNameByType.put("TYPE3", "NAME3");
 
         ExperimentalFactorsBuilder builder = new ExperimentalFactorsBuilder();
+        List<FactorGroup> factorGroups = Lists.newArrayList(factorGroup1, factorGroup2);
         subject = builder.withExperimentRuns(experimentRunMocks)
                 .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1", "TYPE2"))
+                .withOrderedFactorGroups(factorGroups)
                 .withFactorNamesByType(factorNameByType)
                 .create();
     }

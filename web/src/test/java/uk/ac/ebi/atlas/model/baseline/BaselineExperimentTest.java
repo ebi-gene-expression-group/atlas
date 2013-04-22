@@ -74,8 +74,12 @@ public class BaselineExperimentTest {
         when(runMock2.getFactorGroup()).thenReturn(factorGroupMock2);
         when(runMock2.getAccession()).thenReturn(RUN_ACCESSION2);
 
+        Map<String, ExperimentRun> experimentRunsMock = Maps.newHashMap();
+        experimentRunsMock.put(runMock1.getAccession(), runMock1);
+        experimentRunsMock.put(runMock2.getAccession(), runMock2);
+
         subject = new BaselineExperiment("accession", experimentalFactorsMock,
-                Sets.newHashSet(runMock1, runMock2), "description",
+                experimentRunsMock, "description",
                 "displayName", Sets.newHashSet("species"), speciesMapping, DEFAULT_QUERY_FACTOR_TYPE,
                 Sets.newHashSet(factorMock), true);
 
@@ -107,10 +111,4 @@ public class BaselineExperimentTest {
         assertThat(subject.getExperimentalFactors(), is(experimentalFactorsMock));
     }
 
-    @Test
-    public void testCreateOrderedFactorGroups() throws Exception {
-        List<FactorGroup> orderedFactorGroups = subject.createOrderedFactorGroups(Lists.newArrayList(RUN_ACCESSION2, RUN_ACCESSION1));
-
-        assertThat(orderedFactorGroups, contains(factorGroupMock2, factorGroupMock1));
-    }
 }

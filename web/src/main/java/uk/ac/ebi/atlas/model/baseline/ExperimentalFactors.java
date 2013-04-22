@@ -36,18 +36,16 @@ public class ExperimentalFactors implements Serializable {
 
     private BiMap<String, String> factorNamesByType = HashBiMap.create();
 
-    private Collection<FactorGroup> factorGroups = new HashSet<>();
-
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
     private Set<String> menuFilterFactorTypes;
 
     private List<FactorGroup> orderedFactorGroups;
 
-    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType, Map<String, String> factorNamesByType, Collection<FactorGroup> factorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes) {
+    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType, Map<String, String> factorNamesByType, List<FactorGroup> orderedFactorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes) {
         this.factorsByType = factorsByType;
         this.factorNamesByType.putAll(factorNamesByType);
-        this.factorGroups = factorGroups;
+        this.orderedFactorGroups = orderedFactorGroups;
         this.coOccurringFactors = coOccurringFactors;
         this.menuFilterFactorTypes = menuFilterFactorTypes;
     }
@@ -85,7 +83,7 @@ public class ExperimentalFactors implements Serializable {
 
         TreeSet<Factor> factorsByType = Sets.newTreeSet();
 
-        for (FactorGroup factorGroup : factorGroups) {
+        for (FactorGroup factorGroup : orderedFactorGroups) {
 
             List<Factor> remainingFactors = factorGroup.remove(filterFactors);
             if (remainingFactors.size() == 1) {
@@ -114,16 +112,11 @@ public class ExperimentalFactors implements Serializable {
         return ImmutableSortedSet.copyOf(factorsByType.values());
     }
 
-    public void setOrderedFactorGroups(List<FactorGroup> orderedFactorGroups) {
-        this.orderedFactorGroups = orderedFactorGroups;
+    public int getFactorIndex(FactorGroup factorGroup) {
+        return orderedFactorGroups.indexOf(factorGroup);
     }
 
-    public int getFactorIndex(Factor factor) {
-        for (FactorGroup factorGroup : orderedFactorGroups) {
-            if (factorGroup.contains(factor)) {
-                return orderedFactorGroups.indexOf(factorGroup);
-            }
-        }
-        throw new IllegalStateException("Factor is not found in experiment: " + factor);
+    public List<FactorGroup> getOrderedFactorGroups(){
+        return ImmutableList.copyOf(orderedFactorGroups);
     }
 }

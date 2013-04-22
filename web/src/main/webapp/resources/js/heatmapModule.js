@@ -74,7 +74,7 @@ var heatmapModule = (function($) {
 
     }
 
-    function initHeatmapCellsClickHandling(experimentAccession, species){ //binds heatmap cells click handler
+    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson){ //binds heatmap cells click handler
 
         function buildPlotData(transcriptRates) {
             var data = [],
@@ -95,10 +95,12 @@ var heatmapModule = (function($) {
 
             $.ajax({
                 url: "json/transcripts/" + experimentAccession,
+                type: "GET",
                 data:{
                     'geneId': geneId,
                     'factorType': factorType,
-                    'factorValue' : factorValue
+                    'factorValue' : factorValue,
+                    'selectedFilterFactorsJson' : JSON.stringify(selectedFilterFactorsJson)
                 },
                 datatype: 'json',
                 success: function (data) {
@@ -271,10 +273,10 @@ var heatmapModule = (function($) {
     }
 
 
-    function initHeatmap(experimentAccession, differentialParameters){
+    function initHeatmap(experimentAccession, parameters){
 
-        if (differentialParameters && differentialParameters.species) {
-            initHeatmapCellsClickHandling(experimentAccession, differentialParameters.species);
+        if (parameters && parameters.species) {
+            initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
         }
 
         initHeatmapCellsTooltip();
@@ -282,22 +284,22 @@ var heatmapModule = (function($) {
         initDisplayLevelsButton();
         initHeatmapFactorHeaders();
 
-        if (differentialParameters && differentialParameters.arrayDesignAccession){ //then it is a microarray experiment
+        if (parameters && parameters.arrayDesignAccession){ //then it is a microarray experiment
             createAccessionHeaders(['Gene', 'Design Element']);
         }   else {
             createAccessionHeaders(['Gene']);
         }
 
-        if (differentialParameters && differentialParameters.cutoff === 0.05 && ! differentialParameters.geneQuery){
-            initMaPlotButtons(experimentAccession, differentialParameters.arrayDesignAccession);
+        if (parameters && parameters.cutoff === 0.05 && ! parameters.geneQuery){
+            initMaPlotButtons(experimentAccession, parameters.arrayDesignAccession);
         }
 
         $("#heatmap-div").show();
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species){
-        initHeatmap(experimentAccession, {species: species});
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson){
+        initHeatmap(experimentAccession, {species: species, selectedFilterFactorsJson: selectedFilterFactorsJson});
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery){

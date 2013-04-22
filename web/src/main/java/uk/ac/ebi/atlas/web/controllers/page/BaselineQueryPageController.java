@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -124,11 +125,13 @@ public class BaselineQueryPageController extends BaselineQueryController {
         }
 
         //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
-        Map<String, String> factorNameToValue = new HashMap<>();
+        Map<String, String> selectedFilterFactorNamesAndValues = new HashMap<>();
         for (Factor selectedFilterFactor : selectedFilterFactors) {
-            factorNameToValue.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
+            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
         }
-        model.addAttribute("selectedFilterFactors", factorNameToValue);
+        model.addAttribute("selectedFilterFactorNamesAndValues", selectedFilterFactorNamesAndValues);
+
+        model.addAttribute("selectedFilterFactorsJson", new Gson().toJson(requestContext.getSelectedFilterFactors()));
 
         if (!result.hasErrors()) {
 

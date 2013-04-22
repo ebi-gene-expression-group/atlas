@@ -48,7 +48,7 @@
                     <td> <!-- empty placeholder above Contrasts --> </td>
                 </c:if>
 
-                <c:if test="${selectedFilterFactors.size() > 0}">
+                <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
                     <td>
                         <label>Filtered by</label>
                         <span data-help-loc="#filterBy"></span>
@@ -88,7 +88,7 @@
                     </span>
 
                 </td>
-                <c:if test="${selectedFilterFactors.size() > 0}">
+                <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
                     <td>
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>

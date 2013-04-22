@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,28 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams;
+package uk.ac.ebi.atlas.utils;
 
-public interface TsvRowBufferBuilder<T extends TsvRowBuffer<?>> {
+import org.springframework.context.annotation.Scope;
 
-    public TsvRowBufferBuilder forExperiment(String experimentAccession);
+import javax.imageio.ImageIO;
+import javax.inject.Named;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 
-    public abstract TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
+@Named
+@Scope("singleton")
+public class ImageIOUtils {
 
-    public T build();
+    public BufferedImage read(File file) throws IOException {
+        return ImageIO.read(file);
+    }
+
+    public boolean write(RenderedImage im, String formatName, OutputStream output) throws IOException {
+        return ImageIO.write(im, formatName, output);
+    }
 
 }

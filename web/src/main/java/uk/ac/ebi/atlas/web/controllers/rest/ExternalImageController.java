@@ -29,8 +29,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.utils.ImageIOUtils;
 
-import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -43,18 +44,28 @@ public class ExternalImageController {
 
     private static final Logger LOGGER = Logger.getLogger(ExternalImageController.class);
 
-    @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
 
-    @Value("#{configuration['experiment.rnaseq.ma-plot.path.template']}")
     private String rnaSeqPathTemplate;
 
-    @Value("#{configuration['experiment.microarray.ma-plot.path.template']}")
     private String microarrayPathTemplate;
+
+    private ImageIOUtils imageIOUtils;
+
+    @Inject
+    public ExternalImageController(ImageIOUtils imageIOUtils,
+                                   @Value("#{configuration['experiment.extra-info-image.path.template']}") String extraInfoPathTemplate,
+                                   @Value("#{configuration['experiment.rnaseq.ma-plot.path.template']}") String rnaSeqPathTemplate,
+                                   @Value("#{configuration['experiment.microarray.ma-plot.path.template']}") String microarrayPathTemplate) {
+        this.imageIOUtils = imageIOUtils;
+        this.extraInfoPathTemplate = extraInfoPathTemplate;
+        this.rnaSeqPathTemplate = rnaSeqPathTemplate;
+        this.microarrayPathTemplate = microarrayPathTemplate;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/extra-info.png")
-    public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession){
+    public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession) {
 
         String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
 
@@ -65,11 +76,11 @@ public class ExternalImageController {
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{contrastName}/ma-plot.png")
     public void streamMicroarrayMaPlotImage(HttpServletResponse response, @PathVariable String experimentAccession,
-                         @PathVariable String arrayDesignAccession, @PathVariable String contrastName){
+                                            @PathVariable String arrayDesignAccession, @PathVariable String contrastName) {
 
         String microarrayMaPlotImageLocation = MessageFormat.format(microarrayPathTemplate, experimentAccession,
-                                                                    arrayDesignAccession,
-                                                                    contrastName);
+                arrayDesignAccession,
+                contrastName);
 
         streamExternalImage(response, microarrayMaPlotImageLocation);
 
@@ -78,7 +89,7 @@ public class ExternalImageController {
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/ma-plot.png")
     public void streamRnaSeqMaPlotImage(HttpServletResponse response, @PathVariable String experimentAccession
-                                        , @PathVariable String contrastName){
+            , @PathVariable String contrastName) {
 
         String rnaSeqMaPlotImageLocation = MessageFormat.format(rnaSeqPathTemplate, experimentAccession, contrastName);
 
@@ -87,19 +98,18 @@ public class ExternalImageController {
     }
 
 
-
     protected void streamExternalImage(HttpServletResponse response, String extraInfoFileLocation) {
-        try{
+        try {
 
             File extraInfoFile = new File(extraInfoFileLocation);
-            BufferedImage image = ImageIO.read(extraInfoFile);
+            BufferedImage image = imageIOUtils.read(extraInfoFile);
 
             response.setContentType("image/png");
             OutputStream out = response.getOutputStream();
-            ImageIO.write(image, "png", out);
+            imageIOUtils.write(image, "png", out);
             out.close();
 
-        } catch (IOException e){
+        } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Error loading external image with location " + extraInfoFileLocation);
         }

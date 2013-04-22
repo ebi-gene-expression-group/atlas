@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface MageTabParser {
 
-    Collection<ExperimentRun> getProcessedExperimentRuns();
+    Map<String, ExperimentRun> getProcessedExperimentRuns();
 
     Set<String> extractSpecies();
 

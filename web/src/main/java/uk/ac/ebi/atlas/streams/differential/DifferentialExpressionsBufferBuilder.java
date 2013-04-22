@@ -88,7 +88,7 @@ public class DifferentialExpressionsBufferBuilder implements TsvRowBufferBuilder
     }
 
     @Override
-    public DifferentialExpressionsBuffer create() {
+    public DifferentialExpressionsBuffer build() {
 
         checkState(!orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
 

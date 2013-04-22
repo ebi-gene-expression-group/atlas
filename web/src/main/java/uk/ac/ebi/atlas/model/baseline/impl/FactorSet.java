@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,13 @@ public class FactorSet implements FactorGroup {
         return this;
     }
 
+    public FactorSet addAll(Collection<Factor> factors) {
+        for (Factor factor : factors){
+            add(factor);
+        }
+        return this;
+    }
+
     @Override
     public Iterator<Factor> iterator() {
         return Iterators.unmodifiableIterator(factorsByType.values().iterator());
@@ -55,21 +62,24 @@ public class FactorSet implements FactorGroup {
 
     @Override
     public boolean containsAll(Set<Factor> factors) {
-        return this.factorsByType.values().containsAll(factors);
+        return factorsByType.values().containsAll(factors);
     }
 
     @Override
     public boolean equals(Object other) {
-        if (getClass() != other.getClass()) {
+        if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        return Objects.equal(this.getClass(), other.getClass())
-                && Objects.equal(this.factorsByType, ((FactorSet) other).factorsByType);
+        //equality on hashmaps or hashmap values is broken, for this reason better to compare brand new Lists
+        List<Factor> thisFactors = Lists.newArrayList(factorsByType.values());
+        List<Factor> otherFactors =  Lists.newArrayList(((FactorSet) other).factorsByType.values());
+
+        return Objects.equal(thisFactors, otherFactors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(factorsByType);
+        return Objects.hashCode(factorsByType.values());
     }
 
     @Override

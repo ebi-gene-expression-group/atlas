@@ -34,10 +34,12 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -73,43 +75,29 @@ public class ExperimentalFactorsBuilderTest {
         factorNameByType.put("TYPE2", "NAME2");
         factorNameByType.put("TYPE3", "NAME3");
 
+        List<FactorGroup> factorGroups = Lists.newArrayList(factorGroup1, factorGroup2);
+
         subject = new ExperimentalFactorsBuilder();
         subject.withExperimentRuns(experimentRunMocks)
                 .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"))
-        .withFactorNamesByType(factorNameByType);
-    }
-
-
-    @Test
-    public void testExtractFactorGroups() throws Exception {
-
-        //then
-        assertThat(subject.extractFactorGroups(), contains(factorGroup1, factorGroup2));
+                .withOrderedFactorGroups(factorGroups)
+                .withFactorNamesByType(factorNameByType);
     }
 
     @Test
     public void testFactorByNameIsCreated() {
         subject.create();
 
-        SortedSetMultimap<String, Factor> factorsByType = subject.getFactorsByType();
+        SortedSetMultimap<String, Factor> factorsByType = subject.buildFactorsByType();
         assertThat(factorsByType.keySet(), contains("TYPE1", "TYPE2", "TYPE3"));
         assertThat(factorsByType.get("TYPE2"), contains(factorWithType2DifferentValue, factorWithType2));
-    }
-
-    @Test
-    public void testFactorNamesByType() {
-        subject.create();
-        Map<String, String> factorNamesByType = subject.getFactorNamesByType();
-
-        assertThat(factorNamesByType.keySet(), hasItems("TYPE1", "TYPE2", "TYPE3"));
-        assertThat(factorNamesByType.get("TYPE1"), is("NAME1"));
     }
 
     @Test
     public void testCoOccurringFactors() {
         subject.create();
 
-        SortedSetMultimap<Factor, Factor> coOccurringFactors = subject.getCoOccurringFactors();
+        SortedSetMultimap<Factor, Factor> coOccurringFactors = subject.buildCoOccurringFactors();
 
         assertThat(coOccurringFactors.get(factorWithType1), contains(factorWithType2DifferentValue, factorWithType2, factorWithType3));
     }
@@ -127,4 +115,5 @@ public class ExperimentalFactorsBuilderTest {
         subject.withMenuFilterFactorTypes(null);
         subject.create();
     }
+
 }

@@ -23,12 +23,13 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class BaselineExperimentBuilder {
     private Set<String> species;
     private String description;
     private String displayName;
-    private Collection<ExperimentRun> experimentRuns;
+    private Map<String, ExperimentRun> experimentRuns;
     private String defaultQueryType;
     private boolean hasExtraInfoFile;
     private Set<Factor> defaultFilterFactors;
@@ -50,6 +51,7 @@ public class BaselineExperimentBuilder {
     private Map<String, String> factorNamesByType;
     private Map<String, String> speciesMapping;
     private String experimentAccession;
+    private List<FactorGroup> orderedFactorGroups;
 
     @Inject
     BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -66,7 +68,7 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
-    public BaselineExperimentBuilder withExperimentRuns(Collection<ExperimentRun> experimentRuns) {
+    public BaselineExperimentBuilder withExperimentRuns(Map<String, ExperimentRun> experimentRuns) {
         this.experimentRuns = experimentRuns;
         return this;
     }
@@ -110,13 +112,14 @@ public class BaselineExperimentBuilder {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
-        checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
+        checkState(MapUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
 
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder
-                .withExperimentRuns(experimentRuns)
+                .withExperimentRuns(experimentRuns.values())
+                .withOrderedFactorGroups(orderedFactorGroups)
                 .withMenuFilterFactorTypes(menuFilterFactorTypes)
                 .withFactorNamesByType(factorNamesByType)
                 .create();
@@ -132,6 +135,11 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withOrderedFactorGroups(List<FactorGroup> orderedFactorGroups) {
+        this.orderedFactorGroups = orderedFactorGroups;
         return this;
     }
 }

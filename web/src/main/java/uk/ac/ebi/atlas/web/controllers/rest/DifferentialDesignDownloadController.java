@@ -24,14 +24,13 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Set;
 
@@ -39,18 +38,20 @@ import java.util.Set;
 @Scope("request")
 public class DifferentialDesignDownloadController extends ExperimentDesignDownloadController<DifferentialExperiment> {
 
+    @Inject
+    public DifferentialDesignDownloadController(TsvReaderBuilder tsvReaderBuilder) {
+        super(tsvReaderBuilder);
+    }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=DIFFERENTIAL"})
-    public void downloadRnaSeqExperimentDesign(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void downloadRnaSeqExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         extractExperimentDesign(request, response);
 
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=MICROARRAY"})
-    public void downloadMicroarrayExperimentDesign(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void downloadMicroarrayExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         extractExperimentDesign(request, response);
 
