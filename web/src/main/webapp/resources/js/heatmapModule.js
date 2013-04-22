@@ -119,7 +119,7 @@ var heatmapModule = (function($) {
                                     radius: plotData.length === 1 ? 0 : 3/5,
                                     show: true,
                                     formatter: function(label, series){
-                                        return "<span style='display:none'>" + series.data[0][1] + "%</span>";},
+                                        return ""  /*series.data[0][1] + "%"*/;},
                                     background: {
                                         opacity: 0.5
                                     }

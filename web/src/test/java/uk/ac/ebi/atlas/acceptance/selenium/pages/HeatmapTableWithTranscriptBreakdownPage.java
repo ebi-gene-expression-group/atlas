@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import com.google.common.collect.Lists;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -71,19 +72,11 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
         WebElement legend = transcriptPie.findElement(By.className("legend"));
         List<WebElement> elements = legend.findElements(By.className("legendLabel"));
         for (WebElement element : elements) {
-            results.add(element.findElement(By.xpath("a")).getText());
-        }
-        return results;
-    }
-
-    public List<String> getTranscriptBreakdownPieLabels() {
-
-        List<String> results = Lists.newArrayList();
-
-        WebElement transcriptPie = driver.findElement(By.id("transcripts-pie"));
-        List<WebElement> elements = transcriptPie.findElements(By.className("pieLabel"));
-        for (WebElement element : elements) {
-            results.add(element.getText());
+            try{
+                results.add(element.findElement(By.xpath("a")).getText());
+            }catch(NoSuchElementException e){
+                results.add(element.getText());
+            }
         }
         return results;
     }
