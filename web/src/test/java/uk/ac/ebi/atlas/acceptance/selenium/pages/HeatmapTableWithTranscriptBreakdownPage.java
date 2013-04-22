@@ -52,7 +52,7 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
-                return driver.findElement(By.id("transcript-breakdown-title")) != null;
+            return driver.findElement(By.id("transcript-breakdown-title")) != null;
             }
         });
         return this;
@@ -60,17 +60,35 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
 
     public String getTranscriptBreakdownTitle() {
 
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return driver.findElement(By.id("transcript-breakdown-title")) != null;
+            }
+        });
+
         WebElement breakdownTitleElement = driver.findElement(By.id("transcript-breakdown-title"));
         return breakdownTitleElement.getText();
     }
 
     public List<String> getTranscriptBreakdownLegendLabels() {
 
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return driver.findElement(By.id("transcripts-pie")) != null;
+            }
+        });
+
         List<String> results = Lists.newArrayList();
 
         WebElement transcriptPie = driver.findElement(By.id("transcripts-pie"));
         WebElement legend = transcriptPie.findElement(By.className("legend"));
         List<WebElement> elements = legend.findElements(By.className("legendLabel"));
+
+
         for (WebElement element : elements) {
             try{
                 results.add(element.findElement(By.xpath("a")).getText());
