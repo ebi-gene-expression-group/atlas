@@ -29,6 +29,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.transcript.TranscriptContributionCalculator;
 import uk.ac.ebi.atlas.transcript.TranscriptsContribution;
 
@@ -49,6 +51,7 @@ public class RankedGeneTranscriptsControllerTest {
     public static final String TRANSCRIPT_1 = "transcript1";
     public static final String TRANSCRIPT_2 = "transcript2";
     public static final String TRANSCRIPT_3 = "transcript3";
+    private static final String SELECTED_FILTER_FACTORS_JSON = "[]";
 
     @Mock
     private HttpServletRequest requestMock;
@@ -61,14 +64,18 @@ public class RankedGeneTranscriptsControllerTest {
 
     private RankedGeneTranscriptsController subject;
 
+    private FactorSet factorSet = new FactorSet();
+
     @Before
     public void setUp() throws Exception {
+        factorSet.add(new Factor(FACTOR_TYPE, FACTOR_VALUE));
+
         subject = new RankedGeneTranscriptsController(transcriptContributionCalculatorMock);
     }
 
     @Test
     public void testGetRankedTranscripts() throws Exception {
-        when(transcriptContributionCalculatorMock.getTranscriptsContribution(GENE_ID, EXPERIMENT_ACCESSION, new Factor(FACTOR_TYPE, FACTOR_VALUE))).thenReturn(transcriptsContributionMock);
+        when(transcriptContributionCalculatorMock.getTranscriptsContribution(GENE_ID, EXPERIMENT_ACCESSION, factorSet)).thenReturn(transcriptsContributionMock);
         when(transcriptsContributionMock.getTotalTranscriptCount()).thenReturn(7);
         Map<String, Double> map = Maps.newHashMap();
         map.put(TRANSCRIPT_1, 0.5);
@@ -76,7 +83,7 @@ public class RankedGeneTranscriptsControllerTest {
         map.put(TRANSCRIPT_3, 0.1);
         when(transcriptsContributionMock.getTranscriptPercentageRates()).thenReturn(map);
 
-        String rankedTranscripts = subject.getRankedTranscripts(requestMock, EXPERIMENT_ACCESSION, GENE_ID, FACTOR_TYPE, FACTOR_VALUE, 3);
+        String rankedTranscripts = subject.getRankedTranscripts(requestMock, EXPERIMENT_ACCESSION, GENE_ID, FACTOR_TYPE, FACTOR_VALUE, SELECTED_FILTER_FACTORS_JSON, 3);
         assertThat(rankedTranscripts, containsString("7"));
         assertThat(rankedTranscripts, containsString(TRANSCRIPT_1));
         assertThat(rankedTranscripts, containsString(TRANSCRIPT_2));
