@@ -22,8 +22,6 @@
 
 package uk.ac.ebi.atlas.model.cache.baseline;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
@@ -40,7 +38,9 @@ import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder every time the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
@@ -57,10 +57,10 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
 
     @Inject
     protected BaselineExperimentLoader(TsvReaderBuilder tsvReaderBuilder,
-                                    MageTabParserBuilder mageTabParserBuilder,
-                                    ConfigurationTrader configurationTrader,
-                                    @Value("#{configuration['experiment.magetab.path.template']}")
-                                    String pathTemplate) {
+                                       MageTabParserBuilder mageTabParserBuilder,
+                                       ConfigurationTrader configurationTrader,
+                                       @Value("#{configuration['experiment.magetab.path.template']}")
+                                       String pathTemplate) {
 
         this.mageTabParserBuilder = mageTabParserBuilder;
         this.configurationTrader = configurationTrader;
@@ -113,12 +113,12 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
 
     }
 
-    private Set<String> getSpecies(MageTabParser mageTabParser) {
+    Set<String> getSpecies(MageTabParser mageTabParser) {
 
         return mageTabParser.extractSpecies();
     }
 
-    private Set<String> getRequiredFactorTypes(String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
+    Set<String> getRequiredFactorTypes(String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
         Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);
 
         for (Factor defaultFilterFactor : defaultFilterFactors) {
@@ -148,7 +148,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
 
         List<FactorGroup> factorGroups = Lists.newArrayList();
 
-        for (String columnHeader : columnHeaders){
+        for (String columnHeader : columnHeaders) {
             String firstRunAccessionOfTheGroup = StringUtils.substringBefore(columnHeader, ",").trim();
             ExperimentRun firstExperimentRunOfTheGroup = experimentRuns.get(firstRunAccessionOfTheGroup);
             factorGroups.add(firstExperimentRunOfTheGroup.getFactorGroup());
