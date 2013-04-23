@@ -175,8 +175,9 @@
 </style>
 
 <div id="transcript-breakdown" style="display:none;height: 320px;width: 600px; padding-top:10px">
-    <p id="transcript-breakdown-title" style = "text-align: center">
-        ...
+    <p style="text-align: center">
+        <span id="transcript-breakdown-title"></span>
+        <span id="transcript-breakdown-title-help"><a class="help-icon" href="#" title="Transcripts with zero expression are excluded from the pie chart">?</a></span>
     </p>
     <div>
         <div id="transcripts-pie" style="padding-top:10px;width: 590px;height:250px;line-height: 1.2em;">

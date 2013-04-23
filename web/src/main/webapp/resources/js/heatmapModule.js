@@ -24,7 +24,7 @@
 /*jslint browser:true */
 /*jslint nomen: true*/
 
-var heatmapModule = (function($) {
+var heatmapModule = (function ($) {
 
     "use strict";
 
@@ -52,20 +52,20 @@ var heatmapModule = (function($) {
         $(".gradient-level-max").css("display", "none");
     }
 
-    function initDisplayLevelsButton(){ //binds toggle handler
+    function initDisplayLevelsButton() { //binds toggle handler
 
         $("#display-levels").button()
             .toggle(
-                function () {
-                    $(this).button('option', 'label', 'Hide levels');
-                    showExpressionLevels(this);
-                    $("#prefForm #displayLevels").val("true");
-                },
-                function () {
-                    $(this).button('option', 'label', 'Display levels');
-                    hideExpressionLevels(this);
-                    $("#prefForm #displayLevels").val("false");
-                }
+            function () {
+                $(this).button('option', 'label', 'Hide levels');
+                showExpressionLevels(this);
+                $("#prefForm #displayLevels").val("true");
+            },
+            function () {
+                $(this).button('option', 'label', 'Display levels');
+                hideExpressionLevels(this);
+                $("#prefForm #displayLevels").val("false");
+            }
         );
 
         if ($("#prefForm #displayLevels").val() === "true") {
@@ -74,7 +74,7 @@ var heatmapModule = (function($) {
 
     }
 
-    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson){ //binds heatmap cells click handler
+    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson) { //binds heatmap cells click handler
 
         function buildPlotData(transcriptRates) {
             var data = [],
@@ -96,11 +96,11 @@ var heatmapModule = (function($) {
             $.ajax({
                 url: "json/transcripts/" + experimentAccession,
                 type: "GET",
-                data:{
+                data: {
                     'geneId': geneId,
                     'factorType': factorType,
-                    'factorValue' : factorValue,
-                    'selectedFilterFactorsJson' : JSON.stringify(selectedFilterFactorsJson)
+                    'factorValue': factorValue,
+                    'selectedFilterFactorsJson': JSON.stringify(selectedFilterFactorsJson)
                 },
                 datatype: 'json',
                 success: function (data) {
@@ -113,10 +113,10 @@ var heatmapModule = (function($) {
                         series: {
                             pie: {
                                 show: true,
-                                radius:1,
+                                radius: 1,
                                 label: {
                                     style: {color: "white"},
-                                    radius: plotData.length === 1 ? 0 : 3/5,
+                                    radius: plotData.length === 1 ? 0 : 3 / 5,
                                     show: true,
                                     formatter: function(label, series){
                                         return ""  /*series.data[0][1] + "%"*/;},
@@ -129,9 +129,9 @@ var heatmapModule = (function($) {
                         legend: {
 
                             show: true,
-                            labelFormatter: function(label){
+                            labelFormatter: function (label) {
                                 return label === "Others" ? "Others" :
-                                    "<a href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t="
+                                    "<a class='transcriptid' href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t="
                                         + label + "' target='_blank'" + "title='View transcript in Ensembl'" + ">" +
                                         label + "</a>";
                             }
@@ -139,34 +139,43 @@ var heatmapModule = (function($) {
                     });
 
                     var s = '';
-                    if (totalCount > 1) {s = 's'};
+                    if (totalCount > 1) {
+                        s = 's';
+                    }
+
                     $('#transcript-breakdown-title').html("Expression Level Breakdown for " +
-                        "<a href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
+                        "<a id='geneid' href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
                         "' target='_blank'" + "title='View gene in Ensembl'" + ">" +
                         geneName + "</a>" + " (" + totalCount + " transcript" + s + ") in " + factorValue);
 
 
-                    $.fancybox({href : '#transcript-breakdown',
-                        padding:0,
-                        openEffect:'elastic',
-                        closeEffect:'elastic',
+                    $('#geneid').tooltip();
+
+                    $('.transcriptid').tooltip();
+
+                    $('#transcript-breakdown-title-help').tooltip();
+
+                    $.fancybox({href: '#transcript-breakdown',
+                        padding: 0,
+                        openEffect: 'elastic',
+                        closeEffect: 'elastic',
                         helpers: {
-                            overlay : {
+                            overlay: {
                                 locked: false
                             }
                         }
                     });
 
                 }
-            }).fail(function( data ) {
-                    console.log( "ERROR:  " + data );
-            });
+            }).fail(function (data) {
+                    console.log("ERROR:  " + data);
+                });
 
         });
     }
 
     //there must be a cleaner way to do this, but I don't know it yet!
-    function buildHeatmapCellTooltip(expressionLevel, tstatistic, foldChange){
+    function buildHeatmapCellTooltip(expressionLevel, tstatistic, foldChange) {
         return "<table class='table-grid'><thead><th class='header-cell'>Adjusted P-value</th>" +
             (tstatistic !== undefined ? "<th class='header-cell'>T-statistic</th>" : "") +
             "<th class='header-cell'>Log2-fold Change</th></thead>" +
@@ -177,16 +186,16 @@ var heatmapModule = (function($) {
             "</table>";
     }
 
-    function initHeatmapCellsTooltip(){ //initializes heatmap cells tooltip
+    function initHeatmapCellsTooltip() { //initializes heatmap cells tooltip
         $("#heatmap-table td:has(div[data-fold-change])").attr('title', '').tooltip(
             {
-                open:function (event, ui) {
+                open: function (event, ui) {
                     var colour = $(this).find("div").attr("data-color");
                     ui.tooltip.css('background', colour);
                 },
-                tooltipClass:"help-tooltip pvalue-tooltip-styling",
+                tooltipClass: "help-tooltip pvalue-tooltip-styling",
 
-                content:function (callback) {
+                content: function (callback) {
                     var expressionLevel = $(this).find("div").html(),
                         foldChange = $(this).find("div").attr("data-fold-change"),
                         tstatistic = $(this).find("div").attr("data-tstatistic");
@@ -197,7 +206,7 @@ var heatmapModule = (function($) {
             });
     }
 
-    function initDownloadButton(){
+    function initDownloadButton() {
         $('#download-profiles-link').button().tooltip();
     }
 
@@ -213,7 +222,7 @@ var heatmapModule = (function($) {
         return label;
     }
 
-    function initHeatmapFactorHeaders(){//shorten header labels if necessary and inits tooltips
+    function initHeatmapFactorHeaders() {//shorten header labels if necessary and inits tooltips
 
         $(".factor-header")
             .each(function () {
@@ -228,18 +237,18 @@ var heatmapModule = (function($) {
 
     }
 
-    function createAccessionHeaders(accessionHeaders){
+    function createAccessionHeaders(accessionHeaders) {
 
         var headers;
 
-        $(accessionHeaders).each(function(){
+        $(accessionHeaders).each(function () {
             headers += "<td class='header-cell'>" + this + "</td>";
         });
         //add custom header cells for gene name and design element
         $($("#heatmap-table thead")).append("<tr>" + headers + "</tr>");
 
         //add display levels cell colspan
-        if (accessionHeaders.length === 2){
+        if (accessionHeaders.length === 2) {
 
             $("#heatmap-table thead tr th:eq(1)").remove();
             $("#heatmap-table thead tr th:eq(0)").attr("colspan", 2);
@@ -249,15 +258,15 @@ var heatmapModule = (function($) {
         $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
     }
 
-    function initMaPlotButtons(experimentAccession, arrayDesignAccession){
+    function initMaPlotButtons(experimentAccession, arrayDesignAccession) {
         var thElements = $(".factor-header").parent(),
             maPlotURL;
 
-        thElements.css("width","60px");
+        thElements.css("width", "60px");
         $(".factor-header").css("transform-origin");
-        $(".factor-header").css("top","57px");
+        $(".factor-header").css("top", "57px");
 
-        $(thElements).each(function(){
+        $(thElements).each(function () {
             var contrastName = $(this).children().attr("data-contrast-name");
 
             maPlotURL = 'external-resources/' + experimentAccession + '/' + (arrayDesignAccession ? arrayDesignAccession + '/' : '' ) + contrastName + '/ma-plot.png';
@@ -269,15 +278,15 @@ var heatmapModule = (function($) {
         $(".ma-button").tooltip().button();
 
         $(".ma-button").fancybox({
-            padding:0,
-            openEffect:'elastic',
-            closeEffect:'elastic'
+            padding: 0,
+            openEffect: 'elastic',
+            closeEffect: 'elastic'
         });
 
     }
 
 
-    function initHeatmap(experimentAccession, parameters){
+    function initHeatmap(experimentAccession, parameters) {
 
         if (parameters && parameters.species) {
             initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
@@ -288,13 +297,13 @@ var heatmapModule = (function($) {
         initDisplayLevelsButton();
         initHeatmapFactorHeaders();
 
-        if (parameters && parameters.arrayDesignAccession){ //then it is a microarray experiment
+        if (parameters && parameters.arrayDesignAccession) { //then it is a microarray experiment
             createAccessionHeaders(['Gene', 'Design Element']);
-        }   else {
+        } else {
             createAccessionHeaders(['Gene']);
         }
 
-        if (parameters && parameters.cutoff === 0.05 && ! parameters.geneQuery){
+        if (parameters && parameters.cutoff === 0.05 && !parameters.geneQuery) {
             initMaPlotButtons(experimentAccession, parameters.arrayDesignAccession);
         }
 
@@ -302,18 +311,18 @@ var heatmapModule = (function($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson){
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson) {
         initHeatmap(experimentAccession, {species: species, selectedFilterFactorsJson: selectedFilterFactorsJson});
     }
 
-    function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery){
+    function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery) {
         initHeatmap(experimentAccession, {cutoff: cutoff, geneQuery: geneQuery});
     }
 
     function initMicroarrayHeatmap(experimentAccession, arrayDesignAccession, cutoff, geneQuery) {
         initHeatmap(experimentAccession, {  arrayDesignAccession: arrayDesignAccession,
-                                            cutoff: cutoff,
-                                            geneQuery: geneQuery });
+            cutoff: cutoff,
+            geneQuery: geneQuery });
     }
 
     return {
