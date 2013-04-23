@@ -154,19 +154,7 @@ public class RankedGeneTranscriptsIT {
         assertThat(responseBody.asString(), is("[\"10\",\"{\\\"ENST00000326266\\\":83.3,\\\"ENST00000253952\\\":16.700000000000003}\"]"));
 
     }
-/*
-    @Test
-    public void testEGEOD30352RankedGeneTranscriptsFourTranscripts() {
-        EndPoint subject = new EndPoint(E_GEOD_30352_URL_TEMPLATE, "geneId=ENSG00000100253&factorType=ORGANISM_PART" +
-                "&factorValue=kidney&selectedFilterFactorsJson=[]");
 
-        ResponseBody responseBody = responseAssertions(subject);
-
-        assertThat(responseBody.asString(), is("[\"7\",\"{\\\"ENSMUST00000163767\\\":60.5,\\\"ENSMUST00000074225\\\":18.4,\\\"ENSMUST00000165262\\\":15.8,\\\"OTHERS\\\":5.299999999999997}\"]"));
-
-
-    }
-*/
     private ResponseBody responseAssertions(EndPoint endPoint) {
         Response response = endPoint.getResponse();
 
