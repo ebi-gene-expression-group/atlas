@@ -23,30 +23,42 @@
 package uk.ac.ebi.atlas.commons.readers;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 
-import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.MessageFormat;
 
 @Named
 @Scope("prototype")
-public class TsvReaderBuilder {
+public class TsvInputStreamReaderBuilder {
 
-    private TsvReaderImpl tsvReader;
+    private Path fileSystemPath;
 
-    @Inject
-    TsvReaderBuilder(TsvReaderImpl tsvReader) {
-        this.tsvReader = tsvReader;
-    }
+    private String pathTemplate;
 
-    public TsvReaderBuilder forTsvFilePathTemplate(String tsvFilePathTemplate) {
-        this.tsvReader.setPathTemplate(tsvFilePathTemplate);
+    public TsvInputStreamReaderBuilder withPathTemplate(String pathTemplate) {
+        this.pathTemplate = pathTemplate;
         return this;
     }
 
-    public TsvReader build() {
-        return tsvReader;
+    public TsvInputStreamReaderBuilder forExperimentAccession(String experimentAccession) {
+        this.fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
+        return this;
     }
 
+    public InputStreamReader build() throws IOException {
+        return new InputStreamReader(Files.newInputStream(fileSystemPath));
+    }
 
+    public Path getFileSystemPath() {
+        return fileSystemPath;
+    }
+
+    String getPathString(String experimentAccession) {
+        return MessageFormat.format(pathTemplate, experimentAccession);
+    }
 }
