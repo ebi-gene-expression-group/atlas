@@ -1,0 +1,23 @@
+<configuration>
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1">
+                <assay>SRR054659</assay>
+                <assay>SRR054660</assay>
+                <assay>SRR054661</assay>
+            </assay_group>
+            <assay_group id="g2">
+                <assay>SRR054662</assay>
+                <assay>SRR054663</assay>
+                <assay>SRR054664</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g2">
+                <name>clinical information:'non-pregnant' vs 'pregnant'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

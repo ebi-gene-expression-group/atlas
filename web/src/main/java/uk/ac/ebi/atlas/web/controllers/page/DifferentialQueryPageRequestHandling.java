@@ -36,6 +36,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,18 +44,17 @@ import java.util.SortedSet;
 
 public abstract class DifferentialQueryPageRequestHandling<T extends DifferentialExperiment, K extends DifferentialRequestPreferences> {
 
-    private static final String TSV_RAW_FILE_EXTENSION = "/raw-counts.tsv";
-    private static final String TSV_NORMALIZED_FILE_EXTENSION = "/normalized.tsv";
-
-    private static final String TSV_ANALYTICS_FILE_EXTENSION = "/all-analytics.tsv";
-
+    private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private RankProfilesCommand<GeneProfilesList, GeneProfile> rankProfilesCommand;
 
 
-    protected DifferentialQueryPageRequestHandling(DifferentialRequestContextBuilder requestContextBuilder, RankProfilesCommand rankProfilesCommand) {
+    protected DifferentialQueryPageRequestHandling(DifferentialRequestContextBuilder requestContextBuilder,
+                                                   RankProfilesCommand rankProfilesCommand,
+                                                   DownloadURLBuilder downloadURLBuilder) {
         this.differentialRequestContextBuilder = requestContextBuilder;
         this.rankProfilesCommand = rankProfilesCommand;
+        this.downloadURLBuilder = downloadURLBuilder;
     }
 
     public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
@@ -86,11 +86,11 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
 
                 model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
 
-                model.addAttribute("rawDownloadUrl", buildDownloadRawUrl(request));
+                model.addAttribute("rawDownloadUrl", downloadURLBuilder.buildDownloadRawUrl(request));
 
-                model.addAttribute("normalizedUrl", buildDownloadNormalizedDataUrl(request));
+                model.addAttribute("normalizedUrl", downloadURLBuilder.buildDownloadNormalizedDataUrl(request));
 
-                model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
+                model.addAttribute("analyticsDownloadUrl", downloadURLBuilder.buildDownloadAllAnalyticsUrl(request));
 
 
             } catch (GenesNotFoundException e) {
@@ -113,24 +113,10 @@ public abstract class DifferentialQueryPageRequestHandling<T extends Differentia
 
     protected abstract void initExtraRequestPreferences(K requestPreferences, T experiment);
 
-
     private DifferentialRequestContext initRequestContext(T experiment, DifferentialRequestPreferences requestPreferences) {
         return differentialRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences).build();
 
     }
-
-    private String buildDownloadRawUrl(HttpServletRequest request) {
-        return request.getRequestURI() + TSV_RAW_FILE_EXTENSION;
-    }
-
-    private String buildDownloadAllAnalyticsUrl(HttpServletRequest request) {
-        return request.getRequestURI() + TSV_ANALYTICS_FILE_EXTENSION;
-    }
-
-    private String buildDownloadNormalizedDataUrl(HttpServletRequest request) {
-        return request.getRequestURI() + TSV_NORMALIZED_FILE_EXTENSION;
-    }
-
 
 }

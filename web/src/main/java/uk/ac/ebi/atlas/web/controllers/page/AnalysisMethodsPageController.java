@@ -30,8 +30,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
@@ -40,20 +42,29 @@ public class AnalysisMethodsPageController {
 
     private TsvReader tsvReader;
 
+    private DownloadURLBuilder downloadURLBuilder;
+
     @Inject
-    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder,
+    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
                                          @Value("#{configuration['experiment.analysis-method.path.template']}")
                                          String pathTemplate) {
 
         this.tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
+        this.downloadURLBuilder = downloadURLBuilder;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")
-    public String showGeneProfiles(@PathVariable String experimentAccession, Model model) throws IOException {
+    public String showGeneProfiles(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
 
         model.addAttribute("csvLines", tsvReader.readAll(experimentAccession));
 
         model.addAttribute("experimentAccession", experimentAccession);
+
+        model.addAttribute("rawDownloadUrl", downloadURLBuilder.buildDownloadRawUrl(request));
+
+        model.addAttribute("normalizedUrl", downloadURLBuilder.buildDownloadNormalizedDataUrl(request));
+
+        model.addAttribute("analyticsDownloadUrl", downloadURLBuilder.buildDownloadAllAnalyticsUrl(request));
 
         return "experiment-analysis-methods";
     }

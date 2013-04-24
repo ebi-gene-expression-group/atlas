@@ -26,6 +26,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -38,6 +39,16 @@ public class HeatmapCustomHeadersIT extends SinglePageSeleniumFixture {
     public void getStartingPage() {
         subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
         subject.get();
+    }
+
+    @Test
+    public void verifyDownloadLinks() {
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
+        subject.get();
+
+        assertThat(subject.getDownloadExpressionProfilesLink(), endsWith("/gxa/experiments/E-MTAB-1066.tsv"));
+        assertThat(subject.getDownloadAnalyticsLink(), endsWith("/gxa/experiments/E-MTAB-1066/all-analytics.tsv"));
+        assertThat(subject.getDownloadNormalizedLink(), endsWith("/gxa/experiments/E-MTAB-1066/normalized.tsv"));
     }
 
     @Test

@@ -37,6 +37,16 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
     protected HeatmapTablePage subject;
 
     @Test
+    public void verifyDownloadLinks() {
+        subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION);
+        subject.get();
+
+        assertThat(subject.getDownloadExpressionProfilesLink(), endsWith("/gxa/experiments/E-GEOD-22351.tsv"));
+        assertThat(subject.getDownloadAnalyticsLink(), endsWith("/gxa/experiments/E-GEOD-22351/all-analytics.tsv"));
+        assertThat(subject.getDownloadRawCountsLink(), endsWith("/gxa/experiments/E-GEOD-22351/raw-counts.tsv"));
+    }
+
+    @Test
     public void verifyQueryFactorLableAndHeatmapHeaders() {
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
@@ -73,7 +83,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gm15512", "Pla2g3", "Pmp2"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("6.61"+ " \u00D7 " + "10-5"));
+        assertThat(subject.getGeneProfile(1).get(0), is("6.61" + " \u00D7 " + "10-5"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
         assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
@@ -96,7 +106,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
     }
 
     @Test
-    public void heatmapCellTooltipTest(){
+    public void heatmapCellTooltipTest() {
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
 

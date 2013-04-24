@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +43,10 @@ import javax.validation.Valid;
 public class MicroarrayQueryPageController extends DifferentialQueryPageRequestHandling<MicroarrayExperiment, MicroarrayRequestPreferences> {
 
     @Inject
-    public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder, RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand) {
-        super(requestContextBuilder, rankMicroarrayProfilesCommand);
+    public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder,
+                                         RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand,
+                                         DownloadURLBuilder downloadURLBuilder) {
+        super(requestContextBuilder, rankMicroarrayProfilesCommand, downloadURLBuilder);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY"})

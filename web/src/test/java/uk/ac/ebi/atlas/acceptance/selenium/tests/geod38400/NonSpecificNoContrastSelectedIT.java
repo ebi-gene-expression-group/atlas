@@ -26,8 +26,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -35,6 +34,16 @@ public class NonSpecificNoContrastSelectedIT extends SeleniumFixture {
 
     private static final String E_E_GEOD_38400_ACCESSION = "E-GEOD-38400";
     protected HeatmapTablePage subject;
+
+    @Test
+    public void verifyDownloadLinks() {
+        subject = new HeatmapTablePage(driver, E_E_GEOD_38400_ACCESSION);
+        subject.get();
+
+        assertThat(subject.getDownloadExpressionProfilesLink(), endsWith("/gxa/experiments/E-GEOD-38400.tsv"));
+        assertThat(subject.getDownloadAnalyticsLink(), endsWith("/gxa/experiments/E-GEOD-38400/all-analytics.tsv"));
+        assertThat(subject.getDownloadRawCountsLink(), endsWith("/gxa/experiments/E-GEOD-38400/raw-counts.tsv"));
+    }
 
     @Test
     public void verifyResultsWithRegulationUpDown() {
