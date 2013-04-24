@@ -79,6 +79,7 @@ public class DifferentialDesignPageControllerIT {
         preferencesMock = mock(DifferentialDesignRequestPreferences.class);
         DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(differentialExperiment);
+        when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
     }
 
     @Test
