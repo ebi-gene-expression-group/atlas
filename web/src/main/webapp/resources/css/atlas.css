@@ -91,6 +91,15 @@ img {
     color: #eb8f00 !important;
     border: 1px solid #fbd850 !important;
 }
+
+.ui-button {
+    border-bottom-color: #cccccc !important;
+    border-bottom-style: solid !important;
+}
+
+.ui-button:hover, .ui-button:active {
+    border: 1px solid #fbd850 !important;
+}
 /* JQuery UI overrides: end */
 
 .thick-link {
