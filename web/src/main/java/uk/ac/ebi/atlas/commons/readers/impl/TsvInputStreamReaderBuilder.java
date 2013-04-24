@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commons.readers;
+package uk.ac.ebi.atlas.commons.readers.impl;
 
 import org.springframework.context.annotation.Scope;
 

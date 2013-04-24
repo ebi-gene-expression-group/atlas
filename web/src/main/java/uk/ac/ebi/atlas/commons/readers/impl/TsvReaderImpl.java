@@ -26,7 +26,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.readers.TsvInputStreamReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import javax.inject.Inject;
