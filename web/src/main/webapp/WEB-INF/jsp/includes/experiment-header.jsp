@@ -10,15 +10,15 @@
     <tr>
         <td style="width:140px;">
             <div class="experiment-accession">
-                <a id="goto-ae"
+                <a id="goto-ae" class="thick-link"
                    href="${applicationProperties.getArrayExpressURL(experimentAccession)}"
                    title="View experiment in ArrayExpress"
                    target="_blank">${experimentAccession}</a>
             </div>
         </td>
         <td width="100%">
-            <div id="experimentDescription" style="font-weight: bold;">
-                <a id="goto-experiment" title="Experiment Page"
+            <div id="experimentDescription">
+                <a id="goto-experiment" class="thick-link" title="Experiment Page"
                    href="experiments/${experimentAccession}">${experimentDescription}</a>
                 <c:if test="${hasExtraInfo}">
                     <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
@@ -38,7 +38,7 @@
             </c:if>
         </td>
         <td width="130px">
-            <table cellpadding="2" cellspacing="0" border="0" style="float:right">
+            <table cellpadding="2" cellspacing="0" style="float:right">
                 <tr>
                     <td>
                         <a id="display-experiment" class="button-image"

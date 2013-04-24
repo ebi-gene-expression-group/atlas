@@ -59,7 +59,7 @@
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css"/>
     <link type="text/css" rel="stylesheet"
-          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fixed.css"/>
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"/>
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/embl-petrol-colours.css"/>
 

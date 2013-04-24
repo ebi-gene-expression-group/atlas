@@ -57,6 +57,15 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a{
     border-bottom: 3px solid;
 }
 
+table, table td{
+    border: none !important;
+    margin: 0px;
+}
+
+img {
+    max-width: none !important;
+}
+
 /* ebi css and ebi-visual.css override: end */
 
 
@@ -84,13 +93,15 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a{
 }
 /* JQuery UI overrides: end */
 
-
+.thick-link {
+    font-weight: bold;
+}
 
 body {
     min-width: 950px;
-/*    font-size: 12px;
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    margin:0px auto !important;*/
+    font-size: 12px;
+    /*    font-family: Verdana, Helvetica, Arial, sans-serif;
+        margin:0px auto !important;*/
 }
 
 #contents {
