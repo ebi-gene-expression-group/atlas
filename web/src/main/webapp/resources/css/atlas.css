@@ -58,7 +58,7 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a{
 }
 
 table, table td{
-    border: none !important;
+    border: none;
     margin: 0px;
 }
 
@@ -101,6 +101,10 @@ img {
     border: 1px solid #fbd850 !important;
 }
 /* JQuery UI overrides: end */
+
+textarea {
+    border-color: lightgray;
+}
 
 .thick-link {
     font-weight: bold;
@@ -222,7 +226,7 @@ textarea, .chzn-container {
     border-style: solid;
     border-width: 1px;
     border-color: lightgray;
-    margin: 2px;
+    margin-bottom: 2px;
 }
 
 .filter-name {

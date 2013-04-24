@@ -126,12 +126,10 @@
                                                   type="number"
                                                   maxFractionDigits="0"
                                                   var="formattedCutoff"/>
-                                <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"
-                                            style="border:1; font-weight:bold;"/>
+                                <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"/>
                             </c:when>
                             <c:otherwise>
-                                <form:input size="10" path="cutoff" id="cutoff"
-                                            style="border:1; font-weight:bold;"/>
+                                <form:input size="10" path="cutoff" id="cutoff"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
