@@ -94,8 +94,13 @@ img {
     box-shadow: 0 0 7px gray;
 }
 
-.ui-menu {
-    width: 140px;
+#filterby-menu #filterBy{
+    height: 26px;
+    width: 137px;
+}
+
+#filterby-menu .ui-menu{
+    width: 150px;
     z-index: 100!important;
 }
 

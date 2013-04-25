@@ -34,7 +34,7 @@
 </div>
 <c:set var="filterMenuLabel" value="Change filters"/>
 
-<span>
+<span id="filterby-menu" >
     <ul id="filterBy" style="display: none">
         <li><a>${filterMenuLabel}</a>
             <ul>
