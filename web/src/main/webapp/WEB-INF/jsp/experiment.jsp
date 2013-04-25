@@ -76,7 +76,7 @@
                     </table>
                 </div>
 
-                <div id="heatmap-div">
+                <div id="heatmap-div" class="heatmap-position" style="display:none">
 
                     <table>
                         <tr>

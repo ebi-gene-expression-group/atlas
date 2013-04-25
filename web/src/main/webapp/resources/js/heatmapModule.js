@@ -309,6 +309,8 @@ var heatmapModule = (function ($) {
             initMaPlotButtons(experimentAccession, parameters.arrayDesignAccession);
         }
 
+        $("#heatmap-div").show();
+
     }
 
     function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson) {
