@@ -242,7 +242,7 @@ var heatmapModule = (function ($) {
         var headers;
 
         $(accessionHeaders).each(function () {
-            headers += "<td class='header-cell'>" + this + "</td>";
+            headers += "<td class='horizontal-header-cell'>" + this + "</td>";
         });
         //add custom header cells for gene name and design element
         $($("#heatmap-table thead")).append("<tr>" + headers + "</tr>");

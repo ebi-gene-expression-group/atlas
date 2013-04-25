@@ -57,8 +57,20 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a{
     border-bottom: 3px solid;
 }
 
-table, table td{
+table {
     border: none;
+    width: auto;
+    margin: 0px;
+}
+
+td, th{
+    border: none;
+    margin: 0px;
+    padding: 1px;
+}
+
+form {
+    padding: 0px;
     margin: 0px;
 }
 
@@ -101,6 +113,10 @@ img {
     border: 1px solid #fbd850 !important;
 }
 /* JQuery UI overrides: end */
+
+section {
+    padding: 10px;
+}
 
 textarea {
     border-color: lightgray;
