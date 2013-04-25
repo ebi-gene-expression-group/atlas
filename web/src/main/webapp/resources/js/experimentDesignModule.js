@@ -28,10 +28,10 @@ var experimentDesignTableModule = (function ($) {
     function initColumnDefs() {
         var aoColumnDefs = [];
         if (_assayHeaders.length === 1) {
-            aoColumnDefs[0] = { "sClass":"assays bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[0] = { "sClass":"header-cell bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
         } else {
-            aoColumnDefs[0] = { "sClass":"assays bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
-            aoColumnDefs[1] = { "sClass":"assays bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
+            aoColumnDefs[0] = { "sClass":"header-cell bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[1] = { "sClass":"header-cell bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
         }
 
         initColumns(aoColumnDefs, _sampleHeaders, _assayHeaders.length);
@@ -103,9 +103,10 @@ var experimentDesignTableModule = (function ($) {
         });
 
         var tableHeaderRow = $(".dataTables_scrollHeadInner").find('thead > tr');
+
         $("<tr><th id='assaysHeader' class='header-cell br bt bl'></th>" +
-            "<th id='samplesHeader' class='samples br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
-            "<th id='factorsHeader' class='factors br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
+            "<th id='samplesHeader' class='samples header-cell  br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
+            "<th id='factorsHeader' class='factors header-cell br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
             .insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */
@@ -113,8 +114,9 @@ var experimentDesignTableModule = (function ($) {
         $('#samplesHeader').attr('colspan', Object.keys(_sampleHeaders).length);
         $('#factorsHeader').attr('colspan', Object.keys(_factorHeaders).length);
 
-
         $('#download-experiment-design-link').button().tooltip();
+
+        $(".sorting").addClass("header-cell");
 
     }
 

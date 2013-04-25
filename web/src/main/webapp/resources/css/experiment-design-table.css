@@ -45,20 +45,19 @@
 }
 
 .assays {
-    background-color: #FAFAFA;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .header-cell {
-    background-color: #FAFAFA;
+    background-color: rgb(237,246,246)!important;
     font-weight: bold;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .header-cell:hover {
-    background-color: #deebeb;
+    background-color: #deebeb !important;
     cursor: pointer;
     *cursor: hand;
 }

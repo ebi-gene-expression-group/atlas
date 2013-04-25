@@ -51,13 +51,12 @@
     padding: 5px;
 }
 
-.form-grid td{
+td{
     background-color: white;
 }
 
 .table-grid>tbody>tr>td, .table-grid>thead>tr>td {
     color: #3D3D3D;
-    background-color: white;
     vertical-align: middle;
     text-align: center;
     border: 1px solid #cdcdcd;
@@ -66,9 +65,9 @@
     white-space: nowrap;
 }
 
-.table-grid .horizontal-header-cell {
+.horizontal-header-cell {
     border: 1px solid #cdcdcd;
-    background-color: rgb(237,246,246);
+    background-color: rgb(237,246,246) !important;
     white-space: nowrap;
     width: auto !important;
     padding-bottom: 0px;
@@ -77,7 +76,7 @@
     text-align: left;
 }
 
-.table-grid .horizontal-header-cell:hover, .table-grid th:hover {
+.horizontal-header-cell:hover, .table-grid th:hover {
     background-color: #deebeb !important;
     cursor: default;
 }
