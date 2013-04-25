@@ -1,13 +1,11 @@
-package uk.ac.ebi.atlas.geneannotation.arraydesign;
+package uk.ac.ebi.atlas.geneannotation;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.sleepycat.collections.TransactionRunner;
-import com.sleepycat.collections.TransactionWorker;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.commons.berkeley.MapTransactionWorker;
 import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
 import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
 import uk.ac.ebi.atlas.utils.DesignElementKeyGenerator;
@@ -18,19 +16,19 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
 
-@Named("designElementLoader")
-public class DesignElementGeneMappingLoader {
+@Named("geneNameLoader")
+public class GeneNamesLoader {
     private TransactionRunner transactionRunner;
 
     private AnnotationEnvironment annotationEnvironment;
 
-    @Value("#{configuration['de.mapping.gxa.server.url']}")
+    @Value("#{configuration['gene.mapping.gxa.server.url']}")
     private String serverURL;
 
     private RestTemplate restTemplate;
 
     @Inject
-    public DesignElementGeneMappingLoader(AnnotationEnvironment annotationEnvironment, RestTemplate restTemplate) {
+    public GeneNamesLoader(AnnotationEnvironment annotationEnvironment, RestTemplate restTemplate) {
         this.annotationEnvironment = annotationEnvironment;
         this.restTemplate = restTemplate;
     }
@@ -86,7 +84,7 @@ public class DesignElementGeneMappingLoader {
             annotationEnvironment.geneDesignElementsToGeneNames().clear();
         }
 
-        TransactionWorker transactionWorker = new MapTransactionWorker(arrayDesignAccession);
+        ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker = getTransactionWorker(arrayDesignAccession);
 
 
         loadAnnotations(designElements, transactionWorker);
@@ -96,25 +94,24 @@ public class DesignElementGeneMappingLoader {
 
     }
 
-//    ObjectValueTransactionWorker<String, Map.Entry<String, String>> getTransactionWorker(final String arrayDesignAccession) {
-//        return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>(annotationEnvironment.geneDesignElementsToGeneNames()) {
-//            @Override
-//            protected String getValue() {
-//                return getRow().getValue();
-//            }
-//
-//            @Override
-//            protected String getKey() {
-//                return DesignElementKeyGenerator.getKey(arrayDesignAccession, getRow().getKey());
-//            }
-//
-//            @Override
-//            protected boolean isEmptyValue(String value) {
-//                return StringUtils.isBlank(value);
-//            }
-//        };
-//        return new MapTransactionWorker()
-//    }
+    ObjectValueTransactionWorker<String, Map.Entry<String, String>> getTransactionWorker(final String arrayDesignAccession) {
+        return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>(annotationEnvironment.geneDesignElementsToGeneNames()) {
+            @Override
+            protected String getValue() {
+                return getRow().getValue();
+            }
+
+            @Override
+            protected String getKey() {
+                return DesignElementKeyGenerator.getKey(arrayDesignAccession, getRow().getKey());
+            }
+
+            @Override
+            protected boolean isEmptyValue(String value) {
+                return StringUtils.isBlank(value);
+            }
+        };
+    }
 
     protected Map<String, String> convertJson(String jsonString) {
         Gson gson = new Gson();
