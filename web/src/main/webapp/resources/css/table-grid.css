@@ -62,19 +62,19 @@
     white-space: nowrap;
 }
 
-.table-grid .header-cell {
+.table-grid .horizontal-header-cell {
     background-color: #FAFAFA;
     border: 1px solid #cdcdcd;
     white-space: nowrap;
     font-weight: bold;
     width: auto !important;
-    padding-top: 1px;
+    padding-bottom: 0px;
     padding-left: 5px;
     padding-right: 5px;
     text-align: left;
 }
 
-.table-grid .header-cell:hover, .table-grid th:hover {
+.table-grid .horizontal-header-cell:hover, .table-grid th:hover {
     background-color: #deebeb;
     cursor: default;
 }
