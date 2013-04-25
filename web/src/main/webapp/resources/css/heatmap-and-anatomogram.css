@@ -22,9 +22,9 @@
     visibility: hidden;
 }
 
-.content {
+#heatmap-div {
     position: relative;
-    margin-left: 300px;
+    margin-left: 270px;
 }
 
 .aside {

@@ -49,7 +49,7 @@
         </c:when>
         <c:otherwise>
 
-            <div id="heatmap" style="overflow: auto; padding:20px;" class="row stickem-container">
+            <div id="heatmap" style="overflow: auto;" class="row stickem-container">
 
                 <div id="anatomogram" class="aside stickem double-click-noselection">
                     <table>
@@ -72,7 +72,7 @@
                     </table>
                 </div>
 
-                <div id="heatmap-div" class="content" style="display:none;">
+                <div id="heatmap-div">
 
                     <table>
                         <tr>
