@@ -1,0 +1,23 @@
+<configuration>
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1">
+                <assay>ERR036348</assay>
+                <assay>ERR036353</assay>
+                <assay>ERR036349</assay>
+            </assay_group>
+            <assay_group id="g2">
+                <assay>ERR036350</assay>
+                <assay>ERR036351</assay>
+                <assay>ERR036351</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g2">
+                <name>sex:'male' vs 'female'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>
