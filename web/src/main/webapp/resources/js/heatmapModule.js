@@ -288,6 +288,8 @@ var heatmapModule = (function ($) {
 
     function initHeatmap(experimentAccession, parameters) {
 
+        $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
+
         if (parameters && parameters.species) {
             initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
         }

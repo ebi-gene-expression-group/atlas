@@ -22,7 +22,7 @@
 
 .form-grid, .table-grid, .analysis-grid {
     color: #404040;
-    background-color: #fafafa;
+    /*background-color: #fafafa;*/
     border: 1px solid #cdcdcd;
     border-spacing: 0;
     empty-cells: show;
@@ -53,7 +53,6 @@
 
 .table-grid>tbody>tr>td, .table-grid>thead>tr>td {
     color: #3D3D3D;
-    background-color: white;
     vertical-align: middle;
     text-align: center;
     border: 1px solid #cdcdcd;
@@ -62,8 +61,11 @@
     white-space: nowrap;
 }
 
+.horizontal-header-cell, .rotated_cell {
+    background-color: rgba(112,189,189,0.1);
+}
+
 .table-grid .horizontal-header-cell {
-    background-color: #FAFAFA;
     border: 1px solid #cdcdcd;
     white-space: nowrap;
     width: auto !important;
