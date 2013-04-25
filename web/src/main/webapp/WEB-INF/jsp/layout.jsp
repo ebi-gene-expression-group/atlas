@@ -145,7 +145,7 @@
 
             <section>
 
-                <div id="" style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+                <div style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
                     <tiles:insertAttribute name="menu" ignore="true"/>
                     <tiles:insertAttribute name="body"/>
                 </div>
