@@ -143,14 +143,10 @@
 
         <div id="contents" class="grid_24">
 
-            <section>
-
                 <div style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
                     <tiles:insertAttribute name="menu" ignore="true"/>
                     <tiles:insertAttribute name="body"/>
                 </div>
-
-            </section>
 
         </div>
 

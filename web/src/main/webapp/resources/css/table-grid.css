@@ -22,7 +22,7 @@
 
 .form-grid, .table-grid, .analysis-grid {
     color: #404040;
-    /*background-color: #fafafa;*/
+    background-color: rgb(237,246,246);
     border: 1px solid #cdcdcd;
     border-spacing: 0;
     empty-cells: show;
@@ -51,8 +51,13 @@
     padding: 5px;
 }
 
+.form-grid td{
+    background-color: white;
+}
+
 .table-grid>tbody>tr>td, .table-grid>thead>tr>td {
     color: #3D3D3D;
+    background-color: white;
     vertical-align: middle;
     text-align: center;
     border: 1px solid #cdcdcd;
@@ -61,12 +66,9 @@
     white-space: nowrap;
 }
 
-.horizontal-header-cell, .rotated_cell {
-    background-color: rgba(112,189,189,0.1);
-}
-
 .table-grid .horizontal-header-cell {
     border: 1px solid #cdcdcd;
+    background-color: rgb(237,246,246);
     white-space: nowrap;
     width: auto !important;
     padding-bottom: 0px;
@@ -76,7 +78,7 @@
 }
 
 .table-grid .horizontal-header-cell:hover, .table-grid th:hover {
-    background-color: #deebeb;
+    background-color: #deebeb !important;
     cursor: default;
 }
 

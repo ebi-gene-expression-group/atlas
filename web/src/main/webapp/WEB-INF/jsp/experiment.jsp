@@ -29,10 +29,14 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<section>
+
+
 <c:import url="includes/request-preferences.jsp"/>
 
+</section>
 
-<div class="container">
+<section style="overflow: auto;" >
 
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
@@ -49,7 +53,7 @@
         </c:when>
         <c:otherwise>
 
-            <div id="heatmap" style="overflow: auto;" class="row stickem-container">
+            <div id="heatmap" class="row stickem-container">
 
                 <div id="anatomogram" class="aside stickem double-click-noselection">
                     <table>
@@ -97,11 +101,11 @@
         </c:otherwise>
     </c:choose>
 
-</div>
+    <br/>
 
-<br/>
+    <div id="help-placeholder" style="display: none"></div>
 
-<div id="help-placeholder" style="display: none"></div>
+</section>
 
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>

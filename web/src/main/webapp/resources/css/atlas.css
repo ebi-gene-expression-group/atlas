@@ -63,11 +63,18 @@ table {
     margin: 0px;
 }
 
+th {
+    background-color: transparent!important;
+}
+
 td, th{
     border: none;
     margin: 0px;
     padding: 1px;
 }
+
+
+
 
 form {
     padding: 0px;
@@ -205,7 +212,6 @@ textarea, .chzn-container {
 }
 
 .block-max-width {
-    padding-top: 1em;
     max-width: 950px;
 }
 
