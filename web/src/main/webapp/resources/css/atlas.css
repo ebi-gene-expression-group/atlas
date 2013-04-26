@@ -133,6 +133,11 @@ h1 {
 .ui-button:hover, .ui-button:active {
     border: 1px solid #fbd850 !important;
 }
+
+.fancybox-close {
+    border: 0px !important;
+}
+
 /* JQuery UI overrides: end */
 
 section {
