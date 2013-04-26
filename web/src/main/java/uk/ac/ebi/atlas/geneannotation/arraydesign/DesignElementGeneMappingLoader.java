@@ -4,13 +4,10 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.sleepycat.collections.TransactionRunner;
 import com.sleepycat.collections.TransactionWorker;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commons.berkeley.MapTransactionWorker;
-import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
 import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
-import uk.ac.ebi.atlas.utils.DesignElementKeyGenerator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,14 +43,12 @@ public class DesignElementGeneMappingLoader {
     }
 
 
-    void loadAnnotations(Map<String, String> designElements,
-                                   ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker) {
+    void loadAnnotations(TransactionWorker transactionWorker) {
 
         transactionRunner = annotationEnvironment.getTransactionRunner();
         try {
-            for (Map.Entry<String, String> deName : designElements.entrySet()) {
-                transactionRunner.run(transactionWorker.setRow(deName));
-            }
+
+            transactionRunner.run(transactionWorker);
 
         } catch (Exception e) {
             throw new IllegalStateException("Exception while loading annotations.", e);
@@ -63,7 +58,7 @@ public class DesignElementGeneMappingLoader {
 
     public void loadMappings(String arrayDesignAccession) {
 
-       loadMappings(arrayDesignAccession, false);
+        loadMappings(arrayDesignAccession, false);
 
     }
 
@@ -86,39 +81,21 @@ public class DesignElementGeneMappingLoader {
             annotationEnvironment.geneDesignElementsToGeneNames().clear();
         }
 
-        TransactionWorker transactionWorker = new MapTransactionWorker(arrayDesignAccession);
+        TransactionWorker transactionWorker = new MapTransactionWorker(annotationEnvironment.geneDesignElementsToGeneNames(),
+                designElements);
 
 
-        loadAnnotations(designElements, transactionWorker);
+        loadAnnotations(transactionWorker);
 
 
         turnOnReadOnly();
 
     }
 
-//    ObjectValueTransactionWorker<String, Map.Entry<String, String>> getTransactionWorker(final String arrayDesignAccession) {
-//        return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>(annotationEnvironment.geneDesignElementsToGeneNames()) {
-//            @Override
-//            protected String getValue() {
-//                return getRow().getValue();
-//            }
-//
-//            @Override
-//            protected String getKey() {
-//                return DesignElementKeyGenerator.getKey(arrayDesignAccession, getRow().getKey());
-//            }
-//
-//            @Override
-//            protected boolean isEmptyValue(String value) {
-//                return StringUtils.isBlank(value);
-//            }
-//        };
-//        return new MapTransactionWorker()
-//    }
-
     protected Map<String, String> convertJson(String jsonString) {
         Gson gson = new Gson();
-        Type mapType = new TypeToken<Map<String, String>>() {}.getType();
+        Type mapType = new TypeToken<Map<String, String>>() {
+        }.getType();
         Map<String, String> allMap = gson.fromJson(jsonString, mapType);
         return gson.fromJson(allMap.get("exportText"), mapType);
     }

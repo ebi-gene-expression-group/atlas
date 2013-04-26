@@ -11,7 +11,7 @@ public class MapTransactionWorker implements TransactionWorker {
     private final ConcurrentMap<String, String> dest;
     private final Map<String, String> src;
 
-    protected MapTransactionWorker(ConcurrentMap<String, String> dest, Map<String, String> src) {
+    public MapTransactionWorker(ConcurrentMap<String, String> dest, Map<String, String> src) {
         this.dest = dest;
         this.src = src;
     }
