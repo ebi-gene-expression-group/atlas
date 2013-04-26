@@ -49,7 +49,7 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getSelectedContrast(), is(IDN2_MUTANT_VS_WILD_TYPE));
 
         // then
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(4));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(7));
         assertThat(subject.getFirstExperimentDesign(), contains("SRR504179", "Arabidopsis thaliana", "Col-0", "wild type"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(DifferentialExperimentDesignTablePage.EXPERIMENT_ACCESSION + "/experiment-design.tsv"));
 
@@ -68,7 +68,7 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
 
         // then
         assertThat(subject.getSelectedContrast(), is(NRPE1_MUTANT_VS_WILD_TYPE));
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(4));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(7));
         assertThat(subject.getFirstExperimentDesign(), contains("SRR504179", "Arabidopsis thaliana", "Col-0", "wild type"));
 
         // and

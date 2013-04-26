@@ -41,7 +41,7 @@ public class ExperimentDesignTableBrowseIT extends SinglePageSeleniumFixture {
 
     @Test
     public void defaultExperimentDesignPage() {
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(6));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(9));
         assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 16 of 16 entries (filtered from 48 total entries)"));
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
         assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));

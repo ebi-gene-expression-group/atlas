@@ -107,7 +107,10 @@
                     $(this).find('td').css("background-color", "#82CDCD");
                 }
             });
+
             </c:if>
+
+            experimentDesignTableModule.adjustTableSize();
         });
     })(jQuery);
 

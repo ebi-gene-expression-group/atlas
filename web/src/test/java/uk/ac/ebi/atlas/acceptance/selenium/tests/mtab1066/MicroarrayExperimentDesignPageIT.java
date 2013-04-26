@@ -49,7 +49,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getSelectedContrast(), is(DEFAULT));
 
         // then
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(6));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(9));
         assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "Drosophila melanogaster", "", "cycC mutant,w1118; +; cycCY5"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(MicroarrayExperimentDesignTablePage.EXPERIMENT_ACCESSION + "/experiment-design.tsv"));
 
@@ -68,7 +68,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
 
         // then
         assertThat(subject.getSelectedContrast(), is(OTHER));
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(6));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(9));
         assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "Drosophila melanogaster", "", "cycC mutant,w1118; +; cycCY5"));
 
         // and

@@ -9,7 +9,17 @@ var experimentDesignTableModule = (function ($) {
         _runAccessions,
         _sampleHeaders,
         _factorHeaders,
-        _assayHeaders;
+        _assayHeaders,
+        _oTable;
+
+    var _window = $(window);
+    var calcDataTableHeight = function () {
+        return _window.height() - 270;
+    };
+
+    var calcDataTableWidth = function () {
+        return $('#contents').width() - 100;
+    };
 
     function initColumns(aoColumnDefs, values, startingFromColumnIndex) {
         for (var value in values) {
@@ -65,20 +75,7 @@ var experimentDesignTableModule = (function ($) {
             }
         );
 
-        $('#showOnlyAnalysedRuns').click(function () {
-            oTable.fnDraw();
-        });
-
-        var $window = $(window);
-        var calcDataTableHeight = function () {
-            return $window.height() - 270;
-        };
-
-        var calcDataTableWidth = function () {
-            return $('#contents').width() - 100;
-        };
-
-        var oTable = $('#experiment-design-table').dataTable({
+        _oTable = $('#experiment-design-table').dataTable({
             "aaData":_dataSet,
             "aoColumnDefs":initColumnDefs(),
             "bPaginate":false,
@@ -88,18 +85,15 @@ var experimentDesignTableModule = (function ($) {
             "sDom":'i<"download">f<"clear">t'
         });
 
+        $('#showOnlyAnalysedRuns').click(function () {
+            _oTable.fnDraw();
+        });
+
         $('div.download').html($('#download-button'));
         $('div.download').attr('style', 'float: right');
 
-
-        $window.resize(function () {
-            var oSettings = oTable.fnSettings();
-            oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
-            //oSettings.oScroll.sX = calcDataTableWidth();
-
-            // maybe you need to redraw the table (not sure about this)
-            oTable.fnAdjustColumnSizing(false);
-            oTable.fnDraw(false);
+        _window.resize(function () {
+            _adjustTableSize();
         });
 
         var tableHeaderRow = $(".dataTables_scrollHeadInner").find('thead > tr');
@@ -120,6 +114,16 @@ var experimentDesignTableModule = (function ($) {
 
     }
 
+    function _adjustTableSize() {
+        var oSettings = _oTable.fnSettings();
+        oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
+        //oSettings.oScroll.sX = calcDataTableWidth();
+
+        // maybe you need to redraw the table (not sure about this)
+        _oTable.fnAdjustColumnSizing(false);
+        _oTable.fnDraw(false);
+    }
+
     function _init(assayHeaders, dataSet, runAccessions, sampleHeaders, factorHeaders) {
         _dataSet = dataSet;
         _runAccessions = runAccessions;
@@ -132,7 +136,8 @@ var experimentDesignTableModule = (function ($) {
     }
 
     return {
-        init:_init
+        init:_init,
+        adjustTableSize:_adjustTableSize
     };
 
 }(jQuery));
