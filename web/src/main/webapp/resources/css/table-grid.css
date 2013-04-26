@@ -58,7 +58,6 @@ td{
 .table-grid>tbody>tr>td, .table-grid>thead>tr>td {
     color: #3D3D3D;
     vertical-align: middle;
-    text-align: center;
     border: 1px solid #cdcdcd;
     height: 25px;
     width: 25px;
@@ -97,6 +96,7 @@ td{
     margin: 4px;
     padding: 2px;
     white-space: nowrap;
+    text-align: center;
 }
 
 /*next is a css hack patch that only gets enabled on IE7. It removes margins, that do not display properly in IE7.*/

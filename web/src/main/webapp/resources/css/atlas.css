@@ -65,6 +65,7 @@ table {
 
 th {
     background-color: transparent!important;
+    text-align: center;
 }
 
 td, th{
