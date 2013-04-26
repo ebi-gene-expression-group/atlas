@@ -69,6 +69,7 @@ th {
 }
 
 td, th{
+    vertical-align: inherit;
     border: none;
     margin: 0px;
     padding: 1px;
