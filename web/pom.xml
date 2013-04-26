@@ -132,7 +132,8 @@
                 <executions>
                     <execution>
                         <id>default</id>
-                        <phase>pre-integration-test</phase>
+                        <phase>none</phase>
+                        <!--pre-integration-test-->
                         <goals>
                             <goal>test</goal>
                         </goals>
