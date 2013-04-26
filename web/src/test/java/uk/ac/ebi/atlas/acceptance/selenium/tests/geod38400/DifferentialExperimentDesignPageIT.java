@@ -55,7 +55,7 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(255, 194, 102, 1)"));
-        assertThat(subject.getLineColor(4), is("rgba(250, 250, 250, 1)"));
+        assertThat(subject.getLineColor(4), is("rgba(255, 255, 255, 1)"));
         assertThat(subject.getLineColor(10), is("rgba(130, 205, 205, 1)"));
 
     }
@@ -74,7 +74,7 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
         // and
         assertThat(subject.getLineColor(1), is("rgba(255, 194, 102, 1)"));
         assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(10), is("rgba(250, 250, 250, 1)"));
+        assertThat(subject.getLineColor(10), is("rgba(255, 255, 255, 1)"));
 
     }
 

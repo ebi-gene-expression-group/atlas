@@ -28,10 +28,10 @@ var experimentDesignTableModule = (function ($) {
     function initColumnDefs() {
         var aoColumnDefs = [];
         if (_assayHeaders.length === 1) {
-            aoColumnDefs[0] = { "sClass":"header-cell bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[0] = { "sClass":"bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
         } else {
-            aoColumnDefs[0] = { "sClass":"header-cell bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
-            aoColumnDefs[1] = { "sClass":"header-cell bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
+            aoColumnDefs[0] = { "sClass":"bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[1] = { "sClass":"bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
         }
 
         initColumns(aoColumnDefs, _sampleHeaders, _assayHeaders.length);
@@ -116,7 +116,7 @@ var experimentDesignTableModule = (function ($) {
 
         $('#download-experiment-design-link').button().tooltip();
 
-        $(".sorting").addClass("header-cell");
+        $("th").addClass("header-cell");
 
     }
 
