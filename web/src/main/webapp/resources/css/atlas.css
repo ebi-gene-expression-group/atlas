@@ -73,16 +73,23 @@ td, th{
     padding: 1px;
 }
 
-
-
-
 form {
+    padding: 0px;
+    margin: 0px;
+}
+
+form fieldset {
+    background-color: transparent;
     padding: 0px;
     margin: 0px;
 }
 
 img {
     max-width: none !important;
+}
+
+h1 {
+    color: #207A7A;
 }
 
 /* ebi css and ebi-visual.css override: end */
@@ -261,7 +268,6 @@ textarea, .chzn-container {
     font-weight: bold;
 }
 
-
 /*
 Set sensible minimum heights for small and large screens
 */
@@ -310,4 +316,8 @@ a.help-icon {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     color:white;
+}
+
+#filterBy li {
+    padding-bottom: 4px;
 }

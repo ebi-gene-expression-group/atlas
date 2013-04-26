@@ -103,11 +103,7 @@
     }
 
     .ui-dialog .ui-state-error {
-        padding: .3em;
-    }
-
-    #filterBy li {
-        padding-bottom: 4px;
+        padding: 0px;
     }
 
     .validateTips {
@@ -128,7 +124,7 @@
                         <label for="feedback">Your feedback:</label>
                     </div>
                     <div>
-                        <textarea rows="4" cols="50" name="feedback" id="feedback"
+                        <textarea rows="5" cols="50" name="feedback" id="feedback"
                                   class="text ui-widget-content ui-corner-all"></textarea>
                     </div>
                 </li>
@@ -196,8 +192,8 @@
             autoOpen:false,
             show:"blind",
             hide:"explode",
-            height:"300",
-            width:"440",
+            height:"320",
+            width:"440px",
             modal:true,
             buttons:[
                 {width:"60px", text:"Send", id:"send-button", click:function () {

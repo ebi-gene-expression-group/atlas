@@ -59,6 +59,6 @@
 
 .item ul li a {
     font-size: 14px;
-    width: 150px;
+    white-space: nowrap;
     float: left;
 }
