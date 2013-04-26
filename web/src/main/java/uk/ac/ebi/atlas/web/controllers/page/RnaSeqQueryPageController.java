@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -43,8 +44,9 @@ public class RnaSeqQueryPageController extends DifferentialQueryPageRequestHandl
 
     @Inject
     public RnaSeqQueryPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
-                                     RankRnaSeqProfilesCommand rnaSeqRankProfilesCommand){
-        super(rnaSeqRequestContextBuilder, rnaSeqRankProfilesCommand);
+                                     RankRnaSeqProfilesCommand rnaSeqRankProfilesCommand,
+                                     DownloadURLBuilder downloadURLBuilder) {
+        super(rnaSeqRequestContextBuilder, rnaSeqRankProfilesCommand, downloadURLBuilder);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class RnaSeqQueryPageController extends DifferentialQueryPageRequestHandl
         //No extra initalizations required
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params={"type=DIFFERENTIAL"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 

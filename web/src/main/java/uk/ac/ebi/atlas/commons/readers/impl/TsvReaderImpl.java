@@ -28,13 +28,10 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,21 +41,23 @@ public class TsvReaderImpl implements TsvReader {
 
     private static final Logger LOGGER = Logger.getLogger(TsvReaderImpl.class);
 
-    private String pathTemplate;
+    private TsvInputStreamReaderBuilder tsvInputStreamReaderBuilder;
 
-    TsvReaderImpl() {
+    @Inject
+    TsvReaderImpl(TsvInputStreamReaderBuilder tsvInputStreamReaderBuilder) {
+        this.tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder;
     }
 
-    public void setPathTemplate(String pathTemplate){
-        this.pathTemplate = pathTemplate;
+    public void setPathTemplate(String pathTemplate) {
+        tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder.withPathTemplate(pathTemplate);
     }
 
     @Override
     public String[] readLine(String experimentAccession, long lineIndex) {
 
-        Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
+        tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder.forExperimentAccession(experimentAccession);
 
-        try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
+        try (InputStreamReader reader = tsvInputStreamReaderBuilder.build();
              CSVReader csvReader = new CSVReader(reader, '\t')) {
             String[] line = null;
             for (int i = 0; i <= lineIndex; i++) {
@@ -68,7 +67,7 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file from path " + fileSystemPath.toString(), e);
+            throw new IllegalStateException("Cannot read Tsv file from path " + tsvInputStreamReaderBuilder.getFileSystemPath().toString(), e);
         }
     }
 
@@ -79,9 +78,9 @@ public class TsvReaderImpl implements TsvReader {
 
     List<String[]> readAndFilter(String experimentAccession, Predicate<String> acceptanceCriteria) {
 
-        Path fileSystemPath = FileSystems.getDefault().getPath(getPathString(experimentAccession));
+        tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder.forExperimentAccession(experimentAccession);
 
-        try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(fileSystemPath));
+        try (InputStreamReader reader = tsvInputStreamReaderBuilder.build();
              CSVReader csvReader = new CSVReader(reader, '\t')) {
             List<String[]> rows = new ArrayList<>();
             for (String[] row : csvReader.readAll()) {
@@ -93,7 +92,7 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file from path " + fileSystemPath.toString(), e);
+            throw new IllegalStateException("Cannot read Tsv file from path " + tsvInputStreamReaderBuilder.getFileSystemPath().toString(), e);
         }
     }
 
@@ -105,7 +104,7 @@ public class TsvReaderImpl implements TsvReader {
         }
     }
 
-    private static class IsNotComment extends IsComment {
+    protected static class IsNotComment extends IsComment {
 
         @Override
         public boolean apply(String rowHeader) {
@@ -113,8 +112,5 @@ public class TsvReaderImpl implements TsvReader {
         }
     }
 
-    private String getPathString(String experimentAccession) {
-        return MessageFormat.format(pathTemplate, experimentAccession);
-    }
 
 }

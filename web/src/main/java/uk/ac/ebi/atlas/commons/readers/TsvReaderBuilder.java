@@ -35,16 +35,16 @@ public class TsvReaderBuilder {
     private TsvReaderImpl tsvReader;
 
     @Inject
-    private TsvReaderBuilder(TsvReaderImpl tsvReader){
+    TsvReaderBuilder(TsvReaderImpl tsvReader) {
         this.tsvReader = tsvReader;
     }
 
-    public TsvReaderBuilder forTsvFilePathTemplate(String tsvFilePathTemplate){
+    public TsvReaderBuilder forTsvFilePathTemplate(String tsvFilePathTemplate) {
         this.tsvReader.setPathTemplate(tsvFilePathTemplate);
         return this;
     }
 
-    public TsvReader build(){
+    public TsvReader build() {
         return tsvReader;
     }
 

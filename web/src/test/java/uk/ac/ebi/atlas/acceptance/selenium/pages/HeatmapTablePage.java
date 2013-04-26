@@ -55,6 +55,15 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "download-profiles-link")
     private WebElement downloadExpressionProfilesLink;
 
+    @FindBy(id = "download-raw")
+    private WebElement downloadRawCountsLink;
+
+    @FindBy(id = "download-analytics")
+    private WebElement downloadAnalyticsLink;
+
+    @FindBy(id = "download-normalized")
+    private WebElement downloadNormalizedLink;
+
     @FindBy(id = "display-levels")
     private WebElement displayLevelsButton;
 
@@ -91,15 +100,15 @@ public class HeatmapTablePage extends TablePage {
         this.experimentAccession = experimentAccession;
     }
 
-    protected String getExperimentAccession(){
+    protected String getExperimentAccession() {
         return experimentAccession;
     }
 
-    protected int getGeneExpressionStartingRowIndex(){
-        try{
+    protected int getGeneExpressionStartingRowIndex() {
+        try {
             driver.findElement(By.id("arrayDesignAccession")).getAttribute("value");
             return 2; //MicroarrayExperiment, we have two columns before expression level cells
-        } catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return 1; //Other experiment types, we have one column before expression level cells
         }
     }
@@ -160,6 +169,18 @@ public class HeatmapTablePage extends TablePage {
 
     public String getDownloadExpressionProfilesLink() {
         return downloadExpressionProfilesLink.getAttribute("href");
+    }
+
+    public String getDownloadRawCountsLink() {
+        return downloadRawCountsLink.getAttribute("href");
+    }
+
+    public String getDownloadAnalyticsLink() {
+        return downloadAnalyticsLink.getAttribute("href");
+    }
+
+    public String getDownloadNormalizedLink() {
+        return downloadNormalizedLink.getAttribute("href");
     }
 
     @Override
@@ -305,7 +326,7 @@ public class HeatmapTablePage extends TablePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         List<WebElement> highlightedTermElements = driver.findElements(byTooltipClass);
         List<String> highlightedTerms = Lists.newArrayList();
-        for (WebElement highlightedTermElement: highlightedTermElements){
+        for (WebElement highlightedTermElement : highlightedTermElements) {
             highlightedTerms.add(highlightedTermElement.getText());
         }
         return highlightedTerms;

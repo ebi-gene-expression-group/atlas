@@ -29,6 +29,7 @@ import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -49,9 +50,16 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
     private TsvReaderBuilder tsvReaderBuilder;
 
+    private DownloadURLBuilder downloadURLBuilder;
+
     @Inject
-    void setTsvReaderBuilder(TsvReaderBuilder tsvReaderBuilder){
+    void setTsvReaderBuilder(TsvReaderBuilder tsvReaderBuilder) {
         this.tsvReaderBuilder = tsvReaderBuilder;
+    }
+
+    @Inject
+    void setDownloadURLBuilder(DownloadURLBuilder downloadURLBuilder) {
+        this.downloadURLBuilder = downloadURLBuilder;
     }
 
     public String handleRequest(Model model, HttpServletRequest request) {
@@ -75,7 +83,7 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
         for (String[] line : csvLines) {
             String[] copy = Arrays.copyOf(line, headerLine.length);
-            for (int j = 0 ; j < mapping.size(); j++) {
+            for (int j = 0; j < mapping.size(); j++) {
                 Integer columnIndex = mapping.get(j);
                 checkNotNull(columnIndex, "No mapping found for ExpDesign column " + j);
                 // here re-ordering of each line
@@ -86,7 +94,7 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         // does the serialisation to JSON
         Gson gson = new Gson();
         // add table data to model
-        String[] assayHeaders = (String[])ArrayUtils.subarray(headerLine, 0, startIndex);
+        String[] assayHeaders = (String[]) ArrayUtils.subarray(headerLine, 0, startIndex);
         model.addAttribute("assayHeaders", gson.toJson(assayHeaders));
         model.addAttribute("sampleHeaders", gson.toJson(sampleHeaderIndexes.keySet()));
         model.addAttribute("factorHeaders", gson.toJson(factorHeaderIndexes.keySet()));
@@ -100,6 +108,11 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         // add general experiment attributes to model
         model.addAttribute("experimentAccession", experimentAccession);
 
+        model.addAttribute("rawDownloadUrl", downloadURLBuilder.buildDownloadRawUrl(request));
+
+        model.addAttribute("normalizedUrl", downloadURLBuilder.buildDownloadNormalizedDataUrl(request));
+
+        model.addAttribute("analyticsDownloadUrl", downloadURLBuilder.buildDownloadAllAnalyticsUrl(request));
 
         extendModel(model, experiment);
 
@@ -116,7 +129,7 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
     protected Map<String, Integer> extractHeaderIndexes(String[] columnHeaders, Pattern columnHeaderPattern) {
         Map<String, Integer> map = new TreeMap<>();
         for (int i = 0; i < columnHeaders.length; i++) {
-            String matchingHeaderContent = extractMatchingContent(columnHeaders[i],columnHeaderPattern);
+            String matchingHeaderContent = extractMatchingContent(columnHeaders[i], columnHeaderPattern);
             if (matchingHeaderContent != null) {
                 map.put(matchingHeaderContent, i);
             }
@@ -124,9 +137,9 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         return map;
     }
 
-    static String extractMatchingContent(String string, Pattern pattern){
+    static String extractMatchingContent(String string, Pattern pattern) {
         Matcher matcher = pattern.matcher(string);
-        if (matcher.matches()){
+        if (matcher.matches()) {
             return matcher.group(1);
         }
         return null;
