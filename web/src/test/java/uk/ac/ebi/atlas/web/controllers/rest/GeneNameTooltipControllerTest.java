@@ -116,7 +116,7 @@ public class GeneNameTooltipControllerTest {
 
         Collection<String> values = Lists.newArrayList("VALUE_1", "VALUE_2");
 
-        String formattedValues = subject.format(values, true);
+        String formattedValues = subject.format(values, true, 20);
 
         assertThat(formattedValues, is(
                 "<span class='property-value-markup'>VALUE_1</span>" +
@@ -129,7 +129,7 @@ public class GeneNameTooltipControllerTest {
 
         Collection<String> values = Lists.newArrayList();
 
-        String formattedValues = subject.format(values, false);
+        String formattedValues = subject.format(values, false, 20);
 
         assertThat(formattedValues, is(""));
     }
@@ -139,9 +139,21 @@ public class GeneNameTooltipControllerTest {
 
         Collection<String> values = Lists.newArrayList();
 
-        String formattedValues = subject.format(values, true);
+        String formattedValues = subject.format(values, true, 20);
 
         assertThat(formattedValues, is("NA"));
+    }
+
+    @Test
+    public void testLengthRestrictionForListOfTerms() throws Exception {
+
+        Collection<String> values = Lists.newArrayList("VALUE_1", "VALUE_2");
+
+        String formattedValues = subject.format(values, true, 1);
+
+        assertThat(formattedValues, is(
+                "<span class='property-value-markup'>VALUE_1</span> <span class='property-value-markup'>...(total 2)</span>"));
+
     }
 
 }

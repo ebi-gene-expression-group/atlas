@@ -43,6 +43,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @Scope("request")
@@ -50,6 +52,7 @@ public class GeneNameTooltipController {
     private static final Logger LOGGER = Logger.getLogger(GeneNameTooltipController.class);
     private static final String WORD_SPAN_OPEN = "<span class='property-value-markup'>";
     private static final String WORD_SPAN_CLOSE = "</span>";
+    private static final int NUMBER_OF_TERMS_TO_SHOW = 20;
 
     private SolrClient solrClient;
 
@@ -84,24 +87,32 @@ public class GeneNameTooltipController {
 
         String synonyms = buildSynonyms(identifier, multimap);
 
-        String goTerms = format(multimap.get("goterm"), true);
+        String goTerms = format(multimap.get("goterm"), true, NUMBER_OF_TERMS_TO_SHOW);
 
-        String interproTerms = format(multimap.get("interproterm"), true);
+        String interproTerms = format(multimap.get("interproterm"), true, NUMBER_OF_TERMS_TO_SHOW);
 
         return MessageFormat.format(htmlTemplate, geneName, synonyms, goTerms, interproTerms);
 
     }
 
-    String format(Collection<String> values, boolean returnEmptyValuesAsNA) {
+    String format(Collection<String> values, boolean returnEmptyValuesAsNA, int restrictListLengthTo) {
         if (CollectionUtils.isEmpty(values)) {
             return returnEmptyValuesAsNA ? "NA" : StringUtils.EMPTY;
         }
-        return WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " " + WORD_SPAN_OPEN).join(values) + WORD_SPAN_CLOSE;
+        List<String> subList;
+        if (values.size() > restrictListLengthTo) {
+            subList = Collections.list(Collections.enumeration(values)).subList(0, restrictListLengthTo);
+            subList.add("...(total " + values.size() + ")");
+        } else {
+            subList = Collections.list(Collections.enumeration(values));
+        }
+
+        return WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " " + WORD_SPAN_OPEN).join(subList) + WORD_SPAN_CLOSE;
     }
 
     String buildSynonyms(String identifier, Multimap<String, String> multimap) {
 
-        String synonyms = format(multimap.get("synonym"), false);
+        String synonyms = format(multimap.get("synonym"), false, NUMBER_OF_TERMS_TO_SHOW);
 
         identifier = WORD_SPAN_OPEN + identifier + WORD_SPAN_CLOSE;
 
