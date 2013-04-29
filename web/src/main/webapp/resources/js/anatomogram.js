@@ -61,48 +61,34 @@ function toggleOrganismPartColor(svg, factorValue, evt) {
 
 }
 
-function hoverOrganismPart(svg, organism_part) {
 
-    var tableHeaderDivs = $('#heatmap-table th').find("div[data-organism-part='" + organism_part + "']");
+function initMouseOverBindingForSvgPath(svgPath, organismPart) {
 
-    function mouseHover(domElem) {
+    var headerDiv = $('#heatmap-table th').has("div[data-organism-part='" + organismPart + "']");
 
-        function toggleClass(elem, evtType) {
-            var headerCell = elem.parent();
-            //var colIndex = headerCell.parent("tr").children().index(headerCell) + 1;
-            //var dataCells = $('#heatmap-table').find('tr>td:nth-child(' + colIndex + ')');
-            if (evtType !== "mouseover") {
-                headerCell.removeClass("headerHover");
-            //    dataCells.removeClass("highlight");
-            } else {
-                headerCell.addClass("headerHover");
-            //    dataCells.addClass("highlight");
-            }
-        }
+    svgPath.addEventListener("mouseover", function () {
+        headerDiv.addClass("headerHover");
+        togglePathColor(svgPath, "mouseover");
+    }, false);
 
-        domElem.addEventListener("mouseover", function () {
-            $.each(tableHeaderDivs, function () {
-                toggleClass($(this), "mouseover");
-            });
-            togglePathColor(domElem, "mouseover");
-        }, false);
-        domElem.addEventListener("mouseout", function () {
-            $.each(tableHeaderDivs, function () {
-                toggleClass($(this), "mouseout");
-            });
-            togglePathColor(domElem, "mouseout");
-        }, false);
-    }
+    svgPath.addEventListener("mouseout", function () {
+        headerDiv.removeClass("headerHover");
+        togglePathColor(svgPath, "mouseout");
+    }, false);
+}
 
-    var element = svg.getElementById(organism_part);
 
-    if (element !== null) {
-        if (element.nodeName === 'g') {
-            $.each(element.getElementsByTagName('path'), function (index, domEle) {
-                mouseHover(domEle);
+function initBindingsForAnatomogramPaths(svg, organismPart) {
+
+    var svgElement = svg.getElementById(organismPart);
+
+    if (svgElement !== null) {
+        if (svgElement.nodeName === 'g') {
+            $.each(svgElement.getElementsByTagName('path'), function () {
+                initMouseOverBindingForSvgPath(this, organismPart);
             });
         } else {
-            mouseHover(element);
+            initMouseOverBindingForSvgPath(svgElement, organismPart);
         }
     }
 }
@@ -116,16 +102,16 @@ function scaleAnatomogram(svg) {
 }
 
 
-//load anatomogram from given location and display given organism parts
-function displayFactorValues(svg, factorValues) {
+function initAnatomogramBindings(svg, factorValues) {
     $.each(factorValues, function () {
-        toggleOrganismPartColor(svg, this);
-        hoverOrganismPart(svg, this);
+        initBindingsForAnatomogramPaths(svg, this);
     });
 }
 
-function initAnatomogramBindings(svg, factorValues) {
-    displayFactorValues(svg, factorValues);
+function highlightAllOrganismParts(svg, factorValues) {
+    $.each(factorValues, function () {
+        toggleOrganismPartColor(svg, this);
+    });
 }
 
 //load anatomogram from given location and display given organism parts
@@ -135,6 +121,7 @@ function loadAnatomogram(location, factorValues) {
     svg.load(location, {
         onLoad:function(){
             scaleAnatomogram(svg);
+            highlightAllOrganismParts(svg, factorValues);
             initAnatomogramBindings(svg, factorValues);
 
         }
