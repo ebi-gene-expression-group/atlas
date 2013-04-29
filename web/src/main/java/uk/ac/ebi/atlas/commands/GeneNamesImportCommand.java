@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.commands;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.geneannotation.GeneAnnotationLoader;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,16 +33,16 @@ import java.util.Set;
 @Scope("prototype")
 public class GeneNamesImportCommand {
 
-    private GeneAnnotationLoader geneAnnotationLoader;
+    private GeneNamesLoader geneNamesLoader;
 
     @Inject
-    public GeneNamesImportCommand(GeneAnnotationLoader geneAnnotationLoader) {
-        this.geneAnnotationLoader = geneAnnotationLoader;
+    public GeneNamesImportCommand(GeneNamesLoader geneNamesLoader) {
+        this.geneNamesLoader = geneNamesLoader;
     }
 
     public void loadGeneNames(Set<String> species) {
         for (String organism: species){
-            geneAnnotationLoader.loadGeneNames(organism);
+            geneNamesLoader.loadMappings(organism);
         }
     }
 

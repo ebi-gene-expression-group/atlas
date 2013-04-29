@@ -11,7 +11,7 @@ public class MapTransactionWorker implements TransactionWorker {
     private final ConcurrentMap<String, String> dest;
     private final Map<String, String> src;
 
-    public MapTransactionWorker(ConcurrentMap<String, String> dest, Map<String, String> src) {
+    public MapTransactionWorker(Map<String, String> src, ConcurrentMap<String, String> dest) {
         this.dest = dest;
         this.src = src;
     }
@@ -22,11 +22,15 @@ public class MapTransactionWorker implements TransactionWorker {
             for (String key : src.keySet()) {
                 String value = src.get(key);
                 if(!StringUtils.isBlank(value)) {
-                    dest.put(key, value);
+                    dest.put(generateKey(key), value);
                 }
             }
         } catch (Exception e) {
             throw new IllegalStateException("Error while writing gene annotations DB: " + e.getMessage());
         }
+    }
+
+    protected String generateKey(String key) {
+        return key;
     }
 }

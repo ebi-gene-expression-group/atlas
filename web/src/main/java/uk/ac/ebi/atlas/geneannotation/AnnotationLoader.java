@@ -1,101 +1,82 @@
 package uk.ac.ebi.atlas.geneannotation;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import com.sleepycat.collections.TransactionRunner;
 import com.sleepycat.collections.TransactionWorker;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commons.berkeley.MapTransactionWorker;
 
-import javax.inject.Inject;
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 public abstract class AnnotationLoader {
-    private TransactionRunner transactionRunner;
 
-       private AnnotationEnvironment annotationEnvironment;
+    private AnnotationEnvironment annotationEnvironment;
 
-       @Value("#{configuration['de.mapping.gxa.server.url']}")
-       private String serverURL;
+    private AnnotationMappingExtractor annotationMappingExtractor;
 
-       private RestTemplate restTemplate;
+    public AnnotationLoader(AnnotationEnvironment annotationEnvironment, AnnotationMappingExtractor annotationMappingExtractor) {
+        this.annotationEnvironment = annotationEnvironment;
+        this.annotationMappingExtractor = annotationMappingExtractor;
+    }
 
-       @Inject
-       public AnnotationLoader(AnnotationEnvironment annotationEnvironment) {
-           this.annotationEnvironment = annotationEnvironment;
-           this.restTemplate = restTemplate;
-       }
+    public void loadMappings(Collection<String> annotatedSubjects) {
+        for (String annotatedSubject : annotatedSubjects) {
+            loadMappings(annotatedSubject, true);
+        }
 
-       private void turnOffReadonly() {
-           this.annotationEnvironment.close();
-           this.annotationEnvironment.initBerkeleyDatabase(false);
-       }
+    }
 
-       private void turnOnReadOnly() {
-           this.annotationEnvironment.close();
-           this.annotationEnvironment.initBerkeleyReadonly();
-       }
+    public void loadMappings(String annotatedSubject) {
 
+        loadMappings(annotatedSubject, false);
 
-       void loadAnnotations(TransactionWorker transactionWorker) {
+    }
 
-           transactionRunner = annotationEnvironment.getTransactionRunner();
-           try {
+    private void turnOffReadonly() {
+        annotationEnvironment.close();
+        annotationEnvironment.initBerkeleyDatabase(false);
+    }
 
-               transactionRunner.run(transactionWorker);
+    private void turnOnReadOnly() {
+        annotationEnvironment.close();
+        annotationEnvironment.initBerkeleyReadonly();
+    }
 
-           } catch (Exception e) {
-               throw new IllegalStateException("Exception while loading annotations.", e);
-           }
-       }
+    protected void loadMappings(String annotatedSubject, boolean removeOldMappings) {
 
+        Map<String, String> annotations = annotationMappingExtractor.extractAnnotationsMap(getAnnotationServerUrl(), annotatedSubject);
 
-       public void loadMappings(String arrayDesignAccession) {
+        turnOffReadonly();
 
-           loadMappings(arrayDesignAccession, false);
+        ConcurrentMap<String, String> destinationMap = getDestinationMap(annotationEnvironment);
 
-       }
+        if (removeOldMappings) {
+            destinationMap.clear();
+        }
 
-       public void loadMappings(Collection<String> arrayDesignAccessions) {
-           for (String arrayDesignAccession : arrayDesignAccessions) {
-               loadMappings(arrayDesignAccession, true);
-           }
+        TransactionWorker transactionWorker = getTransactionWorker(destinationMap, annotations, annotatedSubject);
 
-       }
+        loadAnnotations(transactionWorker);
 
-       public void loadMappings(String arrayDesignAccession, boolean removeOldMappings) {
+        turnOnReadOnly();
 
-           String jsonString = restTemplate.getForObject(serverURL, String.class, arrayDesignAccession);
+    }
 
-           Map<String, String> designElements = convertJson(jsonString);
+    void loadAnnotations(TransactionWorker transactionWorker) {
 
-           turnOffReadonly();
+        TransactionRunner transactionRunner = annotationEnvironment.getTransactionRunner();
+        try {
 
-           if (removeOldMappings) {
-               annotationEnvironment.geneDesignElementsToGeneNames().clear();
-           }
+            transactionRunner.run(transactionWorker);
 
-           TransactionWorker transactionWorker = new MapTransactionWorker(annotationEnvironment.geneDesignElementsToGeneNames(),
-                   designElements);
+        } catch (Exception e) {
+            throw new IllegalStateException("Exception while loading annotations.", e);
+        }
+    }
 
+    protected abstract String getAnnotationServerUrl();
 
-           loadAnnotations(transactionWorker);
+    protected abstract ConcurrentMap<String, String> getDestinationMap(AnnotationEnvironment annotationEnvironment);
 
-
-           turnOnReadOnly();
-
-       }
-
-       protected Map<String, String> convertJson(String jsonString) {
-           Gson gson = new Gson();
-           Type mapType = new TypeToken<Map<String, String>>() {
-           }.getType();
-           Map<String, String> allMap = gson.fromJson(jsonString, mapType);
-           return gson.fromJson(allMap.get("exportText"), mapType);
-       }
-
-
+    protected abstract MapTransactionWorker getTransactionWorker(ConcurrentMap<String, String> dest, Map<String, String> src, String annotatedSubject);
 }

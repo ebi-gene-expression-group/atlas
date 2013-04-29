@@ -1,124 +1,38 @@
 package uk.ac.ebi.atlas.geneannotation;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.sleepycat.collections.TransactionRunner;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.commons.berkeley.ObjectValueTransactionWorker;
-import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
-import uk.ac.ebi.atlas.utils.DesignElementKeyGenerator;
+import uk.ac.ebi.atlas.commons.berkeley.MapTransactionWorker;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 @Named("geneNameLoader")
-public class GeneNamesLoader {
-    private TransactionRunner transactionRunner;
-
-    private AnnotationEnvironment annotationEnvironment;
+public class GeneNamesLoader extends AnnotationLoader{
 
     @Value("#{configuration['gene.mapping.gxa.server.url']}")
     private String serverURL;
 
-    private RestTemplate restTemplate;
-
     @Inject
-    public GeneNamesLoader(AnnotationEnvironment annotationEnvironment, RestTemplate restTemplate) {
-        this.annotationEnvironment = annotationEnvironment;
-        this.restTemplate = restTemplate;
-    }
-
-    private void turnOffReadonly() {
-        this.annotationEnvironment.close();
-        this.annotationEnvironment.initBerkeleyDatabase(false);
-    }
-
-    private void turnOnReadOnly() {
-        this.annotationEnvironment.close();
-        this.annotationEnvironment.initBerkeleyReadonly();
-    }
-
-
-    void loadAnnotations(Map<String, String> designElements,
-                                   ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker) {
-
-        transactionRunner = annotationEnvironment.getTransactionRunner();
-        try {
-            for (Map.Entry<String, String> deName : designElements.entrySet()) {
-                transactionRunner.run(transactionWorker.setRow(deName));
-            }
-
-        } catch (Exception e) {
-            throw new IllegalStateException("Exception while loading annotations.", e);
-        }
-    }
-
-
-    public void loadMappings(String arrayDesignAccession) {
-
-       loadMappings(arrayDesignAccession, false);
+    public GeneNamesLoader(AnnotationEnvironment annotationEnvironment, AnnotationMappingExtractor annotationMappingExtractor) {
+        super(annotationEnvironment, annotationMappingExtractor);
 
     }
 
-    public void loadMappings(Collection<String> arrayDesignAccessions) {
-        for (String arrayDesignAccession : arrayDesignAccessions) {
-            loadMappings(arrayDesignAccession, true);
-        }
-
+    @Override
+    protected String getAnnotationServerUrl() {
+        return serverURL;
     }
 
-    public void loadMappings(String arrayDesignAccession, boolean removeOldMappings) {
-
-        String jsonString = restTemplate.getForObject(serverURL, String.class, arrayDesignAccession);
-
-        Map<String, String> designElements = convertJson(jsonString);
-
-        turnOffReadonly();
-
-        if (removeOldMappings) {
-            annotationEnvironment.geneDesignElementsToGeneNames().clear();
-        }
-
-        ObjectValueTransactionWorker<String, Map.Entry<String, String>> transactionWorker = getTransactionWorker(arrayDesignAccession);
-
-
-        loadAnnotations(designElements, transactionWorker);
-
-
-        turnOnReadOnly();
-
+    @Override
+    protected ConcurrentMap<String, String> getDestinationMap(AnnotationEnvironment annotationEnvironment) {
+        return annotationEnvironment.geneNames();
     }
 
-    ObjectValueTransactionWorker<String, Map.Entry<String, String>> getTransactionWorker(final String arrayDesignAccession) {
-        return new ObjectValueTransactionWorker<String, Map.Entry<String, String>>(annotationEnvironment.geneDesignElementsToGeneNames()) {
-            @Override
-            protected String getValue() {
-                return getRow().getValue();
-            }
-
-            @Override
-            protected String getKey() {
-                return DesignElementKeyGenerator.getKey(arrayDesignAccession, getRow().getKey());
-            }
-
-            @Override
-            protected boolean isEmptyValue(String value) {
-                return StringUtils.isBlank(value);
-            }
-        };
+    @Override
+    protected MapTransactionWorker getTransactionWorker(ConcurrentMap<String, String> dest, Map<String, String> src, String annotatedSubject) {
+        return new MapTransactionWorker(src, dest);
     }
-
-    protected Map<String, String> convertJson(String jsonString) {
-        Gson gson = new Gson();
-        Type mapType = new TypeToken<Map<String, String>>() {}.getType();
-        Map<String, String> allMap = gson.fromJson(jsonString, mapType);
-        return gson.fromJson(allMap.get("exportText"), mapType);
-    }
-
 
 }
