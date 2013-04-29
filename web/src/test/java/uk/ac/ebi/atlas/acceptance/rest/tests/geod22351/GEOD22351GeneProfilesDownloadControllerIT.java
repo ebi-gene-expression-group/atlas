@@ -54,7 +54,7 @@ public class GEOD22351GeneProfilesDownloadControllerIT {
     @Test
     public void verifyFirstLine() {
 
-        List<String> firstLine = subject.getRowValues(0);
+        List<String> firstLine = subject.getRowValues(1);
 
         assertThat(firstLine,
                 contains("Gene name", "Gene Id", "genotype:'expressing human TDP-43' vs 'non transgenic'.p-value", "genotype:'expressing human TDP-43' vs 'non transgenic'.log2foldchange")
@@ -65,7 +65,7 @@ public class GEOD22351GeneProfilesDownloadControllerIT {
     @Test
     public void verifySecondLine() {
 
-        List<String> secondLine = subject.getRowValues(1);
+        List<String> secondLine = subject.getRowValues(2);
 
         assertThat(secondLine,
                 contains("Ch25h", "ENSMUSG00000050370", "1.70428798138445E-6", "3.01033089730209")
@@ -78,7 +78,7 @@ public class GEOD22351GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(50));
+        assertThat(lines.length, is(51));
     }
 
 }

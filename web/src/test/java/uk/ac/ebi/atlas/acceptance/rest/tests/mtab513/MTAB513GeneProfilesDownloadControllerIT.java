@@ -54,7 +54,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
     @Test
     public void verifyFirstLine() {
 
-        List<String> firstLine = subject.getRowValues(0);
+        List<String> firstLine = subject.getRowValues(3);
 
         assertThat(firstLine,
                 contains("Gene name", "Gene Id", "adipose", "adrenal", "brain", "breast", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid")
@@ -65,7 +65,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
     @Test
     public void verifySecondLine() {
 
-        List<String> secondLine = subject.getRowValues(1);
+        List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
                 contains("METTL25", "ENSG00000127720", "0", "2", "0.7", "2", "0.9", "2", "5", "4", "4", "0.9", "2", "3", "3", "1", "3", "3")
@@ -78,7 +78,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(161));
+        assertThat(lines.length, is(164));
     }
 
 }

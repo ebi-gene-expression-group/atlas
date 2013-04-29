@@ -40,6 +40,7 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
 
     private CSVWriter csvWriter;
+    private PrintWriter responseWriter;
 
     protected NumberUtils numberUtils;
     private GeneNamesProvider geneNamesProvider;
@@ -52,7 +53,7 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
 
     public Long apply(ObjectInputStream<T> inputStream, SortedSet<K> conditions) throws IOException {
 
-        csvWriter.writeNext(buildHeaders());
+        responseWriter.write(buildHeaders() + "\n");
         csvWriter.writeNext(buildCsvHeaders(conditions));
 
         long count = 0;
@@ -90,7 +91,7 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
 
     protected abstract List<String> buildColumnNames(SortedSet<K> conditionNames);
 
-    protected abstract String[] buildHeaders();
+    protected abstract String buildHeaders();
 
     protected String[] buildExpressionsRow(T geneProfile, SortedSet<K> factors) {
         String[] expressionLevels = new String[factors.size()];
@@ -108,6 +109,7 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     }
 
     public void setResponseWriter(PrintWriter responseWriter) {
+        this.responseWriter = responseWriter;
         csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER);
     }
 

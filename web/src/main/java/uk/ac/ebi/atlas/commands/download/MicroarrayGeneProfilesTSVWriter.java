@@ -57,8 +57,8 @@ public class MicroarrayGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Micro
     }
 
     @Override
-    protected String[] buildHeaders() {
-        return new String[0];
+    protected String buildHeaders() {
+        return "";
     }
 
     @Override

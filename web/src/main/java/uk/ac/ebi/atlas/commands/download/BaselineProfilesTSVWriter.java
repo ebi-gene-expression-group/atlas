@@ -69,14 +69,14 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String[] buildHeaders() {
+    protected String buildHeaders() {
         String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? "(specifically) " : "";
         String exactMatch = requestContext.isExactMatch() ? "exactly " : "";
         double cutoff = requestContext.getCutoff();
         Date dNow = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss");
-        return new String[]{MessageFormat.format(headerTemplate, exactMatch, geneQuery, specific, formatQueryFactors(), cutoff, ft.format(dNow))};
+        return MessageFormat.format(headerTemplate, exactMatch, geneQuery, specific, formatQueryFactors(), cutoff, ft.format(dNow));
 
     }
 

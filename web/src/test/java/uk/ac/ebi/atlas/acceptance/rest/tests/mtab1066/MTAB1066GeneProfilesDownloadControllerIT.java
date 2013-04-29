@@ -54,7 +54,7 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
     @Test
     public void verifyFirstLine() {
 
-        List<String> firstLine = subject.getRowValues(0);
+        List<String> firstLine = subject.getRowValues(1);
 
         assertThat(firstLine,
                 contains("Gene name", "Design Element", "genotype:'cdk8 mutant' vs 'wild type'.p-value", "genotype:'cdk8 mutant' vs 'wild type'.log2foldchange", "genotype:'cdk8 mutant' vs 'wild type'.t-statistic", "genotype:'cycC mutant' vs 'wild type'.p-value", "genotype:'cycC mutant' vs 'wild type'.log2foldchange", "genotype:'cycC mutant' vs 'wild type'.t-statistic")
@@ -65,7 +65,7 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
     @Test
     public void verifySecondLine() {
 
-        List<String> secondLine = subject.getRowValues(1);
+        List<String> secondLine = subject.getRowValues(2);
 
         assertThat(secondLine,
                 contains("Irc", "1633391_at", "NA", "NA", "NA", "4.32183975431433E-4", "0.676040000000002", "8.29055586787586")
@@ -78,7 +78,7 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(176));
+        assertThat(lines.length, is(177));
     }
 
 }

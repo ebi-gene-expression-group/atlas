@@ -34,8 +34,8 @@ public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Rna
     }
 
     @Override
-    protected String[] buildHeaders() {
-        return new String[0];
+    protected String buildHeaders() {
+        return "";
     }
 
     @Override
