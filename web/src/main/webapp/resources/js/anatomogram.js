@@ -115,66 +115,77 @@ function scaleAnatomogram(svg) {
     }
 }
 
-function initAnatomogram(factorValues, fileNameMale, fileNameFemale) {
 
-    //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(location) {
-        svg.load(location, {onLoad:prepareAnatomogram});
-    }
+//load anatomogram from given location and display given organism parts
+function displayFactorValues(svg, factorValues) {
+    $.each(factorValues, function () {
+        toggleOrganismPartColor(svg, this);
+        hoverOrganismPart(svg, this);
+    });
+}
+
+function initAnatomogramBindings(svg, factorValues) {
+    displayFactorValues(svg, factorValues);
+}
+
+//load anatomogram from given location and display given organism parts
+function loadAnatomogram(location, factorValues) {
+    var svg = $('#anatomogramBody').svg('get');
+
+    svg.load(location, {
+        onLoad:function(){
+            scaleAnatomogram(svg);
+            initAnatomogramBindings(svg, factorValues);
+
+        }
+    });
+    return svg;
+}
+
+function initAnatomogram(factorValues, fileNameMale, fileNameFemale) {
 
     if ($('#anatomogramBody').length === 0) {
         return;
     }
 
-    var svg = $('#anatomogramBody').svg().svg('get');
+    //init svg
+    $('#anatomogramBody').svg();
 
-    loadAnatomogram("resources/svg/" + fileNameMale);
 
-    //hover on first column, to show all organism parts involved on a single gene profile
-    $("#heatmap-table").delegate("td:first-child", "hover", function (evt) { //hover on cells of the first table column
+    var svg = loadAnatomogram("resources/svg/" + fileNameMale, factorValues);
+
+    //hover on gene name, to highlight all organism parts involved on a single gene profile
+    $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
         var geneExpressions = $(this).parents("tr .even,.odd").find("div[data-organism-part!='']");
 
         var factorValues = geneExpressions.map(function () {
             return $(this).attr('data-organism-part');
         }).get();
 
-        factorValues.forEach(function (entry) {
-            toggleOrganismPartColor(svg, entry, evt);
+        $.each(factorValues, function () {
+            toggleOrganismPartColor(svg, this, evt);
         });
 
     });
 
-
-    $('#heatmap-table').delegate("td,th", "hover", function (evt) {
+    //hover on a cell to highlight related organism part
+    $("#heatmap-table td,th").on("hover", function (evt) {
         var organismPart = $(this).find('div').attr("data-organism-part");
         if (organismPart !== undefined) {
             toggleOrganismPartColor(svg, organismPart, evt);
         }
     });
 
-    //load anatomogram from given location and display given organism parts
-    function displayFactorValues() {
-        $.each(factorValues, function () {
-            toggleOrganismPartColor(svg, this);
-            hoverOrganismPart(svg, this);
-        });
-    }
-
-    function prepareAnatomogram() {
-        displayFactorValues();
-        scaleAnatomogram(svg);
-    }
-
     if (fileNameMale !== fileNameFemale) {
         //switch sex toggle button
         $("#sex-toggle-image").button().toggle(
             function () {
                 $(this).attr("src", "resources/images/female_selected.png");
-                loadAnatomogram("resources/svg/" + fileNameFemale);
+                loadAnatomogram("resources/svg/" + fileNameFemale, factorValues);
             },
             function () {
                 $(this).attr("src", "resources/images/male_selected.png");
-                loadAnatomogram("resources/svg/" + fileNameMale);
+                loadAnatomogram("resources/svg/" + fileNameMale, factorValues);
             }
         ).tooltip();
     } else {
