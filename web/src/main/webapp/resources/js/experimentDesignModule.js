@@ -12,9 +12,8 @@ var experimentDesignTableModule = (function ($) {
         _assayHeaders,
         _oTable;
 
-    var _window = $(window);
     var calcDataTableHeight = function () {
-        return _window.height() - 270;
+        return $(window).height() - 270;
     };
 
     var calcDataTableWidth = function () {
@@ -92,7 +91,7 @@ var experimentDesignTableModule = (function ($) {
         $('div.download').html($('#download-button'));
         $('div.download').attr('style', 'float: right');
 
-        _window.resize(function () {
+        $(window).resize(function () {
             _adjustTableSize();
         });
 
