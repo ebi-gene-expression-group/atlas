@@ -126,7 +126,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
         src="${pageContext.request.contextPath}/resources/js/jquery.stickem.js"></script>
 
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/anatomogramModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -193,7 +193,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
             </c:forEach>
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length)  {
-                    initAnatomogram(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }
 
