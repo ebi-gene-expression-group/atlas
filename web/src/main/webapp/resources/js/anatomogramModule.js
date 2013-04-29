@@ -145,7 +145,7 @@ var anatomogramModule = (function ($) {
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
         $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
-            var geneExpressions = $(this).parents("tr").find("div[data-organism-part!='']");
+            var geneExpressions = $(this).parent("tr").find("div[data-organism-part!='']");
 
             var factorValues = geneExpressions.map(function () {
                 return $(this).attr('data-organism-part');
