@@ -23,19 +23,21 @@
 package uk.ac.ebi.atlas.geneannotation.arraydesign;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.sleepycat.collections.TransactionRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.commons.berkeley.MapTransactionWorker;
 import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
+import uk.ac.ebi.atlas.geneannotation.AnnotationMappingExtractor;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,37 +49,34 @@ public class DesignElementGeneMappingLoaderTest {
     @Mock
     private AnnotationEnvironment annotationEnvironmentMock;
 
+
     @Mock
-    private RestTemplate restTemplateMock;
+    private AnnotationMappingExtractor annotationMappingExtractorMock;
 
     @Mock
     private TransactionRunner transactionRunnerMock;
 
-    private ConcurrentMap<String, String> map = Maps.newConcurrentMap();
+    @Mock
+    private ConcurrentMap<String, String> destinationMapMock;
 
     @Before
     public void setUp() throws Exception {
-        subject = new DesignElementGeneMappingLoader(annotationEnvironmentMock, restTemplateMock);
 
-        when(restTemplateMock.getForObject(anyString(), eq(String.class), any())).thenReturn("{\"exportText\":\"{209575_at:ENSG00000243646,1553147_at:ENSG00000164188}\"}");
+        Map<String, String> annotations = Maps.newHashMap();
+        annotations.put("de1", "gene1");
+        annotations.put("de2", "gene2");
+
+        when(annotationMappingExtractorMock.extractAnnotationsMap(any(String.class), any(String.class))).thenReturn(annotations);
         when(annotationEnvironmentMock.getTransactionRunner()).thenReturn(transactionRunnerMock);
-        when(annotationEnvironmentMock.geneDesignElementsToGeneNames()).thenReturn(map);
+        when(annotationEnvironmentMock.geneDesignElementsToGeneNames()).thenReturn(destinationMapMock);
 
+
+        subject = new DesignElementGeneMappingLoader(annotationEnvironmentMock, annotationMappingExtractorMock);
     }
 
     @Test
     public void testLoadMappingsForSingleDesignAccession() throws Exception {
         subject.loadMappings(ARRAY_DESIGN_ACCESSION);
-    }
-
-    @Test
-    public void testLoadMappingsForCollectionOfDesignAccessions() throws Exception {
-        subject.loadMappings(Sets.newHashSet(ARRAY_DESIGN_ACCESSION));
-    }
-
-    @Test
-    public void testLoadMappings() throws Exception {
-        subject.loadMappings(ARRAY_DESIGN_ACCESSION, false);
-        subject.loadMappings(ARRAY_DESIGN_ACCESSION, true);
+        verify(transactionRunnerMock).run(any(MapTransactionWorker.class));
     }
 }

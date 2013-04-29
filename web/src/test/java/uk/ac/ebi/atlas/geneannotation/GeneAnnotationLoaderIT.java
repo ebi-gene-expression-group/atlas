@@ -44,7 +44,7 @@ public class GeneAnnotationLoaderIT {
     private static final String HOMO_SAPIENS_DATASET = "hsapiens_gene_ensembl";
 
     @Inject
-    private GeneAnnotationLoader subject;
+    private GeneNamesLoader subject;
 
     @Inject
     private AnnotationEnvironment annotationEnvironment;
@@ -57,7 +57,7 @@ public class GeneAnnotationLoaderIT {
     public void testLoadGeneNames() throws Exception {
 
         //given
-        subject.loadGeneNames(HOMO_SAPIENS_DATASET);
+        subject.loadMappings(HOMO_SAPIENS_DATASET);
         ConcurrentMap<String, String> map = annotationEnvironment.geneNames();
 
         //then
