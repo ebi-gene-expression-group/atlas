@@ -69,14 +69,14 @@ function hoverOrganismPart(svg, organism_part) {
 
         function toggleClass(elem, evtType) {
             var headerCell = elem.parent();
-            var colIndex = headerCell.parent("tr").children().index(headerCell) + 1;
-            var dataCells = $('#heatmap-table').find('tr>td:nth-child(' + colIndex + ')');
+            //var colIndex = headerCell.parent("tr").children().index(headerCell) + 1;
+            //var dataCells = $('#heatmap-table').find('tr>td:nth-child(' + colIndex + ')');
             if (evtType !== "mouseover") {
-                headerCell.removeClass("highlight");
-                dataCells.removeClass("highlight");
+                headerCell.removeClass("headerHover");
+            //    dataCells.removeClass("highlight");
             } else {
-                headerCell.addClass("highlight");
-                dataCells.addClass("highlight");
+                headerCell.addClass("headerHover");
+            //    dataCells.addClass("highlight");
             }
         }
 

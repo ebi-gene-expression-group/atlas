@@ -75,7 +75,7 @@ td{
     text-align: left;
 }
 
-.horizontal-header-cell:hover, .table-grid th:hover {
+.horizontal-header-cell:hover, .table-grid th:hover, .headerHover {
     background-color: #deebeb !important;
     cursor: default;
 }
