@@ -9,7 +9,16 @@ var experimentDesignTableModule = (function ($) {
         _runAccessions,
         _sampleHeaders,
         _factorHeaders,
-        _assayHeaders;
+        _assayHeaders,
+        _oTable;
+
+    var calcDataTableHeight = function () {
+        return $(window).height() - 270;
+    };
+
+    var calcDataTableWidth = function () {
+        return $('#contents').width() - 100;
+    };
 
     function initColumns(aoColumnDefs, values, startingFromColumnIndex) {
         for (var value in values) {
@@ -28,10 +37,10 @@ var experimentDesignTableModule = (function ($) {
     function initColumnDefs() {
         var aoColumnDefs = [];
         if (_assayHeaders.length === 1) {
-            aoColumnDefs[0] = { "sClass":"assays bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[0] = { "sClass":"bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
         } else {
-            aoColumnDefs[0] = { "sClass":"assays bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
-            aoColumnDefs[1] = { "sClass":"assays bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
+            aoColumnDefs[0] = { "sClass":"bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[1] = { "sClass":"bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
         }
 
         initColumns(aoColumnDefs, _sampleHeaders, _assayHeaders.length);
@@ -65,20 +74,7 @@ var experimentDesignTableModule = (function ($) {
             }
         );
 
-        $('#showOnlyAnalysedRuns').click(function () {
-            oTable.fnDraw();
-        });
-
-        var $window = $(window);
-        var calcDataTableHeight = function () {
-            return $window.height() - 270;
-        };
-
-        var calcDataTableWidth = function () {
-            return $('#contents').width() - 100;
-        };
-
-        var oTable = $('#experiment-design-table').dataTable({
+        _oTable = $('#experiment-design-table').dataTable({
             "aaData":_dataSet,
             "aoColumnDefs":initColumnDefs(),
             "bPaginate":false,
@@ -88,24 +84,22 @@ var experimentDesignTableModule = (function ($) {
             "sDom":'i<"download">f<"clear">t'
         });
 
+        $('#showOnlyAnalysedRuns').click(function () {
+            _oTable.fnDraw();
+        });
+
         $('div.download').html($('#download-button'));
         $('div.download').attr('style', 'float: right');
 
-
-        $window.resize(function () {
-            var oSettings = oTable.fnSettings();
-            oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
-            //oSettings.oScroll.sX = calcDataTableWidth();
-
-            // maybe you need to redraw the table (not sure about this)
-            oTable.fnAdjustColumnSizing(false);
-            oTable.fnDraw(false);
+        $(window).resize(function () {
+            _adjustTableSize();
         });
 
         var tableHeaderRow = $(".dataTables_scrollHeadInner").find('thead > tr');
+
         $("<tr><th id='assaysHeader' class='header-cell br bt bl'></th>" +
-            "<th id='samplesHeader' class='samples br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
-            "<th id='factorsHeader' class='factors br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
+            "<th id='samplesHeader' class='samples header-cell  br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
+            "<th id='factorsHeader' class='factors header-cell br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
             .insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */
@@ -113,9 +107,20 @@ var experimentDesignTableModule = (function ($) {
         $('#samplesHeader').attr('colspan', Object.keys(_sampleHeaders).length);
         $('#factorsHeader').attr('colspan', Object.keys(_factorHeaders).length);
 
-
         $('#download-experiment-design-link').button().tooltip();
 
+        $("th").addClass("header-cell");
+
+    }
+
+    function _adjustTableSize() {
+        var oSettings = _oTable.fnSettings();
+        oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
+        //oSettings.oScroll.sX = calcDataTableWidth();
+
+        // maybe you need to redraw the table (not sure about this)
+        _oTable.fnAdjustColumnSizing(false);
+        _oTable.fnDraw(false);
     }
 
     function _init(assayHeaders, dataSet, runAccessions, sampleHeaders, factorHeaders) {
@@ -130,7 +135,8 @@ var experimentDesignTableModule = (function ($) {
     }
 
     return {
-        init:_init
+        init:_init,
+        adjustTableSize:_adjustTableSize
     };
 
 }(jQuery));

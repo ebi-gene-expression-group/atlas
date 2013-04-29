@@ -61,8 +61,8 @@ public class DifferentialExperimentDesignTablePage extends ExperimentDesignTable
         select.selectByValue(value);
     }
 
-    public String getLineColor(int index) {
-        List<WebElement> row = getRow(experimentDesignTable, index);
+    public String getLineColor(int rowIndex) {
+        List<WebElement> row = getRow(experimentDesignTable, rowIndex);
         WebElement element = row.get(0);
         return element.getCssValue("background-color");
     }

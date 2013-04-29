@@ -49,12 +49,12 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getSelectedContrast(), is(DEFAULT));
 
         // then
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(6));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(9));
         assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "Drosophila melanogaster", "", "cycC mutant,w1118; +; cycCY5"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(MicroarrayExperimentDesignTablePage.EXPERIMENT_ACCESSION + "/experiment-design.tsv"));
 
         // and
-        assertThat(subject.getLineColor(1), is("rgba(250, 250, 250, 1)"));
+        assertThat(subject.getLineColor(1), is("rgba(255, 255, 255, 1)"));
         assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
         assertThat(subject.getLineColor(9), is("rgba(255, 194, 102, 1)"));
 
@@ -68,12 +68,12 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
 
         // then
         assertThat(subject.getSelectedContrast(), is(OTHER));
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(6));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(9));
         assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "Drosophila melanogaster", "", "cycC mutant,w1118; +; cycCY5"));
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(4), is("rgba(250, 250, 250, 1)"));
+        assertThat(subject.getLineColor(4), is("rgba(255, 255, 255, 1)"));
         assertThat(subject.getLineColor(9), is("rgba(255, 194, 102, 1)"));
 
     }

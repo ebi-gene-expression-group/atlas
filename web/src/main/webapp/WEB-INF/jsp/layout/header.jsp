@@ -21,57 +21,79 @@
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="headerdiv" id="headerdiv">
-    <div class="header">
-        <div id="global-masthead" class="masthead grid_24">
-            <!--This has to be one line and no newline characters-->
-            <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img
-                    src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"
-                    alt="EMBL European Bioinformatics Institute"/></a>
+<header>
 
-            <div class="nav">
-                <ul id="global-nav">
-                    <!-- set active class as appropriate -->
-                    <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
-                    <li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
-                    <li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
-                    <li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
-                    <li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
-                </ul>
-            </div>
-        </div>
+    <div id="global-masthead" class="masthead grid_24">
+        <!--This has to be one line and no newline characters-->
+        <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute"></a>
 
-        <div id="local-masthead" class="masthead grid_24" style="background-color: #E1EEE9">
+        <nav>
+            <ul id="global-nav">
+                <!-- set active class as appropriate -->
+                <li class="first active" id="services"><a href="//www.ebi.ac.uk/services">Services</a></li>
+                <li id="research"><a href="//www.ebi.ac.uk/research">Research</a></li>
+                <li id="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
+                <li id="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></li>
+                <li id="about" class="last"><a href="//www.ebi.ac.uk/about">About us</a></li>
+            </ul>
+        </nav>
 
-            <!-- local-title -->
-            <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
+    </div>
 
-            <div class="logo-title" id="local-title">
+    <div id="local-masthead" class="masthead grid_24 nomenu" style="background-color: #E1EEE9">
+
+        <!-- local-title -->
+        <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
+
+        <!-- apply grid_12 alpha class if you have a local search box in the header...
+        <div class="grid_12 alpha" id="local-title">
+        -->
+        <div class="grid_12 alpha" id="local-title">
+            <h1 style="color: #000000; text-shadow: 0px 0px #E1EEE9">
                 <a href="${pageContext.request.contextPath}" title="Back to Expression Atlas homepage">
                     <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
-                         alt="Expression Atlas logo" width="64" height="64">
-                </a><span style="padding-top: 5px"><h1 style="color: #000000; text-shadow: 0px 0px #E1EEE9">Expression
-                Atlas</h1></span>
-            </div>
+                         alt="Expression Atlas logo" width="64" height="64" style="vertical-align: bottom">Expression Atlas
+                </a>
+            </h1>
 
-            <!-- /local-title -->
-            <nav>
-                <ul class="grid_24" id="local-nav">
-                    <li id="local-nav-home" class="first active"><a href="${pageContext.request.contextPath}"
-                                                                    title="Go to the Expression Atlas homepage">Home</a>
-                    </li>
-                    <li id="local-nav-help" class="last"><a href="${pageContext.request.contextPath}/help.html"
-                                                            title="Go to the Expression Atlas help page">Help</a></li>
-                    <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-                    add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-                    whichever one will show up last... For example: -->
-                    <li class="functional last"><a id="feedback-link" href="feedback-form" class="icon icon-static"
-                                                   data-icon="\">Feedback</a></li>
-                </ul>
-            </nav>
         </div>
+
+        <!-- /local-title -->
+
+        <!-- local-search -->
+        <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
+
+        <!-- local search ... the search box in the header ... should go here -->
+
+        <!-- /local-search -->
+
+        <!-- local-nav -->
+
+        <nav>
+            <ul class="grid_24" id="local-nav">
+                <li id="local-nav-home" class="first active">
+                    <a href="${pageContext.request.contextPath}" title="Go to the Expression Atlas homepage">Home</a>
+                </li>
+                <li id="local-nav-help" class="last">
+                    <a href="${pageContext.request.contextPath}/help.html"
+                       title="Go to the Expression Atlas help page">Help</a>
+                </li>
+                <!--
+                <li class="last"><a href="#">About [service-name]</a></li>
+                -->
+                <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+                     add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+                     whichever one will show up last...
+                     For example: -->
+                <li class="functional last"><a id="feedback-link" href="feedback-form" class="icon icon-generic"
+                                               data-icon="\">Feedback</a></li>
+            </ul>
+        </nav>
+
+        <!-- /local-nav -->
+
     </div>
-</div>
+</header>
 
 <style>
     fieldset {
@@ -81,11 +103,7 @@
     }
 
     .ui-dialog .ui-state-error {
-        padding: .3em;
-    }
-
-    #filterBy li {
-        padding-bottom: 4px;
+        padding: 0px;
     }
 
     .validateTips {
@@ -106,7 +124,7 @@
                         <label for="feedback">Your feedback:</label>
                     </div>
                     <div>
-                        <textarea rows="4" cols="50" name="feedback" id="feedback"
+                        <textarea rows="5" cols="50" name="feedback" id="feedback"
                                   class="text ui-widget-content ui-corner-all"></textarea>
                     </div>
                 </li>
@@ -128,10 +146,10 @@
 <script>
     function clearLocalNav() {
         var listItems = $("#local-nav li");
-        listItems.each(function (idx, li) {
-            var item = $(li);
-            item.removeClass("active");
-        });
+            listItems.each(function (idx, li) {
+                var item = $(li);
+                item.removeClass("active");
+            });
     }
 
     $(function () {
@@ -174,8 +192,8 @@
             autoOpen:false,
             show:"blind",
             hide:"explode",
-            height:"300",
-            width:"440",
+            height:"320",
+            width:"440px",
             modal:true,
             buttons:[
                 {width:"60px", text:"Send", id:"send-button", click:function () {

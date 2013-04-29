@@ -49,13 +49,13 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getSelectedContrast(), is(IDN2_MUTANT_VS_WILD_TYPE));
 
         // then
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(4));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(7));
         assertThat(subject.getFirstExperimentDesign(), contains("SRR504179", "Arabidopsis thaliana", "Col-0", "wild type"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(DifferentialExperimentDesignTablePage.EXPERIMENT_ACCESSION + "/experiment-design.tsv"));
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(255, 194, 102, 1)"));
-        assertThat(subject.getLineColor(4), is("rgba(250, 250, 250, 1)"));
+        assertThat(subject.getLineColor(4), is("rgba(255, 255, 255, 1)"));
         assertThat(subject.getLineColor(10), is("rgba(130, 205, 205, 1)"));
 
     }
@@ -68,13 +68,13 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
 
         // then
         assertThat(subject.getSelectedContrast(), is(NRPE1_MUTANT_VS_WILD_TYPE));
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(4));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(7));
         assertThat(subject.getFirstExperimentDesign(), contains("SRR504179", "Arabidopsis thaliana", "Col-0", "wild type"));
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(255, 194, 102, 1)"));
         assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(10), is("rgba(250, 250, 250, 1)"));
+        assertThat(subject.getLineColor(10), is("rgba(255, 255, 255, 1)"));
 
     }
 

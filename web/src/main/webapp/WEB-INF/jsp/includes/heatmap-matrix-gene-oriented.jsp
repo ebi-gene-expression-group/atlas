@@ -42,7 +42,7 @@
                                     <label for='display-levels'>Display levels</label>
                                 </button>
                                 </div>"
-                            class="header-cell">
+                            class="horizontal-header-cell">
 
                         <c:set var="geneId" value="${geneProfile.geneId}"/>
 

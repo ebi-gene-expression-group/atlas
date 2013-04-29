@@ -242,7 +242,7 @@ var heatmapModule = (function ($) {
         var headers;
 
         $(accessionHeaders).each(function () {
-            headers += "<td class='header-cell'>" + this + "</td>";
+            headers += "<td class='horizontal-header-cell'>" + this + "</td>";
         });
         //add custom header cells for gene name and design element
         $($("#heatmap-table thead")).append("<tr>" + headers + "</tr>");
@@ -287,6 +287,8 @@ var heatmapModule = (function ($) {
 
 
     function initHeatmap(experimentAccession, parameters) {
+
+        $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
         if (parameters && parameters.species) {
             initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);

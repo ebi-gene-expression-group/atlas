@@ -29,10 +29,14 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<section>
+
+
 <c:import url="includes/request-preferences.jsp"/>
 
+</section>
 
-<div class="container">
+<section style="overflow: auto;" >
 
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
@@ -49,7 +53,7 @@
         </c:when>
         <c:otherwise>
 
-            <div id="heatmap" style="overflow: auto; padding:20px;" class="row stickem-container">
+            <div id="heatmap" class="row stickem-container">
 
                 <div id="anatomogram" class="aside stickem double-click-noselection">
                     <table>
@@ -72,7 +76,7 @@
                     </table>
                 </div>
 
-                <div id="heatmap-div" class="content" style="display:none;">
+                <div id="heatmap-div" class="heatmap-position" style="display:none">
 
                     <table>
                         <tr>
@@ -97,11 +101,11 @@
         </c:otherwise>
     </c:choose>
 
-</div>
+    <br/>
 
-<br/>
+    <div id="help-placeholder" style="display: none"></div>
 
-<div id="help-placeholder" style="display: none"></div>
+</section>
 
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
@@ -122,7 +126,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
         src="${pageContext.request.contextPath}/resources/js/jquery.stickem.js"></script>
 
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/anatomogram.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/anatomogramModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -189,7 +193,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
             </c:forEach>
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length)  {
-                    initAnatomogram(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }
 

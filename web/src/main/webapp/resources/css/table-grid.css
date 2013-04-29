@@ -22,7 +22,7 @@
 
 .form-grid, .table-grid, .analysis-grid {
     color: #404040;
-    background-color: #fafafa;
+    background-color: rgb(237,246,246);
     border: 1px solid #cdcdcd;
     border-spacing: 0;
     empty-cells: show;
@@ -51,31 +51,32 @@
     padding: 5px;
 }
 
+td{
+    background-color: white;
+}
+
 .table-grid>tbody>tr>td, .table-grid>thead>tr>td {
     color: #3D3D3D;
-    background-color: white;
     vertical-align: middle;
-    text-align: center;
     border: 1px solid #cdcdcd;
     height: 25px;
     width: 25px;
     white-space: nowrap;
 }
 
-.table-grid .header-cell {
-    background-color: #FAFAFA;
+.horizontal-header-cell {
     border: 1px solid #cdcdcd;
+    background-color: rgb(237,246,246) !important;
     white-space: nowrap;
-    font-weight: bold;
     width: auto !important;
-    padding-top: 1px;
+    padding-bottom: 0px;
     padding-left: 5px;
     padding-right: 5px;
     text-align: left;
 }
 
-.table-grid .header-cell:hover, .table-grid th:hover {
-    background-color: #deebeb;
+.horizontal-header-cell:hover, .table-grid th:hover, .headerHover {
+    background-color: #deebeb !important;
     cursor: default;
 }
 
@@ -95,6 +96,7 @@
     margin: 4px;
     padding: 2px;
     white-space: nowrap;
+    text-align: center;
 }
 
 /*next is a css hack patch that only gets enabled on IE7. It removes margins, that do not display properly in IE7.*/

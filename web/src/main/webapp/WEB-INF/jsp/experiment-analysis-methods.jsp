@@ -36,7 +36,7 @@
                 </label>
             </div>
         </display:caption>
-        <display:column class="header-cell">
+        <display:column class="horizontal-header-cell">
             <label>
                     ${csvLine[0]}
             </label>

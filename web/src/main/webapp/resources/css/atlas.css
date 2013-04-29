@@ -20,6 +20,145 @@
  * http://gxa.github.com/gxa
  */
 
+/* ebi css override: start */
+
+::selection {
+    background: rgb(95, 142, 179) !important;
+    color: white;
+}
+
+body div#local-title a {
+    color: black !important;
+    text-shadow: none !important;
+}
+
+td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {
+    border-bottom-color: transparent;
+}
+
+a, a:link, a:visited {
+    border-bottom-color: transparent;
+    color: #343094
+}
+
+a:hover, a:active{
+    border-bottom-style: solid !important;
+    border-bottom-color: brown !important;
+    color: brown !important;
+}
+
+nav a:link, nav a:visited, nav a:active, nav a:hover {
+    color:white !important;
+    border-bottom: 3px solid transparent!important;
+}
+
+ul#local-nav a:hover, ul#local-nav a:active, li.active a{
+    border-bottom-color: #207A7A !important;
+    border-bottom: 3px solid;
+}
+
+table {
+    border: none;
+    width: auto;
+    margin: 0px;
+}
+
+th {
+    background-color: transparent!important;
+    text-align: center;
+}
+
+td, th{
+    vertical-align: inherit;
+    border: none;
+    margin: 0px;
+    padding: 1px;
+}
+
+form {
+    padding: 0px;
+    margin: 0px;
+}
+
+form fieldset {
+    background-color: transparent;
+    padding: 0px;
+    margin: 0px;
+}
+
+img {
+    max-width: none !important;
+}
+
+h1 {
+    color: #207A7A;
+}
+
+/* ebi css and ebi-visual.css override: end */
+
+
+
+/* JQuery UI overrides: start */
+.ui-tooltip, .help-tooltip {
+    background: #fafafa;
+    border: 1px solid #2777A5!important;
+    padding: 4px;
+    max-width: 400px!important;
+    color: #2777A5;
+    border-radius: 4px;
+    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    box-shadow: 0 0 7px gray;
+}
+
+#filterby-menu #filterBy{
+    height: 26px;
+    width: 137px;
+}
+
+#filterby-menu .ui-menu{
+    width: 150px;
+    z-index: 100!important;
+}
+
+.ui-menu a:hover{
+    color: #eb8f00 !important;
+    border: 1px solid #fbd850 !important;
+}
+
+.ui-button {
+    border-bottom-color: #cccccc !important;
+    border-bottom-style: solid !important;
+}
+
+.ui-button:hover, .ui-button:active {
+    border: 1px solid #fbd850 !important;
+}
+
+.fancybox-close {
+    border: 0px !important;
+}
+
+/* JQuery UI overrides: end */
+
+section {
+    padding: 10px;
+}
+
+textarea {
+    border-color: lightgray;
+}
+
+.thick-link {
+    font-weight: bold;
+}
+
+body {
+    min-width: 950px;
+    font-size: 12px;
+    /*    font-family: Verdana, Helvetica, Arial, sans-serif;
+        margin:0px auto !important;*/
+}
+
 #contents {
     background-color: white;
 }
@@ -48,13 +187,7 @@
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    /*
-        width: 22px;
-        height: 24px;
-        padding: 3px;
-    */
 }
-
 
 .button-image .ui-button-text {
     padding: 2px!important;
@@ -69,14 +202,6 @@ form td {
 form td div {
     padding-bottom: 3px;
 }
-
-body {
-    min-width: 950px;
-    font-size: 12px;
-    font-family: Verdana, Helvetica, Arial, sans-serif;
-    margin:0px auto !important;
-}
-
 
 textarea, .chzn-container {
     font-family: inherit !important;
@@ -101,7 +226,6 @@ textarea, .chzn-container {
 }
 
 .block-max-width {
-    padding-top: 1em;
     max-width: 950px;
 }
 
@@ -122,27 +246,6 @@ textarea, .chzn-container {
     background: #f5f5f5;
 }
 
-a:link {
-    text-decoration: none;
-    color: #272794
-}
-
-/* unvisited link */
-a:visited {
-    text-decoration: none;
-    color: #272794
-}
-
-/* visited link */
-a:hover {
-    text-decoration: underline;
-    color: brown
-}
-
-/* mouse over link */
-a:active {
-    text-decoration: underline;
-}
 
 /* selected link */
 
@@ -164,29 +267,12 @@ a:active {
     border-style: solid;
     border-width: 1px;
     border-color: lightgray;
-    margin: 2px;
+    margin-bottom: 2px;
 }
 
 .filter-name {
     color: #FF9C2A;
     font-weight: bold;
-}
-
-/* JQuery UI*/
-.ui-tooltip, .help-tooltip {
-    background: #fafafa;
-    border: 1px solid #2777A5!important;
-    padding: 4px;
-    max-width: 400px!important;
-    color: #2777A5;
-    border-radius: 4px;
-    font: 10px Verdana, Helvetica, Arial, sans-serif;
-    box-shadow: 0 0 7px gray;
-}
-
-.ui-menu {
-    width: 140px;
-    z-index: 100!important;
 }
 
 /*
@@ -237,4 +323,8 @@ a.help-icon {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     color:white;
+}
+
+#filterBy li {
+    padding-bottom: 4px;
 }
