@@ -34,6 +34,11 @@ public class DifferentialGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Rna
     }
 
     @Override
+    protected String[] buildHeaders() {
+        return new String[0];
+    }
+
+    @Override
     protected String[] buildExpressionsRow(final RnaSeqProfile geneProfile, SortedSet<Contrast> contrasts) {
         String[] expressionLevels = new String[contrasts.size() * 2];
         int i = 0;

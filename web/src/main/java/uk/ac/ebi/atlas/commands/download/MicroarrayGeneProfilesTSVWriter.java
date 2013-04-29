@@ -57,6 +57,11 @@ public class MicroarrayGeneProfilesTSVWriter extends GeneProfilesTSVWriter<Micro
     }
 
     @Override
+    protected String[] buildHeaders() {
+        return new String[0];
+    }
+
+    @Override
     protected String[] buildExpressionsRow(final MicroarrayProfile geneProfile, SortedSet<Contrast> contrasts) {
         String[] expressionLevels = new String[contrasts.size() * 3];
         int i = 0;

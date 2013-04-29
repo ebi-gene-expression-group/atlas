@@ -1,0 +1,3 @@
+# Expression Atlas version: ${project.version}
+# Query: Genes ({0}matching): {1}, {2}expressed in any factor value/in factor value(s): {3} above the expression level cutoff: {4}
+# Timestamp: {5}

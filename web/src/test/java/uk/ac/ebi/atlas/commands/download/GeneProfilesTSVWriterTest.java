@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
@@ -37,6 +38,8 @@ import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.SortedSet;
 
@@ -65,6 +68,8 @@ public class GeneProfilesTSVWriterTest {
     private ExperimentalFactors experimentalFactorsMock;
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
+    @Mock
+    private Resource headerTemplateResourceMock;
 
     private BaselineProfilesTSVWriter subject;
 
@@ -80,6 +85,10 @@ public class GeneProfilesTSVWriterTest {
                 createFactorValue("lung")));
 
         when(requestContextMock.getAllQueryFactors()).thenReturn(organismParts);
+        when(requestContextMock.getGeneQuery()).thenReturn("geneQuery");
+        when(requestContextMock.getSelectedQueryFactors()).thenReturn(
+                Sets.newHashSet(new Factor("type1", "value1"), new Factor("type2", "value2")));
+        when(requestContextMock.getCutoff()).thenReturn(0.5D);
 
         when(inputStreamMock.readNext()).thenReturn(baselineProfileMock1)
                 .thenReturn(baselineProfileMock2)
@@ -102,6 +111,12 @@ public class GeneProfilesTSVWriterTest {
     public void initSubject() throws Exception {
         subject = new BaselineProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock);
         subject.setResponseWriter(printWriterMock);
+        subject.setRequestContext(requestContextMock);
+
+        InputStream inputStream = new ByteArrayInputStream("{0} {1} {2} {3} {4} {5}".getBytes());
+        when(headerTemplateResourceMock.getInputStream()).thenReturn(inputStream);
+        subject.setHeaderTemplateResource(headerTemplateResourceMock);
+        subject.initTemplate();
     }
 
     @Test
