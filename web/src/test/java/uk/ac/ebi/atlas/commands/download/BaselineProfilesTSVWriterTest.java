@@ -50,7 +50,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfilesTSVWriterTest {
+public class BaselineProfilesTSVWriterTest {
 
     @Mock
     private ObjectInputStream<BaselineProfile> inputStreamMock;

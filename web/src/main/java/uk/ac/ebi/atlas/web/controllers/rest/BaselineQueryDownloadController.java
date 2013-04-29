@@ -52,7 +52,8 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
     @Inject
     public BaselineQueryDownloadController(BaselineRequestContextBuilder requestContextBuilder,
-                                           FilterFactorsConverter filterFactorsConverter, WriteBaselineProfilesCommand writeBaselineProfilesCommand) {
+                                           FilterFactorsConverter filterFactorsConverter,
+                                           WriteBaselineProfilesCommand writeBaselineProfilesCommand) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.writeBaselineProfilesCommand = writeBaselineProfilesCommand;

@@ -4,7 +4,9 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -83,6 +85,9 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
 
     protected String formatQueryFactors() {
         Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
+        if (CollectionUtils.isEmpty(selectedQueryFactors)){
+            return StringUtils.EMPTY;
+        }
         Collection<String> transformedFactors = Collections2.transform(selectedQueryFactors, new Function<Factor, String>() {
             @Override
             public String apply(Factor factor) {
