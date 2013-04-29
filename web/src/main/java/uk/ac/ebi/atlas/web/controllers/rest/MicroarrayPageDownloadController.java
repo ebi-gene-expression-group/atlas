@@ -78,7 +78,7 @@ public class MicroarrayPageDownloadController {
 
         LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "_" + arrayDesign + "-gene-expression-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "_" + arrayDesign + "-query-results.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 

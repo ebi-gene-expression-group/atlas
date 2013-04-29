@@ -100,7 +100,7 @@ public class MicroarrayPageDownloadControllerTest {
     public void testDownloadGeneProfiles() throws Exception {
         subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
 
-        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-gene-expression-profiles.tsv\"");
+        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
         verify(writeGeneProfilesCommandMock).setResponseWriter(printWriterMock);

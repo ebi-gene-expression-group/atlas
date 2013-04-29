@@ -46,7 +46,7 @@ public class GEOD38400RawCountsDownloadControllerIT {
         // unicode encoded plain text
         assertThat(response.getContentType(), is("text/plain;charset=utf-8"));
 
-        // filename of attachment should be ending in -gene-expression-profiles.tsv
+        // filename of attachment should be ending in -query-results.tsv
         assertThat(response.getHeader("Content-Disposition"), containsString("-raw-counts.tsv"));
     }
 

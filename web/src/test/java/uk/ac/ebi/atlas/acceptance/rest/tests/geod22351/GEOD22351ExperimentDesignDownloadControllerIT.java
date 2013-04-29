@@ -47,7 +47,7 @@ public class GEOD22351ExperimentDesignDownloadControllerIT {
         // unicode encoded plain text
         assertThat(response.getContentType(), is("text/plain;charset=utf-8"));
 
-        // filename of attachment should be ending in -gene-expression-profiles.tsv
+        // filename of attachment should be ending in -query-results.tsv
         assertThat(response.getHeader("Content-Disposition"), containsString("-experiment-design.tsv"));
     }
 

@@ -98,7 +98,7 @@ public class BaselineQueryDownloadControllerTest {
 
         subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
 
-        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-gene-expression-profiles.tsv\"");
+        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
         verify(writeBaselineProfilesCommandMock).setResponseWriter(printWriterMock);

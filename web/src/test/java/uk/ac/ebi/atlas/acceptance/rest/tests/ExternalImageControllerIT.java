@@ -99,7 +99,7 @@ public class ExternalImageControllerIT {
         // unicode encoded plain text
         assertThat(response.getContentType(), is("image/png"));
 
-        // filename of attachment should be ending in -gene-expression-profiles.tsv
+        // filename of attachment should be ending in -query-results.tsv
         assertThat(response.asByteArray().length, is(greaterThan(1)));
 
         return response.body();

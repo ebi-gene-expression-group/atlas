@@ -75,7 +75,7 @@ public class DifferentialPageDownloadController {
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-gene-expression-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
@@ -105,7 +105,7 @@ public class DifferentialPageDownloadController {
         ExpressionsWriter rnaSeqRawDataWriter = dataWriterFactory.getRnaSeqRawDataWriter(experiment, response.getWriter());
 
         long genesCount = rnaSeqRawDataWriter.write();
-                LOGGER.info("<download" + RAW_COUNTS_TSV + "> streamed " + genesCount + " gene expression profiles");
+        LOGGER.info("<download" + RAW_COUNTS_TSV + "> streamed " + genesCount + " gene expression profiles");
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=DIFFERENTIAL")
