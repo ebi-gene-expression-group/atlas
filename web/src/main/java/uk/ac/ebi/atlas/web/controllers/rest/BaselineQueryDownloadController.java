@@ -51,7 +51,7 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
 
     @Inject
-    public BaselineQueryDownloadController( BaselineRequestContextBuilder requestContextBuilder,
+    public BaselineQueryDownloadController(BaselineRequestContextBuilder requestContextBuilder,
                                            FilterFactorsConverter filterFactorsConverter, WriteBaselineProfilesCommand writeBaselineProfilesCommand) {
 
         super(requestContextBuilder, filterFactorsConverter);
@@ -69,7 +69,7 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-gene-expression-profiles.tsv\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
 
         response.setContentType("text/plain; charset=utf-8");
 
