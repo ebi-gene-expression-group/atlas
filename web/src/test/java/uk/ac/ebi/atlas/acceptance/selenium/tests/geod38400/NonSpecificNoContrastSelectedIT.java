@@ -52,8 +52,8 @@ public class NonSpecificNoContrastSelectedIT extends SeleniumFixture {
         assertThat(subject.getGeneCount(), containsString("of 51"));
 
         assertThat(subject.getSelectedGenes().size(), is(50));
-        assertThat(subject.getSelectedGenes().subList(0, 3), contains("AT1G33840", "AT1G33850", "AT3G54770"));
-        assertThat(subject.getSelectedGenes().subList(13, 14), contains("AT2G36490"));
+        assertThat(subject.getSelectedGenes().subList(0, 3), contains("AT1G33840", "F14M2.2", "T5N23_130"));
+        assertThat(subject.getSelectedGenes().subList(13, 14), contains("DML1"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
         assertThat(subject.getGeneProfile(1).get(1), is("<10-10"));
