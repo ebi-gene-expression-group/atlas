@@ -52,6 +52,7 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
 
     public Long apply(ObjectInputStream<T> inputStream, SortedSet<K> conditions) throws IOException {
 
+        csvWriter.writeNext(buildHeaders());
         csvWriter.writeNext(buildCsvHeaders(conditions));
 
         long count = 0;
@@ -88,6 +89,8 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     }
 
     protected abstract List<String> buildColumnNames(SortedSet<K> conditionNames);
+
+    protected abstract String[] buildHeaders();
 
     protected String[] buildExpressionsRow(T geneProfile, SortedSet<K> factors) {
         String[] expressionLevels = new String[factors.size()];
