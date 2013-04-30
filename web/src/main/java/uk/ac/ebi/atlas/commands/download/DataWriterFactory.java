@@ -25,6 +25,9 @@ public class DataWriterFactory {
     @Value("#{configuration['microarray.normalized.data.path.template']}")
     private String microarrayExperimentNormalizedFileUrlTemplate;
 
+    @Value("#{configuration['microarray.log-fold-changes.data.path.template']}")
+    private String microarrayExperimentLogFoldFileUrlTemplate;
+
 
     private TsvReaderUtils tsvReaderUtils;
     private GeneNamesProvider geneNamesProvider;
@@ -89,6 +92,19 @@ public class DataWriterFactory {
 
         return microarrayDataWriter;
     }
+
+    public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment, String arrayDesignAccession, PrintWriter responseWriter) {
+        MicroarrayNormalizedDataHeaderBuilder headerBuilder = new MicroarrayNormalizedDataHeaderBuilder();
+
+        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(tsvReaderUtils, geneNamesProvider, designElementMappingProvider);
+        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        microarrayDataWriter.setFileUrlTemplate(microarrayExperimentLogFoldFileUrlTemplate);
+
+        initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter, headerBuilder);
+
+        return microarrayDataWriter;
+    }
+
 
     private void initWriter(ExpressionsWriterImpl expressionsWriter, String experimentAccession,
                             PrintWriter responseWriter, HeaderBuilder analyticsDataHeaderBuilder) {

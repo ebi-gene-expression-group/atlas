@@ -27,6 +27,7 @@ function initExperimentPageButtonsAndTooltips() {
     $('#display-experiment').button().tooltip();
     if (undefined !== $('#download-raw')) $('#download-raw').button().tooltip();
     if (undefined !== $('#download-normalized')) $('#download-normalized').button().tooltip();
+    if (undefined !== $('#download-logFold')) $('#download-logFold').button().tooltip();
     if (undefined !== $('#download-analytics')) $('#download-analytics').button().tooltip();
     $('#goto-ae').tooltip();
     $('#goto-experiment').tooltip();

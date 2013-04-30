@@ -112,6 +112,8 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
         model.addAttribute("normalizedUrl", downloadURLBuilder.buildDownloadNormalizedDataUrl(request));
 
+        model.addAttribute("logFoldUrl", downloadURLBuilder.buildDownloadLogFoldDataUrl(request));
+
         model.addAttribute("analyticsDownloadUrl", downloadURLBuilder.buildDownloadAllAnalyticsUrl(request));
 
         extendModel(model, experiment);

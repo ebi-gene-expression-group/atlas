@@ -46,7 +46,7 @@ public class MicroarrayExperimentTest {
     @Before
     public void setUp() throws Exception {
         subject = new MicroarrayExperiment("accession", Sets.newHashSet(contrastMock), "description", false,
-                Sets.newHashSet("species"), Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)));
+                Sets.newHashSet("species"), Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)), false);
     }
 
     @Test

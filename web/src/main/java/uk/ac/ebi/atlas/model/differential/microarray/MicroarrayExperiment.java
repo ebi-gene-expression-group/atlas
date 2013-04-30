@@ -34,16 +34,22 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
     private SortedSet<String> arrayDesignAccessions;
 
+    private boolean isTwoColour = false;
+
     public MicroarrayExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile,
-                                                  Set<String> species, SortedSet<String> arrayDesignAccessions) {
+                                Set<String> species, SortedSet<String> arrayDesignAccessions, boolean twoColour) {
 
         super(ExperimentType.MICROARRAY, accession, contrasts, description, hasExtraInfoFile, species);
         this.arrayDesignAccessions = arrayDesignAccessions;
 
+        isTwoColour = twoColour;
     }
 
     public SortedSet<String> getArrayDesignAccessions() {
         return arrayDesignAccessions;
     }
 
+    public boolean isTwoColour() {
+        return isTwoColour;
+    }
 }
