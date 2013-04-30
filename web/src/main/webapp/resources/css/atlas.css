@@ -94,6 +94,10 @@ h1 {
     color: #207A7A;
 }
 
+section img {
+    margin: 0px;
+}
+
 /* ebi css and ebi-visual.css override: end */
 
 
