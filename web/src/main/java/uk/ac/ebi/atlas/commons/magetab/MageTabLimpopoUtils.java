@@ -26,7 +26,6 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
@@ -64,16 +63,15 @@ public class MageTabLimpopoUtils {
 
     protected Set<String> extractSpeciesFromSDRF(Collection<ScanNode> scanNodes) {
         Set<String> species = Sets.newHashSet();
-        for (ScanNode scanNode : scanNodes) {
-            SourceNode firstScanNode = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class).iterator().next();
-
-            for (CharacteristicsAttribute characteristic : firstScanNode.characteristics) {
+        Collection<SourceNode> sourceNodes = investigation.SDRF.getNodes(SourceNode.class);
+        for (SourceNode sourceNode : sourceNodes) {
+            for (CharacteristicsAttribute characteristic : sourceNode.characteristics) {
                 if (characteristic.type.equalsIgnoreCase("ORGANISM")) {
                     species.add(characteristic.getAttributeValue());
                 }
             }
-
         }
+
         return species;
     }
 
