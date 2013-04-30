@@ -64,6 +64,8 @@ public class AnalysisMethodsPageController {
 
         model.addAttribute("normalizedUrl", downloadURLBuilder.buildDownloadNormalizedDataUrl(request));
 
+        model.addAttribute("logFoldUrl", downloadURLBuilder.buildDownloadLogFoldDataUrl(request));
+
         model.addAttribute("analyticsDownloadUrl", downloadURLBuilder.buildDownloadAllAnalyticsUrl(request));
 
         return "experiment-analysis-methods";

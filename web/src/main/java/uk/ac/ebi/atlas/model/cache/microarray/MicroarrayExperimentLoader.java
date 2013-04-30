@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.cache.microarray;
 
+import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
 import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParserBuilder;
@@ -33,7 +34,9 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfigu
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -43,6 +46,9 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
     private MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder;
 
     private ConfigurationTrader configurationTrader;
+
+    @Value("#{configuration['microarray.log-fold-changes.data.path.template']}")
+    private String logFoldChangePathTemplate;
 
     @Inject
     public MicroarrayExperimentLoader(MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder, ConfigurationTrader configurationTrader) {
@@ -61,7 +67,11 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
 
         SortedSet<String> arrayDesignNames = microarrayExperimentConfiguration.getArrayDesignNames();
 
-        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames);
+        String logFoldChangeFileLocation = MessageFormat.format(logFoldChangePathTemplate, accession, arrayDesignNames.first());
+
+        boolean hasLogFoldChangeFile = new File(logFoldChangeFileLocation).exists();
+
+        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile);
 
     }
 }

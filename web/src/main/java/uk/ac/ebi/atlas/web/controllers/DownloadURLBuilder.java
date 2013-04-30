@@ -35,6 +35,8 @@ public class DownloadURLBuilder {
 
     private static final String TSV_NORMALIZED_FILE_EXTENSION = "/normalized.tsv";
 
+    private static final String TSV_LOG_FOLD_FILE_EXTENSION = "/logFold.tsv";
+
     private static final String TSV_ANALYTICS_FILE_EXTENSION = "/all-analytics.tsv";
 
     public String buildDownloadRawUrl(HttpServletRequest request) {
@@ -47,6 +49,10 @@ public class DownloadURLBuilder {
 
     public String buildDownloadNormalizedDataUrl(HttpServletRequest request) {
         return extractBaseURL(request) + TSV_NORMALIZED_FILE_EXTENSION;
+    }
+
+    public String buildDownloadLogFoldDataUrl(HttpServletRequest request) {
+        return extractBaseURL(request) + TSV_LOG_FOLD_FILE_EXTENSION;
     }
 
     private String extractBaseURL(HttpServletRequest request) {

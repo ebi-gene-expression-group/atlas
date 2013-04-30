@@ -80,6 +80,7 @@ public class ExperimentDispatcher {
     public static final String EXPERIMENT_ATTRIBUTE = "experiment";
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
+    private static final String IS_TWO_COLOUR = "isTwoColour";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
@@ -136,6 +137,7 @@ public class ExperimentDispatcher {
             MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
             model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+            model.addAttribute(IS_TWO_COLOUR, microarrayExperiment.isTwoColour());
 
             return microarrayExperiment;
         }

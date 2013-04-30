@@ -61,17 +61,29 @@
                         </td>
                         <c:if test="${type eq 'DIFFERENTIAL'}">
                             <td>
-                                <a id="download-raw" class="button-image" title="Download all raw counts for the experiment"
+                                <a id="download-raw" class="button-image"
+                                   title="Download all raw counts for the experiment"
                                    href="${rawDownloadUrl}">
                                     <img src="resources/images/download_blue_small_raw.png"/></a>
                             </td>
                         </c:if>
                         <c:if test="${type eq 'MICROARRAY'}">
                             <td>
-                                <a id="download-normalized" class="button-image"
-                                   title="Download all normalized expressions for the experiment"
-                                   href="${normalizedUrl}">
-                                    <img src="resources/images/download_blue_small_normalized.png"/></a>
+                                <c:choose>
+                                    <c:when test="${isTwoColour eq 'true'}">
+                                        <a id="download-logFold" class="button-image"
+                                           title="Download all log fold expression changes for the experiment"
+                                           href="${logFoldUrl}">
+                                            <img src="resources/images/download_blue_small_logfold.png"/></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a id="download-normalized" class="button-image"
+                                           title="Download all normalized expressions for the experiment"
+                                           href="${normalizedUrl}">
+                                            <img src="resources/images/download_blue_small_normalized.png"/></a>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </td>
                         </c:if>
                         <c:if test="${type != 'BASELINE'}">
@@ -101,9 +113,9 @@
                  beforeLoad: function(){
                  this.title = "Look at this marvelous title... yes this is the title";
                  },*/
-                padding:0,
-                openEffect:'elastic',
-                closeEffect:'elastic'
+                padding: 0,
+                openEffect: 'elastic',
+                closeEffect: 'elastic'
             });
 
         });

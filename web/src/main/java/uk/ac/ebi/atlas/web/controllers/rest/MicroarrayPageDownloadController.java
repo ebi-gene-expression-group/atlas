@@ -47,6 +47,7 @@ import java.io.IOException;
 public class MicroarrayPageDownloadController {
     private static final Logger LOGGER = Logger.getLogger(MicroarrayPageDownloadController.class);
     private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
+    private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
     private static final String ANALYTICS_TSV = "-analytics.tsv";
 
     private final MicroarrayRequestContextBuilder requestContextBuilder;
@@ -116,6 +117,26 @@ public class MicroarrayPageDownloadController {
         long genesCount = writer.write();
 
         LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/logFold.tsv", params = "type=MICROARRAY")
+    public void downloadLogFoldData(HttpServletRequest request
+            , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+            , HttpServletResponse response) throws IOException {
+
+        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        String selectedArrayDesign = getSelectedArrayDesign(preferences, experiment);
+
+        prepareResponse(response, experiment.getAccession(), selectedArrayDesign, LOG_FOLD_CHANGES_TSV);
+
+        ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
+                selectedArrayDesign,
+                response.getWriter());
+
+        long genesCount = writer.write();
+
+        LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> streamed " + genesCount + " gene expression profiles");
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=MICROARRAY")
