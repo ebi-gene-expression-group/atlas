@@ -47,13 +47,15 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
 
     private ConfigurationTrader configurationTrader;
 
-    @Value("#{configuration['microarray.log-fold-changes.data.path.template']}")
     private String logFoldChangePathTemplate;
 
     @Inject
-    public MicroarrayExperimentLoader(MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder, ConfigurationTrader configurationTrader) {
+    public MicroarrayExperimentLoader(MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder,
+                                      ConfigurationTrader configurationTrader,
+                                      @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate) {
         this.mageTabSpeciesParserBuilder = mageTabSpeciesParserBuilder;
         this.configurationTrader = configurationTrader;
+        this.logFoldChangePathTemplate = logFoldChangePathTemplate;
     }
 
     @Override

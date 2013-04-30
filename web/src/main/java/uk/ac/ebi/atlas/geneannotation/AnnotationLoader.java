@@ -20,15 +20,20 @@ public abstract class AnnotationLoader {
     }
 
     public void loadMappings(Collection<String> annotatedSubjects) {
+        turnOffReadonly();
+
+        ConcurrentMap<String, String> destinationMap = getDestinationMap(annotationEnvironment);
+        destinationMap.clear();
+
         for (String annotatedSubject : annotatedSubjects) {
-            loadMappings(annotatedSubject, true);
+            loadMappingsToBerkeley(annotatedSubject);
         }
 
     }
 
     public void loadMappings(String annotatedSubject) {
 
-        loadMappings(annotatedSubject, false);
+        loadMappingsToBerkeley(annotatedSubject);
 
     }
 
@@ -42,17 +47,13 @@ public abstract class AnnotationLoader {
         annotationEnvironment.initBerkeleyReadonly();
     }
 
-    protected void loadMappings(String annotatedSubject, boolean removeOldMappings) {
+    protected void loadMappingsToBerkeley(String annotatedSubject) {
 
         Map<String, String> annotations = annotationMappingExtractor.extractAnnotationsMap(getAnnotationServerUrl(), annotatedSubject);
 
         turnOffReadonly();
 
         ConcurrentMap<String, String> destinationMap = getDestinationMap(annotationEnvironment);
-
-        if (removeOldMappings) {
-            destinationMap.clear();
-        }
 
         TransactionWorker transactionWorker = getTransactionWorker(destinationMap, annotations, annotatedSubject);
 
