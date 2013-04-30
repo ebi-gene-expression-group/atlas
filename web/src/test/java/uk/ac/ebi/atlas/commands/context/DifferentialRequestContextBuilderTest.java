@@ -30,7 +30,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -47,10 +49,10 @@ public class DifferentialRequestContextBuilderTest {
     public static final String CONTRAST_NAME2 = "b";
 
     @Mock
-    DifferentialExperiment experimentMock;
+    MicroarrayExperiment experimentMock;
 
     @Mock
-    DifferentialRequestPreferences preferencesMock;
+    MicroarrayRequestPreferences preferencesMock;
 
     @Mock
     Contrast contrastMock1;
@@ -58,11 +60,11 @@ public class DifferentialRequestContextBuilderTest {
     @Mock
     Contrast contrastMock2;
 
-    DifferentialRequestContextBuilder subject;
+    MicroarrayRequestContextBuilder subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new DifferentialRequestContextBuilder(new DifferentialRequestContext());
+        subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
 
         when(experimentMock.getFirstSpecies()).thenReturn(ORGANISM);
 
@@ -80,7 +82,7 @@ public class DifferentialRequestContextBuilderTest {
 
     @Test
     public void testBuild() throws Exception {
-        DifferentialRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
+        MicroarrayRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context.getSelectedQueryFactors(), hasItem(contrastMock1));
         assertThat(context.getFilteredBySpecies(), is(ORGANISM));
         assertThat(context.getAllQueryFactors(), hasItems(contrastMock1, contrastMock2));

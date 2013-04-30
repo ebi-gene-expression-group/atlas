@@ -40,7 +40,7 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class MicroarrayQueryPageController extends DifferentialQueryPageRequestHandling<MicroarrayExperiment, MicroarrayRequestPreferences> {
+public class MicroarrayQueryPageController extends DifferentialQueryPageController<MicroarrayExperiment, MicroarrayRequestPreferences> {
 
     @Inject
     public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder,

@@ -40,7 +40,7 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class RnaSeqQueryPageController extends DifferentialQueryPageRequestHandling<DifferentialExperiment, DifferentialRequestPreferences> {
+public class RnaSeqQueryPageController extends DifferentialQueryPageController<DifferentialExperiment, DifferentialRequestPreferences> {
 
     @Inject
     public RnaSeqQueryPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,

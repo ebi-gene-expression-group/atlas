@@ -30,6 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -74,6 +75,8 @@ public class MicroarrayProfilesInputStreamIT {
     private MicroarrayExperimentsCache microarrayExperimentsCache;
 
     @Inject
+    private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
+
     private MicroarrayRequestContext microarrayRequestContext;
 
     private ObjectInputStream<MicroarrayProfile> subject;
@@ -84,7 +87,6 @@ public class MicroarrayProfilesInputStreamIT {
 
     @Before
     public void initSubject() throws Exception {
-        microarrayRequestContext.setRequestPreferences(microarrayRequestPreferences);
 
         subject = inputStreamFactory.createMicroarrayProfileInputStream(EXPERIMENT_ACCESSION, ARRAY_DESIGN_ACCESSION);
 
@@ -92,16 +94,20 @@ public class MicroarrayProfilesInputStreamIT {
 
         contrast = microarrayExperiment.getContrasts().first();
 
-        TreeSet<Contrast> allQueryFactors = Sets.newTreeSet(Contrast.orderByDisplayName());
+        microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
+                                                .withPreferences(microarrayRequestPreferences).build();
+        /*
+        microarrayRequestContext.setRequestPreferences(microarrayRequestPreferences);
         allQueryFactors.add(contrast);
+        TreeSet<Contrast> allQueryFactors = Sets.newTreeSet(Contrast.orderByDisplayName());
         microarrayRequestContext.setAllQueryFactors(allQueryFactors);
         microarrayRequestContext.setSelectedQueryFactors(Sets.newHashSet());
+        */
     }
 
     @Test
     public void readNextWithUpDownRegulation() throws IOException {
-        microarrayRequestContext.setRegulation(Regulation.UP_DOWN);
-
+        microarrayRequestPreferences.setRegulation(Regulation.UP_DOWN);
 
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
@@ -140,7 +146,7 @@ public class MicroarrayProfilesInputStreamIT {
 
     @Test
     public void readNextWithUpRegulation() throws IOException {
-        microarrayRequestContext.setRegulation(Regulation.UP);
+        microarrayRequestPreferences.setRegulation(Regulation.UP);
 
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
@@ -180,8 +186,7 @@ public class MicroarrayProfilesInputStreamIT {
 
     @Test
     public void readNextWithDownRegulation() throws IOException {
-        microarrayRequestContext.setRegulation(Regulation.DOWN);
-
+        microarrayRequestPreferences.setRegulation(Regulation.DOWN);
 
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
@@ -219,7 +224,7 @@ public class MicroarrayProfilesInputStreamIT {
 
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
-        microarrayRequestContext.setRegulation(Regulation.UP_DOWN);
+        microarrayRequestPreferences.setRegulation(Regulation.UP_DOWN);
 
 
         long countProfiles = 0;

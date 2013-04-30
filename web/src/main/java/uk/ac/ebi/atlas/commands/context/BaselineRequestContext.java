@@ -24,6 +24,8 @@ package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -33,6 +35,8 @@ import java.util.Set;
 @Named
 @Scope("request")
 public class BaselineRequestContext extends RequestContext<Factor, BaselineRequestPreferences> {
+
+    private BaselineExperiment experiment;
 
     private Set<Factor> selectedFilterFactors;
 
@@ -47,14 +51,24 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
         return requestPreferences.getQueryFactorType();
     }
 
-    public void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
+    void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
         this.selectedFilterFactors = selectedFilterFactors;
+    }
+
+    void setExperiment(BaselineExperiment experiment){
+        this.experiment = experiment;
+    }
+
+    public BaselineExperiment getExperiment(){
+        return experiment;
     }
 
     @Override
     public String toString(){
-        return Objects.toStringHelper(this.getClass())
-                .add("selectedFilterFactors", selectedFilterFactors).toString();
+        return Objects.toStringHelper(getClass())
+                .addValue(super.toString())
+                .add("selectedFilterFactors", selectedFilterFactors)
+                .add("experiment", experiment).toString();
     }
 
 

@@ -41,30 +41,26 @@ public class DifferentialRequestContextTest {
     DifferentialRequestContext subject;
 
     @Mock
-    DifferentialRequestPreferences preferencesMock;
-
-    Regulation regulation = Regulation.UP;
-
-    Regulation regulation1 = Regulation.DOWN;
+    DifferentialRequestPreferences requestPreferencesMock;
 
     @Before
     public void setUp() throws Exception {
         subject = new DifferentialRequestContext();
 
-        when(preferencesMock.getRegulation()).thenReturn(regulation);
+        when(requestPreferencesMock.getRegulation()).thenReturn(Regulation.UP);
 
-        subject.setRequestPreferences(preferencesMock);
+        subject.setRequestPreferences(requestPreferencesMock);
     }
 
     @Test
     public void testGetRegulation() throws Exception {
-        assertThat(subject.getRegulation(), is(regulation));
+        assertThat(subject.getRegulation(), is(Regulation.UP));
     }
 
     @Test
     public void testSetRegulation() throws Exception {
-        subject.setRegulation(regulation1);
-        assertThat(subject.getRegulation(), is(regulation1));
+        when(requestPreferencesMock.getRegulation()).thenReturn(Regulation.DOWN);
+        assertThat(subject.getRegulation(), is(Regulation.DOWN));
     }
 
     @Test

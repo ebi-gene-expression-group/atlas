@@ -28,6 +28,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.rest.BaselineQueryDownloadController;
 
@@ -43,26 +46,33 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class BaselineProfilesTSVWriterIT {
 
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
     private static String EXPECTED_HEADERS_TEXT =
             "# Expression Atlas version: 0.1.4-SNAPSHOT\n" +
-            "# Query: Genes (matching): protein_coding, (specifically) expressed in any factor value/in factor value(s):  above the expression level cutoff: 0.5\n" +
+            "# Query: Genes (matching): protein_coding, (specifically) expressed in any ORGANISM_PART above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION + "\n" +
             "# Timestamp: ";
 
     /*/in factor value(s)*/
 
-
     @Inject
     private BaselineProfilesTSVWriter subject;
 
+    @Inject
+    private BaselineExperimentsCache baselineExperimentsCache;
 
     @Inject
+    private BaselineRequestContextBuilder baselineRequestContextBuilder;
+
     private BaselineRequestContext baselineRequestContext;
 
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
     @PostConstruct
     private void initContext(){
-        baselineRequestContext.setRequestPreferences(requestPreferences);
+        requestPreferences.setQueryFactorType("ORGANISM_PART");
+        BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        baselineRequestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
+                                .withPreferences(requestPreferences).build();
     }
 
 
