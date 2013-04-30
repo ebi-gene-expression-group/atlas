@@ -146,6 +146,25 @@ public class BaselineProfilesTSVWriterIT {
                 "in Cell Line(s): 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
                 "in experiment E-GEOD-26284, filtered by RNA: total RNA and Cellular Component: whole cell"));
 
+    }
+
+    @Test
+    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForTwodimensionalExperiments(){
+        BaselineExperiment multidimensionalExperiment = baselineExperimentsCache.getExperiment(MULTIDIMENSIONAL_EXPERIMENT_ACCESSION);
+
+        requestPreferences.setSerializedFilterFactors("CELL_LINE:HPC-PL cell line");
+
+        requestPreferences.setQueryFactorType("RNA");
+        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("Mickey Mouse")));
+
+        baselineRequestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
+                                                              .withPreferences(requestPreferences).build();
+
+        String[] headerRows = subject.buildHeaders().split("\n");
+
+        assertThat(headerRows[1], is("# Query: Genes exactly matching: 'protein_coding', specifically expressed " +
+                "in RNA: 'Mickey Mouse' above the expression level cutoff: 0.5 " +
+                "in experiment E-GEOD-26284, filtered by Cell Line: HPC-PL cell line"));
 
     }
 }
