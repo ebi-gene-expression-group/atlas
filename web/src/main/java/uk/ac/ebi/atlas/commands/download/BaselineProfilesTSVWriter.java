@@ -114,7 +114,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
                 return factor.getValue();
             }
         });
-        return queryFactorName + (transformedFactors.isEmpty()? ":" : "(s): '") + Joiner.on(", ").join(transformedFactors) + "'";
+        return queryFactorName + (transformedFactors.size() == 1 ? ": '" : "s: '") + Joiner.on(", ").join(transformedFactors) + "'";
     }
 
 }
