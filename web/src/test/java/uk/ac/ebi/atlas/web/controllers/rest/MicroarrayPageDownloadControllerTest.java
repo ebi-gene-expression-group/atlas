@@ -109,14 +109,26 @@ public class MicroarrayPageDownloadControllerTest {
     }
 
     @Test
-    public void testDownloadRawCounts() throws Exception {
+    public void testDownloadNormalizedData() throws Exception {
         when(expressionsWriterMock.write()).thenReturn(0L);
         when(dataWriterFactoryMock.getMicroarrayRawDataWriter(experimentMock, ARRAY_DESIGN, printWriterMock)).thenReturn(expressionsWriterMock);
 
-        subject.downloadRawCounts(requestMock, preferencesMock, responseMock);
+        subject.downloadNormalizedData(requestMock, preferencesMock, responseMock);
 
         verify(expressionsWriterMock).write();
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-normalized-expressions.tsv\"");
+        verify(responseMock).setContentType("text/plain; charset=utf-8");
+    }
+
+    @Test
+    public void testDownloadLogFoldData() throws Exception {
+        when(expressionsWriterMock.write()).thenReturn(0L);
+        when(dataWriterFactoryMock.getMicroarrayLogFoldDataWriter(experimentMock, ARRAY_DESIGN, printWriterMock)).thenReturn(expressionsWriterMock);
+
+        subject.downloadLogFoldData(requestMock, preferencesMock, responseMock);
+
+        verify(expressionsWriterMock).write();
+        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-log-fold-changes.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
     }
 

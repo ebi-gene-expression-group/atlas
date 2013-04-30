@@ -100,7 +100,7 @@ public class MicroarrayPageDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = "type=MICROARRAY")
-    public void downloadRawCounts(HttpServletRequest request
+    public void downloadNormalizedData(HttpServletRequest request
             , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
