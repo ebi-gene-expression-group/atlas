@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
@@ -93,18 +94,19 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         Collection<String> transformedSelectedFilterFactors = Collections2.transform(selectedFilterFactors, new Function<Factor, String>() {
             @Override
             public String apply(Factor factor) {
-                return factor.getType()+ ": " + factor.getValue();
+                String factorName = requestContext.getExperiment().getExperimentalFactors().getFactorName(factor.getType());
+                return factorName + ": " + factor.getValue();
             }
         });
-        return "(filtered by" + Joiner.on(" and ").join(transformedSelectedFilterFactors) + ")";
+        return " (filtered by " + Joiner.on(" and ").join(transformedSelectedFilterFactors) + ")";
     }
 
 
     protected String formatSelectedQueryFactors() {
-        String queryFactorType = requestContext.getQueryFactorType();
+        String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorName(requestContext.getQueryFactorType());
         Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
         if (CollectionUtils.isEmpty(selectedQueryFactors)){
-            return "any " + queryFactorType;
+            return "any " + queryFactorName;
         }
         Collection<String> transformedFactors = Collections2.transform(selectedQueryFactors, new Function<Factor, String>() {
             @Override
@@ -112,7 +114,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
                 return factor.getValue();
             }
         });
-        return queryFactorType + "(s): "+ Joiner.on(",").join(transformedFactors);
+        return queryFactorName + "(s): "+ Joiner.on(", ").join(transformedFactors);
     }
 
 }
