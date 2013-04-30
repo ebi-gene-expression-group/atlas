@@ -73,9 +73,9 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
 
     @Override
     protected String buildHeaders() {
-        String geneQuery = requestContext.getGeneQuery();
-        String specific = requestContext.isSpecific() ? "(specifically) " : "";
-        String exactMatch = requestContext.isExactMatch() ? "exactly " : "";
+        String geneQuery = "'" + requestContext.getGeneQuery() + "'";
+        String specific = requestContext.isSpecific() ? "specifically " : "";
+        String exactMatch = requestContext.isExactMatch() ? " exactly matching" : "";
         String selectedQueryFactors = formatSelectedQueryFactors();
         double cutoff = requestContext.getCutoff();
         String experimentAccession = requestContext.getExperiment().getAccession();
@@ -98,7 +98,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
                 return factorName + ": " + factor.getValue();
             }
         });
-        return " (filtered by " + Joiner.on(" and ").join(transformedSelectedFilterFactors) + ")";
+        return ", filtered by " + Joiner.on(" and ").join(transformedSelectedFilterFactors);
     }
 
 
@@ -114,7 +114,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
                 return factor.getValue();
             }
         });
-        return queryFactorName + "(s): "+ Joiner.on(", ").join(transformedFactors);
+        return queryFactorName + (transformedFactors.isEmpty()? ":" : "(s): '") + Joiner.on(", ").join(transformedFactors) + "'";
     }
 
 }

@@ -110,7 +110,7 @@ public class BaselineProfilesTSVWriterIT {
 
         String[] headerRows = subject.buildHeaders().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes (matching): protein_coding, (specifically) expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
+        assertThat(headerRows[1], is("# Query: Genes: 'protein_coding', specifically expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
 
     }
 
@@ -123,7 +123,7 @@ public class BaselineProfilesTSVWriterIT {
 
         String[] headerRows = subject.buildHeaders().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes (exactly matching): protein_coding, expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
+        assertThat(headerRows[1], is("# Query: Genes exactly matching: 'protein_coding', expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
 
     }
@@ -142,9 +142,9 @@ public class BaselineProfilesTSVWriterIT {
 
         String[] headerRows = subject.buildHeaders().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes (exactly matching): protein_coding, (specifically) expressed " +
-                "in Cell Line(s): HPC-PL cell line, Mickey Mouse above the expression level cutoff: 0.5 " +
-                "in experiment E-GEOD-26284 (filtered by RNA: total RNA and Cellular Component: whole cell)"));
+        assertThat(headerRows[1], is("# Query: Genes exactly matching: 'protein_coding', specifically expressed " +
+                "in Cell Line(s): 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
+                "in experiment E-GEOD-26284, filtered by RNA: total RNA and Cellular Component: whole cell"));
 
 
     }
