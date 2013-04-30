@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.commands.download;
 
+import com.google.common.collect.Sets;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,11 +33,11 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.rest.BaselineQueryDownloadController;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
@@ -47,10 +48,7 @@ import static org.junit.Assert.assertThat;
 public class BaselineProfilesTSVWriterIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
-    private static String EXPECTED_HEADERS_TEXT =
-            "# Expression Atlas version: 0.1.4-SNAPSHOT\n" +
-            "# Query: Genes (matching): protein_coding, (specifically) expressed in any ORGANISM_PART above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION + "\n" +
-            "# Timestamp: ";
+    private static final String MULTIDIMENSIONAL_EXPERIMENT_ACCESSION = "E-GEOD-26284";
 
     /*/in factor value(s)*/
 
@@ -77,14 +75,77 @@ public class BaselineProfilesTSVWriterIT {
 
 
     @Test
-    public void headersShouldHaveExpectedFormat(){
+    public void headerTextShouldContainThreeRows(){
 
-        requestPreferences.setExactMatch(false);
+        String[] headerRows = subject.buildHeaders().split("\n");
 
-        String headersText = subject.buildHeaders();
-
-        assertThat(headersText, startsWith(EXPECTED_HEADERS_TEXT));
+        assertThat(headerRows.length, is(3));
 
     }
 
+    @Test
+    public void thirdHeaderLineShouldDescribeTimestamp(){
+
+        String[] headerRows = subject.buildHeaders().split("\n");
+
+        assertThat(headerRows[2], startsWith("# Timestamp: "));
+        assertThat(headerRows[2].length(), greaterThan("# Timestamp: ".length()));
+
+    }
+
+    @Test
+    public void firstHeaderLineShouldDescribeAtlasVersion(){
+
+        String[] headerRows = subject.buildHeaders().split("\n");
+
+        assertThat(headerRows[0], startsWith("# Expression Atlas version: "));
+        assertThat(headerRows[0].length(), greaterThan("# Expression Atlas version: ".length()));
+
+    }
+
+    @Test
+    public void secondHeaderLineShouldDescribeQuery(){
+
+        requestPreferences.setExactMatch(false);
+
+        String[] headerRows = subject.buildHeaders().split("\n");
+
+        assertThat(headerRows[1], is("# Query: Genes (matching): protein_coding, (specifically) expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
+
+    }
+
+
+    @Test
+    public void secondHeaderLineShouldDescribeExactMatchQuery(){
+
+        requestPreferences.setExactMatch(true);
+        requestPreferences.setSpecific(false);
+
+        String[] headerRows = subject.buildHeaders().split("\n");
+
+        assertThat(headerRows[1], is("# Query: Genes (exactly matching): protein_coding, expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
+        assertThat(headerRows[2], startsWith("# Timestamp: "));
+
+    }
+
+    @Test
+    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForMultidimensionalExperiments(){
+        BaselineExperiment multidimensionalExperiment = baselineExperimentsCache.getExperiment(MULTIDIMENSIONAL_EXPERIMENT_ACCESSION);
+
+        requestPreferences.setSerializedFilterFactors("RNA:total RNA,CELLULAR_COMPONENT:whole cell");
+
+        requestPreferences.setQueryFactorType("CELL_LINE");
+        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("HPC-PL cell line", "Mickey Mouse")));
+
+        baselineRequestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
+                                                              .withPreferences(requestPreferences).build();
+
+        String[] headerRows = subject.buildHeaders().split("\n");
+
+        assertThat(headerRows[1], is("# Query: Genes (exactly matching): protein_coding, (specifically) expressed " +
+                "in Cell Line(s): HPC-PL cell line, Mickey Mouse above the expression level cutoff: 0.5 " +
+                "in experiment E-GEOD-26284 (filtered by RNA: total RNA and Cellular Component: whole cell)"));
+
+
+    }
 }
