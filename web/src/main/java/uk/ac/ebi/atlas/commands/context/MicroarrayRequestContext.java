@@ -24,27 +24,29 @@ package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Named;
 
 @Named
 @Scope("request")
-public class MicroarrayRequestContext extends DifferentialRequestContext {
-
+public class MicroarrayRequestContext extends DifferentialRequestContext<MicroarrayExperiment> {
 
     private String arrayDesignAccession;
 
-    @Override
-    public String toString(){
-        return Objects.toStringHelper(this.getClass())
-                .add("arrayDesignAccession", arrayDesignAccession).toString();
-    }
-
-    public void setArrayDesignAccession(String arrayDesignAccession) {
+    void setArrayDesignAccession(String arrayDesignAccession) {
         this.arrayDesignAccession = arrayDesignAccession;
     }
 
     public String getArrayDesignAccession() {
         return arrayDesignAccession;
     }
+
+    @Override
+    public String toString(){
+        return Objects.toStringHelper(getClass())
+                .addValue(super.toString())
+                .add("arrayDesignAccession", arrayDesignAccession).toString();
+    }
+
 }

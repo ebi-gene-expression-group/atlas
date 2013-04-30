@@ -72,6 +72,8 @@ public class BaselineRequestContextBuilder {
     public BaselineRequestContext build() {
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
+        requestContext.setExperiment(experiment);
+
         requestContext.setRequestPreferences(preferences);
 
         Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());

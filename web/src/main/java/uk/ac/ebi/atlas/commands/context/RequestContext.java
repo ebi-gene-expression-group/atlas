@@ -23,13 +23,14 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Set;
 import java.util.SortedSet;
 
 
-public class RequestContext<T, K extends ExperimentPageRequestPreferences> {
+public abstract class RequestContext<T, K extends ExperimentPageRequestPreferences> {
     protected K requestPreferences;
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
@@ -64,24 +65,25 @@ public class RequestContext<T, K extends ExperimentPageRequestPreferences> {
     }
 
     public SortedSet<T> getAllQueryFactors() {
-        return this.allQueryFactors;
+        return allQueryFactors;
     }
 
-    public void setAllQueryFactors(SortedSet<T> allQueryFactors) {
+    void setAllQueryFactors(SortedSet<T> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
     }
 
-    public void setSelectedQueryFactors(Set selectedQueryFactors) {
+    void setSelectedQueryFactors(Set selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
     }
 
-    public void setFilteredBySpecies(String filteredBySpecies) {
+    void setFilteredBySpecies(String filteredBySpecies) {
         this.filteredBySpecies = filteredBySpecies;
     }
 
-    public void setRequestPreferences(K requestPreferences) {
+    void setRequestPreferences(K requestPreferences) {
         this.requestPreferences = requestPreferences;
     }
+
 
     @Override
     public String toString() {
@@ -90,6 +92,5 @@ public class RequestContext<T, K extends ExperimentPageRequestPreferences> {
                 .add("filteredBySpecies", filteredBySpecies)
                 .toString();
     }
-
 
 }

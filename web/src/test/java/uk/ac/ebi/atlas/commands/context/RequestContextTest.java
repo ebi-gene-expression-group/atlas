@@ -28,6 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.SortedSet;
@@ -39,14 +41,20 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RequestContextTest {
 
-    RequestContext<String, ExperimentPageRequestPreferences> subject;
+    private BaselineRequestContext subject;
 
     @Mock
-    ExperimentPageRequestPreferences preferencesMock;
+    private BaselineRequestPreferences preferencesMock;
+
+    @Mock
+    private Factor factor1Mock;
+
+    @Mock
+    private Factor factor2Mock;
 
     @Before
     public void setUp() throws Exception {
-        subject = new RequestContext<>();
+        subject = new BaselineRequestContext();
         subject.setRequestPreferences(preferencesMock);
 
         when(preferencesMock.getGeneQuery()).thenReturn("GENE_QUERY");
@@ -98,18 +106,17 @@ public class RequestContextTest {
 
     @Test
     public void testSetAllQueryFactors() throws Exception {
-        SortedSet<String> set = Sets.newTreeSet();
-        set.add("b");
-        set.add("a");
-        set.add("c");
+        SortedSet<Factor> set = Sets.newTreeSet();
+        set.add(factor1Mock);
+        set.add(factor2Mock);
         subject.setAllQueryFactors(set);
-        assertThat(subject.getAllQueryFactors(), contains("a", "b", "c"));
+        assertThat(subject.getAllQueryFactors(), contains(factor1Mock, factor2Mock));
     }
 
     @Test
     public void testSetSelectedQueryFactors() throws Exception {
-        subject.setSelectedQueryFactors(Sets.newHashSet("a", "b", "c"));
-        assertThat(subject.getSelectedQueryFactors(), hasItems("a", "b", "c"));
+        subject.setSelectedQueryFactors(Sets.newHashSet(factor1Mock, factor2Mock));
+        assertThat(subject.getSelectedQueryFactors(), hasItems(factor1Mock, factor2Mock));
     }
 
     @Test

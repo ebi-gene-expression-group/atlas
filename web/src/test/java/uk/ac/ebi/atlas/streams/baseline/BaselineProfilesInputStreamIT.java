@@ -29,6 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -59,7 +60,9 @@ public class BaselineProfilesInputStreamIT {
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    private BaselineRequestContext filterParameters;
+    private BaselineRequestContextBuilder baselineRequestContextBuilder;
+
+    private BaselineRequestContext baselineRequestContext;
 
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
@@ -74,11 +77,8 @@ public class BaselineProfilesInputStreamIT {
         requestPreferences.setQueryFactorType("ORGANISM_PART");
 
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        filterParameters.setRequestPreferences(requestPreferences);
-        filterParameters.setFilteredBySpecies("homo");
-        filterParameters.setSelectedFilterFactors(Collections.EMPTY_SET);
-        filterParameters.setSelectedQueryFactors(Collections.EMPTY_SET);
-        filterParameters.setAllQueryFactors(experiment.getExperimentalFactors().getAllFactors());
+
+        baselineRequestContext = baselineRequestContextBuilder.forExperiment(experiment).withPreferences(requestPreferences).build();
 
         subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION);
 

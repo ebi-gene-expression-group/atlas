@@ -51,20 +51,23 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
     }
 
     public T build() {
+
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
         requestContext.setRequestPreferences(requestPreferences);
 
-        requestContext.setSelectedQueryFactors(getSelectedQueryContrasts());
+        requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 
         requestContext.setFilteredBySpecies(experiment.getFirstSpecies());
 
         requestContext.setAllQueryFactors(experiment.getContrasts());
 
+        requestContext.setExperiment(experiment);
+
         return requestContext;
     }
 
-    Set<Contrast> getSelectedQueryContrasts() {
+    Set<Contrast> getSelectedQueryContrasts(DifferentialExperiment experiment) {
         if(CollectionUtils.isEmpty(requestPreferences.getQueryFactorValues())){
             return Sets.newHashSet();
         }

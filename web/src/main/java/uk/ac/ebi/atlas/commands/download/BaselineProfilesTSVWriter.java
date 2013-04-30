@@ -75,18 +75,36 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? "(specifically) " : "";
         String exactMatch = requestContext.isExactMatch() ? "exactly " : "";
+        String selectedQueryFactors = formatSelectedQueryFactors();
         double cutoff = requestContext.getCutoff();
-        Date dNow = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss");
-        return MessageFormat.format(headerTemplate, exactMatch, geneQuery, specific, formatQueryFactors(), cutoff, ft.format(dNow));
+        String experimentAccession = requestContext.getExperiment().getAccession();
+        String selectedFilterFactors = formatSelectedFilterFactors();
+        String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
+        return MessageFormat.format(headerTemplate, exactMatch, geneQuery, specific, selectedQueryFactors, cutoff,
+                                    experimentAccession, selectedFilterFactors, timeStamp);
 
     }
 
+    private String formatSelectedFilterFactors() {
+        Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
+        if (CollectionUtils.isEmpty(selectedFilterFactors)){
+            return "";
+        }
+        Collection<String> transformedSelectedFilterFactors = Collections2.transform(selectedFilterFactors, new Function<Factor, String>() {
+            @Override
+            public String apply(Factor factor) {
+                return factor.getType()+ ": " + factor.getValue();
+            }
+        });
+        return "(filtered by" + Joiner.on(" and ").join(transformedSelectedFilterFactors) + ")";
+    }
 
-    protected String formatQueryFactors() {
+
+    protected String formatSelectedQueryFactors() {
+        String queryFactorType = requestContext.getQueryFactorType();
         Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
         if (CollectionUtils.isEmpty(selectedQueryFactors)){
-            return StringUtils.EMPTY;
+            return "any " + queryFactorType;
         }
         Collection<String> transformedFactors = Collections2.transform(selectedQueryFactors, new Function<Factor, String>() {
             @Override
@@ -94,8 +112,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
                 return factor.getValue();
             }
         });
-
-        return Joiner.on(",").join(transformedFactors);
+        return queryFactorType + "(s): "+ Joiner.on(",").join(transformedFactors);
     }
 
 }
