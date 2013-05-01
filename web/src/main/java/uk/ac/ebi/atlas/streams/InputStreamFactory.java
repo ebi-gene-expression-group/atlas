@@ -38,7 +38,7 @@ import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfileBuilder;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBufferBuilder;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
-import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBufferBuilder;
+import uk.ac.ebi.atlas.streams.differential.RnaSeqExpressionsBufferBuilder;
 import uk.ac.ebi.atlas.streams.differential.RnaSeqProfilesInputStream;
 import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsBufferBuilder;
 import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfilesInputStream;
@@ -64,7 +64,7 @@ public class InputStreamFactory {
     private String microarrayExperimentDataFileUrlTemplate;
 
     private BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder;
-    private DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder;
+    private RnaSeqExpressionsBufferBuilder rnaSeqExpressionsBufferBuilder;
     private MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder;
     private BaselineProfileBuilder baselineProfileBuilder;
     private MicroarrayProfileBuilder microarrayProfileBuilder;
@@ -75,14 +75,14 @@ public class InputStreamFactory {
 
     @Inject
     public InputStreamFactory(BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder,
-                              DifferentialExpressionsBufferBuilder differentialExpressionsBufferBuilder,
+                              RnaSeqExpressionsBufferBuilder rnaSeqExpressionsBufferBuilder,
                               MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder,
                               BaselineProfileBuilder baselineProfileBuilder,
                               MicroarrayProfileBuilder microarrayProfileBuilder,
                               RnaSeqProfileBuilder rnaSeqProfileBuilder,
                               DesignElementMappingProvider designElementMappingProvider, TsvReaderUtils tsvReaderUtils) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
-        this.differentialExpressionsBufferBuilder = differentialExpressionsBufferBuilder;
+        this.rnaSeqExpressionsBufferBuilder = rnaSeqExpressionsBufferBuilder;
         this.microarrayExpressionsBufferBuilder = microarrayExpressionsBufferBuilder;
         this.baselineProfileBuilder = baselineProfileBuilder;
         this.microarrayProfileBuilder = microarrayProfileBuilder;
@@ -108,7 +108,7 @@ public class InputStreamFactory {
     public ObjectInputStream<RnaSeqProfile> createDifferentialProfileInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(differentialExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = tsvReaderUtils.build(tsvFileURL);
-        return new RnaSeqProfilesInputStream(csvReader, experimentAccession, differentialExpressionsBufferBuilder, rnaSeqProfileBuilder);
+        return new RnaSeqProfilesInputStream(csvReader, experimentAccession, rnaSeqExpressionsBufferBuilder, rnaSeqProfileBuilder);
     }
 
     public ObjectInputStream<MicroarrayProfile> createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {

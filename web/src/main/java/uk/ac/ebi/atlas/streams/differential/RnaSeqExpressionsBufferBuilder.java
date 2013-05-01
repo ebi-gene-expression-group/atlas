@@ -40,9 +40,9 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class DifferentialExpressionsBufferBuilder implements TsvRowBufferBuilder {
+public class RnaSeqExpressionsBufferBuilder implements TsvRowBufferBuilder {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionsBufferBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(RnaSeqExpressionsBufferBuilder.class);
 
     private String experimentAccession;
 
@@ -51,14 +51,14 @@ public class DifferentialExpressionsBufferBuilder implements TsvRowBufferBuilder
     private List<Contrast> orderedContrasts = new LinkedList<>();
 
     @Inject
-    public DifferentialExpressionsBufferBuilder(DifferentialExperimentsCache experimentsCache) {
+    public RnaSeqExpressionsBufferBuilder(DifferentialExperimentsCache experimentsCache) {
 
         this.experimentsCache = experimentsCache;
 
     }
 
     @Override
-    public DifferentialExpressionsBufferBuilder forExperiment(String experimentAccession) {
+    public RnaSeqExpressionsBufferBuilder forExperiment(String experimentAccession) {
 
         this.experimentAccession = experimentAccession;
 
@@ -67,7 +67,7 @@ public class DifferentialExpressionsBufferBuilder implements TsvRowBufferBuilder
     }
 
     @Override
-    public DifferentialExpressionsBufferBuilder withHeaders(String... tsvFileHeaders) {
+    public RnaSeqExpressionsBufferBuilder withHeaders(String... tsvFileHeaders) {
 
         LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
 

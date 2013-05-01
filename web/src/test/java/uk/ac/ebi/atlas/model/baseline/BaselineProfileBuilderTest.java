@@ -22,54 +22,156 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.TreeSet;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.anyDouble;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfileBuilderTest {
 
-    public static final String GENE_ID = "geneId";
-    @Mock
-    BaselineRequestContext requestContextMock;
+    private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
+    private BaselineProfileBuilder subject;
 
     @Mock
-    BaselineExpression expressionMock;
+    private BaselineProfilePrecondition baselineProfilePreconditionMock;
+    @Mock
+    private BaselineExpressionPrecondition baselineExpressionPreconditionMock;
 
-    Factor factor;
+    @Mock
+    private GeneNamesProvider geneNamesProviderMock;
 
-    BaselineProfileBuilder subject;
+    @Mock
+    private BaselineRequestContext requestContextMock;
+
+    @Mock
+    private BaselineExpression expressionMock1;
+    @Mock
+    private BaselineExpression expressionMock2;
+
 
     @Before
-    public void setUp() throws Exception {
-        factor = new Factor("type", "value");
-        when(requestContextMock.getCutoff()).thenReturn(0.05);
-        when(requestContextMock.getSelectedFilterFactors()).thenReturn(new HashSet<Factor>());
-        when(requestContextMock.getAllQueryFactors()).thenReturn(Sets.newTreeSet(Sets.newHashSet(factor)));
-        when(requestContextMock.getSelectedQueryFactors()).thenReturn(Sets.newHashSet(factor));
-        when(requestContextMock.isSpecific()).thenReturn(false);
+    public void initSubject() {
+        subject = new BaselineProfileBuilder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
 
-        when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
+        when(requestContextMock.getCutoff()).thenReturn(0d);
+        when(requestContextMock.isSpecific()).thenReturn(true);
+        when(requestContextMock.getQueryFactorType()).thenReturn(QUERY_FACTOR_TYPE);
+        when(requestContextMock.getAllQueryFactors()).thenReturn(new TreeSet<Factor>());
+        when(requestContextMock.getFilteredBySpecies()).thenReturn("homo");
+        when(requestContextMock.getSelectedFilterFactors()).thenReturn(Collections.EMPTY_SET);
 
+        when(baselineExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(baselineExpressionPreconditionMock);
+        when(baselineExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(baselineExpressionPreconditionMock);
+        when(baselineProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
+        when(baselineProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
+        when(baselineProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(baselineProfilePreconditionMock);
+    }
 
-        subject = new BaselineProfileBuilder(requestContextMock, new BaselineExpressionPrecondition(),
-                new BaselineProfilePrecondition());
+    @Test(expected = IllegalStateException.class)
+    public void createShouldFailWhenSetGeneIdIsNotInvoked() {
+        subject.addExpression(expressionMock1).create();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void addExpressionShouldFailBeforeSetGeneIdIsNotInvoked() {
+        subject.addExpression(expressionMock1);
     }
 
     @Test
-    public void testCreate() throws Exception {
-        BaselineProfile profile = subject.forGeneId(GENE_ID).addExpression(expressionMock).create();
-        assertThat(profile.getGeneId(), is(GENE_ID));
+    public void createShouldReturnNullIfNoneOfTheExpressionsSatisfyPreconditionsWithoutSelectedQueryFactors() {
+        //when
+        subject.forGeneId("Gene1")
+                .addExpression(expressionMock1)
+                .addExpression(expressionMock2);
+
+        //then
+        assertThat(subject.create(), is(nullValue()));
+
     }
+
+    @Test
+    public void createShouldReturnGeneProfileIfAtLeastOneExpressionSatisfiesPreconditionsWithoutSelectedQueryFactors() {
+        //given
+        given(baselineExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(baselineProfilePreconditionMock.apply(Matchers.any(BaselineProfile.class))).willReturn(true);
+        //and
+        given(expressionMock1.isGreaterThan(0d)).willReturn(true);
+        given(expressionMock2.isGreaterThan(0d)).willReturn(true);
+        given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(mock(Factor.class));
+
+        subject.forGeneId("Gene1")
+                .addExpression(expressionMock1)
+                .addExpression(expressionMock2);
+
+        //then
+        assertThat(subject.create().getGeneId(), is("Gene1"));
+
+    }
+
+    @Test
+    public void createShouldReturnGeneProfileIfOnlyOneExpressionPresentForPreconditionWithSelectedQueryFactors() {
+        //given
+        Factor selectedFactorMock = new Factor(QUERY_FACTOR_TYPE, "value1");
+
+        given(baselineExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(baselineExpressionPreconditionMock.apply(expressionMock2)).willReturn(false);
+
+        given(baselineProfilePreconditionMock.apply(Matchers.any(BaselineProfile.class))).willReturn(true);
+
+        //and
+        given(expressionMock1.isGreaterThan(0d)).willReturn(true);
+        given(expressionMock1.getLevel()).willReturn(5d);
+        given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(selectedFactorMock);
+
+        subject.forGeneId("Gene1")
+                .addExpression(expressionMock1)
+                .addExpression(expressionMock2);
+
+        //then
+        assertThat(subject.create().getGeneId(), is("Gene1"));
+
+    }
+
+    @Test
+    public void createShouldReturnGeneProfileIfAtLeastOneExpressionSatisfiesPreconditionWithSelectedQueryFactors() {
+        //given
+        Factor selectedFactorMock = new Factor(QUERY_FACTOR_TYPE, "value1");
+        Factor otherFactorMock = new Factor(QUERY_FACTOR_TYPE, "value2");
+
+        given(baselineExpressionPreconditionMock.apply(expressionMock1)).willReturn(true);
+        given(baselineExpressionPreconditionMock.apply(expressionMock2)).willReturn(true);
+        given(baselineProfilePreconditionMock.apply(Matchers.any(BaselineProfile.class))).willReturn(true);
+        //and
+        given(expressionMock1.isGreaterThan(0d)).willReturn(true);
+        given(expressionMock1.getLevel()).willReturn(5d);
+        given(expressionMock2.isGreaterThan(0d)).willReturn(true);
+        given(expressionMock2.getLevel()).willReturn(3d);
+        given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(selectedFactorMock);
+        given(expressionMock2.getFactor(QUERY_FACTOR_TYPE)).willReturn(otherFactorMock);
+
+        subject.forGeneId("Gene1")
+                .addExpression(expressionMock1)
+                .addExpression(expressionMock2);
+
+        //then
+        assertThat(subject.create().getGeneId(), is("Gene1"));
+
+    }
+
 }
