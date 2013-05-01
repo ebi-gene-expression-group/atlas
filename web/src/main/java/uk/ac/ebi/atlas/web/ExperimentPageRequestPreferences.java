@@ -60,8 +60,10 @@ public abstract class ExperimentPageRequestPreferences {
 
     private boolean displayGeneDistribution;
 
-    protected ExperimentPageRequestPreferences(){
-      //  customInitializations();
+    private boolean collapseGeneProfiles;
+
+    protected ExperimentPageRequestPreferences() {
+        //  customInitializations();
     }
 
     public SortedSet<String> getQueryFactorValues() {
@@ -96,6 +98,14 @@ public abstract class ExperimentPageRequestPreferences {
         this.displayGeneDistribution = displayGeneDistribution;
     }
 
+    public boolean isCollapseGeneProfiles() {
+        return collapseGeneProfiles;
+    }
+
+    public void setCollapseGeneProfiles(boolean collapseGeneProfiles) {
+        this.collapseGeneProfiles = collapseGeneProfiles;
+    }
+
     public Integer getHeatmapMatrixSize() {
         return this.heatmapMatrixSize;
     }
@@ -109,6 +119,7 @@ public abstract class ExperimentPageRequestPreferences {
     public Double getCutoff() {
         return this.cutoff;
     }
+
     //must be public because the jsp needs to access it
     public abstract Double getDefaultCutoff();
 
@@ -141,7 +152,7 @@ public abstract class ExperimentPageRequestPreferences {
     }
 
     public void setGeneQuery(String geneQuery) {
-        if (!areQuotesMatching(geneQuery)){
+        if (!areQuotesMatching(geneQuery)) {
             geneQuery = geneQuery + "\"";
         }
         this.geneQuery = geneQuery;

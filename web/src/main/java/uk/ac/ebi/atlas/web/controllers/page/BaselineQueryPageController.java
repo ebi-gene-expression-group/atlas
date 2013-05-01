@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.model.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -139,7 +140,12 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
                 GeneProfilesList<BaselineProfile> geneProfiles = rankCommand.execute(experiment.getAccession());
 
-                model.addAttribute("geneProfiles", geneProfiles);
+                if (preferences.isCollapseGeneProfiles()) {
+                    BaselineProfilesList baselineProfilesList = (BaselineProfilesList) geneProfiles;
+                    model.addAttribute("geneProfiles", baselineProfilesList.collapsedProfilesList(allQueryFactors));
+                } else {
+                    model.addAttribute("geneProfiles", geneProfiles);
+                }
 
                 //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
