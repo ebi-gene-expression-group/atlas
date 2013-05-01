@@ -91,12 +91,12 @@ public class BaselineProfilesListTest {
     @Test
     public void testCollapsedProfilesList() throws Exception {
         BaselineProfilesList baselineProfiles = subject.collapsedProfilesList(allQueryFactors);
-        assertThat(baselineProfiles.getMaxExpressionLevel(), is(2.5));
+        assertThat(baselineProfiles.getMaxExpressionLevel(), is(3.0));
         assertThat(baselineProfiles.getMinExpressionLevel(), is(1.0));
         assertThat(baselineProfiles.size(), is(1));
 
         BaselineProfile profile = baselineProfiles.get(0);
-        assertThat(profile.getExpressionLevel(factorMock1), is(2.5));
+        assertThat(profile.getExpressionLevel(factorMock1), is(3.0));
         assertThat(profile.getExpressionLevel(factorMock2), is(1.0));
         assertThat(profile.getGeneId(), is("collapsed"));
     }
