@@ -28,7 +28,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.context.*;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -42,7 +43,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class DifferentialProfilesTSVWriterIT {
+public class RnaSeqProfilesTSVWriterIT {
 
     private static final String RNA_SEQ_EXPERIMENT_ACCESSION = "E-GEOD-38400";
 
@@ -125,7 +126,7 @@ public class DifferentialProfilesTSVWriterIT {
     }
 
     @Test
-    public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasta(){
+    public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasts(){
 
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g1_g4", "g1_g3")));
 

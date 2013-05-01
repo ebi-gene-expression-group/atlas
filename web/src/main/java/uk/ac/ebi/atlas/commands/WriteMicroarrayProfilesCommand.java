@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
-import uk.ac.ebi.atlas.commands.download.MicroarrayGeneProfilesTSVWriter;
+import uk.ac.ebi.atlas.commands.download.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
@@ -43,14 +43,14 @@ public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Lon
 
     private static final Logger LOGGER = Logger.getLogger(WriteMicroarrayProfilesCommand.class);
 
-    private MicroarrayGeneProfilesTSVWriter geneProfileTsvWriter;
+    private MicroarrayProfilesTSVWriter geneProfileTsvWriter;
     private MicroarrayRequestContext requestContext;
 
     private MicroarrayExperiment experiment;
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    public WriteMicroarrayProfilesCommand(MicroarrayGeneProfilesTSVWriter geneProfileTsvWriter,
+    public WriteMicroarrayProfilesCommand(MicroarrayProfilesTSVWriter geneProfileTsvWriter,
                                           MicroarrayRequestContext requestContext,
                                           InputStreamFactory inputStreamFactory) {
         super(requestContext);

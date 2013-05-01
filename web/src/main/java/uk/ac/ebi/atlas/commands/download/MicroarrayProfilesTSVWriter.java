@@ -23,11 +23,8 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 
@@ -37,7 +34,7 @@ import java.util.List;
 
 @Named("microarrayProfileWriter")
 @Scope("prototype")
-public class MicroarrayGeneProfilesTSVWriter extends DifferentialProfilesTSVWriter<MicroarrayProfile, MicroarrayExpression> {
+public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<MicroarrayProfile, MicroarrayExpression> {
 
     private MicroarrayRequestContext requestContext;
 
