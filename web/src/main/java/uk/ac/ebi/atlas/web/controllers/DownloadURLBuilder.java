@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.ui.Model;
 
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -39,19 +40,31 @@ public class DownloadURLBuilder {
 
     private static final String TSV_ANALYTICS_FILE_EXTENSION = "/all-analytics.tsv";
 
-    public String buildDownloadRawUrl(HttpServletRequest request) {
+
+    public void addDataDownloadUrlsToModel(Model model, HttpServletRequest request) {
+
+        model.addAttribute("rawDownloadUrl", buildDownloadRawUrl(request));
+
+        model.addAttribute("normalizedUrl", buildDownloadNormalizedDataUrl(request));
+
+        model.addAttribute("logFoldUrl", buildDownloadLogFoldDataUrl(request));
+
+        model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
+    }
+
+    private String buildDownloadRawUrl(HttpServletRequest request) {
         return extractBaseURL(request) + TSV_RAW_FILE_EXTENSION;
     }
 
-    public String buildDownloadAllAnalyticsUrl(HttpServletRequest request) {
+    private String buildDownloadAllAnalyticsUrl(HttpServletRequest request) {
         return extractBaseURL(request) + TSV_ANALYTICS_FILE_EXTENSION;
     }
 
-    public String buildDownloadNormalizedDataUrl(HttpServletRequest request) {
+    private String buildDownloadNormalizedDataUrl(HttpServletRequest request) {
         return extractBaseURL(request) + TSV_NORMALIZED_FILE_EXTENSION;
     }
 
-    public String buildDownloadLogFoldDataUrl(HttpServletRequest request) {
+    private String buildDownloadLogFoldDataUrl(HttpServletRequest request) {
         return extractBaseURL(request) + TSV_LOG_FOLD_FILE_EXTENSION;
     }
 

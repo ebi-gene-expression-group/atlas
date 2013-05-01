@@ -86,14 +86,7 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
 
                 model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
 
-                model.addAttribute("rawDownloadUrl", downloadURLBuilder.buildDownloadRawUrl(request));
-
-                model.addAttribute("normalizedUrl", downloadURLBuilder.buildDownloadNormalizedDataUrl(request));
-
-                model.addAttribute("logFoldUrl", downloadURLBuilder.buildDownloadLogFoldDataUrl(request));
-
-                model.addAttribute("analyticsDownloadUrl", downloadURLBuilder.buildDownloadAllAnalyticsUrl(request));
-
+                downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery() + "'"));

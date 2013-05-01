@@ -60,17 +60,10 @@ public class AnalysisMethodsPageController {
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        model.addAttribute("rawDownloadUrl", downloadURLBuilder.buildDownloadRawUrl(request));
-
-        model.addAttribute("normalizedUrl", downloadURLBuilder.buildDownloadNormalizedDataUrl(request));
-
-        model.addAttribute("logFoldUrl", downloadURLBuilder.buildDownloadLogFoldDataUrl(request));
-
-        model.addAttribute("analyticsDownloadUrl", downloadURLBuilder.buildDownloadAllAnalyticsUrl(request));
+        downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
         return "experiment-analysis-methods";
     }
-
 
 }
 
