@@ -101,7 +101,7 @@ public class SolrQueryServiceIT {
         List<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
-        assertThat(geneIds.size(), is(25396));
+        assertThat(geneIds.size(), is(25375));
         assertThat(geneIds, hasItems("ENSG00000179218", "ENSG00000269773"));
 
     }

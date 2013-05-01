@@ -36,7 +36,7 @@ public class GenePropertiesTooltipIT extends SinglePageSeleniumFixture {
 
     private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String HTTP_PARAMETERS = "geneQuery=protein+coding+%22actin-like%22+bile+acid&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+    private static final String HTTP_PARAMETERS = "geneQuery=%22actin-related+protein%22+bile+acid+protein&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
 
     protected HeatmapTablePage subject;
 
@@ -53,7 +53,7 @@ public class GenePropertiesTooltipIT extends SinglePageSeleniumFixture {
         //then
         assertThat(tooltipContent, containsString("ACTL7A"));
         List<String> highlightedTerms = subject.getGenePropertyTooltipHighlightedTerms(0);
-        assertThat(highlightedTerms , hasItems("protein","Actin-like"));
+        assertThat(highlightedTerms, hasItems("protein", "Actin-related protein"));
 
     }
 
