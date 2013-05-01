@@ -93,7 +93,7 @@ public class DifferentialProfilesInputStreamIT {
 
         contrast = differentialExperiment.getContrasts().first();
 
-        TreeSet<Contrast> allQueryFactors = Sets.newTreeSet(Contrast.orderByDisplayName());
+        TreeSet<Contrast> allQueryFactors = Sets.newTreeSet();
         allQueryFactors.add(contrast);
 
         rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)

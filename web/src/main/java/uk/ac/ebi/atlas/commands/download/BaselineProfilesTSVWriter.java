@@ -73,15 +73,15 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
 
     @Override
     protected String buildHeaders() {
-        String geneQuery = "'" + requestContext.getGeneQuery() + "'";
+        String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? "specifically " : "";
-        String exactMatch = requestContext.isExactMatch() ? " exactly matching" : "";
+        String exactMatch = requestContext.isExactMatch() ? " exactly" : "";
         String selectedQueryFactors = formatSelectedQueryFactors();
         double cutoff = requestContext.getCutoff();
         String experimentAccession = requestContext.getExperiment().getAccession();
         String selectedFilterFactors = formatSelectedFilterFactors();
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(headerTemplate, exactMatch, geneQuery, specific, selectedQueryFactors, cutoff,
+        return MessageFormat.format(headerTemplate, geneQuery, exactMatch, specific, selectedQueryFactors, cutoff,
                                     experimentAccession, selectedFilterFactors, timeStamp);
 
     }
@@ -100,7 +100,6 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         });
         return ", filtered by " + Joiner.on(" and ").join(transformedSelectedFilterFactors);
     }
-
 
     protected String formatSelectedQueryFactors() {
         String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorName(requestContext.getQueryFactorType());

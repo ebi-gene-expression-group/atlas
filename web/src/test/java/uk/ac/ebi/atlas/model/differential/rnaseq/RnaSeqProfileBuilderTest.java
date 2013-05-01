@@ -63,7 +63,7 @@ public class RnaSeqProfileBuilderTest {
     public void setUp() throws Exception {
         when(contrastMock1.getDisplayName()).thenReturn(CONTRAST_NAME1);
         when(contrastMock2.getDisplayName()).thenReturn(CONTRAST_NAME2);
-        SortedSet<Contrast> sortedSet = new TreeSet(Contrast.orderByDisplayName());
+        SortedSet<Contrast> sortedSet = new TreeSet();
         sortedSet.add(contrastMock1);
         sortedSet.add(contrastMock2);
 

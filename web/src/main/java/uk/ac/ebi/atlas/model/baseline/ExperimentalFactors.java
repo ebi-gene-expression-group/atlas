@@ -52,14 +52,14 @@ public class ExperimentalFactors implements Serializable {
 
     public String getFactorName(String type) {
 
-        checkState(factorNamesByType.containsKey(type), "Cannot request a factor name for an unknown type.");
+        checkState(factorNamesByType.containsKey(type), "Cannot find a factor with the given factor type: " + type);
 
         return factorNamesByType.get(type);
     }
 
     public String getFactorType(String name) {
 
-        checkState(factorNamesByType.inverse().containsKey(name), "Cannot request a factor type for an unknown name.");
+        checkState(factorNamesByType.inverse().containsKey(name), "Cannot find a factor with the given factor name: " + name);
 
         return factorNamesByType.inverse().get(name);
     }

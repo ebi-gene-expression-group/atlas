@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 public class DifferentialRequestContextBuilder<T extends DifferentialRequestContext, K extends DifferentialRequestPreferences> {
     protected T requestContext;
@@ -72,7 +73,7 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
             return Sets.newHashSet();
         }
 
-        Set<Contrast> selectedQueryContrasts = Sets.newHashSet();
+        SortedSet<Contrast> selectedQueryContrasts = Sets.newTreeSet();
         for (String queryContrastId : requestPreferences.getQueryFactorValues()){
             selectedQueryContrasts.add(experiment.getContrast(queryContrastId));
         }

@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
 import com.google.common.collect.Ordering;
 
 import java.util.Comparator;
 
-public class Contrast {
+public class Contrast implements Comparable<Contrast>{
     private String id;
     private AssayGroup referenceAssayGroup;
     private AssayGroup testAssayGroup;
@@ -44,12 +45,25 @@ public class Contrast {
                 '}';
     }
 
-    public static Comparator<Contrast> orderByDisplayName() {
-        return Ordering.natural().onResultOf(new Function<Contrast, Comparable>() {
-            @Override
-            public Comparable apply(Contrast contrast) {
-                return contrast.getDisplayName();
-            }
-        });
+    @Override
+    public boolean equals(Object other){
+        if (other == null || !(other instanceof Contrast)){
+            return false;
+        }
+        return Objects.equal(id, ((Contrast)other).id);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public int compareTo(Contrast o) {
+
+        if (o == null){
+            return 1;
+        }
+        return this.getDisplayName().compareTo(o.getDisplayName());
     }
 }

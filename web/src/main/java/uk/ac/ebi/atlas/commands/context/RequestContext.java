@@ -72,7 +72,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         this.allQueryFactors = allQueryFactors;
     }
 
-    void setSelectedQueryFactors(Set selectedQueryFactors) {
+    void setSelectedQueryFactors(Set<T> selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
     }
 

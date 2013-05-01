@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+import static com.google.common.base.Preconditions.checkState;
+
 public class DifferentialExperiment extends Experiment {
 
     private Map<String, Contrast> contrastsById = Maps.newHashMap();
@@ -42,18 +44,20 @@ public class DifferentialExperiment extends Experiment {
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species) {
         super(experimentType, accession, description, hasExtraInfoFile, species, null);
         for (Contrast contrast : contrasts) {
-            this.contrastsById.put(contrast.getId(), contrast);
+            contrastsById.put(contrast.getId(), contrast);
         }
     }
 
     public SortedSet<Contrast> getContrasts() {
-        SortedSet<Contrast> contrasts = Sets.newTreeSet(Contrast.orderByDisplayName());
-        contrasts.addAll(this.contrastsById.values());
+        SortedSet<Contrast> contrasts = Sets.newTreeSet();
+        contrasts.addAll(contrastsById.values());
         return contrasts;
     }
 
     public Contrast getContrast(String contrastId) {
-        return this.contrastsById.get(contrastId);
+        Contrast contrast = contrastsById.get(contrastId);
+        checkState(contrast != null, "Cannot find a contrast with contrastId: " + contrastId);
+        return contrast;
     }
 
     public SortedSet<String> getContrastIds() {

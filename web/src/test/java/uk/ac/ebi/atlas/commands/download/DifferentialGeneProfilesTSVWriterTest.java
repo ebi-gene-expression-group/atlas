@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
@@ -36,6 +38,9 @@ public class DifferentialGeneProfilesTSVWriterTest {
     @Mock
     private DifferentialExpression expressionMock;
 
+    @Mock
+    private RnaSeqRequestContext rnaSeqRequestContextMock;
+
     private DifferentialGeneProfilesTSVWriter subject;
 
 
@@ -43,7 +48,7 @@ public class DifferentialGeneProfilesTSVWriterTest {
     public void initMocks() {
         when(geneProfileMock.getExpression(any(Contrast.class))).thenReturn(expressionMock);
 
-        subject = new DifferentialGeneProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock);
+        subject = new DifferentialGeneProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock, rnaSeqRequestContextMock);
     }
 
     @Test
@@ -53,7 +58,7 @@ public class DifferentialGeneProfilesTSVWriterTest {
         Contrast contrast2 = mock(Contrast.class);
         when(contrast2.getDisplayName()).thenReturn("cond2");
 
-        TreeSet<Contrast> conditions = Sets.newTreeSet(Contrast.orderByDisplayName());
+        TreeSet<Contrast> conditions = Sets.newTreeSet();
         conditions.add(contrast1);
         conditions.add(contrast2);
         List<String> columnNames = subject.buildColumnNames(conditions);
@@ -68,7 +73,7 @@ public class DifferentialGeneProfilesTSVWriterTest {
         when(expressionMock.getFoldChange()).thenReturn(-0.978932452151424);
         when(expressionMock.getLevel()).thenReturn(0.134707651014487);
 
-        SortedSet<Contrast> contrasts = new TreeSet<>(Contrast.orderByDisplayName());
+        SortedSet<Contrast> contrasts = new TreeSet<>();
         contrasts.add(new Contrast("id1", null, null, "name"));
 
         //when
