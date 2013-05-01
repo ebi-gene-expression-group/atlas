@@ -47,11 +47,6 @@ public class NumberUtils {
     private static final String SUP_POST = "</span>";
 
 
-    public String removeTrailingZero(double value) {
-        NumberFormat format = new DecimalFormat("0.####");
-        return format.format(value);
-    }
-
     public double round(double value) {
         int numberOfFractionalDigits = value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
                                                   : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE;

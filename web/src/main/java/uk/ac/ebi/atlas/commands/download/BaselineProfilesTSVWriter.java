@@ -40,12 +40,6 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     private String headerTemplate;
 
     @Inject
-    public BaselineProfilesTSVWriter(NumberUtils numberUtils,
-                                     GeneNamesProvider geneNamesProvider) {
-        super(numberUtils, geneNamesProvider);
-    }
-
-    @Inject
     public void setHeaderTemplateResource(@Value("classpath:/file-templates/download-headers-baseline.txt") Resource headerTemplateResource) {
         this.headerTemplateResource = headerTemplateResource;
     }
@@ -66,7 +60,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected List<String> buildColumnNames(SortedSet<Factor> conditions) {
+    protected List<String> buildConditionExpressionsHeaders(SortedSet<Factor> conditions) {
         SortedSet<String> values = Factor.getValues(conditions);
         return Lists.newArrayList(values);
     }

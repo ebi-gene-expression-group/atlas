@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.commands.download.DifferentialGeneProfilesTSVWriter;
+import uk.ac.ebi.atlas.commands.download.RnaSeqProfilesTSVWriter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
@@ -43,13 +43,13 @@ public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<L
 
     private static final Logger logger = Logger.getLogger(WriteDifferentialProfilesCommand.class);
 
-    private DifferentialGeneProfilesTSVWriter geneProfileTsvWriter;
+    private RnaSeqProfilesTSVWriter geneProfileTsvWriter;
 
     private DifferentialExperiment experiment;
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    public WriteDifferentialProfilesCommand(DifferentialGeneProfilesTSVWriter geneProfileTsvWriter,
+    public WriteDifferentialProfilesCommand(RnaSeqProfilesTSVWriter geneProfileTsvWriter,
                                             RnaSeqRequestContext requestContext,
                                             InputStreamFactory inputStreamFactory) {
         super(requestContext);

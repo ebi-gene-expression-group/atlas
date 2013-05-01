@@ -22,133 +22,46 @@
 
 package uk.ac.ebi.atlas.commands.download;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
 
 @Named("microarrayProfileWriter")
 @Scope("prototype")
-public class MicroarrayGeneProfilesTSVWriter extends GeneProfilesTSVWriter<MicroarrayProfile, Contrast> {
-
-    private static final Logger LOGGER = Logger.getLogger(DifferentialGeneProfilesTSVWriter.class);
+public class MicroarrayGeneProfilesTSVWriter extends DifferentialProfilesTSVWriter<MicroarrayProfile, MicroarrayExpression> {
 
     private MicroarrayRequestContext requestContext;
-
-    private Resource headerTemplateResource;
-
-    private String headerTemplate;
-
-    @Inject
-    public MicroarrayGeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
-        super(numberUtils, geneNamesProvider);
-    }
-
-    @Inject
-    public void setHeaderTemplateResource(@Value("classpath:/file-templates/download-headers-differential.txt") Resource headerTemplateResource) {
-        this.headerTemplateResource = headerTemplateResource;
-    }
 
     @Inject
     public void setRequestContext(MicroarrayRequestContext requestContext) {
         this.requestContext = requestContext;
     }
 
-    @PostConstruct
-    void initTemplate() {
-        try (InputStream inputStream = headerTemplateResource.getInputStream()) {
-            headerTemplate = IOUtils.toString(inputStream);
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-        }
+    @Override
+    public MicroarrayRequestContext getRequestContext() {
+        return requestContext;
     }
 
     @Override
-    protected String buildHeaders() {
-        String geneQuery = requestContext.getGeneQuery();
-        String specific = requestContext.isSpecific() ? "(specifically) " : "";
-        String exactMatch = requestContext.isExactMatch() ? "exactly " : "";
-        double cutoff = requestContext.getCutoff();
-        Date dNow = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss");
-        return MessageFormat.format(headerTemplate, exactMatch, geneQuery, specific, formatContrasts(), cutoff, ft.format(dNow));
-
+    protected List<String> getExpressionDataLabels(){
+        return Lists.newArrayList("p-value", "log2foldchange", "t-statistic");
     }
 
-    protected String formatContrasts() {
-        Set<Contrast> selectedContrasts = requestContext.getSelectedQueryFactors();
-        if (CollectionUtils.isEmpty(selectedContrasts)) {
-            return StringUtils.EMPTY;
-        }
-        Collection<String> transformedContrasts = Collections2.transform(selectedContrasts, new Function<Contrast, String>() {
-            @Override
-            public String apply(Contrast contrast) {
-                return contrast.getDisplayName();
-            }
-        });
-
-        return Joiner.on(",").join(transformedContrasts);
-    }
 
     @Override
-    protected List<String> buildColumnNames(SortedSet<Contrast> conditions) {
-        List<String> columnNames = new ArrayList<>();
-        for (Contrast condition : conditions) {
-            columnNames.add(condition.getDisplayName() + ".p-value");
-            columnNames.add(condition.getDisplayName() + ".log2foldchange");
-            columnNames.add(condition.getDisplayName() + ".t-statistic");
-        }
-
-        return columnNames;
+    protected List<Double> getExpressionLevelData(MicroarrayExpression expression){
+        return Lists.newArrayList(expression.getLevel(), expression.getFoldChange(), expression.getTstatistic());
     }
 
-    @Override
-    protected String[] buildExpressionsRow(final MicroarrayProfile geneProfile, SortedSet<Contrast> contrasts) {
-        String[] expressionLevels = new String[contrasts.size() * 3];
-        int i = 0;
-        for (Contrast contrast : contrasts) {
-            MicroarrayExpression expression = geneProfile.getExpression(contrast);
-            if (expression != null) {
-                expressionLevels[i++] = getValueToString(expression.getLevel());
-                expressionLevels[i++] = getValueToString(expression.getFoldChange());
-                expressionLevels[i++] = getValueToString(expression.getTstatistic());
-            } else {
-                expressionLevels[i++] = "NA";
-                expressionLevels[i++] = "NA";
-                expressionLevels[i++] = "NA";
-            }
-        }
-        return expressionLevels;
-    }
-
-    protected String getValueToString(double value) {
-        if (Double.isInfinite(value)) {
-            return "NA";
-        }
-        return Double.toString(value);
-    }
 
     @Override
     protected String getSecondColumnName() {

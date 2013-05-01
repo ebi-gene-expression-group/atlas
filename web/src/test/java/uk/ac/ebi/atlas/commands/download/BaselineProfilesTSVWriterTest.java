@@ -110,7 +110,7 @@ public class BaselineProfilesTSVWriterTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new BaselineProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock);
+        subject = new BaselineProfilesTSVWriter();
         subject.setResponseWriter(printWriterMock);
         subject.setRequestContext(requestContextMock);
 
@@ -118,6 +118,7 @@ public class BaselineProfilesTSVWriterTest {
         when(headerTemplateResourceMock.getInputStream()).thenReturn(inputStream);
         subject.setHeaderTemplateResource(headerTemplateResourceMock);
         subject.initTemplate();
+        subject.setGeneNamesProvider(geneNamesProviderMock);
     }
 
     @Test

@@ -26,12 +26,15 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
+import uk.ac.ebi.atlas.model.GeneExpression;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -42,12 +45,10 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     private CSVWriter csvWriter;
     private PrintWriter responseWriter;
 
-    protected NumberUtils numberUtils;
     private GeneNamesProvider geneNamesProvider;
 
     @Inject
-    protected GeneProfilesTSVWriter(NumberUtils numberUtils, GeneNamesProvider geneNamesProvider) {
-        this.numberUtils = numberUtils;
+    public void setGeneNamesProvider(GeneNamesProvider geneNamesProvider){
         this.geneNamesProvider = geneNamesProvider;
     }
 
@@ -70,7 +71,7 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     }
 
     protected String[] buildCsvHeaders(SortedSet<K> factorValues) {
-        List<String> columnNames = buildColumnNames(factorValues);
+        List<String> columnNames = buildConditionExpressionsHeaders(factorValues);
         return buildCsvRow(new String[]{HeaderBuilder.GENE_NAME, getSecondColumnName()}, columnNames.toArray(new String[columnNames.size()]));
     }
 
@@ -79,38 +80,42 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     }
 
     protected String[] buildCsvRow(final T geneProfile, SortedSet<K> factors) {
-        String[] expressionLevels = buildExpressionsRow(geneProfile, factors);
+        String[] expressionLevels = extractConditionLevels(geneProfile, factors);
 
         String geneId = geneProfile.getGeneId();
-        return buildCsvRow(new String[]{geneNamesProvider.getGeneName(geneId), getSecondColumnValue(geneProfile)}, expressionLevels);
+        String[] rowHeaders = new String[]{geneNamesProvider.getGeneName(geneId), getSecondColumnValue(geneProfile)};
+        return buildCsvRow(rowHeaders, expressionLevels);
     }
 
     protected String getSecondColumnValue(T geneProfile) {
         return geneProfile.getGeneId();
     }
 
-    protected abstract List<String> buildColumnNames(SortedSet<K> conditionNames);
+    protected abstract List<String> buildConditionExpressionsHeaders(SortedSet<K> conditionNames);
 
     protected abstract String buildHeaders();
 
-    protected String[] buildExpressionsRow(T geneProfile, SortedSet<K> factors) {
+    protected String[] extractConditionLevels(T geneProfile, SortedSet<K> factors) {
         String[] expressionLevels = new String[factors.size()];
         int i = 0;
         for (K factor : factors) {
-            expressionLevels[i++] = numberUtils.removeTrailingZero(geneProfile.getExpressionLevel(factor));
+            expressionLevels[i++] = removeTrailingZero(geneProfile.getExpressionLevel(factor));
         }
         return expressionLevels;
     }
 
     protected String[] buildCsvRow(String[] rowHeaders, String[] values) {
-
         return ArrayUtils.addAll(rowHeaders, values);
-
     }
 
     public void setResponseWriter(PrintWriter responseWriter) {
         this.responseWriter = responseWriter;
         csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER);
+    }
+
+    String removeTrailingZero(double value) {
+        NumberFormat format = new DecimalFormat("0.####");
+        return format.format(value);
     }
 
 }

@@ -7,13 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -27,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialGeneProfilesTSVWriterTest {
+public class RnaSeqProfilesTSVWriterTest {
 
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
@@ -41,18 +39,18 @@ public class DifferentialGeneProfilesTSVWriterTest {
     @Mock
     private RnaSeqRequestContext rnaSeqRequestContextMock;
 
-    private DifferentialGeneProfilesTSVWriter subject;
+    private RnaSeqProfilesTSVWriter subject;
 
 
     @Before
     public void initMocks() {
         when(geneProfileMock.getExpression(any(Contrast.class))).thenReturn(expressionMock);
 
-        subject = new DifferentialGeneProfilesTSVWriter(new NumberUtils(), geneNamesProviderMock, rnaSeqRequestContextMock);
+        subject = new RnaSeqProfilesTSVWriter();
     }
 
     @Test
-    public void testBuildColumnNames() throws Exception {
+    public void buildConditionExpressionsHeaders() throws Exception {
         Contrast contrast1 = mock(Contrast.class);
         when(contrast1.getDisplayName()).thenReturn("cond1");
         Contrast contrast2 = mock(Contrast.class);
@@ -61,7 +59,7 @@ public class DifferentialGeneProfilesTSVWriterTest {
         TreeSet<Contrast> conditions = Sets.newTreeSet();
         conditions.add(contrast1);
         conditions.add(contrast2);
-        List<String> columnNames = subject.buildColumnNames(conditions);
+        List<String> columnNames = subject.buildConditionExpressionsHeaders(conditions);
         assertThat(columnNames.size(), is(4));
         assertThat(columnNames, contains("cond1.p-value", "cond1.log2foldchange", "cond2.p-value", "cond2.log2foldchange"));
     }
@@ -77,7 +75,7 @@ public class DifferentialGeneProfilesTSVWriterTest {
         contrasts.add(new Contrast("id1", null, null, "name"));
 
         //when
-        String[] expressions = subject.buildExpressionsRow(geneProfileMock, contrasts);
+        String[] expressions = subject.extractConditionLevels(geneProfileMock, contrasts);
 
         //then
         assertThat(expressions.length, Matchers.is(2));
@@ -91,5 +89,13 @@ public class DifferentialGeneProfilesTSVWriterTest {
         assertThat(subject.getValueToString(Double.POSITIVE_INFINITY), is("NA"));
         assertThat(subject.getValueToString(Double.NEGATIVE_INFINITY), is("NA"));
 
+    }
+
+    @Test
+    public void testRemoveTrailingZero(){
+        assertThat(subject.removeTrailingZero(1.111111), is("1.1111"));
+        assertThat(subject.removeTrailingZero(1.100111), is("1.1001"));
+        assertThat(subject.removeTrailingZero(1.111100), is("1.1111"));
+        assertThat(subject.removeTrailingZero(1.110000), is("1.11"));
     }
 }

@@ -29,11 +29,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.*;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.annotation.PostConstruct;
@@ -52,7 +49,7 @@ public class DifferentialProfilesTSVWriterIT {
     /*/in factor value(s)*/
 
     @Inject
-    private DifferentialGeneProfilesTSVWriter subject;
+    private RnaSeqProfilesTSVWriter subject;
 
     @Inject
     private DifferentialExperimentsCache differentialExperimentsCache;
@@ -114,7 +111,6 @@ public class DifferentialProfilesTSVWriterIT {
 
     }
 
-
     @Test
     public void secondHeaderLineShouldDescribeExactMatchQuery(){
 
@@ -131,7 +127,7 @@ public class DifferentialProfilesTSVWriterIT {
     @Test
     public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasta(){
 
-        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g1_g4","g1_g3")));
+        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g1_g4", "g1_g3")));
 
         rnaSeqRequestContext = rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
                 .withPreferences(requestPreferences).build();
