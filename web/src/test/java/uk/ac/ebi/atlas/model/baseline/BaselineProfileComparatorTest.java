@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -30,12 +31,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
+import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -50,6 +53,12 @@ public class BaselineProfileComparatorTest {
 
     @Mock
     private BaselineProfile geneWithSpecificity16;
+
+    @Mock
+    private BaselineProfile geneWithAverageExpression3;
+
+    @Mock
+    private BaselineProfile geneWithAverageExpression8;
 
     @Mock
     private BaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
@@ -78,6 +87,9 @@ public class BaselineProfileComparatorTest {
 
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(0D);
+
+        when(geneWithAverageExpression3.getAverageExpressionLevelOn(anySet())).thenReturn(3D);
+        when(geneWithAverageExpression8.getAverageExpressionLevelOn(anySet())).thenReturn(8D);
     }
 
 
@@ -173,6 +185,12 @@ public class BaselineProfileComparatorTest {
         double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity16);
         assertThat(averageExpressionLevel, is(2.0));
 
+    }
 
+    @Test
+    public void averageExpressionLevelComparationIsBeingReversed(){
+        subject = new BaselineProfileComparator(false, null, null, 0);
+        int comparison = subject.compareOnAverageExpressionLevel(geneWithAverageExpression8, geneWithAverageExpression3, new HashSet<Factor>());
+        assertThat(comparison, is(-1));
     }
 }
