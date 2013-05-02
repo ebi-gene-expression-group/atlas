@@ -39,7 +39,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialExperimentsCacheTest {
+public class RnaSeqDiffExperimentsCacheTest {
 
     @Mock
     private LoadingCache<String, DifferentialExperiment> loadingCacheMock;
@@ -47,11 +47,11 @@ public class DifferentialExperimentsCacheTest {
     @Mock
     private DifferentialExperiment differentialExperimentMock;
 
-    private DifferentialExperimentsCache subject;
+    private RnaSeqDiffExperimentsCache subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new DifferentialExperimentsCache(loadingCacheMock);
+        subject = new RnaSeqDiffExperimentsCache(loadingCacheMock);
     }
 
     @Test

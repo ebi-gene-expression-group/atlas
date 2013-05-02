@@ -33,7 +33,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
-import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -66,7 +66,7 @@ public class DifferentialDesignPageControllerIT {
     private DifferentialDesignPageController subject;
 
     @Inject
-    private DifferentialExperimentsCache differentialExperimentsCache;
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
     private HttpServletRequest requestMock;
     private DifferentialDesignRequestPreferences preferencesMock;
@@ -77,7 +77,7 @@ public class DifferentialDesignPageControllerIT {
     public void setUp() throws Exception {
         requestMock = mock(HttpServletRequest.class);
         preferencesMock = mock(DifferentialDesignRequestPreferences.class);
-        DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(differentialExperiment);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
     }

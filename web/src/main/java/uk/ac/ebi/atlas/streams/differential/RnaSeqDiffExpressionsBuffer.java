@@ -33,11 +33,11 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class DifferentialExpressionsBuffer extends TsvRowBuffer<DifferentialExpression> {
+public class RnaSeqDiffExpressionsBuffer extends TsvRowBuffer<DifferentialExpression> {
 
     private Iterator<Contrast> expectedContrasts;
 
-    DifferentialExpressionsBuffer(List<Contrast> orderedContrasts) {
+    RnaSeqDiffExpressionsBuffer(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
     }
 

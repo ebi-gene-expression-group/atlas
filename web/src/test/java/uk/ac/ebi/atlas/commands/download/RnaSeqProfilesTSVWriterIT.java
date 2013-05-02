@@ -30,7 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -53,7 +53,7 @@ public class RnaSeqProfilesTSVWriterIT {
     private RnaSeqProfilesTSVWriter subject;
 
     @Inject
-    private DifferentialExperimentsCache differentialExperimentsCache;
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
     @Inject
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
@@ -66,7 +66,7 @@ public class RnaSeqProfilesTSVWriterIT {
 
     @PostConstruct
     private void initContext(){
-        differentialExperiment = differentialExperimentsCache.getExperiment(RNA_SEQ_EXPERIMENT_ACCESSION);
+        differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(RNA_SEQ_EXPERIMENT_ACCESSION);
         rnaSeqRequestContext = rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
                                 .withPreferences(requestPreferences).build();
     }

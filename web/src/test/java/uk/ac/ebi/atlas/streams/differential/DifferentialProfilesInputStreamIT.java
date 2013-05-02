@@ -32,7 +32,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
@@ -71,7 +71,7 @@ public class DifferentialProfilesInputStreamIT {
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    private DifferentialExperimentsCache differentialExperimentsCache;
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
     @Inject
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
@@ -89,7 +89,7 @@ public class DifferentialProfilesInputStreamIT {
 
         subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
 
-        DifferentialExperiment differentialExperiment = differentialExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
         contrast = differentialExperiment.getContrasts().first();
 

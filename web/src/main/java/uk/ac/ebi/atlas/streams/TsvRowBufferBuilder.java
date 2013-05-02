@@ -22,12 +22,14 @@
 
 package uk.ac.ebi.atlas.streams;
 
-public interface TsvRowBufferBuilder<T extends TsvRowBuffer<?>> {
+import uk.ac.ebi.atlas.model.GeneExpression;
+
+public interface TsvRowBufferBuilder<T extends GeneExpression> {
 
     public TsvRowBufferBuilder forExperiment(String experimentAccession);
 
     public abstract TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
 
-    public T build();
+    public TsvRowBuffer<T> build();
 
 }
