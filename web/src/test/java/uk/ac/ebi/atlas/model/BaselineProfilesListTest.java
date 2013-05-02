@@ -22,7 +22,9 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,10 +96,52 @@ public class BaselineProfilesListTest {
         assertThat(baselineProfiles.getMaxExpressionLevel(), is(3.0));
         assertThat(baselineProfiles.getMinExpressionLevel(), is(1.0));
         assertThat(baselineProfiles.size(), is(1));
+    }
 
-        BaselineProfile profile = baselineProfiles.get(0);
+    @Test
+    public void testCalculateAverageExpressionProfile() throws Exception {
+        BaselineProfile profile = subject.calculateAverageExpressionProfile(allQueryFactors);
         assertThat(profile.getExpressionLevel(factorMock1), is(3.0));
         assertThat(profile.getExpressionLevel(factorMock2), is(1.0));
-        assertThat(profile.getGeneId(), is("collapsed"));
+        assertThat(profile.getGeneId(), is("averages"));
     }
+
+    @Test
+    public void testCalculateCountsExpressionProfile() throws Exception {
+        BaselineProfile profile = subject.calculateCountsExpressionProfile(allQueryFactors);
+        assertThat(profile.getExpressionLevel(factorMock1), is(1.0));
+        assertThat(profile.getExpressionLevel(factorMock2), is(1.0));
+        assertThat(profile.getGeneId(), is("counts"));
+    }
+
+    @Test
+    public void testCalculateMinExpressionProfile() throws Exception {
+        BaselineProfile profile = subject.calculateMinExpressionProfile(allQueryFactors);
+        assertThat(profile.getExpressionLevel(factorMock1), is(5.0));
+        assertThat(profile.getExpressionLevel(factorMock2), is(2.0));
+        assertThat(profile.getGeneId(), is("min"));
+    }
+
+    @Test
+    public void testCalculateMaxExpressionProfile() throws Exception {
+        BaselineProfile profile = subject.calculateMaxExpressionProfile(allQueryFactors);
+        assertThat(profile.getExpressionLevel(factorMock1), is(5.0));
+        assertThat(profile.getExpressionLevel(factorMock2), is(2.0));
+        assertThat(profile.getGeneId(), is("max"));
+    }
+
+    @Test
+    public void testTransformMapIntoProfile() throws Exception {
+        BaselineProfile profile = subject.transformMapIntoProfile("test",
+                Maps.asMap(allQueryFactors, new Function<Factor, Number>() {
+                    @Override
+                    public Number apply(Factor factor) {
+                        return 1.0;
+                    }
+                }));
+        assertThat(profile.getExpressionLevel(factorMock1), is(1.0));
+        assertThat(profile.getExpressionLevel(factorMock2), is(1.0));
+        assertThat(profile.getGeneId(), is("test"));
+    }
+
 }
