@@ -108,7 +108,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
                 return constrast.getDisplayName();
             }
         });
-        return "contrast" + (selectedContrasts.size() == 1 ? ": '" : "s: '") + Joiner.on(", ").join(selectedContrasts) + "'";
+        return "contrast" + (selectedContrasts.size() == 1 ? ": " : "s: ") + Joiner.on(", ").join(selectedContrasts);
     }
 
     @Override
