@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
-public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile> {
+public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
 
     private BaselineProfileBuilder baselineProfileBuilder;
 
@@ -52,7 +52,7 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile>
 
         BaselineExpression expression;
 
-        while ((expression = (BaselineExpression) getTsvRowBuffer().poll()) != null) {
+        while ((expression = getTsvRowBuffer().poll()) != null) {
 
             baselineProfileBuilder.addExpression(expression);
         }

@@ -31,9 +31,13 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import static com.google.common.base.Preconditions.checkState;
+
 @Named
 @Scope("prototype")
 public class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfile, RnaSeqRequestContext> {
+
+    private String geneId;
 
     @Inject
     protected RnaSeqProfileBuilder(RnaSeqRequestContext requestContext,
@@ -42,8 +46,15 @@ public class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfi
         super(requestContext, differentialExpressionPrecondition, differentialProfilePrecondition);
     }
 
+    public DifferentialProfileBuilder forGeneId(String geneId) {
+        this.geneId = geneId;
+        return this;
+    }
+
     @Override
-    protected RnaSeqProfile createProfile(String geneId) {
+    protected RnaSeqProfile createProfile() {
+
+        checkState(geneId != null, "Please invoke forGeneId before create");
         return new RnaSeqProfile(geneId);
     }
 }

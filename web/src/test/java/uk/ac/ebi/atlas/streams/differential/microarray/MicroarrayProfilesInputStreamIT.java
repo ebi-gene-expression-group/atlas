@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.streams.differential.microarray;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +42,6 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -94,15 +92,10 @@ public class MicroarrayProfilesInputStreamIT {
 
         contrast = microarrayExperiment.getContrasts().first();
 
+        microarrayRequestPreferences.setArrayDesignAccession(ARRAY_DESIGN_ACCESSION);
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                                                 .withPreferences(microarrayRequestPreferences).build();
-        /*
-        microarrayRequestContext.setRequestPreferences(microarrayRequestPreferences);
-        allQueryFactors.add(contrast);
-        TreeSet<Contrast> allQueryFactors = Sets.newTreeSet(Contrast.orderByDisplayName());
-        microarrayRequestContext.setAllQueryFactors(allQueryFactors);
-        microarrayRequestContext.setSelectedQueryFactors(Sets.newHashSet());
-        */
+
     }
 
     @Test

@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileBuilder;
@@ -69,7 +68,6 @@ public class InputStreamFactory {
     private BaselineProfileBuilder baselineProfileBuilder;
     private MicroarrayProfileBuilder microarrayProfileBuilder;
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
-    private DesignElementMappingProvider designElementMappingProvider;
 
     private TsvReaderUtils tsvReaderUtils;
 
@@ -80,15 +78,13 @@ public class InputStreamFactory {
                               BaselineProfileBuilder baselineProfileBuilder,
                               MicroarrayProfileBuilder microarrayProfileBuilder,
                               RnaSeqProfileBuilder rnaSeqProfileBuilder,
-                              DesignElementMappingProvider designElementMappingProvider, TsvReaderUtils tsvReaderUtils) {
+                               TsvReaderUtils tsvReaderUtils) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.rnaSeqExpressionsBufferBuilder = rnaSeqExpressionsBufferBuilder;
         this.microarrayExpressionsBufferBuilder = microarrayExpressionsBufferBuilder;
         this.baselineProfileBuilder = baselineProfileBuilder;
         this.microarrayProfileBuilder = microarrayProfileBuilder;
         this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
-
-        this.designElementMappingProvider = designElementMappingProvider;
         this.tsvReaderUtils = tsvReaderUtils;
     }
 
@@ -114,7 +110,7 @@ public class InputStreamFactory {
     public ObjectInputStream<MicroarrayProfile> createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
         String tsvFileURL = MessageFormat.format(microarrayExperimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
         CSVReader csvReader = tsvReaderUtils.build(tsvFileURL);
-        return new MicroarrayProfilesInputStream(csvReader, experimentAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder, designElementMappingProvider, arrayDesignAccession);
+        return new MicroarrayProfilesInputStream(csvReader, experimentAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder);
     }
 
 }

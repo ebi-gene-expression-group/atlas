@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
-public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpressions> {
+public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
 
     public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsBufferBuilder expressionsBufferBuilder) {
         super(csvReader, experimentAccession, expressionsBufferBuilder);
@@ -43,7 +43,7 @@ public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpre
 
         BaselineExpression expression;
 
-        while ((expression = (BaselineExpression)getTsvRowBuffer().poll()) != null) {
+        while ((expression = getTsvRowBuffer().poll()) != null) {
 
             baselineExpressions.addExpression(expression);
         }

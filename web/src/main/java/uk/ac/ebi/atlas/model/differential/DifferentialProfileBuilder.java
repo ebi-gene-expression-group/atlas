@@ -27,13 +27,9 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkState;
-
 public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, K extends DifferentialRequestContext> {
 
     private K requestContext;
-
-    private String geneId;
 
     private List<DifferentialExpression> expressions = Lists.newArrayList();
 
@@ -59,41 +55,46 @@ public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, 
 
     }
 
-    public DifferentialProfileBuilder forGeneId(String geneId) {
-        this.geneId = geneId;
-        initPreconditions();
-        return this;
-    }
-
-    protected abstract T createProfile(String geneId);
-
     public DifferentialProfileBuilder addExpression(DifferentialExpression expression) {
-        checkState(geneId != null, "Please invoke forGeneID before create");
-        if (differentialExpressionPrecondition.apply(expression)) {
-            expressions.add(expression);
-        }
+
+        expressions.add(expression);
         return this;
     }
 
     public T create() {
-        checkState(geneId != null, "Please invoke forGeneId before create");
-        T differentialProfile = createProfile(geneId);
-        for (DifferentialExpression expression : expressions) {
-            differentialProfile.add(expression);
-        }
+        initPreconditions();
+
+        T differentialProfile = createAndValidateProfile();
+
         resetBuilder();
-        if (differentialProfilePrecondition.apply(differentialProfile)){
-            return differentialProfile;
+
+        return differentialProfile;
+    }
+
+    T createAndValidateProfile() {
+        T differentialProfile = createProfile();
+
+        if (differentialProfile != null) {
+            for (DifferentialExpression expression : expressions) {
+                if (differentialExpressionPrecondition.apply(expression)) {
+                    differentialProfile.add(expression);
+                }
+            }
+
+            if (differentialProfilePrecondition.apply(differentialProfile)) {
+                return differentialProfile;
+            }
         }
         return null;
     }
+
+    protected abstract T createProfile();
 
     //this is only a temporary ugly workaround to patch previous even more buggish implementation...
     //Builder should not support multiple creations...
     //new instance of builder should be used everytime an object has to be built.
     private void resetBuilder() {
-        this.expressions = Lists.newArrayList();
-        this.geneId = null;
+        expressions = Lists.newArrayList();
     }
 
 }

@@ -27,10 +27,11 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.GeneExpression;
 
 import java.io.IOException;
 
-public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
+public abstract class TsvInputStream<T, K extends GeneExpression> implements ObjectInputStream<T> {
 
     private static final Logger logger = Logger.getLogger(TsvInputStream.class);
 
@@ -38,7 +39,7 @@ public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
 
     private CSVReader csvReader;
 
-    private TsvRowBuffer tsvRowBuffer;
+    private TsvRowBuffer<K> tsvRowBuffer;
 
 
     protected TsvInputStream(CSVReader csvReader, String experimentAccession
@@ -83,7 +84,7 @@ public abstract class TsvInputStream<T> implements ObjectInputStream<T> {
 
     protected abstract T buildObjectFromTsvValues(String[] values);
 
-    protected TsvRowBuffer getTsvRowBuffer() {
+    protected TsvRowBuffer<K> getTsvRowBuffer() {
         return tsvRowBuffer;
     }
 

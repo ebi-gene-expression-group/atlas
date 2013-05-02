@@ -25,33 +25,24 @@ package uk.ac.ebi.atlas.streams.differential.microarray;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 
-public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProfile> {
+public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProfile, DifferentialExpression> {
 
 
     private MicroarrayProfileBuilder microarrayProfileBuilder;
-    private final DesignElementMappingProvider designElementMappingProvider;
-    private final String arrayDesignAccession;
 
     public MicroarrayProfilesInputStream(CSVReader csvReader,
                                          String experimentAccession,
                                          MicroarrayExpressionsBufferBuilder expressionsBufferBuilder,
-                                         MicroarrayProfileBuilder microarrayProfileBuilder,
-                                         DesignElementMappingProvider designElementMappingProvider,
-                                         String arrayDesignAccession) {
+                                         MicroarrayProfileBuilder microarrayProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
         this.microarrayProfileBuilder = microarrayProfileBuilder;
-        this.designElementMappingProvider = designElementMappingProvider;
-        this.arrayDesignAccession = arrayDesignAccession;
     }
 
     @Override
@@ -59,20 +50,14 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
 
         String designElementName = values[GENE_ID_COLUMN];
 
-        String geneId = designElementMappingProvider.getEnsGeneId(arrayDesignAccession, designElementName);
-
-        if (StringUtils.isBlank(geneId)) {
-            return null;
-        }
-
-        microarrayProfileBuilder.forGeneId(geneId).withDesignElementName(designElementName);
+        microarrayProfileBuilder.withDesignElementName(designElementName);
 
         //we need to reload because the first line can only be used to extract the gene ID
         getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
 
         DifferentialExpression expression;
 
-        while ((expression = (MicroarrayExpression) getTsvRowBuffer().poll()) != null) {
+        while ((expression = getTsvRowBuffer().poll()) != null) {
 
             microarrayProfileBuilder.addExpression(expression);
 
