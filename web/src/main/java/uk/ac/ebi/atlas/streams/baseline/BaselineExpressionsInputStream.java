@@ -50,4 +50,19 @@ public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpre
 
         return baselineExpressions;
     }
+
+    @Override
+    protected BaselineExpressions createProfile() {
+        return null;
+    }
+
+    @Override
+    protected void addExpressionToBuilder(BaselineExpression expression) {
+
+    }
+
+    @Override
+    protected void addGeneColumnValueToBuilder(String geneName) {
+
+    }
 }

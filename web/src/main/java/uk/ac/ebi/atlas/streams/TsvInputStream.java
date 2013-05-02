@@ -41,14 +41,13 @@ public abstract class TsvInputStream<T, K extends GeneExpression> implements Obj
 
     private TsvRowBuffer<K> tsvRowBuffer;
 
-
     protected TsvInputStream(CSVReader csvReader, String experimentAccession
             , TsvRowBufferBuilder tsvRowBufferBuilder) {
 
         this.csvReader = csvReader;
 
         String[] firstCsvLine = readCsvLine();
-        String[] headersWithoutGeneIdColumn = (String[])ArrayUtils.remove(firstCsvLine, GENE_ID_COLUMN);
+        String[] headersWithoutGeneIdColumn = (String[]) ArrayUtils.remove(firstCsvLine, GENE_ID_COLUMN);
         tsvRowBuffer = tsvRowBufferBuilder.forExperiment(experimentAccession)
                 .withHeaders(headersWithoutGeneIdColumn).build();
     }
@@ -82,7 +81,33 @@ public abstract class TsvInputStream<T, K extends GeneExpression> implements Obj
         }
     }
 
-    protected abstract T buildObjectFromTsvValues(String[] values);
+
+    protected T buildObjectFromTsvValues(String[] values) {
+        String geneName = values[GENE_ID_COLUMN];
+
+        addGeneColumnValueToBuilder(geneName);
+
+        //we need to reload because the first line can only be used to extract the gene ID
+        getTsvRowBuffer().reload((String[]) ArrayUtils.remove(values, GENE_ID_COLUMN));
+
+        K expression;
+
+        while ((expression = getTsvRowBuffer().poll()) != null) {
+
+            addExpressionToBuilder(expression);
+
+        }
+
+        return createProfile();
+
+
+    }
+
+    protected abstract T createProfile();
+
+    protected abstract void addExpressionToBuilder(K expression);
+
+    protected abstract void addGeneColumnValueToBuilder(String geneName);
 
     protected TsvRowBuffer<K> getTsvRowBuffer() {
         return tsvRowBuffer;

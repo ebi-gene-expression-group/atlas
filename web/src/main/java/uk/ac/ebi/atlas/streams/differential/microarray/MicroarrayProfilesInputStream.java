@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.streams.differential.microarray;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfileBuilder;
@@ -45,25 +44,15 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 
-    @Override
-    protected MicroarrayProfile buildObjectFromTsvValues(String[] values) {
-
-        String designElementName = values[GENE_ID_COLUMN];
-
-        microarrayProfileBuilder.withDesignElementName(designElementName);
-
-        //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
-
-        DifferentialExpression expression;
-
-        while ((expression = getTsvRowBuffer().poll()) != null) {
-
-            microarrayProfileBuilder.addExpression(expression);
-
-        }
-
+    protected MicroarrayProfile createProfile() {
         return microarrayProfileBuilder.create();
+    }
 
+    protected void addExpressionToBuilder(DifferentialExpression expression) {
+        microarrayProfileBuilder.addExpression(expression);
+    }
+
+    protected void addGeneColumnValueToBuilder(String designElementName) {
+        microarrayProfileBuilder.withDesignElementName(designElementName);
     }
 }

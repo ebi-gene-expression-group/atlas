@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.streams.differential;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfileBuilder;
@@ -44,22 +43,17 @@ public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile, Dif
     }
 
     @Override
-    protected RnaSeqProfile buildObjectFromTsvValues(String[] values) {
-
-        rnaSeqProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
-
-        //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
-
-        DifferentialExpression expression;
-
-        while ((expression = getTsvRowBuffer().poll()) != null) {
-
-            rnaSeqProfileBuilder.addExpression(expression);
-
-        }
-
+    protected RnaSeqProfile createProfile() {
         return rnaSeqProfileBuilder.create();
+    }
 
+    @Override
+    protected void addExpressionToBuilder(DifferentialExpression expression) {
+        rnaSeqProfileBuilder.addExpression(expression);
+    }
+
+    @Override
+    protected void addGeneColumnValueToBuilder(String geneName) {
+        rnaSeqProfileBuilder.forGeneId(geneName);
     }
 }

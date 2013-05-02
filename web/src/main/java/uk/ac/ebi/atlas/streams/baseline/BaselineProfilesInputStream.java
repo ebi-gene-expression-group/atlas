@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.streams.baseline;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileBuilder;
@@ -43,22 +42,19 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile,
         this.baselineProfileBuilder = baselineProfileBuilder;
     }
 
-    protected BaselineProfile buildObjectFromTsvValues(String[] values) {
-
-        baselineProfileBuilder.forGeneId(values[GENE_ID_COLUMN]);
-
-        //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
-
-        BaselineExpression expression;
-
-        while ((expression = getTsvRowBuffer().poll()) != null) {
-
-            baselineProfileBuilder.addExpression(expression);
-        }
-
+    @Override
+    protected BaselineProfile createProfile() {
         return baselineProfileBuilder.create();
+    }
 
+    @Override
+    protected void addExpressionToBuilder(BaselineExpression expression) {
+        baselineProfileBuilder.addExpression(expression);
+    }
+
+    @Override
+    protected void addGeneColumnValueToBuilder(String geneName) {
+        baselineProfileBuilder.forGeneId(geneName);
     }
 
 }
