@@ -33,7 +33,7 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-//ToDo: duplicate code with DifferentialExpressionsBuffer
+//ToDo: duplicate code with RnaSeqDiffExpressionsBuffer
 public class MicroarrayExpressionsBuffer extends TsvRowBuffer<MicroarrayExpression> {
 
 

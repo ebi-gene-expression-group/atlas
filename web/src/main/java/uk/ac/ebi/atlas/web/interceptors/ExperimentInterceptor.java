@@ -28,7 +28,7 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -46,7 +46,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
     public static final String EXPERIMENT_TYPE = "experimentType";
 
     private BaselineExperimentsCache baselineExperimentsCache;
-    private DifferentialExperimentsCache differentialExperimentsCache;
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
     private ApplicationProperties applicationProperties;
 
@@ -64,8 +64,8 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Inject
-    public void setDifferentialExperimentsCache(DifferentialExperimentsCache differentialExperimentsCache) {
-        this.differentialExperimentsCache = differentialExperimentsCache;
+    public void setRnaSeqDiffExperimentsCache(RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache) {
+        this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
     }
 
     @Override

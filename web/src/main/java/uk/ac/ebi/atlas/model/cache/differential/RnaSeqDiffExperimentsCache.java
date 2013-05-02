@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.cache.differential;
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.cache.ExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
@@ -33,18 +34,19 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class DifferentialExperimentsCache {
+public class RnaSeqDiffExperimentsCache implements ExperimentsCache<DifferentialExperiment> {
 
-    private static final Logger logger = Logger.getLogger(DifferentialExperimentsCache.class);
+    private static final Logger logger = Logger.getLogger(RnaSeqDiffExperimentsCache.class);
 
     private LoadingCache<String, DifferentialExperiment> experiments;
 
     @Inject
     @Named("differentialExperimentsLoadingCache")//this is the name of the implementation being injected, required because LoadingCache is an interface
-    public DifferentialExperimentsCache(LoadingCache<String, DifferentialExperiment> experiments) {
+    public RnaSeqDiffExperimentsCache(LoadingCache<String, DifferentialExperiment> experiments) {
         this.experiments = experiments;
     }
 
+    @Override
     public DifferentialExperiment getExperiment(String experimentAccession) {
         try {
 

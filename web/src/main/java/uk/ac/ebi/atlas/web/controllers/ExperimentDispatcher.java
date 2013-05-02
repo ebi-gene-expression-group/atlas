@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -86,15 +86,15 @@ public class ExperimentDispatcher {
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
 
     private BaselineExperimentsCache baselineExperimentsCache;
-    private DifferentialExperimentsCache differentialExperimentsCache;
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ApplicationProperties applicationProperties;
 
     @Inject
-    private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, DifferentialExperimentsCache differentialExperimentsCache,
+    private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                  MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties){
         this.baselineExperimentsCache = baselineExperimentsCache;
-        this.differentialExperimentsCache = differentialExperimentsCache;
+        this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.applicationProperties = applicationProperties;
     }
@@ -131,7 +131,7 @@ public class ExperimentDispatcher {
             return baselineExperimentsCache.getExperiment(experimentAccession);
         }
         if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)){
-            return differentialExperimentsCache.getExperiment(experimentAccession);
+            return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
         }
         if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)){
             MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);

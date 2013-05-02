@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.cache.microarray;
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.cache.ExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
@@ -33,7 +34,7 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class MicroarrayExperimentsCache {
+public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment>{
 
     private static final Logger logger = Logger.getLogger(MicroarrayExperimentsCache.class);
 
@@ -45,6 +46,7 @@ public class MicroarrayExperimentsCache {
         this.experiments = experiments;
     }
 
+    @Override
     public MicroarrayExperiment getExperiment(String experimentAccession) {
         try {
 

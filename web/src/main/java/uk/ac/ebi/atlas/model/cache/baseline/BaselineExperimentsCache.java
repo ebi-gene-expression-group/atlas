@@ -26,6 +26,7 @@ import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.cache.ExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,7 +34,7 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class BaselineExperimentsCache {
+public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperiment>{
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentsCache.class);
 
@@ -45,6 +46,7 @@ public class BaselineExperimentsCache {
         this.experiments = experiments;
     }
 
+    @Override
     public BaselineExperiment getExperiment(String experimentAccession) {
         try {
 

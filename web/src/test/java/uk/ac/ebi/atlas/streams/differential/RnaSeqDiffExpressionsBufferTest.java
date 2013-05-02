@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialExpressionsBufferTest {
+public class RnaSeqDiffExpressionsBufferTest {
 
     public static final String P_VAL_1 = "1";
     public static final String FOLD_CHANGE_1 = "0.474360080385946";
@@ -48,7 +48,7 @@ public class DifferentialExpressionsBufferTest {
 
     private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
 
-    private DifferentialExpressionsBuffer subject;
+    private RnaSeqDiffExpressionsBuffer subject;
 
     @Mock
     private Contrast contrast1Mock;
@@ -57,7 +57,7 @@ public class DifferentialExpressionsBufferTest {
 
     @Before
     public void initializeSubject() {
-        subject = new DifferentialExpressionsBuffer(Lists.newArrayList(contrast1Mock, contrast2Mock));
+        subject = new RnaSeqDiffExpressionsBuffer(Lists.newArrayList(contrast1Mock, contrast2Mock));
 
     }
 

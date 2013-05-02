@@ -22,78 +22,31 @@
 
 package uk.ac.ebi.atlas.streams.differential.microarray;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.streams.TsvRowBufferBuilder;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.streams.TsvRowBuffer;
+import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBufferBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class MicroarrayExpressionsBufferBuilder implements TsvRowBufferBuilder {
+public class MicroarrayExpressionsBufferBuilder  extends DifferentialExpressionsBufferBuilder<MicroarrayExpression, MicroarrayExperiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayExpressionsBuffer.class);
-
-    private String experimentAccession;
-
-    private MicroarrayExperimentsCache experimentsCache;
-
-    private List<Contrast> orderedContrasts = new LinkedList<>();
 
     @Inject
     public MicroarrayExpressionsBufferBuilder(MicroarrayExperimentsCache experimentsCache) {
-
-        this.experimentsCache = experimentsCache;
-
+        super(experimentsCache);
     }
 
     @Override
-    public MicroarrayExpressionsBufferBuilder forExperiment(String experimentAccession) {
-
-        this.experimentAccession = experimentAccession;
-
-        return this;
-
-    }
-
-    @Override
-    public MicroarrayExpressionsBufferBuilder withHeaders(String... tsvFileHeaders) {
-
-        LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
-
-        checkState(experimentAccession != null, "Builder not properly initialized!");
-
-        MicroarrayExperiment experiment = experimentsCache.getExperiment(experimentAccession);
-
-        List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
-
-        for (String columnHeader : columnHeaders) {
-            if (columnHeader.endsWith(".p-value")) {
-                String contrastId = StringUtils.substringBefore(columnHeader, ".");
-                orderedContrasts.add(experiment.getContrast(contrastId));
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    public MicroarrayExpressionsBuffer build() {
-
-        checkState(!orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
-
+    protected TsvRowBuffer<MicroarrayExpression> getBufferInstance(List<Contrast> orderedContrasts) {
         return new MicroarrayExpressionsBuffer(orderedContrasts);
-
     }
 
 }
