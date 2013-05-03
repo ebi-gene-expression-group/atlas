@@ -36,6 +36,11 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 
+import java.util.Map;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -43,6 +48,7 @@ public class GeneProfilesQueryCommandTest {
 
     private static final String SPECIES = "Species 1";
     private static final String GENE_QUERY = "A GENE QUERY";
+    public static final String A_GENE_IDENTIFIER = "A GENE IDENTIFIER";
 
 
     @Mock
@@ -68,7 +74,8 @@ public class GeneProfilesQueryCommandTest {
         when(requestContextMock.getGeneQuery()).thenReturn("");
 
         // no filtering should be done here
-        when(solrClientMock.findGeneIds(GENE_QUERY, false, SPECIES)).thenReturn(Sets.<String>newHashSet("A GENE IDENTIFIER"));
+        when(solrClientMock.findGeneIds(GENE_QUERY, false, SPECIES)).thenReturn(Sets.<String>newHashSet(A_GENE_IDENTIFIER));
+        when(solrClientMock.findGeneIds(GENE_QUERY.split(" ")[0], false, SPECIES)).thenReturn(Sets.<String>newHashSet(A_GENE_IDENTIFIER));
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -96,6 +103,38 @@ public class GeneProfilesQueryCommandTest {
         subject.execute("");
 
         verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, false, SPECIES);
+    }
+
+    @Test
+    public void testGetSelectedGeneIds() throws GenesNotFoundException {
+
+        when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
+        when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
+
+        Set<String> selectedGeneIds = subject.getSelectedGeneIds();
+
+        verify(solrClientMock, times(1)).findGeneIds(GENE_QUERY, false, SPECIES);
+        assertThat(selectedGeneIds, hasItem(A_GENE_IDENTIFIER));
+    }
+
+    @Test
+    public void testGetSelectedGeneIdsPerQueryToken() throws GenesNotFoundException {
+
+        when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
+        when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
+
+        Map<String, Set<String>> selectedGeneIdsPerQueryToken = subject.getSelectedGeneIdsPerQueryToken();
+
+        String[] split = GENE_QUERY.split(" ");
+        verify(solrClientMock, times(1)).findGeneIds(split[0], false, SPECIES);
+        verify(solrClientMock, times(1)).findGeneIds(split[1], false, SPECIES);
+        verify(solrClientMock, times(1)).findGeneIds(split[2], false, SPECIES);
+
+        assertThat(selectedGeneIdsPerQueryToken.size(), is(3));
+        assertThat(selectedGeneIdsPerQueryToken.keySet(), hasItems(split[0], split[1], split[2]));
+        assertThat(selectedGeneIdsPerQueryToken.get(split[0]), hasItem(A_GENE_IDENTIFIER));
+        assertThat(selectedGeneIdsPerQueryToken.get(split[1]).size(), is(0));
+        assertThat(selectedGeneIdsPerQueryToken.get(split[2]).size(), is(0));
     }
 
 
