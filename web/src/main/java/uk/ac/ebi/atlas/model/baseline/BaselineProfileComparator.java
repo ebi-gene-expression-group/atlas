@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
@@ -36,7 +37,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private boolean isSpecific;
     private Set<Factor> selectedQueryFactors;
     private Set<Factor> allQueryFactors;
-    private double cutoffDivisor = CUTOFF_DIVISOR_DEFAULT_VALUE;
+    private double cutoffDivisor;
 
 
     public BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
@@ -45,14 +46,26 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         this.selectedQueryFactors = selectedQueryFactors;
         this.allQueryFactors = allQueryFactors;
 
-        if(cutoff != 0){
-            cutoffDivisor = cutoff;
-        }
+        cutoffDivisor = cutoff !=0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
     }
 
     @Override
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
+        //ToDo: we are using reverse comparison logic everywhere in this method.
+        //ToDo: This reduces readability, every time I read it I spend hours to understand it.
+        //ToDo: We should have the comparator use normal natural (ascending) logic as standard in every Java library
+        //ToDo: and then require the client to revert it (because the client needs to sort a priority queue in descending order).
+        //ToDo: this would make also the client implementation more explicit.
+
+        /*
+        *  maybe Guava ComparisonChain reads better:
+        *  ....
+        *  return ComparisonChain.start()
+        *                        .compare(x,y)
+        *                        .compare(x,y,Ordering.natural().reverse())
+        *                        .result();
+        */
 
         // A1:
         if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
@@ -77,12 +90,12 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     }
 
-    private int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile,
+    int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile,
                                                 Set<Factor> factors) {
 
-        Ordering<Comparable> naturalOrdering = Ordering.natural().reverse();
-        return naturalOrdering.compare(firstBaselineProfile.getAverageExpressionLevelOn(factors),
-                otherBaselineProfile.getAverageExpressionLevelOn(factors));
+        return Ordering.natural().reverse().
+                compare(firstBaselineProfile.getAverageExpressionLevelOn(factors),
+                        otherBaselineProfile.getAverageExpressionLevelOn(factors));
     }
 
     public double getExpressionLevelFoldChangeOn(BaselineProfile baselineProfile) {
