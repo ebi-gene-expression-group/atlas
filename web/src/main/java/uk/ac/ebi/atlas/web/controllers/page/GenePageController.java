@@ -22,7 +22,9 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,13 +33,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 
 import javax.inject.Inject;
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @Scope("request")
 public class GenePageController {
 
+    static final String PROPERTY_TYPE_SYMBOL = "symbol";
+
+    static final String PROPERTY_TYPE_DESCRIPTION = "description";
+
     SolrClient solrClient;
+
+    @Value("#{configuration['index.types.genepage']}")
+    private String genePagePropertyTypes;
 
     @Inject
     GenePageController(SolrClient solrClient) {
@@ -47,27 +57,36 @@ public class GenePageController {
     @RequestMapping(value = "/genes/{identifier}")
     public String showGenePage(@PathVariable String identifier, Model model) {
 
+        model.addAttribute("property_types", filterPropertyTypes());
+
         String species = solrClient.findSpeciesForGeneId(identifier);
         model.addAttribute("species", species);
 
         Multimap<String, String> properties = solrClient.fetchGenePageProperties(identifier);
-        for (String property_type : properties.keySet()) {
-            Collection<String> values = properties.get(property_type);
-            if (property_type.equals("symbol")) {
-                // there should be only one element of this kind
-                model.addAttribute(property_type, values.iterator().next());
-            } else if (property_type.equals("description")) {
-                // cleanup gene description
-                String description = values.iterator().next();
-                if (description.contains("[")) {
-                    description = description.substring(0, description.indexOf("["));
-                }
-                model.addAttribute(property_type, description);
-            } else {
-                model.addAttribute(property_type, values);
-            }
+        model.addAttribute("properties", properties);
+
+        // there should be only one element of this kind
+        model.addAttribute(PROPERTY_TYPE_SYMBOL, properties.get(PROPERTY_TYPE_SYMBOL).iterator().next());
+
+        // cleanup gene description
+        String description = properties.get(PROPERTY_TYPE_DESCRIPTION).iterator().next();
+        if (description.contains("[")) {
+            description = description.substring(0, description.indexOf("["));
         }
+        model.addAttribute(PROPERTY_TYPE_DESCRIPTION, description);
 
         return "gene";
+    }
+
+    List<String> filterPropertyTypes() {
+        String[] split = genePagePropertyTypes.split(",");
+        List<String> allPropertyTypes = Arrays.asList(split);
+        List<String> filteredPropertyTypes = Lists.newArrayList();
+        for (String property_type : allPropertyTypes) {
+            if (!property_type.equals(PROPERTY_TYPE_SYMBOL) && !property_type.equals(PROPERTY_TYPE_DESCRIPTION)) {
+                filteredPropertyTypes.add(property_type);
+            }
+        }
+        return filteredPropertyTypes;
     }
 }
