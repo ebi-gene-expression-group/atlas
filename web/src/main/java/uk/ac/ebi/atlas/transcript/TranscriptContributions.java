@@ -28,23 +28,23 @@ import java.util.Map;
 public class TranscriptContributions {
 
     protected static final String OTHERS = "Others";
-    private int totalTranscriptCount;
+    private int totalTranscriptsCount;
 
     private LinkedHashMap<String, Double> transcriptExpressions = new LinkedHashMap<>();
 
-    public int getTotalTranscriptCount() {
-        return totalTranscriptCount;
+    public int getTotalTranscriptsCount() {
+        return totalTranscriptsCount;
     }
 
-    void setTotalTranscriptCount(int totalTranscriptCount) {
-        this.totalTranscriptCount = totalTranscriptCount;
+    public void setTotalTranscriptsCount(int totalTranscriptsCount) {
+        this.totalTranscriptsCount = totalTranscriptsCount;
     }
 
     public Map<String, Double> getTranscriptExpressions(){
         return transcriptExpressions;
     }
 
-    void put(String transcriptId, double fpkm) {
+    public void put(String transcriptId, double fpkm) {
         transcriptExpressions.put(transcriptId, fpkm);
     }
 

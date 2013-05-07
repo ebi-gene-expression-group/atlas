@@ -104,7 +104,7 @@ var heatmapModule = (function ($) {
                 },
                 datatype: 'json',
                 success: function (data) {
-                    var totalCount = data[0],
+                    var totalCount = data.totalTranscriptsCount,
                         plotData = buildPlotData(data.transcriptExpressions);
 
                     species = species.replace(" ", "_");

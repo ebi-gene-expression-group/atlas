@@ -69,25 +69,25 @@ public class TranscriptContributionsCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile4, profile3, profile2, profile1);
 
         //when
-        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptsContribution(transcriptProfiles, 1);
+        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1);
 
         //then
         assertThat(topThreeTranscriptContributions.getTranscriptExpressions().keySet(), contains("T4", "T3", "T2", TranscriptContributions.OTHERS));
-        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().values(), containsInAnyOrder(40d, 30d, 20d, 10d));
+        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().values(), contains(4d, 3d, 2d, 1d));
 
     }
 
     @Test
     public void testCreateTopThreeTranscriptsMapWith2Transcripts() throws Exception {
         //given
-        transcriptProfiles = Lists.newArrayList(profile4, profile2);
+        transcriptProfiles = Lists.newArrayList(profile2, profile4);
 
         //when
-        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptsContribution(transcriptProfiles, 1);
+        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().keySet(), containsInAnyOrder("T4", "T2"));
-        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().values(), containsInAnyOrder(66.7d, 33.3d));
+        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().keySet(), contains("T4", "T2"));
+        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().values(), contains(4d, 2d));
     }
 
     @Test

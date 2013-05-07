@@ -58,8 +58,7 @@ public class RankedGeneTranscriptsControllerTest {
     @Mock
     private TranscriptContributionsCalculator transcriptContributionsCalculatorMock;
 
-    @Mock
-    private TranscriptContributions transcriptContributionsMock;
+    private TranscriptContributions transcriptContributions;
 
     private RankedGeneTranscriptsController subject;
 
@@ -74,13 +73,14 @@ public class RankedGeneTranscriptsControllerTest {
 
     @Test
     public void testGetRankedTranscripts() throws Exception {
-        when(transcriptContributionsCalculatorMock.getTranscriptsContribution(GENE_ID, EXPERIMENT_ACCESSION, factorSet)).thenReturn(transcriptContributionsMock);
-        when(transcriptContributionsMock.getTotalTranscriptCount()).thenReturn(7);
+        transcriptContributions = new TranscriptContributions();
+        transcriptContributions.setTotalTranscriptsCount(7);
         Map<String, Double> map = Maps.newHashMap();
-        map.put(TRANSCRIPT_1, 0.5);
-        map.put(TRANSCRIPT_2, 0.4);
-        map.put(TRANSCRIPT_3, 0.1);
-        when(transcriptContributionsMock.getTranscriptExpressions()).thenReturn(map);
+        transcriptContributions.put(TRANSCRIPT_1, 0.5);
+        transcriptContributions.put(TRANSCRIPT_2, 0.4);
+        transcriptContributions.put(TRANSCRIPT_3, 0.1);
+
+        when(transcriptContributionsCalculatorMock.getTranscriptsContribution(GENE_ID, EXPERIMENT_ACCESSION, factorSet)).thenReturn(transcriptContributions);
 
         String rankedTranscripts = subject.getRankedTranscripts(requestMock, EXPERIMENT_ACCESSION, GENE_ID, FACTOR_TYPE, FACTOR_VALUE, SELECTED_FILTER_FACTORS_JSON, 3);
         assertThat(rankedTranscripts, containsString("7"));

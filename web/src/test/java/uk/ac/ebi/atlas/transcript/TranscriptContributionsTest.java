@@ -41,12 +41,12 @@ public class TranscriptContributionsTest {
         subject.put("t3", 4d);
 
         //when
-        Map<String,Double> rates = subject.getTranscriptExpressions();
+        Map<String,Double> expressions = subject.getTranscriptExpressions();
 
         //then
-        assertThat(rates.get("t1"), is(33.3));
-        assertThat(rates.get("t2"), is(22.2));
-        assertThat(rates.get("t3"), is(44.5));
+        assertThat(expressions.get("t1"), is(3d));
+        assertThat(expressions.get("t2"), is(2d));
+        assertThat(expressions.get("t3"), is(4d));
 
     }
 }
