@@ -22,16 +22,19 @@
 
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class GeneProfilesQueryCommand<T, K extends GeneProfile> implements Command<T> {
@@ -42,7 +45,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends GeneProfile> impleme
 
     private RequestContext requestContext;
 
-    protected GeneProfilesQueryCommand(RequestContext requestContext){
+    protected GeneProfilesQueryCommand(RequestContext requestContext) {
         this.requestContext = requestContext;
     }
 
@@ -73,6 +76,25 @@ public abstract class GeneProfilesQueryCommand<T, K extends GeneProfile> impleme
 
         }
         return selectedGeneIds;
+    }
+
+    Map<String, Set<String>> getSelectedGeneIdsPerQueryToken() throws GenesNotFoundException {
+        Map<String, Set<String>> selectedGeneIdsPerQueryToken = null;
+
+        if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
+
+            selectedGeneIdsPerQueryToken = Maps.newHashMap();
+
+            for (String queryToken : GeneQueryTokenizer.tokenize(requestContext.getGeneQuery())) {
+
+                Set<String> selectedGeneIds = solrClient.findGeneIds(queryToken, requestContext.isExactMatch(), requestContext.getFilteredBySpecies());
+                selectedGeneIdsPerQueryToken.put(queryToken, selectedGeneIds);
+
+            }
+
+        }
+
+        return selectedGeneIdsPerQueryToken;
     }
 
     protected abstract ObjectInputStream<K> createInputStream(String experimentAccession);
