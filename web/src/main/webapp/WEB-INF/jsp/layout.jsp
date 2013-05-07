@@ -40,9 +40,12 @@
 
     <!-- compliance style start -->
 
-    <meta name="description" content="EMBL-EBI"><!-- Describe what this page is about -->
-    <meta name="keywords" content="bioinformatics, atlas, gxa, ebi, functional, genomics"><!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
-    <meta name="author" content="EMBL-EBI"><!-- Your [project-name] here -->
+    <meta name="description" content="EMBL-EBI">
+    <!-- Describe what this page is about -->
+    <meta name="keywords" content="bioinformatics, atlas, gxa, ebi, functional, genomics">
+    <!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
+    <meta name="author" content="EMBL-EBI">
+    <!-- Your [project-name] here -->
 
     <!-- Mobile viewport optimized: j.mp/bplateviewport -->
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -83,7 +86,7 @@
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
+          href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
@@ -99,9 +102,11 @@
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
 
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-1.8.3.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.0.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
     <script language="JavaScript" type="text/javascript"
@@ -128,33 +133,33 @@
 </head>
 
 <body class="level2">
-    <div id="skip-to">
-        <ul>
-            <li><a href="#content">Skip to main content</a></li>
-            <li><a href="#local-nav">Skip to local navigation</a></li>
-            <li><a href="#global-nav">Skip to EBI global navigation menu</a></li>
-            <li><a href="#global-nav-expanded">Skip to expanded EBI global navigation menu (includes all sub-sections)</a></li>
-        </ul>
-    </div>
+<div id="skip-to">
+    <ul>
+        <li><a href="#content">Skip to main content</a></li>
+        <li><a href="#local-nav">Skip to local navigation</a></li>
+        <li><a href="#global-nav">Skip to EBI global navigation menu</a></li>
+        <li><a href="#global-nav-expanded">Skip to expanded EBI global navigation menu (includes all sub-sections)</a>
+        </li>
+    </ul>
+</div>
 
-    <div id="wrapper" class="container_24">
+<div id="wrapper" class="container_24">
 
-        <tiles:insertAttribute name="header"/>
+    <tiles:insertAttribute name="header"/>
 
-        <div id="contents" class="grid_24">
+    <div id="contents" class="grid_24">
 
-                <div style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
-                    <tiles:insertAttribute name="menu" ignore="true"/>
-                    <tiles:insertAttribute name="body"/>
-                </div>
-
+        <div style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+            <tiles:insertAttribute name="menu" ignore="true"/>
+            <tiles:insertAttribute name="body"/>
         </div>
 
-        <tiles:insertAttribute name="footer"/>
-
-
     </div>
 
+    <tiles:insertAttribute name="footer"/>
+
+
+</div>
 
 
 </body>

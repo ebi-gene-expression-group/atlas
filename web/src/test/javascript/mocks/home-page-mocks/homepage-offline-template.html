@@ -25,7 +25,7 @@
     <title>Html Mock</title>
 
     <link rel="stylesheet" type="text/css"
-          href="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
+          href="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
     <link rel="stylesheet" type="text/css" href="http://www-test.ebi.ac.uk/gxa/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css" href="http://www-test.ebi.ac.uk/gxa/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="http://www-test.ebi.ac.uk/gxa/resources/css/home.css">
@@ -33,9 +33,9 @@
           href="http://www-test.ebi.ac.uk/gxa/resources/css/heatmap-and-anatomogram.css">
 
     <script language="JavaScript" type="text/javascript"
-            src="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-1.8.3.min.js"></script>
+            src="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-1.9.1.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js"></script>
+            src="http://www-test.ebi.ac.uk/gxa/resources/js/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
 
     <script>
         /*global jQuery: false */
@@ -54,17 +54,17 @@
     <script type="text/javascript">
 
         /*
-           drawCircle()
-           selector : a jQuery selector defining an element or array of elements
-           center : the center of the circle
-           radius : the radius of the circle
-           angle: the angle of the circle
-           x: the left offset of all points on the circle
-           y: the top offset of all points on the circle
-           Sample usage:
-           CSS: .box { background-color:red; height:90px; width:90px;  position:absolute; margin:5px;}
-           JS:drawCircle('.box', 50, 200, 90, 310, 220);
-        */
+         drawCircle()
+         selector : a jQuery selector defining an element or array of elements
+         center : the center of the circle
+         radius : the radius of the circle
+         angle: the angle of the circle
+         x: the left offset of all points on the circle
+         y: the top offset of all points on the circle
+         Sample usage:
+         CSS: .box { background-color:red; height:90px; width:90px;  position:absolute; margin:5px;}
+         JS:drawCircle('.box', 50, 200, 90, 310, 220);
+         */
         function drawCircle(selector, center, radius, angle, x, y) {
             var total = $(selector).length;
             var alpha = Math.PI * 2 / total;

@@ -32,6 +32,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/home.jsp"/>
     </definition>
 
+    <definition name="gene" extends="base.definition">
+        <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/gene.jsp"/>
+    </definition>
+
     <!-- error pages -->
     <definition name="error-page" extends="base.definition">
         <put-attribute name="menu" value=""/>
