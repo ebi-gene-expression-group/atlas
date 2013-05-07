@@ -31,7 +31,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
@@ -56,6 +55,9 @@ public class SolrClient {
     @Value("#{configuration['index.types.tooltip']}")
     private String tooltipPropertyTypes;
 
+    @Value("#{configuration['index.types.genepage']}")
+    private String genePagePropertyTypes;
+
     private RestTemplate restTemplate;
 
     private final SolrQueryService solrQueryService;
@@ -66,9 +68,29 @@ public class SolrClient {
         this.solrQueryService = solrQueryService;
     }
 
+    void setTooltipPropertyTypes(String tooltipPropertyTypes) {
+        this.tooltipPropertyTypes = tooltipPropertyTypes;
+    }
+
+    void setGenePagePropertyTypes(String genePagePropertyTypes) {
+        this.genePagePropertyTypes = genePagePropertyTypes;
+    }
+
     public Multimap<String, String> fetchTooltipProperties(String identifier) {
 
         String[] propertyTypes = tooltipPropertyTypes.trim().split(",");
+        return fetchProperties(identifier, propertyTypes);
+
+    }
+
+    public Multimap<String, String> fetchGenePageProperties(String identifier) {
+
+        String[] propertyTypes = genePagePropertyTypes.trim().split(",");
+        return fetchProperties(identifier, propertyTypes);
+
+    }
+
+    Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
 
         try {
             return solrQueryService.fetchProperties(identifier, propertyTypes);

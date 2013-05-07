@@ -22,7 +22,9 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,25 +37,54 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.anyVararg;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrClientTest {
+
+    private static final String IDENTIFIER = "ENSG00000132604";
+
+    private static final String GENE_PAGE_PROPERTY_TYPES = "synonym,ortholog,goterm,interproterm,ensfamily_description,enstranscript,mgi_description,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
+
+    private static final String[] GENE_PAGE_PROPERTY_TYPES_ARRAY = GENE_PAGE_PROPERTY_TYPES.split(",");
+
+    private static final String EXPECTED_GENE_PAGE_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"ortholog\" OR property_type:\"goterm\" OR property_type:\"interproterm\" OR property_type:\"ensfamily_description\" OR property_type:\"enstranscript\" OR property_type:\"mgi_description\" OR property_type:\"entrezgene\" OR property_type:\"uniprot\" OR property_type:\"mgi_id\" OR property_type:\"gene_biotype\" OR property_type:\"designelement_accession\")";
+
+    private static final String TOOLTIP_PROPERTY_TYPES = "synonym,goterm,interproterm";
+
+    private static final String[] TOOLTIP_PROPERTY_TYPES_ARRAY = TOOLTIP_PROPERTY_TYPES.split(",");
+
+    private static final String EXPECTED_TOOLTIP_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"goterm\" OR property_type:\"interproterm\")";
 
     private SolrClient subject;
 
     @Mock
     private RestTemplate restTemplateMock;
 
+    @Mock
+    private SolrQueryService solrQueryServiceMock;
+
+    private Multimap<String, String> results = HashMultimap.create();
+
     private String jsonAutocompleteResponse;
 
     @Before
-    public void initSubject() {
+    public void initSubject() throws Exception {
+
+        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES_ARRAY);
+        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, TOOLTIP_PROPERTY_TYPES_ARRAY);
+        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES_ARRAY);
+        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, TOOLTIP_PROPERTY_TYPES_ARRAY);
+
+        when(solrQueryServiceMock.querySolrForProperties(anyString(), anyInt())).thenReturn(results);
+
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
-        subject = new SolrClient(restTemplateMock, mock(SolrQueryService.class));
+
+        subject = new SolrClient(restTemplateMock, solrQueryServiceMock);
     }
 
     @Test
@@ -67,7 +98,6 @@ public class SolrClientTest {
         String suggestion = subject.extractSuggestion("\"musk\" AND species:\"mus musculus\"");
 
         assertThat(suggestion, is("musk"));
-
     }
 
     @Test
@@ -80,5 +110,23 @@ public class SolrClientTest {
         assertThat(subject.findGenePropertySuggestions("p53", "mus mus"), is(not(empty())));
     }
 
+    @Test
+    public void testFetchGenePageProperties() throws Exception {
+        subject.setGenePagePropertyTypes(GENE_PAGE_PROPERTY_TYPES);
 
+        Multimap<String, String> multimap = subject.fetchGenePageProperties(IDENTIFIER);
+        assertThat(multimap, is(results));
+
+        verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_GENE_PAGE_QUERY, 1000);
+    }
+
+    @Test
+    public void testFetchTooltipProperties() throws Exception {
+        subject.setTooltipPropertyTypes(TOOLTIP_PROPERTY_TYPES);
+
+        Multimap<String, String> multimap = subject.fetchTooltipProperties(IDENTIFIER);
+        assertThat(multimap, is(results));
+
+        verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_TOOLTIP_QUERY, 1000);
+    }
 }
