@@ -80,7 +80,7 @@ var heatmapModule = (function ($) {
             var data = [],
                 index = 0;
             $.each(transcriptRates, function (key, value) {
-                data[index++] = {label: key, data: value.toFixed(1)};
+                data[index++] = {label: key, data: Math.abs(value.toFixed(1)), color: (value < 0 ? 'white' : undefined)};
             });
             return data;
         }
@@ -104,14 +104,17 @@ var heatmapModule = (function ($) {
                 },
                 datatype: 'json',
                 success: function (data) {
-                    var totalCount = data[0],
-                        plotData = buildPlotData($.parseJSON(data[1]));
+                    var totalCount = data.totalTranscriptsCount,
+                        plotData = buildPlotData(data.transcriptExpressions);
 
                     species = species.replace(" ", "_");
 
                     $.plot('#transcripts-pie', plotData, {
                         series: {
                             pie: {
+                                stroke: {
+                                    color: "lightgray"
+                                },
                                 show: true,
                                 radius: 1,
                                 label: {

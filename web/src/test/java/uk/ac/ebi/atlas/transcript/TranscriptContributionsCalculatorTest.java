@@ -38,7 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TranscriptContributionCalculatorTest {
+public class TranscriptContributionsCalculatorTest {
 
     public static final String GENE_ID = "geneId";
 
@@ -48,7 +48,7 @@ public class TranscriptContributionCalculatorTest {
     @Mock
     private BaselineExperimentsCache experimentsCacheMock;
 
-    private TranscriptContributionCalculator subject;
+    private TranscriptContributionsCalculator subject;
 
     private List<TranscriptProfile> transcriptProfiles;
 
@@ -60,7 +60,7 @@ public class TranscriptContributionCalculatorTest {
     @Before
     public void initSubject() throws Exception {
 
-        subject = new TranscriptContributionCalculator(geneProfileDaoMock, experimentsCacheMock);
+        subject = new TranscriptContributionsCalculator(geneProfileDaoMock, experimentsCacheMock);
     }
 
     @Test
@@ -69,25 +69,25 @@ public class TranscriptContributionCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile4, profile3, profile2, profile1);
 
         //when
-        TranscriptsContribution topThreeTranscriptsMap = subject.createTranscriptsContribution(transcriptProfiles, 1);
+        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().keySet(), contains("T4", "T3", "T2", TranscriptsContribution.OTHERS));
-        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().values(), containsInAnyOrder(40d, 30d, 20d, 10d));
+        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().keySet(), contains("T4", "T3", "T2", TranscriptContributions.OTHERS));
+        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().values(), contains(4d, 3d, 2d, 1d));
 
     }
 
     @Test
     public void testCreateTopThreeTranscriptsMapWith2Transcripts() throws Exception {
         //given
-        transcriptProfiles = Lists.newArrayList(profile4, profile2);
+        transcriptProfiles = Lists.newArrayList(profile2, profile4);
 
         //when
-        TranscriptsContribution topThreeTranscriptsMap = subject.createTranscriptsContribution(transcriptProfiles, 1);
+        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1);
 
         //then
-        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().keySet(), containsInAnyOrder("T4", "T2"));
-        assertThat(topThreeTranscriptsMap.getTranscriptPercentageRates().values(), containsInAnyOrder(66.7d, 33.3d));
+        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().keySet(), contains("T4", "T2"));
+        assertThat(topThreeTranscriptContributions.getTranscriptExpressions().values(), contains(4d, 2d));
     }
 
     @Test

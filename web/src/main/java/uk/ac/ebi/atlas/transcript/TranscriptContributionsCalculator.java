@@ -36,7 +36,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Named
-public class TranscriptContributionCalculator {
+public class TranscriptContributionsCalculator {
 
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
 
@@ -45,23 +45,21 @@ public class TranscriptContributionCalculator {
     private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public TranscriptContributionCalculator(GeneProfileDao geneProfileDao, BaselineExperimentsCache experimentsCache) {
+    public TranscriptContributionsCalculator(GeneProfileDao geneProfileDao, BaselineExperimentsCache experimentsCache) {
         this.geneProfileDao = geneProfileDao;
         this.experimentsCache = experimentsCache;
     }
 
-    public TranscriptsContribution getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup) {
+    public TranscriptContributions getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup) {
 
         List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(experimentAccession, geneId));
 
         int factorIndex = getFactorIndex(experimentAccession, factorGroup);
 
-        Collections.sort(transcriptProfiles, getReverseTranscriptProfileComparator(factorIndex));
-
-        return createTranscriptsContribution(transcriptProfiles, factorIndex);
+        return createTranscriptContributions(transcriptProfiles, factorIndex);
     }
 
-    protected int getFactorIndex(String experimentAccession, FactorGroup factorGroup) {
+    int getFactorIndex(String experimentAccession, FactorGroup factorGroup) {
 
         BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -69,10 +67,12 @@ public class TranscriptContributionCalculator {
         return experimentalFactors.getFactorIndex(factorGroup);
     }
 
-    protected TranscriptsContribution createTranscriptsContribution(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
-        TranscriptsContribution transcriptsContribution = new TranscriptsContribution();
+    TranscriptContributions createTranscriptContributions(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
+        Collections.sort(transcriptProfiles, getReverseTranscriptProfileComparator(factorIndex));
 
-        transcriptsContribution.setTotalTranscriptCount(transcriptProfiles.size());
+        TranscriptContributions transcriptContributions = new TranscriptContributions();
+
+        transcriptContributions.setTotalTranscriptsCount(transcriptProfiles.size());
 
         double sum = 0d;
 
@@ -81,7 +81,7 @@ public class TranscriptContributionCalculator {
             double expression = transcriptProfile.getExpression(factorIndex);
             if (i < TOP_TRANSCRIPTS_NUMBER) {
                 if (expression > 0d) {
-                    transcriptsContribution.put(transcriptProfile.getTranscriptId(), expression);
+                    transcriptContributions.put(transcriptProfile.getTranscriptId(), expression);
                 }
             } else {
                 sum += expression;
@@ -89,13 +89,13 @@ public class TranscriptContributionCalculator {
         }
 
         if (sum > 0d) {
-            transcriptsContribution.put(TranscriptsContribution.OTHERS, sum);
+            transcriptContributions.put(TranscriptContributions.OTHERS, sum);
         }
 
-        return transcriptsContribution;
+        return transcriptContributions;
     }
 
-    protected Comparator<TranscriptProfile> getReverseTranscriptProfileComparator(final int selectedIndex) {
+    Comparator<TranscriptProfile> getReverseTranscriptProfileComparator(final int selectedIndex) {
         return new Comparator<TranscriptProfile>() {
             @Override
             public int compare(TranscriptProfile profile1, TranscriptProfile profile2) {
