@@ -30,26 +30,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.transcript.TranscriptContributionCalculator;
-import uk.ac.ebi.atlas.transcript.TranscriptsContribution;
+import uk.ac.ebi.atlas.transcript.TranscriptContributions;
+import uk.ac.ebi.atlas.transcript.TranscriptContributionsCalculator;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @Scope("request")
 public class RankedGeneTranscriptsController {
 
-    private TranscriptContributionCalculator transcriptContributionCalculator;
+    private TranscriptContributionsCalculator transcriptContributionsCalculator;
 
     @Inject
-    public RankedGeneTranscriptsController(TranscriptContributionCalculator transcriptContributionCalculator) {
-        this.transcriptContributionCalculator = transcriptContributionCalculator;
+    public RankedGeneTranscriptsController(TranscriptContributionsCalculator transcriptContributionsCalculator) {
+        this.transcriptContributionsCalculator = transcriptContributionsCalculator;
     }
 
     @RequestMapping(value = "/json/transcripts/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
@@ -70,14 +67,9 @@ public class RankedGeneTranscriptsController {
         Collection<Factor> selectedFilterFactors = gson.fromJson(selectedFilterFactorsJson, factorsCollectionType);
         selectedFactorGroup.addAll(selectedFilterFactors);
 
-        TranscriptsContribution transcriptsContribution = transcriptContributionCalculator.getTranscriptsContribution(geneId, experimentAccession, selectedFactorGroup);
+        TranscriptContributions transcriptContributions = transcriptContributionsCalculator.getTranscriptsContribution(geneId, experimentAccession, selectedFactorGroup);
 
-
-        List<String> contributionData = new ArrayList<>();
-        contributionData.add(String.valueOf(transcriptsContribution.getTotalTranscriptCount()));
-        Map<String, Double> transcriptPercentageRates = transcriptsContribution.getTranscriptPercentageRates();
-        contributionData.add(gson.toJson(transcriptPercentageRates, Map.class));
-        return gson.toJson(contributionData, List.class);
+        return gson.toJson(transcriptContributions);
         //return gson.toJson(transcriptsContribution);
 
     }

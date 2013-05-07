@@ -36,7 +36,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Named
-public class TranscriptContributionCalculator {
+public class TranscriptContributionsCalculator {
 
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
 
@@ -45,12 +45,12 @@ public class TranscriptContributionCalculator {
     private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public TranscriptContributionCalculator(GeneProfileDao geneProfileDao, BaselineExperimentsCache experimentsCache) {
+    public TranscriptContributionsCalculator(GeneProfileDao geneProfileDao, BaselineExperimentsCache experimentsCache) {
         this.geneProfileDao = geneProfileDao;
         this.experimentsCache = experimentsCache;
     }
 
-    public TranscriptsContribution getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup) {
+    public TranscriptContributions getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup) {
 
         List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(experimentAccession, geneId));
 
@@ -69,10 +69,10 @@ public class TranscriptContributionCalculator {
         return experimentalFactors.getFactorIndex(factorGroup);
     }
 
-    protected TranscriptsContribution createTranscriptsContribution(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
-        TranscriptsContribution transcriptsContribution = new TranscriptsContribution();
+    protected TranscriptContributions createTranscriptsContribution(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
+        TranscriptContributions transcriptContributions = new TranscriptContributions();
 
-        transcriptsContribution.setTotalTranscriptCount(transcriptProfiles.size());
+        transcriptContributions.setTotalTranscriptCount(transcriptProfiles.size());
 
         double sum = 0d;
 
@@ -81,7 +81,7 @@ public class TranscriptContributionCalculator {
             double expression = transcriptProfile.getExpression(factorIndex);
             if (i < TOP_TRANSCRIPTS_NUMBER) {
                 if (expression > 0d) {
-                    transcriptsContribution.put(transcriptProfile.getTranscriptId(), expression);
+                    transcriptContributions.put(transcriptProfile.getTranscriptId(), expression);
                 }
             } else {
                 sum += expression;
@@ -89,10 +89,10 @@ public class TranscriptContributionCalculator {
         }
 
         if (sum > 0d) {
-            transcriptsContribution.put(TranscriptsContribution.OTHERS, sum);
+            transcriptContributions.put(TranscriptContributions.OTHERS, sum);
         }
 
-        return transcriptsContribution;
+        return transcriptContributions;
     }
 
     protected Comparator<TranscriptProfile> getReverseTranscriptProfileComparator(final int selectedIndex) {

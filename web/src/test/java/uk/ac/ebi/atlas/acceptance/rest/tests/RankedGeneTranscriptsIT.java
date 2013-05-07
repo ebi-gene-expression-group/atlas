@@ -29,15 +29,12 @@ import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 
 public class RankedGeneTranscriptsIT {
 
     private static final String E_MTAB_513_URL_TEMPLATE = "/gxa/json/transcripts/E-MTAB-513";
 
     private static final String E_MTAB_599_URL_TEMPLATE = "/gxa/json/transcripts/E-MTAB-599";
-
-    private static final String E_GEOD_30352_URL_TEMPLATE = "/gxa/json/transcripts/E-GEOD-30352";
 
     private static final String E_GEOD_26284_URL_TEMPLATE = "/gxa/json/transcripts/E-GEOD-26284";
 
