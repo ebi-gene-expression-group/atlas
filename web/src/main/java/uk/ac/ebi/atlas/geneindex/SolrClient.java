@@ -101,6 +101,16 @@ public class SolrClient {
 
     }
 
+    public String findSpeciesForGeneId(String identifier) {
+
+        try {
+            return solrQueryService.getSpeciesForIdentifier(identifier);
+        } catch (SolrServerException e) {
+            LOGGER.error("<fetchProperties> error querying solr service", e);
+            throw new IllegalStateException(e);
+        }
+    }
+
     public Set<String> findGeneIds(String geneQuery, boolean exactMatch, String species) throws GenesNotFoundException {
         try {
             String lowercaseSpecies = species.toLowerCase();
@@ -147,7 +157,6 @@ public class SolrClient {
         }
 
     }
-
 
     public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
 

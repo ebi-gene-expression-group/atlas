@@ -106,4 +106,12 @@ public class SolrQueryServiceIT {
 
     }
 
+    @Test
+    public void testGetSpeciesForIdentifier() throws SolrServerException {
+
+        assertThat(subject.getSpeciesForIdentifier("ENSG00000179218"), is("homo sapiens"));
+        assertThat(subject.getSpeciesForIdentifier("ENSMUSG00000029816"), is("mus musculus"));
+
+    }
+
 }

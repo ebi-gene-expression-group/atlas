@@ -58,6 +58,7 @@ public class SolrClientTest {
     private static final String[] TOOLTIP_PROPERTY_TYPES_ARRAY = TOOLTIP_PROPERTY_TYPES.split(",");
 
     private static final String EXPECTED_TOOLTIP_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"goterm\" OR property_type:\"interproterm\")";
+    public static final String SPECIES = "mus musculus";
 
     private SolrClient subject;
 
@@ -80,6 +81,7 @@ public class SolrClientTest {
         doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, TOOLTIP_PROPERTY_TYPES_ARRAY);
 
         when(solrQueryServiceMock.querySolrForProperties(anyString(), anyInt())).thenReturn(results);
+        when(solrQueryServiceMock.getSpeciesForIdentifier(IDENTIFIER)).thenReturn(SPECIES);
 
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
@@ -128,5 +130,10 @@ public class SolrClientTest {
         assertThat(multimap, is(results));
 
         verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_TOOLTIP_QUERY, 1000);
+    }
+
+    @Test
+    public void testFindSpeciesForGeneId() throws Exception {
+        assertThat(subject.findSpeciesForGeneId(IDENTIFIER), is(SPECIES));
     }
 }

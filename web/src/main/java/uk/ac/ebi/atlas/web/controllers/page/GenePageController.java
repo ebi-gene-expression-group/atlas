@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 
 import javax.inject.Inject;
+import java.util.Collection;
 
 @Controller
 @Scope("request")
@@ -46,9 +47,25 @@ public class GenePageController {
     @RequestMapping(value = "/genes/{identifier}")
     public String showGenePage(@PathVariable String identifier, Model model) {
 
+        String species = solrClient.findSpeciesForGeneId(identifier);
+        model.addAttribute("species", species);
+
         Multimap<String, String> properties = solrClient.fetchGenePageProperties(identifier);
         for (String property_type : properties.keySet()) {
-            model.addAttribute(property_type, properties.get(property_type));
+            Collection<String> values = properties.get(property_type);
+            if (property_type.equals("symbol")) {
+                // there should be only one element of this kind
+                model.addAttribute(property_type, values.iterator().next());
+            } else if (property_type.equals("description")) {
+                // cleanup gene description
+                String description = values.iterator().next();
+                if (description.contains("[")) {
+                    description = description.substring(0, description.indexOf("["));
+                }
+                model.addAttribute(property_type, description);
+            } else {
+                model.addAttribute(property_type, values);
+            }
         }
 
         return "gene";

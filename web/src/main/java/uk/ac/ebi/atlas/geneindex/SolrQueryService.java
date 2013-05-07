@@ -112,6 +112,22 @@ public class SolrQueryService {
         return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
     }
 
+    public String getSpeciesForIdentifier(String identifier) throws SolrServerException {
+
+        String species = null;
+
+        SolrQuery query = new SolrQuery("identifier:" + identifier);
+        query.setFields("species");
+        query.setRows(1);
+
+        QueryResponse solrResponse = solrServer.query(query);
+        for (SolrDocument doc : solrResponse.getResults()) {
+            species = doc.getFieldValue("species").toString();
+        }
+
+        return species;
+    }
+
     List<String> fetchGeneIdentifiersFromSolr(String queryString) throws SolrServerException {
         List<String> results = Lists.newArrayList();
 
