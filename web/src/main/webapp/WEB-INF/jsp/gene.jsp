@@ -32,7 +32,7 @@
     </ul>
 
     <div class="geneCard">
-        <table>
+        <table id="geneCardTable">
             <c:forEach var="propertyType" items="${property_types}">
                 <c:if test="${properties.get(propertyType).size() > 0}">
                     <tr>
