@@ -56,7 +56,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":3,\"transcriptExpressions\":{\"ENST00000417459\":0.7,\"ENST00000370832\":0.4}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":4,\"transcriptExpressions\":{\"ENST00000417459\":0.7,\"ENST00000370832\":0.4}}"));
 
 
     }
@@ -123,7 +123,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"transcriptExpressions\":{\"ENSMUST00000163767\":23.0,\"ENSMUST00000074225\":7.0,\"ENSMUST00000165262\":6.0,\"Others\":2.0}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"transcriptExpressions\":{\"ENSMUST00000163767\":111.0,\"ENSMUST00000074225\":41.0,\"ENSMUST00000165262\":35.0,\"Others\":14.0}}"));
 
 
     }

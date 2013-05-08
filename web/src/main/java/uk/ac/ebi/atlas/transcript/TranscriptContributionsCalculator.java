@@ -80,7 +80,7 @@ public class TranscriptContributionsCalculator {
             TranscriptProfile transcriptProfile = transcriptProfiles.get(i);
             double expression = transcriptProfile.getExpression(factorIndex);
             if (i < TOP_TRANSCRIPTS_NUMBER) {
-                if (expression > 0d) {
+                if (expression != 0d) {
                     transcriptContributions.put(transcriptProfile.getTranscriptId(), expression);
                 }
             } else {
@@ -99,7 +99,7 @@ public class TranscriptContributionsCalculator {
         return new Comparator<TranscriptProfile>() {
             @Override
             public int compare(TranscriptProfile profile1, TranscriptProfile profile2) {
-                return Double.compare(profile2.getExpression(selectedIndex), profile1.getExpression(selectedIndex));
+                return Double.compare(Math.abs(profile2.getExpression(selectedIndex)), Math.abs(profile1.getExpression(selectedIndex)));
             }
         };
     }

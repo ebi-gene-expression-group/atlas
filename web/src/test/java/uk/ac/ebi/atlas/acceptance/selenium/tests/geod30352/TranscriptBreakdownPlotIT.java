@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.geod30352;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,21 +33,27 @@ import static org.junit.Assert.assertThat;
 
 public class TranscriptBreakdownPlotIT extends SeleniumFixture {
 
-    private static final String E_GEOD_26284_ACCESSION = "E-GEOD-26284";
+    private static final String E_MTAB_513_ACCESSION = "E-MTAB-513";
     protected HeatmapTableWithTranscriptBreakdownPage subject;
 
     @Before
     public void initSubject() {
-        subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_GEOD_26284_ACCESSION);
+        subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_MTAB_513_ACCESSION);
         subject.get();
     }
 
     @Test
     public void verifyButtonClickFirstProfile() {
-        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(9, 3);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for PTBP3 (8 transcripts) in IMR-90"));
-        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000374257", "ENST00000343327", "ENST00000374255", "Others"));
+        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 14);
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ACTL7A (1 transcript) in testis"));
+        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000333999"));
     }
 
+    @Test
+    public void verifyButtonClickSecondProfile() {
+        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(1, 14);
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for TEX33 (4 transcripts) in testis"));
+        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000442538", "ENST00000381821", "ENST00000405091", "Others"));
+    }
 
 }
