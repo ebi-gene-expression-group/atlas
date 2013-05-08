@@ -128,6 +128,22 @@ public class SolrQueryService {
         return species;
     }
 
+    public List<String> getPropertyValuesForIdentifier(String identifier, String propertyType) throws SolrServerException {
+
+        List<String> results = Lists.newArrayList();
+
+        SolrQuery query = new SolrQuery("identifier:" + identifier + " AND property_type:" + propertyType);
+        query.setFields("property");
+        query.setRows(PROPERTY_VALUES_LIMIT);
+
+        QueryResponse solrResponse = solrServer.query(query);
+        for (SolrDocument doc : solrResponse.getResults()) {
+            results.add(doc.getFieldValue("property").toString());
+        }
+
+        return results;
+    }
+
     List<String> fetchGeneIdentifiersFromSolr(String queryString) throws SolrServerException {
         List<String> results = Lists.newArrayList();
 

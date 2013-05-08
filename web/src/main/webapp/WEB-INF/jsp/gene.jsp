@@ -32,19 +32,35 @@
     </ul>
 
     <div class="geneCard">
-        <table>
+        <table id="geneCardTable">
             <c:forEach var="propertyType" items="${property_types}">
-                <tr>
-                    <td class="geneCardPropertyType">${names.get(propertyType)}</td>
-                    <td class="geneCardPropertyValue">
-                        <c:set var="count" value="0"/>
-                        <c:forEach var="propertyValuePair" items="${properties.get(propertyType)}">
-                            <c:set var="count" value="${count + 1}"/>
-                            <span>${propertyValuePair.getKey()}<c:if
-                                    test="${count < properties.get(propertyType).size()}">,</c:if></span>
-                        </c:forEach>
-                    </td>
-                </tr>
+                <c:if test="${properties.get(propertyType).size() > 0}">
+                    <tr>
+                        <td class="geneCardPropertyType">${names.get(propertyType)}</td>
+                        <td class="geneCardPropertyValue">
+                            <c:set var="count" value="0"/>
+                            <c:forEach var="propertyValuePair" items="${properties.get(propertyType)}">
+
+                                <c:set var="count" value="${count + 1}"/>
+                                <c:set var="comma" value=""/>
+                                <c:if test="${count < properties.get(propertyType).size()}">
+                                    <c:set var="comma" value=","/>
+                                </c:if>
+
+                                <c:set var="preLinkHTML" value=""/>
+                                <c:set var="postLinkHTML" value=""/>
+                                <c:if test="${propertyValuePair.getValue().length() > 0}">
+                                    <c:set var="preLinkHTML"
+                                           value="<a href=\"${propertyValuePair.getValue()}\" target=\"_blank\">"/>
+                                    <c:set var="postLinkHTML" value="<span class=\"external\"></span></a>"/>
+                                </c:if>
+
+                                <span>${preLinkHTML}${propertyValuePair.getKey()}${postLinkHTML}${comma}</span>
+
+                            </c:forEach>
+                        </td>
+                    </tr>
+                </c:if>
             </c:forEach>
         </table>
     </div>

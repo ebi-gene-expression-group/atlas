@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,6 +80,7 @@ public class GenePageControllerTest {
 
         when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(SPECIES);
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER)).thenReturn(genePageProperties);
+        when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
         subject = new GenePageController(solrClientMock, geneCardProperties, PROPERTY_TYPES);
     }
@@ -105,5 +107,10 @@ public class GenePageControllerTest {
         assertThat(nameMapping.size(), is(2));
         assertThat(nameMapping.get(SYNONYM), is(SYNONYMS));
         assertThat(nameMapping.get(GOTERM), is(GENE_ONTOLOGY));
+    }
+
+    @Test
+    public void testTransformOrthologToSymbol() {
+        assertThat(subject.transformOrthologToSymbol(IDENTIFIER), is("symbol (SPECIES)"));
     }
 }
