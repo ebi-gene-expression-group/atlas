@@ -36,7 +36,14 @@
             <c:forEach var="propertyType" items="${property_types}">
                 <tr>
                     <td class="geneCardPropertyType">${names.get(propertyType)}</td>
-                    <td>${properties.get(propertyType)}</td>
+                    <td class="geneCardPropertyValue">
+                        <c:set var="count" value="0"/>
+                        <c:forEach var="propertyValuePair" items="${properties.get(propertyType)}">
+                            <c:set var="count" value="${count + 1}"/>
+                            <span>${propertyValuePair.getKey()}<c:if
+                                    test="${count < properties.get(propertyType).size()}">,</c:if></span>
+                        </c:forEach>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

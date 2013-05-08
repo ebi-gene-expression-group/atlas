@@ -373,6 +373,11 @@ a.help-icon {
     vertical-align: top;
 }
 
+.geneCardPropertyType {
+    font-size: 12px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+}
+
 .geneCardIconPlus {
     background-position: -16px -128px;
     position: relative !important;

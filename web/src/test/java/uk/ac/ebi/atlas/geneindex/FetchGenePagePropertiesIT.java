@@ -49,9 +49,9 @@ public class FetchGenePagePropertiesIT {
         // given
         Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816");
 
-        // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession
+        // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,designelement_accession
 
-        assertThat(properties.size(), Matchers.is(54));
+        assertThat(properties.size(), Matchers.is(55));
         assertThat(properties.get("symbol"), Matchers.hasItem("Gpnmb"));
         assertThat(properties.get("description"), Matchers.hasItem("glycoprotein (transmembrane) nmb [Source:MGI Symbol;Acc:MGI:1934765]"));
         assertThat(properties.get("synonym").size(), Matchers.is(2));
@@ -64,6 +64,7 @@ public class FetchGenePagePropertiesIT {
         assertThat(properties.get("entrezgene"), Matchers.hasItems("93695"));
         assertThat(properties.get("uniprot"), Matchers.hasItems("Q99P91", "Q3UE75"));
         assertThat(properties.get("mgi_id"), Matchers.hasItems("MGI:1934765"));
+        assertThat(properties.get("mgi_description"), Matchers.hasItems("glycoprotein (transmembrane) nmb"));
         assertThat(properties.get("gene_biotype"), Matchers.hasItems("protein_coding"));
         assertThat(properties.get("designelement_accession"), Matchers.hasItems("5548029", "108822_at", "5610568", "5182097", "5246058"));
     }

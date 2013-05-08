@@ -88,10 +88,9 @@ public class GenePageControllerTest {
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("gene"));
         verify(modelMock).addAttribute("species", SPECIES);
         verify(modelMock).addAttribute("property_types", subject.filterPropertyTypes());
-        verify(modelMock).addAttribute("properties", genePageProperties);
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_DESCRIPTION, DESCRIPTION);
-        verify(modelMock).addAttribute("names", subject.extractPropertyTypeNameMappings());
+        verify(modelMock).addAttribute("names", subject.extractPropertiesFromConfiguration("property"));
     }
 
     @Test
@@ -101,8 +100,8 @@ public class GenePageControllerTest {
     }
 
     @Test
-    public void testExtractPropertyTypeNameMappings() {
-        Map<String, String> nameMapping = subject.extractPropertyTypeNameMappings();
+    public void testExtractPropertiesFromConfiguration() {
+        Map<String, String> nameMapping = subject.extractPropertiesFromConfiguration("property");
         assertThat(nameMapping.size(), is(2));
         assertThat(nameMapping.get(SYNONYM), is(SYNONYMS));
         assertThat(nameMapping.get(GOTERM), is(GENE_ONTOLOGY));
