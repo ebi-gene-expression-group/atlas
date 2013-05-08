@@ -106,9 +106,20 @@ public class SolrClient {
         try {
             return solrQueryService.getSpeciesForIdentifier(identifier);
         } catch (SolrServerException e) {
-            LOGGER.error("<fetchProperties> error querying solr service", e);
+            LOGGER.error("<findSpeciesForGeneId> error querying solr service", e);
             throw new IllegalStateException(e);
         }
+    }
+
+    public List<String> findPropertyValuesForGeneId(String identifier, String propertyType) {
+
+        try {
+            return solrQueryService.getPropertyValuesForIdentifier(identifier, propertyType);
+        } catch (SolrServerException e) {
+            LOGGER.error("<findPropertyValuesForGeneId> error querying solr service", e);
+            throw new IllegalStateException(e);
+        }
+
     }
 
     public Set<String> findGeneIds(String geneQuery, boolean exactMatch, String species) throws GenesNotFoundException {

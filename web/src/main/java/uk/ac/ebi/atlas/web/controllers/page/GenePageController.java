@@ -105,6 +105,10 @@ public class GenePageController {
                 Multimaps.transformEntries(properties, new Maps.EntryTransformer<String, String, Pair<String, String>>() {
                     @Override
                     public Pair<String, String> transformEntry(String propertyType, String propertyValue) {
+                        String value = propertyValue;
+                        if (propertyType.equals("ortholog")) {
+                            value = transformOrthologToSymbol(value);
+                        }
                         if (linkTemplates.containsKey(propertyType)) {
                             String link = "";
                             try {
@@ -113,15 +117,25 @@ public class GenePageController {
                             } catch (UnsupportedEncodingException e) {
                                 // ignore
                             }
-                            return Pair.of(propertyValue, link);
+                            return Pair.of(value, link);
                         }
-                        return Pair.of(propertyValue, "");
+                        return Pair.of(value, "");
                     }
                 });
 
         return results;
     }
 
+    String transformOrthologToSymbol(String identifier) {
+        String species = solrClient.findSpeciesForGeneId(identifier);
+        species = species.substring(0, 1).toUpperCase() + species.substring(1);
+        List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
+        if (!valuesForGeneId.isEmpty()) {
+            String symbol = valuesForGeneId.get(0);
+            return symbol + " (" + species + ")";
+        }
+        return identifier;
+    }
 
     List<String> filterPropertyTypes() {
         String[] split = genePagePropertyTypes.split(",");

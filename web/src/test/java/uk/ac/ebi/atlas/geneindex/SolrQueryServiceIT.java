@@ -114,4 +114,12 @@ public class SolrQueryServiceIT {
 
     }
 
+    @Test
+    public void testGetPropertyValuesForIdentifier() throws SolrServerException {
+
+        assertThat(subject.getPropertyValuesForIdentifier("ENSG00000179218", "symbol"), hasItem("CALR"));
+        assertThat(subject.getPropertyValuesForIdentifier("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
+
+    }
+
 }
