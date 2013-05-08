@@ -29,6 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 public class TranscriptBreakdownPlotIT extends SeleniumFixture {
@@ -46,14 +47,23 @@ public class TranscriptBreakdownPlotIT extends SeleniumFixture {
     public void verifyButtonClickKidneyProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 3);
         assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 (9 transcripts) in kidney"));
-        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746","ENST00000341360","ENST00000357681","Others"));
+        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746", "ENST00000341360", "ENST00000357681", "Others"));
+        assertThat(page.getTranscriptColor(0), not("white"));
+        assertThat(page.getTranscriptColor(1), is("white"));
+        assertThat(page.getTranscriptColor(2), not("white"));
+        assertThat(page.getTranscriptColor(3), not("white"));
+
     }
 
     @Test
     public void verifyButtonClickPrefrontalCortexProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 5);
         assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 (9 transcripts) in prefrontal cortex"));
-        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746","ENST00000341360","ENST00000367218","Others"));
+        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746", "ENST00000341360", "ENST00000367218", "Others"));
+        assertThat(page.getTranscriptColor(0), not("white"));
+        assertThat(page.getTranscriptColor(1), is("white"));
+        assertThat(page.getTranscriptColor(2), not("white"));
+        assertThat(page.getTranscriptColor(3), not("white"));
     }
 
 }
