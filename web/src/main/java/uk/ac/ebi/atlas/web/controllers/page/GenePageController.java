@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -33,25 +34,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 @Controller
 @Scope("request")
 public class GenePageController {
 
-    static final String PROPERTY_TYPE_SYMBOL = "symbol";
+    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
-    static final String PROPERTY_TYPE_DESCRIPTION = "description";
+    public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
     SolrClient solrClient;
 
-    @Value("#{configuration['index.types.genepage']}")
-    private String genePagePropertyTypes;
+    Properties geneCardProperties;
+
+    String genePagePropertyTypes;
 
     @Inject
-    GenePageController(SolrClient solrClient) {
+    GenePageController(SolrClient solrClient,
+                       @Named("genecard") Properties geneCardProperties,
+                       @Value("#{configuration['index.types.genepage']}") String genePagePropertyTypes) {
         this.solrClient = solrClient;
+        this.geneCardProperties = geneCardProperties;
+        this.genePagePropertyTypes = genePagePropertyTypes;
     }
 
     @RequestMapping(value = "/genes/{identifier}")
@@ -75,6 +84,8 @@ public class GenePageController {
         }
         model.addAttribute(PROPERTY_TYPE_DESCRIPTION, description);
 
+        model.addAttribute("names", extractPropertyTypeNameMappings());
+
         return "gene";
     }
 
@@ -89,4 +100,16 @@ public class GenePageController {
         }
         return filteredPropertyTypes;
     }
+
+    Map<String, String> extractPropertyTypeNameMappings() {
+        Map<String, String> results = Maps.newHashMap();
+        for (String key : geneCardProperties.stringPropertyNames()) {
+            if (key.startsWith("property")) {
+                String propertyType = key.substring(9);
+                results.put(propertyType, geneCardProperties.getProperty(key));
+            }
+        }
+        return results;
+    }
+
 }

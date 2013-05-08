@@ -23,19 +23,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="accordion">
-    <ul>
+    <ul class="geneCardHeader">
         <img id="bioentity-info-image" title="Gene info" style="position: absolute; left: 0.5em; "
-             src="resources/images/bioentity_info.png"/>
+             src="resources/images/bioentity_info_transparent_bkg.png"/>
         <span class="geneCardSymbol">${symbol}</span>
         <span class="geneCardSpecies">${species}</span>
         <span class="geneCardDescription">${description}</span>
     </ul>
 
-    <div>
+    <div class="geneCard">
         <table>
             <c:forEach var="propertyType" items="${property_types}">
                 <tr>
-                    <td>${propertyType}</td>
+                    <td class="geneCardPropertyType">${names.get(propertyType)}</td>
                     <td>${properties.get(propertyType)}</td>
                 </tr>
             </c:forEach>
