@@ -68,7 +68,7 @@ public class GenePageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkLinksInTable() {
-        assertThat(subject.getLinksInTableRow(1).get(0), startsWith("http://www-test.ebi.ac.uk/gxa/genes/ENS"));
+        assertThat(subject.getLinksInTableRow(1).get(0), containsString("/gxa/genes/ENS"));
         assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://amigo.geneontology.org/cgi-bin/amigo/search.cgi?search_constraint=term&exact_match=yes&action=new-search&search_query="));
         assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.ebi.ac.uk/interpro/search?q="));
         assertThat(subject.getLinksInTableRow(4).get(0), is("http://www.ensembl.org/mus_musculus/Search/Details?db=core;end=1;idx=Family;q=TRANSMEMBRANE+GLYCOPROTEIN+NMB+PRECURSOR;species=mus_musculus"));
