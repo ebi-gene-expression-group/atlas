@@ -102,6 +102,8 @@
     <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
 
     <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
+    <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.0.min.js"></script>
@@ -157,7 +159,6 @@
     </div>
 
     <tiles:insertAttribute name="footer"/>
-
 
 </div>
 
