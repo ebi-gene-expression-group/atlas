@@ -186,7 +186,7 @@ function loadSliderAndPlot(cutoff, experimentAccession, queryFactorType, seriali
             var magnifiedScale = new MagnifiedScale(1),
                 previousPoint = null,
                 scaledCutoff = magnifiedScale.getNearestScaleValue(cutoff),
-                keys = Object.keys(data),
+                keys = $.map(data,function(value,key){return key;}),
                 scaledCutoffTicks = [],
                 dataArray = [];
 
