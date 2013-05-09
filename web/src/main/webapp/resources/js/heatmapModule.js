@@ -28,6 +28,21 @@ var heatmapModule = (function ($) {
 
     "use strict";
 
+    function showTranscriptBreakdownFancyBox(){
+        $.fancybox({
+                href: '#transcript-breakdown',
+                padding: 0,
+                openEffect: 'elastic',
+                closeEffect: 'elastic',
+                helpers: {
+                    overlay: {
+                        locked: false
+                    }
+                }
+            }
+        );
+    }
+
     function showCellText(div) {
         $(div).removeClass("hide_cell").addClass("show_cell");
     }
@@ -80,7 +95,7 @@ var heatmapModule = (function ($) {
             var data = [],
                 index = 0;
             $.each(transcriptRates, function (key, value) {
-                data[index++] = {label: key, data: Math.abs(value.toFixed(1))};
+                data[index++] = {label: key, data: Math.abs(value.toFixed(1)), color: (value < 0 ? 'white' : undefined)};
             });
             return data;
         }
@@ -143,13 +158,6 @@ var heatmapModule = (function ($) {
                         "' target='_blank'" + "title='View gene in Ensembl'" + ">" +
                         geneName + "</a>" + " (" + totalCount + " transcript" + s + ") in " + factorValue);
 
-
-                    $('#geneid').tooltip();
-
-                    $('.transcriptid').tooltip();
-
-                    $('#transcript-breakdown-title-help').tooltip();
-
                     //next line is required because the div is configured to stay in an invisible position (position:absolute; left:-5000px)
                     //in order to make it invisible during the show-up of fancybox
                     //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
@@ -157,21 +165,11 @@ var heatmapModule = (function ($) {
                     $('#transcript-breakdown').css('position','relative')
                                               .css('left','0px');
 
-                    $.fancybox({href: '#transcript-breakdown',
-                        padding: 0,
-                        openEffect: 'elastic',
-                        closeEffect: 'elastic',
-                        helpers: {
-                           overlay: {
-                               locked: false
-                           }
-                        }
-                    });
-
+                    showTranscriptBreakdownFancyBox();
                 }
             }).fail(function (data) {
                     console.log("ERROR:  " + data);
-                });
+            });
 
         });
     }
@@ -287,13 +285,20 @@ var heatmapModule = (function ($) {
 
     }
 
+    function initTranscriptBreakdownFancyBox(experimentAccession, parameters){
+        initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
+
+        $('#geneid').tooltip();
+        $('#transcript-breakdown-title-help').tooltip();
+
+    }
 
     function initHeatmap(experimentAccession, parameters) {
 
         $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
         if (parameters && parameters.species) {
-            initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
+            initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
         initHeatmapCellsTooltip();
