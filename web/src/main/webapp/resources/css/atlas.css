@@ -378,6 +378,10 @@ a.help-icon {
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
 }
 
+.geneCardLink {
+    border-bottom-color: #222222 !important;
+}
+
 .geneCardIconPlus {
     background-position: -16px -128px;
     position: relative !important;

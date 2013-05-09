@@ -51,8 +51,8 @@
                                 <c:set var="postLinkHTML" value=""/>
                                 <c:if test="${propertyValuePair.getValue().length() > 0}">
                                     <c:set var="preLinkHTML"
-                                           value="<a href=\"${propertyValuePair.getValue()}\" target=\"_blank\">"/>
-                                    <c:set var="postLinkHTML" value="<span class=\"external\"></span></a>"/>
+                                           value="<a class=\"geneCardLink\" href=\"${propertyValuePair.getValue()}\" target=\"_blank\">"/>
+                                    <c:set var="postLinkHTML" value="</a>"/>
                                 </c:if>
 
                                 <span>${preLinkHTML}${propertyValuePair.getKey()}${postLinkHTML}${comma}</span>
