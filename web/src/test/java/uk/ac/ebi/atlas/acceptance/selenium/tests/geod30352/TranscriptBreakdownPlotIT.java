@@ -29,31 +29,41 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 public class TranscriptBreakdownPlotIT extends SeleniumFixture {
 
-    private static final String E_MTAB_513_ACCESSION = "E-MTAB-513";
+    private static final String E_E_GEOD_30352_ACCESSION = "E-GEOD-30352";
     protected HeatmapTableWithTranscriptBreakdownPage subject;
 
     @Before
     public void initSubject() {
-        subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_MTAB_513_ACCESSION);
+        subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_E_GEOD_30352_ACCESSION,"serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=ENSG00000058668&exactMatch=true&_exactMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
         subject.get();
     }
 
     @Test
-    public void verifyButtonClickFirstProfile() {
-        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 14);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ACTL7A (1 transcript) in testis"));
-        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000333999"));
+    public void verifyButtonClickKidneyProfile() {
+        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 3);
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 (9 transcripts) in kidney"));
+        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746", "ENST00000341360", "ENST00000357681", "Others"));
+        assertThat(page.getTranscriptColor(0), not("white"));
+        assertThat(page.getTranscriptColor(1), is("white"));
+        assertThat(page.getTranscriptColor(2), not("white"));
+        assertThat(page.getTranscriptColor(3), not("white"));
+
     }
 
     @Test
-    public void verifyButtonClickSecondProfile() {
-        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(1, 14);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for TEX33 (4 transcripts) in testis"));
-        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000442538", "ENST00000381821", "ENST00000405091", "Others"));
+    public void verifyButtonClickPrefrontalCortexProfile() {
+        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 5);
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 (9 transcripts) in prefrontal cortex"));
+        assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746", "ENST00000341360", "ENST00000367218", "Others"));
+        assertThat(page.getTranscriptColor(0), not("white"));
+        assertThat(page.getTranscriptColor(1), is("white"));
+        assertThat(page.getTranscriptColor(2), not("white"));
+        assertThat(page.getTranscriptColor(3), not("white"));
     }
 
 }

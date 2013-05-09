@@ -36,6 +36,8 @@ import java.util.List;
 
 public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
 
+    private static String TRANSCRIPT_COLOR_CELLS = "#transcripts-pie .legendColorBox";
+
     @FindBy(id = "heatmap-table")
     private WebElement heatmapTable;
 
@@ -57,6 +59,11 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
             }
         });
         return this;
+    }
+
+    public String getTranscriptColor(int zeroBasedIndex){
+        List<WebElement> colorDivs = driver.findElements(By.cssSelector(TRANSCRIPT_COLOR_CELLS));
+        return colorDivs.get(zeroBasedIndex).findElement(By.cssSelector("div>div")).getCssValue("border-color");
     }
 
     public String getTranscriptBreakdownTitle() {

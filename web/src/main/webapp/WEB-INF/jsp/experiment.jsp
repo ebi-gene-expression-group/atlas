@@ -36,7 +36,7 @@
 
 </section>
 
-<section style="overflow: auto;" >
+<section id="stickem-container" style="overflow: auto;" >
 
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
@@ -208,7 +208,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
             helpTooltipsModule.init('experiment');
 
-            $('.container').stickem();
+            $('#stickem-container').stickem();
         });
 
     })(jQuery);
