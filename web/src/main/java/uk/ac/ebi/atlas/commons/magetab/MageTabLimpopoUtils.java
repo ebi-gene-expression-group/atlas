@@ -32,6 +32,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.Characteris
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -44,13 +45,21 @@ public class MageTabLimpopoUtils {
 
     private static final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
 
-    @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String idfUrlTemplate;
 
-    @Value("#{configuration['experiment.magetab.idf.path.template']}")
     private String idfPathTemplate;
 
     private MAGETABInvestigation investigation;
+
+    @Inject
+    public void setIdfUrlTemplate(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate) {
+        this.idfUrlTemplate = idfUrlTemplate;
+    }
+
+    @Inject
+    public void setIdfPathTemplate(@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate) {
+        this.idfPathTemplate = idfPathTemplate;
+    }
 
     protected MAGETABInvestigation getInvestigation() {
         return investigation;
@@ -59,6 +68,11 @@ public class MageTabLimpopoUtils {
     protected Collection<ScanNode> extractScanNodes(String experimentAccession) throws IOException, ParseException {
         investigation = parseInvestigation(experimentAccession);
         return investigation.SDRF.getNodes(ScanNode.class);
+    }
+
+    protected Collection<SourceNode> extractSourceNodes(String experimentAccession) throws IOException, ParseException {
+        investigation = parseInvestigation(experimentAccession);
+        return investigation.SDRF.getNodes(SourceNode.class);
     }
 
     protected Set<String> extractSpeciesFromSDRF(Collection<ScanNode> scanNodes) {
