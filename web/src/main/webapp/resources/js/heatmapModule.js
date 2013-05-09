@@ -80,7 +80,7 @@ var heatmapModule = (function ($) {
             var data = [],
                 index = 0;
             $.each(transcriptRates, function (key, value) {
-                data[index++] = {label: key, data: Math.abs(value.toFixed(1)), color: (value < 0 ? 'white' : undefined)};
+                data[index++] = {label: key, data: Math.abs(value.toFixed(1))};
             });
             return data;
         }
@@ -92,6 +92,10 @@ var heatmapModule = (function ($) {
                 factorType = $("#queryFactorType").attr("value"),
                 geneId = $(this).parent().find("td a:eq(0)").attr("id"),
                 geneName = $(this).parent().find("td a:eq(0)").text();
+
+            $('#transcript-breakdown').css('position','absolute')
+                                      .css('left','-5000px')
+            $('#transcript-breakdown').show();
 
             $.ajax({
                 url: "json/transcripts/" + experimentAccession,
@@ -111,22 +115,10 @@ var heatmapModule = (function ($) {
 
                     $.plot('#transcripts-pie', plotData, {
                         series: {
-                            pie: {
-                                stroke: {
-                                    color: "lightgray"
+                            pie:{stroke: {
+                                    color: "#d3d3d3"
                                 },
-                                show: true,
-                                radius: 1,
-                                label: {
-                                    style: {color: "white"},
-                                    radius: plotData.length === 1 ? 0 : 3 / 5,
-                                    show: true,
-                                    formatter: function(label, series){
-                                        return ""  /*series.data[0][1] + "%"*/;},
-                                    background: {
-                                        opacity: 0.5
-                                    }
-                                }
+                                show: true
                             }
                         },
                         legend: {
@@ -158,14 +150,21 @@ var heatmapModule = (function ($) {
 
                     $('#transcript-breakdown-title-help').tooltip();
 
+                    //next line is required because the div is configured to stay in an invisible position (position:absolute; left:-5000px)
+                    //in order to make it invisible during the show-up of fancybox
+                    //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
+                    $('#transcript-breakdown').hide();
+                    $('#transcript-breakdown').css('position','relative')
+                                              .css('left','0px');
+
                     $.fancybox({href: '#transcript-breakdown',
                         padding: 0,
                         openEffect: 'elastic',
                         closeEffect: 'elastic',
                         helpers: {
-                            overlay: {
-                                locked: false
-                            }
+                           overlay: {
+                               locked: false
+                           }
                         }
                     });
 
