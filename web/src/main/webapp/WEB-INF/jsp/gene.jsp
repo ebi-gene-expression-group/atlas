@@ -24,7 +24,7 @@
 
 <div id="accordion">
     <ul class="geneCardHeader">
-        <img id="bioentity-info-image" title="Gene info" style="position: absolute; left: 0.5em; "
+        <img id="bioentity-info-image" title="Gene information" style="position: absolute; left: 0.5em; "
              src="resources/images/bioentity_info_transparent_bkg.png"/>
         <span class="geneCardSymbol">${symbol}</span>
         <span class="geneCardSpecies">${species}</span>
