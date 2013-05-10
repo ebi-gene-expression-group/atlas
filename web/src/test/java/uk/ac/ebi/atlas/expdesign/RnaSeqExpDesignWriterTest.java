@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -49,6 +50,8 @@ public class RnaSeqExpDesignWriterTest {
     private static final String AGE = "age";
     private static final String ORGANISM = "organism";
     private static final String RNA = "RNA";
+    private static final String[] EXPECTED_HEADER = new String[]{"Run", "Sample Characteristics[age]", "Sample Characteristics[organism]", "Sample Characteristics[sex]", "Factor Values[RNA]", "Factor Values[age]"};
+    private static final String[] EXPECTED_RUN = new String[]{"RUN", "60", "Homo sapiens", "male", "total RNA", "60"};
 
     RnaSeqExpDesignWriter subject;
 
@@ -57,6 +60,9 @@ public class RnaSeqExpDesignWriterTest {
 
     @Mock
     ScanNode scanNodeMock;
+
+    @Mock
+    CSVWriter csvWriterMock;
 
     Set<String> characteristics = Sets.newHashSet(SEX, AGE, ORGANISM);
 
@@ -83,7 +89,7 @@ public class RnaSeqExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
         when(mageTabLimpopoExpDesignParserMock.extractRunAccessions()).thenReturn(Sets.newHashSet(RUN));
 
-        subject = new RnaSeqExpDesignWriter(mageTabLimpopoExpDesignParserMock);
+        subject = new RnaSeqExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
     }
 
     @Test
@@ -101,15 +107,18 @@ public class RnaSeqExpDesignWriterTest {
         verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForScanNode(scanNodeMock, ORGANISM);
         verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNode(scanNodeMock, RNA);
         verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNode(scanNodeMock, AGE);
+
+        verify(csvWriterMock).writeNext(EXPECTED_HEADER);
+        verify(csvWriterMock).writeNext(EXPECTED_RUN);
     }
 
     @Test
     public void testComposeHeader() {
-        assertThat(subject.composeHeader(characteristicsList, factorsList), is("Run\tSample Characteristics[age]\tSample Characteristics[organism]\tSample Characteristics[sex]\tFactor Values[RNA]\tFactor Values[age]"));
+        assertThat(subject.composeHeader(characteristicsList, factorsList), is(EXPECTED_HEADER));
     }
 
     @Test
     public void testComposeExperimentRun() {
-        assertThat(subject.composeExperimentRun(RUN, characteristicsList, factorsList), is("RUN\t60\tHomo sapiens\tmale\ttotal RNA\t60"));
+        assertThat(subject.composeExperimentRun(RUN, characteristicsList, factorsList), is(EXPECTED_RUN));
     }
 }

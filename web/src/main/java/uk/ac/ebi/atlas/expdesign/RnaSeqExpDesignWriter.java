@@ -22,21 +22,25 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RnaSeqExpDesignWriter {
 
-    MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
+    private MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
 
+    private CSVWriter csvWriter;
 
-    public RnaSeqExpDesignWriter(MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser) {
+    public RnaSeqExpDesignWriter(MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
+        this.csvWriter = csvWriter;
     }
 
     public void forExperimentAccession(String experimentAccession) throws IOException, ParseException {
@@ -48,59 +52,43 @@ public class RnaSeqExpDesignWriter {
         List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactors());
         Collections.sort(factors);
 
-        String headerString = composeHeader(characteristics, factors);
-
         List<String> runAccessions = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractRunAccessions());
         Collections.sort(runAccessions);
 
-        List<String> runs = Lists.newArrayList();
+        csvWriter.writeNext(composeHeader(characteristics, factors));
         for (String accession : runAccessions) {
-            runs.add(composeExperimentRun(accession, characteristics, factors));
+            csvWriter.writeNext(composeExperimentRun(accession, characteristics, factors));
         }
-
     }
 
-    String composeExperimentRun(String runAccession, List<String> characteristics, List<String> factors) {
-        StringBuilder sb = new StringBuilder(runAccession);
-        sb.append("\t");
+    String[] composeExperimentRun(String runAccession, List<String> characteristics, List<String> factors) {
+        ArrayList<String> result = Lists.newArrayList(runAccession);
         ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForRunAccession(runAccession);
         for (String characteristic : characteristics) {
             String[] characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
             if (characteristicValueForScanNode != null) {
-                sb.append(characteristicValueForScanNode[0]);
-                sb.append("\t");
-            } else {
-                sb.append("\t");
+                result.add(characteristicValueForScanNode[0]);
             }
         }
         for (String factor : factors) {
             String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
             if (factorValueForScanNode != null) {
-                sb.append(factorValueForScanNode[0]);
-                sb.append("\t");
-            } else {
-                sb.append("\t");
+                result.add(factorValueForScanNode[0]);
             }
         }
-        sb.deleteCharAt(sb.length() - 1);
-        return sb.toString();
+        return result.toArray(new String[result.size()]);
     }
 
 
-    String composeHeader(List<String> characteristics, List<String> factors) {
-        StringBuilder sb = new StringBuilder("Run\t");
+    String[] composeHeader(List<String> characteristics, List<String> factors) {
+        ArrayList<String> result = Lists.newArrayList("Run");
         for (String characteristic : characteristics) {
-            sb.append("Sample Characteristics[");
-            sb.append(characteristic);
-            sb.append("]\t");
+            result.add("Sample Characteristics[" + characteristic + "]");
         }
         for (String factor : factors) {
-            sb.append("Factor Values[");
-            sb.append(factor);
-            sb.append("]\t");
+            result.add("Factor Values[" + factor + "]");
         }
-        sb.deleteCharAt(sb.length() - 1);
-        return sb.toString();
+        return result.toArray(new String[result.size()]);
     }
 
 }
