@@ -100,17 +100,48 @@ var heatmapModule = (function ($) {
             return data;
         }
 
+        function paintPieChart(plotData, geneId){
+
+            $('#transcript-breakdown').css('position','absolute')
+                .css('left','-5000px')
+            $('#transcript-breakdown').show();
+
+            $.plot('#transcripts-pie', plotData, {
+                series: {
+                    pie:{stroke: {
+                        color: "#d3d3d3"
+                    },
+                        show: true
+                    }
+                },
+                legend: {
+                    show: true,
+                    labelFormatter: function (label) {
+                        return label === "Others" ? "Others" :
+                                "<a class='transcriptid' href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t="
+                                + label + "' target='_blank'" + "title='View transcript in Ensembl'" + ">" +
+                                label + "</a>";
+                    }
+                }
+            });
+
+            //next lines are required because the div is configured to stay in an invisible position (position:absolute; left:-5000px)
+            //in order to make it invisible during the show-up of fancybox
+            //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
+            $('#transcript-breakdown').hide();
+            $('#transcript-breakdown').css('position','relative')
+                .css('left','0px');
+
+        }
+
+        //on click...
         $("#heatmap-table td:has(div[data-color])").click(function () {
 
-            //we need to identify gene and factorType for the cell being clicked
+            //gene and factor properties are extracted from gene and factor headers in the html table
             var factorValue = $(this).find("div").attr("data-organism-part"),
                 factorType = $("#queryFactorType").attr("value"),
                 geneId = $(this).parent().find("td a:eq(0)").attr("id"),
                 geneName = $(this).parent().find("td a:eq(0)").text();
-
-            $('#transcript-breakdown').css('position','absolute')
-                                      .css('left','-5000px')
-            $('#transcript-breakdown').show();
 
             $.ajax({
                 url: "json/transcripts/" + experimentAccession,
@@ -128,25 +159,9 @@ var heatmapModule = (function ($) {
 
                     species = species.replace(" ", "_");
 
-                    $.plot('#transcripts-pie', plotData, {
-                        series: {
-                            pie:{stroke: {
-                                    color: "#d3d3d3"
-                                },
-                                show: true
-                            }
-                        },
-                        legend: {
+                    paintPieChart(plotData, geneId);
 
-                            show: true,
-                            labelFormatter: function (label) {
-                                return label === "Others" ? "Others" :
-                                    "<a class='transcriptid' href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t="
-                                        + label + "' target='_blank'" + "title='View transcript in Ensembl'" + ">" +
-                                        label + "</a>";
-                            }
-                        }
-                    });
+                    showTranscriptBreakdownFancyBox();
 
                     var s = '';
                     if (totalCount > 1) {
@@ -158,14 +173,6 @@ var heatmapModule = (function ($) {
                         "' target='_blank'" + "title='View gene in Ensembl'" + ">" +
                         geneName + "</a>" + " (" + totalCount + " transcript" + s + ") in " + factorValue);
 
-                    //next line is required because the div is configured to stay in an invisible position (position:absolute; left:-5000px)
-                    //in order to make it invisible during the show-up of fancybox
-                    //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
-                    $('#transcript-breakdown').hide();
-                    $('#transcript-breakdown').css('position','relative')
-                                              .css('left','0px');
-
-                    showTranscriptBreakdownFancyBox();
                 }
             }).fail(function (data) {
                     console.log("ERROR:  " + data);
