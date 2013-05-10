@@ -40,6 +40,7 @@
 
 .form-grid label, .analysis-grid label {
     font-weight: bold;
+    vertical-align: middle;
 }
 
 .analysis-grid thead {

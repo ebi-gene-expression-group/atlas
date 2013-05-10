@@ -140,7 +140,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
                 GeneProfilesList<BaselineProfile> geneProfiles = rankCommand.execute(experiment.getAccession());
 
-                if (preferences.isCollapseGeneProfiles()) {
+                if (preferences.isGeneSetMatch()) {
                     BaselineProfilesList baselineProfilesList = (BaselineProfilesList) geneProfiles;
                     model.addAttribute("geneProfiles", baselineProfilesList.collapsedProfilesList(allQueryFactors));
                 } else {

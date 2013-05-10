@@ -86,7 +86,12 @@
                                        path="exactMatch"
                                        label="Exact match"/>
                     </span>
-
+                    <span data-help-loc="#gene-set-match" style="float:right;padding-right:10px"></span>
+                    <span style="float:right">
+                        <form:checkbox id="geneSetMatch"
+                                       path="geneSetMatch"
+                                       label="Gene set"/>
+                    </span>
                 </td>
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
                     <td>

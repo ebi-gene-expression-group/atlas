@@ -60,7 +60,7 @@ public abstract class ExperimentPageRequestPreferences {
 
     private boolean displayGeneDistribution;
 
-    private boolean collapseGeneProfiles;
+    private boolean geneSetMatch;
 
     protected ExperimentPageRequestPreferences() {
         //  customInitializations();
@@ -96,14 +96,6 @@ public abstract class ExperimentPageRequestPreferences {
 
     public void setDisplayGeneDistribution(boolean displayGeneDistribution) {
         this.displayGeneDistribution = displayGeneDistribution;
-    }
-
-    public boolean isCollapseGeneProfiles() {
-        return collapseGeneProfiles;
-    }
-
-    public void setCollapseGeneProfiles(boolean collapseGeneProfiles) {
-        this.collapseGeneProfiles = collapseGeneProfiles;
     }
 
     public Integer getHeatmapMatrixSize() {
@@ -172,6 +164,7 @@ public abstract class ExperimentPageRequestPreferences {
                 .add("serializedFilterFactors", serializedFilterFactors)
                 .add("specific", specific)
                 .add("exactMatch", exactMatch)
+                .add("geneSetMatch", geneSetMatch)
                 .toString();
     }
 
@@ -181,5 +174,13 @@ public abstract class ExperimentPageRequestPreferences {
 
     public void setExactMatch(boolean exactMatch) {
         this.exactMatch = exactMatch;
+    }
+
+    public boolean isGeneSetMatch() {
+        return geneSetMatch;
+    }
+
+    public void setGeneSetMatch(boolean geneSetMatch) {
+        this.geneSetMatch = geneSetMatch;
     }
 }
