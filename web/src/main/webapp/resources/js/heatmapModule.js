@@ -101,6 +101,11 @@ var heatmapModule = (function ($) {
         }
 
         function paintPieChart(plotData, geneId){
+
+            $('#transcript-breakdown').css('position','absolute')
+                .css('left','-5000px')
+            $('#transcript-breakdown').show();
+
             $.plot('#transcripts-pie', plotData, {
                 series: {
                     pie:{stroke: {
@@ -119,6 +124,14 @@ var heatmapModule = (function ($) {
                     }
                 }
             });
+
+            //next lines are required because the div is configured to stay in an invisible position (position:absolute; left:-5000px)
+            //in order to make it invisible during the show-up of fancybox
+            //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
+            $('#transcript-breakdown').hide();
+            $('#transcript-breakdown').css('position','relative')
+                .css('left','0px');
+
         }
 
         //on click...
@@ -146,18 +159,7 @@ var heatmapModule = (function ($) {
 
                     species = species.replace(" ", "_");
 
-                    $('#transcript-breakdown').css('position','absolute')
-                        .css('left','-5000px')
-                    $('#transcript-breakdown').show();
-
                     paintPieChart(plotData, geneId);
-
-                    //next line is required because the div is configured to stay in an invisible position (position:absolute; left:-5000px)
-                    //in order to make it invisible during the show-up of fancybox
-                    //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
-                    $('#transcript-breakdown').hide();
-                    $('#transcript-breakdown').css('position','relative')
-                        .css('left','0px');
 
                     showTranscriptBreakdownFancyBox();
 
