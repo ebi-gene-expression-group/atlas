@@ -63,6 +63,18 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
         return this;
     }
 
+
+    public Set<String> extractRunAccessions() {
+
+        Set<String> runs = Sets.newHashSet();
+
+        for (ScanNode scanNode : scanNodes) {
+            runs.add(scanNode.comments.get(ENA_RUN));
+        }
+
+        return runs;
+    }
+
     public Set<String> extractFactors() {
 
         Set<String> factors = Sets.newHashSet();
