@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Lists;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
 import java.io.IOException;
@@ -49,6 +50,40 @@ public class RnaSeqExpDesignWriter {
 
         String headerString = composeHeader(characteristics, factors);
 
+        List<String> runAccessions = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractRunAccessions());
+        Collections.sort(runAccessions);
+
+        List<String> runs = Lists.newArrayList();
+        for (String accession : runAccessions) {
+            runs.add(composeExperimentRun(accession, characteristics, factors));
+        }
+
+    }
+
+    String composeExperimentRun(String runAccession, List<String> characteristics, List<String> factors) {
+        StringBuilder sb = new StringBuilder(runAccession);
+        sb.append("\t");
+        ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForRunAccession(runAccession);
+        for (String characteristic : characteristics) {
+            String[] characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
+            if (characteristicValueForScanNode != null) {
+                sb.append(characteristicValueForScanNode[0]);
+                sb.append("\t");
+            } else {
+                sb.append("\t");
+            }
+        }
+        for (String factor : factors) {
+            String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
+            if (factorValueForScanNode != null) {
+                sb.append(factorValueForScanNode[0]);
+                sb.append("\t");
+            } else {
+                sb.append("\t");
+            }
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
     }
 
 
@@ -64,6 +99,7 @@ public class RnaSeqExpDesignWriter {
             sb.append(factor);
             sb.append("]\t");
         }
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
