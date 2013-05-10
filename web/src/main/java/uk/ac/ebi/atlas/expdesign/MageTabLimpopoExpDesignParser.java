@@ -63,6 +63,50 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
         return this;
     }
 
+    public String[] findFactorValueForScanNode(ScanNode scanNode, String factor) {
+
+        Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
+        if (assayNodes.size() != 1) {
+            throw new IllegalStateException("There is no one to one mapping between scanNode and assayNode. " + scanNode);
+        }
+
+        AssayNode assayNode = assayNodes.iterator().next();
+        for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
+            if (factorValueAttribute.type.equals(factor)) {
+                return factorValueAttribute.values();
+            }
+        }
+
+        return null;
+    }
+
+    public String[] findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
+
+        Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class);
+        if (upstreamNodes.size() != 1) {
+            throw new IllegalStateException("There is no one to one mapping between scanNode and sourceNode. " + scanNode);
+        }
+
+        SourceNode sourceNode = upstreamNodes.iterator().next();
+        for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
+            if (characteristicsAttribute.type.equals(characteristic)) {
+                return characteristicsAttribute.values();
+            }
+        }
+
+        return null;
+    }
+
+    public ScanNode getScanNodeForRunAccession(String runAccession) {
+
+        for (ScanNode scanNode : scanNodes) {
+            if (scanNode.comments.get(ENA_RUN).equals(runAccession)) {
+                return scanNode;
+            }
+        }
+
+        return null;
+    }
 
     public Set<String> extractRunAccessions() {
 
