@@ -66,8 +66,7 @@ public class BaselineProfilesList extends GeneProfilesList<BaselineProfile> {
 
         BaselineProfile averageProfile = calculateAverageExpressionProfile(allQueryFactors);
 
-        BaselineProfilesList baselineProfiles = new BaselineProfilesList(
-                Lists.newArrayList(averageProfile));
+        BaselineProfilesList baselineProfiles = new BaselineProfilesList(Lists.newArrayList(averageProfile));
         baselineProfiles.setTotalResultCount(1);
         return baselineProfiles;
     }

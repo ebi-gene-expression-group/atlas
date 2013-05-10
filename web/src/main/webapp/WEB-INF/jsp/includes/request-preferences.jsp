@@ -86,12 +86,15 @@
                                        path="exactMatch"
                                        label="Exact match"/>
                     </span>
-                    <span data-help-loc="#gene-set-match" style="float:right;padding-right:10px"></span>
-                    <span style="float:right">
-                        <form:checkbox id="geneSetMatch"
-                                       path="geneSetMatch"
-                                       label="Gene set"/>
-                    </span>
+                    <c:if test="${type eq 'BASELINE'}">
+                        <span data-help-loc="#gene-set-match" style="float:right;padding-right:10px"></span>
+                        <span style="float:right">
+                            <form:checkbox id="geneSetMatch"
+                                           path="geneSetMatch"
+                                           label="Gene set"/>
+                        </span>
+
+                    </c:if>
                 </td>
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
                     <td>
@@ -157,8 +160,7 @@
                     <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
                 </a>
             </div>
-            <div id="slider-range-max"
-                 style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
+            <div id="slider-range-max" style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
         </span>
         <span id="slider-help" data-help-loc="#slider"></span>
     </div>

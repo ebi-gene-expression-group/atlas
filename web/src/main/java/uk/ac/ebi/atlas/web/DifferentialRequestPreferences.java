@@ -29,6 +29,7 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
 
     private static final double DEFAULT_CUTOFF = 0.05d;
     private Regulation regulation = Regulation.UP_DOWN;
+    private boolean geneSetMatch;
 
     @Override
     public Double getDefaultCutoff(){

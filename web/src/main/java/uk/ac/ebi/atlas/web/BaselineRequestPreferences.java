@@ -31,6 +31,7 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     private static final String DEFAULT_GENE_QUERY = "protein_coding";
 
     private NumberUtils numberUtils = new NumberUtils();
+    private boolean geneSetMatch;
 
     @Override
     protected String getDefaultGeneQuery(){
@@ -48,6 +49,14 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
             cutoff = numberUtils.round(cutoff);
         }
         super.setCutoff(cutoff);
+    }
+
+    public boolean isGeneSetMatch() {
+        return geneSetMatch;
+    }
+
+    public void setGeneSetMatch(boolean geneSetMatch) {
+        this.geneSetMatch = geneSetMatch;
     }
 
 }

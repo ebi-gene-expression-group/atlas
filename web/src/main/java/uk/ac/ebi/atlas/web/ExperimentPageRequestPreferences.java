@@ -60,8 +60,6 @@ public abstract class ExperimentPageRequestPreferences {
 
     private boolean displayGeneDistribution;
 
-    private boolean geneSetMatch;
-
     protected ExperimentPageRequestPreferences() {
         //  customInitializations();
     }
@@ -164,7 +162,6 @@ public abstract class ExperimentPageRequestPreferences {
                 .add("serializedFilterFactors", serializedFilterFactors)
                 .add("specific", specific)
                 .add("exactMatch", exactMatch)
-                .add("geneSetMatch", geneSetMatch)
                 .toString();
     }
 
@@ -176,11 +173,4 @@ public abstract class ExperimentPageRequestPreferences {
         this.exactMatch = exactMatch;
     }
 
-    public boolean isGeneSetMatch() {
-        return geneSetMatch;
-    }
-
-    public void setGeneSetMatch(boolean geneSetMatch) {
-        this.geneSetMatch = geneSetMatch;
-    }
 }

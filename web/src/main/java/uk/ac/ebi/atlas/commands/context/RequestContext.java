@@ -64,10 +64,6 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return requestPreferences.isExactMatch();
     }
 
-    public boolean isGeneSetMatch() {
-        return requestPreferences.isGeneSetMatch();
-    }
-
     public SortedSet<T> getAllQueryFactors() {
         return allQueryFactors;
     }
