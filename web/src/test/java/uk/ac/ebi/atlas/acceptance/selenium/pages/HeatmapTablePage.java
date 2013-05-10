@@ -200,8 +200,8 @@ public class HeatmapTablePage extends TablePage {
         return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
     }
 
-    public List<String> getGeneProfile(int rowIndex) {
-        List<String> rowValues = getRowValues(heatmapTable, rowIndex);
+    public List<String> getGeneProfile(int zeroBasedRowIndex) {
+        List<String> rowValues = getRowValues(heatmapTable, zeroBasedRowIndex);
         return rowValues.subList(getGeneExpressionStartingRowIndex(), rowValues.size());
     }
 

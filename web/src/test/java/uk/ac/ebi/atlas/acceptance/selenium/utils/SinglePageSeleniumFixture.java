@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.utils;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -37,10 +38,10 @@ public abstract class SinglePageSeleniumFixture {
     private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
 
     //Uncomment this if you want to use local firefox browser
-    //protected FirefoxDriver driver;
+    protected FirefoxDriver driver;
 
     //comment this if you want to use local firefox browser
-    protected WebDriver driver;
+    //protected WebDriver driver;
 
 
     @Before
@@ -57,9 +58,9 @@ public abstract class SinglePageSeleniumFixture {
     private void initializeFirefoxDriver() {
 
         //uncomment this if you want to use local firefox driver
-        //this.driver = new FirefoxDriver();
+        driver = new FirefoxDriver();
 
-
+/*
         //comment this if you want to use local firefox browser
         try {
 
@@ -75,7 +76,7 @@ public abstract class SinglePageSeleniumFixture {
 
         }
         //
-
+*/
 
     }
 
