@@ -58,7 +58,7 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
     protected BaselineProfilesList createGeneProfilesList(Queue<BaselineProfile> geneProfiles) {
         BaselineProfilesList baselineProfilesList = new BaselineProfilesList(geneProfiles);
 
-        if (requestContext.isGeneSetMatch()){
+        if (requestContext.isGeneSetMatch() && !geneProfiles.isEmpty()){
                 BaselineProfile averageProfile = averageBaselineProfileBuilder
                         .forProfileId(requestContext.getGeneQuery())
                         .withBaselineProfiles(baselineProfilesList).build();

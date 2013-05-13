@@ -29,6 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
@@ -77,6 +79,11 @@ public class BaselineQueryPageController extends BaselineQueryController {
         this.rankCommand = rankCommand;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
         this.averageBaselineProfileBuilder = averageBaselineProfileBuilder;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new RequestPreferencesValidator());
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=BASELINE"})
