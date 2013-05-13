@@ -31,10 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.expdesign.ExpDesignWriter;
-import uk.ac.ebi.atlas.expdesign.MageTabLimpopoExpDesignParser;
-import uk.ac.ebi.atlas.expdesign.MicroArrayExpDesignWriter;
-import uk.ac.ebi.atlas.expdesign.RnaSeqExpDesignWriter;
+import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -55,12 +52,17 @@ public class ExpDesignLoaderController {
 
     private ApplicationProperties applicationProperties;
 
-    private MageTabLimpopoExpDesignParser mageTabLimpopoParser;
+    private RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser;
+
+    private MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser;
 
     @Inject
-    public ExpDesignLoaderController(ApplicationProperties applicationProperties, MageTabLimpopoExpDesignParser mageTabLimpopoParser) {
+    public ExpDesignLoaderController(ApplicationProperties applicationProperties,
+                                     RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser,
+                                     MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser) {
         this.applicationProperties = applicationProperties;
-        this.mageTabLimpopoParser = mageTabLimpopoParser;
+        this.rnaSeqMageTabLimpopoParser = rnaSeqMageTabLimpopoParser;
+        this.microArrayMageTabLimpopoExpDesignParser = microArrayMageTabLimpopoExpDesignParser;
     }
 
     @RequestMapping(value = "/loadExperimentDesign/{experimentAccession}")
@@ -81,9 +83,11 @@ public class ExpDesignLoaderController {
 
         if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)
                 || applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = new RnaSeqExpDesignWriter(mageTabLimpopoParser, csvWriter);
+            expDesignWriter = new RnaSeqExpDesignWriter(rnaSeqMageTabLimpopoParser, csvWriter);
+        } else if (applicationProperties.getTwoColourExperimentsIdentifiers().contains(experimentAccession)) {
+            return "Two colour experiments not yet supported.";
         } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = new MicroArrayExpDesignWriter(mageTabLimpopoParser, csvWriter);
+            expDesignWriter = new MicroArrayExpDesignWriter(microArrayMageTabLimpopoExpDesignParser, csvWriter);
         } else {
             return "Not a known experiment accession: " + experimentAccession;
         }
