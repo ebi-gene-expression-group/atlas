@@ -34,11 +34,11 @@ import java.util.List;
 
 public class RnaSeqExpDesignWriter implements ExpDesignWriter {
 
-    private MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
+    private RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
 
     private CSVWriter csvWriter;
 
-    public RnaSeqExpDesignWriter(MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
+    public RnaSeqExpDesignWriter(RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
         this.csvWriter = csvWriter;
     }
@@ -49,7 +49,7 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
         Collections.sort(characteristics);
 
-        List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactorsForENARuns());
+        List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactors());
         Collections.sort(factors);
 
         List<String> runAccessions = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractRunAccessions());
@@ -73,7 +73,7 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
             }
         }
         for (String factor : factors) {
-            String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNodeENARun(scanNode, factor);
+            String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
             if (factorValueForScanNode != null) {
                 result.add(factorValueForScanNode[0]);
             } else {

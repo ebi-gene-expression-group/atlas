@@ -76,6 +76,10 @@ public class ApplicationProperties {
         return getStringValues("microarray.experiment.identifiers");
     }
 
+    public Set<String> getTwoColourExperimentsIdentifiers() {
+        return getStringValues("twocolour.experiment.identifiers");
+    }
+
     public Set<String> getBiomartDatasetIdentifiers() {
         return getStringValues("biomart.dataset.names");
     }

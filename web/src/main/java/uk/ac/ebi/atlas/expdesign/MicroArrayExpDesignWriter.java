@@ -34,11 +34,11 @@ import java.util.List;
 
 public class MicroArrayExpDesignWriter implements ExpDesignWriter {
 
-    private MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
+    private MicroArrayMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
 
     private CSVWriter csvWriter;
 
-    public MicroArrayExpDesignWriter(MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
+    public MicroArrayExpDesignWriter(MicroArrayMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
         this.csvWriter = csvWriter;
     }
@@ -50,7 +50,7 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
         Collections.sort(characteristics);
 
-        List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactorsForAssays());
+        List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactors());
         Collections.sort(factors);
 
         ArrayList<String> assays = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractAssays());
@@ -76,7 +76,7 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
             }
         }
         for (String factor : factors) {
-            String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNodeAssay(scanNode, factor);
+            String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
             if (factorValueForScanNode != null) {
                 result.add(factorValueForScanNode[0]);
             } else {
