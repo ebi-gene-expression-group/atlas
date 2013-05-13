@@ -25,11 +25,9 @@ package uk.ac.ebi.atlas.model.baseline;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -41,7 +39,7 @@ public class AverageBaselineProfileBuilder {
 
     private BaselineRequestContext requestContext;
 
-    private List<BaselineProfile> baselineProfiles;
+    private BaselineProfilesList baselineProfilesList;
 
     @Inject
     AverageBaselineProfileBuilder(BaselineRequestContext requestContext) {
@@ -53,9 +51,9 @@ public class AverageBaselineProfileBuilder {
         return this;
     }
 
-    public AverageBaselineProfileBuilder withBaselineProfiles(List<BaselineProfile> baselineProfiles){
-        checkArgument(baselineProfiles != null && !baselineProfiles.isEmpty(), "Please provide a non empty profiles list");
-        this.baselineProfiles = baselineProfiles;
+    public AverageBaselineProfileBuilder withBaselineProfiles(BaselineProfilesList baselineProfilesList){
+        checkArgument(baselineProfilesList != null && !baselineProfilesList.isEmpty(), "Please provide a non empty profiles list");
+        this.baselineProfilesList = baselineProfilesList;
         return this;
     }
 
@@ -63,7 +61,7 @@ public class AverageBaselineProfileBuilder {
         BaselineProfile averageBaselineProfile = new BaselineProfile(profileId);
         for (Factor queryFactor : requestContext.getAllQueryFactors()){
 
-            double averageExpressionLevel = averageExpressionLevel(queryFactor);
+            double averageExpressionLevel = baselineProfilesList.getAverageExpressionLevel(queryFactor);
 
             BaselineExpression baselineExpression = buildExpressionLevel(queryFactor, averageExpressionLevel);
 
@@ -75,16 +73,6 @@ public class AverageBaselineProfileBuilder {
     BaselineExpression buildExpressionLevel(Factor factor, double averageExpressionLevel) {
         FactorGroup factorGroup = new FactorSet().add(factor).addAll(requestContext.getSelectedFilterFactors());
         return new BaselineExpression(averageExpressionLevel, factorGroup);
-    }
-
-    double averageExpressionLevel(Factor factor) {
-        double totalExpressionLevel = 0D;
-
-        for (BaselineProfile baselineProfile: baselineProfiles){
-            totalExpressionLevel += baselineProfile.getExpressionLevel(factor);
-        }
-
-        return new NumberUtils().round(totalExpressionLevel / baselineProfiles.size());
     }
 
 

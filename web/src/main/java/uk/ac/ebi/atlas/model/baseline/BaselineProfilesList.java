@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.util.Collection;
 
@@ -52,5 +53,15 @@ public class BaselineProfilesList extends GeneProfilesList<BaselineProfile> {
         }
         return minExpressionLevel;
     }
+
+    public double getAverageExpressionLevel(Factor factor) {
+        double totalExpressionLevel = 0D;
+
+        for (BaselineProfile baselineProfile: this){
+            totalExpressionLevel += baselineProfile.getExpressionLevel(factor);
+        }
+        return new NumberUtils().round(totalExpressionLevel / size());
+    }
+
 
 }

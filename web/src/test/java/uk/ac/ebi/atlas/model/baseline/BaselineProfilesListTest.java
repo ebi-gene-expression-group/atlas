@@ -64,18 +64,24 @@ public class BaselineProfilesListTest {
     }
 
     @Test
-    public void testGetMaxExpressionLevel() throws Exception {
+    public void shouldReturnMaxExpressionLevel() throws Exception {
         assertThat(subject.getMaxExpressionLevel(), is(10.0));
     }
 
     @Test
-    public void testGetMinExpressionLevel() throws Exception {
+    public void shouldReturnMinExpressionLevel() throws Exception {
         assertThat(subject.getMinExpressionLevel(), is(-10.0));
     }
 
     @Test
-    public void testTotalResultCount() throws Exception {
+    public void shuoldReturnResultCount() throws Exception {
         assertThat(subject.getTotalResultCount(), is(2));
+    }
+
+    @Test
+    public void shouldReturnRoundedAverageLevelForTheGivenFactor(){
+        assertThat(subject.getAverageExpressionLevel(factorMock1), is(3D));
+        assertThat(subject.getAverageExpressionLevel(factorMock2), is(1D));
     }
 
 }
