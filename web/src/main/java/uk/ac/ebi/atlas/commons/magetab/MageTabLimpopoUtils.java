@@ -45,9 +45,9 @@ public class MageTabLimpopoUtils {
 
     private static final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
 
-    private String idfUrlTemplate;
+    protected String idfUrlTemplate;
 
-    private String idfPathTemplate;
+    protected String idfPathTemplate;
 
     private MAGETABInvestigation investigation;
 

@@ -68,12 +68,16 @@ public class RnaSeqExpDesignWriter {
             String[] characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
             if (characteristicValueForScanNode != null) {
                 result.add(characteristicValueForScanNode[0]);
+            } else {
+                result.add("");
             }
         }
         for (String factor : factors) {
             String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
             if (factorValueForScanNode != null) {
                 result.add(factorValueForScanNode[0]);
+            } else {
+                result.add("");
             }
         }
         return result.toArray(new String[result.size()]);
