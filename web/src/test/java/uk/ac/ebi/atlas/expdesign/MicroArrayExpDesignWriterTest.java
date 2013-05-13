@@ -42,18 +42,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RnaSeqExpDesignWriterTest {
+public class MicroArrayExpDesignWriterTest {
 
     private static final String ACCESSION = "ACCESSION";
-    private static final String RUN = "RUN";
+    private static final String ARRAY = "ARRAY";
+    private static final String ASSAY = "ASSAY";
     private static final String SEX = "sex";
     private static final String AGE = "age";
     private static final String ORGANISM = "organism";
     private static final String RNA = "RNA";
-    private static final String[] EXPECTED_HEADER = new String[]{"Run", "Sample Characteristics[age]", "Sample Characteristics[organism]", "Sample Characteristics[sex]", "Factor Values[RNA]", "Factor Values[age]"};
-    private static final String[] EXPECTED_RUN = new String[]{"RUN", "60", "Homo sapiens", "male", "total RNA", "60"};
+    private static final String[] EXPECTED_ASSAY = new String[]{"ASSAY", "ARRAY", "60", "Homo sapiens", "male", "total RNA", "60"};
+    private static final String[] EXPECTED_HEADER = new String[]{"Assay", "Array", "Sample Characteristics[age]", "Sample Characteristics[organism]", "Sample Characteristics[sex]", "Factor Values[RNA]", "Factor Values[age]"};
 
-    RnaSeqExpDesignWriter subject;
+    MicroArrayExpDesignWriter subject;
 
     @Mock
     MageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParserMock;
@@ -80,16 +81,17 @@ public class RnaSeqExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.forExperimentAccession(ACCESSION)).thenReturn(mageTabLimpopoExpDesignParserMock);
         when(mageTabLimpopoExpDesignParserMock.build()).thenReturn(mageTabLimpopoExpDesignParserMock);
         when(mageTabLimpopoExpDesignParserMock.extractCharacteristics()).thenReturn(characteristics);
-        when(mageTabLimpopoExpDesignParserMock.extractFactorsForENARuns()).thenReturn(factors);
-        when(mageTabLimpopoExpDesignParserMock.getScanNodeForRunAccession(RUN)).thenReturn(scanNodeMock);
+        when(mageTabLimpopoExpDesignParserMock.extractFactorsForAssays()).thenReturn(factors);
+        when(mageTabLimpopoExpDesignParserMock.getScanNodeForAssay(ASSAY)).thenReturn(scanNodeMock);
+        when(mageTabLimpopoExpDesignParserMock.findArrayForScanNode(scanNodeMock)).thenReturn(ARRAY);
         when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, SEX)).thenReturn(new String[]{"male"});
         when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
         when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, ORGANISM)).thenReturn(new String[]{"Homo sapiens"});
-        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNodeENARun(scanNodeMock, RNA)).thenReturn(new String[]{"total RNA"});
-        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNodeENARun(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
-        when(mageTabLimpopoExpDesignParserMock.extractRunAccessions()).thenReturn(Sets.newHashSet(RUN));
+        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNodeAssay(scanNodeMock, RNA)).thenReturn(new String[]{"total RNA"});
+        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNodeAssay(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
+        when(mageTabLimpopoExpDesignParserMock.extractAssays()).thenReturn(Sets.newHashSet(ASSAY));
 
-        subject = new RnaSeqExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
+        subject = new MicroArrayExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
     }
 
     @Test
@@ -99,17 +101,18 @@ public class RnaSeqExpDesignWriterTest {
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
         verify(mageTabLimpopoExpDesignParserMock).build();
         verify(mageTabLimpopoExpDesignParserMock).extractCharacteristics();
-        verify(mageTabLimpopoExpDesignParserMock).extractFactorsForENARuns();
-        verify(mageTabLimpopoExpDesignParserMock).extractRunAccessions();
-        verify(mageTabLimpopoExpDesignParserMock).getScanNodeForRunAccession(RUN);
+        verify(mageTabLimpopoExpDesignParserMock).extractFactorsForAssays();
+        verify(mageTabLimpopoExpDesignParserMock).extractAssays();
+        verify(mageTabLimpopoExpDesignParserMock).findArrayForScanNode(scanNodeMock);
+        verify(mageTabLimpopoExpDesignParserMock).getScanNodeForAssay(ASSAY);
         verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForScanNode(scanNodeMock, SEX);
         verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForScanNode(scanNodeMock, AGE);
         verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForScanNode(scanNodeMock, ORGANISM);
-        verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNodeENARun(scanNodeMock, RNA);
-        verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNodeENARun(scanNodeMock, AGE);
+        verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNodeAssay(scanNodeMock, RNA);
+        verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNodeAssay(scanNodeMock, AGE);
 
         verify(csvWriterMock).writeNext(EXPECTED_HEADER);
-        verify(csvWriterMock).writeNext(EXPECTED_RUN);
+        verify(csvWriterMock).writeNext(EXPECTED_ASSAY);
     }
 
     @Test
@@ -118,7 +121,7 @@ public class RnaSeqExpDesignWriterTest {
     }
 
     @Test
-    public void testComposeExperimentRun() {
-        assertThat(subject.composeExperimentRun(RUN, characteristicsList, factorsList), is(EXPECTED_RUN));
+    public void testComposeExperimentAssay() {
+        assertThat(subject.composeExperimentAssay(ASSAY, characteristicsList, factorsList), is(EXPECTED_ASSAY));
     }
 }

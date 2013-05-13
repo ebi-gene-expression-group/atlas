@@ -26,8 +26,10 @@ import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.ArrayDesignAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
@@ -67,7 +69,7 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
         return this;
     }
 
-    public String[] findFactorValueForScanNode(ScanNode scanNode, String factor) {
+    public String[] findFactorValueForScanNodeENARun(ScanNode scanNode, String factor) {
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
         if (assayNodes.size() != 1) {
@@ -76,6 +78,27 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
         AssayNode assayNode = assayNodes.iterator().next();
         for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
+            if (factorValueAttribute.type.equals(factor)) {
+                return factorValueAttribute.values();
+            }
+        }
+
+        return null;
+    }
+
+    public String[] findFactorValueForScanNodeAssay(ScanNode scanNode, String factor) {
+
+        Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
+        if (hybridizationNodes.size() != 1) {
+            throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
+        }
+
+        HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
+        if (hybridizationNode.arrayDesigns.size() > 1) {
+            throw new IllegalStateException("Assays with multiple array designs not supported.");
+        }
+
+        for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
             if (factorValueAttribute.type.equals(factor)) {
                 return factorValueAttribute.values();
             }
@@ -123,7 +146,45 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
         return runs;
     }
 
-    public Set<String> extractFactors() {
+    public Set<String> extractAssays() {
+
+        Set<String> assays = Sets.newHashSet();
+
+        for (ScanNode scanNode : scanNodes) {
+            assays.add(scanNode.getNodeName());
+        }
+
+        return assays;
+    }
+
+    public ScanNode getScanNodeForAssay(String assay) {
+
+        for (ScanNode scanNode : scanNodes) {
+            if (scanNode.getNodeName().equals(assay)) {
+                return scanNode;
+            }
+        }
+
+        return null;
+    }
+
+    public String findArrayForScanNode(ScanNode scanNode) {
+
+        Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
+        if (hybridizationNodes.size() != 1) {
+            throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
+        }
+
+        HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
+        if (hybridizationNode.arrayDesigns.size() > 1) {
+            throw new IllegalStateException("Assays with multiple array designs not supported.");
+        }
+
+        ArrayDesignAttribute arrayDesignAttribute = hybridizationNode.arrayDesigns.get(0);
+        return arrayDesignAttribute.getAttributeValue();
+    }
+
+    public Set<String> extractFactorsForENARuns() {
 
         Set<String> factors = Sets.newHashSet();
 
@@ -135,6 +196,25 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
             AssayNode assayNode = assayNodes.iterator().next();
             for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
+                factors.add(factorValueAttribute.type);
+            }
+        }
+
+        return factors;
+    }
+
+    public Set<String> extractFactorsForAssays() {
+
+        Set<String> factors = Sets.newHashSet();
+
+        for (ScanNode scanNode : scanNodes) {
+            Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
+            if (hybridizationNodes.size() != 1) {
+                throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
+            }
+
+            HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
+            for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
                 factors.add(factorValueAttribute.type);
             }
         }
