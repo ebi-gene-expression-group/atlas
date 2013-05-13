@@ -23,11 +23,11 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Objects;
-import uk.ac.ebi.atlas.model.GeneExpression;
+import uk.ac.ebi.atlas.model.Expression;
 
 import java.util.Set;
 
-public class BaselineExpression implements GeneExpression {
+public class BaselineExpression implements Expression {
     private double level;
 
     private FactorGroup factorGroup;
@@ -37,6 +37,7 @@ public class BaselineExpression implements GeneExpression {
         this.factorGroup = factorGroup;
     }
 
+    //ToDo: this method is only required by BitIndexBuilder and is just exposing internal data structure, maybe it should not be here.
     public FactorGroup getFactorGroup() {
         return factorGroup;
     }

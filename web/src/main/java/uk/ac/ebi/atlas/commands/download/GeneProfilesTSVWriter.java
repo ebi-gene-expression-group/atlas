@@ -26,9 +26,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.model.GeneExpression;
-import uk.ac.ebi.atlas.model.GeneProfile;
-import uk.ac.ebi.atlas.utils.NumberUtils;
+import uk.ac.ebi.atlas.model.Profile;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -40,7 +38,7 @@ import java.util.SortedSet;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
-public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
+public abstract class GeneProfilesTSVWriter<T extends Profile, K> {
 
     private CSVWriter csvWriter;
     private PrintWriter responseWriter;
@@ -82,13 +80,13 @@ public abstract class GeneProfilesTSVWriter<T extends GeneProfile, K> {
     protected String[] buildCsvRow(final T geneProfile, SortedSet<K> factors) {
         String[] expressionLevels = extractConditionLevels(geneProfile, factors);
 
-        String geneId = geneProfile.getGeneId();
+        String geneId = geneProfile.getId();
         String[] rowHeaders = new String[]{geneNamesProvider.getGeneName(geneId), getSecondColumnValue(geneProfile)};
         return buildCsvRow(rowHeaders, expressionLevels);
     }
 
     protected String getSecondColumnValue(T geneProfile) {
-        return geneProfile.getGeneId();
+        return geneProfile.getId();
     }
 
     protected abstract List<String> buildConditionExpressionsHeaders(SortedSet<K> conditionNames);

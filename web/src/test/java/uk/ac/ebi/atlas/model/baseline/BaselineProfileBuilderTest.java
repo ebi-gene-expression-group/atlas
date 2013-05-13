@@ -120,7 +120,7 @@ public class BaselineProfileBuilderTest {
                 .addExpression(expressionMock2);
 
         //then
-        assertThat(subject.create().getGeneId(), is("Gene1"));
+        assertThat(subject.create().getId(), is("Gene1"));
 
     }
 
@@ -144,7 +144,7 @@ public class BaselineProfileBuilderTest {
                 .addExpression(expressionMock2);
 
         //then
-        assertThat(subject.create().getGeneId(), is("Gene1"));
+        assertThat(subject.create().getId(), is("Gene1"));
 
     }
 
@@ -170,7 +170,7 @@ public class BaselineProfileBuilderTest {
                 .addExpression(expressionMock2);
 
         //then
-        assertThat(subject.create().getGeneId(), is("Gene1"));
+        assertThat(subject.create().getId(), is("Gene1"));
 
     }
 

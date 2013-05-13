@@ -27,11 +27,11 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.GeneExpression;
+import uk.ac.ebi.atlas.model.Expression;
 
 import java.io.IOException;
 
-public abstract class TsvInputStream<T, K extends GeneExpression> implements ObjectInputStream<T> {
+public abstract class TsvInputStream<T, K extends Expression> implements ObjectInputStream<T> {
 
     private static final Logger logger = Logger.getLogger(TsvInputStream.class);
 

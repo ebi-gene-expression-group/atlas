@@ -93,6 +93,6 @@ public class MicroarrayProfileBuilderTest {
         builder.addExpression(expressionMock);
         MicroarrayProfile profile = builder.create();
         assertThat(profile.getDesignElementName(), is(DESIGN_ELEMENT_NAME));
-        assertThat(profile.getGeneId(), is(GENE_ID));
+        assertThat(profile.getId(), is(GENE_ID));
     }
 }

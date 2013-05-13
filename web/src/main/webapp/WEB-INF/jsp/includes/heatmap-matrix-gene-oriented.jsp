@@ -44,7 +44,7 @@
                                 </div>"
                             class="horizontal-header-cell">
 
-                        <c:set var="geneId" value="${geneProfile.geneId}"/>
+                        <c:set var="geneId" value="${geneProfile.id}"/>
 
                         <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
                             <fmt:param value="${geneId}"/>

@@ -105,7 +105,7 @@ public class MicroarrayProfilesInputStreamIT {
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
         //then
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_UPDOWN_1));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_UPDOWN_1));
         assertThat(microarrayProfile.getSpecificity(), is(1));
         double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.0));
@@ -113,7 +113,7 @@ public class MicroarrayProfilesInputStreamIT {
         //given we poll again
         microarrayProfile = subject.readNext();
         //then
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_UPDOWN_2));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_UPDOWN_2));
         assertThat(microarrayProfile.getSpecificity(), is(2));
         expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.0103104291771865));
@@ -126,7 +126,7 @@ public class MicroarrayProfilesInputStreamIT {
         microarrayProfile = subject.readNext();
 
         //given we poll again
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_UPDOWN_3));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_UPDOWN_3));
         assertThat(microarrayProfile.getSpecificity(), is(2));
         expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.00146761846818228));
@@ -144,7 +144,7 @@ public class MicroarrayProfilesInputStreamIT {
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
         //then
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_UP_1));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_UP_1));
         assertThat(microarrayProfile.getSpecificity(), is(1));
         double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.0));
@@ -152,7 +152,7 @@ public class MicroarrayProfilesInputStreamIT {
         //given we poll again
         microarrayProfile = subject.readNext();
         //then
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_UP_2));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_UP_2));
         assertThat(microarrayProfile.getSpecificity(), is(2));
         expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.0103104291771865));
@@ -165,7 +165,7 @@ public class MicroarrayProfilesInputStreamIT {
         microarrayProfile = subject.readNext();
 
         //given we poll again
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_UP_3));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_UP_3));
         assertThat(microarrayProfile.getSpecificity(), is(2));
         expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(1.46552279262956E-5));
@@ -184,7 +184,7 @@ public class MicroarrayProfilesInputStreamIT {
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
         //then
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_DOWN_1));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_DOWN_1));
         assertThat(microarrayProfile.getSpecificity(), is(2));
         double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.00146761846818228));
@@ -196,7 +196,7 @@ public class MicroarrayProfilesInputStreamIT {
         //given we poll again
         microarrayProfile = subject.readNext();
         //then
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_DOWN_2));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_DOWN_2));
         assertThat(microarrayProfile.getSpecificity(), is(1));
         expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.0));
@@ -204,7 +204,7 @@ public class MicroarrayProfilesInputStreamIT {
         microarrayProfile = subject.readNext();
 
         //given we poll again
-        assertThat(microarrayProfile.getGeneId(), is(GENE_ID_DOWN_3));
+        assertThat(microarrayProfile.getId(), is(GENE_ID_DOWN_3));
         assertThat(microarrayProfile.getSpecificity(), is(2));
         expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.00844182480286779));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@
 
 package uk.ac.ebi.atlas.streams;
 
-import uk.ac.ebi.atlas.model.GeneExpression;
+import uk.ac.ebi.atlas.model.Expression;
 
-public interface TsvRowBufferBuilder<T extends GeneExpression> {
+public interface TsvRowBufferBuilder<T extends Expression> {
 
     public TsvRowBufferBuilder forExperiment(String experimentAccession);
 

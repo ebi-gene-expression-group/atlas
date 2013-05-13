@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
@@ -37,7 +37,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class GeneProfilesQueryCommand<T, K extends GeneProfile> implements Command<T> {
+public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements Command<T> {
 
     private static final Logger LOGGER = Logger.getLogger(GeneProfilesQueryCommand.class);
 

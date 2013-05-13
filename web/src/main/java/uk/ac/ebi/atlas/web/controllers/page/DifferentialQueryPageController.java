@@ -29,8 +29,8 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
-import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
@@ -46,7 +46,7 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
 
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
-    private RankProfilesCommand<GeneProfilesList, GeneProfile> rankProfilesCommand;
+    private RankProfilesCommand<GeneProfilesList, Profile> rankProfilesCommand;
 
 
     protected DifferentialQueryPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,

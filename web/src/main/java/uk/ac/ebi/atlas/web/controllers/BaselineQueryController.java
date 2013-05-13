@@ -23,15 +23,13 @@
 package uk.ac.ebi.atlas.web.controllers;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-@Scope("request")
-public class BaselineQueryController {
+public abstract class BaselineQueryController {
 
     private BaselineRequestContextBuilder baselineRequestContextBuilder;
     private FilterFactorsConverter filterFactorsConverter;

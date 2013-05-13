@@ -20,9 +20,9 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.atlas.model.differential;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import java.util.Collection;
 

@@ -23,24 +23,24 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Set;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class BaselineProfile extends GeneProfile<Factor, BaselineExpression> {
+public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    public BaselineProfile(String geneId) {
-        super(geneId);
+    public BaselineProfile(String id) {
+        super(id);
     }
 
-    BaselineProfile add(BaselineExpression expression, String queryFactorType) {
+    BaselineProfile add(String queryFactorType, BaselineExpression expression) {
 
-        this.addExpression(expression.getFactor(queryFactorType), expression);
+        addExpression(expression.getFactor(queryFactorType), expression);
         return this;
     }
 

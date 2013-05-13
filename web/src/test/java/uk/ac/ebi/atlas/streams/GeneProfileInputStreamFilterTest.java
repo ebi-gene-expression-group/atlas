@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
@@ -47,7 +47,7 @@ public class GeneProfileInputStreamFilterTest {
     public static final String GENE_2 = "Gene2";
 
     @Mock
-    private ObjectInputStream<GeneProfile> inputStreamMock;
+    private ObjectInputStream<Profile> inputStreamMock;
 
     @Mock
     private BaselineProfile gene1ProfileMock;
@@ -74,9 +74,9 @@ public class GeneProfileInputStreamFilterTest {
 
     @Before
     public void initMocks() {
-        when(gene1ProfileMock.getGeneId()).thenReturn(GENE_2);
+        when(gene1ProfileMock.getId()).thenReturn(GENE_2);
         when(gene1ProfileMock.isExpressedOnAnyOf(factors)).thenReturn(true);
-        when(gene3ProfileMock.getGeneId()).thenReturn("UNACCEPTABLE_GENE");
+        when(gene3ProfileMock.getId()).thenReturn("UNACCEPTABLE_GENE");
         when(gene3ProfileMock.isExpressedOnAnyOf(factors)).thenReturn(true);
 
         when(requestContextMock.getSelectedFilterFactors()).thenReturn(EMPTY_FILTER_FACTOR_VALUES);
@@ -87,7 +87,7 @@ public class GeneProfileInputStreamFilterTest {
     public void acceptanceCriteriaTestShouldBeBasedOnGeneIDsSet() {
         //given
         subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, factors);
-        Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
+        Predicate<Profile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
         boolean apply = acceptancePredicate.apply(gene1ProfileMock);
@@ -101,7 +101,7 @@ public class GeneProfileInputStreamFilterTest {
         //given
         subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_GENE_IDS, factors);
         //and
-        Predicate<GeneProfile> acceptancePredicate = subject.getAcceptanceCriteria();
+        Predicate<Profile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
         assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));

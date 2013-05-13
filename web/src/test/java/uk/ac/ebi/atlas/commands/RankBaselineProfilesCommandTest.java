@@ -125,14 +125,14 @@ public class RankBaselineProfilesCommandTest {
         //and
         assertThat(top3Objects.get(0).getMaxExpressionLevel(), is(5D));
         //then
-        assertThat(top3Objects.get(0).getGeneId(), is("5"));
+        assertThat(top3Objects.get(0).getId(), is("5"));
 
         //and
         assertThat(top3Objects.get(2).getSpecificity(), is(3));
         //and
         assertThat(top3Objects.get(2).getMaxExpressionLevel(), is(3D));
         //and
-        assertThat(top3Objects.get(2).getGeneId(), is("3"));
+        assertThat(top3Objects.get(2).getId(), is("3"));
 
     }
 
@@ -147,14 +147,14 @@ public class RankBaselineProfilesCommandTest {
         //and
         assertThat(top3Objects.get(0).getMaxExpressionLevel(), is(1D));
         //then
-        assertThat(top3Objects.get(0).getGeneId(), is("1"));
+        assertThat(top3Objects.get(0).getId(), is("1"));
 
         //and
         assertThat(top3Objects.get(2).getSpecificity(), is(3));
         //and
         assertThat(top3Objects.get(2).getMaxExpressionLevel(), is(3D));
         //and
-        assertThat(top3Objects.get(2).getGeneId(), is("3"));
+        assertThat(top3Objects.get(2).getId(), is("3"));
 
     }
 

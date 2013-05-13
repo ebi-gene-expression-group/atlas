@@ -23,9 +23,9 @@
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Objects;
-import uk.ac.ebi.atlas.model.GeneExpression;
+import uk.ac.ebi.atlas.model.Expression;
 
-public class DifferentialExpression implements GeneExpression{
+public class DifferentialExpression implements Expression {
 
     private double pValue;
 

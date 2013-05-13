@@ -68,7 +68,7 @@ public class BaselineProfileTest {
 
         subject = new BaselineProfile(GENE_ID);
 
-        subject.add(expression_1,QUERY_FACTOR_TYPE).add(expression_2,QUERY_FACTOR_TYPE).add(expression_3,QUERY_FACTOR_TYPE);
+        subject.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2).add(QUERY_FACTOR_TYPE, expression_3);
 
     }
 

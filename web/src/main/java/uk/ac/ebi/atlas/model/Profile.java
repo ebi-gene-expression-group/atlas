@@ -33,17 +33,17 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 //K is the Condition type (i.e. Factor or Contrast),
 //T is the Expression type (Baseline Expression or DifferentialExpression)
-public abstract class GeneProfile<K, T extends GeneExpression> {
+public abstract class Profile<K, T extends Expression> {
     private Map<K, T> expressionsByCondition = new HashMap<>();
 
-    private String geneId;
+    private String id;
 
-    protected GeneProfile(String geneId) {
-        this.geneId = geneId;
+    protected Profile(String id) {
+        this.id = id;
     }
 
-    public String getGeneId() {
-        return geneId;
+    public String getId() {
+        return id;
     }
 
     public boolean isEmpty() {
@@ -55,25 +55,25 @@ public abstract class GeneProfile<K, T extends GeneExpression> {
     }
 
     public double getExpressionLevel(K condition) {
-        GeneExpression expression = expressionsByCondition.get(condition);
+        Expression expression = expressionsByCondition.get(condition);
         return expression == null ? 0 : expression.getLevel();
     }
 
-    protected abstract void updateProfileExpression(T geneExpression);
+    protected abstract void updateProfileExpression(T expression);
 
     public boolean isExpressedOnAnyOf(Set<K> conditions) {
         checkArgument(CollectionUtils.isNotEmpty(conditions));
-        return Sets.intersection(this.expressionsByCondition.keySet(), conditions).size() > 0;
+        return Sets.intersection(expressionsByCondition.keySet(), conditions).size() > 0;
     }
 
-    protected GeneProfile addExpression(K condition, T geneExpression) {
-        updateProfileExpression(geneExpression);
-        this.expressionsByCondition.put(condition, geneExpression);
+    protected Profile addExpression(K condition, T expression) {
+        updateProfileExpression(expression);
+        expressionsByCondition.put(condition, expression);
         return this;
     }
 
-    public T getExpression(K contrast) {
-        return expressionsByCondition.get(contrast);
+    public T getExpression(K condition) {
+        return expressionsByCondition.get(condition);
     }
 
 }

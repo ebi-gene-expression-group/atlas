@@ -25,15 +25,15 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.GeneProfile;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Profile;
 
 import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
 
-public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends GeneProfile> extends GeneProfilesQueryCommand<T,K> {
+public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends Profile> extends GeneProfilesQueryCommand<T,K> {
 
     @Inject
     protected RankProfilesCommand(RequestContext requestContext) {

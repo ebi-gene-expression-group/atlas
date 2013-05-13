@@ -24,14 +24,14 @@ package uk.ac.ebi.atlas.model.differential;
 
 
 import org.apache.commons.collections.CollectionUtils;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Set;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class DifferentialProfile<T extends DifferentialExpression> extends GeneProfile<Contrast, T> {
+public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> {
 
     private double maxUpRegulatedExpressionLevel = 0D;
     private double minUpRegulatedExpressionLevel = Double.MAX_VALUE;

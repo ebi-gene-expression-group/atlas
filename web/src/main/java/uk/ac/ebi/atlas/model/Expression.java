@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.model;
 
-public interface GeneExpression {
+public interface Expression {
 
     public double getLevel();
 

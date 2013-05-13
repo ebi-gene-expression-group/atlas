@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model;
+package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 
 import java.util.Collection;
 

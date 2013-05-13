@@ -28,7 +28,7 @@ import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class GeneProfilesList<T extends GeneProfile> extends ArrayList<T> {
+public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
 
     private static final long serialVersionUID = -1678371004778942235L;
 
@@ -41,7 +41,7 @@ public class GeneProfilesList<T extends GeneProfile> extends ArrayList<T> {
     @Override
     public GeneProfilesList subList(int fromIndex, int toIndex) {
         checkArgument(toIndex >= 0, "Upper index value must be larger than 0");
-        if (toIndex > this.size()) {
+        if (toIndex > size()) {
             return this;
         }
         return new GeneProfilesList(super.subList(fromIndex, toIndex));

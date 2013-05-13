@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -35,12 +36,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.model.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.utils.FilterFactorMenuBuilder;
 import uk.ac.ebi.atlas.utils.FilterFactorMenuVoice;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -67,17 +63,21 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
     private FilterFactorMenuBuilder filterFactorMenuBuilder;
 
+    private AverageBaselineProfileBuilder averageBaselineProfileBuilder;
+
     @Inject
     public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
                                        ApplicationProperties applicationProperties,
                                        BaselineRequestContextBuilder requestContextBuilder,
                                        FilterFactorsConverter filterFactorsConverter,
-                                       FilterFactorMenuBuilder filterFactorMenuBuilder) {
+                                       FilterFactorMenuBuilder filterFactorMenuBuilder,
+                                       AverageBaselineProfileBuilder averageBaselineProfileBuilder) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
+        this.averageBaselineProfileBuilder = averageBaselineProfileBuilder;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=BASELINE"})
@@ -138,13 +138,16 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
             try {
 
-                BaselineProfilesList geneProfiles = rankCommand.execute(experiment.getAccession());
+                BaselineProfilesList baselineProfiles = rankCommand.execute(experiment.getAccession());
 
-                if (preferences.isGeneSetMatch()) {
-                    model.addAttribute("geneProfiles", geneProfiles.collapsedProfilesList(allQueryFactors));
-                } else {
-                    model.addAttribute("geneProfiles", geneProfiles);
+                if (!baselineProfiles.isEmpty() && preferences.isGeneSetMatch()) {
+                    BaselineProfile averageProfile = averageBaselineProfileBuilder
+                                                        .forProfileId(requestContext.getGeneQuery())
+                                                        .withBaselineProfiles(baselineProfiles).build();
+                    baselineProfiles = new BaselineProfilesList(Lists.newArrayList(averageProfile));
                 }
+
+                model.addAttribute("geneProfiles", baselineProfiles);
 
                 //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {

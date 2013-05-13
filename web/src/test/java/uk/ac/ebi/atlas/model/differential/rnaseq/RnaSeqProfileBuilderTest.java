@@ -82,6 +82,6 @@ public class RnaSeqProfileBuilderTest {
         DifferentialProfileBuilder builder = subject.forGeneId(GENE_ID);
         builder.addExpression(expressionMock);
         DifferentialProfile profile = builder.create();
-        assertThat(profile.getGeneId(), is(GENE_ID));
+        assertThat(profile.getId(), is(GENE_ID));
     }
 }

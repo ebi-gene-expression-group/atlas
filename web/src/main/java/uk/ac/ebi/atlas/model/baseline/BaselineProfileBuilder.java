@@ -69,7 +69,7 @@ public class BaselineProfileBuilder {
     public BaselineProfileBuilder addExpression(BaselineExpression expression) {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
         if (baselineExpressionPrecondition.apply(expression)) {
-            baselineProfile.add(expression, requestContext.getQueryFactorType());
+            baselineProfile.add(requestContext.getQueryFactorType(), expression);
         }
         return this;
     }

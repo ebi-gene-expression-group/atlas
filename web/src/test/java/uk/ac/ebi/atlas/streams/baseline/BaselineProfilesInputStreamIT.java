@@ -39,7 +39,6 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -89,18 +88,18 @@ public class BaselineProfilesInputStreamIT {
         //given
         BaselineProfile baselineProfile = subject.readNext();
         //then
-        assertThat(baselineProfile.getGeneId(), is(GENE_ID_1));
+        assertThat(baselineProfile.getId(), is(GENE_ID_1));
         assertThat(baselineProfile.getSpecificity(), is(1));
 
         //given we poll twice more
         baselineProfile = subject.readNext();
         //then
-        assertThat(baselineProfile.getGeneId(), is(GENE_ID_2));
+        assertThat(baselineProfile.getId(), is(GENE_ID_2));
         assertThat(baselineProfile.getSpecificity(), is(15));
 
         baselineProfile = subject.readNext();
 
-        assertThat(baselineProfile.getGeneId(), is(GENE_ID_3));
+        assertThat(baselineProfile.getId(), is(GENE_ID_3));
         assertThat(baselineProfile.getSpecificity(), is(1));
     }
 
@@ -130,7 +129,7 @@ public class BaselineProfilesInputStreamIT {
         subject.readNext();
 
         //and next gene popping up after the third becomes the sixth, because 4th and 5th have lowern than 4D specificity.
-        assertThat(subject.readNext().getGeneId(), is(GENE_ID_6));
+        assertThat(subject.readNext().getId(), is(GENE_ID_6));
 
     }
 

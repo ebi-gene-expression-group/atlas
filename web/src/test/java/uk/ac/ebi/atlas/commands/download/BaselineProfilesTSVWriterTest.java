@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -95,11 +94,11 @@ public class BaselineProfilesTSVWriterTest {
                 .thenReturn(baselineProfileMock2)
                 .thenReturn(null);
 
-        when(baselineProfileMock1.getGeneId()).thenReturn("GI1");
+        when(baselineProfileMock1.getId()).thenReturn("GI1");
         when(baselineProfileMock1.getExpressionLevel(createFactorValue("brain"))).thenReturn(0.11d);
         when(baselineProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
 
-        when(baselineProfileMock2.getGeneId()).thenReturn("GI2");
+        when(baselineProfileMock2.getId()).thenReturn("GI2");
         when(baselineProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
         when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));

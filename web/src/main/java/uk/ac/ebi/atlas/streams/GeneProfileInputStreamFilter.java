@@ -26,11 +26,11 @@ import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
-import uk.ac.ebi.atlas.model.GeneProfile;
+import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Set;
 
-public class GeneProfileInputStreamFilter<K, T extends GeneProfile> extends ObjectInputStreamFilter {
+public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectInputStreamFilter {
 
     private Set<String> uppercaseGeneIDs;
 
@@ -45,18 +45,18 @@ public class GeneProfileInputStreamFilter<K, T extends GeneProfile> extends Obje
     }
 
     @Override
-    protected Predicate<GeneProfile> getAcceptanceCriteria() {
+    protected Predicate<Profile> getAcceptanceCriteria() {
 
-        return new Predicate<GeneProfile>() {
+        return new Predicate<Profile>() {
             @Override
-            public boolean apply(GeneProfile profile) {
+            public boolean apply(Profile profile) {
 
-                boolean checkGene = checkGeneId(profile.getGeneId());
+                boolean checkGene = checkGeneId(profile.getId());
                 return checkGene && (CollectionUtils.isEmpty(queryConditions) || hasTheRightExpressionProfile(profile));
             }
 
-            private boolean hasTheRightExpressionProfile(GeneProfile geneProfile) {
-                return geneProfile.isExpressedOnAnyOf(queryConditions);
+            private boolean hasTheRightExpressionProfile(Profile profile) {
+                return profile.isExpressedOnAnyOf(queryConditions);
             }
         };
 
