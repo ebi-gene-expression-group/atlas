@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -139,13 +138,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
             try {
 
                 BaselineProfilesList baselineProfiles = rankCommand.execute(experiment.getAccession());
-
-                if (!baselineProfiles.isEmpty() && preferences.isGeneSetMatch()) {
-                    BaselineProfile averageProfile = averageBaselineProfileBuilder
-                                                        .forProfileId(requestContext.getGeneQuery())
-                                                        .withBaselineProfiles(baselineProfiles).build();
-                    baselineProfiles = new BaselineProfilesList(Lists.newArrayList(averageProfile));
-                }
 
                 model.addAttribute("geneProfiles", baselineProfiles);
 

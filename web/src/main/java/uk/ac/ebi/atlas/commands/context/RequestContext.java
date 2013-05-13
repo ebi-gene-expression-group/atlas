@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Set;
@@ -62,6 +61,10 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
 
     public boolean isExactMatch() {
         return requestPreferences.isExactMatch();
+    }
+
+    public boolean isGeneSetMatch(){
+        return requestPreferences.isGeneSetMatch();
     }
 
     public SortedSet<T> getAllQueryFactors() {

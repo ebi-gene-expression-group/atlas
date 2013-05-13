@@ -29,6 +29,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.AverageBaselineProfileBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
@@ -45,6 +46,9 @@ import static org.mockito.Mockito.when;
 public class RankBaselineProfilesCommandTest {
 
     private static final String SPECIES = "Species 1";
+
+    @Mock
+    private AverageBaselineProfileBuilder averageBaselineProfileBuilder;
 
     @Mock
     private ExperimentalFactors experimentalFactors;
@@ -83,7 +87,7 @@ public class RankBaselineProfilesCommandTest {
         //a stream with 1 profile of 2 expressions
         smallInputStream = new GeneProfileInputStreamMock(1);
 
-        subject = new RankBaselineProfilesCommand(requestContextMock, inputStreamFactoryMock);
+        subject = new RankBaselineProfilesCommand(requestContextMock, inputStreamFactoryMock, averageBaselineProfileBuilder);
 
     }
 

@@ -60,6 +60,8 @@ public abstract class ExperimentPageRequestPreferences {
 
     private boolean displayGeneDistribution;
 
+    private boolean geneSetMatch;
+
     protected ExperimentPageRequestPreferences() {
         //  customInitializations();
     }
@@ -127,6 +129,14 @@ public abstract class ExperimentPageRequestPreferences {
 
     public void setSpecific(boolean specific) {
         this.specific = specific;
+    }
+
+    public boolean isGeneSetMatch() {
+        return geneSetMatch;
+    }
+
+    public void setGeneSetMatch(boolean geneSetMatch) {
+        this.geneSetMatch = geneSetMatch;
     }
 
     public boolean getDisplayLevels() {

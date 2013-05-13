@@ -22,10 +22,12 @@
 
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.AverageBaselineProfileBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
@@ -42,16 +44,28 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
 
     private InputStreamFactory inputStreamFactory;
 
+    private AverageBaselineProfileBuilder averageBaselineProfileBuilder;
 
     @Inject
-    public RankBaselineProfilesCommand(BaselineRequestContext requestContext, InputStreamFactory inputStreamFactory) {
+    public RankBaselineProfilesCommand(BaselineRequestContext requestContext, InputStreamFactory inputStreamFactory,
+                                       AverageBaselineProfileBuilder averageBaselineProfileBuilder) {
         super(requestContext);
+        this.averageBaselineProfileBuilder = averageBaselineProfileBuilder;
         this.inputStreamFactory = inputStreamFactory;
     }
 
     @Override
     protected BaselineProfilesList createGeneProfilesList(Queue<BaselineProfile> geneProfiles) {
-        return new BaselineProfilesList(geneProfiles);
+        BaselineProfilesList baselineProfilesList = new BaselineProfilesList(geneProfiles);
+
+        if (requestContext.isGeneSetMatch()){
+                BaselineProfile averageProfile = averageBaselineProfileBuilder
+                        .forProfileId(requestContext.getGeneQuery())
+                        .withBaselineProfiles(baselineProfilesList).build();
+
+                return new BaselineProfilesList(Lists.newArrayList(averageProfile));
+        }
+        return baselineProfilesList;
     }
 
     @Override

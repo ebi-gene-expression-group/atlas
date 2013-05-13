@@ -43,7 +43,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
 
     private SolrClient solrClient;
 
-    private RequestContext requestContext;
+    protected RequestContext requestContext;
 
     protected GeneProfilesQueryCommand(RequestContext requestContext) {
         this.requestContext = requestContext;
