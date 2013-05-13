@@ -79,7 +79,7 @@ public class GenePageControllerTest {
         genePageProperties.put(ORTHOLOG, ORTHOLOG);
 
         when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(SPECIES);
-        when(solrClientMock.fetchGenePageProperties(IDENTIFIER)).thenReturn(genePageProperties);
+        when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
         subject = new GenePageController(solrClientMock, geneCardProperties, PROPERTY_TYPES);

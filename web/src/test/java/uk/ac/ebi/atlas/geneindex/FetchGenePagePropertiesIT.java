@@ -26,6 +26,7 @@ import com.google.common.collect.Multimap;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -42,12 +43,14 @@ public class FetchGenePagePropertiesIT {
     @Inject
     private SolrClient subject;
 
+    @Value("#{configuration['index.types.genepage']}")
+    private String genePagePropertyTypes;
 
     @Test
     public void testFetchTooltipProperties() throws Exception {
 
         // given
-        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816");
+        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", genePagePropertyTypes.split(","));
 
         // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,designelement_accession
 
