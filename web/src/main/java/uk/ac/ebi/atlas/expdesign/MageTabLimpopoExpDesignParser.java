@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Sets;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
@@ -32,12 +33,15 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValue
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 
+import javax.inject.Named;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
+@Named
+@Scope("prototype")
 public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
     private static final String ENA_RUN = "ENA_RUN";
