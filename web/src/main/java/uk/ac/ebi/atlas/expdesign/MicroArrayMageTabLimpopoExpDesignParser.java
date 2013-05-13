@@ -38,6 +38,47 @@ import java.util.Set;
 @Scope("prototype")
 public class MicroArrayMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesignParser {
 
+    public Set<String> extractAssays() {
+
+        Set<String> assays = Sets.newHashSet();
+
+        for (ScanNode scanNode : scanNodes) {
+            assays.add(scanNode.getNodeName());
+        }
+
+        return assays;
+    }
+
+    public Set<String> extractFactors() {
+
+        Set<String> factors = Sets.newHashSet();
+
+        for (ScanNode scanNode : scanNodes) {
+            Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
+            if (hybridizationNodes.size() != 1) {
+                throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
+            }
+
+            HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
+            for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
+                factors.add(factorValueAttribute.type);
+            }
+        }
+
+        return factors;
+    }
+
+    public ScanNode getScanNodeForAssay(String assay) {
+
+        for (ScanNode scanNode : scanNodes) {
+            if (scanNode.getNodeName().equals(assay)) {
+                return scanNode;
+            }
+        }
+
+        return null;
+    }
+
     public String[] findFactorValueForScanNode(ScanNode scanNode, String factor) {
 
         Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
@@ -53,28 +94,6 @@ public class MicroArrayMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDe
         for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
             if (factorValueAttribute.type.equals(factor)) {
                 return factorValueAttribute.values();
-            }
-        }
-
-        return null;
-    }
-
-    public Set<String> extractAssays() {
-
-        Set<String> assays = Sets.newHashSet();
-
-        for (ScanNode scanNode : scanNodes) {
-            assays.add(scanNode.getNodeName());
-        }
-
-        return assays;
-    }
-
-    public ScanNode getScanNodeForAssay(String assay) {
-
-        for (ScanNode scanNode : scanNodes) {
-            if (scanNode.getNodeName().equals(assay)) {
-                return scanNode;
             }
         }
 
@@ -97,22 +116,4 @@ public class MicroArrayMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDe
         return arrayDesignAttribute.getAttributeValue();
     }
 
-    public Set<String> extractFactors() {
-
-        Set<String> factors = Sets.newHashSet();
-
-        for (ScanNode scanNode : scanNodes) {
-            Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
-            if (hybridizationNodes.size() != 1) {
-                throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
-            }
-
-            HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
-            for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
-                factors.add(factorValueAttribute.type);
-            }
-        }
-
-        return factors;
-    }
 }

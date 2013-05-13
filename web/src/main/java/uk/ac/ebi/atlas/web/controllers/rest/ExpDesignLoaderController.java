@@ -56,13 +56,17 @@ public class ExpDesignLoaderController {
 
     private MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser;
 
+    private TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser;
+
     @Inject
     public ExpDesignLoaderController(ApplicationProperties applicationProperties,
                                      RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser,
-                                     MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser) {
+                                     MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser,
+                                     TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser) {
         this.applicationProperties = applicationProperties;
         this.rnaSeqMageTabLimpopoParser = rnaSeqMageTabLimpopoParser;
         this.microArrayMageTabLimpopoExpDesignParser = microArrayMageTabLimpopoExpDesignParser;
+        this.twoColourMageTabLimpopoExpDesignParser = twoColourMageTabLimpopoExpDesignParser;
     }
 
     @RequestMapping(value = "/loadExperimentDesign/{experimentAccession}")
@@ -85,7 +89,7 @@ public class ExpDesignLoaderController {
                 || applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
             expDesignWriter = new RnaSeqExpDesignWriter(rnaSeqMageTabLimpopoParser, csvWriter);
         } else if (applicationProperties.getTwoColourExperimentsIdentifiers().contains(experimentAccession)) {
-            return "Two colour experiments not yet supported.";
+            expDesignWriter = new TwoColourExpDesignWriter(twoColourMageTabLimpopoExpDesignParser, csvWriter);
         } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
             expDesignWriter = new MicroArrayExpDesignWriter(microArrayMageTabLimpopoExpDesignParser, csvWriter);
         } else {

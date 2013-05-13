@@ -39,17 +39,6 @@ public class RnaSeqMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesign
 
     private static final String ENA_RUN = "ENA_RUN";
 
-    public ScanNode getScanNodeForRunAccession(String runAccession) {
-
-        for (ScanNode scanNode : scanNodes) {
-            if (scanNode.comments.get(ENA_RUN).equals(runAccession)) {
-                return scanNode;
-            }
-        }
-
-        return null;
-    }
-
     public Set<String> extractRunAccessions() {
 
         Set<String> runs = Sets.newHashSet();
@@ -78,6 +67,17 @@ public class RnaSeqMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesign
         }
 
         return factors;
+    }
+
+    public ScanNode getScanNodeForRunAccession(String runAccession) {
+
+        for (ScanNode scanNode : scanNodes) {
+            if (scanNode.comments.get(ENA_RUN).equals(runAccession)) {
+                return scanNode;
+            }
+        }
+
+        return null;
     }
 
     public String[] findFactorValueForScanNode(ScanNode scanNode, String factor) {

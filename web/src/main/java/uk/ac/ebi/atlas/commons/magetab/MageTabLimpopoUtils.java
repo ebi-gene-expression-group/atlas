@@ -26,6 +26,7 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
@@ -49,7 +50,7 @@ public class MageTabLimpopoUtils {
 
     protected String idfPathTemplate;
 
-    private MAGETABInvestigation investigation;
+    protected MAGETABInvestigation investigation;
 
     @Inject
     public void setIdfUrlTemplate(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate) {
@@ -73,6 +74,11 @@ public class MageTabLimpopoUtils {
     protected Collection<SourceNode> extractSourceNodes(String experimentAccession) throws IOException, ParseException {
         investigation = parseInvestigation(experimentAccession);
         return investigation.SDRF.getNodes(SourceNode.class);
+    }
+
+    protected Collection<HybridizationNode> extractHybridizationNode(String experimentAccession) throws IOException, ParseException {
+        investigation = parseInvestigation(experimentAccession);
+        return investigation.SDRF.getNodes(HybridizationNode.class);
     }
 
     protected Set<String> extractSpeciesFromSDRF(Collection<ScanNode> scanNodes) {

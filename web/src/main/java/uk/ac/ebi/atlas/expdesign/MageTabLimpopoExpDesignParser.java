@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Sets;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
@@ -44,6 +45,8 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
     protected Collection<ScanNode> scanNodes;
 
+    protected Collection<HybridizationNode> hybridizationNodes;
+
     public MageTabLimpopoExpDesignParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
@@ -56,24 +59,9 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
         scanNodes = extractScanNodes(experimentAccession);
 
+        hybridizationNodes = extractHybridizationNode(experimentAccession);
+
         return this;
-    }
-
-    public String[] findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
-
-        Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class);
-        if (upstreamNodes.size() != 1) {
-            throw new IllegalStateException("There is no one to one mapping between scanNode and sourceNode. " + scanNode);
-        }
-
-        SourceNode sourceNode = upstreamNodes.iterator().next();
-        for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
-            if (characteristicsAttribute.type.equals(characteristic)) {
-                return characteristicsAttribute.values();
-            }
-        }
-
-        return null;
     }
 
     public Set<String> extractCharacteristics() {
@@ -87,6 +75,23 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
         }
 
         return characteristics;
+    }
+
+    public String[] findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
+
+        Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class);
+        if (upstreamNodes.size() != 1) {
+            throw new IllegalStateException("There is no one to one mapping between scanNode and sourceNode for scanNode: " + scanNode);
+        }
+
+        SourceNode sourceNode = upstreamNodes.iterator().next();
+        for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
+            if (characteristicsAttribute.type.equals(characteristic)) {
+                return characteristicsAttribute.values();
+            }
+        }
+
+        return null;
     }
 
 }
