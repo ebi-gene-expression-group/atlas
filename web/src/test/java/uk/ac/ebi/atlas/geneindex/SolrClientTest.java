@@ -121,9 +121,7 @@ public class SolrClientTest {
 
     @Test
     public void testFetchGenePageProperties() throws Exception {
-        subject.setGenePagePropertyTypes(GENE_PAGE_PROPERTY_TYPES);
-
-        Multimap<String, String> multimap = subject.fetchGenePageProperties(IDENTIFIER);
+        Multimap<String, String> multimap = subject.fetchGenePageProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES.split(","));
         assertThat(multimap, is(results));
 
         verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_GENE_PAGE_QUERY, 1000);

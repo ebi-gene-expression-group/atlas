@@ -32,17 +32,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RnaSeqExpDesignWriter implements ExpDesignWriter {
+public class MicroArrayExpDesignWriter implements ExpDesignWriter {
 
-    private RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
+    private MicroArrayMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
 
     private CSVWriter csvWriter;
 
-    public RnaSeqExpDesignWriter(RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
+    public MicroArrayExpDesignWriter(MicroArrayMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
         this.csvWriter = csvWriter;
     }
 
+    @Override
     public void forExperimentAccession(String experimentAccession) throws IOException, ParseException {
         mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).build();
 
@@ -52,18 +53,20 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
         List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactors());
         Collections.sort(factors);
 
-        List<String> runAccessions = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractRunAccessions());
-        Collections.sort(runAccessions);
+        ArrayList<String> assays = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractAssays());
+        Collections.sort(assays);
 
         csvWriter.writeNext(composeHeader(characteristics, factors));
-        for (String accession : runAccessions) {
-            csvWriter.writeNext(composeExperimentRun(accession, characteristics, factors));
+        for (String assay : assays) {
+            csvWriter.writeNext(composeExperimentAssay(assay, characteristics, factors));
         }
     }
 
-    String[] composeExperimentRun(String runAccession, List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList(runAccession);
-        ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForRunAccession(runAccession);
+    String[] composeExperimentAssay(String assay, List<String> characteristics, List<String> factors) {
+        ArrayList<String> result = Lists.newArrayList(assay);
+        ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForAssay(assay);
+        String array = mageTabLimpopoExpDesignParser.findArrayForScanNode(scanNode);
+        result.add(array);
         for (String characteristic : characteristics) {
             String[] characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
             if (characteristicValueForScanNode != null) {
@@ -84,7 +87,7 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
     }
 
     String[] composeHeader(List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList("Run");
+        ArrayList<String> result = Lists.newArrayList("Assay", "Array");
         for (String characteristic : characteristics) {
             result.add("Sample Characteristics[" + characteristic + "]");
         }
@@ -93,5 +96,4 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
         }
         return result.toArray(new String[result.size()]);
     }
-
 }

@@ -31,8 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.expdesign.MageTabLimpopoExpDesignParser;
-import uk.ac.ebi.atlas.expdesign.RnaSeqExpDesignWriter;
+import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -53,49 +52,64 @@ public class ExpDesignLoaderController {
 
     private ApplicationProperties applicationProperties;
 
-    private MageTabLimpopoExpDesignParser mageTabLimpopoParser;
+    private RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser;
+
+    private MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser;
+
+    private TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser;
 
     @Inject
-    public ExpDesignLoaderController(ApplicationProperties applicationProperties, MageTabLimpopoExpDesignParser mageTabLimpopoParser) {
+    public ExpDesignLoaderController(ApplicationProperties applicationProperties,
+                                     RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser,
+                                     MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser,
+                                     TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser) {
         this.applicationProperties = applicationProperties;
-        this.mageTabLimpopoParser = mageTabLimpopoParser;
+        this.rnaSeqMageTabLimpopoParser = rnaSeqMageTabLimpopoParser;
+        this.microArrayMageTabLimpopoExpDesignParser = microArrayMageTabLimpopoExpDesignParser;
+        this.twoColourMageTabLimpopoExpDesignParser = twoColourMageTabLimpopoExpDesignParser;
     }
 
     @RequestMapping(value = "/loadExperimentDesign/{experimentAccession}")
     @ResponseBody
     public String loadExpDesign(@PathVariable String experimentAccession) {
-        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)
-                || applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
 
-            File file = FileSystems.getDefault().getPath(getPathString(experimentAccession)).toFile();
-            FileWriter writer = null;
-            try {
-                writer = new FileWriter(file);
-            } catch (IOException e) {
-                LOGGER.error("<loadExpDesign> error opening file to write: " + e.getMessage());
-                return e.getMessage();
-            }
-
-            CSVWriter csvWriter = new CSVWriter(writer, '\t');
-
-            RnaSeqExpDesignWriter rnaSeqExpDesignWriter = new RnaSeqExpDesignWriter(mageTabLimpopoParser, csvWriter);
-            try {
-                rnaSeqExpDesignWriter.forExperimentAccession(experimentAccession);
-                csvWriter.flush();
-                csvWriter.close();
-                LOGGER.info("<loadExpDesign> written ExpDesign file: " + file.getAbsolutePath());
-            } catch (IOException e) {
-                LOGGER.error("<loadExpDesign> error writing to file: " + e.getMessage());
-                return e.getMessage();
-            } catch (ParseException e) {
-                LOGGER.error("<loadExpDesign> error parsing SDRF: " + e.getMessage());
-                return e.getMessage();
-            }
-
-            return "ExperimentDesign for " + experimentAccession + " loaded.";
+        File file = FileSystems.getDefault().getPath(getPathString(experimentAccession)).toFile();
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+        } catch (IOException e) {
+            LOGGER.error("<loadExpDesign> error opening file to write: " + e.getMessage());
+            return e.getMessage();
         }
 
-        return "Not a known experiment accession.";
+        CSVWriter csvWriter = new CSVWriter(writer, '\t');
+        ExpDesignWriter expDesignWriter = null;
+
+        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)
+                || applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
+            expDesignWriter = new RnaSeqExpDesignWriter(rnaSeqMageTabLimpopoParser, csvWriter);
+        } else if (applicationProperties.getTwoColourExperimentsIdentifiers().contains(experimentAccession)) {
+            expDesignWriter = new TwoColourExpDesignWriter(twoColourMageTabLimpopoExpDesignParser, csvWriter);
+        } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
+            expDesignWriter = new MicroArrayExpDesignWriter(microArrayMageTabLimpopoExpDesignParser, csvWriter);
+        } else {
+            return "Not a known experiment accession: " + experimentAccession;
+        }
+
+        try {
+            expDesignWriter.forExperimentAccession(experimentAccession);
+            csvWriter.flush();
+            csvWriter.close();
+            LOGGER.info("<loadExpDesign> written ExpDesign file: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            LOGGER.error("<loadExpDesign> error writing to file: " + e.getMessage());
+            return e.getMessage();
+        } catch (ParseException e) {
+            LOGGER.error("<loadExpDesign> error parsing SDRF: " + e.getMessage());
+            return e.getMessage();
+        }
+
+        return "ExperimentDesign for " + experimentAccession + " loaded.";
     }
 
     String getPathString(String experimentAccession) {

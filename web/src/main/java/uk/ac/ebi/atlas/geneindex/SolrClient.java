@@ -62,9 +62,6 @@ public class SolrClient {
     @Value("#{configuration['index.types.tooltip']}")
     private String tooltipPropertyTypes;
 
-    @Value("#{configuration['index.types.genepage']}")
-    private String genePagePropertyTypes;
-
     private RestTemplate restTemplate;
 
     private final SolrQueryService solrQueryService;
@@ -80,10 +77,6 @@ public class SolrClient {
         this.tooltipPropertyTypes = tooltipPropertyTypes;
     }
 
-    void setGenePagePropertyTypes(String genePagePropertyTypes) {
-        this.genePagePropertyTypes = genePagePropertyTypes;
-    }
-
     public Multimap<String, String> fetchTooltipProperties(String identifier) {
 
         String[] propertyTypes = tooltipPropertyTypes.trim().split(",");
@@ -91,9 +84,7 @@ public class SolrClient {
 
     }
 
-    public Multimap<String, String> fetchGenePageProperties(String identifier) {
-
-        String[] propertyTypes = genePagePropertyTypes.trim().split(",");
+    public Multimap<String, String> fetchGenePageProperties(String identifier, String[] propertyTypes) {
         return fetchProperties(identifier, propertyTypes);
 
     }

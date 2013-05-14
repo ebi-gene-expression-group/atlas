@@ -36,28 +36,28 @@ import java.util.Properties;
 
 @Controller
 @Scope("request")
-public class GenePageController extends BioentityPageController {
+public class ProteinPageController extends BioentityPageController {
 
-    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
+    public static final String PROPERTY_TYPE_SYMBOL = "uniprot";
 
-    private String genePagePropertyTypes;
+    private String proteinPagePropertyTypes;
 
     @Inject
-    GenePageController(SolrClient solrClient,
-                       @Named("genecard") Properties geneCardProperties,
-                       @Value("#{configuration['index.types.genepage']}") String genePagePropertyTypes) {
+    ProteinPageController(SolrClient solrClient,
+                          @Named("genecard") Properties geneCardProperties,
+                          @Value("#{configuration['index.types.proteinpage']}") String proteinPagePropertyTypes) {
         super(solrClient, geneCardProperties);
-        this.genePagePropertyTypes = genePagePropertyTypes;
+        this.proteinPagePropertyTypes = proteinPagePropertyTypes;
     }
 
-    @RequestMapping(value = "/genes/{identifier}")
+    @RequestMapping(value = "/proteins/{identifier}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         return super.showGenePage(identifier, model);
     }
 
     @Override
     String getPagePropertyTypes() {
-        return genePagePropertyTypes;
+        return proteinPagePropertyTypes;
     }
 
     @Override
