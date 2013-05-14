@@ -74,7 +74,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
     }
 
     @Test
-    public void verifyLenghtOfDocument() {
+    public void  verifyLenghtOfDocument() {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");

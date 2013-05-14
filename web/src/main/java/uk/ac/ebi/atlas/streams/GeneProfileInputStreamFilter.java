@@ -23,48 +23,68 @@
 package uk.ac.ebi.atlas.streams;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamFilter;
 import uk.ac.ebi.atlas.model.Profile;
 
+import java.util.Collection;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectInputStreamFilter {
 
-    private Set<String> uppercaseGeneIDs;
-
-    private Set<K> queryConditions;
+    private Predicate<Profile> geneProfileAcceptanceCriteria;
 
     public GeneProfileInputStreamFilter(ObjectInputStream<T> geneProfileInputStream
-                                        , Set<String> uppercaseGeneIDs, Set<K> queryConditions) {
+                                        , Collection<String> uppercaseGeneIDs, Set<K> queryConditions) {
         super(geneProfileInputStream);
 
-        this.uppercaseGeneIDs = uppercaseGeneIDs;
-        this.queryConditions = queryConditions;
+        geneProfileAcceptanceCriteria = Predicates.and(new GeneIdsPredicate(uppercaseGeneIDs),
+                                                       new GeneProfilePredicate(queryConditions));
+    }
+
+    public GeneProfileInputStreamFilter(ObjectInputStream<T> geneProfileInputStream, Set<K> queryConditions) {
+        super(geneProfileInputStream);
+
+        geneProfileAcceptanceCriteria = new GeneProfilePredicate(queryConditions);
     }
 
     @Override
     protected Predicate<Profile> getAcceptanceCriteria() {
-
-        return new Predicate<Profile>() {
-            @Override
-            public boolean apply(Profile profile) {
-
-                boolean checkGene = checkGeneId(profile.getId());
-                return checkGene && (CollectionUtils.isEmpty(queryConditions) || hasTheRightExpressionProfile(profile));
-            }
-
-            private boolean hasTheRightExpressionProfile(Profile profile) {
-                return profile.isExpressedOnAnyOf(queryConditions);
-            }
-        };
-
+        return geneProfileAcceptanceCriteria;
     }
 
-    private boolean checkGeneId(String geneId) {
-        return CollectionUtils.isEmpty(uppercaseGeneIDs)
-                || uppercaseGeneIDs.contains(geneId.toUpperCase());
-    }
+    class GeneIdsPredicate implements Predicate<Profile> {
+        Collection<String> uppercaseGeneIDs;
+
+        GeneIdsPredicate(Collection<String> uppercaseGeneIDs){
+            checkArgument(CollectionUtils.isNotEmpty(uppercaseGeneIDs));
+            this.uppercaseGeneIDs = uppercaseGeneIDs;
+        }
+
+        @Override
+        public boolean apply(Profile geneProfile) {
+            return uppercaseGeneIDs.contains(geneProfile.getId().toUpperCase());
+        }
+
+    };
+
+    class GeneProfilePredicate<K> implements Predicate<Profile> {
+        Set<K> queryConditions;
+
+        GeneProfilePredicate(Set<K> queryConditions){
+            this.queryConditions = queryConditions;
+        }
+
+        @Override
+        public boolean apply(Profile profile) {
+            return CollectionUtils.isEmpty(queryConditions) || profile.isExpressedOnAnyOf(queryConditions);
+        }
+
+    };
+
 
 }

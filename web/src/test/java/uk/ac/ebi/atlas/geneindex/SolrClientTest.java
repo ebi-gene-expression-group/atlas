@@ -155,7 +155,7 @@ public class SolrClientTest {
 
         when(geneQueryTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
 
-        Multimap<String, String> geneIds = subject.getGeneSets(GENE_QUERY, false, SPECIES);
+        Multimap<String, String> geneIds = subject.findGeneSets(GENE_QUERY, false, SPECIES, true);
 
         verify(geneQueryTokenizerMock).split("A QUERY");
 

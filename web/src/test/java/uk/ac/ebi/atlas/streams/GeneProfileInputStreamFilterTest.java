@@ -90,23 +90,18 @@ public class GeneProfileInputStreamFilterTest {
         Predicate<Profile> acceptancePredicate = subject.getAcceptanceCriteria();
 
         //then
-        boolean apply = acceptancePredicate.apply(gene1ProfileMock);
-        assertThat(apply, is(true));
+        assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));
         //and
         assertThat(acceptancePredicate.apply(gene3ProfileMock), is(false));
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty() {
         //given
         subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_GENE_IDS, factors);
         //and
-        Predicate<Profile> acceptancePredicate = subject.getAcceptanceCriteria();
+        subject.getAcceptanceCriteria();
 
-        //then
-        assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));
-        //and
-        assertThat(acceptancePredicate.apply(gene3ProfileMock), is(true));
     }
 
 }

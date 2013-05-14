@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,10 +38,6 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
 
-import java.util.Set;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -70,15 +67,17 @@ public class GeneProfilesQueryCommandTest {
     }
 
     //ToDo: better to do verifications on real values than on anyX(), using anyX() could hide bugs
+    //ToDo: 20 lines of setup for a 2 lines test?
     @Before
     public void initializeSubject() throws Exception {
 
-        when(requestContextMock.getGeneQuery()).thenReturn("");
+        Multimap<String, String> geneSets = ArrayListMultimap.create();
+        geneSets.put(GENE_QUERY, A_GENE_IDENTIFIER);
 
         // no filtering should be done here
-        when(solrClientMock.findGeneIds(GENE_QUERY, false, SPECIES)).thenReturn(Sets.<String>newHashSet(A_GENE_IDENTIFIER));
-        when(solrClientMock.findGeneIds("A", false, SPECIES)).thenReturn(Sets.<String>newHashSet(A_GENE_IDENTIFIER));
-        when(solrClientMock.findGeneIds("QUERY", false, SPECIES)).thenReturn(Sets.<String>newHashSet(A_GENE_IDENTIFIER));
+        when(solrClientMock.findGeneSets(GENE_QUERY, false, SPECIES, false)).thenReturn(geneSets);
+        when(solrClientMock.findGeneSets("A", false, SPECIES, false)).thenReturn(geneSets);
+        when(solrClientMock.findGeneSets("QUERY", false, SPECIES, false)).thenReturn(geneSets);
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
@@ -101,23 +100,9 @@ public class GeneProfilesQueryCommandTest {
     @Test
     public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GenesNotFoundException {
 
-        when(requestContextMock.getGeneQuery()).thenReturn("");
-
         subject.execute("");
 
-        verify(solrClientMock, times(0)).findGeneIds(GENE_QUERY, false, SPECIES);
-    }
-
-    @Test
-    public void testGetSelectedGeneIds() throws GenesNotFoundException {
-
-        when(requestContextMock.getGeneQuery()).thenReturn(GENE_QUERY);
-        when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
-
-        Set<String> selectedGeneIds = subject.getSelectedGeneIds();
-
-        verify(solrClientMock).findGeneIds(GENE_QUERY, false, SPECIES);
-        assertThat(selectedGeneIds, hasItem(A_GENE_IDENTIFIER));
+        verify(solrClientMock, times(0)).findGeneSets(GENE_QUERY, false, SPECIES, false);
     }
 
 }

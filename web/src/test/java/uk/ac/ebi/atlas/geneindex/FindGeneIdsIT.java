@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Multimap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,7 +32,6 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -51,12 +51,12 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "GO:0008134 \"p53 binding\"";
         //when
-        Set<String> result = subject.findGeneIds(geneQuery, false, SPECIES);
+        Multimap<String, String> result = subject.findGeneSets(geneQuery, false, SPECIES, false);
 
         //some genes are found
-        assertThat(result, hasItems("ENSG00000131759", "ENSG00000112592") );
-        assertThat(result.size(), is(greaterThan(300)) );
-        assertThat(result.size(), is(lessThan(600)) );
+        assertThat(result.values(), hasItems("ENSG00000131759", "ENSG00000112592") );
+        assertThat(result.values().size(), is(greaterThan(300)) );
+        assertThat(result.values().size(), is(lessThan(600)) );
 
     }
 
@@ -65,12 +65,12 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "ENSG00000131759 \"mRNA splicing, via spliceosome\"";
         //when
-        Set<String> result = subject.findGeneIds(geneQuery, true, SPECIES);
+        Multimap<String, String> result = subject.findGeneSets(geneQuery, true, SPECIES, false);
 
         //some genes are found
-        assertThat(result, hasItems("ENSG00000131759", "ENSG00000084072") );
-        assertThat(result.size(), is(greaterThan(190)) );
-        assertThat(result.size(), is(lessThan(210)) );
+        assertThat(result.values(), hasItems("ENSG00000131759", "ENSG00000084072") );
+        assertThat(result.values().size(), is(greaterThan(190)) );
+        assertThat(result.values().size(), is(lessThan(210)) );
 
     }
 
@@ -79,7 +79,7 @@ public class FindGeneIdsIT {
         //given
         String query = "\"NOT THERE\"";
 
-        subject.findGeneIds(query, false, SPECIES);
+        subject.findGeneSets(query, false, SPECIES, false);
 
     }
 

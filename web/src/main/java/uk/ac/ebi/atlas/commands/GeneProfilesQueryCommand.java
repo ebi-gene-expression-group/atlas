@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Multimap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
@@ -33,15 +34,12 @@ import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Set;
 
 public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements Command<T> {
 
     private static final Logger LOGGER = Logger.getLogger(GeneProfilesQueryCommand.class);
 
     private SolrClient solrClient;
-
-    private GeneQueryTokenizer geneQueryTokenizer;
 
     protected RequestContext requestContext;
 
@@ -52,15 +50,13 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
     @Inject
     public void setSolrClient(SolrClient solrClient, GeneQueryTokenizer geneQueryTokenizer) {
         this.solrClient = solrClient;
-        this.geneQueryTokenizer = geneQueryTokenizer;
     }
 
     public T execute(String experimentAccession) throws GenesNotFoundException {
-        Set<String> selectedGeneIds = getSelectedGeneIds();
 
-        try (ObjectInputStream<K> inputStream = new GeneProfileInputStreamFilter(createInputStream(experimentAccession), selectedGeneIds, requestContext.getSelectedQueryFactors())) {
+        try (ObjectInputStream<K> filteredInputStream = buildFilterInputStream(experimentAccession)) {
 
-            return execute(inputStream, requestContext);
+            return execute(filteredInputStream, requestContext);
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
@@ -68,16 +64,23 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
         }
     }
 
-    //ToDo: remove this method, returning null or passing nulls around is a bad smell
-    Set<String> getSelectedGeneIds() throws GenesNotFoundException {
-        Set<String> selectedGeneIds = null;
+    //ToDo: this should become an injectable builder
+    ObjectInputStream<K> buildFilterInputStream(String experimentAccession) throws GenesNotFoundException{
+        ObjectInputStream<K> inputStream = createInputStream(experimentAccession);
 
-        if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
-
-            selectedGeneIds = solrClient.findGeneIds(requestContext.getGeneQuery(), requestContext.isExactMatch(), requestContext.getFilteredBySpecies());
-
+        if (StringUtils.isBlank(requestContext.getGeneQuery())) {
+            return new GeneProfileInputStreamFilter(inputStream, requestContext.getSelectedQueryFactors());
         }
-        return selectedGeneIds;
+
+        Multimap<String, String> geneSets = solrClient.findGeneSets(requestContext.getGeneQuery(),
+                requestContext.isExactMatch(),
+                requestContext.getFilteredBySpecies(),
+                requestContext.isGeneSetMatch());
+
+        //ToDo: this initialization is unrelated to this method, but I can't find better way to do it for now
+        requestContext.setGeneSets(geneSets);
+
+        return new GeneProfileInputStreamFilter(inputStream, geneSets.values(), requestContext.getSelectedQueryFactors());
     }
 
     protected abstract ObjectInputStream<K> createInputStream(String experimentAccession);

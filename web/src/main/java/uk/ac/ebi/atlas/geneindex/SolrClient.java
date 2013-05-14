@@ -41,9 +41,10 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
 @Scope("singleton")
@@ -106,37 +107,31 @@ public class SolrClient {
 
     }
 
-    public Set<String> findGeneIds(String geneQuery, boolean exactMatch, String species) throws GenesNotFoundException {
-        String lowercaseSpecies = species.toLowerCase();
-        Set<String> geneIds = solrQueryService.getGeneIds(geneQuery, exactMatch, lowercaseSpecies);
-        if (geneIds.isEmpty()) {
-            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + lowercaseSpecies);
-        }
-        return geneIds;
-    }
+    public Multimap<String, String> findGeneSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
 
-    Multimap<String, String> getGeneSets(String geneQuery, boolean isExactMatch, String species) throws GenesNotFoundException {
+        checkArgument(StringUtils.isNotBlank(geneQuery));
 
         Multimap<String, String> geneSets = ArrayListMultimap.create();
 
-        for (String queryToken : geneQueryTokenizer.split(geneQuery)) {
-
-            Set<String> geneIds = solrQueryService.getGeneIds(queryToken, isExactMatch, species);
-
-            geneSets.putAll(queryToken, geneIds);
+        if(tokenizeQuery){
+            for (String queryToken : geneQueryTokenizer.split(geneQuery)) {
+                geneSets.putAll(queryToken, solrQueryService.getGeneIds(queryToken, exactMatch, species));
+            }
+        } else {
+            geneSets.putAll(geneQuery, solrQueryService.getGeneIds(geneQuery, exactMatch, species));
         }
+
         if (geneSets.isEmpty()){
             throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);
         }
-        return geneSets;
-    }
 
+        return geneSets;
+
+    }
 
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
         return solrQueryService.getGeneIdSuggestionsInName(geneName, species.toLowerCase());
-
-
     }
 
     public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
