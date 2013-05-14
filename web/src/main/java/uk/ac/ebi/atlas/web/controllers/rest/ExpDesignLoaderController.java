@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +34,7 @@ import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.text.MessageFormat;
 
 @Controller
 @Scope("request")
@@ -47,8 +42,7 @@ public class ExpDesignLoaderController {
 
     private static final Logger LOGGER = Logger.getLogger(ExpDesignLoaderController.class);
 
-    @Value("#{configuration['experiment.experiment-design.path.template']}")
-    private String pathTemplate;
+    private ExpDesignTsvWriter expDesignTsvWriter;
 
     private ApplicationProperties applicationProperties;
 
@@ -62,27 +56,27 @@ public class ExpDesignLoaderController {
     public ExpDesignLoaderController(ApplicationProperties applicationProperties,
                                      RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser,
                                      MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser,
-                                     TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser) {
+                                     TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser,
+                                     ExpDesignTsvWriter expDesignTsvWriter) {
         this.applicationProperties = applicationProperties;
         this.rnaSeqMageTabLimpopoParser = rnaSeqMageTabLimpopoParser;
         this.microArrayMageTabLimpopoExpDesignParser = microArrayMageTabLimpopoExpDesignParser;
         this.twoColourMageTabLimpopoExpDesignParser = twoColourMageTabLimpopoExpDesignParser;
+        this.expDesignTsvWriter = expDesignTsvWriter;
     }
 
     @RequestMapping(value = "/loadExperimentDesign/{experimentAccession}")
     @ResponseBody
     public String loadExpDesign(@PathVariable String experimentAccession) {
 
-        File file = FileSystems.getDefault().getPath(getPathString(experimentAccession)).toFile();
-        FileWriter writer = null;
+        CSVWriter csvWriter = null;
         try {
-            writer = new FileWriter(file);
+            csvWriter = expDesignTsvWriter.forExperimentAccession(experimentAccession);
         } catch (IOException e) {
-            LOGGER.error("<loadExpDesign> error opening file to write: " + e.getMessage());
+            LOGGER.error("<loadExpDesign> could not open file: " + expDesignTsvWriter.getFileAbsolutePath());
             return e.getMessage();
         }
 
-        CSVWriter csvWriter = new CSVWriter(writer, '\t');
         ExpDesignWriter expDesignWriter = null;
 
         if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)
@@ -100,7 +94,7 @@ public class ExpDesignLoaderController {
             expDesignWriter.forExperimentAccession(experimentAccession);
             csvWriter.flush();
             csvWriter.close();
-            LOGGER.info("<loadExpDesign> written ExpDesign file: " + file.getAbsolutePath());
+            LOGGER.info("<loadExpDesign> written ExpDesign file: " + expDesignTsvWriter.getFileAbsolutePath());
         } catch (IOException e) {
             LOGGER.error("<loadExpDesign> error writing to file: " + e.getMessage());
             return e.getMessage();
@@ -110,10 +104,6 @@ public class ExpDesignLoaderController {
         }
 
         return "ExperimentDesign for " + experimentAccession + " loaded.";
-    }
-
-    String getPathString(String experimentAccession) {
-        return MessageFormat.format(pathTemplate, experimentAccession);
     }
 
 }
