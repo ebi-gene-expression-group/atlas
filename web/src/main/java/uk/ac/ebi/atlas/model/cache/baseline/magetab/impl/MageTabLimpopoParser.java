@@ -22,12 +22,17 @@
 
 package uk.ac.ebi.atlas.model.cache.baseline.magetab.impl;
 
-import com.google.common.collect.*;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.velocity.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
@@ -39,6 +44,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.*;
@@ -47,7 +53,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser, MageTabParserBuilder {
+public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser, MageTabParserBuilder {
 
     private static final String SPECIES_FACTOR_TYPE = "ORGANISM";
 
@@ -64,6 +70,22 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
     private Collection<ScanNode> scanNodes;
 
     private String experimentAccession;
+
+    private MAGETABInvestigation investigation;
+
+    private String idfUrlTemplate;
+
+    private String idfPathTemplate;
+
+    @Inject
+    public void setIdfUrlTemplate(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate) {
+        this.idfUrlTemplate = idfUrlTemplate;
+    }
+
+    @Inject
+    public void setIdfPathTemplate(@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate) {
+        this.idfPathTemplate = idfPathTemplate;
+    }
 
     @Override
     public MageTabLimpopoParser forExperimentAccession(String experimentAccession) {
@@ -88,7 +110,9 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
         checkState(CollectionUtils.isNotEmpty(requiredFactorTypes), "Please invoke withRequiredFactorTypes method to initialize the builder !");
 
-        scanNodes = extractScanNodes(experimentAccession);
+        investigation = MageTabLimpopoUtils.parseInvestigation(experimentAccession, idfPathTemplate, idfUrlTemplate);
+
+        scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
         factorNamesByType = transformFactorNames(extractPreservedFactorTypes());
 
@@ -111,7 +135,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
 
     protected Map<String, ExperimentRun> extractProcessedExperimentRuns() {
 
-        Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, getInvestigation().IDF);
+        Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
         Map<String, ExperimentRun> processedExperimentRuns = Maps.newHashMap();
 
@@ -138,7 +162,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
             return species;
         }
 
-        return extractSpeciesFromSDRF(scanNodes);
+        return MageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
 
     }
 
@@ -148,7 +172,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
     }
 
     Map<String, String> extractFactorNames() {
-        IDF idf = getInvestigation().IDF;
+        IDF idf = investigation.IDF;
         Map<String, String> namesByType = Maps.newHashMap();
         for (int i = 0; i < idf.experimentalFactorType.size(); i++) {
             String factorType = idf.experimentalFactorType.get(i);
@@ -161,7 +185,7 @@ public class MageTabLimpopoParser extends MageTabLimpopoUtils implements uk.ac.e
     }
 
     Map<String, String> extractPreservedFactorTypes() {
-        IDF idf = getInvestigation().IDF;
+        IDF idf = investigation.IDF;
         Map<String, String> preservedByType = Maps.newHashMap();
         for (int i = 0; i < idf.experimentalFactorType.size(); i++) {
             String factorType = idf.experimentalFactorType.get(i);

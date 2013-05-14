@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Sets;
+import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
@@ -31,13 +33,14 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.Characteris
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
+public class MageTabLimpopoExpDesignParser {
 
     protected String experimentAccession;
 
@@ -47,6 +50,22 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
     protected Collection<HybridizationNode> hybridizationNodes;
 
+    protected MAGETABInvestigation investigation;
+
+    private String idfUrlTemplate;
+
+    private String idfPathTemplate;
+
+    @Inject
+    public void setIdfUrlTemplate(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate) {
+        this.idfUrlTemplate = idfUrlTemplate;
+    }
+
+    @Inject
+    public void setIdfPathTemplate(@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate) {
+        this.idfPathTemplate = idfPathTemplate;
+    }
+
     public MageTabLimpopoExpDesignParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
@@ -55,11 +74,13 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
     public MageTabLimpopoExpDesignParser build() throws IOException, ParseException {
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
 
-        sourceNodes = extractSourceNodes(experimentAccession);
+        investigation = MageTabLimpopoUtils.parseInvestigation(experimentAccession, idfPathTemplate, idfUrlTemplate);
 
-        scanNodes = extractScanNodes(experimentAccession);
+        sourceNodes = investigation.SDRF.getNodes(SourceNode.class);
 
-        hybridizationNodes = extractHybridizationNode(experimentAccession);
+        scanNodes = investigation.SDRF.getNodes(ScanNode.class);
+
+        hybridizationNodes = investigation.SDRF.getNodes(HybridizationNode.class);
 
         return this;
     }

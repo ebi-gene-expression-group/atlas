@@ -23,24 +23,40 @@
 package uk.ac.ebi.atlas.commons.magetab;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class MageTabSpeciesParser extends MageTabLimpopoUtils implements MageTabSpeciesParserBuilder {
-
-    private Collection<ScanNode> scanNodes;
+public class MageTabSpeciesParser implements MageTabSpeciesParserBuilder {
 
     private String experimentAccession;
+
+    private MAGETABInvestigation investigation;
+
+    private String idfUrlTemplate;
+
+    private String idfPathTemplate;
+
+    @Inject
+    public void setIdfUrlTemplate(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate) {
+        this.idfUrlTemplate = idfUrlTemplate;
+    }
+
+    @Inject
+    public void setIdfPathTemplate(@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate) {
+        this.idfPathTemplate = idfPathTemplate;
+    }
+
 
     public MageTabSpeciesParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
@@ -50,13 +66,13 @@ public class MageTabSpeciesParser extends MageTabLimpopoUtils implements MageTab
     public MageTabSpeciesParser build() throws IOException, ParseException {
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
 
-        scanNodes = extractScanNodes(experimentAccession);
+        investigation = MageTabLimpopoUtils.parseInvestigation(experimentAccession, idfPathTemplate, idfUrlTemplate);
 
         return this;
     }
 
     public Set<String> extractSpecies() {
-        return extractSpeciesFromSDRF(scanNodes);
+        return MageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
     }
 
 }
