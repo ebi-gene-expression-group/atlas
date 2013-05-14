@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
@@ -34,7 +33,6 @@ import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
 
 public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements Command<T> {
@@ -43,6 +41,8 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
 
     private SolrClient solrClient;
 
+    private GeneQueryTokenizer geneQueryTokenizer;
+
     protected RequestContext requestContext;
 
     protected GeneProfilesQueryCommand(RequestContext requestContext) {
@@ -50,8 +50,9 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
     }
 
     @Inject
-    public void setSolrClient(SolrClient solrClient) {
+    public void setSolrClient(SolrClient solrClient, GeneQueryTokenizer geneQueryTokenizer) {
         this.solrClient = solrClient;
+        this.geneQueryTokenizer = geneQueryTokenizer;
     }
 
     public T execute(String experimentAccession) throws GenesNotFoundException {
@@ -67,6 +68,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
         }
     }
 
+    //ToDo: remove this method, returning null or passing nulls around is a bad smell
     Set<String> getSelectedGeneIds() throws GenesNotFoundException {
         Set<String> selectedGeneIds = null;
 
@@ -76,25 +78,6 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
 
         }
         return selectedGeneIds;
-    }
-
-    Map<String, Set<String>> getSelectedGeneIdsPerQueryToken() throws GenesNotFoundException {
-        Map<String, Set<String>> selectedGeneIdsPerQueryToken = null;
-
-        if (StringUtils.isNotBlank(requestContext.getGeneQuery())) {
-
-            selectedGeneIdsPerQueryToken = Maps.newHashMap();
-
-            for (String queryToken : GeneQueryTokenizer.tokenize(requestContext.getGeneQuery())) {
-
-                Set<String> selectedGeneIds = solrClient.findGeneIds(queryToken, requestContext.isExactMatch(), requestContext.getFilteredBySpecies());
-                selectedGeneIdsPerQueryToken.put(queryToken, selectedGeneIds);
-
-            }
-
-        }
-
-        return selectedGeneIdsPerQueryToken;
     }
 
     protected abstract ObjectInputStream<K> createInputStream(String experimentAccession);

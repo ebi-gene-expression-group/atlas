@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,9 @@ package uk.ac.ebi.atlas.geneindex;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.utils.Files;
 
@@ -35,10 +38,18 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 
+@RunWith(MockitoJUnitRunner.class)
 public class JsonAutocompleteTest {
 
+    @Mock
+    private RestTemplate restTemplateMock;
+
+    @Mock
+    private SolrQueryService solrQueryServiceMock;
+
+    @Mock
+    private GeneQueryTokenizer geneQueryTokenizerMock;
 
     private SolrClient subject;
 
@@ -50,7 +61,7 @@ public class JsonAutocompleteTest {
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         jsonAutocompleteEmptyResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.emptySuggestions.json");
 
-        subject = new SolrClient(mock(RestTemplate.class), mock(SolrQueryService.class));
+        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, geneQueryTokenizerMock);
     }
 
     @Test

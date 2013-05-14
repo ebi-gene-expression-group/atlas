@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,15 @@ package uk.ac.ebi.atlas.geneindex;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.utils.Files;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -63,13 +66,18 @@ public class SolrClientTest {
 
     private static final String SYMBOL = "symbol";
 
-    private SolrClient subject;
+    private static final String GENE_QUERY = "A QUERY";
 
     @Mock
     private RestTemplate restTemplateMock;
 
     @Mock
     private SolrQueryService solrQueryServiceMock;
+
+    @Mock
+    private GeneQueryTokenizer geneQueryTokenizerMock;
+
+    private SolrClient subject;
 
     private Multimap<String, String> results = HashMultimap.create();
 
@@ -90,12 +98,7 @@ public class SolrClientTest {
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
 
-        subject = new SolrClient(restTemplateMock, solrQueryServiceMock);
-    }
-
-    @Test
-    public void toUppercaseShouldConvertAllStringsToUppercase() {
-        assertThat(subject.toUppercase(Lists.newArrayList("hEllo", "bOy")), containsInAnyOrder("HELLO", "BOY"));
+        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, geneQueryTokenizerMock);
     }
 
     @Test
@@ -145,4 +148,24 @@ public class SolrClientTest {
     public void testFindPropertyValuesForGeneId() throws Exception {
         assertThat(subject.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL), hasItem(SYMBOL));
     }
+
+    @Test
+    public void testGetSelectedGeneIdsPerQueryToken() throws GenesNotFoundException, SolrServerException {
+
+        when(solrQueryServiceMock.getGeneIds("A", false, SPECIES)).thenReturn(Sets.newHashSet(IDENTIFIER));
+        when(solrQueryServiceMock.getGeneIds("QUERY", false, SPECIES)).thenReturn(Sets.newHashSet(IDENTIFIER));
+
+        when(geneQueryTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
+
+        Multimap<String, String> geneIds = subject.getGeneSets(GENE_QUERY, false, SPECIES);
+
+        verify(geneQueryTokenizerMock).split("A QUERY");
+
+        verify(solrQueryServiceMock).getGeneIds("A", false, SPECIES);
+        verify(solrQueryServiceMock).getGeneIds("QUERY", false, SPECIES);
+
+        assertThat(geneIds.keySet(), containsInAnyOrder("A", "QUERY"));
+    }
+
+
 }

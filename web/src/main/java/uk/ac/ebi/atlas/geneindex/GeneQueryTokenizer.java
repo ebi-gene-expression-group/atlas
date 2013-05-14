@@ -23,20 +23,26 @@
 package uk.ac.ebi.atlas.geneindex;
 
 import com.google.common.collect.Lists;
+import org.springframework.context.annotation.Scope;
 
+import javax.inject.Named;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Named
+@Scope("singleton")
 public class GeneQueryTokenizer {
 
-    public static final String REGEX = "\"([^\"]*)\"|(\\S+)";
+    public static final String SPLIT_BY_SPACE_PRESERVING_DOUBLE_QUOTES_REGEXP = "\"([^\"]*)\"|(\\S+)";
 
-    public static List<String> tokenize(String geneQuery) {
+    private static final Pattern SPLITTING_PATTERN = Pattern.compile(SPLIT_BY_SPACE_PRESERVING_DOUBLE_QUOTES_REGEXP);
+
+    public List<String> split(String geneQuery) {
 
         List<String> results = Lists.newArrayList();
 
-        Matcher m = Pattern.compile(REGEX).matcher(geneQuery);
+        Matcher m = SPLITTING_PATTERN.matcher(geneQuery);
         while (m.find()) {
             if (m.group(1) != null) {
                 // quoted

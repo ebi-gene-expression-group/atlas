@@ -25,15 +25,22 @@ package uk.ac.ebi.atlas.geneindex;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SolrQueryServiceTest {
 
     private SolrQueryService subject;
+
+    @Mock
+    private GeneQueryTokenizer geneQueryTokenizerMock;
 
     @Before
     public void setUp() throws Exception {

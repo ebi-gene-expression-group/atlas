@@ -32,6 +32,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -85,7 +86,7 @@ public class SolrQueryServiceIT {
 
         // given
         String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens");
-        List<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
+        Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
         assertThat(geneIds.size(), is(1));
@@ -98,7 +99,7 @@ public class SolrQueryServiceIT {
 
         // given
         String queryString = subject.buildGeneQuery("protein", false, "homo sapiens");
-        List<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
+        Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
         assertThat(geneIds.size(), is(25375));

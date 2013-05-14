@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -29,25 +30,31 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Named
+@Scope("singleton")
 public class SolrClient {
     private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
     private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+
+    private final GeneQueryTokenizer geneQueryTokenizer;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -63,9 +70,10 @@ public class SolrClient {
     private final SolrQueryService solrQueryService;
 
     @Inject
-    public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService) {
+    public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService, GeneQueryTokenizer geneQueryTokenizer) {
         this.restTemplate = restTemplate;
         this.solrQueryService = solrQueryService;
+        this.geneQueryTokenizer = geneQueryTokenizer;
     }
 
     void setTooltipPropertyTypes(String tooltipPropertyTypes) {
@@ -92,80 +100,62 @@ public class SolrClient {
 
     Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
 
-        try {
-            return solrQueryService.fetchProperties(identifier, propertyTypes);
-        } catch (SolrServerException e) {
-            LOGGER.error("<fetchProperties> error querying solr service", e);
-            throw new IllegalStateException(e);
-        }
+        return solrQueryService.fetchProperties(identifier, propertyTypes);
 
     }
 
     public String findSpeciesForGeneId(String identifier) {
 
-        try {
-            return solrQueryService.getSpeciesForIdentifier(identifier);
-        } catch (SolrServerException e) {
-            LOGGER.error("<findSpeciesForGeneId> error querying solr service", e);
-            throw new IllegalStateException(e);
-        }
+        return solrQueryService.getSpeciesForIdentifier(identifier);
     }
 
     public List<String> findPropertyValuesForGeneId(String identifier, String propertyType) {
 
-        try {
-            return solrQueryService.getPropertyValuesForIdentifier(identifier, propertyType);
-        } catch (SolrServerException e) {
-            LOGGER.error("<findPropertyValuesForGeneId> error querying solr service", e);
-            throw new IllegalStateException(e);
-        }
+        return solrQueryService.getPropertyValuesForIdentifier(identifier, propertyType);
 
     }
 
     public Set<String> findGeneIds(String geneQuery, boolean exactMatch, String species) throws GenesNotFoundException {
-        try {
-            String lowercaseSpecies = species.toLowerCase();
-            List<String> geneIds = solrQueryService.getGeneIds(geneQuery, exactMatch, lowercaseSpecies);
-            if (geneIds.isEmpty()) {
-                throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + lowercaseSpecies);
-            }
-            return toUppercase(geneIds);
-        } catch (SolrServerException e) {
-            LOGGER.error("<findGeneIds> error querying solr service", e);
-            throw new IllegalStateException(e);
+        String lowercaseSpecies = species.toLowerCase();
+        Set<String> geneIds = solrQueryService.getGeneIds(geneQuery, exactMatch, lowercaseSpecies);
+        if (geneIds.isEmpty()) {
+            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + lowercaseSpecies);
         }
+        return geneIds;
     }
+
+    Multimap<String, String> getGeneSets(String geneQuery, boolean isExactMatch, String species) throws GenesNotFoundException {
+
+        Multimap<String, String> geneSets = ArrayListMultimap.create();
+
+        for (String queryToken : geneQueryTokenizer.split(geneQuery)) {
+
+            Set<String> geneIds = solrQueryService.getGeneIds(queryToken, isExactMatch, species);
+
+            geneSets.putAll(queryToken, geneIds);
+        }
+        if (geneSets.isEmpty()){
+            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);
+        }
+        return geneSets;
+    }
+
 
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
-        try {
-            return solrQueryService.getGeneIdSuggestionsInName(geneName, species.toLowerCase());
-        } catch (SolrServerException e) {
-            LOGGER.error("<findGeneIdSuggestionsInName> error querying solr service", e);
-            return Collections.EMPTY_LIST;
-        }
+        return solrQueryService.getGeneIdSuggestionsInName(geneName, species.toLowerCase());
+
 
     }
 
     public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
 
-        try {
-            return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species.toLowerCase());
-        } catch (SolrServerException e) {
-            LOGGER.error("<findGeneIdSuggestionsInSynonym> error querying solr service", e);
-            return Collections.EMPTY_LIST;
-        }
-
+        return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species.toLowerCase());
     }
 
     public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
 
-        try {
-            return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species.toLowerCase());
-        } catch (SolrServerException e) {
-            LOGGER.error("<findGeneIdSuggestionsInIdentifier> error querying solr service", e);
-            return Collections.EMPTY_LIST;
-        }
+        return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species.toLowerCase());
 
     }
 
@@ -225,14 +215,6 @@ public class SolrClient {
             LOGGER.error(e.getMessage(), e);
             throw e;
         }
-    }
-
-    Set<String> toUppercase(List<String> geneIds) {
-        Set<String> result = new HashSet<>();
-        for (String geneId : geneIds) {
-            result.add(geneId.toUpperCase());
-        }
-        return result;
     }
 
 }
