@@ -42,7 +42,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
     @Test
     public void shouldFindExpressionLevelsForTermInDoubleQuotes() {
         String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
-                "&displayLevels=true&displayGeneDistribution=true&geneQuery=\"Alpha-1-acid+glycoprotein\"&_exactMatch=on&geneSetMatch=true" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
                 "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
@@ -50,7 +50,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         subject.get();
         //then
         assertThat(subject.getSelectedGenes(), contains("\"Alpha-1-acid glycoprotein\""));
-        assertThat(subject.getFirstGeneProfile(), contains("", "", "", "0.5", "0.5", "6451", "", "", "3" ));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
 
     }
 
