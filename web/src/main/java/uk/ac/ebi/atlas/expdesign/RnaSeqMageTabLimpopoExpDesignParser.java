@@ -30,8 +30,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 @Named
 @Scope("prototype")
@@ -80,7 +79,7 @@ public class RnaSeqMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesign
         return null;
     }
 
-    public String[] findFactorValueForScanNode(ScanNode scanNode, String factor) {
+    public List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
         if (assayNodes.size() != 1) {
@@ -90,10 +89,10 @@ public class RnaSeqMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesign
         AssayNode assayNode = assayNodes.iterator().next();
         for (FactorValueAttribute factorValueAttribute : assayNode.factorValues) {
             if (factorValueAttribute.type.equals(factor)) {
-                return factorValueAttribute.values();
+                return Arrays.asList(factorValueAttribute.values());
             }
         }
 
-        return null;
+        return Collections.emptyList();
     }
 }

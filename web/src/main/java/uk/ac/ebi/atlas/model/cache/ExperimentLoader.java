@@ -25,13 +25,17 @@ package uk.ac.ebi.atlas.model.cache;
 import com.google.common.cache.CacheLoader;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
+import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.MessageFormat;
+import java.util.Set;
 
 public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
     private static final Logger LOGGER = Logger.getLogger(ExperimentLoader.class);
@@ -39,13 +43,15 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
     @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
 
+    protected MageTabLimpopoUtils mageTabLimpopoUtils;
+
     protected ArrayExpressClient arrayExpressClient;
 
     protected ExperimentLoader() {
     }
 
     @Inject
-    public void setArrayExpressClient(ArrayExpressClient arrayExpressClient){
+    public void setArrayExpressClient(ArrayExpressClient arrayExpressClient) {
         this.arrayExpressClient = arrayExpressClient;
     }
 
@@ -60,7 +66,7 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
 
     }
 
-    protected abstract T load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile)  throws ParseException, IOException;
+    protected abstract T load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException;
 
     private String fetchExperimentDescription(String experimentAccession) {
         try {
@@ -69,6 +75,11 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
             LOGGER.error(e.getMessage(), e);
             return "Error connecting to ArrayExpress!";
         }
+    }
+
+    protected Set<String> extractSpecies(String experimentAccession) throws MalformedURLException, ParseException {
+        MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+        return mageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
     }
 
 }

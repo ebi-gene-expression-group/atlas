@@ -58,7 +58,7 @@ public class MTAB1066ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Assay", "Array", "Sample Characteristics[developmental stage]", "Factor Values[genotype]", "Sample Characteristics[organism]", "Sample Characteristics[strain or line]", "Analysed")
+                contains("Assay", "Array", "Sample Characteristics[DevelopmentalStage]", "Sample Characteristics[Genotype]", "Sample Characteristics[Organism]", "Sample Characteristics[StrainOrLine]", "Factor Values[GENOTYPE]", "Analysed")
         );
 
     }
@@ -70,7 +70,7 @@ public class MTAB1066ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("C1", "A-AFFY-35", "3rd instar larva", "cycC mutant,w1118; +; cycCY5", "Drosophila melanogaster", "", "Yes")
+                contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant", "Yes")
         );
 
     }

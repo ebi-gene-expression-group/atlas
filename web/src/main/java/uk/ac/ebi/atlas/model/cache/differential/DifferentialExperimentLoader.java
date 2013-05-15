@@ -23,8 +23,7 @@
 package uk.ac.ebi.atlas.model.cache.differential;
 
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
-import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParserBuilder;
+import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -39,13 +38,11 @@ import java.util.Set;
 @Named
 public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialExperiment> {
 
-    private MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder;
-
     private ConfigurationTrader configurationTrader;
 
     @Inject
-    public DifferentialExperimentLoader(MageTabSpeciesParserBuilder mageTabSpeciesParserBuilder, ConfigurationTrader configurationTrader) {
-        this.mageTabSpeciesParserBuilder = mageTabSpeciesParserBuilder;
+    public DifferentialExperimentLoader(MageTabLimpopoUtils mageTabLimpopoUtils, ConfigurationTrader configurationTrader) {
+        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
         this.configurationTrader = configurationTrader;
     }
 
@@ -55,8 +52,7 @@ public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialE
         DifferentialExperimentConfiguration differentialExperimentConfiguration = configurationTrader.getDifferentialExperimentConfiguration(accession);
         Set<Contrast> contrasts = differentialExperimentConfiguration.getContrasts();
 
-        MageTabSpeciesParser mageTabSpeciesParser = mageTabSpeciesParserBuilder.forExperimentAccession(accession).build();
-        Set<String> species = mageTabSpeciesParser.extractSpecies();
+        Set<String> species = extractSpecies(accession);
 
         return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species);
 

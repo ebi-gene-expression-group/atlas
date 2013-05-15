@@ -58,7 +58,7 @@ public class GEOD22351ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Run", " Sample Characteristics[Organism]", " Sample Characteristics[age]", "Factor Values[genotype]", " Sample Characteristics[organism part]", " Sample Characteristics[strain]", "Analysed")
+                contains("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[genotype]", "Sample Characteristics[organism part]", "Sample Characteristics[strain]", "Factor Values[genotype]", "Analysed")
         );
 
     }
@@ -70,7 +70,7 @@ public class GEOD22351ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("SRR057598", "Mus musculus", "21 days", "non transgenic", "spinal cord", "C57BL/6;SJL", "Yes")
+                contains("SRR057596", "Mus musculus", "21", "non transgenic", "spinal cord", "C57BL/6;SJL", "non transgenic", "Yes")
         );
 
     }

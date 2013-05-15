@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Sets;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
@@ -31,13 +32,13 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.Characteris
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
+public class MageTabLimpopoExpDesignParser {
 
     protected String experimentAccession;
 
@@ -47,6 +48,15 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
     protected Collection<HybridizationNode> hybridizationNodes;
 
+    protected MAGETABInvestigation investigation;
+
+    private MageTabLimpopoUtils mageTabLimpopoUtils;
+
+    @Inject
+    protected void setMageTabLimpopoUtils(MageTabLimpopoUtils mageTabLimpopoUtils) {
+        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
+    }
+
     public MageTabLimpopoExpDesignParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
@@ -54,12 +64,15 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
 
     public MageTabLimpopoExpDesignParser build() throws IOException, ParseException {
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
+        checkState(mageTabLimpopoUtils != null, "MageTabLimpopoUtils not injected !");
 
-        sourceNodes = extractSourceNodes(experimentAccession);
+        investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
 
-        scanNodes = extractScanNodes(experimentAccession);
+        sourceNodes = investigation.SDRF.getNodes(SourceNode.class);
 
-        hybridizationNodes = extractHybridizationNode(experimentAccession);
+        scanNodes = investigation.SDRF.getNodes(ScanNode.class);
+
+        hybridizationNodes = investigation.SDRF.getNodes(HybridizationNode.class);
 
         return this;
     }
@@ -77,7 +90,7 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
         return characteristics;
     }
 
-    public String[] findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
+    public List<String> findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
 
         Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class);
         if (upstreamNodes.size() != 1) {
@@ -87,11 +100,11 @@ public class MageTabLimpopoExpDesignParser extends MageTabLimpopoUtils {
         SourceNode sourceNode = upstreamNodes.iterator().next();
         for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
             if (characteristicsAttribute.type.equals(characteristic)) {
-                return characteristicsAttribute.values();
+                return Arrays.asList(characteristicsAttribute.values());
             }
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
 }

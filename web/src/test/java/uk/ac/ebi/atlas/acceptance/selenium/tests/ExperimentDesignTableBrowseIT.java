@@ -41,7 +41,7 @@ public class ExperimentDesignTableBrowseIT extends SinglePageSeleniumFixture {
 
     @Test
     public void defaultExperimentDesignPage() {
-        assertThat(subject.getExperimentDesignTableHeader().size(), is(9));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
         assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 16 of 16 entries (filtered from 48 total entries)"));
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
         assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
@@ -86,11 +86,11 @@ public class ExperimentDesignTableBrowseIT extends SinglePageSeleniumFixture {
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
         assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
         subject.clickSecondColumnHeader();
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030873"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030878"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
         subject.clickSecondColumnHeader();
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030878"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030873"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
     }
 
     @Test
@@ -98,11 +98,11 @@ public class ExperimentDesignTableBrowseIT extends SinglePageSeleniumFixture {
         assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030872"));
         assertThat(subject.getLastExperimentDesign(), hasItem("ERR030887"));
         subject.clickThirdColumnHeader();
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030880"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030875"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030873"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030878"));
         subject.clickThirdColumnHeader();
-        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030875"));
-        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030880"));
+        assertThat(subject.getFirstExperimentDesign(), hasItem("ERR030878"));
+        assertThat(subject.getLastExperimentDesign(), hasItem("ERR030873"));
     }
 
     @Test

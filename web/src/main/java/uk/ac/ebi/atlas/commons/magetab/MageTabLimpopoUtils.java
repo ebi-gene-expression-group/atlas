@@ -25,63 +25,34 @@ package uk.ac.ebi.atlas.commons.magetab;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 
-import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Set;
 
+@Named
+@Scope("prototype")
 public class MageTabLimpopoUtils {
 
-    private static final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
+    private final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
 
-    protected String idfUrlTemplate;
+    @Value("#{configuration['experiment.magetab.idf.url.template']}")
+    private String idfUrlTemplate;
 
-    protected String idfPathTemplate;
+    @Value("#{configuration['experiment.magetab.idf.path.template']}")
+    private String idfPathTemplate;
 
-    protected MAGETABInvestigation investigation;
-
-    @Inject
-    public void setIdfUrlTemplate(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate) {
-        this.idfUrlTemplate = idfUrlTemplate;
-    }
-
-    @Inject
-    public void setIdfPathTemplate(@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate) {
-        this.idfPathTemplate = idfPathTemplate;
-    }
-
-    protected MAGETABInvestigation getInvestigation() {
-        return investigation;
-    }
-
-    protected Collection<ScanNode> extractScanNodes(String experimentAccession) throws IOException, ParseException {
-        investigation = parseInvestigation(experimentAccession);
-        return investigation.SDRF.getNodes(ScanNode.class);
-    }
-
-    protected Collection<SourceNode> extractSourceNodes(String experimentAccession) throws IOException, ParseException {
-        investigation = parseInvestigation(experimentAccession);
-        return investigation.SDRF.getNodes(SourceNode.class);
-    }
-
-    protected Collection<HybridizationNode> extractHybridizationNode(String experimentAccession) throws IOException, ParseException {
-        investigation = parseInvestigation(experimentAccession);
-        return investigation.SDRF.getNodes(HybridizationNode.class);
-    }
-
-    protected Set<String> extractSpeciesFromSDRF(Collection<ScanNode> scanNodes) {
+    public Set<String> extractSpeciesFromSDRF(MAGETABInvestigation investigation) {
         Set<String> species = Sets.newHashSet();
         Collection<SourceNode> sourceNodes = investigation.SDRF.getNodes(SourceNode.class);
         for (SourceNode sourceNode : sourceNodes) {
@@ -95,7 +66,8 @@ public class MageTabLimpopoUtils {
         return species;
     }
 
-    MAGETABInvestigation parseInvestigation(String experimentAccession) throws ParseException, MalformedURLException {
+    public MAGETABInvestigation parseInvestigation(String experimentAccession)
+            throws ParseException, MalformedURLException {
 
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);
         LOGGER.info("<parseInvestigation> idfFileLocation = " + idfFileLocation);
