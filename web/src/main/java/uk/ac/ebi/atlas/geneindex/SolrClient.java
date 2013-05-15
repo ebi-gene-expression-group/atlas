@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -41,6 +40,7 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,25 +107,23 @@ public class SolrClient {
 
     }
 
-    public Multimap<String, String> findGeneSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
+
+    public GeneQueryResponse findGeneSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
 
         checkArgument(StringUtils.isNotBlank(geneQuery));
 
-        Multimap<String, String> geneSets = ArrayListMultimap.create();
+        GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         if(tokenizeQuery){
             for (String queryToken : geneQueryTokenizer.split(geneQuery)) {
-                geneSets.putAll(queryToken, solrQueryService.getGeneIds(queryToken, exactMatch, species));
+                Set<String> geneIds = solrQueryService.getGeneIds(queryToken, exactMatch, species);
+                geneQueryResponse.addGeneIds(queryToken, geneIds);
             }
         } else {
-            geneSets.putAll(geneQuery, solrQueryService.getGeneIds(geneQuery, exactMatch, species));
+            Set<String> geneIds = solrQueryService.getGeneIds(geneQuery, exactMatch, species);
+            geneQueryResponse.addGeneIds(geneQuery, geneIds);
         }
-
-        if (geneSets.isEmpty()){
-            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);
-        }
-
-        return geneSets;
+        return geneQueryResponse;
 
     }
 

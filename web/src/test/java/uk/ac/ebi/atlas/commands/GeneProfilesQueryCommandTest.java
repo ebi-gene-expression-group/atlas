@@ -22,8 +22,7 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +31,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
@@ -71,13 +71,13 @@ public class GeneProfilesQueryCommandTest {
     @Before
     public void initializeSubject() throws Exception {
 
-        Multimap<String, String> geneSets = ArrayListMultimap.create();
-        geneSets.put(GENE_QUERY, A_GENE_IDENTIFIER);
+        GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
+        geneQueryResponse.addGeneIds(GENE_QUERY, Sets.newHashSet(A_GENE_IDENTIFIER));
 
         // no filtering should be done here
-        when(solrClientMock.findGeneSets(GENE_QUERY, false, SPECIES, false)).thenReturn(geneSets);
-        when(solrClientMock.findGeneSets("A", false, SPECIES, false)).thenReturn(geneSets);
-        when(solrClientMock.findGeneSets("QUERY", false, SPECIES, false)).thenReturn(geneSets);
+        when(solrClientMock.findGeneSets(GENE_QUERY, false, SPECIES, false)).thenReturn(geneQueryResponse);
+        when(solrClientMock.findGeneSets("A", false, SPECIES, false)).thenReturn(geneQueryResponse);
+        when(solrClientMock.findGeneSets("QUERY", false, SPECIES, false)).thenReturn(geneQueryResponse);
 
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);

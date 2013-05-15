@@ -68,4 +68,9 @@ public class RankMicroarrayProfilesCommand extends RankProfilesCommand<Different
     protected ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createMicroarrayProfileInputStream(experimentAccession, requestContext.getArrayDesignAccession());
     }
+
+    @Override
+    protected DifferentialProfilesList buildAverageGeneSetProfiles(ObjectInputStream<MicroarrayProfile> objectInputStream) {
+        throw new UnsupportedOperationException("Method only supported for Baseline Experiments");
+    }
 }

@@ -78,10 +78,4 @@ public class BaselineProfilesListTest {
         assertThat(subject.getTotalResultCount(), is(2));
     }
 
-    @Test
-    public void shouldReturnRoundedAverageLevelForTheGivenFactor(){
-        assertThat(subject.getAverageExpressionLevel(factorMock1), is(3D));
-        assertThat(subject.getAverageExpressionLevel(factorMock2), is(1D));
-    }
-
 }

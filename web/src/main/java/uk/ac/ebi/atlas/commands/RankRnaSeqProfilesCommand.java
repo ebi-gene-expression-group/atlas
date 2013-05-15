@@ -51,6 +51,11 @@ public class RankRnaSeqProfilesCommand extends RankProfilesCommand<DifferentialP
     }
 
     @Override
+    protected DifferentialProfilesList buildAverageGeneSetProfiles(ObjectInputStream<RnaSeqProfile> objectInputStream) {
+        throw new UnsupportedOperationException("Method only supported for Baseline Experiments");
+    }
+
+    @Override
     protected DifferentialProfilesList createGeneProfilesList(Queue<RnaSeqProfile> geneProfiles) {
         return new DifferentialProfilesList(geneProfiles);
     }

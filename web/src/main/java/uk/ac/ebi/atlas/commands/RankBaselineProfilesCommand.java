@@ -22,15 +22,14 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.AverageBaselineProfileBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.baseline.GeneSetProfilesBuilder;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
@@ -43,29 +42,20 @@ import java.util.Queue;
 public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselineProfilesList, BaselineProfile> {
 
     private InputStreamFactory inputStreamFactory;
-
-    private AverageBaselineProfileBuilder averageBaselineProfileBuilder;
+    private GeneSetProfilesBuilder geneSetProfilesBuilder;
 
     @Inject
     public RankBaselineProfilesCommand(BaselineRequestContext requestContext, InputStreamFactory inputStreamFactory,
-                                       AverageBaselineProfileBuilder averageBaselineProfileBuilder) {
+                                       GeneSetProfilesBuilder geneSetProfilesBuilder) {
         super(requestContext);
-        this.averageBaselineProfileBuilder = averageBaselineProfileBuilder;
         this.inputStreamFactory = inputStreamFactory;
+        this.geneSetProfilesBuilder = geneSetProfilesBuilder;
     }
+
 
     @Override
     protected BaselineProfilesList createGeneProfilesList(Queue<BaselineProfile> geneProfiles) {
-        BaselineProfilesList baselineProfilesList = new BaselineProfilesList(geneProfiles);
-
-        if (requestContext.isGeneSetMatch() && !geneProfiles.isEmpty()){
-                BaselineProfile averageProfile = averageBaselineProfileBuilder
-                        .forProfileId(requestContext.getGeneQuery())
-                        .withBaselineProfiles(baselineProfilesList).build();
-
-                return new BaselineProfilesList(Lists.newArrayList(averageProfile));
-        }
-        return baselineProfilesList;
+        return new BaselineProfilesList(geneProfiles);
     }
 
     @Override
@@ -78,4 +68,18 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
     protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createBaselineProfileInputStream(experimentAccession);
     }
+
+
+    @Override
+    protected BaselineProfilesList buildAverageGeneSetProfiles(ObjectInputStream<BaselineProfile> inputStream) {
+
+        BaselineProfile geneProfile;
+        while ((geneProfile = inputStream.readNext()) != null) {
+
+            geneSetProfilesBuilder.sumProfile(geneProfile);
+
+        }
+        return geneSetProfilesBuilder.build();
+    }
+
 }

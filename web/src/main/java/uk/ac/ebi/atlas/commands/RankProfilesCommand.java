@@ -45,24 +45,32 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
 
         MinMaxPriorityQueue<K> rankingQueue = buildRankingQueue(requestContext);
 
-        K geneProfile;
-
         int geneCount = 0;
 
-        while ((geneProfile = inputStream.readNext()) != null) {
-            rankingQueue.add(geneProfile);
-            geneCount++;
+        T list = null;
+
+        if (!requestContext.isGeneSetMatch()){
+
+            K geneProfile;
+
+            while ((geneProfile = inputStream.readNext()) != null) {
+                rankingQueue.add(geneProfile);
+                geneCount++;
+            }
+            list = createGeneProfilesList(rankingQueue);
+            list.setTotalResultCount(geneCount);
+
+        } else {
+            list = buildAverageGeneSetProfiles(inputStream);
         }
 
-        T list = createGeneProfilesList(rankingQueue);
-
         Collections.sort(list, rankingQueue.comparator());
-
-        list.setTotalResultCount(geneCount);
 
         return list;
 
     }
+
+    protected abstract T buildAverageGeneSetProfiles(ObjectInputStream<K> objectInputStream);
 
     protected abstract T createGeneProfilesList(Queue<K> geneProfiles);
 

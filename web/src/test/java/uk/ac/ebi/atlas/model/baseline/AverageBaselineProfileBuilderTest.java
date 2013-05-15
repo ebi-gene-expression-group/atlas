@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Lists;
@@ -93,3 +93,4 @@ public class AverageBaselineProfileBuilderTest {
     }
 
 }
+*/

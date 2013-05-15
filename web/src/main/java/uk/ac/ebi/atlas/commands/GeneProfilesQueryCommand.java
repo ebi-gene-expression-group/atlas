@@ -22,11 +22,11 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Multimap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Profile;
@@ -72,15 +72,19 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
             return new GeneProfileInputStreamFilter(inputStream, requestContext.getSelectedQueryFactors());
         }
 
-        Multimap<String, String> geneSets = solrClient.findGeneSets(requestContext.getGeneQuery(),
+        GeneQueryResponse geneQueryResponse = solrClient.findGeneSets(requestContext.getGeneQuery(),
                 requestContext.isExactMatch(),
                 requestContext.getFilteredBySpecies(),
                 requestContext.isGeneSetMatch());
 
-        //ToDo: this initialization is unrelated to this method, but I can't find better way to do it for now
-        requestContext.setGeneSets(geneSets);
+        if (geneQueryResponse.isEmpty()){
+            throw new GenesNotFoundException("No genes found for searchText = " + requestContext.getGeneQuery() + ", species = " + requestContext.getFilteredBySpecies());
+        }
 
-        return new GeneProfileInputStreamFilter(inputStream, geneSets.values(), requestContext.getSelectedQueryFactors());
+        //ToDo: this initialization is unrelated to this method, but I can't find better way to do it for now
+        requestContext.setGeneQueryResponse(geneQueryResponse);
+
+        return new GeneProfileInputStreamFilter(inputStream, geneQueryResponse.getAllGeneIds(), requestContext.getSelectedQueryFactors());
     }
 
     protected abstract ObjectInputStream<K> createInputStream(String experimentAccession);

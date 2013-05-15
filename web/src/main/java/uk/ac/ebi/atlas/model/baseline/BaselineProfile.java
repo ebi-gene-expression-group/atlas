@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         super(id);
     }
 
-    BaselineProfile add(String queryFactorType, BaselineExpression expression) {
+    public BaselineProfile add(String queryFactorType, BaselineExpression expression) {
 
         addExpression(expression.getFactor(queryFactorType), expression);
         return this;
@@ -63,6 +64,42 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
             expressionLevel += getExpressionLevel(condition);
         }
         return expressionLevel / factors.size();
+    }
+
+    public BaselineProfile addAll(BaselineProfile otherProfile){
+        BaselineProfile newProfile = new BaselineProfile(getId());
+        Set<Factor> allFactors = otherProfile.getConditions();
+        allFactors.addAll(getConditions());
+
+        for (Factor factor : allFactors){
+            double expressionLevel = getExpressionLevel(factor);
+            double otherExpressionLevel = otherProfile.getExpressionLevel(factor);
+
+            if(otherExpressionLevel != 0){
+                FactorGroup factorGroup = otherProfile.getExpression(factor).getFactorGroup();
+                BaselineExpression totalExpression =
+                        new BaselineExpression(expressionLevel + otherExpressionLevel, factorGroup);
+                newProfile.add(factor.getType(), totalExpression);
+            } else {
+                newProfile.add(factor.getType(), getExpression(factor));
+            }
+        }
+        return newProfile;
+    }
+
+    public BaselineProfile foldProfile(int foldFactor) {
+        BaselineProfile newProfile = new BaselineProfile(getId());
+        for (Factor factor : getConditions()){
+            BaselineExpression expression = getExpression(factor);
+            BaselineExpression foldedExpression =
+                    new BaselineExpression(fold(expression.getLevel(), foldFactor), expression.getFactorGroup());
+            newProfile.add(factor.getType(), foldedExpression);
+        }
+        return newProfile;
+    }
+
+    private double fold(double value, int foldFactor) {
+        return new NumberUtils().round(value / foldFactor);
     }
 
     @Override

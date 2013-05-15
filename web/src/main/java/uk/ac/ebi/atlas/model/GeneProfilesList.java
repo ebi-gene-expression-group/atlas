@@ -38,6 +38,9 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
         super(collection);
     }
 
+    public GeneProfilesList() {
+    }
+
     @Override
     public GeneProfilesList subList(int fromIndex, int toIndex) {
         checkArgument(toIndex >= 0, "Upper index value must be larger than 0");

@@ -40,54 +40,50 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
     }
 
     @Test
-    public void shouldFindExpressionLevelsForCytoplasm() {
-        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART" +
-                "&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=cytoplasm" +
-                "&exactMatch=true&_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+    public void shouldFindExpressionLevelsForTermInDoubleQuotes() {
+        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=\"Alpha-1-acid+glycoprotein\"&_exactMatch=on&geneSetMatch=true" +
+                "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         //then
-        assertThat(subject.getSelectedGenes(), contains("cytoplasm"));
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("28", "24", "17", "29", "27", "18", "22", "62"));
+        assertThat(subject.getSelectedGenes(), contains("\"Alpha-1-acid glycoprotein\""));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "", "0.5", "0.5", "6451", "", "", "3" ));
 
     }
 
     @Test
-    public void shouldFindExpressionLevelsForNucleus() {
-        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART" +
-                "&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=nucleus" +
-                "&exactMatch=true&_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+    public void shouldFindExpressionLevelsForReactomeTerm() {
+        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&" +
+                "displayLevels=true&displayGeneDistribution=true&geneQuery=react_1619&" +
+                "_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         //then
-        assertThat(subject.getSelectedGenes(), contains("nucleus"));
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("39", "28", "16", "22", "11", "21", "19", "33"));
+        assertThat(subject.getSelectedGenes(), contains("react_1619"));
+        assertThat(subject.getFirstGeneProfile(), contains("4", "4", "12", "22", "17", "4", "6", "14"));
 
     }
 
-    /*
     @Test
     public void shouldFindExpressionLevelsForMultipleTerms() {
-        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART" +
-                "&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=nucleus+cytoplasm" +
-                "&exactMatch=true&_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619&_exactMatch=on" +
+                "&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         //then
-        assertThat(subject.getSelectedGenes(), contains("nucleus", "cytoplasm"));
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("39", "28", "16", "22", "11", "21", "19", "33"));
-        assertThat(subject.getGeneProfile(1), contains("28", "24", "17", "29", "27", "18", "22", "62"));
+        assertThat(subject.getSelectedGenes(), contains("\"Alpha-1-acid glycoprotein\"", "react_1619"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
+        assertThat(subject.getGeneProfile(2), contains("4", "4", "12", "22", "17", "4", "6", "14"));
 
     }
-*/
+
 
 }

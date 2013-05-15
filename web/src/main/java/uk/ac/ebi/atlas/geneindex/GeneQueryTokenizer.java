@@ -46,7 +46,7 @@ public class GeneQueryTokenizer {
         while (m.find()) {
             if (m.group(1) != null) {
                 // quoted
-                results.add(m.group(1));
+                results.add("\"" + m.group(1) +"\"");
             } else {
                 // plain
                 results.add(m.group(2));
