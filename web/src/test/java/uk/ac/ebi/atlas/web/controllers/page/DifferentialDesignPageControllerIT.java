@@ -96,7 +96,7 @@ public class DifferentialDesignPageControllerIT {
 
         // and
         String[] samples = gson.fromJson((String) map.get("sampleHeaders"), String[].class);
-        assertThat(samples, arrayContaining("Organism", "ecotype"));
+        assertThat(samples, arrayContaining("Organism", "age", "developmental stage", "ecotype", "genotype"));
         String[] factors = gson.fromJson((String) map.get("factorHeaders"), String[].class);
         assertThat(factors, arrayContaining("genotype"));
 

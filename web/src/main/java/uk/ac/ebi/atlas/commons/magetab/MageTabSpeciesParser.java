@@ -30,18 +30,12 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class MageTabSpeciesParser implements MageTabSpeciesParserBuilder {
-
-    private String experimentAccession;
-
-    private MAGETABInvestigation investigation;
+public class MageTabSpeciesParser {
 
     private String idfUrlTemplate;
 
@@ -57,21 +51,8 @@ public class MageTabSpeciesParser implements MageTabSpeciesParserBuilder {
         this.idfPathTemplate = idfPathTemplate;
     }
 
-
-    public MageTabSpeciesParser forExperimentAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
-        return this;
-    }
-
-    public MageTabSpeciesParser build() throws IOException, ParseException {
-        checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
-
-        investigation = MageTabLimpopoUtils.parseInvestigation(experimentAccession, idfPathTemplate, idfUrlTemplate);
-
-        return this;
-    }
-
-    public Set<String> extractSpecies() {
+    public Set<String> extractSpecies(String experimentAccession) throws MalformedURLException, ParseException {
+        MAGETABInvestigation investigation = MageTabLimpopoUtils.parseInvestigation(experimentAccession, idfPathTemplate, idfUrlTemplate);
         return MageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
     }
 

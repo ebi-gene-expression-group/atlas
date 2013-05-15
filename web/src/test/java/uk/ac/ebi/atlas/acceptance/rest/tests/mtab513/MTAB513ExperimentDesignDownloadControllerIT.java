@@ -58,7 +58,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Run", "Sample Characteristics[organism]", "Sample Characteristics[age]", "Sample Characteristics[sex]", "Sample Characteristics[biosource provider]", "Factor Values[organism part]", "Analysed")
+                contains("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics[sex]", "Factor Values[organism part]", "Analysed")
         );
 
     }
@@ -70,7 +70,20 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("ERR030872", "Homo sapiens", "60", "female", "Human thyroid total RNA, lot 0908003", "thyroid", "Yes")
+                contains("ERR030856", "Homo sapiens", "", "", "16 tissues mixture", "", "16 tissues mixture", "No")
+        );
+
+    }
+
+    @Test
+    public void verifyUsedLine() {
+
+        ResponseBody body = subject.getResponseBody();
+
+        List<String> line = subject.getRowValues(17);
+
+        assertThat(line,
+                contains("ERR030872", "Homo sapiens", "60", "Caucasian", "thyroid", "female", "thyroid", "Yes")
         );
 
     }

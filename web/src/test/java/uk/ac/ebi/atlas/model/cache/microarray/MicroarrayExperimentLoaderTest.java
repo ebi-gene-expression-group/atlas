@@ -29,7 +29,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
-import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParserBuilder;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
@@ -48,9 +47,6 @@ public class MicroarrayExperimentLoaderTest {
     public static final String SPECIES = "species";
 
     @Mock
-    private MageTabSpeciesParserBuilder mageTabSpeciesParserBuilderMock;
-
-    @Mock
     private ConfigurationTrader configurationTraderMock;
 
     @Mock
@@ -66,13 +62,11 @@ public class MicroarrayExperimentLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentLoader(mageTabSpeciesParserBuilderMock, configurationTraderMock, "{0}{1}");
+        subject = new MicroarrayExperimentLoader(speciesParserMock, configurationTraderMock, "{0}{1}");
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
-        when(mageTabSpeciesParserBuilderMock.forExperimentAccession(ACCESSION)).thenReturn(mageTabSpeciesParserBuilderMock);
-        when(mageTabSpeciesParserBuilderMock.build()).thenReturn(speciesParserMock);
-        when(speciesParserMock.extractSpecies()).thenReturn(Sets.newHashSet(SPECIES));
+        when(speciesParserMock.extractSpecies(ACCESSION)).thenReturn(Sets.newHashSet(SPECIES));
     }
 
     @Test

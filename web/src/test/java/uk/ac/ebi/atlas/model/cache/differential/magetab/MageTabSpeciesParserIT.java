@@ -22,14 +22,12 @@
 
 package uk.ac.ebi.atlas.model.cache.differential.magetab;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
-import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParserBuilder;
 
 import javax.inject.Inject;
 
@@ -42,19 +40,11 @@ import static org.hamcrest.Matchers.contains;
 public class MageTabSpeciesParserIT {
 
     @Inject
-    private MageTabSpeciesParserBuilder builder;
-
     private MageTabSpeciesParser subject;
-
-    @Before
-    public void setUp() throws Exception {
-        subject = builder.forExperimentAccession("E-GEOD-22351").build();
-    }
 
     @Test
     public void testExtractSpecies() throws Exception {
-        assertThat(subject.extractSpecies(), contains("Mus musculus"));
+        assertThat(subject.extractSpecies("E-GEOD-22351"), contains("Mus musculus"));
     }
-
 
 }
