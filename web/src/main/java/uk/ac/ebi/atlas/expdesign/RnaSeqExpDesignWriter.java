@@ -31,7 +31,6 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
     }
 
     String[] composeExperimentRun(String runAccession, List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList(runAccession);
+        List<String> result = Lists.newArrayList(runAccession);
         ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForRunAccession(runAccession);
         for (String characteristic : characteristics) {
             List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
@@ -87,7 +86,7 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
     }
 
     String[] composeHeader(List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList("Run");
+        List<String> result = Lists.newArrayList("Run");
         for (String characteristic : characteristics) {
             result.add("Sample Characteristics[" + characteristic + "]");
         }

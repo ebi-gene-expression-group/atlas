@@ -31,7 +31,6 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
         List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactors());
         Collections.sort(factors);
 
-        ArrayList<String> assays = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractAssays());
+        List<String> assays = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractAssays());
         Collections.sort(assays);
 
         csvWriter.writeNext(composeHeader(characteristics, factors));
@@ -66,7 +65,7 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
     }
 
     String[] composeExperimentAssay(String assay, List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList(assay);
+        List<String> result = Lists.newArrayList(assay);
         ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForAssay(assay);
         String array = mageTabLimpopoExpDesignParser.findArrayForScanNode(scanNode);
         result.add(array);
@@ -90,7 +89,7 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
     }
 
     String[] composeHeader(List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList("Assay", "Array");
+        List<String> result = Lists.newArrayList("Assay", "Array");
         for (String characteristic : characteristics) {
             result.add("Sample Characteristics[" + characteristic + "]");
         }
