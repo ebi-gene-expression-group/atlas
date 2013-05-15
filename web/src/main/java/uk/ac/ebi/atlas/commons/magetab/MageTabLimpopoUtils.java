@@ -24,12 +24,15 @@ package uk.ac.ebi.atlas.commons.magetab;
 
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 
+import javax.inject.Named;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,11 +40,19 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Set;
 
+@Named
+@Scope("prototype")
 public class MageTabLimpopoUtils {
 
-    private static final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
+    private final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
 
-    public static Set<String> extractSpeciesFromSDRF(MAGETABInvestigation investigation) {
+    @Value("#{configuration['experiment.magetab.idf.url.template']}")
+    private String idfUrlTemplate;
+
+    @Value("#{configuration['experiment.magetab.idf.path.template']}")
+    private String idfPathTemplate;
+
+    public Set<String> extractSpeciesFromSDRF(MAGETABInvestigation investigation) {
         Set<String> species = Sets.newHashSet();
         Collection<SourceNode> sourceNodes = investigation.SDRF.getNodes(SourceNode.class);
         for (SourceNode sourceNode : sourceNodes) {
@@ -55,7 +66,7 @@ public class MageTabLimpopoUtils {
         return species;
     }
 
-    public static MAGETABInvestigation parseInvestigation(String experimentAccession, String idfPathTemplate, String idfUrlTemplate)
+    public MAGETABInvestigation parseInvestigation(String experimentAccession)
             throws ParseException, MalformedURLException {
 
         String idfFileLocation = MessageFormat.format(idfPathTemplate, experimentAccession);

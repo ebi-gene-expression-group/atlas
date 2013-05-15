@@ -22,27 +22,27 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MicroArrayMageTabLimpopoExpDesignParserTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class MicroArrayMageTabLimpopoExpDesignParserIT {
 
-    static final String EXPERIMENT_ACCESSION_E_MTAB_1066 = "E-MTAB-1066";
+    private static final String EXPERIMENT_ACCESSION_E_MTAB_1066 = "E-MTAB-1066";
 
-    MicroArrayMageTabLimpopoExpDesignParser subject;
-
-    @Before
-    public void setUp() throws Exception {
-
-        subject = new MicroArrayMageTabLimpopoExpDesignParser();
-        subject.setIdfUrlTemplate("http://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
-        subject.setIdfPathTemplate("/magetab/{0}/{0}.idf.txt");
-
-    }
+    @Inject
+    private MicroArrayMageTabLimpopoExpDesignParser subject;
 
     @Test
     public void testExtractAssays1066() throws Exception {

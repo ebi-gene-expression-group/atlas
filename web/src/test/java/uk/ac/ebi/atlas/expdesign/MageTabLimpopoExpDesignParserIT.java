@@ -24,30 +24,40 @@ package uk.ac.ebi.atlas.expdesign;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
-public class MageTabLimpopoExpDesignParserTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class MageTabLimpopoExpDesignParserIT {
 
-    static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
+    private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
 
-    static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
+    private static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
 
-    static final String EXPERIMENT_ACCESSION_E_MTAB_1066 = "E-MTAB-1066";
+    private static final String EXPERIMENT_ACCESSION_E_MTAB_1066 = "E-MTAB-1066";
 
-    static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
+    private static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
 
-    MageTabLimpopoExpDesignParser subject;
+    @Inject
+    private MageTabLimpopoUtils mageTabLimpopoUtils;
+
+    private MageTabLimpopoExpDesignParser subject;
 
     @Before
     public void setUp() throws Exception {
-
         subject = new MageTabLimpopoExpDesignParser();
-        subject.setIdfUrlTemplate("http://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
-        subject.setIdfPathTemplate("/magetab/{0}/{0}.idf.txt");
-
+        subject.setMageTabLimpopoUtils(mageTabLimpopoUtils);
     }
 
     @Test(expected = IllegalStateException.class)

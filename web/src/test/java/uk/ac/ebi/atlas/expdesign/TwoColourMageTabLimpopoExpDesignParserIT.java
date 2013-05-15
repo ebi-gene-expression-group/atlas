@@ -23,27 +23,27 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class TwoColourMageTabLimpopoExpDesignParserTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class TwoColourMageTabLimpopoExpDesignParserIT {
 
-    static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
+    private static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
 
-    TwoColourMageTabLimpopoExpDesignParser subject;
-
-    @Before
-    public void setUp() throws Exception {
-
-        subject = new TwoColourMageTabLimpopoExpDesignParser();
-        subject.setIdfUrlTemplate("http://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
-        subject.setIdfPathTemplate("/magetab/{0}/{0}.idf.txt");
-
-    }
+    @Inject
+    private TwoColourMageTabLimpopoExpDesignParser subject;
 
     @Test
     public void testExtractAssays43049() throws Exception {

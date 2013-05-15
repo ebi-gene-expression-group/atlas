@@ -22,29 +22,29 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class RnaSeqMageTabLimpopoExpDesignParserTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class RnaSeqMageTabLimpopoExpDesignParserIT {
 
-    static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
+    private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
 
-    static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
+    private static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
 
-    RnaSeqMageTabLimpopoExpDesignParser subject;
-
-    @Before
-    public void setUp() throws Exception {
-
-        subject = new RnaSeqMageTabLimpopoExpDesignParser();
-        subject.setIdfUrlTemplate("http://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
-        subject.setIdfPathTemplate("/magetab/{0}/{0}.idf.txt");
-
-    }
+    @Inject
+    private RnaSeqMageTabLimpopoExpDesignParser subject;
 
     @Test
     public void testExtractFactors513() throws Exception {

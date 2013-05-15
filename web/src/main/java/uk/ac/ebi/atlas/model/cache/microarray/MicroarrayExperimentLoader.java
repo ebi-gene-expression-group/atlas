@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.model.cache.microarray;
 
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
+import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -42,17 +42,14 @@ import java.util.SortedSet;
 @Named
 public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExperiment> {
 
-    private MageTabSpeciesParser mageTabSpeciesParser;
-
     private ConfigurationTrader configurationTrader;
 
     private String logFoldChangePathTemplate;
 
     @Inject
-    public MicroarrayExperimentLoader(MageTabSpeciesParser mageTabSpeciesParser,
-                                      ConfigurationTrader configurationTrader,
+    public MicroarrayExperimentLoader(MageTabLimpopoUtils mageTabLimpopoUtils, ConfigurationTrader configurationTrader,
                                       @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate) {
-        this.mageTabSpeciesParser = mageTabSpeciesParser;
+        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
         this.configurationTrader = configurationTrader;
         this.logFoldChangePathTemplate = logFoldChangePathTemplate;
     }
@@ -63,7 +60,7 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration = configurationTrader.getMicroarrayExperimentConfiguration(accession);
         Set<Contrast> contrasts = microarrayExperimentConfiguration.getContrasts();
 
-        Set<String> species = mageTabSpeciesParser.extractSpecies(accession);
+        Set<String> species = extractSpecies(accession);
 
         SortedSet<String> arrayDesignNames = microarrayExperimentConfiguration.getArrayDesignNames();
 

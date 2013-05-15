@@ -29,7 +29,6 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.velocity.util.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
@@ -73,18 +72,11 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
 
     private MAGETABInvestigation investigation;
 
-    private String idfUrlTemplate;
-
-    private String idfPathTemplate;
+    private MageTabLimpopoUtils mageTabLimpopoUtils;
 
     @Inject
-    public void setIdfUrlTemplate(@Value("#{configuration['experiment.magetab.idf.url.template']}") String idfUrlTemplate) {
-        this.idfUrlTemplate = idfUrlTemplate;
-    }
-
-    @Inject
-    public void setIdfPathTemplate(@Value("#{configuration['experiment.magetab.idf.path.template']}") String idfPathTemplate) {
-        this.idfPathTemplate = idfPathTemplate;
+    public void setMageTabLimpopoUtils(MageTabLimpopoUtils mageTabLimpopoUtils) {
+        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
     @Override
@@ -108,9 +100,10 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
     @Override
     public MageTabParser build() throws IOException, ParseException {
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
+        checkState(mageTabLimpopoUtils != null, "MageTabLimpopoUtils not injected !");
         checkState(CollectionUtils.isNotEmpty(requiredFactorTypes), "Please invoke withRequiredFactorTypes method to initialize the builder !");
 
-        investigation = MageTabLimpopoUtils.parseInvestigation(experimentAccession, idfPathTemplate, idfUrlTemplate);
+        investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
 
         scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
@@ -162,7 +155,7 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
             return species;
         }
 
-        return MageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
+        return mageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
 
     }
 

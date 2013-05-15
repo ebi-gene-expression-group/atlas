@@ -28,7 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.magetab.MageTabSpeciesParser;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
+import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
@@ -42,9 +43,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayExperimentLoaderTest {
 
-    public static final String ACCESSION = "accession";
-    public static final String ARRAYDESIGNS = "arraydesigns";
-    public static final String SPECIES = "species";
+    private static final String ACCESSION = "accession";
+    private static final String ARRAYDESIGNS = "arraydesigns";
+    private static final String SPECIES = "species";
 
     @Mock
     private ConfigurationTrader configurationTraderMock;
@@ -56,17 +57,21 @@ public class MicroarrayExperimentLoaderTest {
     private Contrast contrastMock;
 
     @Mock
-    private MageTabSpeciesParser speciesParserMock;
+    private MageTabLimpopoUtils mageTabLimpopoUtilsMock;
+
+    @Mock
+    private MAGETABInvestigation investigationMock;
 
     private MicroarrayExperimentLoader subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentLoader(speciesParserMock, configurationTraderMock, "{0}{1}");
+        subject = new MicroarrayExperimentLoader(mageTabLimpopoUtilsMock, configurationTraderMock, "{0}{1}");
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
-        when(speciesParserMock.extractSpecies(ACCESSION)).thenReturn(Sets.newHashSet(SPECIES));
+        when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
+        when(mageTabLimpopoUtilsMock.extractSpeciesFromSDRF(investigationMock)).thenReturn(Sets.newHashSet(SPECIES));
     }
 
     @Test
