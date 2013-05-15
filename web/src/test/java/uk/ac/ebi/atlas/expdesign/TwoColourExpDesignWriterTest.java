@@ -92,12 +92,12 @@ public class TwoColourExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForAssay(Pair.of(ASSAY, 1), AGE)).thenReturn("60");
         when(mageTabLimpopoExpDesignParserMock.extractAssays()).thenReturn(Lists.newArrayList(Pair.of(ASSAY, 1)));
 
-        subject = new TwoColourExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
+        subject = new TwoColourExpDesignWriter(mageTabLimpopoExpDesignParserMock);
     }
 
     @Test
     public void testForExperimentAccession() throws Exception {
-        subject.forExperimentAccession(ACCESSION);
+        subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
         verify(mageTabLimpopoExpDesignParserMock).build();

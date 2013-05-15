@@ -91,12 +91,12 @@ public class MicroArrayExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
         when(mageTabLimpopoExpDesignParserMock.extractAssays()).thenReturn(Sets.newHashSet(ASSAY));
 
-        subject = new MicroArrayExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
+        subject = new MicroArrayExpDesignWriter(mageTabLimpopoExpDesignParserMock);
     }
 
     @Test
     public void testForExperimentAccession() throws Exception {
-        subject.forExperimentAccession(ACCESSION);
+        subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
         verify(mageTabLimpopoExpDesignParserMock).build();

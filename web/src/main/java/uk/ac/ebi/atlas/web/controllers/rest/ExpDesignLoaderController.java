@@ -46,22 +46,22 @@ public class ExpDesignLoaderController {
 
     private ApplicationProperties applicationProperties;
 
-    private RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser;
+    private RnaSeqExpDesignWriter rnaSeqExpDesignWriter;
 
-    private MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser;
+    private MicroArrayExpDesignWriter microArrayExpDesignWriter;
 
-    private TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser;
+    private TwoColourExpDesignWriter twoColourExpDesignWriter;
 
     @Inject
     public ExpDesignLoaderController(ApplicationProperties applicationProperties,
-                                     RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParser,
-                                     MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParser,
-                                     TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParser,
+                                     RnaSeqExpDesignWriter rnaSeqExpDesignWriter,
+                                     MicroArrayExpDesignWriter microArrayExpDesignWriter,
+                                     TwoColourExpDesignWriter twoColourExpDesignWriter,
                                      ExpDesignTsvWriter expDesignTsvWriter) {
         this.applicationProperties = applicationProperties;
-        this.rnaSeqMageTabLimpopoParser = rnaSeqMageTabLimpopoParser;
-        this.microArrayMageTabLimpopoExpDesignParser = microArrayMageTabLimpopoExpDesignParser;
-        this.twoColourMageTabLimpopoExpDesignParser = twoColourMageTabLimpopoExpDesignParser;
+        this.rnaSeqExpDesignWriter = rnaSeqExpDesignWriter;
+        this.microArrayExpDesignWriter = microArrayExpDesignWriter;
+        this.twoColourExpDesignWriter = twoColourExpDesignWriter;
         this.expDesignTsvWriter = expDesignTsvWriter;
     }
 
@@ -69,29 +69,22 @@ public class ExpDesignLoaderController {
     @ResponseBody
     public String loadExpDesign(@PathVariable String experimentAccession) {
 
-        CSVWriter csvWriter = null;
-        try {
-            csvWriter = expDesignTsvWriter.forExperimentAccession(experimentAccession);
-        } catch (IOException e) {
-            LOGGER.error("<loadExpDesign> could not open file: " + expDesignTsvWriter.getFileAbsolutePath());
-            return e.getMessage();
-        }
-
         ExpDesignWriter expDesignWriter = null;
 
         if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)
                 || applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = new RnaSeqExpDesignWriter(rnaSeqMageTabLimpopoParser, csvWriter);
+            expDesignWriter = rnaSeqExpDesignWriter;
         } else if (applicationProperties.getTwoColourExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = new TwoColourExpDesignWriter(twoColourMageTabLimpopoExpDesignParser, csvWriter);
+            expDesignWriter = twoColourExpDesignWriter;
         } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = new MicroArrayExpDesignWriter(microArrayMageTabLimpopoExpDesignParser, csvWriter);
+            expDesignWriter = microArrayExpDesignWriter;
         } else {
             return "Not a known experiment accession: " + experimentAccession;
         }
 
         try {
-            expDesignWriter.forExperimentAccession(experimentAccession);
+            CSVWriter csvWriter = expDesignTsvWriter.forExperimentAccession(experimentAccession);
+            expDesignWriter.forExperimentAccession(experimentAccession, csvWriter);
             csvWriter.flush();
             csvWriter.close();
             LOGGER.info("<loadExpDesign> written ExpDesign file: " + expDesignTsvWriter.getFileAbsolutePath());

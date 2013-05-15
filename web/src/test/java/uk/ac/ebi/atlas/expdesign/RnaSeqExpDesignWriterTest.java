@@ -89,12 +89,12 @@ public class RnaSeqExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
         when(mageTabLimpopoExpDesignParserMock.extractRunAccessions()).thenReturn(Sets.newHashSet(RUN));
 
-        subject = new RnaSeqExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
+        subject = new RnaSeqExpDesignWriter(mageTabLimpopoExpDesignParserMock);
     }
 
     @Test
     public void testForExperimentAccession() throws Exception {
-        subject.forExperimentAccession(ACCESSION);
+        subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
         verify(mageTabLimpopoExpDesignParserMock).build();

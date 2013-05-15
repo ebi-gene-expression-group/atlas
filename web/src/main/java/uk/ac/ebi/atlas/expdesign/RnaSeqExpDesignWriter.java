@@ -24,26 +24,29 @@ package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Named
+@Scope("prototype")
 public class RnaSeqExpDesignWriter implements ExpDesignWriter {
 
     private RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
 
-    private CSVWriter csvWriter;
-
-    public RnaSeqExpDesignWriter(RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
+    @Inject
+    public RnaSeqExpDesignWriter(RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
-        this.csvWriter = csvWriter;
     }
 
-    public void forExperimentAccession(String experimentAccession) throws IOException, ParseException {
+    public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException {
         mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).build();
 
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
