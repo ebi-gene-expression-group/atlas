@@ -71,17 +71,17 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
         String array = mageTabLimpopoExpDesignParser.findArrayForScanNode(scanNode);
         result.add(array);
         for (String characteristic : characteristics) {
-            String[] characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
-            if (characteristicValueForScanNode != null) {
-                result.add(characteristicValueForScanNode[0]);
+            List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
+            if (!characteristicValueForScanNode.isEmpty()) {
+                result.add(characteristicValueForScanNode.get(0));
             } else {
                 result.add("");
             }
         }
         for (String factor : factors) {
-            String[] factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
-            if (factorValueForScanNode != null) {
-                result.add(factorValueForScanNode[0]);
+            List<String> factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
+            if (!factorValueForScanNode.isEmpty()) {
+                result.add(factorValueForScanNode.get(0));
             } else {
                 result.add("");
             }

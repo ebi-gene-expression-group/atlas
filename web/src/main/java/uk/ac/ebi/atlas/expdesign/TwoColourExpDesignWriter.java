@@ -72,16 +72,16 @@ public class TwoColourExpDesignWriter implements ExpDesignWriter {
         String array = mageTabLimpopoExpDesignParser.findArrayForHybridizationNode(hybridizationNode);
         result.add(array);
         for (String characteristic : characteristics) {
-            String[] characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForAssay(assay, characteristic);
-            if (characteristicValueForScanNode != null) {
-                result.add(characteristicValueForScanNode[0]);
+            List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForAssay(assay, characteristic);
+            if (!characteristicValueForScanNode.isEmpty()) {
+                result.add(characteristicValueForScanNode.get(0));
             } else {
                 result.add("");
             }
         }
         for (String factor : factors) {
             String factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForAssay(assay, factor);
-            if (factorValueForScanNode != null) {
+            if (!factorValueForScanNode.isEmpty()) {
                 result.add(factorValueForScanNode);
             } else {
                 result.add("");

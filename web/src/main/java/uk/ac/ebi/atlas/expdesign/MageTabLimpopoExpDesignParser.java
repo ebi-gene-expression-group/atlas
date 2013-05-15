@@ -34,8 +34,7 @@ import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -91,7 +90,7 @@ public class MageTabLimpopoExpDesignParser {
         return characteristics;
     }
 
-    public String[] findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
+    public List<String> findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
 
         Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class);
         if (upstreamNodes.size() != 1) {
@@ -101,11 +100,11 @@ public class MageTabLimpopoExpDesignParser {
         SourceNode sourceNode = upstreamNodes.iterator().next();
         for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
             if (characteristicsAttribute.type.equals(characteristic)) {
-                return characteristicsAttribute.values();
+                return Arrays.asList(characteristicsAttribute.values());
             }
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
 }

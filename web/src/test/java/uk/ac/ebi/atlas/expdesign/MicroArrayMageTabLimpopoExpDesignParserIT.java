@@ -76,10 +76,10 @@ public class MicroArrayMageTabLimpopoExpDesignParserIT {
 
         // C1	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster
         ScanNode scanNode = subject.getScanNodeForAssay("C1");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "GENOTYPE"), hasItemInArray("cycC mutant"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "GENOTYPE"), hasItem("cycC mutant"));
 
         // WT3	A-AFFY-35	3rd instar larva	wild type	Drosophila melanogaster	Oregon R
         scanNode = subject.getScanNodeForAssay("WT3");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "GENOTYPE"), hasItemInArray("wild_type"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "GENOTYPE"), hasItem("wild_type"));
     }
 }

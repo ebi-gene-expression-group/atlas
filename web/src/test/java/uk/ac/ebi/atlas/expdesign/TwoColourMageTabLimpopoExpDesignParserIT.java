@@ -98,12 +98,12 @@ public class TwoColourMageTabLimpopoExpDesignParserIT {
     public void testFindCharacteristicValueForAssay43049() throws Exception {
         subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
         // GSM1055612.Cy5	A-AGIL-28	Homo sapiens	Caco-2	Apical anaerobic	Apical anaerobic
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "culture condition"), hasItemInArray("Apical anaerobic"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "cell line"), hasItemInArray("Caco-2"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "Organism"), hasItemInArray("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "culture condition"), hasItem("Apical anaerobic"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "cell line"), hasItem("Caco-2"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "Organism"), hasItem("Homo sapiens"));
         // GSM1055617.Cy3	A-AGIL-28	Homo sapiens	Caco-2	Conventional	Conventional
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "culture condition"), hasItemInArray("Conventional"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "cell line"), hasItemInArray("Caco-2"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "Organism"), hasItemInArray("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "culture condition"), hasItem("Conventional"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "cell line"), hasItem("Caco-2"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "Organism"), hasItem("Homo sapiens"));
     }
 }
