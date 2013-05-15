@@ -32,8 +32,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.web.BioentityPageProperties;
 
-import java.util.Map;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -63,14 +63,16 @@ public class GenePageControllerTest {
     @Mock
     Model modelMock;
 
-    Properties geneCardProperties = new Properties();
+    Properties properties = new Properties();
 
     Multimap<String, String> genePageProperties = HashMultimap.create();
 
     @Before
     public void setUp() throws Exception {
-        geneCardProperties.setProperty("property.synonym", SYNONYMS);
-        geneCardProperties.setProperty("property.goterm", GENE_ONTOLOGY);
+        properties.setProperty("property.synonym", SYNONYMS);
+        properties.setProperty("property.goterm", GENE_ONTOLOGY);
+
+        BioentityPageProperties bioentityPageProperties = new BioentityPageProperties(properties);
 
         genePageProperties.put(SYMBOL, SYMBOL);
         genePageProperties.put(DESCRIPTION, DESCRIPTION);
@@ -82,31 +84,29 @@ public class GenePageControllerTest {
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
-        subject = new GenePageController(solrClientMock, geneCardProperties, PROPERTY_TYPES);
+        subject = new GenePageController(solrClientMock, bioentityPageProperties, PROPERTY_TYPES);
     }
 
     @Test
     public void testShowGenePage() throws Exception {
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("gene"));
         verify(modelMock).addAttribute("species", SPECIES);
-        verify(modelMock).addAttribute("property_types", subject.filterPropertyTypes());
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_DESCRIPTION, DESCRIPTION);
-        verify(modelMock).addAttribute("names", subject.extractPropertiesFromConfiguration("property"));
     }
 
     @Test
     public void testFilterPropertyTypes() {
-        assertThat(subject.filterPropertyTypes(), hasItems(SYNONYM, ORTHOLOG, GOTERM, "interproterm", "ensfamily_description", "ensgene", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "designelement_accession"));
-        assertThat(subject.filterPropertyTypes(), not(hasItems(SYMBOL, DESCRIPTION)));
+        assertThat(subject.getFilteredPropertyTypes(), hasItems(SYNONYM, ORTHOLOG, GOTERM, "interproterm", "ensfamily_description", "ensgene", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "designelement_accession"));
+        assertThat(subject.getFilteredPropertyTypes(), not(hasItems(SYMBOL, DESCRIPTION)));
     }
 
     @Test
     public void testExtractPropertiesFromConfiguration() {
-        Map<String, String> nameMapping = subject.extractPropertiesFromConfiguration("property");
-        assertThat(nameMapping.size(), is(2));
-        assertThat(nameMapping.get(SYNONYM), is(SYNONYMS));
-        assertThat(nameMapping.get(GOTERM), is(GENE_ONTOLOGY));
+//        Map<String, String> nameMapping = subject.extractPropertiesFromConfiguration("property");
+//        assertThat(nameMapping.size(), is(2));
+//        assertThat(nameMapping.get(SYNONYM), is(SYNONYMS));
+//        assertThat(nameMapping.get(GOTERM), is(GENE_ONTOLOGY));
     }
 
     @Test

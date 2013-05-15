@@ -33,7 +33,7 @@
 
     <div class="geneCard">
         <table id="geneCardTable">
-            <c:forEach var="propertyType" items="${property_types}">
+            <c:forEach var="propertyType" items="${names.keySet()}">
                 <c:if test="${properties.get(propertyType).size() > 0}">
                     <tr>
                         <td class="geneCardPropertyType">${names.get(propertyType)}</td>

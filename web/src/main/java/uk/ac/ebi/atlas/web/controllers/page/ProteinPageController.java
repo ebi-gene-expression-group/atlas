@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Multimap;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -29,10 +31,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.utils.UniProtClient;
+import uk.ac.ebi.atlas.web.BioentityPageProperties;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.Properties;
+import java.util.Collection;
 
 @Controller
 @Scope("request")
@@ -42,12 +45,15 @@ public class ProteinPageController extends BioentityPageController {
 
     private String proteinPagePropertyTypes;
 
+    private UniProtClient uniProtClient;
+
     @Inject
     ProteinPageController(SolrClient solrClient,
-                          @Named("genecard") Properties geneCardProperties,
-                          @Value("#{configuration['index.types.proteinpage']}") String proteinPagePropertyTypes) {
+                          BioentityPageProperties geneCardProperties,
+                          @Value("#{configuration['index.types.proteinpage']}") String proteinPagePropertyTypes, UniProtClient uniProtClient) {
         super(solrClient, geneCardProperties);
         this.proteinPagePropertyTypes = proteinPagePropertyTypes;
+        this.uniProtClient = uniProtClient;
     }
 
     @RequestMapping(value = "/proteins/{identifier}")
@@ -65,4 +71,14 @@ public class ProteinPageController extends BioentityPageController {
         return PROPERTY_TYPE_SYMBOL;
     }
 
+    @Override
+    protected void addExtraProperties(Multimap<String, String> properties) {
+        Collection<String> uniprotIds = properties.get("uniprot");
+        if (CollectionUtils.isNotEmpty(uniprotIds)) {
+            for (String uniprotId : uniprotIds) {
+                Collection<String> reactomeIds = uniProtClient.fetchReactomeIds(uniprotId);
+                properties.putAll("reactome", reactomeIds);
+            }
+        }
+    }
 }

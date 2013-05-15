@@ -30,43 +30,42 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.web.BioentityPageProperties;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 public abstract class BioentityPageController {
-
-    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
     private SolrClient solrClient;
 
-    private Properties geneCardProperties;
+    private BioentityPageProperties geneCardProperties;
 
-
-    BioentityPageController(SolrClient solrClient, Properties geneCardProperties) {
+    BioentityPageController(SolrClient solrClient, BioentityPageProperties geneCardProperties) {
         this.solrClient = solrClient;
         this.geneCardProperties = geneCardProperties;
     }
 
     public String showGenePage(String identifier, Model model) {
 
-        model.addAttribute("property_types", filterPropertyTypes());
-
         String species = solrClient.findSpeciesForGeneId(identifier);
         model.addAttribute("species", species);
 
         Multimap<String, String> properties = solrClient.fetchGenePageProperties(identifier, getAllBioentityProperties());
+
+        addExtraProperties(properties);
+
         model.addAttribute("properties", transformPropertiesMapWithLinks(properties, species));
 
         // there should be only one element of this kind
-        model.addAttribute(PROPERTY_TYPE_SYMBOL, properties.get(getSymbolType()).iterator().next());
+        model.addAttribute(getSymbolType(), properties.get(getSymbolType()).iterator().next());
 
         // cleanup gene description
         String description = properties.get(PROPERTY_TYPE_DESCRIPTION).iterator().next();
@@ -75,19 +74,19 @@ public abstract class BioentityPageController {
         }
         model.addAttribute(PROPERTY_TYPE_DESCRIPTION, description);
 
-        model.addAttribute("names", extractPropertiesFromConfiguration("property"));
+        model.addAttribute("names", generateTypeToNameMap());
 
         return "gene";
     }
+
 
     Multimap<String, Pair<String, String>> transformPropertiesMapWithLinks(final Multimap<String, String> properties, String species) {
 
         final String linkSpecies = species.replaceAll(" ", "_");
 
-        final Map<String, String> linkTemplates = extractPropertiesFromConfiguration("link");
-
         Multimap<String, Pair<String, String>> results =
 
+                //ToDo: this is called from jsp
                 Multimaps.transformEntries(properties, new Maps.EntryTransformer<String, String, Pair<String, String>>() {
                     @Override
                     public Pair<String, String> transformEntry(String propertyType, String propertyValue) {
@@ -95,13 +94,13 @@ public abstract class BioentityPageController {
                         if (propertyType.equals("ortholog")) {
                             value = transformOrthologToSymbol(value);
                         }
-                        if (linkTemplates.containsKey(propertyType)) {
-                            String link = "";
+                        String link = geneCardProperties.getLink(propertyType);
+                        if (link != null) {
                             try {
-                                link = MessageFormat.format(linkTemplates.get(propertyType),
+                                link = MessageFormat.format(link,
                                         URLEncoder.encode(propertyValue, "ISO-8859-1"), linkSpecies);
                             } catch (UnsupportedEncodingException e) {
-                                // ignore
+                                throw new IllegalStateException("Cannot create URL from " + linkSpecies, e);
                             }
                             return Pair.of(value, link);
                         }
@@ -125,12 +124,12 @@ public abstract class BioentityPageController {
         return identifier;
     }
 
-    List<String> filterPropertyTypes() {
+    List<String> getFilteredPropertyTypes() {
         String[] split = getAllBioentityProperties();
         List<String> allPropertyTypes = Arrays.asList(split);
         List<String> filteredPropertyTypes = Lists.newArrayList();
         for (String property_type : allPropertyTypes) {
-            if (!property_type.equals(PROPERTY_TYPE_SYMBOL) && !property_type.equals(PROPERTY_TYPE_DESCRIPTION)) {
+            if (!property_type.equals(getSymbolType()) && !property_type.equals(PROPERTY_TYPE_DESCRIPTION)) {
                 filteredPropertyTypes.add(property_type);
             }
         }
@@ -139,18 +138,20 @@ public abstract class BioentityPageController {
 
     private String[] getAllBioentityProperties() {return getPagePropertyTypes().split(",");}
 
-    Map<String, String> extractPropertiesFromConfiguration(String prefix) {
-        Map<String, String> results = Maps.newHashMap();
-        for (String key : geneCardProperties.stringPropertyNames()) {
-            if (key.startsWith(prefix)) {
-                String propertyType = key.substring(prefix.length() + 1);
-                results.put(propertyType, geneCardProperties.getProperty(key));
-            }
+    protected Map<String, String> generateTypeToNameMap() {
+        LinkedHashMap<String, String> result = Maps.newLinkedHashMap();
+        List<String> filteredPropertyTypes = getFilteredPropertyTypes();
+        for (String propertyType : filteredPropertyTypes) {
+            result.put(propertyType, geneCardProperties.getPropertyName(propertyType));
         }
-        return results;
+
+        return result;
     }
 
     abstract String getPagePropertyTypes();
 
     abstract String getSymbolType();
+
+    protected void addExtraProperties(Multimap<String, String> properties) {
+    }
 }

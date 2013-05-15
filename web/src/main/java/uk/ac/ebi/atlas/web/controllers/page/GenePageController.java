@@ -29,10 +29,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.web.BioentityPageProperties;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.Properties;
 
 @Controller
 @Scope("request")
@@ -44,7 +43,7 @@ public class GenePageController extends BioentityPageController {
 
     @Inject
     GenePageController(SolrClient solrClient,
-                       @Named("genecard") Properties geneCardProperties,
+                       BioentityPageProperties geneCardProperties,
                        @Value("#{configuration['index.types.genepage']}") String genePagePropertyTypes) {
         super(solrClient, geneCardProperties);
         this.genePagePropertyTypes = genePagePropertyTypes;
