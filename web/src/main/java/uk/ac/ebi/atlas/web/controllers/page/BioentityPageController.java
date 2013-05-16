@@ -50,7 +50,7 @@ public abstract class BioentityPageController {
 
     private BioentityPageProperties geneCardProperties;
 
-    private Multimap<String,String> propertiesWithValues;
+    private Multimap<String, String> propertiesWithValues;
 
     BioentityPageController(SolrClient solrClient, BioentityPageProperties geneCardProperties) {
         this.solrClient = solrClient;
@@ -106,11 +106,11 @@ public abstract class BioentityPageController {
                 Multimaps.transformEntries(propertiesWithValues, new Maps.EntryTransformer<String, String, Pair<String, String>>() {
                     @Override
                     public Pair<String, String> transformEntry(String propertyType, String propertyValue) {
-                        String value = propertyValue;
+                        String displayName = propertyValue;
                         if (propertyType.equals("ortholog")) {
-                            value = transformOrthologToSymbol(value);
+                            displayName = transformOrthologToSymbol(displayName);
                         }
-                        return createLink(propertyType, value, species);
+                        return createLink(propertyType, displayName, propertyValue, species);
                     }
                 });
 
@@ -130,7 +130,7 @@ public abstract class BioentityPageController {
         return identifier;
     }
 
-    protected Pair createLink(String propertyType, String propertyValue, String species) {
+    protected Pair createLink(String propertyType, String displayName, String propertyValue, String species) {
         final String linkSpecies = species.replaceAll(" ", "_");
 
         String link = geneCardProperties.getLink(propertyType);
@@ -143,9 +143,9 @@ public abstract class BioentityPageController {
                 link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies);
             }
 
-            return Pair.of(propertyValue, link);
+            return Pair.of(displayName, link);
         }
-        return Pair.of(propertyValue, "");
+        return Pair.of(displayName, "");
     }
 
     protected String getEncodedString(String value) {
