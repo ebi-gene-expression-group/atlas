@@ -46,7 +46,7 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
     }
 
     public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException {
-        mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).init();
+        mageTabLimpopoExpDesignParser.init(experimentAccession);
 
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
         Collections.sort(characteristics);

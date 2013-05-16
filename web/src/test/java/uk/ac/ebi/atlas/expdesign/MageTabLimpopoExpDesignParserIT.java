@@ -60,32 +60,31 @@ public class MageTabLimpopoExpDesignParserIT {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testForExperimentAccession() throws Exception {
-        subject.forExperimentAccession(null);
-        subject.init();
+    public void testForNullExperimentAccession() throws Exception {
+        subject.init(null);
     }
 
     @Test
     public void testExtractCharacteristics513() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_513).init();
+        subject.init(EXPERIMENT_ACCESSION_E_MTAB_513);
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("sex", "age", "organism part", "Organism", "ethnic group"));
     }
 
     @Test
     public void testExtractCharacteristics26284() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_26284).init();
+        subject.init(EXPERIMENT_ACCESSION_E_GEOD_26284);
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("sex", "biosource provider", "cell line", "cellular component", "organism part", "karyotype", "disease state", "cell type", "Organism"));
     }
 
     @Test
     public void testExtractCharacteristics1066() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).init();
+        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("DevelopmentalStage", "Genotype", "Organism", "StrainOrLine"));
     }
 
     @Test
     public void testExtractCharacteristics43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
+        subject.init(EXPERIMENT_ACCESSION_E_GEOD_43049);
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("Organism", "cell line", "culture condition"));
     }
 

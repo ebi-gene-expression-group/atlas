@@ -57,13 +57,8 @@ public class ExpDesignMageTabParser {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
-    public ExpDesignMageTabParser forExperimentAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
-        return this;
-    }
-
-    public void init() throws IOException, ParseException {
-        checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
+    public void init(String experimentAccession) throws IOException, ParseException {
+        checkState(experimentAccession != null, "Make sure experiment accession is not null !");
         checkState(mageTabLimpopoUtils != null, "MageTabLimpopoUtils not injected !");
 
         investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);

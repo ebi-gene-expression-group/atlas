@@ -79,7 +79,6 @@ public class TwoColourExpDesignWriterTest {
         Collections.sort(characteristicsList);
         Collections.sort(factorsList);
 
-        when(mageTabLimpopoExpDesignParserMock.forExperimentAccession(ACCESSION)).thenReturn(mageTabLimpopoExpDesignParserMock);
         when(mageTabLimpopoExpDesignParserMock.extractCharacteristics()).thenReturn(characteristics);
         when(mageTabLimpopoExpDesignParserMock.extractFactors()).thenReturn(factors);
         when(mageTabLimpopoExpDesignParserMock.getHybridizationNodeForAssay(Pair.of(ASSAY, 1))).thenReturn(scanNodeMock);
@@ -98,8 +97,7 @@ public class TwoColourExpDesignWriterTest {
     public void testForExperimentAccession() throws Exception {
         subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
-        verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
-        verify(mageTabLimpopoExpDesignParserMock).init();
+        verify(mageTabLimpopoExpDesignParserMock).init(ACCESSION);
         verify(mageTabLimpopoExpDesignParserMock).extractCharacteristics();
         verify(mageTabLimpopoExpDesignParserMock).extractFactors();
         verify(mageTabLimpopoExpDesignParserMock).extractAssays();
