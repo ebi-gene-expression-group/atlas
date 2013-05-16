@@ -39,16 +39,16 @@ import java.util.List;
 @Scope("prototype")
 public class TwoColourExpDesignWriter implements ExpDesignWriter {
 
-    private TwoColourMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
+    private TwoColourExpDesignMageTabParser mageTabLimpopoExpDesignParser;
 
     @Inject
-    public TwoColourExpDesignWriter(TwoColourMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser) {
+    public TwoColourExpDesignWriter(TwoColourExpDesignMageTabParser mageTabLimpopoExpDesignParser) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
     }
 
     @Override
     public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException {
-        mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).build();
+        mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).init();
 
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
         Collections.sort(characteristics);

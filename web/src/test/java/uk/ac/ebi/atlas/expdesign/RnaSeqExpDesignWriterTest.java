@@ -56,7 +56,7 @@ public class RnaSeqExpDesignWriterTest {
     RnaSeqExpDesignWriter subject;
 
     @Mock
-    RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParserMock;
+    RnaSeqExpDesignMageTabParser mageTabLimpopoExpDesignParserMock;
 
     @Mock
     ScanNode scanNodeMock;
@@ -78,7 +78,6 @@ public class RnaSeqExpDesignWriterTest {
         Collections.sort(factorsList);
 
         when(mageTabLimpopoExpDesignParserMock.forExperimentAccession(ACCESSION)).thenReturn(mageTabLimpopoExpDesignParserMock);
-        when(mageTabLimpopoExpDesignParserMock.build()).thenReturn(mageTabLimpopoExpDesignParserMock);
         when(mageTabLimpopoExpDesignParserMock.extractCharacteristics()).thenReturn(characteristics);
         when(mageTabLimpopoExpDesignParserMock.extractFactors()).thenReturn(factors);
         when(mageTabLimpopoExpDesignParserMock.getScanNodeForRunAccession(RUN)).thenReturn(scanNodeMock);
@@ -97,7 +96,7 @@ public class RnaSeqExpDesignWriterTest {
         subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
-        verify(mageTabLimpopoExpDesignParserMock).build();
+        verify(mageTabLimpopoExpDesignParserMock).init();
         verify(mageTabLimpopoExpDesignParserMock).extractCharacteristics();
         verify(mageTabLimpopoExpDesignParserMock).extractFactors();
         verify(mageTabLimpopoExpDesignParserMock).extractRunAccessions();

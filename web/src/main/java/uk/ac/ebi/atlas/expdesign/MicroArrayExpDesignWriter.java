@@ -38,16 +38,16 @@ import java.util.List;
 @Scope("prototype")
 public class MicroArrayExpDesignWriter implements ExpDesignWriter {
 
-    private MicroArrayMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
+    private MicroArrayExpDesignMageTabParser mageTabLimpopoExpDesignParser;
 
     @Inject
-    public MicroArrayExpDesignWriter(MicroArrayMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser) {
+    public MicroArrayExpDesignWriter(MicroArrayExpDesignMageTabParser mageTabLimpopoExpDesignParser) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
     }
 
     @Override
     public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException {
-        mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).build();
+        mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).init();
 
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
         Collections.sort(characteristics);
@@ -71,21 +71,21 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
         result.add(array);
         for (String characteristic : characteristics) {
             List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
-            if (!characteristicValueForScanNode.isEmpty()) {
-                result.add(characteristicValueForScanNode.get(0));
-            } else {
-                result.add("");
-            }
+            addNodeValue(result, characteristicValueForScanNode);
         }
         for (String factor : factors) {
             List<String> factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
-            if (!factorValueForScanNode.isEmpty()) {
-                result.add(factorValueForScanNode.get(0));
-            } else {
-                result.add("");
-            }
+            addNodeValue(result, factorValueForScanNode);
         }
         return result.toArray(new String[result.size()]);
+    }
+
+    private void addNodeValue(List<String> result, List<String> factorValueForScanNode) {
+        if (!factorValueForScanNode.isEmpty()) {
+            result.add(factorValueForScanNode.get(0));
+        } else {
+            result.add("");
+        }
     }
 
     String[] composeHeader(List<String> characteristics, List<String> factors) {

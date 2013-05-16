@@ -34,7 +34,6 @@ import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -52,46 +51,41 @@ public class MageTabLimpopoExpDesignParserIT {
     @Inject
     private MageTabLimpopoUtils mageTabLimpopoUtils;
 
-    private MageTabLimpopoExpDesignParser subject;
+    private ExpDesignMageTabParser subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new MageTabLimpopoExpDesignParser();
+        subject = new ExpDesignMageTabParser();
         subject.setMageTabLimpopoUtils(mageTabLimpopoUtils);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testForExperimentAccession() throws Exception {
         subject.forExperimentAccession(null);
-        subject.build();
-    }
-
-    @Test
-    public void testBuild() throws Exception {
-        assertThat(subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_513).build(), is(subject));
+        subject.init();
     }
 
     @Test
     public void testExtractCharacteristics513() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_513).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_513).init();
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("sex", "age", "organism part", "Organism", "ethnic group"));
     }
 
     @Test
     public void testExtractCharacteristics26284() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_26284).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_26284).init();
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("sex", "biosource provider", "cell line", "cellular component", "organism part", "karyotype", "disease state", "cell type", "Organism"));
     }
 
     @Test
     public void testExtractCharacteristics1066() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).init();
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("DevelopmentalStage", "Genotype", "Organism", "StrainOrLine"));
     }
 
     @Test
     public void testExtractCharacteristics43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
         assertThat(subject.extractCharacteristics(), containsInAnyOrder("Organism", "cell line", "culture condition"));
     }
 

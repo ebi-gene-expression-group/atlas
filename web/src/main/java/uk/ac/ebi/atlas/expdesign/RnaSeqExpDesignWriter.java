@@ -38,15 +38,15 @@ import java.util.List;
 @Scope("prototype")
 public class RnaSeqExpDesignWriter implements ExpDesignWriter {
 
-    private RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
+    private RnaSeqExpDesignMageTabParser mageTabLimpopoExpDesignParser;
 
     @Inject
-    public RnaSeqExpDesignWriter(RnaSeqMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser) {
+    public RnaSeqExpDesignWriter(RnaSeqExpDesignMageTabParser mageTabLimpopoExpDesignParser) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
     }
 
     public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException {
-        mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).build();
+        mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).init();
 
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
         Collections.sort(characteristics);

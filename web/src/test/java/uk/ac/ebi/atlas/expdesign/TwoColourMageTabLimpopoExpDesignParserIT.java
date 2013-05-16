@@ -43,11 +43,11 @@ public class TwoColourMageTabLimpopoExpDesignParserIT {
     private static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
 
     @Inject
-    private TwoColourMageTabLimpopoExpDesignParser subject;
+    private TwoColourExpDesignMageTabParser subject;
 
     @Test
     public void testExtractAssays43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
         assertThat(subject.extractAssays(), containsInAnyOrder(
                 Pair.of("GSM1055612.Cy5", 1), Pair.of("GSM1055613.Cy3", 2),
                 Pair.of("GSM1055613.Cy5", 1), Pair.of("GSM1055617.Cy3", 2),
@@ -59,20 +59,20 @@ public class TwoColourMageTabLimpopoExpDesignParserIT {
 
     @Test
     public void testExtractFactors43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
         assertThat(subject.extractFactors(), containsInAnyOrder("CULTURE CONDITION"));
     }
 
     @Test
     public void testGetHybridizationNodeForAssay43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
         assertThat(subject.getHybridizationNodeForAssay(Pair.of("bla", 1)), is(nullValue()));
         assertThat(subject.getHybridizationNodeForAssay(Pair.of("GSM1055612.Cy5", 1)), is(not(nullValue())));
     }
 
     @Test
     public void testFindFactorValueForAssay43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
         assertThat(subject.findFactorValueForAssay(Pair.of("GSM1055612.Cy5", 1), "CULTURE CONDITION"), is("Apical anaerobic"));
         assertThat(subject.findFactorValueForAssay(Pair.of("GSM1055612.Cy3", 2), "CULTURE CONDITION"), is("Conventional"));
         assertThat(subject.findFactorValueForAssay(Pair.of("GSM1055613.Cy5", 1), "CULTURE CONDITION"), is("Conventional"));
@@ -89,14 +89,14 @@ public class TwoColourMageTabLimpopoExpDesignParserIT {
 
     @Test
     public void testFindArrayForHybridizationNode43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
         HybridizationNode hybridizationNode = subject.getHybridizationNodeForAssay(Pair.of("GSM1055612.Cy5", 1));
         assertThat(subject.findArrayForHybridizationNode(hybridizationNode), is("A-AGIL-28"));
     }
 
     @Test
     public void testFindCharacteristicValueForAssay43049() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).init();
         // GSM1055612.Cy5	A-AGIL-28	Homo sapiens	Caco-2	Apical anaerobic	Apical anaerobic
         assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "culture condition"), hasItem("Apical anaerobic"));
         assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "cell line"), hasItem("Caco-2"));

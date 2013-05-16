@@ -38,7 +38,7 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class MageTabLimpopoExpDesignParser {
+public class ExpDesignMageTabParser {
 
     protected String experimentAccession;
 
@@ -57,12 +57,12 @@ public class MageTabLimpopoExpDesignParser {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
-    public MageTabLimpopoExpDesignParser forExperimentAccession(String experimentAccession) {
+    public ExpDesignMageTabParser forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
     }
 
-    public MageTabLimpopoExpDesignParser build() throws IOException, ParseException {
+    public void init() throws IOException, ParseException {
         checkState(experimentAccession != null, "Please invoke forExperimentAccession method to initialize the builder !");
         checkState(mageTabLimpopoUtils != null, "MageTabLimpopoUtils not injected !");
 
@@ -73,8 +73,6 @@ public class MageTabLimpopoExpDesignParser {
         scanNodes = investigation.SDRF.getNodes(ScanNode.class);
 
         hybridizationNodes = investigation.SDRF.getNodes(HybridizationNode.class);
-
-        return this;
     }
 
     public Set<String> extractCharacteristics() {

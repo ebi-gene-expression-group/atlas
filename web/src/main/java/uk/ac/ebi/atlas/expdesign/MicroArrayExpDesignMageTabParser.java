@@ -35,7 +35,7 @@ import java.util.*;
 
 @Named
 @Scope("prototype")
-public class MicroArrayMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesignParser {
+public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
 
     public Set<String> extractAssays() {
 
