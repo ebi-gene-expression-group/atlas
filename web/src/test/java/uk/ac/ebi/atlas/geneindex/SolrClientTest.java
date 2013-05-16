@@ -155,14 +155,14 @@ public class SolrClientTest {
 
         when(geneQueryTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
 
-        Multimap<String, String> geneIds = subject.findGeneSets(GENE_QUERY, false, SPECIES, true);
+        GeneQueryResponse geneQueryResponse = subject.findGeneSets(GENE_QUERY, false, SPECIES, true);
 
         verify(geneQueryTokenizerMock).split("A QUERY");
 
         verify(solrQueryServiceMock).getGeneIds("A", false, SPECIES);
         verify(solrQueryServiceMock).getGeneIds("QUERY", false, SPECIES);
 
-        assertThat(geneIds.keySet(), containsInAnyOrder("A", "QUERY"));
+        assertThat(geneQueryResponse.getQueryTerms(), containsInAnyOrder("A", "QUERY"));
     }
 
 

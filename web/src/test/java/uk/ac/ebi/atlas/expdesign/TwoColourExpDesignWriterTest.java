@@ -85,19 +85,19 @@ public class TwoColourExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.extractFactors()).thenReturn(factors);
         when(mageTabLimpopoExpDesignParserMock.getHybridizationNodeForAssay(Pair.of(ASSAY, 1))).thenReturn(scanNodeMock);
         when(mageTabLimpopoExpDesignParserMock.findArrayForHybridizationNode(scanNodeMock)).thenReturn(ARRAY);
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForAssay(Pair.of(ASSAY, 1), SEX)).thenReturn(new String[]{"male"});
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForAssay(Pair.of(ASSAY, 1), AGE)).thenReturn(new String[]{"60"});
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForAssay(Pair.of(ASSAY, 1), ORGANISM)).thenReturn(new String[]{"Homo sapiens"});
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForAssay(Pair.of(ASSAY, 1), SEX)).thenReturn(Lists.newArrayList("male"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForAssay(Pair.of(ASSAY, 1), AGE)).thenReturn(Lists.newArrayList("60"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForAssay(Pair.of(ASSAY, 1), ORGANISM)).thenReturn(Lists.newArrayList("Homo sapiens"));
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForAssay(Pair.of(ASSAY, 1), RNA)).thenReturn("total RNA");
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForAssay(Pair.of(ASSAY, 1), AGE)).thenReturn("60");
         when(mageTabLimpopoExpDesignParserMock.extractAssays()).thenReturn(Lists.newArrayList(Pair.of(ASSAY, 1)));
 
-        subject = new TwoColourExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
+        subject = new TwoColourExpDesignWriter(mageTabLimpopoExpDesignParserMock);
     }
 
     @Test
     public void testForExperimentAccession() throws Exception {
-        subject.forExperimentAccession(ACCESSION);
+        subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
         verify(mageTabLimpopoExpDesignParserMock).build();

@@ -22,12 +22,13 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
 import java.io.IOException;
 
 public interface ExpDesignWriter {
 
-    public void forExperimentAccession(String experimentAccession) throws IOException, ParseException;
+    public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException;
 
 }

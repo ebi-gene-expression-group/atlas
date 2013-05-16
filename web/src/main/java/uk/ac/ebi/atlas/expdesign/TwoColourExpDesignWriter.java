@@ -25,27 +25,29 @@ package uk.ac.ebi.atlas.expdesign;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Named
+@Scope("prototype")
 public class TwoColourExpDesignWriter implements ExpDesignWriter {
 
     private TwoColourMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser;
 
-    private CSVWriter csvWriter;
-
-    public TwoColourExpDesignWriter(TwoColourMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser, CSVWriter csvWriter) {
+    @Inject
+    public TwoColourExpDesignWriter(TwoColourMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParser) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
-        this.csvWriter = csvWriter;
     }
 
     @Override
-    public void forExperimentAccession(String experimentAccession) throws IOException, ParseException {
+    public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException {
         mageTabLimpopoExpDesignParser.forExperimentAccession(experimentAccession).build();
 
         List<String> characteristics = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractCharacteristics());
@@ -54,7 +56,7 @@ public class TwoColourExpDesignWriter implements ExpDesignWriter {
         List<String> factors = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractFactors());
         Collections.sort(factors);
 
-        ArrayList<Pair<String, Integer>> assays = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractAssays());
+        List<Pair<String, Integer>> assays = Lists.newArrayList(mageTabLimpopoExpDesignParser.extractAssays());
         Collections.sort(assays);
 
         csvWriter.writeNext(composeHeader(characteristics, factors));
@@ -64,21 +66,21 @@ public class TwoColourExpDesignWriter implements ExpDesignWriter {
     }
 
     String[] composeExperimentAssay(Pair<String, Integer> assay, List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList(assay.getKey());
+        List<String> result = Lists.newArrayList(assay.getKey());
         HybridizationNode hybridizationNode = mageTabLimpopoExpDesignParser.getHybridizationNodeForAssay(assay);
         String array = mageTabLimpopoExpDesignParser.findArrayForHybridizationNode(hybridizationNode);
         result.add(array);
         for (String characteristic : characteristics) {
-            String[] characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForAssay(assay, characteristic);
-            if (characteristicValueForScanNode != null) {
-                result.add(characteristicValueForScanNode[0]);
+            List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForAssay(assay, characteristic);
+            if (!characteristicValueForScanNode.isEmpty()) {
+                result.add(characteristicValueForScanNode.get(0));
             } else {
                 result.add("");
             }
         }
         for (String factor : factors) {
             String factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForAssay(assay, factor);
-            if (factorValueForScanNode != null) {
+            if (!factorValueForScanNode.isEmpty()) {
                 result.add(factorValueForScanNode);
             } else {
                 result.add("");
@@ -88,7 +90,7 @@ public class TwoColourExpDesignWriter implements ExpDesignWriter {
     }
 
     String[] composeHeader(List<String> characteristics, List<String> factors) {
-        ArrayList<String> result = Lists.newArrayList("Assay", "Array");
+        List<String> result = Lists.newArrayList("Assay", "Array");
         for (String characteristic : characteristics) {
             result.add("Sample Characteristics[" + characteristic + "]");
         }

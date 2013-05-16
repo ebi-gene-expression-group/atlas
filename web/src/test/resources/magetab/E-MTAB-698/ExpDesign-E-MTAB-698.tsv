@@ -1,7 +1,7 @@
-Run	Sample Characteristics[Organism]	Sample Characteristics[Age]	Sample Characteristics[DevelopmentalStage]	Sample Characteristics[OrganismPart]	Sample Characteristics[StrainOrLine]	Sample Characteristics[BioSourceType]	Sample Characteristics[BioSourceProvider]	Factor Values[sex]
-ERR036348	Mus musculus	8 weeks	adult	vomeronasal organ	C57BL/6J	fresh_sample	"The Scripps Research Institute, La Jolla, California, USA"	female
-ERR036349	Mus musculus	8 weeks	adult	vomeronasal organ	C57BL/6J	fresh_sample	"The Scripps Research Institute, La Jolla, California, USA"	female
-ERR036350	Mus musculus	8 weeks	adult	vomeronasal organ	C57BL/6J	fresh_sample	"The Scripps Research Institute, La Jolla, California, USA"	male
-ERR036351	Mus musculus	8 weeks	adult	vomeronasal organ	C57BL/6J	fresh_sample	"The Scripps Research Institute, La Jolla, California, USA"	male
-ERR036352	Mus musculus	8 weeks	adult	vomeronasal organ	C57BL/6J	fresh_sample	"The Scripps Research Institute, La Jolla, California, USA"	male
-ERR036353	Mus musculus	8 weeks	adult	vomeronasal organ	C57BL/6J	fresh_sample	"The Scripps Research Institute, La Jolla, California, USA"	female
+"Run"	"Sample Characteristics[Age]"	"Sample Characteristics[BioSourceProvider]"	"Sample Characteristics[BioSourceType]"	"Sample Characteristics[DevelopmentalStage]"	"Sample Characteristics[Organism]"	"Sample Characteristics[OrganismPart]"	"Sample Characteristics[Sex]"	"Sample Characteristics[StrainOrLine]"	"Factor Values[sex]"
+"ERR036348"	"8"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"female"	"C57BL/6J"	"female"
+"ERR036349"	"8"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"female"	"C57BL/6J"	"female"
+"ERR036350"	"8"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"male"	"C57BL/6J"	"male"
+"ERR036351"	"8"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"male"	"C57BL/6J"	"male"
+"ERR036352"	"8"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"male"	"C57BL/6J"	"male"
+"ERR036353"	"8"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"female"	"C57BL/6J"	"female"

@@ -37,7 +37,10 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.utils.FilterFactorMenuBuilder;
 import uk.ac.ebi.atlas.utils.FilterFactorMenuVoice;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -64,21 +67,17 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
     private FilterFactorMenuBuilder filterFactorMenuBuilder;
 
-    private AverageBaselineProfileBuilder averageBaselineProfileBuilder;
-
     @Inject
     public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
                                        ApplicationProperties applicationProperties,
                                        BaselineRequestContextBuilder requestContextBuilder,
                                        FilterFactorsConverter filterFactorsConverter,
-                                       FilterFactorMenuBuilder filterFactorMenuBuilder,
-                                       AverageBaselineProfileBuilder averageBaselineProfileBuilder) {
+                                       FilterFactorMenuBuilder filterFactorMenuBuilder) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.rankCommand = rankCommand;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
-        this.averageBaselineProfileBuilder = averageBaselineProfileBuilder;
     }
 
     @InitBinder

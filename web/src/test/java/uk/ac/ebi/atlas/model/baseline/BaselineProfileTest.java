@@ -52,6 +52,7 @@ public class BaselineProfileTest {
     private Factor factor1 = new Factor(QUERY_FACTOR_TYPE, "nose");
     private Factor factor2 = new Factor(QUERY_FACTOR_TYPE, "trunk");
     private Factor factor3 = new Factor(QUERY_FACTOR_TYPE, "head");
+    private Factor factor4 = new Factor(QUERY_FACTOR_TYPE, "billabong");
 
     private BaselineExpression expression_1 = new BaselineExpression(2.2D, new FactorSet().add(factor1));
     private BaselineExpression expression_2 = new BaselineExpression(3D, new FactorSet().add(factor2));
@@ -95,6 +96,57 @@ public class BaselineProfileTest {
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factor1, factor3,
                 new Factor(QUERY_FACTOR_TYPE, "leg")));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
+    }
+
+    @Test
+    public void testAddAll(){
+
+        BaselineProfile sumProfile = subject.addAll(buildOtherProfile());
+        assertThat(sumProfile.getId(), is(subject.getId()));
+        assertThat(sumProfile.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1) + 1D));
+        assertThat(sumProfile.getExpressionLevel(factor2), is(subject.getExpressionLevel(factor2) + 2D));
+        assertThat(sumProfile.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3) + 3D));
+        assertThat(sumProfile.getExpressionLevel(factor4), is(300D));
+
+    }
+
+    @Test
+    public void addAllShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
+
+        BaselineProfile otherProfile = new BaselineProfile("other profile").add(QUERY_FACTOR_TYPE, expression_2);
+
+        BaselineProfile sumProfile = subject.addAll(otherProfile);
+        assertThat(sumProfile.getId(), is(subject.getId()));
+        assertThat(sumProfile.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1)));
+        assertThat(sumProfile.getExpressionLevel(factor2), is(subject.getExpressionLevel(factor2) + expression_2.getLevel()));
+        assertThat(sumProfile.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3)));
+        assertThat(sumProfile.getExpressionLevel(factor4), is(0D));
+
+    }
+
+    @Test
+    public void testFold(){
+
+        BaselineProfile sumProfile = subject.foldProfile(3);
+        assertThat(sumProfile.getId(), is(subject.getId()));
+        assertThat(sumProfile.getExpressionLevel(factor1), is(0.7D));
+        assertThat(sumProfile.getExpressionLevel(factor2), is(1.0D));
+        assertThat(sumProfile.getExpressionLevel(factor3), is(1.0D));
+        assertThat(sumProfile.getExpressionLevel(factor4), is(0D));
+
+    }
+
+    BaselineProfile buildOtherProfile(){
+
+        BaselineExpression expression_1 = new BaselineExpression(1D, new FactorSet().add(factor1));
+        BaselineExpression expression_2 = new BaselineExpression(2D, new FactorSet().add(factor2));
+        BaselineExpression expression_3 = new BaselineExpression(3D, new FactorSet().add(factor3));
+        BaselineExpression expression_4 = new BaselineExpression(300D, new FactorSet().add(factor4));
+
+        BaselineProfile baselineProfile = new BaselineProfile("OTHER_ID");
+
+        return baselineProfile.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2)
+                                .add(QUERY_FACTOR_TYPE, expression_3).add(QUERY_FACTOR_TYPE, expression_4);
     }
 
 }

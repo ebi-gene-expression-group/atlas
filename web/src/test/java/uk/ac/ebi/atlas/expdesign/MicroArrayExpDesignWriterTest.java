@@ -84,19 +84,19 @@ public class MicroArrayExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.extractFactors()).thenReturn(factors);
         when(mageTabLimpopoExpDesignParserMock.getScanNodeForAssay(ASSAY)).thenReturn(scanNodeMock);
         when(mageTabLimpopoExpDesignParserMock.findArrayForScanNode(scanNodeMock)).thenReturn(ARRAY);
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, SEX)).thenReturn(new String[]{"male"});
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, ORGANISM)).thenReturn(new String[]{"Homo sapiens"});
-        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, RNA)).thenReturn(new String[]{"total RNA"});
-        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, AGE)).thenReturn(new String[]{"60"});
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, SEX)).thenReturn(Lists.newArrayList("male"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, ORGANISM)).thenReturn(Lists.newArrayList("Homo sapiens"));
+        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, RNA)).thenReturn(Lists.newArrayList("total RNA"));
+        when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60"));
         when(mageTabLimpopoExpDesignParserMock.extractAssays()).thenReturn(Sets.newHashSet(ASSAY));
 
-        subject = new MicroArrayExpDesignWriter(mageTabLimpopoExpDesignParserMock, csvWriterMock);
+        subject = new MicroArrayExpDesignWriter(mageTabLimpopoExpDesignParserMock);
     }
 
     @Test
     public void testForExperimentAccession() throws Exception {
-        subject.forExperimentAccession(ACCESSION);
+        subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
         verify(mageTabLimpopoExpDesignParserMock).build();

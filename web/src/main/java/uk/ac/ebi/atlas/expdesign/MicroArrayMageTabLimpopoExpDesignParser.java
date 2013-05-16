@@ -31,8 +31,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.ArrayDesign
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 @Named
 @Scope("prototype")
@@ -79,7 +78,7 @@ public class MicroArrayMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDe
         return null;
     }
 
-    public String[] findFactorValueForScanNode(ScanNode scanNode, String factor) {
+    public List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
 
         Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
         if (hybridizationNodes.size() != 1) {
@@ -93,11 +92,11 @@ public class MicroArrayMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDe
 
         for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
             if (factorValueAttribute.type.equals(factor)) {
-                return factorValueAttribute.values();
+                return Arrays.asList(factorValueAttribute.values());
             }
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
     public String findArrayForScanNode(ScanNode scanNode) {

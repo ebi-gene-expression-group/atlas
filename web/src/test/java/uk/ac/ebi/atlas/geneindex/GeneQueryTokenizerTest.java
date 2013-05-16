@@ -43,15 +43,15 @@ public class GeneQueryTokenizerTest {
         assertThat(subject.split("").size(), is(0));
         assertThat(subject.split("test1 test2"), contains("test1", "test2"));
         assertThat(subject.split("test1 test2\ntest3"), contains("test1", "test2", "test3"));
-        assertThat(subject.split("\"test1 test2\""), contains("test1 test2"));
-        assertThat(subject.split("\"test1\" \"test2\""), contains("test1", "test2"));
-        assertThat(subject.split("\"mt-at\""), contains("mt-at"));
+        assertThat(subject.split("\"test1 test2\""), contains("\"test1 test2\""));
+        assertThat(subject.split("\"test1\" \"test2\""), contains("\"test1\"", "\"test2\""));
+        assertThat(subject.split("\"mt-at\""), contains("\"mt-at\""));
         assertThat(subject.split("mt-at6"), contains("mt-at6"));
         assertThat(subject.split("protein_c"), contains("protein_c"));
         assertThat(subject.split("GO:0016"), contains("GO:0016"));
         assertThat(subject.split("hs2affx.1.41.s1_3p_s_at"), contains("hs2affx.1.41.s1_3p_s_at"));
         assertThat(subject.split("mitochondrial enco"), contains("mitochondrial", "enco"));
-        assertThat(subject.split("GO:0008134 \"p53 binding\""), contains("GO:0008134", "p53 binding"));
-        assertThat(subject.split("ENSG00000131759 \"mRNA splicing, via spliceosome\""), contains("ENSG00000131759", "mRNA splicing, via spliceosome"));
+        assertThat(subject.split("GO:0008134 \"p53 binding\""), contains("GO:0008134", "\"p53 binding\""));
+        assertThat(subject.split("ENSG00000131759 \"mRNA splicing, via spliceosome\""), contains("ENSG00000131759", "\"mRNA splicing, via spliceosome\""));
     }
 }

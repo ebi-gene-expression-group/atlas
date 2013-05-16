@@ -1,49 +1,49 @@
-Run	Sample Characteristics[organism]	Sample Characteristics[age]	Sample Characteristics[sex]	Sample Characteristics[biosource provider]	Factor Values[organism part]
-ERR030872	Homo sapiens	60	female	Human thyroid total RNA, lot 0908003	thyroid
-ERR030873	Homo sapiens	19	male	Human testes total RNA, lot 05060392	testes
-ERR030874	Homo sapiens	47	female	Human ovary total RNA, lot 0812002	ovary
-ERR030875	Homo sapiens	58	male	Human White Blood Cells total RNA	white blood cells
-ERR030876	Homo sapiens	77	male	Human skeletal muscle total RNA, lot 046P021205086A	skeletal muscle
-ERR030877	Homo sapiens	73	male	Human prostate total RNA, lot 0906002	prostate
-ERR030878	Homo sapiens	86	female	Human lymph node total RNA, lot 026P010305032B	lymph node
-ERR030879	Homo sapiens	65	male	Human lung total RNA, lot 0904002	lung
-ERR030888	Homo sapiens	73	female	Human adipose total RNA, lot 05060581	adipose
-ERR030889	Homo sapiens	60	male	Human adrenal total RNA, lot 0812003	adrenal
-ERR030890	Homo sapiens	77	female	Human brain total RNA, Ambion	brain
-ERR030891	Homo sapiens	29	female	Human breast total RNA, lot 04060013	breast
-ERR030892	Homo sapiens	68	female	Human colon total RNA, lot 05060063	colon
-ERR030893	Homo sapiens	60	female	Human kidney total RNA, lot 0908002	kidney
-ERR030894	Homo sapiens	77	male	Human heart total RNA, lot 07040023	heart
-ERR030895	Homo sapiens	37	male	Human liver total RNA, lot 040000124	liver
-ERR030856	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030857	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030858	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030859	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030860	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030861	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030862	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030863	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030880	Homo sapiens	73	female	Human adipose total RNA, lot 05060581	adipose
-ERR030881	Homo sapiens	60	male	Human adrenal total RNA, lot 0812003	adrenal
-ERR030882	Homo sapiens	77	female	Human brain total RNA, Ambion	brain
-ERR030883	Homo sapiens	29	female	Human breast total RNA, lot 04060013	breast
-ERR030884	Homo sapiens	68	female	Human colon total RNA, lot 05060063	colon
-ERR030885	Homo sapiens	60	female	Human kidney total RNA, lot 0908002	kidney
-ERR030886	Homo sapiens	77	male	Human heart total RNA, lot 07040023	heart
-ERR030887	Homo sapiens	37	male	Human liver total RNA, lot 040000124	liver
-ERR030896	Homo sapiens	65	male	Human lung total RNA, lot 0904002	lung
-ERR030897	Homo sapiens	86	female	Human lymph node total RNA, lot 026P010305032B	lymph node
-ERR030898	Homo sapiens	73	male	Human prostate total RNA, lot 0906002	prostate
-ERR030899	Homo sapiens	77	male	Human skeletal muscle total RNA, lot 046P021205086A	skeletal muscle
-ERR030900	Homo sapiens	58	male	Human White Blood Cells total RNA	white blood cells
-ERR030901	Homo sapiens	47	female	Human ovary total RNA, lot 0812002	ovary
-ERR030902	Homo sapiens	19	male	Human testes total RNA, lot 05060392	testes
-ERR030903	Homo sapiens	60	female	Human thyroid total RNA, lot 0908003	thyroid
-ERR030864	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030865	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030866	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030867	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030868	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030869	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030870	Homo sapiens	  	  	  	16 Tissues mixture 
-ERR030871	Homo sapiens	  	  	  	16 Tissues mixture 
+"Run"	"Sample Characteristics[Organism]"	"Sample Characteristics[age]"	"Sample Characteristics[ethnic group]"	"Sample Characteristics[organism part]"	"Sample Characteristics[sex]"	"Factor Values[organism part]"
+"ERR030856"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030857"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030858"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030859"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030860"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030861"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030862"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030863"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030864"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030865"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030866"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030867"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030868"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030869"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030870"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030871"	"Homo sapiens"	""	""	"16 tissues mixture"	""	"16 tissues mixture"
+"ERR030872"	"Homo sapiens"	"60"	"Caucasian"	"thyroid"	"female"	"thyroid"
+"ERR030873"	"Homo sapiens"	"19"	"Caucasian"	"testis"	"male"	"testis"
+"ERR030874"	"Homo sapiens"	"47"	"African American"	"ovary"	"female"	"ovary"
+"ERR030875"	"Homo sapiens"	"58"	"Caucasian"	"leukocyte"	"male"	"leukocyte"
+"ERR030876"	"Homo sapiens"	"77"	"Caucasian"	"skeletal muscle"	"male"	"skeletal muscle"
+"ERR030877"	"Homo sapiens"	"73"	"Caucasian"	"prostate"	"male"	"prostate"
+"ERR030878"	"Homo sapiens"	"86"	"Caucasian"	"lymph node"	"female"	"lymph node"
+"ERR030879"	"Homo sapiens"	"65"	"Caucasian"	"lung"	"male"	"lung"
+"ERR030880"	"Homo sapiens"	"73"	"Caucasian"	"adipose"	"female"	"adipose"
+"ERR030881"	"Homo sapiens"	"60"	"Caucasian"	"adrenal"	"male"	"adrenal"
+"ERR030882"	"Homo sapiens"	"77"	"Caucasian"	"brain"	"female"	"brain"
+"ERR030883"	"Homo sapiens"	"29"	"Caucasian"	"breast"	"female"	"breast"
+"ERR030884"	"Homo sapiens"	"68"	"Caucasian"	"colon"	"female"	"colon"
+"ERR030885"	"Homo sapiens"	"60"	"Caucasian"	"kidney"	"female"	"kidney"
+"ERR030886"	"Homo sapiens"	"77"	"Caucasian"	"heart"	"male"	"heart"
+"ERR030887"	"Homo sapiens"	"37"	"Caucasian"	"liver"	"male"	"liver"
+"ERR030888"	"Homo sapiens"	"73"	"Caucasian"	"adipose"	"female"	"adipose"
+"ERR030889"	"Homo sapiens"	"60"	"Caucasian"	"adrenal"	"male"	"adrenal"
+"ERR030890"	"Homo sapiens"	"77"	"Caucasian"	"brain"	"female"	"brain"
+"ERR030891"	"Homo sapiens"	"29"	"Caucasian"	"breast"	"female"	"breast"
+"ERR030892"	"Homo sapiens"	"68"	"Caucasian"	"colon"	"female"	"colon"
+"ERR030893"	"Homo sapiens"	"60"	"Caucasian"	"kidney"	"female"	"kidney"
+"ERR030894"	"Homo sapiens"	"77"	"Caucasian"	"heart"	"male"	"heart"
+"ERR030895"	"Homo sapiens"	"37"	"Caucasian"	"liver"	"male"	"liver"
+"ERR030896"	"Homo sapiens"	"65"	"Caucasian"	"lung"	"male"	"lung"
+"ERR030897"	"Homo sapiens"	"86"	"Caucasian"	"lymph node"	"female"	"lymph node"
+"ERR030898"	"Homo sapiens"	"73"	"Caucasian"	"prostate"	"male"	"prostate"
+"ERR030899"	"Homo sapiens"	"77"	"Caucasian"	"skeletal muscle"	"male"	"skeletal muscle"
+"ERR030900"	"Homo sapiens"	"58"	"Caucasian"	"leukocyte"	"male"	"leukocyte"
+"ERR030901"	"Homo sapiens"	"47"	"African American"	"ovary"	"female"	"ovary"
+"ERR030902"	"Homo sapiens"	"19"	"Caucasian"	"testis"	"male"	"testis"
+"ERR030903"	"Homo sapiens"	"60"	"Caucasian"	"thyroid"	"female"	"thyroid"

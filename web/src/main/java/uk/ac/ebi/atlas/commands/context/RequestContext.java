@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Multimap;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Set;
@@ -35,14 +35,14 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
     private SortedSet<T> allQueryFactors;
-    private Multimap<String, String> geneSets;
+    private GeneQueryResponse geneQueryResponse;
 
-    public Multimap<String, String> getGeneSets() {
-        return geneSets;
+    public GeneQueryResponse getGeneQueryResponse() {
+        return geneQueryResponse;
     }
 
-    public void setGeneSets(Multimap<String, String> geneSets) {
-        this.geneSets = geneSets;
+    public void setGeneQueryResponse(GeneQueryResponse geneQueryResponse) {
+        this.geneQueryResponse = geneQueryResponse;
     }
 
     public String getGeneQuery() {
@@ -100,9 +100,10 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this.getClass())
+        return Objects.toStringHelper(getClass())
                 .add("requestPreferences", requestPreferences)
                 .add("filteredBySpecies", filteredBySpecies)
+                .add("geneQueryResponse", geneQueryResponse)
                 .toString();
     }
 

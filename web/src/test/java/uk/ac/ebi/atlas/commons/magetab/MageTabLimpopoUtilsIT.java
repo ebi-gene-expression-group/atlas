@@ -25,20 +25,29 @@ package uk.ac.ebi.atlas.commons.magetab;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
 
+import javax.inject.Inject;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class MageTabLimpopoUtilsTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class MageTabLimpopoUtilsIT {
 
     private static final String HOMO_SAPIENS = "Homo sapiens";
 
     private MAGETABInvestigation investigation;
+
+    @Inject
+    private MageTabLimpopoUtils subject;
 
     @Before
     public void setUp() throws Exception {
@@ -57,13 +66,13 @@ public class MageTabLimpopoUtilsTest {
 
     @Test
     public void testExtractSpeciesFromSDRF() throws Exception {
-        assertThat(MageTabLimpopoUtils.extractSpeciesFromSDRF(investigation), contains(HOMO_SAPIENS));
+        assertThat(subject.extractSpeciesFromSDRF(investigation), contains(HOMO_SAPIENS));
     }
 
     @Test
     public void testParseInvestigation() throws Exception {
-        MAGETABInvestigation magetabInvestigation = MageTabLimpopoUtils.parseInvestigation("E-MTAB-513", "/magetab/{0}/{0}.idf.txt", "http://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
+        MAGETABInvestigation magetabInvestigation = subject.parseInvestigation("E-MTAB-513");
         assertThat(magetabInvestigation, is(not(nullValue())));
-        assertThat(MageTabLimpopoUtils.extractSpeciesFromSDRF(magetabInvestigation), contains(HOMO_SAPIENS));
+        assertThat(subject.extractSpeciesFromSDRF(magetabInvestigation), contains(HOMO_SAPIENS));
     }
 }

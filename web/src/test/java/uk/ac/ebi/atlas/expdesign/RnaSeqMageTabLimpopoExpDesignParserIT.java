@@ -22,29 +22,29 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class RnaSeqMageTabLimpopoExpDesignParserTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class RnaSeqMageTabLimpopoExpDesignParserIT {
 
-    static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
+    private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
 
-    static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
+    private static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
 
-    RnaSeqMageTabLimpopoExpDesignParser subject;
-
-    @Before
-    public void setUp() throws Exception {
-
-        subject = new RnaSeqMageTabLimpopoExpDesignParser();
-        subject.setIdfUrlTemplate("http://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
-        subject.setIdfPathTemplate("/magetab/{0}/{0}.idf.txt");
-
-    }
+    @Inject
+    private RnaSeqMageTabLimpopoExpDesignParser subject;
 
     @Test
     public void testExtractFactors513() throws Exception {
@@ -71,22 +71,22 @@ public class RnaSeqMageTabLimpopoExpDesignParserTest {
 
         // ERR030872	Homo sapiens	60	female	Human thyroid total RNA, lot 0908003	thyroid
         ScanNode scanNode = subject.getScanNodeForRunAccession("ERR030872");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItemInArray("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "age"), hasItemInArray("60"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItemInArray("female"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItemInArray("thyroid"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "age"), hasItem("60"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItem("female"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("thyroid"));
 
         // ERR030902	Homo sapiens	19	male	Human testes total RNA, lot 05060392	testes
         scanNode = subject.getScanNodeForRunAccession("ERR030902");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItemInArray("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "age"), hasItemInArray("19"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItemInArray("male"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItemInArray("testis"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "age"), hasItem("19"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItem("male"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("testis"));
 
         // ERR030871	Homo sapiens	  	  	  	16 Tissues mixture
         scanNode = subject.getScanNodeForRunAccession("ERR030871");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItemInArray("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItemInArray("16 tissues mixture"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("16 tissues mixture"));
     }
 
     @Test
@@ -95,15 +95,15 @@ public class RnaSeqMageTabLimpopoExpDesignParserTest {
 
         // ERR030872	Homo sapiens	60	female	Human thyroid total RNA, lot 0908003	thyroid
         ScanNode scanNode = subject.getScanNodeForRunAccession("ERR030872");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "organism part"), hasItemInArray("thyroid"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "organism part"), hasItem("thyroid"));
 
         // ERR030902	Homo sapiens	19	male	Human testes total RNA, lot 05060392	testes
         scanNode = subject.getScanNodeForRunAccession("ERR030902");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "organism part"), hasItemInArray("testis"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "organism part"), hasItem("testis"));
 
         // ERR030871	Homo sapiens	  	  	  	16 Tissues mixture
         scanNode = subject.getScanNodeForRunAccession("ERR030871");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "organism part"), hasItemInArray("16 tissues mixture"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "organism part"), hasItem("16 tissues mixture"));
     }
 
     @Test
@@ -131,23 +131,23 @@ public class RnaSeqMageTabLimpopoExpDesignParserTest {
 
         // SRR307901	Homo sapiens	  	AG445	whole cell	lung	fibroblast		  	Coriell	AG445	whole cell	long polyA RNA
         ScanNode scanNode = subject.getScanNodeForRunAccession("SRR307901");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItemInArray("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), is(nullValue()));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell line"), hasItemInArray("AG445"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cellular component"), hasItemInArray("whole cell"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItemInArray("lung"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell type"), hasItemInArray("fibroblast"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "biosource provider"), hasItemInArray("Coriell"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), is(emptyCollectionOf(String.class)));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell line"), hasItem("AG445"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cellular component"), hasItem("whole cell"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("lung"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell type"), hasItem("fibroblast"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "biosource provider"), hasItem("Coriell"));
 
         // SRR089336	Homo sapiens	female	K562	cytosol			leukemia	cancer	ATCC	K562	cytosol	long polyA RNA
         scanNode = subject.getScanNodeForRunAccession("SRR089336");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItemInArray("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItemInArray("female"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell line"), hasItemInArray("K562"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cellular component"), hasItemInArray("cytosol"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), is(nullValue()));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell type"), is(nullValue()));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "biosource provider"), hasItemInArray("ATCC"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItem("female"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell line"), hasItem("K562"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cellular component"), hasItem("cytosol"));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), is(emptyCollectionOf(String.class)));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell type"), is(emptyCollectionOf(String.class)));
+        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "biosource provider"), hasItem("ATCC"));
     }
 
     @Test
@@ -156,14 +156,14 @@ public class RnaSeqMageTabLimpopoExpDesignParserTest {
 
         // SRR307901	Homo sapiens	  	AG445	whole cell	lung	fibroblast		  	Coriell	AG445	whole cell	long polyA RNA
         ScanNode scanNode = subject.getScanNodeForRunAccession("SRR307901");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "cell line"), hasItemInArray("AG445"));
-        assertThat(subject.findFactorValueForScanNode(scanNode, "cellular component"), hasItemInArray("whole cell"));
-        assertThat(subject.findFactorValueForScanNode(scanNode, "RNA"), hasItemInArray("long polyA RNA"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "cell line"), hasItem("AG445"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "cellular component"), hasItem("whole cell"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "RNA"), hasItem("long polyA RNA"));
 
         // SRR089336	Homo sapiens	female	K562	cytosol			leukemia	cancer	ATCC	K562	cytosol	long polyA RNA
         scanNode = subject.getScanNodeForRunAccession("SRR089336");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "cell line"), hasItemInArray("K562"));
-        assertThat(subject.findFactorValueForScanNode(scanNode, "cellular component"), hasItemInArray("cytosol"));
-        assertThat(subject.findFactorValueForScanNode(scanNode, "RNA"), hasItemInArray("long polyA RNA"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "cell line"), hasItem("K562"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "cellular component"), hasItem("cytosol"));
+        assertThat(subject.findFactorValueForScanNode(scanNode, "RNA"), hasItem("long polyA RNA"));
     }
 }

@@ -58,7 +58,7 @@ public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectIn
     }
 
     class GeneIdsPredicate implements Predicate<Profile> {
-        Collection<String> uppercaseGeneIDs;
+        private Collection<String> uppercaseGeneIDs;
 
         GeneIdsPredicate(Collection<String> uppercaseGeneIDs){
             checkArgument(CollectionUtils.isNotEmpty(uppercaseGeneIDs));
@@ -73,7 +73,7 @@ public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectIn
     };
 
     class GeneProfilePredicate<K> implements Predicate<Profile> {
-        Set<K> queryConditions;
+        private Set<K> queryConditions;
 
         GeneProfilePredicate(Set<K> queryConditions){
             this.queryConditions = queryConditions;

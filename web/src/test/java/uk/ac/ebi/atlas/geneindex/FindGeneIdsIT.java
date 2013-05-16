@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.Multimap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -51,12 +50,12 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "GO:0008134 \"p53 binding\"";
         //when
-        Multimap<String, String> result = subject.findGeneSets(geneQuery, false, SPECIES, false);
+        GeneQueryResponse result = subject.findGeneSets(geneQuery, false, SPECIES, false);
 
         //some genes are found
-        assertThat(result.values(), hasItems("ENSG00000131759", "ENSG00000112592") );
-        assertThat(result.values().size(), is(greaterThan(300)) );
-        assertThat(result.values().size(), is(lessThan(600)) );
+        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000112592") );
+        assertThat(result.getAllGeneIds().size(), is(greaterThan(300)) );
+        assertThat(result.getAllGeneIds().size(), is(lessThan(600)) );
 
     }
 
@@ -65,21 +64,23 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "ENSG00000131759 \"mRNA splicing, via spliceosome\"";
         //when
-        Multimap<String, String> result = subject.findGeneSets(geneQuery, true, SPECIES, false);
+        GeneQueryResponse result = subject.findGeneSets(geneQuery, true, SPECIES, false);
 
         //some genes are found
-        assertThat(result.values(), hasItems("ENSG00000131759", "ENSG00000084072") );
-        assertThat(result.values().size(), is(greaterThan(190)) );
-        assertThat(result.values().size(), is(lessThan(210)) );
+        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000084072") );
+        assertThat(result.getAllGeneIds().size(), is(greaterThan(190)) );
+        assertThat(result.getAllGeneIds().size(), is(lessThan(210)) );
 
     }
 
-    @Test(expected = GenesNotFoundException.class)
-    public void shouldThrowExceptionWhenThereIsNoMatchingId() throws URISyntaxException, GenesNotFoundException {
+    @Test
+    public void shouldReturnEmptyResultWhenThereIsNoMatchingId() throws URISyntaxException, GenesNotFoundException {
         //given
         String query = "\"NOT THERE\"";
 
-        subject.findGeneSets(query, false, SPECIES, false);
+        GeneQueryResponse geneQueryResponse = subject.findGeneSets(query, false, SPECIES, false);
+
+        assertThat(geneQueryResponse.isEmpty(), is(true));
 
     }
 

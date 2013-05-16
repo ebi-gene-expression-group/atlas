@@ -34,10 +34,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.Characteris
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Named
 @Scope("prototype")
@@ -108,7 +105,7 @@ public class TwoColourMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDes
         return arrayDesignAttribute.getAttributeValue();
     }
 
-    public String[] findCharacteristicValueForAssay(Pair<String, Integer> assay, String characteristic) {
+    public List<String> findCharacteristicValueForAssay(Pair<String, Integer> assay, String characteristic) {
 
         HybridizationNode hybridizationNode = getHybridizationNodeForAssay(assay);
         int channelNo = assay.getValue();
@@ -128,11 +125,11 @@ public class TwoColourMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDes
         SourceNode sourceNode = upstreamSources.iterator().next();
         for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
             if (characteristicsAttribute.type.equals(characteristic)) {
-                return characteristicsAttribute.values();
+                return Arrays.asList(characteristicsAttribute.values());
             }
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
 }

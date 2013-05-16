@@ -23,27 +23,27 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class TwoColourMageTabLimpopoExpDesignParserTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class TwoColourMageTabLimpopoExpDesignParserIT {
 
-    static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
+    private static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
 
-    TwoColourMageTabLimpopoExpDesignParser subject;
-
-    @Before
-    public void setUp() throws Exception {
-
-        subject = new TwoColourMageTabLimpopoExpDesignParser();
-        subject.setIdfUrlTemplate("http://www.ebi.ac.uk/arrayexpress/files/{0}/{0}.idf.txt");
-        subject.setIdfPathTemplate("/magetab/{0}/{0}.idf.txt");
-
-    }
+    @Inject
+    private TwoColourMageTabLimpopoExpDesignParser subject;
 
     @Test
     public void testExtractAssays43049() throws Exception {
@@ -98,12 +98,12 @@ public class TwoColourMageTabLimpopoExpDesignParserTest {
     public void testFindCharacteristicValueForAssay43049() throws Exception {
         subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_GEOD_43049).build();
         // GSM1055612.Cy5	A-AGIL-28	Homo sapiens	Caco-2	Apical anaerobic	Apical anaerobic
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "culture condition"), hasItemInArray("Apical anaerobic"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "cell line"), hasItemInArray("Caco-2"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "Organism"), hasItemInArray("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "culture condition"), hasItem("Apical anaerobic"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "cell line"), hasItem("Caco-2"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055612.Cy5", 1), "Organism"), hasItem("Homo sapiens"));
         // GSM1055617.Cy3	A-AGIL-28	Homo sapiens	Caco-2	Conventional	Conventional
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "culture condition"), hasItemInArray("Conventional"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "cell line"), hasItemInArray("Caco-2"));
-        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "Organism"), hasItemInArray("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "culture condition"), hasItem("Conventional"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "cell line"), hasItem("Caco-2"));
+        assertThat(subject.findCharacteristicValueForAssay(Pair.of("GSM1055617.Cy3", 2), "Organism"), hasItem("Homo sapiens"));
     }
 }

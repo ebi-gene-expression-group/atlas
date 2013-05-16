@@ -30,9 +30,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
-import uk.ac.ebi.atlas.expdesign.MicroArrayMageTabLimpopoExpDesignParser;
-import uk.ac.ebi.atlas.expdesign.RnaSeqMageTabLimpopoExpDesignParser;
-import uk.ac.ebi.atlas.expdesign.TwoColourMageTabLimpopoExpDesignParser;
+import uk.ac.ebi.atlas.expdesign.MicroArrayExpDesignWriter;
+import uk.ac.ebi.atlas.expdesign.RnaSeqExpDesignWriter;
+import uk.ac.ebi.atlas.expdesign.TwoColourExpDesignWriter;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -48,13 +48,13 @@ public class ExpDesignLoaderControllerTest {
     ApplicationProperties applicationPropertiesMock;
 
     @Mock
-    RnaSeqMageTabLimpopoExpDesignParser rnaSeqMageTabLimpopoParserMock;
+    RnaSeqExpDesignWriter rnaSeqExpDesignWriterMock;
 
     @Mock
-    MicroArrayMageTabLimpopoExpDesignParser microArrayMageTabLimpopoExpDesignParserMock;
+    MicroArrayExpDesignWriter microArrayExpDesignWriterMock;
 
     @Mock
-    TwoColourMageTabLimpopoExpDesignParser twoColourMageTabLimpopoExpDesignParserMock;
+    TwoColourExpDesignWriter twoColourExpDesignWriterMock;
 
     @Mock
     ExpDesignTsvWriter expDesignTsvWriterMock;
@@ -67,18 +67,13 @@ public class ExpDesignLoaderControllerTest {
     @Before
     public void setUp() throws Exception {
         subject = new ExpDesignLoaderController(applicationPropertiesMock,
-                rnaSeqMageTabLimpopoParserMock,
-                microArrayMageTabLimpopoExpDesignParserMock,
-                twoColourMageTabLimpopoExpDesignParserMock,
+                rnaSeqExpDesignWriterMock,
+                microArrayExpDesignWriterMock,
+                twoColourExpDesignWriterMock,
                 expDesignTsvWriterMock);
 
         when(expDesignTsvWriterMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(csvWriterMock);
-        when(rnaSeqMageTabLimpopoParserMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(rnaSeqMageTabLimpopoParserMock);
-        when(rnaSeqMageTabLimpopoParserMock.build()).thenReturn(rnaSeqMageTabLimpopoParserMock);
-        when(microArrayMageTabLimpopoExpDesignParserMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(microArrayMageTabLimpopoExpDesignParserMock);
-        when(microArrayMageTabLimpopoExpDesignParserMock.build()).thenReturn(microArrayMageTabLimpopoExpDesignParserMock);
-        when(twoColourMageTabLimpopoExpDesignParserMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(twoColourMageTabLimpopoExpDesignParserMock);
-        when(twoColourMageTabLimpopoExpDesignParserMock.build()).thenReturn(twoColourMageTabLimpopoExpDesignParserMock);
+        when(expDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
     }
 
     @Test
@@ -86,7 +81,7 @@ public class ExpDesignLoaderControllerTest {
         when(applicationPropertiesMock.getBaselineExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
 
         assertThat(subject.loadExpDesign(EXPERIMENT_ACCESSION), is("ExperimentDesign for " + EXPERIMENT_ACCESSION + " loaded."));
-        verify(rnaSeqMageTabLimpopoParserMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
         verify(csvWriterMock).flush();
     }
 
@@ -95,7 +90,7 @@ public class ExpDesignLoaderControllerTest {
         when(applicationPropertiesMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
 
         assertThat(subject.loadExpDesign(EXPERIMENT_ACCESSION), is("ExperimentDesign for " + EXPERIMENT_ACCESSION + " loaded."));
-        verify(rnaSeqMageTabLimpopoParserMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
         verify(csvWriterMock).flush();
     }
 
@@ -104,7 +99,7 @@ public class ExpDesignLoaderControllerTest {
         when(applicationPropertiesMock.getMicroarrayExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
 
         assertThat(subject.loadExpDesign(EXPERIMENT_ACCESSION), is("ExperimentDesign for " + EXPERIMENT_ACCESSION + " loaded."));
-        verify(microArrayMageTabLimpopoExpDesignParserMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(microArrayExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
         verify(csvWriterMock).flush();
     }
 
@@ -113,7 +108,7 @@ public class ExpDesignLoaderControllerTest {
         when(applicationPropertiesMock.getTwoColourExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
 
         assertThat(subject.loadExpDesign(EXPERIMENT_ACCESSION), is("ExperimentDesign for " + EXPERIMENT_ACCESSION + " loaded."));
-        verify(twoColourMageTabLimpopoExpDesignParserMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(twoColourExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
         verify(csvWriterMock).flush();
     }
 
