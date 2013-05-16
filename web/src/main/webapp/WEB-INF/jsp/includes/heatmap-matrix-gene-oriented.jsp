@@ -183,7 +183,7 @@
 
                 var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"}
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}' , selectedFilterFactorsJson);
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}' , selectedFilterFactorsJson, ${preferences.geneSetMatch});
 
             } else if (${type == "MICROARRAY"}){
 
