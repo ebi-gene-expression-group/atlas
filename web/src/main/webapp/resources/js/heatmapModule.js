@@ -313,10 +313,12 @@ var heatmapModule = (function ($) {
         initDisplayLevelsButton();
         initHeatmapFactorHeaders();
 
+        var firstColumnHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
+
         if (parameters && parameters.arrayDesignAccession) { //then it is a microarray experiment
-            createAccessionHeaders(['Gene', 'Design Element']);
+            createAccessionHeaders([firstColumnHeader, "Design Element"]);
         } else {
-            createAccessionHeaders(['Gene']);
+            createAccessionHeaders([firstColumnHeader]);
         }
 
         if (parameters && parameters.cutoff === 0.05 && !parameters.geneQuery) {
@@ -327,8 +329,12 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson) {
-        initHeatmap(experimentAccession, {species: species, selectedFilterFactorsJson: selectedFilterFactorsJson});
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch) {
+        initHeatmap(experimentAccession, {
+            species: species,
+            selectedFilterFactorsJson: selectedFilterFactorsJson,
+            geneSetMatch: geneSetMatch
+        });
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery) {
@@ -336,9 +342,11 @@ var heatmapModule = (function ($) {
     }
 
     function initMicroarrayHeatmap(experimentAccession, arrayDesignAccession, cutoff, geneQuery) {
-        initHeatmap(experimentAccession, {  arrayDesignAccession: arrayDesignAccession,
+        initHeatmap(experimentAccession, {
+            arrayDesignAccession: arrayDesignAccession,
             cutoff: cutoff,
-            geneQuery: geneQuery });
+            geneQuery: geneQuery
+        });
     }
 
     return {
