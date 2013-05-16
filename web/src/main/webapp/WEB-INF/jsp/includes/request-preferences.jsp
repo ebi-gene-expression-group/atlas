@@ -76,10 +76,10 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td width="33%">
                     <div>
                         <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="2"
-                                       cols="30"></form:textarea>
+                                       cols="39"></form:textarea>
                     </div>
                     <span>
                         <form:checkbox id="exactMatch"
@@ -114,7 +114,7 @@
                         <form:select path="queryFactorValues" data-placeholder="(Any ${queryFactorName})"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
-                                     cssStyle="width:300px;"
+                                     cssStyle="width:350px;"
                                      disabled="${isSingleContrast ? true : false}"/>
                     </div>
                     <span>
