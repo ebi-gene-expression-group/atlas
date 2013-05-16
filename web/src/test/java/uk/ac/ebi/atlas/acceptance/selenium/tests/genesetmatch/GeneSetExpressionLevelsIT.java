@@ -27,6 +27,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
 
@@ -37,6 +38,32 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
 
     @Before
     public void initSubject() {
+    }
+
+    @Test
+    public void shouldHaveAGeneHeader() {
+        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
+                "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+        //given
+        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
+        //when
+        subject.get();
+        //then
+        assertThat(subject.getGeneColumnHeader(), is("Gene set"));
+    }
+
+    @Test
+    public void shouldHaveGeneSetCheckBoxSelected() {
+        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
+                "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+        //given
+        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
+        //when
+        subject.get();
+        //then
+        assertThat(subject.isGeneSetMatch(), is(true));
     }
 
     @Test
