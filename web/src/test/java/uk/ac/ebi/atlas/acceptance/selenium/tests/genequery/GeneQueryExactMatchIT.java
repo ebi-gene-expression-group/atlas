@@ -28,6 +28,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class GeneQueryExactMatchIT extends SeleniumFixture {
@@ -37,6 +38,17 @@ public class GeneQueryExactMatchIT extends SeleniumFixture {
     private static final String E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH_WITH_UNQUOTED_TERMS = "geneQuery=mitochondrially+encoded+ATP+8&exactMatch=true&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&queryFactorValues=liver&_queryFactorValues=1&specific=true&cutoff=0.5";
 
     protected HeatmapTableWithSearchFormPage subject;
+
+    @Test
+    public void shouldHaveExactMatchCheckboxSelected() {
+        //given
+        subject = new HeatmapTableWithSearchFormPage(driver, "E-MTAB-513", E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH);
+        //when
+        subject.get();
+        //then
+        assertThat(subject.isExactMatch(), is(true));
+
+    }
 
     @Test
     public void shouldReturnOnlyGenesWithPropertyValuesExactlyMatchingToAtLeastOneOfTheProvidedGeneQueryTerms() {

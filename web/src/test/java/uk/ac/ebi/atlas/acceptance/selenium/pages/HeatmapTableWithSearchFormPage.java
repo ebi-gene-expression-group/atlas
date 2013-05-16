@@ -36,6 +36,12 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
     @FindBy(id = "geneQuery")
     private WebElement geneQuery;
 
+    @FindBy(id = "exactMatch")
+    private WebElement exactMatch;
+
+    @FindBy(id = "geneSetMatch")
+    private WebElement geneSetMatch;
+
     @FindBy(id = "queryFactorValues")
     WebElement queryFactorValues;
 
@@ -61,6 +67,14 @@ public class HeatmapTableWithSearchFormPage extends HeatmapTablePage {
 
     public String getGeneQuery() {
         return geneQuery.getText();
+    }
+
+    public boolean isExactMatch() {
+        return exactMatch.isSelected();
+    }
+
+    public boolean isGeneSetMatch() {
+        return geneSetMatch.isSelected();
     }
 
     public String getCutoff() {
