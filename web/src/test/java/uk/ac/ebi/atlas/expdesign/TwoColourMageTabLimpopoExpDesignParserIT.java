@@ -66,8 +66,13 @@ public class TwoColourMageTabLimpopoExpDesignParserIT {
     @Test
     public void testGetHybridizationNodeForAssay43049() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_GEOD_43049);
-        assertThat(subject.getHybridizationNodeForAssay(Pair.of("bla", 1)), is(nullValue()));
         assertThat(subject.getHybridizationNodeForAssay(Pair.of("GSM1055612.Cy5", 1)), is(not(nullValue())));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGetHybridizationNodeForUnknownAssay43049() throws Exception {
+        subject.init(EXPERIMENT_ACCESSION_E_GEOD_43049);
+        subject.getHybridizationNodeForAssay(Pair.of("GSM123456.Cy5", 1));
     }
 
     @Test
@@ -85,6 +90,12 @@ public class TwoColourMageTabLimpopoExpDesignParserIT {
         assertThat(subject.findFactorValueForAssay(Pair.of("GSM1055616.Cy3", 2), "CULTURE CONDITION"), is("Apical anaerobic"));
         assertThat(subject.findFactorValueForAssay(Pair.of("GSM1055617.Cy5", 1), "CULTURE CONDITION"), is("Apical anaerobic"));
         assertThat(subject.findFactorValueForAssay(Pair.of("GSM1055617.Cy3", 2), "CULTURE CONDITION"), is("Conventional"));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testFindFactorValueForUnknownAssay43049() throws Exception {
+        subject.init(EXPERIMENT_ACCESSION_E_GEOD_43049);
+        subject.findFactorValueForAssay(Pair.of("GSM123456.Cy5", 1), "CULTURE CONDITION");
     }
 
     @Test

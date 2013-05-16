@@ -76,7 +76,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
             }
         }
 
-        return null;
+        throw new IllegalStateException("Run has not been found in SDRF: " + runAccession);
     }
 
     List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {

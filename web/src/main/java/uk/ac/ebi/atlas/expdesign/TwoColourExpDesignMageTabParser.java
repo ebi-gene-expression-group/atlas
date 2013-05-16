@@ -76,7 +76,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
             }
         }
 
-        return null;
+        throw new IllegalStateException("Hybridization has not been found in SDRF: " + assay);
     }
 
     String findFactorValueForAssay(Pair<String, Integer> assay, String factor) {
@@ -92,7 +92,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
             }
         }
 
-        return null;
+        throw new IllegalStateException("FactorValue has not been found in SDRF: " + assay + " " + factor);
     }
 
     String findArrayForHybridizationNode(HybridizationNode hybridizationNode) {

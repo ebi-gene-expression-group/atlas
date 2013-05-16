@@ -61,8 +61,13 @@ public class RnaSeqMageTabLimpopoExpDesignParserIT {
     @Test
     public void testGetScanNodeForRunAccession513() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_MTAB_513);
-        assertThat(subject.getScanNodeForRunAccession("bla"), is(nullValue()));
         assertThat(subject.getScanNodeForRunAccession("ERR030872"), is(not(nullValue())));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGetScanNodeForNonExistingRun513() throws Exception {
+        subject.init(EXPERIMENT_ACCESSION_E_MTAB_513);
+        subject.getScanNodeForRunAccession("ERR123456");
     }
 
     @Test
@@ -121,8 +126,13 @@ public class RnaSeqMageTabLimpopoExpDesignParserIT {
     @Test
     public void testGetScanNodeForRunAccession26284() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_GEOD_26284);
-        assertThat(subject.getScanNodeForRunAccession("bla"), is(nullValue()));
         assertThat(subject.getScanNodeForRunAccession("SRR387660"), is(not(nullValue())));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGetScanNodeForNonExistingRun26284() throws Exception {
+        subject.init(EXPERIMENT_ACCESSION_E_GEOD_26284);
+        subject.getScanNodeForRunAccession("SRR123456");
     }
 
     @Test

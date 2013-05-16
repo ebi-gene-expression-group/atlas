@@ -75,7 +75,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
             }
         }
 
-        return null;
+        throw new IllegalStateException("Assay has not been found in SDRF: " + assay);
     }
 
     List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {

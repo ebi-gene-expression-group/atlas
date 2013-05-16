@@ -30,8 +30,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.expdesign.*;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
+import uk.ac.ebi.atlas.expdesign.ExpDesignWriter;
+import uk.ac.ebi.atlas.expdesign.ExpDesignWriterBuilder;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -44,43 +45,19 @@ public class ExpDesignLoaderController {
 
     private ExpDesignTsvWriter expDesignTsvWriter;
 
-    private ApplicationProperties applicationProperties;
-
-    private RnaSeqExpDesignWriter rnaSeqExpDesignWriter;
-
-    private MicroArrayExpDesignWriter microArrayExpDesignWriter;
-
-    private TwoColourExpDesignWriter twoColourExpDesignWriter;
+    private ExpDesignWriterBuilder expDesignWriterBuilder;
 
     @Inject
-    public ExpDesignLoaderController(ApplicationProperties applicationProperties,
-                                     RnaSeqExpDesignWriter rnaSeqExpDesignWriter,
-                                     MicroArrayExpDesignWriter microArrayExpDesignWriter,
-                                     TwoColourExpDesignWriter twoColourExpDesignWriter,
-                                     ExpDesignTsvWriter expDesignTsvWriter) {
-        this.applicationProperties = applicationProperties;
-        this.rnaSeqExpDesignWriter = rnaSeqExpDesignWriter;
-        this.microArrayExpDesignWriter = microArrayExpDesignWriter;
-        this.twoColourExpDesignWriter = twoColourExpDesignWriter;
+    public ExpDesignLoaderController(ExpDesignTsvWriter expDesignTsvWriter, ExpDesignWriterBuilder expDesignWriterBuilder) {
         this.expDesignTsvWriter = expDesignTsvWriter;
+        this.expDesignWriterBuilder = expDesignWriterBuilder;
     }
 
     @RequestMapping(value = "/loadExperimentDesign/{experimentAccession}")
     @ResponseBody
     public String loadExpDesign(@PathVariable String experimentAccession) {
 
-        ExpDesignWriter expDesignWriter = null;
-
-        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)
-                || applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = rnaSeqExpDesignWriter;
-        } else if (applicationProperties.getTwoColourExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = twoColourExpDesignWriter;
-        } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
-            expDesignWriter = microArrayExpDesignWriter;
-        } else {
-            return "Not a known experiment accession: " + experimentAccession;
-        }
+        ExpDesignWriter expDesignWriter = expDesignWriterBuilder.forExperimentAccession(experimentAccession).build();
 
         try {
             CSVWriter csvWriter = expDesignTsvWriter.forExperimentAccession(experimentAccession);

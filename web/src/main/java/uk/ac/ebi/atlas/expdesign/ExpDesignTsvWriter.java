@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.text.MessageFormat;
 
+import static com.google.common.base.Preconditions.checkState;
+
 @Named("expDesignTsvWriter")
 @Scope("prototype")
 public class ExpDesignTsvWriter {
@@ -54,10 +56,8 @@ public class ExpDesignTsvWriter {
     }
 
     public String getFileAbsolutePath() {
-        if (file != null) {
-            return file.getAbsolutePath();
-        }
-        return null;
+        checkState(file != null, "Please invoke forExperimentAccession first !");
+        return file.getAbsolutePath();
     }
 
     String getPathString(String experimentAccession) {

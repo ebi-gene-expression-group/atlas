@@ -53,8 +53,13 @@ public class MicroArrayMageTabLimpopoExpDesignParserIT {
     @Test
     public void testGetScanNodeForAssay1066() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        assertThat(subject.getScanNodeForAssay("bla"), is(nullValue()));
         assertThat(subject.getScanNodeForAssay("C1"), is(not(nullValue())));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGenScanNodeForNonExistingAssay() throws Exception {
+        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
+        subject.getScanNodeForAssay("C14");
     }
 
     @Test

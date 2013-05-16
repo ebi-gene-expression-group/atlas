@@ -54,9 +54,9 @@ public class ExpDesignTsvWriterTest {
         assertThat(file.delete(), is(true));
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testGetFileAbsolutePath() throws Exception {
-        assertThat(subject.getFileAbsolutePath(), is(nullValue()));
+        subject.getFileAbsolutePath();
     }
 
     @Test

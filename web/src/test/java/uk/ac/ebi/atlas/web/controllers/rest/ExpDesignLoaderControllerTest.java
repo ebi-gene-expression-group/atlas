@@ -29,10 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
-import uk.ac.ebi.atlas.expdesign.MicroArrayExpDesignWriter;
-import uk.ac.ebi.atlas.expdesign.RnaSeqExpDesignWriter;
-import uk.ac.ebi.atlas.expdesign.TwoColourExpDesignWriter;
+import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,34 +40,39 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExpDesignLoaderControllerTest {
 
-    public static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-    @Mock
-    ApplicationProperties applicationPropertiesMock;
+    private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
 
     @Mock
-    RnaSeqExpDesignWriter rnaSeqExpDesignWriterMock;
+    private ApplicationProperties applicationPropertiesMock;
 
     @Mock
-    MicroArrayExpDesignWriter microArrayExpDesignWriterMock;
+    private RnaSeqExpDesignWriter rnaSeqExpDesignWriterMock;
 
     @Mock
-    TwoColourExpDesignWriter twoColourExpDesignWriterMock;
+    private MicroArrayExpDesignWriter microArrayExpDesignWriterMock;
 
     @Mock
-    ExpDesignTsvWriter expDesignTsvWriterMock;
+    private TwoColourExpDesignWriter twoColourExpDesignWriterMock;
 
     @Mock
-    CSVWriter csvWriterMock;
+    private ExpDesignTsvWriter expDesignTsvWriterMock;
 
-    ExpDesignLoaderController subject;
+    @Mock
+    private CSVWriter csvWriterMock;
+
+    private ExpDesignWriterBuilder expDesignWriterBuilder;
+
+    private ExpDesignLoaderController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExpDesignLoaderController(applicationPropertiesMock,
+        expDesignWriterBuilder = new ExpDesignWriterBuilder(applicationPropertiesMock,
                 rnaSeqExpDesignWriterMock,
                 microArrayExpDesignWriterMock,
-                twoColourExpDesignWriterMock,
-                expDesignTsvWriterMock);
+                twoColourExpDesignWriterMock);
+
+        subject = new ExpDesignLoaderController(
+                expDesignTsvWriterMock, expDesignWriterBuilder);
 
         when(expDesignTsvWriterMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(csvWriterMock);
         when(expDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
@@ -112,8 +114,8 @@ public class ExpDesignLoaderControllerTest {
         verify(csvWriterMock).flush();
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testUnknownExperiment() throws Exception {
-        assertThat(subject.loadExpDesign(EXPERIMENT_ACCESSION), is("Not a known experiment accession: " + EXPERIMENT_ACCESSION));
+        subject.loadExpDesign(EXPERIMENT_ACCESSION);
     }
 }
