@@ -44,7 +44,7 @@
         <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
         <berkeley.schema.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/bdb-lime</berkeley.schema.location>
         <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2-lime/atlas</h2.database.location>
-        <solr.host>localhost</solr.host>
+        <solr.host>ves-ebi-7f</solr.host>
         <gxa.server.url>http://wwwdev.ebi.ac.uk/gxa</gxa.server.url>
         <deploy.host>
             <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
