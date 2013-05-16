@@ -58,7 +58,7 @@ public class TwoColourExpDesignWriterTest {
     TwoColourExpDesignWriter subject;
 
     @Mock
-    TwoColourMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParserMock;
+    TwoColourExpDesignMageTabParser mageTabLimpopoExpDesignParserMock;
 
     @Mock
     HybridizationNode scanNodeMock;
@@ -80,7 +80,6 @@ public class TwoColourExpDesignWriterTest {
         Collections.sort(factorsList);
 
         when(mageTabLimpopoExpDesignParserMock.forExperimentAccession(ACCESSION)).thenReturn(mageTabLimpopoExpDesignParserMock);
-        when(mageTabLimpopoExpDesignParserMock.build()).thenReturn(mageTabLimpopoExpDesignParserMock);
         when(mageTabLimpopoExpDesignParserMock.extractCharacteristics()).thenReturn(characteristics);
         when(mageTabLimpopoExpDesignParserMock.extractFactors()).thenReturn(factors);
         when(mageTabLimpopoExpDesignParserMock.getHybridizationNodeForAssay(Pair.of(ASSAY, 1))).thenReturn(scanNodeMock);
@@ -100,7 +99,7 @@ public class TwoColourExpDesignWriterTest {
         subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
-        verify(mageTabLimpopoExpDesignParserMock).build();
+        verify(mageTabLimpopoExpDesignParserMock).init();
         verify(mageTabLimpopoExpDesignParserMock).extractCharacteristics();
         verify(mageTabLimpopoExpDesignParserMock).extractFactors();
         verify(mageTabLimpopoExpDesignParserMock).extractAssays();

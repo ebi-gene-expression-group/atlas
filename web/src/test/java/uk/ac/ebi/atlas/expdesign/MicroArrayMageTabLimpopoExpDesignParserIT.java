@@ -42,37 +42,37 @@ public class MicroArrayMageTabLimpopoExpDesignParserIT {
     private static final String EXPERIMENT_ACCESSION_E_MTAB_1066 = "E-MTAB-1066";
 
     @Inject
-    private MicroArrayMageTabLimpopoExpDesignParser subject;
+    private MicroArrayExpDesignMageTabParser subject;
 
     @Test
     public void testExtractAssays1066() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).init();
         assertThat(subject.extractAssays(), containsInAnyOrder("C1", "C2", "C3", "K1", "K2", "K3", "WT1", "WT2", "WT3"));
     }
 
     @Test
     public void testGetScanNodeForAssay1066() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).init();
         assertThat(subject.getScanNodeForAssay("bla"), is(nullValue()));
         assertThat(subject.getScanNodeForAssay("C1"), is(not(nullValue())));
     }
 
     @Test
     public void testFindArrayForScanNode1066() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).init();
         ScanNode scanNode = subject.getScanNodeForAssay("C1");
         assertThat(subject.findArrayForScanNode(scanNode), is("A-AFFY-35"));
     }
 
     @Test
     public void testExtractFactors1066() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).init();
         assertThat(subject.extractFactors(), containsInAnyOrder("GENOTYPE"));
     }
 
     @Test
     public void testFindFactorValueForScanNodeAssay1066() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).build();
+        subject.forExperimentAccession(EXPERIMENT_ACCESSION_E_MTAB_1066).init();
 
         // C1	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster
         ScanNode scanNode = subject.getScanNodeForAssay("C1");

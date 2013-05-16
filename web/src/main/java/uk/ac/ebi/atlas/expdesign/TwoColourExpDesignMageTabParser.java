@@ -38,7 +38,7 @@ import java.util.*;
 
 @Named
 @Scope("prototype")
-public class TwoColourMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesignParser {
+public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
 
     public List<Pair<String, Integer>> extractAssays() {
         List<Pair<String, Integer>> assayAccessions = new ArrayList<>();

@@ -34,7 +34,7 @@ import java.util.*;
 
 @Named
 @Scope("prototype")
-public class RnaSeqMageTabLimpopoExpDesignParser extends MageTabLimpopoExpDesignParser {
+public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
 
     private static final String ENA_RUN = "ENA_RUN";
 

@@ -57,7 +57,7 @@ public class MicroArrayExpDesignWriterTest {
     MicroArrayExpDesignWriter subject;
 
     @Mock
-    MicroArrayMageTabLimpopoExpDesignParser mageTabLimpopoExpDesignParserMock;
+    MicroArrayExpDesignMageTabParser mageTabLimpopoExpDesignParserMock;
 
     @Mock
     ScanNode scanNodeMock;
@@ -79,7 +79,6 @@ public class MicroArrayExpDesignWriterTest {
         Collections.sort(factorsList);
 
         when(mageTabLimpopoExpDesignParserMock.forExperimentAccession(ACCESSION)).thenReturn(mageTabLimpopoExpDesignParserMock);
-        when(mageTabLimpopoExpDesignParserMock.build()).thenReturn(mageTabLimpopoExpDesignParserMock);
         when(mageTabLimpopoExpDesignParserMock.extractCharacteristics()).thenReturn(characteristics);
         when(mageTabLimpopoExpDesignParserMock.extractFactors()).thenReturn(factors);
         when(mageTabLimpopoExpDesignParserMock.getScanNodeForAssay(ASSAY)).thenReturn(scanNodeMock);
@@ -99,7 +98,7 @@ public class MicroArrayExpDesignWriterTest {
         subject.forExperimentAccession(ACCESSION, csvWriterMock);
 
         verify(mageTabLimpopoExpDesignParserMock).forExperimentAccession(ACCESSION);
-        verify(mageTabLimpopoExpDesignParserMock).build();
+        verify(mageTabLimpopoExpDesignParserMock).init();
         verify(mageTabLimpopoExpDesignParserMock).extractCharacteristics();
         verify(mageTabLimpopoExpDesignParserMock).extractFactors();
         verify(mageTabLimpopoExpDesignParserMock).extractAssays();
