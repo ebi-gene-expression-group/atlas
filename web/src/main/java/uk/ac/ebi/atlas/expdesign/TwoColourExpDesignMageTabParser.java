@@ -40,7 +40,7 @@ import java.util.*;
 @Scope("prototype")
 public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
 
-    public List<Pair<String, Integer>> extractAssays() {
+    List<Pair<String, Integer>> extractAssays() {
         List<Pair<String, Integer>> assayAccessions = new ArrayList<>();
 
         for (HybridizationNode hybridizationNode : hybridizationNodes) {
@@ -55,7 +55,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
         return assayAccessions;
     }
 
-    public Set<String> extractFactors() {
+    Set<String> extractFactors() {
 
         Set<String> factors = Sets.newHashSet();
 
@@ -68,7 +68,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
         return factors;
     }
 
-    public HybridizationNode getHybridizationNodeForAssay(Pair<String, Integer> assay) {
+    HybridizationNode getHybridizationNodeForAssay(Pair<String, Integer> assay) {
 
         for (HybridizationNode hybridizationNode : hybridizationNodes) {
             if (assay.getKey().startsWith(hybridizationNode.getNodeName())) {
@@ -79,7 +79,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
         return null;
     }
 
-    public String findFactorValueForAssay(Pair<String, Integer> assay, String factor) {
+    String findFactorValueForAssay(Pair<String, Integer> assay, String factor) {
 
         HybridizationNode hybridizationNode = getHybridizationNodeForAssay(assay);
         if (hybridizationNode.arrayDesigns.size() > 1) {
@@ -95,7 +95,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
         return null;
     }
 
-    public String findArrayForHybridizationNode(HybridizationNode hybridizationNode) {
+    String findArrayForHybridizationNode(HybridizationNode hybridizationNode) {
 
         if (hybridizationNode.arrayDesigns.size() > 1) {
             throw new IllegalStateException("Assays with multiple array designs not supported.");
@@ -105,7 +105,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
         return arrayDesignAttribute.getAttributeValue();
     }
 
-    public List<String> findCharacteristicValueForAssay(Pair<String, Integer> assay, String characteristic) {
+    List<String> findCharacteristicValueForAssay(Pair<String, Integer> assay, String characteristic) {
 
         HybridizationNode hybridizationNode = getHybridizationNodeForAssay(assay);
         int channelNo = assay.getValue();

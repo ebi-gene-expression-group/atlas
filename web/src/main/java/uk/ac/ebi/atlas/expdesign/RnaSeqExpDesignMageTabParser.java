@@ -38,7 +38,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
 
     private static final String ENA_RUN = "ENA_RUN";
 
-    public Set<String> extractRunAccessions() {
+    Set<String> extractRunAccessions() {
 
         Set<String> runs = Sets.newHashSet();
 
@@ -49,7 +49,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
         return runs;
     }
 
-    public Set<String> extractFactors() {
+    Set<String> extractFactors() {
 
         Set<String> factors = Sets.newHashSet();
 
@@ -68,7 +68,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
         return factors;
     }
 
-    public ScanNode getScanNodeForRunAccession(String runAccession) {
+    ScanNode getScanNodeForRunAccession(String runAccession) {
 
         for (ScanNode scanNode : scanNodes) {
             if (scanNode.comments.get(ENA_RUN).equals(runAccession)) {
@@ -79,7 +79,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
         return null;
     }
 
-    public List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
+    List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
         if (assayNodes.size() != 1) {

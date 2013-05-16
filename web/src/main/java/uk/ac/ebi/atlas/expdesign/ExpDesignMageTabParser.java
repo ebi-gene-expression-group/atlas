@@ -75,7 +75,7 @@ public class ExpDesignMageTabParser {
         hybridizationNodes = investigation.SDRF.getNodes(HybridizationNode.class);
     }
 
-    public Set<String> extractCharacteristics() {
+    Set<String> extractCharacteristics() {
 
         Set<String> characteristics = Sets.newHashSet();
 
@@ -88,7 +88,7 @@ public class ExpDesignMageTabParser {
         return characteristics;
     }
 
-    public List<String> findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
+    List<String> findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
 
         Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class);
         if (upstreamNodes.size() != 1) {

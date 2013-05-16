@@ -37,7 +37,7 @@ import java.util.*;
 @Scope("prototype")
 public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
 
-    public Set<String> extractAssays() {
+    Set<String> extractAssays() {
 
         Set<String> assays = Sets.newHashSet();
 
@@ -48,7 +48,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
         return assays;
     }
 
-    public Set<String> extractFactors() {
+    Set<String> extractFactors() {
 
         Set<String> factors = Sets.newHashSet();
 
@@ -67,7 +67,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
         return factors;
     }
 
-    public ScanNode getScanNodeForAssay(String assay) {
+    ScanNode getScanNodeForAssay(String assay) {
 
         for (ScanNode scanNode : scanNodes) {
             if (scanNode.getNodeName().equals(assay)) {
@@ -78,7 +78,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
         return null;
     }
 
-    public List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
+    List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
 
         Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
         if (hybridizationNodes.size() != 1) {
@@ -99,7 +99,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
         return Collections.emptyList();
     }
 
-    public String findArrayForScanNode(ScanNode scanNode) {
+    String findArrayForScanNode(ScanNode scanNode) {
 
         Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
         if (hybridizationNodes.size() != 1) {
