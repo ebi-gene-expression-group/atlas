@@ -76,25 +76,27 @@
                 </td>
             </tr>
             <tr>
-                <td width="33%">
-                    <div>
+                <td>
+                    <div style="display:inline-block">
                         <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="2"
-                                       cols="39"></form:textarea>
+                                       cols="36"></form:textarea>
+                        <div>
+                            <span style="float:left">
+                                <form:checkbox id="exactMatch"
+                                               path="exactMatch"
+                                               label="Exact match"/>
+                            </span>
+                            <c:if test="${type eq 'BASELINE'}">
+                            <span data-help-loc="#gene-set-match" style="float:right;padding-right:10px"></span>
+                            <span style="float:right;">
+                                <form:checkbox id="geneSetMatch"
+                                               path="geneSetMatch"
+                                               label="Gene set"/>
+                            </span>
+                            <div style="clear:both;"></div>
+                            </c:if>
+                        </div>
                     </div>
-                    <span>
-                        <form:checkbox id="exactMatch"
-                                       path="exactMatch"
-                                       label="Exact match"/>
-                    </span>
-                    <c:if test="${type eq 'BASELINE'}">
-                        <span data-help-loc="#gene-set-match" style="float:right;padding-right:10px"></span>
-                        <span style="float:right">
-                            <form:checkbox id="geneSetMatch"
-                                           path="geneSetMatch"
-                                           label="Gene set"/>
-                        </span>
-
-                    </c:if>
                 </td>
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
                     <td>
@@ -114,7 +116,7 @@
                         <form:select path="queryFactorValues" data-placeholder="(Any ${queryFactorName})"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
-                                     cssStyle="width:350px;"
+                                     cssStyle="width:340px;"
                                      disabled="${isSingleContrast ? true : false}"/>
                     </div>
                     <span>
