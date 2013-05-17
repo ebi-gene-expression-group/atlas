@@ -29,6 +29,6 @@ import java.io.IOException;
 
 public interface ExpDesignWriter {
 
-    public void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException;
+    void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException;
 
 }

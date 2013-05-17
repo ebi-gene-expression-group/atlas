@@ -43,11 +43,11 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
     List<Pair<String, Integer>> extractAssays() {
         List<Pair<String, Integer>> assayAccessions = new ArrayList<>();
 
-        for (HybridizationNode hybridizationNode : hybridizationNodes) {
+        for (HybridizationNode hybridizationNode : getHybridizationNodes()) {
             // Assemble assay accession for each channel separately
             for (int channelNo = 1; channelNo <= 2; channelNo++) {
                 assayAccessions.add(0, Pair.of(
-                        hybridizationNode.getNodeName() + "." + investigation.SDRF.getLabelForChannel(channelNo),
+                        hybridizationNode.getNodeName() + "." + getInvestigation().SDRF.getLabelForChannel(channelNo),
                         channelNo));
             }
         }
@@ -59,7 +59,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
 
         Set<String> factors = Sets.newHashSet();
 
-        for (HybridizationNode hybridizationNode : hybridizationNodes) {
+        for (HybridizationNode hybridizationNode : getHybridizationNodes()) {
             for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
                 factors.add(factorValueAttribute.type);
             }
@@ -70,7 +70,7 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
 
     HybridizationNode getHybridizationNodeForAssay(Pair<String, Integer> assay) {
 
-        for (HybridizationNode hybridizationNode : hybridizationNodes) {
+        for (HybridizationNode hybridizationNode : getHybridizationNodes()) {
             if (assay.getKey().startsWith(hybridizationNode.getNodeName())) {
                 return hybridizationNode;
             }
@@ -113,13 +113,13 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
         // Make sure that the upstream samples correspond to the same labelled extract as the this (single-channel) assayAcc
         Collection<SourceNode> upstreamSources = null;
         for (LabeledExtractNode labeledExtractNode : GraphUtils.findUpstreamNodes(hybridizationNode, LabeledExtractNode.class)) {
-            if (investigation.SDRF.getLabelForChannel(channelNo).equals(labeledExtractNode.label.getAttributeValue())) {
+            if (getInvestigation().SDRF.getLabelForChannel(channelNo).equals(labeledExtractNode.label.getAttributeValue())) {
                 upstreamSources =
                         GraphUtils.findUpstreamNodes(labeledExtractNode, SourceNode.class);
             }
         }
         if (upstreamSources == null) {
-            throw new IllegalStateException("Unable to find the labeled extract: " + investigation.SDRF.getLabelForChannel(channelNo) + " for the assay: " + assay.getKey());
+            throw new IllegalStateException("Unable to find the labeled extract: " + getInvestigation().SDRF.getLabelForChannel(channelNo) + " for the assay: " + assay.getKey());
         }
 
         SourceNode sourceNode = upstreamSources.iterator().next();

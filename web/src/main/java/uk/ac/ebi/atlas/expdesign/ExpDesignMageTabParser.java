@@ -40,15 +40,13 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class ExpDesignMageTabParser {
 
-    protected String experimentAccession;
+    private Collection<SourceNode> sourceNodes;
 
-    protected Collection<SourceNode> sourceNodes;
+    private Collection<ScanNode> scanNodes;
 
-    protected Collection<ScanNode> scanNodes;
+    private Collection<HybridizationNode> hybridizationNodes;
 
-    protected Collection<HybridizationNode> hybridizationNodes;
-
-    protected MAGETABInvestigation investigation;
+    private MAGETABInvestigation investigation;
 
     private MageTabLimpopoUtils mageTabLimpopoUtils;
 
@@ -63,11 +61,11 @@ public class ExpDesignMageTabParser {
 
         investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
 
-        sourceNodes = investigation.SDRF.getNodes(SourceNode.class);
+        sourceNodes = getInvestigation().SDRF.getNodes(SourceNode.class);
 
-        scanNodes = investigation.SDRF.getNodes(ScanNode.class);
+        scanNodes = getInvestigation().SDRF.getNodes(ScanNode.class);
 
-        hybridizationNodes = investigation.SDRF.getNodes(HybridizationNode.class);
+        hybridizationNodes = getInvestigation().SDRF.getNodes(HybridizationNode.class);
     }
 
     Set<String> extractCharacteristics() {
@@ -100,4 +98,15 @@ public class ExpDesignMageTabParser {
         return Collections.emptyList();
     }
 
+    protected Collection<ScanNode> getScanNodes() {
+        return scanNodes;
+    }
+
+    protected Collection<HybridizationNode> getHybridizationNodes() {
+        return hybridizationNodes;
+    }
+
+    protected MAGETABInvestigation getInvestigation() {
+        return investigation;
+    }
 }

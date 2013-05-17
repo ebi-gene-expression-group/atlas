@@ -42,7 +42,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
 
         Set<String> runs = Sets.newHashSet();
 
-        for (ScanNode scanNode : scanNodes) {
+        for (ScanNode scanNode : getScanNodes()) {
             runs.add(scanNode.comments.get(ENA_RUN));
         }
 
@@ -53,7 +53,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
 
         Set<String> factors = Sets.newHashSet();
 
-        for (ScanNode scanNode : scanNodes) {
+        for (ScanNode scanNode : getScanNodes()) {
             Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
             if (assayNodes.size() != 1) {
                 throw new IllegalStateException("No assay corresponds to ENA run " + scanNode.comments.get(ENA_RUN));
@@ -70,7 +70,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
 
     ScanNode getScanNodeForRunAccession(String runAccession) {
 
-        for (ScanNode scanNode : scanNodes) {
+        for (ScanNode scanNode : getScanNodes()) {
             if (scanNode.comments.get(ENA_RUN).equals(runAccession)) {
                 return scanNode;
             }

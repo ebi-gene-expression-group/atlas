@@ -28,9 +28,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+
+import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -41,6 +45,8 @@ import static org.mockito.Mockito.when;
 public class ExpDesignLoaderControllerTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
+
+    private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
 
     @Mock
     private ApplicationProperties applicationPropertiesMock;
@@ -117,5 +123,23 @@ public class ExpDesignLoaderControllerTest {
     @Test(expected = IllegalStateException.class)
     public void testUnknownExperiment() throws Exception {
         subject.loadExpDesign(EXPERIMENT_ACCESSION);
+    }
+
+    @Test
+    public void testIOException() throws Exception {
+        when(applicationPropertiesMock.getTwoColourExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
+
+        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(csvWriterMock).close();
+
+        assertThat(subject.loadExpDesign(EXPERIMENT_ACCESSION), is(TEST_EXCEPTION));
+    }
+
+    @Test
+    public void testParseException() throws Exception {
+        when(applicationPropertiesMock.getTwoColourExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
+
+        Mockito.doThrow(new ParseException(TEST_EXCEPTION)).when(twoColourExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+
+        assertThat(subject.loadExpDesign(EXPERIMENT_ACCESSION), is(TEST_EXCEPTION));
     }
 }

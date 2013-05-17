@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class TwoColourMageTabLimpopoExpDesignParserIT {
+public class TwoColourExpDesignMageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION_E_GEOD_43049 = "E-GEOD-43049";
 

@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 
 import javax.inject.Inject;
@@ -38,7 +39,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class MageTabLimpopoExpDesignParserIT {
+public class ExpDesignMageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
 
@@ -62,6 +63,13 @@ public class MageTabLimpopoExpDesignParserIT {
     @Test(expected = IllegalStateException.class)
     public void testForNullExperimentAccession() throws Exception {
         subject.init(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testForNonExistingScanNode() throws Exception {
+        subject.init(EXPERIMENT_ACCESSION_E_MTAB_513);
+        ScanNode scanNode = new ScanNode();
+        subject.findCharacteristicValueForScanNode(scanNode, "sex");
     }
 
     @Test

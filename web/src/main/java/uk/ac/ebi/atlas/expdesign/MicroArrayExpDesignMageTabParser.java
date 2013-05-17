@@ -41,7 +41,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
 
         Set<String> assays = Sets.newHashSet();
 
-        for (ScanNode scanNode : scanNodes) {
+        for (ScanNode scanNode : getScanNodes()) {
             assays.add(scanNode.getNodeName());
         }
 
@@ -52,7 +52,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
 
         Set<String> factors = Sets.newHashSet();
 
-        for (ScanNode scanNode : scanNodes) {
+        for (ScanNode scanNode : getScanNodes()) {
             Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
             if (hybridizationNodes.size() != 1) {
                 throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
@@ -69,7 +69,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
 
     ScanNode getScanNodeForAssay(String assay) {
 
-        for (ScanNode scanNode : scanNodes) {
+        for (ScanNode scanNode : getScanNodes()) {
             if (scanNode.getNodeName().equals(assay)) {
                 return scanNode;
             }

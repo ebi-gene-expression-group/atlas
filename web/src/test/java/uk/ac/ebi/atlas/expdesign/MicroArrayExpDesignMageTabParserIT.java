@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class MicroArrayMageTabLimpopoExpDesignParserIT {
+public class MicroArrayExpDesignMageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION_E_MTAB_1066 = "E-MTAB-1066";
 
