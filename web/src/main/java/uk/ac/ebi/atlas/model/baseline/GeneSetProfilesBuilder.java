@@ -39,20 +39,20 @@ public class GeneSetProfilesBuilder {
     private Map<String, BaselineProfile> averageProfiles = new HashMap<>();
     private Map<String, Integer> geneSetProfileCounts = new HashMap<>();
 
-    int totalGeneProfileCount = 0;
+    private int totalGeneProfileCount = 0;
 
     @Inject
-    GeneSetProfilesBuilder(BaselineRequestContext requestContext){
+    GeneSetProfilesBuilder(BaselineRequestContext requestContext) {
         this.requestContext = requestContext;
     }
 
-    public GeneSetProfilesBuilder sumProfile(BaselineProfile profile){
+    public GeneSetProfilesBuilder sumProfile(BaselineProfile profile) {
         totalGeneProfileCount++;
 
-        for (String queryTerm: requestContext.getGeneQueryResponse().getRelatedTerms(profile.getId())){
+        for (String queryTerm : requestContext.getGeneQueryResponse().getRelatedTerms(profile.getId())) {
 
             BaselineProfile sumProfile = averageProfiles.get(queryTerm);
-            if (sumProfile == null){
+            if (sumProfile == null) {
                 sumProfile = new BaselineProfile(queryTerm);
                 geneSetProfileCounts.put(queryTerm, 0);
             }
@@ -65,11 +65,11 @@ public class GeneSetProfilesBuilder {
         return this;
     }
 
-    public BaselineProfilesList build(){
+    public BaselineProfilesList build() {
         BaselineProfilesList baselineProfilesList = new BaselineProfilesList();
 
-        for(BaselineProfile profile : averageProfiles.values()){
-            if (!averageProfiles.isEmpty()){
+        for (BaselineProfile profile : averageProfiles.values()) {
+            if (!averageProfiles.isEmpty()) {
                 baselineProfilesList.add(profile.foldProfile(geneSetProfileCounts.get(profile.getId())));
             }
         }
