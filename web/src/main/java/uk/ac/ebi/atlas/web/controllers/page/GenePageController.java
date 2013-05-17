@@ -49,7 +49,7 @@ public class GenePageController extends BioentityPageController {
         this.genePagePropertyTypes = genePagePropertyTypes;
     }
 
-    @RequestMapping(value = "/genes/{identifier}")
+    @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         return super.showGenePage(identifier, model);
     }

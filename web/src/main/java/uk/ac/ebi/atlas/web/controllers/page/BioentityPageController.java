@@ -26,19 +26,18 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioentityPageProperties;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class BioentityPageController {
 
@@ -61,13 +60,16 @@ public abstract class BioentityPageController {
 
         String species = solrClient.findSpeciesForGeneId(identifier);
 
+        propertiesWithValues = fetchProperties(identifier);
+
+        //ToDo: this might be written better
+        validateData(identifier, species);
+
+        model.addAttribute("properties", transformPropertiesMapWithLinks(species));
+
         model.addAttribute("species", species);
 
         model.addAttribute("names", generateTypeToNameMap());
-
-        propertiesWithValues = fetchProperties(identifier);
-
-        model.addAttribute("properties", transformPropertiesMapWithLinks(species));
 
         // there should be only one element of this kind
         model.addAttribute(PROPERTY_TYPE_SYMBOL, getFirstValueOfProperty(getSymbolType()));
@@ -76,6 +78,12 @@ public abstract class BioentityPageController {
         model.addAttribute(PROPERTY_TYPE_DESCRIPTION, getCleanedUpDescription());
 
         return "gene";
+    }
+
+    private void validateData(String identifier, String species) {
+        if (propertiesWithValues.isEmpty() || StringUtils.isBlank(species)) {
+            throw new ResourceNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
+        }
     }
 
     private Multimap<String, String> fetchProperties(String identifier) {
@@ -94,7 +102,8 @@ public abstract class BioentityPageController {
     }
 
     protected String getFirstValueOfProperty(String propertyType) {
-        return propertiesWithValues.get(propertyType).iterator().next();
+        Collection<String> properties = propertiesWithValues.get(propertyType);
+        return CollectionUtils.isNotEmpty(properties) ? properties.iterator().next() : "";
     }
 
 

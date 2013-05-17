@@ -56,7 +56,7 @@ public class ProteinPageController extends BioentityPageController {
         this.uniProtClient = uniProtClient;
     }
 
-    @RequestMapping(value = "/proteins/{identifier}")
+    @RequestMapping(value = "/proteins/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         return super.showGenePage(identifier, model);
     }
