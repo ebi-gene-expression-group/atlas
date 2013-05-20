@@ -37,23 +37,15 @@ public class GenePageController extends BioentityPageController {
 
     @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
-/*
-    @Inject
-    GenePageController(SolrClient solrClient,
-                       BioentityPageProperties geneCardProperties,
-                       @Value("#{configuration['index.types.genepage']}") String genePagePropertyTypes) {
-        super(solrClient, geneCardProperties);
-        this.genePagePropertyTypes = genePagePropertyTypes;
-    }
-*/
+
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         return super.showGenePage(identifier, model);
     }
 
     @Override
-    String getPagePropertyTypes() {
-        return genePagePropertyTypes;
+    String[] getPagePropertyTypes() {
+        return genePagePropertyTypes.split(",");
     }
 
     @Override

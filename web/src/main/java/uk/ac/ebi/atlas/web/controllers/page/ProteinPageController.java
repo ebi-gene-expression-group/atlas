@@ -38,25 +38,14 @@ public class ProteinPageController extends BioentityPageController {
     @Value("#{configuration['index.types.proteinpage']}")
     private String proteinPagePropertyTypes;
 
-    //private UniProtClient uniProtClient;
-/*
-    @Inject
-    ProteinPageController(SolrClient solrClient,
-                          BioentityPageProperties geneCardProperties,
-                          @Value("#{configuration['index.types.proteinpage']}") String proteinPagePropertyTypes, UniProtClient uniProtClient) {
-        super(solrClient, geneCardProperties);
-        this.proteinPagePropertyTypes = proteinPagePropertyTypes;
-        this.uniProtClient = uniProtClient;
-    }
-*/
     @RequestMapping(value = "/proteins/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         return super.showGenePage(identifier, model);
     }
 
     @Override
-    String getPagePropertyTypes() {
-        return proteinPagePropertyTypes;
+    String[] getPagePropertyTypes() {
+        return proteinPagePropertyTypes.split(",");
     }
 
     @Override
@@ -64,14 +53,4 @@ public class ProteinPageController extends BioentityPageController {
         return PROPERTY_TYPE_SYMBOL;
     }
 
-//    @Override
-//    protected void addExtraProperties(Multimap<String, String> properties) {
-//        Collection<String> uniprotIds = properties.get("uniprot");
-//        if (CollectionUtils.isNotEmpty(uniprotIds)) {
-//            for (String uniprotId : uniprotIds) {
-//                Collection<String> reactomeIds = uniProtClient.fetchReactomeIds(uniprotId);
-//                properties.putAll("reactome", reactomeIds);
-//            }
-//        }
-//    }
 }

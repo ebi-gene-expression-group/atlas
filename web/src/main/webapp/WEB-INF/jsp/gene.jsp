@@ -19,6 +19,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -28,16 +29,16 @@
              src="resources/images/bioentity_info_transparent_bkg.png"/>
         <span class="geneCardSymbol">${symbol}</span>
         <span class="geneCardSpecies">${bioentityPropertyService.getSpecies()}</span>
-        <span class="geneCardDescription">${description}</span>
+        <span class="geneCardDescription">${bioentityPropertyService.getBioEntityDescription()}</span>
     </ul>
 
     <div class="geneCard">
         <table id="geneCardTable">
-            <c:forEach var="propertyType" items="${names.keySet()}">
+            <c:forEach var="propertyType" items="${propertyNames.keySet()}">
                 <c:set var="propertyLinks" value="${bioentityPropertyService.getPropertyLinks(propertyType)}"/>
                 <c:if test="${propertyLinks.size() > 0}">
                     <tr>
-                        <td class="geneCardPropertyType">${names.get(propertyType)}</td>
+                        <td class="geneCardPropertyType">${propertyNames.get(propertyType)}</td>
                         <td class="geneCardPropertyValue">
                             <c:set var="count" value="0"/>
                             <c:forEach var="propertyLink" items="${propertyLinks}">

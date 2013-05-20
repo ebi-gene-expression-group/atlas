@@ -1,9 +1,32 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
@@ -21,7 +44,10 @@ import java.util.List;
 @Scope("request")
 public class BioentityPropertyService {
 
+    public static final String PROPERTY_TYPE_DESCRIPTION = "description";
+
     private SolrClient solrClient;
+
     private UniProtClient uniProtClient;
 
     private BioentityPageProperties geneCardProperties;
@@ -37,9 +63,9 @@ public class BioentityPropertyService {
         this.geneCardProperties = geneCardProperties;
     }
 
-    public void init(String identifier, String queryPropertyTypes) {
+    public void init(String identifier, String[] queryPropertyTypes) {
         species = solrClient.findSpeciesForGeneId(identifier);
-        propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes.split(","));
+        propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
     }
 
     public String getSpecies(){
@@ -58,15 +84,33 @@ public class BioentityPropertyService {
         return propertyLinks;
     }
 
+    public String getBioEntityDescription() {
+        String description = getFirstValueOfProperty(PROPERTY_TYPE_DESCRIPTION);
+        return StringUtils.substringBefore(description, "[");
+    }
+
+    String getFirstValueOfProperty(String propertyType) {
+        Collection<String> properties = propertyValuesByType.get(propertyType);
+        return CollectionUtils.isNotEmpty(properties) ? properties.iterator().next() : "";
+    }
+
+    void addReactomePropertyValues() {
+        Collection<String> uniprotIds = propertyValuesByType.get("uniprot");
+        if (CollectionUtils.isNotEmpty(uniprotIds)) {
+            for (String uniprotId : uniprotIds) {
+                Collection<String> reactomeIds = uniProtClient.fetchReactomeIds(uniprotId);
+                propertyValuesByType.putAll("reactome", reactomeIds);
+            }
+        }
+    }
+
     String transformOrthologToSymbol(String identifier) {
         String species = solrClient.findSpeciesForGeneId(identifier);
-        if (!StringUtils.isBlank(species)) {
-            species = species.substring(0, 1).toUpperCase() + species.substring(1);
-            List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
-            if (!valuesForGeneId.isEmpty()) {
-                String symbol = valuesForGeneId.get(0);
-                return symbol + " (" + species + ")";
-            }
+        species = WordUtils.capitalize(species);
+        List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
+        if (!valuesForGeneId.isEmpty()) {
+            String symbol = valuesForGeneId.get(0);
+            return symbol + " (" + species + ")";
         }
         return identifier;
     }
@@ -104,21 +148,6 @@ public class BioentityPropertyService {
             return URLEncoder.encode(value, "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("Cannot create URL from " + value, e);
-        }
-    }
-
-    String getFirstValueOfProperty(String propertyType) {
-        Collection<String> properties = propertyValuesByType.get(propertyType);
-        return CollectionUtils.isNotEmpty(properties) ? properties.iterator().next() : "";
-    }
-
-    void addReactomePropertyValues() {
-        Collection<String> uniprotIds = propertyValuesByType.get("uniprot");
-        if (CollectionUtils.isNotEmpty(uniprotIds)) {
-            for (String uniprotId : uniprotIds) {
-                Collection<String> reactomeIds = uniProtClient.fetchReactomeIds(uniprotId);
-                propertyValuesByType.putAll("reactome", reactomeIds);
-            }
         }
     }
 
