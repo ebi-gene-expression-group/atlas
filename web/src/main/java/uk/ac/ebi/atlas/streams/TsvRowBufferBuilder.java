@@ -28,7 +28,7 @@ public interface TsvRowBufferBuilder<T extends Expression> {
 
     TsvRowBufferBuilder forExperiment(String experimentAccession);
 
-    abstract TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
+    TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
 
     TsvRowBuffer<T> build();
 
