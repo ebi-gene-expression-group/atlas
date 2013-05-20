@@ -63,6 +63,9 @@ public class GenePageControllerTest {
     @Mock
     Model modelMock;
 
+    @Mock
+    private BioentityPropertyService bioentityPropertyServiceMock;
+
     Properties properties = new Properties();
 
     Multimap<String, String> genePageProperties = HashMultimap.create();
@@ -84,7 +87,10 @@ public class GenePageControllerTest {
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
-        subject = new GenePageController(solrClientMock, bioentityPageProperties, PROPERTY_TYPES);
+        subject = new GenePageController();
+
+        subject.setBioentityPageProperties(bioentityPageProperties);
+        subject.setBioentityPropertyService(bioentityPropertyServiceMock);
     }
 
     @Test
@@ -109,8 +115,4 @@ public class GenePageControllerTest {
 //        assertThat(nameMapping.get(GOTERM), is(GENE_ONTOLOGY));
     }
 
-    @Test
-    public void testTransformOrthologToSymbol() {
-        assertThat(subject.transformOrthologToSymbol(IDENTIFIER), is("symbol (SPECIES)"));
-    }
 }

@@ -27,7 +27,7 @@
         <img id="bioentity-info-image" title="Gene information" style="position: absolute; left: 0.5em; "
              src="resources/images/bioentity_info_transparent_bkg.png"/>
         <span class="geneCardSymbol">${symbol}</span>
-        <span class="geneCardSpecies">${species}</span>
+        <span class="geneCardSpecies">${bioentityPropertyService.getSpecies()}</span>
         <span class="geneCardDescription">${description}</span>
     </ul>
 
@@ -39,23 +39,24 @@
                         <td class="geneCardPropertyType">${names.get(propertyType)}</td>
                         <td class="geneCardPropertyValue">
                             <c:set var="count" value="0"/>
-                            <c:forEach var="propertyValuePair" items="${properties.get(propertyType)}">
+                            <c:set var="propertyLinks" value="${bioentityPropertyService.getPropertyLinks(propertyType)}"/>
+                            <c:forEach var="propertyLink" items="${propertyLinks}">
 
                                 <c:set var="count" value="${count + 1}"/>
                                 <c:set var="comma" value=""/>
-                                <c:if test="${count < properties.get(propertyType).size()}">
+                                <c:if test="${count < propertyLinks.size()}">
                                     <c:set var="comma" value=","/>
                                 </c:if>
 
                                 <c:set var="preLinkHTML" value=""/>
                                 <c:set var="postLinkHTML" value=""/>
-                                <c:if test="${propertyValuePair.getValue().length() > 0}">
+                                <c:if test="${propertyLink.getUrl() > 0}">
                                     <c:set var="preLinkHTML"
-                                           value="<a class=\"geneCardLink\" href=\"${propertyValuePair.getValue()}\" target=\"_blank\">"/>
+                                           value="<a class=\"geneCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
                                     <c:set var="postLinkHTML" value="</a>"/>
                                 </c:if>
 
-                                <span>${preLinkHTML}${propertyValuePair.getKey()}${postLinkHTML}${comma}</span>
+                                <span>${preLinkHTML}${propertyLink.getText()}${postLinkHTML}${comma}</span>
 
                             </c:forEach>
                         </td>

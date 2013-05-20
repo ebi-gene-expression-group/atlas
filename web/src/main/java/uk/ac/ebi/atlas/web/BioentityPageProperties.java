@@ -24,7 +24,7 @@ public class BioentityPageProperties {
         return name == null? propertyType:name;
     }
 
-    public String getLink(String propertyType) {
+    public String getLinkTemplate(String propertyType) {
         return properties.getProperty(LINK_PREFIX + propertyType);
     }
 }

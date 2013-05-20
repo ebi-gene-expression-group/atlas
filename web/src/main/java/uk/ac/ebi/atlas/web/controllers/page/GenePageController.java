@@ -28,10 +28,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.web.BioentityPageProperties;
-
-import javax.inject.Inject;
 
 @Controller
 @Scope("request")
@@ -39,8 +35,9 @@ public class GenePageController extends BioentityPageController {
 
     public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
+    @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
-
+/*
     @Inject
     GenePageController(SolrClient solrClient,
                        BioentityPageProperties geneCardProperties,
@@ -48,7 +45,7 @@ public class GenePageController extends BioentityPageController {
         super(solrClient, geneCardProperties);
         this.genePagePropertyTypes = genePagePropertyTypes;
     }
-
+*/
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         return super.showGenePage(identifier, model);
