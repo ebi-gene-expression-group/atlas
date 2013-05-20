@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 
-@Named
+@Named("bioentityPropertyService")
 @Scope("request")
 public class BioentityPropertyService {
 

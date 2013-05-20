@@ -34,12 +34,12 @@
     <div class="geneCard">
         <table id="geneCardTable">
             <c:forEach var="propertyType" items="${names.keySet()}">
-                <c:if test="${properties.get(propertyType).size() > 0}">
+                <c:set var="propertyLinks" value="${bioentityPropertyService.getPropertyLinks(propertyType)}"/>
+                <c:if test="${propertyLinks.size() > 0}">
                     <tr>
                         <td class="geneCardPropertyType">${names.get(propertyType)}</td>
                         <td class="geneCardPropertyValue">
                             <c:set var="count" value="0"/>
-                            <c:set var="propertyLinks" value="${bioentityPropertyService.getPropertyLinks(propertyType)}"/>
                             <c:forEach var="propertyLink" items="${propertyLinks}">
 
                                 <c:set var="count" value="${count + 1}"/>
@@ -50,7 +50,7 @@
 
                                 <c:set var="preLinkHTML" value=""/>
                                 <c:set var="postLinkHTML" value=""/>
-                                <c:if test="${propertyLink.getUrl() > 0}">
+                                <c:if test="${not propertyLink.getUrl().isEmpty()}">
                                     <c:set var="preLinkHTML"
                                            value="<a class=\"geneCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
                                     <c:set var="postLinkHTML" value="</a>"/>
