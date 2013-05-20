@@ -45,27 +45,27 @@ import java.util.Set;
  * this is a proxy router / interceptor controller that makes up for the lack of workflow handling mechanisms in Spring MVC (HandlerInterceptors are a very poor thing).
  * It intercepts requests for any resource or sub-resource related to any experiment
  * and implements the following responsibilities:
- *
+ * <p/>
  * experiment lookup / experiment resolver
  * - lookup the experiment across different caches
  * -- if there is no experiment for the given accession then http response is routed to 404 - resource not fount
  * view decorator (to keep delegated controllers DRY)
  * - add the experiment to the HttpServletRequest, for any delegated controller to use it
  * - add model attributes that are required by all experiment related views
- *   (i.e. required by layout elements that are shared by all experiment views)
+ * (i.e. required by layout elements that are shared by all experiment views)
  * proxy router for specialized controllers
  * - resolve experiment type (baseline or differential)
  * - forward to the original request URI,
- *   but adding a "type = baseline" | "type=differential" http parameter.
- *   This last step enables routing to different delegated controllers depending on the type of the requested experiment.
- *   Each controller will have to specify params="type=baseline" or params="type=differential" or params="type" in order
- *   to handle baseline experiments, differential experiments, or both.
- *
+ * but adding a "type = baseline" | "type=differential" http parameter.
+ * This last step enables routing to different delegated controllers depending on the type of the requested experiment.
+ * Each controller will have to specify params="type=baseline" or params="type=differential" or params="type" in order
+ * to handle baseline experiments, differential experiments, or both.
+ * <p/>
  * Note: the original query string - request.getQueryString() - is not re-appended to the forwarded request URI
  * because Spring MVC processes and transforms it into ModelAttribute(s) that will be
  * automatically / transparently available to delegated controller,
  * without any need for controller to access the query string.
- *
+ * <p/>
  * If more complex request mappings are required (i.e. url exclusions) this post may help:
  * http://stackoverflow.com/questions/8998419/requestmapping-annotation-in-spring-mvc
  * For a Spring MVC reference:
@@ -73,7 +73,7 @@ import java.util.Set;
  */
 
 @Controller
-public class ExperimentDispatcher {
+public final class ExperimentDispatcher {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
 
@@ -92,15 +92,15 @@ public class ExperimentDispatcher {
 
     @Inject
     private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties){
+                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties) {
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.applicationProperties = applicationProperties;
     }
 
-    @RequestMapping(value ={ "/experiments/{experimentAccession}",
-                             "/experiments/{experimentAccession}/*" })
+    @RequestMapping(value = {"/experiments/{experimentAccession}",
+            "/experiments/{experimentAccession}/*"})
     public String dispatch(HttpServletRequest request, @PathVariable String experimentAccession, Model model) {
 
         Experiment experiment = getExperiment(experimentAccession, model);
@@ -120,7 +120,7 @@ public class ExperimentDispatcher {
         String contextPath = request.getContextPath();
         String requestURI = request.getRequestURI();
 
-        String requestURL = StringUtils.substringAfter(requestURI,contextPath);
+        String requestURL = StringUtils.substringAfter(requestURI, contextPath);
 
         return "forward:" + requestURL + "?type=" + experiment.getType();
     }
@@ -130,10 +130,10 @@ public class ExperimentDispatcher {
         if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)) {
             return baselineExperimentsCache.getExperiment(experimentAccession);
         }
-        if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)){
+        if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
             return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
         }
-        if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)){
+        if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
             MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
             model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
@@ -149,7 +149,7 @@ public class ExperimentDispatcher {
     //ToDo: this method maybe should go somewhere else, indeed it is required by both Baseline and Differential Query Page Controllers
     public static String buildDownloadURL(HttpServletRequest request) {
         //It's important that here we use the original query string, not the forwarded one
-        String originalQueryString = ((HttpServletRequest)((HttpServletRequestWrapper) request).getRequest()).getQueryString();
+        String originalQueryString = ((HttpServletRequest) ((HttpServletRequestWrapper) request).getRequest()).getQueryString();
         return Joiner.on("?").skipNulls()
                 .join(new String[]{request.getRequestURI() + TSV_FILE_EXTENSION, originalQueryString}).toString();
     }

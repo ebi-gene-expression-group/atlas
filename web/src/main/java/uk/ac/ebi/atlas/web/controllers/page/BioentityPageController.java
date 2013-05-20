@@ -88,7 +88,7 @@ public abstract class BioentityPageController {
     private String getCleanedUpDescription() {
         String description = getFirstValueOfProperty(PROPERTY_TYPE_DESCRIPTION);
         if (description.contains("[")) {
-            description = description.substring(0, description.indexOf("["));
+            description = description.substring(0, description.indexOf('['));
         }
         return description;
     }

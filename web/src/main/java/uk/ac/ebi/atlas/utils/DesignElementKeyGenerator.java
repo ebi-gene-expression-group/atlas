@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
-public class DesignElementKeyGenerator {
+public final class DesignElementKeyGenerator {
 
     public static String getKey(String arrayDesignAcc, String designElementAcc) {
         StringBuilder sb = new StringBuilder();

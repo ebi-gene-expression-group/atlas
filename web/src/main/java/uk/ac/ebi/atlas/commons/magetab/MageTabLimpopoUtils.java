@@ -44,7 +44,7 @@ import java.util.Set;
 @Scope("prototype")
 public class MageTabLimpopoUtils {
 
-    private final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
+    private static final Logger LOGGER = Logger.getLogger(MageTabLimpopoUtils.class);
 
     @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String idfUrlTemplate;

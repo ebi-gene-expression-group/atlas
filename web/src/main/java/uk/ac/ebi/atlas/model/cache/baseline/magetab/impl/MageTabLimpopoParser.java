@@ -130,14 +130,14 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
 
         Collection<ExperimentRun> allExperimentRuns = extractAllExperimentRunsFromSdrf(scanNodes, investigation.IDF);
 
-        Map<String, ExperimentRun> processedExperimentRuns = Maps.newHashMap();
+        Map<String, ExperimentRun> extractedExperimentRuns = Maps.newHashMap();
 
         for (ExperimentRun experimentRun : allExperimentRuns) {
             if (processedRunAccessions.contains(experimentRun.getAccession())) {
-                processedExperimentRuns.put(experimentRun.getAccession(), experimentRun);
+                extractedExperimentRuns.put(experimentRun.getAccession(), experimentRun);
             }
         }
-        return processedExperimentRuns;
+        return extractedExperimentRuns;
     }
 
 

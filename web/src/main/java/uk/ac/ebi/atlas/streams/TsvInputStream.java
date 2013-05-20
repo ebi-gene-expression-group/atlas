@@ -71,10 +71,9 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     }
 
-    String[] readCsvLine() {
+    private String[] readCsvLine() {
         try {
             return csvReader.readNext();
-
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
             throw new IllegalStateException("Exception thrown while reading next csv line.", e);

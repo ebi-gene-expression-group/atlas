@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -88,7 +87,7 @@ public class ApplicationProperties {
         return getStringValues("arraydesign.accessions");
     }
 
-    private HashSet<String> getStringValues(String propertyKey) {
+    private Set<String> getStringValues(String propertyKey) {
         return Sets.newHashSet(configurationProperties.getProperty(propertyKey).trim().split(","));
     }
 
