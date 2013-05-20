@@ -41,7 +41,7 @@ import java.io.PrintWriter;
 @Scope("prototype")
 public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<Long, RnaSeqProfile> implements Command<Long> {
 
-    private static final Logger logger = Logger.getLogger(WriteDifferentialProfilesCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(WriteDifferentialProfilesCommand.class);
 
     private RnaSeqProfilesTSVWriter geneProfileTsvWriter;
 
@@ -67,7 +67,7 @@ public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<L
         try {
             return geneProfileTsvWriter.apply(inputStream, experiment.getContrasts());
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
     }

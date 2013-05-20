@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 @Named("experimentInterceptor")
 public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger logger = Logger.getLogger(ExperimentInterceptor.class);
+    private static final Logger LOGGER = Logger.getLogger(ExperimentInterceptor.class);
 
     protected static final String STOP_WATCH = "stopWatch";
 
@@ -55,7 +55,7 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
         stopWatch.stop();
 
-        logger.info("<postHandle> time taken " + stopWatch.getTotalTimeSeconds()
+        LOGGER.info("<postHandle> time taken " + stopWatch.getTotalTimeSeconds()
                 + " s - geneQuery = " + request.getParameter("geneQuery")
                 + ", query factor values = " + request.getParameter("queryFactorValues")
                 + ", cutoff = " + request.getParameter("cutoff"));

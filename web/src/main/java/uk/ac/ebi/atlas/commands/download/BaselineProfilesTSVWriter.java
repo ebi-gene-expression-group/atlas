@@ -6,17 +6,13 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -76,13 +72,13 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         String selectedFilterFactors = formatSelectedFilterFactors();
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
         return MessageFormat.format(headerTemplate, geneQuery, exactMatch, specific, selectedQueryFactors, cutoff,
-                                    experimentAccession, selectedFilterFactors, timeStamp);
+                experimentAccession, selectedFilterFactors, timeStamp);
 
     }
 
     private String formatSelectedFilterFactors() {
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
-        if (CollectionUtils.isEmpty(selectedFilterFactors)){
+        if (CollectionUtils.isEmpty(selectedFilterFactors)) {
             return "";
         }
         Collection<String> transformedSelectedFilterFactors = Collections2.transform(selectedFilterFactors, new Function<Factor, String>() {
@@ -98,7 +94,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     protected String formatSelectedQueryFactors() {
         String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorName(requestContext.getQueryFactorType());
         Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
-        if (CollectionUtils.isEmpty(selectedQueryFactors)){
+        if (CollectionUtils.isEmpty(selectedQueryFactors)) {
             return "any " + queryFactorName;
         }
         Collection<String> transformedFactors = Collections2.transform(selectedQueryFactors, new Function<Factor, String>() {

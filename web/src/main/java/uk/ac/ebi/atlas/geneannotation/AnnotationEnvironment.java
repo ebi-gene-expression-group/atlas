@@ -43,7 +43,7 @@ import java.util.concurrent.ConcurrentMap;
 @Scope("singleton")
 public class AnnotationEnvironment {
 
-    private static final Logger logger = Logger.getLogger(AnnotationEnvironment.class);
+    private static final Logger LOGGER = Logger.getLogger(AnnotationEnvironment.class);
 
     private static final String GENES_DB = "genes.db";
 
@@ -153,6 +153,6 @@ public class AnnotationEnvironment {
         geneNameDatabase.close();
         designElementDatabase.close();
         environment.close();
-        logger.info("<close> gene name database successfully closed");
+        LOGGER.info("<close> gene name database successfully closed");
     }
 }

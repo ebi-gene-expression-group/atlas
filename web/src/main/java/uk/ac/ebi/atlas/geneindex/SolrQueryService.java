@@ -53,6 +53,7 @@ public class SolrQueryService {
     private static final String IDENTIFIER_FIELD = "identifier";
     private static final String SPECIES_FIELD = "species";
     private static final String PROPERTY_FIELD = "property";
+    private static final int MAX_GENE_IDS_TO_FETCH = 100000;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -74,8 +75,10 @@ public class SolrQueryService {
     @PostConstruct
     private void initServer() {
         solrServer = new HttpSolrServer(serverURL);
-        solrServer.setMaxRetries(MAX_RETRIES); // defaults to 0.  > 1 not recommended.
-        solrServer.setConnectionTimeout(CONNECTION_TIMEOUT); // 5 seconds to establish TCP
+        // defaults to 0.  > 1 not recommended.
+        solrServer.setMaxRetries(MAX_RETRIES);
+        // 5 seconds to establish TCP
+        solrServer.setConnectionTimeout(CONNECTION_TIMEOUT);
     }
 
     public Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
@@ -159,7 +162,7 @@ public class SolrQueryService {
         solrQuery.setParam("group", true);
         solrQuery.setParam("group.field", IDENTIFIER_FIELD);
         solrQuery.setParam("group.main", true);
-        solrQuery.setRows(100000);
+        solrQuery.setRows(MAX_GENE_IDS_TO_FETCH);
 
         LOGGER.debug("<fetchGeneIdentifiersFromSolr> processing solr query: " + solrQuery.toString());
 

@@ -31,11 +31,12 @@ import java.util.Set;
 
 public class DifferentialProfileComparator<T extends DifferentialProfile> implements Comparator<T> {
 
+    private static final double DEFAULT_CUTOFF = 0.05;
     private boolean isSpecific;
     private Set<Contrast> selectedQueryFactors;
     private Set<Contrast> allQueryFactors;
     private Regulation regulation;
-    private double cutoff = 0.05;
+    private double cutoff = DEFAULT_CUTOFF;
 
 
     public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectedQueryFactors,
@@ -54,7 +55,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
         // A1:
         if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
             int comparison = Integer.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
-            if (0 == comparison){
+            if (0 == comparison) {
                 comparison = compareOnAverage(firstProfile, otherProfile, allQueryFactors);
             }
             return comparison;
@@ -63,8 +64,8 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
             return Ordering.natural().reverse().compare(
-                                                    getExpressionLevelFoldChangeOn(firstProfile),
-                                                    getExpressionLevelFoldChangeOn(otherProfile));
+                    getExpressionLevelFoldChangeOn(firstProfile),
+                    getExpressionLevelFoldChangeOn(otherProfile));
         }
 
         // A2
@@ -78,7 +79,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     }
 
     protected int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
-                                 Set<Contrast> averageOn) {
+                                   Set<Contrast> averageOn) {
 
         double averageExpressionLevelOn1 = firstProfile.getAverageExpressionLevelOn(averageOn, regulation);
         double averageExpressionLevelOn2 = otherProfile.getAverageExpressionLevelOn(averageOn, regulation);

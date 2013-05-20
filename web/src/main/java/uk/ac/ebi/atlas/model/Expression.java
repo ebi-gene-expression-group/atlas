@@ -24,6 +24,6 @@ package uk.ac.ebi.atlas.model;
 
 public interface Expression {
 
-    public double getLevel();
+    double getLevel();
 
 }

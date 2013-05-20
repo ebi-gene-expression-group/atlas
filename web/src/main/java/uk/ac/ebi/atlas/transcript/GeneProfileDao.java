@@ -47,6 +47,10 @@ public class GeneProfileDao {
 
     private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO experiment_transcripts " +
             "(experiment_accession, gene_id, transcript_id, transcript_expressions) VALUES (?, ?, ?, ?)";
+    private static final int FIRST_INDEX = 1;
+    private static final int SECOND_INDEX = 2;
+    private static final int THIRD_INDEX = 3;
+    private static final int FOURTH_INDEX = 4;
 
     @Inject
     private DataSource dataSource;
@@ -68,11 +72,11 @@ public class GeneProfileDao {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 TranscriptProfile profile = profiles.get(i);
-                ps.setString(1, experimentAccession);
-                ps.setString(2, profile.getGeneId());
-                ps.setString(3, profile.getTranscriptId());
+                ps.setString(FIRST_INDEX, experimentAccession);
+                ps.setString(SECOND_INDEX, profile.getGeneId());
+                ps.setString(THIRD_INDEX, profile.getTranscriptId());
                 List<Double> expressions = profile.getExpressions();
-                ps.setObject(4, expressions.toArray(new Double[expressions.size()]));
+                ps.setObject(FOURTH_INDEX, expressions.toArray(new Double[expressions.size()]));
             }
 
             @Override

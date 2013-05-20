@@ -40,7 +40,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@Scope("request") //if we make it singleton it gets initialized during deployment, that means deployment become slow
+// if we make it singleton it gets initialized during deployment, that means deployment become slow
+@Scope("request")
 public class HomePageController {
     private static final Logger LOGGER = Logger.getLogger(HomePageController.class);
 
@@ -77,9 +78,10 @@ public class HomePageController {
 
         for (String experimentAccession : properties.getBaselineExperimentsIdentifiers()) {
             String displayName = null;
-            try{
+            try {
                 displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
-            }catch(RuntimeException e){ //we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
+            } catch (RuntimeException e) {
+                // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
                 displayName = experimentAccession;
             }
@@ -104,7 +106,7 @@ public class HomePageController {
 
         for (String experimentAccession : properties.getBaselineExperimentsIdentifiers()) {
 
-            try{
+            try {
                 BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
                 for (String specie : experiment.getSpecies()) {
@@ -115,7 +117,8 @@ public class HomePageController {
                         experimentLinks.put(experimentAccession + specie, "");
                     }
                 }
-            }catch(RuntimeException e){ //we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
+            } catch (RuntimeException e) {
+                // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
 
