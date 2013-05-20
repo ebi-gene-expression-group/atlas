@@ -63,7 +63,7 @@ public abstract class ExperimentPageRequestPreferences {
     private boolean geneSetMatch;
 
     protected ExperimentPageRequestPreferences() {
-        //  customInitializations();
+
     }
 
     public SortedSet<String> getQueryFactorValues() {

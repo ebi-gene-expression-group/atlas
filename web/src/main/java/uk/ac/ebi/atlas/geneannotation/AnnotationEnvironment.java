@@ -120,9 +120,9 @@ public class AnnotationEnvironment {
             return environment.openDatabase(null, dbName, dbConfig);
         } catch (DatabaseNotFoundException e) {
             Database database = setupDatabase(false, dbName);
-            if(readonly) {
+            if (readonly) {
                 database.close();
-                return  setupDatabase(readonly, dbName);
+                return setupDatabase(readonly, dbName);
             } else {
                 return database;
             }
@@ -147,14 +147,6 @@ public class AnnotationEnvironment {
     public TransactionRunner getTransactionRunner() {
         return new TransactionRunner(environment);
     }
-
-//    public Environment getEnvironment() {
-//        return environment;
-//    }
-//
-//    public Database getGeneNameDatabase() {
-//        return geneNameDatabase;
-//    }
 
     @PreDestroy
     public void close() {
