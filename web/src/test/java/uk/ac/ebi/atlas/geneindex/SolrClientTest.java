@@ -119,10 +119,9 @@ public class SolrClientTest {
         assertThat(subject.findGenePropertySuggestions("p53", "mus mus"), is(not(empty())));
     }
 
-    @Test
+    @Test(expected = ResultNotFoundException.class)
     public void testFetchGenePageProperties() throws Exception {
         Multimap<String, String> multimap = subject.fetchGenePageProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES.split(","));
-        assertThat(multimap, is(results));
 
         verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_GENE_PAGE_QUERY, 1000);
     }

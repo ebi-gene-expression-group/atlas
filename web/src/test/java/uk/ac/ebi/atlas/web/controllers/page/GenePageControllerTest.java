@@ -87,18 +87,19 @@ public class GenePageControllerTest {
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
+        when(bioentityPropertyServiceMock.getFirstValueOfProperty(SYMBOL)).thenReturn(SYMBOL);
+        when(bioentityPropertyServiceMock.getFirstValueOfProperty(DESCRIPTION)).thenReturn(DESCRIPTION);
         subject = new GenePageController();
 
         subject.setBioentityPageProperties(bioentityPageProperties);
         subject.setBioentityPropertyService(bioentityPropertyServiceMock);
+        subject.setGenePagePropertyTypes(PROPERTY_TYPES);
     }
 
     @Test
     public void testShowGenePage() throws Exception {
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("gene"));
-        verify(modelMock).addAttribute("species", SPECIES);
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
-        verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_DESCRIPTION, DESCRIPTION);
     }
 
     @Test

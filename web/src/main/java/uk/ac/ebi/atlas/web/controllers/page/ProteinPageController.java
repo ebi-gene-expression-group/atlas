@@ -53,4 +53,7 @@ public class ProteinPageController extends BioentityPageController {
         return PROPERTY_TYPE_SYMBOL;
     }
 
+    void setProteinPagePropertyTypes(String proteinPagePropertyTypes) {
+        this.proteinPagePropertyTypes = proteinPagePropertyTypes;
+    }
 }

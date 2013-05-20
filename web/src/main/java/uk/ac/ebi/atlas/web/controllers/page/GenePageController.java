@@ -53,4 +53,7 @@ public class GenePageController extends BioentityPageController {
         return PROPERTY_TYPE_SYMBOL;
     }
 
+    void setGenePagePropertyTypes(String genePagePropertyTypes) {
+        this.genePagePropertyTypes = genePagePropertyTypes;
+    }
 }

@@ -72,6 +72,7 @@ public class BioentityPropertyService {
         return species;
     }
 
+    //used in gene.jsp
     public List<PropertyLink> getPropertyLinks(String propertyType) {
         if ("reactome".equals(propertyType)){
             addReactomePropertyValues();

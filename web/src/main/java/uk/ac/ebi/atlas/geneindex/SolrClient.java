@@ -101,11 +101,7 @@ public class SolrClient {
 
     public String findSpeciesForGeneId(String identifier) {
 
-        String species = solrQueryService.getSpeciesForIdentifier(identifier);
-        if (species == null) {
-            throw new ResultNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
-        }
-        return species;
+        return solrQueryService.getSpeciesForIdentifier(identifier);
 
     }
 
