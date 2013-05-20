@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.streams;
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -51,8 +50,6 @@ import java.text.MessageFormat;
 @Scope("prototype")
 public class InputStreamFactory {
 
-    private static final Logger logger = Logger.getLogger(InputStreamFactory.class);
-
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineExperimentDataFileUrlTemplate;
 
@@ -78,7 +75,7 @@ public class InputStreamFactory {
                               BaselineProfileBuilder baselineProfileBuilder,
                               MicroarrayProfileBuilder microarrayProfileBuilder,
                               RnaSeqProfileBuilder rnaSeqProfileBuilder,
-                               TsvReaderUtils tsvReaderUtils) {
+                              TsvReaderUtils tsvReaderUtils) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.rnaSeqExpressionsBufferBuilder = rnaSeqExpressionsBufferBuilder;
         this.microarrayExpressionsBufferBuilder = microarrayExpressionsBufferBuilder;

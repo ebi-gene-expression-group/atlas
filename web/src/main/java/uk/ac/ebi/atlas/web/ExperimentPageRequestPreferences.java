@@ -44,6 +44,7 @@ public abstract class ExperimentPageRequestPreferences {
     private Double cutoff = getDefaultCutoff();
 
     private String serializedFilterFactors;
+
     private String queryFactorType;
 
     private SortedSet<String> queryFactorValues;
@@ -153,9 +154,10 @@ public abstract class ExperimentPageRequestPreferences {
 
     public void setGeneQuery(String geneQuery) {
         if (!areQuotesMatching(geneQuery)) {
-            geneQuery = geneQuery + "\"";
+            this.geneQuery = geneQuery + "\"";
+        } else {
+            this.geneQuery = geneQuery;
         }
-        this.geneQuery = geneQuery;
     }
 
     boolean areQuotesMatching(String searchText) {

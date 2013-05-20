@@ -28,20 +28,20 @@ import uk.ac.ebi.atlas.model.differential.Regulation;
 public class DifferentialRequestPreferences extends ExperimentPageRequestPreferences {
 
     private static final double DEFAULT_CUTOFF = 0.05d;
+
     private Regulation regulation = Regulation.UP_DOWN;
-    private boolean geneSetMatch;
 
     @Override
-    public Double getDefaultCutoff(){
+    public Double getDefaultCutoff() {
         return DEFAULT_CUTOFF;
     }
 
     @Override
-    protected String getDefaultGeneQuery(){
+    protected String getDefaultGeneQuery() {
         return "";
     }
 
-    public Regulation getRegulation(){
+    public Regulation getRegulation() {
         return regulation;
     }
 

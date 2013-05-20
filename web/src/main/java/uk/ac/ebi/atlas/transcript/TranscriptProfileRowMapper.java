@@ -35,12 +35,12 @@ public class TranscriptProfileRowMapper implements RowMapper<TranscriptProfile> 
 
     @Override
     public TranscriptProfile mapRow(ResultSet resultSet, int i) throws SQLException {
-        String gene_id = resultSet.getString("gene_id");
-        String transcript_id = resultSet.getString("transcript_id");
+        String geneId = resultSet.getString("gene_id");
+        String transcriptId = resultSet.getString("transcript_id");
         Array array = resultSet.getArray("transcript_expressions");
         Object[] resultArray = (Object[]) array.getArray();
         Double[] expressions = Arrays.copyOf(resultArray, resultArray.length, Double[].class);
-        TranscriptProfile profile = new TranscriptProfile(gene_id, transcript_id, Lists.newArrayList(expressions));
+        TranscriptProfile profile = new TranscriptProfile(geneId, transcriptId, Lists.newArrayList(expressions));
         array.free();
         return profile;
     }

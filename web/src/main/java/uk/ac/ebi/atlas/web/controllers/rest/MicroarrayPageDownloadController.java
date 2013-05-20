@@ -45,10 +45,13 @@ import java.io.IOException;
 @Controller
 @Scope("request")
 public class MicroarrayPageDownloadController {
+
     private static final Logger LOGGER = Logger.getLogger(MicroarrayPageDownloadController.class);
     private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
     private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
     private static final String ANALYTICS_TSV = "-analytics.tsv";
+    private static final String PARAMS_TYPE_MICROARRAY = "type=MICROARRAY";
+    private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
 
     private final MicroarrayRequestContextBuilder requestContextBuilder;
 
@@ -65,9 +68,9 @@ public class MicroarrayPageDownloadController {
         this.dataWriterFactory = dataWriterFactory;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=MICROARRAY")
+    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_MICROARRAY)
     public void downloadGeneProfiles(HttpServletRequest request
-            , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -99,9 +102,9 @@ public class MicroarrayPageDownloadController {
 
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = "type=MICROARRAY")
+    @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = PARAMS_TYPE_MICROARRAY)
     public void downloadNormalizedData(HttpServletRequest request
-            , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -119,9 +122,9 @@ public class MicroarrayPageDownloadController {
         LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/logFold.tsv", params = "type=MICROARRAY")
+    @RequestMapping(value = "/experiments/{experimentAccession}/logFold.tsv", params = PARAMS_TYPE_MICROARRAY)
     public void downloadLogFoldData(HttpServletRequest request
-            , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -139,9 +142,9 @@ public class MicroarrayPageDownloadController {
         LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> streamed " + genesCount + " gene expression profiles");
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=MICROARRAY")
+    @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_MICROARRAY)
     public void downloadAllAnalytics(HttpServletRequest request
-            , @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
+            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);

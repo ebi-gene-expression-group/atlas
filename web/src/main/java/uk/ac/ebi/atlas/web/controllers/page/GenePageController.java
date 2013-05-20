@@ -37,8 +37,6 @@ import javax.inject.Inject;
 @Scope("request")
 public class GenePageController extends BioentityPageController {
 
-    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
-
     private String genePagePropertyTypes;
 
     @Inject
