@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.*;
 
 public class MTAB513GeneProfilesDownloadControllerIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?exactMatch=false");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?geneQuery=&exactMatch=false");
 
     @Test
     public void verifyHeader() {
@@ -68,17 +68,17 @@ public class MTAB513GeneProfilesDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
-                contains("METTL25", "ENSG00000127720", "0", "2", "0.7", "2", "0.9", "2", "5", "4", "4", "0.9", "2", "3", "3", "1", "3", "3")
+                contains("CU463998.3", "ENSG00000244656", "0", "0", "0", "0", "0", "57", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")
         );
 
     }
 
     @Test
-    public void  verifyLenghtOfDocument() {
+    public void verifyLenghtOfDocument() {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(163));
+        assertThat(lines.length, is(268));
     }
 
 }
