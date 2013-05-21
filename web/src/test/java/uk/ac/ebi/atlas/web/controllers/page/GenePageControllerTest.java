@@ -44,28 +44,31 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GenePageControllerTest {
 
-    static final String PROPERTY_TYPES = "symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
-    static final String SYNONYMS = "Synonyms";
-    static final String GENE_ONTOLOGY = "Gene Ontology";
-    public static final String IDENTIFIER = "IDENTIFIER";
-    public static final String SPECIES = "SPECIES";
-    public static final String SYMBOL = "symbol";
-    public static final String DESCRIPTION = "description";
-    public static final String SYNONYM = "synonym";
-    public static final String GOTERM = "goterm";
-    public static final String ORTHOLOG = "ortholog";
+    private static final String PROPERTY_TYPES = "symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
+    private static final String SYNONYMS = "Synonyms";
+    private static final String GENE_ONTOLOGY = "Gene Ontology";
+    private static final String IDENTIFIER = "IDENTIFIER";
+    private static final String SPECIES = "SPECIES";
+    private static final String SYMBOL = "symbol";
+    private static final String DESCRIPTION = "description";
+    private static final String SYNONYM = "synonym";
+    private static final String GOTERM = "goterm";
+    private static final String ORTHOLOG = "ortholog";
 
-    GenePageController subject;
-
-    @Mock
-    SolrClient solrClientMock;
+    private GenePageController subject;
 
     @Mock
-    Model modelMock;
+    private SolrClient solrClientMock;
 
-    Properties properties = new Properties();
+    @Mock
+    private Model modelMock;
 
-    Multimap<String, String> genePageProperties = HashMultimap.create();
+    @Mock
+    private BioentityPropertyService bioentityPropertyServiceMock;
+
+    private Properties properties = new Properties();
+
+    private Multimap<String, String> genePageProperties = HashMultimap.create();
 
     @Before
     public void setUp() throws Exception {
@@ -84,15 +87,19 @@ public class GenePageControllerTest {
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
-        subject = new GenePageController(solrClientMock, bioentityPageProperties, PROPERTY_TYPES);
+        when(bioentityPropertyServiceMock.getFirstValueOfProperty(SYMBOL)).thenReturn(SYMBOL);
+        when(bioentityPropertyServiceMock.getFirstValueOfProperty(DESCRIPTION)).thenReturn(DESCRIPTION);
+        subject = new GenePageController();
+
+        subject.setBioentityPageProperties(bioentityPageProperties);
+        subject.setBioentityPropertyService(bioentityPropertyServiceMock);
+        subject.setGenePagePropertyTypes(PROPERTY_TYPES);
     }
 
     @Test
     public void testShowGenePage() throws Exception {
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("gene"));
-        verify(modelMock).addAttribute("species", SPECIES);
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
-        verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_DESCRIPTION, DESCRIPTION);
     }
 
     @Test
@@ -101,16 +108,5 @@ public class GenePageControllerTest {
         assertThat(subject.getFilteredPropertyTypes(), not(hasItems(SYMBOL, DESCRIPTION)));
     }
 
-    @Test
-    public void testExtractPropertiesFromConfiguration() {
-//        Map<String, String> nameMapping = subject.extractPropertiesFromConfiguration("property");
-//        assertThat(nameMapping.size(), is(2));
-//        assertThat(nameMapping.get(SYNONYM), is(SYNONYMS));
-//        assertThat(nameMapping.get(GOTERM), is(GENE_ONTOLOGY));
-    }
 
-    @Test
-    public void testTransformOrthologToSymbol() {
-        assertThat(subject.transformOrthologToSymbol(IDENTIFIER), is("symbol (SPECIES)"));
-    }
 }

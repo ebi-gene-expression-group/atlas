@@ -86,8 +86,11 @@ public class SolrClient {
     }
 
     public Multimap<String, String> fetchGenePageProperties(String identifier, String[] propertyTypes) {
-        return fetchProperties(identifier, propertyTypes);
-
+        Multimap<String, String> propertiesByType = fetchProperties(identifier, propertyTypes);
+        if (propertiesByType.isEmpty()) {
+            throw new ResultNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
+        }
+        return propertiesByType;
     }
 
     Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
@@ -99,6 +102,7 @@ public class SolrClient {
     public String findSpeciesForGeneId(String identifier) {
 
         return solrQueryService.getSpeciesForIdentifier(identifier);
+
     }
 
     public List<String> findPropertyValuesForGeneId(String identifier, String propertyType) {

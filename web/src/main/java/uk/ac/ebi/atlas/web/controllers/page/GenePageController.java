@@ -28,24 +28,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.web.BioentityPageProperties;
-
-import javax.inject.Inject;
 
 @Controller
 @Scope("request")
 public class GenePageController extends BioentityPageController {
 
-    private String genePagePropertyTypes;
+    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
-    @Inject
-    GenePageController(SolrClient solrClient,
-                       BioentityPageProperties geneCardProperties,
-                       @Value("#{configuration['index.types.genepage']}") String genePagePropertyTypes) {
-        super(solrClient, geneCardProperties);
-        this.genePagePropertyTypes = genePagePropertyTypes;
-    }
+    @Value("#{configuration['index.types.genepage']}")
+    private String genePagePropertyTypes;
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
@@ -53,8 +44,8 @@ public class GenePageController extends BioentityPageController {
     }
 
     @Override
-    String getPagePropertyTypes() {
-        return genePagePropertyTypes;
+    String[] getPagePropertyTypes() {
+        return genePagePropertyTypes.split(",");
     }
 
     @Override
@@ -62,4 +53,7 @@ public class GenePageController extends BioentityPageController {
         return PROPERTY_TYPE_SYMBOL;
     }
 
+    void setGenePagePropertyTypes(String genePagePropertyTypes) {
+        this.genePagePropertyTypes = genePagePropertyTypes;
+    }
 }
