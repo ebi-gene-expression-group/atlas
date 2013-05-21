@@ -33,21 +33,22 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     private NumberUtils numberUtils = new NumberUtils();
 
     @Override
-    protected String getDefaultGeneQuery(){
+    protected String getDefaultGeneQuery() {
         return DEFAULT_GENE_QUERY;
     }
 
     @Override
-    public Double getDefaultCutoff(){
+    public Double getDefaultCutoff() {
         return DEFAULT_CUTOFF;
     }
 
     @Override
-    public void setCutoff(Double cutoff){
-        if(cutoff != null) {
-            cutoff = numberUtils.round(cutoff);
+    public void setCutoff(Double cutoff) {
+        if (cutoff != null) {
+            super.setCutoff(numberUtils.round(cutoff));
+        } else {
+            super.setCutoff(cutoff);
         }
-        super.setCutoff(cutoff);
     }
 
 }

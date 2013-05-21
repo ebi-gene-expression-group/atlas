@@ -36,12 +36,13 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class RnaSeqDiffExperimentsCache implements ExperimentsCache<DifferentialExperiment> {
 
-    private static final Logger logger = Logger.getLogger(RnaSeqDiffExperimentsCache.class);
+    private static final Logger LOGGER = Logger.getLogger(RnaSeqDiffExperimentsCache.class);
 
     private LoadingCache<String, DifferentialExperiment> experiments;
 
     @Inject
-    @Named("differentialExperimentsLoadingCache")//this is the name of the implementation being injected, required because LoadingCache is an interface
+    @Named("differentialExperimentsLoadingCache")
+    //this is the name of the implementation being injected, required because LoadingCache is an interface
     public RnaSeqDiffExperimentsCache(LoadingCache<String, DifferentialExperiment> experiments) {
         this.experiments = experiments;
     }
@@ -53,7 +54,7 @@ public class RnaSeqDiffExperimentsCache implements ExperimentsCache<Differential
             return experiments.get(experimentAccession);
 
         } catch (ExecutionException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
         }
     }

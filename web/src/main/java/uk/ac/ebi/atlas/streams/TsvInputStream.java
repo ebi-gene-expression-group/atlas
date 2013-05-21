@@ -33,7 +33,7 @@ import java.io.IOException;
 
 public abstract class TsvInputStream<T, K extends Expression> implements ObjectInputStream<T> {
 
-    private static final Logger logger = Logger.getLogger(TsvInputStream.class);
+    private static final Logger LOGGER = Logger.getLogger(TsvInputStream.class);
 
     protected static final int GENE_ID_COLUMN = 0;
 
@@ -71,12 +71,11 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     }
 
-    String[] readCsvLine() {
+    private String[] readCsvLine() {
         try {
             return csvReader.readNext();
-
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Exception thrown while reading next csv line.", e);
         }
     }
@@ -116,7 +115,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
     @Override
     public void close() throws IOException {
         csvReader.close();
-        logger.debug("<close> close invoked on TsvInputStream");
+        LOGGER.debug("<close> close invoked on TsvInputStream");
     }
 
 }

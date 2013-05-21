@@ -87,7 +87,7 @@
                                                label="Exact match"/>
                             </span>
                             <c:if test="${type eq 'BASELINE'}">
-                            <span data-help-loc="#gene-set-match" style="float:right;padding-right:10px"></span>
+                            <span data-help-loc="#gene-set-match" style="float:right;"></span>
                             <span style="float:right;">
                                 <form:checkbox id="geneSetMatch"
                                                path="geneSetMatch"

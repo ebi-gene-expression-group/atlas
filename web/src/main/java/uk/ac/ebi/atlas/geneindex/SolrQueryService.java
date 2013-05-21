@@ -37,7 +37,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -49,6 +48,12 @@ public class SolrQueryService {
     private static final int CONNECTION_TIMEOUT = 2000;
     private static final int MAX_RETRIES = 1;
     private static final int DEFAULT_LIMIT = 15;
+    private static final String CONFIG_SPLIT_REGEX = ",";
+    private static final String PROPERTY_LOWER_FIELD = "property_lower";
+    private static final String IDENTIFIER_FIELD = "identifier";
+    private static final String SPECIES_FIELD = "species";
+    private static final String PROPERTY_FIELD = "property";
+    private static final int MAX_GENE_IDS_TO_FETCH = 100000;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -70,8 +75,10 @@ public class SolrQueryService {
     @PostConstruct
     private void initServer() {
         solrServer = new HttpSolrServer(serverURL);
-        solrServer.setMaxRetries(MAX_RETRIES); // defaults to 0.  > 1 not recommended.
-        solrServer.setConnectionTimeout(CONNECTION_TIMEOUT); // 5 seconds to establish TCP
+        // defaults to 0.  > 1 not recommended.
+        solrServer.setMaxRetries(MAX_RETRIES);
+        // 5 seconds to establish TCP
+        solrServer.setConnectionTimeout(CONNECTION_TIMEOUT);
     }
 
     public Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
@@ -90,29 +97,29 @@ public class SolrQueryService {
 
     public List<String> getGeneIdSuggestionsInName(String geneName, String species) {
 
-        String[] propertyTypes = namePropertyTypes.trim().split(",");
+        String[] propertyTypes = namePropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes);
 
-        return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
+        return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
 
     public List<String> getGeneIdSuggestionsInSynonym(String geneName, String species) {
 
-        String[] propertyTypes = synonymPropertyTypes.trim().split(",");
+        String[] propertyTypes = synonymPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes);
 
-        return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
+        return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
 
     public List<String> getGeneIdSuggestionsInIdentifier(String geneName, String species) {
 
-        String[] propertyTypes = identifierPropertyTypes.trim().split(",");
+        String[] propertyTypes = identifierPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes);
 
-        return getSolrResultsForQuery(queryString, "property_lower", DEFAULT_LIMIT);
+        return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
 
     public String getSpeciesForIdentifier(String identifier) {
@@ -120,12 +127,12 @@ public class SolrQueryService {
         String species = null;
 
         SolrQuery query = new SolrQuery("identifier:" + identifier);
-        query.setFields("species");
+        query.setFields(SPECIES_FIELD);
         query.setRows(1);
 
         QueryResponse solrResponse = executeSolrQuery(query);
         for (SolrDocument doc : solrResponse.getResults()) {
-            species = doc.getFieldValue("species").toString();
+            species = doc.getFieldValue(SPECIES_FIELD).toString();
         }
 
         return species;
@@ -136,12 +143,12 @@ public class SolrQueryService {
         List<String> results = Lists.newArrayList();
 
         SolrQuery query = new SolrQuery("identifier:" + identifier + " AND property_type:" + propertyType);
-        query.setFields("property");
+        query.setFields(PROPERTY_FIELD);
         query.setRows(PROPERTY_VALUES_LIMIT);
 
         QueryResponse solrResponse = executeSolrQuery(query);
         for (SolrDocument doc : solrResponse.getResults()) {
-            results.add(doc.getFieldValue("property").toString());
+            results.add(doc.getFieldValue(PROPERTY_FIELD).toString());
         }
 
         return results;
@@ -151,24 +158,24 @@ public class SolrQueryService {
         Set<String> results = Sets.newHashSet();
 
         SolrQuery solrQuery = new SolrQuery(queryString);
-        solrQuery.setFields("identifier");
+        solrQuery.setFields(IDENTIFIER_FIELD);
         solrQuery.setParam("group", true);
-        solrQuery.setParam("group.field", "identifier");
+        solrQuery.setParam("group.field", IDENTIFIER_FIELD);
         solrQuery.setParam("group.main", true);
-        solrQuery.setRows(100000);
+        solrQuery.setRows(MAX_GENE_IDS_TO_FETCH);
 
         LOGGER.debug("<fetchGeneIdentifiersFromSolr> processing solr query: " + solrQuery.toString());
 
         QueryResponse solrResponse = executeSolrQuery(solrQuery);
         for (SolrDocument doc : solrResponse.getResults()) {
-            String uppercaseGeneId = doc.getFieldValue("identifier").toString().toUpperCase();
+            String uppercaseGeneId = doc.getFieldValue(IDENTIFIER_FIELD).toString().toUpperCase();
             results.add(uppercaseGeneId);
         }
 
         return results;
     }
 
-    QueryResponse executeSolrQuery(SolrQuery solrQuery){
+    QueryResponse executeSolrQuery(SolrQuery solrQuery) {
         try {
             return solrServer.query(solrQuery);
         } catch (SolrServerException e) {
@@ -180,7 +187,7 @@ public class SolrQueryService {
     Multimap<String, String> querySolrForProperties(String queryString, int limitResults) {
         SolrQuery solrQuery = new SolrQuery(queryString);
         solrQuery.setRows(limitResults);
-        solrQuery.setFields("property", "property_type");
+        solrQuery.setFields(PROPERTY_FIELD, "property_type");
 
         LOGGER.debug("<querySolrForProperties> processing solr query: " + solrQuery.getQuery());
 
@@ -189,7 +196,7 @@ public class SolrQueryService {
         Multimap<String, String> results = HashMultimap.create();
         for (SolrDocument document : solrResponse.getResults()) {
             String key = document.getFieldValue("property_type").toString();
-            String value = document.getFieldValue("property").toString();
+            String value = document.getFieldValue(PROPERTY_FIELD).toString();
             results.put(key, value);
         }
 
@@ -213,7 +220,7 @@ public class SolrQueryService {
     }
 
     String buildGeneQuery(String query, boolean exactMatch, String species) {
-        String propertyName = exactMatch ? "property_lower" : "property_search";
+        String propertyName = exactMatch ? PROPERTY_LOWER_FIELD : "property_search";
 
         String escapedGeneQuery = customEscape(query);
 
@@ -284,11 +291,4 @@ public class SolrQueryService {
         return searchText.replace(":", "\\:");
     }
 
-    Set<String> toUppercase(List<String> geneIds) {
-        Set<String> result = new HashSet<>();
-        for (String geneId : geneIds) {
-            result.add(geneId.toUpperCase());
-        }
-        return result;
-    }
 }

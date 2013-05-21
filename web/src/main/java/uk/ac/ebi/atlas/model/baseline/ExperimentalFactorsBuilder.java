@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Multimaps;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.commons.collections.CollectionUtils;
@@ -74,8 +73,8 @@ public class ExperimentalFactorsBuilder {
         SortedSetMultimap<String, Factor> factorsByType = buildFactorsByType();
         SortedSetMultimap<Factor, Factor> coOccurringFactors = buildCoOccurringFactors();
 
-        return new ExperimentalFactors( factorsByType, factorNamesByType, orderedFactorGroups,
-                                        coOccurringFactors, menuFilterFactorTypes);
+        return new ExperimentalFactors(factorsByType, factorNamesByType, orderedFactorGroups,
+                coOccurringFactors, menuFilterFactorTypes);
     }
 
     SortedSetMultimap<String, Factor> buildFactorsByType() {

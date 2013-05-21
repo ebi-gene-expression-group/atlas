@@ -40,7 +40,7 @@ import java.util.Set;
 
 public abstract class ExperimentDesignDownloadController<T extends Experiment> {
 
-    private static final Logger logger = Logger.getLogger(DifferentialDesignDownloadController.class);
+    private static final Logger LOGGER = Logger.getLogger(DifferentialDesignDownloadController.class);
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;
@@ -88,7 +88,7 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
         CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', CSVWriter.NO_QUOTE_CHARACTER);
         csvWriter.writeAll(newCsvLines);
 
-        logger.debug("<downloadExperimentDesign> streamed " + newCsvLines.size() + " rows");
+        LOGGER.debug("<downloadExperimentDesign> streamed " + newCsvLines.size() + " rows");
 
         csvWriter.flush();
         csvWriter.close();

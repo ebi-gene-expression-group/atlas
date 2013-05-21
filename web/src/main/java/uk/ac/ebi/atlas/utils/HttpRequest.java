@@ -22,23 +22,19 @@
 
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.base.Charsets;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.List;
 
-public class HttpRequest {
+public final class HttpRequest {
 
     private HttpRequest() {
-
     }
 
     public static InputStream httpPost(org.apache.http.client.HttpClient httpClient, String url, List<? extends NameValuePair> params) throws IOException {

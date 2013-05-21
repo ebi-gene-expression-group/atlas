@@ -40,10 +40,9 @@ import static com.google.common.base.Preconditions.checkState;
 public abstract class DifferentialExpressionsBufferBuilder<T extends Expression, K extends DifferentialExperiment> implements TsvRowBufferBuilder<T> {
 
     private static final Logger LOGGER = Logger.getLogger(RnaSeqExpressionsBufferBuilder.class);
-    protected ExperimentsCache<K> experimentsCache;
+    private ExperimentsCache<K> experimentsCache;
     private String experimentAccession;
     private List<Contrast> orderedContrasts = new LinkedList<>();
-
 
     public DifferentialExpressionsBufferBuilder(ExperimentsCache<K> experimentsCache) {
         this.experimentsCache = experimentsCache;

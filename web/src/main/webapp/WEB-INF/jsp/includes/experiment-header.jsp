@@ -11,7 +11,7 @@
     <table width="100%">
         <tbody>
         <tr>
-            <td style="width:140px;">
+            <td style="width:140px;padding-right:20px">
                 <div class="experiment-accession">
                     <a id="goto-ae" class="thick-link"
                        href="${applicationProperties.getArrayExpressURL(experimentAccession)}"

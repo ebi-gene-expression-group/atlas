@@ -23,13 +23,13 @@
 <%@ attribute name="lowValueColour" required="true" %>
 <%@ attribute name="highValueColour" required="true" %>
 
-<%@ attribute name="minExpressionLevel" required="true" %>
-<%@ attribute name="maxExpressionLevel" required="true" %>
+<%@ attribute name="highValueColorExpressionLevel" required="true" %>
+<%@ attribute name="lowValueColorExpressionLevel" required="true" %>
 
 <tr>
     <td>
         <span style="display:none" class="gradient-level-min">
-            ${maxExpressionLevel}
+            ${lowValueColorExpressionLevel}
         </span>
     </td>
     <td width="200px">
@@ -49,7 +49,7 @@
     </td>
     <td>
         <span style="display:none" class="gradient-level-max">
-            ${minExpressionLevel}
+            ${highValueColorExpressionLevel}
         </span>
     </td>
 </tr>

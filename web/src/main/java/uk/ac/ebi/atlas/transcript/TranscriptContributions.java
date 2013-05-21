@@ -28,9 +28,10 @@ import java.util.Map;
 public class TranscriptContributions {
 
     protected static final String OTHERS = "Others";
+
     private int totalTranscriptsCount;
 
-    private LinkedHashMap<String, Double> transcriptExpressions = new LinkedHashMap<>();
+    private Map<String, Double> transcriptExpressions = new LinkedHashMap<>();
 
     public int getTotalTranscriptsCount() {
         return totalTranscriptsCount;
@@ -40,7 +41,7 @@ public class TranscriptContributions {
         this.totalTranscriptsCount = totalTranscriptsCount;
     }
 
-    public Map<String, Double> getTranscriptExpressions(){
+    public Map<String, Double> getTranscriptExpressions() {
         return transcriptExpressions;
     }
 

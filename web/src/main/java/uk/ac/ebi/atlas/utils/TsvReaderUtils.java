@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 public class TsvReaderUtils {
 
-    private static final Logger logger = Logger.getLogger(TsvReaderUtils.class);
+    private static final Logger LOGGER = Logger.getLogger(TsvReaderUtils.class);
 
     public CSVReader build(String tsvFileURL) {
         try {
@@ -24,7 +24,7 @@ public class TsvReaderUtils {
             Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
             return new CSVReader(dataFileReader, '\t');
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalArgumentException("Error while building GeneProfileInputStream.", e);
         }
     }

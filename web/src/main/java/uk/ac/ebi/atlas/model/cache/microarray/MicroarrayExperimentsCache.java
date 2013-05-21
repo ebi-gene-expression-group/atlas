@@ -34,14 +34,15 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment>{
+public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
 
-    private static final Logger logger = Logger.getLogger(MicroarrayExperimentsCache.class);
+    private static final Logger LOGGER = Logger.getLogger(MicroarrayExperimentsCache.class);
 
     private LoadingCache<String, MicroarrayExperiment> experiments;
 
     @Inject
-    @Named("microarrayExperimentsLoadingCache")//this is the name of the implementation being injected, required because LoadingCache is an interface
+    @Named("microarrayExperimentsLoadingCache")
+    //this is the name of the implementation being injected, required because LoadingCache is an interface
     public MicroarrayExperimentsCache(LoadingCache<String, MicroarrayExperiment> experiments) {
         this.experiments = experiments;
     }
@@ -53,7 +54,7 @@ public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayEx
             return experiments.get(experimentAccession);
 
         } catch (ExecutionException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
         }
     }

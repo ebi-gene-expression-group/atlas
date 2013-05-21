@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.model.cache.differential;
 
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -41,8 +40,7 @@ public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialE
     private ConfigurationTrader configurationTrader;
 
     @Inject
-    public DifferentialExperimentLoader(MageTabLimpopoUtils mageTabLimpopoUtils, ConfigurationTrader configurationTrader) {
-        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
+    public DifferentialExperimentLoader(ConfigurationTrader configurationTrader) {
         this.configurationTrader = configurationTrader;
     }
 

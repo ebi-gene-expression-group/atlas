@@ -297,7 +297,7 @@
           <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion" enabled="true">
             <stringProp name="TestPlan.comments">let&apos;s check that size is larger than 1 MB (actually it is 2.5 MB)</stringProp>
             <stringProp name="Assertion.test_field">SizeAssertion.response_data</stringProp>
-            <stringProp name="SizeAssertion.size">1000000</stringProp>
+            <stringProp name="SizeAssertion.size">900000</stringProp>
             <intProp name="SizeAssertion.operator">3</intProp>
           </SizeAssertion>
           <hashTree/>

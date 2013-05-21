@@ -23,9 +23,6 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
@@ -35,8 +32,6 @@ import javax.inject.Named;
 @Scope("prototype")
 public class MicroarrayRequestContextBuilder extends DifferentialRequestContextBuilder<MicroarrayRequestContext, MicroarrayRequestPreferences> {
 
-    private MicroarrayExperiment experiment;
-
     @Inject
     public MicroarrayRequestContextBuilder(MicroarrayRequestContext requestContext) {
         super(requestContext);
@@ -45,7 +40,7 @@ public class MicroarrayRequestContextBuilder extends DifferentialRequestContextB
     @Override
     public MicroarrayRequestContextBuilder withPreferences(MicroarrayRequestPreferences requestPreferences) {
         super.withPreferences(requestPreferences);
-        requestContext.setArrayDesignAccession(requestPreferences.getArrayDesignAccession());
+        getRequestContext().setArrayDesignAccession(requestPreferences.getArrayDesignAccession());
         return this;
     }
 

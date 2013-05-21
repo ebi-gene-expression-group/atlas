@@ -26,10 +26,10 @@ import uk.ac.ebi.atlas.model.Expression;
 
 public interface TsvRowBufferBuilder<T extends Expression> {
 
-    public TsvRowBufferBuilder forExperiment(String experimentAccession);
+    TsvRowBufferBuilder forExperiment(String experimentAccession);
 
-    public abstract TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
+    TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
 
-    public TsvRowBuffer<T> build();
+    TsvRowBuffer<T> build();
 
 }

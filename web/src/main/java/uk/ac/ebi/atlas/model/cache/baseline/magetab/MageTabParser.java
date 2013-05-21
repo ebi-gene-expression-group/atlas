@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.cache.baseline.magetab;
 
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 

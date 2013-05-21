@@ -31,7 +31,7 @@ import java.util.SortedSet;
 
 
 public abstract class RequestContext<T, K extends ExperimentPageRequestPreferences> {
-    protected K requestPreferences;
+    private K requestPreferences;
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
     private SortedSet<T> allQueryFactors;
@@ -46,11 +46,11 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     }
 
     public String getGeneQuery() {
-        return requestPreferences.getGeneQuery();
+        return getRequestPreferences().getGeneQuery();
     }
 
     public Integer getHeatmapMatrixSize() {
-        return requestPreferences.getHeatmapMatrixSize();
+        return getRequestPreferences().getHeatmapMatrixSize();
     }
 
     public Set<T> getSelectedQueryFactors() {
@@ -62,19 +62,19 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     }
 
     public double getCutoff() {
-        return requestPreferences.getCutoff();
+        return getRequestPreferences().getCutoff();
     }
 
     public boolean isSpecific() {
-        return requestPreferences.isSpecific();
+        return getRequestPreferences().isSpecific();
     }
 
     public boolean isExactMatch() {
-        return requestPreferences.isExactMatch();
+        return getRequestPreferences().isExactMatch();
     }
 
-    public boolean isGeneSetMatch(){
-        return requestPreferences.isGeneSetMatch();
+    public boolean isGeneSetMatch() {
+        return getRequestPreferences().isGeneSetMatch();
     }
 
     public SortedSet<T> getAllQueryFactors() {
@@ -97,11 +97,14 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         this.requestPreferences = requestPreferences;
     }
 
+    K getRequestPreferences() {
+        return requestPreferences;
+    }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(getClass())
-                .add("requestPreferences", requestPreferences)
+                .add("requestPreferences", getRequestPreferences())
                 .add("filteredBySpecies", filteredBySpecies)
                 .add("geneQueryResponse", geneQueryResponse)
                 .toString();

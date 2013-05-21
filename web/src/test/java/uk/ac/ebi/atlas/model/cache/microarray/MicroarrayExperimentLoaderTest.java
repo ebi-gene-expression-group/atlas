@@ -66,7 +66,8 @@ public class MicroarrayExperimentLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentLoader(mageTabLimpopoUtilsMock, configurationTraderMock, "{0}{1}");
+        subject = new MicroarrayExperimentLoader(configurationTraderMock, "{0}{1}");
+        subject.setMageTabLimpopoUtils(mageTabLimpopoUtilsMock);
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));

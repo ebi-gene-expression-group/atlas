@@ -34,6 +34,13 @@ public class TranscriptContributionsTest {
     private TranscriptContributions subject = new TranscriptContributions();
 
     @Test
+    public void testSetGetTotalTranscriptsCount() throws Exception {
+        assertThat(subject.getTotalTranscriptsCount(), is(0));
+        subject.setTotalTranscriptsCount(10);
+        assertThat(subject.getTotalTranscriptsCount(), is(10));
+    }
+
+    @Test
     public void testGetTranscriptPercentageRates() throws Exception {
         //given
         subject.put("t1", 3d);
@@ -41,7 +48,7 @@ public class TranscriptContributionsTest {
         subject.put("t3", 4d);
 
         //when
-        Map<String,Double> expressions = subject.getTranscriptExpressions();
+        Map<String, Double> expressions = subject.getTranscriptExpressions();
 
         //then
         assertThat(expressions.get("t1"), is(3d));

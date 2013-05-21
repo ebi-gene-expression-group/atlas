@@ -33,7 +33,6 @@ import java.util.Enumeration;
 
 public class JdbcDriverUnregisteringListener implements ServletContextListener {
 
-
     @Override
     public void contextInitialized(ServletContextEvent event) {
     }
@@ -72,9 +71,11 @@ public class JdbcDriverUnregisteringListener implements ServletContextListener {
     void deregisterDriver(Driver driver) {
         try {
             DriverManager.deregisterDriver(driver);
-            System.out.println("Successfully deregistered JDBC driver: " + driver); //System.out because log4j doesn't work in context listeners
+            //System.out because log4j doesn't work in context listeners
+            System.out.println("Successfully deregistered JDBC driver: " + driver);
         } catch (SQLException e) {
-            e.printStackTrace(); //System.out because log4j doesn't work in context listeners
+            //System.out because log4j doesn't work in context listeners
+            e.printStackTrace();
         }
     }
 }

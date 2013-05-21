@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Maps;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,16 +38,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-
 @Named
 @Scope("prototype")
 public class GeneProfileDao {
 
-    private static final Logger LOGGER = Logger.getLogger(GeneProfileDao.class);
-    public static final String TRANSCRIPT_PROFILE_QUERY = "SELECT gene_id, transcript_id, transcript_expressions " +
+    private static final String TRANSCRIPT_PROFILE_QUERY = "SELECT gene_id, transcript_id, transcript_expressions " +
             "FROM experiment_transcripts WHERE experiment_accession = ? AND gene_id = ?";
-    public static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO experiment_transcripts " +
+
+    private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO experiment_transcripts " +
             "(experiment_accession, gene_id, transcript_id, transcript_expressions) VALUES (?, ?, ?, ?)";
+    private static final int FIRST_INDEX = 1;
+    private static final int SECOND_INDEX = 2;
+    private static final int THIRD_INDEX = 3;
+    private static final int FOURTH_INDEX = 4;
 
     @Inject
     private DataSource dataSource;
@@ -70,11 +72,11 @@ public class GeneProfileDao {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 TranscriptProfile profile = profiles.get(i);
-                ps.setString(1, experimentAccession);
-                ps.setString(2, profile.getGeneId());
-                ps.setString(3, profile.getTranscriptId());
+                ps.setString(FIRST_INDEX, experimentAccession);
+                ps.setString(SECOND_INDEX, profile.getGeneId());
+                ps.setString(THIRD_INDEX, profile.getTranscriptId());
                 List<Double> expressions = profile.getExpressions();
-                ps.setObject(4, expressions.toArray(new Double[expressions.size()]));
+                ps.setObject(FOURTH_INDEX, expressions.toArray(new Double[expressions.size()]));
             }
 
             @Override

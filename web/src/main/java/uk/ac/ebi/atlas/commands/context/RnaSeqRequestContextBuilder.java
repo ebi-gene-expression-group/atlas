@@ -23,8 +23,6 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;

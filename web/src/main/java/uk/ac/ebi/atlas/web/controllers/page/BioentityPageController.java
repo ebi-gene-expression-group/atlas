@@ -41,9 +41,9 @@ import java.util.*;
 
 public abstract class BioentityPageController {
 
-    public static final String PROPERTY_TYPE_DESCRIPTION = "description";
+    protected static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
-    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
+    protected static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
     private SolrClient solrClient;
 
@@ -96,7 +96,7 @@ public abstract class BioentityPageController {
     private String getCleanedUpDescription() {
         String description = getFirstValueOfProperty(PROPERTY_TYPE_DESCRIPTION);
         if (description.contains("[")) {
-            description = description.substring(0, description.indexOf("["));
+            description = description.substring(0, description.indexOf('['));
         }
         return description;
     }
@@ -169,9 +169,9 @@ public abstract class BioentityPageController {
         String[] split = getAllBioentityProperties();
         List<String> allPropertyTypes = Arrays.asList(split);
         List<String> filteredPropertyTypes = Lists.newArrayList();
-        for (String property_type : allPropertyTypes) {
-            if (!property_type.equals(PROPERTY_TYPE_SYMBOL) && !property_type.equals(PROPERTY_TYPE_DESCRIPTION)) {
-                filteredPropertyTypes.add(property_type);
+        for (String propertyType : allPropertyTypes) {
+            if (!propertyType.equals(PROPERTY_TYPE_SYMBOL) && !propertyType.equals(PROPERTY_TYPE_DESCRIPTION)) {
+                filteredPropertyTypes.add(propertyType);
             }
         }
         return filteredPropertyTypes;

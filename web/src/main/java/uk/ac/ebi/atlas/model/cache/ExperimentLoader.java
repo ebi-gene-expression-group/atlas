@@ -43,11 +43,16 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
     @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
 
-    protected MageTabLimpopoUtils mageTabLimpopoUtils;
+    private MageTabLimpopoUtils mageTabLimpopoUtils;
 
-    protected ArrayExpressClient arrayExpressClient;
+    private ArrayExpressClient arrayExpressClient;
 
     protected ExperimentLoader() {
+    }
+
+    @Inject
+    public void setMageTabLimpopoUtils(MageTabLimpopoUtils mageTabLimpopoUtils) {
+        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
     @Inject

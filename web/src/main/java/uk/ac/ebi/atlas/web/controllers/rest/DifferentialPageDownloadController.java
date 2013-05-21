@@ -45,9 +45,12 @@ import java.io.IOException;
 @Controller
 @Scope("request")
 public class DifferentialPageDownloadController {
+
     private static final Logger LOGGER = Logger.getLogger(DifferentialPageDownloadController.class);
     private static final String ALL_ANALYTICS_TSV = "-analytics.tsv";
     private static final String RAW_COUNTS_TSV = "-raw-counts.tsv";
+    private static final String PARAMS_TYPE_DIFFERENTIAL = "type=DIFFERENTIAL";
+    private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
 
     private final RnaSeqRequestContextBuilder requestContextBuilder;
 
@@ -65,9 +68,9 @@ public class DifferentialPageDownloadController {
         this.dataWriterFactory = dataWriterFactory;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=DIFFERENTIAL")
+    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
     public void downloadGeneProfiles(HttpServletRequest request
-            , @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
+            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid DifferentialRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
@@ -96,7 +99,7 @@ public class DifferentialPageDownloadController {
 
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/raw-counts.tsv", params = "type=DIFFERENTIAL")
+    @RequestMapping(value = "/experiments/{experimentAccession}/raw-counts.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
     public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
@@ -108,7 +111,7 @@ public class DifferentialPageDownloadController {
         LOGGER.info("<download" + RAW_COUNTS_TSV + "> streamed " + genesCount + " gene expression profiles");
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = "type=DIFFERENTIAL")
+    @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
     public void downloadAllAnalytics(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 

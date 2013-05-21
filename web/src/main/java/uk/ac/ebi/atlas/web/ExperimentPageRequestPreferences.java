@@ -36,20 +36,29 @@ public abstract class ExperimentPageRequestPreferences {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
-    @Size(max = 900,
+    private static final int GENE_QUERY_MAX_LENGTH = 900;
+
+    private static final int EXPRESSION_LEVEL_MIN = 0;
+
+    private static final int HEATMAP_SIZE_MIN = 0;
+
+    private static final int HEATMAP_SIZE_MAX = 1000;
+
+    @Size(max = GENE_QUERY_MAX_LENGTH,
             message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
     private String geneQuery = getDefaultGeneQuery();
 
-    @Min(value = 0, message = "The expression level cutoff must be greater than 0")
+    @Min(value = EXPRESSION_LEVEL_MIN, message = "The expression level cutoff must be greater than 0")
     private Double cutoff = getDefaultCutoff();
 
     private String serializedFilterFactors;
+
     private String queryFactorType;
 
     private SortedSet<String> queryFactorValues;
 
     @NotNull
-    @Range(min = 0, max = 1000)
+    @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
 
     private boolean specific = true;
@@ -63,7 +72,7 @@ public abstract class ExperimentPageRequestPreferences {
     private boolean geneSetMatch;
 
     protected ExperimentPageRequestPreferences() {
-        //  customInitializations();
+
     }
 
     public SortedSet<String> getQueryFactorValues() {
@@ -153,9 +162,10 @@ public abstract class ExperimentPageRequestPreferences {
 
     public void setGeneQuery(String geneQuery) {
         if (!areQuotesMatching(geneQuery)) {
-            geneQuery = geneQuery + "\"";
+            this.geneQuery = geneQuery + "\"";
+        } else {
+            this.geneQuery = geneQuery;
         }
-        this.geneQuery = geneQuery;
     }
 
     boolean areQuotesMatching(String searchText) {
