@@ -114,13 +114,13 @@ public class GeneNameTooltipController {
 
         String synonyms = format(multimap.get("synonym"), false, NUMBER_OF_TERMS_TO_SHOW);
 
-        identifier = WORD_SPAN_OPEN + identifier + WORD_SPAN_CLOSE;
+        String enclosedIdentifier = WORD_SPAN_OPEN + identifier + WORD_SPAN_CLOSE;
 
         if (synonyms.isEmpty()) {
-            return identifier;
+            return enclosedIdentifier;
         }
 
-        return Joiner.on(" ").join(synonyms, identifier);
+        return Joiner.on(" ").join(synonyms, enclosedIdentifier);
     }
 
 }

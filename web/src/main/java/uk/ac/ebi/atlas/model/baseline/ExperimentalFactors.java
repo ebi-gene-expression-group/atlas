@@ -81,17 +81,17 @@ public class ExperimentalFactors implements Serializable {
             return getAllFactors();
         }
 
-        TreeSet<Factor> factorsByType = Sets.newTreeSet();
+        TreeSet<Factor> filteredFactors = Sets.newTreeSet();
 
         for (FactorGroup factorGroup : orderedFactorGroups) {
 
             List<Factor> remainingFactors = factorGroup.remove(filterFactors);
             if (remainingFactors.size() == 1) {
-                factorsByType.add(remainingFactors.get(0));
+                filteredFactors.add(remainingFactors.get(0));
             }
         }
 
-        return factorsByType;
+        return filteredFactors;
 
     }
 
@@ -116,7 +116,7 @@ public class ExperimentalFactors implements Serializable {
         return orderedFactorGroups.indexOf(factorGroup);
     }
 
-    public List<FactorGroup> getOrderedFactorGroups(){
+    public List<FactorGroup> getOrderedFactorGroups() {
         return ImmutableList.copyOf(orderedFactorGroups);
     }
 }

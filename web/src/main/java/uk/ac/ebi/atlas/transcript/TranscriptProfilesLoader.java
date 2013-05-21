@@ -67,7 +67,8 @@ public class TranscriptProfilesLoader {
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
         try (CSVReader csvReader = tsvReaderUtils.build(fileURL)) {
 
-            csvReader.readNext();//skip header line
+            //skip header line
+            csvReader.readNext();
 
             List<TranscriptProfile> transcriptProfilesBatch = new ArrayList<>(BATCH_SIZE);
 

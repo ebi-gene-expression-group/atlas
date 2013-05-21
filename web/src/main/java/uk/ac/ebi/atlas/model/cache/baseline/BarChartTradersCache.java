@@ -40,7 +40,8 @@ public class BarChartTradersCache {
     private LoadingCache<String, BarChartTrader> barchartTraders;
 
     @Inject
-    @Named("barChartTradersLoadingCache")//this is the name of the implementation being injected, required because LoadingCache is an interface
+    @Named("barChartTradersLoadingCache")
+    //this is the name of the implementation being injected, required because LoadingCache is an interface
     public BarChartTradersCache(LoadingCache<String, BarChartTrader> barchartTraders) {
         this.barchartTraders = barchartTraders;
     }

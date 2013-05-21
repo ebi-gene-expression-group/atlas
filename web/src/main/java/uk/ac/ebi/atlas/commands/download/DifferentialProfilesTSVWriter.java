@@ -32,7 +32,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
@@ -71,7 +70,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
 
         List<String> attributeLabels = getExpressionDataLabels();
         for (Contrast condition : conditions) {
-            for (String attributeLabel: attributeLabels) {
+            for (String attributeLabel : attributeLabels) {
                 conditionExpressionsHeaders.add(condition.getDisplayName() + "." + attributeLabel);
             }
         }
@@ -99,7 +98,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     }
 
     private String formatSelectedContrasts(DifferentialRequestContext requestContext) {
-        if (requestContext.getSelectedQueryFactors().isEmpty()){
+        if (requestContext.getSelectedQueryFactors().isEmpty()) {
             return "any contrast";
         }
         Collection<String> selectedContrasts = Collections2.transform(requestContext.getSelectedQueryFactors(), new Function<Contrast, String>() {
@@ -116,7 +115,6 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
 
         String[] conditionLevelStrings = null;
 
-        int i = 0;
         for (Contrast contrast : contrasts) {
             K expression = geneProfile.getExpression(contrast);
             String[] expressionLevelStrings = getExpressionLevelStrings(expression);
@@ -125,9 +123,9 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
         return conditionLevelStrings;
     }
 
-    final String[] getExpressionLevelStrings(K expression){
+    final String[] getExpressionLevelStrings(K expression) {
         String[] expressionLevelData = new String[getExpressionDataLabels().size()];
-        if (expression == null){
+        if (expression == null) {
             Arrays.fill(expressionLevelData, "NA");
             return expressionLevelData;
         }
@@ -138,7 +136,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
 
     protected abstract List<Double> getExpressionLevelData(K expression);
 
-    protected Function<Double, String> expressionValueToString(){
+    protected Function<Double, String> expressionValueToString() {
         return new Function<Double, String>() {
             @Override
             public String apply(Double expressionValue) {

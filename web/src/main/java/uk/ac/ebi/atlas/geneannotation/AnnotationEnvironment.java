@@ -43,7 +43,7 @@ import java.util.concurrent.ConcurrentMap;
 @Scope("singleton")
 public class AnnotationEnvironment {
 
-    private static final Logger logger = Logger.getLogger(AnnotationEnvironment.class);
+    private static final Logger LOGGER = Logger.getLogger(AnnotationEnvironment.class);
 
     private static final String GENES_DB = "genes.db";
 
@@ -120,9 +120,9 @@ public class AnnotationEnvironment {
             return environment.openDatabase(null, dbName, dbConfig);
         } catch (DatabaseNotFoundException e) {
             Database database = setupDatabase(false, dbName);
-            if(readonly) {
+            if (readonly) {
                 database.close();
-                return  setupDatabase(readonly, dbName);
+                return setupDatabase(readonly, dbName);
             } else {
                 return database;
             }
@@ -148,19 +148,11 @@ public class AnnotationEnvironment {
         return new TransactionRunner(environment);
     }
 
-//    public Environment getEnvironment() {
-//        return environment;
-//    }
-//
-//    public Database getGeneNameDatabase() {
-//        return geneNameDatabase;
-//    }
-
     @PreDestroy
     public void close() {
         geneNameDatabase.close();
         designElementDatabase.close();
         environment.close();
-        logger.info("<close> gene name database successfully closed");
+        LOGGER.info("<close> gene name database successfully closed");
     }
 }

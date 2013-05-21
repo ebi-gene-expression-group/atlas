@@ -28,7 +28,8 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T> {
-    private static final Logger logger = Logger.getLogger(ObjectInputStreamFilter.class);
+
+    private static final Logger LOGGER = Logger.getLogger(ObjectInputStreamFilter.class);
 
     private ObjectInputStream<T> inputStream;
 
@@ -51,7 +52,7 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
     @Override
     public void close() throws IOException {
         inputStream.close();
-        logger.debug("<close> close invoked on ObjectInputStreamFilter");
+        LOGGER.debug("<close> close invoked on ObjectInputStreamFilter");
     }
 
     protected abstract Predicate<T> getAcceptanceCriteria();

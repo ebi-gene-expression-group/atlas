@@ -22,13 +22,11 @@
 
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.primitives.Doubles;
 import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 @Named("numberUtils")
 @Scope("singleton")
@@ -45,17 +43,18 @@ public class NumberUtils {
     private static final String E = "E";
     private static final String SUP_PRE = "<span style=\"vertical-align: super;\">";
     private static final String SUP_POST = "</span>";
+    private static final int EXPONENT_MINIMUM = -3;
 
 
     public double round(double value) {
         int numberOfFractionalDigits = value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
-                                                  : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE;
+                : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE;
         return MathUtils.round(value, numberOfFractionalDigits);
     }
 
     public String htmlFormatDouble(double number) {
         return (number > 0 && number < MIN_REPORTED_VALUE) ? "<" + formatNumber(MIN_REPORTED_VALUE)
-                                                           : formatNumber(number);
+                : formatNumber(number);
     }
 
     String formatNumber(double number) {
@@ -66,15 +65,17 @@ public class NumberUtils {
 
         // We now convert this format to 6.2*10^-3 (and 0 in the case of 0E0 specifically)
         String[] formatParts = auxFormat.split(E);
-        String mantissa = formatParts[0]; // in 6.2E-3, mantissa = 6.2
-        int exponent = Integer.parseInt(formatParts[1]); // in 6.2E-3, exponent= -3
-        if (exponent >= -3 && exponent <= 0) {
+        // in 6.2E-3, mantissa = 6.2
+        String mantissa = formatParts[0];
+        // in 6.2E-3, exponent= -3
+        int exponent = Integer.parseInt(formatParts[1]);
+        if (exponent >= EXPONENT_MINIMUM && exponent <= 0) {
             return new DecimalFormat("#.###").format(number);
         }
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        if(! "1".equals(mantissa)){
+        if (!"1".equals(mantissa)) {
             stringBuilder.append(mantissa).append(MULTIPLY_HTML_CODE);
         }
         stringBuilder.append(TEN)

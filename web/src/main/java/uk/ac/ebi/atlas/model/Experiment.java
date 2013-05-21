@@ -31,8 +31,8 @@ public class Experiment implements Serializable {
 
     private ExperimentType type;
 
-    protected SortedSet<String> species;
-    protected Map<String, String> speciesMapping;
+    private SortedSet<String> species;
+    private Map<String, String> speciesMapping;
     private String accession;
     private String description;
     private String displayName;
@@ -57,7 +57,7 @@ public class Experiment implements Serializable {
     }
 
     public String getDisplayName() {
-        if (StringUtils.isNotBlank(displayName)){
+        if (StringUtils.isNotBlank(displayName)) {
             return displayName;
         }
         return getAccession();

@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.model.cache.microarray;
 
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -47,9 +46,8 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
     private String logFoldChangePathTemplate;
 
     @Inject
-    public MicroarrayExperimentLoader(MageTabLimpopoUtils mageTabLimpopoUtils, ConfigurationTrader configurationTrader,
+    public MicroarrayExperimentLoader(ConfigurationTrader configurationTrader,
                                       @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate) {
-        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
         this.configurationTrader = configurationTrader;
         this.logFoldChangePathTemplate = logFoldChangePathTemplate;
     }

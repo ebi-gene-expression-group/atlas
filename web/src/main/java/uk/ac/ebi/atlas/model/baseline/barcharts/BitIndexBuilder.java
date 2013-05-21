@@ -41,7 +41,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BitIndexBuilder {
 
-    private static final Logger logger = Logger.getLogger(BitIndexBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(BitIndexBuilder.class);
 
     private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
 
@@ -66,7 +66,7 @@ public class BitIndexBuilder {
 
             return this;
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
         }
 

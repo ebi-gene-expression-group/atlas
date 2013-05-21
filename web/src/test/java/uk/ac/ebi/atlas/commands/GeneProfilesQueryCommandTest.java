@@ -45,7 +45,7 @@ public class GeneProfilesQueryCommandTest {
 
     private static final String SPECIES = "Species 1";
     private static final String GENE_QUERY = "A QUERY";
-    public static final String A_GENE_IDENTIFIER = "A GENE IDENTIFIER";
+    private static final String A_GENE_IDENTIFIER = "A GENE IDENTIFIER";
 
     @Mock
     private GeneQueryTokenizer geneQueryTokenizerMock;
@@ -62,9 +62,6 @@ public class GeneProfilesQueryCommandTest {
     private ObjectInputStream<BaselineProfile> largeInputStream;
 
     private GeneProfilesQueryCommand<GeneProfilesList, BaselineProfile> subject;
-
-    public GeneProfilesQueryCommandTest() {
-    }
 
     //ToDo: better to do verifications on real values than on anyX(), using anyX() could hide bugs
     //ToDo: 20 lines of setup for a 2 lines test?

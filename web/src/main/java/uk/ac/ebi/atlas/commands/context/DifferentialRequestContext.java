@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 public class DifferentialRequestContext<T extends DifferentialExperiment> extends RequestContext<Contrast, DifferentialRequestPreferences> {
@@ -20,11 +19,11 @@ public class DifferentialRequestContext<T extends DifferentialExperiment> extend
     }
 
     public Regulation getRegulation() {
-        return requestPreferences.getRegulation();
+        return getRequestPreferences().getRegulation();
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return Objects.toStringHelper(this.getClass())
                 .addValue(super.toString())
                 .add("regulation", getRegulation())

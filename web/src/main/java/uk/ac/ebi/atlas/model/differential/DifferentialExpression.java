@@ -48,15 +48,22 @@ public class DifferentialExpression implements Expression {
     }
 
     //ToDo: Try to replace with INFINITE_POSITIVE and NEGATIVE
-    public boolean isNotApplicable(){
+    public boolean isNotApplicable() {
         return (getFoldChange() == Double.MAX_VALUE) || (getFoldChange() == Double.MIN_VALUE);
     }
 
     public boolean isRegulatedLike(Regulation regulation) {
         return Regulation.UP_DOWN.equals(regulation)
-                || Regulation.UP.equals(regulation) && isOverExpressed()
-                || Regulation.DOWN.equals(regulation) && isUnderExpressed();
+                || isLikeUpRegulation(regulation)
+                || isLikeDownRegulation(regulation);
+    }
 
+    private boolean isLikeUpRegulation(Regulation regulation) {
+        return Regulation.UP.equals(regulation) && isOverExpressed();
+    }
+
+    private boolean isLikeDownRegulation(Regulation regulation) {
+        return Regulation.DOWN.equals(regulation) && isUnderExpressed();
     }
 
     public Contrast getContrast() {
@@ -74,9 +81,9 @@ public class DifferentialExpression implements Expression {
 
         DifferentialExpression other = (DifferentialExpression) object;
 
-        return  Objects.equal(foldChange, other.foldChange) &&
+        return Objects.equal(foldChange, other.foldChange) &&
                 Objects.equal(pValue, other.pValue) &&
-                Objects.equal(contrast,other.contrast);
+                Objects.equal(contrast, other.contrast);
     }
 
     @Override

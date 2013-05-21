@@ -33,13 +33,13 @@ import java.util.Set;
  */
 public interface FactorGroup extends Iterable<Factor>, Serializable {
 
-    public Factor getFactorByType(String type);
+    Factor getFactorByType(String type);
 
-    public boolean containsAll(Set<Factor> factors);
+    boolean containsAll(Set<Factor> factors);
 
-    public boolean overlapsWith(Collection<Factor> factors);
+    boolean overlapsWith(Collection<Factor> factors);
 
-    public List<Factor> remove(Collection<Factor> factors);
+    List<Factor> remove(Collection<Factor> factors);
 
-    public boolean contains(Factor factor);
+    boolean contains(Factor factor);
 }

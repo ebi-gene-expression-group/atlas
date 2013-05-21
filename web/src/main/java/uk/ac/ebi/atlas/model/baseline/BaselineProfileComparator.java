@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
@@ -46,7 +45,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         this.selectedQueryFactors = selectedQueryFactors;
         this.allQueryFactors = allQueryFactors;
 
-        cutoffDivisor = cutoff !=0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
+        cutoffDivisor = cutoff != 0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
     }
 
     @Override
@@ -64,7 +63,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         *  return ComparisonChain.start()
         *                        .compare(x,y)
         *                        .compare(x,y,Ordering.natural().reverse())
-        *                        .result();
+        *                        .result()
         */
 
         // A1:
@@ -75,7 +74,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
-            //reverse because we want lower values to come first;
+            // reverse because we want lower values to come first
             return Ordering.natural().reverse().compare(getExpressionLevelFoldChangeOn(firstBaselineProfile),
                     getExpressionLevelFoldChangeOn(otherBaselineProfile));
         }
@@ -91,7 +90,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     }
 
     int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile,
-                                                Set<Factor> factors) {
+                                        Set<Factor> factors) {
 
         return Ordering.natural().reverse().
                 compare(firstBaselineProfile.getAverageExpressionLevelOn(factors),

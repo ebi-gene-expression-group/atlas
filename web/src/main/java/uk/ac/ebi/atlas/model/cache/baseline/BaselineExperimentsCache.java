@@ -34,14 +34,15 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperiment>{
+public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperiment> {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentsCache.class);
 
     private LoadingCache<String, BaselineExperiment> experiments;
 
     @Inject
-    @Named("baselineExperimentsLoadingCache")//this is the name of the implementation being injected, required because LoadingCache is an interface
+    @Named("baselineExperimentsLoadingCache")
+    //this is the name of the implementation being injected, required because LoadingCache is an interface
     public BaselineExperimentsCache(LoadingCache<String, BaselineExperiment> experiments) {
         this.experiments = experiments;
     }

@@ -41,7 +41,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
 
     private SolrClient solrClient;
 
-    protected RequestContext requestContext;
+    private RequestContext requestContext;
 
     protected GeneProfilesQueryCommand(RequestContext requestContext) {
         this.requestContext = requestContext;
@@ -65,7 +65,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
     }
 
     //ToDo: this should become an injectable builder
-    ObjectInputStream<K> buildFilterInputStream(String experimentAccession) throws GenesNotFoundException{
+    ObjectInputStream<K> buildFilterInputStream(String experimentAccession) throws GenesNotFoundException {
         ObjectInputStream<K> inputStream = createInputStream(experimentAccession);
 
         if (StringUtils.isBlank(requestContext.getGeneQuery())) {
@@ -77,7 +77,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
                 requestContext.getFilteredBySpecies(),
                 requestContext.isGeneSetMatch());
 
-        if (geneQueryResponse.isEmpty()){
+        if (geneQueryResponse.isEmpty()) {
             throw new GenesNotFoundException("No genes found for searchText = " + requestContext.getGeneQuery() + ", species = " + requestContext.getFilteredBySpecies());
         }
 

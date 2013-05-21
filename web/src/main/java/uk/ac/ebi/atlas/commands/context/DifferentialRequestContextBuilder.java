@@ -33,20 +33,20 @@ import java.util.Set;
 import java.util.SortedSet;
 
 public class DifferentialRequestContextBuilder<T extends DifferentialRequestContext, K extends DifferentialRequestPreferences> {
-    protected T requestContext;
-    protected K requestPreferences;
+    private T requestContext;
+    private K requestPreferences;
     private DifferentialExperiment experiment;
 
     public DifferentialRequestContextBuilder(T requestContext) {
         this.requestContext = requestContext;
     }
 
-    public DifferentialRequestContextBuilder<T,K> forExperiment(DifferentialExperiment experiment) {
+    public DifferentialRequestContextBuilder<T, K> forExperiment(DifferentialExperiment experiment) {
         this.experiment = experiment;
         return this;
     }
 
-    public DifferentialRequestContextBuilder<T,K> withPreferences(K requestPreferences) {
+    public DifferentialRequestContextBuilder<T, K> withPreferences(K requestPreferences) {
         this.requestPreferences = requestPreferences;
         return this;
     }
@@ -55,28 +55,36 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
-        requestContext.setRequestPreferences(requestPreferences);
+        getRequestContext().setRequestPreferences(getRequestPreferences());
 
-        requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
+        getRequestContext().setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 
-        requestContext.setFilteredBySpecies(experiment.getFirstSpecies());
+        getRequestContext().setFilteredBySpecies(experiment.getFirstSpecies());
 
-        requestContext.setAllQueryFactors(experiment.getContrasts());
+        getRequestContext().setAllQueryFactors(experiment.getContrasts());
 
-        requestContext.setExperiment(experiment);
+        getRequestContext().setExperiment(experiment);
 
-        return requestContext;
+        return getRequestContext();
     }
 
     Set<Contrast> getSelectedQueryContrasts(DifferentialExperiment experiment) {
-        if(CollectionUtils.isEmpty(requestPreferences.getQueryFactorValues())){
+        if (CollectionUtils.isEmpty(getRequestPreferences().getQueryFactorValues())) {
             return Sets.newHashSet();
         }
 
         SortedSet<Contrast> selectedQueryContrasts = Sets.newTreeSet();
-        for (String queryContrastId : requestPreferences.getQueryFactorValues()){
+        for (String queryContrastId : getRequestPreferences().getQueryFactorValues()) {
             selectedQueryContrasts.add(experiment.getContrast(queryContrastId));
         }
         return selectedQueryContrasts;
+    }
+
+    protected T getRequestContext() {
+        return requestContext;
+    }
+
+    protected K getRequestPreferences() {
+        return requestPreferences;
     }
 }

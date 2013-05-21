@@ -33,8 +33,8 @@
 
                     <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                           highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                          minExpressionLevel="${geneProfiles.getMinExpressionLevel()}"
-                                          maxExpressionLevel="${geneProfiles.getMaxExpressionLevel()}"/>
+                                          lowValueColorExpressionLevel="${geneProfiles.getMinExpressionLevel()}"
+                                          highValueColorExpressionLevel="${geneProfiles.getMaxExpressionLevel()}"/>
 
                 </table>
             </c:when>
@@ -45,8 +45,8 @@
 
                         <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                               highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                              minExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMinDownRegulatedExpressionLevel())}"
-                                              maxExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMaxDownRegulatedExpressionLevel())}"/>
+                                              highValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMinDownRegulatedExpressionLevel())}"
+                                              lowValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMaxDownRegulatedExpressionLevel())}"/>
 
                     </c:if>
                     <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))
@@ -54,8 +54,8 @@
 
                         <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('pink')}"
                                               highValueColour="${colourGradient.getHexByColourName('red')}"
-                                              minExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMinUpRegulatedExpressionLevel())}"
-                                              maxExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMaxUpRegulatedExpressionLevel())}"/>
+                                              highValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMinUpRegulatedExpressionLevel())}"
+                                              lowValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMaxUpRegulatedExpressionLevel())}"/>
 
                     </c:if>
                 </table>
