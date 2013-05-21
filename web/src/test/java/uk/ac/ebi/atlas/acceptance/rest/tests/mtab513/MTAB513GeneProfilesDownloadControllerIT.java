@@ -68,7 +68,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
-                contains("METTL25", "ENSG00000127720", "0", "2", "0.7", "2", "0.9", "2", "5", "4", "4", "0.9", "2", "3", "3", "1", "3", "3")
+                contains("CU463998.3", "ENSG00000244656", "0", "0", "0", "0", "0", "57", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")
         );
 
     }
