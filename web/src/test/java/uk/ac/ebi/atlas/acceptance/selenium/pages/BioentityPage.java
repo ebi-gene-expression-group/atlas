@@ -32,11 +32,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class GenePage extends AtlasPage {
+public class BioentityPage extends AtlasPage {
 
-    private static final String PAGE_LOCATION = "/gxa/genes/";
+    private static final String PAGE_LOCATION = "/gxa/";
 
     private String geneIdentifier;
+
+    private String type;
 
     @FindBy(id = "accordion")
     private WebElement accordion;
@@ -44,19 +46,21 @@ public class GenePage extends AtlasPage {
     @FindBy(id = "geneCardTable")
     private WebElement table;
 
-    public GenePage(WebDriver driver, String geneIdentifier) {
+    public BioentityPage(WebDriver driver, String geneIdentifier, String type) {
         super(driver);
         this.geneIdentifier = geneIdentifier;
+        this.type = type;
     }
 
-    GenePage(WebDriver driver, String geneIdentifier, String httpParameters) {
+    BioentityPage(WebDriver driver, String geneIdentifier, String type, String httpParameters) {
         super(driver, httpParameters);
         this.geneIdentifier = geneIdentifier;
+        this.type = type;
     }
 
     @Override
     protected String getPageURI() {
-        return PAGE_LOCATION + geneIdentifier;
+        return PAGE_LOCATION +type + "/" + geneIdentifier;
     }
 
     protected String getGeneIdentifier() {

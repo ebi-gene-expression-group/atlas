@@ -29,21 +29,21 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageIT extends SinglePageSeleniumFixture {
+public class ProteinPageIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "ENSMUSG00000029816";
+    private static final String GENE_IDENTIFIER = "ENSP00000355434";
 
     private BioentityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioentityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioentityPage(driver, GENE_IDENTIFIER, "proteins");
         subject.get();
     }
 
     @Test
     public void checkGeneCartTitle() {
-        assertThat(subject.getGeneCardTitle(), is("Gpnmb Mus Musculus glycoprotein (transmembrane) nmb"));
+        assertThat(subject.getGeneCardTitle(), is("Q8N349 Homo Sapiens olfactory receptor, family 2, subfamily L, member 13"));
     }
 
     @Test
@@ -55,24 +55,23 @@ public class GenePageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkTableSize() {
-        assertThat(subject.getTableSize(), is(12));
+        assertThat(subject.getTableSize(), is(6));
     }
 
     @Test
     public void checkTableRows() {
-        assertThat(subject.getTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
-        assertThat(subject.getTableRow(1), hasItems("Orthologs"));
-        assertThat(subject.getTableRow(1).get(1), containsString("Gpnmb"));
-        assertThat(subject.getTableRow(10), hasItems("Gene Biotype", "protein_coding"));
+        assertThat(subject.getTableRow(0), hasItems("Ensembl Protein", "ENSP00000355434"));
+        assertThat(subject.getTableRow(1), hasItems("Ensembl Transcript"));
+        assertThat(subject.getTableRow(1).get(1), containsString("ENST00000366478"));
+        assertThat(subject.getTableRow(3), hasItems("UniProt", "Q8N349"));
+        assertThat(subject.getTableRow(5), hasItems("Reactome ID", "REACT_111102"));
     }
 
     @Test
     public void checkLinksInTable() {
-        assertThat(subject.getLinksInTableRow(1).get(0), containsString("/gxa/genes/ENS"));
-        assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://amigo.geneontology.org/cgi-bin/amigo/search.cgi?search_constraint=term&exact_match=yes&action=new-search&search_query="));
-        assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.ebi.ac.uk/interpro/search?q="));
-        assertThat(subject.getLinksInTableRow(4).get(0), is("http://www.ensembl.org/mus_musculus/Search/Details?db=core;end=1;idx=Family;q=TRANSMEMBRANE+GLYCOPROTEIN+NMB+PRECURSOR;species=mus_musculus"));
-        assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.ensembl.org/Multi/Search/Results?species=all;idx=;q=ENSMUSG00000029816"));
-        assertThat(subject.getLinksInTableRow(6).get(0), is("http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&term=93695"));
+        assertThat(subject.getLinksInTableRow(1).get(0), containsString("http://www.ensembl.org/homo_sapiens/Transcript/Summary?db=core;g=ENSG00000196071;t=ENST00000366478"));
+        assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://www.ensembl.org/Multi/Search/Results?species=all;idx=;q=ENSG00000196071"));
+        assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.uniprot.org/uniprot/Q8N349"));
+        assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_111102"));
     }
 }
