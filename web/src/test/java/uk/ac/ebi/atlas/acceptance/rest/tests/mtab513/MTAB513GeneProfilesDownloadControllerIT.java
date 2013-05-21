@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.*;
 
 public class MTAB513GeneProfilesDownloadControllerIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?exactMatch=false");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?geneQuery=&exactMatch=false");
 
     @Test
     public void verifyHeader() {
@@ -74,11 +74,11 @@ public class MTAB513GeneProfilesDownloadControllerIT {
     }
 
     @Test
-    public void  verifyLenghtOfDocument() {
+    public void verifyLenghtOfDocument() {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(163));
+        assertThat(lines.length, is(268));
     }
 
 }

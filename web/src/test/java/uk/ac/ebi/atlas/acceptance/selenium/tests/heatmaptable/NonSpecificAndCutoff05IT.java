@@ -26,19 +26,18 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class NonSpecificAndCutoff05IT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String HTTP_PARAMETERS = "cutoff=0.5"
+    private static final String HTTP_PARAMETERS = "geneQuery=&cutoff=0.5"
             + "&specific=false";
 
-    private static final String HIGHER_RANKING_GENE = "VPS4A";
-    private static final String LOWER_RANKING_GENE = "PPT1";
+    private static final String HIGHER_RANKING_GENE = "ARPC5";
+    private static final String LOWER_RANKING_GENE = "RAB13";
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
@@ -56,11 +55,11 @@ public class NonSpecificAndCutoff05IT extends SinglePageSeleniumFixture {
         double lowerRankingGeneAverageFpkm = subject.getAverageFpkm(11);
 
         //then
-        assertThat(higherRankingGeneAverageFpkm, is(47.0D));
+        assertThat(higherRankingGeneAverageFpkm, is(89.4375));
         assertThat(higherRankingGeneAverageFpkm, is(greaterThan(lowerRankingGeneAverageFpkm)));
 
         //and max fpkm is greater for gene at row 11 than gene at row 10
-        assertThat(subject.getMaxExpressionLevel(11), is(greaterThan(subject.getMaxExpressionLevel(10))));
+        assertThat(subject.getMaxExpressionLevel(11), is(lessThan(subject.getMaxExpressionLevel(10))));
 
         //gene at row 11 follows gene at row 10
         assertThat(subject.getGeneThatRanksAt(10), is(HIGHER_RANKING_GENE));

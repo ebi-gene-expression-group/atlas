@@ -35,11 +35,11 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFi
 
     private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String HTTP_PARAMETERS = "cutoff=0.5"
+    private static final String HTTP_PARAMETERS = "geneQuery=&cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
             + "&specific=true";
-    private static final String HIGHER_RANKING_GENE = "RNF41";
-    private static final String LOWER_RANKING_GENE = "ZFP2";
+    private static final String HIGHER_RANKING_GENE = "GAS2L2";
+    private static final String LOWER_RANKING_GENE = "SEMA3G";
 
     protected HeatmapTablePage subject;
 
@@ -60,11 +60,11 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFi
         double lowerRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageExpressionLevel(30, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
 
         //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(20.0D));
-        assertThat(higherRankingGeneAverageFpkmOnRemainingFactors, is(13.214285714285714D));
+        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(0.5D));
+        assertThat(higherRankingGeneAverageFpkmOnRemainingFactors, is(0.21428571428571427));
         //and
-        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(2.0D));
-        assertThat(lowerRankingGeneAverageFpkmOnRemainingFactors, is(1.3357142857142856D));
+        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(21.5D));
+        assertThat(lowerRankingGeneAverageFpkmOnRemainingFactors, is(9.428571428571429));
 
         //and average fpkm is greater for gene at row 29 than gene at row 30
         assertThat(higherRankingGeneAverageFpkmOnSelectedFactors / higherRankingGeneAverageFpkmOnRemainingFactors,

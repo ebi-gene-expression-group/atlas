@@ -34,7 +34,7 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String HTTP_PARAMETERS = "cutoff=0.5"
+    private static final String HTTP_PARAMETERS = "geneQuery=&cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
             + "&specific=false";
 

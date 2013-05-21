@@ -53,9 +53,9 @@ public class FindGeneIdsIT {
         GeneQueryResponse result = subject.findGeneSets(geneQuery, false, SPECIES, false);
 
         //some genes are found
-        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000112592") );
-        assertThat(result.getAllGeneIds().size(), is(greaterThan(300)) );
-        assertThat(result.getAllGeneIds().size(), is(lessThan(600)) );
+        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000112592"));
+        assertThat(result.getAllGeneIds().size(), is(greaterThan(1000)));
+        assertThat(result.getAllGeneIds().size(), is(lessThan(1600)));
 
     }
 
@@ -67,9 +67,9 @@ public class FindGeneIdsIT {
         GeneQueryResponse result = subject.findGeneSets(geneQuery, true, SPECIES, false);
 
         //some genes are found
-        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000084072") );
-        assertThat(result.getAllGeneIds().size(), is(greaterThan(190)) );
-        assertThat(result.getAllGeneIds().size(), is(lessThan(210)) );
+        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000084072"));
+        assertThat(result.getAllGeneIds().size(), is(greaterThan(300)));
+        assertThat(result.getAllGeneIds().size(), is(lessThan(600)));
 
     }
 
