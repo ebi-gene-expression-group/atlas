@@ -59,7 +59,8 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         getRequestContext().setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 
-        getRequestContext().setFilteredBySpecies(experiment.getFirstSpecies());
+        // species names are stored in lower case in Solr
+        getRequestContext().setFilteredBySpecies(experiment.getFirstSpecies().toLowerCase());
 
         getRequestContext().setAllQueryFactors(experiment.getContrasts());
 

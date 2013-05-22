@@ -22,13 +22,10 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
@@ -53,10 +50,6 @@ public class DifferentialGeneProfileService {
 
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
-    private DifferentialRequestPreferences differentialRequestPreferences;
-
-    private GeneQueryResponse geneQueryResponse;
-
     @Inject
     public DifferentialGeneProfileService(ApplicationProperties applicationProperties,
                                           RankRnaSeqProfilesCommand rankRnaSeqProfilesCommand,
@@ -66,38 +59,38 @@ public class DifferentialGeneProfileService {
         this.rankRnaSeqProfilesCommand = rankRnaSeqProfilesCommand;
         this.rnaSeqRequestContextBuilder = rnaSeqRequestContextBuilder;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
-
-        differentialRequestPreferences = new DifferentialRequestPreferences();
-        differentialRequestPreferences.setRegulation(Regulation.UP_DOWN);
-        differentialRequestPreferences.setGeneQuery("");
-        differentialRequestPreferences.setQueryFactorValues(new TreeSet<String>());
     }
 
     public DifferentialProfilesList getDifferentialProfilesList(String identifier, String species) throws GenesNotFoundException {
-
-        geneQueryResponse = new GeneQueryResponse();
-        geneQueryResponse.addGeneIds(identifier, Sets.newHashSet(identifier));
 
         DifferentialProfilesList differentialProfilesList = null;
 
         for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
             if (differentialProfilesList == null) {
-                differentialProfilesList = retrieveDifferentialProfileForExperiment(experimentAccession, species);
+                differentialProfilesList = retrieveDifferentialProfileForExperiment(experimentAccession, identifier, species);
             } else {
-                differentialProfilesList.addAll(retrieveDifferentialProfileForExperiment(experimentAccession, species));
+                differentialProfilesList.addAll(retrieveDifferentialProfileForExperiment(experimentAccession, identifier, species));
             }
         }
 
         return differentialProfilesList;
     }
 
-    protected DifferentialProfilesList retrieveDifferentialProfileForExperiment(String experimentAccession, String species) throws GenesNotFoundException {
+    protected DifferentialProfilesList retrieveDifferentialProfileForExperiment(String experimentAccession, String identifier, String species) throws GenesNotFoundException {
+
+        DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
+        differentialRequestPreferences.setRegulation(Regulation.UP_DOWN);
+        differentialRequestPreferences.setGeneQuery(identifier.toLowerCase());
+        differentialRequestPreferences.setExactMatch(true);
+        differentialRequestPreferences.setGeneSetMatch(false);
+        differentialRequestPreferences.setSpecific(false);
+        differentialRequestPreferences.setQueryFactorValues(new TreeSet<String>());
+
 
         DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
 
         if (differentialExperiment.getSpecies().contains(species)) {
-            RnaSeqRequestContext rnaSeqRequestContext = rnaSeqRequestContextBuilder.withPreferences(differentialRequestPreferences).forExperiment(differentialExperiment).build();
-            rnaSeqRequestContext.setGeneQueryResponse(geneQueryResponse);
+            rnaSeqRequestContextBuilder.withPreferences(differentialRequestPreferences).forExperiment(differentialExperiment).build();
             return rankRnaSeqProfilesCommand.execute(experimentAccession);
         }
 

@@ -58,8 +58,8 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testRetrieveDifferentialProfileForExperiment() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfileForExperiment(EXPERIMENT_ACCESSION, SPECIES);
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfileForExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, SPECIES);
         assertThat(differentialProfilesList, is(not(nullValue())));
-        assertThat(differentialProfilesList.size(), is(49));
+        assertThat(differentialProfilesList.size(), is(1));
     }
 }

@@ -31,7 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
@@ -84,21 +83,21 @@ public class DifferentialGeneProfileServiceTest {
         when(rnaSeqRequestContextBuilderMock.withPreferences(any(DifferentialRequestPreferences.class))).thenReturn(rnaSeqRequestContextBuilderMock);
         when(rnaSeqRequestContextBuilderMock.build()).thenReturn(rnaSeqRequestContextMock);
 
-        subject = new DifferentialGeneProfileService(applicationPropertiesMock, rankRnaSeqProfilesCommandMock, rnaSeqRequestContextBuilderMock,
-                rnaSeqDiffExperimentsCacheMock);
+        subject = new DifferentialGeneProfileService(applicationPropertiesMock, rankRnaSeqProfilesCommandMock,
+                rnaSeqRequestContextBuilderMock, rnaSeqDiffExperimentsCacheMock);
     }
 
     @Test
     public void testGetDifferentialProfilesList() throws Exception {
         assertThat(subject.getDifferentialProfilesList(IDENTIFIER, SPECIES), is(differentialProfilesListMock));
+        verify(applicationPropertiesMock).getDifferentialExperimentsIdentifiers();
     }
 
     @Test
     public void testRetrieveDifferentialProfileForExperiment() throws Exception {
-        assertThat(subject.retrieveDifferentialProfileForExperiment(EXPERIMENT_ACCESSION, SPECIES), is(differentialProfilesListMock));
+        assertThat(subject.retrieveDifferentialProfileForExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, SPECIES), is(differentialProfilesListMock));
         verify(rnaSeqRequestContextBuilderMock).forExperiment(differentialExperimentMock);
         verify(rnaSeqRequestContextBuilderMock).withPreferences(any(DifferentialRequestPreferences.class));
         verify(rnaSeqRequestContextBuilderMock).build();
-        verify(rnaSeqRequestContextMock).setGeneQueryResponse(any(GeneQueryResponse.class));
     }
 }
