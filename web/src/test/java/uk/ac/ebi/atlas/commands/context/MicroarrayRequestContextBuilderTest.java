@@ -37,7 +37,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayRequestContextBuilderTest {
 
-    public static final String ACCESSION = "ACCESSION";
+    private static final String ACCESSION = "ACCESSION";
+    private static final String SPECIES = "SPECIES";
+
     @Mock
     MicroarrayExperiment experimentMock;
 
@@ -51,12 +53,13 @@ public class MicroarrayRequestContextBuilderTest {
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
 
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ACCESSION);
-
+        when(experimentMock.getFirstSpecies()).thenReturn(SPECIES);
     }
 
     @Test
     public void testBuild() throws Exception {
         MicroarrayRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context.getArrayDesignAccession(), is(ACCESSION));
+        assertThat(context.getFilteredBySpecies(), is(SPECIES.toLowerCase()));
     }
 }
