@@ -75,6 +75,10 @@
     </div>
 
 </div>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/anatomogramModule.js"></script>
 <script>
 
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -87,7 +91,7 @@
             //ToDo: this should be replaced with a JSON array directly sent from backend layer
             var allQueryFactorValues = [${allQueryFactors.size()}];
             <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
-            allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
+                allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
             </c:forEach>
 
             if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
