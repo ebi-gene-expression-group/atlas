@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.RankProfilesCommandFactory;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
@@ -36,6 +37,8 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+
+import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -70,13 +73,16 @@ public class DifferentialGeneProfileServiceTest {
     @Mock
     private DifferentialExperiment differentialExperimentMock;
 
-    @Mock
-    private DifferentialProfilesList differentialProfilesListMock;
+
+    private DifferentialProfilesList differentialProfilesList = new DifferentialProfilesList(Collections.emptyList());
 
     @Mock
     private DifferentialRequestPreferences differentialRequestPreferencesMock;
 
     private DifferentialGeneProfileService subject;
+
+    @Mock
+    private RankProfilesCommandFactory rankProfilesCommandFactoryMock;
 
     @Before
     public void setUp() throws Exception {
@@ -85,24 +91,26 @@ public class DifferentialGeneProfileServiceTest {
         when(differentialExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
         when(differentialExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST1, CONTRAST2)));
         when(differentialExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(rankRnaSeqProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesListMock);
+        when(rankRnaSeqProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesList);
         when(rnaSeqRequestContextBuilderMock.forExperiment(differentialExperimentMock)).thenReturn(rnaSeqRequestContextBuilderMock);
         when(rnaSeqRequestContextBuilderMock.withPreferences(any(DifferentialRequestPreferences.class))).thenReturn(rnaSeqRequestContextBuilderMock);
         when(rnaSeqRequestContextBuilderMock.build()).thenReturn(rnaSeqRequestContextMock);
 
-        subject = new DifferentialGeneProfileService(applicationPropertiesMock, rankRnaSeqProfilesCommandMock,
-                rnaSeqRequestContextBuilderMock, rnaSeqDiffExperimentsCacheMock);
+        when(rankProfilesCommandFactoryMock.getRankRnaSeqProfilesCommand()).thenReturn(rankRnaSeqProfilesCommandMock);
+
+        subject = new DifferentialGeneProfileService(applicationPropertiesMock,
+                rnaSeqRequestContextBuilderMock, rnaSeqDiffExperimentsCacheMock, rankProfilesCommandFactoryMock);
     }
 
     @Test
     public void testGetDifferentialProfilesList() throws Exception {
-        assertThat(subject.getDifferentialProfilesListForIdentifier(IDENTIFIER, SPECIES, CUTOFF), is(differentialProfilesListMock));
+        assertThat(subject.getDifferentialProfilesListForIdentifier(IDENTIFIER, SPECIES, CUTOFF), is(differentialProfilesList));
         verify(applicationPropertiesMock).getDifferentialExperimentsIdentifiers();
     }
 
     @Test
     public void testRetrieveDifferentialProfileForExperiment() throws Exception {
-        assertThat(subject.retrieveDifferentialProfilesForExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, SPECIES, CUTOFF), is(differentialProfilesListMock));
+        assertThat(subject.retrieveDifferentialProfilesForExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, SPECIES, CUTOFF), is(differentialProfilesList));
         verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);
         verify(differentialExperimentMock).getSpecies();
     }
@@ -116,7 +124,7 @@ public class DifferentialGeneProfileServiceTest {
 
     @Test
     public void testExecuteForExperimentAndContrast() throws Exception {
-        assertThat(subject.executeForExperimentAndAllContrasts(differentialExperimentMock, differentialRequestPreferencesMock), is(differentialProfilesListMock));
+        assertThat(subject.executeForExperimentAndAllContrasts(differentialExperimentMock, differentialRequestPreferencesMock), is(differentialProfilesList));
         verify(differentialExperimentMock).getContrastIds();
         verify(differentialRequestPreferencesMock).setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet(CONTRAST1)));
         verify(differentialRequestPreferencesMock).setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet(CONTRAST2)));
@@ -125,7 +133,6 @@ public class DifferentialGeneProfileServiceTest {
         verify(rnaSeqRequestContextBuilderMock, times(2)).withPreferences(any(DifferentialRequestPreferences.class));
         verify(rnaSeqRequestContextBuilderMock, times(2)).build();
         verify(rankRnaSeqProfilesCommandMock, times(2)).execute(EXPERIMENT_ACCESSION);
-        verify(differentialProfilesListMock).addAll(differentialProfilesListMock);
     }
 
 }

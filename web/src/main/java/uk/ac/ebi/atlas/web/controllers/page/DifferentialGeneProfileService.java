@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.web.controllers.page;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.commands.RankProfilesCommandFactory;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
@@ -44,21 +45,20 @@ public class DifferentialGeneProfileService {
 
     private ApplicationProperties applicationProperties;
 
-    private RankRnaSeqProfilesCommand rankRnaSeqProfilesCommand;
-
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
 
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
+    private RankProfilesCommandFactory rankProfilesCommandFactory;
+
     @Inject
     public DifferentialGeneProfileService(ApplicationProperties applicationProperties,
-                                          RankRnaSeqProfilesCommand rankRnaSeqProfilesCommand,
                                           RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
-                                          RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache) {
+                                          RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache, RankProfilesCommandFactory rankProfilesCommandFactory) {
         this.applicationProperties = applicationProperties;
-        this.rankRnaSeqProfilesCommand = rankRnaSeqProfilesCommand;
         this.rnaSeqRequestContextBuilder = rnaSeqRequestContextBuilder;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
+        this.rankProfilesCommandFactory = rankProfilesCommandFactory;
     }
 
     public DifferentialProfilesList getDifferentialProfilesListForIdentifier(String identifier, String species, double cutoff) throws GenesNotFoundException {
@@ -73,7 +73,7 @@ public class DifferentialGeneProfileService {
         return differentialProfilesList;
     }
 
-    protected DifferentialProfilesList retrieveDifferentialProfilesForExperiment(String experimentAccession, String identifier, String species, double cutoff) throws GenesNotFoundException {
+    DifferentialProfilesList retrieveDifferentialProfilesForExperiment(String experimentAccession, String identifier, String species, double cutoff) throws GenesNotFoundException {
 
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setRegulation(Regulation.UP_DOWN);
@@ -92,9 +92,9 @@ public class DifferentialGeneProfileService {
         return new DifferentialProfilesList(Collections.emptyList());
     }
 
-    protected DifferentialProfilesList executeForExperimentAndAllContrasts(DifferentialExperiment differentialExperiment, DifferentialRequestPreferences differentialRequestPreferences) throws GenesNotFoundException {
+    DifferentialProfilesList executeForExperimentAndAllContrasts(DifferentialExperiment differentialExperiment, DifferentialRequestPreferences differentialRequestPreferences) throws GenesNotFoundException {
 
-        DifferentialProfilesList differentialProfilesList = null;
+        DifferentialProfilesList differentialProfilesList = new DifferentialProfilesList(Collections.emptyList());
 
         for (String contrastId : differentialExperiment.getContrastIds()) {
 
@@ -102,11 +102,9 @@ public class DifferentialGeneProfileService {
 
             rnaSeqRequestContextBuilder.withPreferences(differentialRequestPreferences).forExperiment(differentialExperiment).build();
 
-            if (differentialProfilesList == null) {
-                differentialProfilesList = rankRnaSeqProfilesCommand.execute(differentialExperiment.getAccession());
-            } else {
-                differentialProfilesList.addAll(rankRnaSeqProfilesCommand.execute(differentialExperiment.getAccession()));
-            }
+            RankRnaSeqProfilesCommand rankRnaSeqProfilesCommand = rankProfilesCommandFactory.getRankRnaSeqProfilesCommand();
+            differentialProfilesList.addAll(rankRnaSeqProfilesCommand.execute(differentialExperiment.getAccession()));
+
         }
 
         return differentialProfilesList;
