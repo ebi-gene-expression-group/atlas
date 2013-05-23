@@ -31,13 +31,13 @@ correlate <<- function(genes, runs, countsFile1, countsFile2, outFile) {
 	# Read in counts and sort the rows by gene IDs.
 	counts1 <- read.delim(countsFile1, header=TRUE, sep="\t")
 	rownames(counts1) <- counts1[,1]
-	counts1[,1] <- NULL
-	counts1 <- counts1[order(rownames(counts1)),]
+	counts1 <- subset(counts1, select = -1, drop=FALSE)
+	counts1 <- counts1[order(rownames(counts1)),,drop=FALSE]
 	
 	counts2 <- read.delim(countsFile2, header=TRUE, sep="\t")
 	rownames(counts2) <- counts2[,1]
-	counts2[,1] <- NULL
-	counts2 <- counts2[order(rownames(counts2)),]
+	counts2 <- subset(counts2, select = -1, drop=FALSE)
+	counts2 <- counts2[order(rownames(counts2)),,drop=FALSE]
 
 	# Make sure that the row names in each set of counts are identical. It
 	# doesn't make sense to try and correlate counts from one gene from one
@@ -59,6 +59,7 @@ correlate <<- function(genes, runs, countsFile1, countsFile2, outFile) {
 		counts1 <- counts1[genes, , drop=FALSE]
 		counts2 <- counts2[genes, , drop=FALSE]
 	}
+
 
 	# Add counts for each gene and put the two vectors into a data frame.
 	counts1Sum <- apply(counts1, 1, function(x) { sum(x) })
