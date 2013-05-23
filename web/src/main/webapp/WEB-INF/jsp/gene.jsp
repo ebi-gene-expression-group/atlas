@@ -66,11 +66,26 @@
             </c:forEach>
         </table>
     </div>
+
+    <ul class="geneCardHeader">
+        <img id="differential-info-image" title="Differential Expression" style="position: absolute; left: 0.5em; "
+             src="resources/images/updown_transparent_bkg.png"/>
+        <span class="geneCardSymbol">Differential Expression</span>
+    </ul>
+
+
+    <div class="geneCard">
+        <div class="ui-corner-all geneCardDifferentialSummary">
+            <span>${differentialProfilesListMap.totalNumberOfProfiles} search results found</span>
+            <span style="float: right">False Discovery Rate cutoff: ${differentialProfilesListMap.fdrCutoff}</span>
+        </div>
+    </div>
 </div>
 
 <script>
     $(function () {
         $("#bioentity-info-image").tooltip();
+        $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
             collapsible:true,

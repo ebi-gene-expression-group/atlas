@@ -35,6 +35,8 @@ public class DifferentialProfilesListMap {
 
     private Map<String, DifferentialProfilesList> experimentToDifferentialProfilesListMap = Maps.newHashMap();
 
+    private double fdrCutoff;
+
     public Set<String> getAllExperimentAccessions() {
         return experimentToDifferentialProfilesListMap.keySet();
     }
@@ -49,5 +51,27 @@ public class DifferentialProfilesListMap {
 
     public void clear() {
         experimentToDifferentialProfilesListMap.clear();
+    }
+
+    /*
+     * used in gene.jsp
+     */
+    public int getTotalNumberOfProfiles() {
+        int totalNumberOfProfiles = 0;
+        for (DifferentialProfilesList profilesList : experimentToDifferentialProfilesListMap.values()) {
+            totalNumberOfProfiles += profilesList.size();
+        }
+        return totalNumberOfProfiles;
+    }
+
+    public void setFdrCutoff(double fdrCutoff) {
+        this.fdrCutoff = fdrCutoff;
+    }
+
+    /*
+     * used in gene.jsp
+     */
+    public double getFdrCutoff() {
+        return fdrCutoff;
     }
 }
