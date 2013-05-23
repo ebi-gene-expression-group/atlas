@@ -1,4 +1,4 @@
-#!/ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
+#! /ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
 
 # diffAtlas_mvaPlot()
 #  - Create an "MvA" plot (average intensity against log2 fold change), and write it to a file.
@@ -11,6 +11,11 @@ diffAtlas_mvaPlot <<- function(plotDataFile, contrastName, plotFile, techType) {
 
 	# Read data
 	madf <- read.delim(plotDataFile, stringsAsFactors=FALSE)
+
+	# First filter out rows with any "NA"s in, can't use them.
+	# complete.cases() function returns TRUE for rows where there is no missing
+	# data (e.g. "NA"s).
+	madf <- madf[complete.cases(madf),]
 
 	# add DE and non-DE calls to data frame
 	sig <- rep("non-DE", nrow(madf))
