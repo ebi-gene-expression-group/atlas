@@ -37,9 +37,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -77,7 +75,7 @@ public class BaselineProfilesTSVWriterIT {
     @Test
     public void headerTextShouldContainThreeRows(){
 
-        String[] headerRows = subject.buildHeaders().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows.length, is(3));
 
@@ -86,7 +84,7 @@ public class BaselineProfilesTSVWriterIT {
     @Test
     public void thirdHeaderLineShouldDescribeTimestamp(){
 
-        String[] headerRows = subject.buildHeaders().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[2], startsWith("# Timestamp: "));
         assertThat(headerRows[2].length(), greaterThan("# Timestamp: ".length()));
@@ -96,7 +94,7 @@ public class BaselineProfilesTSVWriterIT {
     @Test
     public void firstHeaderLineShouldDescribeAtlasVersion(){
 
-        String[] headerRows = subject.buildHeaders().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[0], startsWith("# Expression Atlas version: "));
         assertThat(headerRows[0].length(), greaterThan("# Expression Atlas version: ".length()));
@@ -108,7 +106,7 @@ public class BaselineProfilesTSVWriterIT {
 
         requestPreferences.setExactMatch(false);
 
-        String[] headerRows = subject.buildHeaders().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding', specifically expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
 
@@ -121,7 +119,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setExactMatch(true);
         requestPreferences.setSpecific(false);
 
-        String[] headerRows = subject.buildHeaders().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
@@ -140,7 +138,7 @@ public class BaselineProfilesTSVWriterIT {
         baselineRequestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
                                                               .withPreferences(requestPreferences).build();
 
-        String[] headerRows = subject.buildHeaders().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
                 "in Cell Lines: 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
@@ -160,7 +158,7 @@ public class BaselineProfilesTSVWriterIT {
         baselineRequestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
                                                               .withPreferences(requestPreferences).build();
 
-        String[] headerRows = subject.buildHeaders().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
                 "in RNA: 'Mickey Mouse' above the expression level cutoff: 0.5 " +

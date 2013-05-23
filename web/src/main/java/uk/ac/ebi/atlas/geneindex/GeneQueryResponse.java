@@ -35,46 +35,46 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class GeneQueryResponse {
 
-    private Multimap<String, String> geneSets = HashMultimap.create();
+    private Multimap<String, String> geneIdsByQueryTerm = HashMultimap.create();
 
     public GeneQueryResponse addGeneIds(String queryTerm, Set<String> geneIds){
         checkArgument(StringUtils.isNotBlank(queryTerm));
-        checkArgument(!geneSets.containsKey(queryTerm));
+        checkArgument(!geneIdsByQueryTerm.containsKey(queryTerm));
 
         if(!geneIds.isEmpty()){
-            geneSets.putAll(queryTerm, geneIds);
+            geneIdsByQueryTerm.putAll(queryTerm, geneIds);
         }
         return this;
     }
 
     public Collection<String> getAllGeneIds(){
-        return Sets.newHashSet(geneSets.values());
+        return Sets.newHashSet(geneIdsByQueryTerm.values());
     }
 
     public boolean isEmpty() {
-        return geneSets.isEmpty();
+        return geneIdsByQueryTerm.isEmpty();
     }
 
     public Set<String> getQueryTerms() {
-        return geneSets.keySet();
+        return geneIdsByQueryTerm.keySet();
     }
 
     public boolean containsEntry(String queryTerm, String id) {
-        return geneSets.containsEntry(queryTerm, id);
+        return geneIdsByQueryTerm.containsEntry(queryTerm, id);
     }
 
     public Collection<String> getIds(String queryTerm) {
-        return geneSets.get(queryTerm);
+        return geneIdsByQueryTerm.get(queryTerm);
     }
 
-    public Set<String> getRelatedTerms(String geneId){
-        Set<String> relatedTerms = Sets.newHashSet();
-        for (Map.Entry<String,Collection<String>> geneSet: geneSets.asMap().entrySet()){
+    public Set<String> getRelatedQueryTerms(String geneId){
+        Set<String> relatedQueryTerms = Sets.newHashSet();
+        for (Map.Entry<String,Collection<String>> geneSet: geneIdsByQueryTerm.asMap().entrySet()){
             if(geneSet.getValue().contains(geneId)){
-                relatedTerms.add(geneSet.getKey());
+                relatedQueryTerms.add(geneSet.getKey());
             }
         }
-        return relatedTerms;
+        return relatedQueryTerms;
     }
 
 }

@@ -27,6 +27,7 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -51,7 +52,9 @@ public class RankRnaSeqProfilesCommand extends RankProfilesCommand<DifferentialP
     }
 
     @Override
-    protected DifferentialProfilesList buildAverageGeneSetProfiles(ObjectInputStream<RnaSeqProfile> objectInputStream) {
+    protected DifferentialProfilesList buildAverageGeneSetProfiles(GeneQueryResponse geneQueryResponse,
+                                                                   ObjectInputStream<RnaSeqProfile> objectInputStream,
+                                                                   Comparator<RnaSeqProfile> rnaSeqProfileComparator) {
         throw new UnsupportedOperationException("Method only supported for Baseline Experiments");
     }
 

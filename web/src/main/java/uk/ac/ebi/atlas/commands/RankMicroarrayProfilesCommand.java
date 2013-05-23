@@ -27,6 +27,7 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -70,7 +71,9 @@ public class RankMicroarrayProfilesCommand extends RankProfilesCommand<Different
     }
 
     @Override
-    protected DifferentialProfilesList buildAverageGeneSetProfiles(ObjectInputStream<MicroarrayProfile> objectInputStream) {
+    protected DifferentialProfilesList buildAverageGeneSetProfiles(GeneQueryResponse geneQueryResponse,
+                                                                   ObjectInputStream<MicroarrayProfile> objectInputStream,
+                                                                   Comparator<MicroarrayProfile> comparator) {
         throw new UnsupportedOperationException("Method only supported for Baseline Experiments");
     }
 }

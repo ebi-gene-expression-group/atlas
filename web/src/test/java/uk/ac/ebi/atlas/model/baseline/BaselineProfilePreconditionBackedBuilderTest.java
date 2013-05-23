@@ -43,10 +43,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineProfileBuilderTest {
+public class BaselineProfilePreconditionBackedBuilderTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
-    private BaselineProfileBuilder subject;
+    private BaselineProfilePreconditionBackedBuilder subject;
 
     @Mock
     private BaselineProfilePrecondition baselineProfilePreconditionMock;
@@ -67,7 +67,7 @@ public class BaselineProfileBuilderTest {
 
     @Before
     public void initSubject() {
-        subject = new BaselineProfileBuilder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
+        subject = new BaselineProfilePreconditionBackedBuilder(requestContextMock, baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
 
         when(requestContextMock.getCutoff()).thenReturn(0d);
         when(requestContextMock.isSpecific()).thenReturn(true);

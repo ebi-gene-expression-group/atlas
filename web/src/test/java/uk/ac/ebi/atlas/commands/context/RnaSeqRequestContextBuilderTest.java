@@ -37,8 +37,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqRequestContextBuilderTest {
 
-    private static final String SPECIES = "SPECIES";
-
+    private static final String SPECIES = "species";
+    
     @Mock
     DifferentialExperiment experimentMock;
 
@@ -49,8 +49,8 @@ public class RnaSeqRequestContextBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
         when(experimentMock.getFirstSpecies()).thenReturn(SPECIES);
+        subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
     }
 
     @Test

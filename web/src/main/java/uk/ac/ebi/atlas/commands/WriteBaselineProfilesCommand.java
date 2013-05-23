@@ -29,6 +29,9 @@ import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commands.download.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.baseline.GeneSetProfilesBuilder;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
@@ -43,6 +46,7 @@ public class WriteBaselineProfilesCommand extends GeneProfilesQueryCommand<Long,
     private static final Logger LOGGER = Logger.getLogger(WriteBaselineProfilesCommand.class);
 
     private BaselineProfilesTSVWriter baselineProfilesTSVWriter;
+    private GeneSetProfilesBuilder geneSetProfilesBuilder;
     private InputStreamFactory inputStreamFactory;
 
     @Inject
@@ -51,9 +55,12 @@ public class WriteBaselineProfilesCommand extends GeneProfilesQueryCommand<Long,
     }
 
     @Inject
-    public WriteBaselineProfilesCommand(BaselineProfilesTSVWriter baselineProfilesTSVWriter, BaselineRequestContext requestContext) {
+    public WriteBaselineProfilesCommand(BaselineProfilesTSVWriter baselineProfilesTSVWriter
+                                        , BaselineRequestContext requestContext
+                                        , GeneSetProfilesBuilder geneSetProfilesBuilder) {
         super(requestContext);
         this.baselineProfilesTSVWriter = baselineProfilesTSVWriter;
+        this.geneSetProfilesBuilder = geneSetProfilesBuilder;
     }
 
     @Override
@@ -64,7 +71,23 @@ public class WriteBaselineProfilesCommand extends GeneProfilesQueryCommand<Long,
     @Override
     protected Long execute(ObjectInputStream<BaselineProfile> inputStream, RequestContext requestContext) {
         try {
-            return baselineProfilesTSVWriter.apply(inputStream, requestContext.getAllQueryFactors());
+            if (requestContext.isGeneSetMatch()){
+                BaselineProfileComparator baselineProfileComparator =
+                        new BaselineProfileComparator(requestContext.isSpecific()
+                                                     ,requestContext.getSelectedQueryFactors()
+                                                     ,requestContext.getAllQueryFactors()
+                                                     ,requestContext.getCutoff());
+
+                BaselineProfilesList geneSetProfiles =
+                                    geneSetProfilesBuilder.forGeneQueryResponse(requestContext.getGeneQueryResponse())
+                                      .withInputStream(inputStream)
+                                      .withBaselineComparator(baselineProfileComparator)
+                                      .build();
+
+                return baselineProfilesTSVWriter.write(geneSetProfiles, requestContext.getAllQueryFactors());
+            }
+
+            return baselineProfilesTSVWriter.write(inputStream, requestContext.getAllQueryFactors());
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");

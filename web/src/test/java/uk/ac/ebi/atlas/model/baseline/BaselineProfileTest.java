@@ -99,28 +99,28 @@ public class BaselineProfileTest {
     }
 
     @Test
-    public void testAddAll(){
+    public void testSumProfile(){
 
-        BaselineProfile sumProfile = subject.addAll(buildOtherProfile());
-        assertThat(sumProfile.getId(), is(subject.getId()));
-        assertThat(sumProfile.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1) + 1D));
-        assertThat(sumProfile.getExpressionLevel(factor2), is(subject.getExpressionLevel(factor2) + 2D));
-        assertThat(sumProfile.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3) + 3D));
-        assertThat(sumProfile.getExpressionLevel(factor4), is(300D));
+        subject.sumProfile(buildOtherProfile());
+        assertThat(subject.getId(), is(subject.getId()));
+        assertThat(subject.getExpressionLevel(factor1), is(2.2D + 1D));
+        assertThat(subject.getExpressionLevel(factor2), is(3D + 2D));
+        assertThat(subject.getExpressionLevel(factor3), is(3.001D + 3D));
+        assertThat(subject.getExpressionLevel(factor4), is(300D));
 
     }
 
     @Test
-    public void addAllShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
+    public void sumProfileShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
 
         BaselineProfile otherProfile = new BaselineProfile("other profile").add(QUERY_FACTOR_TYPE, expression_2);
 
-        BaselineProfile sumProfile = subject.addAll(otherProfile);
-        assertThat(sumProfile.getId(), is(subject.getId()));
-        assertThat(sumProfile.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1)));
-        assertThat(sumProfile.getExpressionLevel(factor2), is(subject.getExpressionLevel(factor2) + expression_2.getLevel()));
-        assertThat(sumProfile.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3)));
-        assertThat(sumProfile.getExpressionLevel(factor4), is(0D));
+        subject.sumProfile(otherProfile);
+        assertThat(subject.getId(), is(GENE_ID));
+        assertThat(subject.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1)));
+        assertThat(subject.getExpressionLevel(factor2), is(6D));
+        assertThat(subject.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3)));
+        assertThat(subject.getExpressionLevel(factor4), is(0D));
 
     }
 
