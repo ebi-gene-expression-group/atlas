@@ -38,7 +38,7 @@ public class GenePageController extends BioentityPageController {
     public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
     // needs changing to DifferentialRequestPreferences.DEFAULT_CUTOFF
-    private static final double CUTOFF = 0.5;
+    public static final double CUTOFF = 0.5;
 
     @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
