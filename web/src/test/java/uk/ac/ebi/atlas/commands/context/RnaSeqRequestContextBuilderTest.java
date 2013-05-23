@@ -32,9 +32,12 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqRequestContextBuilderTest {
+
+    private static final String SPECIES = "SPECIES";
 
     @Mock
     DifferentialExperiment experimentMock;
@@ -47,12 +50,13 @@ public class RnaSeqRequestContextBuilderTest {
     @Before
     public void setUp() throws Exception {
         subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
-
+        when(experimentMock.getFirstSpecies()).thenReturn(SPECIES);
     }
 
     @Test
     public void testBuild() throws Exception {
         RnaSeqRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context, is(not(nullValue())));
+        assertThat(context.getFilteredBySpecies(), is(SPECIES.toLowerCase()));
     }
 }
