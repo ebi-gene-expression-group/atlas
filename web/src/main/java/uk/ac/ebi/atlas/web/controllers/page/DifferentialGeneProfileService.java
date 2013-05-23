@@ -31,7 +31,7 @@ import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesListMap;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -51,48 +51,48 @@ public class DifferentialGeneProfileService {
 
     private RankProfilesCommandFactory rankProfilesCommandFactory;
 
+    private DifferentialProfilesListMap differentialProfilesListMap;
+
     @Inject
     public DifferentialGeneProfileService(ApplicationProperties applicationProperties,
                                           RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
-                                          RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache, RankProfilesCommandFactory rankProfilesCommandFactory) {
+                                          RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
+                                          RankProfilesCommandFactory rankProfilesCommandFactory,
+                                          DifferentialProfilesListMap differentialProfilesListMap) {
         this.applicationProperties = applicationProperties;
         this.rnaSeqRequestContextBuilder = rnaSeqRequestContextBuilder;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.rankProfilesCommandFactory = rankProfilesCommandFactory;
+        this.differentialProfilesListMap = differentialProfilesListMap;
     }
 
-    public DifferentialProfilesList getDifferentialProfilesListForIdentifier(String identifier, String species, double cutoff) throws GenesNotFoundException {
+    public DifferentialProfilesListMap getDifferentialProfilesListMapForIdentifier(String identifier, double cutoff) {
 
-        DifferentialProfilesList differentialProfilesList = new DifferentialProfilesList(Collections.emptyList());
+        // just being paranoid here, maybe not necessary because of request scope
+        differentialProfilesListMap.clear();
 
         for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
-            DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForExperiment(experimentAccession, identifier, species, cutoff);
-            differentialProfilesList.addAll(retrievedProfilesList);
+            DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForExperiment(experimentAccession, identifier, cutoff);
+            if (!retrievedProfilesList.isEmpty()) {
+                differentialProfilesListMap.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
+            }
         }
 
-        return differentialProfilesList;
+        return differentialProfilesListMap;
     }
 
-    DifferentialProfilesList retrieveDifferentialProfilesForExperiment(String experimentAccession, String identifier, String species, double cutoff) throws GenesNotFoundException {
+    DifferentialProfilesList retrieveDifferentialProfilesForExperiment(String experimentAccession, String geneQuery, double cutoff) {
 
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
-        differentialRequestPreferences.setRegulation(Regulation.UP_DOWN);
-        differentialRequestPreferences.setGeneQuery(identifier.toLowerCase());
-        differentialRequestPreferences.setExactMatch(true);
-        differentialRequestPreferences.setGeneSetMatch(false);
-        differentialRequestPreferences.setSpecific(false);
+        differentialRequestPreferences.setGeneQuery(geneQuery.toLowerCase());
         differentialRequestPreferences.setCutoff(cutoff);
 
+        // no need to worry about species for now, as geneQuery is already species specific
         DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-
-        if (differentialExperiment.getSpecies().contains(species)) {
-            return executeForExperimentAndAllContrasts(differentialExperiment, differentialRequestPreferences);
-        }
-
-        return new DifferentialProfilesList(Collections.emptyList());
+        return executeForExperimentAndAllContrasts(differentialExperiment, differentialRequestPreferences);
     }
 
-    DifferentialProfilesList executeForExperimentAndAllContrasts(DifferentialExperiment differentialExperiment, DifferentialRequestPreferences differentialRequestPreferences) throws GenesNotFoundException {
+    DifferentialProfilesList executeForExperimentAndAllContrasts(DifferentialExperiment differentialExperiment, DifferentialRequestPreferences differentialRequestPreferences) {
 
         DifferentialProfilesList differentialProfilesList = new DifferentialProfilesList(Collections.emptyList());
 
@@ -103,8 +103,11 @@ public class DifferentialGeneProfileService {
             rnaSeqRequestContextBuilder.withPreferences(differentialRequestPreferences).forExperiment(differentialExperiment).build();
 
             RankRnaSeqProfilesCommand rankRnaSeqProfilesCommand = rankProfilesCommandFactory.getRankRnaSeqProfilesCommand();
-            differentialProfilesList.addAll(rankRnaSeqProfilesCommand.execute(differentialExperiment.getAccession()));
-
+            try {
+                differentialProfilesList.addAll(rankRnaSeqProfilesCommand.execute(differentialExperiment.getAccession()));
+            } catch (GenesNotFoundException e) {
+                // this happens when a gene identifier is searched within another species than it belongs to
+            }
         }
 
         return differentialProfilesList;

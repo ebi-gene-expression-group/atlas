@@ -29,6 +29,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.inject.Inject;
+
 @Controller
 @Scope("request")
 public class GenePageController extends BioentityPageController {
@@ -38,8 +40,16 @@ public class GenePageController extends BioentityPageController {
     @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
 
+    private DifferentialGeneProfileService differentialGeneProfileService;
+
+    @Inject
+    public void setDifferentialGeneProfileService(DifferentialGeneProfileService differentialGeneProfileService) {
+        this.differentialGeneProfileService = differentialGeneProfileService;
+    }
+
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
+        differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, 0.05D);
         return super.showGenePage(identifier, model);
     }
 

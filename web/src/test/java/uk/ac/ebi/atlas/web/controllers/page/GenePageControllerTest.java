@@ -66,6 +66,9 @@ public class GenePageControllerTest {
     @Mock
     private BioentityPropertyService bioentityPropertyServiceMock;
 
+    @Mock
+    private DifferentialGeneProfileService differentialGeneProfileServiceMock;
+
     private Properties properties = new Properties();
 
     private Multimap<String, String> genePageProperties = HashMultimap.create();
@@ -89,10 +92,12 @@ public class GenePageControllerTest {
 
         when(bioentityPropertyServiceMock.getFirstValueOfProperty(SYMBOL)).thenReturn(SYMBOL);
         when(bioentityPropertyServiceMock.getFirstValueOfProperty(DESCRIPTION)).thenReturn(DESCRIPTION);
+
         subject = new GenePageController();
 
         subject.setBioentityPageProperties(bioentityPageProperties);
         subject.setBioentityPropertyService(bioentityPropertyServiceMock);
+        subject.setDifferentialGeneProfileService(differentialGeneProfileServiceMock);
         subject.setGenePagePropertyTypes(PROPERTY_TYPES);
     }
 
@@ -100,6 +105,7 @@ public class GenePageControllerTest {
     public void testShowGenePage() throws Exception {
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("gene"));
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
+        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, 0.05D);
     }
 
     @Test
