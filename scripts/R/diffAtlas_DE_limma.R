@@ -1,4 +1,4 @@
-#!/ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
+#! /ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
 
 # diffAtlas_DE_limma.R
 # Microarray differential expression statistics computation for the
@@ -28,8 +28,10 @@ diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays, resFile, p
 		normExprs[,1] <- NULL
 
 		# make vectors of assay accessions.
-		refAssays <- unlist(strsplit(refAssays, ","))
-		testAssays <- unlist(strsplit(testAssays, ","))
+		# use make.names so that they match the column headings from reading in
+		# the normalized expressions above.
+		refAssays <- make.names(unlist(strsplit(refAssays, ",")))
+		testAssays <- make.names(unlist(strsplit(testAssays, ",")))
 		
 		
 
