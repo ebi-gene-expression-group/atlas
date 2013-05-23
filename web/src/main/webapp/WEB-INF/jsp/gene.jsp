@@ -76,9 +76,25 @@
 
     <div class="geneCard">
         <div class="ui-corner-all geneCardDifferentialSummary">
-            <span>${differentialProfilesListMap.totalNumberOfProfiles} search results found</span>
-            <span style="float: right">False Discovery Rate cutoff: ${differentialProfilesListMap.fdrCutoff}</span>
+            <span>${differentialGeneProfileProperties.totalNumberOfProfiles} search results found</span>
+            <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
         </div>
+        <table>
+            <c:forEach items="${differentialGeneProfileProperties.allExperimentAccessions}" var="experimentAccession">
+                <c:forEach
+                        items="${differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(experimentAccession)}"
+                        var="differentialProfile">
+                    <c:forEach items="${differentialProfile.conditions}" var="condition">
+                        <c:set var="differentialExpression" value="${differentialProfile.getExpression(condition)}"/>
+                        <tr>
+                            <td>${experimentAccession}</td>
+                            <td>${condition.displayName}</td>
+                            <td>${differentialExpression.level}</td>
+                        </tr>
+                    </c:forEach>
+                </c:forEach>
+            </c:forEach>
+        </table>
     </div>
 </div>
 

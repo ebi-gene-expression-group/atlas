@@ -28,7 +28,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 
@@ -37,6 +36,9 @@ import javax.inject.Inject;
 public class GenePageController extends BioentityPageController {
 
     public static final String PROPERTY_TYPE_SYMBOL = "symbol";
+
+    // needs changing to DifferentialRequestPreferences.DEFAULT_CUTOFF
+    private static final double CUTOFF = 0.5;
 
     @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
@@ -50,7 +52,7 @@ public class GenePageController extends BioentityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
-        differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, DifferentialRequestPreferences.DEFAULT_CUTOFF);
+        differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, CUTOFF);
         return super.showGenePage(identifier, model);
     }
 

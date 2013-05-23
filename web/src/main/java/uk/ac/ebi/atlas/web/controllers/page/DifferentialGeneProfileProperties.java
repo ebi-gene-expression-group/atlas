@@ -20,18 +20,19 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Maps;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 
 import javax.inject.Named;
 import java.util.Map;
 import java.util.Set;
 
-@Named("differentialProfilesListMap")
+@Named("differentialGeneProfileProperties")
 @Scope("request")
-public class DifferentialProfilesListMap {
+public class DifferentialGeneProfileProperties {
 
     private Map<String, DifferentialProfilesList> experimentToDifferentialProfilesListMap = Maps.newHashMap();
 

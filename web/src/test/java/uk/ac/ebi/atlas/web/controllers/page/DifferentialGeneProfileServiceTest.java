@@ -37,7 +37,6 @@ import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesListMap;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -77,7 +76,7 @@ public class DifferentialGeneProfileServiceTest {
     private RankProfilesCommandFactory rankProfilesCommandFactoryMock;
 
     @Mock
-    private DifferentialProfilesListMap differentialProfilesListMapMock;
+    private DifferentialGeneProfileProperties differentialGeneProfilePropertiesMock;
 
     @Mock
     private DifferentialProfile differentialProfileMock;
@@ -107,16 +106,16 @@ public class DifferentialGeneProfileServiceTest {
 
         subject = new DifferentialGeneProfileService(applicationPropertiesMock,
                 rnaSeqRequestContextBuilderMock, rnaSeqDiffExperimentsCacheMock,
-                rankProfilesCommandFactoryMock, differentialProfilesListMapMock);
+                rankProfilesCommandFactoryMock, differentialGeneProfilePropertiesMock);
     }
 
     @Test
     public void testGetDifferentialProfilesList() throws Exception {
-        assertThat(subject.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialProfilesListMapMock));
+        assertThat(subject.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
         verify(applicationPropertiesMock).getDifferentialExperimentsIdentifiers();
-        verify(differentialProfilesListMapMock).clear();
+        verify(differentialGeneProfilePropertiesMock).clear();
         ArgumentCaptor<DifferentialProfilesList> argumentCaptor = ArgumentCaptor.forClass(DifferentialProfilesList.class);
-        verify(differentialProfilesListMapMock).putDifferentialProfilesListForExperiment(eq(EXPERIMENT_ACCESSION), argumentCaptor.capture());
+        verify(differentialGeneProfilePropertiesMock).putDifferentialProfilesListForExperiment(eq(EXPERIMENT_ACCESSION), argumentCaptor.capture());
         assertThat((DifferentialProfile) argumentCaptor.getValue().get(0), is(differentialProfileMock));
     }
 
