@@ -22,13 +22,15 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 
 import javax.inject.Named;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Named("differentialGeneProfileProperties")
 @Scope("request")
@@ -55,8 +57,38 @@ public class DifferentialGeneProfileProperties {
     }
 
     /*
-     * used in gene.jsp
-     */
+    * used in gene.jsp
+    */
+    public List<DifferentialGeneProfileLink> getDifferentialGeneProfileLinks() {
+
+        List<DifferentialGeneProfileLink> differentialGeneProfileLinks = Lists.newArrayList();
+
+        for (String experimentAccession : experimentToDifferentialProfilesListMap.keySet()) {
+            DifferentialProfilesList differentialProfilesList = experimentToDifferentialProfilesListMap.get(experimentAccession);
+            for (Object item : differentialProfilesList) {
+                DifferentialProfile profile = (DifferentialProfile) item;
+                for (Object condition : profile.getConditions()) {
+                    Contrast contrast = (Contrast) condition;
+                    double expressionLevel = profile.getExpressionLevel(contrast);
+                    DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(contrast.getDisplayName(), experimentAccession, expressionLevel);
+                    differentialGeneProfileLinks.add(differentialGeneProfileLink);
+                }
+            }
+        }
+
+        Collections.sort(differentialGeneProfileLinks, new Comparator<DifferentialGeneProfileLink>() {
+            @Override
+            public int compare(DifferentialGeneProfileLink o1, DifferentialGeneProfileLink o2) {
+                return o1.getValue() - o2.getValue() < 0 ? -1 : 1;
+            }
+        });
+
+        return differentialGeneProfileLinks;
+    }
+
+    /*
+    * used in gene.jsp
+    */
     public int getTotalNumberOfProfiles() {
         int totalNumberOfProfiles = 0;
         for (DifferentialProfilesList profilesList : experimentToDifferentialProfilesListMap.values()) {
