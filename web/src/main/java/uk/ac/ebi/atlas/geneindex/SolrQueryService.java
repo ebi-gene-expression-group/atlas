@@ -46,7 +46,8 @@ public class SolrQueryService {
 
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
     private static final int PROPERTY_VALUES_LIMIT = 1000;
-    private static final int CONNECTION_TIMEOUT = 2000;
+    // changed from 2000
+    private static final int CONNECTION_TIMEOUT = 4000;
     private static final int MAX_RETRIES = 1;
     private static final int DEFAULT_LIMIT = 15;
     private static final String CONFIG_SPLIT_REGEX = ",";
@@ -54,7 +55,8 @@ public class SolrQueryService {
     private static final String IDENTIFIER_FIELD = "identifier";
     private static final String SPECIES_FIELD = "species";
     private static final String PROPERTY_FIELD = "property";
-    private static final int MAX_GENE_IDS_TO_FETCH = 100000;
+    // changed from 100000
+    private static final int MAX_GENE_IDS_TO_FETCH = 500000;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
