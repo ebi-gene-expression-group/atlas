@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
-import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
@@ -48,7 +47,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
     }
 
     @Inject
-    public void setSolrClient(SolrClient solrClient, GeneQueryTokenizer geneQueryTokenizer) {
+    public void setSolrClient(SolrClient solrClient) {
         this.solrClient = solrClient;
     }
 
@@ -81,7 +80,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
             throw new GenesNotFoundException("No genes found for searchText = " + requestContext.getGeneQuery() + ", species = " + requestContext.getFilteredBySpecies());
         }
 
-        //ToDo: this initialization is unrelated to this method, but I can't find better way to do it for now
+        //ToDo: this initialization is unrelated to this method, but I haven't find yet a better place for it
         requestContext.setGeneQueryResponse(geneQueryResponse);
 
         return new GeneProfileInputStreamFilter(inputStream, geneQueryResponse.getAllGeneIds(), requestContext.getSelectedQueryFactors());

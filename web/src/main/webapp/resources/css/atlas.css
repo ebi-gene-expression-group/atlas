@@ -399,3 +399,15 @@ a.help-icon {
     margin-top: 0px !important;
     float: right;
 }
+
+.geneCardDifferentialSummary {
+    border: 1px solid #FBD850;
+    color: #EB8F00;
+    font-weight: bold;
+    display: block;
+    margin-top: 2px;
+    min-height: 0;
+    padding: 0.5em 0.5em 0.5em 0.7em;
+    position: relative;
+    width: 100%;
+}

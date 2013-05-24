@@ -113,12 +113,12 @@ public class GeneQueryResponseTest {
 
     @Test
     public void relatedTermsShouldDoReverseMapping() throws Exception {
-        assertThat(subject.getRelatedTerms("G2"), contains(A_QUERY_TERM));
-        assertThat(subject.getRelatedTerms("G3"), is(empty()));
+        assertThat(subject.getRelatedQueryTerms("G2"), contains(A_QUERY_TERM));
+        assertThat(subject.getRelatedQueryTerms("G3"), is(empty()));
         subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1","G4"));
-        assertThat(subject.getRelatedTerms("G1"), containsInAnyOrder(A_QUERY_TERM, ANOTHER_TERM));
-        assertThat(subject.getRelatedTerms("G2"), contains(A_QUERY_TERM));
-        assertThat(subject.getRelatedTerms("G3"), is(empty()));
-        assertThat(subject.getRelatedTerms("G4"), contains(ANOTHER_TERM));
+        assertThat(subject.getRelatedQueryTerms("G1"), containsInAnyOrder(A_QUERY_TERM, ANOTHER_TERM));
+        assertThat(subject.getRelatedQueryTerms("G2"), contains(A_QUERY_TERM));
+        assertThat(subject.getRelatedQueryTerms("G3"), is(empty()));
+        assertThat(subject.getRelatedQueryTerms("G4"), contains(ANOTHER_TERM));
     }
 }

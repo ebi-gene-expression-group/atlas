@@ -23,10 +23,13 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,47 +37,74 @@ import java.util.Map;
 @Scope("request")
 public class GeneSetProfilesBuilder {
 
-    private BaselineRequestContext requestContext;
+    private Comparator<BaselineProfile> baselineProfileComparator;
 
-    private Map<String, BaselineProfile> averageProfiles = new HashMap<>();
-    private Map<String, Integer> geneSetProfileCounts = new HashMap<>();
+    private ObjectInputStream<BaselineProfile> inputStream;
 
     private int totalGeneProfileCount = 0;
 
+    private Map<String, GeneSet> geneSets = new HashMap();
+
+    private GeneQueryResponse geneQueryResponse;
+
+    private GeneSetFactory geneSetFactory;
+
     @Inject
-    GeneSetProfilesBuilder(BaselineRequestContext requestContext) {
-        this.requestContext = requestContext;
+    public GeneSetProfilesBuilder(GeneSetFactory geneSetFactory){
+        this.geneSetFactory = geneSetFactory;
     }
 
-    public GeneSetProfilesBuilder sumProfile(BaselineProfile profile) {
+    public GeneSetProfilesBuilder forGeneQueryResponse(GeneQueryResponse geneQueryResponse){
+        this.geneQueryResponse = geneQueryResponse;
+
+        for (String geneSetId: geneQueryResponse.getQueryTerms()){
+            GeneSet geneSet = geneSetFactory.createGeneSet(geneSetId);
+            geneSets.put(geneSetId, geneSet);
+        }
+        return this;
+    }
+
+    public GeneSetProfilesBuilder withBaselineComparator(Comparator<BaselineProfile> baselineProfileComparator){
+        this.baselineProfileComparator = baselineProfileComparator;
+        return this;
+    }
+
+    public GeneSetProfilesBuilder withInputStream(ObjectInputStream<BaselineProfile> inputStream){
+        this.inputStream = inputStream;
+        return this;
+    }
+
+    GeneSetProfilesBuilder addProfile(BaselineProfile profile){
         totalGeneProfileCount++;
 
-        for (String queryTerm : requestContext.getGeneQueryResponse().getRelatedTerms(profile.getId())) {
-
-            BaselineProfile sumProfile = averageProfiles.get(queryTerm);
-            if (sumProfile == null) {
-                sumProfile = new BaselineProfile(queryTerm);
-                geneSetProfileCounts.put(queryTerm, 0);
-            }
-            averageProfiles.put(queryTerm, sumProfile.addAll(profile));
-
-            geneSetProfileCounts.put(queryTerm, geneSetProfileCounts.get(queryTerm) + 1);
-
+        for (String geneSetId: geneQueryResponse.getRelatedQueryTerms(profile.getId())){
+            geneSets.get(geneSetId).addBaselineProfile(profile);
         }
 
         return this;
     }
 
-    public BaselineProfilesList build() {
+    public BaselineProfilesList build(){
+
+        BaselineProfile geneProfile;
+        while ((geneProfile = inputStream.readNext()) != null) {
+            addProfile(geneProfile);
+        }
+
         BaselineProfilesList baselineProfilesList = new BaselineProfilesList();
 
-        for (BaselineProfile profile : averageProfiles.values()) {
-            if (!averageProfiles.isEmpty()) {
-                baselineProfilesList.add(profile.foldProfile(geneSetProfileCounts.get(profile.getId())));
+        for(GeneSet geneSet: geneSets.values()){
+            BaselineProfile averageProfile = geneSet.getAverageProfile();
+            if (!averageProfile.isEmpty()){
+                baselineProfilesList.add(averageProfile);
             }
         }
 
         baselineProfilesList.setTotalResultCount(totalGeneProfileCount);
+
+        if (baselineProfileComparator != null){
+            Collections.sort(baselineProfilesList, baselineProfileComparator);
+        }
 
         return baselineProfilesList;
     }

@@ -20,17 +20,31 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands.download;
+package uk.ac.ebi.atlas.web.controllers.page;
 
-import org.apache.commons.lang3.ArrayUtils;
+public class DifferentialGeneProfileLink {
 
-class RnaSeqRawDataHeaderBuilder implements HeaderBuilder {
+    private String contrast;
 
-    @Override
-    public String[] buildHeader(String[] header) {
-        String[] headerWithoutFirstElement = ArrayUtils.remove(header, 0);
-              return ArrayUtils.addAll(new String[]{GENE_NAME_COLUMN_NAME, getSecondColumnName()}, headerWithoutFirstElement);
+    private String url;
+
+    private double value;
+
+    public DifferentialGeneProfileLink(String contrast, String url, double value) {
+        this.contrast = contrast;
+        this.url = url;
+        this.value = value;
     }
 
-    protected String getSecondColumnName() {return GENE_ID_COLUMN_NAME;}
+    public String getContrast() {
+        return contrast;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public double getValue() {
+        return value;
+    }
 }

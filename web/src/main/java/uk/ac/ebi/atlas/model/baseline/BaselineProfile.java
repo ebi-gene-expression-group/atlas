@@ -31,11 +31,12 @@ import java.util.Set;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+
 public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    public BaselineProfile(String id) {
+    BaselineProfile(String id) {
         super(id);
     }
 
@@ -66,36 +67,30 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         return expressionLevel / factors.size();
     }
 
-    public BaselineProfile addAll(BaselineProfile otherProfile){
-        BaselineProfile newProfile = new BaselineProfile(getId());
-        Set<Factor> allFactors = otherProfile.getConditions();
-        allFactors.addAll(getConditions());
-
-        for (Factor factor : allFactors){
-            double expressionLevel = getExpressionLevel(factor);
+    public BaselineProfile sumProfile(BaselineProfile otherProfile){
+        for (Factor factor : otherProfile.getConditions()){
             double otherExpressionLevel = otherProfile.getExpressionLevel(factor);
 
             if(otherExpressionLevel != 0){
+                double thisExpressionLevel = getExpressionLevel(factor);
                 FactorGroup factorGroup = otherProfile.getExpression(factor).getFactorGroup();
                 BaselineExpression totalExpression =
-                        new BaselineExpression(expressionLevel + otherExpressionLevel, factorGroup);
-                newProfile.add(factor.getType(), totalExpression);
-            } else {
-                newProfile.add(factor.getType(), getExpression(factor));
+                        new BaselineExpression(thisExpressionLevel + otherExpressionLevel, factorGroup);
+                add(factor.getType(), totalExpression);
             }
         }
-        return newProfile;
+        return this;
     }
 
     public BaselineProfile foldProfile(int foldFactor) {
-        BaselineProfile newProfile = new BaselineProfile(getId());
         for (Factor factor : getConditions()){
             BaselineExpression expression = getExpression(factor);
+            double foldLevel = fold(expression.getLevel(), foldFactor);
             BaselineExpression foldedExpression =
-                    new BaselineExpression(fold(expression.getLevel(), foldFactor), expression.getFactorGroup());
-            newProfile.add(factor.getType(), foldedExpression);
+                    new BaselineExpression(foldLevel, expression.getFactorGroup());
+            add(factor.getType(), foldedExpression);
         }
-        return newProfile;
+        return this;
     }
 
     private double fold(double value, int foldFactor) {

@@ -26,35 +26,35 @@ package uk.ac.ebi.atlas.streams.baseline;
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfileBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilePreconditionBackedBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
 
-    private BaselineProfileBuilder baselineProfileBuilder;
+    private BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder;
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
             , BaselineExpressionsBufferBuilder expressionsBufferBuilder
-            , BaselineProfileBuilder baselineProfileBuilder) {
+            , BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
-        this.baselineProfileBuilder = baselineProfileBuilder;
+        this.baselineProfilePreconditionBackedBuilder = baselineProfilePreconditionBackedBuilder;
     }
 
     @Override
     protected BaselineProfile createProfile() {
-        return baselineProfileBuilder.create();
+        return baselineProfilePreconditionBackedBuilder.create();
     }
 
     @Override
     protected void addExpressionToBuilder(BaselineExpression expression) {
-        baselineProfileBuilder.addExpression(expression);
+        baselineProfilePreconditionBackedBuilder.addExpression(expression);
     }
 
     @Override
     protected void addGeneColumnValueToBuilder(String geneName) {
-        baselineProfileBuilder.forGeneId(geneName);
+        baselineProfilePreconditionBackedBuilder.forGeneId(geneName);
     }
 
 }

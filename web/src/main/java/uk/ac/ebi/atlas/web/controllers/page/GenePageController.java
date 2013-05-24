@@ -37,6 +37,9 @@ public class GenePageController extends BioentityPageController {
 
     public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
+    // needs changing to DifferentialRequestPreferences.DEFAULT_CUTOFF
+    public static final double CUTOFF = 0.5;
+
     @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
 
@@ -49,7 +52,7 @@ public class GenePageController extends BioentityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
-        differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, 0.05D);
+        differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, CUTOFF);
         return super.showGenePage(identifier, model);
     }
 

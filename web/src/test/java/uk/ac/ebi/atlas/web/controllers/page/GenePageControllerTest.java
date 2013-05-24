@@ -105,7 +105,7 @@ public class GenePageControllerTest {
     public void testShowGenePage() throws Exception {
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("gene"));
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
-        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, 0.05D);
+        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.CUTOFF);
     }
 
     @Test

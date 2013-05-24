@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 
@@ -43,7 +44,9 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
     @Override
     protected T execute(ObjectInputStream<K> inputStream, RequestContext requestContext) {
 
-        MinMaxPriorityQueue<K> rankingQueue = buildRankingQueue(requestContext);
+        Comparator<K> profilesComparator = createGeneProfileComparator(requestContext);
+
+        MinMaxPriorityQueue<K> rankingQueue = buildRankingQueue(requestContext.getHeatmapMatrixSize(), profilesComparator);
 
         int geneCount = 0;
 
@@ -60,25 +63,23 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
             list = createGeneProfilesList(rankingQueue);
             list.setTotalResultCount(geneCount);
 
-        } else {
-            list = buildAverageGeneSetProfiles(inputStream);
+            Collections.sort(list, profilesComparator);
+
+            return list;
         }
 
-        Collections.sort(list, rankingQueue.comparator());
-
-        return list;
+        return buildAverageGeneSetProfiles(requestContext.getGeneQueryResponse(), inputStream, profilesComparator);
 
     }
 
-    protected abstract T buildAverageGeneSetProfiles(ObjectInputStream<K> objectInputStream);
+    protected abstract T buildAverageGeneSetProfiles(GeneQueryResponse geneQueryResponse, ObjectInputStream<K> objectInputStream, Comparator<K> geneProfilesComparator);
 
     protected abstract T createGeneProfilesList(Queue<K> geneProfiles);
 
     protected abstract Comparator<K> createGeneProfileComparator(RequestContext requestContext);
 
-    MinMaxPriorityQueue<K> buildRankingQueue(RequestContext requestContext){
-        Comparator<K> geneProfileComparator = createGeneProfileComparator(requestContext);
-        return MinMaxPriorityQueue.orderedBy(geneProfileComparator).maximumSize(requestContext.getHeatmapMatrixSize()).create();
+    MinMaxPriorityQueue<K> buildRankingQueue(int heatmapMatrixSize, Comparator<K> profilesComparator){
+        return MinMaxPriorityQueue.orderedBy(profilesComparator).maximumSize(heatmapMatrixSize).create();
     }
 
 }

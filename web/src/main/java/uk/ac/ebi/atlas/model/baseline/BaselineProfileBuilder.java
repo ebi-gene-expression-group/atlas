@@ -23,65 +23,21 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-
-import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
 public class BaselineProfileBuilder {
 
-    private BaselineProfile baselineProfile;
+    private String profileId;
 
-    private BaselineExpressionPrecondition baselineExpressionPrecondition;
-
-    private BaselineProfilePrecondition baselineProfilePrecondition;
-
-    private BaselineRequestContext requestContext;
-
-    @Inject
-    protected BaselineProfileBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
-                                     BaselineProfilePrecondition baselineProfilePrecondition) {
-        this.requestContext = requestContext;
-        this.baselineExpressionPrecondition = baselineExpressionPrecondition;
-        this.baselineProfilePrecondition = baselineProfilePrecondition;
-    }
-
-    //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
-    // , that is before the Controller actually executes the request, before the Controller initialize RequestContext
-    void initPreconditions() {
-        baselineExpressionPrecondition.setCutoff(requestContext.getCutoff())
-                .setFilterFactors(requestContext.getSelectedFilterFactors());
-        baselineProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
-                .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
-                .setSpecific(requestContext.isSpecific());
-    }
-
-    public BaselineProfileBuilder forGeneId(String geneId) {
-        baselineProfile = new BaselineProfile(geneId);
-        initPreconditions();
+    public BaselineProfileBuilder withProfileId(String profileId) {
+        this.profileId = profileId;
         return this;
     }
 
-    public BaselineProfileBuilder addExpression(BaselineExpression expression) {
-        checkState(baselineProfile != null, "Please invoke forGeneID before create");
-        if (baselineExpressionPrecondition.apply(expression)) {
-            baselineProfile.add(requestContext.getQueryFactorType(), expression);
-        }
-        return this;
+    public BaselineProfile build(){
+        return new BaselineProfile(profileId);
     }
-
-    public BaselineProfile create() {
-        checkState(baselineProfile != null, "Please invoke forGeneID before create");
-
-        if (baselineProfilePrecondition.apply(baselineProfile)){
-            return baselineProfile;
-        }
-        return null;
-    }
-
-
 }
