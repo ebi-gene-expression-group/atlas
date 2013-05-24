@@ -36,6 +36,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.SortedSet;
 
+import static au.com.bytecode.opencsv.CSVWriter.NO_ESCAPE_CHARACTER;
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 public abstract class GeneProfilesTSVWriter<T extends Profile, K> {
@@ -56,7 +57,8 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> {
         csvWriter.writeNext(buildCsvColumnHeaders(conditions));
 
         for (T profile: geneProfilesList){
-            csvWriter.writeNext(buildCsvRow(profile, conditions));
+            String[] csvRow = buildCsvRow(profile, conditions);
+            csvWriter.writeNext(csvRow);
         }
 
         csvWriter.flush();
@@ -74,7 +76,8 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> {
         T geneProfile;
         while ((geneProfile = inputStream.readNext()) != null) {
             ++count;
-            csvWriter.writeNext(buildCsvRow(geneProfile, conditions));
+            String[] csvRow = buildCsvRow(geneProfile, conditions);
+            csvWriter.writeNext(csvRow);
         }
 
         csvWriter.flush();
@@ -103,8 +106,12 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> {
     }
 
     String[] getRowHeaders(T geneProfile){
-        String geneName = geneNamesProvider.getGeneName(geneProfile.getId());
-        return new String[]{geneName, getSecondaryRowHeader(geneProfile)};
+        String primaryRowHeader = geneNamesProvider.getGeneName(geneProfile.getId());
+        String secondaryRowHeader = getSecondaryRowHeader(geneProfile);
+        if  (secondaryRowHeader != null){
+            return new String[]{primaryRowHeader, secondaryRowHeader};
+        }
+        return new String[]{primaryRowHeader};
     }
 
     protected abstract String getSecondaryRowHeader(T profile);
@@ -124,7 +131,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> {
 
     public void setResponseWriter(PrintWriter responseWriter) {
         this.responseWriter = responseWriter;
-        csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER);
+        csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER, NO_ESCAPE_CHARACTER);
     }
 
     String removeTrailingZero(double value) {
