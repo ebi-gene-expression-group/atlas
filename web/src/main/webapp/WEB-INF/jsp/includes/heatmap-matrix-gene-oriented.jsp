@@ -46,11 +46,7 @@
 
                         <c:set var="geneId" value="${geneProfile.id}"/>
 
-                        <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
-                            <fmt:param value="${geneId}"/>
-                        </fmt:message>
-
-                        <a class="genename" id="${geneId}" href='${genePageURL}' target='_blank'
+                        <a class="genename" id="${geneId}" href='genes/${geneId}'
                            title="">${geneNamesProvider.getGeneName(geneId)}</a>
                     </display:column>
 

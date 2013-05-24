@@ -46,6 +46,10 @@ public class BioentityPage extends AtlasPage {
     @FindBy(id = "geneCardTable")
     private WebElement table;
 
+    public BioentityPage(WebDriver driver) {
+        super(driver);
+    }
+
     public BioentityPage(WebDriver driver, String geneIdentifier, String type) {
         super(driver);
         this.geneIdentifier = geneIdentifier;
