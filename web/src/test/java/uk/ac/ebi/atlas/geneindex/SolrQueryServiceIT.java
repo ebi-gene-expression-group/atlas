@@ -102,7 +102,7 @@ public class SolrQueryServiceIT {
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
-        assertThat(geneIds.size(), is(100000));
+        assertThat(geneIds.size(), lessThan(200000));
         assertThat(geneIds, hasItems("ENSP00000286301", "ENSG00000214919"));
 
     }
