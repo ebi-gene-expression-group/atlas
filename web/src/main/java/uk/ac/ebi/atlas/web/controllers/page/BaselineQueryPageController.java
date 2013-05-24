@@ -89,6 +89,25 @@ public class BaselineQueryPageController extends BaselineQueryController {
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
+        prepareModel(preferences, result, model, request);
+
+        return "experiment";
+    }
+
+    @RequestMapping(value = "/heatmap-widget/protein/{identifier}", params = {"type=BASELINE"})
+    public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+            , BindingResult result, Model model, HttpServletRequest request) {
+
+        preferences.setGeneQuery((String) request.getAttribute(ExperimentDispatcher.IDENTIFIER_ATTRIBUTE));
+
+        prepareModel(preferences, result, model, request);
+
+
+        return "heatmap-widget";
+    }
+
+
+    private void prepareModel(BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         initPreferences(preferences, experiment);
@@ -163,8 +182,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
             }
 
         }
-
-        return "experiment";
     }
 
 }

@@ -29,52 +29,10 @@
             </td>
         </tbody>
     </table>
-    <div id="heatmap" class="row stickem-container">
 
-        <div id="anatomogram" class="aside stickem double-click-noselection">
-            <table>
-                <tr>
-                    <td style="padding-top: 15px; vertical-align:top">
-                <span id="sex-toggle">
-                    <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                         style="width:20px;height:38px;padding:2px"
-                         src="resources/images/male_selected.png"/>
-                </span>
-                        <!--
-                        <span data-help-loc="#anatomogram"/>
-                        -->
-                    </td>
-                    <td>
-                        <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="heatmap-div" class="heatmap-position" style="display:none">
-
-            <table>
-                <tr>
-                    <td>
-                        <span id="geneCount">Showing ${geneProfiles.size()}
-                            of ${geneProfiles.getTotalResultCount()} genes found:
-                        </span>
-                    </td>
-                    <td>
-                        <c:import url="includes/gradient-legend.jsp"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
+    <%@ include file="includes/anatomigram-and-heatmap.jsp" %>
 </div>
+
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -91,7 +49,7 @@
             //ToDo: this should be replaced with a JSON array directly sent from backend layer
             var allQueryFactorValues = [${allQueryFactors.size()}];
             <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
-                allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
+            allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
             </c:forEach>
 
             if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
