@@ -99,7 +99,6 @@
         $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
-            collapsible:true,
             heightStyle:"content",
             icons:{ "header":"geneCardIconPlus", "activeHeader":"geneCardIconMinus" },
             header:"ul"
