@@ -52,6 +52,10 @@ public class BaselineProfilePreconditionBackedBuilder {
 
     //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
     // , that is before the Controller actually executes the request, before the Controller initialize RequestContext
+    //ToDo - circular package dependency:
+    //ToDo: builder should not be responsible of checking that added expressions satisfy request preferences...
+    //ToDo: It introduces circular dependency between model and request preferences.
+    //ToDo: We should move preconditions in the nearest point where the condition to be checked can be evaluated (i.e. ExpressionBuffer)
     void initPreconditions() {
         baselineExpressionPrecondition.setCutoff(requestContext.getCutoff())
                 .setFilterFactors(requestContext.getSelectedFilterFactors());
