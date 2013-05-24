@@ -362,8 +362,8 @@ public class HeatmapTablePage extends TablePage {
         geneNames.get(zeroBasedGeneNameIndex).click();
 
 
-        //WebDriverWait wait = new WebDriverWait(driver, 10L);
-       // wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("accordion")));
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("accordion")));
 
         return new BioentityPage(driver);
     }

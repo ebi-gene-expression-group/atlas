@@ -50,10 +50,4 @@ public class GeneNameLinksIT extends SinglePageSeleniumFixture {
 
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldNotHaveADesignElement() {
-
-        subject.getDesignElementHeader();
-
-    }
 }
