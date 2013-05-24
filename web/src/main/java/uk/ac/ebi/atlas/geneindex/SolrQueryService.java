@@ -33,6 +33,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
@@ -124,19 +125,18 @@ public class SolrQueryService {
 
     public String getSpeciesForIdentifier(String identifier) {
 
-        String species = null;
-
         SolrQuery query = new SolrQuery("identifier:" + identifier);
-        query.setFields(SPECIES_FIELD);
-        query.setRows(1);
+        return extractSpecies(query);
 
-        QueryResponse solrResponse = executeSolrQuery(query);
-        for (SolrDocument doc : solrResponse.getResults()) {
-            species = doc.getFieldValue(SPECIES_FIELD).toString();
-        }
-
-        return species;
     }
+
+    public String getSpeciesForPropertyValue(String propertyValue) {
+
+        SolrQuery query = new SolrQuery("property:" + propertyValue);
+        return extractSpecies(query);
+
+    }
+
 
     public List<String> getPropertyValuesForIdentifier(String identifier, String propertyType) {
 
@@ -153,6 +153,21 @@ public class SolrQueryService {
 
         return results;
     }
+
+    private String extractSpecies(SolrQuery query) {
+        String species = null;
+
+        query.setFields(SPECIES_FIELD);
+        query.setRows(1);
+
+        QueryResponse solrResponse = executeSolrQuery(query);
+        SolrDocumentList results = solrResponse.getResults();
+        if (results.getNumFound() > 1) {
+            species = results.get(0).getFieldValue(SPECIES_FIELD).toString();
+        }
+        return species;
+    }
+
 
     Set<String> fetchGeneIdentifiersFromSolr(String queryString) {
         Set<String> results = Sets.newHashSet();
