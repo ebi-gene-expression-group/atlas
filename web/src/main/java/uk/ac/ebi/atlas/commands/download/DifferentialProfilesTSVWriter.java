@@ -37,7 +37,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -46,18 +45,18 @@ import java.util.*;
 
 public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfile<K>, K extends DifferentialExpression> extends GeneProfilesTSVWriter<T, Contrast> {
     private static final Logger LOGGER = Logger.getLogger(RnaSeqProfilesTSVWriter.class);
-    private Resource headerTemplateResource;
-    private String headerTemplate;
+    private Resource tsvFileMastheadResource;
+    private String tsvFileMastheadTemplate;
 
-    @Inject
-    public void setHeaderTemplateResource(@Value("classpath:/file-templates/download-headers-differential.txt") Resource headerTemplateResource) {
-        this.headerTemplateResource = headerTemplateResource;
+    @Value("classpath:/file-templates/download-headers-differential.txt")
+    public void setTsvFileMastheadTemplateResource(Resource tsvFileMastheadResource) {
+        this.tsvFileMastheadResource = tsvFileMastheadResource;
     }
 
     @PostConstruct
-    void initTemplate() {
-        try (InputStream inputStream = headerTemplateResource.getInputStream()) {
-            headerTemplate = IOUtils.toString(inputStream);
+    void initTsvFileMastheadTemplate() {
+        try (InputStream inputStream = tsvFileMastheadResource.getInputStream()) {
+            tsvFileMastheadTemplate = IOUtils.toString(inputStream);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
@@ -65,24 +64,24 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     }
 
     @Override
-    protected List<String> buildConditionExpressionsHeaders(SortedSet<Contrast> conditions) {
-        List<String> conditionExpressionsHeaders = new ArrayList<>();
+    protected String[] getConditionColumnHeaders(SortedSet<Contrast> conditions) {
+        List<String> conditionColumnHeaders = new ArrayList<>();
 
-        List<String> attributeLabels = getExpressionDataLabels();
+        List<String> attributeLabels = getExpressionColumnsHeaders();
         for (Contrast condition : conditions) {
             for (String attributeLabel : attributeLabels) {
-                conditionExpressionsHeaders.add(condition.getDisplayName() + "." + attributeLabel);
+                conditionColumnHeaders.add(condition.getDisplayName() + "." + attributeLabel);
             }
         }
-        return conditionExpressionsHeaders;
+        return conditionColumnHeaders.toArray(new String[conditionColumnHeaders.size()]);
     }
 
     protected abstract DifferentialRequestContext getRequestContext();
 
-    protected abstract List<String> getExpressionDataLabels();
+    protected abstract List<String> getExpressionColumnsHeaders();
 
     @Override
-    protected String buildHeaders() {
+    protected String getTsvFileMasthead() {
         DifferentialRequestContext requestContext = getRequestContext();
         String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? " specifically" : "";
@@ -92,7 +91,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
         double cutoff = requestContext.getCutoff();
         String experimentAccession = requestContext.getExperiment().getAccession();
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(headerTemplate, geneQuery, exactMatch, specific, regulation, selectedContrasts, cutoff,
+        return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, exactMatch, specific, regulation, selectedContrasts, cutoff,
                 experimentAccession, timeStamp);
 
     }
@@ -124,7 +123,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     }
 
     final String[] getExpressionLevelStrings(K expression) {
-        String[] expressionLevelData = new String[getExpressionDataLabels().size()];
+        String[] expressionLevelData = new String[getExpressionColumnsHeaders().size()];
         if (expression == null) {
             Arrays.fill(expressionLevelData, "NA");
             return expressionLevelData;

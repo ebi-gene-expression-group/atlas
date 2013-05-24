@@ -20,17 +20,26 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands.download;
+package uk.ac.ebi.atlas.model.baseline;
 
-import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.context.annotation.Scope;
 
-class RnaSeqRawDataHeaderBuilder implements HeaderBuilder {
+import javax.inject.Inject;
+import javax.inject.Named;
 
-    @Override
-    public String[] buildHeader(String[] header) {
-        String[] headerWithoutFirstElement = ArrayUtils.remove(header, 0);
-              return ArrayUtils.addAll(new String[]{GENE_NAME_COLUMN_NAME, getSecondColumnName()}, headerWithoutFirstElement);
+@Named
+@Scope("prototype")
+public class GeneSetFactory {
+
+    private BaselineProfileBuilder baselineProfileBuilder;
+
+    @Inject
+    public GeneSetFactory(BaselineProfileBuilder baselineProfileBuilder){
+        this.baselineProfileBuilder = baselineProfileBuilder;
     }
 
-    protected String getSecondColumnName() {return GENE_ID_COLUMN_NAME;}
+    public GeneSet createGeneSet(String geneSetId){
+        return new GeneSet(geneSetId, baselineProfileBuilder);
+    }
+
 }

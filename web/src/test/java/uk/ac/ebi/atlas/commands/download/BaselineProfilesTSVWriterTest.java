@@ -68,7 +68,7 @@ public class BaselineProfilesTSVWriterTest {
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
     @Mock
-    private Resource headerTemplateResourceMock;
+    private Resource tsvFileMastheadTemplateResourceMock;
 
     private BaselineProfilesTSVWriter subject;
 
@@ -114,16 +114,16 @@ public class BaselineProfilesTSVWriterTest {
         subject.setRequestContext(requestContextMock);
 
         InputStream inputStream = new ByteArrayInputStream("{0} {1} {2} {3} {4} {5}".getBytes());
-        when(headerTemplateResourceMock.getInputStream()).thenReturn(inputStream);
-        subject.setHeaderTemplateResource(headerTemplateResourceMock);
-        subject.initTemplate();
+        when(tsvFileMastheadTemplateResourceMock.getInputStream()).thenReturn(inputStream);
+        subject.setTsvFileMastheadTemplateResource(tsvFileMastheadTemplateResourceMock);
+        subject.initTsvFileMastheadTemplate();
         subject.setGeneNamesProvider(geneNamesProviderMock);
     }
 
     @Test
     public void applyShouldUseCsvWriter() throws Exception {
 
-        long count = subject.apply(inputStreamMock, organismParts);
+        long count = subject.write(inputStreamMock, organismParts);
 
         verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 
@@ -137,7 +137,7 @@ public class BaselineProfilesTSVWriterTest {
 
     @Test
     public void buildCsvHeadersTest() {
-        String[] headers = subject.buildCsvHeaders(organismParts);
+        String[] headers = subject.buildCsvColumnHeaders(organismParts);
         assertThat(headers, is(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"}));
     }
 

@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -44,9 +44,6 @@ public class GeneSetProfilesBuilderTest {
     public static final String IDENTIFIER_2 = "IDENTIFIER2";
 
     @Mock
-    private BaselineRequestContext baselineRequestContextMock;
-
-    @Mock
     private GeneQueryResponse geneQueryResponseMock;
 
     @Mock
@@ -55,35 +52,48 @@ public class GeneSetProfilesBuilderTest {
     @Mock
     private BaselineProfile baselineProfileMock2;
 
+    @Mock
+    private BaselineProfile averageProfileMock;
+
+    @Mock
+    private ObjectInputStream<BaselineProfile> inputStreamMock;
+
+    @Mock
+    private GeneSetFactory geneSetFactoryMock;
+
+    @Mock
+    private GeneSet geneSetMock;
+
     private GeneSetProfilesBuilder subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new GeneSetProfilesBuilder(baselineRequestContextMock);
-        when(baselineRequestContextMock.getGeneQueryResponse()).thenReturn(geneQueryResponseMock);
-        when(geneQueryResponseMock.getRelatedTerms(IDENTIFIER_1)).thenReturn(Sets.newHashSet(QUERY_TERM));
-        when(geneQueryResponseMock.getRelatedTerms(IDENTIFIER_2)).thenReturn(Sets.newHashSet(QUERY_TERM));
+        subject = new GeneSetProfilesBuilder(geneSetFactoryMock);
+
+        when(averageProfileMock.isEmpty()).thenReturn(false);
+        when(geneSetFactoryMock.createGeneSet(QUERY_TERM)).thenReturn(geneSetMock);
+        when(geneSetMock.getAverageProfile()).thenReturn(averageProfileMock);
+
+        when(geneQueryResponseMock.getQueryTerms()).thenReturn(Sets.newHashSet(QUERY_TERM));
+        when(geneQueryResponseMock.getRelatedQueryTerms(IDENTIFIER_1)).thenReturn(Sets.newHashSet(QUERY_TERM));
+        when(geneQueryResponseMock.getRelatedQueryTerms(IDENTIFIER_2)).thenReturn(Sets.newHashSet(QUERY_TERM));
+
         when(baselineProfileMock1.getId()).thenReturn(IDENTIFIER_1);
+
         when(baselineProfileMock2.getId()).thenReturn(IDENTIFIER_2);
+
+        when(inputStreamMock.readNext()).thenReturn(baselineProfileMock1).thenReturn(baselineProfileMock2).thenReturn(null);
     }
 
-    @Test
-    public void testSumProfile() throws Exception {
-        assertThat(subject.sumProfile(baselineProfileMock1), is(subject));
-
-        verify(baselineProfileMock1).getId();
-        verify(baselineRequestContextMock).getGeneQueryResponse();
-        verify(geneQueryResponseMock).getRelatedTerms(IDENTIFIER_1);
-    }
 
     @Test
     public void testBuild() throws Exception {
-        BaselineProfilesList baselineProfilesList = subject.sumProfile(baselineProfileMock1).sumProfile(baselineProfileMock2).build();
-        assertThat(baselineProfilesList.size(), is(1));
+        BaselineProfilesList baselineProfilesList = subject.forGeneQueryResponse(geneQueryResponseMock)
+                                                           .withInputStream(inputStreamMock).build();
+        verify(geneQueryResponseMock).getRelatedQueryTerms(IDENTIFIER_1);
         assertThat(baselineProfilesList.getTotalResultCount(), is(2));
 
-        BaselineProfile baselineProfile = baselineProfilesList.get(0);
-        assertThat(baselineProfile.getMinExpressionLevel(), is(Double.MAX_VALUE));
-        assertThat(baselineProfile.getMaxExpressionLevel(), is(0D));
+        assertThat(baselineProfilesList.size(), is(1));
+        assertThat(baselineProfilesList.get(0), is(averageProfileMock));
     }
 }
