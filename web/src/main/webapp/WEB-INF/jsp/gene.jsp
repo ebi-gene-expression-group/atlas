@@ -80,19 +80,14 @@
             <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
         </div>
         <table>
-            <c:forEach items="${differentialGeneProfileProperties.allExperimentAccessions}" var="experimentAccession">
-                <c:forEach
-                        items="${differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(experimentAccession)}"
-                        var="differentialProfile">
-                    <c:forEach items="${differentialProfile.conditions}" var="condition">
-                        <c:set var="differentialExpression" value="${differentialProfile.getExpression(condition)}"/>
-                        <tr>
-                            <td>${experimentAccession}</td>
-                            <td>${condition.displayName}</td>
-                            <td>${differentialExpression.level}</td>
-                        </tr>
-                    </c:forEach>
-                </c:forEach>
+            <c:forEach items="${differentialGeneProfileProperties.differentialGeneProfileLinks}"
+                       var="differentialGeneProfileLink">
+                <tr>
+                    <td><a class="geneCardLink"
+                           href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrast}</a>
+                    </td>
+                    <td>${differentialGeneProfileLink.value}</td>
+                </tr>
             </c:forEach>
         </table>
     </div>
