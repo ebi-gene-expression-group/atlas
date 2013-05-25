@@ -67,11 +67,24 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         return expressionLevel / factors.size();
     }
 
-    public BaselineProfile sumProfile(BaselineProfile otherProfile){
-        for (Factor factor : otherProfile.getConditions()){
+    public double getMaxExpressionLevelOn(Set<Factor> factors) {
+        double expressionLevel = 0D;
+
+        if (CollectionUtils.isEmpty(factors)) {
+            return expressionLevel;
+        }
+
+        for (Factor condition : factors) {
+            expressionLevel = max(expressionLevel, getExpressionLevel(condition));
+        }
+        return expressionLevel;
+    }
+
+    public BaselineProfile sumProfile(BaselineProfile otherProfile) {
+        for (Factor factor : otherProfile.getConditions()) {
             double otherExpressionLevel = otherProfile.getExpressionLevel(factor);
 
-            if(otherExpressionLevel != 0){
+            if (otherExpressionLevel != 0) {
                 double thisExpressionLevel = getExpressionLevel(factor);
                 FactorGroup factorGroup = otherProfile.getExpression(factor).getFactorGroup();
                 BaselineExpression totalExpression =
@@ -83,7 +96,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     }
 
     public BaselineProfile foldProfile(int foldFactor) {
-        for (Factor factor : getConditions()){
+        for (Factor factor : getConditions()) {
             BaselineExpression expression = getExpression(factor);
             double foldLevel = fold(expression.getLevel(), foldFactor);
             BaselineExpression foldedExpression =

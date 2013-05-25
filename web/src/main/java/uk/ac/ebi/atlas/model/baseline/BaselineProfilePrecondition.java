@@ -64,9 +64,9 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
         Set<Factor> remainingFactors = Sets.newHashSet(allQueryFactors);
         remainingFactors.removeAll(selectedQueryFactors);
 
-        double averageOnRest = baselineProfile.getAverageExpressionLevelOn(remainingFactors);
+        double maxOnRest = baselineProfile.getMaxExpressionLevelOn(remainingFactors);
 
-        return (averageOnSelected / averageOnRest) >= 1;
+        return (averageOnSelected / maxOnRest) >= 1;
 
     }
 
