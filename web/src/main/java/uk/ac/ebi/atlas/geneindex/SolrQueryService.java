@@ -157,7 +157,7 @@ public class SolrQueryService {
     }
 
     private String extractSpecies(SolrQuery query) {
-        String species = null;
+        String species = "";
 
         query.setFields(SPECIES_FIELD);
         query.setRows(1);

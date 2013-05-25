@@ -22,6 +22,6 @@ public class ExperimentSpeciesResolver {
 
     public String getExperimentAccession(String bioentitId) {
         String species = solrQueryService.getSpeciesForPropertyValue(bioentitId);
-        return properties.getProperty(species);
+        return properties.getProperty(species.replace(" ", "_"));
     }
 }
