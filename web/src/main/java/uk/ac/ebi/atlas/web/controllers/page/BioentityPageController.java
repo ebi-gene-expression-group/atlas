@@ -32,7 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BioEntityPageController {
+public abstract class BioentityPageController {
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
