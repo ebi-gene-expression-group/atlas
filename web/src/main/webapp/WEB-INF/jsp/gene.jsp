@@ -76,20 +76,34 @@
 
     <div class="geneCard">
         <div class="ui-corner-all geneCardDifferentialSummary">
-            <span>${differentialGeneProfileProperties.totalNumberOfProfiles} search results found</span>
+            <span>${differentialGeneProfileProperties.totalNumberOfResults} search results found</span>
             <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
         </div>
-        <table>
-            <c:forEach items="${differentialGeneProfileProperties.differentialGeneProfileLinks}"
-                       var="differentialGeneProfileLink">
+
+        <div id="heatmap-div" style="display:none;">
+            <table style="margin-left:auto;margin-right:auto;">
                 <tr>
-                    <td><a class="geneCardLink"
-                           href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrast}</a>
+                    <td>
+                        <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
+                            <label for='display-levels'>Display levels</label>
+                        </button>
                     </td>
-                    <td>${differentialGeneProfileLink.value}</td>
+                    <td>
+                        <c:import url="includes/gradient-legend.jsp"/>
+                    </td>
                 </tr>
-            </c:forEach>
-        </table>
+                <tr>
+                    <td colspan="2">
+                        <c:import url="includes/heatmap-matrix-organism-oriented.jsp"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br/>
+
+        <div id="help-placeholder" style="display: none"></div>
+
     </div>
 </div>
 
@@ -104,6 +118,8 @@
             icons:{ "header":"geneCardIconPlus", "activeHeader":"geneCardIconMinus" },
             header:"ul"
         });
+
+        helpTooltipsModule.init('experiment');
     });
 </script>
 

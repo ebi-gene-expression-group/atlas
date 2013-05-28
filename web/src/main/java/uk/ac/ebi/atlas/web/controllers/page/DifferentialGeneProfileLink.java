@@ -22,18 +22,20 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+
 public class DifferentialGeneProfileLink {
 
     private String contrast;
 
     private String url;
 
-    private double value;
+    private DifferentialExpression expression;
 
-    public DifferentialGeneProfileLink(String contrast, String url, double value) {
+    public DifferentialGeneProfileLink(String contrast, String url, DifferentialExpression expression) {
         this.contrast = contrast;
         this.url = url;
-        this.value = value;
+        this.expression = expression;
     }
 
     public String getContrast() {
@@ -44,7 +46,11 @@ public class DifferentialGeneProfileLink {
         return url;
     }
 
+    public DifferentialExpression getExpression() {
+        return expression;
+    }
+
     public double getValue() {
-        return value;
+        return expression.getLevel();
     }
 }

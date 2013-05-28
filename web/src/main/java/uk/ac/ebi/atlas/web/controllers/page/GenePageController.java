@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 
@@ -52,7 +53,15 @@ public class GenePageController extends BioentityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
-        differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, CUTOFF);
+        DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
+                differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, CUTOFF);
+        model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
+
+        // setting FDR as cutoff
+        DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
+        requestPreferences.setCutoff(differentialProfilesListMapForIdentifier.getFdrCutoff());
+        model.addAttribute("preferences", requestPreferences);
+
         return super.showGenePage(identifier, model);
     }
 
