@@ -49,7 +49,7 @@ public class SolrQueryServiceIT {
     public void testGetSolrResultsForQuery() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm", false, "ensgene", "homo sapiens");
         List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
 
         // then
@@ -61,7 +61,7 @@ public class SolrQueryServiceIT {
     public void testGetSolrResultsForMultiTermQuery() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm splicing", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm splicing", false, "ensgene", "homo sapiens");
         List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
 
         // then
@@ -85,7 +85,7 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolr() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm", false, "ensgene", "homo sapiens");
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
@@ -98,7 +98,7 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolrMany() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("protein", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("protein", false, "ensgene", "homo sapiens");
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
