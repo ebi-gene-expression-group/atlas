@@ -69,6 +69,9 @@ public class GenePageControllerTest {
     @Mock
     private DifferentialGeneProfileService differentialGeneProfileServiceMock;
 
+    @Mock
+    private DifferentialGeneProfileProperties differentialGeneProfilePropertiesMock;
+
     private Properties properties = new Properties();
 
     private Multimap<String, String> genePageProperties = HashMultimap.create();
@@ -103,6 +106,8 @@ public class GenePageControllerTest {
 
     @Test
     public void testShowGenePage() throws Exception {
+        when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
+        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(GenePageController.CUTOFF);
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("bioEntity"));
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
         verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.CUTOFF);
