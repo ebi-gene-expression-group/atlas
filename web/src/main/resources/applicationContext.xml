@@ -42,7 +42,7 @@
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
     <util:properties id="genecard" location="classpath:bundles/genecard.properties"/>
-    <util:properties id="species-experiment" location="classpath:bundles/species-experiment.properties"/>
+    <util:properties id="speciesToExperiment" location="classpath:bundles/speciesToExperiment.properties"/>
 
     <bean id="baselineExperimentLoader" class="uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentLoader">
         <lookup-method name="createExperimentBuilder" bean="baselineExperimentBuilder"/>

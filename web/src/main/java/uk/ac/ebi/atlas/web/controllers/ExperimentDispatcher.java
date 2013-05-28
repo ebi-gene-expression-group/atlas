@@ -28,7 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commons.ExperimentSpeciesResolver;
+import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commons.ExperimentResolver;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
@@ -79,7 +80,7 @@ public final class ExperimentDispatcher {
     private static final String TSV_FILE_EXTENSION = ".tsv";
 
     public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-    public static final String IDENTIFIER_ATTRIBUTE = "identifier";
+    public static final String PROTEIN_IDENTIFIER_ATTRIBUTE = "uniprotAccession";
 
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
@@ -93,16 +94,16 @@ public final class ExperimentDispatcher {
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ApplicationProperties applicationProperties;
 
-    private ExperimentSpeciesResolver experimentSpeciesResolver;
+    private ExperimentResolver experimentResolver;
 
     @Inject
     private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties, ExperimentSpeciesResolver experimentSpeciesResolver) {
+                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties, ExperimentResolver experimentResolver) {
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.applicationProperties = applicationProperties;
-        this.experimentSpeciesResolver = experimentSpeciesResolver;
+        this.experimentResolver = experimentResolver;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}",
@@ -113,12 +114,23 @@ public final class ExperimentDispatcher {
 
         prepareModel(request, model, experiment);
 
-        String requestURL = getRquestURL(request);
+        String requestURL = getRequestURL(request);
 
         return "forward:" + requestURL + "?type=" + experiment.getType();
     }
 
-    private String getRquestURL(HttpServletRequest request) {
+    @RequestMapping(value = "/widgets/heatmap/protein")
+    public String dispatchWidget(HttpServletRequest request,
+        @RequestParam(value = "geneQuery", required = true) String uniprotAccession, Model model) {
+        Experiment experiment = getExperiment(experimentResolver.getExperimentAccessionByUniprotAccession(uniprotAccession), model);
+        prepareModel(request, model, experiment);
+        String requestURL = getRequestURL(request);
+
+        return "forward:" + requestURL + "?type=" + experiment.getType();
+
+    }
+
+    private String getRequestURL(HttpServletRequest request) {
         String contextPath = request.getContextPath();
         String requestURI = request.getRequestURI();
 
@@ -137,18 +149,6 @@ public final class ExperimentDispatcher {
         model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
 
         model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
-    }
-
-    @RequestMapping(value = "/heatmap-widget/protein/{identifier}")
-    public String dispatchWidget(HttpServletRequest request, @PathVariable String identifier, Model model) {
-        Experiment experiment = getExperiment(experimentSpeciesResolver.getExperimentAccession(identifier), model);
-        prepareModel(request, model, experiment);
-        String requestURL = getRquestURL(request);
-
-        request.setAttribute(IDENTIFIER_ATTRIBUTE, identifier);
-
-        return "forward:" + requestURL + "?type=" + experiment.getType();
-
     }
 
     //ToDo: refactor - create different methods for diff experiment types

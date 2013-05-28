@@ -23,9 +23,9 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.widget;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
@@ -38,42 +38,42 @@ public class ProteinWidgetIT extends SeleniumFixture {
 
     private static final String Q9GIL2_ACCESSION = "Q9GIL2";
 
-    private HeatmapTablePage getPage(String uniprotAccession, String params) {
-        HeatmapTableWidgetPage heatmapTablePage = new HeatmapTableWidgetPage(driver, uniprotAccession, params);
+    private HeatmapTableWidgetPage heatmapTablePage;
+
+    @Before
+    public void initPage(){
+        heatmapTablePage = new HeatmapTableWidgetPage(driver, "geneQuery=" + Q9GIL2_ACCESSION);
         heatmapTablePage.get();
-        return heatmapTablePage;
-    }
-
-
-    private HeatmapTablePage getDefaultPage() {
-        return getPage(Q9GIL2_ACCESSION, "");
     }
 
     @Test
-    public void testAnatomogramIsTherep() {
-        assertThat(getDefaultPage().getAnatomogram().isDisplayed(), is(true));
+    public void testAnatomogramIsThere() {
+        assertThat(heatmapTablePage.getAnatomogram().isDisplayed(), is(true));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void testNoResultFoundForNotValidAccession() {
-        HeatmapTablePage page = getPage(Q9GIL2_ACCESSION + "qqq", "");
-        page.getAnatomogram().isDisplayed();
+        heatmapTablePage = new HeatmapTableWidgetPage(driver, "geneQuery=123321xyzzyx");
+        heatmapTablePage.get();
+        heatmapTablePage.getAnatomogram().isDisplayed();
     }
 
     @Test
     public void verifyResultOnSinglePropertyQuery() {
-        Assert.assertThat(getDefaultPage().getGeneCount(), containsString("of 1"));
+        Assert.assertThat(heatmapTablePage.getGeneCount(), containsString("of 1"));
     }
 
     @Test
     public void testTitle() {
-        assertThat(getDefaultPage().getExperimentDescription(), startsWith("RNA-Seq of human individual tissues and mixture of 16 " +
+        String experimentDescription = heatmapTablePage.getExperimentDescription();
+        assertThat(experimentDescription, startsWith("RNA-Seq of human individual tissues and mixture of 16 " +
                 "tissues (Illumina Body Map)"));
     }
 
     @Test
     public void testGeneName() {
-        assertThat(getDefaultPage().getSelectedGenes().get(0), is("HLA-B"));
+        String firstGeneName = heatmapTablePage.getSelectedGenes().get(0);
+        assertThat(firstGeneName, is("HLA-B"));
     }
 
 }
