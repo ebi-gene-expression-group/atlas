@@ -46,17 +46,17 @@ public class BioentityPage extends AtlasPage {
     @FindBy(id = "bioEntityCardTable")
     private WebElement table;
 
-    public BioEntityPage(WebDriver driver) {
+    public BioentityPage(WebDriver driver) {
         super(driver);
     }
 
-    public BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type) {
+    public BioentityPage(WebDriver driver, String bioEntityIdentifier, String type) {
         super(driver);
         this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
     }
 
-    BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type, String httpParameters) {
+    BioentityPage(WebDriver driver, String bioEntityIdentifier, String type, String httpParameters) {
         super(driver, httpParameters);
         this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
