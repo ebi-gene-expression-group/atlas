@@ -32,6 +32,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+// this class is making some problems with GIT
 public class BioEntityPage extends AtlasPage {
 
     private static final String PAGE_LOCATION = "/gxa/";
@@ -113,4 +114,5 @@ public class BioEntityPage extends AtlasPage {
         }
         return row;
     }
+
 }
