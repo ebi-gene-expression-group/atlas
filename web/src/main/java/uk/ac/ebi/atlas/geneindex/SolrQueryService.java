@@ -58,6 +58,8 @@ public class SolrQueryService {
     // changed from 100000
     private static final int MAX_GENE_IDS_TO_FETCH = 1000000;
 
+    private static final String BIOENTITY_TYPE_GENE = "ensgene";
+
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
@@ -93,7 +95,7 @@ public class SolrQueryService {
 
     public Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
 
-        String queryString = buildGeneQuery(geneQuery, exactMatch, species);
+        String queryString = buildGeneQuery(geneQuery, exactMatch, BIOENTITY_TYPE_GENE, species);
 
         return fetchGeneIdentifiersFromSolr(queryString);
     }
@@ -102,7 +104,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = namePropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -111,7 +113,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = synonymPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -120,7 +122,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = identifierPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -236,7 +238,7 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    String buildGeneQuery(String query, boolean exactMatch, String species) {
+    String buildGeneQuery(String query, boolean exactMatch, String bioentityType, String species) {
         String propertyName = exactMatch ? PROPERTY_LOWER_FIELD : "property_search";
 
         String escapedGeneQuery = customEscape(query);
@@ -247,6 +249,9 @@ public class SolrQueryService {
                         .append("(" + propertyName + ":").append(escapedGeneQuery).append(")")
                         .append(" AND species:\"")
                         .append(species)
+                        .append("\"")
+                        .append(" AND type:\"")
+                        .append(bioentityType)
                         .append("\"");
         return sb.toString();
 
@@ -271,13 +276,15 @@ public class SolrQueryService {
         return query.toString();
     }
 
-    String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
+    String buildCompositeQuery(String geneName, String bioentityType, String species, String[] propertyTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("property_edgengram:\"");
         query.append(geneName);
         query.append("\" AND species:\"");
         query.append(species);
+         query.append("\" AND type:\"");
+        query.append(bioentityType);
         query.append("\" AND (");
         for (int i = 0; i < propertyTypes.length; i++) {
             query.append("property_type:\"");

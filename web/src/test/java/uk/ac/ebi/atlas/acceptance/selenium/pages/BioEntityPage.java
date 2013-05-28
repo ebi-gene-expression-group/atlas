@@ -32,7 +32,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class BioentityPage extends AtlasPage {
+public class BioEntityPage extends AtlasPage {
 
     private static final String PAGE_LOCATION = "/gxa/";
 
@@ -46,17 +46,17 @@ public class BioentityPage extends AtlasPage {
     @FindBy(id = "bioEntityCardTable")
     private WebElement table;
 
-    public BioentityPage(WebDriver driver) {
+    public BioEntityPage(WebDriver driver) {
         super(driver);
     }
 
-    public BioentityPage(WebDriver driver, String bioEntityIdentifier, String type) {
+    public BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type) {
         super(driver);
         this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
     }
 
-    BioentityPage(WebDriver driver, String bioEntityIdentifier, String type, String httpParameters) {
+    BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type, String httpParameters) {
         super(driver, httpParameters);
         this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;

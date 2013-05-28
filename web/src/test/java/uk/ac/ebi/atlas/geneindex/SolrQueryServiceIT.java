@@ -49,7 +49,7 @@ public class SolrQueryServiceIT {
     public void testGetSolrResultsForQuery() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm", false, "ensgene", "homo sapiens");
         List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
 
         // then
@@ -61,7 +61,7 @@ public class SolrQueryServiceIT {
     public void testGetSolrResultsForMultiTermQuery() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm splicing", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm splicing", false, "ensgene", "homo sapiens");
         List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
 
         // then
@@ -85,11 +85,11 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolr() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm", false, "ensgene", "homo sapiens");
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
-        assertThat(geneIds.size(), is(4));
+        assertThat(geneIds.size(), is(1));
         assertThat(geneIds, hasItem("ENSG00000066279"));
 
     }
@@ -98,12 +98,25 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolrMany() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("protein", false, "homo sapiens");
+        String queryString = subject.buildGeneQuery("protein", false, "ensgene", "homo sapiens");
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
         assertThat(geneIds.size(), lessThan(200000));
-        assertThat(geneIds, hasItems("ENSP00000286301", "ENSG00000214919"));
+        assertThat(geneIds, hasItems("ENSG00000270144", "ENSG00000214919"));
+
+    }
+
+    @Test
+    public void testFetchProteinIdentifiersFromSolrMany() throws SolrServerException {
+
+        // given
+        String queryString = subject.buildGeneQuery("protein", false, "ensprotein", "homo sapiens");
+        Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
+
+        // then
+        assertThat(geneIds.size(), lessThan(200000));
+        assertThat(geneIds, hasItems("ENSP00000286301"));
 
     }
 

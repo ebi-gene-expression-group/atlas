@@ -24,22 +24,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="accordion">
-    <ul class="geneCardHeader">
-        <img id="bioentity-info-image" title="Gene information" style="position: absolute; left: 0.5em; "
+    <ul class="bioEntityCardHeader">
+        <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
              src="resources/images/bioentity_info_transparent_bkg.png"/>
-        <span class="geneCardSymbol">${symbol}</span>
-        <span class="geneCardSpecies">${bioentityPropertyService.getSpecies()}</span>
-        <span class="geneCardDescription">${bioentityPropertyService.getBioEntityDescription()}</span>
+        <span class="bioEntityCardSymbol">${symbol}</span>
+        <span class="bioEntityCardSpecies">${bioEntityPropertyService.getSpecies()}</span>
+        <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
     </ul>
 
-    <div class="geneCard">
-        <table id="geneCardTable">
+    <div class="bioEntityCard">
+        <table id="bioEntityCardTable">
             <c:forEach var="propertyType" items="${propertyNames.keySet()}">
-                <c:set var="propertyLinks" value="${bioentityPropertyService.getPropertyLinks(propertyType)}"/>
+                <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
                 <c:if test="${propertyLinks.size() > 0}">
                     <tr>
-                        <td class="geneCardPropertyType">${propertyNames.get(propertyType)}</td>
-                        <td class="geneCardPropertyValue">
+                        <td class="bioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
+                        <td class="bioEntityCardPropertyValue">
                             <c:set var="count" value="0"/>
                             <c:forEach var="propertyLink" items="${propertyLinks}">
 
@@ -53,7 +53,7 @@
                                 <c:set var="postLinkHTML" value=""/>
                                 <c:if test="${not propertyLink.getUrl().isEmpty()}">
                                     <c:set var="preLinkHTML"
-                                           value="<a class=\"geneCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
+                                           value="<a class=\"bioEntityCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
                                     <c:set var="postLinkHTML" value="</a>"/>
                                 </c:if>
 
@@ -67,26 +67,24 @@
         </table>
     </div>
 
-    <ul class="geneCardHeader">
+    <ul class="bioEntityCardHeader">
         <img id="differential-info-image" title="Differential Expression" style="position: absolute; left: 0.5em; "
              src="resources/images/updown_transparent_bkg.png"/>
-        <span class="geneCardSymbol">Differential Expression</span>
+        <span class="bioEntityCardSymbol">Differential Expression</span>
     </ul>
 
 
-    <div class="geneCard">
-        <div class="ui-corner-all geneCardDifferentialSummary">
-            <span>${differentialGeneProfileProperties.totalNumberOfResults} search results found</span>
+    <div class="bioEntityCard">
+        <div class="ui-corner-all bioEntityCardDifferentialSummary">
+            <span>${differentialGeneProfileProperties.totalNumberOfProfiles} search results found</span>
             <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
         </div>
 
         <div id="heatmap-div" style="display:none;">
             <table style="margin-left:auto;margin-right:auto;">
                 <tr>
-                    <td>
-                        <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                            <label for='display-levels'>Display levels</label>
-                        </button>
+                    <td><a class="bioEntityCardLink"
+                           href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrast}</a>
                     </td>
                     <td>
                         <c:import url="includes/gradient-legend.jsp"/>
@@ -115,7 +113,7 @@
         $("#accordion").accordion({
             collapsible:true,
             heightStyle:"content",
-            icons:{ "header":"geneCardIconPlus", "activeHeader":"geneCardIconMinus" },
+            icons:{ "header":"bioEntityCardIconPlus", "activeHeader":"bioEntityCardIconMinus" },
             header:"ul"
         });
 

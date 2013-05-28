@@ -104,7 +104,7 @@ public class DifferentialGeneProfileProperties {
     }
 
     /*
-    * used in gene.jsp
+    * used in bioEntity.jsp
     */
     public List<DifferentialGeneProfileLink> getDifferentialGeneProfileLinks() {
 
@@ -135,7 +135,7 @@ public class DifferentialGeneProfileProperties {
     }
 
     /*
-    * used in gene.jsp
+    * used in bioEntity.jsp
     */
     public int getTotalNumberOfResults() {
         int count = 0;
@@ -154,7 +154,7 @@ public class DifferentialGeneProfileProperties {
     }
 
     /*
-     * used in gene.jsp
+     * used in bioEntity.jsp
      */
     public double getFdrCutoff() {
         return fdrCutoff;

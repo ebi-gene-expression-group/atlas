@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -347,18 +347,18 @@ a.help-icon {
     padding-bottom: 4px;
 }
 
-.geneCard {
+.bioEntityCard {
     background: white !important;
     background-color: white !important;
 }
 
-.geneCardHeader {
+.bioEntityCardHeader {
     background: #f1fffa !important;
     background-color: #f1fffa !important;
     border: 1px solid #CCCCCC !important;
 }
 
-.geneCardSymbol {
+.bioEntityCardSymbol {
     font-size: 16px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;
@@ -366,14 +366,14 @@ a.help-icon {
     padding-left: 14px;
 }
 
-.geneCardDescription {
+.bioEntityCardDescription {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     color: gray;
     padding-left: 6px;
 }
 
-.geneCardSpecies {
+.bioEntityCardSpecies {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     color: gray;
@@ -381,7 +381,7 @@ a.help-icon {
     text-transform: capitalize;
 }
 
-.geneCardPropertyType {
+.bioEntityCardPropertyType {
     font-size: 14px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;
@@ -389,16 +389,16 @@ a.help-icon {
     vertical-align: top;
 }
 
-.geneCardPropertyValue {
+.bioEntityCardPropertyValue {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
 }
 
-.geneCardLink {
+.bioEntityCardLink {
     color: #343094 !important;
 }
 
-.geneCardIconPlus {
+.bioEntityCardIconPlus {
     background-position: -16px -128px;
     position: relative !important;
     top: 0px !important;
@@ -407,7 +407,7 @@ a.help-icon {
     float: right;
 }
 
-.geneCardIconMinus {
+.bioEntityCardIconMinus {
     background-position: -48px -128px;
     position: relative !important;
     top: 0px !important;
@@ -416,7 +416,7 @@ a.help-icon {
     float: right;
 }
 
-.geneCardDifferentialSummary {
+.bioEntityCardDifferentialSummary {
     border: 1px solid #FBD850;
     color: #EB8F00;
     font-weight: bold;

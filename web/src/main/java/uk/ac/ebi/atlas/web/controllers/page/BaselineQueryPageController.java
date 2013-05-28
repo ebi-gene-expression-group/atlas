@@ -100,11 +100,9 @@ public class BaselineQueryPageController extends BaselineQueryController {
         return "experiment";
     }
 
-    @RequestMapping(value = "/heatmap-widget/protein/{identifier}", params = {"type=BASELINE"})
+    @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=BASELINE"})
     public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
-
-        preferences.setGeneQuery((String) request.getAttribute(ExperimentDispatcher.IDENTIFIER_ATTRIBUTE));
 
         prepareModel(preferences, result, model, request);
 
