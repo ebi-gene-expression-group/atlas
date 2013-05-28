@@ -89,7 +89,7 @@ public class SolrQueryServiceIT {
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
-        assertThat(geneIds.size(), is(4));
+        assertThat(geneIds.size(), is(1));
         assertThat(geneIds, hasItem("ENSG00000066279"));
 
     }
@@ -103,7 +103,20 @@ public class SolrQueryServiceIT {
 
         // then
         assertThat(geneIds.size(), lessThan(200000));
-        assertThat(geneIds, hasItems("ENSP00000286301", "ENSG00000214919"));
+        assertThat(geneIds, hasItems("ENSG00000270144", "ENSG00000214919"));
+
+    }
+
+    @Test
+    public void testFetchProteinIdentifiersFromSolrMany() throws SolrServerException {
+
+        // given
+        String queryString = subject.buildGeneQuery("protein", false, "ensprotein", "homo sapiens");
+        Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
+
+        // then
+        assertThat(geneIds.size(), lessThan(200000));
+        assertThat(geneIds, hasItems("ENSP00000286301"));
 
     }
 
