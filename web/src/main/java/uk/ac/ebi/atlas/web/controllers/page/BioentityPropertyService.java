@@ -57,7 +57,7 @@ public class BioentityPropertyService {
     private String species;
 
     @Inject
-    public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties) {
+    public BioentityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties) {
         this.solrClient = solrClient;
         this.uniProtClient = uniProtClient;
         this.bioEntityCardProperties = bioEntityCardProperties;
