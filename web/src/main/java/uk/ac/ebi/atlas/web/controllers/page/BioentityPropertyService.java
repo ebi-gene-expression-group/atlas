@@ -30,7 +30,7 @@ import org.apache.commons.lang.WordUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
-import uk.ac.ebi.atlas.web.BioentityPageProperties;
+import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,9 +40,9 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 
-@Named("bioentityPropertyService")
+@Named("bioEntityPropertyService")
 @Scope("request")
-public class BioentityPropertyService {
+public class BioEntityPropertyService {
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
@@ -50,17 +50,17 @@ public class BioentityPropertyService {
 
     private UniProtClient uniProtClient;
 
-    private BioentityPageProperties geneCardProperties;
+    private BioEntityCardProperties bioEntityCardProperties;
 
     private Multimap<String, String> propertyValuesByType;
 
     private String species;
 
     @Inject
-    public BioentityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioentityPageProperties geneCardProperties) {
+    public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties) {
         this.solrClient = solrClient;
         this.uniProtClient = uniProtClient;
-        this.geneCardProperties = geneCardProperties;
+        this.bioEntityCardProperties = bioEntityCardProperties;
     }
 
     public void init(String identifier, String[] queryPropertyTypes) {
@@ -72,7 +72,7 @@ public class BioentityPropertyService {
         return species;
     }
 
-    //used in gene.jsp
+    //used in bioEntity.jsp
     public List<PropertyLink> getPropertyLinks(String propertyType) {
         if ("reactome".equals(propertyType)){
             addReactomePropertyValues();
@@ -121,7 +121,7 @@ public class BioentityPropertyService {
 
         String linkText = getLinkText(propertyType, propertyValue);
 
-        String link = geneCardProperties.getLinkTemplate(propertyType);
+        String link = bioEntityCardProperties.getLinkTemplate(propertyType);
         if (link != null) {
 
             if (propertyType.equals("ensprotein") || propertyType.equals("enstranscript")) {

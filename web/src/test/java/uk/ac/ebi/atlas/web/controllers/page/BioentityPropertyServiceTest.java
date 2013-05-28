@@ -32,7 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
-import uk.ac.ebi.atlas.web.BioentityPageProperties;
+import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BioentityPropertyServiceTest {
+public class BioEntityPropertyServiceTest {
 
     private static final String PROPERTY_TYPES = "symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
 
@@ -58,13 +58,13 @@ public class BioentityPropertyServiceTest {
     private static final String GENE = "ensgene";
     private static final String TRANSCRIPT = "enstranscript";
 
-    private BioentityPropertyService subject;
+    private BioEntityPropertyService subject;
 
     @Mock
     private UniProtClient uniprotClientMock;
 
     @Mock
-    private BioentityPageProperties bioentityPagePropertiesMock;
+    private BioEntityCardProperties bioEntityCardPropertiesMock;
 
     @Mock
     private SolrClient solrClientMock;
@@ -87,7 +87,7 @@ public class BioentityPropertyServiceTest {
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
 
 
-        subject = new BioentityPropertyService(solrClientMock, uniprotClientMock, bioentityPagePropertiesMock);
+        subject = new BioEntityPropertyService(solrClientMock, uniprotClientMock, bioEntityCardPropertiesMock);
         subject.init(IDENTIFIER, PROPERTY_TYPES.split(","));
     }
 
@@ -108,7 +108,7 @@ public class BioentityPropertyServiceTest {
 
     @Test
     public void testCreateLinkProtein() throws Exception {
-        when(bioentityPagePropertiesMock.getLinkTemplate(PROTEIN)).thenReturn("http://www.ensembl.org/{0}/Transcript/ProteinSummary?db=core;g={1};t={2}");
+        when(bioEntityCardPropertiesMock.getLinkTemplate(PROTEIN)).thenReturn("http://www.ensembl.org/{0}/Transcript/ProteinSummary?db=core;g={1};t={2}");
 
         PropertyLink link = subject.createLink(PROTEIN, "prot1", SPECIES);
 
@@ -118,7 +118,7 @@ public class BioentityPropertyServiceTest {
 
     @Test
     public void testCreateLinkEmpty() throws Exception {
-        when(bioentityPagePropertiesMock.getLinkTemplate("type")).thenReturn("");
+        when(bioEntityCardPropertiesMock.getLinkTemplate("type")).thenReturn("");
 
         PropertyLink link = subject.createLink("type", "acc", SPECIES);
 

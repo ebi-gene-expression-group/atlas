@@ -32,47 +32,47 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class BioentityPage extends AtlasPage {
+public class BioEntityPage extends AtlasPage {
 
     private static final String PAGE_LOCATION = "/gxa/";
 
-    private String geneIdentifier;
+    private String bioEntityIdentifier;
 
     private String type;
 
     @FindBy(id = "accordion")
     private WebElement accordion;
 
-    @FindBy(id = "geneCardTable")
+    @FindBy(id = "bioEntityCardTable")
     private WebElement table;
 
-    public BioentityPage(WebDriver driver) {
+    public BioEntityPage(WebDriver driver) {
         super(driver);
     }
 
-    public BioentityPage(WebDriver driver, String geneIdentifier, String type) {
+    public BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type) {
         super(driver);
-        this.geneIdentifier = geneIdentifier;
+        this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
     }
 
-    BioentityPage(WebDriver driver, String geneIdentifier, String type, String httpParameters) {
+    BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type, String httpParameters) {
         super(driver, httpParameters);
-        this.geneIdentifier = geneIdentifier;
+        this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
     }
 
     @Override
     protected String getPageURI() {
-        return PAGE_LOCATION +type + "/" + geneIdentifier;
+        return PAGE_LOCATION +type + "/" + bioEntityIdentifier;
     }
 
-    protected String getGeneIdentifier() {
-        return geneIdentifier;
+    protected String getBioEntityIdentifier() {
+        return bioEntityIdentifier;
     }
 
-    public String getGeneCardTitle() {
-        WebElement header = accordion.findElement(By.className("geneCardHeader"));
+    public String getBioEntityCardTitle() {
+        WebElement header = accordion.findElement(By.className("bioEntityCardHeader"));
         return header.getText();
     }
 
@@ -82,12 +82,12 @@ public class BioentityPage extends AtlasPage {
     }
 
     public void hideCard() {
-        WebElement header = accordion.findElement(By.className("geneCardHeader"));
+        WebElement header = accordion.findElement(By.className("bioEntityCardHeader"));
         header.click();
 
-        By byGeneCardClass = By.className("geneCard");
+        By byBioEntityCardClass = By.className("bioEntityCard");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(byGeneCardClass));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
     public int getTableSize() {

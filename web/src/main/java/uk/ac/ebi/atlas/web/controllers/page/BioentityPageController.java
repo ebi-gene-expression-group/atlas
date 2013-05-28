@@ -25,50 +25,50 @@ package uk.ac.ebi.atlas.web.controllers.page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.web.BioentityPageProperties;
+import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BioentityPageController {
+public abstract class BioEntityPageController {
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
     public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
-    private BioentityPropertyService bioentityPropertyService;
+    private BioEntityPropertyService bioEntityPropertyService;
 
-    private BioentityPageProperties bioentityPageProperties;
+    private BioEntityCardProperties bioEntityCardProperties;
 
     @Inject
-    public void setBioentityPageProperties(BioentityPageProperties bioentityPageProperties) {
-        this.bioentityPageProperties = bioentityPageProperties;
+    public void setBioEntityCardProperties(BioEntityCardProperties bioEntityCardProperties) {
+        this.bioEntityCardProperties = bioEntityCardProperties;
     }
 
     @Inject
-    public void setBioentityPropertyService(BioentityPropertyService bioentityPropertyService) {
-        this.bioentityPropertyService = bioentityPropertyService;
+    public void setBioEntityPropertyService(BioEntityPropertyService bioEntityPropertyService) {
+        this.bioEntityPropertyService = bioEntityPropertyService;
     }
 
     public String showGenePage(String identifier, Model model) {
 
-        bioentityPropertyService.init(identifier, getPagePropertyTypes());
+        bioEntityPropertyService.init(identifier, getPagePropertyTypes());
 
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         //there should be only one element of this kind
-        model.addAttribute(PROPERTY_TYPE_SYMBOL, bioentityPropertyService.getFirstValueOfProperty(getSymbolType()));
+        model.addAttribute(PROPERTY_TYPE_SYMBOL, bioEntityPropertyService.getFirstValueOfProperty(getSymbolType()));
 
-        return "gene";
+        return "bioEntity";
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {
         LinkedHashMap<String, String> result = Maps.newLinkedHashMap();
         List<String> filteredPropertyTypes = getFilteredPropertyTypes();
         for (String propertyType : filteredPropertyTypes) {
-            result.put(propertyType, bioentityPageProperties.getPropertyName(propertyType));
+            result.put(propertyType, bioEntityCardProperties.getPropertyName(propertyType));
         }
 
         return result;
