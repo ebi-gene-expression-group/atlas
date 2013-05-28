@@ -23,27 +23,27 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioentityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageIT extends SinglePageSeleniumFixture {
+public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSMUSG00000029816";
 
-    private BioentityPage subject;
+    private BioEntityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioentityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
         subject.get();
     }
 
     @Test
     public void checkGeneCartTitle() {
-        assertThat(subject.getGeneCardTitle(), is("Gpnmb Mus Musculus glycoprotein (transmembrane) nmb"));
+        assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus Musculus glycoprotein (transmembrane) nmb"));
     }
 
     @Test

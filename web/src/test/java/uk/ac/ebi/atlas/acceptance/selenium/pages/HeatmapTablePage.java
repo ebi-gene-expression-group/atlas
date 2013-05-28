@@ -358,13 +358,13 @@ public class HeatmapTablePage extends TablePage {
         return designElementHeader.getText();
     }
 
-    public BioentityPage clickGeneName(int zeroBasedGeneNameIndex) {
+    public BioEntityPage clickGeneName(int zeroBasedGeneNameIndex) {
         geneNames.get(zeroBasedGeneNameIndex).click();
 
 
         WebDriverWait wait = new WebDriverWait(driver, 10L);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("accordion")));
 
-        return new BioentityPage(driver);
+        return new BioEntityPage(driver);
     }
 }

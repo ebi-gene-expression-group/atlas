@@ -20,30 +20,32 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commons;
+package uk.ac.ebi.atlas.web;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.geneindex.SolrQueryService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Properties;
 
-@Named()
+@Named("bioEntityCardProperties")
 @Scope("singleton")
-public class ExperimentResolver {
-    private Properties speciesToExperimentProperties;
+public class BioEntityCardProperties {
+    public static final String PROPERTY_PREFIX = "property.";
+    public static final String LINK_PREFIX = "link.";
 
-    private SolrQueryService solrQueryService;
+    private Properties bioEntityCardProperties;
 
     @Inject
-    public ExperimentResolver(@Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties, SolrQueryService solrQueryService) {
-        this.speciesToExperimentProperties = speciesToExperimentProperties;
-        this.solrQueryService = solrQueryService;
+    public BioEntityCardProperties(@Named("bioEntityCardPropertyFile") Properties bioEntityCardProperties) {
+        this.bioEntityCardProperties = bioEntityCardProperties;
     }
 
-    public String getExperimentAccessionByUniprotAccession(String accession) {
-        String species = solrQueryService.getSpeciesForPropertyValue(accession);
-        return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
+    public String getPropertyName(String propertyType) {
+        return bioEntityCardProperties.getProperty(PROPERTY_PREFIX + propertyType, propertyType);
+    }
+
+    public String getLinkTemplate(String propertyType) {
+        return bioEntityCardProperties.getProperty(LINK_PREFIX + propertyType);
     }
 }

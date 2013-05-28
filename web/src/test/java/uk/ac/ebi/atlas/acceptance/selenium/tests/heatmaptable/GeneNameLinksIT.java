@@ -23,8 +23,7 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
 
 import org.junit.Test;
-import org.openqa.selenium.NoSuchElementException;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioentityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
@@ -44,9 +43,9 @@ public class GeneNameLinksIT extends SinglePageSeleniumFixture {
 
     @Test
     public void clickingOnGeneNameShouldTakeToTheGenePage() {
-        BioentityPage bioentityPage = subject.clickGeneName(1);
+        BioEntityPage bioEntityPage = subject.clickGeneName(1);
 
-        assertThat(bioentityPage.getGeneCardTitle(), is("TEX33 Homo Sapiens testis expressed 33"));
+        assertThat(bioEntityPage.getBioEntityCardTitle(), is("TEX33 Homo Sapiens testis expressed 33"));
 
     }
 
