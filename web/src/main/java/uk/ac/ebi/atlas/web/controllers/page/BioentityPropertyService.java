@@ -42,7 +42,7 @@ import java.util.List;
 
 @Named("bioEntityPropertyService")
 @Scope("request")
-public class BioEntityPropertyService {
+public class BioentityPropertyService {
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
