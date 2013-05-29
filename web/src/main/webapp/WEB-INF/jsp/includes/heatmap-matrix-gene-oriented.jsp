@@ -39,7 +39,6 @@
                                 <div class='heatmap-matrix-top-left-corner'>
                                 <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
                                 <button id='display-levels' />
-                                    <label for='display-levels'>Display levels</label>
                                 </button>
                                 </div>"
                             class="horizontal-header-cell">
@@ -150,7 +149,7 @@
                        title="Top 50 genes displayed on page. Download results to see the rest." href="${downloadUrl}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
-                             src="resources/images/download_blue_small.png">
+                             src="${pageContext.request.contextPath}/resources/images/download_blue_small.png">
                     </a>
                 </div>
             </td>

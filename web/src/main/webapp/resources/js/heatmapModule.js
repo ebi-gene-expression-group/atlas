@@ -83,6 +83,8 @@ var heatmapModule = (function ($) {
             }
         );
 
+        $("#display-levels").button({ label: 'Display levels' });
+
         if ($("#prefForm #displayLevels").val() === "true") {
             $("#display-levels").click();
         }

@@ -85,7 +85,7 @@
                 <tr>
                     <td>
                         <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                            <label for='display-levels'>Display levels</label>
+                            <label for='display-levels'></label>
                         </button>
                     </td>
                     <td>
