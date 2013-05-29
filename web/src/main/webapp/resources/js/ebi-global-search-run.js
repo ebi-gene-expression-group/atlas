@@ -33,7 +33,10 @@ $(document).ready(function () {
             jQuery("#search-extras .slideToggle").click(function () {
                 $(this).attr("data-icon", $(this).attr("data-icon") === 'u' ? "w" : "u");
                 if ($(this).attr("data-icon") === 'w') {
-                    updateSummary({searchboxId: "searchterm"});
+                    updateSummary({
+                        searchboxId: "searchterm",
+                        searchBaseURL: "http://www.ebi.ac.uk/ebisearch/"
+                    });
                 }
                 $(this).parent().find("p").slideToggle(300);
                 $(this).parent().find("ul").slideToggle(300);
