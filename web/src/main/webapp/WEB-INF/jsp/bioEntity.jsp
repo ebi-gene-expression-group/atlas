@@ -23,9 +23,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<input type="text" value="${symbol}" style="display: none" id="searchterm">
+
 <section class="grid_17 alpha">
     <h2 class = "strapline">
-        Expression Atlas results for <span class="searchterm">${symbol}</span>
+        Expression Atlas results for <span  class="searchterm">${symbol}</span>
     </h2>
 </section>
 <aside id="search-extras" class="grid_6 omega shortcuts expander">
@@ -120,7 +122,8 @@
 
 </section>
 
-
+<script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
+<script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
 <script>
     $(function () {
         $("#bioentity-info-image").tooltip();
