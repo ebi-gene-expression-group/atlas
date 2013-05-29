@@ -23,6 +23,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<section>
+    <h2 class = "strapline">
+        Expression Atlas results for <span class="searchterm">${symbol}</span>
+    </h2>
+</section>
+
 <div id="accordion">
     <ul class="bioEntityCardHeader">
         <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
