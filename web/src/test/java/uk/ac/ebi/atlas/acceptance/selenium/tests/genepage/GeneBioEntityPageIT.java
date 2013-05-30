@@ -48,22 +48,22 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkCardExpansion() {
-        assertThat(subject.isCardExpanded(), is(true));
-        subject.hideCard();
-        assertThat(subject.isCardExpanded(), is(false));
+        assertThat(subject.isInfoCardExpanded(), is(true));
+        subject.clickInfoCard();
+        assertThat(subject.isInfoCardExpanded(), is(false));
     }
 
     @Test
     public void checkTableSize() {
-        assertThat(subject.getTableSize(), is(12));
+        assertThat(subject.getPropertiesTableSize(), is(12));
     }
 
     @Test
     public void checkTableRows() {
-        assertThat(subject.getTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
-        assertThat(subject.getTableRow(1), hasItems("Orthologs"));
-        assertThat(subject.getTableRow(1).get(1), containsString("Gpnmb"));
-        assertThat(subject.getTableRow(10), hasItems("Gene Biotype", "protein_coding"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Orthologs"));
+        assertThat(subject.getPropertiesTableRow(1).get(1), containsString("Gpnmb"));
+        assertThat(subject.getPropertiesTableRow(10), hasItems("Gene Biotype", "protein_coding"));
     }
 
     @Test

@@ -48,23 +48,23 @@ public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkCardExpansion() {
-        assertThat(subject.isCardExpanded(), is(true));
-        subject.hideCard();
-        assertThat(subject.isCardExpanded(), is(false));
+        assertThat(subject.isInfoCardExpanded(), is(true));
+        subject.clickInfoCard();
+        assertThat(subject.isInfoCardExpanded(), is(false));
     }
 
     @Test
     public void checkTableSize() {
-        assertThat(subject.getTableSize(), is(6));
+        assertThat(subject.getPropertiesTableSize(), is(6));
     }
 
     @Test
     public void checkTableRows() {
-        assertThat(subject.getTableRow(0), hasItems("Ensembl Protein", "ENSP00000355434"));
-        assertThat(subject.getTableRow(1), hasItems("Ensembl Transcript"));
-        assertThat(subject.getTableRow(1).get(1), containsString("ENST00000366478"));
-        assertThat(subject.getTableRow(3), hasItems("UniProt", "Q8N349"));
-        assertThat(subject.getTableRow(5), hasItems("Reactome ID", "REACT_111102"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Ensembl Protein", "ENSP00000355434"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Ensembl Transcript"));
+        assertThat(subject.getPropertiesTableRow(1).get(1), containsString("ENST00000366478"));
+        assertThat(subject.getPropertiesTableRow(3), hasItems("UniProt", "Q8N349"));
+        assertThat(subject.getPropertiesTableRow(5), hasItems("Reactome ID", "REACT_111102"));
     }
 
     @Test
