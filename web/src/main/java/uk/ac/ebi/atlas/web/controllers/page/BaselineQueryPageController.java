@@ -97,6 +97,8 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
         addFactorMenu(model);
 
+        model.addAttribute("isWidget", false);
+
         return "experiment";
     }
 
@@ -105,6 +107,8 @@ public class BaselineQueryPageController extends BaselineQueryController {
             , BindingResult result, Model model, HttpServletRequest request) {
 
         prepareModel(preferences, result, model, request);
+
+        model.addAttribute("isWidget", true);
 
         return "heatmap-widget";
     }

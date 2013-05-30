@@ -141,7 +141,7 @@
                 </display:table>
             </td>
             <td style="vertical-align: top">
-                <div style="float:left; ${isWidget ? '' : 'display:none'}">
+                <div style="float:left; ${isWidget ? 'display:none' : ''}">
                     <!--
                      <button id="download-profiles" class="button-image" value="D"></button>
                     -->
