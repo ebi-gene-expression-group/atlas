@@ -29,16 +29,22 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.RankProfilesCommandFactory;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import java.util.Collections;
 
@@ -53,6 +59,7 @@ public class DifferentialGeneProfileServiceTest {
     private static final String EXPERIMENT_ACCESSION = "experimentAccession";
     private static final String IDENTIFIER = "identifier";
     private static final double CUTOFF = 0.05;
+    private static final String ARRAY_DESIGN_ACCESSION = "AFFY";
 
     @Mock
     private ApplicationProperties applicationPropertiesMock;
@@ -61,16 +68,31 @@ public class DifferentialGeneProfileServiceTest {
     private RankRnaSeqProfilesCommand rankRnaSeqProfilesCommandMock;
 
     @Mock
+    private RankMicroarrayProfilesCommand rankMicroarrayProfilesCommandMock;
+
+    @Mock
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilderMock;
+
+    @Mock
+    private MicroarrayRequestContextBuilder microarrayRequestContextBuilderMock;
 
     @Mock
     private RnaSeqRequestContext rnaSeqRequestContextMock;
 
     @Mock
+    private MicroarrayRequestContext microarrayRequestContextMock;
+
+    @Mock
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCacheMock;
 
     @Mock
+    private MicroarrayExperimentsCache microarrayExperimentsCacheMock;
+
+    @Mock
     private DifferentialExperiment differentialExperimentMock;
+
+    @Mock
+    private MicroarrayExperiment microarrayExperimentMock;
 
     @Mock
     private RankProfilesCommandFactory rankProfilesCommandFactoryMock;
@@ -90,22 +112,33 @@ public class DifferentialGeneProfileServiceTest {
         when(applicationPropertiesMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
 
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(differentialExperimentMock);
+        when(microarrayExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentMock);
 
         when(differentialExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
 
+        when(microarrayExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
+        when(microarrayExperimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSION)));
+
         when(rankRnaSeqProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesList);
+        when(rankMicroarrayProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesList);
 
         when(rnaSeqRequestContextBuilderMock.forExperiment(differentialExperimentMock)).thenReturn(rnaSeqRequestContextBuilderMock);
         when(rnaSeqRequestContextBuilderMock.withPreferences(any(DifferentialRequestPreferences.class))).thenReturn(rnaSeqRequestContextBuilderMock);
         when(rnaSeqRequestContextBuilderMock.build()).thenReturn(rnaSeqRequestContextMock);
 
+        when(microarrayRequestContextBuilderMock.forExperiment(microarrayExperimentMock)).thenReturn(microarrayRequestContextBuilderMock);
+        when(microarrayRequestContextBuilderMock.withPreferences(any(MicroarrayRequestPreferences.class))).thenReturn(microarrayRequestContextBuilderMock);
+        when(microarrayRequestContextBuilderMock.build()).thenReturn(microarrayRequestContextMock);
+
         when(rankProfilesCommandFactoryMock.getRankRnaSeqProfilesCommand()).thenReturn(rankRnaSeqProfilesCommandMock);
+        when(rankProfilesCommandFactoryMock.getRankMicroarrayProfilesCommand()).thenReturn(rankMicroarrayProfilesCommandMock);
 
         // to have a non-empty list
         differentialProfilesList.add(differentialProfileMock);
 
         subject = new DifferentialGeneProfileService(applicationPropertiesMock,
-                rnaSeqRequestContextBuilderMock, rnaSeqDiffExperimentsCacheMock,
+                rnaSeqRequestContextBuilderMock, microarrayRequestContextBuilderMock,
+                rnaSeqDiffExperimentsCacheMock, microarrayExperimentsCacheMock,
                 rankProfilesCommandFactoryMock, differentialGeneProfilePropertiesMock);
     }
 
@@ -113,6 +146,8 @@ public class DifferentialGeneProfileServiceTest {
     public void testGetDifferentialProfilesList() throws Exception {
         assertThat(subject.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
         verify(applicationPropertiesMock).getDifferentialExperimentsIdentifiers();
+        verify(applicationPropertiesMock).getMicroarrayExperimentsIdentifiers();
+        verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);
         verify(differentialGeneProfilePropertiesMock).clear();
         ArgumentCaptor<DifferentialProfilesList> argumentCaptor = ArgumentCaptor.forClass(DifferentialProfilesList.class);
         verify(differentialGeneProfilePropertiesMock).putDifferentialProfilesListForExperiment(eq(EXPERIMENT_ACCESSION), argumentCaptor.capture());
@@ -121,14 +156,24 @@ public class DifferentialGeneProfileServiceTest {
 
     @Test
     public void testRetrieveDifferentialProfileForExperiment() throws Exception {
-        DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF);
+        DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF);
         assertThat(profilesList.size(), is(1));
-        verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);
         verify(differentialExperimentMock).getAccession();
         verify(rnaSeqRequestContextBuilderMock).forExperiment(differentialExperimentMock);
         verify(rnaSeqRequestContextBuilderMock).withPreferences(any(DifferentialRequestPreferences.class));
         verify(rnaSeqRequestContextBuilderMock).build();
         verify(rankRnaSeqProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
+    }
+
+    @Test
+    public void testRetrieveDifferentialProfilesForMicroarrayExperiment() throws Exception {
+        DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForMicroarrayExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF);
+        assertThat(profilesList.size(), is(1));
+        verify(microarrayExperimentMock).getAccession();
+        verify(microarrayRequestContextBuilderMock).forExperiment(microarrayExperimentMock);
+        verify(microarrayRequestContextBuilderMock).withPreferences(any(MicroarrayRequestPreferences.class));
+        verify(microarrayRequestContextBuilderMock).build();
+        verify(rankMicroarrayProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
     }
 
 }

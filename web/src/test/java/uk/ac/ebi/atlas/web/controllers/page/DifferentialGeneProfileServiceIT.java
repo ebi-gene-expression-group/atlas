@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 
@@ -44,16 +45,23 @@ public class DifferentialGeneProfileServiceIT {
     private static final String E_GEOD_21860 = "E-GEOD-21860";
     private static final String E_MTAB_698 = "E-MTAB-698";
     private static final String E_GEOD_38400 = "E-GEOD-38400";
+    private static final String E_MTAB_1066 = "E-MTAB-1066";
 
     private static final String FIRST_IDENTIFIER = "ENSMUSG00000029816";
     private static final String SECOND_IDENTIFIER = "ENSMUSG00000036887";
     private static final String THIRD_IDENTIFIER = "ENSMUSG00000026628";
     private static final String FOURTH_IDENTIFIER = "AT3G29644";
+    private static final String FIFTH_IDENTIFIER = "FBgn0035109";
+    private static final String SIXTH_IDENTIFIER = "FBgn0032801";
 
     private static final double FDR_CUTOFF = 0.5;
 
     @Inject
     private DifferentialGeneProfileService subject;
+
+    @Inject
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
+
 
     @Test
     public void testGetDifferentialProfilesListForIdentifierFirst() throws Exception {
@@ -109,7 +117,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD22351First() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForExperiment(E_GEOD_22351, FIRST_IDENTIFIER, FDR_CUTOFF);
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_22351, FIRST_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialProfilesList, is(not(nullValue())));
         assertThat(differentialProfilesList.size(), is(1));
         DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
@@ -118,7 +126,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD21860Second() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForExperiment(E_GEOD_21860, SECOND_IDENTIFIER, FDR_CUTOFF);
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_21860, SECOND_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialProfilesList, is(not(nullValue())));
         assertThat(differentialProfilesList.size(), is(1));
         DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
@@ -127,7 +135,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD22351Second() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForExperiment(E_GEOD_22351, SECOND_IDENTIFIER, FDR_CUTOFF);
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_22351, SECOND_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialProfilesList, is(not(nullValue())));
         assertThat(differentialProfilesList.size(), is(1));
         DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
@@ -136,7 +144,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testRetrieveDifferentialProfileForExperimentEMTAB698Third() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForExperiment(E_MTAB_698, THIRD_IDENTIFIER, FDR_CUTOFF);
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_MTAB_698, THIRD_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialProfilesList, is(not(nullValue())));
         assertThat(differentialProfilesList.size(), is(1));
         DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
@@ -145,7 +153,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD22351Third() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForExperiment(E_GEOD_22351, THIRD_IDENTIFIER, FDR_CUTOFF);
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_22351, THIRD_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialProfilesList, is(not(nullValue())));
         assertThat(differentialProfilesList.size(), is(1));
         DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
@@ -154,10 +162,29 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD38400Fourth() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForExperiment(E_GEOD_38400, FOURTH_IDENTIFIER, FDR_CUTOFF);
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_38400, FOURTH_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialProfilesList, is(not(nullValue())));
         assertThat(differentialProfilesList.size(), is(1));
         DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
         assertThat(differentialProfile.getId(), is(FOURTH_IDENTIFIER));
+    }
+
+    @Test
+    public void testRetrieveDifferentialProfilesForMicroarrayExperimentEMTAB1066Fifth() throws Exception {
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForMicroarrayExperiment(E_MTAB_1066, FIFTH_IDENTIFIER, FDR_CUTOFF);
+        assertThat(differentialProfilesList, is(not(nullValue())));
+        assertThat(differentialProfilesList.size(), is(1));
+        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
+        assertThat(differentialProfile.getId(), is(FIFTH_IDENTIFIER));
+    }
+
+    @Test
+    public void testRetrieveDifferentialProfilesForMicroarrayExperimentEMTAB1066Sixth() throws Exception {
+        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForMicroarrayExperiment(E_MTAB_1066, SIXTH_IDENTIFIER, FDR_CUTOFF);
+        assertThat(differentialProfilesList, is(not(nullValue())));
+        assertThat(differentialProfilesList.size(), is(1));
+        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
+        assertThat(differentialProfile.getId(), is(SIXTH_IDENTIFIER));
+        assertThat(differentialProfile.getConditions().size(), is(2));
     }
 }

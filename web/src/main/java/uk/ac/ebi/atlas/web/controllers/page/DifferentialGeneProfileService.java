@@ -24,17 +24,23 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.RankProfilesCommandFactory;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.SortedSet;
 
 @Named("differentialGeneProfileService")
 @Scope("request")
@@ -44,7 +50,11 @@ public class DifferentialGeneProfileService {
 
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
 
+    private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
+
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
+
+    private MicroarrayExperimentsCache microarrayExperimentsCache;
 
     private RankProfilesCommandFactory rankProfilesCommandFactory;
 
@@ -53,12 +63,16 @@ public class DifferentialGeneProfileService {
     @Inject
     public DifferentialGeneProfileService(ApplicationProperties applicationProperties,
                                           RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
+                                          MicroarrayRequestContextBuilder microarrayRequestContextBuilder,
                                           RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
+                                          MicroarrayExperimentsCache microarrayExperimentsCache,
                                           RankProfilesCommandFactory rankProfilesCommandFactory,
                                           DifferentialGeneProfileProperties differentialGeneProfileProperties) {
         this.applicationProperties = applicationProperties;
         this.rnaSeqRequestContextBuilder = rnaSeqRequestContextBuilder;
+        this.microarrayRequestContextBuilder = microarrayRequestContextBuilder;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
+        this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.rankProfilesCommandFactory = rankProfilesCommandFactory;
         this.differentialGeneProfileProperties = differentialGeneProfileProperties;
     }
@@ -73,7 +87,18 @@ public class DifferentialGeneProfileService {
 
         for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
             try {
-                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForExperiment(experimentAccession, identifier, cutoff);
+                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, identifier, cutoff);
+                if (!retrievedProfilesList.isEmpty()) {
+                    differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
+                }
+            } catch (GenesNotFoundException e) {
+                // this happens when the experiment species is different from the identifier one
+            }
+        }
+
+        for (String experimentAccession : applicationProperties.getMicroarrayExperimentsIdentifiers()) {
+            try {
+                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, identifier, cutoff);
                 if (!retrievedProfilesList.isEmpty()) {
                     differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
                 }
@@ -85,7 +110,7 @@ public class DifferentialGeneProfileService {
         return differentialGeneProfileProperties;
     }
 
-    DifferentialProfilesList retrieveDifferentialProfilesForExperiment(String experimentAccession, String geneQuery, double cutoff) throws GenesNotFoundException {
+    DifferentialProfilesList retrieveDifferentialProfilesForRnaSeqExperiment(String experimentAccession, String geneQuery, double cutoff) throws GenesNotFoundException {
 
         // no need to worry about species for now, as a identifier in geneQuery is already species specific
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
@@ -97,6 +122,25 @@ public class DifferentialGeneProfileService {
 
         RankRnaSeqProfilesCommand rankRnaSeqProfilesCommand = rankProfilesCommandFactory.getRankRnaSeqProfilesCommand();
         return rankRnaSeqProfilesCommand.execute(differentialExperiment.getAccession());
+    }
+
+    DifferentialProfilesList retrieveDifferentialProfilesForMicroarrayExperiment(String experimentAccession, String geneQuery, double cutoff) throws GenesNotFoundException {
+
+        // no need to worry about species for now, as a identifier in geneQuery is already species specific
+        MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
+        microarrayRequestPreferences.setGeneQuery(geneQuery.toLowerCase());
+        microarrayRequestPreferences.setCutoff(cutoff);
+
+        MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
+
+        // TODO: this assumes that there is only one array design accession per experiment, this is true now, but might change in the future
+        SortedSet<String> arrayDesignAccessions = microarrayExperiment.getArrayDesignAccessions();
+        microarrayRequestPreferences.setArrayDesignAccession(arrayDesignAccessions.first());
+
+        microarrayRequestContextBuilder.withPreferences(microarrayRequestPreferences).forExperiment(microarrayExperiment).build();
+
+        RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand = rankProfilesCommandFactory.getRankMicroarrayProfilesCommand();
+        return rankMicroarrayProfilesCommand.execute(microarrayExperiment.getAccession());
     }
 
 }
