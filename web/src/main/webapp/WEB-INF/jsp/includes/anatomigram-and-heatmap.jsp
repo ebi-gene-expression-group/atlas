@@ -37,7 +37,7 @@
                     <tr>
                         <td>
                         <span id="geneCount">Showing ${geneProfiles.size()}
-                            of ${geneProfiles.getTotalResultCount()} genes found:
+                            of ${preferences.geneSetMatch?geneProfiles.size():geneProfiles.getTotalResultCount()} ${preferences.geneSetMatch?'gene sets':'genes'} found:
                         </span>
                         </td>
                         <td>
