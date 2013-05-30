@@ -38,7 +38,7 @@
 
 <section class="grid_23">
     <div id="accordion">
-        <ul class="bioEntityCardHeader">
+        <ul id="infoHeader" class="bioEntityCardHeader">
             <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
                  src="resources/images/bioentity_info_transparent_bkg.png"/>
             <span class="bioEntityCardSymbol">${symbol}</span>
@@ -46,7 +46,7 @@
             <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
         </ul>
 
-        <div class="bioEntityCard">
+        <div id="infoBody" class="bioEntityCard">
             <table id="bioEntityCardTable">
                 <c:forEach var="propertyType" items="${propertyNames.keySet()}">
                     <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
@@ -82,7 +82,7 @@
         </div>
 
         <c:if test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
-            <ul class="bioEntityCardHeader">
+            <ul id="diffProfileHeader" class="bioEntityCardHeader">
                 <img id="differential-info-image" title="Differential Expression"
                      style="position: absolute; left: 0.5em; "
                      src="resources/images/updown_transparent_bkg.png"/>
@@ -90,7 +90,7 @@
             </ul>
 
 
-            <div class="bioEntityCard">
+            <div id="diffProfileBody" class="bioEntityCard">
                 <div class="ui-corner-all bioEntityCardDifferentialSummary">
                     <span>${differentialGeneProfileProperties.totalNumberOfResults} search results found</span>
                     <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>

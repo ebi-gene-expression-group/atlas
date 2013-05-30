@@ -46,6 +46,21 @@ public class BioEntityPage extends AtlasPage {
     @FindBy(id = "bioEntityCardTable")
     private WebElement table;
 
+    @FindBy(id = "heatmap-table")
+    private WebElement heatmapTable;
+
+    @FindBy(id = "infoHeader")
+    private WebElement infoPaneHeader;
+
+    @FindBy(id = "diffProfileHeader")
+    private WebElement diffProfilePaneHeader;
+
+    @FindBy(id = "infoBody")
+    private WebElement infoPaneBody;
+
+    @FindBy(id = "diffProfileBody")
+    private WebElement diffProfilePaneBody;
+
     @FindBy(css = "h2.strapline")
     private WebElement searchResultHeader;
 
@@ -73,7 +88,7 @@ public class BioEntityPage extends AtlasPage {
 
     @Override
     protected String getPageURI() {
-        return PAGE_LOCATION +type + "/" + bioEntityIdentifier;
+        return PAGE_LOCATION + type + "/" + bioEntityIdentifier;
     }
 
     protected String getBioEntityIdentifier() {
@@ -85,27 +100,50 @@ public class BioEntityPage extends AtlasPage {
         return header.getText();
     }
 
-    public boolean isCardExpanded() {
-        WebElement body = accordion.findElement(By.tagName("div"));
-        return body.isDisplayed();
+    public boolean isInfoCardExpanded() {
+        return infoPaneBody.isDisplayed();
     }
 
-    public void hideCard() {
-        WebElement header = accordion.findElement(By.className("bioEntityCardHeader"));
-        header.click();
+    public void clickInfoCard() {
+        infoPaneHeader.click();
 
         By byBioEntityCardClass = By.className("bioEntityCard");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
-    public int getTableSize() {
+    public boolean isDiffProfileExpanded() {
+        return diffProfilePaneBody.isDisplayed();
+    }
+
+    public void clickDiffProfile() {
+        diffProfilePaneHeader.click();
+
+        By byBioEntityCardClass = By.className("bioEntityCard");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
+    }
+
+    public int getPropertiesTableSize() {
         return table.findElements(By.tagName("tr")).size();
     }
 
-    public List<String> getTableRow(int index) {
+    public List<String> getPropertiesTableRow(int index) {
         List<String> row = Lists.newArrayList();
         WebElement rowElement = table.findElements(By.tagName("tr")).get(index);
+        for (WebElement dataElement : rowElement.findElements(By.tagName("td"))) {
+            row.add(dataElement.getText());
+        }
+        return row;
+    }
+
+    public int getHeatmapTableSize() {
+        return heatmapTable.findElements(By.tagName("tr")).size();
+    }
+
+    public List<String> getHeatmapTableRow(int index) {
+        List<String> row = Lists.newArrayList();
+        WebElement rowElement = heatmapTable.findElements(By.tagName("tr")).get(index);
         for (WebElement dataElement : rowElement.findElements(By.tagName("td"))) {
             row.add(dataElement.getText());
         }

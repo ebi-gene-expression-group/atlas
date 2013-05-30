@@ -177,10 +177,9 @@
 
             if (${type == "BASELINE"}) {
 
-                var selectedFilterFactorsJson =
-            ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"}
+                var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"};
 
-                var isWidget = ${isWidget != null? isWidget : false}
+                var isWidget = ${isWidget != null? isWidget : false};
 
                         heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget);
 
