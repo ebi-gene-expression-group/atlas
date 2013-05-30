@@ -26,12 +26,13 @@
 <input type="text" value="${symbol}" style="display: none" id="searchterm">
 
 <section class="grid_17 alpha">
-    <h2 class = "strapline">
-        Expression Atlas results for <span  class="searchterm">${symbol}</span>
+    <h2 class="strapline">
+        Expression Atlas results for <span class="searchterm">${symbol}</span>
     </h2>
 </section>
 <aside id="search-extras" class="grid_6 omega shortcuts expander">
-    <div id="ebi_search_results"><h3 data-icon="u" class="slideToggle icon icon-functional">Show more data from EMBL-EBI</h3>
+    <div id="ebi_search_results"><h3 data-icon="u" class="slideToggle icon icon-functional">Show more data from
+        EMBL-EBI</h3>
     </div>
 </aside>
 
@@ -80,47 +81,50 @@
             </table>
         </div>
 
-        <ul class="bioEntityCardHeader">
-            <img id="differential-info-image" title="Differential Expression" style="position: absolute; left: 0.5em; "
-                 src="resources/images/updown_transparent_bkg.png"/>
-            <span class="bioEntityCardSymbol">Differential Expression</span>
-        </ul>
+        <c:if test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
+            <ul class="bioEntityCardHeader">
+                <img id="differential-info-image" title="Differential Expression"
+                     style="position: absolute; left: 0.5em; "
+                     src="resources/images/updown_transparent_bkg.png"/>
+                <span class="bioEntityCardSymbol">Differential Expression</span>
+            </ul>
 
 
-        <div class="bioEntityCard">
-            <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                <span>${differentialGeneProfileProperties.totalNumberOfResults} search results found</span>
-                <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
+            <div class="bioEntityCard">
+                <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                    <span>${differentialGeneProfileProperties.totalNumberOfResults} search results found</span>
+                    <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
+                </div>
+
+                <div id="heatmap-div" style="display:none;">
+                    <table style="margin-left:auto;margin-right:auto;">
+                        <tr>
+                            <td>
+                                <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
+                                    <label for='display-levels'>Display levels</label>
+                                </button>
+                            </td>
+                            <td>
+                                <c:import url="includes/gradient-legend.jsp"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <c:import url="includes/heatmap-matrix-organism-oriented.jsp"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
-
-            <div id="heatmap-div" style="display:none;">
-                <table style="margin-left:auto;margin-right:auto;">
-                    <tr>
-                        <td>
-                            <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                                <label for='display-levels'>Display levels</label>
-                            </button>
-                        </td>
-                        <td>
-                            <c:import url="includes/gradient-legend.jsp"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <c:import url="includes/heatmap-matrix-organism-oriented.jsp"/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <br/>
-
-            <div id="help-placeholder" style="display: none"></div>
-
-        </div>
+        </c:if>
     </div>
 
 </section>
+
+<br/>
+
+<div id="help-placeholder" style="display: none"></div>
 
 <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
