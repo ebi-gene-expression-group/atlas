@@ -64,8 +64,6 @@
                 $("#heatmap-div").removeClass();
             }
 
-
-            $('#stickem-container').stickem();
         });
 
     })(jQuery);

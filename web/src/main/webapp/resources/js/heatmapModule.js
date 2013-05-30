@@ -83,7 +83,7 @@ var heatmapModule = (function ($) {
             }
         );
 
-        $("#display-levels").button({ label: 'Display levels' });
+        $("#display-levels").button({ label:'Display levels' });
 
         if ($("#prefForm #displayLevels").val() === "true") {
             $("#display-levels").click();
@@ -306,7 +306,7 @@ var heatmapModule = (function ($) {
 
         $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (parameters && parameters.species) {
+        if (parameters && parameters.species && !parameters.isWidget) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
@@ -331,11 +331,12 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget) {
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
-            geneSetMatch:geneSetMatch
+            geneSetMatch:geneSetMatch,
+            isWidget:isWidget
         });
     }
 

@@ -39,7 +39,7 @@
  */
 Biojs.Heatmap = Biojs.extend({
 
-    constructor: function (options) {
+    constructor:function (options) {
 
         var self = this;
 
@@ -47,15 +47,15 @@ Biojs.Heatmap = Biojs.extend({
 
         var options = self.opt;
         var httpRequest = {
-            url: options.featuresUrl,
+            url:options.featuresUrl,
 
-            methid: "GET",
-            success: function (htmlResponse) {
+            methid:"GET",
+            success:function (htmlResponse) {
                 Biojs.console.log("SUCCESS: data received");
                 Biojs.console.log(htmlResponse);
                 containerDiv.append(htmlResponse);
             },
-            error: function (textStatus) {
+            error:function (textStatus) {
                 Biojs.console.log("ERROR: " + textStatus);
             }
         };
@@ -65,18 +65,18 @@ Biojs.Heatmap = Biojs.extend({
 
     },
 
-    setSize: function (size) {
+    setSize:function (size) {
         jQuery("#" + this.opt.target).css('font-size', size);
     },
 
-    opt: {
+    opt:{
 
-        featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=Q9GIL2',
+        featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=Q9GIL2',
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your
          component into. */
-        target: "YourOwnDivId"
+        target:"YourOwnDivId"
 
     }
 });
