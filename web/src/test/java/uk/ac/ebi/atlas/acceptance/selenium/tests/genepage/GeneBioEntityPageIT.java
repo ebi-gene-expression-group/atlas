@@ -75,4 +75,16 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.ensembl.org/Multi/Search/Results?species=all;idx=;q=ENSMUSG00000029816"));
         assertThat(subject.getLinksInTableRow(6).get(0), is("http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&term=93695"));
     }
+
+    @Test
+    public void shouldDisplaySearchResultsHeader(){
+        assertThat(subject.getSearchResultsHeader(), endsWith("results for Gpnmb"));
+    }
+
+    @Test
+    public void clickingOnGlobalSearchWidgetShouldDisplayGlobalSearchResults(){
+        subject.clickShowMoreDataWidget();
+        assertThat(subject.getGlobalSearchAllResultsString(), startsWith("All results (1"));
+    }
+
 }

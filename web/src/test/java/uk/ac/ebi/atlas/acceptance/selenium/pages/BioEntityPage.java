@@ -46,6 +46,15 @@ public class BioEntityPage extends AtlasPage {
     @FindBy(id = "bioEntityCardTable")
     private WebElement table;
 
+    @FindBy(css = "h2.strapline")
+    private WebElement searchResultHeader;
+
+    @FindBy(css = "[data-icon='u']")
+    private WebElement showMoreDataWidget;
+
+    @FindBy(css = "#global-search-results > li > a")
+    private List<WebElement> globalSearchPointers;
+
     public BioEntityPage(WebDriver driver) {
         super(driver);
     }
@@ -112,5 +121,21 @@ public class BioEntityPage extends AtlasPage {
             }
         }
         return row;
+    }
+
+    public String getSearchResultsHeader() {
+        return searchResultHeader.getText();
+    }
+
+    public BioEntityPage clickShowMoreDataWidget() {
+        showMoreDataWidget.click();
+        WebDriverWait wait = new WebDriverWait(driver, 8L);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#global-search-results > li > a")));
+        return this;
+    }
+
+    public String getGlobalSearchAllResultsString() {
+
+        return globalSearchPointers.get(0).getText();
     }
 }
