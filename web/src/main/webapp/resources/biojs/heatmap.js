@@ -71,7 +71,7 @@ Biojs.Heatmap = Biojs.extend({
 
     opt: {
 
-        featuresUrl: 'http://localhost:8080/gxa/widgets/heatmap/protein?geneQuery=Q9GIL2',
+        featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=Q9GIL2',
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your
