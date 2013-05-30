@@ -1,25 +1,3 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 /**
  * This is the description of the ... component.
  *
@@ -59,9 +37,9 @@
  * });
  *
  */
-Biojs.Heatmap = Biojs.extend({
+Biojs.AtlasHeatmap = Biojs.extend({
 
-    constructor:function (options) {
+    constructor: function (options) {
 
         var self = this;
 
@@ -69,15 +47,15 @@ Biojs.Heatmap = Biojs.extend({
 
         var options = self.opt;
         var httpRequest = {
-            url:options.featuresUrl,
+            url: options.featuresUrl,
 
-            methid:"GET",
-            success:function (htmlResponse) {
+            methid: "GET",
+            success: function (htmlResponse) {
                 Biojs.console.log("SUCCESS: data received");
                 Biojs.console.log(htmlResponse);
                 containerDiv.append(htmlResponse);
             },
-            error:function (textStatus) {
+            error: function (textStatus) {
                 Biojs.console.log("ERROR: " + textStatus);
             }
         };
@@ -87,14 +65,14 @@ Biojs.Heatmap = Biojs.extend({
 
     },
 
-    opt:{
+    opt: {
 
         featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=Q9GIL2',
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your
          component into. */
-        target:"YourOwnDivId"
+        target: "YourOwnDivId"
 
     }
 });
