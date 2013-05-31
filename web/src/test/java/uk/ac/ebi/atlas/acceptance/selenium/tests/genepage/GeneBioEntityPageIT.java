@@ -78,13 +78,13 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void shouldDisplaySearchResultsHeader(){
-        assertThat(subject.getSearchResultsHeader(), endsWith("results for Gpnmb"));
+        assertThat(subject.getSearchResultsHeader(), endsWith("results for ENSMUSG00000029816"));
     }
 
     @Test
     public void clickingOnGlobalSearchWidgetShouldDisplayGlobalSearchResults(){
         subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsString(), startsWith("All results (1"));
+        assertThat(subject.getGlobalSearchAllResultsString().length(), is(greaterThan("All results ()".length())));
     }
 
 }
