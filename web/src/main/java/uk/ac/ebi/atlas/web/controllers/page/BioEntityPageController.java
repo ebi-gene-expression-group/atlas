@@ -56,6 +56,8 @@ public abstract class BioEntityPageController {
 
         bioEntityPropertyService.init(identifier, getPagePropertyTypes());
 
+        model.addAttribute("entityIdentifier", identifier);
+
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         //there should be only one element of this kind
