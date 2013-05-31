@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
@@ -39,7 +40,7 @@ public class GenePageController extends BioEntityPageController {
     public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
     // needs changing to DifferentialRequestPreferences.DEFAULT_CUTOFF
-    public static final double CUTOFF = 0.5;
+    public static final double DEFAULT_CUTOFF = 0.05;
 
     @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
@@ -52,9 +53,9 @@ public class GenePageController extends BioEntityPageController {
     }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
-    public String showGenePage(@PathVariable String identifier, Model model) {
+    public String showGenePage(@RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
         DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
-                differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, CUTOFF);
+                differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ? DEFAULT_CUTOFF : cutoff);
         model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
 
         // setting FDR as cutoff
@@ -62,7 +63,7 @@ public class GenePageController extends BioEntityPageController {
         requestPreferences.setCutoff(differentialProfilesListMapForIdentifier.getFdrCutoff());
         model.addAttribute("preferences", requestPreferences);
 
-        return super.showGenePage(identifier, model);
+        return showGenePage(identifier, model);
     }
 
     @Override

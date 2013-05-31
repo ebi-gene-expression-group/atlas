@@ -80,8 +80,8 @@ public class BioEntityPage extends HeatmapTablePage {
         this.type = type;
     }
 
-    BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type, String httpParameters) {
-        super(driver, httpParameters);
+    public BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type, String httpParameters) {
+        super(driver, null, httpParameters);
         this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
     }
