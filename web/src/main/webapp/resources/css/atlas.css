@@ -23,15 +23,14 @@
 /* ebi css override: start */
 
 #global-footer.grid_24 {
-    width:100%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
-#global-footer.grid_24 .grid_4{
-    width:15%;
+#global-footer.grid_24 .grid_4 {
+    width: 15%;
 }
-
 
 ::selection {
     background: rgb(95, 142, 179) !important;
@@ -48,6 +47,7 @@ body div#local-title a {
     color: black !important;
     text-shadow: none !important;
 }
+
 /*
 td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {
     border-bottom-color: transparent;
@@ -56,7 +56,6 @@ td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {
 #contents {
     font-size: 12px;
 }
-
 
 #contents a, #contents a:link, #contents a:visited {
     border-bottom-color: transparent;
@@ -68,6 +67,7 @@ td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {
     border-bottom-color: brown;
     color: brown !important;
 }
+
 /*
 div#global-masthead ul li a:link, div#global-masthead ul li a:visited,
 div#global-masthead ul li a:active, div#global-masthead ul li a:hover {
@@ -376,9 +376,9 @@ a.help-icon {
 .bioEntityCardSpecies {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-style: italic;
     color: gray;
     padding-left: 6px;
-    text-transform: capitalize;
 }
 
 .bioEntityCardPropertyType {

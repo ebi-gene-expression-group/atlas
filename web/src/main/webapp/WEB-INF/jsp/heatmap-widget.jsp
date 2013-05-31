@@ -25,7 +25,7 @@
                         </a>
                     </c:if>
                 </div>
-                <div>Organism(s): ${allSpecies}</div>
+                <div>Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
             </td>
         </tbody>
     </table>

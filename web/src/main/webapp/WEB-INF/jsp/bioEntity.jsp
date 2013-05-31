@@ -22,6 +22,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <input type="text" value="${symbol}" style="display: none" id="searchterm">
 
@@ -42,7 +43,8 @@
             <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
                  src="resources/images/bioentity_info_transparent_bkg.png"/>
             <span class="bioEntityCardSymbol">${symbol}</span>
-            <span class="bioEntityCardSpecies">${bioEntityPropertyService.getSpecies()}</span>
+            <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
+            <span class="bioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
             <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
         </ul>
 
