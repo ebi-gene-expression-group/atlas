@@ -32,7 +32,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class BioEntityPage extends AtlasPage {
+public class BioEntityPage extends HeatmapTablePage {
 
     private static final String PAGE_LOCATION = "/gxa/";
 
@@ -45,9 +45,9 @@ public class BioEntityPage extends AtlasPage {
 
     @FindBy(id = "bioEntityCardTable")
     private WebElement table;
-
-    @FindBy(id = "heatmap-table")
-    private WebElement heatmapTable;
+//
+//    @FindBy(id = "heatmap-table")
+//    private WebElement heatmapTable;
 
     @FindBy(id = "infoHeader")
     private WebElement infoPaneHeader;
@@ -71,11 +71,11 @@ public class BioEntityPage extends AtlasPage {
     private List<WebElement> globalSearchPointers;
 
     public BioEntityPage(WebDriver driver) {
-        super(driver);
+        super(driver, null);
     }
 
     public BioEntityPage(WebDriver driver, String bioEntityIdentifier, String type) {
-        super(driver);
+        super(driver, null);
         this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
     }
@@ -131,19 +131,6 @@ public class BioEntityPage extends AtlasPage {
     public List<String> getPropertiesTableRow(int index) {
         List<String> row = Lists.newArrayList();
         WebElement rowElement = table.findElements(By.tagName("tr")).get(index);
-        for (WebElement dataElement : rowElement.findElements(By.tagName("td"))) {
-            row.add(dataElement.getText());
-        }
-        return row;
-    }
-
-    public int getHeatmapTableSize() {
-        return heatmapTable.findElements(By.tagName("tr")).size();
-    }
-
-    public List<String> getHeatmapTableRow(int index) {
-        List<String> row = Lists.newArrayList();
-        WebElement rowElement = heatmapTable.findElements(By.tagName("tr")).get(index);
         for (WebElement dataElement : rowElement.findElements(By.tagName("td"))) {
             row.add(dataElement.getText());
         }

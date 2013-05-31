@@ -63,8 +63,8 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 40"));
 
-        assertThat(subject.getSelectedGenes().size(), is(40));
-        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
+        assertThat(subject.getSelectedProfiles().size(), is(40));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
@@ -79,8 +79,8 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 9"));
 
-        assertThat(subject.getSelectedGenes().size(), is(9));
-        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gm15512", "Pla2g3", "Pmp2"));
+        assertThat(subject.getSelectedProfiles().size(), is(9));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Gm15512", "Pla2g3", "Pmp2"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("6.61" + " \u00D7 " + "10-5"));
@@ -95,8 +95,8 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 49"));
 
-        assertThat(subject.getSelectedGenes().size(), is(49));
-        assertThat(subject.getSelectedGenes().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
+        assertThat(subject.getSelectedProfiles().size(), is(49));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));

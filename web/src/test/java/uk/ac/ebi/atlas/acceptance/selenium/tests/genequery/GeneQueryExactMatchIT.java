@@ -58,7 +58,7 @@ public class GeneQueryExactMatchIT extends SeleniumFixture {
         subject.get();
 
         //then
-        assertThat(subject.getSelectedGenes(), contains("RTDR1", "RANBP17", "POLR2B", "SNRPA"));
+        assertThat(subject.getSelectedProfiles(), contains("RTDR1", "RANBP17", "POLR2B", "SNRPA"));
 
     }
 
@@ -71,7 +71,7 @@ public class GeneQueryExactMatchIT extends SeleniumFixture {
         subject.get();
 
         //then
-        assertThat(subject.getSelectedGenes(), contains("mt-Atp8"));
+        assertThat(subject.getSelectedProfiles(), contains("mt-Atp8"));
 
     }
 

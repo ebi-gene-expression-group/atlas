@@ -72,7 +72,7 @@ public class ProteinWidgetIT extends SeleniumFixture {
 
     @Test
     public void testGeneName() {
-        String firstGeneName = heatmapTablePage.getSelectedGenes().get(0);
+        String firstGeneName = heatmapTablePage.getSelectedProfiles().get(0);
         assertThat(firstGeneName, is("HLA-B"));
     }
 

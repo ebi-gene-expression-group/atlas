@@ -59,7 +59,7 @@ public abstract class Geod26284HeatmapTableTests extends SinglePageSeleniumFixtu
         //given selected filterFactorValues
 
         //when we extract top 9 from heatmap
-        List<String> selectedGenes = subject.getSelectedGenes().subList(0, 9);
+        List<String> selectedGenes = subject.getSelectedProfiles().subList(0, 9);
 
         //then
         assertThat(selectedGenes, contains(getTop9Genes()));

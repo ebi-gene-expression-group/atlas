@@ -27,11 +27,12 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "ENSMUSG00000036887";
+    private static final String GENE_IDENTIFIER = "AT3G29644";
 
     private BioEntityPage subject;
 
@@ -50,8 +51,15 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void checkTableSize() {
-        assertThat(subject.getHeatmapTableSize(), is(3));
+    public void checkSelectedProfiles() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getSelectedProfiles(), contains("idn2 mutant vs wild type",
+                                                           "nrpe1 mutant vs wild type",
+                                                           "swi3b mutant vs wild type"));
+        assertThat(subject.getFirstGeneProfile(), contains("6.64 × 10-9"));
+        assertThat(subject.getLastGeneProfile(), contains("0.056"));
+        assertThat(subject.getSelectedProfiles().size(), is(3));
+
     }
 
 

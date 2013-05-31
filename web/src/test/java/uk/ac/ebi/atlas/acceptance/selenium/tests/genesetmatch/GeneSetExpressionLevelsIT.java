@@ -76,7 +76,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         //when
         subject.get();
         //then
-        assertThat(subject.getSelectedGenes(), contains("\"Alpha-1-acid glycoprotein\""));
+        assertThat(subject.getSelectedProfiles(), contains("\"Alpha-1-acid glycoprotein\""));
         assertThat(subject.getFirstGeneProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
 
     }
@@ -91,7 +91,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         //when
         subject.get();
         //then
-        assertThat(subject.getSelectedGenes(), contains("react_1619"));
+        assertThat(subject.getSelectedProfiles(), contains("react_1619"));
         assertThat(subject.getFirstGeneProfile(), contains("4", "4", "12", "22", "17", "4", "6", "14"));
 
     }
@@ -106,7 +106,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         //when
         subject.get();
         //then
-        assertThat(subject.getSelectedGenes(), contains("\"Alpha-1-acid glycoprotein\"", "react_1619"));
+        assertThat(subject.getSelectedProfiles(), contains("\"Alpha-1-acid glycoprotein\"", "react_1619"));
         assertThat(subject.getFirstGeneProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
         assertThat(subject.getGeneProfile(2), contains("4", "4", "12", "22", "17", "4", "6", "14"));
 

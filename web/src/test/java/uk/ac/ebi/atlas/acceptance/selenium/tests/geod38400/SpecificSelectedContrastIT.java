@@ -29,8 +29,8 @@ public class SpecificSelectedContrastIT extends SeleniumFixture {
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 34"));
 
-        assertThat(subject.getSelectedGenes().size(), is(34));
-        assertThat(subject.getSelectedGenes().subList(0, 3), contains("T5N23_130", "AT3G29644", "GRXS4"));
+        assertThat(subject.getSelectedProfiles().size(), is(34));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("T5N23_130", "AT3G29644", "GRXS4"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
         assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));

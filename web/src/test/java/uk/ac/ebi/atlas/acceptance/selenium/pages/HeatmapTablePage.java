@@ -50,7 +50,7 @@ public class HeatmapTablePage extends TablePage {
     private WebElement heatmapTable;
 
     @FindBy(id = "geneCount")
-    private WebElement geneFound;
+    private WebElement geneCount;
 
     @FindBy(id = "download-profiles-link")
     private WebElement downloadExpressionProfilesLink;
@@ -129,7 +129,7 @@ public class HeatmapTablePage extends TablePage {
         return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size());
     }
 
-    public List<String> getSelectedGenes() {
+    public List<String> getSelectedProfiles() {
         return getFirstColumnValues(heatmapTable);
     }
 
@@ -215,7 +215,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public String getGeneCount() {
-        return geneFound.getText();
+        return geneCount.getText();
     }
 
     public void clickDisplayLevelsButton() {
@@ -234,13 +234,13 @@ public class HeatmapTablePage extends TablePage {
 
     public Boolean areExpressionLevelsHidden() {
         //we get the cell at index 1 because at index 0 we have the gene name
-        WebElement firstExpressionLevelCell = this.getNonEmptyCellsFromFirstTableRow(heatmapTable).get(getGeneExpressionStartingRowIndex());
+        WebElement firstExpressionLevelCell = getNonEmptyCellsFromFirstTableRow(heatmapTable).get(getGeneExpressionStartingRowIndex());
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
         return div.getAttribute("class").contains("hide_cell");
     }
 
     public double getAverageFpkm(int rowIndex) {
-        List<String> stringValues = this.getGeneProfile(rowIndex);
+        List<String> stringValues = getGeneProfile(rowIndex);
         double averageFpkm = 0D;
         for (String stringValue : stringValues) {
             if (StringUtils.isNotBlank(stringValue)) {
@@ -251,7 +251,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public double getMaxExpressionLevel(int rowIndex) {
-        List<String> stringValues = this.getGeneProfile(rowIndex);
+        List<String> stringValues = getGeneProfile(rowIndex);
         double maxFpkm = 0D;
         for (String stringValue : stringValues) {
             if (StringUtils.isNotBlank(stringValue)) {
@@ -265,7 +265,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public String getGeneThatRanksAt(int rowIndex) {
-        return getSelectedGenes().get(rowIndex - 1);
+        return getSelectedProfiles().get(rowIndex - 1);
     }
 
     public double getAverageExpressionLevel(int rowIndex, String... factors) {
