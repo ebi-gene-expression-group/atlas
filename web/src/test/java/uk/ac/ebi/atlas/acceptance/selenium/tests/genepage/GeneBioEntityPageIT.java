@@ -42,8 +42,8 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void checkGeneCartTitle() {
-        assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus Musculus glycoprotein (transmembrane) nmb"));
+    public void checkGeneCardTitle() {
+        assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus musculus glycoprotein (transmembrane) nmb"));
     }
 
     @Test

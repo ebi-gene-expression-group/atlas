@@ -45,7 +45,7 @@ public class GeneNameLinksIT extends SinglePageSeleniumFixture {
     public void clickingOnGeneNameShouldTakeToTheGenePage() {
         BioEntityPage bioEntityPage = subject.clickGeneName(1);
 
-        assertThat(bioEntityPage.getBioEntityCardTitle(), is("TEX33 Homo Sapiens testis expressed 33"));
+        assertThat(bioEntityPage.getBioEntityCardTitle(), is("TEX33 Homo sapiens testis expressed 33"));
 
     }
 

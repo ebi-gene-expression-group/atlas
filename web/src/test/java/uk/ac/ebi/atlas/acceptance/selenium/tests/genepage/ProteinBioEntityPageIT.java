@@ -42,8 +42,8 @@ public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void checkGeneCartTitle() {
-        assertThat(subject.getBioEntityCardTitle(), is("Q8N349 Homo Sapiens olfactory receptor, family 2, subfamily L, member 13"));
+    public void checkGeneCardTitle() {
+        assertThat(subject.getBioEntityCardTitle(), is("Q8N349 Homo sapiens olfactory receptor, family 2, subfamily L, member 13"));
     }
 
     @Test
