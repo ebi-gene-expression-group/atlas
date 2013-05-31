@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
@@ -59,7 +60,11 @@ public abstract class BioEntityPageController {
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         //there should be only one element of this kind
-        model.addAttribute(PROPERTY_TYPE_SYMBOL, bioEntityPropertyService.getFirstValueOfProperty(getSymbolType()));
+        String symbol = bioEntityPropertyService.getFirstValueOfProperty(getSymbolType());
+        if (StringUtils.isEmpty(symbol)) {
+            symbol = identifier;
+        }
+        model.addAttribute(PROPERTY_TYPE_SYMBOL, symbol);
 
         return "bioEntity";
     }

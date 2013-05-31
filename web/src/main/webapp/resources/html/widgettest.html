@@ -1,19 +1,20 @@
 <html>
 <head>
-	<title>Biojs.MyHelloWorld test</title>
-	<script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-	<script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
-	<script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/dependencies/jquery/jquery-1.6.4.js"></script>
-	<script language="JavaScript" type="text/javascript">
-		window.onload = function() {
-			var instance = new Biojs.AtlasHeatmap({
-				target : "YourOwnDivId",
-				selectionBackgroundColor : '#99FF00'
-			});
-		};
-	</script>
-	</head>
-	<body>
-		<div id="YourOwnDivId" ></div>
-	</body>
+    <title>Biojs.AtlasHeatmap test</title>
+    <script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="http://www.ebi.ac.uk/Tools/biojs/biojs/dependencies/jquery/jquery-1.6.4.js"></script>
+    <script language="JavaScript" type="text/javascript">
+        window.onload = function () {
+            var instance = new Biojs.AtlasHeatmap({
+                featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=P00846',
+                target:"YourOwnDivId"
+            });
+        };
+    </script>
+</head>
+<body>
+<div id="YourOwnDivId"></div>
+</body>
 </html>
