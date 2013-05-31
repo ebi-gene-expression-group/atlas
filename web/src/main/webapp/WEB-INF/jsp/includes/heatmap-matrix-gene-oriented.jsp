@@ -39,18 +39,13 @@
                                 <div class='heatmap-matrix-top-left-corner'>
                                 <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
                                 <button id='display-levels' />
-                                    <label for='display-levels'>Display levels</label>
                                 </button>
                                 </div>"
                             class="horizontal-header-cell">
 
                         <c:set var="geneId" value="${geneProfile.id}"/>
 
-                        <fmt:message bundle="${configuration}" key="gene.url.template" var="genePageURL">
-                            <fmt:param value="${geneId}"/>
-                        </fmt:message>
-
-                        <a class="genename" id="${geneId}" href='${genePageURL}' target='_blank'
+                        <a class="genename" id="${geneId}" href='genes/${geneId}'
                            title="">${geneNamesProvider.getGeneName(geneId)}</a>
                     </display:column>
 
@@ -132,9 +127,9 @@
                                 </c:choose>
 
                                 <div class="hide_cell" ${type == 'MICROARRAY' ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                                                       ${type != 'BASELINE' ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
-                                                        data-organism-part="${columnHeader}" data-color="${cellColour}">
-                                                       ${type != 'BASELINE' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
+                                    ${type != 'BASELINE' ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
+                                     data-organism-part="${columnHeader}" data-color="${cellColour}">
+                                        ${type != 'BASELINE' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
 
                             </c:if>
@@ -146,15 +141,16 @@
                 </display:table>
             </td>
             <td style="vertical-align: top">
-                <div style="float:left">
+                <div style="float:left; ${isWidget ? 'display:none' : ''}">
                     <!--
                      <button id="download-profiles" class="button-image" value="D"></button>
                     -->
                     <a id="download-profiles-link"
-                       title="Top 50 genes displayed on page. Download results to see the rest." href="${downloadUrl}"
+                       title="Top 50 genes displayed on page. Download results to see the rest."
+                       href="${downloadUrl}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
-                             src="resources/images/download_blue_small.png">
+                             src="${pageContext.request.contextPath}/resources/images/download_blue_small.png">
                     </a>
                 </div>
             </td>
@@ -179,13 +175,15 @@
 
             genePropertiesTooltipModule.init('${preferences.geneQuery}');
 
-            if (${type == "BASELINE"}){
+            if (${type == "BASELINE"}) {
 
-                var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"}
+                var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"};
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}' , selectedFilterFactorsJson, ${preferences.geneSetMatch});
+                var isWidget = ${isWidget != null? isWidget : false};
 
-            } else if (${type == "MICROARRAY"}){
+                        heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget);
+
+            } else if (${type == "MICROARRAY"}) {
 
                 var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
 

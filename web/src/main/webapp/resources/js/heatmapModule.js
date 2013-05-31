@@ -28,15 +28,15 @@ var heatmapModule = (function ($) {
 
     "use strict";
 
-    function showTranscriptBreakdownFancyBox(){
+    function showTranscriptBreakdownFancyBox() {
         $.fancybox({
-                href: '#transcript-breakdown',
-                padding: 0,
-                openEffect: 'elastic',
-                closeEffect: 'elastic',
-                helpers: {
-                    overlay: {
-                        locked: false
+                href:'#transcript-breakdown',
+                padding:0,
+                openEffect:'elastic',
+                closeEffect:'elastic',
+                helpers:{
+                    overlay:{
+                        locked:false
                     }
                 }
             }
@@ -83,6 +83,8 @@ var heatmapModule = (function ($) {
             }
         );
 
+        $("#display-levels").button({ label:'Display levels' });
+
         if ($("#prefForm #displayLevels").val() === "true") {
             $("#display-levels").click();
         }
@@ -95,30 +97,30 @@ var heatmapModule = (function ($) {
             var data = [],
                 index = 0;
             $.each(transcriptRates, function (key, value) {
-                data[index++] = {label: key, data: Math.abs(value.toFixed(1)), color: (value < 0 ? 'white' : undefined)};
+                data[index++] = {label:key, data:Math.abs(value.toFixed(1)), color:(value < 0 ? 'white' : undefined)};
             });
             return data;
         }
 
-        function paintPieChart(plotData, geneId){
+        function paintPieChart(plotData, geneId) {
 
-            $('#transcript-breakdown').css('position','absolute')
-                .css('left','-5000px')
+            $('#transcript-breakdown').css('position', 'absolute')
+                .css('left', '-5000px')
             $('#transcript-breakdown').show();
 
             $.plot('#transcripts-pie', plotData, {
-                series: {
-                    pie:{stroke: {
-                        color: "#d3d3d3"
+                series:{
+                    pie:{stroke:{
+                        color:"#d3d3d3"
                     },
-                        show: true
+                        show:true
                     }
                 },
-                legend: {
-                    show: true,
-                    labelFormatter: function (label) {
+                legend:{
+                    show:true,
+                    labelFormatter:function (label) {
                         return label === "Others" ? "Others" :
-                                "<a class='transcriptid' href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t="
+                            "<a class='transcriptid' href='http://www.ensembl.org/" + species + "/Transcript/Summary?g=" + geneId + ";t="
                                 + label + "' target='_blank'" + "title='View transcript in Ensembl'" + ">" +
                                 label + "</a>";
                     }
@@ -129,8 +131,8 @@ var heatmapModule = (function ($) {
             //in order to make it invisible during the show-up of fancybox
             //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
             $('#transcript-breakdown').hide();
-            $('#transcript-breakdown').css('position','relative')
-                .css('left','0px');
+            $('#transcript-breakdown').css('position', 'relative')
+                .css('left', '0px');
 
         }
 
@@ -144,16 +146,16 @@ var heatmapModule = (function ($) {
                 geneName = $(this).parent().find("td a:eq(0)").text();
 
             $.ajax({
-                url: "json/transcripts/" + experimentAccession,
-                type: "GET",
-                data: {
-                    'geneId': geneId,
-                    'factorType': factorType,
-                    'factorValue': factorValue,
-                    'selectedFilterFactorsJson': JSON.stringify(selectedFilterFactorsJson)
+                url:"json/transcripts/" + experimentAccession,
+                type:"GET",
+                data:{
+                    'geneId':geneId,
+                    'factorType':factorType,
+                    'factorValue':factorValue,
+                    'selectedFilterFactorsJson':JSON.stringify(selectedFilterFactorsJson)
                 },
-                datatype: 'json',
-                success: function (data) {
+                datatype:'json',
+                success:function (data) {
                     var totalCount = data.totalTranscriptsCount,
                         plotData = buildPlotData(data.transcriptExpressions);
 
@@ -176,7 +178,7 @@ var heatmapModule = (function ($) {
                 }
             }).fail(function (data) {
                     console.log("ERROR:  " + data);
-            });
+                });
 
         });
     }
@@ -196,13 +198,13 @@ var heatmapModule = (function ($) {
     function initHeatmapCellsTooltip() { //initializes heatmap cells tooltip
         $("#heatmap-table td:has(div[data-fold-change])").attr('title', '').tooltip(
             {
-                open: function (event, ui) {
+                open:function (event, ui) {
                     var colour = $(this).find("div").attr("data-color");
                     ui.tooltip.css('background', colour);
                 },
-                tooltipClass: "help-tooltip pvalue-tooltip-styling",
+                tooltipClass:"help-tooltip pvalue-tooltip-styling",
 
-                content: function (callback) {
+                content:function (callback) {
                     var expressionLevel = $(this).find("div").html(),
                         foldChange = $(this).find("div").attr("data-fold-change"),
                         tstatistic = $(this).find("div").attr("data-tstatistic");
@@ -252,7 +254,7 @@ var heatmapModule = (function ($) {
             headers += "<td class='horizontal-header-cell'>" + this + "</td>";
         });
         //add custom header cells for gene name and design element
-        $($("#heatmap-table thead")).append("<tr>" + headers + "</tr>");
+        $($("#heatmap-table thead")).append("<tr id='injected-header'>" + headers + "</tr>");
 
         //add display levels cell colspan
         if (accessionHeaders.length === 2) {
@@ -285,14 +287,14 @@ var heatmapModule = (function ($) {
         $(".ma-button").tooltip().button();
 
         $(".ma-button").fancybox({
-            padding: 0,
-            openEffect: 'elastic',
-            closeEffect: 'elastic'
+            padding:0,
+            openEffect:'elastic',
+            closeEffect:'elastic'
         });
 
     }
 
-    function initTranscriptBreakdownFancyBox(experimentAccession, parameters){
+    function initTranscriptBreakdownFancyBox(experimentAccession, parameters) {
         initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
 
         $('#geneid').tooltip();
@@ -304,7 +306,7 @@ var heatmapModule = (function ($) {
 
         $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (parameters && parameters.species) {
+        if (parameters && parameters.species && !parameters.isWidget) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
@@ -329,31 +331,32 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget) {
         initHeatmap(experimentAccession, {
-            species: species,
-            selectedFilterFactorsJson: selectedFilterFactorsJson,
-            geneSetMatch: geneSetMatch
+            species:species,
+            selectedFilterFactorsJson:selectedFilterFactorsJson,
+            geneSetMatch:geneSetMatch,
+            isWidget:isWidget
         });
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery) {
-        initHeatmap(experimentAccession, {cutoff: cutoff, geneQuery: geneQuery});
+        initHeatmap(experimentAccession, {cutoff:cutoff, geneQuery:geneQuery});
     }
 
     function initMicroarrayHeatmap(experimentAccession, arrayDesignAccession, cutoff, geneQuery) {
         initHeatmap(experimentAccession, {
-            arrayDesignAccession: arrayDesignAccession,
-            cutoff: cutoff,
-            geneQuery: geneQuery
+            arrayDesignAccession:arrayDesignAccession,
+            cutoff:cutoff,
+            geneQuery:geneQuery
         });
     }
 
     return {
 
-        initBaselineHeatmap: initBaselineHeatmap,
-        initRnaSeqHeatmap: initRnaSeqHeatmap,
-        initMicroarrayHeatmap: initMicroarrayHeatmap
+        initBaselineHeatmap:initBaselineHeatmap,
+        initRnaSeqHeatmap:initRnaSeqHeatmap,
+        initMicroarrayHeatmap:initMicroarrayHeatmap
 
     };
 

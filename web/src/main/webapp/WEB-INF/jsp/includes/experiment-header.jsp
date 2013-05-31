@@ -29,7 +29,7 @@
                         </a>
                     </c:if>
                 </div>
-                <div>Organism(s): ${allSpecies}</div>
+                <div>Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
                 <c:if test="${allArrayDesigns!=null}">
                     <div>Array Design(s):
                         <c:forEach items="${allArrayDesigns}" var="arrayDesign">
@@ -113,9 +113,9 @@
                  beforeLoad: function(){
                  this.title = "Look at this marvelous title... yes this is the title";
                  },*/
-                padding: 0,
-                openEffect: 'elastic',
-                closeEffect: 'elastic'
+                padding:0,
+                openEffect:'elastic',
+                closeEffect:'elastic'
             });
 
         });

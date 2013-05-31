@@ -22,6 +22,9 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Ordering;
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,6 +32,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithSearchFormPage{
@@ -59,7 +64,7 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
     }
 
     private void waitForAjaxDataToLoad(){
-        WebDriverWait wait = new WebDriverWait(driver, 15);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
@@ -71,33 +76,61 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
     }
 
     public String getMaxXAxisValue(){
-        return getLastTickValue(xAxisDiv);
+        return getLastXTickValue(xAxisDiv);
     }
 
     public String getMaxYAxisValue(){
-        return getLastTickValue(yAxisDiv);
+        return getLastYTickValue(yAxisDiv);
     }
 
     public String getXAxisValue(int index){
-        return getTickValue(xAxisDiv, index);
+        return getXTickValue(xAxisDiv, index);
     }
 
     public String getYAxisValue(int index){
-        return getTickValue(yAxisDiv, index);
+        return getYTickValue(yAxisDiv, index);
     }
 
-    private String getTickValue(WebElement axisDiv, int index){
-        List<WebElement> webElements = getTicks(axisDiv);
+    private String getXTickValue(WebElement axisDiv, int index){
+        List<WebElement> webElements = getXTicks(axisDiv);
         return webElements.get(index).getText();
     }
 
-    private String getLastTickValue(WebElement axisDiv){
-        List<WebElement> webElements = getTicks(axisDiv);
+    private String getYTickValue(WebElement axisDiv, int index){
+        List<WebElement> webElements = getYTicks(axisDiv);
+        return webElements.get(index).getText();
+    }
+
+    private String getLastXTickValue(WebElement axisDiv){
+        List<WebElement> webElements = getXTicks(axisDiv);
         return webElements.get(webElements.size()-1).getText();
     }
 
-    private List<WebElement> getTicks(WebElement axisDiv){
-        return axisDiv.findElements(By.className("tickLabel"));
+    private String getLastYTickValue(WebElement axisDiv){
+        List<WebElement> webElements = getYTicks(axisDiv);
+        return webElements.get(webElements.size()-1).getText();
+    }
+
+    private List<WebElement> getXTicks(WebElement axisDiv){
+        List<WebElement> ticks = axisDiv.findElements(By.className("tickLabel"));
+
+        //This is a patch because in some browser the X axis tick divs are ordered randomly,
+        //but we can use the distance from X=0 to reorder the tick values
+        Comparator distanceFromZeroComparator = Ordering.natural().onResultOf(new Function<WebElement, Integer>(){
+            @Override
+            public Integer apply(org.openqa.selenium.WebElement webElement) {
+                String distanceFromZero = StringUtils.substringBefore(webElement.getCssValue("left"), "px");
+                return Integer.parseInt(distanceFromZero);
+            }
+        });
+        Collections.sort(ticks, distanceFromZeroComparator);
+
+        return ticks;
+    }
+
+    private List<WebElement> getYTicks(WebElement axisDiv){
+        List<WebElement> ticks = axisDiv.findElements(By.className("tickLabel"));
+        return ticks;
     }
 
 }

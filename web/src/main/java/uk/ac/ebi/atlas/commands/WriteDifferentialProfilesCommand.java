@@ -65,7 +65,7 @@ public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<L
     @Override
     protected Long execute(ObjectInputStream<RnaSeqProfile> inputStream, RequestContext requestContext) {
         try {
-            return geneProfileTsvWriter.apply(inputStream, experiment.getContrasts());
+            return geneProfileTsvWriter.write(inputStream, experiment.getContrasts());
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");

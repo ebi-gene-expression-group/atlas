@@ -23,48 +23,48 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioentityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ProteinPageIT extends SinglePageSeleniumFixture {
+public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSP00000355434";
 
-    private BioentityPage subject;
+    private BioEntityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioentityPage(driver, GENE_IDENTIFIER, "proteins");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "proteins");
         subject.get();
     }
 
     @Test
     public void checkGeneCartTitle() {
-        assertThat(subject.getGeneCardTitle(), is("Q8N349 Homo Sapiens olfactory receptor, family 2, subfamily L, member 13"));
+        assertThat(subject.getBioEntityCardTitle(), is("Q8N349 Homo Sapiens olfactory receptor, family 2, subfamily L, member 13"));
     }
 
     @Test
     public void checkCardExpansion() {
-        assertThat(subject.isCardExpanded(), is(true));
-        subject.hideCard();
-        assertThat(subject.isCardExpanded(), is(false));
+        assertThat(subject.isInfoCardExpanded(), is(true));
+        subject.clickInfoCard();
+        assertThat(subject.isInfoCardExpanded(), is(false));
     }
 
     @Test
     public void checkTableSize() {
-        assertThat(subject.getTableSize(), is(6));
+        assertThat(subject.getPropertiesTableSize(), is(6));
     }
 
     @Test
     public void checkTableRows() {
-        assertThat(subject.getTableRow(0), hasItems("Ensembl Protein", "ENSP00000355434"));
-        assertThat(subject.getTableRow(1), hasItems("Ensembl Transcript"));
-        assertThat(subject.getTableRow(1).get(1), containsString("ENST00000366478"));
-        assertThat(subject.getTableRow(3), hasItems("UniProt", "Q8N349"));
-        assertThat(subject.getTableRow(5), hasItems("Reactome ID", "REACT_111102"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Ensembl Protein", "ENSP00000355434"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Ensembl Transcript"));
+        assertThat(subject.getPropertiesTableRow(1).get(1), containsString("ENST00000366478"));
+        assertThat(subject.getPropertiesTableRow(3), hasItems("UniProt", "Q8N349"));
+        assertThat(subject.getPropertiesTableRow(5), hasItems("Reactome ID", "REACT_111102"));
     }
 
     @Test

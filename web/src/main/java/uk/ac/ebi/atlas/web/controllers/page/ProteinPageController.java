@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Scope("request")
-public class ProteinPageController extends BioentityPageController {
+public class ProteinPageController extends BioEntityPageController {
 
     public static final String PROPERTY_TYPE_SYMBOL = "uniprot";
 

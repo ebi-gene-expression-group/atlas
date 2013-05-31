@@ -23,47 +23,47 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioentityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageIT extends SinglePageSeleniumFixture {
+public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSMUSG00000029816";
 
-    private BioentityPage subject;
+    private BioEntityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioentityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
         subject.get();
     }
 
     @Test
     public void checkGeneCartTitle() {
-        assertThat(subject.getGeneCardTitle(), is("Gpnmb Mus Musculus glycoprotein (transmembrane) nmb"));
+        assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus Musculus glycoprotein (transmembrane) nmb"));
     }
 
     @Test
     public void checkCardExpansion() {
-        assertThat(subject.isCardExpanded(), is(true));
-        subject.hideCard();
-        assertThat(subject.isCardExpanded(), is(false));
+        assertThat(subject.isInfoCardExpanded(), is(true));
+        subject.clickInfoCard();
+        assertThat(subject.isInfoCardExpanded(), is(false));
     }
 
     @Test
     public void checkTableSize() {
-        assertThat(subject.getTableSize(), is(12));
+        assertThat(subject.getPropertiesTableSize(), is(12));
     }
 
     @Test
     public void checkTableRows() {
-        assertThat(subject.getTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
-        assertThat(subject.getTableRow(1), hasItems("Orthologs"));
-        assertThat(subject.getTableRow(1).get(1), containsString("Gpnmb"));
-        assertThat(subject.getTableRow(10), hasItems("Gene Biotype", "protein_coding"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Orthologs"));
+        assertThat(subject.getPropertiesTableRow(1).get(1), containsString("Gpnmb"));
+        assertThat(subject.getPropertiesTableRow(10), hasItems("Gene Biotype", "protein_coding"));
     }
 
     @Test
@@ -75,4 +75,16 @@ public class GenePageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.ensembl.org/Multi/Search/Results?species=all;idx=;q=ENSMUSG00000029816"));
         assertThat(subject.getLinksInTableRow(6).get(0), is("http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&term=93695"));
     }
+
+    @Test
+    public void shouldDisplaySearchResultsHeader(){
+        assertThat(subject.getSearchResultsHeader(), endsWith("results for Gpnmb"));
+    }
+
+    @Test
+    public void clickingOnGlobalSearchWidgetShouldDisplayGlobalSearchResults(){
+        subject.clickShowMoreDataWidget();
+        assertThat(subject.getGlobalSearchAllResultsString(), startsWith("All results (1"));
+    }
+
 }

@@ -49,24 +49,22 @@ public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<M
     }
 
     @Override
-    protected List<String> getExpressionDataLabels(){
+    protected List<String> getExpressionColumnsHeaders(){
         return Lists.newArrayList("p-value", "log2foldchange", "t-statistic");
     }
-
 
     @Override
     protected List<Double> getExpressionLevelData(MicroarrayExpression expression){
         return Lists.newArrayList(expression.getLevel(), expression.getFoldChange(), expression.getTstatistic());
     }
 
-
     @Override
-    protected String getSecondColumnName() {
-        return HeaderBuilder.DESIGN_ELEMENT;
+    protected String[] getProfileIdColumnHeaders() {
+        return new String[]{HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.DESIGN_ELEMENT};
     }
 
     @Override
-    protected String getSecondColumnValue(MicroarrayProfile geneProfile) {
+    protected String getSecondaryRowHeader(MicroarrayProfile geneProfile) {
         return geneProfile.getDesignElementName();
     }
 }

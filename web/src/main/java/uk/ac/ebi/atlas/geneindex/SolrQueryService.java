@@ -33,6 +33,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
@@ -45,7 +46,8 @@ public class SolrQueryService {
 
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
     private static final int PROPERTY_VALUES_LIMIT = 1000;
-    private static final int CONNECTION_TIMEOUT = 2000;
+    // changed from 2000
+    private static final int CONNECTION_TIMEOUT = 60000;
     private static final int MAX_RETRIES = 1;
     private static final int DEFAULT_LIMIT = 15;
     private static final String CONFIG_SPLIT_REGEX = ",";
@@ -53,7 +55,10 @@ public class SolrQueryService {
     private static final String IDENTIFIER_FIELD = "identifier";
     private static final String SPECIES_FIELD = "species";
     private static final String PROPERTY_FIELD = "property";
-    private static final int MAX_GENE_IDS_TO_FETCH = 100000;
+    // changed from 100000
+    private static final int MAX_GENE_IDS_TO_FETCH = 1000000;
+
+    private static final String BIOENTITY_TYPE_GENE = "ensgene";
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -90,7 +95,7 @@ public class SolrQueryService {
 
     public Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
 
-        String queryString = buildGeneQuery(geneQuery, exactMatch, species);
+        String queryString = buildGeneQuery(geneQuery, exactMatch, BIOENTITY_TYPE_GENE, species);
 
         return fetchGeneIdentifiersFromSolr(queryString);
     }
@@ -99,7 +104,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = namePropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -108,7 +113,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = synonymPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -117,26 +122,25 @@ public class SolrQueryService {
 
         String[] propertyTypes = identifierPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
 
     public String getSpeciesForIdentifier(String identifier) {
 
-        String species = null;
-
         SolrQuery query = new SolrQuery("identifier:" + identifier);
-        query.setFields(SPECIES_FIELD);
-        query.setRows(1);
+        return extractSpecies(query);
 
-        QueryResponse solrResponse = executeSolrQuery(query);
-        for (SolrDocument doc : solrResponse.getResults()) {
-            species = doc.getFieldValue(SPECIES_FIELD).toString();
-        }
-
-        return species;
     }
+
+    public String getSpeciesForPropertyValue(String propertyValue) {
+
+        SolrQuery query = new SolrQuery("property:" + propertyValue);
+        return extractSpecies(query);
+
+    }
+
 
     public List<String> getPropertyValuesForIdentifier(String identifier, String propertyType) {
 
@@ -153,6 +157,21 @@ public class SolrQueryService {
 
         return results;
     }
+
+    private String extractSpecies(SolrQuery query) {
+        String species = "";
+
+        query.setFields(SPECIES_FIELD);
+        query.setRows(1);
+
+        QueryResponse solrResponse = executeSolrQuery(query);
+        SolrDocumentList results = solrResponse.getResults();
+        if (results.getNumFound() > 1) {
+            species = results.get(0).getFieldValue(SPECIES_FIELD).toString();
+        }
+        return species;
+    }
+
 
     Set<String> fetchGeneIdentifiersFromSolr(String queryString) {
         Set<String> results = Sets.newHashSet();
@@ -219,7 +238,7 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    String buildGeneQuery(String query, boolean exactMatch, String species) {
+    String buildGeneQuery(String query, boolean exactMatch, String bioentityType, String species) {
         String propertyName = exactMatch ? PROPERTY_LOWER_FIELD : "property_search";
 
         String escapedGeneQuery = customEscape(query);
@@ -230,6 +249,9 @@ public class SolrQueryService {
                         .append("(" + propertyName + ":").append(escapedGeneQuery).append(")")
                         .append(" AND species:\"")
                         .append(species)
+                        .append("\"")
+                        .append(" AND type:\"")
+                        .append(bioentityType)
                         .append("\"");
         return sb.toString();
 
@@ -254,13 +276,15 @@ public class SolrQueryService {
         return query.toString();
     }
 
-    String buildCompositeQuery(String geneName, String species, String[] propertyTypes) {
+    String buildCompositeQuery(String geneName, String bioentityType, String species, String[] propertyTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("property_edgengram:\"");
         query.append(geneName);
         query.append("\" AND species:\"");
         query.append(species);
+         query.append("\" AND type:\"");
+        query.append(bioentityType);
         query.append("\" AND (");
         for (int i = 0; i < propertyTypes.length; i++) {
             query.append("property_type:\"");

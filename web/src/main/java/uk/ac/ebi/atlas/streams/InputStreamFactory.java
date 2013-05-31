@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfileBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilePreconditionBackedBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
@@ -62,7 +62,7 @@ public class InputStreamFactory {
     private BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder;
     private RnaSeqExpressionsBufferBuilder rnaSeqExpressionsBufferBuilder;
     private MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder;
-    private BaselineProfileBuilder baselineProfileBuilder;
+    private BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder;
     private MicroarrayProfileBuilder microarrayProfileBuilder;
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
 
@@ -72,14 +72,14 @@ public class InputStreamFactory {
     public InputStreamFactory(BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder,
                               RnaSeqExpressionsBufferBuilder rnaSeqExpressionsBufferBuilder,
                               MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder,
-                              BaselineProfileBuilder baselineProfileBuilder,
+                              BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder,
                               MicroarrayProfileBuilder microarrayProfileBuilder,
                               RnaSeqProfileBuilder rnaSeqProfileBuilder,
                               TsvReaderUtils tsvReaderUtils) {
         this.baselineExpressionsBufferBuilder = baselineExpressionsBufferBuilder;
         this.rnaSeqExpressionsBufferBuilder = rnaSeqExpressionsBufferBuilder;
         this.microarrayExpressionsBufferBuilder = microarrayExpressionsBufferBuilder;
-        this.baselineProfileBuilder = baselineProfileBuilder;
+        this.baselineProfilePreconditionBackedBuilder = baselineProfilePreconditionBackedBuilder;
         this.microarrayProfileBuilder = microarrayProfileBuilder;
         this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
         this.tsvReaderUtils = tsvReaderUtils;
@@ -89,7 +89,7 @@ public class InputStreamFactory {
     public ObjectInputStream<BaselineProfile> createBaselineProfileInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = tsvReaderUtils.build(tsvFileURL);
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, baselineProfileBuilder);
+        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsBufferBuilder, baselineProfilePreconditionBackedBuilder);
     }
 
     public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {

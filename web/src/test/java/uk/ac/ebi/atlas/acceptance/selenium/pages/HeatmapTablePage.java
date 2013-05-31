@@ -76,6 +76,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(className = "gradient-level-max")
     private WebElement gradientLevelsMax;
 
+    @FindBy(className = "genename")
+    private List<WebElement> geneNames;
+
     @FindBy(xpath = "//label[@for='queryFactorValues']")
     private WebElement queryFactorLabel;
 
@@ -353,5 +356,15 @@ public class HeatmapTablePage extends TablePage {
 
     public String getDesignElementHeader() {
         return designElementHeader.getText();
+    }
+
+    public BioEntityPage clickGeneName(int zeroBasedGeneNameIndex) {
+        geneNames.get(zeroBasedGeneNameIndex).click();
+
+
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("accordion")));
+
+        return new BioEntityPage(driver);
     }
 }

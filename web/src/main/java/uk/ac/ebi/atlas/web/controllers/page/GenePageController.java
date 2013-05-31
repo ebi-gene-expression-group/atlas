@@ -34,9 +34,12 @@ import javax.inject.Inject;
 
 @Controller
 @Scope("request")
-public class GenePageController extends BioentityPageController {
+public class GenePageController extends BioEntityPageController {
 
     public static final String PROPERTY_TYPE_SYMBOL = "symbol";
+
+    // needs changing to DifferentialRequestPreferences.DEFAULT_CUTOFF
+    public static final double CUTOFF = 0.5;
 
     @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
@@ -50,7 +53,15 @@ public class GenePageController extends BioentityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
-        differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, DifferentialRequestPreferences.DEFAULT_CUTOFF);
+        DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
+                differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, CUTOFF);
+        model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
+
+        // setting FDR as cutoff
+        DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
+        requestPreferences.setCutoff(differentialProfilesListMapForIdentifier.getFdrCutoff());
+        model.addAttribute("preferences", requestPreferences);
+
         return super.showGenePage(identifier, model);
     }
 

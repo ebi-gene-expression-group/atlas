@@ -98,9 +98,6 @@
     <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/jqcloud.css"
           rel="stylesheet">
 
-    <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
-    <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
-
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
     <script language="JavaScript" type="text/javascript"
@@ -149,7 +146,7 @@
 
     <tiles:insertAttribute name="header"/>
 
-    <div id="contents" class="grid_24">
+    <div id="content" class="grid_24">
 
         <div style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
             <tiles:insertAttribute name="menu" ignore="true"/>

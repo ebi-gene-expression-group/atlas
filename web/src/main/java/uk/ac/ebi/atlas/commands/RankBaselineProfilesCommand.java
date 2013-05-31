@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
@@ -69,17 +70,14 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
         return inputStreamFactory.createBaselineProfileInputStream(experimentAccession);
     }
 
-
     @Override
-    protected BaselineProfilesList buildAverageGeneSetProfiles(ObjectInputStream<BaselineProfile> inputStream) {
+    protected BaselineProfilesList buildAverageGeneSetProfiles(GeneQueryResponse geneQueryResponse,
+                                                               ObjectInputStream<BaselineProfile> inputStream,
+                                                               Comparator<BaselineProfile> baselineProfileComparator) {
 
-        BaselineProfile geneProfile;
-        while ((geneProfile = inputStream.readNext()) != null) {
-
-            geneSetProfilesBuilder.sumProfile(geneProfile);
-
-        }
-        return geneSetProfilesBuilder.build();
+        return geneSetProfilesBuilder.forGeneQueryResponse(geneQueryResponse)
+                                     .withInputStream(inputStream)
+                                     .withBaselineComparator(baselineProfileComparator).build();
     }
 
 }

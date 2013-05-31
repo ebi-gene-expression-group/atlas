@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,25 @@
 
 /* ebi css override: start */
 
+#global-footer.grid_24 {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#global-footer.grid_24 .grid_4 {
+    width: 15%;
+}
+
 ::selection {
     background: rgb(95, 142, 179) !important;
     color: white;
+}
+
+body {
+    min-width: 950px;
+    /*    font-family: Verdana, Helvetica, Arial, sans-serif;
+        margin:0px auto !important;*/
 }
 
 body div#local-title a {
@@ -32,26 +48,33 @@ body div#local-title a {
     text-shadow: none !important;
 }
 
+/*
 td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {
     border-bottom-color: transparent;
 }
+*/
+#contents {
+    font-size: 12px;
+}
 
-a, a:link, a:visited {
+#contents a, #contents a:link, #contents a:visited {
     border-bottom-color: transparent;
     color: #343094
 }
 
-a:hover, a:active {
-    border-bottom-style: solid !important;
-    border-bottom-color: brown !important;
+#contents a:hover, #contents a:active {
+    border-bottom-style: solid;
+    border-bottom-color: brown;
     color: brown !important;
 }
 
-nav a:link, nav a:visited, nav a:active, nav a:hover {
-    color: white !important;
-    border-bottom: 3px solid transparent !important;
+/*
+div#global-masthead ul li a:link, div#global-masthead ul li a:visited,
+div#global-masthead ul li a:active, div#global-masthead ul li a:hover {
+    color: white;
+    border-bottom: 0 none;
 }
-
+*/
 ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     border-bottom-color: #207A7A !important;
     border-bottom: 3px solid;
@@ -152,13 +175,6 @@ textarea {
 
 .thick-link {
     font-weight: bold;
-}
-
-body {
-    min-width: 950px;
-    font-size: 12px;
-    /*    font-family: Verdana, Helvetica, Arial, sans-serif;
-        margin:0px auto !important;*/
 }
 
 #contents {
@@ -331,18 +347,18 @@ a.help-icon {
     padding-bottom: 4px;
 }
 
-.geneCard {
+.bioEntityCard {
     background: white !important;
     background-color: white !important;
 }
 
-.geneCardHeader {
+.bioEntityCardHeader {
     background: #f1fffa !important;
     background-color: #f1fffa !important;
     border: 1px solid #CCCCCC !important;
 }
 
-.geneCardSymbol {
+.bioEntityCardSymbol {
     font-size: 16px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;
@@ -350,22 +366,22 @@ a.help-icon {
     padding-left: 14px;
 }
 
-.geneCardDescription {
+.bioEntityCardDescription {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     color: gray;
     padding-left: 6px;
 }
 
-.geneCardSpecies {
+.bioEntityCardSpecies {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-style: italic;
     color: gray;
     padding-left: 6px;
-    text-transform: capitalize;
 }
 
-.geneCardPropertyType {
+.bioEntityCardPropertyType {
     font-size: 14px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;
@@ -373,16 +389,16 @@ a.help-icon {
     vertical-align: top;
 }
 
-.geneCardPropertyValue {
+.bioEntityCardPropertyValue {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
 }
 
-.geneCardLink {
+.bioEntityCardLink {
     color: #343094 !important;
 }
 
-.geneCardIconPlus {
+.bioEntityCardIconPlus {
     background-position: -16px -128px;
     position: relative !important;
     top: 0px !important;
@@ -391,7 +407,7 @@ a.help-icon {
     float: right;
 }
 
-.geneCardIconMinus {
+.bioEntityCardIconMinus {
     background-position: -48px -128px;
     position: relative !important;
     top: 0px !important;
@@ -400,7 +416,7 @@ a.help-icon {
     float: right;
 }
 
-.geneCardDifferentialSummary {
+.bioEntityCardDifferentialSummary {
     border: 1px solid #FBD850;
     color: #EB8F00;
     font-weight: bold;

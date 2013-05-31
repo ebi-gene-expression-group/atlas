@@ -90,7 +90,7 @@ public class GeneProfilesQueryCommandTest {
                 return null;
             }
         };
-        subject.setSolrClient(solrClientMock, geneQueryTokenizerMock);
+        subject.setSolrClient(solrClientMock);
 
     }
 

@@ -32,7 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
-import uk.ac.ebi.atlas.web.BioentityPageProperties;
+import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import java.util.Properties;
 
@@ -64,10 +64,13 @@ public class GenePageControllerTest {
     private Model modelMock;
 
     @Mock
-    private BioentityPropertyService bioentityPropertyServiceMock;
+    private BioEntityPropertyService bioEntityPropertyServiceMock;
 
     @Mock
     private DifferentialGeneProfileService differentialGeneProfileServiceMock;
+
+    @Mock
+    private DifferentialGeneProfileProperties differentialGeneProfilePropertiesMock;
 
     private Properties properties = new Properties();
 
@@ -78,7 +81,7 @@ public class GenePageControllerTest {
         properties.setProperty("property.synonym", SYNONYMS);
         properties.setProperty("property.goterm", GENE_ONTOLOGY);
 
-        BioentityPageProperties bioentityPageProperties = new BioentityPageProperties(properties);
+        BioEntityCardProperties bioEntityCardProperties = new BioEntityCardProperties(properties);
 
         genePageProperties.put(SYMBOL, SYMBOL);
         genePageProperties.put(DESCRIPTION, DESCRIPTION);
@@ -90,22 +93,24 @@ public class GenePageControllerTest {
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
-        when(bioentityPropertyServiceMock.getFirstValueOfProperty(SYMBOL)).thenReturn(SYMBOL);
-        when(bioentityPropertyServiceMock.getFirstValueOfProperty(DESCRIPTION)).thenReturn(DESCRIPTION);
+        when(bioEntityPropertyServiceMock.getFirstValueOfProperty(SYMBOL)).thenReturn(SYMBOL);
+        when(bioEntityPropertyServiceMock.getFirstValueOfProperty(DESCRIPTION)).thenReturn(DESCRIPTION);
 
         subject = new GenePageController();
 
-        subject.setBioentityPageProperties(bioentityPageProperties);
-        subject.setBioentityPropertyService(bioentityPropertyServiceMock);
+        subject.setBioEntityCardProperties(bioEntityCardProperties);
+        subject.setBioEntityPropertyService(bioEntityPropertyServiceMock);
         subject.setDifferentialGeneProfileService(differentialGeneProfileServiceMock);
         subject.setGenePagePropertyTypes(PROPERTY_TYPES);
     }
 
     @Test
     public void testShowGenePage() throws Exception {
-        assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("gene"));
+        when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
+        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(GenePageController.CUTOFF);
+        assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("bioEntity"));
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
-        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, 0.05D);
+        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.CUTOFF);
     }
 
     @Test

@@ -32,74 +32,18 @@
 <section>
 
 
-<c:import url="includes/request-preferences.jsp"/>
+    <c:import url="includes/request-preferences.jsp"/>
 
 </section>
 
-<section id="stickem-container" style="overflow: auto;" >
+<section id="stickem-container" style="overflow: auto;">
 
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>
 
 
-    <c:choose>
-        <c:when test="${empty geneProfiles}">
-            <c:if test="${not isPreferenceError}">
-                <div id="heatmap-message">
-                    No expressions found above the expression level cutoff for the query.
-                </div>
-            </c:if>
-        </c:when>
-        <c:otherwise>
-
-            <div id="heatmap" class="row stickem-container">
-
-                <div id="anatomogram" class="aside stickem double-click-noselection">
-                    <table>
-                        <tr>
-                            <td style="padding-top: 15px; vertical-align:top">
-                        <span id="sex-toggle">
-                            <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                                 style="width:20px;height:38px;padding:2px"
-                                 src="resources/images/male_selected.png"/>
-                        </span>
-                                <!--
-                                <span data-help-loc="#anatomogram"/>
-                                -->
-                            </td>
-                            <td>
-                                <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div id="heatmap-div" class="heatmap-position" style="display:none">
-
-                    <table>
-                        <tr>
-                            <td>
-                                <span id="geneCount">Showing ${geneProfiles.size()}
-                                    of ${geneProfiles.getTotalResultCount()} genes found:
-                                </span>
-                            </td>
-                            <td>
-                                <c:import url="includes/gradient-legend.jsp"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-        </c:otherwise>
-    </c:choose>
+    <%@ include file="includes/anatomigram-and-heatmap.jsp" %>
 
     <br/>
 
@@ -118,8 +62,10 @@
     <div id="transcript-breakdown" style="display:none;height: 320px;width: 500px; padding-top:10px">
         <p style="text-align: center">
             <span id="transcript-breakdown-title"></span>
-            <span id="transcript-breakdown-title-help"><a class="help-icon" href="#" title="Transcripts with zero expression are excluded from the pie chart. Transcripts shown in white colour have been reported with low confidence.">?</a></span>
+            <span id="transcript-breakdown-title-help"><a class="help-icon" href="#"
+                                                          title="Transcripts with zero expression are excluded from the pie chart. Transcripts shown in white colour have been reported with low confidence.">?</a></span>
         </p>
+
         <div>
             <div id="transcripts-pie" style="width: 500px;height:250px;">
             </div>
@@ -188,7 +134,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
-            if ('${type}'!=='BASELINE' ) {
+            if ('${type}' !== 'BASELINE') {
 
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
@@ -209,11 +155,11 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var allQueryFactorValues = [${allQueryFactors.size()}];
-            <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
+                <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
                 allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
-            </c:forEach>
+                </c:forEach>
 
-                if (anyAnatomogramFile && 0 < anyAnatomogramFile.length)  {
+                if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
                     anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
                 }
             }

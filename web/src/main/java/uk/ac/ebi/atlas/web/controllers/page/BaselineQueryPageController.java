@@ -67,6 +67,10 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
     private FilterFactorMenuBuilder filterFactorMenuBuilder;
 
+    private BaselineRequestContext requestContext;
+
+    private BaselineExperiment experiment;
+
     @Inject
     public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
                                        ApplicationProperties applicationProperties,
@@ -89,11 +93,30 @@ public class BaselineQueryPageController extends BaselineQueryController {
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        prepareModel(preferences, result, model, request);
 
-        initPreferences(preferences, experiment);
+        addFactorMenu(model);
 
-        BaselineRequestContext requestContext = initRequestContext(experiment, preferences);
+        model.addAttribute("isWidget", false);
+
+        return "experiment";
+    }
+
+    @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=BASELINE"})
+    public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+            , BindingResult result, Model model, HttpServletRequest request) {
+
+        prepareModel(preferences, result, model, request);
+
+        model.addAttribute("isWidget", true);
+
+        return "heatmap-widget";
+    }
+
+
+    private void prepareModel(BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
+
+        initializeContext(preferences, request);
 
         model.addAttribute("experimentAccession", experiment.getAccession());
 
@@ -108,36 +131,10 @@ public class BaselineQueryPageController extends BaselineQueryController {
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactors", allQueryFactors);
 
-        SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
-
         String species = requestContext.getFilteredBySpecies();
 
         //required by autocomplete
         model.addAttribute("species", species);
-
-        //ToDo: this stuff should be refactored, menu should be a separate REST service
-        if (!menuFactorNames.isEmpty()) {
-
-            Set<Factor> menuFactors = experimentalFactors.getAllFactors();
-
-            SortedSet<FilterFactorMenuVoice> filterFactorMenu = filterFactorMenuBuilder
-                    .withExperimentalFactors(experimentalFactors)
-                    .forFilterFactors(menuFactors)
-                    .build();
-
-            model.addAttribute("filterFactorMenu", filterFactorMenu);
-
-            model.addAttribute("menuFactorNames", menuFactorNames);
-        }
-
-        //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
-        Map<String, String> selectedFilterFactorNamesAndValues = new HashMap<>();
-        for (Factor selectedFilterFactor : selectedFilterFactors) {
-            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
-        }
-        model.addAttribute("selectedFilterFactorNamesAndValues", selectedFilterFactorNamesAndValues);
-
-        model.addAttribute("selectedFilterFactorsJson", new Gson().toJson(requestContext.getSelectedFilterFactors()));
 
         if (!result.hasErrors()) {
 
@@ -163,8 +160,44 @@ public class BaselineQueryPageController extends BaselineQueryController {
             }
 
         }
+    }
 
-        return "experiment";
+    private void initializeContext(BaselineRequestPreferences preferences, HttpServletRequest request) {
+        experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        initPreferences(preferences, experiment);
+
+        requestContext = initRequestContext(experiment, preferences);
+    }
+
+    private void addFactorMenu(Model model) {
+
+        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+
+        //ToDo: this stuff should be refactored, menu should be a separate REST service
+        SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
+        if (!menuFactorNames.isEmpty()) {
+
+            Set<Factor> menuFactors = experimentalFactors.getAllFactors();
+
+            SortedSet<FilterFactorMenuVoice> filterFactorMenu = filterFactorMenuBuilder
+                    .withExperimentalFactors(experimentalFactors)
+                    .forFilterFactors(menuFactors)
+                    .build();
+
+            model.addAttribute("filterFactorMenu", filterFactorMenu);
+
+            model.addAttribute("menuFactorNames", menuFactorNames);
+        }
+
+        //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
+        Map<String, String> selectedFilterFactorNamesAndValues = new HashMap<>();
+        for (Factor selectedFilterFactor : requestContext.getSelectedFilterFactors()) {
+            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
+        }
+        model.addAttribute("selectedFilterFactorNamesAndValues", selectedFilterFactorNamesAndValues);
+
+        model.addAttribute("selectedFilterFactorsJson", new Gson().toJson(requestContext.getSelectedFilterFactors()));
     }
 
 }
