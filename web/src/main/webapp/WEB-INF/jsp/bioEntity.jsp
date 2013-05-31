@@ -94,7 +94,7 @@
 
             <div id="diffProfileBody" class="bioEntityCard">
                 <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                    <span>${differentialGeneProfileProperties.totalNumberOfResults} search results found</span>
+                    <span>${differentialGeneProfileProperties.totalNumberOfResults} search result(s) found</span>
                     <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
                 </div>
 
