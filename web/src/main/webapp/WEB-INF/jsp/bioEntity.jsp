@@ -132,11 +132,14 @@
 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
 <script>
     $(function () {
+        var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : 0};
+
         $("#bioentity-info-image").tooltip();
         $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
             collapsible:true,
+            active: openPanelIndex,
             heightStyle:"content",
             icons:{ "header":"bioEntityCardIconPlus", "activeHeader":"bioEntityCardIconMinus" },
             header:"ul"
