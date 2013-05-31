@@ -106,11 +106,11 @@ public class GenePageControllerTest {
 
     @Test
     public void testShowGenePage() throws Exception {
-        when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
-        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(GenePageController.CUTOFF);
+        when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
+        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(GenePageController.DEFAULT_CUTOFF);
         assertThat(subject.showGenePage(IDENTIFIER, modelMock), is("bioEntity"));
         verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
-        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.CUTOFF);
+        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.DEFAULT_CUTOFF);
     }
 
     @Test

@@ -27,7 +27,7 @@
 <table id="heatmap-table" class="table-grid">
     <thead>
     <tr>
-        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">Contrast</th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;"><div>Contrast</div></th>
         <th class="horizontal-header-cell" style="padding: 5px;">
             <div class='factor-header' data-organism-part=''>Adjusted P-value</div>
         </th>

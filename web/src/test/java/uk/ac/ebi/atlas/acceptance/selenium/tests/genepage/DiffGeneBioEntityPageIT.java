@@ -38,7 +38,7 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "cutoff=0.5");
         subject.get();
         subject.clickDiffProfile();
     }
