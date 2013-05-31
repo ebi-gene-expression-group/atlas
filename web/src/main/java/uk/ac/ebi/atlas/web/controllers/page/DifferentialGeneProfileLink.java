@@ -22,28 +22,32 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
 public class DifferentialGeneProfileLink {
 
-    private String contrast;
+    private String geneQuery;
+
+    private Contrast contrast;
 
     private String url;
 
     private DifferentialExpression expression;
 
-    public DifferentialGeneProfileLink(String contrast, String url, DifferentialExpression expression) {
+    public DifferentialGeneProfileLink(String geneQuery, Contrast contrast, String url, DifferentialExpression expression) {
+        this.geneQuery = geneQuery;
         this.contrast = contrast;
         this.url = url;
         this.expression = expression;
     }
 
-    public String getContrast() {
-        return contrast;
+    public String getContrastDisplayName() {
+        return contrast.getDisplayName();
     }
 
     public String getUrl() {
-        return url;
+        return url + "?geneQuery=" + geneQuery + "&queryFactorValues=" + contrast.getId();
     }
 
     public DifferentialExpression getExpression() {

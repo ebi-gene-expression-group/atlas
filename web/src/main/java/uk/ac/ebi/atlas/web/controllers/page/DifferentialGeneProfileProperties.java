@@ -42,6 +42,8 @@ public class DifferentialGeneProfileProperties {
 
     private Map<String, DifferentialProfilesList<DifferentialProfile>> experimentToDifferentialProfilesListMap = Maps.newHashMap();
 
+    private String geneQuery;
+
     private double fdrCutoff;
 
     public Set<String> getAllExperimentAccessions() {
@@ -53,12 +55,10 @@ public class DifferentialGeneProfileProperties {
     }
 
     public DifferentialProfilesList putDifferentialProfilesListForExperiment(String experimentAccession, DifferentialProfilesList differentialProfilesList) {
-
         return experimentToDifferentialProfilesListMap.put(experimentAccession, differentialProfilesList);
     }
 
     public void clear() {
-
         experimentToDifferentialProfilesListMap.clear();
     }
 
@@ -116,9 +116,8 @@ public class DifferentialGeneProfileProperties {
                 DifferentialProfile profile = (DifferentialProfile) item;
                 for (Object condition : profile.getConditions()) {
                     Contrast contrast = (Contrast) condition;
-                    double expressionLevel = profile.getExpressionLevel(contrast);
-                    DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(
-                            contrast.getDisplayName(), experimentAccession, (DifferentialExpression) profile.getExpression(contrast));
+                    DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(geneQuery,
+                            contrast, experimentAccession, (DifferentialExpression) profile.getExpression(contrast));
                     differentialGeneProfileLinks.add(differentialGeneProfileLink);
                 }
             }
@@ -147,6 +146,10 @@ public class DifferentialGeneProfileProperties {
             }
         }
         return count;
+    }
+
+    public void setGeneQuery(String geneQuery) {
+        this.geneQuery = geneQuery;
     }
 
     public void setFdrCutoff(double fdrCutoff) {

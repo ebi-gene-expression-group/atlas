@@ -85,6 +85,9 @@ public class DifferentialGeneProfileService {
         // set cutoff used to calculate profile lists for showing on web page
         differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
+        // set identifier as gene query
+        differentialGeneProfileProperties.setGeneQuery(identifier);
+
         for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
             try {
                 DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, identifier, cutoff);

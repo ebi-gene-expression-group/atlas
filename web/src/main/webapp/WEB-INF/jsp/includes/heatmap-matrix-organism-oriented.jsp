@@ -42,7 +42,7 @@
         <tr class=${count % 2 == 0 ? 'even' : 'odd'}>
             <td class="horizontal-header-cell">
                 <a class="genename"
-                   href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrast}</a>
+                   href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrastDisplayName}</a>
             </td>
 
             <c:set var="expression" value="${differentialGeneProfileLink.expression}"/>
