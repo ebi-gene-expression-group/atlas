@@ -268,6 +268,9 @@ var heatmapModule = (function ($) {
     }
 
     function initMaPlotButtons(experimentAccession, arrayDesignAccession) {
+        if (experimentAccession === undefined) {
+            return;
+        }
         var thElements = $(".factor-header").parent(),
             maPlotURL;
 
