@@ -33,9 +33,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -108,17 +108,10 @@ public class GenePageControllerTest {
 
     @Test
     public void testShowGenePage() throws Exception {
-        when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
-        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(GenePageController.DEFAULT_CUTOFF);
+        when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
+        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
         assertThat(subject.showGenePage(null,IDENTIFIER, modelMock), is("bioEntity"));
-        verify(modelMock).addAttribute(GenePageController.PROPERTY_TYPE_SYMBOL, SYMBOL);
-        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, GenePageController.DEFAULT_CUTOFF);
-    }
-
-    @Test
-    public void testFilterPropertyTypes() {
-        assertThat(subject.getFilteredPropertyTypes(), hasItems(SYNONYM, ORTHOLOG, GOTERM, "interproterm", "ensfamily_description", "ensgene", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "designelement_accession"));
-        assertThat(subject.getFilteredPropertyTypes(), not(hasItems(SYMBOL, DESCRIPTION)));
+        verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF);
     }
 
 

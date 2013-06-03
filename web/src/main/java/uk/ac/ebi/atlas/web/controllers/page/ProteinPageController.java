@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,14 @@ import java.util.List;
 @Scope("request")
 public class ProteinPageController extends BioEntityPageController {
 
-    public static final String PROPERTY_TYPE_SYMBOL = "uniprot";
+    public static final String GENE_NAME_PROPERTY_TYPE = "uniprot";
+
+    private String proteinPagePropertyTypes;
 
     @Value("#{configuration['index.types.proteinpage']}")
-    private String proteinPagePropertyTypes;
+    void setProteinPagePropertyTypes(String proteinPagePropertyTypes) {
+        this.proteinPagePropertyTypes = proteinPagePropertyTypes;
+    }
 
     @RequestMapping(value = "/proteins/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
@@ -48,15 +53,12 @@ public class ProteinPageController extends BioEntityPageController {
 
     @Override
     List<String> getPagePropertyTypes() {
-        return Arrays.asList(proteinPagePropertyTypes.split(","));
+        return Lists.newArrayList(proteinPagePropertyTypes.split(","));
     }
 
     @Override
-    String getSymbolType() {
-        return PROPERTY_TYPE_SYMBOL;
+    String getEntityNamePropertyType() {
+        return GENE_NAME_PROPERTY_TYPE;
     }
 
-    void setProteinPagePropertyTypes(String proteinPagePropertyTypes) {
-        this.proteinPagePropertyTypes = proteinPagePropertyTypes;
-    }
 }

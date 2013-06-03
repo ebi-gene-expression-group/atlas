@@ -32,29 +32,6 @@
 <head>
     <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"/>
 
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-    <meta content="en-GB" http-equiv="Content-Language">
-    <meta content="_top" http-equiv="Window-target">
-    <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
-    <meta content="IE=9" http-equiv="X-UA-Compatible"/>
-
-    <!-- compliance style start -->
-
-    <meta name="description" content="EMBL-EBI">
-    <!-- Describe what this page is about -->
-    <meta name="keywords" content="bioinformatics, atlas, gxa, ebi, functional, genomics">
-    <!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
-    <meta name="author" content="EMBL-EBI">
-    <!-- Your [project-name] here -->
-
-    <!-- Mobile viewport optimized: j.mp/bplateviewport -->
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
-
-    <!-- CSS: implied media=all -->
-    <!-- CSS concatenated and minified via ant build script-->
-
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css"/>
     <link type="text/css" rel="stylesheet"
@@ -66,37 +43,12 @@
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/embl-petrol-colours.css"/>
 
-    <style type="text/css">
-            /* You have the option of setting a maximum width for your page, and making sure everything is centered */
-            /* body { max-width: 1600px; margin: 0 auto; } */
-    </style>
-
-    <!-- end CSS-->
-
-    <!-- All JavaScript at the bottom, except for Modernizr / Respond.
-         Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
-         For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-
-    <!-- Full build -->
-    <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
-
-    <!-- compliance style end -->
-
-    <title><tiles:insertAttribute name="title" ignore="true"/> &lt; EMBL-EBI</title>
-
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">
-    <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css"
-          rel="stylesheet">
-    <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/jqcloud.css"
-          rel="stylesheet">
 
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
@@ -111,54 +63,11 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
 
-    <!-- fancybox start -->
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css"
-          type="text/css" media="screen"/>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
-    <!-- fancybox end -->
-
-    <%--<script>--%>
-        <%--(function ($) { //self invoking wrapper function that prevents $ namespace conflicts--%>
-            <%--$(document).ready(function () {--%>
-
-                <%--initExperimentPageButtonsAndTooltips();--%>
-
-            <%--});--%>
-        <%--})(jQuery);--%>
-    <%--</script>--%>
-
 </head>
 
 <body>
-<div id="skip-to">
-    <ul>
-        <li><a href="#content">Skip to main content</a></li>
-        <li><a href="#local-nav">Skip to local navigation</a></li>
-        <li><a href="#global-nav">Skip to EBI global navigation menu</a></li>
-        <li><a href="#global-nav-expanded">Skip to expanded EBI global navigation menu (includes all sub-sections)</a>
-        </li>
-    </ul>
-</div>
 
-<div id="wrapper" class="container_24">
-
-    <tiles:insertAttribute name="header"/>
-
-    <div id="contents">
-
-        <div style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
-            <tiles:insertAttribute name="menu" ignore="true"/>
-            <tiles:insertAttribute name="body"/>
-        </div>
-
-    </div>
-
-    <tiles:insertAttribute name="footer"/>
-
-</div>
-
+<tiles:insertAttribute name="body"/>
 
 </body>
 

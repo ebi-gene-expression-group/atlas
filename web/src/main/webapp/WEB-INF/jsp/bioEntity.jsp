@@ -42,7 +42,7 @@
         <ul id="infoHeader" class="bioEntityCardHeader">
             <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
                  src="resources/images/bioentity_info_transparent_bkg.png"/>
-            <span class="bioEntityCardSymbol">${symbol}</span>
+            <span class="bioEntityCardBioentityName">${bioEntityPropertyService.getEntityName()}</span>
             <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
             <span class="bioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
             <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
@@ -88,7 +88,7 @@
                 <img id="differential-info-image" title="Differential Expression"
                      style="position: absolute; left: 0.5em; "
                      src="resources/images/updown_transparent_bkg.png"/>
-                <span class="bioEntityCardSymbol">Differential Expression</span>
+                <span class="bioEntityCardBioentityName">Differential Expression</span>
             </ul>
 
 

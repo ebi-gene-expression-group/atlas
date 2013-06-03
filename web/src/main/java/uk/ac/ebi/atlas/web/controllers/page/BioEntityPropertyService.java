@@ -44,7 +44,7 @@ import java.util.List;
 @Scope("request")
 public class BioEntityPropertyService {
 
-    public static final String PROPERTY_TYPE_DESCRIPTION = "description";
+    private static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
     private SolrClient solrClient;
 
@@ -56,6 +56,8 @@ public class BioEntityPropertyService {
 
     private String species;
 
+    private String entityName;
+
     @Inject
     public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties) {
         this.solrClient = solrClient;
@@ -63,9 +65,15 @@ public class BioEntityPropertyService {
         this.bioEntityCardProperties = bioEntityCardProperties;
     }
 
-    public void init(String identifier, List<String> queryPropertyTypes) {
+    public void init(String identifier, String entityNamePropertyType, List<String> queryPropertyTypes) {
         species = solrClient.findSpeciesForGeneId(identifier);
+        queryPropertyTypes.add(entityNamePropertyType);
+        queryPropertyTypes.add(PROPERTY_TYPE_DESCRIPTION);
         propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
+        entityName = getFirstValueOfProperty(entityNamePropertyType);
+        if (StringUtils.isEmpty(entityName)) {
+            entityName = identifier;
+        }
     }
 
     public String getSpecies(){
@@ -88,6 +96,10 @@ public class BioEntityPropertyService {
     public String getBioEntityDescription() {
         String description = getFirstValueOfProperty(PROPERTY_TYPE_DESCRIPTION);
         return StringUtils.substringBefore(description, "[");
+    }
+
+    public String getEntityName(){
+        return entityName;
     }
 
     String getFirstValueOfProperty(String propertyType) {

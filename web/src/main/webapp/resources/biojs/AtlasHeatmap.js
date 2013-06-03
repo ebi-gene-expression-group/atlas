@@ -29,7 +29,7 @@
  * @extends Biojs
  *
  * @author <a href="mailto:atlas-developers@ebi.ac.uk">ExpressionAtlas Team</a>
- * @version 1.0.0
+ * @version 1.0.1
  * @category 1
  *
  * @requires <a href='http://code.jquery.com/jquery-1.6.4.js'>jQuery Core 1.6.4</a>
