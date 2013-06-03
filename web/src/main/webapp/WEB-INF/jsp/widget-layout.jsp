@@ -32,8 +32,18 @@
 <head>
     <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"/>
 
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/embl-petrol-colours.css"/>
+
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas-widget.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
