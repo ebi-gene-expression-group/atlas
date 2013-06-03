@@ -29,26 +29,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
 @Scope("request")
-public class ProteinPageController extends BioEntityPageController {
+public class GeneSetPageController extends BioEntityPageController {
 
     public static final String PROPERTY_TYPE_SYMBOL = "uniprot";
 
-    @Value("#{configuration['index.types.proteinpage']}")
-    private String proteinPagePropertyTypes;
-
-    @RequestMapping(value = "/proteins/{identifier:.*}")
+    @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         return super.showGenePage(identifier, model);
     }
 
     @Override
     List<String> getPagePropertyTypes() {
-        return Arrays.asList(proteinPagePropertyTypes.split(","));
+        return Collections.emptyList();
     }
 
     @Override
@@ -56,7 +53,4 @@ public class ProteinPageController extends BioEntityPageController {
         return PROPERTY_TYPE_SYMBOL;
     }
 
-    void setProteinPagePropertyTypes(String proteinPagePropertyTypes) {
-        this.proteinPagePropertyTypes = proteinPagePropertyTypes;
-    }
 }

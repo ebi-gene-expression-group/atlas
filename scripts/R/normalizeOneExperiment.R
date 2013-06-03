@@ -8,25 +8,43 @@
 # 	- scans <- a vector of corresponding scan names (should have the same length as files)
 # 	- outFile <- filename to store normalized data matrix
 # 	- mode <- which type of normalization to do:
-# 					- "2colour" : normalization for 2-colour Agilent arrays.
+# 					- "agil1" : normalization for 1-colour Agilent arrays.
+# 					- "agil2" : loess normalization for 2-colour Agilent arrays.
 # 					- "oligo" : RMA normalization for Affymetrix single-colour arrays using oligo package.
 # 					- "affy" : RMA normalization for Affymetrix single-solour arrays usinng affy package.
-normalizeOneExperiment <- function(files, outFile, scans, mode) {
+# 	- miRBaseFile <- filename with probeset IDs and latest miRBase mappings (if applicable).
+normalizeOneExperiment <- function(files, outFile, scans, mode, miRBaseFile = NULL) {
 
 	# Use try() to catch errors
 	error <- try({
 
 		# If data is from 2-colour Agilent array
-		if(mode == "2colour") {
+		if(mode == "agil1" | mode == "agil2") {
 			
 			# load limma
 			library(limma)
 
+
 			# read files
-			print("Reading in raw data")
-			rg <- try({read.maimages(files, source="agilent")})
+			if(mode == "agil1") {
+			
+				print("Reading Agilent 1-colour data")
+				# for 1-colour Agilent data we only have a green channel.
+				dataSet <- try({read.maimages(files, source="agilent", green.only=TRUE)})
+			}
+			else if(mode == "agil2") {
+				
+				print("Reading Agilent 2-colour data")
+				dataSet <- try({read.maimages(files, source="agilent")})
+			}
 			# check it worked, if not, return the error.
-			if(class(rg) == "try-error") { return(rg) }
+			if(class(dataSet) == "try-error") { return(dataSet) }
+
+			
+			# Check if there's a microRNA miRBase probeset list and if so,
+			# subset based on that list.
+			if(!is.null(miRBaseFile)) { dataSet <- subsetProbes(dataSet, miRBaseFile) }
+
 			
 			# Background correction.
 			# Using method outlined in Section 6.1 of Limma Users Guide (25
@@ -34,41 +52,77 @@ normalizeOneExperiment <- function(files, outFile, scans, mode) {
 			# the background intensities, to produce strictly positive adjusted
 			# intensities, i.e. avoiding negative or zero values in the
 			# resulting adjusted intensities.
+			# NB: this might get masked by oligo package's backgroundCorrect
+			# method if they are both loaded (here they shouldn't be so don't
+			# call limma's explicitly).
 			print("Background correcting")
-			rg <- backgroundCorrect(rg, method="normexp", offset=50)
+			dataSet <- backgroundCorrect(dataSet, method="normexp", offset=50)
+			
+			
+			if(mode == "agil1") {
+				
+				# Between-array normalization for 1-colour.
+				normData <- normalizeBetweenArrays(dataSet, method="quantile")
+			}
 
-			# Within-array normalization.
-			# This gives the M-value and A-value for each gene on the array.
-			# M = log2(Cy5) - log2(Cy3)
-			# A = 0.5[log2(Cy5) + log2(Cy3)]
-			print("Running within-array normalization")
-			ma <- normalizeWithinArrays(rg, method="loess")
+			else if(mode == "agil2") {
+				# Within-array normalization for 2-colour.
+				# This gives the M-value and A-value for each gene on the array.
+				# M = log2(Cy5) - log2(Cy3)
+				# A = 0.5[log2(Cy5) + log2(Cy3)]
+				print("Running within-array normalization")
+				normData <- normalizeWithinArrays(dataSet, method="loess")
+			}
+
+				
 
 			# average for probe duplicates -- some probes are on the array
 			# multiple times in different locations.
 			print("Averaging duplicated probes")
-			ma <- avereps(ma, ID=ma$genes$ProbeName)
+			normData <- avereps(normData, ID=normData$genes$ProbeName)
 
-			# data frames for M-values and A-values. Put rownames (design
-			# element IDs) as the first column and name it
-			# "DesignElementAccession".
-			mValues <- data.frame(ma$M)
-			mValues <- data.frame(cbind(rownames(mValues), mValues))
-			colnames(mValues) <- c("DesignElementAccession", scans)
-			aValues <- data.frame(ma$A)
-			aValues <- data.frame(cbind(rownames(aValues), aValues))
-			colnames(aValues) <- c("DesignElementAccession", scans)
-
-			# Filename for A-values
-			outFile_A = gsub(".txt", "_A.txt", outFile)
-
-			print("Writing M-values and A-values")
 			
-			# write M-values and A-values, without column names because we already wrote them above.
-			write.table(mValues, file=outFile, sep="\t", quote=FALSE, row.names=FALSE)
-			write.table(aValues, file=outFile_A, sep="\t", quote=FALSE, row.names=FALSE)
-		
-			return("2-colour normalization complete")
+			# Write results to file
+			if(mode == "agil1") {
+				# For single channel Agilent data, this is just the
+				# quantile-normalized expressions (analogous to RMA-normalized
+				# expressions from Affymetrix data).
+				
+				# Make a dataframe with probe IDs and normalized expressions.
+				normExprs <- data.frame(cbind(normData$genes$ProbeName, normData$E))
+				# Add scans as column headings
+				colnames(normExprs) <- c("DesignElementAccession", scans)
+
+				print("Writing normalized expressions matrix")
+				write.table(normExprs, file=outFile, sep="\t", quote=FALSE, row.names=FALSE)
+
+				return("Agilent 1-colour normalization finished")
+			}
+			else if(mode == "agil2") {
+				# For two channel Agilent data, this is logFCs (M-values) and
+				# average intensities (A-values).
+
+				# data frames for M-values and A-values. Put rownames (design
+				# element IDs) as the first column and name it
+				# "DesignElementAccession".
+				mValues <- data.frame(normData$M)
+				mValues <- data.frame(cbind(rownames(mValues), mValues))
+				colnames(mValues) <- c("DesignElementAccession", scans)
+				aValues <- data.frame(normData$A)
+				aValues <- data.frame(cbind(rownames(aValues), aValues))
+				colnames(aValues) <- c("DesignElementAccession", scans)
+
+				# Filename for A-values
+				outFile_A = paste(outFile, ".A-values", sep="")
+
+				print("Writing M-values and A-values")
+				
+				# write M-values and A-values, without column names because we already wrote them above.
+				write.table(mValues, file=outFile, sep="\t", quote=FALSE, row.names=FALSE)
+				write.table(aValues, file=outFile_A, sep="\t", quote=FALSE, row.names=FALSE)
+			
+				return("Agilent 2-colour normalization complete")
+			}
 		}
 		
 		
@@ -193,6 +247,8 @@ normalizeOneExperiment <- function(files, outFile, scans, mode) {
 		# Add row names as a column and give it col name "DesignElementAccession".
 		normExprs <- data.frame(cbind(rownames(normExprs), normExprs))
 	    colnames(normExprs) <- c("DesignElementAccession", scansSorted)
+
+		print("Writing normalized expressions matrix")
 		# Write to file.
 		write.table(normExprs, file = outFile, sep = "\t", quote = FALSE, row.names=FALSE)
 	
@@ -205,4 +261,36 @@ normalizeOneExperiment <- function(files, outFile, scans, mode) {
 	} else {
 		return(NULL)
 	}
+}
+
+
+
+
+# subsetProbes
+#  - For microRNA, we only want to normalize using probesets that are mapped to
+#  the latest release of miRBase (www.mirbase.org). Subset the data here.
+# ARGUMENTS:
+# 	- dataSet <- for now either EListRaw or RGList object.
+# 	- miRBaseProbeFile <- filename for miRBase mappings.
+subsetProbes <<- function(dataSet, miRBaseFile) {
+	
+	print(paste("Subsetting for probes found in", miRBaseFile))
+
+	# Read file with miRBase mappings.
+	miRBaseProbeMapping <- read.delim(miRBaseFile, stringsAsFactors = FALSE)
+	
+	# Probesets can be repeated; take unique set.
+	miRBaseProbes <- unique(miRBaseProbeMapping$adf.reporter.name)
+
+	# Subset the data, taking only probesets from miRBase mapping file.
+	# Agilent data is read in to one of two classes:
+	# 	- "EListRaw" : 1-colour
+	# 	- "RGList" : 2-colour
+	if(class(dataSet) %in% c("EListRaw", "RGList")) { dataSet <- dataSet[which(dataSet$genes$ProbeName %in% miRBaseProbes), ] }
+
+	# TODO: add something here to subset for Affymetrix arrays.
+	# Need to think about how to map probes to probesets because before
+	# normalization probeset info is not available?
+	
+	return(dataSet)
 }

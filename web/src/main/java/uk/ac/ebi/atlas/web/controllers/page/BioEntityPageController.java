@@ -24,6 +24,8 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
@@ -82,12 +84,11 @@ public abstract class BioEntityPageController {
     }
 
     List<String> getFilteredPropertyTypes() {
-        List<String> propertyTypes = Lists.newArrayList(getPagePropertyTypes());
-        propertyTypes.removeAll(Lists.newArrayList(PROPERTY_TYPE_SYMBOL, PROPERTY_TYPE_DESCRIPTION));
+        List<String> propertyTypes = ListUtils.removeAll(getPagePropertyTypes(), Lists.newArrayList(PROPERTY_TYPE_SYMBOL, PROPERTY_TYPE_DESCRIPTION));
         return propertyTypes;
     }
 
-    abstract String[] getPagePropertyTypes();
+    abstract List<String> getPagePropertyTypes();
 
     abstract String getSymbolType();
 

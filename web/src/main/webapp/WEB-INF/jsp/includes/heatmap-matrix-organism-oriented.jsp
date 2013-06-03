@@ -119,7 +119,7 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
-            heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
+            heatmapModule.initRnaSeqHeatmap(${preferences.cutoff});
 
             $("#injected-header").remove();
             $("#heatmap-table th").attr("rowspan", "1");

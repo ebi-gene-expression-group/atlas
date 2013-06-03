@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
@@ -73,7 +74,7 @@ public class SolrQueryServiceIT {
     public void testQuerySolrForProperties() throws SolrServerException {
 
         // given
-        String queryString = subject.buildCompositeQueryIdentifier("ENSG00000109819", new String[]{"goterm"});
+        String queryString = subject.buildCompositeQueryIdentifier("ENSG00000109819", Lists.newArrayList("goterm"));
         Multimap<String, String> multimap = subject.querySolrForProperties(queryString, 100);
 
         // then

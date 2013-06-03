@@ -59,6 +59,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
         var self = this;
 
         var containerDiv = jQuery("#" + self.opt.target);
+        containerDiv.empty();
 
         var options = self.opt;
         var httpRequest = {
@@ -70,8 +71,9 @@ Biojs.AtlasHeatmap = Biojs.extend({
                 Biojs.console.log(htmlResponse);
                 containerDiv.append(htmlResponse);
             },
-            error:function (textStatus) {
-                Biojs.console.log("ERROR: " + textStatus);
+            error:function (xhr, ajaxOptions, thrownError) {
+                Biojs.console.log("ERROR: " + xhr.status);
+                containerDiv.append("An error occurred while retrieving the data: " + xhr.status + " - " + xhr.statusText);
             }
         };
 
@@ -96,6 +98,5 @@ Biojs.AtlasHeatmap = Biojs.extend({
          component should be displayed. Use this value to draw your
          component into. */
         target:"YourOwnDivId"
-
     }
 });

@@ -34,6 +34,8 @@ import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -90,7 +92,7 @@ public class GenePageControllerTest {
         genePageProperties.put(ORTHOLOG, ORTHOLOG);
 
         when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(SPECIES);
-        when(solrClientMock.fetchGenePageProperties(IDENTIFIER, PROPERTY_TYPES.split(","))).thenReturn(genePageProperties);
+        when(solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
         when(bioEntityPropertyServiceMock.getFirstValueOfProperty(SYMBOL)).thenReturn(SYMBOL);

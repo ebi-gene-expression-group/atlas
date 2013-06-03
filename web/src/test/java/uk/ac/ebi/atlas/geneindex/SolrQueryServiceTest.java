@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Lists;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,7 +81,7 @@ public class SolrQueryServiceTest {
     public void testBuildCompositeQueryIdentifier() {
 
         // given
-        String s = subject.buildCompositeQueryIdentifier("ENSMUS000000", new String[]{"prototype1", "prototype2"});
+        String s = subject.buildCompositeQueryIdentifier("ENSMUS000000", Lists.newArrayList("prototype1", "prototype2"));
 
         // then
         assertThat(s, is("identifier:\"ENSMUS000000\" AND (property_type:\"prototype1\" OR property_type:\"prototype2\")"));
