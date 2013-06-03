@@ -33,6 +33,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,7 +52,7 @@ public class FetchGenePagePropertiesIT {
     public void testFetchTooltipProperties() throws Exception {
 
         // given
-        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", genePagePropertyTypes.split(","));
+        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", Arrays.asList(genePagePropertyTypes.split(",")));
 
         // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,designelement_accession
 

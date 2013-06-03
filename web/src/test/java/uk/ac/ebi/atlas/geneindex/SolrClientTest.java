@@ -36,6 +36,9 @@ import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.utils.Files;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNot.not;
@@ -50,15 +53,15 @@ public class SolrClientTest {
 
     private static final String IDENTIFIER = "ENSG00000132604";
 
-    private static final String GENE_PAGE_PROPERTY_TYPES = "synonym,ortholog,goterm,interproterm,ensfamily_description,enstranscript,mgi_description,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
+    //private static final String GENE_PAGE_PROPERTY_TYPES = "synonym,ortholog,goterm,interproterm,ensfamily_description,enstranscript,mgi_description,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
 
-    private static final String[] GENE_PAGE_PROPERTY_TYPES_ARRAY = GENE_PAGE_PROPERTY_TYPES.split(",");
+    private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym","ortholog","goterm","interproterm","ensfamily_description","enstranscript","mgi_description","entrezgene","uniprot","mgi_id","gene_biotype","designelement_accession");
 
     private static final String EXPECTED_GENE_PAGE_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"ortholog\" OR property_type:\"goterm\" OR property_type:\"interproterm\" OR property_type:\"ensfamily_description\" OR property_type:\"enstranscript\" OR property_type:\"mgi_description\" OR property_type:\"entrezgene\" OR property_type:\"uniprot\" OR property_type:\"mgi_id\" OR property_type:\"gene_biotype\" OR property_type:\"designelement_accession\")";
 
-    private static final String TOOLTIP_PROPERTY_TYPES = "synonym,goterm,interproterm";
+    private static final String CSV_TOOLTIP_PROPERTY_TYPES = "synonym,goterm,interproterm";
 
-    private static final String[] TOOLTIP_PROPERTY_TYPES_ARRAY = TOOLTIP_PROPERTY_TYPES.split(",");
+    private static final List<String> TOOLTIP_PROPERTY_TYPES = Arrays.asList(CSV_TOOLTIP_PROPERTY_TYPES.split(","));
 
     private static final String EXPECTED_TOOLTIP_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"goterm\" OR property_type:\"interproterm\")";
 
@@ -86,16 +89,16 @@ public class SolrClientTest {
     @Before
     public void initSubject() throws Exception {
 
-        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES_ARRAY);
-        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, TOOLTIP_PROPERTY_TYPES_ARRAY);
-        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES_ARRAY);
-        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, TOOLTIP_PROPERTY_TYPES_ARRAY);
+        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
+        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, TOOLTIP_PROPERTY_TYPES);
+        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
+        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, TOOLTIP_PROPERTY_TYPES);
 
         when(solrQueryServiceMock.querySolrForProperties(anyString(), anyInt())).thenReturn(results);
         when(solrQueryServiceMock.getSpeciesForIdentifier(IDENTIFIER)).thenReturn(SPECIES);
         when(solrQueryServiceMock.getPropertyValuesForIdentifier(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
-        jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
+        jsonAutocompleteResponse = Files.readTextFileFromClasspath(getClass(), "solrAutocompleteResponse.json");
         when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
 
         subject = new SolrClient(restTemplateMock, solrQueryServiceMock, geneQueryTokenizerMock);
@@ -121,14 +124,12 @@ public class SolrClientTest {
 
     @Test(expected = ResultNotFoundException.class)
     public void testFetchGenePageProperties() throws Exception {
-        Multimap<String, String> multimap = subject.fetchGenePageProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES.split(","));
-
-        verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_GENE_PAGE_QUERY, 1000);
+        subject.fetchGenePageProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
     }
 
     @Test
     public void testFetchTooltipProperties() throws Exception {
-        subject.setTooltipPropertyTypes(TOOLTIP_PROPERTY_TYPES);
+        subject.setTooltipPropertyTypes(CSV_TOOLTIP_PROPERTY_TYPES);
 
         Multimap<String, String> multimap = subject.fetchTooltipProperties(IDENTIFIER);
         assertThat(multimap, is(results));

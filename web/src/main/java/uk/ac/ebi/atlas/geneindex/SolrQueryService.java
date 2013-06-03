@@ -86,7 +86,7 @@ public class SolrQueryService {
         solrServer.setConnectionTimeout(CONNECTION_TIMEOUT);
     }
 
-    public Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
+    public Multimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
 
         String queryString = buildCompositeQueryIdentifier(identifier, propertyTypes);
 
@@ -257,16 +257,16 @@ public class SolrQueryService {
 
     }
 
-    String buildCompositeQueryIdentifier(String identifier, String[] propertyTypes) {
+    String buildCompositeQueryIdentifier(String identifier, List<String> propertyTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("identifier:\"");
         query.append(identifier);
         query.append("\" AND (");
-        for (int i = 0; i < propertyTypes.length; i++) {
+        for (int i = 0; i < propertyTypes.size(); i++) {
             query.append("property_type:\"");
-            query.append(propertyTypes[i]);
-            if (i < propertyTypes.length - 1) {
+            query.append(propertyTypes.get(i));
+            if (i < propertyTypes.size() - 1) {
                 query.append("\" OR ");
             } else {
                 query.append("\"");

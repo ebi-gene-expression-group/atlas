@@ -63,7 +63,7 @@ public class BioEntityPropertyService {
         this.bioEntityCardProperties = bioEntityCardProperties;
     }
 
-    public void init(String identifier, String[] queryPropertyTypes) {
+    public void init(String identifier, List<String> queryPropertyTypes) {
         species = solrClient.findSpeciesForGeneId(identifier);
         propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
     }

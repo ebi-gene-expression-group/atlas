@@ -32,6 +32,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @Scope("request")
@@ -67,8 +70,8 @@ public class GenePageController extends BioEntityPageController {
     }
 
     @Override
-    String[] getPagePropertyTypes() {
-        return genePagePropertyTypes.split(",");
+    List<String> getPagePropertyTypes() {
+        return Arrays.asList(genePagePropertyTypes.split(","));
     }
 
     @Override

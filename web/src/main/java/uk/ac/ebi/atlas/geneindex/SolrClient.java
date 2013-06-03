@@ -37,10 +37,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -80,12 +77,12 @@ public class SolrClient {
 
     public Multimap<String, String> fetchTooltipProperties(String identifier) {
 
-        String[] propertyTypes = tooltipPropertyTypes.trim().split(",");
+        List<String> propertyTypes = Arrays.asList(tooltipPropertyTypes.trim().split(","));
         return fetchProperties(identifier, propertyTypes);
 
     }
 
-    public Multimap<String, String> fetchGenePageProperties(String identifier, String[] propertyTypes) {
+    public Multimap<String, String> fetchGenePageProperties(String identifier, List<String> propertyTypes) {
         Multimap<String, String> propertiesByType = fetchProperties(identifier, propertyTypes);
         if (propertiesByType.isEmpty()) {
             throw new ResultNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
@@ -93,7 +90,7 @@ public class SolrClient {
         return propertiesByType;
     }
 
-    Multimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
+    Multimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
 
         return solrQueryService.fetchProperties(identifier, propertyTypes);
 
