@@ -40,7 +40,7 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"TERF2", "GFI1", "PTBP3", "RP11-20I23.6", "TRPM2", "SLC10A1", "GEMIN8P4", "AC111200.7", "THOC6"};
+        return new String[]{"TERF2", "GFI1", "PTBP3", "RP11-20I23.6", "AC111200.7", "7SK", "TRPM2", "SLC10A1", "THOC6"};
     }
 
     @Override
@@ -60,6 +60,6 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     @Override
     protected String getGeneCount() {
-        return "14";
+        return "11";
     }
 }

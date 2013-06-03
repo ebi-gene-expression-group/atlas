@@ -268,23 +268,6 @@ public class HeatmapTablePage extends TablePage {
         return getSelectedProfiles().get(rowIndex - 1);
     }
 
-    public double getAverageExpressionLevel(int rowIndex, String... factors) {
-
-        List<String> tableHeaders = getTableHeaders(heatmapTable);
-        tableHeaders.remove(0); //because this is the display button cell
-
-        List<String> stringValues = this.getGeneProfile(rowIndex);
-
-        double averageFpkm = 0D;
-        for (String factor : factors) {
-            int columnIndex = tableHeaders.indexOf(factor);
-            String stringValue = stringValues.get(columnIndex);
-            if (StringUtils.isNotBlank(stringValue)) {
-                averageFpkm += Double.parseDouble(stringValue);
-            }
-        }
-        return averageFpkm / factors.length;
-    }
 
     public WebElement getAnatomogram() {
         return anatomogram;

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -183,7 +182,7 @@ public class BaselineProfileComparatorTest {
         subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
 
         double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity16);
-        assertThat(averageExpressionLevel, is(2.0));
+        assertThat(averageExpressionLevel, is(4.0));
 
     }
 

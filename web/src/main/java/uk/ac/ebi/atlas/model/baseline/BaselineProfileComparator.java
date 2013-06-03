@@ -108,7 +108,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
             if (remainingFactors.isEmpty()) {
                 return averageExpressionLevelOnSelected;
             }
-            return averageExpressionLevelOnSelected / (cutoffDivisor / remainingFactors.size());
+            return averageExpressionLevelOnSelected / cutoffDivisor;
 
         }
         return averageExpressionLevelOnSelected / maxOfRemaning;

@@ -26,11 +26,12 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
-import static org.hamcrest.Matchers.greaterThan;
+import java.util.List;
+
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-// TODO: we need to rename this test, as the content changed
 public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFixture {
 
     private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
@@ -38,8 +39,6 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFi
     private static final String HTTP_PARAMETERS = "geneQuery=&cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
             + "&specific=true";
-    private static final String HIGHER_RANKING_GENE = "GAS2L2";
-    private static final String LOWER_RANKING_GENE = "SEMA3G";
 
     protected HeatmapTablePage subject;
 
@@ -49,31 +48,30 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFi
     }
 
     @Test
-    public void higherAverageFpkmAcrossSelectedMinusAverageFpkmNonSelected() {
+    public void verifySelectedGenes() {
+        List<String> selectedGenes = subject.getSelectedProfiles();
+        assertThat(selectedGenes.size(), is(15));
+        assertThat(selectedGenes.get(0), is("MIR215"));
+        assertThat(selectedGenes.get(1), is("PRMT8"));
+        assertThat(selectedGenes.get(2), is("AC073479.1"));
+    }
 
-        //given
+    @Test
+    public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "109", "", "", "", "", "", "", "", "", "", "", "", "", ""));
+    }
 
-        double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageExpressionLevel(29, "brain", "breast");
-        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageExpressionLevel(30, "brain", "breast");
-        double higherRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageExpressionLevel(29, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
-        double lowerRankingGeneAverageFpkmOnRemainingFactors = subject.getAverageExpressionLevel(30, "adipose", "adrenal", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid");
+    @Test
+    public void verifyLastGeneProfile() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getLastGeneProfile(), contains("", "", "", "0.6", "", "", "", "", ""
+                , "", "", "", "", "", "", ""));
+    }
 
-        //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(0.5D));
-        assertThat(higherRankingGeneAverageFpkmOnRemainingFactors, is(0.21428571428571427));
-        //and
-        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(21.5D));
-        assertThat(lowerRankingGeneAverageFpkmOnRemainingFactors, is(9.428571428571429));
-
-        //and average fpkm is greater for gene at row 29 than gene at row 30
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors / higherRankingGeneAverageFpkmOnRemainingFactors,
-                is(greaterThan(lowerRankingGeneAverageFpkmOnSelectedFactors / lowerRankingGeneAverageFpkmOnRemainingFactors)));
-
-        //gene at row 30 follows gene at row 29
-        assertThat(subject.getGeneThatRanksAt(29), is(HIGHER_RANKING_GENE));
-        assertThat(subject.getGeneThatRanksAt(30), is(LOWER_RANKING_GENE));
-
+    @Test
+    public void verifyGeneCount() {
+        assertThat(subject.getGeneCount().contains("15"), is(true));
     }
 
 }

@@ -48,7 +48,7 @@ public class TwoOrganismPartsAndCutoff9IT extends SinglePageSeleniumFixture {
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getSelectedProfiles();
         assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("AL031284.1", "AL162853.1", "CU463998.3", "NEBL", "CPAMD8"));
+        assertThat(selectedGenes, contains("AL031284.1", "AL162853.1", "CU463998.3", "NEBL", "HLA-B"));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TwoOrganismPartsAndCutoff9IT extends SinglePageSeleniumFixture {
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("35"), is(true));
+        assertThat(subject.getGeneCount().contains("5"), is(true));
     }
 
 }

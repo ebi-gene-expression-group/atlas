@@ -26,7 +26,9 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
-import static org.hamcrest.Matchers.greaterThan;
+import java.util.List;
+
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -38,8 +40,6 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
             + "&queryFactorValues=brain&queryFactorValues=breast"
             + "&specific=false";
 
-    private static final String HIGHER_RANKING_GENE = "TMSB10";
-    private static final String LOWER_RANKING_GENE = "RTN4";
 
     protected HeatmapTablePage subject;
 
@@ -49,26 +49,23 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
     }
 
     @Test
-    public void averageFpkmAcrossSelectedFactors() {
+    public void verifySelectedGenes() {
+        List<String> selectedGenes = subject.getSelectedProfiles();
+        assertThat(selectedGenes.size(), is(50));
+        assertThat(selectedGenes.get(0), is("TMSB10"));
+        assertThat(selectedGenes.get(1), is("RTN4"));
+        assertThat(selectedGenes.get(2), is("AC005702.4"));
+    }
 
-        //given
+    @Test
+    public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("1728","2286","704","1344","1633","326","793","2380","156","1825","1265","1206","807","129","1040","425" ));
+    }
 
-        double higherRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageExpressionLevel(1, "brain", "breast");
-        double lowerRankingGeneAverageFpkmOnSelectedFactors = subject.getAverageExpressionLevel(2, "brain", "breast");
-
-        //then
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(1024.0));
-
-        //then
-        assertThat(lowerRankingGeneAverageFpkmOnSelectedFactors, is(535.5));
-
-        //and
-        assertThat(higherRankingGeneAverageFpkmOnSelectedFactors, is(greaterThan(lowerRankingGeneAverageFpkmOnSelectedFactors)));
-
-        assertThat(subject.getGeneThatRanksAt(1), is(HIGHER_RANKING_GENE));
-        assertThat(subject.getGeneThatRanksAt(2), is(LOWER_RANKING_GENE));
-
+    @Test
+    public void verifyGeneCount() {
+        assertThat(subject.getGeneCount().contains("189"), is(true));
     }
 
 }
