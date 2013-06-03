@@ -22,10 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,7 +79,7 @@ public class SolrClientTest {
 
     private SolrClient subject;
 
-    private Multimap<String, String> results = HashMultimap.create();
+    private SortedSetMultimap<String, String> results = TreeMultimap.create();
 
     private String jsonAutocompleteResponse;
 
@@ -131,7 +128,7 @@ public class SolrClientTest {
     public void testFetchTooltipProperties() throws Exception {
         subject.setTooltipPropertyTypes(CSV_TOOLTIP_PROPERTY_TYPES);
 
-        Multimap<String, String> multimap = subject.fetchTooltipProperties(IDENTIFIER);
+        SortedSetMultimap<String, String> multimap = subject.fetchTooltipProperties(IDENTIFIER);
         assertThat(multimap, is(results));
 
         verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_TOOLTIP_QUERY, 1000);

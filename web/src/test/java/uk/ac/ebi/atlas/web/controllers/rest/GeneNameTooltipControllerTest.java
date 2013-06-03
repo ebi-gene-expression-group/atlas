@@ -22,9 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,7 +81,7 @@ public class GeneNameTooltipControllerTest {
     @Test
     public void testGetTooltipContent() throws Exception {
 
-        Multimap<String, String> hashMultimap = HashMultimap.create();
+        SortedSetMultimap<String, String> hashMultimap = TreeMultimap.create();
         hashMultimap.put(GOTERM, GOTERM);
         hashMultimap.put(INTERPROTERM, INTERPROTERM);
         hashMultimap.put(SYNONYM, SYNONYM_1);

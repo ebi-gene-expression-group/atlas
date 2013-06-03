@@ -24,6 +24,8 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
@@ -39,6 +41,7 @@ import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
+import java.util.SortedSet;
 
 @Named("bioEntityPropertyService")
 @Scope("request")
@@ -52,11 +55,11 @@ public class BioEntityPropertyService {
 
     private BioEntityCardProperties bioEntityCardProperties;
 
-    private Multimap<String, String> propertyValuesByType;
+    private SortedSetMultimap<String, String> propertyValuesByType;
 
     private String species;
 
-    private String entityName;
+    private SortedSet<String> entityNames;
 
     @Inject
     public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties) {
@@ -70,9 +73,9 @@ public class BioEntityPropertyService {
         queryPropertyTypes.add(entityNamePropertyType);
         queryPropertyTypes.add(PROPERTY_TYPE_DESCRIPTION);
         propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
-        entityName = getFirstValueOfProperty(entityNamePropertyType);
-        if (StringUtils.isEmpty(entityName)) {
-            entityName = identifier;
+        entityNames = propertyValuesByType.get(entityNamePropertyType);
+        if (entityNames.isEmpty()) {
+            entityNames.add(identifier);
         }
     }
 
@@ -98,8 +101,8 @@ public class BioEntityPropertyService {
         return StringUtils.substringBefore(description, "[");
     }
 
-    public String getEntityName(){
-        return entityName;
+    public SortedSet<String> getEntityNames(){
+        return entityNames;
     }
 
     String getFirstValueOfProperty(String propertyType) {

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.geneindex;
 
 import com.google.common.collect.Multimap;
+import com.google.common.collect.SortedSetMultimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -75,22 +76,22 @@ public class SolrClient {
         this.tooltipPropertyTypes = tooltipPropertyTypes;
     }
 
-    public Multimap<String, String> fetchTooltipProperties(String identifier) {
+    public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
 
         List<String> propertyTypes = Arrays.asList(tooltipPropertyTypes.trim().split(","));
         return fetchProperties(identifier, propertyTypes);
 
     }
 
-    public Multimap<String, String> fetchGenePageProperties(String identifier, List<String> propertyTypes) {
-        Multimap<String, String> propertiesByType = fetchProperties(identifier, propertyTypes);
+    public SortedSetMultimap<String, String> fetchGenePageProperties(String identifier, List<String> propertyTypes) {
+        SortedSetMultimap<String, String> propertiesByType = fetchProperties(identifier, propertyTypes);
         if (propertiesByType.isEmpty()) {
             throw new ResultNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
         }
         return propertiesByType;
     }
 
-    Multimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
+    SortedSetMultimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
 
         return solrQueryService.fetchProperties(identifier, propertyTypes);
 

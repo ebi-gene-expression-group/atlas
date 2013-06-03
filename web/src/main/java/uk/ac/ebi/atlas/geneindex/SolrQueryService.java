@@ -22,10 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -86,7 +83,7 @@ public class SolrQueryService {
         solrServer.setConnectionTimeout(CONNECTION_TIMEOUT);
     }
 
-    public Multimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
+    public SortedSetMultimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
 
         String queryString = buildCompositeQueryIdentifier(identifier, propertyTypes);
 
@@ -203,7 +200,7 @@ public class SolrQueryService {
         }
     }
 
-    Multimap<String, String> querySolrForProperties(String queryString, int limitResults) {
+    SortedSetMultimap<String, String> querySolrForProperties(String queryString, int limitResults) {
         SolrQuery solrQuery = new SolrQuery(queryString);
         solrQuery.setRows(limitResults);
         solrQuery.setFields(PROPERTY_FIELD, "property_type");
@@ -212,7 +209,7 @@ public class SolrQueryService {
 
         QueryResponse solrResponse = executeSolrQuery(solrQuery);
 
-        Multimap<String, String> results = HashMultimap.create();
+        SortedSetMultimap<String, String> results = TreeMultimap.create();
         for (SolrDocument document : solrResponse.getResults()) {
             String key = document.getFieldValue("property_type").toString();
             String value = document.getFieldValue(PROPERTY_FIELD).toString();

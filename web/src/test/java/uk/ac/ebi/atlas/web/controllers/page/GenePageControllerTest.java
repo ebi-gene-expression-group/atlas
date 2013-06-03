@@ -22,9 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,7 +74,7 @@ public class GenePageControllerTest {
 
     private Properties properties = new Properties();
 
-    private Multimap<String, String> genePageProperties = HashMultimap.create();
+    private SortedSetMultimap<String, String> genePageProperties = TreeMultimap.create();
 
     @Before
     public void setUp() throws Exception {
@@ -110,7 +108,7 @@ public class GenePageControllerTest {
     public void testShowGenePage() throws Exception {
         when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
         when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
-        assertThat(subject.showGenePage(null,IDENTIFIER, modelMock), is("bioEntity"));
+        assertThat(subject.showGenePage(null, IDENTIFIER, modelMock), is("bioEntity"));
         verify(differentialGeneProfileServiceMock).getDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF);
     }
 
