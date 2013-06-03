@@ -122,7 +122,7 @@ public class BioEntityPropertyService {
 
     String transformOrthologToSymbol(String identifier) {
         String species = solrClient.findSpeciesForGeneId(identifier);
-        species = WordUtils.capitalize(species);
+        species = StringUtils.capitalize(species);
         List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
         if (!valuesForGeneId.isEmpty()) {
             String symbol = valuesForGeneId.get(0);
