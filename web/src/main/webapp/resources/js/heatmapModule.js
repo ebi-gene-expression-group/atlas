@@ -268,9 +268,6 @@ var heatmapModule = (function ($) {
     }
 
     function initMaPlotButtons(experimentAccession, arrayDesignAccession) {
-        if (experimentAccession === undefined) {
-            return;
-        }
         var thElements = $(".factor-header").parent(),
             maPlotURL;
 
@@ -309,7 +306,7 @@ var heatmapModule = (function ($) {
 
         $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (parameters && parameters.species && !parameters.isWidget) {
+        if (experimentAccession!==undefined && parameters.species && !parameters.isWidget) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
@@ -320,13 +317,13 @@ var heatmapModule = (function ($) {
 
         var firstColumnHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
 
-        if (parameters && parameters.arrayDesignAccession) { //then it is a microarray experiment
+        if (parameters.arrayDesignAccession) { //then it is a microarray experiment
             createAccessionHeaders([firstColumnHeader, "Design Element"]);
         } else {
             createAccessionHeaders([firstColumnHeader]);
         }
 
-        if (parameters && parameters.cutoff === 0.05 && !parameters.geneQuery) {
+        if (experimentAccession!==undefined && parameters.cutoff === 0.05 && !parameters.geneQuery) {
             initMaPlotButtons(experimentAccession, parameters.arrayDesignAccession);
         }
 
@@ -341,6 +338,10 @@ var heatmapModule = (function ($) {
             geneSetMatch:geneSetMatch,
             isWidget:isWidget
         });
+    }
+
+    function initRnaSeqHeatmap(cutoff) {
+        initHeatmap(undefined, {cutoff:cutoff, geneQuery:undefined});
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery) {
