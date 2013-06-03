@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -33,32 +34,33 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
 @Scope("request")
 public class GenePageController extends BioEntityPageController {
 
-    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
+    public static final String GENE_NAME_PROPERTY_TYPE = "symbol";
 
-    // needs changing to DifferentialRequestPreferences.DEFAULT_CUTOFF
-    public static final double DEFAULT_CUTOFF = 0.05;
-
-    @Value("#{configuration['index.types.genepage']}")
     private String genePagePropertyTypes;
 
     private DifferentialGeneProfileService differentialGeneProfileService;
 
+    @Value("#{configuration['index.types.genepage']}")
+    void setGenePagePropertyTypes(String genePagePropertyTypes) {
+        this.genePagePropertyTypes = genePagePropertyTypes;
+    }
+
     @Inject
-    public void setDifferentialGeneProfileService(DifferentialGeneProfileService differentialGeneProfileService) {
+    void setDifferentialGeneProfileService(DifferentialGeneProfileService differentialGeneProfileService) {
         this.differentialGeneProfileService = differentialGeneProfileService;
     }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
         DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
-                differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ? DEFAULT_CUTOFF : cutoff);
+                differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
+                                                                DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
         model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
 
         // setting FDR as cutoff
@@ -71,15 +73,12 @@ public class GenePageController extends BioEntityPageController {
 
     @Override
     List<String> getPagePropertyTypes() {
-        return Arrays.asList(genePagePropertyTypes.split(","));
+        return Lists.newArrayList(genePagePropertyTypes.split(","));
     }
 
     @Override
-    String getSymbolType() {
-        return PROPERTY_TYPE_SYMBOL;
+    String getEntityNamePropertyType() {
+        return GENE_NAME_PROPERTY_TYPE;
     }
 
-    void setGenePagePropertyTypes(String genePagePropertyTypes) {
-        this.genePagePropertyTypes = genePagePropertyTypes;
-    }
 }

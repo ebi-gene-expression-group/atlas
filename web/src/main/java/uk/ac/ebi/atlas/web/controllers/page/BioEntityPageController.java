@@ -22,10 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
@@ -36,10 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BioEntityPageController {
-
-    public static final String PROPERTY_TYPE_DESCRIPTION = "description";
-
-    public static final String PROPERTY_TYPE_SYMBOL = "symbol";
 
     private BioEntityPropertyService bioEntityPropertyService;
 
@@ -57,39 +50,27 @@ public abstract class BioEntityPageController {
 
     public String showGenePage(String identifier, Model model) {
 
-        bioEntityPropertyService.init(identifier, getPagePropertyTypes());
+        String entityNamePropertyType = getEntityNamePropertyType();
+
+        bioEntityPropertyService.init(identifier, entityNamePropertyType, getPagePropertyTypes());
 
         model.addAttribute("entityIdentifier", identifier);
 
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
-
-        //there should be only one element of this kind
-        String symbol = bioEntityPropertyService.getFirstValueOfProperty(getSymbolType());
-        if (StringUtils.isEmpty(symbol)) {
-            symbol = identifier;
-        }
-        model.addAttribute(PROPERTY_TYPE_SYMBOL, symbol);
 
         return "bioEntity";
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {
         LinkedHashMap<String, String> result = Maps.newLinkedHashMap();
-        List<String> filteredPropertyTypes = getFilteredPropertyTypes();
-        for (String propertyType : filteredPropertyTypes) {
+        for (String propertyType : getPagePropertyTypes()) {
             result.put(propertyType, bioEntityCardProperties.getPropertyName(propertyType));
         }
-
         return result;
-    }
-
-    List<String> getFilteredPropertyTypes() {
-        List<String> propertyTypes = ListUtils.removeAll(getPagePropertyTypes(), Lists.newArrayList(PROPERTY_TYPE_SYMBOL, PROPERTY_TYPE_DESCRIPTION));
-        return propertyTypes;
     }
 
     abstract List<String> getPagePropertyTypes();
 
-    abstract String getSymbolType();
+    abstract String getEntityNamePropertyType();
 
 }

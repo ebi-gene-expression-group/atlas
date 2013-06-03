@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +35,7 @@ import java.util.List;
 @Scope("request")
 public class GeneSetPageController extends BioEntityPageController {
 
-    public static final String PROPERTY_TYPE_SYMBOL = "uniprot";
+    public static final String GENE_SET_NAME_PROPERTY_TYPE = "T0_BE_SPECIFIED";
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
@@ -49,8 +48,8 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    String getSymbolType() {
-        return PROPERTY_TYPE_SYMBOL;
+    String getEntityNamePropertyType() {
+        return GENE_SET_NAME_PROPERTY_TYPE;
     }
 
 }
