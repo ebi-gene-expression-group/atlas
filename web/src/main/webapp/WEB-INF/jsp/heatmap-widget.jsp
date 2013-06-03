@@ -19,11 +19,6 @@
                 <div id="experimentDescription">
                     <a id="goto-experiment" class="thick-link" title="Experiment Page"
                        href="experiments/${experimentAccession}">${experimentDescription}</a>
-                    <c:if test="${hasExtraInfo}">
-                        <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
-                            <img alt="more information" src="/gxa/resources/images/balloon-ellipsis-icon-left.png">
-                        </a>
-                    </c:if>
                 </div>
                 <div>Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
             </td>
@@ -31,6 +26,10 @@
     </table>
 
     <%@ include file="includes/anatomigram-and-heatmap.jsp" %>
+
+    <br/>
+
+    <div id="help-placeholder" style="display: none"></div>
 </div>
 
 <script language="JavaScript" type="text/javascript"
@@ -56,6 +55,10 @@
                 anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
             }
 
+            helpTooltipsModule.init('experiment');
+
+            $("#goto-ae").tooltip();
+            $("#goto-experiment").tooltip();
 
             //configurations required for any browser...
 
