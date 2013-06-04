@@ -461,8 +461,12 @@ sub getDEresults {
 				
 				
 				# Reference and test assay accessions for limma script
-				my $refAssays = join ",", @{ $contrastHash->{ $platform }->{ $agPair }->{ "reference" }};
-				my $testAssays = join ",", @{ $contrastHash->{ $platform }->{ $agPair }->{ "test" }};
+				my $refAssays = join "\",\"", @{ $contrastHash->{ $platform }->{ $agPair }->{ "reference" }};
+				my $testAssays = join "\",\"", @{ $contrastHash->{ $platform }->{ $agPair }->{ "test" }};
+
+				$refAssays = "\"$refAssays\"";
+				$testAssays = "\"$testAssays\"";
+
 
 				print "Computing differential expression statistics for contrast \"", $atlasName, "\"...";
 
