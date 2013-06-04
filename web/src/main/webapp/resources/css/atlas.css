@@ -427,3 +427,10 @@ a.help-icon {
     position: relative;
     width: 100%;
 }
+
+.experimentsPageHeading {
+    font-size: 14px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-weight: bold;
+    display: block;
+}
