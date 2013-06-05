@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -43,7 +42,7 @@ public class ExperimentInfo {
 
     private SortedSet<String> species = Sets.newTreeSet();
 
-    private SortedSet<Factor> experimentalFactors = Sets.newTreeSet();
+    private SortedSet<String> experimentalFactors = Sets.newTreeSet();
 
     private SortedSet<String> arrayDesigns = Sets.newTreeSet();
 
@@ -95,11 +94,11 @@ public class ExperimentInfo {
         this.species = Sets.newTreeSet(species);
     }
 
-    public SortedSet<Factor> getExperimentalFactors() {
+    public SortedSet<String> getExperimentalFactors() {
         return experimentalFactors;
     }
 
-    public void setExperimentalFactors(Set<Factor> experimentalFactors) {
+    public void setExperimentalFactors(Set<String> experimentalFactors) {
         this.experimentalFactors = Sets.newTreeSet(experimentalFactors);
     }
 

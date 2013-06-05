@@ -22,7 +22,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="experimentsPageHeading">Experiments loaded in the Gene Expression Atlas</div>
+<div class="experimentsPageHeading">Experiments Expression Atlas</div>
 
 <table cellspacing="0" cellpadding="0" border="0" id="experiments-table" class="display">
 
@@ -48,15 +48,7 @@
                 return data.toString();
             }
 
-            function formatFactors(data, type, full) {
-                var html = '';
-                for (var i = 0; i < data.length; i++) {
-                    html += data[i].type + ' ' + data[i].value + '<br/>';
-                }
-                return html;
-            }
-
-            function formatSpecies(data, type, full) {
+            function withLineBreaks(data, type, full) {
                 var html = '';
                 for (var i = 0; i < data.length; i++) {
                     html += data[i] + '<br/>';
@@ -77,36 +69,58 @@
                 return data;
             }
 
-            function formatExperimentLink(data, type, full) {
+            function formatExperimentAccession(data, type, full) {
                 return '<a href="http://www.ebi.ac.uk/arrayexpress/experiments/' + data + '" title="View in Array Express">' + data + '</a>';
+            }
+
+            function formatExperimentDescription(data, type, full) {
+                return '<a href="experiments/' + full['experimentAccession'] + '" title="View in Expression Atlas">' + data + '</a>';
+            }
+
+            /* Create an array with the values of all the img title attributes in a column */
+            $.fn.dataTableExt.afnSortData['dom-text'] = function (oSettings, iColumn) {
+                return $.map(oSettings.oApi._fnGetTrNodes(oSettings), function (tr, i) {
+                    return $('td:eq(' + iColumn + ') img', tr).attr("title");
+                });
             }
 
             var oTable = $('#experiments-table').dataTable({
                 "bProcessing":true,
                 "sAjaxSource":"json/experiments",
                 "aoColumns":[
-                    { "sTitle":"Type", "mData":"experimentType", "mRender":function (data, type, full) {
-                        return formatExperimentType(data, type, full);
-                    } },
-                    { "sTitle":"Experiment", "mData":"experimentAccession", "mRender":function (data, type, full) {
-                        return formatExperimentLink(data, type, full);
-                    } },
-                    { "sTitle":"Description", "mData":"experimentDescription" },
-                    { "sTitle":"Assays", "mData":"numberOfAssays", "mRender":function (data, type, full) {
-                        return replaceZero(data, type, full);
-                    } },
-                    { "sTitle":"Contrasts", "mData":"numberOfContrasts", "mRender":function (data, type, full) {
-                        return replaceZero(data, type, full);
-                    } },
-                    { "sTitle":"Organisms", "mData":"species", "mRender":function (data, type, full) {
-                        return formatSpecies(data, type, full);
-                    } },
-                    { "sTitle":"Experimental Factors", "mData":"experimentalFactors", "mRender":function (data, type, full) {
-                        return formatFactors(data, type, full);
-                    } },
-                    { "sTitle":"Array Designs", "mData":"arrayDesigns" }
+                    { "sTitle":"Type", "mData":"experimentType", "sClass":"center bb bl", "sSortDataType":"dom-text",
+                        "mRender":function (data, type, full) {
+                            return formatExperimentType(data, type, full);
+                        } },
+                    { "sTitle":"Experiment", "mData":"experimentAccession", "sClass":"center bb",
+                        "mRender":function (data, type, full) {
+                            return formatExperimentAccession(data, type, full);
+                        } },
+                    { "sTitle":"Description", "mData":"experimentDescription", "sClass":"center bb",
+                        "mRender":function (data, type, full) {
+                            return formatExperimentDescription(data, type, full);
+                        } },
+                    { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center bb",
+                        "mRender":function (data, type, full) {
+                            return replaceZero(data, type, full);
+                        } },
+                    { "sTitle":"Contrasts", "mData":"numberOfContrasts", "sClass":"center bb",
+                        "mRender":function (data, type, full) {
+                            return replaceZero(data, type, full);
+                        } },
+                    { "sTitle":"Organisms", "mData":"species", "sClass":"center bb italic",
+                        "mRender":function (data, type, full) {
+                            return withLineBreaks(data, type, full);
+                        } },
+                    { "sTitle":"Experimental Factors", "mData":"experimentalFactors", "sClass":"center bb",
+                        "mRender":function (data, type, full) {
+                            return withLineBreaks(data, type, full);
+                        } },
+                    { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb br" }
                 ]
             });
+
+            $("#experiments-table th").addClass("header-cell bt");
 
         });
     })(jQuery);

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
@@ -41,6 +44,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -138,12 +142,24 @@ public class ExperimentsListController {
             experimentInfo.setExperimentDescription(experiment.getDescription());
             experimentInfo.setSpecies(experiment.getSpecies());
             experimentInfo.setExperimentType(experiment.getType());
-            experimentInfo.setExperimentalFactors(experiment.getExperimentalFactors().getAllFactors());
+            experimentInfo.setExperimentalFactors(extractExperimentalFactors(experiment.getExperimentalFactors()));
 
             experimentInfos.add(experimentInfo);
         }
 
         return experimentInfos;
+    }
+
+    protected Set<String> extractExperimentalFactors(ExperimentalFactors experimentalFactors) {
+
+        Set<String> allFactorNames = Sets.newHashSet();
+
+        for (Factor factor : experimentalFactors.getAllFactors()) {
+            String factorName = experimentalFactors.getFactorName(factor.getType());
+            allFactorNames.add(factorName);
+        }
+
+        return allFactorNames;
     }
 
     /* This is a wrapper class used via Gson to produce the right JSON input for DataTables. */

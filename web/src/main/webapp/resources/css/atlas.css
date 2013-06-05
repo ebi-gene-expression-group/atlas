@@ -434,3 +434,20 @@ a.help-icon {
     font-weight: bold;
     display: block;
 }
+
+.italic {
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-style: italic;
+}
+
+#experiments-table tr.odd {
+    background-color: #FAFAFA;
+}
+
+#experiments-table tr.even {
+    background-color: #FFFFFF;
+}
+
+#experiments-table td {
+    background-color: inherit;
+}
