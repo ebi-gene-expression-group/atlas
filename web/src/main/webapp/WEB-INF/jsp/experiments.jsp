@@ -41,17 +41,69 @@
     (function ($) {
         $(document).ready(function () {
 
+            function replaceZero(data, type, full) {
+                if (data == 0) {
+                    return '';
+                }
+                return data.toString();
+            }
+
+            function formatFactors(data, type, full) {
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    html += data[i].type + ' ' + data[i].value + '<br/>';
+                }
+                return html;
+            }
+
+            function formatSpecies(data, type, full) {
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    html += data[i] + '<br/>';
+                }
+                return html;
+            }
+
+            function formatExperimentType(data, type, full) {
+                if (data == 'BASELINE') {
+                    return '<img src="resources/images/allup2_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+                }
+                if (data == 'DIFFERENTIAL') {
+                    return '<img src="resources/images/updown_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+                }
+                if (data == 'MICROARRAY') {
+                    return '<img src="resources/images/updown_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+                }
+                return data;
+            }
+
+            function formatExperimentLink(data, type, full) {
+                return '<a href="http://www.ebi.ac.uk/arrayexpress/experiments/' + data + '" title="View in Array Express">' + data + '</a>';
+            }
+
             var oTable = $('#experiments-table').dataTable({
                 "bProcessing":true,
                 "sAjaxSource":"json/experiments",
                 "aoColumns":[
-                    { "sTitle":"Type", "mData":"experimentType" },
-                    { "sTitle":"Experiment", "mData":"experimentAccession" },
+                    { "sTitle":"Type", "mData":"experimentType", "mRender":function (data, type, full) {
+                        return formatExperimentType(data, type, full);
+                    } },
+                    { "sTitle":"Experiment", "mData":"experimentAccession", "mRender":function (data, type, full) {
+                        return formatExperimentLink(data, type, full);
+                    } },
                     { "sTitle":"Description", "mData":"experimentDescription" },
-                    { "sTitle":"Assays", "mData":"numberOfAssays" },
-                    { "sTitle":"Contrasts", "mData":"numberOfContrasts" },
-                    { "sTitle":"Organisms", "mData":"species" },
-                    { "sTitle":"Experimental Factors", "mData":"experimentalFactors" },
+                    { "sTitle":"Assays", "mData":"numberOfAssays", "mRender":function (data, type, full) {
+                        return replaceZero(data, type, full);
+                    } },
+                    { "sTitle":"Contrasts", "mData":"numberOfContrasts", "mRender":function (data, type, full) {
+                        return replaceZero(data, type, full);
+                    } },
+                    { "sTitle":"Organisms", "mData":"species", "mRender":function (data, type, full) {
+                        return formatSpecies(data, type, full);
+                    } },
+                    { "sTitle":"Experimental Factors", "mData":"experimentalFactors", "mRender":function (data, type, full) {
+                        return formatFactors(data, type, full);
+                    } },
                     { "sTitle":"Array Designs", "mData":"arrayDesigns" }
                 ]
             });

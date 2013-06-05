@@ -22,11 +22,12 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import java.util.Collections;
 import java.util.Set;
+import java.util.SortedSet;
 
 public class ExperimentInfo {
 
@@ -40,11 +41,11 @@ public class ExperimentInfo {
 
     private int numberOfContrasts;
 
-    private Set<String> species = Collections.emptySet();
+    private SortedSet<String> species = Sets.newTreeSet();
 
-    private Set<Factor> experimentalFactors = Collections.emptySet();
+    private SortedSet<Factor> experimentalFactors = Sets.newTreeSet();
 
-    private Set<String> arrayDesigns = Collections.emptySet();
+    private SortedSet<String> arrayDesigns = Sets.newTreeSet();
 
     public ExperimentType getExperimentType() {
         return experimentType;
@@ -86,28 +87,28 @@ public class ExperimentInfo {
         this.numberOfContrasts = numberOfContrasts;
     }
 
-    public Set<String> getSpecies() {
+    public SortedSet<String> getSpecies() {
         return species;
     }
 
     public void setSpecies(Set<String> species) {
-        this.species = species;
+        this.species = Sets.newTreeSet(species);
     }
 
-    public Set<Factor> getExperimentalFactors() {
+    public SortedSet<Factor> getExperimentalFactors() {
         return experimentalFactors;
     }
 
     public void setExperimentalFactors(Set<Factor> experimentalFactors) {
-        this.experimentalFactors = experimentalFactors;
+        this.experimentalFactors = Sets.newTreeSet(experimentalFactors);
     }
 
-    public Set<String> getArrayDesigns() {
+    public SortedSet<String> getArrayDesigns() {
         return arrayDesigns;
     }
 
     public void setArrayDesigns(Set<String> arrayDesigns) {
-        this.arrayDesigns = arrayDesigns;
+        this.arrayDesigns = Sets.newTreeSet(arrayDesigns);
     }
 
 }

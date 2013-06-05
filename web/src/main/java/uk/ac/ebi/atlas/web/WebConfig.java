@@ -43,10 +43,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Override
-    public void addViewControllers(ViewControllerRegistry viewControllerRegistry){
+    public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
         viewControllerRegistry.addViewController("/help.html").setViewName("help");
         viewControllerRegistry.addViewController("/help-2.html").setViewName("help-2");
-
+        viewControllerRegistry.addViewController("/experiments").setViewName("experiments");
     }
 
     @Override
