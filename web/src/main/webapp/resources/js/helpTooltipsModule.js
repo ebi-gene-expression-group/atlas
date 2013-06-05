@@ -24,6 +24,8 @@
 var helpTooltipsModule = (function($) {
     "use strict";
 
+    var _contextRoot;
+
     function buildHelpAnchor() {
         return $("<a/>", {
                     'class': 'help-icon',
@@ -38,10 +40,10 @@ var helpTooltipsModule = (function($) {
     }
 
     function getHelpLocation(pageName, inlineAnchor) {
-        return 'resources/html/' + getHelpFileName(pageName) + ' ' + inlineAnchor;
+        return _contextRoot + '/resources/html/' + getHelpFileName(pageName) + ' ' + inlineAnchor;
     }
 
-    function initTooltips(pageName){
+    function initTooltips(pageName, contextRoot){
 
         var anchor = buildHelpAnchor();
 
@@ -78,7 +80,8 @@ var helpTooltipsModule = (function($) {
     }
 
     return {
-        init:  function(pageName) {
+        init:  function(pageName, contextRoot) {
+                    _contextRoot = contextRoot;
                     initTooltips(pageName);
                 },
         buildHelpAnchor: buildHelpAnchor,

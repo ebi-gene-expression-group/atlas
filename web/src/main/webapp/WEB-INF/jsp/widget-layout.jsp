@@ -30,7 +30,6 @@
               csstransforms csstransforms3d csstransitions fontface generatedcontent applicationcache">
 
 <head>
-    <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"/>
 
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css"/>

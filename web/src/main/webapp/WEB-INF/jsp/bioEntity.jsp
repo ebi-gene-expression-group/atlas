@@ -149,7 +149,7 @@
             header:"ul"
         });
 
-        helpTooltipsModule.init('experiment');
+        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
     });
 </script>
 

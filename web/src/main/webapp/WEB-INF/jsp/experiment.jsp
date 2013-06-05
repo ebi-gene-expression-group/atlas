@@ -160,7 +160,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
                 </c:forEach>
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                    anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                    anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
                 }
             }
 
@@ -173,7 +173,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
             searchFormModule.init("(any ${queryFactorName}s)", '${species}', '${preferences.defaultCutoff}');
 
-            helpTooltipsModule.init('experiment');
+            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
 
             $('#stickem-container').stickem();
         });

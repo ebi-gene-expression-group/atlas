@@ -18,7 +18,7 @@
             <td width="100%">
                 <div id="experimentDescription">
                     <a id="goto-experiment" class="thick-link" title="Experiment Page"
-                       href="experiments/${experimentAccession}">${experimentDescription}</a>
+                       href="${pageContext.request.contextPath}/experiments/${experimentAccession}">${experimentDescription}</a>
                 </div>
                 <div>Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
             </td>
@@ -52,10 +52,10 @@
             </c:forEach>
 
             if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}');
+                anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
             }
 
-            helpTooltipsModule.init('experiment');
+            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
 
             $("#goto-ae").tooltip();
             $("#goto-experiment").tooltip();
