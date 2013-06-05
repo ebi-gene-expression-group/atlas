@@ -41,11 +41,11 @@
     (function ($) {
         $(document).ready(function () {
 
-            function replaceZero(data, type, full) {
+            function replaceZeroAndLinkExpDesign(data, type, full) {
                 if (data == 0) {
                     return '';
                 }
-                return data.toString();
+                return '<a href="experiments/' + full['experimentAccession'] + '/experiment-design" title="View experiment design in Expression Atlas">' + data + '</a>';
             }
 
             function withLineBreaks(data, type, full) {
@@ -77,6 +77,10 @@
                 return '<a href="experiments/' + full['experimentAccession'] + '" title="View in Expression Atlas">' + data + '</a>';
             }
 
+            function formatArrayDesign(data, type, full) {
+                return '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + data + '" title="View in Array Express">' + data + '</a>';
+            }
+
             /* Create an array with the values of all the img title attributes in a column */
             $.fn.dataTableExt.afnSortData['dom-text'] = function (oSettings, iColumn) {
                 return $.map(oSettings.oApi._fnGetTrNodes(oSettings), function (tr, i) {
@@ -102,11 +106,11 @@
                         } },
                     { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center bb",
                         "mRender":function (data, type, full) {
-                            return replaceZero(data, type, full);
+                            return replaceZeroAndLinkExpDesign(data, type, full);
                         } },
                     { "sTitle":"Contrasts", "mData":"numberOfContrasts", "sClass":"center bb",
                         "mRender":function (data, type, full) {
-                            return replaceZero(data, type, full);
+                            return replaceZeroAndLinkExpDesign(data, type, full);
                         } },
                     { "sTitle":"Organisms", "mData":"species", "sClass":"center bb italic",
                         "mRender":function (data, type, full) {
@@ -116,7 +120,10 @@
                         "mRender":function (data, type, full) {
                             return withLineBreaks(data, type, full);
                         } },
-                    { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb br" }
+                    { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb br",
+                        "mRender":function (data, type, full) {
+                            return formatArrayDesign(data, type, full);
+                        } }
                 ]
             });
 
