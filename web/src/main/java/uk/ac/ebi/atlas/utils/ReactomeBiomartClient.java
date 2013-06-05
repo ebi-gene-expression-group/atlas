@@ -52,6 +52,9 @@ public class ReactomeBiomartClient {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * @return pathway name if non empty, otherwise null
+     */
     public String fetchPathwayName(String reactomeId) {
         String url = MessageFormat.format(REACTOME_BIOMART_URL, reactomeId);
         String result = restTemplate.getForObject(url, String.class);
