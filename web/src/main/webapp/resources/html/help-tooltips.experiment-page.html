@@ -40,7 +40,7 @@
 <div id="specific">Check to see genes specific to factor value(s) selected, with most specific genes first. Uncheck to sort by highest expressed genes.
 </div>
 
-<div id="specific-differential">Check to see genes specific to contrast(s) selected, with most specific genes first. Uncheck to sort by highest expressed genes.
+<div id="specific-differential">Check to see genes specific to contrast(s) selected, with most specific genes first. Uncheck to sort by lowest adjusted <i>p</i>-value.
 </div>
 
 <div id="factorSearch">Select experimental factor value(s). Factor values are experimental variables, e.g. different tissues or cell types.
@@ -51,6 +51,9 @@
 
 <div id="cutoff">Enter a minimum expression level (FPKM). Only genes expressed
 	above this are displayed. Set to 0 to retrieve all genes.
+</div>
+
+<div id="cutoff-differential">Enter a maximum FDR. Only genes with adjusted <i>p</i>-value below this will be displayed.
 </div>
 
 <div id="gene-distribution">The histogram shows number of genes (y-axis)
@@ -71,7 +74,14 @@
 <div id="gradient">Expression level: greater colour saturation means higher expression.
 </div>
 
+<div id="gradient-differential">Greater colour saturation mean lower adjusted <i>p</i>-value.
+</div>
+
+
 <div id="heatMapTableCellInfo">Filled boxes indicate genes expressed. Click a box to see transcript breakdown. Click "Display levels" to show expression levels.
+</div>
+
+<div id="heatMapTableCellInfo-differential">Filled boxes indicate genes differentially expressed. Mouseover a box to see adjusted <i>p</i>-value and log<sub>2</sub> fold-change.
 </div>
 
 </body>
