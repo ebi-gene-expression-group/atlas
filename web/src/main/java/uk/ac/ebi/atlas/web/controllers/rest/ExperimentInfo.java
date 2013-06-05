@@ -22,31 +22,35 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class ExperimentInfo {
 
-    private String experimentType = StringUtils.EMPTY;
+    private ExperimentType experimentType;
 
-    private String experimentAccession = StringUtils.EMPTY;
+    private String experimentAccession;
 
-    private String experimentDescription = StringUtils.EMPTY;
+    private String experimentDescription;
 
-    private int numberOfAssays = 0;
+    private int numberOfAssays;
 
-    private int numberOfContrasts = 0;
+    private int numberOfContrasts;
 
-    private String species = StringUtils.EMPTY;
+    private Set<String> species = Collections.emptySet();
 
-    private String experimentalFactors = StringUtils.EMPTY;
+    private Set<Factor> experimentalFactors = Collections.emptySet();
 
-    private String arrayDesigns = StringUtils.EMPTY;
+    private Set<String> arrayDesigns = Collections.emptySet();
 
-    public String getExperimentType() {
+    public ExperimentType getExperimentType() {
         return experimentType;
     }
 
-    public void setExperimentType(String experimentType) {
+    public void setExperimentType(ExperimentType experimentType) {
         this.experimentType = experimentType;
     }
 
@@ -82,27 +86,27 @@ public class ExperimentInfo {
         this.numberOfContrasts = numberOfContrasts;
     }
 
-    public String getSpecies() {
+    public Set<String> getSpecies() {
         return species;
     }
 
-    public void setSpecies(String species) {
+    public void setSpecies(Set<String> species) {
         this.species = species;
     }
 
-    public String getExperimentalFactors() {
+    public Set<Factor> getExperimentalFactors() {
         return experimentalFactors;
     }
 
-    public void setExperimentalFactors(String experimentalFactors) {
+    public void setExperimentalFactors(Set<Factor> experimentalFactors) {
         this.experimentalFactors = experimentalFactors;
     }
 
-    public String getArrayDesigns() {
+    public Set<String> getArrayDesigns() {
         return arrayDesigns;
     }
 
-    public void setArrayDesigns(String arrayDesigns) {
+    public void setArrayDesigns(Set<String> arrayDesigns) {
         this.arrayDesigns = arrayDesigns;
     }
 

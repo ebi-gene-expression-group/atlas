@@ -31,9 +31,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -68,28 +71,88 @@ public class ExperimentsListController {
     @ResponseBody
     public String getExperimentsList() {
 
-        ExperimentInfo experimentInfo = new ExperimentInfo();
-        experimentInfo.setExperimentAccession("accession");
-
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
-        experimentInfos.add(experimentInfo);
+        experimentInfos.addAll(extractBaselineExperiments());
+        experimentInfos.addAll(extractRnaSeqDiffExperiments());
+        experimentInfos.addAll(extractMicrorarryExperiments());
 
-        ExperimentInfoList experimentInfoList = new ExperimentInfoList(experimentInfos);
+        ExperimentInfoWrapper experimentInfoWrapper = new ExperimentInfoWrapper(experimentInfos);
 
         Gson gson = new Gson();
-        return gson.toJson(experimentInfoList);
+        return gson.toJson(experimentInfoWrapper);
     }
 
-    private class ExperimentInfoList {
+    protected List<ExperimentInfo> extractMicrorarryExperiments() {
+
+        List<ExperimentInfo> experimentInfos = Lists.newArrayList();
+
+        for (String experimentAccession : applicationProperties.getMicroarrayExperimentsIdentifiers()) {
+            MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
+
+            ExperimentInfo experimentInfo = new ExperimentInfo();
+            experimentInfo.setExperimentAccession(experimentAccession);
+            experimentInfo.setExperimentDescription(experiment.getDescription());
+            experimentInfo.setSpecies(experiment.getSpecies());
+            experimentInfo.setExperimentType(experiment.getType());
+            experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
+            experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
+            experimentInfo.setArrayDesigns(experiment.getArrayDesignAccessions());
+
+            experimentInfos.add(experimentInfo);
+        }
+
+        return experimentInfos;
+    }
+
+    protected List<ExperimentInfo> extractRnaSeqDiffExperiments() {
+
+        List<ExperimentInfo> experimentInfos = Lists.newArrayList();
+
+        for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
+            DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
+
+            ExperimentInfo experimentInfo = new ExperimentInfo();
+            experimentInfo.setExperimentAccession(experimentAccession);
+            experimentInfo.setExperimentDescription(experiment.getDescription());
+            experimentInfo.setSpecies(experiment.getSpecies());
+            experimentInfo.setExperimentType(experiment.getType());
+            experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
+            experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
+
+            experimentInfos.add(experimentInfo);
+        }
+
+        return experimentInfos;
+    }
+
+
+    protected List<ExperimentInfo> extractBaselineExperiments() {
+
+        List<ExperimentInfo> experimentInfos = Lists.newArrayList();
+
+        for (String experimentAccession : applicationProperties.getBaselineExperimentsIdentifiers()) {
+            BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+
+            ExperimentInfo experimentInfo = new ExperimentInfo();
+            experimentInfo.setExperimentAccession(experimentAccession);
+            experimentInfo.setExperimentDescription(experiment.getDescription());
+            experimentInfo.setSpecies(experiment.getSpecies());
+            experimentInfo.setExperimentType(experiment.getType());
+            experimentInfo.setExperimentalFactors(experiment.getExperimentalFactors().getAllFactors());
+
+            experimentInfos.add(experimentInfo);
+        }
+
+        return experimentInfos;
+    }
+
+    /* This is a wrapper class used via Gson to produce the right JSON input for DataTables. */
+    private class ExperimentInfoWrapper {
 
         private List<ExperimentInfo> aaData;
 
-        public ExperimentInfoList(List<ExperimentInfo> list) {
+        public ExperimentInfoWrapper(List<ExperimentInfo> list) {
             this.aaData = list;
-        }
-
-        public List<ExperimentInfo> getAaData() {
-            return aaData;
         }
     }
 
