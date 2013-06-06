@@ -36,8 +36,7 @@ import java.util.SortedSet;
 
 public abstract class BioEntityPageController {
 
-
-    private static final String PROPERTY_TYPE_DESCRIPTION = "description";
+    protected static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
     private SolrClient solrClient;
 
@@ -74,10 +73,14 @@ public abstract class BioEntityPageController {
     protected Map<String, String> buildPropertyNamesByTypeMap() {
         LinkedHashMap<String, String> result = Maps.newLinkedHashMap();
         for (String propertyType : getPagePropertyTypes()) {
-            result.put(propertyType, bioEntityCardProperties.getPropertyName(propertyType));
+            if (isDisplyedInPropertyList(propertyType)) {
+                result.put(propertyType, bioEntityCardProperties.getPropertyName(propertyType));
+            }
         }
         return result;
     }
+
+    protected abstract boolean isDisplyedInPropertyList(String propertyType) ;
 
     abstract List<String> getPagePropertyTypes();
 
@@ -86,8 +89,8 @@ public abstract class BioEntityPageController {
     protected void initBioEntityPropertyService(String identifier) {
         String species = solrClient.findSpeciesForGeneId(identifier);
         List<String> queryPropertyTypes = getPagePropertyTypes();
-        queryPropertyTypes.add(getEntityNamePropertyType());
-        queryPropertyTypes.add(PROPERTY_TYPE_DESCRIPTION);
+//        queryPropertyTypes.add(getEntityNamePropertyType());
+//        queryPropertyTypes.add(PROPERTY_TYPE_DESCRIPTION);
         SortedSetMultimap<String,String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
         SortedSet<String> entityNames = propertyValuesByType.get(getEntityNamePropertyType());
         if (entityNames.isEmpty()) {
