@@ -22,44 +22,45 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
+import uk.ac.ebi.atlas.utils.ExperimentInfoListBuilder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentsListControllerTest {
 
-    @Mock
-    private ApplicationProperties applicationPropertiesMock;
+    private static final String EXPERIMENT_ACCESSION = "ACCESSION";
+    private static final String EXPECTED_JSON = "{\"aaData\":[{\"experimentAccession\":\"" + EXPERIMENT_ACCESSION +
+            "\",\"numberOfAssays\":0,\"numberOfContrasts\":0,\"species\":[],\"experimentalFactors\":[],\"arrayDesigns\":[]}]}";
 
     @Mock
-    private BaselineExperimentsCache baselineExperimentsCacheMock;
+    private ExperimentInfoListBuilder experimentInfoListBuilderMock;
 
-    @Mock
-    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCacheMock;
-
-    @Mock
-    private MicroarrayExperimentsCache microarrayExperimentsCacheMock;
+    private ExperimentInfo experimentInfo = new ExperimentInfo();
 
     private ExperimentsListController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentsListController(applicationPropertiesMock,
-                baselineExperimentsCacheMock, rnaSeqDiffExperimentsCacheMock, microarrayExperimentsCacheMock);
+
+        experimentInfo.setExperimentAccession(EXPERIMENT_ACCESSION);
+
+        when(experimentInfoListBuilderMock.build()).thenReturn(Lists.newArrayList(experimentInfo));
+
+        subject = new ExperimentsListController(experimentInfoListBuilderMock);
     }
 
     @Test
     public void testGetExperimentsList() throws Exception {
-        assertThat(subject.getExperimentsList(), containsString("aaData"));
+        assertThat(subject.getExperimentsList(), is(EXPECTED_JSON));
     }
 }
