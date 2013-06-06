@@ -44,13 +44,13 @@ var experimentsPageModule = (function ($) {
 
     function formatExperimentType(data, type, full) {
         if (data === 'BASELINE') {
-            return '<img src="resources/images/allup2_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+            return '<img src="resources/images/allup2_transparent_bkg.png" title="baseline"/>';
         }
         if (data === 'DIFFERENTIAL') {
-            return '<img src="resources/images/updown_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+            return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
         }
         if (data === 'MICROARRAY') {
-            return '<img src="resources/images/updown_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+            return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
         }
         return data;
     }

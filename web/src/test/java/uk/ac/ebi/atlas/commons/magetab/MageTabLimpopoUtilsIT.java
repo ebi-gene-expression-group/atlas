@@ -43,6 +43,7 @@ import static org.hamcrest.Matchers.*;
 public class MageTabLimpopoUtilsIT {
 
     private static final String HOMO_SAPIENS = "Homo sapiens";
+    private static final String PUBMED_ID = "22496456";
 
     private MAGETABInvestigation investigation;
 
@@ -62,6 +63,7 @@ public class MageTabLimpopoUtilsIT {
 
         investigation = new MAGETABInvestigation();
         investigation.SDRF.addNode(sourceNode);
+        investigation.IDF.pubMedId.add(PUBMED_ID);
     }
 
     @Test
@@ -70,9 +72,15 @@ public class MageTabLimpopoUtilsIT {
     }
 
     @Test
+    public void testExtractPubMedIdsFromIDF() throws Exception {
+        assertThat(subject.extractPubMedIdsFromIDF(investigation), contains(PUBMED_ID));
+    }
+
+    @Test
     public void testParseInvestigation() throws Exception {
         MAGETABInvestigation magetabInvestigation = subject.parseInvestigation("E-MTAB-513");
         assertThat(magetabInvestigation, is(not(nullValue())));
         assertThat(subject.extractSpeciesFromSDRF(magetabInvestigation), contains(HOMO_SAPIENS));
+        assertThat(subject.extractPubMedIdsFromIDF(investigation), contains(PUBMED_ID));
     }
 }
