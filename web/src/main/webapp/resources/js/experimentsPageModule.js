@@ -92,8 +92,6 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        var emptySpaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-
         $('#experiments-table').dataTable({
             "bProcessing":true,
             "sAjaxSource":"json/experiments",
@@ -106,7 +104,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
                     } },
-                { "sTitle":emptySpaces + "Description" + emptySpaces, "mData":"experimentDescription", "sClass":"center bb",
+                { "sTitle":"Description", "mData":"experimentDescription", "sClass":"center bb padding",
                     "mRender":function (data, type, full) {
                         return formatExperimentDescription(data, type, full);
                     } },

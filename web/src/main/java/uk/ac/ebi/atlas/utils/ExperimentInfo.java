@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.ExperimentType;
