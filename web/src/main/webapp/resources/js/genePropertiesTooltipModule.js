@@ -53,7 +53,7 @@ var genePropertiesTooltipModule = (function($) {
         return words;
     }
 
-    function initTooltip(queryString){
+    function initTooltip(queryString, contextRoot){
 
         $(".genename").tooltip({
             tooltipClass:"genename-tooltip",
@@ -68,7 +68,7 @@ var genePropertiesTooltipModule = (function($) {
 
                 $("#genenametooltip-content").load(
 
-                    "rest/genename-tooltip?geneName=" + geneName + "&identifier=" + identifier,
+                    contextRoot + "/rest/genename-tooltip?geneName=" + geneName + "&identifier=" + identifier,
 
                     function (response, status, xhr) {
                         var tooltipContent;
@@ -95,10 +95,10 @@ var genePropertiesTooltipModule = (function($) {
         });
     }
     return {
-        init:  function(queryString) {
+        init:  function(queryString, contextRoot) {
 
             initHacksThatMinimizeJQueryTooltipBug();
-            initTooltip(queryString);
+            initTooltip(queryString, contextRoot);
 
         }
 

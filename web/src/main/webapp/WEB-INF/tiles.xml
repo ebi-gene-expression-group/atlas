@@ -48,6 +48,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/experiment-experiment-design.jsp"/>
     </definition>
 
+    <definition name="experiments" extends="base.definition">
+        <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/experiments.jsp"/>
+    </definition>
+
     <definition name="home" extends="base.definition">
         <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
         <put-attribute name="menu" value=""/>
@@ -78,12 +84,12 @@
     </definition>
 
     <definition name="widget.base.definition" template="/WEB-INF/jsp/widget-layout.jsp">
-           <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
-           <put-attribute name="header" value=""/>
-           <put-attribute name="menu" value=""/>
-           <put-attribute name="body" value=""/>
-           <put-attribute name="footer" value=""/>
-       </definition>
+        <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value=""/>
+    </definition>
 
     <definition name="heatmap-widget" extends="widget.base.definition">
         <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget.jsp"/>

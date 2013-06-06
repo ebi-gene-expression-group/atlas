@@ -25,7 +25,7 @@
                        href="experiments/${experimentAccession}">${experimentDescription}</a>
                     <c:if test="${hasExtraInfo}">
                         <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
-                            <img alt="more information" src="/gxa/resources/images/balloon-ellipsis-icon-left.png">
+                            <img alt="more information" src="resources/images/balloon-ellipsis-icon-left.png">
                         </a>
                     </c:if>
                 </div>
