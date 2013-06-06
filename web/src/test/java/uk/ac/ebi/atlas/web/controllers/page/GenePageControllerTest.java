@@ -22,7 +22,9 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.collect.*;
+import com.google.common.collect.Lists;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +39,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -90,7 +92,7 @@ public class GenePageControllerTest {
         genePageProperties.put(ORTHOLOG, ORTHOLOG);
 
         when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(SPECIES);
-        when(solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES))).thenReturn(genePageProperties);
+        when(solrClientMock.fetchGenePageProperties(IDENTIFIER, Lists.newArrayList(PROPERTY_TYPES.split(",")))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
         when(bioEntityPropertyServiceMock.getFirstValueOfProperty(SYMBOL)).thenReturn(SYMBOL);
@@ -102,10 +104,12 @@ public class GenePageControllerTest {
         subject.setBioEntityPropertyService(bioEntityPropertyServiceMock);
         subject.setDifferentialGeneProfileService(differentialGeneProfileServiceMock);
         subject.setGenePagePropertyTypes(PROPERTY_TYPES);
+        subject.setSolrClient(solrClientMock);
     }
 
     @Test
     public void testShowGenePage() throws Exception {
+        solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES));
         when(differentialGeneProfileServiceMock.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
         when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
         assertThat(subject.showGenePage(null, IDENTIFIER, modelMock), is("bioEntity"));
