@@ -23,14 +23,12 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
@@ -47,7 +45,7 @@ import java.util.SortedSet;
 @Scope("request")
 public class BioEntityPropertyService {
 
-    private static final String PROPERTY_TYPE_DESCRIPTION = "description";
+    public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
     private SolrClient solrClient;
 
@@ -61,35 +59,33 @@ public class BioEntityPropertyService {
 
     private SortedSet<String> entityNames;
 
+    private ReactomeBiomartClient reactomeBiomartClient;
+
     @Inject
-    public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties) {
+    public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient) {
         this.solrClient = solrClient;
         this.uniProtClient = uniProtClient;
         this.bioEntityCardProperties = bioEntityCardProperties;
+        this.reactomeBiomartClient = reactomeBiomartClient;
     }
 
-    public void init(String identifier, String entityNamePropertyType, List<String> queryPropertyTypes) {
-        species = solrClient.findSpeciesForGeneId(identifier);
-        queryPropertyTypes.add(entityNamePropertyType);
-        queryPropertyTypes.add(PROPERTY_TYPE_DESCRIPTION);
-        propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
-        entityNames = propertyValuesByType.get(entityNamePropertyType);
-        if (entityNames.isEmpty()) {
-            entityNames.add(identifier);
-        }
+    void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames) {
+        this.species = species;
+        this.propertyValuesByType = propertyValuesByType;
+        this.entityNames = entityNames;
     }
 
-    public String getSpecies(){
+    public String getSpecies() {
         return species;
     }
 
     //used in bioEntity.jsp
     public List<PropertyLink> getPropertyLinks(String propertyType) {
-        if ("reactome".equals(propertyType)){
+        if ("reactome".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
             addReactomePropertyValues();
         }
         List<PropertyLink> propertyLinks = Lists.newArrayList();
-        for(String propertyValue: propertyValuesByType.get(propertyType) ){
+        for (String propertyValue : propertyValuesByType.get(propertyType)) {
 
             propertyLinks.add(createLink(propertyType, propertyValue, species));
         }
@@ -101,7 +97,7 @@ public class BioEntityPropertyService {
         return StringUtils.substringBefore(description, "[");
     }
 
-    public SortedSet<String> getEntityNames(){
+    public SortedSet<String> getEntityNames() {
         return entityNames;
     }
 
@@ -155,6 +151,8 @@ public class BioEntityPropertyService {
         String displayName = propertyValue;
         if (propertyType.equals("ortholog")) {
             displayName = transformOrthologToSymbol(displayName);
+        } else if (propertyType.equals("reactome")) {
+            displayName = reactomeBiomartClient.fetchPathwayName(propertyValue);
         }
         return displayName;
     }

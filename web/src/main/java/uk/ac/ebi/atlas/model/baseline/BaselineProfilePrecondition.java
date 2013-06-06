@@ -66,7 +66,7 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
 
         double maxOnRest = baselineProfile.getMaxExpressionLevelOn(remainingFactors);
 
-        return (averageOnSelected / maxOnRest) >= 1;
+        return (averageOnSelected / maxOnRest) > 1;
 
     }
 

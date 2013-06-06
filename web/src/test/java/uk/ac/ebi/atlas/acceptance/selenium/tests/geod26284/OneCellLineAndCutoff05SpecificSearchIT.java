@@ -60,6 +60,6 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     @Override
     protected String getGeneCount() {
-        return "11";
+        return "10";
     }
 }

@@ -22,20 +22,46 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.geneindex.SolrQueryService;
+import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 
-import java.util.Collections;
+import javax.inject.Inject;
 import java.util.List;
+import java.util.SortedSet;
 
 @Controller
 @Scope("request")
 public class GeneSetPageController extends BioEntityPageController {
 
-    public static final String GENE_SET_NAME_PROPERTY_TYPE = "T0_BE_SPECIFIED";
+    private SolrQueryService solrQueryService;
+
+    private BioEntityPropertyService bioEntityPropertyService;
+
+
+    private ReactomeBiomartClient reactomeBiomartClient;
+    private String geneSetPagePropertyTypes;
+
+    @Value("#{configuration['index.types.genesetpage']}")
+    void setGenePagePropertyTypes(String geneSetPagePropertyTypes) {
+        this.geneSetPagePropertyTypes = geneSetPagePropertyTypes;
+    }
+
+    @Inject
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient) {
+        this.solrQueryService = solrQueryService;
+        this.bioEntityPropertyService = bioEntityPropertyService;
+        this.reactomeBiomartClient = reactomeBiomartClient;
+    }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
@@ -43,13 +69,26 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
+    protected void initBioEntityPropertyService(String identifier) {
+        String species = solrQueryService.getSpeciesForPropertyValue(identifier);
+
+        SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
+        propertyValuesByType.put("reactome", identifier);
+        propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(identifier));
+        SortedSet<String> names = Sets.newTreeSet();
+        names.add(identifier);
+        bioEntityPropertyService.init(species, propertyValuesByType, names);
+    }
+
+    @Override
     List<String> getPagePropertyTypes() {
-        return Collections.emptyList();
+        return  Lists.newArrayList(geneSetPagePropertyTypes.split(","));
     }
 
     @Override
     String getEntityNamePropertyType() {
-        return GENE_SET_NAME_PROPERTY_TYPE;
+        return null;
     }
+
 
 }

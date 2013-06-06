@@ -64,7 +64,7 @@ public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getPropertiesTableRow(1), hasItems("Ensembl Transcript"));
         assertThat(subject.getPropertiesTableRow(1).get(1), containsString("ENST00000366478"));
         assertThat(subject.getPropertiesTableRow(3), hasItems("UniProt", "Q8N349"));
-        assertThat(subject.getPropertiesTableRow(5), hasItems("Reactome ID", "REACT_111102"));
+        assertThat(subject.getPropertiesTableRow(5), hasItems("Reactome ID", "Signal Transduction"));
     }
 
     @Test

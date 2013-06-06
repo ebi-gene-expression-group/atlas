@@ -23,16 +23,23 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Maps;
-import org.apache.commons.lang.StringUtils;
+import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
+import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 
 public abstract class BioEntityPageController {
+
+
+    private static final String PROPERTY_TYPE_DESCRIPTION = "description";
+
+    private SolrClient solrClient;
 
     private BioEntityPropertyService bioEntityPropertyService;
 
@@ -48,11 +55,14 @@ public abstract class BioEntityPageController {
         this.bioEntityPropertyService = bioEntityPropertyService;
     }
 
+    @Inject
+    public void setSolrClient(SolrClient solrClient) {
+        this.solrClient = solrClient;
+    }
+
     public String showGenePage(String identifier, Model model) {
 
-        String entityNamePropertyType = getEntityNamePropertyType();
-
-        bioEntityPropertyService.init(identifier, entityNamePropertyType, getPagePropertyTypes());
+        initBioEntityPropertyService(identifier);
 
         model.addAttribute("entityIdentifier", identifier);
 
@@ -73,4 +83,16 @@ public abstract class BioEntityPageController {
 
     abstract String getEntityNamePropertyType();
 
+    protected void initBioEntityPropertyService(String identifier) {
+        String species = solrClient.findSpeciesForGeneId(identifier);
+        List<String> queryPropertyTypes = getPagePropertyTypes();
+        queryPropertyTypes.add(getEntityNamePropertyType());
+        queryPropertyTypes.add(PROPERTY_TYPE_DESCRIPTION);
+        SortedSetMultimap<String,String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
+        SortedSet<String> entityNames = propertyValuesByType.get(getEntityNamePropertyType());
+        if (entityNames.isEmpty()) {
+            entityNames.add(identifier);
+        }
+        bioEntityPropertyService.init(species, propertyValuesByType, entityNames);
+    }
 }
