@@ -59,7 +59,7 @@ public class ReactomeBiomartClient {
         String url = MessageFormat.format(REACTOME_BIOMART_URL, reactomeId);
         String result = restTemplate.getForObject(url, String.class);
 
-        return StringUtils.trimToNull(StringUtils.substringAfterLast(result, "\t"));
+        return StringUtils.trimToEmpty(StringUtils.substringAfterLast(result, "\t"));
     }
 
 }

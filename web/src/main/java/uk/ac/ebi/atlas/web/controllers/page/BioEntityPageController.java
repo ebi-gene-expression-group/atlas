@@ -89,8 +89,7 @@ public abstract class BioEntityPageController {
     protected void initBioEntityPropertyService(String identifier) {
         String species = solrClient.findSpeciesForGeneId(identifier);
         List<String> queryPropertyTypes = getPagePropertyTypes();
-//        queryPropertyTypes.add(getEntityNamePropertyType());
-//        queryPropertyTypes.add(PROPERTY_TYPE_DESCRIPTION);
+
         SortedSetMultimap<String,String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
         SortedSet<String> entityNames = propertyValuesByType.get(getEntityNamePropertyType());
         if (entityNames.isEmpty()) {
