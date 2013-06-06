@@ -143,6 +143,7 @@ public class ExperimentsListController {
             experimentInfo.setSpecies(experiment.getSpecies());
             experimentInfo.setExperimentType(experiment.getType());
             experimentInfo.setExperimentalFactors(extractExperimentalFactors(experiment.getExperimentalFactors()));
+            experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
             experimentInfos.add(experimentInfo);
         }

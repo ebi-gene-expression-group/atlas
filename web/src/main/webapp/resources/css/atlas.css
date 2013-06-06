@@ -435,7 +435,7 @@ a.help-icon {
     display: block;
 }
 
-.italic {
+#experiments-table td.italic {
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-style: italic;
 }
