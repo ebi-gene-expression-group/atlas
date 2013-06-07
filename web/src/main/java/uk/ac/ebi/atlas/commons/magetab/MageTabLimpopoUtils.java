@@ -38,6 +38,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Named
@@ -64,6 +65,10 @@ public class MageTabLimpopoUtils {
         }
 
         return species;
+    }
+
+    public List<String> extractPubMedIdsFromIDF(MAGETABInvestigation investigation) {
+        return investigation.IDF.pubMedId;
     }
 
     public MAGETABInvestigation parseInvestigation(String experimentAccession)

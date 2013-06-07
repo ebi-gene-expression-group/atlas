@@ -44,13 +44,13 @@ var experimentsPageModule = (function ($) {
 
     function formatExperimentType(data, type, full) {
         if (data === 'BASELINE') {
-            return '<img src="resources/images/allup2_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+            return '<img src="resources/images/allup2_transparent_bkg.png" title="baseline"/>';
         }
         if (data === 'DIFFERENTIAL') {
-            return '<img src="resources/images/updown_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+            return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
         }
         if (data === 'MICROARRAY') {
-            return '<img src="resources/images/updown_transparent_bkg.png" title="' + data.toLowerCase() + '"/>';
+            return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
         }
         return data;
     }
@@ -92,8 +92,6 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        var emptySpaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-
         $('#experiments-table').dataTable({
             "bProcessing":true,
             "sAjaxSource":"json/experiments",
@@ -106,7 +104,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
                     } },
-                { "sTitle":emptySpaces + "Description" + emptySpaces, "mData":"experimentDescription", "sClass":"center bb",
+                { "sTitle":"Description", "mData":"experimentDescription", "sClass":"center bb padding",
                     "mRender":function (data, type, full) {
                         return formatExperimentDescription(data, type, full);
                     } },

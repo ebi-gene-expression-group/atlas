@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.differential;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,31 +31,31 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialExperimentTest {
 
-    public static final String CONTRAST_ID1 = "a";
-    public static final String CONTRAST_ID2 = "b";
-    public static final String ASSAY_GROUP_1 = "assayGroup1";
-    public static final String ASSAY_GROUP_2 = "assayGroup2";
+    private static final String CONTRAST_ID1 = "a";
+    private static final String CONTRAST_ID2 = "b";
+    private static final String ASSAY_GROUP_1 = "assayGroup1";
+    private static final String ASSAY_GROUP_2 = "assayGroup2";
+    private static final String PUBMEDID = "PUBMEDID";
 
-    DifferentialExperiment subject;
-
-    @Mock
-    Contrast contrastMock1;
+    private DifferentialExperiment subject;
 
     @Mock
-    Contrast contrastMock2;
+    private Contrast contrastMock1;
 
     @Mock
-    AssayGroup assayGroupMock1;
+    private Contrast contrastMock2;
 
     @Mock
-    AssayGroup assayGroupMock2;
+    private AssayGroup assayGroupMock1;
+
+    @Mock
+    private AssayGroup assayGroupMock2;
 
     @Before
     public void setUp() throws Exception {
@@ -72,7 +73,7 @@ public class DifferentialExperimentTest {
         when(contrastMock2.getReferenceAssayGroup()).thenReturn(assayGroupMock2);
         when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
 
-        subject = new DifferentialExperiment("accession", Sets.newHashSet(contrastMock1, contrastMock2), "description", false, Sets.newHashSet("species"));
+        subject = new DifferentialExperiment("accession", Sets.newHashSet(contrastMock1, contrastMock2), "description", false, Sets.newHashSet("species"), Lists.newArrayList(PUBMEDID));
     }
 
     @Test
@@ -94,5 +95,10 @@ public class DifferentialExperimentTest {
     @Test
     public void testGetAssayAccessions() throws Exception {
         assertThat(subject.getAssayAccessions(), hasItems(ASSAY_GROUP_1, ASSAY_GROUP_2));
+    }
+
+    @Test
+    public void testGetPubMedIds() throws Exception {
+        assertThat(subject.getPubMedIds(), contains(PUBMEDID));
     }
 }

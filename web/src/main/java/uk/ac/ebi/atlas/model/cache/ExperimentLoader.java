@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Set;
 
 public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
@@ -85,6 +86,11 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
     protected Set<String> extractSpecies(String experimentAccession) throws MalformedURLException, ParseException {
         MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
         return mageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
+    }
+
+    protected List<String> extractPubMedIds(String experimentAccession) throws MalformedURLException, ParseException {
+        MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+        return mageTabLimpopoUtils.extractPubMedIdsFromIDF(investigation);
     }
 
 }

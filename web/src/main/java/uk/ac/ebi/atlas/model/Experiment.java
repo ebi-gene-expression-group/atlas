@@ -32,13 +32,14 @@ public class Experiment implements Serializable {
     private ExperimentType type;
 
     private SortedSet<String> species;
+    private List<String> pubMedIds;
     private Map<String, String> speciesMapping;
     private String accession;
     private String description;
     private String displayName;
     private boolean hasExtraInfoFile;
 
-    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping) {
+    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds) {
         this.type = type;
         this.accession = accession;
         this.displayName = displayName;
@@ -46,10 +47,11 @@ public class Experiment implements Serializable {
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.species = new TreeSet<>(species);
         this.speciesMapping = speciesMapping;
+        this.pubMedIds = pubMedIds;
     }
 
-    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping) {
-        this(type, accession, null, description, hasExtraInfoFile, species, speciesMapping);
+    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds) {
+        this(type, accession, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds);
     }
 
     public ExperimentType getType() {
@@ -77,6 +79,10 @@ public class Experiment implements Serializable {
 
     public Set<String> getSpecies() {
         return Collections.unmodifiableSet(species);
+    }
+
+    public List<String> getPubMedIds() {
+        return Collections.unmodifiableList(pubMedIds);
     }
 
     public String getFirstSpecies() {

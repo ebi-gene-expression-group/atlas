@@ -42,16 +42,17 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentBuilderTest {
 
-    public static final String FACTOR_TYPE = "type";
-    public static final String FACTOR_VALUE = "value";
-    public static final String SPECIES = "homo sapiens";
-    public static final String SPECIES_NAME = "Homo sapiens";
-    public static final String FACTOR_NAME = "name";
-    public static final String EXPERIMENT_ACCESSION = "accession";
-    public static final String DESCRIPTION = "description";
-    public static final String DISPLAY_NAME = "displayName";
-    public static final String RUN_ACCESSION1 = "run1";
-    public static final String RUN_ACCESSION2 = "run2";
+    private static final String FACTOR_TYPE = "type";
+    private static final String FACTOR_VALUE = "value";
+    private static final String SPECIES = "homo sapiens";
+    private static final String SPECIES_NAME = "Homo sapiens";
+    private static final String FACTOR_NAME = "name";
+    private static final String EXPERIMENT_ACCESSION = "accession";
+    private static final String DESCRIPTION = "description";
+    private static final String DISPLAY_NAME = "displayName";
+    private static final String RUN_ACCESSION1 = "run1";
+    private static final String RUN_ACCESSION2 = "run2";
+    private static final String PUBMEDID = "PUBMEDID";
 
     private BaselineExperimentBuilder subject;
 
@@ -109,6 +110,7 @@ public class BaselineExperimentBuilderTest {
                 .withMenuFilterFactorTypes(Sets.newHashSet(FACTOR_TYPE))
                 .withFactorNamesByType(nameMap)
                 .withSpeciesMapping(speciesMap)
+                .withPubMedIds(Lists.newArrayList(PUBMEDID))
                 .create();
 
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
@@ -123,6 +125,6 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getFirstSpecies(), is(SPECIES));
         assertThat(experiment.getSpeciesMapping(), is(speciesMap));
         assertThat(experiment.getType(), is(ExperimentType.BASELINE));
-
+        assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
     }
 }

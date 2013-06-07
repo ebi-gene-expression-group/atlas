@@ -30,7 +30,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -61,4 +60,8 @@ public class ProteinPageController extends BioEntityPageController {
         return GENE_NAME_PROPERTY_TYPE;
     }
 
+    @Override
+    protected boolean isDisplyedInPropertyList(String propertyType) {
+        return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION);
+    }
 }

@@ -5,7 +5,6 @@
 
 <section>
 
-
     <div id="helpContentTooltip" style='display:none'></div>
 
     <table width="100%">
@@ -29,7 +28,7 @@
                         </a>
                     </c:if>
                 </div>
-                <div>Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
+                <div id="experimentOrganisms">Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
                 <c:if test="${allArrayDesigns!=null}">
                     <div>Array Design(s):
                         <c:forEach items="${allArrayDesigns}" var="arrayDesign">
@@ -39,6 +38,12 @@
                         </c:forEach>
                     </div>
                 </c:if>
+                <div id="experimentReferences">Reference(s):
+                    <c:forEach var="pubMedId" items="${pubMedIds}">
+                        <span><a href="http://www.ncbi.nlm.nih.gov/pubmed/${pubMedId}"
+                                 title="View publication in PubMed">${pubMedId}</a></span>
+                    </c:forEach>
+                </div>
             </td>
             <td width="130px">
                 <table cellpadding="2" cellspacing="0" style="float:right">

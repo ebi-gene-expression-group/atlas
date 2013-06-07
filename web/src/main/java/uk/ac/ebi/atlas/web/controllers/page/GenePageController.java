@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -70,6 +69,11 @@ public class GenePageController extends BioEntityPageController {
 
         return showGenePage(identifier, model);
     }
+
+    @Override
+       protected boolean isDisplyedInPropertyList(String propertyType) {
+           return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(GENE_NAME_PROPERTY_TYPE);
+       }
 
     @Override
     List<String> getPagePropertyTypes() {

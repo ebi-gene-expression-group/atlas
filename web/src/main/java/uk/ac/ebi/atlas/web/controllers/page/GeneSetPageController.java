@@ -69,6 +69,11 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
+    protected boolean isDisplyedInPropertyList(String propertyType) {
+        return true;
+    }
+
+    @Override
     protected void initBioEntityPropertyService(String identifier) {
         String species = solrQueryService.getSpeciesForPropertyValue(identifier);
 

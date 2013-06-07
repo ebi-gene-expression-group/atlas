@@ -21,6 +21,12 @@
                        href="${pageContext.request.contextPath}/experiments/${experimentAccession}">${experimentDescription}</a>
                 </div>
                 <div>Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
+                <div>Reference(s):
+                    <c:forEach var="pubMedId" items="${pubMedIds}">
+                        <span><a href="http://www.ncbi.nlm.nih.gov/pubmed/${pubMedId}"
+                                 title="View publication in PubMed">${pubMedId}</a></span>
+                    </c:forEach>
+                </div>
             </td>
         </tbody>
     </table>

@@ -26,7 +26,10 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -46,9 +49,10 @@ public class BaselineExperiment extends Experiment {
     BaselineExperiment(String accession, ExperimentalFactors experimentalFactors,
                        Map<String, ExperimentRun> experimentRuns, String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
-                       String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile) {
+                       String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
+                       List<String> pubMedIds) {
 
-        super(ExperimentType.BASELINE, accession, displayName, description, hasExtraInfoFile, species, speciesMapping);
+        super(ExperimentType.BASELINE, accession, displayName, description, hasExtraInfoFile, species, speciesMapping, pubMedIds);
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;

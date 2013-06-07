@@ -32,7 +32,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
-
 import java.util.Arrays;
 
 import static org.junit.Assert.assertThat;
@@ -56,7 +55,7 @@ public class FetchGenePagePropertiesIT {
 
         // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,designelement_accession
 
-        assertThat(properties.size(), Matchers.is(53));
+        assertThat(properties.size(), Matchers.is(55));
         assertThat(properties.get("synonym").size(), Matchers.is(2));
         assertThat(properties.get("synonym"), Matchers.hasItems("Dchil", "Osteoactivin"));
         assertThat(properties.get("ortholog"), Matchers.hasItems("ENSRNOG00000008816", "ENSGALG00000010949", "ENSBTAG00000000604", "ENSXETG00000007393", "ENSG00000136235"));

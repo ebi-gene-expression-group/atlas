@@ -52,6 +52,7 @@ public class BaselineExperimentBuilder {
     private Map<String, String> speciesMapping;
     private String experimentAccession;
     private List<FactorGroup> orderedFactorGroups;
+    private List<String> pubMedIds;
 
     @Inject
     BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -108,6 +109,11 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
+    public BaselineExperimentBuilder withPubMedIds(List<String> pubMedIds) {
+        this.pubMedIds = pubMedIds;
+        return this;
+    }
+
     public BaselineExperiment create() {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
@@ -116,6 +122,7 @@ public class BaselineExperimentBuilder {
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
+        checkState(CollectionUtils.isNotEmpty(pubMedIds), "Please provide a non blank pubMedIds");
 
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder
                 .withExperimentRuns(experimentRuns.values())
@@ -129,7 +136,7 @@ public class BaselineExperimentBuilder {
         }
 
         return new BaselineExperiment(experimentAccession, experimentalFactors, experimentRuns, description,
-                displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile);
+                displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile, pubMedIds);
     }
 
 

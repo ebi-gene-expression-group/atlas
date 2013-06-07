@@ -35,6 +35,7 @@ import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -59,6 +60,7 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
         Set<Contrast> contrasts = microarrayExperimentConfiguration.getContrasts();
 
         Set<String> species = extractSpecies(accession);
+        List<String> pubMedIds = extractPubMedIds(accession);
 
         SortedSet<String> arrayDesignNames = microarrayExperimentConfiguration.getArrayDesignNames();
 
@@ -66,7 +68,7 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
 
         boolean hasLogFoldChangeFile = new File(logFoldChangeFileLocation).exists();
 
-        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile);
+        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds);
 
     }
 }

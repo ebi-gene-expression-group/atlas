@@ -94,6 +94,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
                 .build();
 
         Map<String, ExperimentRun> processedExperimentRuns = mageTabParser.getProcessedExperimentRuns();
+        List<String> pubMedIds = extractPubMedIds(experimentAccession);
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, processedExperimentRuns);
 
@@ -109,6 +110,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
                 .withFactorNamesByType(mageTabParser.getFactorNamesByType())
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withSpeciesMapping(speciesMapping)
+                .withPubMedIds(pubMedIds)
                 .create();
 
     }
