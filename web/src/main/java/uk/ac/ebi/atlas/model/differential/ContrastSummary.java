@@ -22,11 +22,7 @@
 
 package uk.ac.ebi.atlas.model.differential;
 
-import com.google.common.collect.Sets;
-import com.sun.javafx.tools.ant.Platform;
-
 import java.util.Iterator;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
