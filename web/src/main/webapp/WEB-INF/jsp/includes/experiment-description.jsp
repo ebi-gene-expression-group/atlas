@@ -51,11 +51,13 @@
             </c:forEach>
         </div>
     </c:if>
-    <div id="experimentReferences">Reference(s):
-        <c:forEach var="pubMedId" items="${pubMedIds}">
+    <c:if test="${not empty pubMedIds.get(0)}">
+        <div id="experimentReferences">Reference(s):
+            <c:forEach var="pubMedId" items="${pubMedIds}">
                         <span><a href="http://www.ncbi.nlm.nih.gov/pubmed/${pubMedId}"
                                  title="View publication in PubMed">${pubMedId}</a></span>
-        </c:forEach>
-    </div>
+            </c:forEach>
+        </div>
+    </c:if>
 </td>
 
