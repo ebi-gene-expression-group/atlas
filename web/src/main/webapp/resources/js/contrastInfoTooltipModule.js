@@ -48,6 +48,9 @@ var contrastInfoTooltipModule = (function($) {
 
                         $('#experimentDescription').text(experimentDescription);
                         $('#contrastDescription').text(contrastDescription);
+
+                        $("#contrastInfo tbody").html("");
+
                         for(var i = 0; i < data.properties.length; i++){
                             var property = data.properties[i];
                             var propertyName = property.propertyName;
@@ -55,9 +58,9 @@ var contrastInfoTooltipModule = (function($) {
                             var referenceValue = property.referenceValue !== undefined ? property.referenceValue : "";
                             var tableRow = $("<tr><td>" + propertyName + "</td><td>" + testValue + "</td><td>" + referenceValue + "</td></tr>");
                             if(testValue === referenceValue) {
-                                tableRow.css("font-weight","bold");
+                                tableRow.find("td").css("font-weight","bold");
                             } else {
-                                tableRow.css("font-color","gray");
+                                tableRow.find("td").css("color","gray");
                             }
                             $("#contrastInfo tbody").append(tableRow);
                         }
