@@ -27,6 +27,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
 public class ExperimentTitleIT extends SinglePageSeleniumFixture {
@@ -46,5 +47,14 @@ public class ExperimentTitleIT extends SinglePageSeleniumFixture {
                 "tissues (Illumina Body Map)"));
     }
 
+    @Test
+    public void testOrganisms() {
+        assertThat(subject.getExperimentOrganisms(), is("Organism(s): Homo sapiens"));
+    }
+
+    @Test
+    public void testReferences() {
+        assertThat(subject.getExperimentReferences(), is("Reference(s): 22496456 22955988 23258890"));
+    }
 
 }
