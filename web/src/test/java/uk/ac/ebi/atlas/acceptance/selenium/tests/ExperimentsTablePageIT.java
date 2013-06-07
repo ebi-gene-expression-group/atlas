@@ -62,7 +62,7 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
         assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-43049"));
         subject.clickFirstColumnHeader();
-        assertThat(subject.getFirstExperimentInfo(), hasItem("E-TABM-51"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-21860"));
         assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-26284"));
         subject.clickFirstColumnHeader();
         assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
