@@ -23,6 +23,9 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentsTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
@@ -37,6 +40,13 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
     protected void getStartingPage() {
         subject = new ExperimentsTablePage(driver);
         subject.get();
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !subject.getExperimentsTableInfo().startsWith("Showing 0");
+            }
+        });
     }
 
     @Test
