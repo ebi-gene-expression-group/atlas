@@ -90,7 +90,7 @@ abstract class TablePage extends AtlasPage {
     protected List<WebElement> getNonEmptyCellsFromFirstTableRow(WebElement table) {
         List<WebElement> nonEmptyCells = new ArrayList<>();
         for (WebElement cell : getFirstTableRow(table)) {
-            if (!cell.getCssValue("background-color").equals("rgba(255, 255, 255, 1)")) {
+            if (!cell.getCssValue("background-color").equals("transparent")) {
                 nonEmptyCells.add(cell);
             }
         }
