@@ -87,6 +87,25 @@
             </table>
         </div>
 
+
+        <ul id="baselineProfileHeader" class="bioEntityCardHeader">
+            <img id="baseline-info-image" title="Baseline Expression"
+                 style="position: absolute; left: 0.5em; "
+                 src="resources/images/allup2_transparent_bkg.png"/>
+            <span class="bioEntityCardBioentityName">Baseline Expression</span>
+        </ul>
+
+
+        <div id="baselineProfileBody" class="bioEntityCard">
+
+            <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                <span style="float: right">Expression Level cut-off: 0.5</span>
+            </div>
+
+            <div id="widgetBody"></div>
+        </div>
+
+
         <c:if test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
             <ul id="diffProfileHeader" class="bioEntityCardHeader">
                 <img id="differential-info-image" title="Differential Expression"
@@ -134,23 +153,35 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
+
+
+<script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+<script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
+
 <script>
-    $(function () {
-        var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : 0};
+
+    window.onload = function () {
+
+        var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : 1};
 
         $("#bioentity-info-image").tooltip();
         $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
-            collapsible:true,
+            collapsible: true,
             active: openPanelIndex,
-            heightStyle:"content",
-            icons:{ "header":"bioEntityCardIconPlus", "activeHeader":"bioEntityCardIconMinus" },
-            header:"ul"
+            heightStyle: "content",
+            icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
+            header: "ul"
         });
 
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
-    });
+
+        var instance = new Biojs.AtlasHeatmap({
+            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}&geneSetMatch=true',
+            target: "widgetBody"
+        });
+    };
 </script>
 
 

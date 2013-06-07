@@ -77,7 +77,7 @@ public class DifferentialGeneProfileService {
         this.differentialGeneProfileProperties = differentialGeneProfileProperties;
     }
 
-    public DifferentialGeneProfileProperties getDifferentialProfilesListMapForIdentifier(String identifier, double cutoff) {
+    public DifferentialGeneProfileProperties initDifferentialProfilesListMapForIdentifier(String identifier, double cutoff) {
 
         // just being paranoid here, maybe not necessary because of request scope
         differentialGeneProfileProperties.clear();

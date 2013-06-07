@@ -144,7 +144,7 @@ public class DifferentialGeneProfileServiceTest {
 
     @Test
     public void testGetDifferentialProfilesList() throws Exception {
-        assertThat(subject.getDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
+        assertThat(subject.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
         verify(applicationPropertiesMock).getDifferentialExperimentsIdentifiers();
         verify(applicationPropertiesMock).getMicroarrayExperimentsIdentifiers();
         verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);

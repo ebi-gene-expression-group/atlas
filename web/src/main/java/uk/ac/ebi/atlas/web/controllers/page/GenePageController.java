@@ -57,23 +57,17 @@ public class GenePageController extends BioEntityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
-        DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
-                differentialGeneProfileService.getDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
-                                                                DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
-        model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
 
-        // setting FDR as cutoff
-        DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
-        requestPreferences.setCutoff(differentialProfilesListMapForIdentifier.getFdrCutoff());
-        model.addAttribute("preferences", requestPreferences);
+        differentialGeneProfileService.initDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
+                DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
 
         return showGenePage(identifier, model);
     }
 
     @Override
-       protected boolean isDisplyedInPropertyList(String propertyType) {
-           return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(GENE_NAME_PROPERTY_TYPE);
-       }
+    protected boolean isDisplyedInPropertyList(String propertyType) {
+        return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(GENE_NAME_PROPERTY_TYPE);
+    }
 
     @Override
     List<String> getPagePropertyTypes() {
