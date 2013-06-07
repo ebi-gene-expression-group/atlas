@@ -27,6 +27,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -37,9 +38,9 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     private boolean isTwoColour = false;
 
     public MicroarrayExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile,
-                                Set<String> species, SortedSet<String> arrayDesignAccessions, boolean twoColour) {
+                                Set<String> species, SortedSet<String> arrayDesignAccessions, boolean twoColour, List<String> pubMedIds) {
 
-        super(ExperimentType.MICROARRAY, accession, contrasts, description, hasExtraInfoFile, species);
+        super(ExperimentType.MICROARRAY, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds);
         this.arrayDesignAccessions = arrayDesignAccessions;
 
         isTwoColour = twoColour;

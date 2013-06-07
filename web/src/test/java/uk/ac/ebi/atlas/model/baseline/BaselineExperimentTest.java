@@ -31,7 +31,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,31 +40,32 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentTest {
 
-    public static final String RUN_ACCESSION1 = "run1";
-    public static final String RUN_ACCESSION2 = "run2";
-    public static final String DEFAULT_QUERY_FACTOR_TYPE = "defaultQueryFactorType";
+    private static final String RUN_ACCESSION1 = "run1";
+    private static final String RUN_ACCESSION2 = "run2";
+    private static final String DEFAULT_QUERY_FACTOR_TYPE = "defaultQueryFactorType";
+    private static final String PUBMEDID = "PUBMEDID";
 
     @Mock
-    ExperimentalFactors experimentalFactorsMock;
+    private ExperimentalFactors experimentalFactorsMock;
 
     @Mock
-    ExperimentRun runMock1;
+    private ExperimentRun runMock1;
 
     @Mock
-    ExperimentRun runMock2;
+    private ExperimentRun runMock2;
 
     @Mock
-    FactorGroup factorGroupMock1;
+    private FactorGroup factorGroupMock1;
 
     @Mock
-    FactorGroup factorGroupMock2;
+    private FactorGroup factorGroupMock2;
 
     @Mock
-    Factor factorMock;
+    private Factor factorMock;
 
-    Map<String, String> speciesMapping = Maps.newHashMap();
+    private Map<String, String> speciesMapping = Maps.newHashMap();
 
-    BaselineExperiment subject;
+    private BaselineExperiment subject;
 
     @Before
     public void setUp() throws Exception {
@@ -81,7 +81,7 @@ public class BaselineExperimentTest {
         subject = new BaselineExperiment("accession", experimentalFactorsMock,
                 experimentRunsMock, "description",
                 "displayName", Sets.newHashSet("species"), speciesMapping, DEFAULT_QUERY_FACTOR_TYPE,
-                Sets.newHashSet(factorMock), true);
+                Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID));
 
 
     }
@@ -109,6 +109,11 @@ public class BaselineExperimentTest {
     @Test
     public void testGetExperimentalFactors() throws Exception {
         assertThat(subject.getExperimentalFactors(), is(experimentalFactorsMock));
+    }
+
+    @Test
+    public void testGetPubMedIds() throws Exception {
+        assertThat(subject.getPubMedIds(), contains(PUBMEDID));
     }
 
 }

@@ -31,30 +31,29 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentTest {
 
     private static final String DISPLAY_NAME = "DISPLAY NAME";
-    @Mock
-    private ExperimentalFactors experimentalFactorsMock;
-
+    private static final String PUBMEDID = "PUBMEDID";
     private static final String SPECIE = "homo sapiens";
-
     private static final String RUN_ACCESSION_1 = "ENS0";
     private static final String RUN_ACCESSION_2 = "ENS1";
     private static final String DESCRIPTION = "aDescription";
-
     private static final String CELLULAR_COMPONENT = "CELLULAR_COMPONENT";
     private static final String ORGANISM_PART = "ORGANISM_PART";
 
-
+    @Mock
+    private ExperimentalFactors experimentalFactorsMock;
     @Mock
     private ExperimentRun experimentRun1Mock;
     @Mock
@@ -90,7 +89,7 @@ public class ExperimentTest {
         List<FactorGroup> orderedFactorGroups = Lists.newArrayList(factorGroupMock1, factorGroupMock2);
 
         when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRunsMock.values()))
-                                            .thenReturn(experimentalFactorsBuilderMock);
+                .thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withMenuFilterFactorTypes(anySet())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withFactorNamesByType(anyMap())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withOrderedFactorGroups(orderedFactorGroups)).thenReturn(experimentalFactorsBuilderMock);
@@ -108,6 +107,7 @@ public class ExperimentTest {
                 .withExperimentRuns(experimentRunsMock)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)
+                .withPubMedIds(Lists.newArrayList(PUBMEDID))
                 .create();
 
     }
@@ -125,6 +125,11 @@ public class ExperimentTest {
     @Test
     public void testSpecies() {
         assertThat(subject.getFirstSpecies(), is(SPECIE));
+    }
+
+    @Test
+    public void testPubMedIds() {
+        assertThat(subject.getPubMedIds(), hasItem(PUBMEDID));
     }
 
     @Test
@@ -162,7 +167,7 @@ public class ExperimentTest {
     }
 
     @Test
-    public void testGetDisplayName(){
+    public void testGetDisplayName() {
         assertThat(subject.getDisplayName(), is(DISPLAY_NAME));
     }
 
