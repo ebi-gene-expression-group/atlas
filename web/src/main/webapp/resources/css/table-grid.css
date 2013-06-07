@@ -22,7 +22,8 @@
 
 .form-grid, .table-grid, .analysis-grid {
     color: #404040;
-    background-color: rgb(237,246,246);
+    background-color: white;
+    /*background-color: rgb(237,246,246);*/
     border: 1px solid #cdcdcd;
     border-spacing: 0;
     empty-cells: show;
@@ -52,9 +53,9 @@
     padding: 5px;
 }
 
-td{
-    background-color: white;
-}
+/*td{*/
+    /*background-color: white;*/
+/*}*/
 
 .table-grid>tbody>tr>td, .table-grid>thead>tr>td {
     color: #3D3D3D;
@@ -65,9 +66,12 @@ td{
     white-space: nowrap;
 }
 
+.vertical-header-cell, .horizontal-header-cell {
+    background-color: rgb(237,246,246) !important;
+}
+
 .horizontal-header-cell {
     border: 1px solid #cdcdcd;
-    background-color: rgb(237,246,246) !important;
     white-space: nowrap;
     width: auto !important;
     padding-bottom: 0px;

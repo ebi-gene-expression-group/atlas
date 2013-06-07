@@ -92,7 +92,7 @@
 
                             <display:column
                                     title="<div ${type != 'BASELINE' ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''} data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
-                                    headerClass='rotated_cell'
+                                    headerClass='rotated_cell vertical-header-cell'
                                     style="${style}">
 
                                 <c:if test="${expressionLevel != 0}">
