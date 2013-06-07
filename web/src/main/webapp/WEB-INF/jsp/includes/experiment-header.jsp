@@ -10,41 +10,7 @@
     <table width="100%">
         <tbody>
         <tr>
-            <td style="width:140px;padding-right:20px">
-                <div class="experiment-accession">
-                    <a id="goto-ae" class="thick-link"
-                       href="${applicationProperties.getArrayExpressURL(experimentAccession)}"
-                       title="View experiment in ArrayExpress"
-                       target="_blank">${experimentAccession}</a>
-                </div>
-            </td>
-            <td width="100%">
-                <div id="experimentDescription">
-                    <a id="goto-experiment" class="thick-link" title="Experiment Page"
-                       href="experiments/${experimentAccession}">${experimentDescription}</a>
-                    <c:if test="${hasExtraInfo}">
-                        <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
-                            <img alt="more information" src="resources/images/balloon-ellipsis-icon-left.png">
-                        </a>
-                    </c:if>
-                </div>
-                <div id="experimentOrganisms">Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
-                <c:if test="${allArrayDesigns!=null}">
-                    <div>Array Design(s):
-                        <c:forEach items="${allArrayDesigns}" var="arrayDesign">
-                            <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
-                               href="http://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesign}"
-                               target='_blank'>${arrayDesign}</a>
-                        </c:forEach>
-                    </div>
-                </c:if>
-                <div id="experimentReferences">Reference(s):
-                    <c:forEach var="pubMedId" items="${pubMedIds}">
-                        <span><a href="http://www.ncbi.nlm.nih.gov/pubmed/${pubMedId}"
-                                 title="View publication in PubMed">${pubMedId}</a></span>
-                    </c:forEach>
-                </div>
-            </td>
+            <%@ include file="experiment-description.jsp" %>
             <td width="130px">
                 <table cellpadding="2" cellspacing="0" style="float:right">
                     <tr>

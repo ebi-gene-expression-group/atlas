@@ -7,27 +7,8 @@
     <table width="100%">
         <tbody>
         <tr>
-            <td style="width:140px;padding-right:20px">
-                <div class="experiment-accession">
-                    <a id="goto-ae" class="thick-link"
-                       href="${applicationProperties.getArrayExpressURL(experimentAccession)}"
-                       title="View experiment in ArrayExpress"
-                       target="_blank">${experimentAccession}</a>
-                </div>
-            </td>
-            <td width="100%">
-                <div id="experimentDescription">
-                    <a id="goto-experiment" class="thick-link" title="Experiment Page"
-                       href="${pageContext.request.contextPath}/experiments/${experimentAccession}">${experimentDescription}</a>
-                </div>
-                <div>Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
-                <div>Reference(s):
-                    <c:forEach var="pubMedId" items="${pubMedIds}">
-                        <span><a href="http://www.ncbi.nlm.nih.gov/pubmed/${pubMedId}"
-                                 title="View publication in PubMed">${pubMedId}</a></span>
-                    </c:forEach>
-                </div>
-            </td>
+            <%@ include file="includes/experiment-description.jsp" %>
+        </tr>
         </tbody>
     </table>
 
