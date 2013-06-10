@@ -121,8 +121,11 @@ public final class ExperimentDispatcher {
 
     @RequestMapping(value = "/widgets/heatmap/protein")
     public String dispatchWidget(HttpServletRequest request,
-        @RequestParam(value = "geneQuery", required = true) String uniprotAccession, Model model) {
-        Experiment experiment = getExperiment(experimentResolver.getExperimentAccessionByUniprotAccession(uniprotAccession), model);
+                                 @RequestParam(value = "geneQuery", required = true) String uniprotAccession,
+                                 @RequestParam(value = "propertyType", required = false) String propertyType,
+                                 Model model) {
+
+        Experiment experiment = getExperiment(experimentResolver.getExperimentAccessionByProperty(uniprotAccession, propertyType), model);
         prepareModel(request, model, experiment);
         String requestURL = getRequestURL(request);
 

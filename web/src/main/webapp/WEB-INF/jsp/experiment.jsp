@@ -43,7 +43,7 @@
     </spring:hasBindErrors>
 
 
-    <%@ include file="includes/anatomigram-and-heatmap.jsp" %>
+    <%@ include file="includes/anatomogram-and-heatmap.jsp" %>
 
     <br/>
 

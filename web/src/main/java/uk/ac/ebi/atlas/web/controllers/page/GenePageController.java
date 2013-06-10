@@ -58,8 +58,15 @@ public class GenePageController extends BioEntityPageController {
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
 
-        differentialGeneProfileService.initDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
+        DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
+                differentialGeneProfileService.initDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
                 DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
+        model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
+
+        // setting FDR as cutoff
+        DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
+
+        model.addAttribute("preferences", requestPreferences);
 
         return showGenePage(identifier, model);
     }

@@ -26,10 +26,11 @@
   --%>
 
 <div style="float:right; padding-left: 100px">
-    <div style="float:left">
-        <c:choose>
-            <c:when test="${type eq 'BASELINE'}">
-                <table style="font-size:10px;" id="heatmap-legenda">
+    <%--<div style="float:left">--%>
+    <c:choose>
+        <c:when test="${type eq 'BASELINE'}">
+            <div style="float:left">
+                <table style="font-size:10px;" id="baseline-heatmap-legend">
 
                     <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                           highValueColour="${colourGradient.getHexByColourName('blue')}"
@@ -37,9 +38,13 @@
                                           highValueColorExpressionLevel="${geneProfiles.getMaxExpressionLevel()}"/>
 
                 </table>
-            </c:when>
-            <c:otherwise>
-                <table style="font-size:10px;" id="heatmap-legenda">
+
+            </div>
+            <div id="baseline-help-diff" data-help-loc="#gradient-base" style="float:left;"/>
+        </c:when>
+        <c:otherwise>
+            <div style="float:left">
+                <table style="font-size:10px;" id="diff-heatmap-legend">
                     <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
                                     and geneProfiles.getMinDownRegulatedExpressionLevel() != 'NaN'}">
 
@@ -59,10 +64,13 @@
 
                     </c:if>
                 </table>
-            </c:otherwise>
-        </c:choose>
 
-    </div>
+            </div>
+            <div id="gradient-help-diff" data-help-loc="#gradient-diff" style="float:left;"/>
+        </c:otherwise>
+    </c:choose>
 
-    <div data-help-loc="#gradient" style="float:left;"/>
+    <%--</div>--%>
+
+    <%--<div data-help-loc="#gradient" style="float:left;"/>--%>
 </div>

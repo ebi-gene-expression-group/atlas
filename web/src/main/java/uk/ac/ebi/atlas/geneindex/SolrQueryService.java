@@ -22,7 +22,10 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.*;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -133,11 +136,15 @@ public class SolrQueryService {
 
     public String getSpeciesForPropertyValue(String propertyValue) {
 
-        SolrQuery query = new SolrQuery("property:" + propertyValue);
+        SolrQuery query = new SolrQuery(PROPERTY_LOWER_FIELD + ":" + propertyValue);
         return extractSpecies(query);
 
     }
 
+    public String getSpeciesForPropertyValue(String value, String type) {
+        SolrQuery query = new SolrQuery(type + ":" + value);
+        return extractSpecies(query);
+    }
 
     public List<String> getPropertyValuesForIdentifier(String identifier, String propertyType) {
 
@@ -280,7 +287,7 @@ public class SolrQueryService {
         query.append(geneName);
         query.append("\" AND species:\"");
         query.append(species);
-         query.append("\" AND type:\"");
+        query.append("\" AND type:\"");
         query.append(bioentityType);
         query.append("\" AND (");
         for (int i = 0; i < propertyTypes.length; i++) {
@@ -311,5 +318,4 @@ public class SolrQueryService {
     String customEscape(String searchText) {
         return searchText.replace(":", "\\:");
     }
-
 }

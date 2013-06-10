@@ -99,6 +99,7 @@
         <div id="baselineProfileBody" class="bioEntityCard">
 
             <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
                 <span style="float: right">Expression Level cut-off: 0.5</span>
             </div>
 
@@ -175,10 +176,15 @@
             header: "ul"
         });
 
-        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+        <%--helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');--%>
 
-        var instance = new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}&geneSetMatch=true',
+        var widgetParameters = "&propertyType=identifier";
+        if (${isGeneSet == true}) {
+            widgetParameters = "&geneSetMatch=true";
+        }
+
+        new Biojs.AtlasHeatmap({
+            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
             target: "widgetBody"
         });
     };
