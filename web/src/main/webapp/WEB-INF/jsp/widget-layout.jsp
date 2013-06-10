@@ -57,6 +57,25 @@
 
 <tiles:insertAttribute name="body"/>
 
+<script type="text/javascript">
+    <!--[if IE]>
+    //disable vertical header in IE
+    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell');
+    <![endif]-->
+</script>
+
+<script type="text/javascript">
+    <!--[if lte IE 8]>
+    $("#anatomogram").remove();
+    $("#heatmap-div").removeClass();
+    $("#gene-distribution-button").hide();//hide the bar chart button
+    $("#gene-distribution-panel").hide();//hide the bar chart
+    $("#slider-range-max").hide();//hide the cutoff slider
+    $("#slider-help").hide();//hide the slider help
+    <![endif]-->
+</script>
+
 </body>
 
 </html>
