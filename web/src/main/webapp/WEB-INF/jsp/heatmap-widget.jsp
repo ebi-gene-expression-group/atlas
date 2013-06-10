@@ -23,6 +23,22 @@
         src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/anatomogramModule.js"></script>
+
+<script type="text/javascript">
+    <!--[if IE]>
+    //disable vertical header in IE
+    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell');
+    <![endif]-->
+</script>
+
+<script type="text/javascript">
+    <!--[if lte IE 8]>
+    $("#anatomogram").remove();
+    $("#heatmap-div").removeClass();
+    <![endif]-->
+</script>
+
 <script>
 
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
