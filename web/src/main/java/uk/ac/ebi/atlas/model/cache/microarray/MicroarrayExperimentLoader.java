@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.cache.microarray;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
@@ -54,7 +55,7 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
     }
 
     @Override
-    protected MicroarrayExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
+    protected MicroarrayExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration = configurationTrader.getMicroarrayExperimentConfiguration(accession);
         Set<Contrast> contrasts = microarrayExperimentConfiguration.getContrasts();
@@ -68,7 +69,7 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
 
         boolean hasLogFoldChangeFile = new File(logFoldChangeFileLocation).exists();
 
-        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds);
+        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
 
     }
 }

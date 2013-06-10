@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.cache.differential;
 
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -46,7 +47,7 @@ public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialE
     }
 
     @Override
-    protected DifferentialExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
+    protected DifferentialExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         DifferentialExperimentConfiguration differentialExperimentConfiguration = configurationTrader.getDifferentialExperimentConfiguration(accession);
         Set<Contrast> contrasts = differentialExperimentConfiguration.getContrasts();
@@ -54,7 +55,7 @@ public class DifferentialExperimentLoader extends ExperimentLoader<DifferentialE
         Set<String> species = extractSpecies(accession);
         List<String> pubMedIds = extractPubMedIds(accession);
 
-        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, pubMedIds);
+        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, pubMedIds, experimentDesign);
 
     }
 }

@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.List;
@@ -64,6 +65,9 @@ public class BaselineExperimentBuilderTest {
 
     @Mock
     private FactorGroup factorGroupMock;
+
+    @Mock
+    private ExperimentDesign experimentDesignMock;
 
     private Factor factor;
 
@@ -111,6 +115,7 @@ public class BaselineExperimentBuilderTest {
                 .withFactorNamesByType(nameMap)
                 .withSpeciesMapping(speciesMap)
                 .withPubMedIds(Lists.newArrayList(PUBMEDID))
+                .withExperimentDesign(experimentDesignMock)
                 .create();
 
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
@@ -126,5 +131,6 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getSpeciesMapping(), is(speciesMap));
         assertThat(experiment.getType(), is(ExperimentType.BASELINE));
         assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
+        assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));
     }
 }

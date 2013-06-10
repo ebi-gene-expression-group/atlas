@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.util.Map;
 
@@ -63,6 +64,9 @@ public class BaselineExperimentTest {
     @Mock
     private Factor factorMock;
 
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     private Map<String, String> speciesMapping = Maps.newHashMap();
 
     private BaselineExperiment subject;
@@ -81,7 +85,7 @@ public class BaselineExperimentTest {
         subject = new BaselineExperiment("accession", experimentalFactorsMock,
                 experimentRunsMock, "description",
                 "displayName", Sets.newHashSet("species"), speciesMapping, DEFAULT_QUERY_FACTOR_TYPE,
-                Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID));
+                Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID), experimentDesignMock);
 
 
     }
@@ -114,6 +118,11 @@ public class BaselineExperimentTest {
     @Test
     public void testGetPubMedIds() throws Exception {
         assertThat(subject.getPubMedIds(), contains(PUBMEDID));
+    }
+
+    @Test
+    public void testGetExperimentDesign() throws Exception {
+        assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
     }
 
 }

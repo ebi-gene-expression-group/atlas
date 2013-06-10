@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.differential.microarray;
 
 
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -38,9 +39,10 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     private boolean isTwoColour = false;
 
     public MicroarrayExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile,
-                                Set<String> species, SortedSet<String> arrayDesignAccessions, boolean twoColour, List<String> pubMedIds) {
+                                Set<String> species, SortedSet<String> arrayDesignAccessions, boolean twoColour,
+                                List<String> pubMedIds, ExperimentDesign experimentDesign) {
 
-        super(ExperimentType.MICROARRAY, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds);
+        super(ExperimentType.MICROARRAY, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
 
         isTwoColour = twoColour;

@@ -30,7 +30,7 @@ import java.util.*;
 public class Experiment implements Serializable {
 
     private ExperimentType type;
-
+    private ExperimentDesign experimentDesign;
     private SortedSet<String> species;
     private List<String> pubMedIds;
     private Map<String, String> speciesMapping;
@@ -39,8 +39,9 @@ public class Experiment implements Serializable {
     private String displayName;
     private boolean hasExtraInfoFile;
 
-    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds) {
+    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
         this.type = type;
+        this.experimentDesign = experimentDesign;
         this.accession = accession;
         this.displayName = displayName;
         this.description = description;
@@ -50,12 +51,16 @@ public class Experiment implements Serializable {
         this.pubMedIds = pubMedIds;
     }
 
-    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds) {
-        this(type, accession, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds);
+    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+        this(type, accession, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
     }
 
     public ExperimentType getType() {
         return type;
+    }
+
+    public ExperimentDesign getExperimentDesign() {
+        return experimentDesign;
     }
 
     public String getDisplayName() {

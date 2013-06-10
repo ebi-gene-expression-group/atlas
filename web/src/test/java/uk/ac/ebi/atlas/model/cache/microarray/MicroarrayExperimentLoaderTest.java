@@ -31,6 +31,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -62,6 +63,9 @@ public class MicroarrayExperimentLoaderTest {
     @Mock
     private MAGETABInvestigation investigationMock;
 
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     private MicroarrayExperimentLoader subject;
 
     @Before
@@ -77,9 +81,10 @@ public class MicroarrayExperimentLoaderTest {
 
     @Test
     public void testLoad() throws Exception {
-        MicroarrayExperiment microarrayExperiment = subject.load(ACCESSION, "description", false);
+        MicroarrayExperiment microarrayExperiment = subject.load(ACCESSION, "description", false, experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGNS));
         assertThat(microarrayExperiment.getSpecies(), hasItem(SPECIES));
+        assertThat(microarrayExperiment.getExperimentDesign(), is(experimentDesignMock));
     }
 }

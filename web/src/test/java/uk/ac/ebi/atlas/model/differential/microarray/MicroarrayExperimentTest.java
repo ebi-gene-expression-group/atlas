@@ -29,10 +29,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,12 +46,16 @@ public class MicroarrayExperimentTest {
     @Mock
     private Contrast contrastMock;
 
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     private MicroarrayExperiment subject;
 
     @Before
     public void setUp() throws Exception {
         subject = new MicroarrayExperiment("accession", Sets.newHashSet(contrastMock), "description", false,
-                Sets.newHashSet("species"), Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)), false, Lists.newArrayList(PUBMEDID));
+                Sets.newHashSet("species"), Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)), false,
+                Lists.newArrayList(PUBMEDID), experimentDesignMock);
     }
 
     @Test
@@ -60,5 +66,10 @@ public class MicroarrayExperimentTest {
     @Test
     public void testGetPubMedIds() throws Exception {
         assertThat(subject.getPubMedIds(), contains(PUBMEDID));
+    }
+
+    @Test
+    public void testGetExperimentDesign() throws Exception {
+        assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
     }
 }

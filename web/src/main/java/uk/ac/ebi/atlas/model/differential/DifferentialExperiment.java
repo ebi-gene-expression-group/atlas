@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.differential;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.List;
@@ -38,12 +39,12 @@ public class DifferentialExperiment extends Experiment {
 
     private Map<String, Contrast> contrastsById = Maps.newHashMap();
 
-    public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, List<String> pubMedIds) {
-        this(ExperimentType.DIFFERENTIAL, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds);
+    public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+        this(ExperimentType.DIFFERENTIAL, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
     }
 
-    protected DifferentialExperiment(ExperimentType experimentType, String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, List<String> pubMedIds) {
-        super(experimentType, accession, description, hasExtraInfoFile, species, null, pubMedIds);
+    protected DifferentialExperiment(ExperimentType experimentType, String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+        super(experimentType, accession, description, hasExtraInfoFile, species, null, pubMedIds, experimentDesign);
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);
         }

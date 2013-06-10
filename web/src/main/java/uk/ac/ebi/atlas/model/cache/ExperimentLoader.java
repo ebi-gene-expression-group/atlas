@@ -28,6 +28,8 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
+import uk.ac.ebi.atlas.expdesign.ExpDesignParser;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
@@ -48,6 +50,8 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
 
     private ArrayExpressClient arrayExpressClient;
 
+    private ExpDesignParser expDesignParser;
+
     protected ExperimentLoader() {
     }
 
@@ -61,6 +65,11 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
         this.arrayExpressClient = arrayExpressClient;
     }
 
+    @Inject
+    public void setExpDesignParser(ExpDesignParser expDesignParser) {
+        this.expDesignParser = expDesignParser;
+    }
+
     @Override
     public T load(String experimentAccession) throws ParseException, IOException {
 
@@ -68,11 +77,13 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
 
         boolean hasExtraInfoFile = new File(extraInfoFileLocation).exists();
 
-        return load(experimentAccession, fetchExperimentDescription(experimentAccession), hasExtraInfoFile);
+        ExperimentDesign experimentDesign = expDesignParser.parse(experimentAccession);
+
+        return load(experimentAccession, fetchExperimentDescription(experimentAccession), hasExtraInfoFile, experimentDesign);
 
     }
 
-    protected abstract T load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException;
+    protected abstract T load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
     private String fetchExperimentDescription(String experimentAccession) {
         try {

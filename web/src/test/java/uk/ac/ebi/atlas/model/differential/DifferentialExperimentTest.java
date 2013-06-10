@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -57,6 +58,9 @@ public class DifferentialExperimentTest {
     @Mock
     private AssayGroup assayGroupMock2;
 
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     @Before
     public void setUp() throws Exception {
 
@@ -73,7 +77,8 @@ public class DifferentialExperimentTest {
         when(contrastMock2.getReferenceAssayGroup()).thenReturn(assayGroupMock2);
         when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
 
-        subject = new DifferentialExperiment("accession", Sets.newHashSet(contrastMock1, contrastMock2), "description", false, Sets.newHashSet("species"), Lists.newArrayList(PUBMEDID));
+        subject = new DifferentialExperiment("accession", Sets.newHashSet(contrastMock1, contrastMock2), "description",
+                false, Sets.newHashSet("species"), Lists.newArrayList(PUBMEDID), experimentDesignMock);
     }
 
     @Test
@@ -100,5 +105,10 @@ public class DifferentialExperimentTest {
     @Test
     public void testGetPubMedIds() throws Exception {
         assertThat(subject.getPubMedIds(), contains(PUBMEDID));
+    }
+
+    @Test
+    public void testGetExperimentDesign() throws Exception {
+        assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
     }
 }
