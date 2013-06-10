@@ -40,13 +40,13 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
     protected void getStartingPage() {
         subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "cutoff=0.5");
         subject.get();
-        subject.clickDiffProfile();
+        subject.clickDifferentialProfile();
     }
 
     @Test
     public void checkPaneExpansion() {
         assertThat(subject.isInfoCardExpanded(), is(false));
-        assertThat(subject.isDiffProfileExpanded(), is(true));
+        assertThat(subject.isDifferentialProfileExpanded(), is(true));
 
     }
 

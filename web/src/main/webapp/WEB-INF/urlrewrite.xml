@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.1//EN" "http://www.tuckey.org/res/dtds/urlrewrite3.1.dtd">
+<urlrewrite>
+    <rule>
+        <note>Remove trailing slash from all experiments</note>
+        <from>/experiments/(.*)/$</from>
+        <to>/experiments/$1</to>
+    </rule>
+</urlrewrite>

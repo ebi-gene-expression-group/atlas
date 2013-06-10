@@ -40,9 +40,8 @@
                var="differentialGeneProfileLink">
         <c:set var="count" value="${count + 1}"/>
         <tr class=${count % 2 == 0 ? 'even' : 'odd'}>
-            <td class="horizontal-header-cell">
-                <a class="genename"
-                   href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrastDisplayName}</a>
+            <td class="horizontal-header-cell contrastNameCell">
+                <a href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrastDisplayName}</a>
             </td>
 
             <c:set var="expression" value="${differentialGeneProfileLink.expression}"/>

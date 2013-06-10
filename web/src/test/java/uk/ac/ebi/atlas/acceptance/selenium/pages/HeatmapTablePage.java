@@ -325,7 +325,7 @@ public class HeatmapTablePage extends TablePage {
         return highlightedTerms;
     }
 
-    private void hoverOnElement(WebElement webElement) {
+    protected void hoverOnElement(WebElement webElement) {
         Action builder;
         Actions hover = new Actions(driver);
         hover.moveToElement(webElement);

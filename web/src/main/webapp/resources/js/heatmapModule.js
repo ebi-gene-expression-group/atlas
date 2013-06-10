@@ -178,7 +178,7 @@ var heatmapModule = (function ($) {
                 }
             }).fail(function (data) {
                     console.log("ERROR:  " + data);
-                });
+            });
 
         });
     }
@@ -195,7 +195,7 @@ var heatmapModule = (function ($) {
             "</table>";
     }
 
-    function initHeatmapCellsTooltip() { //initializes heatmap cells tooltip
+    function initHeatmapCellsTooltip() {
         $("#heatmap-table td:has(div[data-fold-change])").attr('title', '').tooltip(
             {
                 open:function (event, ui) {

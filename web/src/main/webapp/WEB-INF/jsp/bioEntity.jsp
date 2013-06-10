@@ -136,7 +136,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <c:import url="includes/heatmap-matrix-organism-oriented.jsp"/>
+                                <c:import url="includes/heatmap-matrix-differential-gene-page.jsp"/>
                             </td>
                         </tr>
                     </table>
@@ -145,13 +145,74 @@
             </div>
         </c:if>
     </div>
-
 </section>
+<section id="contrastInfo" style="display:none">
+    <div style="font-weight: bold; color:blue;">
+        RNA-seq of mouse spinal cord expressing wild type human TDP-43
+    </div>
+    <div>
+        genotype:'expressing human TDP-43' vs 'non transgenic'
+    </div>
+    <table class='table-grid'>
+        <thead>
+            <tr>
+                <th class='header-cell'>
+                    Property
+                </th>
+                <th class='header-cell'>
+                    Test value
+                </th>
+                <th class='header-cell'>
+                    Reference value
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <!--
+            <tr style="font-weight: bold;">
+                <td>
+                    genotype
+                </td>
+                <td>
+                    expressing human TDP-43
+                </td>
+                <td>
+                    non transgenic
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    age
+                </td>
+                <td>
+                    21 days
+                </td>
+                <td>
+                    21 days
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    name
+                </td>
+                <td>
+                    benedetto
+                </td>
+                <td>
+                    fiorelli
+                </td>
+            </tr>
+            -->
+        </tbody>
+    </table>
+</section>
+
 
 <br/>
 
 <div id="help-placeholder" style="display: none"></div>
 
+<script src="${pageContext.request.contextPath}/resources/js/contrastInfoTooltipModule.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
 <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
 
@@ -188,6 +249,10 @@
             target: "widgetBody"
         });
     };
+        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+
+        contrastInfoTooltipModule.init('${pageContext.request.contextPath}');
+    });
 </script>
 
 

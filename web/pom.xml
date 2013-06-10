@@ -327,6 +327,7 @@
             <version>${selenium.version}</version>
             <scope>test</scope>
         </dependency>
+
         <!--
             Apache Tiles
         -->
@@ -335,6 +336,15 @@
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-extras</artifactId>
             <version>${tiles.version}</version>
+        </dependency>
+
+        <!--
+            For URL rewrite, because of possible / suffix
+        -->
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.3</version>
         </dependency>
 
         <!--

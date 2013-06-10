@@ -33,6 +33,22 @@
     </context-param>
 
     <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+        <init-param>
+            <param-name>confPath</param-name>
+            <param-value>/WEB-INF/urlrewrite.xml</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <filter>
         <filter-name>encoding-filter</filter-name>
         <filter-class>
             org.springframework.web.filter.CharacterEncodingFilter
@@ -43,23 +59,22 @@
         </init-param>
     </filter>
 
-
     <filter-mapping>
         <filter-name>encoding-filter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-<!--
-    <listener>
-        <listener-class>org.h2.server.web.DbStarter</listener-class>
-    </listener>
--->
+    <!--
+        <listener>
+            <listener-class>org.h2.server.web.DbStarter</listener-class>
+        </listener>
+    -->
     <listener>
         <listener-class>uk.ac.ebi.atlas.web.JdbcDriverUnregisteringListener</listener-class>
     </listener>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
 
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
@@ -71,15 +86,15 @@
 
     <!-- Spring MVC Services Servlet -->
     <servlet>
-     <servlet-name>services</servlet-name>
-     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-     <load-on-startup>1</load-on-startup>
-     </servlet>
+        <servlet-name>services</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
-     <servlet-mapping>
-             <servlet-name>services</servlet-name>
-             <url-pattern>/</url-pattern>
-     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>services</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
     <!-- Define error page to react on Java exception -->
     <error-page>
