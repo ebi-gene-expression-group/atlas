@@ -29,6 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.List;
 
@@ -112,18 +113,28 @@ public class BioEntityPage extends HeatmapTablePage {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
-    public boolean isDiffProfileExpanded() {
+    public boolean isDifferentialProfileExpanded() {
         return diffProfilePaneBody.isDisplayed();
     }
 
-    public void clickDiffProfile() {
+    public void clickDifferentialProfile() {
         diffProfilePaneHeader.click();
 
         By byBioEntityCardClass = By.className("bioEntityCard");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
+/*
+    public String getContastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
+        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex);
+        hoverOnElement(firstGeneProfileCell);
 
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+    }
+*/
     public int getPropertiesTableSize() {
         return table.findElements(By.tagName("tr")).size();
     }
