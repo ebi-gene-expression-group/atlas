@@ -20,62 +20,40 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="eng"
-      class=" js flexbox canvas canvastext no-touch rgba hsla multiplebgs backgroundsize borderimage
-              borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections
-              csstransforms csstransforms3d csstransitions fontface generatedcontent applicationcache">
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
+        <link rel="stylesheet" type="text/css"
+              href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
+        <link rel="stylesheet" type="text/css"
+              href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
 
-<head>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.0.min.js"></script>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
+        <script language="JavaScript" type="text/javascript"
+                src="${pageContext.request.contextPath}/resources/js/anatomogramModule.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
 
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.0.min.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
-
-</head>
-
-<body>
-
-<tiles:insertAttribute name="body"/>
-
-<script type="text/javascript">
-    <!--[if IE]>
-    //disable vertical header in IE
-    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
-    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell');
-    <![endif]-->
-</script>
-
-<script type="text/javascript">
-    <!--[if lte IE 8]>
-    $("#anatomogram").remove();
-    $("#heatmap-div").removeClass();
-    $("#gene-distribution-button").hide();//hide the bar chart button
-    $("#gene-distribution-panel").hide();//hide the bar chart
-    $("#slider-range-max").hide();//hide the cutoff slider
-    $("#slider-help").hide();//hide the slider help
-    <![endif]-->
-</script>
-
-</body>
-
+    </head>
+    <body>
+        <tiles:insertAttribute name="body"/>
+    </body>
 </html>
+
