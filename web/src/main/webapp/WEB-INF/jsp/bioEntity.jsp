@@ -237,7 +237,8 @@
             header: "ul"
         });
 
-        <%--helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');--%>
+
+        contrastInfoTooltipModule.init('${pageContext.request.contextPath}');
 
         var widgetParameters = "&propertyType=identifier";
         if (${isGeneSet == true}) {
@@ -249,10 +250,6 @@
             target: "widgetBody"
         });
     };
-        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
-
-        contrastInfoTooltipModule.init('${pageContext.request.contextPath}');
-    });
 </script>
 
 
