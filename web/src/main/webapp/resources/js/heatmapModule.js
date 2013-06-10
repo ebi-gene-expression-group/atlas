@@ -237,6 +237,8 @@ var heatmapModule = (function ($) {
             .each(function () {
                 if ($.browser.msie) {
                     $(this).append($(this).attr("data-organism-part"));
+                    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+                    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell');
                 } else {
                     var organismPartName = $(this).attr("data-organism-part");
                     organismPartName = restrictLabelSize(organismPartName, 17);
