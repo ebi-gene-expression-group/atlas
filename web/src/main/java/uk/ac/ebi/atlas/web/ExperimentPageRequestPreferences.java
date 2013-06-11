@@ -71,6 +71,8 @@ public abstract class ExperimentPageRequestPreferences {
 
     private boolean geneSetMatch;
 
+    private String rootContext;
+
     protected ExperimentPageRequestPreferences() {
 
     }
@@ -193,4 +195,11 @@ public abstract class ExperimentPageRequestPreferences {
         this.exactMatch = exactMatch;
     }
 
+    public String getRootContext() {
+        return rootContext;
+    }
+
+    public void setRootContext(String rootContext) {
+        this.rootContext = rootContext;
+    }
 }

@@ -23,6 +23,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<c:set var="base" value="${pageContext.request.contextPath}"/>
+<c:if test="${not empty preferences.rootContext}">
+    <c:set var="base" value="${preferences.rootContext}"/>
+</c:if>
 
 <table id="diff-heatmap-table" class="table-grid">
     <thead>
@@ -115,8 +119,7 @@
     </tbody>
 </table>
 
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/heatmapModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts

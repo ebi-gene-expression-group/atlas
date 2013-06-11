@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:set var="base" value="${pageContext.request.contextPath}"/>
+<c:if test="${not empty preferences.rootContext}">
+    <c:set var="base" value="${preferences.rootContext}"/>
+</c:if>
 
 <div id="content" class="block">
     <table width="100%">
@@ -27,7 +30,6 @@
 
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
-
             //ToDo: this should be replaced with a JSON array directly sent from backend layer
             var allQueryFactorValues = [${allQueryFactors.size()}];
             <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
@@ -35,10 +37,10 @@
             </c:forEach>
 
             if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
+                anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${base}');
             }
 
-            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+            helpTooltipsModule.init('experiment', '${base}');
 
             $("#goto-ae").tooltip();
             $("#goto-experiment").tooltip();
