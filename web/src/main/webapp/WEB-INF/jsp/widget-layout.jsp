@@ -22,38 +22,35 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
-        <link rel="stylesheet" type="text/css"
-              href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
-        <link rel="stylesheet" type="text/css"
-              href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
+<head>
+    <c:set var="url">${pageContext.request.requestURL}</c:set>
+    <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/"/>
+    <link rel="stylesheet" type="text/css" href="resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css"
+          href="resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/table-grid.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/heatmap-and-anatomogram.css">
 
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.0.min.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/anatomogramModule.js"></script>
+    <script language="JavaScript" type="text/javascript" src="resources/js/json2.js"></script>
+    <script language="JavaScript" type="text/javascript" src="resources/js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="resources/js/jquery-migrate-1.2.0.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="resources/js/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="resources/js/experiment-page-buttons-and-tooltips.js"></script>
+    <script language="JavaScript" type="text/javascript" src="resources/js/helpTooltipsModule.js"></script>
+    <script language="JavaScript" type="text/javascript" src="resources/js/anatomogramModule.js"></script>
 
-
-    </head>
-    <body>
-        <tiles:insertAttribute name="body"/>
-    </body>
+</head>
+<body>
+<tiles:insertAttribute name="body"/>
+</body>
 </html>
 
