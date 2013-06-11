@@ -31,14 +31,14 @@ public class DifferentialGeneProfileLink {
 
     private Contrast contrast;
 
-    private String url;
+    private String experimentAccession;
 
     private DifferentialExpression expression;
 
-    public DifferentialGeneProfileLink(String geneQuery, Contrast contrast, String url, DifferentialExpression expression) {
+    public DifferentialGeneProfileLink(String geneQuery, Contrast contrast, String experimentAccession, DifferentialExpression expression) {
         this.geneQuery = geneQuery;
         this.contrast = contrast;
-        this.url = url;
+        this.experimentAccession = experimentAccession;
         this.expression = expression;
     }
 
@@ -46,8 +46,16 @@ public class DifferentialGeneProfileLink {
         return contrast.getDisplayName();
     }
 
+    public String getContrastId() {
+        return contrast.getId();
+    }
+
+    public String getExperimentAccession() {
+        return experimentAccession;
+    }
+
     public String getUrl() {
-        return url + "?geneQuery=" + geneQuery + "&queryFactorValues=" + contrast.getId();
+        return experimentAccession + "?geneQuery=" + geneQuery + "&queryFactorValues=" + contrast.getId();
     }
 
     public DifferentialExpression getExpression() {

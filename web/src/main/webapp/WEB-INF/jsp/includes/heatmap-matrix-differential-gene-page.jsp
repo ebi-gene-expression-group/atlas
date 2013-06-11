@@ -27,7 +27,9 @@
 <table id="diff-heatmap-table" class="table-grid">
     <thead>
     <tr>
-        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;"><div>Contrast</div></th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Contrast</div>
+        </th>
         <th class="horizontal-header-cell" style="padding: 5px;">
             <div class='factor-header' data-organism-part=''>Adjusted P-value</div>
         </th>
@@ -40,7 +42,9 @@
                var="differentialGeneProfileLink">
         <c:set var="count" value="${count + 1}"/>
         <tr class=${count % 2 == 0 ? 'even' : 'odd'}>
-            <td class="horizontal-header-cell contrastNameCell">
+            <td class="horizontal-header-cell contrastNameCell"
+                data-experiment-accession="${differentialGeneProfileLink.experimentAccession}"
+                data-contrast-id="${differentialGeneProfileLink.contrastId}">
                 <a href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrastDisplayName}</a>
             </td>
 
