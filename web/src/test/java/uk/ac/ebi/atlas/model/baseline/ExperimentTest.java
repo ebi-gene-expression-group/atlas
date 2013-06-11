@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +72,9 @@ public class ExperimentTest {
     @Mock
     private ExperimentalFactorsBuilder experimentalFactorsBuilderMock;
 
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     private BaselineExperiment subject;
 
     @Before
@@ -108,6 +112,7 @@ public class ExperimentTest {
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)
                 .withPubMedIds(Lists.newArrayList(PUBMEDID))
+                .withExperimentDesign(experimentDesignMock)
                 .create();
 
     }
@@ -130,6 +135,11 @@ public class ExperimentTest {
     @Test
     public void testPubMedIds() {
         assertThat(subject.getPubMedIds(), hasItem(PUBMEDID));
+    }
+
+    @Test
+    public void testGetExperimentDesign() {
+        assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
     }
 
     @Test

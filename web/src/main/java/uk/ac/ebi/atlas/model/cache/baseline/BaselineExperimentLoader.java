@@ -31,6 +31,7 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
@@ -69,7 +70,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
     }
 
     @Override
-    protected BaselineExperiment load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile) throws ParseException, IOException {
+    protected BaselineExperiment load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         BaselineExperimentConfiguration factorsConfig = configurationTrader.getFactorsConfiguration(experimentAccession);
 
@@ -111,6 +112,7 @@ public abstract class BaselineExperimentLoader extends ExperimentLoader<Baseline
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withSpeciesMapping(speciesMapping)
                 .withPubMedIds(pubMedIds)
+                .withExperimentDesign(experimentDesign)
                 .create();
 
     }

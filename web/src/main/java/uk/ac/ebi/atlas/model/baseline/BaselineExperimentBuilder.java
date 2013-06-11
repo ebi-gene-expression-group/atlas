@@ -26,6 +26,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,6 +54,7 @@ public class BaselineExperimentBuilder {
     private String experimentAccession;
     private List<FactorGroup> orderedFactorGroups;
     private List<String> pubMedIds;
+    private ExperimentDesign experimentDesign;
 
     @Inject
     BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -114,6 +116,11 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
+    public BaselineExperimentBuilder withExperimentDesign(ExperimentDesign experimentDesign) {
+        this.experimentDesign = experimentDesign;
+        return this;
+    }
+
     public BaselineExperiment create() {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
@@ -123,6 +130,7 @@ public class BaselineExperimentBuilder {
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
         checkState(CollectionUtils.isNotEmpty(pubMedIds), "Please provide a non blank pubMedIds");
+        checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
 
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder
                 .withExperimentRuns(experimentRuns.values())
@@ -136,7 +144,8 @@ public class BaselineExperimentBuilder {
         }
 
         return new BaselineExperiment(experimentAccession, experimentalFactors, experimentRuns, description,
-                displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile, pubMedIds);
+                displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile,
+                pubMedIds, experimentDesign);
     }
 
 
