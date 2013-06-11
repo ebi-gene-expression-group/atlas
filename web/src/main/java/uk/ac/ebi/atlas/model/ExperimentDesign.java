@@ -31,17 +31,17 @@ import java.util.*;
 
 public class ExperimentDesign implements Serializable {
 
-    SortedSet<String> sampleHeaders = Sets.newTreeSet();
+    private SortedSet<String> sampleHeaders = Sets.newTreeSet();
 
-    SortedSet<String> factorHeaders = Sets.newTreeSet();
+    private SortedSet<String> factorHeaders = Sets.newTreeSet();
 
-    Map<String, ExpDesignValues> samples = Maps.newHashMap();
+    private Map<String, ExpDesignValues> samples = Maps.newHashMap();
 
-    Map<String, ExpDesignValues> factors = Maps.newHashMap();
+    private Map<String, ExpDesignValues> factors = Maps.newHashMap();
 
-    Map<String, String> arrayDesigns = Maps.newHashMap();
+    private Map<String, String> arrayDesigns = Maps.newHashMap();
 
-    String[] assayHeaders;
+    private List<String> assayHeaders = Lists.newArrayList();
 
     public void putSample(String runOrAssay, String sampleHeader, String sampleValue) {
         if (!samples.containsKey(runOrAssay)) {
@@ -67,11 +67,11 @@ public class ExperimentDesign implements Serializable {
         return arrayDesigns.get(runOrAssay);
     }
 
-    public void setAssayHeaders(String[] assayHeaders) {
-        this.assayHeaders = assayHeaders;
+    public void addAssayHeader(String assayHeader) {
+        assayHeaders.add(assayHeader);
     }
 
-    public String[] getAssayHeaders() {
+    public List<String> getAssayHeaders() {
         return assayHeaders;
     }
 

@@ -37,7 +37,6 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Matchers.anyString;
@@ -122,7 +121,7 @@ public class ExpDesignParserTest {
     @Test
     public void testAssayHeaders() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getAssayHeaders(), arrayContaining(ASSAY, ARRAY));
+        assertThat(experimentDesign.getAssayHeaders(), contains(ASSAY, ARRAY));
     }
 
     @Test

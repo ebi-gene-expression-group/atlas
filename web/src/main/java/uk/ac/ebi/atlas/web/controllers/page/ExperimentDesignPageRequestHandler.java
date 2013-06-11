@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Set;
 
 public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
@@ -52,7 +53,7 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         // does the serialisation to JSON
         Gson gson = new Gson();
         // add table data to model
-        String[] assayHeaders = experimentDesign.getAssayHeaders();
+        List<String> assayHeaders = experimentDesign.getAssayHeaders();
         model.addAttribute("assayHeaders", gson.toJson(assayHeaders));
         model.addAttribute("sampleHeaders", gson.toJson(experimentDesign.getSampleHeaders()));
         model.addAttribute("factorHeaders", gson.toJson(experimentDesign.getFactorHeaders()));

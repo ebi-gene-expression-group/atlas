@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
@@ -66,10 +65,12 @@ public class ExpDesignParser {
         Map<String, Integer> sampleHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
         Map<String, Integer> factorHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
         int headersStartIndex = headerLine.length - (sampleHeaderIndexes.size() + factorHeaderIndexes.size());
-        String[] assayHeaders = (String[]) ArrayUtils.subarray(headerLine, 0, headersStartIndex);
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
-        experimentDesign.setAssayHeaders(assayHeaders);
+        for (int i = 0; i < headersStartIndex; i++) {
+            experimentDesign.addAssayHeader(headerLine[i]);
+        }
+
         for (String[] line : csvLines) {
             String runOrAssay = line[0];
             if (headersStartIndex > 1) {
