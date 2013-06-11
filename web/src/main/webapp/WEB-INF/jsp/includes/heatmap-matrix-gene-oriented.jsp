@@ -44,8 +44,9 @@
                                 class="horizontal-header-cell">
 
                             <c:set var="geneId" value="${geneProfile.id}"/>
+                            <c:set var="bioEntityType" value="${preferences.geneSetMatch? \"genesets\": \"genes\"}"/>
 
-                            <a class="genename" id="${geneId}" href='genes/${geneId}'
+                            <a class="genename" id="${geneId}" href='${bioEntityType}/${geneId}'
                                title="">${geneNamesProvider.getGeneName(geneId)}</a>
                         </display:column>
 
