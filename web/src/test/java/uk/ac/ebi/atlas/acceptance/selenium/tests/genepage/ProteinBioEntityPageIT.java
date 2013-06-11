@@ -37,7 +37,7 @@ public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "proteins");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "proteins", "openPanelIndex=0");
         subject.get();
     }
 

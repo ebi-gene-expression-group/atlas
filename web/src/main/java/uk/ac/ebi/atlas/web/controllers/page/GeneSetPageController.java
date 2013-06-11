@@ -65,6 +65,7 @@ public class GeneSetPageController extends BioEntityPageController {
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
+        model.addAttribute("isGeneSet", true);
         return super.showGenePage(identifier, model);
     }
 

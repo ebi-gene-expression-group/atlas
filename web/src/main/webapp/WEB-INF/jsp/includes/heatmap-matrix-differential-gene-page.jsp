@@ -24,7 +24,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
-<table id="heatmap-table" class="table-grid">
+<table id="diff-heatmap-table" class="table-grid">
     <thead>
     <tr>
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;"><div>Contrast</div></th>

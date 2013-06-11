@@ -10,7 +10,7 @@
 
         <div id="heatmap" class="row stickem-container">
 
-            <div id="anatomogram" class="aside stickem double-click-noselection">
+            <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
                 <table>
                     <tr>
                         <td style="padding-top: 15px; vertical-align:top">
@@ -31,7 +31,7 @@
                 </table>
             </div>
 
-            <div id="heatmap-div" class="heatmap-position" style="display:none">
+            <div id="heatmap-div" class="heatmap-position" style="display:none" style="display:inline">
 
                 <table>
                     <tr>

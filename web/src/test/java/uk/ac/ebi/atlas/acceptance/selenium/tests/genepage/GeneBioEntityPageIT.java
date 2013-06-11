@@ -37,7 +37,7 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "openPanelIndex=0");
         subject.get();
     }
 

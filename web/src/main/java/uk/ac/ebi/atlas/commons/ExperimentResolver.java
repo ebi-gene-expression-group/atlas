@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.commons;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneindex.SolrQueryService;
 
@@ -42,8 +43,12 @@ public class ExperimentResolver {
         this.solrQueryService = solrQueryService;
     }
 
-    public String getExperimentAccessionByUniprotAccession(String accession) {
-        String species = solrQueryService.getSpeciesForPropertyValue(accession);
+    public String getExperimentAccessionByProperty(String value, String type) {
+        String species;
+
+        species = StringUtils.isEmpty(type) ? solrQueryService.getSpeciesForPropertyValue(value) : solrQueryService.getSpeciesForPropertyValue(value, type);
+
         return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
     }
+
 }
