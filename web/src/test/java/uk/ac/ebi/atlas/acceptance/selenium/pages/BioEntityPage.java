@@ -45,9 +45,9 @@ public class BioEntityPage extends HeatmapTablePage {
 
     @FindBy(id = "bioEntityCardTable")
     private WebElement table;
-//
-//    @FindBy(id = "heatmap-table")
-//    private WebElement heatmapTable;
+
+    @FindBy(id = "diff-heatmap-table")
+    private WebElement diffHeatmapTable;
 
     @FindBy(id = "infoHeader")
     private WebElement infoPaneHeader;
@@ -95,6 +95,10 @@ public class BioEntityPage extends HeatmapTablePage {
         return bioEntityIdentifier;
     }
 
+    public void useDiffHeatmapTable() {
+        super.setHeatmapTable(diffHeatmapTable);
+    }
+
     public String getBioEntityCardTitle() {
         WebElement header = accordion.findElement(By.className("bioEntityCardHeader"));
         return header.getText();
@@ -107,8 +111,8 @@ public class BioEntityPage extends HeatmapTablePage {
     public void clickInfoCard() {
         infoPaneHeader.click();
 
-        By byBioEntityCardClass = By.className("bioEntityCard");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        By byBioEntityCardClass = By.id("bioEntityCardTable");
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 

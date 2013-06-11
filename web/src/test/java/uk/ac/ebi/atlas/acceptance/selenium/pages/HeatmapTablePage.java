@@ -85,8 +85,8 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "anatomogram")
     private WebElement anatomogram;
 
-    @FindBy(id = "heatmap-legenda")
-    private WebElement heatmapTableLegend;
+    @FindBy(id = "diff-heatmap-legend")
+    private WebElement diffHeatmapTableLegend;
 
     @FindBy(xpath = "//thead/tr/td[1]")
     private WebElement geneColumnHeader;
@@ -123,39 +123,44 @@ public class HeatmapTablePage extends TablePage {
         return heatmapTable;
     }
 
+    protected void setHeatmapTable(WebElement heatmapTable) {
+        this.heatmapTable = heatmapTable;
+    }
+
+
     public List<String> getFactorValueHeaders() {
-        List<String> queryFactorValues = getTableHeaders(heatmapTable);
+        List<String> queryFactorValues = getTableHeaders(getHeatmapTable());
         //and we need to remove the last header value, because is related to the organism part column
         return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size());
     }
 
     public List<String> getSelectedProfiles() {
-        return getFirstColumnValues(heatmapTable);
+        return getFirstColumnValues(getHeatmapTable());
     }
 
     public String getQueryFactorLabel() {
         return queryFactorLabel.getText();
     }
 
-    public List<String> getGradientMinLabels() {
+    public List<String> getDiffGradientMinLabels() {
         List<String> result = new ArrayList<>();
-        for (WebElement element : heatmapTableLegend.findElements(By.className("gradient-level-min"))) {
+        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gradient-level-min"))) {
             result.add(element.getText());
         }
         return result;
     }
 
-    public List<String> getGradientMaxLabels() {
+    public List<String> getDiffGradientMaxLabels() {
         List<String> result = new ArrayList<>();
-        for (WebElement element : heatmapTableLegend.findElements(By.className("gradient-level-max"))) {
+        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gradient-level-max"))) {
             result.add(element.getText());
         }
         return result;
     }
 
-    public List<String> getGradientStartColor() {
+    public List<String> getDiffGradientStartColor() {
         List<String> result = new ArrayList<>();
-        for (WebElement element : heatmapTableLegend.findElements(By.className("color-gradient"))) {
+        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("color-gradient"))) {
             String style = element.getCssValue("background-image");
             style = style.substring(style.indexOf("rgb(") + 4, style.indexOf("), "));
             result.add(style);
@@ -163,9 +168,9 @@ public class HeatmapTablePage extends TablePage {
         return result;
     }
 
-    public List<String> getGradientEndColor() {
+    public List<String> getDiffGradientEndColor() {
         List<String> result = new ArrayList<>();
-        for (WebElement element : heatmapTableLegend.findElements(By.className("color-gradient"))) {
+        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("color-gradient"))) {
             String style = element.getCssValue("background-image");
             style = style.substring(style.lastIndexOf("rgb(") + 4, style.lastIndexOf("))"));
             result.add(style);
@@ -199,18 +204,18 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getFirstGeneProfile() {
-        List<String> firstTableRow = getRowValues(heatmapTable, 1);
+        List<String> firstTableRow = getRowValues(getHeatmapTable(), 1);
         return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
     }
 
     public List<String> getGeneProfile(int zeroBasedRowIndex) {
-        List<String> rowValues = getRowValues(heatmapTable, zeroBasedRowIndex);
+        List<String> rowValues = getRowValues(getHeatmapTable(), zeroBasedRowIndex);
         return rowValues.subList(getGeneExpressionStartingRowIndex(), rowValues.size());
     }
 
 
     public List<String> getLastGeneProfile() {
-        List<String> firstTableRow = getLastRowValues(heatmapTable);
+        List<String> firstTableRow = getLastRowValues(getHeatmapTable());
         return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
     }
 
@@ -234,7 +239,7 @@ public class HeatmapTablePage extends TablePage {
 
     public Boolean areExpressionLevelsHidden() {
         //we get the cell at index 1 because at index 0 we have the gene name
-        WebElement firstExpressionLevelCell = getNonEmptyCellsFromFirstTableRow(heatmapTable).get(getGeneExpressionStartingRowIndex());
+        WebElement firstExpressionLevelCell = getNonEmptyCellsFromFirstTableRow(getHeatmapTable()).get(getGeneExpressionStartingRowIndex());
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
         return div.getAttribute("class").contains("hide_cell");
     }
@@ -274,11 +279,11 @@ public class HeatmapTablePage extends TablePage {
     }
 
     protected WebElement getGeneProfileCell(int profileIndex, int expressionIndex) {
-        return getCell(heatmapTable, profileIndex + 1, expressionIndex + getGeneExpressionStartingRowIndex() + 1);
+        return getCell(getHeatmapTable(), profileIndex + 1, expressionIndex + getGeneExpressionStartingRowIndex() + 1);
     }
 
     protected WebElement getGeneAnchor(int profileIndex) {
-        return getGeneAnchor(heatmapTable, profileIndex + 1);
+        return getGeneAnchor(getHeatmapTable(), profileIndex + 1);
     }
 
     public String getDifferentialExperimentTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex, ExperimentType experimentType) {
