@@ -27,18 +27,53 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.ContrastProperty;
 import uk.ac.ebi.atlas.model.differential.ContrastSummary;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
+
+import javax.inject.Inject;
 
 @Controller
 @Scope("request")
 public class ContrastSummaryController {
+
+    private ApplicationProperties applicationProperties;
+
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
+
+    private MicroarrayExperimentsCache microarrayExperimentsCache;
+
+    @Inject
+    public ContrastSummaryController(ApplicationProperties applicationProperties,
+                                     RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
+                                     MicroarrayExperimentsCache microarrayExperimentsCache) {
+        this.applicationProperties = applicationProperties;
+        this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
+        this.microarrayExperimentsCache = microarrayExperimentsCache;
+    }
 
     @RequestMapping(value = "/rest/contrast-summary", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTooltipContent(@RequestParam(value = "experimentAccession") String experimentAccession,
                                     @RequestParam(value = "contrastId") String contrastId) {
+
+        /*DifferentialExperiment differentialExperiment;
+
+        if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
+            differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
+        } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
+            differentialExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
+        } else {
+            throw new IllegalStateException("Experiment for accession " + experimentAccession + " not found.");
+        }
+
+        Contrast contrast = differentialExperiment.getContrast(contrastId);
+        if (contrast == null) {
+            throw new IllegalStateException("No contract with id " + contrastId + " found.");
+        }*/
 
         //this is only mock data
         String experimentDescription = "RNA-seq of mouse spinal cord expressing wild type human TDP-43";
