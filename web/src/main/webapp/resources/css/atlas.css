@@ -80,6 +80,18 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     border-bottom: 3px solid;
 }
 
+#transcripts-pie table {
+    border: none;
+    width: auto;
+    margin: 0px;
+}
+
+#gene-distribution table {
+    border: none;
+    width: auto;
+    margin: 0px;
+}
+
 .atlas-table {
     border: none;
     width: auto;
@@ -98,15 +110,20 @@ td, th {
     padding: 1px;
 }
 
-form {
+.atlas-form {
     padding: 0px;
     margin: 0px;
 }
 
-form fieldset {
+fieldset.atlas-form {
     background-color: transparent;
     padding: 0px;
     margin: 0px;
+}
+
+input.atlas-form {
+    vertical-align: baseline;
+    margin: 0.2em 0.1em 0.2em 0.2em;
 }
 
 img {
