@@ -67,6 +67,9 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "diffProfileBody")
     private WebElement diffProfilePaneBody;
 
+    @FindBy(id = "widgetBody")
+    private WebElement widgetBody;
+
     @FindBy(css = "h2.strapline")
     private WebElement searchResultHeader;
 
@@ -149,6 +152,12 @@ public class BioEntityPage extends HeatmapTablePage {
             return driver.findElement(byTooltipClass).getText();
         }
     */
+
+
+    public String getWidgetBody() {
+        return widgetBody.getText();
+    }
+
     public int getPropertiesTableSize() {
         return table.findElements(By.tagName("tr")).size();
     }
