@@ -52,8 +52,8 @@
             <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
         </ul>
 
-        <div id="infoBody" class="bioEntityCard">
-            <table id="bioEntityCardTable">
+        <div id="infoBody" class="bioEntityCard atlas-table">
+            <table class="atlas-table" id="bioEntityCardTable">
                 <c:forEach var="propertyType" items="${propertyNames.keySet()}">
                     <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
                     <c:if test="${propertyLinks.size() > 0}">
@@ -123,7 +123,7 @@
                 </div>
 
                 <div id="heatmap-div" style="display:none;">
-                    <table style="margin-left:auto;margin-right:auto;">
+                    <table class="atlas-table" style="margin-left:auto;margin-right:auto;">
                         <tr>
                             <td>
                                 <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
@@ -150,7 +150,7 @@
 <section id="contrastInfo" style="display:none" class="extra-padding">
     <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
     <div id="contrastDescription" style="text-align: center"></div>
-    <table class='table-grid'>
+    <table class='table-grid atlas-table'>
         <thead>
         <tr>
             <th class='header-cell'>

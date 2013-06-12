@@ -39,7 +39,7 @@
         <div id="heatmap" class="row stickem-container">
 
             <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
-                <table>
+                <table class="atlas-table">
                     <tr>
                         <td style="padding-top: 15px; vertical-align:top">
                 <span id="sex-toggle">
@@ -61,7 +61,7 @@
 
             <div id="heatmap-div" class="heatmap-position" style="display:none" style="display:inline">
 
-                <table>
+                <table class="atlas-table">
                     <tr>
                         <td>
                         <span id="geneCount">Showing ${geneProfiles.size()}

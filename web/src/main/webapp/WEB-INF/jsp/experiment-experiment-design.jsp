@@ -33,7 +33,7 @@
     <div id="table-caption"><b>Experiment Design</b></div>
 
     <div id="toolbar">
-        <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
+        <table class="atlas-table" cellpadding="0" cellspacing="0" border="0" style="float: left;">
             <tr>
                 <td style="vertical-align: middle; padding: 0px;">Show Analysed only?</td>
                 <td style="vertical-align: middle; padding: 0px;"><input type="checkbox" id="showOnlyAnalysedRuns"
@@ -43,7 +43,8 @@
         </table>
 
         <c:if test="${type != 'BASELINE'}">
-            <table cellpadding="0" cellspacing="0" border="0" style="float: right; padding: 0px 3px 10px 0px; ">
+            <table class="atlas-table" cellpadding="0" cellspacing="0" border="0"
+                   style="float: right; padding: 0px 3px 10px 0px; ">
                 <tr>
                     <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
                         <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Contrast: </form:label>
@@ -59,7 +60,7 @@
         </c:if>
     </div>
 
-    <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
+    <table class="atlas-table" cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
 
     </table>
 

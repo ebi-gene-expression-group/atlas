@@ -28,7 +28,7 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<table id="diff-heatmap-table" class="table-grid">
+<table id="diff-heatmap-table" class="table-grid atlas-table">
     <thead>
     <tr>
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">

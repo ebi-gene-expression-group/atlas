@@ -7,12 +7,12 @@
 
     <div id="helpContentTooltip" style='display:none'></div>
 
-    <table width="100%">
+    <table class="atlas-table" width="100%">
         <tbody>
         <tr>
             <%@ include file="experiment-description.jsp" %>
             <td width="130px">
-                <table cellpadding="2" cellspacing="0" style="float:right">
+                <table class="atlas-table" cellpadding="2" cellspacing="0" style="float:right">
                     <tr>
                         <td>
                             <a id="display-experiment" class="button-image"

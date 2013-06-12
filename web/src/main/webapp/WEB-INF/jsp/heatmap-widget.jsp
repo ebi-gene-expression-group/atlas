@@ -7,7 +7,7 @@
 </c:if>
 
 <div id="content" class="block">
-    <table width="100%">
+    <table class="atlas-table" width="100%">
         <tbody>
         <tr>
             <%@ include file="includes/experiment-description.jsp" %>

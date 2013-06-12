@@ -80,7 +80,7 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     border-bottom: 3px solid;
 }
 
-table {
+.atlas-table {
     border: none;
     width: auto;
     margin: 0px;

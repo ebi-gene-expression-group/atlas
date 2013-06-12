@@ -38,7 +38,7 @@
         </c:if>
 
         <form:errors path="*" cssClass="error"/>
-        <table class="form-grid">
+        <table class="form-grid atlas-table">
             <tr>
                 <td>
                     <form:label path="geneQuery">Gene Query</form:label>
