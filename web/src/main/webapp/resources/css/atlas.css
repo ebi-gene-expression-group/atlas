@@ -37,8 +37,8 @@
     color: white;
 }
 
-body {
-    min-width: 950px;
+.atlas-body {
+    min-width: 975px;
     /*    font-family: Verdana, Helvetica, Arial, sans-serif;
         margin:0px auto !important;*/
 }
@@ -80,13 +80,7 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     border-bottom: 3px solid;
 }
 
-#transcripts-pie table {
-    border: none;
-    width: auto;
-    margin: 0px;
-}
-
-#gene-distribution table {
+#transcripts-pie table, #gene-distribution table {
     border: none;
     width: auto;
     margin: 0px;
