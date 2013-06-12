@@ -22,6 +22,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="base" value="${pageContext.request.contextPath}"/>
+<c:if test="${not empty preferences.rootContext}">
+    <c:set var="base" value="${preferences.rootContext}"/>
+</c:if>
 
 <td style="width:140px;padding-right:20px">
     <div class="experiment-accession">
@@ -34,10 +38,10 @@
 <td width="100%">
     <div id="experimentDescription">
         <a id="goto-experiment" class="thick-link" title="Experiment Page"
-           href="experiments/${experimentAccession}">${experimentDescription}</a>
+           href="${base}/experiments/${experimentAccession}">${experimentDescription}</a>
         <c:if test="${hasExtraInfo}">
-            <a id="extra-info" href="external-resources/${experimentAccession}/extra-info.png">
-                <img alt="more information" src="resources/images/balloon-ellipsis-icon-left.png">
+            <a id="extra-info" href="${base}/external-resources/${experimentAccession}/extra-info.png">
+                <img alt="more information" src="${base}/resources/images/balloon-ellipsis-icon-left.png">
             </a>
         </c:if>
     </div>
@@ -46,7 +50,7 @@
         <div>Array Design(s):
             <c:forEach items="${allArrayDesigns}" var="arrayDesign">
                 <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
-                   href="http://www.ebi.ac.uk/arrayexpress/arrays/${arrayDesign}"
+                   href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
                    target='_blank'>${arrayDesign}</a>
             </c:forEach>
         </div>
@@ -54,8 +58,8 @@
     <c:if test="${not empty pubMedIds and not empty pubMedIds.get(0)}">
         <div id="experimentReferences">Reference(s):
             <c:forEach var="pubMedId" items="${pubMedIds}">
-                        <span><a class="pubmed-id" href="http://www.ncbi.nlm.nih.gov/pubmed/${pubMedId}"
-                                 title="View publication in PubMed">${pubMedId}</a></span>
+                        <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
+                                 title="View publication in PubMed" target='_blank'>${pubMedId}</a></span>
             </c:forEach>
         </div>
     </c:if>

@@ -44,6 +44,7 @@
 
             $("#goto-ae").tooltip();
             $("#goto-experiment").tooltip();
+            $('.pubmed-id').tooltip();
 
             //configurations required for any browser...
 
