@@ -71,6 +71,12 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, pubMedId);
     }
 
+    //This is invoked from jsp el
+    public String getAtlasURL(String experimentAccession) {
+        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.atlas.url.template");
+        return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
+    }
+
     public String getFeedbackEmailAddress() {
         return configurationProperties.getProperty("feedback.email");
     }
