@@ -21,27 +21,27 @@
  */
 
 .bt {
-    border-top: 1px solid #cdcdcd;
+    border-top: 1px solid #cdcdcd !important;
 }
 
 .br {
-    border-right: 1px solid #cdcdcd;
+    border-right: 1px solid #cdcdcd !important;
 }
 
 .bb {
-    border-bottom: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd !important;
 }
 
 .bl {
-    border-left: 1px solid #cdcdcd;
+    border-left: 1px solid #cdcdcd !important;
 }
 
 .samples {
-    background-color: #FAFAFA;
+    background-color: #FAFAFA !important;
 }
 
 .factors {
-    background-color: #FAFAFA;
+    background-color: #FAFAFA !important;
 }
 
 .assays {
@@ -50,7 +50,7 @@
 }
 
 .header-cell {
-    background-color: rgb(237,246,246)!important;
+    background-color: rgb(237, 246, 246) !important;
     font-weight: bold;
     padding-left: 5px;
     padding-right: 5px;

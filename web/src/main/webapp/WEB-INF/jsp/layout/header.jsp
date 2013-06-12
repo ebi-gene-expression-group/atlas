@@ -119,8 +119,8 @@
 
     <div id="feedback-tips" class="validateTips">Please fill this form and click the Send button.</div>
 
-    <form id="form" cssClass="atlas-form">
-        <fieldset id="form-fields" cssClass="atlas-form">
+    <form id="form">
+        <fieldset id="form-fields">
             <ul>
                 <li>
                     <div>

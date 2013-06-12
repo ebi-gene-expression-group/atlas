@@ -26,7 +26,7 @@
   --%>
 
 <div id="preferencesFormBlock" class="block-max-width">
-    <form:form method="get" commandName="preferences" id="prefForm" cssClass="atlas-form">
+    <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="serializedFilterFactors"/>
         <form:hidden path="queryFactorType"/>
         <form:hidden path="rootContext"/>
@@ -38,10 +38,10 @@
         </c:if>
 
         <form:errors path="*" cssClass="error"/>
-        <table class="form-grid atlas-table">
+        <table class="form-grid">
             <tr>
                 <td>
-                    <form:label path="geneQuery" cssClass="atlas-form">Gene Query</form:label>
+                    <form:label path="geneQuery">Gene Query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
 
@@ -57,12 +57,12 @@
                 </c:if>
 
                 <td>
-                    <form:label path="queryFactorValues" cssClass="atlas-form">${queryFactorName}</form:label>
+                    <form:label path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch${type eq 'BASELINE' ? '' : '-differential'}"/>
                 </td>
                 <td style="width:100%;display:block">
-                    <form:label cssClass="atlas-form"
-                                path="cutoff">${type eq 'BASELINE' ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
+                    <form:label
+                            path="cutoff">${type eq 'BASELINE' ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
                     <span data-help-loc="#cutoff"/>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
@@ -80,19 +80,19 @@
                 <td>
                     <div style="display:inline-block">
                         <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="2"
-                                       cols="36" cssClass="atlas-form"></form:textarea>
+                                       cols="36"></form:textarea>
                         <div>
                             <span style="float:left">
                                 <form:checkbox id="exactMatch"
                                                path="exactMatch"
-                                               label="Exact match" cssClass="atlas-form"/>
+                                               label="Exact match"/>
                             </span>
                             <c:if test="${type eq 'BASELINE'}">
                                 <span data-help-loc="#gene-set-match" style="float:right;"></span>
                             <span style="float:right;">
                                 <form:checkbox id="geneSetMatch"
                                                path="geneSetMatch"
-                                               label="Gene set" cssClass="atlas-form"/>
+                                               label="Gene set"/>
                             </span>
 
                                 <div style="clear:both;"></div>
@@ -119,14 +119,12 @@
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
                                      cssStyle="width:340px;"
-                                     cssClass="atlas-form"
                                      disabled="${isSingleContrast ? true : false}"/>
                     </div>
                     <span>
                         <form:checkbox id="specific"
                                        path="specific"
                                        label="Specific"
-                                       cssClass="atlas-form"
                                        disabled="${isSingleContrast ? true : false}"/>
                     </span>
                     <span data-help-loc="#specific${type != 'BASELINE' ? '' : '-differential'}"
@@ -140,11 +138,10 @@
                                                   type="number"
                                                   maxFractionDigits="0"
                                                   var="formattedCutoff"/>
-                                <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"
-                                            cssClass="atlas-form"/>
+                                <form:input size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"/>
                             </c:when>
                             <c:otherwise>
-                                <form:input size="10" path="cutoff" id="cutoff" cssClass="atlas-form"/>
+                                <form:input size="10" path="cutoff" id="cutoff"/>
                             </c:otherwise>
                         </c:choose>
                     </div>

@@ -28,12 +28,12 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<form:form method="get" commandName="preferences" id="prefForm" cssClass="atlas-form">
+<form:form method="get" commandName="preferences" id="prefForm">
 
     <div id="table-caption"><b>Experiment Design</b></div>
 
     <div id="toolbar">
-        <table class="atlas-table" cellpadding="0" cellspacing="0" border="0" style="float: left;">
+        <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
             <tr>
                 <td style="vertical-align: middle; padding: 0px;">Show Analysed only?</td>
                 <td style="vertical-align: middle; padding: 0px;"><input type="checkbox" id="showOnlyAnalysedRuns"
@@ -43,14 +43,13 @@
         </table>
 
         <c:if test="${type != 'BASELINE'}">
-            <table class="atlas-table" cellpadding="0" cellspacing="0" border="0"
+            <table cellpadding="0" cellspacing="0" border="0"
                    style="float: right; padding: 0px 3px 10px 0px; ">
                 <tr>
                     <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
-                        <form:label path="selectedContrast" cssStyle="vertical-align: middle;"
-                                    cssClass="atlas-form">Contrast: </form:label>
+                        <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Contrast: </form:label>
                         <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
-                                     itemLabel="displayName" cssClass="atlas-form"/>
+                                     itemLabel="displayName"/>
                     </td>
                     <td style="vertical-align: middle; padding: 0px 4px 0px 0px;">Reference:</td>
                     <td style="vertical-align: middle; padding: 0px; background-color:#FFC266;width:20px;">&nbsp;</td>
@@ -61,7 +60,7 @@
         </c:if>
     </div>
 
-    <table class="atlas-table" cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
 
     </table>
 

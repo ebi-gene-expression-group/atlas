@@ -25,7 +25,7 @@
 
 <div class="experimentsPageHeading">Experiments Expression Atlas</div>
 
-<table cellspacing="0" cellpadding="0" border="0" id="experiments-table" class="display atlas-table">
+<table cellspacing="0" cellpadding="0" border="0" id="experiments-table" class="display">
 
 </table>
 

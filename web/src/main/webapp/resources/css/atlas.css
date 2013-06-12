@@ -32,104 +32,89 @@
     width: 15%;
 }
 
-::selection {
-    background: rgb(95, 142, 179) !important;
-    color: white;
-}
-
 .atlas-body {
     min-width: 975px;
     /*    font-family: Verdana, Helvetica, Arial, sans-serif;
         margin:0px auto !important;*/
 }
 
-body div#local-title a {
-    color: black !important;
-    text-shadow: none !important;
-}
-
-/*
-td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {
-    border-bottom-color: transparent;
-}
-*/
-#contents {
-    font-size: 12px;
-}
-
-#contents a, #contents a:link, #contents a:visited {
-    border-bottom-color: transparent;
-    color: #343094
-}
-
-#contents a:hover, #contents a:active {
-    border-bottom-style: solid;
-    border-bottom-color: brown;
-    color: brown !important;
-}
-
-/*
-div#global-masthead ul li a:link, div#global-masthead ul li a:visited,
-div#global-masthead ul li a:active, div#global-masthead ul li a:hover {
-    color: white;
-    border-bottom: 0 none;
-}
-*/
 ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     border-bottom-color: #207A7A !important;
     border-bottom: 3px solid;
 }
 
-#transcripts-pie table, #gene-distribution table {
+#local-title h1, #content h1 {
+    color: #207A7A;
+}
+
+#local-title a {
+    color: black !important;
+    text-shadow: none !important;
+}
+
+#content ::selection {
+    background: rgb(95, 142, 179) !important;
+    color: white;
+}
+
+#content table, #transcripts-pie table {
     border: none;
     width: auto;
     margin: 0px;
 }
 
-.atlas-table {
-    border: none;
-    width: auto;
-    margin: 0px;
-}
-
-th {
-    background-color: transparent !important;
+#content th, #transcripts-pie th {
+    background-color: transparent;
     text-align: center;
 }
 
-td, th {
+#content td, th, #transcripts-pie td, th {
     vertical-align: inherit;
     border: none;
     margin: 0px;
     padding: 1px;
 }
 
-.atlas-form {
+#content form {
     padding: 0px;
     margin: 0px;
 }
 
-fieldset.atlas-form {
+#content form td {
+    vertical-align: top;
+    padding: 4px;
+}
+
+#content form td div {
+    padding-bottom: 3px;
+}
+
+#content form fieldset {
     background-color: transparent;
     padding: 0px;
     margin: 0px;
 }
 
-input.atlas-form {
+#content input {
     vertical-align: baseline;
     margin: 0.2em 0.1em 0.2em 0.2em;
 }
 
-img {
+#content img {
     max-width: none !important;
 }
 
-h1 {
-    color: #207A7A;
+#content section img {
+    margin: 0px;
 }
 
-section img {
-    margin: 0px;
+#content textarea {
+    border-color: lightgray;
+}
+
+#content textarea, .chzn-container {
+    font-family: inherit !important;
+    font-size: inherit !important;
 }
 
 /* ebi css and ebi-visual.css override: end */
@@ -180,16 +165,8 @@ section img {
     padding: 10px;
 }
 
-textarea {
-    border-color: lightgray;
-}
-
 .thick-link {
     font-weight: bold;
-}
-
-#contents {
-    background-color: white;
 }
 
 .chzn-choices {
@@ -220,20 +197,6 @@ textarea {
 
 .button-image .ui-button-text {
     padding: 2px !important;
-}
-
-form td {
-    vertical-align: top;
-    padding: 4px;
-}
-
-form td div {
-    padding-bottom: 3px;
-}
-
-textarea, .chzn-container {
-    font-family: inherit !important;
-    font-size: inherit !important;
 }
 
 .error {

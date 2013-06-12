@@ -34,7 +34,7 @@
 <fmt:setBundle basename="configuration" var="configuration"/>
 
 <div class="block">
-    <table class="atlas-table">
+    <table>
         <tbody>
         <tr>
             <td>

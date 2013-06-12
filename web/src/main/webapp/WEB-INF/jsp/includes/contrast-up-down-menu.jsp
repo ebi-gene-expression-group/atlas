@@ -25,6 +25,5 @@
 
 
 <div style="width: 100px;">
-    <form:radiobuttons path="regulation" element="div" itemLabel="label" items="${regulationValues}"
-                       cssClass="atlas-form"/>
+    <form:radiobuttons path="regulation" element="div" itemLabel="label" items="${regulationValues}"/>
 </div>
