@@ -61,7 +61,7 @@ public class GenesetBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkTableRows() {
-        assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome ID", "Metabolism of nucleotides"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome", "Metabolism of nucleotides"));
     }
 
     @Test

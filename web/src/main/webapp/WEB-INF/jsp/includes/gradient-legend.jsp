@@ -30,7 +30,7 @@
     <c:choose>
         <c:when test="${type eq 'BASELINE'}">
             <div style="float:left">
-                <table style="font-size:10px;" id="baseline-heatmap-legend">
+                <table class="atlas-table" style="font-size:10px;" id="baseline-heatmap-legend">
 
                     <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                           highValueColour="${colourGradient.getHexByColourName('blue')}"
@@ -44,7 +44,7 @@
         </c:when>
         <c:otherwise>
             <div style="float:left">
-                <table style="font-size:10px;" id="diff-heatmap-legend">
+                <table class="atlas-table" style="font-size:10px;" id="diff-heatmap-legend">
                     <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
                                     and geneProfiles.getMinDownRegulatedExpressionLevel() != 'NaN'}">
 

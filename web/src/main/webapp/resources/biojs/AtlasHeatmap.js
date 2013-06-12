@@ -64,7 +64,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
         var options = self.opt;
         var httpRequest = {
             url:options.featuresUrl,
-
+            data:{rootContext:options.rootContext},
             methid:"GET",
             success:function (htmlResponse) {
                 Biojs.console.log("SUCCESS: data received");
@@ -97,6 +97,12 @@ Biojs.AtlasHeatmap = Biojs.extend({
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your
          component into. */
-        target:"YourOwnDivId"
+        target:"YourOwnDivId",
+        /* Root context
+         This is an optional parameter to specify the root context path to
+         be used by the widget content, i.e. this is pointing to the
+         content proxy where required.
+         */
+        rootContext:''
     }
 });

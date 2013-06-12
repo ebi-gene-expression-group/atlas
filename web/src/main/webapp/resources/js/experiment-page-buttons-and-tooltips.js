@@ -32,4 +32,5 @@ function initExperimentPageButtonsAndTooltips() {
     $('#goto-ae').tooltip();
     $('#goto-experiment').tooltip();
     $('.array-design').tooltip();
+    $('.pubmed-id').tooltip();
 }

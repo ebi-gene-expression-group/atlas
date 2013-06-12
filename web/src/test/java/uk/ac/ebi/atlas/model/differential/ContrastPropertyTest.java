@@ -34,26 +34,26 @@ import static org.hamcrest.Matchers.is;
 public class ContrastPropertyTest {
     @Test
     public void testHasEqualValues() throws Exception {
-        ContrastProperty property = new ContrastProperty("a","a","a");
+        ContrastProperty property = new ContrastProperty("a", "a", "a", ContrastProperty.ContrastPropertyType.FACTOR);
         assertThat(property.hasEqualValues(), is(true));
 
-        property = new ContrastProperty("a","z","a");
+        property = new ContrastProperty("a", "z", "a", ContrastProperty.ContrastPropertyType.FACTOR);
         assertThat(property.hasEqualValues(), is(false));
 
-        property = new ContrastProperty("a","z",null);
+        property = new ContrastProperty("a", "z", null, ContrastProperty.ContrastPropertyType.FACTOR);
         assertThat(property.hasEqualValues(), is(false));
     }
 
     @Test
     public void testCompareTo() throws Exception {
-        ContrastProperty property1 = new ContrastProperty("b","z","a");
-        ContrastProperty property2 = new ContrastProperty("a","a","a");
-        ContrastProperty property3 = new ContrastProperty("c",null,"a");
-        ContrastProperty property4 = new ContrastProperty("q","a","z");
-        ContrastProperty property5 = new ContrastProperty("d","a","a");
+        ContrastProperty property1 = new ContrastProperty("b", "z", "a", ContrastProperty.ContrastPropertyType.FACTOR);
+        ContrastProperty property2 = new ContrastProperty("a", "a", "a", ContrastProperty.ContrastPropertyType.FACTOR);
+        ContrastProperty property3 = new ContrastProperty("c", null, "a", ContrastProperty.ContrastPropertyType.FACTOR);
+        ContrastProperty property4 = new ContrastProperty("q", "a", "z", ContrastProperty.ContrastPropertyType.FACTOR);
+        ContrastProperty property5 = new ContrastProperty("d", "a", "a", ContrastProperty.ContrastPropertyType.FACTOR);
 
-        SortedSet<ContrastProperty> properties = Sets.newTreeSet(Sets.newHashSet(property1,property2,property3,property4,property5));
+        SortedSet<ContrastProperty> properties = Sets.newTreeSet(Sets.newHashSet(property1, property2, property3, property4, property5));
 
-        assertThat(properties, contains(property2,property5, property1, property3, property4));
+        assertThat(properties, contains(property2, property5, property1, property3, property4));
     }
 }

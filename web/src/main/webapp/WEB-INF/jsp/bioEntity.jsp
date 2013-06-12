@@ -26,7 +26,7 @@
 
 <input type="text" value="${entityIdentifier}" style="display: none" id="searchterm">
 
-<section class="grid_17 alpha">
+<section class="grid_17 alpha extra-padding">
     <h2 class="strapline">
         Expression Atlas results for <span class="searchterm">${entityIdentifier}</span>
     </h2>
@@ -37,7 +37,7 @@
     </div>
 </aside>
 
-<section class="grid_23">
+<section class="grid_23 extra-padding">
     <div id="accordion">
         <ul id="infoHeader" class="bioEntityCardHeader">
             <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
@@ -52,8 +52,8 @@
             <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
         </ul>
 
-        <div id="infoBody" class="bioEntityCard">
-            <table id="bioEntityCardTable">
+        <div id="infoBody" class="bioEntityCard atlas-table">
+            <table class="atlas-table" id="bioEntityCardTable">
                 <c:forEach var="propertyType" items="${propertyNames.keySet()}">
                     <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
                     <c:if test="${propertyLinks.size() > 0}">
@@ -123,7 +123,7 @@
                 </div>
 
                 <div id="heatmap-div" style="display:none;">
-                    <table style="margin-left:auto;margin-right:auto;">
+                    <table class="atlas-table" style="margin-left:auto;margin-right:auto;">
                         <tr>
                             <td>
                                 <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
@@ -146,64 +146,25 @@
         </c:if>
     </div>
 </section>
-<section id="contrastInfo" style="display:none">
-    <div style="font-weight: bold; color:blue;">
-        RNA-seq of mouse spinal cord expressing wild type human TDP-43
-    </div>
-    <div>
-        genotype:'expressing human TDP-43' vs 'non transgenic'
-    </div>
-    <table class='table-grid'>
+
+<section id="contrastInfo" style="display:none" class="extra-padding">
+    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
+    <div id="contrastDescription" style="text-align: center"></div>
+    <table class='table-grid atlas-table'>
         <thead>
-            <tr>
-                <th class='header-cell'>
-                    Property
-                </th>
-                <th class='header-cell'>
-                    Test value
-                </th>
-                <th class='header-cell'>
-                    Reference value
-                </th>
-            </tr>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Test value
+            </th>
+            <th class='header-cell'>
+                Reference value
+            </th>
+        </tr>
         </thead>
-        <tbody>
-        <!--
-            <tr style="font-weight: bold;">
-                <td>
-                    genotype
-                </td>
-                <td>
-                    expressing human TDP-43
-                </td>
-                <td>
-                    non transgenic
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    age
-                </td>
-                <td>
-                    21 days
-                </td>
-                <td>
-                    21 days
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    name
-                </td>
-                <td>
-                    benedetto
-                </td>
-                <td>
-                    fiorelli
-                </td>
-            </tr>
-            -->
-        </tbody>
+        <tbody></tbody>
     </table>
 </section>
 
@@ -230,11 +191,11 @@
         $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
-            collapsible: true,
-            active: openPanelIndex,
-            heightStyle: "content",
-            icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
-            header: "ul"
+            collapsible:true,
+            active:openPanelIndex,
+            heightStyle:"content",
+            icons:{ "header":"bioEntityCardIconPlus", "activeHeader":"bioEntityCardIconMinus" },
+            header:"ul"
         });
 
 
@@ -246,8 +207,8 @@
         }
 
         new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
-            target: "widgetBody"
+            featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
+            target:"widgetBody"
         });
     };
 </script>

@@ -29,14 +29,13 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<section>
-
+<section class="extra-padding">
 
     <c:import url="includes/request-preferences.jsp"/>
 
 </section>
 
-<section id="stickem-container" style="overflow: auto;">
+<section id="stickem-container" style="overflow: auto;" class="extra-padding">
 
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
@@ -63,7 +62,8 @@
         <p style="text-align: center">
             <span id="transcript-breakdown-title"></span>
             <span id="transcript-breakdown-title-help">
-                <a class="help-icon" href="#" title="Transcripts with zero expression are excluded from the pie chart. Transcripts shown in white colour have been reported with low confidence.">?</a>
+                <a class="help-icon" href="#"
+                   title="Transcripts with zero expression are excluded from the pie chart. Transcripts shown in white colour have been reported with low confidence.">?</a>
             </span>
         </p>
 
@@ -110,14 +110,15 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
             clearLocalNav();
             $('#local-nav-home').addClass("active");
 
-            if ($.browser.msie && $.browser.version <= 8){
+            if ($.browser.msie && $.browser.version <= 8) {
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
                 $("#gene-distribution-panel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
                 $("#slider-help").hide();//hide the slider help
-            };
+            }
+            ;
 
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
@@ -142,9 +143,9 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var allQueryFactorValues = [${allQueryFactors.size()}];
-                <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
+            <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
                 allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
-                </c:forEach>
+            </c:forEach>
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
                     anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');

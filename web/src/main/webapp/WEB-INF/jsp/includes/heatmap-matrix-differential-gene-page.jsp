@@ -23,11 +23,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<c:set var="base" value="${pageContext.request.contextPath}"/>
+<c:if test="${not empty preferences.rootContext}">
+    <c:set var="base" value="${preferences.rootContext}"/>
+</c:if>
 
-<table id="diff-heatmap-table" class="table-grid">
+<table id="diff-heatmap-table" class="table-grid atlas-table">
     <thead>
     <tr>
-        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;"><div>Contrast</div></th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Contrast</div>
+        </th>
         <th class="horizontal-header-cell" style="padding: 5px;">
             <div class='factor-header' data-organism-part=''>Adjusted P-value</div>
         </th>
@@ -40,7 +46,9 @@
                var="differentialGeneProfileLink">
         <c:set var="count" value="${count + 1}"/>
         <tr class=${count % 2 == 0 ? 'even' : 'odd'}>
-            <td class="horizontal-header-cell contrastNameCell">
+            <td class="horizontal-header-cell contrastNameCell"
+                data-experiment-accession="${differentialGeneProfileLink.experimentAccession}"
+                data-contrast-id="${differentialGeneProfileLink.contrastId}">
                 <a href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrastDisplayName}</a>
             </td>
 
@@ -111,8 +119,7 @@
     </tbody>
 </table>
 
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/heatmapModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts

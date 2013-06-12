@@ -23,20 +23,20 @@
 /*global $,jQuery,console,loadSliderAndPlot: false */
 /*jslint browser:true */
 /*jslint nomen: true*/
-var contrastInfoTooltipModule = (function($) {
+var contrastInfoTooltipModule = (function ($) {
     "use strict";
 
-    function initTooltip(contextRoot){
-        var experimentAccession = $(this).attr("data-experiment-accession"),
-            contrastId = $(this).attr("data-contrast-id");
+    function initTooltip(contextRoot) {
 
-        $(".contrastNameCell").attr("title","").tooltip({
+        $(".contrastNameCell").attr("title", "").tooltip({
 
             hide:false,
             show:false,
             tooltipClass:"help-tooltip pvalue-tooltip-styling",
-            content: function (callback) {
+            content:function (callback) {
 
+                var experimentAccession = $(this).attr("data-experiment-accession"),
+                    contrastId = $(this).attr("data-contrast-id");
                 //callback($("#contrastInfo").html());
 
                 $.ajax({
@@ -46,22 +46,26 @@ var contrastInfoTooltipModule = (function($) {
                         var experimentDescription = data.experimentDescription,
                             contrastDescription = data.contrastDescription;
 
-                        $('#experimentDescription').text(experimentDescription);
+                        $('#contrastExperimentDescription').text(experimentDescription);
                         $('#contrastDescription').text(contrastDescription);
 
                         $("#contrastInfo tbody").html("");
 
-                        for(var i = 0; i < data.properties.length; i++){
+                        for (var i = 0; i < data.properties.length; i++) {
                             var property = data.properties[i];
                             var propertyName = property.propertyName;
                             var testValue = property.testValue !== undefined ? property.testValue : "";
                             var referenceValue = property.referenceValue !== undefined ? property.referenceValue : "";
-                            var tableRow = $("<tr><td>" + propertyName + "</td><td>" + testValue + "</td><td>" + referenceValue + "</td></tr>");
-                            if(testValue === referenceValue) {
-                                tableRow.find("td").css("font-weight","bold");
-                            } else {
-                                tableRow.find("td").css("color","gray");
+                            if (testValue === "" && referenceValue === "") {
+                                continue;
                             }
+                            var tableRow = $("<tr><td>" + propertyName + "</td><td>" + testValue + "</td><td>" + referenceValue + "</td></tr>");
+                            if (testValue !== referenceValue && property.contrastPropertyType === 'FACTOR') {
+                                tableRow.find("td").css("font-weight", "bold");
+                            } else {
+                                tableRow.find("td").css("color", "gray");
+                            }
+                            tableRow.find("td").css("white-space", "normal");
                             $("#contrastInfo tbody").append(tableRow);
                         }
                         callback($("#contrastInfo").html());
@@ -71,16 +75,14 @@ var contrastInfoTooltipModule = (function($) {
                         //"Sorry but there was an error: " + xhr.status + " " + xhr.statusText
                         console.log("ERROR:  " + data);
                         callback("ERROR: " + data);
-                });
-
+                    });
             }
         });
     }
+
     return {
-        init:  function(contextRoot) {
+        init:function (contextRoot) {
             initTooltip(contextRoot);
-
         }
-
     };
 }(jQuery));

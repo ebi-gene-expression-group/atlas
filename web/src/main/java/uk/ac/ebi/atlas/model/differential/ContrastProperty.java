@@ -26,16 +26,24 @@ import com.google.common.base.Objects;
 import com.google.common.primitives.Booleans;
 import org.apache.commons.lang3.StringUtils;
 
-public class ContrastProperty implements Comparable<ContrastProperty>{
+public class ContrastProperty implements Comparable<ContrastProperty> {
+
+    public static enum ContrastPropertyType {
+        FACTOR, SAMPLE
+    }
+
+    ;
+
     private String propertyName;
     private String testValue;
     private String referenceValue;
+    private ContrastPropertyType contrastPropertyType;
 
-
-    public ContrastProperty(String propertyName, String testValue, String referenceValue) {
+    public ContrastProperty(String propertyName, String testValue, String referenceValue, ContrastPropertyType contrastPropertyType) {
         this.propertyName = propertyName;
         this.testValue = testValue;
         this.referenceValue = referenceValue;
+        this.contrastPropertyType = contrastPropertyType;
     }
 
     public String getPropertyName() {
@@ -50,25 +58,38 @@ public class ContrastProperty implements Comparable<ContrastProperty>{
         return referenceValue;
     }
 
-    public boolean hasEqualValues(){
-        return StringUtils.equals(testValue,referenceValue);
+    public ContrastPropertyType getContrastPropertyType() {
+        return contrastPropertyType;
+    }
+
+    public boolean hasEqualValues() {
+        return StringUtils.equals(testValue, referenceValue);
     }
 
     @Override
     public int compareTo(ContrastProperty otherProperty) {
-        int groupComparison = Booleans.compare(otherProperty.hasEqualValues(), hasEqualValues());
-        if (groupComparison != 0){
-            return groupComparison;
+        if (contrastPropertyType != otherProperty.contrastPropertyType) {
+            if (contrastPropertyType == ContrastPropertyType.FACTOR) {
+                return -1;
+            } else {
+                return 1;
+            }
+        } else if (contrastPropertyType == otherProperty.contrastPropertyType &&
+                contrastPropertyType == ContrastPropertyType.FACTOR) {
+            int groupComparison = Booleans.compare(otherProperty.hasEqualValues(), hasEqualValues());
+            if (groupComparison != 0) {
+                return groupComparison;
+            }
         }
         return propertyName.compareTo(otherProperty.propertyName);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return Objects.toStringHelper(this)
                 .add("propertyName", propertyName)
-                .add("referenceValue",referenceValue)
-                .add("testValue",testValue)
+                .add("referenceValue", referenceValue)
+                .add("testValue", testValue)
                 .toString();
     }
 }

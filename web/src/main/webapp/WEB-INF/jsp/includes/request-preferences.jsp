@@ -29,6 +29,7 @@
     <form:form method="get" commandName="preferences" id="prefForm">
         <form:hidden path="serializedFilterFactors"/>
         <form:hidden path="queryFactorType"/>
+        <form:hidden path="rootContext"/>
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
@@ -37,7 +38,7 @@
         </c:if>
 
         <form:errors path="*" cssClass="error"/>
-        <table class="form-grid">
+        <table class="form-grid atlas-table">
             <tr>
                 <td>
                     <form:label path="geneQuery">Gene Query</form:label>
@@ -87,13 +88,14 @@
                                                label="Exact match"/>
                             </span>
                             <c:if test="${type eq 'BASELINE'}">
-                            <span data-help-loc="#gene-set-match" style="float:right;"></span>
+                                <span data-help-loc="#gene-set-match" style="float:right;"></span>
                             <span style="float:right;">
                                 <form:checkbox id="geneSetMatch"
                                                path="geneSetMatch"
                                                label="Gene set"/>
                             </span>
-                            <div style="clear:both;"></div>
+
+                                <div style="clear:both;"></div>
                             </c:if>
                         </div>
                     </div>
@@ -162,7 +164,8 @@
                     <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
                 </a>
             </div>
-            <div id="slider-range-max" style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
+            <div id="slider-range-max"
+                 style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
         </span>
         <span id="slider-help" data-help-loc="#slider"></span>
     </div>
