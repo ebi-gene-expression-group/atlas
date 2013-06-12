@@ -46,9 +46,19 @@ public class ExperimentResolver {
     public String getExperimentAccessionByProperty(String value, String type) {
         String species;
 
-        species = StringUtils.isEmpty(type) ? solrQueryService.getSpeciesForPropertyValue(value) : solrQueryService.getSpeciesForPropertyValue(value, type);
+        species = getSpecies(value, type);
 
         return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
+    }
+
+    public String getExperimentAccessionBySpecies(String species) {
+        return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
+    }
+
+    public String getSpecies(String value, String type) {
+        String species;
+        species = StringUtils.isEmpty(type) ? solrQueryService.getSpeciesForPropertyValue(value) : solrQueryService.getSpeciesForPropertyValue(value, type);
+        return species;
     }
 
 }

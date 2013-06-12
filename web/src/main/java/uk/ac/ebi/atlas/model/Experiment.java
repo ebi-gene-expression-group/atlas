@@ -98,4 +98,11 @@ public class Experiment implements Serializable {
         return Collections.unmodifiableMap(speciesMapping);
     }
 
+    public String getRequestSpecieName(String specie) {
+        String specieName = speciesMapping.get(specie);
+        if (specieName != null) {
+            return Character.toUpperCase(specieName.charAt(0)) + specieName.substring(1);
+        }
+        return "";
+    }
 }
