@@ -121,11 +121,14 @@ public class BioEntityPage extends HeatmapTablePage {
         infoPaneHeader.click();
 
         By byBioEntityCardClass = By.id("bioEntityCardTable");
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
     public boolean isBaselineProfileExpanded() {
+        By heatmapTable = By.id("heatmap-table");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(heatmapTable));
         return baselineProfilePaneBody.isDisplayed();
     }
 
