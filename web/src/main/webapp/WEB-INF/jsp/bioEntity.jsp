@@ -146,64 +146,25 @@
         </c:if>
     </div>
 </section>
+
 <section id="contrastInfo" style="display:none">
-    <div style="font-weight: bold; color:blue;">
-        RNA-seq of mouse spinal cord expressing wild type human TDP-43
-    </div>
-    <div>
-        genotype:'expressing human TDP-43' vs 'non transgenic'
-    </div>
+    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
+    <div id="contrastDescription" style="text-align: center"></div>
     <table class='table-grid'>
         <thead>
-            <tr>
-                <th class='header-cell'>
-                    Property
-                </th>
-                <th class='header-cell'>
-                    Test value
-                </th>
-                <th class='header-cell'>
-                    Reference value
-                </th>
-            </tr>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Test value
+            </th>
+            <th class='header-cell'>
+                Reference value
+            </th>
+        </tr>
         </thead>
-        <tbody>
-        <!--
-            <tr style="font-weight: bold;">
-                <td>
-                    genotype
-                </td>
-                <td>
-                    expressing human TDP-43
-                </td>
-                <td>
-                    non transgenic
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    age
-                </td>
-                <td>
-                    21 days
-                </td>
-                <td>
-                    21 days
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    name
-                </td>
-                <td>
-                    benedetto
-                </td>
-                <td>
-                    fiorelli
-                </td>
-            </tr>
-            -->
-        </tbody>
+        <tbody></tbody>
     </table>
 </section>
 
@@ -230,11 +191,11 @@
         $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
-            collapsible: true,
-            active: openPanelIndex,
-            heightStyle: "content",
-            icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
-            header: "ul"
+            collapsible:true,
+            active:openPanelIndex,
+            heightStyle:"content",
+            icons:{ "header":"bioEntityCardIconPlus", "activeHeader":"bioEntityCardIconMinus" },
+            header:"ul"
         });
 
 
@@ -246,8 +207,8 @@
         }
 
         new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
-            target: "widgetBody"
+            featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
+            target:"widgetBody"
         });
     };
 </script>

@@ -46,7 +46,7 @@ var contrastInfoTooltipModule = (function ($) {
                         var experimentDescription = data.experimentDescription,
                             contrastDescription = data.contrastDescription;
 
-                        $('#experimentDescription').text(experimentDescription);
+                        $('#contrastExperimentDescription').text(experimentDescription);
                         $('#contrastDescription').text(contrastDescription);
 
                         $("#contrastInfo tbody").html("");
@@ -65,6 +65,7 @@ var contrastInfoTooltipModule = (function ($) {
                             } else {
                                 tableRow.find("td").css("color", "gray");
                             }
+                            tableRow.find("td").css("white-space", "normal");
                             $("#contrastInfo tbody").append(tableRow);
                         }
                         callback($("#contrastInfo").html());
