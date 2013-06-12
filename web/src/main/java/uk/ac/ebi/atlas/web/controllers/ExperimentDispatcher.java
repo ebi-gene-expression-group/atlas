@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,10 +37,12 @@ import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.validation.Valid;
 import java.util.Set;
 
 /**
@@ -121,15 +124,23 @@ public final class ExperimentDispatcher {
 
     @RequestMapping(value = "/widgets/heatmap/protein")
     public String dispatchWidget(HttpServletRequest request,
-                                 @RequestParam(value = "geneQuery", required = true) String uniprotAccession,
+                                 @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
+                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                  Model model) {
 
-        Experiment experiment = getExperiment(experimentResolver.getExperimentAccessionByProperty(uniprotAccession, propertyType), model);
+        String species = experimentResolver.getSpecies(bioEntityAccession, propertyType);
+        String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(species);
+
+        Experiment experiment = getExperiment(experimentAccession, model);
         prepareModel(request, model, experiment);
         String requestURL = getRequestURL(request);
 
-        return "forward:" + requestURL + "?type=" + experiment.getType();
+        String mappedSpecies = experiment.getRequestSpecieName(species);
+
+        String organismParameters = StringUtils.isEmpty(mappedSpecies)? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
+
+        return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
 
     }
 
