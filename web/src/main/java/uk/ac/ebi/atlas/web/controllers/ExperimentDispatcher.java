@@ -132,15 +132,20 @@ public final class ExperimentDispatcher {
         String species = experimentResolver.getSpecies(bioEntityAccession, propertyType);
         String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(species);
 
-        Experiment experiment = getExperiment(experimentAccession, model);
-        prepareModel(request, model, experiment);
-        String requestURL = getRequestURL(request);
+        if (!StringUtils.isEmpty(experimentAccession)) {
+            Experiment experiment = getExperiment(experimentAccession, model);
+            prepareModel(request, model, experiment);
+            String requestURL = getRequestURL(request);
 
-        String mappedSpecies = experiment.getRequestSpecieName(species);
+            String mappedSpecies = experiment.getRequestSpecieName(species);
 
-        String organismParameters = StringUtils.isEmpty(mappedSpecies)? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
+            String organismParameters = StringUtils.isEmpty(mappedSpecies)? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
 
-        return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
+            return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
+        } else {
+            model.addAttribute("identifier", bioEntityAccession);
+            return "widget-error";
+        }
 
     }
 
