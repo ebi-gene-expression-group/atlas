@@ -165,7 +165,7 @@ section img {
 
 /* JQuery UI overrides: end */
 
-section {
+.extra-padding {
     padding: 10px;
 }
 

@@ -26,7 +26,7 @@
 
 <input type="text" value="${entityIdentifier}" style="display: none" id="searchterm">
 
-<section class="grid_17 alpha">
+<section class="grid_17 alpha extra-padding">
     <h2 class="strapline">
         Expression Atlas results for <span class="searchterm">${entityIdentifier}</span>
     </h2>
@@ -37,7 +37,7 @@
     </div>
 </aside>
 
-<section class="grid_23">
+<section class="grid_23 extra-padding">
     <div id="accordion">
         <ul id="infoHeader" class="bioEntityCardHeader">
             <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
@@ -147,7 +147,7 @@
     </div>
 </section>
 
-<section id="contrastInfo" style="display:none">
+<section id="contrastInfo" style="display:none" class="extra-padding">
     <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
     <div id="contrastDescription" style="text-align: center"></div>
     <table class='table-grid'>

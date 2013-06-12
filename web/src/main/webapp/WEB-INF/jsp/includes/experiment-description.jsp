@@ -38,7 +38,7 @@
 <td width="100%">
     <div id="experimentDescription">
         <a id="goto-experiment" class="thick-link" title="Experiment Page"
-           href="${base}/experiments/${experimentAccession}">${experimentDescription}</a>
+           href="${pageContext.request.contextPath}/experiments/${experimentAccession}">${experimentDescription}</a>
         <c:if test="${hasExtraInfo}">
             <a id="extra-info" href="${base}/external-resources/${experimentAccession}/extra-info.png">
                 <img alt="more information" src="${base}/resources/images/balloon-ellipsis-icon-left.png">
