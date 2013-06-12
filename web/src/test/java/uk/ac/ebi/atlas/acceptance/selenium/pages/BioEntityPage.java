@@ -67,6 +67,9 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "diffProfileBody")
     private WebElement diffProfilePaneBody;
 
+    @FindBy(id = "widgetBody")
+    private WebElement widgetBody;
+
     @FindBy(css = "h2.strapline")
     private WebElement searchResultHeader;
 
@@ -118,11 +121,14 @@ public class BioEntityPage extends HeatmapTablePage {
         infoPaneHeader.click();
 
         By byBioEntityCardClass = By.id("bioEntityCardTable");
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
     public boolean isBaselineProfileExpanded() {
+        By heatmapTable = By.id("heatmap-table");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(heatmapTable));
         return baselineProfilePaneBody.isDisplayed();
     }
 
@@ -149,6 +155,12 @@ public class BioEntityPage extends HeatmapTablePage {
             return driver.findElement(byTooltipClass).getText();
         }
     */
+
+
+    public String getWidgetBody() {
+        return widgetBody.getText();
+    }
+
     public int getPropertiesTableSize() {
         return table.findElements(By.tagName("tr")).size();
     }
