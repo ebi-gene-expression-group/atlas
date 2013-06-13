@@ -52,7 +52,7 @@
                             -->
                         </td>
                         <td>
-                            <c:set var="height" value="230px"/>
+                            <c:set var="height" value="250px"/>
                             <c:if test="${species.equalsIgnoreCase(\"Homo sapiens\")}">
                                 <c:set var="height" value="360px"/>
                             </c:if>
