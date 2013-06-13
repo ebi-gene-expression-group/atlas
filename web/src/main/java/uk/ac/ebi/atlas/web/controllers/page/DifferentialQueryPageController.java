@@ -72,11 +72,10 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
         //required by autocomplete
         model.addAttribute("species", requestContext.getFilteredBySpecies());
 
-        model.addAttribute("pubMedIds", experiment.getPubMedIds());
-
         model.addAttribute("queryFactorName", "Contrast");
 
         model.addAttribute("allQueryFactors", contrasts);
+
         model.addAttribute("regulationValues", Regulation.values());
 
         if (!result.hasErrors()) {

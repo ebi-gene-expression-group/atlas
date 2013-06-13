@@ -136,8 +136,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
         //required by autocomplete
         model.addAttribute("species", species);
 
-        model.addAttribute("pubMedIds", experiment.getPubMedIds());
-
         if (!result.hasErrors()) {
 
             try {

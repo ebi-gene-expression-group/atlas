@@ -54,9 +54,7 @@
 
 </head>
 <body>
-<div id="content">
-    <tiles:insertAttribute name="body"/>
-</div>
+<tiles:insertAttribute name="body"/>
 </body>
 </html>
 
