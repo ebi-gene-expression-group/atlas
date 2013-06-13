@@ -52,7 +52,12 @@
                             -->
                         </td>
                         <td>
-                            <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px">
+                            <c:set var="height" value="230px"/>
+                            <c:if test="${species.equalsIgnoreCase(\"Homo sapiens\")}">
+                                <c:set var="height" value="360px"/>
+                            </c:if>
+
+                            <div id="anatomogramBody" style="display:inline-block;width: 230px; height:${height}">
                             </div>
                         </td>
                     </tr>
