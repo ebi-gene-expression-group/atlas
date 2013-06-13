@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.geneindex.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -78,8 +80,12 @@ public class GeneSetPageController extends BioEntityPageController {
     protected void initBioEntityPropertyService(String identifier) {
         String species = solrQueryService.getSpeciesForPropertyValue(identifier);
 
+        if (StringUtils.isEmpty(species)) {
+            throw new ResourceNotFoundException("Cannot find data for geneset with ID " + identifier);
+        }
+
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
-        propertyValuesByType.put("reactome", identifier);
+        propertyValuesByType.put("reactome", identifier.toUpperCase());
         propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(identifier));
         SortedSet<String> names = Sets.newTreeSet();
         names.add(identifier);
