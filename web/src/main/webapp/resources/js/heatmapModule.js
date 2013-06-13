@@ -178,19 +178,18 @@ var heatmapModule = (function ($) {
                 }
             }).fail(function (data) {
                     console.log("ERROR:  " + data);
-            });
+                });
 
         });
     }
 
     //there must be a cleaner way to do this, but I don't know it yet!
     function buildHeatmapCellTooltip(expressionLevel, tstatistic, foldChange) {
-        return "<table class='table-grid'><thead><th class='header-cell'>Adjusted P-value</th>" +
+        return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted P-value</th>" +
             (tstatistic !== undefined ? "<th class='header-cell'>T-statistic</th>" : "") +
             "<th class='header-cell'>Log2-fold Change</th></thead>" +
             "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + expressionLevel + "</span></td>" +
             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
-
             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
             "</table>";
     }
@@ -308,7 +307,7 @@ var heatmapModule = (function ($) {
 
         $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (experimentAccession!==undefined && parameters.species && !parameters.isWidget) {
+        if (experimentAccession !== undefined && parameters.species && !parameters.isWidget) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
@@ -325,7 +324,7 @@ var heatmapModule = (function ($) {
             createAccessionHeaders([firstColumnHeader]);
         }
 
-        if (experimentAccession!==undefined && parameters.cutoff === 0.05 && !parameters.geneQuery) {
+        if (experimentAccession !== undefined && parameters.cutoff === 0.05 && !parameters.geneQuery) {
             initMaPlotButtons(experimentAccession, parameters.arrayDesignAccession);
         }
 
