@@ -47,7 +47,6 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         String experimentAccession = experiment.getAccession();
-        model.addAttribute("pubMedIds", experiment.getPubMedIds());
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 

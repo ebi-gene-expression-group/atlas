@@ -87,6 +87,7 @@ public final class ExperimentDispatcher {
 
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
+    private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
     private static final String IS_TWO_COLOUR = "isTwoColour";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
@@ -139,7 +140,7 @@ public final class ExperimentDispatcher {
 
             String mappedSpecies = experiment.getRequestSpecieName(species);
 
-            String organismParameters = StringUtils.isEmpty(mappedSpecies)? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
+            String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
 
             return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
         } else {
@@ -168,6 +169,8 @@ public final class ExperimentDispatcher {
         model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
 
         model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
+
+        model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
     }
 
     //ToDo: refactor - create different methods for diff experiment types
