@@ -76,9 +76,9 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkContrastSummaryTooltipTableLastRow() {
-        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 0), is("genotype"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 1), is("idn2-1"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 2), is("wild type"));
+        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 0), is("Organism"));
+        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 1), is("Arabidopsis thaliana"));
+        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 2), is("Arabidopsis thaliana"));
     }
 
     @Test
