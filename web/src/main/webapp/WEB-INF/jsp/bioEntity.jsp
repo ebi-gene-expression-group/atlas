@@ -147,10 +147,10 @@
     </div>
 </section>
 
-<section id="contrastInfo" style="display:none" class="extra-padding">
+<section id="contrastInfo" style="display:none">
     <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
     <div id="contrastDescription" style="text-align: center"></div>
-    <table class='table-grid'>
+    <table class='table-grid' style="padding: 0px; margin: 0px;">
         <thead>
         <tr>
             <th class='header-cell'>
