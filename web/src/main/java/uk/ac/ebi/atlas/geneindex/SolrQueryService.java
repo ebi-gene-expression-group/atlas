@@ -200,9 +200,11 @@ public class SolrQueryService {
 
     QueryResponse executeSolrQuery(SolrQuery solrQuery) {
         try {
-            return solrServer.query(solrQuery);
+            QueryResponse queryResponse = solrServer.query(solrQuery);
+            LOGGER.info("<executeSolrQuery> Solr query time: " + queryResponse.getQTime() + " status code: " + queryResponse.getStatus());
+            return queryResponse;
         } catch (SolrServerException e) {
-            LOGGER.error("<fetchGeneIdentifiersFromSolr> error querying solr service", e);
+            LOGGER.error("<executeSolrQuery> error querying solr service", e);
             throw new IllegalStateException(e);
         }
     }

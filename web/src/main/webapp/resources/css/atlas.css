@@ -447,6 +447,6 @@ a.help-icon {
 }
 
 #experiments-table th.padding {
-    padding-left: 85px;
-    padding-right: 85px;
+    padding-left: 85px !important;
+    padding-right: 85px !important;
 }
