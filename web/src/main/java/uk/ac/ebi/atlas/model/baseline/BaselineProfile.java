@@ -96,6 +96,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     }
 
     public BaselineProfile foldProfile(int foldFactor) {
+        resetMaxMin();
         for (Factor factor : getConditions()) {
             BaselineExpression expression = getExpression(factor);
             double foldLevel = fold(expression.getLevel(), foldFactor);
@@ -110,6 +111,10 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         return new NumberUtils().round(value / foldFactor);
     }
 
+    private void resetMaxMin() {
+        maxExpressionLevel = 0;
+        minExpressionLevel = Double.MAX_VALUE;
+    }
     @Override
     protected void updateProfileExpression(BaselineExpression geneExpression) {
         maxExpressionLevel = max(maxExpressionLevel, geneExpression.getLevel());
