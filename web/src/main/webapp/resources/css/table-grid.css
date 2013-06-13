@@ -38,6 +38,7 @@
 .form-grid label, .analysis-grid label {
     font-weight: bold;
     vertical-align: middle;
+    margin-right: 0 !important;
 }
 
 .analysis-grid thead {
@@ -46,7 +47,7 @@
 
 .analysis-grid td {
     border: 1px solid #cdcdcd !important;
-    padding: 5px;
+    padding: 5px !important;
 }
 
 /*td{*/

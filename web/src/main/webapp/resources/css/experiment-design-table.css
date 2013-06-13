@@ -135,7 +135,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 * DataTables display
 */
-table.display {
+#atlas-content table.display {
     margin: 0 auto;
     clear: both;
     width: 100%;
@@ -154,27 +154,27 @@ table.display {
       */
 }
 
-table.display thead th {
+#atlas-content table.display thead th {
     padding: 3px 18px 3px 10px;
     /*border-bottom: 1px solid black; */
     font-weight: bold;
 }
 
-table.display tfoot th {
+#atlas-content table.display tfoot th {
     padding: 3px 18px 3px 10px;
     border-top: 1px solid black;
     font-weight: bold;
 }
 
-table.display tr.heading2 td {
+#atlas-content table.display tr.heading2 td {
     border-bottom: 1px solid #aaa;
 }
 
-table.display td {
+#atlas-content table.display td {
     padding: 3px 10px;
 }
 
-table.display td.center {
+#atlas-content table.display td.center {
     text-align: center;
 }
 
@@ -230,13 +230,13 @@ table.display td.center {
     text-align: center;
 }
 
-tfoot input {
+#atlas-content tfoot input {
     margin: 0.5em 0;
     width: 100%;
     color: #444;
 }
 
-tfoot input.search_init {
+#atlas-content tfoot input.search_init {
     color: #999;
 }
 

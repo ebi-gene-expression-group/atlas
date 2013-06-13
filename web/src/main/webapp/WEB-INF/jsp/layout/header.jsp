@@ -127,7 +127,7 @@
                         <label for="feedback">Your feedback:</label>
                     </div>
                     <div>
-                        <textarea rows="5" cols="50" name="feedback" id="feedback"
+                        <textarea rows="4" cols="45" name="feedback" id="feedback"
                                   class="text ui-widget-content ui-corner-all"></textarea>
                     </div>
                 </li>
