@@ -30,7 +30,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -56,9 +58,13 @@ public class AnalysisMethodsPageController {
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
 
+        Experiment experiment = (Experiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
         model.addAttribute("csvLines", tsvReader.readAll(experimentAccession));
 
         model.addAttribute("experimentAccession", experimentAccession);
+
+        model.addAttribute("pubMedIds", experiment.getPubMedIds());
 
         downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
