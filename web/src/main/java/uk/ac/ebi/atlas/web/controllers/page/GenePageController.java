@@ -67,6 +67,7 @@ public class GenePageController extends BioEntityPageController {
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
 
         model.addAttribute("preferences", requestPreferences);
+        model.addAttribute("isGenePage", true);
 
         return showGenePage(identifier, model);
     }

@@ -107,7 +107,7 @@
         </div>
 
 
-        <c:if test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
+        <c:if test="${isGenePage}">
             <ul id="diffProfileHeader" class="bioEntityCardHeader">
                 <img id="differential-info-image" title="Differential Expression"
                      style="position: absolute; left: 0.5em; "
@@ -115,34 +115,40 @@
                 <span class="bioEntityCardBioentityName">Differential Expression</span>
             </ul>
 
+            <c:choose>
+                <c:when test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
 
-            <div id="diffProfileBody" class="bioEntityCard">
-                <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                    <span>${differentialGeneProfileProperties.totalNumberOfResults} search result(s) found</span>
-                    <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
-                </div>
+                    <div id="diffProfileBody" class="bioEntityCard">
+                        <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                            <span>${differentialGeneProfileProperties.totalNumberOfResults} search result(s) found</span>
+                            <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
+                        </div>
 
-                <div id="heatmap-div" style="display:none;">
-                    <table style="margin-left:auto;margin-right:auto;">
-                        <tr>
-                            <td>
-                                <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                                    <label for='display-levels'>Display levels</label>
-                                </button>
-                            </td>
-                            <td>
-                                <c:import url="includes/gradient-legend.jsp"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <c:import url="includes/heatmap-matrix-differential-gene-page.jsp"/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-            </div>
+                        <div id="heatmap-div" style="display:none;">
+                            <table style="margin-left:auto;margin-right:auto;">
+                                <tr>
+                                    <td>
+                                        <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
+                                            <label for='display-levels'>Display levels</label>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <c:import url="includes/gradient-legend.jsp"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <c:import url="includes/heatmap-matrix-differential-gene-page.jsp"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div>No differential experiments were found for ${entityIdentifier} </div>
+                </c:otherwise>
+            </c:choose>
         </c:if>
     </div>
 </section>
@@ -191,11 +197,11 @@
         $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
-            collapsible:true,
-            active:openPanelIndex,
-            heightStyle:"content",
-            icons:{ "header":"bioEntityCardIconPlus", "activeHeader":"bioEntityCardIconMinus" },
-            header:"ul"
+            collapsible: true,
+            active: openPanelIndex,
+            heightStyle: "content",
+            icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
+            header: "ul"
         });
 
 
@@ -207,8 +213,8 @@
         }
 
         new Biojs.AtlasHeatmap({
-            featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
-            target:"widgetBody"
+            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
+            target: "widgetBody"
         });
     };
 </script>
