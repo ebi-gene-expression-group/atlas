@@ -179,7 +179,9 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
-            genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
+            if (${preferences.geneSetMatch == false}) {
+                genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
+            }
 
             if (${type == "BASELINE"}) {
 
