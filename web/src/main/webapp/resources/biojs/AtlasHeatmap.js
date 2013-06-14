@@ -29,7 +29,7 @@
  * @extends Biojs
  *
  * @author <a href="mailto:atlas-developers@ebi.ac.uk">ExpressionAtlas Team</a>
- * @version 1.0.1
+ * @version 1.0.2
  * @category 1
  *
  * @requires <a href='http://code.jquery.com/jquery-1.6.4.js'>jQuery Core 1.6.4</a>
@@ -44,6 +44,10 @@
  *
  * @option {string} target
  *    Identifier of the DIV tag where the component should be displayed.
+ *
+ * @option {string} rootContext
+ *    Specifies the root context path to be used by the widget content,
+ *    i.e. this is the location of the content proxy for Ajax calls
  *
  * @example
  * var instance = new Biojs.Heatmap({
@@ -66,14 +70,17 @@ Biojs.AtlasHeatmap = Biojs.extend({
             url:options.featuresUrl,
             data:{rootContext:options.rootContext},
             methid:"GET",
+            beforeSend:function () {
+                containerDiv.html("<img src='http://www-test.ebi.ac.uk/gxa/resources/images/loading.gif' />");
+            },
             success:function (htmlResponse) {
                 Biojs.console.log("SUCCESS: data received");
                 Biojs.console.log(htmlResponse);
-                containerDiv.append(htmlResponse);
+                containerDiv.html(htmlResponse);
             },
             error:function (xhr, ajaxOptions, thrownError) {
                 Biojs.console.log("ERROR: " + xhr.status);
-                containerDiv.append("An error occurred while retrieving the data: " + xhr.status + " - " + xhr.statusText);
+                containerDiv.html("An error occurred while retrieving the data: " + xhr.status + " - " + xhr.statusText);
             }
         };
 
