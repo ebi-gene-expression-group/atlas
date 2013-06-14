@@ -32,8 +32,6 @@ public class ContrastProperty implements Comparable<ContrastProperty> {
         FACTOR, SAMPLE
     }
 
-    ;
-
     private String propertyName;
     private String testValue;
     private String referenceValue;
@@ -81,7 +79,7 @@ public class ContrastProperty implements Comparable<ContrastProperty> {
                 return groupComparison;
             }
         }
-        return propertyName.compareTo(otherProperty.propertyName);
+        return propertyName.compareToIgnoreCase(otherProperty.propertyName);
     }
 
     @Override

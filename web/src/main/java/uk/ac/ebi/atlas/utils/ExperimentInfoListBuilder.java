@@ -23,12 +23,10 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
@@ -39,7 +37,6 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
-import java.util.Set;
 
 @Named
 @Scope("prototype")
@@ -117,7 +114,6 @@ public class ExperimentInfoListBuilder {
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
-            experimentInfo.setExperimentalFactors(extractExperimentalFactors(experiment.getExperimentalFactors()));
             experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
             experimentInfos.add(experimentInfo);
@@ -127,24 +123,16 @@ public class ExperimentInfoListBuilder {
     }
 
     protected ExperimentInfo extractBasicExperimentInfo(Experiment experiment) {
+        ExperimentDesign experimentDesign = experiment.getExperimentDesign();
+
         ExperimentInfo experimentInfo = new ExperimentInfo();
         experimentInfo.setExperimentAccession(experiment.getAccession());
         experimentInfo.setExperimentDescription(experiment.getDescription());
         experimentInfo.setSpecies(experiment.getSpecies());
         experimentInfo.setExperimentType(experiment.getType());
+        experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
+
         return experimentInfo;
-    }
-
-    protected Set<String> extractExperimentalFactors(ExperimentalFactors experimentalFactors) {
-
-        Set<String> allFactorNames = Sets.newHashSet();
-
-        for (Factor factor : experimentalFactors.getAllFactors()) {
-            String factorName = experimentalFactors.getFactorName(factor.getType());
-            allFactorNames.add(factorName);
-        }
-
-        return allFactorNames;
     }
 
 }

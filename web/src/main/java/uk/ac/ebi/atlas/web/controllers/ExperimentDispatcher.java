@@ -129,22 +129,26 @@ public final class ExperimentDispatcher {
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                  Model model) {
+        try {
+            String species = experimentResolver.getSpecies(bioEntityAccession, propertyType);
+            String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(species);
 
-        String species = experimentResolver.getSpecies(bioEntityAccession, propertyType);
-        String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(species);
+            if (!StringUtils.isEmpty(experimentAccession)) {
+                Experiment experiment = getExperiment(experimentAccession, model);
+                prepareModel(request, model, experiment);
+                String requestURL = getRequestURL(request);
 
-        if (!StringUtils.isEmpty(experimentAccession)) {
-            Experiment experiment = getExperiment(experimentAccession, model);
-            prepareModel(request, model, experiment);
-            String requestURL = getRequestURL(request);
+                String mappedSpecies = experiment.getRequestSpecieName(species);
 
-            String mappedSpecies = experiment.getRequestSpecieName(species);
+                String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
 
-            String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
-
-            return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
-        } else {
-            model.addAttribute("identifier", bioEntityAccession);
+                return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
+            } else {
+                model.addAttribute("identifier", bioEntityAccession);
+                return "widget-error";
+            }
+        } catch (ResourceNotFoundException rnfe) {
+            model.addAttribute("errorMessage", rnfe.getMessage());
             return "widget-error";
         }
 
