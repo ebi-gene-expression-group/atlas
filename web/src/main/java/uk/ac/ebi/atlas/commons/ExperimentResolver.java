@@ -24,10 +24,12 @@ package uk.ac.ebi.atlas.commons;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrQueryService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 import java.util.Properties;
 
 @Named()
@@ -37,17 +39,18 @@ public class ExperimentResolver {
 
     private SolrQueryService solrQueryService;
 
+    private GeneQueryTokenizer geneQueryTokenizer;
+
     @Inject
-    public ExperimentResolver(@Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties, SolrQueryService solrQueryService) {
+    public ExperimentResolver(@Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties,
+                              SolrQueryService solrQueryService, GeneQueryTokenizer geneQueryTokenizer) {
         this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.solrQueryService = solrQueryService;
+        this.geneQueryTokenizer = geneQueryTokenizer;
     }
 
     public String getExperimentAccessionByProperty(String value, String type) {
-        String species;
-
-        species = getSpecies(value, type);
-
+        String species = getSpecies(value, type);
         return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
     }
 
@@ -56,8 +59,9 @@ public class ExperimentResolver {
     }
 
     public String getSpecies(String value, String type) {
-        String species;
-        species = StringUtils.isEmpty(type) ? solrQueryService.getSpeciesForPropertyValue(value) : solrQueryService.getSpeciesForPropertyValue(value, type);
+        List<String> partsOfGeneQuery = geneQueryTokenizer.split(value);
+        String firstIdentifier = partsOfGeneQuery.get(0);
+        String species = StringUtils.isEmpty(type) ? solrQueryService.getSpeciesForPropertyValue(firstIdentifier) : solrQueryService.getSpeciesForPropertyValue(firstIdentifier, type);
         return species;
     }
 
