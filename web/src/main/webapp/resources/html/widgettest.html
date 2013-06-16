@@ -3,44 +3,44 @@
               borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections
               csstransforms csstransforms3d csstransitions fontface generatedcontent applicationcache">
 
-    <head>
+<head>
 
-        <title>Biojs.AtlasHeatmap test</title>
+    <title>Biojs.AtlasHeatmap test</title>
 
-        <link type="text/css" rel="stylesheet"
-              href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css"/>
-        <link type="text/css" rel="stylesheet"
-              href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css"/>
-        <link type="text/css" rel="stylesheet"
-              href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css"/>
-        <link type="text/css" rel="stylesheet"
-              href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"/>
-        <link type="text/css" rel="stylesheet"
-              href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/embl-petrol-colours.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/embl-petrol-colours.css"/>
 
 
-        <script language="JavaScript" type="text/javascript"
-                src="/gxa/resources/js/jquery-1.8.3.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="/gxa/resources/js/jquery-1.8.3.min.js"></script>
 
-        <script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-        <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
+    <script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
 
-        <script>
-            (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+    <script>
+        (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
-                $(document).ready(function () {
+            $(document).ready(function () {
 
-                    var instance = new Biojs.AtlasHeatmap({
-                        featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=P00846',
-                        target:"YourOwnDivId"
-                    });
-
+                var instance = new Biojs.AtlasHeatmap({
+                    featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier',
+                    target:"YourOwnDivId"
                 });
 
-            })(jQuery);
-        </script>
-    </head>
-    <body>
-        <div id="YourOwnDivId"></div>
-    </body>
+            });
+
+        })(jQuery);
+    </script>
+</head>
+<body>
+<div id="YourOwnDivId"></div>
+</body>
 </html>

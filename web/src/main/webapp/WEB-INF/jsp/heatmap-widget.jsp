@@ -6,7 +6,7 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<div id="content" class="block">
+<div id="atlas-content" class="block">
     <table width="100%">
         <tbody>
         <tr>
@@ -44,6 +44,7 @@
 
             $("#goto-ae").tooltip();
             $("#goto-experiment").tooltip();
+            $('.pubmed-id').tooltip();
 
             //configurations required for any browser...
 

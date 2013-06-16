@@ -27,11 +27,12 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BaselineGeneBioEntityPageIT extends SinglePageSeleniumFixture {
+public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "AT3G29644";
+    private static final String GENE_IDENTIFIER = "ENSG00000163331";
 
     private BioEntityPage subject;
 
@@ -45,22 +46,16 @@ public class BaselineGeneBioEntityPageIT extends SinglePageSeleniumFixture {
     public void checkPaneExpansion() {
         assertThat(subject.isBaselineProfileExpanded(), is(true));
         assertThat(subject.isInfoCardExpanded(), is(false));
-        assertThat(subject.isDifferentialProfileExpanded(), is(false));
     }
 
-//    @Test
-//    public void checkSelectedProfiles() {
-//        subject.clickDisplayLevelsButton();
-//        assertThat(subject.getSelectedProfiles(), contains("idn2 mutant vs wild type",
-//                                                           "nrpe1 mutant vs wild type",
-//                                                           "swi3b mutant vs wild type"));
-//        assertThat(subject.getFirstGeneProfile(), contains("6.64 × 10-9"));
-//        assertThat(subject.getLastGeneProfile(), contains("0.056"));
-//        assertThat(subject.getSelectedProfiles().size(), is(3));
-//
-//    }
+    @Test
+    public void checkSelectedProfiles() {
+        assertThat(subject.isBaselineProfileExpanded(), is(true));
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getSelectedProfiles(), contains("DAPL1"));
+        assertThat(subject.getSelectedProfiles().size(), is(1));
 
-
+    }
 
 
 }

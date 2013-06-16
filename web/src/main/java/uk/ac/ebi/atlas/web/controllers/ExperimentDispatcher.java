@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,10 +37,12 @@ import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.validation.Valid;
 import java.util.Set;
 
 /**
@@ -84,6 +87,7 @@ public final class ExperimentDispatcher {
 
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
+    private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
     private static final String IS_TWO_COLOUR = "isTwoColour";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
@@ -121,15 +125,32 @@ public final class ExperimentDispatcher {
 
     @RequestMapping(value = "/widgets/heatmap/protein")
     public String dispatchWidget(HttpServletRequest request,
-                                 @RequestParam(value = "geneQuery", required = true) String uniprotAccession,
+                                 @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
+                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                  Model model) {
+        try {
+            String species = experimentResolver.getSpecies(bioEntityAccession, propertyType);
+            String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(species);
 
-        Experiment experiment = getExperiment(experimentResolver.getExperimentAccessionByProperty(uniprotAccession, propertyType), model);
-        prepareModel(request, model, experiment);
-        String requestURL = getRequestURL(request);
+            if (!StringUtils.isEmpty(experimentAccession)) {
+                Experiment experiment = getExperiment(experimentAccession, model);
+                prepareModel(request, model, experiment);
+                String requestURL = getRequestURL(request);
 
-        return "forward:" + requestURL + "?type=" + experiment.getType();
+                String mappedSpecies = experiment.getRequestSpecieName(species);
+
+                String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
+
+                return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
+            } else {
+                model.addAttribute("identifier", bioEntityAccession);
+                return "widget-error";
+            }
+        } catch (ResourceNotFoundException rnfe) {
+            model.addAttribute("errorMessage", rnfe.getMessage());
+            return "widget-error";
+        }
 
     }
 
@@ -152,6 +173,8 @@ public final class ExperimentDispatcher {
         model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
 
         model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
+
+        model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
     }
 
     //ToDo: refactor - create different methods for diff experiment types

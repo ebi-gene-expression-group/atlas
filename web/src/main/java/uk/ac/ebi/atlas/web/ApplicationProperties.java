@@ -54,8 +54,26 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
+    //This is invoked from jsp el
+    public String getArrayExpressArrayURL(String arrayAccession) {
+        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.arrays.url.template");
+        return MessageFormat.format(arrayExpressUrlTemplate, arrayAccession);
+    }
+
     public String getArrayExpressRestURL(String experimentAccession) {
         String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.rest.url.template");
+        return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
+    }
+
+    //This is invoked from jsp el
+    public String getPubMedURL(String pubMedId) {
+        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.pubmed.url.template");
+        return MessageFormat.format(arrayExpressUrlTemplate, pubMedId);
+    }
+
+    //This is invoked from jsp el
+    public String getAtlasURL(String experimentAccession) {
+        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.atlas.url.template");
         return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 

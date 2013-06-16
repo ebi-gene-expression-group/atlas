@@ -24,10 +24,10 @@
     color: #404040;
     background-color: white;
     /*background-color: rgb(237,246,246);*/
-    border: 1px solid #cdcdcd;
+    border: 1px solid #cdcdcd !important;
     border-spacing: 0;
     empty-cells: show;
-    width: 100%;
+    width: 100% !important;
     height: 100%;
 }
 
@@ -35,13 +35,10 @@
     border-collapse: collapse;
 }
 
-.form-grid {
-    width: 100%;
-}
-
 .form-grid label, .analysis-grid label {
     font-weight: bold;
     vertical-align: middle;
+    margin-right: 0 !important;
 }
 
 .analysis-grid thead {
@@ -49,25 +46,25 @@
 }
 
 .analysis-grid td {
-    border: 1px solid #cdcdcd;
-    padding: 5px;
+    border: 1px solid #cdcdcd !important;
+    padding: 5px !important;
 }
 
 /*td{*/
-    /*background-color: white;*/
+/*background-color: white;*/
 /*}*/
 
 .table-grid>tbody>tr>td, .table-grid>thead>tr>td {
     color: #3D3D3D;
-    vertical-align: middle;
-    border: 1px solid #cdcdcd;
+    vertical-align: middle !important;
+    border: 1px solid #cdcdcd !important;
     height: 25px;
     width: 25px;
     white-space: nowrap;
 }
 
 .vertical-header-cell, .horizontal-header-cell {
-    background-color: rgb(237,246,246) !important;
+    background-color: rgb(237, 246, 246) !important;
 }
 
 .horizontal-header-cell {

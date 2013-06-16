@@ -135,12 +135,7 @@ public class BioEntityPropertyService {
         String link = bioEntityCardProperties.getLinkTemplate(propertyType);
         if (link != null) {
 
-            if (propertyType.equals("ensprotein") || propertyType.equals("enstranscript")) {
-                link = MessageFormat.format(link, linkSpecies, getEncodedString(getFirstValueOfProperty("ensgene"))
-                        , getEncodedString(getFirstValueOfProperty("enstranscript")));
-            } else {
-                link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies);
-            }
+            link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies);
 
             return new PropertyLink(linkText, link);
         }

@@ -32,93 +32,101 @@
     width: 15%;
 }
 
-::selection {
-    background: rgb(95, 142, 179) !important;
-    color: white;
+.atlas-body {
+    min-width: 975px;
+    /* font-family: Verdana, Helvetica, Arial, sans-serif;*/
+    margin: 0px auto !important;
 }
 
-body {
-    min-width: 950px;
-    /*    font-family: Verdana, Helvetica, Arial, sans-serif;
-        margin:0px auto !important;*/
-}
-
-body div#local-title a {
-    color: black !important;
-    text-shadow: none !important;
-}
-
-/*
-td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {
-    border-bottom-color: transparent;
-}
-*/
-#contents {
-    font-size: 12px;
-}
-
-#contents a, #contents a:link, #contents a:visited {
-    border-bottom-color: transparent;
-    color: #343094
-}
-
-#contents a:hover, #contents a:active {
-    border-bottom-style: solid;
-    border-bottom-color: brown;
-    color: brown !important;
-}
-
-/*
-div#global-masthead ul li a:link, div#global-masthead ul li a:visited,
-div#global-masthead ul li a:active, div#global-masthead ul li a:hover {
-    color: white;
-    border-bottom: 0 none;
-}
-*/
 ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     border-bottom-color: #207A7A !important;
     border-bottom: 3px solid;
 }
 
-table {
+#local-title h1, #content h1 {
+    color: #207A7A;
+}
+
+#local-title a {
+    color: black !important;
+    text-shadow: none !important;
+}
+
+#atlas-content {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#atlas-content ::selection {
+    background: rgb(95, 142, 179) !important;
+    color: white;
+}
+
+#atlas-content table, #transcripts-pie table {
     border: none;
     width: auto;
     margin: 0px;
 }
 
-th {
-    background-color: transparent !important;
+#atlas-content th, #transcripts-pie th {
+    background-color: transparent;
     text-align: center;
 }
 
-td, th {
+#atlas-content td, th, #transcripts-pie td, th {
     vertical-align: inherit;
     border: none;
     margin: 0px;
     padding: 1px;
 }
 
-form {
+#atlas-content form, #dialog-form form {
     padding: 0px;
     margin: 0px;
 }
 
-form fieldset {
+#atlas-content form td, #dialog-form form td {
+    vertical-align: top;
+    padding: 4px;
+}
+
+#atlas-content form td div, #dialog-form form td div {
+    padding-bottom: 3px;
+}
+
+#atlas-content form fieldset, #dialog-form form fieldset {
     background-color: transparent;
     padding: 0px;
     margin: 0px;
 }
 
-img {
+#atlas-content input, #dialog-form input {
+    vertical-align: baseline;
+    margin-bottom: inherit !important;
+    margin-left: inherit !important;
+    margin-right: 0.2em;
+    margin-top: inherit !important;
+}
+
+#atlas-content textarea, #dialog-form textarea {
+    border-color: lightgray;
+}
+
+#atlas-content textarea, .chzn-container, #dialog-form textarea {
+    font-family: inherit !important;
+    font-size: inherit !important;
+}
+
+#atlas-content img {
     max-width: none !important;
 }
 
-h1 {
-    color: #207A7A;
+#atlas-content section img {
+    margin: 0px;
 }
 
-section img {
-    margin: 0px;
+#filterby-menu a {
+    border-bottom: 0px none;
 }
 
 /* ebi css and ebi-visual.css override: end */
@@ -145,6 +153,14 @@ section img {
     z-index: 100 !important;
 }
 
+#filterby-menu .ui-state-focus {
+    border: 1px solid #FBCB09 !important;
+}
+
+#filterby-menu .ui-state-active {
+    border: 1px solid #FBD850 !important;
+}
+
 .ui-menu a:hover {
     color: #eb8f00 !important;
     border: 1px solid #fbd850 !important;
@@ -165,20 +181,12 @@ section img {
 
 /* JQuery UI overrides: end */
 
-section {
+.extra-padding {
     padding: 10px;
-}
-
-textarea {
-    border-color: lightgray;
 }
 
 .thick-link {
     font-weight: bold;
-}
-
-#contents {
-    background-color: white;
 }
 
 .chzn-choices {
@@ -209,20 +217,6 @@ textarea {
 
 .button-image .ui-button-text {
     padding: 2px !important;
-}
-
-form td {
-    vertical-align: top;
-    padding: 4px;
-}
-
-form td div {
-    padding-bottom: 3px;
-}
-
-textarea, .chzn-container {
-    font-family: inherit !important;
-    font-size: inherit !important;
 }
 
 .error {
@@ -453,6 +447,6 @@ a.help-icon {
 }
 
 #experiments-table th.padding {
-    padding-left: 85px;
-    padding-right: 85px;
+    padding-left: 85px !important;
+    padding-right: 85px !important;
 }

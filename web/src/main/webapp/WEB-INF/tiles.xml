@@ -98,4 +98,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget.jsp"/>
     </definition>
 
+    <definition name="widget-error" extends="widget.base.definition">
+        <put-attribute name="body" value="/WEB-INF/jsp/widget-error.jsp"/>
+    </definition>
+
 </tiles-definitions>

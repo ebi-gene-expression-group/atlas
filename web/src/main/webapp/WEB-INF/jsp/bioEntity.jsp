@@ -26,7 +26,7 @@
 
 <input type="text" value="${entityIdentifier}" style="display: none" id="searchterm">
 
-<section class="grid_17 alpha">
+<section class="grid_17 alpha extra-padding">
     <h2 class="strapline">
         Expression Atlas results for <span class="searchterm">${entityIdentifier}</span>
     </h2>
@@ -37,7 +37,7 @@
     </div>
 </aside>
 
-<section class="grid_23">
+<section class="grid_23 extra-padding">
     <div id="accordion">
         <ul id="infoHeader" class="bioEntityCardHeader">
             <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
@@ -107,7 +107,7 @@
         </div>
 
 
-        <c:if test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
+        <c:if test="${isGenePage}">
             <ul id="diffProfileHeader" class="bioEntityCardHeader">
                 <img id="differential-info-image" title="Differential Expression"
                      style="position: absolute; left: 0.5em; "
@@ -115,95 +115,62 @@
                 <span class="bioEntityCardBioentityName">Differential Expression</span>
             </ul>
 
+            <c:choose>
+                <c:when test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
 
-            <div id="diffProfileBody" class="bioEntityCard">
-                <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                    <span>${differentialGeneProfileProperties.totalNumberOfResults} search result(s) found</span>
-                    <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
-                </div>
+                    <div id="diffProfileBody" class="bioEntityCard">
+                        <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                            <span>${differentialGeneProfileProperties.totalNumberOfResults} search result(s) found</span>
+                            <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
+                        </div>
 
-                <div id="heatmap-div" style="display:none;">
-                    <table style="margin-left:auto;margin-right:auto;">
-                        <tr>
-                            <td>
-                                <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                                    <label for='display-levels'>Display levels</label>
-                                </button>
-                            </td>
-                            <td>
-                                <c:import url="includes/gradient-legend.jsp"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <c:import url="includes/heatmap-matrix-differential-gene-page.jsp"/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-            </div>
+                        <div id="heatmap-div" style="display:none;">
+                            <table style="margin-left:auto;margin-right:auto;">
+                                <tr>
+                                    <td>
+                                        <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
+                                            <label for='display-levels'>Display levels</label>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <c:import url="includes/gradient-legend.jsp"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <c:import url="includes/heatmap-matrix-differential-gene-page.jsp"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div>No differential experiments were found for ${entityIdentifier} </div>
+                </c:otherwise>
+            </c:choose>
         </c:if>
     </div>
 </section>
+
 <section id="contrastInfo" style="display:none">
-    <div style="font-weight: bold; color:blue;">
-        RNA-seq of mouse spinal cord expressing wild type human TDP-43
-    </div>
-    <div>
-        genotype:'expressing human TDP-43' vs 'non transgenic'
-    </div>
-    <table class='table-grid'>
+    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
+    <div id="contrastDescription" style="text-align: center"></div>
+    <table class='table-grid' style="padding: 0px; margin: 0px;">
         <thead>
-            <tr>
-                <th class='header-cell'>
-                    Property
-                </th>
-                <th class='header-cell'>
-                    Test value
-                </th>
-                <th class='header-cell'>
-                    Reference value
-                </th>
-            </tr>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Test value
+            </th>
+            <th class='header-cell'>
+                Reference value
+            </th>
+        </tr>
         </thead>
-        <tbody>
-        <!--
-            <tr style="font-weight: bold;">
-                <td>
-                    genotype
-                </td>
-                <td>
-                    expressing human TDP-43
-                </td>
-                <td>
-                    non transgenic
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    age
-                </td>
-                <td>
-                    21 days
-                </td>
-                <td>
-                    21 days
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    name
-                </td>
-                <td>
-                    benedetto
-                </td>
-                <td>
-                    fiorelli
-                </td>
-            </tr>
-            -->
-        </tbody>
+        <tbody></tbody>
     </table>
 </section>
 

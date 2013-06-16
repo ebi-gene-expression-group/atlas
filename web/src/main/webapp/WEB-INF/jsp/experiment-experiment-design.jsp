@@ -36,14 +36,16 @@
         <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
             <tr>
                 <td style="vertical-align: middle; padding: 0px;">Show Analysed only?</td>
-                <td style="vertical-align: middle; padding: 0px;"><input type="checkbox" id="showOnlyAnalysedRuns"
-                                                                         name="showOnlyAnalysedRuns"
-                                                                         checked="yes"/></td>
+                <td style="vertical-align: middle; padding: 0em 0em 0em 0.2em; "><input type="checkbox"
+                                                                                        id="showOnlyAnalysedRuns"
+                                                                                        name="showOnlyAnalysedRuns"
+                                                                                        checked="yes"/></td>
             </tr>
         </table>
 
         <c:if test="${type != 'BASELINE'}">
-            <table cellpadding="0" cellspacing="0" border="0" style="float: right; padding: 0px 3px 10px 0px; ">
+            <table cellpadding="0" cellspacing="0" border="0"
+                   style="float: right; padding: 0px 3px 10px 0px; margin-bottom: 0.2em;">
                 <tr>
                     <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
                         <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Contrast: </form:label>

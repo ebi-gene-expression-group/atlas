@@ -28,10 +28,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
@@ -74,9 +73,6 @@ public class ExperimentInfoListBuilderTest {
     private MicroarrayExperimentsCache microarrayExperimentsCacheMock;
 
     @Mock
-    private ExperimentalFactors experimentalFactorsMock;
-
-    @Mock
     private BaselineExperiment baselineExperimentMock;
 
     @Mock
@@ -85,14 +81,18 @@ public class ExperimentInfoListBuilderTest {
     @Mock
     private MicroarrayExperiment microarrayExperimentMock;
 
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     private ExperimentInfoListBuilder subject;
 
     @Before
     public void setUp() throws Exception {
 
-        Factor factor = new Factor(FACTOR_TYPE, FACTOR_NAME);
-        when(experimentalFactorsMock.getFactorName(FACTOR_TYPE)).thenReturn(FACTOR_NAME);
-        when(experimentalFactorsMock.getAllFactors()).thenReturn(Sets.newTreeSet(Sets.newHashSet(factor)));
+        when(experimentDesignMock.getFactorHeaders()).thenReturn(Sets.newTreeSet(Sets.newHashSet(FACTOR_NAME)));
+        when(baselineExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
+        when(differentialExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
+        when(microarrayExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
 
         when(baselineExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
         when(baselineExperimentMock.getAccession()).thenReturn(ACCESSION);
@@ -116,7 +116,6 @@ public class ExperimentInfoListBuilderTest {
         when(differentialExperimentMock.getAssayAccessions()).thenReturn(Sets.newHashSet(ASSAY_1, ASSAY_2));
         when(differentialExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST)));
 
-        when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(baselineExperimentMock.getExperimentRunAccessions()).thenReturn(Sets.newHashSet("RUN"));
 
         subject = new ExperimentInfoListBuilder(applicationPropertiesMock,
@@ -171,8 +170,4 @@ public class ExperimentInfoListBuilderTest {
         assertThat(experimentInfo.getExperimentType(), is(ExperimentType.BASELINE));
     }
 
-    @Test
-    public void testExtractExperimentalFactors() throws Exception {
-        assertThat(subject.extractExperimentalFactors(experimentalFactorsMock), contains(FACTOR_NAME));
-    }
 }

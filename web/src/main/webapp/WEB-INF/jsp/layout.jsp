@@ -131,7 +131,7 @@
 
 </head>
 
-<body class="level2">
+<body class="level2 atlas-body">
 <div id="skip-to">
     <ul>
         <li><a href="#content">Skip to main content</a></li>
@@ -148,7 +148,7 @@
 
     <div id="content" class="grid_24">
 
-        <div style="padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+        <div id="atlas-content">
             <tiles:insertAttribute name="menu" ignore="true"/>
             <tiles:insertAttribute name="body"/>
         </div>

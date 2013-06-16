@@ -24,7 +24,6 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
 <c:if test="${not empty preferences.rootContext}">
@@ -180,7 +179,9 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
-            genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
+            if (${preferences.geneSetMatch == false}) {
+                genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
+            }
 
             if (${type == "BASELINE"}) {
 

@@ -22,13 +22,18 @@
 
 package uk.ac.ebi.atlas.commons;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrQueryService;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 @Named()
 @Scope("singleton")
@@ -37,18 +42,42 @@ public class ExperimentResolver {
 
     private SolrQueryService solrQueryService;
 
+    private GeneQueryTokenizer geneQueryTokenizer;
+
     @Inject
-    public ExperimentResolver(@Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties, SolrQueryService solrQueryService) {
+    public ExperimentResolver(@Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties,
+                              SolrQueryService solrQueryService, GeneQueryTokenizer geneQueryTokenizer) {
         this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.solrQueryService = solrQueryService;
+        this.geneQueryTokenizer = geneQueryTokenizer;
     }
 
     public String getExperimentAccessionByProperty(String value, String type) {
-        String species;
-
-        species = StringUtils.isEmpty(type) ? solrQueryService.getSpeciesForPropertyValue(value) : solrQueryService.getSpeciesForPropertyValue(value, type);
-
+        String species = getSpecies(value, type);
         return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
+    }
+
+    public String getExperimentAccessionBySpecies(String species) {
+        return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
+    }
+
+    public String getSpecies(String value, String type) {
+        Set<String> allSpecies = Sets.newHashSet();
+        List<String> partsOfGeneQuery = geneQueryTokenizer.split(value);
+        for (String part : partsOfGeneQuery) {
+            String species;
+            if (StringUtils.isEmpty(type)) {
+                species = solrQueryService.getSpeciesForPropertyValue(part);
+            } else {
+                species = solrQueryService.getSpeciesForPropertyValue(part, type);
+            }
+            allSpecies.add(species);
+        }
+        if (allSpecies.size() != 1) {
+            throw new ResourceNotFoundException("No unambiguous species could be determined. Found: " + allSpecies);
+        }
+        String result = allSpecies.iterator().next();
+        return result;
     }
 
 }

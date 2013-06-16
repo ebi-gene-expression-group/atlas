@@ -25,7 +25,9 @@
 
     <div id="global-masthead" class="masthead grid_24">
         <!--This has to be one line and no newline characters-->
-        <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute"></a>
+        <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img
+                src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"
+                alt="EMBL European Bioinformatics Institute"></a>
 
         <nav>
             <ul id="global-nav">
@@ -52,7 +54,8 @@
             <h1 style="color: #000000; text-shadow: 0px 0px #E1EEE9">
                 <a href="${pageContext.request.contextPath}" title="Back to Expression Atlas homepage">
                     <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
-                         alt="Expression Atlas logo" width="64" height="64" style="vertical-align: bottom">Expression Atlas
+                         alt="Expression Atlas logo" width="64" height="64" style="vertical-align: bottom">Expression
+                    Atlas
                 </a>
             </h1>
 
@@ -124,7 +127,7 @@
                         <label for="feedback">Your feedback:</label>
                     </div>
                     <div>
-                        <textarea rows="5" cols="50" name="feedback" id="feedback"
+                        <textarea rows="4" cols="45" name="feedback" id="feedback"
                                   class="text ui-widget-content ui-corner-all"></textarea>
                     </div>
                 </li>
@@ -146,10 +149,10 @@
 <script>
     function clearLocalNav() {
         var listItems = $("#local-nav li");
-            listItems.each(function (idx, li) {
-                var item = $(li);
-                item.removeClass("active");
-            });
+        listItems.each(function (idx, li) {
+            var item = $(li);
+            item.removeClass("active");
+        });
     }
 
     $(function () {

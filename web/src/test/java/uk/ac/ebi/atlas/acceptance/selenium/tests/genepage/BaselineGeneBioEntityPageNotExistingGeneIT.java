@@ -27,45 +27,36 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-public class GenesetBioEntityPageIT extends SinglePageSeleniumFixture {
+public class BaselineGeneBioEntityPageNotExistingGeneIT extends SinglePageSeleniumFixture {
 
-    private static final String IDENTIFIER = "REACT_1698";
+    private static final String GENE_IDENTIFIER = "AT3G29644";
 
     private BioEntityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, IDENTIFIER, "genesets", "openPanelIndex=0");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
         subject.get();
     }
 
     @Test
-    public void checkGeneCardTitle() {
-        assertThat(subject.getBioEntityCardTitle(), is("REACT_1698 Homo sapiens Metabolism of nucleotides"));
-    }
-
-    @Test
-    public void checkCardExpansion() {
-        assertThat(subject.isInfoCardExpanded(), is(true));
-        subject.clickInfoCard();
+    public void checkPaneExpansion() {
+        assertThat(subject.isBaselineProfileExpanded(), is(true));
         assertThat(subject.isInfoCardExpanded(), is(false));
+        assertThat(subject.isDifferentialProfileExpanded(), is(false));
     }
 
     @Test
-    public void checkTableSize() {
-        assertThat(subject.getPropertiesTableSize(), is(1));
+    public void checkSelectedProfiles() {
+        String widgetBody = subject.getWidgetBody();
+        assertThat(widgetBody, containsString("No baseline experiments were found for AT3G29644"));
+
     }
 
-    @Test
-    public void checkTableRows() {
-        assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome", "Metabolism of nucleotides"));
-    }
 
-    @Test
-    public void checkLinksInTable() {
-        assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_1698"));
-    }
+
+
 }

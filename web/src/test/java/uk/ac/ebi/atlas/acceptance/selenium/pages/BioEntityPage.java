@@ -67,6 +67,9 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "diffProfileBody")
     private WebElement diffProfilePaneBody;
 
+    @FindBy(id = "widgetBody")
+    private WebElement widgetBody;
+
     @FindBy(css = "h2.strapline")
     private WebElement searchResultHeader;
 
@@ -118,11 +121,14 @@ public class BioEntityPage extends HeatmapTablePage {
         infoPaneHeader.click();
 
         By byBioEntityCardClass = By.id("bioEntityCardTable");
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
     public boolean isBaselineProfileExpanded() {
+        By heatmapTable = By.id("heatmap-table");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(heatmapTable));
         return baselineProfilePaneBody.isDisplayed();
     }
 
@@ -138,17 +144,52 @@ public class BioEntityPage extends HeatmapTablePage {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
-    /*
-        public String getContastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
-            WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex);
-            hoverOnElement(firstGeneProfileCell);
+    public String getContastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
+        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
+        hoverOnElement(firstGeneProfileCell);
 
-            By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
-            WebDriverWait wait = new WebDriverWait(driver, 2L);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
-            return driver.findElement(byTooltipClass).getText();
-        }
-    */
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+    }
+
+    public String getContastSummaryTooltipTableData(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableRowIndex,
+                                                    int zeroBasedTooltipTableColumnIndex) {
+        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
+        hoverOnElement(firstGeneProfileCell);
+
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
+                + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+    }
+
+    public String getContastSummaryTooltipExperimentDescription(int zeroBasedExpressionLevelIndex) {
+        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
+        hoverOnElement(firstGeneProfileCell);
+
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastExperimentDescription']");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+    }
+
+    public String getContastSummaryTooltipContrastDescription(int zeroBasedExpressionLevelIndex) {
+        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
+        hoverOnElement(firstGeneProfileCell);
+
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastDescription']");
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+    }
+
+    public String getWidgetBody() {
+        return widgetBody.getText();
+    }
+
     public int getPropertiesTableSize() {
         return table.findElements(By.tagName("tr")).size();
     }

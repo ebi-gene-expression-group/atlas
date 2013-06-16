@@ -64,13 +64,13 @@ public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getPropertiesTableRow(1), hasItems("Ensembl Transcript"));
         assertThat(subject.getPropertiesTableRow(1).get(1), containsString("ENST00000366478"));
         assertThat(subject.getPropertiesTableRow(3), hasItems("UniProt", "Q8N349"));
-        assertThat(subject.getPropertiesTableRow(5), hasItems("Reactome ID", "Signal Transduction"));
+        assertThat(subject.getPropertiesTableRow(5), hasItems("Reactome", "Signal Transduction"));
     }
 
     @Test
     public void checkLinksInTable() {
-        assertThat(subject.getLinksInTableRow(1).get(0), containsString("http://www.ensembl.org/homo_sapiens/Transcript/Summary?db=core;g=ENSG00000196071;t=ENST00000366478"));
-        assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://www.ensembl.org/Multi/Search/Results?species=all;idx=;q=ENSG00000196071"));
+        assertThat(subject.getLinksInTableRow(1).get(0), containsString("http://www.ensemblgenomes.org/id/ENST00000366478"));
+        assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://www.ensemblgenomes.org/id-gene/ENSG00000196071"));
         assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.uniprot.org/uniprot/Q8N349"));
         assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_111102"));
     }

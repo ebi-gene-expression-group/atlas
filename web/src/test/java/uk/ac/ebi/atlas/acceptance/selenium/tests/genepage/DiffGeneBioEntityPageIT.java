@@ -47,22 +47,44 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
     public void checkPaneExpansion() {
         assertThat(subject.isInfoCardExpanded(), is(false));
         assertThat(subject.isDifferentialProfileExpanded(), is(true));
-
     }
 
     @Test
     public void checkSelectedProfiles() {
         subject.clickDisplayLevelsButton();
         assertThat(subject.getSelectedProfiles(), contains("idn2 mutant vs wild type",
-                                                           "nrpe1 mutant vs wild type",
-                                                           "swi3b mutant vs wild type"));
+                "nrpe1 mutant vs wild type",
+                "swi3b mutant vs wild type"));
         assertThat(subject.getFirstGeneProfile(), contains("6.64 × 10-9"));
         assertThat(subject.getLastGeneProfile(), contains("0.056"));
         assertThat(subject.getSelectedProfiles().size(), is(3));
-
     }
 
+    @Test
+    public void checkContrastSummaryTooltipTableHeader() {
+        assertThat(subject.getContastSummaryTooltipTableHeader(0, 0), is("Property"));
+        assertThat(subject.getContastSummaryTooltipTableHeader(0, 1), is("Test value"));
+        assertThat(subject.getContastSummaryTooltipTableHeader(0, 2), is("Reference value"));
+    }
 
+    @Test
+    public void checkContrastSummaryTooltipTableFirstRow() {
+        assertThat(subject.getContastSummaryTooltipTableData(0, 0, 0), is("genotype"));
+        assertThat(subject.getContastSummaryTooltipTableData(0, 0, 1), is("idn2-1"));
+        assertThat(subject.getContastSummaryTooltipTableData(0, 0, 2), is("wild type"));
+    }
 
+    @Test
+    public void checkContrastSummaryTooltipTableLastRow() {
+        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 0), is("Organism"));
+        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 1), is("Arabidopsis thaliana"));
+        assertThat(subject.getContastSummaryTooltipTableData(0, 5, 2), is("Arabidopsis thaliana"));
+    }
+
+    @Test
+    public void checkContrastSummaryTooltipExperimentAndContrastDescription() {
+        assertThat(subject.getContastSummaryTooltipExperimentDescription(0), is("RNA-seq of Arabidopsis mutants with defects in long-non-coding-RNA-mediated transcriptional silencing"));
+        assertThat(subject.getContastSummaryTooltipContrastDescription(0), is("idn2 mutant vs wild type"));
+    }
 
 }
