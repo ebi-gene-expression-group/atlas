@@ -111,7 +111,6 @@ public class ApplicationPropertiesTest {
         when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_REST_URL + "{0}");
         when(configurationMock.getProperty(FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
 
-        when(configurationMock.getProperty(MICROARRAY_PROPERTY_KEY)).thenReturn(E_MTAB_1066 + LIST_SEPARATOR + E_GEOD_43049);
         when(configurationMock.getProperty(TWOCOLOUR_PROPERTY_KEY)).thenReturn(E_GEOD_43049);
         when(configurationMock.getProperty(BIOMART_DATASET_NAMES)).thenReturn(HOMO_SAPIENS_SPECIE + LIST_SEPARATOR + MOUSE_SPECIE);
         when(configurationMock.getProperty(ARRAYDESIGN_PROPERTY_KEY)).thenReturn(A_AFFY_35 + LIST_SEPARATOR + A_AGIL_28);
@@ -130,6 +129,10 @@ public class ApplicationPropertiesTest {
         ExperimentConfiguration egeod38400 = new ExperimentConfiguration(E_GEOD_38400, ExperimentType.DIFFERENTIAL);
         ExperimentConfiguration egeod21860 = new ExperimentConfiguration(E_GEOD_21860, ExperimentType.DIFFERENTIAL);
         when(configurationDaoMock.getExperimentConfigurations(ExperimentType.DIFFERENTIAL)).thenReturn(Lists.newArrayList(egeod21860, egeod22351, egeod38400));
+
+        ExperimentConfiguration emtab1066 = new ExperimentConfiguration(E_MTAB_1066, ExperimentType.MICROARRAY);
+        ExperimentConfiguration egeod43049 = new ExperimentConfiguration(E_GEOD_43049, ExperimentType.MICROARRAY);
+        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.MICROARRAY)).thenReturn(Lists.newArrayList(emtab1066, egeod43049));
 
         subject = new ApplicationProperties(configurationMock, configurationDaoMock);
     }

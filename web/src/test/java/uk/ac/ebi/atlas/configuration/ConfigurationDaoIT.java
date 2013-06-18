@@ -47,6 +47,8 @@ public class ConfigurationDaoIT {
     private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.BASELINE;
     private static final String E_MTAB_1066 = "E-MTAB-1066";
     private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY;
+    private static final String ANOTHER_ACCESION = "ANOTHER";
+    private static final String YET_ANOTHER_ACCESSION = "YETANOTHER";
 
     @Inject
     private DataSource dataSource;
@@ -72,10 +74,22 @@ public class ConfigurationDaoIT {
 
     @Test
     public void testGetExperimentConfigurationsByType() throws Exception {
+        subject.addExperimentConfiguration(ANOTHER_ACCESION, ExperimentType.DIFFERENTIAL);
+        subject.addExperimentConfiguration(YET_ANOTHER_ACCESSION, ExperimentType.MICROARRAY);
         List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations(EXPERIMENT_TYPE);
         ExperimentConfiguration experimentConfiguration = experimentConfigurations.get(0);
         assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(experimentConfiguration.getExperimentType(), is(EXPERIMENT_TYPE));
+        experimentConfigurations = subject.getExperimentConfigurations(ExperimentType.DIFFERENTIAL);
+        experimentConfiguration = experimentConfigurations.get(0);
+        assertThat(experimentConfiguration.getExperimentAccession(), is(ANOTHER_ACCESION));
+        assertThat(experimentConfiguration.getExperimentType(), is(ExperimentType.DIFFERENTIAL));
+        experimentConfigurations = subject.getExperimentConfigurations(ExperimentType.MICROARRAY);
+        experimentConfiguration = experimentConfigurations.get(0);
+        assertThat(experimentConfiguration.getExperimentAccession(), is(YET_ANOTHER_ACCESSION));
+        assertThat(experimentConfiguration.getExperimentType(), is(ExperimentType.MICROARRAY));
+        subject.deleteExperimentConfiguration(ANOTHER_ACCESION);
+        subject.deleteExperimentConfiguration(YET_ANOTHER_ACCESSION);
     }
 
     @Test

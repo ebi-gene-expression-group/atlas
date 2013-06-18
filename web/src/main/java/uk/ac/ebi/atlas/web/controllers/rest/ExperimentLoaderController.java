@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -86,6 +87,13 @@ public class ExperimentLoaderController {
         }
 
         throw new IllegalStateException("<deleteExperiment> An illegal state has been reached.");
+    }
+
+    @RequestMapping("/listExperiments")
+    @ResponseBody
+    public String listExperiments() {
+        Gson gson = new Gson();
+        return gson.toJson(configurationDao.getExperimentConfigurations());
     }
 
 }

@@ -22,14 +22,18 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.controllers.rest.ExperimentLoaderController;
 
 import javax.inject.Inject;
 
@@ -57,11 +61,31 @@ public class DifferentialGeneProfileServiceIT {
     private static final double FDR_CUTOFF = 0.5;
 
     @Inject
+    private ApplicationProperties properties;
+
+    @Inject
     private DifferentialGeneProfileService subject;
 
     @Inject
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
+    @Inject
+    private ExperimentLoaderController experimentLoaderController;
+
+    @Before
+    public void setup() throws Exception {
+        experimentLoaderController.loadExperiment(E_GEOD_21860, ExperimentType.DIFFERENTIAL.name());
+        experimentLoaderController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL.name());
+        experimentLoaderController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL.name());
+        experimentLoaderController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL.name());
+        experimentLoaderController.loadExperiment(E_MTAB_1066, ExperimentType.MICROARRAY.name());
+    }
+
+    @Test
+    public void testForAccessions() throws Exception {
+        assertThat(properties.getDifferentialExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860, E_MTAB_698));
+        assertThat(properties.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066));
+    }
 
     @Test
     public void testGetDifferentialProfilesListForIdentifierFirst() throws Exception {

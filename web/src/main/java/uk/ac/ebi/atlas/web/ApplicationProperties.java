@@ -98,7 +98,8 @@ public class ApplicationProperties {
     }
 
     public Set<String> getMicroarrayExperimentsIdentifiers() {
-        return getStringValues("microarray.experiment.identifiers");
+        Set<String> results = getExperimentIdentifiersForType(ExperimentType.MICROARRAY);
+        return results;
     }
 
     public Set<String> getTwoColourExperimentsIdentifiers() {
