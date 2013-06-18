@@ -71,6 +71,14 @@ public class ConfigurationDaoIT {
     }
 
     @Test
+    public void testGetExperimentConfigurationsByType() throws Exception {
+        List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations(EXPERIMENT_TYPE);
+        ExperimentConfiguration experimentConfiguration = experimentConfigurations.get(0);
+        assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
+        assertThat(experimentConfiguration.getExperimentType(), is(EXPERIMENT_TYPE));
+    }
+
+    @Test
     public void testGetExperimentConfiguration() throws Exception {
         ExperimentConfiguration experimentConfiguration = subject.getExperimentConfiguration(EXPERIMENT_ACCESSION);
         assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));

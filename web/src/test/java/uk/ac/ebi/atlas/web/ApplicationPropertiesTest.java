@@ -110,8 +110,7 @@ public class ApplicationPropertiesTest {
         when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_URL + "{0}");
         when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_REST_URL + "{0}");
         when(configurationMock.getProperty(FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
-        when(configurationMock.getProperty(BASELINE_PROPERTY_KEY)).thenReturn(E_MTAB_513 + LIST_SEPARATOR + E_MTAB_599);
-        when(configurationMock.getProperty(DIFFERENTIAL_PROPERTY_KEY)).thenReturn(E_GEOD_22351 + LIST_SEPARATOR + E_GEOD_38400 + LIST_SEPARATOR + E_GEOD_21860);
+
         when(configurationMock.getProperty(MICROARRAY_PROPERTY_KEY)).thenReturn(E_MTAB_1066 + LIST_SEPARATOR + E_GEOD_43049);
         when(configurationMock.getProperty(TWOCOLOUR_PROPERTY_KEY)).thenReturn(E_GEOD_43049);
         when(configurationMock.getProperty(BIOMART_DATASET_NAMES)).thenReturn(HOMO_SAPIENS_SPECIE + LIST_SEPARATOR + MOUSE_SPECIE);
@@ -125,7 +124,12 @@ public class ApplicationPropertiesTest {
 
         ExperimentConfiguration emtab513 = new ExperimentConfiguration(E_MTAB_513, ExperimentType.BASELINE);
         ExperimentConfiguration emtab599 = new ExperimentConfiguration(E_MTAB_599, ExperimentType.BASELINE);
-        when(configurationDaoMock.getExperimentConfigurations()).thenReturn(Lists.newArrayList(emtab513, emtab599));
+        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.BASELINE)).thenReturn(Lists.newArrayList(emtab513, emtab599));
+
+        ExperimentConfiguration egeod22351 = new ExperimentConfiguration(E_GEOD_22351, ExperimentType.DIFFERENTIAL);
+        ExperimentConfiguration egeod38400 = new ExperimentConfiguration(E_GEOD_38400, ExperimentType.DIFFERENTIAL);
+        ExperimentConfiguration egeod21860 = new ExperimentConfiguration(E_GEOD_21860, ExperimentType.DIFFERENTIAL);
+        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.DIFFERENTIAL)).thenReturn(Lists.newArrayList(egeod21860, egeod22351, egeod38400));
 
         subject = new ApplicationProperties(configurationMock, configurationDaoMock);
     }

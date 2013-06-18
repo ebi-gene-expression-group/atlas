@@ -88,17 +88,13 @@ public class ApplicationProperties {
     }
 
     public Set<String> getBaselineExperimentsIdentifiers() {
-        Set<String> results = Sets.newHashSet();
-        for (ExperimentConfiguration experimentConfiguration : configurationDao.getExperimentConfigurations()) {
-            if (experimentConfiguration.getExperimentType() == ExperimentType.BASELINE) {
-                results.add(experimentConfiguration.getExperimentAccession());
-            }
-        }
+        Set<String> results = getExperimentIdentifiersForType(ExperimentType.BASELINE);
         return results;
     }
 
     public Set<String> getDifferentialExperimentsIdentifiers() {
-        return getStringValues("differential.experiment.identifiers");
+        Set<String> results = getExperimentIdentifiersForType(ExperimentType.DIFFERENTIAL);
+        return results;
     }
 
     public Set<String> getMicroarrayExperimentsIdentifiers() {
@@ -119,6 +115,14 @@ public class ApplicationProperties {
 
     private Set<String> getStringValues(String propertyKey) {
         return Sets.newHashSet(configurationProperties.getProperty(propertyKey).trim().split(","));
+    }
+
+    private Set<String> getExperimentIdentifiersForType(ExperimentType experimentType) {
+        Set<String> results = Sets.newHashSet();
+        for (ExperimentConfiguration experimentConfiguration : configurationDao.getExperimentConfigurations(experimentType)) {
+            results.add(experimentConfiguration.getExperimentAccession());
+        }
+        return results;
     }
 
 }

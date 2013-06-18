@@ -38,8 +38,11 @@ public class ConfigurationDao {
     private static final String EXPERIMENT_CONFIGURATION_SELECT = "SELECT experiment_accession, experiment_type " +
             "FROM experiment_configuration";
 
-    private static final String EXPERIMENT_CONFIGURATION_FIND = "SELECT experiment_accession, experiment_type " +
+    private static final String EXPERIMENT_CONFIGURATION_BY_ACCESSION = "SELECT experiment_accession, experiment_type " +
             "FROM experiment_configuration WHERE experiment_accession = ?";
+
+    private static final String EXPERIMENT_CONFIGURATION_BY_TYPE = "SELECT experiment_accession, experiment_type " +
+            "FROM experiment_configuration WHERE experiment_type = ?";
 
     private static final String EXPERIMENT_CONFIGURATION_INSERT = "INSERT INTO experiment_configuration " +
             "(experiment_accession, experiment_type) VALUES (?, ?)";
@@ -57,11 +60,19 @@ public class ConfigurationDao {
         return select.query(EXPERIMENT_CONFIGURATION_SELECT, new ExperimentConfigurationRowMapper());
     }
 
+    public List<ExperimentConfiguration> getExperimentConfigurations(ExperimentType experimentType) {
+
+        JdbcTemplate select = new JdbcTemplate(dataSource);
+
+        return select.query(EXPERIMENT_CONFIGURATION_BY_TYPE,
+                new ExperimentConfigurationRowMapper(), experimentType.name());
+    }
+
     public ExperimentConfiguration getExperimentConfiguration(String experimentAccession) {
 
         JdbcTemplate select = new JdbcTemplate(dataSource);
 
-        List<ExperimentConfiguration> list = select.query(EXPERIMENT_CONFIGURATION_FIND,
+        List<ExperimentConfiguration> list = select.query(EXPERIMENT_CONFIGURATION_BY_ACCESSION,
                 new ExperimentConfigurationRowMapper(), experimentAccession);
         if (list.size() == 1) {
             return list.get(0);
