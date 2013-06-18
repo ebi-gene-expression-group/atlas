@@ -22,11 +22,15 @@
 
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.configuration.ConfigurationDao;
+import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
@@ -71,6 +75,13 @@ public class ApplicationPropertiesTest {
     private static final String A_AFFY_35 = "A-AFFY-35";
     private static final String A_AGIL_28 = "A-AGIL-28";
     private static final String ARRAYDESIGN_PROPERTY_KEY = "arraydesign.accessions";
+    private static final String EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE = "experiment.arrayexpress.arrays.url.template";
+    private static final String ARRAYEXPRESS_ARRAYS_URL = "http://www.ebi.ac.uk/arrayexpress/arrays/";
+    private static final String EXPERIMENT_PUBMED_URL_TEMPLATE = "experiment.pubmed.url.template";
+    private static final String PUBMED_URL = "http://www.ncbi.nlm.nih.gov/pubmed/";
+    private static final String EXPERIMENT_ATLAS_URL_TEMPLATE = "experiment.atlas.url.template";
+    private static final String ATLAS_URL = "http://www-test.ebi.ac.uk/gxa/experiments/";
+    private static final String PUB_MED_ID = "123456";
 
     @Mock
     private BaselineExperiment homoSapiensExperimentMock;
@@ -83,6 +94,9 @@ public class ApplicationPropertiesTest {
 
     @Mock
     private Properties configurationMock;
+
+    @Mock
+    private ConfigurationDao configurationDaoMock;
 
     private ApplicationProperties subject;
 
@@ -102,11 +116,18 @@ public class ApplicationPropertiesTest {
         when(configurationMock.getProperty(TWOCOLOUR_PROPERTY_KEY)).thenReturn(E_GEOD_43049);
         when(configurationMock.getProperty(BIOMART_DATASET_NAMES)).thenReturn(HOMO_SAPIENS_SPECIE + LIST_SEPARATOR + MOUSE_SPECIE);
         when(configurationMock.getProperty(ARRAYDESIGN_PROPERTY_KEY)).thenReturn(A_AFFY_35 + LIST_SEPARATOR + A_AGIL_28);
+        when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_ARRAYS_URL + "{0}");
+        when(configurationMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
+        when(configurationMock.getProperty(EXPERIMENT_ATLAS_URL_TEMPLATE)).thenReturn(ATLAS_URL + "{0}");
 
         when(homoSapiensExperimentMock.getFirstSpecies()).thenReturn(HOMO_SAPIENS_SPECIE);
         when(mouseExperimentMock.getFirstSpecies()).thenReturn(MOUSE_SPECIE);
 
-        subject = new ApplicationProperties(configurationMock);
+        ExperimentConfiguration emtab513 = new ExperimentConfiguration(E_MTAB_513, ExperimentType.BASELINE);
+        ExperimentConfiguration emtab599 = new ExperimentConfiguration(E_MTAB_599, ExperimentType.BASELINE);
+        when(configurationDaoMock.getExperimentConfigurations()).thenReturn(Lists.newArrayList(emtab513, emtab599));
+
+        subject = new ApplicationProperties(configurationMock, configurationDaoMock);
     }
 
     @Test
@@ -130,6 +151,21 @@ public class ApplicationPropertiesTest {
     @Test
     public void testGetArrayExpressRestURL() throws Exception {
         assertThat(subject.getArrayExpressRestURL(EXPERIMENT_ACCESSION), is(ARRAYEXPRESS_REST_URL + EXPERIMENT_ACCESSION));
+    }
+
+    @Test
+    public void testGetArrayExpressArrayURL() throws Exception {
+        assertThat(subject.getArrayExpressArrayURL(A_AFFY_35), is(ARRAYEXPRESS_ARRAYS_URL + A_AFFY_35));
+    }
+
+    @Test
+    public void testGetPubMedURL() throws Exception {
+        assertThat(subject.getPubMedURL(PUB_MED_ID), is(PUBMED_URL + PUB_MED_ID));
+    }
+
+    @Test
+    public void testGetAtlasURL() throws Exception {
+        assertThat(subject.getAtlasURL(EXPERIMENT_ACCESSION), is(ATLAS_URL + EXPERIMENT_ACCESSION));
     }
 
     @Test

@@ -79,6 +79,12 @@ public class ExperimentLoaderControllerTest {
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, "NON-EXISTING-TYPE"), is("An unknown experiment type has been specified."));
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void testLoadExperimentIllegalState() throws Exception {
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(EXPERIMENT_TYPE))).thenReturn(0);
+        subject.loadExperiment(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE);
+    }
+
     @Test
     public void testDeleteExperiment() throws Exception {
         assertThat(subject.deleteExperiment(EXPERIMENT_ACCESSION), is("Experiment " + EXPERIMENT_ACCESSION + " deleted."));
@@ -93,5 +99,11 @@ public class ExperimentLoaderControllerTest {
     public void testDeleteExperimentNonExisting() throws Exception {
         when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(0);
         assertThat(subject.deleteExperiment(EXPERIMENT_ACCESSION), is("Experiment " + EXPERIMENT_ACCESSION + " not present."));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testDeleteExperimentIllegalState() throws Exception {
+        when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(-1);
+        subject.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 }

@@ -24,6 +24,9 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.configuration.ConfigurationDao;
+import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,9 +40,12 @@ public class ApplicationProperties {
 
     private Properties configurationProperties;
 
+    private ConfigurationDao configurationDao;
+
     @Inject
-    ApplicationProperties(@Named("configuration") Properties configurationProperties) {
+    ApplicationProperties(@Named("configuration") Properties configurationProperties, ConfigurationDao configurationDao) {
         this.configurationProperties = configurationProperties;
+        this.configurationDao = configurationDao;
     }
 
     public String getAnatomogramFileName(String specie, boolean isMale) {
@@ -73,8 +79,8 @@ public class ApplicationProperties {
 
     //This is invoked from jsp el
     public String getAtlasURL(String experimentAccession) {
-        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.atlas.url.template");
-        return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
+        String atlasUrlTemplate = configurationProperties.getProperty("experiment.atlas.url.template");
+        return MessageFormat.format(atlasUrlTemplate, experimentAccession);
     }
 
     public String getFeedbackEmailAddress() {
@@ -82,7 +88,13 @@ public class ApplicationProperties {
     }
 
     public Set<String> getBaselineExperimentsIdentifiers() {
-        return getStringValues("baseline.experiment.identifiers");
+        Set<String> results = Sets.newHashSet();
+        for (ExperimentConfiguration experimentConfiguration : configurationDao.getExperimentConfigurations()) {
+            if (experimentConfiguration.getExperimentType() == ExperimentType.BASELINE) {
+                results.add(experimentConfiguration.getExperimentAccession());
+            }
+        }
+        return results;
     }
 
     public Set<String> getDifferentialExperimentsIdentifiers() {
