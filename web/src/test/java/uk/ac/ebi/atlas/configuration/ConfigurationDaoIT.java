@@ -36,6 +36,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -67,6 +68,18 @@ public class ConfigurationDaoIT {
         ExperimentConfiguration experimentConfiguration = experimentConfigurations.get(0);
         assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(experimentConfiguration.getExperimentType(), is(EXPERIMENT_TYPE));
+    }
+
+    @Test
+    public void testGetExperimentConfiguration() throws Exception {
+        ExperimentConfiguration experimentConfiguration = subject.getExperimentConfiguration(EXPERIMENT_ACCESSION);
+        assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
+        assertThat(experimentConfiguration.getExperimentType(), is(EXPERIMENT_TYPE));
+    }
+
+    @Test
+    public void testGetExperimentConfigurationEmpty() throws Exception {
+        assertThat(subject.getExperimentConfiguration("NON-EXISTING"), is(nullValue()));
     }
 
     @Test
