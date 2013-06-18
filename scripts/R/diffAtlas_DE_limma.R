@@ -1,4 +1,4 @@
-#! /ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
+#!/ebi/microarray/home/biocep/local/lib64/R/bin/Rscript
 
 # diffAtlas_DE_limma.R
 # Microarray differential expression statistics computation for the
@@ -23,17 +23,23 @@ diffAtlas_DE_limma <<- function(normExprsFile, refAssays, testAssays, resFile, p
 		
 		# Read expressions (M-values/log-fold-changes for 2-colour).
 		print(paste("Reading", normExprsFile))
+		# R's reserved characters are changed to "." because check.names=TRUE
+		# in the read.delim() function.
 		normExprs <- read.delim(normExprsFile, stringsAsFactors=FALSE)
 		rownames(normExprs) <- normExprs[,1]
 		normExprs[,1] <- NULL
 
-		# make vectors of assay accessions.
-		# use make.names so that they match the column headings from reading in
-		# the normalized expressions above.
-		refAssays <- make.names(unlist(strsplit(refAssays, ",")))
-		testAssays <- make.names(unlist(strsplit(testAssays, ",")))
-		
-		
+		# Make vectors of assay accessions.
+		# Assay groups come in like e.g.:
+		# 	assay 1<SEP>assay 2<SEP>assay 3
+		# Split on "<SEP>" -- we use this as a separator because it is very
+		# unlikely to crop up in actual assay names.
+		# Use make.names to convert reserved characters to "." so that they
+		# match the column headings from reading in the normalized expressions
+		# above. 
+		refAssays <- make.names(unlist(strsplit(refAssays, "<SEP>")))
+		testAssays <- make.names(unlist(strsplit(testAssays, "<SEP>")))
+
 
 		# Provisions for 2-colour designs:
 		#	- If aValuesFile is not NULL, this means it's a 2-colour design.
