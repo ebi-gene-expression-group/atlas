@@ -40,11 +40,11 @@ print "Experiment accession: $exptAcc\n";
 # can do DE analysis. Don't need these for RNA-seq. We don't get an array
 # design accession for RNA-seq so here we just put the word "rnaseq" as the
 # key.
-# $contrastHash->{ "A-AFFY-35" }->{ "atlasName" } = "genotype: 'mutant X' vs. 'wild type'"
-#                               ->{ "reference" } = [ "WT1", "WT2", "WT3" ]
-#                               ->{ "test" } = [ "mutX1", "mutX2", "mutX3" ]
-#              ->{ "rnaseq" }->{ "atlasName" } = "genotype: 'mutant Y' vs. 'wild type'"
-#                            ->{ "deseqFile" } = "./deSeqResults.genes_de.tsv"
+# $contrastHash->{ "A-AFFY-35" }->{ "g1_g2" } ->{ "atlasName" } = "genotype: 'mutant X' vs. 'wild type'"
+#                               			  ->{ "reference" } = [ "WT1", "WT2", "WT3" ]
+#                              				  ->{ "test" } = [ "mutX1", "mutX2", "mutX3" ]
+#              ->{ "rnaseq" }->{ "g3_g4" }->{ "atlasName" } = "genotype: 'mutant Y' vs. 'wild type'"
+#                            			  ->{ "deseqFile" } = "./deSeqResults.genes_de.tsv"
 my $contrastHash = readAtlasXML($atlasXML);
 
 # If we have an RNA-Seq experiment, get DESeq results filenames.
@@ -54,6 +54,17 @@ if($ereapConfig) {
 
 
 # Get DE results and write them.
+# $contrastHash has a key for each platform. A platform is either a microarray
+# design accession (e.g. "A-AFFY-35") or "rnaseq". We could have multiple
+# platforms in the same experiment, e.g. multiple microarrays or a combination
+# of microarray and RNA-seq. So we send the whole $contrastHash to
+# getDEresults() and go through each contrast in turn:
+# 	- for microarray data, we run differential expression statistics in limma
+# 	via an R script to get p-values, t-statistics, and log2 fold-changes.
+# 	- for RNA-seq data, stats have already been run in eREAP so we just read in
+# 	the results from that and get the p-values and log2 fold-changes. We don't
+# 	have t-statistics for RNA-seq obviously and for now we're not interested in
+# 	the likelihood ratio.
 getDEresults($contrastHash, $exptAcc, $mvaScript, $limmaScript);
 
 # end
@@ -461,8 +472,15 @@ sub getDEresults {
 				
 				
 				# Reference and test assay accessions for limma script
-				my $refAssays = join "\",\"", @{ $contrastHash->{ $platform }->{ $agPair }->{ "reference" }};
-				my $testAssays = join "\",\"", @{ $contrastHash->{ $platform }->{ $agPair }->{ "test" }};
+				# Put double quotes around assay names in case they contain
+				# spaces, and separate them using \<SEP\>. We use this as it is
+				# very unlikely to crop up in actual assay names.
+				# We pass groups of assay names to limma R script like:
+				#	"assay 1"\<SEP\>"assay 2"\<SEP\>"assay 3"
+				# And in R they come out like:
+				# 	assay 1<SEP>assay 2<SEP>assay 3
+				my $refAssays = join "\"\\<SEP\\>\"", @{ $contrastHash->{ $platform }->{ $agPair }->{ "reference" }};
+				my $testAssays = join "\"\\<SEP\\>\"", @{ $contrastHash->{ $platform }->{ $agPair }->{ "test" }};
 
 				$refAssays = "\"$refAssays\"";
 				$testAssays = "\"$testAssays\"";
@@ -470,14 +488,17 @@ sub getDEresults {
 
 				print "Computing differential expression statistics for contrast \"", $atlasName, "\"...";
 
+				# Variable for output of limma script.
 				my $R_limmaOutput;
 				
+				# Run the limma R script via system call.
+				# For 2-colour data, we pass the A-values as well.
 				if($aValues) {
 					
 					$R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile $aValues 2>&1`;
 				}
 				else {
-					# Run limma script
+					# Run limma script without A-values for 1-colour data.
 					$R_limmaOutput = `$limmaScript $normExpr $refAssays $testAssays $limmaResTempFile $plotDataTempFile 2>&1`;
 				}
 
