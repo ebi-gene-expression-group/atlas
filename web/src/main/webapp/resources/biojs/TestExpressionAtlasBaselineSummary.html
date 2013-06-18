@@ -27,7 +27,7 @@
 
 <head>
 
-    <title>Biojs.ExpressionAtlasBaselineExpressionSummary test</title>
+    <title>Biojs.ExpressionAtlasBaselineSummary test</title>
 
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css"/>
@@ -45,14 +45,14 @@
             src="../../main/resources/dependencies/jquery/jquery-1.7.2.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="../../main/javascript/Biojs.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="../../main/javascript/Biojs.ExpressionAtlasBaselineExpressionSummary.js"></script>
+            src="../../main/javascript/Biojs.ExpressionAtlasBaselineSummary.js"></script>
 
     <script>
         (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
             $(document).ready(function () {
 
-                var instance = new Biojs.ExpressionAtlasBaselineExpressionSummary({
+                var instance = new Biojs.ExpressionAtlasBaselineSummary({
                     featuresUrl:'http://www-test.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=ENSG00000187003&propertyType=identifier',
                     target:"YourOwnDivId",
                     rootContext:"../../main/resources/dependencies/proxy/proxy.php?url=http://www-test.ebi.ac.uk/gxa",

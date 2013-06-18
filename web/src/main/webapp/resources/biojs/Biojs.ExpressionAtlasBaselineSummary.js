@@ -21,8 +21,8 @@
  */
 
 /**
- * This is the Expression Atlas component for displaying baseline expression of genes
- * based on RNA-seq experiments in the ExpressionAtlas database.
+ * This is the ExpressionAtlas component for displaying baseline expression of genes
+ *  based on RNA-seq experiments in the ExpressionAtlas database.
  *
  * @class
  * @extends Biojs
@@ -34,7 +34,7 @@
  * @requires <a href='http://code.jquery.com/jquery-1.7.2.min.js'>jQuery Core 1.7.2</a>
  * @dependency <script language="JavaScript" type="text/javascript" src="../biojs/dependencies/jquery/jquery-1.7.2.min.js"></script>
  *
- * @param {Object} options An object with the options for ExpressionAtlasBaselineExpressionSummary component.
+ * @param {Object} options An object with the options for ExpressionAtlasBaselineSummary component.
  *
  * @option {string} featuresUrl
  *    The query URL pointing to the ExpressionAtlas for retrieving gene page results
@@ -44,9 +44,9 @@
  * @option {string} target
  *    Identifier of the DIV tag where the component should be displayed.
  *
- * @option {string} rootContext
+ * @option {string} [rootContext='../biojs/dependencies/proxy/proxy.php?url%3dhttp://www-test.ebi.ac.uk/gxa']
  *    Specifies the root context path to be used by the widget content,
- *    i.e. this is the location of the content proxy for Ajax calls
+ *    i.e. this is the location of the content proxy pointing to ExpressionAtlas
  *
  * @option {string} [proxyUrl='../biojs/dependencies/proxy/proxy.php']
  *    This component needs to request data from a web service. To bypass the same origin policy
@@ -55,19 +55,19 @@
  *    '../biojs/dependencies/proxy/proxy.php' or '../biojs/dependencies/proxy/proxy.jsp'
  *
  * @example
- *    var instance = new Biojs.ExpressionAtlasBaselineExpressionSummary({
- *      featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=P00846',
+ *    var instance = new Biojs.ExpressionAtlasBaselineSummary({
+ *      featuresUrl: 'http://www-test.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=P00846',
  *      target : "YourOwnDivId"
  *    });
  *
  */
-Biojs.ExpressionAtlasBaselineExpressionSummary = Biojs.extend(
-    /** @lends Biojs.ExpressionAtlasBaselineExpressionSummary# */
+Biojs.ExpressionAtlasBaselineSummary = Biojs.extend(
+    /** @lends Biojs.ExpressionAtlasBaselineSummary# */
     {
 
         /**
          * Constructor to initialize the component
-         * @name Biojs.ExpressionAtlasBaselineExpressionSummary-constructor
+         * @name Biojs.ExpressionAtlasBaselineSummary-constructor
          */
         constructor:function (options) {
 
@@ -106,7 +106,7 @@ Biojs.ExpressionAtlasBaselineExpressionSummary = Biojs.extend(
 
         /**
          *  Default values for the options
-         *  @name Biojs.ExpressionAtlasBaselineExpressionSummary-opt
+         *  @name Biojs.ExpressionAtlasBaselineSummary-opt
          */
         opt:{
             /* Features URL
@@ -123,7 +123,7 @@ Biojs.ExpressionAtlasBaselineExpressionSummary = Biojs.extend(
              For multiple identifiers of the same species please use:
              geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
              */
-            featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=P00846',
+            featuresUrl:'http://www-test.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=P00846',
             /* Target DIV
              This mandatory parameter is the identifier of the DIV tag where the
              component should be displayed. Use this value to draw your
@@ -134,7 +134,7 @@ Biojs.ExpressionAtlasBaselineExpressionSummary = Biojs.extend(
              be used by the widget content, i.e. this is pointing to the
              content proxy where required.
              */
-            rootContext:'',
+            rootContext:'../biojs/dependencies/proxy/proxy.php?url=http://www-test.ebi.ac.uk/gxa',
             /* Proxy URL
              To bypass the same origin policy this component needs a proxy, which
              can be set here.
@@ -145,7 +145,7 @@ Biojs.ExpressionAtlasBaselineExpressionSummary = Biojs.extend(
 
         /**
          * Array containing the supported event names
-         * @name Biojs.ExpressionAtlasBaselineExpressionSummary-eventTypes
+         * @name Biojs.ExpressionAtlasBaselineSummary-eventTypes
          */
         eventTypes:[
             /*

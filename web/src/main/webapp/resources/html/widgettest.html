@@ -5,7 +5,7 @@
 
 <head>
 
-    <title>Biojs.ExpressionAtlasBaselineExpressionSummary test</title>
+    <title>Biojs.ExpressionAtlasBaselineSummary test</title>
 
     <link type="text/css" rel="stylesheet"
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css"/>
@@ -22,17 +22,18 @@
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/jquery-1.8.3.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="/gxa/resources/biojs/Biojs.ExpressionAtlasBaselineExpressionSummary.js"></script>
+            src="/gxa/resources/biojs/Biojs.ExpressionAtlasBaselineSummary.js"></script>
 
     <script>
         (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
             $(document).ready(function () {
 
-                var instance = new Biojs.ExpressionAtlasBaselineExpressionSummary({
+                var instance = new Biojs.ExpressionAtlasBaselineSummary({
                     featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier',
                     target:"YourOwnDivId",
-                    proxyUrl:''
+                    proxyUrl:'',
+                    rootContext:''
                 });
 
             });
