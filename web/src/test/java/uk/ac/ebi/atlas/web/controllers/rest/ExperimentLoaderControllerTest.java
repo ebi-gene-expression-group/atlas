@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,6 +57,8 @@ public class ExperimentLoaderControllerTest {
         when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(null);
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(EXPERIMENT_TYPE))).thenReturn(1);
         when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(1);
+        when(configurationDaoMock.getExperimentConfigurations()).thenReturn(
+                Lists.newArrayList(new ExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(EXPERIMENT_TYPE))));
     }
 
     @Test
@@ -105,5 +108,10 @@ public class ExperimentLoaderControllerTest {
     public void testDeleteExperimentIllegalState() throws Exception {
         when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(-1);
         subject.deleteExperiment(EXPERIMENT_ACCESSION);
+    }
+
+    @Test
+    public void testListExperiments() throws Exception {
+        assertThat(subject.listExperiments(), is("[{\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\"}]"));
     }
 }

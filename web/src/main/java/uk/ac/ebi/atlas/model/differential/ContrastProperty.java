@@ -74,7 +74,7 @@ public class ContrastProperty implements Comparable<ContrastProperty> {
             }
         } else if (contrastPropertyType == otherProperty.contrastPropertyType &&
                 contrastPropertyType == ContrastPropertyType.FACTOR) {
-            int groupComparison = Booleans.compare(otherProperty.hasEqualValues(), hasEqualValues());
+            int groupComparison = Booleans.compare(hasEqualValues(), otherProperty.hasEqualValues());
             if (groupComparison != 0) {
                 return groupComparison;
             }
