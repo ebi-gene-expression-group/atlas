@@ -27,12 +27,10 @@ import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 
 public abstract class BioEntityPageController {
 
@@ -87,7 +85,13 @@ public abstract class BioEntityPageController {
     abstract String getEntityNamePropertyType();
 
     protected void initBioEntityPropertyService(String identifier) {
-        String species = solrClient.findSpeciesForGeneId(identifier);
+        Collection<String> species = solrClient.findSpeciesForGeneId(identifier);
+
+        if (species.size() != 1) {
+            throw new ResourceNotFoundException("No unambiguous species could be determined.");
+        }
+        String specie = species.iterator().next();
+
         List<String> queryPropertyTypes = getPagePropertyTypes();
 
         SortedSetMultimap<String,String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
@@ -95,6 +99,6 @@ public abstract class BioEntityPageController {
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);
         }
-        bioEntityPropertyService.init(species, propertyValuesByType, entityNames);
+        bioEntityPropertyService.init(specie, propertyValuesByType, entityNames);
     }
 }

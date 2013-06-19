@@ -22,7 +22,10 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.*;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +37,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.utils.Files;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -62,7 +66,8 @@ public class SolrClientTest {
 
     private static final String EXPECTED_TOOLTIP_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"goterm\" OR property_type:\"interproterm\")";
 
-    private static final String SPECIES = "mus musculus";
+    private static final String MUS_MUSCULUS = "mus musculus";
+    private static final HashSet<String> SPECIES = Sets.newHashSet(MUS_MUSCULUS);
 
     private static final String SYMBOL = "symbol";
 
@@ -92,8 +97,11 @@ public class SolrClientTest {
         doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, TOOLTIP_PROPERTY_TYPES);
 
         when(solrQueryServiceMock.querySolrForProperties(anyString(), anyInt())).thenReturn(results);
-        when(solrQueryServiceMock.getSpeciesForIdentifier(IDENTIFIER)).thenReturn(SPECIES);
+//        when(solrQueryServiceMock.getSpeciesForIdentifier(IDENTIFIER)).thenReturn(SPECIES);
         when(solrQueryServiceMock.getPropertyValuesForIdentifier(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
+        when(solrQueryServiceMock.getSpeciesForPropertyValue(IDENTIFIER, SolrQueryService.IDENTIFIER_FIELD)).thenReturn(SPECIES);
+
+        when(geneQueryTokenizerMock.split(IDENTIFIER)).thenReturn(Lists.newArrayList(IDENTIFIER));
 
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(getClass(), "solrAutocompleteResponse.json");
         when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
@@ -136,7 +144,7 @@ public class SolrClientTest {
 
     @Test
     public void testFindSpeciesForGeneId() throws Exception {
-        assertThat(subject.findSpeciesForGeneId(IDENTIFIER), is(SPECIES));
+        assertThat(subject.findSpeciesForGeneId(IDENTIFIER), containsInAnyOrder(MUS_MUSCULUS));
     }
 
     @Test
@@ -147,17 +155,17 @@ public class SolrClientTest {
     @Test
     public void testGetSelectedGeneIdsPerQueryToken() throws GenesNotFoundException, SolrServerException {
 
-        when(solrQueryServiceMock.getGeneIds("A", false, SPECIES)).thenReturn(Sets.newHashSet(IDENTIFIER));
-        when(solrQueryServiceMock.getGeneIds("QUERY", false, SPECIES)).thenReturn(Sets.newHashSet(IDENTIFIER));
+        when(solrQueryServiceMock.getGeneIds("A", false, MUS_MUSCULUS)).thenReturn(Sets.newHashSet(IDENTIFIER));
+        when(solrQueryServiceMock.getGeneIds("QUERY", false, MUS_MUSCULUS)).thenReturn(Sets.newHashSet(IDENTIFIER));
 
         when(geneQueryTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
 
-        GeneQueryResponse geneQueryResponse = subject.findGeneSets(GENE_QUERY, false, SPECIES, true);
+        GeneQueryResponse geneQueryResponse = subject.findGeneSets(GENE_QUERY, false, MUS_MUSCULUS, true);
 
         verify(geneQueryTokenizerMock).split("A QUERY");
 
-        verify(solrQueryServiceMock).getGeneIds("A", false, SPECIES);
-        verify(solrQueryServiceMock).getGeneIds("QUERY", false, SPECIES);
+        verify(solrQueryServiceMock).getGeneIds("A", false, MUS_MUSCULUS);
+        verify(solrQueryServiceMock).getGeneIds("QUERY", false, MUS_MUSCULUS);
 
         assertThat(geneQueryResponse.getQueryTerms(), containsInAnyOrder("A", "QUERY"));
     }

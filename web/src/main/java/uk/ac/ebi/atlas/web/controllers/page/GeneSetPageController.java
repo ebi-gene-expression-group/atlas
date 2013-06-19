@@ -26,18 +26,18 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.geneindex.SolrQueryService;
+import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -45,7 +45,7 @@ import java.util.SortedSet;
 @Scope("request")
 public class GeneSetPageController extends BioEntityPageController {
 
-    private SolrQueryService solrQueryService;
+    private SolrClient solrClient;
 
     private BioEntityPropertyService bioEntityPropertyService;
 
@@ -59,8 +59,8 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient) {
-        this.solrQueryService = solrQueryService;
+    public GeneSetPageController(SolrClient solrClient, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient) {
+        this.solrClient = solrClient;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeBiomartClient = reactomeBiomartClient;
     }
@@ -79,10 +79,10 @@ public class GeneSetPageController extends BioEntityPageController {
     @Override
     protected void initBioEntityPropertyService(String identifier) {
         String query = identifier.replaceAll("\"", "");
-        String species = solrQueryService.getSpeciesForPropertyValue(query);
+        Collection<String> species = solrClient.getSpeciesForPropertyValue(query);
 
-        if (StringUtils.isEmpty(species)) {
-            throw new ResourceNotFoundException("Cannot find data for geneset with ID " + identifier);
+        if (species.size() != 1) {
+            throw new ResourceNotFoundException("Cannot find data form a single organism for geneset with ID " + identifier);
         }
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
@@ -90,7 +90,7 @@ public class GeneSetPageController extends BioEntityPageController {
         propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(query));
         SortedSet<String> names = Sets.newTreeSet();
         names.add(query);
-        bioEntityPropertyService.init(species, propertyValuesByType, names);
+        bioEntityPropertyService.init(species.iterator().next(), propertyValuesByType, names);
     }
 
     @Override
