@@ -35,17 +35,17 @@ import javax.sql.DataSource;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class ConfigurationDaoIT {
 
-    private static final String EXPERIMENT_ACCESSION = "experiment_accession";
-    private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.BASELINE;
+    private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_MTAB_1066 = "E-MTAB-1066";
+    private static final ExperimentType TYPE_BASELINE = ExperimentType.BASELINE;
+    private static final ExperimentType TYPE_DIFFERENTIAL = ExperimentType.DIFFERENTIAL;
     private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY;
     private static final String ANOTHER_ACCESION = "ANOTHER";
     private static final String YET_ANOTHER_ACCESSION = "YETANOTHER";
@@ -59,44 +59,36 @@ public class ConfigurationDaoIT {
     @Before
     public void setUp() throws Exception {
 
-        subject.deleteExperimentConfiguration(EXPERIMENT_ACCESSION);
-        subject.addExperimentConfiguration(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE);
+        subject.deleteExperimentConfiguration(E_MTAB_513);
+        subject.addExperimentConfiguration(E_MTAB_513, TYPE_BASELINE);
 
     }
 
     @Test
     public void testGetExperimentConfigurations() throws Exception {
         List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations();
-        ExperimentConfiguration experimentConfiguration = experimentConfigurations.get(0);
-        assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(experimentConfiguration.getExperimentType(), is(EXPERIMENT_TYPE));
+        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_513, TYPE_BASELINE)));
     }
 
     @Test
     public void testGetExperimentConfigurationsByType() throws Exception {
-        subject.addExperimentConfiguration(ANOTHER_ACCESION, ExperimentType.DIFFERENTIAL);
-        subject.addExperimentConfiguration(YET_ANOTHER_ACCESSION, ExperimentType.MICROARRAY);
-        List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations(EXPERIMENT_TYPE);
-        ExperimentConfiguration experimentConfiguration = experimentConfigurations.get(0);
-        assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(experimentConfiguration.getExperimentType(), is(EXPERIMENT_TYPE));
-        experimentConfigurations = subject.getExperimentConfigurations(ExperimentType.DIFFERENTIAL);
-        experimentConfiguration = experimentConfigurations.get(0);
-        assertThat(experimentConfiguration.getExperimentAccession(), is(ANOTHER_ACCESION));
-        assertThat(experimentConfiguration.getExperimentType(), is(ExperimentType.DIFFERENTIAL));
-        experimentConfigurations = subject.getExperimentConfigurations(ExperimentType.MICROARRAY);
-        experimentConfiguration = experimentConfigurations.get(0);
-        assertThat(experimentConfiguration.getExperimentAccession(), is(YET_ANOTHER_ACCESSION));
-        assertThat(experimentConfiguration.getExperimentType(), is(ExperimentType.MICROARRAY));
+        subject.addExperimentConfiguration(ANOTHER_ACCESION, TYPE_DIFFERENTIAL);
+        subject.addExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY);
+        List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations(TYPE_BASELINE);
+        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_513, TYPE_BASELINE)));
+        experimentConfigurations = subject.getExperimentConfigurations(TYPE_DIFFERENTIAL);
+        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(ANOTHER_ACCESION, TYPE_DIFFERENTIAL)));
+        experimentConfigurations = subject.getExperimentConfigurations(TYPE_MICROARRAY);
+        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY)));
         subject.deleteExperimentConfiguration(ANOTHER_ACCESION);
         subject.deleteExperimentConfiguration(YET_ANOTHER_ACCESSION);
     }
 
     @Test
     public void testGetExperimentConfiguration() throws Exception {
-        ExperimentConfiguration experimentConfiguration = subject.getExperimentConfiguration(EXPERIMENT_ACCESSION);
-        assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(experimentConfiguration.getExperimentType(), is(EXPERIMENT_TYPE));
+        ExperimentConfiguration experimentConfiguration = subject.getExperimentConfiguration(E_MTAB_513);
+        assertThat(experimentConfiguration.getExperimentAccession(), is(E_MTAB_513));
+        assertThat(experimentConfiguration.getExperimentType(), is(TYPE_BASELINE));
     }
 
     @Test
@@ -106,17 +98,21 @@ public class ConfigurationDaoIT {
 
     @Test
     public void testAddExperimentConfiguration() throws Exception {
-        assertThat(subject.addExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY), is(1));
+        // cleanup just in case
+        subject.deleteExperimentConfiguration(E_MTAB_1066);
         List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations();
-        assertThat(experimentConfigurations.size(), is(2));
-        ExperimentConfiguration experimentConfiguration = experimentConfigurations.get(1);
-        assertThat(experimentConfiguration.getExperimentAccession(), is(E_MTAB_1066));
-        assertThat(experimentConfiguration.getExperimentType(), is(TYPE_MICROARRAY));
+        int size = experimentConfigurations.size();
+        assertThat(subject.addExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY), is(1));
+        experimentConfigurations = subject.getExperimentConfigurations();
+        assertThat(experimentConfigurations.size(), is(size + 1));
+        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY)));
     }
 
     @Test
     public void testDeleteExperimentConfiguration() throws Exception {
-        assertThat(subject.deleteExperimentConfiguration(EXPERIMENT_ACCESSION), is(1));
-        assertThat(subject.getExperimentConfigurations().size(), is(0));
+        List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations();
+        int size = experimentConfigurations.size();
+        assertThat(subject.deleteExperimentConfiguration(E_MTAB_513), is(1));
+        assertThat(subject.getExperimentConfigurations().size(), is(size - 1));
     }
 }

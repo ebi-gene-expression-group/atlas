@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.configuration;
 
+import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 public class ExperimentConfiguration {
@@ -41,5 +42,27 @@ public class ExperimentConfiguration {
 
     public ExperimentType getExperimentType() {
         return experimentType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(experimentAccession, experimentType);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ExperimentConfiguration) {
+            ExperimentConfiguration other = (ExperimentConfiguration) obj;
+            return this.experimentAccession.equals(other.experimentAccession)
+                    && this.experimentType.equals(other.experimentType);
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("ExperimentAccession", experimentAccession)
+                .add("ExperimentType", experimentType).toString();
     }
 }
