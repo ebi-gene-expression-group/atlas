@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commons.ExperimentResolver;
+import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
@@ -43,6 +44,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -98,15 +100,18 @@ public final class ExperimentDispatcher {
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ApplicationProperties applicationProperties;
 
+    private SolrClient solrClient;
+
     private ExperimentResolver experimentResolver;
 
     @Inject
     private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties, ExperimentResolver experimentResolver) {
+                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties, SolrClient solrClient, ExperimentResolver experimentResolver) {
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.applicationProperties = applicationProperties;
+        this.solrClient = solrClient;
         this.experimentResolver = experimentResolver;
     }
 
@@ -129,26 +134,27 @@ public final class ExperimentDispatcher {
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                  Model model) {
-        try {
-            String species = experimentResolver.getSpecies(bioEntityAccession, propertyType);
-            String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(species);
 
-            if (!StringUtils.isEmpty(experimentAccession)) {
-                Experiment experiment = getExperiment(experimentAccession, model);
-                prepareModel(request, model, experiment);
-                String requestURL = getRequestURL(request);
+        Collection<String> species = solrClient.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+        if (species.size() != 1) {
+            model.addAttribute("errorMessage", "No unambiguous species could be determined. Found: " + Joiner.on(", ").join(species));
+            return "widget-error";
+        }
+        String specie = species.iterator().next();
+        String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(specie);
 
-                String mappedSpecies = experiment.getRequestSpecieName(species);
+        if (!StringUtils.isEmpty(experimentAccession)) {
+            Experiment experiment = getExperiment(experimentAccession, model);
+            prepareModel(request, model, experiment);
+            String requestURL = getRequestURL(request);
 
-                String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
+            String mappedSpecies = experiment.getRequestSpecieName(specie);
 
-                return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
-            } else {
-                model.addAttribute("identifier", bioEntityAccession);
-                return "widget-error";
-            }
-        } catch (ResourceNotFoundException rnfe) {
-            model.addAttribute("errorMessage", rnfe.getMessage());
+            String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
+
+            return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
+        } else {
+            model.addAttribute("identifier", bioEntityAccession);
             return "widget-error";
         }
 

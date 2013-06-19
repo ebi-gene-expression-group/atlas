@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
-import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -97,9 +97,9 @@ public class SolrClient {
 
     }
 
-    public String findSpeciesForGeneId(String identifier) {
+    public Collection<String> findSpeciesForGeneId(String identifier) {
 
-        return solrQueryService.getSpeciesForIdentifier(identifier);
+        return getSpeciesForPropertyValue(identifier, SolrQueryService.IDENTIFIER_FIELD);
 
     }
 
@@ -109,6 +109,18 @@ public class SolrClient {
 
     }
 
+    public Collection<String> getSpeciesForPropertyValue(String value) {
+        return getSpeciesForPropertyValue(value, "");
+    }
+
+    public Collection<String> getSpeciesForPropertyValue(String value, String type) {
+        List<String> partsOfGeneQuery = geneQueryTokenizer.split(value);
+        Collection<String> species = Sets.newHashSet();
+        for (String geneQueryPart : partsOfGeneQuery) {
+            species.addAll(solrQueryService.getSpeciesForPropertyValue(geneQueryPart, type));
+        }
+        return species;
+    }
 
     public GeneQueryResponse findGeneSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
 
@@ -116,7 +128,7 @@ public class SolrClient {
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
-        if(tokenizeQuery){
+        if (tokenizeQuery) {
             for (String queryToken : geneQueryTokenizer.split(geneQuery)) {
                 Set<String> geneIds = solrQueryService.getGeneIds(queryToken, exactMatch, species);
                 geneQueryResponse.addGeneIds(queryToken, geneIds);

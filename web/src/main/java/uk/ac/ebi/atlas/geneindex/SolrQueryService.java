@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -38,6 +39,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -51,8 +53,8 @@ public class SolrQueryService {
     private static final int MAX_RETRIES = 1;
     private static final int DEFAULT_LIMIT = 15;
     private static final String CONFIG_SPLIT_REGEX = ",";
-    private static final String PROPERTY_LOWER_FIELD = "property_lower";
-    private static final String IDENTIFIER_FIELD = "identifier";
+    public static final String PROPERTY_LOWER_FIELD = "property_lower";
+    public static final String IDENTIFIER_FIELD = "identifier";
     private static final String SPECIES_FIELD = "species";
     private static final String PROPERTY_FIELD = "property";
     // changed from 100000
@@ -130,20 +132,28 @@ public class SolrQueryService {
     public String getSpeciesForIdentifier(String identifier) {
 
         SolrQuery query = new SolrQuery("identifier:" + identifier);
-        return extractSpecies(query);
+        Collection<String> species = extractAllSpecies(query);
+        if(species.size() == 1) {
+           return species.iterator().next();
+        }
+        throw new IllegalStateException("Found more than one specie for identifier: " + identifier);
 
     }
 
-    public String getSpeciesForPropertyValue(String propertyValue) {
+    public Collection<String> getSpeciesForPropertyValue(String propertyValue) {
 
         SolrQuery query = new SolrQuery(PROPERTY_LOWER_FIELD + ":" + propertyValue);
-        return extractSpecies(query);
+        return extractAllSpecies(query);
 
     }
 
-    public String getSpeciesForPropertyValue(String value, String type) {
+    public Collection<String> getSpeciesForPropertyValue(String value, String type) {
+        if (StringUtils.isEmpty(type)) {
+            return getSpeciesForPropertyValue(value);
+        }
+
         SolrQuery query = new SolrQuery(type + ":" + value);
-        return extractSpecies(query);
+        return extractAllSpecies(query);
     }
 
     public List<String> getPropertyValuesForIdentifier(String identifier, String propertyType) {
@@ -162,20 +172,20 @@ public class SolrQueryService {
         return results;
     }
 
-    private String extractSpecies(SolrQuery query) {
-        String species = "";
+    private Collection<String> extractAllSpecies(SolrQuery query) {
+        Collection<String> species = Sets.newHashSet();
 
         query.setFields(SPECIES_FIELD);
-        query.setRows(1);
+        query.setRows(100);
 
         QueryResponse solrResponse = executeSolrQuery(query);
         SolrDocumentList results = solrResponse.getResults();
-        if (results.getNumFound() > 1) {
-            species = results.get(0).getFieldValue(SPECIES_FIELD).toString();
+        for (SolrDocument result : results) {
+            species.add(result.getFieldValue(SPECIES_FIELD).toString());
         }
+
         return species;
     }
-
 
     Set<String> fetchGeneIdentifiersFromSolr(String queryString) {
         Set<String> results = Sets.newHashSet();

@@ -117,12 +117,15 @@ public class BioEntityPropertyService {
     }
 
     String transformOrthologToSymbol(String identifier) {
-        String species = solrClient.findSpeciesForGeneId(identifier);
-        species = StringUtils.capitalize(species);
-        List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
-        if (!valuesForGeneId.isEmpty()) {
-            String symbol = valuesForGeneId.get(0);
-            return symbol + " (" + species + ")";
+        Collection<String> species = solrClient.findSpeciesForGeneId(identifier);
+
+        if (species.size() == 1) {
+            List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
+            if (!valuesForGeneId.isEmpty()) {
+                String speciesName = StringUtils.capitalize(species.iterator().next());
+                String symbol = valuesForGeneId.get(0);
+                return symbol + " (" + speciesName + ")";
+            }
         }
         return identifier;
     }
