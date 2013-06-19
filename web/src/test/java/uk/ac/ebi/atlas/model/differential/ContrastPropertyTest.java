@@ -54,6 +54,6 @@ public class ContrastPropertyTest {
 
         SortedSet<ContrastProperty> properties = Sets.newTreeSet(Sets.newHashSet(property1, property2, property3, property4, property5));
 
-        assertThat(properties, contains(property2, property5, property1, property3, property4));
+        assertThat(properties, contains(property1, property3, property4, property2, property5));
     }
 }
