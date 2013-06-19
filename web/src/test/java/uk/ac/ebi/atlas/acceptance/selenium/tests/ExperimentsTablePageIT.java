@@ -36,6 +36,8 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
 
     private ExperimentsTablePage subject;
 
+    private static final String EXPERIMENTS_REST_URI = "/gxa/json/experiments";
+
     @Override
     protected void getStartingPage() {
         subject = new ExperimentsTablePage(driver);

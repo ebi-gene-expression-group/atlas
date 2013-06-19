@@ -88,18 +88,17 @@ public class ApplicationProperties {
     }
 
     public Set<String> getBaselineExperimentsIdentifiers() {
-        Set<String> results = getExperimentIdentifiersForType(ExperimentType.BASELINE);
-        return results;
+        return getExperimentIdentifiersForType(ExperimentType.BASELINE);
     }
 
     public Set<String> getDifferentialExperimentsIdentifiers() {
-        Set<String> results = getExperimentIdentifiersForType(ExperimentType.DIFFERENTIAL);
-        return results;
+        return getExperimentIdentifiersForType(ExperimentType.DIFFERENTIAL);
     }
 
     public Set<String> getMicroarrayExperimentsIdentifiers() {
-        Set<String> results = getExperimentIdentifiersForType(ExperimentType.MICROARRAY);
-        return results;
+        Set<String> identifiersForType = getExperimentIdentifiersForType(ExperimentType.MICROARRAY);
+        identifiersForType.addAll(getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR));
+        return identifiersForType;
     }
 
     public Set<String> getTwoColourExperimentsIdentifiers() {
