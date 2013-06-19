@@ -53,8 +53,8 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
     public void defaultExperimentsPage() {
         assertThat(subject.getExperimentsTableHeader().size(), is(8));
         assertThat(subject.getExperimentsTableInfo(), startsWith("Showing 1 to 10 of"));
-        assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
-        assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-43049"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-26284"));
+        assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-698"));
     }
 
     @Test
@@ -63,26 +63,26 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
         subject.setSearchFieldValue("baseline");
         assertThat(subject.getSearchFieldValue(), is("baseline"));
         assertThat(subject.getExperimentsTableInfo(), startsWith("Showing 1 to 4 of"));
-        assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
-        assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-30352"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-26284"));
+        assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-599"));
     }
 
     @Test
     public void sortOnFirstColumn() {
-        assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
-        assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-43049"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-26284"));
+        assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-698"));
         subject.clickFirstColumnHeader();
         assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-21860"));
-        assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-26284"));
+        assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-513"));
         subject.clickFirstColumnHeader();
-        assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
-        assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-43049"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-26284"));
+        assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-698"));
     }
 
     @Test
     public void sortOnSecondColumn() {
-        assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
-        assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-43049"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-26284"));
+        assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-698"));
         subject.clickSecondColumnHeader();
         assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-21860"));
         assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-698"));
@@ -93,8 +93,8 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void sortOnThirdColumn() {
-        assertThat(subject.getFirstExperimentInfo(), hasItem("E-MTAB-599"));
-        assertThat(subject.getLastExperimentInfo(), hasItem("E-GEOD-43049"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-26284"));
+        assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-698"));
         subject.clickThirdColumnHeader();
         assertThat(subject.getFirstExperimentInfo(), hasItem("E-GEOD-43049"));
         assertThat(subject.getLastExperimentInfo(), hasItem("E-MTAB-1066"));

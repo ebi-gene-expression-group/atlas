@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.utils.ExperimentInfo;
 import uk.ac.ebi.atlas.utils.ExperimentInfoListBuilder;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -54,6 +55,8 @@ public class ExperimentsListController {
     public String getExperimentsList() {
 
         List<ExperimentInfo> experimentInfos = experimentInfoListBuilder.build();
+        // this is required for the initial sorting order on the experiments page, which the IT relies on
+        Collections.sort(experimentInfos);
         ExperimentInfoWrapper experimentInfoWrapper = new ExperimentInfoWrapper(experimentInfos);
 
         Gson gson = new Gson();

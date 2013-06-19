@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import java.util.Set;
 import java.util.SortedSet;
 
-public class ExperimentInfo {
+public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
     private ExperimentType experimentType;
 
@@ -110,4 +110,8 @@ public class ExperimentInfo {
         this.arrayDesigns = Sets.newTreeSet(arrayDesigns);
     }
 
+    @Override
+    public int compareTo(ExperimentInfo o) {
+        return this.experimentAccession.compareTo(o.experimentAccession);
+    }
 }
