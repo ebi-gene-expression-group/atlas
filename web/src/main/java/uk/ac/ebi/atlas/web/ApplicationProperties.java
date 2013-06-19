@@ -102,7 +102,7 @@ public class ApplicationProperties {
     }
 
     public Set<String> getTwoColourExperimentsIdentifiers() {
-        return getStringValues("twocolour.experiment.identifiers");
+        return getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR);
     }
 
     public Set<String> getBiomartDatasetIdentifiers() {
