@@ -88,22 +88,23 @@ public class ApplicationProperties {
     }
 
     public Set<String> getBaselineExperimentsIdentifiers() {
-        Set<String> results = getExperimentIdentifiersForType(ExperimentType.BASELINE);
-        return results;
+        return getExperimentIdentifiersForType(ExperimentType.BASELINE);
     }
 
     public Set<String> getDifferentialExperimentsIdentifiers() {
-        Set<String> results = getExperimentIdentifiersForType(ExperimentType.DIFFERENTIAL);
-        return results;
+        return getExperimentIdentifiersForType(ExperimentType.DIFFERENTIAL);
     }
 
     public Set<String> getMicroarrayExperimentsIdentifiers() {
-        Set<String> results = getExperimentIdentifiersForType(ExperimentType.MICROARRAY);
-        return results;
+        Set<String> identifiersForType = getExperimentIdentifiersForType(ExperimentType.MICROARRAY);
+        // as two colour is a subtype of micro array, they need to be added here
+        identifiersForType.addAll(getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR));
+        return identifiersForType;
     }
 
     public Set<String> getTwoColourExperimentsIdentifiers() {
-        return getStringValues("twocolour.experiment.identifiers");
+        // this type distinction is required for SDRF parsing
+        return getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR);
     }
 
     public Set<String> getBiomartDatasetIdentifiers() {

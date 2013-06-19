@@ -131,8 +131,10 @@ public class ApplicationPropertiesTest {
         when(configurationDaoMock.getExperimentConfigurations(ExperimentType.DIFFERENTIAL)).thenReturn(Lists.newArrayList(egeod21860, egeod22351, egeod38400));
 
         ExperimentConfiguration emtab1066 = new ExperimentConfiguration(E_MTAB_1066, ExperimentType.MICROARRAY);
-        ExperimentConfiguration egeod43049 = new ExperimentConfiguration(E_GEOD_43049, ExperimentType.MICROARRAY);
-        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.MICROARRAY)).thenReturn(Lists.newArrayList(emtab1066, egeod43049));
+        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.MICROARRAY)).thenReturn(Lists.newArrayList(emtab1066));
+
+        ExperimentConfiguration egeod43049 = new ExperimentConfiguration(E_GEOD_43049, ExperimentType.TWOCOLOUR);
+        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.TWOCOLOUR)).thenReturn(Lists.newArrayList(egeod43049));
 
         subject = new ApplicationProperties(configurationMock, configurationDaoMock);
     }

@@ -64,12 +64,16 @@ public class ExperimentsListController {
     }
 
     /* This is a wrapper class used via Gson to produce the right JSON input for DataTables. */
-    private class ExperimentInfoWrapper {
+    public class ExperimentInfoWrapper {
 
         private List<ExperimentInfo> aaData;
 
         public ExperimentInfoWrapper(List<ExperimentInfo> list) {
             this.aaData = list;
+        }
+
+        public List<ExperimentInfo> getAaData() {
+            return aaData;
         }
     }
 
