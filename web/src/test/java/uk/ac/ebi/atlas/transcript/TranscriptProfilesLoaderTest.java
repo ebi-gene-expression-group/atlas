@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.transcript;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,39 +33,50 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.util.Collections;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.contains;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TranscriptProfilesLoaderTest {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
-    @Mock
-    private CSVReader csvReaderMock;
+    private static final String A_URL_TEMPLATE_MOCK = "A_URL_TEMPLATE_MOCK ";
+    private static final String TRANSCRIPT_ID = "TRANSCRIPT_ID";
+    private static final String A_GENE_ID = "A_GENE_ID";
+    private static final String[] A_CSV_LINE = new String[]{A_GENE_ID, TRANSCRIPT_ID, "0.11", "1.3242", "0", "0.0003"};
+
+    private CSVReader csvReader;
+
     @Mock
     private TsvReaderUtils tsvReaderUtilsMock;
+
     @Mock
     private GeneProfileDao geneProfileDaoMock;
 
     private TranscriptProfilesLoader subject;
-    private static final String TRANSCRIPT_ID = "TRANSCRIPT_ID";
-    public static final String A_GENE_ID = "A_GENE_ID";
-    private static final String[] A_CSV_LINE = new String[]{A_GENE_ID, TRANSCRIPT_ID, "0.11", "1.3242", "0", "0.0003"};
 
     @Before
     public void setUp() throws Exception {
-        when(tsvReaderUtilsMock.build(contains(EXPERIMENT_ACCESSION))).thenReturn(csvReaderMock);
+        csvReader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(("\n" + Joiner.on(",").join(A_CSV_LINE)).getBytes())));
+        when(tsvReaderUtilsMock.build(contains(EXPERIMENT_ACCESSION))).thenReturn(csvReader);
 
-        subject = new TranscriptProfilesLoader(tsvReaderUtilsMock, geneProfileDaoMock, "A_URL_TEMPLATE_MOCK {0}");
+        subject = new TranscriptProfilesLoader(tsvReaderUtilsMock, geneProfileDaoMock, A_URL_TEMPLATE_MOCK + "{0}");
     }
 
     @Test
     public void testLoad() throws Exception {
         subject.load(EXPERIMENT_ACCESSION);
-        verify(csvReaderMock, times(2)).readNext();
-        verify(csvReaderMock).close();
+        verify(geneProfileDaoMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
+        verify(tsvReaderUtilsMock).build(A_URL_TEMPLATE_MOCK + EXPERIMENT_ACCESSION);
+        verify(geneProfileDaoMock).addTranscriptProfiles(EXPERIMENT_ACCESSION, Collections.EMPTY_LIST);
+        verify(geneProfileDaoMock).addTranscriptProfiles(anyString(), anyListOf(TranscriptProfile.class));
     }
 
     @Test

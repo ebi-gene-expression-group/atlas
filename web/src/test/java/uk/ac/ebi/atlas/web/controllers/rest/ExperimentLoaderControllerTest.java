@@ -35,6 +35,8 @@ import uk.ac.ebi.atlas.configuration.ConfigurationDao;
 import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
 import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.transcript.GeneProfileDao;
+import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import java.io.IOException;
 
@@ -57,6 +59,9 @@ public class ExperimentLoaderControllerTest {
     private ConfigurationDao configurationDaoMock;
 
     @Mock
+    private GeneProfileDao geneProfileDaoMock;
+
+    @Mock
     private ExperimentConfiguration experimentConfigurationMock;
 
     @Mock
@@ -74,6 +79,9 @@ public class ExperimentLoaderControllerTest {
     @Mock
     private CSVWriter csvWriterMock;
 
+    @Mock
+    private TranscriptProfilesLoader transcriptProfileLoaderMock;
+
     private ExpDesignWriterBuilder expDesignWriterBuilder;
 
     private ExperimentLoaderController subject;
@@ -88,7 +96,10 @@ public class ExperimentLoaderControllerTest {
         when(expDesignTsvWriterMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(csvWriterMock);
         when(expDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
 
-        subject = new ExperimentLoaderController(configurationDaoMock, expDesignTsvWriterMock, expDesignWriterBuilder);
+        when(transcriptProfileLoaderMock.load(EXPERIMENT_ACCESSION)).thenReturn(0);
+
+        subject = new ExperimentLoaderController(configurationDaoMock,
+                geneProfileDaoMock, expDesignTsvWriterMock, expDesignWriterBuilder, transcriptProfileLoaderMock);
 
         when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(null);
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(1);
@@ -129,7 +140,7 @@ public class ExperimentLoaderControllerTest {
     }
 
     @Test
-    public void testIOException() throws Exception {
+    public void testCsvWriterIOException() throws Exception {
 
         Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(csvWriterMock).close();
 
@@ -145,8 +156,17 @@ public class ExperimentLoaderControllerTest {
     }
 
     @Test
+    public void testTranscriptLoaderException() throws Exception {
+
+        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
+
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is(TEST_EXCEPTION));
+    }
+
+    @Test
     public void testLoadExperiment() throws Exception {
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -174,6 +194,7 @@ public class ExperimentLoaderControllerTest {
     @Test
     public void testDeleteExperiment() throws Exception {
         assertThat(subject.deleteExperiment(EXPERIMENT_ACCESSION), is("Experiment " + EXPERIMENT_ACCESSION + " deleted."));
+        verify(geneProfileDaoMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Test

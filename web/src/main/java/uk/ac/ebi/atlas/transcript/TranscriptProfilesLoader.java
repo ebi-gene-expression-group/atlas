@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.transcript;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
@@ -42,10 +41,9 @@ import java.util.List;
 @Scope("prototype")
 public class TranscriptProfilesLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(TranscriptProfilesLoader.class);
     private static final int GENE_ID_COLUMN_INDEX = 0;
-    public static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
-    public static final int BATCH_SIZE = 1000;
+    private static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
+    private static final int BATCH_SIZE = 1000;
 
     private String transcriptFileUrlTemplate;
 
@@ -61,7 +59,7 @@ public class TranscriptProfilesLoader {
         this.transcriptFileUrlTemplate = transcriptFileUrlTemplate;
     }
 
-    public int load(String experimentAccession) {
+    public int load(String experimentAccession) throws IOException {
         geneProfileDao.deleteTranscriptProfilesForExperiment(experimentAccession);
 
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
@@ -88,10 +86,6 @@ public class TranscriptProfilesLoader {
             }
 
             return count;
-
-        } catch (IOException e) {
-            LOGGER.error("Exception reading transcripts profile file: " + fileURL);
-            throw new IllegalStateException(e.getMessage(), e);
         }
 
     }

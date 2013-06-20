@@ -28,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +38,8 @@ import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
 import uk.ac.ebi.atlas.expdesign.ExpDesignWriter;
 import uk.ac.ebi.atlas.expdesign.ExpDesignWriterBuilder;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.transcript.GeneProfileDao;
+import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -48,16 +51,22 @@ public class ExperimentLoaderController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderController.class);
     private ConfigurationDao configurationDao;
+    private GeneProfileDao geneProfileDao;
     private ExpDesignTsvWriter expDesignTsvWriter;
     private ExpDesignWriterBuilder expDesignWriterBuilder;
+    private TranscriptProfilesLoader transcriptProfileLoader;
 
     @Inject
     public ExperimentLoaderController(ConfigurationDao configurationDao,
+                                      GeneProfileDao geneProfileDao,
                                       ExpDesignTsvWriter expDesignTsvWriter,
-                                      ExpDesignWriterBuilder expDesignWriterBuilder) {
+                                      ExpDesignWriterBuilder expDesignWriterBuilder,
+                                      TranscriptProfilesLoader transcriptProfileLoader) {
         this.configurationDao = configurationDao;
+        this.geneProfileDao = geneProfileDao;
         this.expDesignTsvWriter = expDesignTsvWriter;
         this.expDesignWriterBuilder = expDesignWriterBuilder;
+        this.transcriptProfileLoader = transcriptProfileLoader;
     }
 
     @RequestMapping("/loadExperiment")
@@ -99,6 +108,21 @@ public class ExperimentLoaderController {
             return e.getMessage();
         }
 
+        if (experimentType == ExperimentType.BASELINE) {
+            try {
+                StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+
+                stopWatch.start();
+                int count = transcriptProfileLoader.load(accession);
+                stopWatch.stop();
+
+                LOGGER.info("<loadExperiment> Inserted " + count + " transcript profiles and took " + stopWatch.getLastTaskInfo().getTimeSeconds() + "secs");
+            } catch (IOException e) {
+                LOGGER.error("<loadExperiment> error reading from file: " + e.getMessage());
+                return e.getMessage();
+            }
+        }
+
         if (configurationDao.addExperimentConfiguration(accession, experimentType) == 1) {
             LOGGER.info("<loadExperiment> Experiment " + accession + " loaded.");
             return "Experiment " + accession + " loaded.";
@@ -119,6 +143,9 @@ public class ExperimentLoaderController {
 
         int returnValue = configurationDao.deleteExperimentConfiguration(accession);
         if (returnValue == 1) {
+            if (geneProfileDao.deleteTranscriptProfilesForExperiment(accession) > 0) {
+                LOGGER.info("<deleteExperiment> Transcripts for Experiment " + accession + " deleted.");
+            }
             LOGGER.info("<deleteExperiment> Experiment " + accession + " deleted.");
             return "Experiment " + accession + " deleted.";
         } else if (returnValue == 0) {
