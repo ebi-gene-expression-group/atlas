@@ -22,25 +22,18 @@
 
 package uk.ac.ebi.atlas.expdesign;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExpDesignWriterBuilderTest {
-
-    private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-
-    @Mock
-    private ApplicationProperties applicationPropertiesMock;
 
     @Mock
     private RnaSeqExpDesignWriter rnaSeqExpDesignWriterMock;
@@ -55,40 +48,41 @@ public class ExpDesignWriterBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExpDesignWriterBuilder(applicationPropertiesMock,
+        subject = new ExpDesignWriterBuilder(
                 rnaSeqExpDesignWriterMock,
                 microArrayExpDesignWriterMock,
                 twoColourExpDesignWriterMock);
     }
 
     @Test
-    public void testForExperimentAccession() throws Exception {
-        assertThat(subject.forExperimentAccession(EXPERIMENT_ACCESSION), is(subject));
+    public void testForExperimentType() throws Exception {
+        assertThat(subject.forExperimentType(ExperimentType.BASELINE), is(subject));
     }
 
     @Test
     public void testBuildRnaSeq() throws Exception {
-        when(applicationPropertiesMock.getBaselineExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
-        assertThat(subject.forExperimentAccession(EXPERIMENT_ACCESSION).build(), is((ExpDesignWriter) rnaSeqExpDesignWriterMock));
+        assertThat(subject.forExperimentType(ExperimentType.BASELINE).build(),
+                is((ExpDesignWriter) rnaSeqExpDesignWriterMock));
 
-        when(applicationPropertiesMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
-        assertThat(subject.forExperimentAccession(EXPERIMENT_ACCESSION).build(), is((ExpDesignWriter) rnaSeqExpDesignWriterMock));
+        assertThat(subject.forExperimentType(ExperimentType.DIFFERENTIAL).build(),
+                is((ExpDesignWriter) rnaSeqExpDesignWriterMock));
     }
 
     @Test
     public void testBuildMicroArray() throws Exception {
-        when(applicationPropertiesMock.getMicroarrayExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
-        assertThat(subject.forExperimentAccession(EXPERIMENT_ACCESSION).build(), is((ExpDesignWriter) microArrayExpDesignWriterMock));
+        assertThat(subject.forExperimentType(ExperimentType.MICROARRAY).build(),
+                is((ExpDesignWriter) microArrayExpDesignWriterMock));
     }
 
     @Test
     public void testBuildTwoColour() throws Exception {
-        when(applicationPropertiesMock.getTwoColourExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
-        assertThat(subject.forExperimentAccession(EXPERIMENT_ACCESSION).build(), is((ExpDesignWriter) twoColourExpDesignWriterMock));
+        assertThat(subject.forExperimentType(ExperimentType.TWOCOLOUR).build(),
+                is((ExpDesignWriter) twoColourExpDesignWriterMock));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testUnknownAccession() throws Exception {
-        subject.forExperimentAccession(EXPERIMENT_ACCESSION).build();
+    public void testNullType() throws Exception {
+        subject.forExperimentType(null).build();
     }
+
 }
