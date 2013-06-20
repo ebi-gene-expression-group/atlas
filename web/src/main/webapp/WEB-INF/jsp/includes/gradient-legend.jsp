@@ -32,10 +32,21 @@
             <div style="float:left">
                 <table style="font-size:10px;" id="baseline-heatmap-legend">
 
+                    <c:set var="minExpressionLevel" value="${geneProfiles.getMinExpressionLevel()}"/>
+                    <c:set var="maxExpressionLevel" value="${geneProfiles.getMaxExpressionLevel()}"/>
+                    <fmt:formatNumber type="number"
+                                      maxFractionDigits="${minExpressionLevel >= 1 ? 0 : 1}"
+                                      value="${minExpressionLevel}" groupingUsed="false"
+                                      var="minExpressionLevel"/>
+                    <fmt:formatNumber type="number"
+                                      maxFractionDigits="${maxExpressionLevel >= 1 ? 0 : 1}"
+                                      value="${maxExpressionLevel}" groupingUsed="false"
+                                      var="maxExpressionLevel"/>
+
                     <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                           highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                          lowValueColorExpressionLevel="${geneProfiles.getMinExpressionLevel()}"
-                                          highValueColorExpressionLevel="${geneProfiles.getMaxExpressionLevel()}"/>
+                                          lowValueColorExpressionLevel="${minExpressionLevel}"
+                                          highValueColorExpressionLevel="${maxExpressionLevel}"/>
 
                 </table>
 
