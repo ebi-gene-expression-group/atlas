@@ -23,8 +23,6 @@
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Objects;
-import com.google.common.primitives.Booleans;
-import org.apache.commons.lang3.StringUtils;
 
 public class ContrastProperty implements Comparable<ContrastProperty> {
 
@@ -60,10 +58,6 @@ public class ContrastProperty implements Comparable<ContrastProperty> {
         return contrastPropertyType;
     }
 
-    public boolean hasEqualValues() {
-        return StringUtils.equals(testValue, referenceValue);
-    }
-
     @Override
     public int compareTo(ContrastProperty otherProperty) {
         if (contrastPropertyType != otherProperty.contrastPropertyType) {
@@ -71,12 +65,6 @@ public class ContrastProperty implements Comparable<ContrastProperty> {
                 return -1;
             } else {
                 return 1;
-            }
-        } else if (contrastPropertyType == otherProperty.contrastPropertyType &&
-                contrastPropertyType == ContrastPropertyType.FACTOR) {
-            int groupComparison = Booleans.compare(hasEqualValues(), otherProperty.hasEqualValues());
-            if (groupComparison != 0) {
-                return groupComparison;
             }
         }
         return propertyName.compareToIgnoreCase(otherProperty.propertyName);
