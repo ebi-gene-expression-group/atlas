@@ -51,9 +51,10 @@ public class ExperimentLoaderControllerTest {
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String BASELINE_TYPE = "BASELINE";
     private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
-    public static final String DIFFERENTIAL_TYPE = "DIFFERENTIAL";
-    public static final String MICROARRAY_TYPE = "MICROARRAY";
-    public static final String TWOCOLOUR_TYPE = "TWOCOLOUR";
+    private static final String DIFFERENTIAL_TYPE = "DIFFERENTIAL";
+    private static final String MICROARRAY_TYPE = "MICROARRAY";
+    private static final String TWOCOLOUR_TYPE = "TWOCOLOUR";
+    private static final String NON_EXISTING_TYPE = "NON-EXISTING-TYPE";
 
     @Mock
     private ConfigurationDao configurationDaoMock;
@@ -182,7 +183,7 @@ public class ExperimentLoaderControllerTest {
 
     @Test
     public void testLoadExperimentWrongType() throws Exception {
-        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, "NON-EXISTING-TYPE"), is("An unknown experiment type has been specified."));
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, NON_EXISTING_TYPE), is("An unknown experiment type has been specified."));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -217,5 +218,44 @@ public class ExperimentLoaderControllerTest {
     @Test
     public void testListExperiments() throws Exception {
         assertThat(subject.listExperiments(), is("[{\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\"}]"));
+    }
+
+    @Test
+    public void testCheckAccessionAndType() throws Exception {
+        assertThat(subject.checkAccessionAndType(EXPERIMENT_ACCESSION, BASELINE_TYPE), is(ExperimentType.BASELINE));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCheckAccessionAndTypeEmptyAccession() throws Exception {
+        subject.checkAccessionAndType("", BASELINE_TYPE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCheckAccessionAndTypeUnknownType() throws Exception {
+        subject.checkAccessionAndType(EXPERIMENT_ACCESSION, NON_EXISTING_TYPE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCheckAccessionAndTypeExistingAccession() throws Exception {
+        when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfigurationMock);
+        subject.checkAccessionAndType(EXPERIMENT_ACCESSION, NON_EXISTING_TYPE);
+    }
+
+    @Test
+    public void testGenerateExpDesign() throws Exception {
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(expDesignTsvWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGenerateExpDesignIOException() throws Exception {
+        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(csvWriterMock).close();
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGenerateExpDesignParseException() throws Exception {
+        Mockito.doThrow(new ParseException(TEST_EXCEPTION)).when(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 }
