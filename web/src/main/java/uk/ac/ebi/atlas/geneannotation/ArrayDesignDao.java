@@ -18,21 +18,21 @@ import java.util.Map;
 
 @Named
 @Scope("singleton")
-public class BioEntityAnnotationDao extends AnnotationDao{
+public class ArrayDesignDao extends AnnotationDao{
 
-    private static final Logger LOGGER = Logger.getLogger(BioEntityAnnotationDao.class);
+    private static final Logger LOGGER = Logger.getLogger(ArrayDesignDao.class);
 
     private static final int SUB_BATCH_SIZE = 100;
     private JdbcTemplate jdbcTemplate;
 
-    private final static String BIOENTITY_NAME_MERGE = "MERGE INTO bioentity_name(identifier, name, organism) KEY(identifier) VALUES(?, ?, ?)";
-
     @Inject
-    public BioEntityAnnotationDao(@Qualifier("annotationDataSource") DataSource dataSource) {
+    public ArrayDesignDao(@Qualifier("annotationDataSource") DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void saveAnnotations(final Map<String, String> annotations, final String organism) {
+    public void saveMappings(final Map<String, String> annotations, final String arrayDesign) {
+
+        String query = "INSERT INTO designelement_mapping(designelement, identifier, arraydesign) VALUES(?, ?, ?)";
 
         final ArrayList<String> keys = Lists.newArrayList(annotations.keySet());
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
@@ -40,7 +40,7 @@ public class BioEntityAnnotationDao extends AnnotationDao{
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setString(1, keys.get(i));
                 ps.setString(2, annotations.get(keys.get(i)));
-                ps.setString(3, organism);
+                ps.setString(3, arrayDesign);
             }
 
             @Override
@@ -49,16 +49,30 @@ public class BioEntityAnnotationDao extends AnnotationDao{
             }
         };
 
-        int[] rows = jdbcTemplate.batchUpdate(BIOENTITY_NAME_MERGE, statementSetter);
+        int[] rows = jdbcTemplate.batchUpdate(query, statementSetter);
         LOGGER.info("Updated " + rows.length + " bioentities");
     }
 
-    public String getName(String identifier) {
-        String query = "select name from bioentity_name where identifier=?";
+    public void deleteMappings(String arrayDesign) {
+        String query = "delete from designelement_mapping where arraydesign=?";
 
-        List<String> names = jdbcTemplate.queryForList(query, new String[]{identifier}, String.class);
+        jdbcTemplate.update(query, new String[]{arrayDesign});
+    }
+
+    public String getIdentifier(String designElement, String arrayDesign) {
+        String query = "select identifier from designelement_mapping where designelement=? and arraydesign=?";
+
+        List<String> names = jdbcTemplate.queryForList(query, new String[]{designElement, arrayDesign}, String.class);
 
         return getOnly(names);
+    }
+
+    public boolean isArrayDesignPresent(String arrayDesign) {
+        String query = "select count(*) from designelement_mapping where arraydesign=?";
+
+        int count = jdbcTemplate.queryForObject(query, new String[]{arrayDesign}, Integer.class);
+
+        return count > 0;
     }
 
 }

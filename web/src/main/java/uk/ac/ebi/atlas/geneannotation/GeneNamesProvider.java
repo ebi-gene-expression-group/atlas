@@ -29,15 +29,15 @@ import javax.inject.Named;
 @Named("geneNamesProvider")
 public class GeneNamesProvider {
 
-    private AnnotationEnvironment annotationEnvironment;
+    private BioEntityAnnotationDao bioEntityAnnotationDao;
 
     @Inject
-    public GeneNamesProvider(AnnotationEnvironment annotationEnvironment) {
-        this.annotationEnvironment = annotationEnvironment;
+    public GeneNamesProvider(BioEntityAnnotationDao bioEntityAnnotationDao) {
+        this.bioEntityAnnotationDao = bioEntityAnnotationDao;
     }
 
     public String getGeneName(String ensGeneId) {
-        String value = annotationEnvironment.geneNames().get(ensGeneId);
+        String value = bioEntityAnnotationDao.getName(ensGeneId);
         return value == null ? ensGeneId : value;
     }
 
