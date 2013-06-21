@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -37,6 +38,7 @@ public class ExperimentChecker {
 
     private ConfigurationDao configurationDao;
 
+    @Inject
     public ExperimentChecker(ConfigurationDao configurationDao) {
         this.configurationDao = configurationDao;
     }
