@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.configuration.ConfigurationDao;
+import uk.ac.ebi.atlas.configuration.ExperimentChecker;
 import uk.ac.ebi.atlas.configuration.ExperimentManager;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.GeneProfileDao;
@@ -42,19 +43,22 @@ import javax.inject.Inject;
 public class ExperimentLoaderController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderController.class);
+
     private ConfigurationDao configurationDao;
     private GeneProfileDao geneProfileDao;
+    private ExperimentChecker experimentChecker;
     private ExperimentManager experimentManager;
 
 
     @Inject
     public ExperimentLoaderController(ConfigurationDao configurationDao,
                                       GeneProfileDao geneProfileDao,
+                                      ExperimentChecker experimentChecker,
                                       ExperimentManager experimentManager) {
         this.configurationDao = configurationDao;
         this.geneProfileDao = geneProfileDao;
+        this.experimentChecker = experimentChecker;
         this.experimentManager = experimentManager;
-
     }
 
     @RequestMapping("/loadExperiment")
@@ -62,7 +66,7 @@ public class ExperimentLoaderController {
     public String loadExperiment(@RequestParam("accession") String accession, @RequestParam("type") String type) {
 
         try {
-            ExperimentType experimentType = checkAccessionAndType(accession, type);
+            ExperimentType experimentType = experimentChecker.checkAccessionAndType(accession, type);
 
             experimentManager.generateExpDesign(accession, experimentType);
 
@@ -113,28 +117,6 @@ public class ExperimentLoaderController {
     public String listExperiments() {
         Gson gson = new Gson();
         return gson.toJson(configurationDao.getExperimentConfigurations());
-    }
-
-    protected ExperimentType checkAccessionAndType(String accession, String type) {
-        if (StringUtils.isEmpty(accession)) {
-            LOGGER.error("<loadExperiment> Experiment accession cannot be empty.");
-            throw new IllegalStateException("Experiment accession cannot be empty.");
-        }
-
-        if (configurationDao.getExperimentConfiguration(accession) != null) {
-            LOGGER.error("<loadExperiment> Experiment with accession " + accession + " already exists.");
-            throw new IllegalStateException("Experiment with accession " + accession + " already exists.");
-        }
-
-        ExperimentType experimentType;
-        try {
-            experimentType = ExperimentType.valueOf(type);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error("<loadExperiment> Illegal ExperimentType specified: " + e.getMessage());
-            throw new IllegalStateException("An unknown experiment type has been specified.");
-        }
-
-        return experimentType;
     }
 
 }
