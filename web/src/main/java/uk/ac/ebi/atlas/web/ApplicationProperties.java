@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
+import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.configuration.ConfigurationDao;
 import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
@@ -31,6 +32,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 
@@ -120,9 +122,17 @@ public class ApplicationProperties {
     }
 
     private Set<String> getExperimentIdentifiersForType(ExperimentType experimentType) {
+        Set<String> integrationIdentifiers = Collections.emptySet();
+        if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
+            integrationIdentifiers = getStringValues("integration.experiment.identifiers");
+        }
         Set<String> results = Sets.newHashSet();
         for (ExperimentConfiguration experimentConfiguration : configurationDao.getExperimentConfigurations(experimentType)) {
             results.add(experimentConfiguration.getExperimentAccession());
+        }
+        // this filtering is for integration tests using only subset of all experiments
+        if (!integrationIdentifiers.isEmpty()) {
+            results.retainAll(integrationIdentifiers);
         }
         return results;
     }
