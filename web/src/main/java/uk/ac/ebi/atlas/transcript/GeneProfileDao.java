@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Maps;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -53,6 +54,7 @@ public class GeneProfileDao {
     private static final int FOURTH_INDEX = 4;
 
     @Inject
+    @Qualifier("experimentDataSource")
     private DataSource dataSource;
 
     public Collection<TranscriptProfile> getTranscriptProfiles(String experimentAccession, String geneId) {

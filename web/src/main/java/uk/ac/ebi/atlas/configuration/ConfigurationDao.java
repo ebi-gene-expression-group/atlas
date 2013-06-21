@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.configuration;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -51,6 +52,7 @@ public class ConfigurationDao {
             "WHERE experiment_accession = ?";
 
     @Inject
+    @Qualifier("experimentDataSource")
     private DataSource dataSource;
 
     public List<ExperimentConfiguration> getExperimentConfigurations() {

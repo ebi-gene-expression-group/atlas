@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.configuration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -51,7 +52,8 @@ public class ConfigurationDaoIT {
     private static final String YET_ANOTHER_ACCESSION = "YETANOTHER";
 
     @Inject
-    private DataSource dataSource;
+    @Qualifier("experimentDataSource")
+    private DataSource experimentDataSource;
 
     @Inject
     private ConfigurationDao subject;
