@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.geneannotation;
 
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Named
@@ -26,8 +28,8 @@ public class BioEntityAnnotationDao {
     private final static String BIOENTITY_NAME_MERGE = "MERGE INTO bioentity_name(identifier, name, organism) KEY(identifier) VALUES(?, ?, ?)";
 
     @Inject
-    public BioEntityAnnotationDao(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public BioEntityAnnotationDao(@Qualifier("annotationDataSource") DataSource dataSource) {
+        jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void saveAnnotations(final Map<String, String> annotations, final String organism) {
@@ -49,68 +51,21 @@ public class BioEntityAnnotationDao {
 
         int[] rows = jdbcTemplate.batchUpdate(BIOENTITY_NAME_MERGE, statementSetter);
         LOGGER.info("Updated " + rows.length + " bioentities");
-
     }
 
-//    public void writeBioEntities(final Collection<BioEntity> bioEntities, final int batchSize) {
-//
-//        BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
-//            @Override
-//            public void setValues(PreparedStatement ps, int i) throws SQLException {
-//
-//            }
-//
-//            @Override
-//            public int getBatchSize() {
-//                return 0;
-//            }
-//        }
-//
-//        ListStatementSetter<BioEntity> statementSetter = new ListStatementSetter<BioEntity>() {
-//
-//            public void setValues(PreparedStatement ps, int i) throws SQLException {
-//                ps.setString(1, list.get(i).getIdentifier());
-//                ps.setLong(2, list.get(i).getType().getId());
-//                ps.setString(3, list.get(i).getIdentifier());
-//                ps.setString(4, list.get(i).getName());
-//                ps.setLong(5, list.get(i).getOrganism().getId());
-//                ps.setLong(6, list.get(i).getType().getId());
-//            }
-//
-//        };
-//
-//        int loadedRecordsNumber = writeBatchInChunks(query, bioEntities, statementSetter, batchSize);
-//        LOGGER.info("BioEntities merged: " + loadedRecordsNumber);
-//
-//    }
-//
-//    private <T> int writeBatchInChunks(String query,
-//                                       final Map<String, String> entityList,
-//                                       ListStatementSetter<T> statementSetter,
-//                                       int batchSize) throws DataAccessException {
-//        int loadedRecordsNumber = 0;
-//
-//        int subBatchSize = batchSize != 0 ? batchSize : SUB_BATCH_SIZE;
-//
-//        entityList.
-//        for (partition(entityList, subBatchSize)) {
-//            statementSetter.setList(subList);
-//            int[] rowsAffectedArray = jdbcTemplate.batchUpdate(query, statementSetter);
-//            loadedRecordsNumber += rowsAffectedArray.length;
-//        }
-//
-//        return loadedRecordsNumber;
-//    }
-//
-//    private abstract static class ListStatementSetter<T> implements BatchPreparedStatementSetter {
-//        List<T> list;
-//
-//        public int getBatchSize() {
-//            return list.size();
-//        }
-//
-//        public void setList(List<T> list) {
-//            this.list = list;
-//        }
-//    }
+    public String getName(String identifier) {
+        String query = "select name from bioentity_name where identifier=?";
+
+        List<String> names = jdbcTemplate.queryForList(query, new String[]{identifier}, String.class);
+
+        return getOnly(names);
+    }
+
+    protected String getOnly(List<String> objects) {
+        if (objects.size() == 1)
+            return objects.get(0);
+        else
+            return null;
+    }
+
 }

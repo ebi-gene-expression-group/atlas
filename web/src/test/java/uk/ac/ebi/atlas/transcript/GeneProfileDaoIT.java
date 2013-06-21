@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -53,7 +54,8 @@ public class GeneProfileDaoIT {
     private GeneProfileDao subject;
 
     @Inject
-    DataSource dataSource;
+    @Qualifier("experimentDataSource")
+    private DataSource dataSource;
 
     private TranscriptProfile transcriptProfile1 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
     private TranscriptProfile transcriptProfile2 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
