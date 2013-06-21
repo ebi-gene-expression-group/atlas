@@ -32,28 +32,32 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 public class ContrastPropertyTest {
+
+    private static final String PROPERTY_NAME = "propertyName";
+    private static final String TEST_VALUE = "testValue";
+    private static final String REFERENCE_VALUE = "referenceValue";
+    private static final ContrastProperty.ContrastPropertyType CONTRAST_PROPERTY_TYPE = ContrastProperty.ContrastPropertyType.FACTOR;
+
     @Test
-    public void testHasEqualValues() throws Exception {
-        ContrastProperty property = new ContrastProperty("a", "a", "a", ContrastProperty.ContrastPropertyType.FACTOR);
-        assertThat(property.hasEqualValues(), is(true));
-
-        property = new ContrastProperty("a", "z", "a", ContrastProperty.ContrastPropertyType.FACTOR);
-        assertThat(property.hasEqualValues(), is(false));
-
-        property = new ContrastProperty("a", "z", null, ContrastProperty.ContrastPropertyType.FACTOR);
-        assertThat(property.hasEqualValues(), is(false));
+    public void testGetters() throws Exception {
+        ContrastProperty subject = new ContrastProperty(PROPERTY_NAME, TEST_VALUE, REFERENCE_VALUE, CONTRAST_PROPERTY_TYPE);
+        assertThat(subject.getContrastPropertyType(), is(CONTRAST_PROPERTY_TYPE));
+        assertThat(subject.getPropertyName(), is(PROPERTY_NAME));
+        assertThat(subject.getTestValue(), is(TEST_VALUE));
+        assertThat(subject.getReferenceValue(), is(REFERENCE_VALUE));
+        assertThat(subject.toString(), is("ContrastProperty{propertyName=" + PROPERTY_NAME + ", referenceValue=" + REFERENCE_VALUE + ", testValue=" + TEST_VALUE + "}"));
     }
 
     @Test
     public void testCompareTo() throws Exception {
-        ContrastProperty property1 = new ContrastProperty("b", "z", "a", ContrastProperty.ContrastPropertyType.FACTOR);
-        ContrastProperty property2 = new ContrastProperty("a", "a", "a", ContrastProperty.ContrastPropertyType.FACTOR);
-        ContrastProperty property3 = new ContrastProperty("c", null, "a", ContrastProperty.ContrastPropertyType.FACTOR);
-        ContrastProperty property4 = new ContrastProperty("q", "a", "z", ContrastProperty.ContrastPropertyType.FACTOR);
-        ContrastProperty property5 = new ContrastProperty("d", "a", "a", ContrastProperty.ContrastPropertyType.FACTOR);
+        ContrastProperty property1 = new ContrastProperty("b", "z", "a", CONTRAST_PROPERTY_TYPE);
+        ContrastProperty property2 = new ContrastProperty("a", "a", "a", CONTRAST_PROPERTY_TYPE);
+        ContrastProperty property3 = new ContrastProperty("c", null, "a", CONTRAST_PROPERTY_TYPE);
+        ContrastProperty property4 = new ContrastProperty("q", "a", "z", CONTRAST_PROPERTY_TYPE);
+        ContrastProperty property5 = new ContrastProperty("d", "a", "a", CONTRAST_PROPERTY_TYPE);
 
         SortedSet<ContrastProperty> properties = Sets.newTreeSet(Sets.newHashSet(property1, property2, property3, property4, property5));
 
-        assertThat(properties, contains(property2, property5, property1, property3, property4));
+        assertThat(properties, contains(property2, property1, property3, property5, property4));
     }
 }

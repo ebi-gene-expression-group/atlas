@@ -22,72 +22,180 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.configuration.ConfigurationDao;
 import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
+import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.transcript.GeneProfileDao;
+import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
+
+import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentLoaderControllerTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-    private static final String EXPERIMENT_TYPE = "BASELINE";
+    private static final String BASELINE_TYPE = "BASELINE";
+    private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
+    private static final String DIFFERENTIAL_TYPE = "DIFFERENTIAL";
+    private static final String MICROARRAY_TYPE = "MICROARRAY";
+    private static final String TWOCOLOUR_TYPE = "TWOCOLOUR";
+    private static final String NON_EXISTING_TYPE = "NON-EXISTING-TYPE";
 
     @Mock
     private ConfigurationDao configurationDaoMock;
 
     @Mock
+    private GeneProfileDao geneProfileDaoMock;
+
+    @Mock
     private ExperimentConfiguration experimentConfigurationMock;
+
+    @Mock
+    private RnaSeqExpDesignWriter rnaSeqExpDesignWriterMock;
+
+    @Mock
+    private MicroArrayExpDesignWriter microArrayExpDesignWriterMock;
+
+    @Mock
+    private TwoColourExpDesignWriter twoColourExpDesignWriterMock;
+
+    @Mock
+    private ExpDesignTsvWriter expDesignTsvWriterMock;
+
+    @Mock
+    private CSVWriter csvWriterMock;
+
+    @Mock
+    private TranscriptProfilesLoader transcriptProfileLoaderMock;
+
+    private ExpDesignWriterBuilder expDesignWriterBuilder;
 
     private ExperimentLoaderController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentLoaderController(configurationDaoMock);
+        expDesignWriterBuilder = new ExpDesignWriterBuilder(
+                rnaSeqExpDesignWriterMock,
+                microArrayExpDesignWriterMock,
+                twoColourExpDesignWriterMock);
+
+        when(expDesignTsvWriterMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(csvWriterMock);
+        when(expDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
+
+        when(transcriptProfileLoaderMock.load(EXPERIMENT_ACCESSION)).thenReturn(0);
+
+        subject = new ExperimentLoaderController(configurationDaoMock,
+                geneProfileDaoMock, expDesignTsvWriterMock, expDesignWriterBuilder, transcriptProfileLoaderMock);
 
         when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(null);
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(EXPERIMENT_TYPE))).thenReturn(1);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(1);
         when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(1);
+        when(configurationDaoMock.getExperimentConfigurations()).thenReturn(
+                Lists.newArrayList(new ExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))));
+    }
+
+    @Test
+    public void testLoadExpDesignForBaseline() throws Exception {
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        verify(csvWriterMock).flush();
+    }
+
+    @Test
+    public void testLoadExpDesignForDifferential() throws Exception {
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(DIFFERENTIAL_TYPE))).thenReturn(1);
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, DIFFERENTIAL_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        verify(csvWriterMock).flush();
+    }
+
+    @Test
+    public void testLoadExpDesignMicroArray() throws Exception {
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICROARRAY_TYPE))).thenReturn(1);
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, MICROARRAY_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(microArrayExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        verify(csvWriterMock).flush();
+    }
+
+    @Test
+    public void testLoadExpDesignTwoColour() throws Exception {
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(TWOCOLOUR_TYPE))).thenReturn(1);
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(twoColourExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        verify(csvWriterMock).flush();
+    }
+
+    @Test
+    public void testCsvWriterIOException() throws Exception {
+
+        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(csvWriterMock).close();
+
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE), is(TEST_EXCEPTION));
+    }
+
+    @Test
+    public void testParseException() throws Exception {
+
+        Mockito.doThrow(new ParseException(TEST_EXCEPTION)).when(twoColourExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE), is(TEST_EXCEPTION));
+    }
+
+    @Test
+    public void testTranscriptLoaderException() throws Exception {
+
+        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
+
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is(TEST_EXCEPTION));
     }
 
     @Test
     public void testLoadExperiment() throws Exception {
-        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
     }
 
     @Test
     public void testLoadExperimentEmptyAccession() throws Exception {
-        assertThat(subject.loadExperiment("", EXPERIMENT_TYPE), is("Experiment accession cannot be empty."));
+        assertThat(subject.loadExperiment("", BASELINE_TYPE), is("Experiment accession cannot be empty."));
     }
 
     @Test
     public void testLoadExperimentExistingAccession() throws Exception {
         when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfigurationMock);
-        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE), is("Experiment with accession " + EXPERIMENT_ACCESSION + " already exists."));
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is("Experiment with accession " + EXPERIMENT_ACCESSION + " already exists."));
     }
 
     @Test
     public void testLoadExperimentWrongType() throws Exception {
-        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, "NON-EXISTING-TYPE"), is("An unknown experiment type has been specified."));
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, NON_EXISTING_TYPE), is("An unknown experiment type has been specified."));
     }
 
     @Test(expected = IllegalStateException.class)
     public void testLoadExperimentIllegalState() throws Exception {
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(EXPERIMENT_TYPE))).thenReturn(0);
-        subject.loadExperiment(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(0);
+        subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE);
     }
 
     @Test
     public void testDeleteExperiment() throws Exception {
         assertThat(subject.deleteExperiment(EXPERIMENT_ACCESSION), is("Experiment " + EXPERIMENT_ACCESSION + " deleted."));
+        verify(geneProfileDaoMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -105,5 +213,49 @@ public class ExperimentLoaderControllerTest {
     public void testDeleteExperimentIllegalState() throws Exception {
         when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(-1);
         subject.deleteExperiment(EXPERIMENT_ACCESSION);
+    }
+
+    @Test
+    public void testListExperiments() throws Exception {
+        assertThat(subject.listExperiments(), is("[{\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\"}]"));
+    }
+
+    @Test
+    public void testCheckAccessionAndType() throws Exception {
+        assertThat(subject.checkAccessionAndType(EXPERIMENT_ACCESSION, BASELINE_TYPE), is(ExperimentType.BASELINE));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCheckAccessionAndTypeEmptyAccession() throws Exception {
+        subject.checkAccessionAndType("", BASELINE_TYPE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCheckAccessionAndTypeUnknownType() throws Exception {
+        subject.checkAccessionAndType(EXPERIMENT_ACCESSION, NON_EXISTING_TYPE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCheckAccessionAndTypeExistingAccession() throws Exception {
+        when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfigurationMock);
+        subject.checkAccessionAndType(EXPERIMENT_ACCESSION, NON_EXISTING_TYPE);
+    }
+
+    @Test
+    public void testGenerateExpDesign() throws Exception {
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(expDesignTsvWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGenerateExpDesignIOException() throws Exception {
+        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(csvWriterMock).close();
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testGenerateExpDesignParseException() throws Exception {
+        Mockito.doThrow(new ParseException(TEST_EXCEPTION)).when(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 }

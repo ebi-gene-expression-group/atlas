@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,45 +34,40 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class ExpDesignWriterBuilder {
 
-    private ApplicationProperties applicationProperties;
-
     private RnaSeqExpDesignWriter rnaSeqExpDesignWriter;
 
     private MicroArrayExpDesignWriter microArrayExpDesignWriter;
 
     private TwoColourExpDesignWriter twoColourExpDesignWriter;
 
-    private String experimentAccession;
+    private ExperimentType experimentType;
 
     @Inject
-    public ExpDesignWriterBuilder(ApplicationProperties applicationProperties,
-                                  RnaSeqExpDesignWriter rnaSeqExpDesignWriter,
+    public ExpDesignWriterBuilder(RnaSeqExpDesignWriter rnaSeqExpDesignWriter,
                                   MicroArrayExpDesignWriter microArrayExpDesignWriter,
                                   TwoColourExpDesignWriter twoColourExpDesignWriter) {
-        this.applicationProperties = applicationProperties;
         this.rnaSeqExpDesignWriter = rnaSeqExpDesignWriter;
         this.microArrayExpDesignWriter = microArrayExpDesignWriter;
         this.twoColourExpDesignWriter = twoColourExpDesignWriter;
     }
 
-    public ExpDesignWriterBuilder forExperimentAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
+    public ExpDesignWriterBuilder forExperimentType(ExperimentType experimentType) {
+        this.experimentType = experimentType;
         return this;
     }
 
     public ExpDesignWriter build() {
-        checkState(experimentAccession != null, "Please invoke forExperiment before build");
+        checkState(experimentType != null, "Please invoke forExperimentType before build");
 
-        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)
-                || applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
+        if (experimentType == ExperimentType.BASELINE || experimentType == ExperimentType.DIFFERENTIAL) {
             return rnaSeqExpDesignWriter;
-        } else if (applicationProperties.getTwoColourExperimentsIdentifiers().contains(experimentAccession)) {
+        } else if (experimentType == ExperimentType.TWOCOLOUR) {
             return twoColourExpDesignWriter;
-        } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
+        } else if (experimentType == ExperimentType.MICROARRAY) {
             return microArrayExpDesignWriter;
         }
 
-        throw new IllegalStateException("Experiment accession does not have a matching ExpDesignWriter.");
+        throw new IllegalStateException("ExperimentType does not have a matching ExpDesignWriter.");
     }
 
 }

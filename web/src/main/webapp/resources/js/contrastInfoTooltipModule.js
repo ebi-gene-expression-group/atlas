@@ -60,7 +60,7 @@ var contrastInfoTooltipModule = (function ($) {
                                 continue;
                             }
                             var tableRow = $("<tr><td>" + propertyName + "</td><td>" + testValue + "</td><td>" + referenceValue + "</td></tr>");
-                            if (testValue !== referenceValue && property.contrastPropertyType === 'FACTOR') {
+                            if (property.contrastPropertyType === 'FACTOR') {
                                 tableRow.find("td").css("font-weight", "bold");
                             } else {
                                 tableRow.find("td").css("color", "gray");

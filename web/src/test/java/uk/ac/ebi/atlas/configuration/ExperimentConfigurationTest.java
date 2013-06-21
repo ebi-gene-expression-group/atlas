@@ -28,6 +28,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 public class ExperimentConfigurationTest {
 
@@ -49,5 +50,21 @@ public class ExperimentConfigurationTest {
     @Test
     public void testGetExperimentType() throws Exception {
         assertThat(subject.getExperimentType(), is(EXPERIMENT_TYPE));
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        assertThat(subject.equals(null), is(false));
+        assertThat(subject.equals(new ExperimentConfiguration(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE)), is(true));
+    }
+
+    @Test
+    public void testToString() throws Exception {
+        assertThat(subject.toString(), is("ExperimentConfiguration{ExperimentAccession=EXPERIMENT_ACCESSION, ExperimentType=BASELINE}"));
+    }
+
+    @Test
+    public void testHashCode() throws Exception {
+        assertThat(subject.hashCode(), is(not(0)));
     }
 }
