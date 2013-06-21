@@ -22,28 +22,20 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.configuration.ConfigurationDao;
-import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
-import uk.ac.ebi.atlas.expdesign.ExpDesignWriter;
-import uk.ac.ebi.atlas.expdesign.ExpDesignWriterBuilder;
+import uk.ac.ebi.atlas.configuration.ExperimentManager;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.GeneProfileDao;
-import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import javax.inject.Inject;
-import java.io.File;
-import java.io.IOException;
 
 @Controller
 @Scope("request")
@@ -52,21 +44,17 @@ public class ExperimentLoaderController {
     private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderController.class);
     private ConfigurationDao configurationDao;
     private GeneProfileDao geneProfileDao;
-    private ExpDesignTsvWriter expDesignTsvWriter;
-    private ExpDesignWriterBuilder expDesignWriterBuilder;
-    private TranscriptProfilesLoader transcriptProfileLoader;
+    private ExperimentManager experimentManager;
+
 
     @Inject
     public ExperimentLoaderController(ConfigurationDao configurationDao,
                                       GeneProfileDao geneProfileDao,
-                                      ExpDesignTsvWriter expDesignTsvWriter,
-                                      ExpDesignWriterBuilder expDesignWriterBuilder,
-                                      TranscriptProfilesLoader transcriptProfileLoader) {
+                                      ExperimentManager experimentManager) {
         this.configurationDao = configurationDao;
         this.geneProfileDao = geneProfileDao;
-        this.expDesignTsvWriter = expDesignTsvWriter;
-        this.expDesignWriterBuilder = expDesignWriterBuilder;
-        this.transcriptProfileLoader = transcriptProfileLoader;
+        this.experimentManager = experimentManager;
+
     }
 
     @RequestMapping("/loadExperiment")
@@ -76,21 +64,10 @@ public class ExperimentLoaderController {
         try {
             ExperimentType experimentType = checkAccessionAndType(accession, type);
 
-            generateExpDesign(accession, experimentType);
+            experimentManager.generateExpDesign(accession, experimentType);
 
             if (experimentType == ExperimentType.BASELINE) {
-                try {
-                    StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-
-                    stopWatch.start();
-                    int count = transcriptProfileLoader.load(accession);
-                    stopWatch.stop();
-
-                    LOGGER.info("<loadExperiment> Inserted " + count + " transcript profiles and took " + stopWatch.getLastTaskInfo().getTimeSeconds() + "secs");
-                } catch (IOException e) {
-                    LOGGER.error("<loadExperiment> error reading from file: " + e.getMessage());
-                    return e.getMessage();
-                }
+                experimentManager.loadTranscripts(accession);
             }
 
             if (configurationDao.addExperimentConfiguration(accession, experimentType) == 1) {
@@ -160,22 +137,4 @@ public class ExperimentLoaderController {
         return experimentType;
     }
 
-    protected void generateExpDesign(String accession, ExperimentType experimentType) {
-        ExpDesignWriter expDesignWriter = expDesignWriterBuilder.forExperimentType(experimentType).build();
-
-        try (CSVWriter csvWriter = expDesignTsvWriter.forExperimentAccession(accession)) {
-            expDesignWriter.forExperimentAccession(accession, csvWriter);
-            csvWriter.flush();
-            LOGGER.info("<loadExperiment> written ExpDesign file: " + expDesignTsvWriter.getFileAbsolutePath());
-        } catch (IOException e) {
-            LOGGER.error("<loadExperiment> error writing to file: " + e.getMessage());
-            throw new IllegalStateException(e.getMessage());
-        } catch (ParseException e) {
-            LOGGER.error("<loadExperiment> error parsing SDRF: " + e.getMessage());
-            File expDesignTsv = new File(expDesignTsvWriter.getFileAbsolutePath());
-            String outcomeDelete = expDesignTsv.delete() ? " success" : " fail";
-            LOGGER.error("<loadExperiment> ExpDesign cleanup " + expDesignTsvWriter.getFileAbsolutePath() + outcomeDelete);
-            throw new IllegalStateException(e.getMessage());
-        }
-    }
 }
