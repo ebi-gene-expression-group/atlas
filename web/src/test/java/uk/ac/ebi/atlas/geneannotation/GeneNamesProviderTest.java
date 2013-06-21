@@ -28,9 +28,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
@@ -41,15 +38,12 @@ public class GeneNamesProviderTest {
     private GeneNamesProvider subject;
 
     @Mock
-    private AnnotationEnvironment annotationEnvironmentMock;
-
-    private ConcurrentMap<String, String> map = new ConcurrentHashMap();
+    private BioEntityAnnotationDao bioEntityAnnotationDaoMock;
 
     @Before
     public void initializeSubject() {
-        map.put("e1", "g1");
-        when(annotationEnvironmentMock.geneNames()).thenReturn(map);
-        subject = new GeneNamesProvider(annotationEnvironmentMock);
+        when(bioEntityAnnotationDaoMock.getName("e1")).thenReturn("g1");
+        subject = new GeneNamesProvider(bioEntityAnnotationDaoMock);
     }
 
     @Test
