@@ -68,6 +68,8 @@ public class ExperimentLoaderController {
         try {
             ExperimentType experimentType = experimentChecker.checkAccessionAndType(accession, type);
 
+            experimentChecker.checkAllFilesPresent(accession, experimentType);
+
             experimentManager.generateExpDesign(accession, experimentType);
 
             if (experimentType == ExperimentType.BASELINE) {

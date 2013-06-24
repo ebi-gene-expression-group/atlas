@@ -29,6 +29,9 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.Properties;
 
 @Named
 @Scope("prototype")
@@ -36,22 +39,25 @@ public class ExperimentChecker {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentChecker.class);
 
+    private Properties configurationProperties;
+
     private ConfigurationDao configurationDao;
 
     @Inject
-    public ExperimentChecker(ConfigurationDao configurationDao) {
+    public ExperimentChecker(@Named("configuration") Properties configurationProperties, ConfigurationDao configurationDao) {
+        this.configurationProperties = configurationProperties;
         this.configurationDao = configurationDao;
     }
 
     public ExperimentType checkAccessionAndType(String accession, String type) {
         if (StringUtils.isEmpty(accession)) {
-            LOGGER.error("<checkAccessionAndType> Experiment accession cannot be empty.");
-            throw new IllegalStateException("Experiment accession cannot be empty.");
+            LOGGER.error("<checkAccessionAndType> Experiment experimentAccession cannot be empty.");
+            throw new IllegalStateException("Experiment experimentAccession cannot be empty.");
         }
 
         if (configurationDao.getExperimentConfiguration(accession) != null) {
-            LOGGER.error("<checkAccessionAndType> Experiment with accession " + accession + " already exists.");
-            throw new IllegalStateException("Experiment with accession " + accession + " already exists.");
+            LOGGER.error("<checkAccessionAndType> Experiment with experimentAccession " + accession + " already exists.");
+            throw new IllegalStateException("Experiment with experimentAccession " + accession + " already exists.");
         }
 
         ExperimentType experimentType;
@@ -63,6 +69,64 @@ public class ExperimentChecker {
         }
 
         return experimentType;
+    }
+
+    public void checkAllFilesPresent(String experimentAccession, ExperimentType experimentType) {
+
+        // every experiment should have analysis methods file
+        checkRequiredFileCanRead(experimentAccession, "experiment.analysis-method.path.template");
+
+        switch (experimentType) {
+            case BASELINE:
+                checkBaseline(experimentAccession);
+                break;
+            case DIFFERENTIAL:
+                checkDifferential(experimentAccession);
+                break;
+            case MICROARRAY:
+                checkMicroarray(experimentAccession);
+                break;
+            case TWOCOLOUR:
+                checkTwoColour(experimentAccession);
+                break;
+            default:
+                LOGGER.error("<checkAllFilesPresent> The specified experiment type is not supported.");
+                throw new IllegalStateException("The specified experiment type is not supported.");
+        }
+    }
+
+    protected void checkBaseline(String experimentAccession) {
+        checkRequiredFileCanRead(experimentAccession, "experiment.magetab.path.template");
+        checkRequiredFileCanRead(experimentAccession, "experiment.transcripts.path.template");
+        checkRequiredFileCanRead(experimentAccession, "experiment.factors.path.template");
+    }
+
+    protected void checkDifferential(String experimentAccession) {
+        checkRequiredFileCanRead(experimentAccession, "diff.experiment.data.path.template");
+        checkRequiredFileCanRead(experimentAccession, "diff.experiment.raw-counts.path.template");
+        checkRequiredFileCanRead(experimentAccession, "diff.experiment.configuration.path.template");
+    }
+
+    protected void checkMicroarray(String experimentAccession) {
+        checkRequiredFileCanRead(experimentAccession, "microarray.experiment.data.path.template");
+        checkRequiredFileCanRead(experimentAccession, "microarray.normalized.data.path.template");
+        checkRequiredFileCanRead(experimentAccession, "diff.experiment.configuration.path.template");
+    }
+
+    protected void checkTwoColour(String experimentAccession) {
+        checkRequiredFileCanRead(experimentAccession, "microarray.experiment.data.path.template");
+        checkRequiredFileCanRead(experimentAccession, "microarray.log-fold-changes.data.path.template");
+        checkRequiredFileCanRead(experimentAccession, "diff.experiment.configuration.path.template");
+    }
+
+    protected void checkRequiredFileCanRead(String experimentAccession, String configurationPropertyKey) {
+        String dataFileUrlTemplate = configurationProperties.getProperty(configurationPropertyKey);
+        String dataFileURL = MessageFormat.format(dataFileUrlTemplate, experimentAccession);
+        File dataFile = new File(dataFileURL);
+        if (!dataFile.canRead()) {
+            LOGGER.error("<checkRequiredFileCanRead> Required file can not be read: " + dataFile.getAbsolutePath());
+            throw new IllegalStateException("Required file can not be read: " + dataFile.getAbsolutePath());
+        }
     }
 
 }
