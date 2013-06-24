@@ -9,8 +9,8 @@ import javax.inject.Named;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-@Named("mappingExtractor")
-public class RestAnnotationMappingExtractor {
+@Named("restMappingExtractor")
+public class RestAnnotationMappingExtractor implements AnnotationMappingExtractor{
 
     private RestTemplate restTemplate;
 
