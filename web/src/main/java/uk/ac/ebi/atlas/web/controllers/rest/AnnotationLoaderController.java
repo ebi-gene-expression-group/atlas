@@ -78,7 +78,7 @@ public class AnnotationLoaderController {
                                        @RequestParam(value="type", required = false) String type) {
         //ToDo: maybe create Command similar to GeneNamesImportCommand
         if (StringUtils.isEmpty(type)) {
-            type = ArrayDesignType.ENSEMBL.getName();
+            type = ArrayDesignType.MICRO_ARRAY.getName();
         }
         designElementLoader.loadMappings(arrayDesign, type);
 

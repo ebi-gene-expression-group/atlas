@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.geneannotation.arraydesign;
 
 public enum ArrayDesignType {
-    ENSEMBL("ensembl"),
+    MICRO_ARRAY("microArray"),
     MICRO_RNA("microRNA");
 
     private String name;
