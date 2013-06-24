@@ -22,12 +22,15 @@
 
 package uk.ac.ebi.atlas.configuration;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import java.io.File;
 import java.util.Properties;
@@ -56,14 +59,22 @@ public class ExperimentCheckerTest {
     @Mock
     private Properties configurationPropertiesMock;
 
+    @Mock
+    private ConfigurationTrader configurationTraderMock;
+
+    @Mock
+    private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
+
     private ExperimentChecker subject;
 
     @Before
     public void setUp() throws Exception {
 
         when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(null);
+        when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
+        when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet("ARRAYDESIGN")));
 
-        subject = new ExperimentChecker(configurationPropertiesMock, configurationDaoMock);
+        subject = new ExperimentChecker(configurationPropertiesMock, configurationDaoMock, configurationTraderMock);
     }
 
     @Test
@@ -92,14 +103,14 @@ public class ExperimentCheckerTest {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty(CONFIGURATION_PROPERTY_KEY)).thenReturn(pathTemplate);
-        subject.checkRequiredFileCanRead(EXPERIMENT_ACCESSION, CONFIGURATION_PROPERTY_KEY);
+        subject.checkRequiredFileCanRead(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
         tempFile.delete();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testCheckRequiredFileCanReadException() throws Exception {
         when(configurationPropertiesMock.getProperty(CONFIGURATION_PROPERTY_KEY)).thenReturn(NON_EXISTING_PATH);
-        subject.checkRequiredFileCanRead(EXPERIMENT_ACCESSION, CONFIGURATION_PROPERTY_KEY);
+        subject.checkRequiredFileCanRead(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
     }
 
     @Test

@@ -25,7 +25,9 @@ package uk.ac.ebi.atlas.configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,10 +45,15 @@ public class ExperimentChecker {
 
     private ConfigurationDao configurationDao;
 
+    private ConfigurationTrader configurationTrader;
+
     @Inject
-    public ExperimentChecker(@Named("configuration") Properties configurationProperties, ConfigurationDao configurationDao) {
+    public ExperimentChecker(@Named("configuration") Properties configurationProperties,
+                             ConfigurationDao configurationDao,
+                             ConfigurationTrader configurationTrader) {
         this.configurationProperties = configurationProperties;
         this.configurationDao = configurationDao;
+        this.configurationTrader = configurationTrader;
     }
 
     public ExperimentType checkAccessionAndType(String accession, String type) {
@@ -74,7 +81,7 @@ public class ExperimentChecker {
     public void checkAllFilesPresent(String experimentAccession, ExperimentType experimentType) {
 
         // every experiment should have analysis methods file
-        checkRequiredFileCanRead(experimentAccession, "experiment.analysis-method.path.template");
+        checkRequiredFileCanRead("experiment.analysis-method.path.template", experimentAccession);
 
         switch (experimentType) {
             case BASELINE:
@@ -96,32 +103,40 @@ public class ExperimentChecker {
     }
 
     protected void checkBaseline(String experimentAccession) {
-        checkRequiredFileCanRead(experimentAccession, "experiment.magetab.path.template");
-        checkRequiredFileCanRead(experimentAccession, "experiment.transcripts.path.template");
-        checkRequiredFileCanRead(experimentAccession, "experiment.factors.path.template");
+        checkRequiredFileCanRead("experiment.magetab.path.template", experimentAccession);
+        checkRequiredFileCanRead("experiment.transcripts.path.template", experimentAccession);
+        checkRequiredFileCanRead("experiment.factors.path.template", experimentAccession);
     }
 
     protected void checkDifferential(String experimentAccession) {
-        checkRequiredFileCanRead(experimentAccession, "diff.experiment.data.path.template");
-        checkRequiredFileCanRead(experimentAccession, "diff.experiment.raw-counts.path.template");
-        checkRequiredFileCanRead(experimentAccession, "diff.experiment.configuration.path.template");
+        checkRequiredFileCanRead("diff.experiment.configuration.path.template", experimentAccession);
+        checkRequiredFileCanRead("diff.experiment.data.path.template", experimentAccession);
+        checkRequiredFileCanRead("diff.experiment.raw-counts.path.template", experimentAccession);
     }
 
     protected void checkMicroarray(String experimentAccession) {
-        checkRequiredFileCanRead(experimentAccession, "microarray.experiment.data.path.template");
-        checkRequiredFileCanRead(experimentAccession, "microarray.normalized.data.path.template");
-        checkRequiredFileCanRead(experimentAccession, "diff.experiment.configuration.path.template");
+        checkRequiredFileCanRead("diff.experiment.configuration.path.template", experimentAccession);
+        MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
+                configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
+        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
+            checkRequiredFileCanRead("microarray.experiment.data.path.template", experimentAccession, arrayDesign);
+            checkRequiredFileCanRead("microarray.normalized.data.path.template", experimentAccession, arrayDesign);
+        }
     }
 
     protected void checkTwoColour(String experimentAccession) {
-        checkRequiredFileCanRead(experimentAccession, "microarray.experiment.data.path.template");
-        checkRequiredFileCanRead(experimentAccession, "microarray.log-fold-changes.data.path.template");
-        checkRequiredFileCanRead(experimentAccession, "diff.experiment.configuration.path.template");
+        checkRequiredFileCanRead("diff.experiment.configuration.path.template", experimentAccession);
+        MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
+                configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
+        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
+            checkRequiredFileCanRead("microarray.experiment.data.path.template", experimentAccession, arrayDesign);
+            checkRequiredFileCanRead("microarray.log-fold-changes.data.path.template", experimentAccession, arrayDesign);
+        }
     }
 
-    protected void checkRequiredFileCanRead(String experimentAccession, String configurationPropertyKey) {
+    protected void checkRequiredFileCanRead(String configurationPropertyKey, String... templateContents) {
         String dataFileUrlTemplate = configurationProperties.getProperty(configurationPropertyKey);
-        String dataFileURL = MessageFormat.format(dataFileUrlTemplate, experimentAccession);
+        String dataFileURL = MessageFormat.format(dataFileUrlTemplate, templateContents);
         File dataFile = new File(dataFileURL);
         if (!dataFile.canRead()) {
             LOGGER.error("<checkRequiredFileCanRead> Required file can not be read: " + dataFile.getAbsolutePath());
