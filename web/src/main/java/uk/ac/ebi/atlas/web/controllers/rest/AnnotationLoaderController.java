@@ -22,13 +22,15 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementGeneMappingLoader;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -42,10 +44,10 @@ public class AnnotationLoaderController {
 
     private GeneNamesImportCommand geneNamesImportCommand;
 
-    private DesignElementGeneMappingLoader designElementLoader;
+    private DesignElementMappingLoader designElementLoader;
 
     @Inject
-    public AnnotationLoaderController(ApplicationProperties applicationProperties, GeneNamesImportCommand geneNamesImportCommand, DesignElementGeneMappingLoader designElementLoader) {
+    public AnnotationLoaderController(ApplicationProperties applicationProperties, GeneNamesImportCommand geneNamesImportCommand, DesignElementMappingLoader designElementLoader) {
         this.applicationProperties = applicationProperties;
         this.geneNamesImportCommand = geneNamesImportCommand;
 
@@ -63,6 +65,7 @@ public class AnnotationLoaderController {
 
     @RequestMapping("/updateAllAnnotations")
     @ResponseBody
+//ToDo: this will not work once we add MicroRna
     public String updateAnnotationsForAllLoadedExperiments() {
 
         return updateAnnotations(applicationProperties.getBiomartDatasetIdentifiers());
@@ -71,19 +74,23 @@ public class AnnotationLoaderController {
 
     @RequestMapping("/updateDesignElements")
     @ResponseBody
-    public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign) {
+    public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign,
+                                       @RequestParam(value="type", required = false) String type) {
         //ToDo: maybe create Command similar to GeneNamesImportCommand
-        designElementLoader.loadMappings(arrayDesign);
+        if (StringUtils.isEmpty(type)) {
+            type = ArrayDesignType.ENSEMBL.getName();
+        }
+        designElementLoader.loadMappings(arrayDesign, type);
 
         return "Updated";
     }
 
-    @RequestMapping("/updateAllArrayDesigns")
-    @ResponseBody
-    public String updateAllArrayDesigns() {
-        designElementLoader.loadMappings(applicationProperties.getArrayDesignAccessions());
-        return "Updated";
-    }
+//    @RequestMapping("/updateAllArrayDesigns")
+//    @ResponseBody
+//    public String updateAllArrayDesigns() {
+//        designElementLoader.loadMappings(applicationProperties.getArrayDesignAccessions());
+//        return "Updated";
+//    }
 }
 
 

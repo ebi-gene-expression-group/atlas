@@ -52,8 +52,8 @@ public class ConfigurationDaoIT {
     private static final String YET_ANOTHER_ACCESSION = "YETANOTHER";
 
     @Inject
-    @Qualifier("experimentDataSource")
-    private DataSource experimentDataSource;
+    @Qualifier("dataSource")
+    private DataSource dataSource;
 
     @Inject
     private ConfigurationDao subject;

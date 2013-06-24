@@ -9,32 +9,29 @@ import java.util.Map;
 
 @Named
 @Scope("singleton")
-public class BioEntityNameLoader extends H2AnnotationLoader {
+public class BioEntityNameLoader {
 
     @Value("#{configuration['gene.mapping.gxa.server.url']}")
     private String serverURL;
 
     private BioEntityAnnotationDao bioEntityAnnotationDao;
 
+    private RestAnnotationMappingExtractor annotationMappingExtractor;
 
     @Inject
-    public BioEntityNameLoader(BioEntityAnnotationDao bioEntityAnnotationDao) {
+    public BioEntityNameLoader(BioEntityAnnotationDao bioEntityAnnotationDao, RestAnnotationMappingExtractor annotationMappingExtractor) {
         this.bioEntityAnnotationDao = bioEntityAnnotationDao;
+        this.annotationMappingExtractor = annotationMappingExtractor;
     }
 
-    @Override
-    protected String getAnnotationServerUrl() {
-        return serverURL;
+    public void loadMappings(String annotatedSubject) {
+
+        Map<String, String> annotations = annotationMappingExtractor.extractAnnotationsMap(serverURL, annotatedSubject);
+        saveMappings(annotations, annotatedSubject);
     }
 
-    @Override
-    protected void clean(String annotatedSubject) {
-
-    }
-
-    @Override
     protected void saveMappings(Map<String, String> mappings, String annotatedSubject) {
-        bioEntityAnnotationDao.saveAnnotations(mappings, annotatedSubject);
+        bioEntityAnnotationDao.saveAnnotations(mappings, annotatedSubject, "gene");
 
     }
 }

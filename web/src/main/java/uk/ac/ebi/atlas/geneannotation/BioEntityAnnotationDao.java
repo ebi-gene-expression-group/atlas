@@ -22,17 +22,16 @@ public class BioEntityAnnotationDao extends AnnotationDao{
 
     private static final Logger LOGGER = Logger.getLogger(BioEntityAnnotationDao.class);
 
-    private static final int SUB_BATCH_SIZE = 100;
     private JdbcTemplate jdbcTemplate;
 
-    private final static String BIOENTITY_NAME_MERGE = "MERGE INTO bioentity_name(identifier, name, organism) KEY(identifier) VALUES(?, ?, ?)";
-
     @Inject
-    public BioEntityAnnotationDao(@Qualifier("annotationDataSource") DataSource dataSource) {
+    public BioEntityAnnotationDao(@Qualifier("dataSource") DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void saveAnnotations(final Map<String, String> annotations, final String organism) {
+    public void saveAnnotations(final Map<String, String> annotations, final String organism, final String type) {
+
+        String query = "MERGE INTO bioentity_name(identifier, name, organism, type) KEY(identifier) VALUES(?, ?, ?, ?)";
 
         final ArrayList<String> keys = Lists.newArrayList(annotations.keySet());
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
@@ -41,6 +40,7 @@ public class BioEntityAnnotationDao extends AnnotationDao{
                 ps.setString(1, keys.get(i));
                 ps.setString(2, annotations.get(keys.get(i)));
                 ps.setString(3, organism);
+                ps.setString(4, type);
             }
 
             @Override
@@ -49,7 +49,7 @@ public class BioEntityAnnotationDao extends AnnotationDao{
             }
         };
 
-        int[] rows = jdbcTemplate.batchUpdate(BIOENTITY_NAME_MERGE, statementSetter);
+        int[] rows = jdbcTemplate.batchUpdate(query, statementSetter);
         LOGGER.info("Updated " + rows.length + " bioentities");
     }
 

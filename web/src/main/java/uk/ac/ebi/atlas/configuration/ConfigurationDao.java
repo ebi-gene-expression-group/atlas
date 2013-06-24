@@ -52,7 +52,7 @@ public class ConfigurationDao {
             "WHERE experiment_accession = ?";
 
     @Inject
-    @Qualifier("experimentDataSource")
+    @Qualifier("dataSource")
     private DataSource dataSource;
 
     public List<ExperimentConfiguration> getExperimentConfigurations() {

@@ -1,22 +1,22 @@
 package uk.ac.ebi.atlas.geneannotation.arraydesign;
 
-import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
-import uk.ac.ebi.atlas.utils.DesignElementKeyGenerator;
+import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("designElementMappingProvider")
 public class DesignElementMappingProvider {
-    private AnnotationEnvironment annotationEnvironment;
+
+    private ArrayDesignDao arrayDesignDao;
 
     @Inject
-    public DesignElementMappingProvider(AnnotationEnvironment annotationEnvironment) {
-        this.annotationEnvironment = annotationEnvironment;
+    public DesignElementMappingProvider(ArrayDesignDao arrayDesignDao) {
+        this.arrayDesignDao = arrayDesignDao;
     }
 
     public String getEnsGeneId(String arrayDesign, String designElement) {
-        return annotationEnvironment.geneDesignElementsToGeneNames().get(DesignElementKeyGenerator.getKey(arrayDesign, designElement));
+        return arrayDesignDao.getIdentifier(arrayDesign, designElement);
     }
 
 }

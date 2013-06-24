@@ -54,7 +54,7 @@ public class GeneProfileDaoIT {
     private GeneProfileDao subject;
 
     @Inject
-    @Qualifier("experimentDataSource")
+    @Qualifier("dataSource")
     private DataSource dataSource;
 
     private TranscriptProfile transcriptProfile1 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));

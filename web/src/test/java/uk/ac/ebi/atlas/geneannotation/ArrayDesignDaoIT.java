@@ -37,7 +37,7 @@ public class ArrayDesignDaoIT {
 
     @Test
     public void testSaveGetMappings() throws Exception {
-        subject.saveMappings(annotations, ARRAY_DESIGN);
+        subject.saveMappings(annotations, ARRAY_DESIGN, "ensembl");
         assertThat(subject.getIdentifier("de1", ARRAY_DESIGN), is("ens1"));
         assertThat(subject.getIdentifier("de1", "NOT EXISRING AD"), is(nullValue()));
         assertThat(subject.getIdentifier("not there", ARRAY_DESIGN), is(nullValue()));
@@ -46,7 +46,7 @@ public class ArrayDesignDaoIT {
     @Test
     public void testIsArrayDesignPresent() throws Exception {
         assertThat(subject.isArrayDesignPresent(ARRAY_DESIGN), is(false));
-        subject.saveMappings(annotations, ARRAY_DESIGN);
+        subject.saveMappings(annotations, ARRAY_DESIGN, "ensembl");
         assertThat(subject.isArrayDesignPresent(ARRAY_DESIGN), is(true));
 
     }

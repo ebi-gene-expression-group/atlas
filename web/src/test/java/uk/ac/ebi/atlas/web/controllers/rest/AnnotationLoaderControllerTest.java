@@ -30,7 +30,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementGeneMappingLoader;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import java.util.Set;
@@ -46,6 +46,10 @@ public class AnnotationLoaderControllerTest {
     public static final String ARRAY_DESIGN = "arrayDesign";
     public static final String SPECIES = "species";
     public static final String UPDATED = "Updated";
+
+    public static final String ARRAY_DESIGN_TYPE = "ensembl";
+    public static final String BIOENTITY_TYPE = "gene";
+
     AnnotationLoaderController subject;
 
     @Mock
@@ -55,7 +59,7 @@ public class AnnotationLoaderControllerTest {
     private GeneNamesImportCommand geneNamesImportCommandMock;
 
     @Mock
-    private DesignElementGeneMappingLoader designElementLoaderMock;
+    private DesignElementMappingLoader designElementLoaderMock;
 
     @Before
     public void setUp() throws Exception {
@@ -84,18 +88,17 @@ public class AnnotationLoaderControllerTest {
     @Test
     public void testUpdateDesignElements() throws Exception {
 
-        String result = subject.updateDesignElements(ARRAY_DESIGN);
+        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
         assertThat(result, is(UPDATED));
-        verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN);
+        verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
     }
 
     @Test
     public void testUpdateAllArrayDesigns() throws Exception {
-        Set<String> set = Sets.newHashSet(ARRAY_DESIGN);
-        when(applicationPropertiesMock.getArrayDesignAccessions()).thenReturn(set);
 
-        String result = subject.updateAllArrayDesigns();
+
+        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
         assertThat(result, is(UPDATED));
-        verify(designElementLoaderMock).loadMappings(set);
+        verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
     }
 }
