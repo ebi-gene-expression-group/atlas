@@ -76,29 +76,20 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
-    <bean id="experimentDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <bean id="annotationDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="${annotation.jdbc.driverClassName}"/>
-        <property name="url" value="${annotation.jdbc.url}"/>
-        <property name="username" value="${annotation.jdbc.username}"/>
-        <property name="password" value="${annotation.jdbc.password}"/>
-    </bean>
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <jdbc:initialize-database data-source="experimentDataSource">
+    <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath:atlas-schema.sql"/>
     </jdbc:initialize-database>
 
-    <jdbc:initialize-database data-source="annotationDataSource">
-        <jdbc:script location="classpath:annotation-schema.sql"/>
-    </jdbc:initialize-database>
 
     <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
 

@@ -54,7 +54,7 @@ public class GeneProfileDao {
     private static final int FOURTH_INDEX = 4;
 
     @Inject
-    @Qualifier("experimentDataSource")
+    @Qualifier("dataSource")
     private DataSource dataSource;
 
     public Collection<TranscriptProfile> getTranscriptProfiles(String experimentAccession, String geneId) {

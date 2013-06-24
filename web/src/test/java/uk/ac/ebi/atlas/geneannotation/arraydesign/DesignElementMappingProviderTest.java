@@ -5,11 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.geneannotation.AnnotationEnvironment;
-import uk.ac.ebi.atlas.utils.DesignElementKeyGenerator;
-
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -22,15 +18,12 @@ public class DesignElementMappingProviderTest {
     private DesignElementMappingProvider subject;
 
     @Mock
-    private AnnotationEnvironment annotationEnvironmentMock;
-
-    private ConcurrentMap<String, String> map = new ConcurrentHashMap();
+    private ArrayDesignDao arrayDesignDaoMock;
 
     @Before
     public void initializeSubject() {
-        map.put(DesignElementKeyGenerator.getKey("ad1", "de1"), "g1");
-        when(annotationEnvironmentMock.geneDesignElementsToGeneNames()).thenReturn(map);
-        subject = new DesignElementMappingProvider(annotationEnvironmentMock);
+        when(arrayDesignDaoMock.getIdentifier("ad1", "de1")).thenReturn("g1");
+        subject = new DesignElementMappingProvider(arrayDesignDaoMock);
     }
 
     @Test

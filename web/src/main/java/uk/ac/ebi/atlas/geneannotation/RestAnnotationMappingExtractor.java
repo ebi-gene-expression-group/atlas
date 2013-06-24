@@ -10,12 +10,12 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 @Named("mappingExtractor")
-public class AnnotationMappingExtractor {
+public class RestAnnotationMappingExtractor {
 
     private RestTemplate restTemplate;
 
     @Inject
-    public AnnotationMappingExtractor(RestTemplate restTemplate) {
+    public RestAnnotationMappingExtractor(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -28,8 +28,7 @@ public class AnnotationMappingExtractor {
 
     protected Map<String, String> convertJson(String jsonString) {
         Gson gson = new Gson();
-        Type mapType = new TypeToken<Map<String, String>>() {
-        }.getType();
+        Type mapType = new TypeToken<Map<String, String>>() {}.getType();
         Map<String, String> allMap = gson.fromJson(jsonString, mapType);
         return gson.fromJson(allMap.get("exportText"), mapType);
     }

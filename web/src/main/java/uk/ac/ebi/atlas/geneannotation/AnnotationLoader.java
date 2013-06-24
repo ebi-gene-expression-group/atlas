@@ -12,9 +12,9 @@ public abstract class AnnotationLoader {
 
     private AnnotationEnvironment annotationEnvironment;
 
-    private AnnotationMappingExtractor annotationMappingExtractor;
+    private RestAnnotationMappingExtractor annotationMappingExtractor;
 
-    public AnnotationLoader(AnnotationEnvironment annotationEnvironment, AnnotationMappingExtractor annotationMappingExtractor) {
+    public AnnotationLoader(AnnotationEnvironment annotationEnvironment, RestAnnotationMappingExtractor annotationMappingExtractor) {
         this.annotationEnvironment = annotationEnvironment;
         this.annotationMappingExtractor = annotationMappingExtractor;
     }

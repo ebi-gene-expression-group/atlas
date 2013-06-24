@@ -35,7 +35,7 @@ public class BioEntityAnnotationDaoIT {
 
     @Test
     public void testSaveGetAnnotations() throws Exception {
-        subject.saveAnnotations(annotations, ORGANISM);
+        subject.saveAnnotations(annotations, ORGANISM, "gene");
         assertThat(subject.getName("ens1"), is("gene1"));
         assertThat(subject.getName("not there"), is(nullValue()));
 

@@ -48,13 +48,13 @@ public class ArrayDesignDao extends AnnotationDao {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public ArrayDesignDao(@Qualifier("annotationDataSource") DataSource dataSource) {
+    public ArrayDesignDao(@Qualifier("dataSource") DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void saveMappings(final Map<String, String> annotations, final String arrayDesign) {
+    public void saveMappings(final Map<String, String> annotations, final String arrayDesign, final String type) {
 
-        String query = "INSERT INTO designelement_mapping(designelement, identifier, arraydesign) VALUES(?, ?, ?)";
+        String query = "INSERT INTO designelement_mapping(designelement, identifier, type, arraydesign) VALUES(?, ?, ?,?)";
 
         final ArrayList<String> keys = Lists.newArrayList(annotations.keySet());
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
@@ -62,7 +62,8 @@ public class ArrayDesignDao extends AnnotationDao {
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setString(1, keys.get(i));
                 ps.setString(2, annotations.get(keys.get(i)));
-                ps.setString(3, arrayDesign);
+                ps.setString(3, type);
+                ps.setString(4, arrayDesign);
             }
 
             @Override
@@ -81,7 +82,7 @@ public class ArrayDesignDao extends AnnotationDao {
         jdbcTemplate.update(query, new String[]{arrayDesign});
     }
 
-    public String getIdentifier(String designElement, String arrayDesign) {
+    public String getIdentifier(String arrayDesign, String designElement) {
         String query = "select identifier from designelement_mapping where designelement=? and arraydesign=?";
 
         List<String> names = jdbcTemplate.queryForList(query, new String[]{designElement, arrayDesign}, String.class);
