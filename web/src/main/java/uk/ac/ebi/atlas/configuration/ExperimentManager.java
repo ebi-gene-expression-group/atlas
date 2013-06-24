@@ -31,7 +31,8 @@ import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
 import uk.ac.ebi.atlas.expdesign.ExpDesignWriter;
 import uk.ac.ebi.atlas.expdesign.ExpDesignWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementGeneMappingLoader;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -53,7 +54,7 @@ public class ExperimentManager {
     private TranscriptProfilesLoader transcriptProfileLoader;
     private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
-    private DesignElementGeneMappingLoader designElementLoader;
+    private DesignElementMappingLoader designElementLoader;
 
     @Inject
     public ExperimentManager(ExpDesignTsvWriter expDesignTsvWriter,
@@ -61,7 +62,7 @@ public class ExperimentManager {
                              TranscriptProfilesLoader transcriptProfileLoader,
                              ArrayDesignDao arrayDesignDao,
                              ConfigurationTrader configurationTrader,
-                             DesignElementGeneMappingLoader designElementLoader) {
+                             DesignElementMappingLoader designElementLoader) {
         this.expDesignTsvWriter = expDesignTsvWriter;
         this.expDesignWriterBuilder = expDesignWriterBuilder;
         this.transcriptProfileLoader = transcriptProfileLoader;
@@ -111,7 +112,7 @@ public class ExperimentManager {
 
         for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
             if (!arrayDesignDao.isArrayDesignPresent(arrayDesign)) {
-                designElementLoader.loadMappings(arrayDesign);
+                designElementLoader.loadMappings(arrayDesign, ArrayDesignType.MICRO_ARRAY.getName());
             }
         }
 

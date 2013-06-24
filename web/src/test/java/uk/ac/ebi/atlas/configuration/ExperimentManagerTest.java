@@ -33,7 +33,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.expdesign.*;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementGeneMappingLoader;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -79,7 +80,7 @@ public class ExperimentManagerTest {
     private ConfigurationTrader configurationTraderMock;
 
     @Mock
-    private DesignElementGeneMappingLoader designElementLoaderMock;
+    private DesignElementMappingLoader designElementLoaderMock;
 
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
@@ -174,13 +175,13 @@ public class ExperimentManagerTest {
     public void testLoadArrayDesignPresent() throws Exception {
         when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(true);
         subject.loadArrayDesign(EXPERIMENT_ACCESSION);
-        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN);
+        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY.getName());
     }
 
     @Test
     public void testLoadArrayDesignNotPresent() throws Exception {
         when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
         subject.loadArrayDesign(EXPERIMENT_ACCESSION);
-        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN);
+        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY.getName());
     }
 }
