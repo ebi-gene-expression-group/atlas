@@ -38,8 +38,7 @@ import uk.ac.ebi.atlas.transcript.GeneProfileDao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentLoaderControllerTest {
@@ -84,6 +83,8 @@ public class ExperimentLoaderControllerTest {
     @Test
     public void testLoadExpDesignForBaseline() throws Exception {
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(experimentManagerMock, times(1)).loadTranscripts(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(0)).loadArrayDesign(EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -91,6 +92,8 @@ public class ExperimentLoaderControllerTest {
         when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, DIFFERENTIAL_TYPE)).thenReturn(ExperimentType.DIFFERENTIAL);
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(DIFFERENTIAL_TYPE))).thenReturn(1);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, DIFFERENTIAL_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(0)).loadArrayDesign(EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -98,6 +101,8 @@ public class ExperimentLoaderControllerTest {
         when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, MICROARRAY_TYPE)).thenReturn(ExperimentType.MICROARRAY);
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICROARRAY_TYPE))).thenReturn(1);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, MICROARRAY_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -105,6 +110,8 @@ public class ExperimentLoaderControllerTest {
         when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE)).thenReturn(ExperimentType.TWOCOLOUR);
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(TWOCOLOUR_TYPE))).thenReturn(1);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION);
     }
 
     @Test

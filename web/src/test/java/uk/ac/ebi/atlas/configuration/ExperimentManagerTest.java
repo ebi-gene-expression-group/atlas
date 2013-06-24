@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.configuration;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,13 +32,16 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.expdesign.*;
+import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementGeneMappingLoader;
+import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import java.io.IOException;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentManagerTest {
@@ -48,6 +52,7 @@ public class ExperimentManagerTest {
     private static final ExperimentType TWOCOLOUR_TYPE = ExperimentType.TWOCOLOUR;
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
+    private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
 
     @Mock
     private RnaSeqExpDesignWriter rnaSeqExpDesignWriterMock;
@@ -67,6 +72,18 @@ public class ExperimentManagerTest {
     @Mock
     private TranscriptProfilesLoader transcriptProfileLoaderMock;
 
+    @Mock
+    private ArrayDesignDao arrayDesignDaoMock;
+
+    @Mock
+    private ConfigurationTrader configurationTraderMock;
+
+    @Mock
+    private DesignElementGeneMappingLoader designElementLoaderMock;
+
+    @Mock
+    private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
+
     private ExpDesignWriterBuilder expDesignWriterBuilder;
 
     private ExperimentManager subject;
@@ -82,8 +99,11 @@ public class ExperimentManagerTest {
         when(expDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
 
         when(transcriptProfileLoaderMock.load(EXPERIMENT_ACCESSION)).thenReturn(0);
+        when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
+        when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
-        subject = new ExperimentManager(expDesignTsvWriterMock, expDesignWriterBuilder, transcriptProfileLoaderMock);
+        subject = new ExperimentManager(expDesignTsvWriterMock, expDesignWriterBuilder, transcriptProfileLoaderMock,
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock);
     }
 
     @Test
@@ -150,4 +170,17 @@ public class ExperimentManagerTest {
         subject.loadTranscripts(EXPERIMENT_ACCESSION);
     }
 
+    @Test
+    public void testLoadArrayDesignPresent() throws Exception {
+        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(true);
+        subject.loadArrayDesign(EXPERIMENT_ACCESSION);
+        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN);
+    }
+
+    @Test
+    public void testLoadArrayDesignNotPresent() throws Exception {
+        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
+        subject.loadArrayDesign(EXPERIMENT_ACCESSION);
+        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN);
+    }
 }

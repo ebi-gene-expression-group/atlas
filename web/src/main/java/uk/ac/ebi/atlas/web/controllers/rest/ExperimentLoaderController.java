@@ -76,6 +76,10 @@ public class ExperimentLoaderController {
                 experimentManager.loadTranscripts(accession);
             }
 
+            if (experimentType == ExperimentType.MICROARRAY || experimentType == ExperimentType.TWOCOLOUR) {
+                experimentManager.loadArrayDesign(accession);
+            }
+
             if (configurationDao.addExperimentConfiguration(accession, experimentType) == 1) {
                 LOGGER.info("<loadExperiment> Experiment " + accession + " loaded.");
                 return "Experiment " + accession + " loaded.";

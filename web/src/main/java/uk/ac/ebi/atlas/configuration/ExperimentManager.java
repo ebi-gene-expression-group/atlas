@@ -30,7 +30,11 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
 import uk.ac.ebi.atlas.expdesign.ExpDesignWriter;
 import uk.ac.ebi.atlas.expdesign.ExpDesignWriterBuilder;
+import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementGeneMappingLoader;
+import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import javax.inject.Inject;
@@ -47,14 +51,23 @@ public class ExperimentManager {
     private ExpDesignTsvWriter expDesignTsvWriter;
     private ExpDesignWriterBuilder expDesignWriterBuilder;
     private TranscriptProfilesLoader transcriptProfileLoader;
+    private ArrayDesignDao arrayDesignDao;
+    private ConfigurationTrader configurationTrader;
+    private DesignElementGeneMappingLoader designElementLoader;
 
     @Inject
     public ExperimentManager(ExpDesignTsvWriter expDesignTsvWriter,
                              ExpDesignWriterBuilder expDesignWriterBuilder,
-                             TranscriptProfilesLoader transcriptProfileLoader) {
+                             TranscriptProfilesLoader transcriptProfileLoader,
+                             ArrayDesignDao arrayDesignDao,
+                             ConfigurationTrader configurationTrader,
+                             DesignElementGeneMappingLoader designElementLoader) {
         this.expDesignTsvWriter = expDesignTsvWriter;
         this.expDesignWriterBuilder = expDesignWriterBuilder;
         this.transcriptProfileLoader = transcriptProfileLoader;
+        this.arrayDesignDao = arrayDesignDao;
+        this.configurationTrader = configurationTrader;
+        this.designElementLoader = designElementLoader;
     }
 
     public void generateExpDesign(String accession, ExperimentType experimentType) {
@@ -89,6 +102,19 @@ public class ExperimentManager {
             LOGGER.error("<loadTranscripts> error reading from file: " + e.getMessage());
             throw new IllegalStateException(e.getMessage());
         }
+    }
+
+    public void loadArrayDesign(String accession) {
+
+        MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
+                configurationTrader.getMicroarrayExperimentConfiguration(accession);
+
+        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
+            if (!arrayDesignDao.isArrayDesignPresent(arrayDesign)) {
+                designElementLoader.loadMappings(arrayDesign);
+            }
+        }
+
     }
 
 }
