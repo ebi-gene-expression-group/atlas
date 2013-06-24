@@ -138,6 +138,12 @@ public class ExperimentLoaderControllerTest {
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, NON_EXISTING_TYPE), is("An unknown experiment type has been specified."));
     }
 
+    @Test
+    public void testLoadExperimentRequiredFileMissing() throws Exception {
+        Mockito.doThrow(new IllegalStateException(TEST_EXCEPTION)).when(experimentCheckerMock).checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is(TEST_EXCEPTION));
+    }
+
     @Test(expected = IllegalStateException.class)
     public void testLoadExperimentIllegalState() throws Exception {
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(0);
