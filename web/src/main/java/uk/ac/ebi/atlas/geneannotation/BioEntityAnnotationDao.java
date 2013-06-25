@@ -23,6 +23,7 @@ public class BioEntityAnnotationDao extends AnnotationDao {
     private static final int BATCH_SIZE = 1000;
     private static final String INSERT_QUERY = "INSERT INTO bioentity_name(identifier, name, organism, type) VALUES(?, ?, ?, ?)";
     private static final String DELETE_QUERY = "DELETE FROM bioentity_name WHERE organism = ? AND type = ?";
+    private static final String SELECT_QUERY = "SELECT name FROM bioentity_name WHERE identifier = ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -71,9 +72,8 @@ public class BioEntityAnnotationDao extends AnnotationDao {
     }
 
     public String getName(String identifier) {
-        String query = "select name from bioentity_name where identifier=?";
 
-        List<String> names = jdbcTemplate.queryForList(query, new String[]{identifier}, String.class);
+        List<String> names = jdbcTemplate.queryForList(SELECT_QUERY, new String[]{identifier}, String.class);
 
         return getOnly(names);
     }
