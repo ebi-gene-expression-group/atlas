@@ -25,13 +25,12 @@ public class BioEntityNameLoader {
     }
 
     public void loadMappings(String annotatedSubject) {
-
         Map<String, String> annotations = annotationMappingExtractor.extractAnnotationsMap(serverURL, annotatedSubject);
         saveMappings(annotations, annotatedSubject);
     }
 
     protected void saveMappings(Map<String, String> mappings, String annotatedSubject) {
+        bioEntityAnnotationDao.deleteAnnotations(annotatedSubject, "gene");
         bioEntityAnnotationDao.saveAnnotations(mappings, annotatedSubject, "gene");
-
     }
 }

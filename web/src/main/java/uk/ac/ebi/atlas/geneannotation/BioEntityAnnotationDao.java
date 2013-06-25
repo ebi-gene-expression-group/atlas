@@ -12,15 +12,17 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Named
 @Scope("singleton")
-public class BioEntityAnnotationDao extends AnnotationDao{
+public class BioEntityAnnotationDao extends AnnotationDao {
 
     private static final Logger LOGGER = Logger.getLogger(BioEntityAnnotationDao.class);
+    private static final int BATCH_SIZE = 1000;
+    private static final String INSERT_QUERY = "INSERT INTO bioentity_name(identifier, name, organism, type) VALUES(?, ?, ?, ?)";
+    private static final String DELETE_QUERY = "DELETE FROM bioentity_name WHERE organism = ? AND type = ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -29,28 +31,43 @@ public class BioEntityAnnotationDao extends AnnotationDao{
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void saveAnnotations(final Map<String, String> annotations, final String organism, final String type) {
+    public void saveAnnotations(Map<String, String> annotations, String organism, String type) {
 
-        String query = "MERGE INTO bioentity_name(identifier, name, organism, type) KEY(identifier) VALUES(?, ?, ?, ?)";
+        List<Map.Entry<String, String>> annotationEntries = Lists.newArrayList(annotations.entrySet());
 
-        final ArrayList<String> keys = Lists.newArrayList(annotations.keySet());
+        List<List<Map.Entry<String, String>>> partitionsOfEntries = Lists.partition(annotationEntries, BATCH_SIZE);
+
+        int total = 0;
+        for (List<Map.Entry<String, String>> partition : partitionsOfEntries) {
+            int[] rows = performBatchStatement(partition, organism, type);
+            total += rows.length;
+        }
+
+        LOGGER.info("Updated " + total + " bioentities");
+    }
+
+    private int[] performBatchStatement(final List<Map.Entry<String, String>> annotationEntries, final String organism, final String type) {
+
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, keys.get(i));
-                ps.setString(2, annotations.get(keys.get(i)));
+                ps.setString(1, annotationEntries.get(i).getKey());
+                ps.setString(2, annotationEntries.get(i).getValue());
                 ps.setString(3, organism);
                 ps.setString(4, type);
             }
 
             @Override
             public int getBatchSize() {
-                return annotations.size();
+                return annotationEntries.size();
             }
         };
 
-        int[] rows = jdbcTemplate.batchUpdate(query, statementSetter);
-        LOGGER.info("Updated " + rows.length + " bioentities");
+        return jdbcTemplate.batchUpdate(INSERT_QUERY, statementSetter);
+    }
+
+    public int deleteAnnotations(String organism, String type) {
+        return jdbcTemplate.update(DELETE_QUERY, new Object[]{organism, type});
     }
 
     public String getName(String identifier) {

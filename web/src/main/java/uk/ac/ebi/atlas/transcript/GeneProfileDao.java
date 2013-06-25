@@ -53,23 +53,24 @@ public class GeneProfileDao {
     private static final int THIRD_INDEX = 3;
     private static final int FOURTH_INDEX = 4;
 
-    @Inject
-    @Qualifier("dataSource")
     private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    @Inject
+    public GeneProfileDao(@Qualifier("dataSource") DataSource dataSource) {
+        this.dataSource = dataSource;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
     public Collection<TranscriptProfile> getTranscriptProfiles(String experimentAccession, String geneId) {
-
-        JdbcTemplate template = new JdbcTemplate(dataSource);
-
-        return template.query(TRANSCRIPT_PROFILE_QUERY,
+        return jdbcTemplate.query(TRANSCRIPT_PROFILE_QUERY,
                 new String[]{experimentAccession, geneId},
                 new TranscriptProfileRowMapper());
     }
 
     public void addTranscriptProfiles(final String experimentAccession, final List<TranscriptProfile> profiles) {
 
-        JdbcTemplate template = new JdbcTemplate(dataSource);
-        template.batchUpdate(TRANSCRIPT_PROFILE_INSERT, new BatchPreparedStatementSetter() {
+        jdbcTemplate.batchUpdate(TRANSCRIPT_PROFILE_INSERT, new BatchPreparedStatementSetter() {
 
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
@@ -99,14 +100,12 @@ public class GeneProfileDao {
     }
 
     public int deleteTranscriptProfilesForExperimentAndGene(String experimentAccession, String geneId) {
-        JdbcTemplate delete = new JdbcTemplate(dataSource);
-        return delete.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ? AND gene_id = ?",
+        return jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ? AND gene_id = ?",
                 new Object[]{experimentAccession, geneId});
     }
 
     public int deleteTranscriptProfilesForExperiment(String experimentAccession) {
-        JdbcTemplate delete = new JdbcTemplate(dataSource);
-        return delete.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ?",
+        return jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ?",
                 new Object[]{experimentAccession});
     }
 }

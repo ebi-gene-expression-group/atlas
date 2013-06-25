@@ -26,14 +26,12 @@ import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,12 +48,9 @@ public class GeneProfileDaoIT {
     private static final String EXPERIMENT_ACCESSION = "experiment_accession";
     private static final String GENE_ID = "geneId";
     public static final String GENE_ID_2 = "geneID2";
-    @Inject
-    private GeneProfileDao subject;
 
     @Inject
-    @Qualifier("dataSource")
-    private DataSource dataSource;
+    private GeneProfileDao subject;
 
     private TranscriptProfile transcriptProfile1 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
     private TranscriptProfile transcriptProfile2 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
