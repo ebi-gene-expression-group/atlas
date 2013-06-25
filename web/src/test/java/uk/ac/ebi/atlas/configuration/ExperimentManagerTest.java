@@ -175,13 +175,13 @@ public class ExperimentManagerTest {
     public void testLoadArrayDesignPresent() throws Exception {
         when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(true);
         subject.loadArrayDesign(EXPERIMENT_ACCESSION);
-        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY.getName());
+        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
     }
 
     @Test
     public void testLoadArrayDesignNotPresent() throws Exception {
         when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
         subject.loadArrayDesign(EXPERIMENT_ACCESSION);
-        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY.getName());
+        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
     }
 }

@@ -36,4 +36,13 @@ public enum ArrayDesignType {
         return name;
     }
 
+    public static ArrayDesignType getByName(String name) {
+           for (ArrayDesignType type : values()) {
+               if (type.getName().equalsIgnoreCase(name)) {
+                   return type;
+               }
+           }
+           throw new IllegalArgumentException("There is no ArrayDesignType with a name " + name);
+       }
+
 }
