@@ -77,10 +77,14 @@ public class AnnotationLoaderController {
     public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign,
                                        @RequestParam(value="type", required = false) String type) {
         //ToDo: maybe create Command similar to GeneNamesImportCommand
+        ArrayDesignType arrayDesignType;
         if (StringUtils.isEmpty(type)) {
-            type = ArrayDesignType.MICRO_ARRAY.getName();
+            arrayDesignType = ArrayDesignType.MICRO_ARRAY;
+        } else {
+            arrayDesignType = ArrayDesignType.getByName(type);
         }
-        designElementLoader.loadMappings(arrayDesign, type);
+
+        designElementLoader.loadMappings(arrayDesign, arrayDesignType);
 
         return "Updated";
     }

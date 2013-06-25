@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS bioentity_name(
     type VARCHAR(50),
     PRIMARY KEY (identifier, organism, type)
 );
+CREATE INDEX IF NOT EXISTS bioentity_name_identifier ON bioentity_name(identifier);
 
 CREATE TABLE IF NOT EXISTS designelement_mapping(
     designelement VARCHAR(255) NOT NULL,

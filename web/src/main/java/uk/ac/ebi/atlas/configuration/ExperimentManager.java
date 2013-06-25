@@ -112,7 +112,7 @@ public class ExperimentManager {
 
         for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
             if (!arrayDesignDao.isArrayDesignPresent(arrayDesign)) {
-                designElementLoader.loadMappings(arrayDesign, ArrayDesignType.MICRO_ARRAY.getName());
+                designElementLoader.loadMappings(arrayDesign, ArrayDesignType.MICRO_ARRAY);
             }
         }
 

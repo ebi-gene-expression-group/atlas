@@ -95,13 +95,17 @@ close Faliases ;
 ##########
 ## design array adf file (input file)
 ## 
-## Identify the column with the miRBase identifier (usually 6th or 7th one)
+## Identify the column with the miRBase identifier (usually 6th or 7th one),
+## Identify the column with Reporter Name (based on header),
 ## Get the reporter name and the miRBase ID from that file, 
 ## find the corresponding latest miRBase ID from %H_mirbase_aliases
 ## And print. 
 ###########
 #Identify column with miRBase identifiers
-my $col = &fetchIDcolumn($file_adf) ;
+my $col_mirID = &fetchIDcolumn($file_adf) ;
+
+#Identify the column with Reporter Name
+my $col_RN = &fetchRNcolumn($file_adf) ;
 
 #Parse adf file
 my ($cpt_found, $cpt_lost) ; #counters
@@ -118,10 +122,13 @@ while (my $line=<Fadf>) {
 	chomp $line ;
 	my @A_line = split ("\t", $line) ;
 
-	#adf file: "reporter name" is ALWAYS 5th column ([4] for array position)	
-	#miRBase identifier column identified in subroutine &fetchIDcolumn (-1 for array position)
-	my $reporter = $A_line[4] ; 
-	my $ID_mirbase = $A_line[$col-1] ;
+	##Reporter name column identified in subroutine &fetchRNcolumn (array position identified, so OK as is)
+	my $reporter = $A_line[$col_RN] ; 
+	#print "Reporter is in column $reporter\n" ;
+
+	##miRBase identifier column identified in subroutine &fetchIDcolumn (array position identified, so OK as is)
+	my $ID_mirbase = $A_line[$col_mirID] ;
+	#print "miRBase ID is in column $ID_mirbase\n" ;
 
 	#Get the current miRBase ID
 	my $ID_mirbase_current = $H_mirbase_aliases{$ID_mirbase} ;		
@@ -155,36 +162,36 @@ close Fout_stats ;
 #############
 #
 #Check in which column is the miRBase identifier 
-#Parse 50 'Experimental' lines, identify column - same column 95% times? Stop. 
+#Parse 50 'Experimental' lines, identify column - same column 95% times? Stop.
+# !! give the array position, so -1 compare to real position
 sub fetchIDcolumn {
 	my $file = $_[0] ;
 	my $cpt = 0 ; #counter
 	my %H_cl ; #%H column counter 	
 	my $column ; #variable to return
 
-	my $max_check = 50 ; #number of lines to check
+	my $max_check = 1000 ; #number of lines to check
 
 	open (F, $file) || die "Can't open subroutine file $file\n" ;	
-	while ( (my $l=<F>) && ($cpt < $max_check) ) {	
-			
-		if ($l =~ /Experimental/) { #only consider "Experimental" lines
+
+	#while ( (my $l=<F>) && ($cpt < $max_check) ) {			
+	while (my $l=<F>) {                           
+		##if ($l =~ /Experimental/) { #only consider "Experimental" lines
     	            	$cpt++ ;
 			my @A_line = split ("\t", $l) ;
 		
 			for my $a (0..$#A_line) { 
-				if ($A_line[$a] =~ /^\w{3}-\w{3}-\+?/) { $H_cl{$a}++ ;}
+				if ($A_line[$a] =~ /^\w{3,}-\w{3}-\+?/) { $H_cl{$a}++ ; }
 			}
-		}
+		##}
 	}
 	close F ;
 
 	#Check which column contains the ID
 	foreach my $A (keys %H_cl) {
-		if ($H_cl{$A} >= $max_check*0.95) { $column = $A ; }
+		if ($H_cl{$A} >= $max_check*0.90) { $column = $A ; }
+		print "[SUB] Testing column $A ($H_cl{$A})\n" ;
 	}
-
-	#Array position (start at 0), so real column is +1
-	$column++ ;
 
 	#If no identifier column found, make some noise and die
 	if ($column eq "") { die "ERROR! Could not identify column with miRBase identifiers in $file\n" ; }
@@ -192,6 +199,29 @@ sub fetchIDcolumn {
 }
 
 
+#Check in which column is the reporter name
+# !! give the array position, so -1 compare to real position
+use List::Util qw(first);
+sub fetchRNcolumn {
+	my $file = $_[0] ;
+	my $column ;
+
+	open (F, $file) || die "Can't open subroutine file $file\n" ;
+	while (my $l=<F>) { 
+
+		#Search for "Reporter Name"
+		if ($l =~ /Reporter Name\t/) { 
+			my @A_line = split ("\t", $l) ; 
+			$column = first { $A_line[$_] eq 'Reporter Name' } 0..$#A_line;
+			last ;
+		}
+	}	
+	close F ;
+
+	#If no identifier column found, make some noise and die
+	if ($column eq "") { die "ERROR! Could not identify column with Reporter Name in $file\n" ; }
+	return $column ;
+}
 
 
 

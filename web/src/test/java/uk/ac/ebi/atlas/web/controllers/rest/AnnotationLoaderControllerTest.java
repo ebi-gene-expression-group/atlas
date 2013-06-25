@@ -30,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
@@ -47,7 +48,7 @@ public class AnnotationLoaderControllerTest {
     public static final String SPECIES = "species";
     public static final String UPDATED = "Updated";
 
-    public static final String ARRAY_DESIGN_TYPE = "ensembl";
+    public static final ArrayDesignType ARRAY_DESIGN_TYPE = ArrayDesignType.MICRO_ARRAY;
     public static final String BIOENTITY_TYPE = "gene";
 
     AnnotationLoaderController subject;
@@ -88,7 +89,7 @@ public class AnnotationLoaderControllerTest {
     @Test
     public void testUpdateDesignElements() throws Exception {
 
-        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
+        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE.getName());
         assertThat(result, is(UPDATED));
         verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
     }
@@ -97,7 +98,7 @@ public class AnnotationLoaderControllerTest {
     public void testUpdateAllArrayDesigns() throws Exception {
 
 
-        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
+        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE.getName());
         assertThat(result, is(UPDATED));
         verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
     }
