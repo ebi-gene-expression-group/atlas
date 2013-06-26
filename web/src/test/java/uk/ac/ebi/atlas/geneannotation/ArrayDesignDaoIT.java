@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.geneannotation;
 
 import com.google.common.collect.Maps;
@@ -38,9 +60,9 @@ public class ArrayDesignDaoIT {
     @Test
     public void testSaveGetMappings() throws Exception {
         subject.saveMappings(annotations, ARRAY_DESIGN, "ensembl");
-        assertThat(subject.getIdentifier("de1", ARRAY_DESIGN), is("ens1"));
-        assertThat(subject.getIdentifier("de1", "NOT EXISRING AD"), is(nullValue()));
-        assertThat(subject.getIdentifier("not there", ARRAY_DESIGN), is(nullValue()));
+        assertThat(subject.getIdentifier(ARRAY_DESIGN, "de1"), is("ens1"));
+        assertThat(subject.getIdentifier("NOT EXISRING AD", "de1"), is(nullValue()));
+        assertThat(subject.getIdentifier(ARRAY_DESIGN, "not there"), is(nullValue()));
     }
 
     @Test
