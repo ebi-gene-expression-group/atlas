@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+
 #
 ## POD documentation - main docs before the code
 =pod
@@ -39,7 +40,7 @@ use Getopt::Long ;
 my ($file_adf, $file_out, $file_out_stats) ; # input adf file and output files
 my $file_aliases ; # miRBase file containing the deprecated & current accession/identifiers. See below for more information. 
 my %H_mirbase_aliases ; # Link miRBase accession/identifiers from all miRBase releases to the current (the latest) miRBase identifier
-
+my %H_output ; #Contains the output to print (to remove duplicate)
 
 ## Collect arguments
 GetOptions('adf=s' => \$file_adf,
@@ -99,7 +100,7 @@ close Faliases ;
 ## Identify the column with Reporter Name (based on header),
 ## Get the reporter name and the miRBase ID from that file, 
 ## find the corresponding latest miRBase ID from %H_mirbase_aliases
-## And print. 
+## And store (%H). Print later, when duplicates removed! 
 ###########
 #Identify column with miRBase identifiers
 my $col_mirID = &fetchIDcolumn($file_adf) ;
@@ -136,7 +137,11 @@ while (my $line=<Fadf>) {
         #If exists, print!
     	#Do some stats
     	if ($ID_mirbase_current ne "") {
-        	print Fout "$reporter\t$ID_mirbase_current\n" ;
+        	#print Fout "$reporter\t$ID_mirbase_current\n" ;
+
+		#Store in H to remove duplicates (if duplicated in the array!) 
+		my $print = "$reporter\t$ID_mirbase_current" ;
+		$H_output{$print} = 1 ;
 		$cpt_found++ ;
 	} else { $cpt_lost++ ; }	
 
@@ -146,6 +151,11 @@ while (my $line=<Fadf>) {
 }
 
 close Fadf ; 
+
+
+#Print the output reporter name - current miRBase ID
+foreach my $out (sort keys %H_output) {	print Fout "$out\n" ; }
+
 
 #Print the stats
 my $cpt_tot = $cpt_found + $cpt_lost ;
