@@ -76,22 +76,22 @@ public class RnaSeqExpDesignMageTabParserIT {
 
         // ERR030872	Homo sapiens	60	female	Human thyroid total RNA, lot 0908003	thyroid
         ScanNode scanNode = subject.getScanNodeForRunAccession("ERR030872");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "age"), hasItem("60"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItem("female"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("thyroid"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "age"), hasItem("60"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "sex"), hasItem("female"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "organism part"), hasItem("thyroid"));
 
         // ERR030902	Homo sapiens	19	male	Human testes total RNA, lot 05060392	testes
         scanNode = subject.getScanNodeForRunAccession("ERR030902");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "age"), hasItem("19"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItem("male"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("testis"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "age"), hasItem("19"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "sex"), hasItem("male"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "organism part"), hasItem("testis"));
 
         // ERR030871	Homo sapiens	  	  	  	16 Tissues mixture
         scanNode = subject.getScanNodeForRunAccession("ERR030871");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("16 tissues mixture"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "organism part"), hasItem("16 tissues mixture"));
     }
 
     @Test
@@ -141,23 +141,23 @@ public class RnaSeqExpDesignMageTabParserIT {
 
         // SRR307901	Homo sapiens	  	AG445	whole cell	lung	fibroblast		  	Coriell	AG445	whole cell	long polyA RNA
         ScanNode scanNode = subject.getScanNodeForRunAccession("SRR307901");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), is(emptyCollectionOf(String.class)));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell line"), hasItem("AG445"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cellular component"), hasItem("whole cell"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), hasItem("lung"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell type"), hasItem("fibroblast"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "biosource provider"), hasItem("Coriell"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "sex"), is(emptyCollectionOf(String.class)));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "cell line"), hasItem("AG445"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "cellular component"), hasItem("whole cell"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "organism part"), hasItem("lung"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "cell type"), hasItem("fibroblast"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "biosource provider"), hasItem("Coriell"));
 
         // SRR089336	Homo sapiens	female	K562	cytosol			leukemia	cancer	ATCC	K562	cytosol	long polyA RNA
         scanNode = subject.getScanNodeForRunAccession("SRR089336");
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "Organism"), hasItem("Homo sapiens"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "sex"), hasItem("female"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell line"), hasItem("K562"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cellular component"), hasItem("cytosol"));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "organism part"), is(emptyCollectionOf(String.class)));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "cell type"), is(emptyCollectionOf(String.class)));
-        assertThat(subject.findCharacteristicValueForScanNode(scanNode, "biosource provider"), hasItem("ATCC"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "Organism"), hasItem("Homo sapiens"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "sex"), hasItem("female"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "cell line"), hasItem("K562"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "cellular component"), hasItem("cytosol"));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "organism part"), is(emptyCollectionOf(String.class)));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "cell type"), is(emptyCollectionOf(String.class)));
+        assertThat(subject.findCharacteristicValueForSDRFNode(scanNode, "biosource provider"), hasItem("ATCC"));
     }
 
     @Test

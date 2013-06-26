@@ -24,14 +24,15 @@ package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.ArrayDesignAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 @Named
 @Scope("prototype")
@@ -41,8 +42,8 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
 
         Set<String> assays = Sets.newHashSet();
 
-        for (ScanNode scanNode : getScanNodes()) {
-            assays.add(scanNode.getNodeName());
+        for (HybridizationNode hybridizationNode : getHybridizationNodes()) {
+            assays.add(hybridizationNode.getNodeName());
         }
 
         return assays;
@@ -52,13 +53,7 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
 
         Set<String> factors = Sets.newHashSet();
 
-        for (ScanNode scanNode : getScanNodes()) {
-            Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
-            if (hybridizationNodes.size() != 1) {
-                throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
-            }
-
-            HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
+        for (HybridizationNode hybridizationNode : getHybridizationNodes()) {
             for (FactorValueAttribute factorValueAttribute : hybridizationNode.factorValues) {
                 factors.add(factorValueAttribute.type);
             }
@@ -67,25 +62,19 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
         return factors;
     }
 
-    ScanNode getScanNodeForAssay(String assay) {
+    HybridizationNode getHybridizationNodeForAssay(String assay) {
 
-        for (ScanNode scanNode : getScanNodes()) {
-            if (scanNode.getNodeName().equals(assay)) {
-                return scanNode;
+        for (HybridizationNode hybridizationNode : getHybridizationNodes()) {
+            if (hybridizationNode.getNodeName().equals(assay)) {
+                return hybridizationNode;
             }
         }
 
         throw new IllegalStateException("Assay has not been found in SDRF: " + assay);
     }
 
-    List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
+    List<String> findFactorValueForHybridizationNode(HybridizationNode hybridizationNode, String factor) {
 
-        Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
-        if (hybridizationNodes.size() != 1) {
-            throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
-        }
-
-        HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
         if (hybridizationNode.arrayDesigns.size() > 1) {
             throw new IllegalStateException("Assays with multiple array designs not supported.");
         }
@@ -99,14 +88,8 @@ public class MicroArrayExpDesignMageTabParser extends ExpDesignMageTabParser {
         return Collections.emptyList();
     }
 
-    String findArrayForScanNode(ScanNode scanNode) {
+    String findArrayForHybridizationNode(HybridizationNode hybridizationNode) {
 
-        Collection<HybridizationNode> hybridizationNodes = GraphUtils.findUpstreamNodes(scanNode, HybridizationNode.class);
-        if (hybridizationNodes.size() != 1) {
-            throw new IllegalStateException("There is no one to one mapping between scanNode and hybridizationNode. " + scanNode);
-        }
-
-        HybridizationNode hybridizationNode = hybridizationNodes.iterator().next();
         if (hybridizationNode.arrayDesigns.size() > 1) {
             throw new IllegalStateException("Assays with multiple array designs not supported.");
         }

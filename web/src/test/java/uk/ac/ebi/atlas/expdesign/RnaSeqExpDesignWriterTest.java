@@ -80,9 +80,9 @@ public class RnaSeqExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.extractCharacteristics()).thenReturn(characteristics);
         when(mageTabLimpopoExpDesignParserMock.extractFactors()).thenReturn(factors);
         when(mageTabLimpopoExpDesignParserMock.getScanNodeForRunAccession(RUN)).thenReturn(scanNodeMock);
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, SEX)).thenReturn(Lists.newArrayList("male"));
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60"));
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForScanNode(scanNodeMock, ORGANISM)).thenReturn(Lists.newArrayList("Homo sapiens"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForSDRFNode(scanNodeMock, SEX)).thenReturn(Lists.newArrayList("male"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForSDRFNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForSDRFNode(scanNodeMock, ORGANISM)).thenReturn(Lists.newArrayList("Homo sapiens"));
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, RNA)).thenReturn(Lists.newArrayList("total RNA"));
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForScanNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60"));
         when(mageTabLimpopoExpDesignParserMock.extractRunAccessions()).thenReturn(Sets.newHashSet(RUN));
@@ -99,9 +99,9 @@ public class RnaSeqExpDesignWriterTest {
         verify(mageTabLimpopoExpDesignParserMock).extractFactors();
         verify(mageTabLimpopoExpDesignParserMock).extractRunAccessions();
         verify(mageTabLimpopoExpDesignParserMock).getScanNodeForRunAccession(RUN);
-        verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForScanNode(scanNodeMock, SEX);
-        verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForScanNode(scanNodeMock, AGE);
-        verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForScanNode(scanNodeMock, ORGANISM);
+        verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForSDRFNode(scanNodeMock, SEX);
+        verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForSDRFNode(scanNodeMock, AGE);
+        verify(mageTabLimpopoExpDesignParserMock).findCharacteristicValueForSDRFNode(scanNodeMock, ORGANISM);
         verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNode(scanNodeMock, RNA);
         verify(mageTabLimpopoExpDesignParserMock).findFactorValueForScanNode(scanNodeMock, AGE);
 

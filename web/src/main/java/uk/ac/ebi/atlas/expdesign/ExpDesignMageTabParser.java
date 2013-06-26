@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.expdesign;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
@@ -81,11 +82,11 @@ public class ExpDesignMageTabParser {
         return characteristics;
     }
 
-    List<String> findCharacteristicValueForScanNode(ScanNode scanNode, String characteristic) {
+    List<String> findCharacteristicValueForSDRFNode(AbstractSDRFNode sdrfNode, String characteristic) {
 
-        Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(scanNode, SourceNode.class);
+        Collection<SourceNode> upstreamNodes = GraphUtils.findUpstreamNodes(sdrfNode, SourceNode.class);
         if (upstreamNodes.size() != 1) {
-            throw new IllegalStateException("There is no one to one mapping between scanNode and sourceNode for scanNode: " + scanNode);
+            throw new IllegalStateException("There is no one to one mapping between sdrfNode and sourceNode for sdrfNode: " + sdrfNode);
         }
 
         SourceNode sourceNode = upstreamNodes.iterator().next();
