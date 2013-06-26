@@ -80,6 +80,12 @@ public class ExpDesignWriterBuilderTest {
                 is((ExpDesignWriter) twoColourExpDesignWriterMock));
     }
 
+    @Test
+    public void testBuildMicroRNA() throws Exception {
+        assertThat(subject.forExperimentType(ExperimentType.MICRORNA).build(),
+                is((ExpDesignWriter) microArrayExpDesignWriterMock));
+    }
+
     @Test(expected = IllegalStateException.class)
     public void testNullType() throws Exception {
         subject.forExperimentType(null).build();

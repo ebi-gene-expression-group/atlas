@@ -51,6 +51,7 @@ public class ExperimentManagerTest {
     private static final ExperimentType DIFFERENTIAL_TYPE = ExperimentType.DIFFERENTIAL;
     private static final ExperimentType MICROARRAY_TYPE = ExperimentType.MICROARRAY;
     private static final ExperimentType TWOCOLOUR_TYPE = ExperimentType.TWOCOLOUR;
+    private static final ExperimentType MICRORNA_TYPE = ExperimentType.MICRORNA;
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
     private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
@@ -141,6 +142,13 @@ public class ExperimentManagerTest {
         verify(csvWriterMock).flush();
     }
 
+    @Test
+    public void testGenerateExpDesignForMicroRNA() throws Exception {
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, MICRORNA_TYPE);
+        verify(microArrayExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        verify(csvWriterMock).flush();
+    }
+
     @Test(expected = IllegalStateException.class)
     public void testCsvWriterIOException() throws Exception {
         Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(csvWriterMock).close();
@@ -174,14 +182,28 @@ public class ExperimentManagerTest {
     @Test
     public void testLoadArrayDesignPresent() throws Exception {
         when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(true);
-        subject.loadArrayDesign(EXPERIMENT_ACCESSION);
+        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
         verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
     }
 
     @Test
     public void testLoadArrayDesignNotPresent() throws Exception {
         when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
-        subject.loadArrayDesign(EXPERIMENT_ACCESSION);
+        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
         verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
+    }
+
+    @Test
+    public void testLoadArrayDesignMicroRNAPresent() throws Exception {
+        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(true);
+        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_RNA);
+        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_RNA);
+    }
+
+    @Test
+    public void testLoadArrayDesignMicroRNANotPresent() throws Exception {
+        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
+        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_RNA);
+        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_RNA);
     }
 }

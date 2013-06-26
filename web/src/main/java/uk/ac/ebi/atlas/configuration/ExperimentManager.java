@@ -105,14 +105,14 @@ public class ExperimentManager {
         }
     }
 
-    public void loadArrayDesign(String accession) {
+    public void loadArrayDesign(String accession, ArrayDesignType arrayDesignType) {
 
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
                 configurationTrader.getMicroarrayExperimentConfiguration(accession);
 
         for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
             if (!arrayDesignDao.isArrayDesignPresent(arrayDesign)) {
-                designElementLoader.loadMappings(arrayDesign, ArrayDesignType.MICRO_ARRAY);
+                designElementLoader.loadMappings(arrayDesign, arrayDesignType);
             }
         }
 

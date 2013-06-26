@@ -48,8 +48,10 @@ public class ConfigurationDaoIT {
     private static final ExperimentType TYPE_BASELINE = ExperimentType.BASELINE;
     private static final ExperimentType TYPE_DIFFERENTIAL = ExperimentType.DIFFERENTIAL;
     private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY;
+    private static final ExperimentType TYPE_MICRORNA = ExperimentType.MICRORNA;
     private static final String ANOTHER_ACCESION = "ANOTHER";
-    private static final String YET_ANOTHER_ACCESSION = "YETANOTHER";
+    private static final String YET_ANOTHER_ACCESSION = "YET ANOTHER";
+    private static final String YET_YET_ANOTHER_ACCESSION = "YET YET ANOTHER";
 
     @Inject
     @Qualifier("dataSource")
@@ -76,14 +78,18 @@ public class ConfigurationDaoIT {
     public void testGetExperimentConfigurationsByType() throws Exception {
         subject.addExperimentConfiguration(ANOTHER_ACCESION, TYPE_DIFFERENTIAL);
         subject.addExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY);
+        subject.addExperimentConfiguration(YET_YET_ANOTHER_ACCESSION, TYPE_MICRORNA);
         List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations(TYPE_BASELINE);
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_513, TYPE_BASELINE)));
         experimentConfigurations = subject.getExperimentConfigurations(TYPE_DIFFERENTIAL);
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(ANOTHER_ACCESION, TYPE_DIFFERENTIAL)));
         experimentConfigurations = subject.getExperimentConfigurations(TYPE_MICROARRAY);
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY)));
+        experimentConfigurations = subject.getExperimentConfigurations(TYPE_MICRORNA);
+        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(YET_YET_ANOTHER_ACCESSION, TYPE_MICRORNA)));
         subject.deleteExperimentConfiguration(ANOTHER_ACCESION);
         subject.deleteExperimentConfiguration(YET_ANOTHER_ACCESSION);
+        subject.deleteExperimentConfiguration(YET_YET_ANOTHER_ACCESSION);
     }
 
     @Test

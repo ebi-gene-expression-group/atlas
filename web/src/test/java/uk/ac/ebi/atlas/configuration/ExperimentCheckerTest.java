@@ -212,4 +212,17 @@ public class ExperimentCheckerTest {
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
     }
+
+    @Test
+    public void testCheckAllFilesPresentMicroRNA() throws Exception {
+        File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
+        String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
+        when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("microarray.normalized.data.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        subject.checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.MICRORNA);
+        verify(configurationPropertiesMock, times(4)).getProperty(anyString());
+        tempFile.delete();
+    }
 }

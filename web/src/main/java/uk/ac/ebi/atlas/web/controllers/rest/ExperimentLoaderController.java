@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.configuration.ConfigurationDao;
 import uk.ac.ebi.atlas.configuration.ExperimentChecker;
 import uk.ac.ebi.atlas.configuration.ExperimentManager;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.GeneProfileDao;
 
@@ -77,7 +78,11 @@ public class ExperimentLoaderController {
             }
 
             if (experimentType == ExperimentType.MICROARRAY || experimentType == ExperimentType.TWOCOLOUR) {
-                experimentManager.loadArrayDesign(accession);
+                experimentManager.loadArrayDesign(accession, ArrayDesignType.MICRO_ARRAY);
+            }
+
+            if (experimentType == ExperimentType.MICRORNA) {
+                experimentManager.loadArrayDesign(accession, ArrayDesignType.MICRO_RNA);
             }
 
             if (configurationDao.addExperimentConfiguration(accession, experimentType) == 1) {

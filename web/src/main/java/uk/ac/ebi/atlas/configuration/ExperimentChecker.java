@@ -96,6 +96,9 @@ public class ExperimentChecker {
             case TWOCOLOUR:
                 checkTwoColour(experimentAccession);
                 break;
+            case MICRORNA:
+                checkMicroarray(experimentAccession);
+                break;
             default:
                 LOGGER.error("<checkAllFilesPresent> The specified experiment type is not supported.");
                 throw new IllegalStateException("The specified experiment type is not supported.");
