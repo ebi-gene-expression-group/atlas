@@ -27,14 +27,13 @@ import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Set;
-import java.util.SortedSet;
 
 
 public abstract class RequestContext<T, K extends ExperimentPageRequestPreferences> {
     private K requestPreferences;
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
-    private SortedSet<T> allQueryFactors;
+    private Set<T> allQueryFactors;
     private GeneQueryResponse geneQueryResponse;
 
     public GeneQueryResponse getGeneQueryResponse() {
@@ -77,11 +76,11 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return getRequestPreferences().isGeneSetMatch();
     }
 
-    public SortedSet<T> getAllQueryFactors() {
+    public Set<T> getAllQueryFactors() {
         return allQueryFactors;
     }
 
-    void setAllQueryFactors(SortedSet<T> allQueryFactors) {
+    void setAllQueryFactors(Set<T> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
     }
 

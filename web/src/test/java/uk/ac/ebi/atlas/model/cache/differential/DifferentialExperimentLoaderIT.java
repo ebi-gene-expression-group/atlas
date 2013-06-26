@@ -70,7 +70,7 @@ public class DifferentialExperimentLoaderIT {
 
         //then
         assertThat(experiment.getContrasts().size(), is(1));
-        assertThat(experiment.getContrasts().first().getDisplayName(), startsWith("genotype:'expressing"));
+        assertThat(experiment.getContrasts().iterator().next().getDisplayName(), startsWith("genotype:'expressing"));
     }
 
     @Test

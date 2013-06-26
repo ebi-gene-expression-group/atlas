@@ -32,8 +32,8 @@ import static org.hamcrest.Matchers.*;
 
 public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
 
-    public static final String OTHER = "genotype:'cycC mutant' vs 'wild type'";
-    public static final String DEFAULT = "genotype:'cdk8 mutant' vs 'wild type'";
+    public static final String DEFAULT = "genotype:'cycC mutant' vs 'wild type'";
+    public static final String OTHER = "genotype:'cdk8 mutant' vs 'wild type'";
     private MicroarrayExperimentDesignTablePage subject;
 
     @Before
@@ -54,8 +54,8 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(MicroarrayExperimentDesignTablePage.EXPERIMENT_ACCESSION + "/experiment-design.tsv"));
 
         // and
-        assertThat(subject.getLineColor(1), is("transparent"));
-        assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
+        assertThat(subject.getLineColor(1), is("rgba(130, 205, 205, 1)"));
+        assertThat(subject.getLineColor(4), is("transparent"));
         assertThat(subject.getLineColor(9), is("rgba(255, 194, 102, 1)"));
 
     }
@@ -67,13 +67,31 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         subject.selectContrast("g2_g1");
 
         // then
-        assertThat(subject.getSelectedContrast(), is(OTHER));
+        assertThat(subject.getSelectedContrast(), is(DEFAULT));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
         assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(130, 205, 205, 1)"));
         assertThat(subject.getLineColor(4), is("transparent"));
+        assertThat(subject.getLineColor(9), is("rgba(255, 194, 102, 1)"));
+
+    }
+
+    @Test
+    public void testSelectAnotherContrast() {
+
+        // given
+        subject.selectContrast("g2_g3");
+
+        // then
+        assertThat(subject.getSelectedContrast(), is(OTHER));
+        assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
+        assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
+
+        // and
+        assertThat(subject.getLineColor(1), is("transparent"));
+        assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
         assertThat(subject.getLineColor(9), is("rgba(255, 194, 102, 1)"));
 
     }

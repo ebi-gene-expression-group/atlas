@@ -16,7 +16,7 @@ public class DifferentialExperimentConfiguration {
 
     public Set<Contrast> getContrasts() {
 
-        Set<Contrast> contrasts = Sets.newHashSet();
+        Set<Contrast> contrasts = Sets.newLinkedHashSet();
         String[] ids = xmlConfiguration.getStringArray("analytics/contrasts/contrast/@id");
         for (String id : ids) {
             Contrast contrast = getContrast(id);

@@ -97,7 +97,7 @@ public class MicroarrayProfilesInputStreamIT {
 
         MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
-        contrast = microarrayExperiment.getContrasts().first();
+        contrast = microarrayExperiment.getContrasts().toArray(new Contrast[0])[1];
 
         microarrayRequestPreferences.setArrayDesignAccession(ARRAY_DESIGN_ACCESSION);
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)

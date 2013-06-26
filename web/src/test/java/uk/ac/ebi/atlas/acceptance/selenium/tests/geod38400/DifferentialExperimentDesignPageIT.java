@@ -46,7 +46,7 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
     public void testContrastDefault() {
 
         // given
-        assertThat(subject.getSelectedContrast(), is(IDN2_MUTANT_VS_WILD_TYPE));
+        assertThat(subject.getSelectedContrast(), is(NRPE1_MUTANT_VS_WILD_TYPE));
 
         // then
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
@@ -55,8 +55,8 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(255, 194, 102, 1)"));
-        assertThat(subject.getLineColor(4), is("transparent"));
-        assertThat(subject.getLineColor(10), is("rgba(130, 205, 205, 1)"));
+        assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
+        assertThat(subject.getLineColor(10), is("transparent"));
 
     }
 

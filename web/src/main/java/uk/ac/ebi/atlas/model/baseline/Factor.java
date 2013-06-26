@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.baseline;
 import com.google.common.base.Objects;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -83,7 +84,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return value.compareTo(factor.value);
     }
 
-    public static SortedSet<String> getValues(SortedSet<Factor> factors) {
+    public static SortedSet<String> getValues(Set<Factor> factors) {
         SortedSet<String> result = new TreeSet<>();
         for (Factor factor : factors) {
             result.add(factor.getValue());
