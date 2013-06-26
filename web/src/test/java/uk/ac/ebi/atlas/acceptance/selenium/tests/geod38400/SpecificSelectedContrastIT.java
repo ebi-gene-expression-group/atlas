@@ -20,7 +20,7 @@ public class SpecificSelectedContrastIT extends SeleniumFixture {
         assertThat(subject.getQueryFactorLabel(), is("Contrast"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(3));
-        assertThat(subject.getFactorValueHeaders().get(0), startsWith("idn2"));
+        assertThat(subject.getFactorValueHeaders().get(0), startsWith("nrpe1"));
     }
 
     @Test
@@ -33,11 +33,11 @@ public class SpecificSelectedContrastIT extends SeleniumFixture {
         assertThat(subject.getSelectedProfiles().subList(0, 3), contains("T5N23_130", "AT3G29644", "GRXS4"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
+        assertThat(subject.getGeneProfile(1).get(2), is("<10-10"));
 
         assertThat(subject.getGeneProfile(2).size(), is(3));
-        assertThat(subject.getGeneProfile(2).get(0), is("6.64"+ " \u00D7 " + "10-9"));
-        assertThat(subject.getGeneProfile(2).get(1), is("0.014"));
+        assertThat(subject.getGeneProfile(2).get(0), is("0.014"));
+        assertThat(subject.getGeneProfile(2).get(2), is("6.64" + " \u00D7 " + "10-9"));
     }
 
 }

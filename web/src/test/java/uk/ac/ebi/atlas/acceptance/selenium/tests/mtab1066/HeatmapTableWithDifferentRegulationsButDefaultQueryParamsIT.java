@@ -46,12 +46,12 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Irc", "CG8303", "Ykt6"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is(""));
-        assertThat(subject.getGeneProfile(1).get(1), is("4.32 × 10-4"));
+        assertThat(subject.getGeneProfile(1).get(0), is("4.32 × 10-4"));
+        assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("0.004"));
-        assertThat(subject.getLastGeneProfile().get(1), is("6.23 × 10-4"));
+        assertThat(subject.getLastGeneProfile().get(0), is("6.23 × 10-4"));
+        assertThat(subject.getLastGeneProfile().get(1), is("0.004"));
     }
 
     @Test
@@ -64,12 +64,12 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getSelectedProfiles().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is(""));
-        assertThat(subject.getGeneProfile(1).get(1), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("0.043"));
-        assertThat(subject.getLastGeneProfile().get(1), is(""));
+        assertThat(subject.getLastGeneProfile().get(0), is(""));
+        assertThat(subject.getLastGeneProfile().get(1), is("0.043"));
     }
 
     @Test
@@ -82,12 +82,12 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getSelectedProfiles().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is(""));
-        assertThat(subject.getGeneProfile(1).get(1), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is(""));
-        assertThat(subject.getLastGeneProfile().get(1), is("0.022"));
+        assertThat(subject.getLastGeneProfile().get(0), is("0.022"));
+        assertThat(subject.getLastGeneProfile().get(1), is(""));
     }
 
     @Test
@@ -95,12 +95,12 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
 
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(1, 0, ExperimentType.MICROARRAY), is("Adjusted P-value"));
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(1, 1, ExperimentType.MICROARRAY), is("T-statistic"));
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(1, 2, ExperimentType.MICROARRAY), startsWith("Log2-fold"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(1, 0, ExperimentType.MICROARRAY), is("8.36 × 10-6"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(1, 1, ExperimentType.MICROARRAY), is("-19.16"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(1, 2, ExperimentType.MICROARRAY), is("-1.56"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, ExperimentType.MICROARRAY), is("Adjusted P-value"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 1, ExperimentType.MICROARRAY), is("T-statistic"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 2, ExperimentType.MICROARRAY), startsWith("Log2-fold"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, ExperimentType.MICROARRAY), is("8.36 × 10-6"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 1, ExperimentType.MICROARRAY), is("-19.16"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 2, ExperimentType.MICROARRAY), is("-1.56"));
     }
 
 }

@@ -36,7 +36,7 @@ public class MaPlotButtonsIT extends SeleniumFixture {
     protected HeatmapTableWithMaPlotButtonsPage subject;
 
     @Before
-    public void initSubject(){
+    public void initSubject() {
         subject = new HeatmapTableWithMaPlotButtonsPage(driver, E_MTAB_1066_ACCESSION);
         subject.get();
     }
@@ -44,7 +44,7 @@ public class MaPlotButtonsIT extends SeleniumFixture {
     @Test
     public void verifyButtonClick() {
         HeatmapTableWithMaPlotButtonsPage page = subject.clickMaPlotButton(0);
-        assertThat(page.getMaPlotImageAnchor(), endsWith("E-MTAB-1066/A-AFFY-35/g2_g3/ma-plot.png"));
+        assertThat(page.getMaPlotImageAnchor(), endsWith("E-MTAB-1066/A-AFFY-35/g2_g1/ma-plot.png"));
     }
 
 }

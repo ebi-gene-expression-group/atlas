@@ -64,7 +64,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     }
 
     @Override
-    protected String[] getConditionColumnHeaders(SortedSet<Contrast> conditions) {
+    protected String[] getConditionColumnHeaders(Set<Contrast> conditions) {
         List<String> conditionColumnHeaders = new ArrayList<>();
 
         List<String> attributeLabels = getExpressionColumnsHeaders();
@@ -110,7 +110,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     }
 
     @Override
-    protected String[] extractConditionLevels(T geneProfile, SortedSet<Contrast> contrasts) {
+    protected String[] extractConditionLevels(T geneProfile, Set<Contrast> contrasts) {
 
         String[] conditionLevelStrings = null;
 

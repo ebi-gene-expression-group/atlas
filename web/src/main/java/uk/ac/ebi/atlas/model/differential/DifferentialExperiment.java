@@ -28,16 +28,16 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkState;
 
 public class DifferentialExperiment extends Experiment {
 
-    private Map<String, Contrast> contrastsById = Maps.newHashMap();
+    private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
     public DifferentialExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, List<String> pubMedIds, ExperimentDesign experimentDesign) {
         this(ExperimentType.DIFFERENTIAL, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
@@ -50,10 +50,8 @@ public class DifferentialExperiment extends Experiment {
         }
     }
 
-    public SortedSet<Contrast> getContrasts() {
-        SortedSet<Contrast> contrasts = Sets.newTreeSet();
-        contrasts.addAll(contrastsById.values());
-        return contrasts;
+    public Set<Contrast> getContrasts() {
+        return Sets.newLinkedHashSet(contrastsById.values());
     }
 
     public Contrast getContrast(String contrastId) {
@@ -62,8 +60,8 @@ public class DifferentialExperiment extends Experiment {
         return contrast;
     }
 
-    public SortedSet<String> getContrastIds() {
-        return Sets.newTreeSet(contrastsById.keySet());
+    public Set<String> getContrastIds() {
+        return Collections.unmodifiableSet(contrastsById.keySet());
     }
 
     public Set<String> getAssayAccessions() {
