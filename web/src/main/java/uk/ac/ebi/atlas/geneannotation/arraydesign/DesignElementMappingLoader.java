@@ -17,7 +17,7 @@ public class DesignElementMappingLoader {
     @Value("#{configuration['de.mapping.gxa.server.url']}")
     private String gxaMappingUrl;
 
-    @Value("#{configuration['de.microrna.mapping.path.template']}")
+    @Value("#{configuration['de.mirna.mapping.path.template']}")
     private String micrornaMappingPath;
 
 

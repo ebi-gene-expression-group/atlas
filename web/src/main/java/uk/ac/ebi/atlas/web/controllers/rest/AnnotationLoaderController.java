@@ -63,6 +63,15 @@ public class AnnotationLoaderController {
         return "Updated";
     }
 
+    @RequestMapping("/updateMiRnaAnnotations")
+    @ResponseBody
+    public String updateMiRnaAnnotations() {
+
+        int count = geneNamesImportCommand.loadMiRnaNames();
+
+        return "Updated " + count + " miRNA names";
+    }
+
     @RequestMapping("/updateAllAnnotations")
     @ResponseBody
 //ToDo: this will not work once we add MicroRna
@@ -75,7 +84,7 @@ public class AnnotationLoaderController {
     @RequestMapping("/updateDesignElements")
     @ResponseBody
     public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign,
-                                       @RequestParam(value="type", required = false) String type) {
+                                       @RequestParam(value = "type", required = false) String type) {
         //ToDo: maybe create Command similar to GeneNamesImportCommand
         ArrayDesignType arrayDesignType;
         if (StringUtils.isEmpty(type)) {

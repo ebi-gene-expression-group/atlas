@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.geneannotation.mirna;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.inject.Named;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,8 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Named
 public class MirbaseFastaParser {
 
+    @Value("#{configuration['mirbase.fasta.path.template']}")
     private String miRnaFastaLocation;
 
     public static final String NEW_ENTRY_SYMBOL = ">";
