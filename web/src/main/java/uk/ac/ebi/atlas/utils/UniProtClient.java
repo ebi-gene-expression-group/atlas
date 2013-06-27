@@ -25,7 +25,9 @@ package uk.ac.ebi.atlas.utils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
@@ -39,6 +41,8 @@ public class UniProtClient {
 
     public static final String UNIPROT_URL = "http://www.ebi.uniprot.org/uniprot/?query=accession:{0}&format=tab&columns=id,database(reactome)";
 
+    private static final Logger LOGGER = Logger.getLogger(UniProtClient.class);
+
     private RestTemplate restTemplate;
 
     @Inject
@@ -48,9 +52,14 @@ public class UniProtClient {
 
     public Collection<String> fetchReactomeIds(String uniprotId) {
         String url = MessageFormat.format(UNIPROT_URL, uniprotId);
-        String result = restTemplate.getForObject(url, String.class);
 
-        return parseResult(result);
+        try {
+            String result = restTemplate.getForObject(url, String.class);
+            return parseResult(result);
+        } catch (HttpServerErrorException e) {
+            LOGGER.error(e);
+            return Lists.newArrayList();
+        }
     }
 
     protected Collection<String> parseResult(String entryString) {
