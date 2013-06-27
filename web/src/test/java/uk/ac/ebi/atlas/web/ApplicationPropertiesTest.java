@@ -59,18 +59,14 @@ public class ApplicationPropertiesTest {
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String ARRAYEXPRESS_REST_URL = "http://www.ebi.ac.uk/arrayexpressrest/";
     private static final String EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE = "experiment.arrayexpress.rest.url.template";
-    private static final String BASELINE_PROPERTY_KEY = "baseline.experiment.identifiers";
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_MTAB_599 = "E-MTAB-599";
     private static final String LIST_SEPARATOR = ",";
     private static final String E_MTAB_1066 = "E-MTAB-1066";
     private static final String E_GEOD_43049 = "E-GEOD-43049";
-    private static final String DIFFERENTIAL_PROPERTY_KEY = "differential.experiment.identifiers";
     private static final String E_GEOD_22351 = "E-GEOD-22351";
     private static final String E_GEOD_38400 = "E-GEOD-38400";
     private static final String E_GEOD_21860 = "E-GEOD-21860";
-    private static final String MICROARRAY_PROPERTY_KEY = "microarray.experiment.identifiers";
-    private static final String TWOCOLOUR_PROPERTY_KEY = "twocolour.experiment.identifiers";
     private static final String BIOMART_DATASET_NAMES = "biomart.dataset.names";
     private static final String A_AFFY_35 = "A-AFFY-35";
     private static final String A_AGIL_28 = "A-AGIL-28";
@@ -82,6 +78,7 @@ public class ApplicationPropertiesTest {
     private static final String EXPERIMENT_ATLAS_URL_TEMPLATE = "experiment.atlas.url.template";
     private static final String ATLAS_URL = "http://www-test.ebi.ac.uk/gxa/experiments/";
     private static final String PUB_MED_ID = "123456";
+    private static final String E_TABM_713 = "E-TABM-713";
 
     @Mock
     private BaselineExperiment homoSapiensExperimentMock;
@@ -111,7 +108,6 @@ public class ApplicationPropertiesTest {
         when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_REST_URL + "{0}");
         when(configurationMock.getProperty(FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
 
-        when(configurationMock.getProperty(TWOCOLOUR_PROPERTY_KEY)).thenReturn(E_GEOD_43049);
         when(configurationMock.getProperty(BIOMART_DATASET_NAMES)).thenReturn(HOMO_SAPIENS_SPECIE + LIST_SEPARATOR + MOUSE_SPECIE);
         when(configurationMock.getProperty(ARRAYDESIGN_PROPERTY_KEY)).thenReturn(A_AFFY_35 + LIST_SEPARATOR + A_AGIL_28);
         when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_ARRAYS_URL + "{0}");
@@ -137,6 +133,9 @@ public class ApplicationPropertiesTest {
 
         ExperimentConfiguration egeod43049 = new ExperimentConfiguration(E_GEOD_43049, ExperimentType.TWOCOLOUR);
         when(configurationDaoMock.getExperimentConfigurations(ExperimentType.TWOCOLOUR)).thenReturn(Lists.newArrayList(egeod43049));
+
+        ExperimentConfiguration etabm713 = new ExperimentConfiguration(E_TABM_713, ExperimentType.MICRORNA);
+        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.MICRORNA)).thenReturn(Lists.newArrayList(etabm713));
 
         subject = new ApplicationProperties(configurationMock, configurationDaoMock);
     }
@@ -196,12 +195,17 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void testGetMicroarrayExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066, E_GEOD_43049));
+        assertThat(subject.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066, E_GEOD_43049, E_TABM_713));
     }
 
     @Test
     public void testGetTwoColourExperimentsIdentifiers() throws Exception {
         assertThat(subject.getTwoColourExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_43049));
+    }
+
+    @Test
+    public void testGetMicroRNAExperimentsIdentifiers() throws Exception {
+        assertThat(subject.getMicroRNAExperimentsIdentifiers(), containsInAnyOrder(E_TABM_713));
     }
 
     @Test

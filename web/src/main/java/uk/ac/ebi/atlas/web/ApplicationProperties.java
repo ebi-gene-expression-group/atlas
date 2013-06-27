@@ -101,12 +101,18 @@ public class ApplicationProperties {
         Set<String> identifiersForType = getExperimentIdentifiersForType(ExperimentType.MICROARRAY);
         // as two colour is a subtype of micro array, they need to be added here
         identifiersForType.addAll(getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR));
+        identifiersForType.addAll(getExperimentIdentifiersForType(ExperimentType.MICRORNA));
         return identifiersForType;
     }
 
     public Set<String> getTwoColourExperimentsIdentifiers() {
         // this type distinction is required for SDRF parsing
         return getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR);
+    }
+
+    public Set<String> getMicroRNAExperimentsIdentifiers() {
+        // currently not yet used
+        return getExperimentIdentifiersForType(ExperimentType.MICRORNA);
     }
 
     public Set<String> getBiomartDatasetIdentifiers() {

@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.configuration.ConfigurationDao;
 import uk.ac.ebi.atlas.configuration.ExperimentChecker;
 import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
 import uk.ac.ebi.atlas.configuration.ExperimentManager;
+import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.GeneProfileDao;
 
@@ -49,6 +50,7 @@ public class ExperimentLoaderControllerTest {
     private static final String DIFFERENTIAL_TYPE = "DIFFERENTIAL";
     private static final String MICROARRAY_TYPE = "MICROARRAY";
     private static final String TWOCOLOUR_TYPE = "TWOCOLOUR";
+    private static final String MICRORNA_TYPE = "MICRORNA";
     private static final String NON_EXISTING_TYPE = "NON-EXISTING-TYPE";
 
     @Mock
@@ -84,7 +86,7 @@ public class ExperimentLoaderControllerTest {
     public void testLoadExpDesignForBaseline() throws Exception {
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(1)).loadTranscripts(EXPERIMENT_ACCESSION);
-        verify(experimentManagerMock, times(0)).loadArrayDesign(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(0)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
     }
 
     @Test
@@ -93,7 +95,7 @@ public class ExperimentLoaderControllerTest {
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(DIFFERENTIAL_TYPE))).thenReturn(1);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, DIFFERENTIAL_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
-        verify(experimentManagerMock, times(0)).loadArrayDesign(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(0)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
     }
 
     @Test
@@ -102,7 +104,7 @@ public class ExperimentLoaderControllerTest {
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICROARRAY_TYPE))).thenReturn(1);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, MICROARRAY_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
-        verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
     }
 
     @Test
@@ -111,7 +113,16 @@ public class ExperimentLoaderControllerTest {
         when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(TWOCOLOUR_TYPE))).thenReturn(1);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
-        verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
+    }
+
+    @Test
+    public void testLoadExpDesignMicroRNA() throws Exception {
+        when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, MICRORNA_TYPE)).thenReturn(ExperimentType.MICRORNA);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICRORNA_TYPE))).thenReturn(1);
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, MICRORNA_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
+        verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_RNA);
     }
 
     @Test

@@ -568,7 +568,7 @@
             <properties>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <integration.experiment.identifiers>
-                    E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713
+                    E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713
                 </integration.experiment.identifiers>
             </properties>
         </profile>
@@ -581,7 +581,7 @@
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <h2.database.location>${user.home}/ATLAS3.TEST/data/h2/atlas</h2.database.location>
                 <integration.experiment.identifiers>
-                    E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713
+                    E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713
                 </integration.experiment.identifiers>
             </properties>
         </profile>
