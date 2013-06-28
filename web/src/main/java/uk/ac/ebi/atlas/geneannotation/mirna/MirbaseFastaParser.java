@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Named;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 @Named
 public class MirbaseFastaParser {
@@ -27,12 +28,10 @@ public class MirbaseFastaParser {
 
     public List<MiRNAEntity> parse() {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(miRnaFastaLocation))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new GZIPInputStream(new URL(miRnaFastaLocation).openConnection().getInputStream())))) {
 
             return readData(br);
 
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException("Cannot find miRBase fasta file in " + miRnaFastaLocation, e);
         } catch (IOException e) {
             throw new IllegalStateException("Cannot find miRBase fasta file in " + miRnaFastaLocation, e);
         }
@@ -57,7 +56,7 @@ public class MirbaseFastaParser {
             }
 
         }
-        return  entries;
+        return entries;
     }
 
     protected ArrayList<String> splitLine(String line) {
