@@ -76,12 +76,15 @@ public class TranscriptContributionsCalculator {
 
         double sum = 0d;
 
+        int expressedTranscriptsCount = 0;
+
         for (int i = 0; i < transcriptProfiles.size(); i++) {
             TranscriptProfile transcriptProfile = transcriptProfiles.get(i);
             double expression = transcriptProfile.getExpression(factorIndex);
             if (i < TOP_TRANSCRIPTS_NUMBER) {
                 if (expression != 0d) {
                     transcriptContributions.put(transcriptProfile.getTranscriptId(), expression);
+                    expressedTranscriptsCount++;
                 }
             } else {
                 sum += expression;
@@ -91,6 +94,8 @@ public class TranscriptContributionsCalculator {
         if (sum > 0d) {
             transcriptContributions.put(TranscriptContributions.OTHERS, sum);
         }
+
+        transcriptContributions.setExpressedTranscriptsCount(expressedTranscriptsCount);
 
         return transcriptContributions;
     }
