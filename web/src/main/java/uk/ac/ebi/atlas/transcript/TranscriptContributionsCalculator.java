@@ -50,13 +50,13 @@ public class TranscriptContributionsCalculator {
         this.experimentsCache = experimentsCache;
     }
 
-    public TranscriptContributions getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup, double cutoff) {
+    public TranscriptContributions getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup) {
 
         List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(experimentAccession, geneId));
 
         int factorIndex = getFactorIndex(experimentAccession, factorGroup);
 
-        return createTranscriptContributions(transcriptProfiles, factorIndex, cutoff);
+        return createTranscriptContributions(transcriptProfiles, factorIndex);
     }
 
     int getFactorIndex(String experimentAccession, FactorGroup factorGroup) {
@@ -67,7 +67,7 @@ public class TranscriptContributionsCalculator {
         return experimentalFactors.getFactorIndex(factorGroup);
     }
 
-    TranscriptContributions createTranscriptContributions(List<TranscriptProfile> transcriptProfiles, int factorIndex, double cutoff) {
+    TranscriptContributions createTranscriptContributions(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
         Collections.sort(transcriptProfiles, getReverseTranscriptProfileComparator(factorIndex));
 
         TranscriptContributions transcriptContributions = new TranscriptContributions();
@@ -81,7 +81,7 @@ public class TranscriptContributionsCalculator {
         for (int i = 0; i < transcriptProfiles.size(); i++) {
             TranscriptProfile transcriptProfile = transcriptProfiles.get(i);
             double expression = transcriptProfile.getExpression(factorIndex);
-            if (expression > cutoff) {
+            if (expression != 0d) {
                 expressedTranscriptsCount++;
             }
             if (i < TOP_TRANSCRIPTS_NUMBER) {

@@ -57,8 +57,7 @@ public class RankedGeneTranscriptsController {
                                        @RequestParam("factorType") String factorType,
                                        @RequestParam("factorValue") String factorValue,
                                        @RequestParam("selectedFilterFactorsJson") String selectedFilterFactorsJson,
-                                       @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize,
-                                       @RequestParam(value = "cutoff", defaultValue = "0.05") Double cutoff) {
+                                       @RequestParam(value = "rankingSize", defaultValue = "3") Integer rankingSize) {
 
         Factor selectedQueryFactor = new Factor(factorType, factorValue);
         FactorSet selectedFactorGroup = new FactorSet().add(selectedQueryFactor);
@@ -68,7 +67,7 @@ public class RankedGeneTranscriptsController {
         Collection<Factor> selectedFilterFactors = gson.fromJson(selectedFilterFactorsJson, factorsCollectionType);
         selectedFactorGroup.addAll(selectedFilterFactors);
 
-        TranscriptContributions transcriptContributions = transcriptContributionsCalculator.getTranscriptsContribution(geneId, experimentAccession, selectedFactorGroup, cutoff);
+        TranscriptContributions transcriptContributions = transcriptContributionsCalculator.getTranscriptsContribution(geneId, experimentAccession, selectedFactorGroup);
 
         return gson.toJson(transcriptContributions, TranscriptContributions.class);
 

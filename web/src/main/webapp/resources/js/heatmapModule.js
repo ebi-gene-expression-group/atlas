@@ -91,7 +91,7 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson, cutoff) { //binds heatmap cells click handler
+    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson) { //binds heatmap cells click handler
 
         function buildPlotData(transcriptRates) {
             var data = [],
@@ -152,8 +152,7 @@ var heatmapModule = (function ($) {
                     'geneId':geneId,
                     'factorType':factorType,
                     'factorValue':factorValue,
-                    'selectedFilterFactorsJson':JSON.stringify(selectedFilterFactorsJson),
-                    'cutoff':cutoff
+                    'selectedFilterFactorsJson':JSON.stringify(selectedFilterFactorsJson)
                 },
                 datatype:'json',
                 success:function (data) {
@@ -176,7 +175,7 @@ var heatmapModule = (function ($) {
                         "<a id='geneid' href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
                         "' target='_blank'" + "title='View gene in Ensembl'" + ">" + geneName + "</a> in " + factorValue +
                         "<br/>" + expressedCount + " out of " + totalCount + " transcript" + s +
-                        " are expressed above the expression level cutoff.");
+                        " are expressed.");
 
                 }
             }).fail(function (data) {
@@ -299,7 +298,7 @@ var heatmapModule = (function ($) {
     }
 
     function initTranscriptBreakdownFancyBox(experimentAccession, parameters) {
-        initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson, parameters.cutoff);
+        initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
 
         $('#geneid').tooltip();
         $('#transcript-breakdown-title-help').tooltip();
@@ -335,13 +334,12 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget, cutoff) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget) {
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
             geneSetMatch:geneSetMatch,
-            isWidget:isWidget,
-            cutoff:cutoff
+            isWidget:isWidget
         });
     }
 

@@ -45,14 +45,14 @@ public class TranscriptBreakdownPlotIT extends SeleniumFixture {
     @Test
     public void verifyButtonClickFirstProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 2);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for mt-Atp8 in liver\n1 out of 1 transcript are expressed above the expression level cutoff."));
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for mt-Atp8 in liver\n1 out of 1 transcript are expressed."));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENSMUST00000082407"));
     }
 
     @Test
     public void verifyButtonClickSecondProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(1, 3);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for Sftpc in lung\n1 out of 1 transcript are expressed above the expression level cutoff."));
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for Sftpc in lung\n1 out of 1 transcript are expressed."));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENSMUST00000022692"));
     }
 

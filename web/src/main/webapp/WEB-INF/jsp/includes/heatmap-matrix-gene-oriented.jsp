@@ -189,7 +189,7 @@
 
                 var isWidget = ${isWidget != null? isWidget : false};
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget, ${preferences.cutoff});
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget);
 
             } else if (${type == "MICROARRAY"}) {
 
