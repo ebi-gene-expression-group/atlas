@@ -69,7 +69,7 @@ public class TranscriptContributionsCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile4, profile3, profile2, profile1);
 
         //when
-        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1);
+        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1, 0);
 
         //then
         assertThat(topThreeTranscriptContributions.getTranscriptExpressions().keySet(), contains("T4", "T3", "T2", TranscriptContributions.OTHERS));
@@ -83,7 +83,7 @@ public class TranscriptContributionsCalculatorTest {
         transcriptProfiles = Lists.newArrayList(profile2, profile4);
 
         //when
-        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1);
+        TranscriptContributions topThreeTranscriptContributions = subject.createTranscriptContributions(transcriptProfiles, 1, 0);
 
         //then
         assertThat(topThreeTranscriptContributions.getTranscriptExpressions().keySet(), contains("T4", "T2"));

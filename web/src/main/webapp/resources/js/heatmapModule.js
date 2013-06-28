@@ -91,7 +91,7 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson) { //binds heatmap cells click handler
+    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson, cutoff) { //binds heatmap cells click handler
 
         function buildPlotData(transcriptRates) {
             var data = [],
@@ -152,7 +152,8 @@ var heatmapModule = (function ($) {
                     'geneId':geneId,
                     'factorType':factorType,
                     'factorValue':factorValue,
-                    'selectedFilterFactorsJson':JSON.stringify(selectedFilterFactorsJson)
+                    'selectedFilterFactorsJson':JSON.stringify(selectedFilterFactorsJson),
+                    'cutoff':0.05
                 },
                 datatype:'json',
                 success:function (data) {
@@ -298,7 +299,7 @@ var heatmapModule = (function ($) {
     }
 
     function initTranscriptBreakdownFancyBox(experimentAccession, parameters) {
-        initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
+        initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson, parameters.cutoff);
 
         $('#geneid').tooltip();
         $('#transcript-breakdown-title-help').tooltip();
@@ -334,12 +335,13 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget, cutoff) {
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
             geneSetMatch:geneSetMatch,
-            isWidget:isWidget
+            isWidget:isWidget,
+            cutoff:cutoff
         });
     }
 

@@ -80,9 +80,9 @@ public class RankedGeneTranscriptsControllerTest {
         transcriptContributions.put(TRANSCRIPT_2, 0.4);
         transcriptContributions.put(TRANSCRIPT_3, 0.1);
 
-        when(transcriptContributionsCalculatorMock.getTranscriptsContribution(GENE_ID, EXPERIMENT_ACCESSION, factorSet)).thenReturn(transcriptContributions);
+        when(transcriptContributionsCalculatorMock.getTranscriptsContribution(GENE_ID, EXPERIMENT_ACCESSION, factorSet, 0d)).thenReturn(transcriptContributions);
 
-        String rankedTranscripts = subject.getRankedTranscripts(requestMock, EXPERIMENT_ACCESSION, GENE_ID, FACTOR_TYPE, FACTOR_VALUE, SELECTED_FILTER_FACTORS_JSON, 3);
+        String rankedTranscripts = subject.getRankedTranscripts(requestMock, EXPERIMENT_ACCESSION, GENE_ID, FACTOR_TYPE, FACTOR_VALUE, SELECTED_FILTER_FACTORS_JSON, 3, 0d);
         assertThat(rankedTranscripts, containsString("7"));
         assertThat(rankedTranscripts, containsString(TRANSCRIPT_1));
         assertThat(rankedTranscripts, containsString(TRANSCRIPT_2));

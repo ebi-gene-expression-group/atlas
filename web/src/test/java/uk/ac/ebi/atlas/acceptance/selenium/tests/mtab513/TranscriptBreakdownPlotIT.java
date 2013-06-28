@@ -52,7 +52,7 @@ public class TranscriptBreakdownPlotIT extends SeleniumFixture {
     @Test
     public void verifyButtonClickSecondProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(1, 14);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for TEX33 in testis\n3 out of 4 transcripts are expressed above the expression level cutoff."));
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for TEX33 in testis\n4 out of 4 transcripts are expressed above the expression level cutoff."));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000442538", "ENST00000381821", "ENST00000405091", "Others"));
     }
 
