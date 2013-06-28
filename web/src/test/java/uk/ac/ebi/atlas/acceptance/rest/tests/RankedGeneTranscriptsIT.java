@@ -45,7 +45,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":1,\"transcriptExpressions\":{\"ENST00000390503\":7332.0}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":1,\"expressedTranscriptsCount\":1,\"transcriptExpressions\":{\"ENST00000390503\":7332.0}}"));
 
 
     }
@@ -56,7 +56,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":4,\"transcriptExpressions\":{\"ENST00000417459\":0.7,\"ENST00000370832\":0.4}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":4,\"expressedTranscriptsCount\":2,\"transcriptExpressions\":{\"ENST00000417459\":0.7,\"ENST00000370832\":0.4}}"));
 
 
     }
@@ -67,7 +67,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":8,\"transcriptExpressions\":{\"ENST00000396133\":1.0,\"ENST00000520509\":0.6,\"ENST00000308108\":0.5}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":8,\"expressedTranscriptsCount\":3,\"transcriptExpressions\":{\"ENST00000396133\":1.0,\"ENST00000520509\":0.6,\"ENST00000308108\":0.5}}"));
 
 
     }
@@ -78,7 +78,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":20,\"transcriptExpressions\":{\"ENST00000377456\":1.0,\"ENST00000421826\":0.6,\"ENST00000492575\":0.6,\"Others\":0.1}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":20,\"expressedTranscriptsCount\":3,\"transcriptExpressions\":{\"ENST00000377456\":1.0,\"ENST00000421826\":0.6,\"ENST00000492575\":0.6,\"Others\":0.1}}"));
 
 
     }
@@ -90,7 +90,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":1,\"transcriptExpressions\":{\"ENSMUST00000082407\":1151225.0}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":1,\"expressedTranscriptsCount\":1,\"transcriptExpressions\":{\"ENSMUST00000082407\":1151225.0}}"));
 
 
     }
@@ -101,7 +101,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":2,\"transcriptExpressions\":{\"ENSMUST00000022314\":905.0,\"ENSMUST00000170719\":584.0}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":2,\"expressedTranscriptsCount\":2,\"transcriptExpressions\":{\"ENSMUST00000022314\":905.0,\"ENSMUST00000170719\":584.0}}"));
 
 
     }
@@ -112,7 +112,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":3,\"transcriptExpressions\":{\"ENSMUST00000107490\":199.0,\"ENSMUST00000148940\":93.0,\"ENSMUST00000074700\":19.0}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":3,\"expressedTranscriptsCount\":3,\"transcriptExpressions\":{\"ENSMUST00000107490\":199.0,\"ENSMUST00000148940\":93.0,\"ENSMUST00000074700\":19.0}}"));
 
 
     }
@@ -123,7 +123,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"transcriptExpressions\":{\"ENSMUST00000163767\":111.0,\"ENSMUST00000074225\":41.0,\"ENSMUST00000165262\":35.0,\"Others\":14.0}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"expressedTranscriptsCount\":3,\"transcriptExpressions\":{\"ENSMUST00000163767\":111.0,\"ENSMUST00000074225\":41.0,\"ENSMUST00000165262\":35.0,\"Others\":14.0}}"));
 
 
     }
@@ -136,7 +136,7 @@ public class RankedGeneTranscriptsIT {
 
         ResponseBody responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"transcriptExpressions\":{\"ENST00000490982\":0.5,\"ENST00000397928\":0.4,\"ENST00000397932\":0.3,\"Others\":0.1}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"expressedTranscriptsCount\":3,\"transcriptExpressions\":{\"ENST00000490982\":0.5,\"ENST00000397928\":0.4,\"ENST00000397932\":0.3,\"Others\":0.1}}"));
 
 
         subject = new EndPoint(E_GEOD_26284_URL_TEMPLATE, "geneId=ENSG00000131652&factorType=CELL_LINE" +
@@ -145,7 +145,7 @@ public class RankedGeneTranscriptsIT {
 
         responseBody = responseAssertions(subject);
 
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":10,\"transcriptExpressions\":{\"ENST00000326266\":5.0,\"ENST00000253952\":1.0}}"));
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":10,\"expressedTranscriptsCount\":2,\"transcriptExpressions\":{\"ENST00000326266\":5.0,\"ENST00000253952\":1.0}}"));
 
     }
 
