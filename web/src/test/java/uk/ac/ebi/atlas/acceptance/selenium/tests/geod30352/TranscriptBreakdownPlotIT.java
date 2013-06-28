@@ -46,7 +46,7 @@ public class TranscriptBreakdownPlotIT extends SeleniumFixture {
     @Test
     public void verifyButtonClickKidneyProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 3);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 in kidney\n3 out of 9 transcripts are expressed above the expression level cutoff."));
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 in kidney\n2 out of 9 transcripts are expressed above the expression level cutoff."));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746", "ENST00000341360", "ENST00000357681", "Others"));
         assertThat(page.getTranscriptColor(0), not("white"));
         assertThat(page.getTranscriptColor(1), is("white"));

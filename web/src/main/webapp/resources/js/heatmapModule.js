@@ -153,7 +153,7 @@ var heatmapModule = (function ($) {
                     'factorType':factorType,
                     'factorValue':factorValue,
                     'selectedFilterFactorsJson':JSON.stringify(selectedFilterFactorsJson),
-                    'cutoff':0.05
+                    'cutoff':cutoff
                 },
                 datatype:'json',
                 success:function (data) {
