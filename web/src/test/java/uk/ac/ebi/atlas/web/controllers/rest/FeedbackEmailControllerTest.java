@@ -77,7 +77,6 @@ public class FeedbackEmailControllerTest {
         subject.sendFeedbackMail(FEEDBACK_MESSAGE, FEEDBACK_EMAIL_ADDRESS);
 
         verify(emailMessageMock).setBody(FEEDBACK_MESSAGE);
-        verify(emailMessageMock).setSender(SENDER_EMAIL);
         verify(emailMessageMock).setSender(FEEDBACK_EMAIL_ADDRESS);
         verify(emailMessageMock).setSubject(SUBJECT);
         verify(emailMessageMock).setRecipient(FEEDBACK_EMAIL_ADDRESS);

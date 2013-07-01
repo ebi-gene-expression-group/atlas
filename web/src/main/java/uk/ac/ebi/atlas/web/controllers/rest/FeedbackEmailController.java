@@ -67,8 +67,9 @@ public class FeedbackEmailController {
     public String sendFeedbackMail(@RequestParam("feedback") String feedback, @RequestParam("email") String email) {
 
         emailMessage.setBody(feedback);
-        emailMessage.setSender(email);
-        if (StringUtils.isEmpty(emailMessage.getSender())) {
+        if (StringUtils.isNotEmpty(email)) {
+            emailMessage.setSender(email);
+        } else {
             emailMessage.setSender(applicationProperties.getFeedbackEmailAddress());
         }
         emailMessage.setSubject(ATLAS_FEEDBACK_SUBJECT);
