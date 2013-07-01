@@ -61,14 +61,13 @@ public class FeedbackEmailController {
         this.applicationProperties = applicationProperties;
     }
 
-    @RequestMapping(value = "/email", method = RequestMethod.PUT)
+    @RequestMapping(value = "/email", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String sendFeedbackMail(@RequestBody MultiValueMap<String, String> body) {
+    public String sendFeedbackMail(@RequestParam("feedback") String feedback, @RequestParam("email") String email) {
 
-        // capture input data
-        emailMessage.setBody(body.get("feedback").get(0));
-        emailMessage.setSender(body.get("email").get(0));
+        emailMessage.setBody(feedback);
+        emailMessage.setSender(email);
         if (StringUtils.isEmpty(emailMessage.getSender())) {
             emailMessage.setSender(applicationProperties.getFeedbackEmailAddress());
         }

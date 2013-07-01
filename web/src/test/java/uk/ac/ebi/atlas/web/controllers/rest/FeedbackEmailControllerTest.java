@@ -74,7 +74,7 @@ public class FeedbackEmailControllerTest {
 
     @Test
     public void testSendFeedbackMail() throws Exception {
-        subject.sendFeedbackMail(bodyMock);
+        subject.sendFeedbackMail(FEEDBACK_MESSAGE, FEEDBACK_EMAIL_ADDRESS);
 
         verify(emailMessageMock).setBody(FEEDBACK_MESSAGE);
         verify(emailMessageMock).setSender(SENDER_EMAIL);
