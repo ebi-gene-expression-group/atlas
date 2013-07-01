@@ -91,13 +91,13 @@ public class DifferentialProfilesInputStreamIT {
 
         DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
-        contrast = differentialExperiment.getContrasts().first();
+        contrast = differentialExperiment.getContrasts().iterator().next();
 
         TreeSet<Contrast> allQueryFactors = Sets.newTreeSet();
         allQueryFactors.add(contrast);
 
         rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
-                                   .withPreferences(differentialRequestPreferences);
+                .withPreferences(differentialRequestPreferences);
 
         rnaSeqRequestContext = rnaSeqRequestContextBuilder.build();
     }
@@ -221,7 +221,7 @@ public class DifferentialProfilesInputStreamIT {
 
 
         long countProfiles = 0;
-        while(subject.readNext() != null){
+        while (subject.readNext() != null) {
             ++countProfiles;
         }
 

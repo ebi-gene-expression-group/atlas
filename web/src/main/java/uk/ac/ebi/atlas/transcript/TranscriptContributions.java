@@ -31,6 +31,8 @@ public class TranscriptContributions {
 
     private int totalTranscriptsCount;
 
+    private int expressedTranscriptsCount;
+
     private Map<String, Double> transcriptExpressions = new LinkedHashMap<>();
 
     public int getTotalTranscriptsCount() {
@@ -39,6 +41,14 @@ public class TranscriptContributions {
 
     public void setTotalTranscriptsCount(int totalTranscriptsCount) {
         this.totalTranscriptsCount = totalTranscriptsCount;
+    }
+
+    public int getExpressedTranscriptsCount() {
+        return expressedTranscriptsCount;
+    }
+
+    public void setExpressedTranscriptsCount(int expressedTranscriptsCount) {
+        this.expressedTranscriptsCount = expressedTranscriptsCount;
     }
 
     public Map<String, Double> getTranscriptExpressions() {

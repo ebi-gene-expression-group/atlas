@@ -74,7 +74,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
         model.addAttribute("contrasts", experiment.getContrasts());
 
         if (StringUtils.isBlank(contrastId)) {
-            contrastId = experiment.getContrasts().first().getId();
+            contrastId = experiment.getContrasts().iterator().next().getId();
         }
 
         Gson gson = new Gson();

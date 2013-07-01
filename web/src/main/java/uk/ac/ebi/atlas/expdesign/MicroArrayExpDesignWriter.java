@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.expdesign;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
 import javax.inject.Inject;
@@ -66,16 +66,16 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
 
     String[] composeExperimentAssay(String assay, List<String> characteristics, List<String> factors) {
         List<String> result = Lists.newArrayList(assay);
-        ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForAssay(assay);
-        String array = mageTabLimpopoExpDesignParser.findArrayForScanNode(scanNode);
+        HybridizationNode hybridizationNode = mageTabLimpopoExpDesignParser.getHybridizationNodeForAssay(assay);
+        String array = mageTabLimpopoExpDesignParser.findArrayForHybridizationNode(hybridizationNode);
         result.add(array);
         for (String characteristic : characteristics) {
-            List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
-            addNodeValue(result, characteristicValueForScanNode);
+            List<String> characteristicValueForSDRFNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForSDRFNode(hybridizationNode, characteristic);
+            addNodeValue(result, characteristicValueForSDRFNode);
         }
         for (String factor : factors) {
-            List<String> factorValueForScanNode = mageTabLimpopoExpDesignParser.findFactorValueForScanNode(scanNode, factor);
-            addNodeValue(result, factorValueForScanNode);
+            List<String> factorValueForHybridizationNode = mageTabLimpopoExpDesignParser.findFactorValueForHybridizationNode(hybridizationNode, factor);
+            addNodeValue(result, factorValueForHybridizationNode);
         }
         return result.toArray(new String[result.size()]);
     }

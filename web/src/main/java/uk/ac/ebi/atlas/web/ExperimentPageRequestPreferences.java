@@ -29,7 +29,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.SortedSet;
+import java.util.Set;
 
 
 public abstract class ExperimentPageRequestPreferences {
@@ -55,7 +55,7 @@ public abstract class ExperimentPageRequestPreferences {
 
     private String queryFactorType;
 
-    private SortedSet<String> queryFactorValues;
+    private Set<String> queryFactorValues;
 
     @NotNull
     @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
@@ -77,11 +77,11 @@ public abstract class ExperimentPageRequestPreferences {
 
     }
 
-    public SortedSet<String> getQueryFactorValues() {
+    public Set<String> getQueryFactorValues() {
         return queryFactorValues;
     }
 
-    public void setQueryFactorValues(SortedSet<String> queryFactorValues) {
+    public void setQueryFactorValues(Set<String> queryFactorValues) {
         this.queryFactorValues = queryFactorValues;
     }
 

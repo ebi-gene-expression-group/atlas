@@ -157,6 +157,7 @@ var heatmapModule = (function ($) {
                 datatype:'json',
                 success:function (data) {
                     var totalCount = data.totalTranscriptsCount,
+                        expressedCount = data.expressedTranscriptsCount,
                         plotData = buildPlotData(data.transcriptExpressions);
 
                     species = species.replace(" ", "_");
@@ -172,8 +173,9 @@ var heatmapModule = (function ($) {
 
                     $('#transcript-breakdown-title').html("Expression Level Breakdown for " +
                         "<a id='geneid' href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
-                        "' target='_blank'" + "title='View gene in Ensembl'" + ">" +
-                        geneName + "</a>" + " (" + totalCount + " transcript" + s + ") in " + factorValue);
+                        "' target='_blank'" + "title='View gene in Ensembl'" + ">" + geneName + "</a> in " + factorValue +
+                        "<br/>" + expressedCount + " out of " + totalCount + " transcript" + s +
+                        " are expressed.");
 
                 }
             }).fail(function (data) {

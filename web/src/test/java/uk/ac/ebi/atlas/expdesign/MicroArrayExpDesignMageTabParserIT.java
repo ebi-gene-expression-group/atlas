@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 
 import javax.inject.Inject;
 
@@ -51,22 +51,22 @@ public class MicroArrayExpDesignMageTabParserIT {
     }
 
     @Test
-    public void testGetScanNodeForAssay1066() throws Exception {
+    public void testGetHybridizationNodeForAssay1066() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        assertThat(subject.getScanNodeForAssay("C1"), is(not(nullValue())));
+        assertThat(subject.getHybridizationNodeForAssay("C1"), is(not(nullValue())));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testGenScanNodeForNonExistingAssay() throws Exception {
+    public void testGetHybridizationNodeForNonExistingAssay() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        subject.getScanNodeForAssay("C14");
+        subject.getHybridizationNodeForAssay("C14");
     }
 
     @Test
-    public void testFindArrayForScanNode1066() throws Exception {
+    public void testFindArrayForHybridizationNode1066() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        ScanNode scanNode = subject.getScanNodeForAssay("C1");
-        assertThat(subject.findArrayForScanNode(scanNode), is("A-AFFY-35"));
+        HybridizationNode scanNode = subject.getHybridizationNodeForAssay("C1");
+        assertThat(subject.findArrayForHybridizationNode(scanNode), is("A-AFFY-35"));
     }
 
     @Test
@@ -76,15 +76,15 @@ public class MicroArrayExpDesignMageTabParserIT {
     }
 
     @Test
-    public void testFindFactorValueForScanNodeAssay1066() throws Exception {
+    public void testFindFactorValueForHybridizationNodeAssay1066() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
 
         // C1	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster
-        ScanNode scanNode = subject.getScanNodeForAssay("C1");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "GENOTYPE"), hasItem("cycC mutant"));
+        HybridizationNode scanNode = subject.getHybridizationNodeForAssay("C1");
+        assertThat(subject.findFactorValueForHybridizationNode(scanNode, "GENOTYPE"), hasItem("cycC mutant"));
 
         // WT3	A-AFFY-35	3rd instar larva	wild type	Drosophila melanogaster	Oregon R
-        scanNode = subject.getScanNodeForAssay("WT3");
-        assertThat(subject.findFactorValueForScanNode(scanNode, "GENOTYPE"), hasItem("wild_type"));
+        scanNode = subject.getHybridizationNodeForAssay("WT3");
+        assertThat(subject.findFactorValueForHybridizationNode(scanNode, "GENOTYPE"), hasItem("wild_type"));
     }
 }

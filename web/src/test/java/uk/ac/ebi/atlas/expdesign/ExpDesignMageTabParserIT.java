@@ -69,7 +69,7 @@ public class ExpDesignMageTabParserIT {
     public void testForNonExistingScanNode() throws Exception {
         subject.init(EXPERIMENT_ACCESSION_E_MTAB_513);
         ScanNode scanNode = new ScanNode();
-        subject.findCharacteristicValueForScanNode(scanNode, "sex");
+        subject.findCharacteristicValueForSDRFNode(scanNode, "sex");
     }
 
     @Test

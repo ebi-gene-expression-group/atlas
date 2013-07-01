@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.commands;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.BioEntityNameLoader;
+import uk.ac.ebi.atlas.geneannotation.mirna.MiRnaNameLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,9 +36,12 @@ public class GeneNamesImportCommand {
 
     private BioEntityNameLoader geneNamesLoader;
 
+    private MiRnaNameLoader miRnaNameLoader;
+
     @Inject
-    public GeneNamesImportCommand(BioEntityNameLoader geneNamesLoader) {
+    public GeneNamesImportCommand(BioEntityNameLoader geneNamesLoader, MiRnaNameLoader miRnaNameLoader) {
         this.geneNamesLoader = geneNamesLoader;
+        this.miRnaNameLoader = miRnaNameLoader;
     }
 
     public void loadGeneNames(Set<String> species) {
@@ -46,4 +50,7 @@ public class GeneNamesImportCommand {
         }
     }
 
+    public int loadMiRnaNames() {
+        return miRnaNameLoader.loadAnnotations();
+    }
 }

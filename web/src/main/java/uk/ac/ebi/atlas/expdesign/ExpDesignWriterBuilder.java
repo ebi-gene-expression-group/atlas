@@ -63,7 +63,7 @@ public class ExpDesignWriterBuilder {
             return rnaSeqExpDesignWriter;
         } else if (experimentType == ExperimentType.TWOCOLOUR) {
             return twoColourExpDesignWriter;
-        } else if (experimentType == ExperimentType.MICROARRAY) {
+        } else if (experimentType == ExperimentType.MICROARRAY || experimentType == ExperimentType.MICRORNA) {
             return microArrayExpDesignWriter;
         }
 

@@ -45,7 +45,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
-import java.util.SortedSet;
 
 @Named("geneProfileWriter")
 @Scope("prototype")
@@ -82,21 +81,21 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
 
     @Override
     protected String[] getProfileIdColumnHeaders() {
-        if(requestContext.isGeneSetMatch()){
+        if (requestContext.isGeneSetMatch()) {
             return new String[]{GENE_SET_COLUMN_NAME};
         }
         return new String[]{HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.GENE_ID_COLUMN_NAME};
     }
 
     @Override
-    protected String[] getConditionColumnHeaders(SortedSet<Factor> conditions) {
-        SortedSet<String> factorValues = Factor.getValues(conditions);
+    protected String[] getConditionColumnHeaders(Set<Factor> conditions) {
+        Set<String> factorValues = Factor.getValues(conditions);
         return factorValues.toArray(new String[factorValues.size()]);
     }
 
     @Override
     protected String getSecondaryRowHeader(BaselineProfile geneProfile) {
-        if(requestContext.isGeneSetMatch()){
+        if (requestContext.isGeneSetMatch()) {
             return null;
         }
         return geneProfile.getId();

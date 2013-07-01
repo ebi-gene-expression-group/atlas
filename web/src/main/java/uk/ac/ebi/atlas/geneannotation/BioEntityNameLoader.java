@@ -30,7 +30,7 @@ public class BioEntityNameLoader {
     }
 
     protected void saveMappings(Map<String, String> mappings, String annotatedSubject) {
-        bioEntityAnnotationDao.deleteAnnotations(annotatedSubject, "gene");
-        bioEntityAnnotationDao.saveAnnotations(mappings, annotatedSubject, "gene");
+        bioEntityAnnotationDao.deleteAnnotations(annotatedSubject, BioEntityType.GENE.getName());
+        bioEntityAnnotationDao.saveAnnotations(mappings, annotatedSubject, BioEntityType.GENE.getName());
     }
 }

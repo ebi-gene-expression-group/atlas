@@ -57,7 +57,7 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(3);
 
         assertThat(firstLine,
-                contains("Gene name", "Design Element", "genotype:'cdk8 mutant' vs 'wild type'.p-value", "genotype:'cdk8 mutant' vs 'wild type'.log2foldchange", "genotype:'cdk8 mutant' vs 'wild type'.t-statistic", "genotype:'cycC mutant' vs 'wild type'.p-value", "genotype:'cycC mutant' vs 'wild type'.log2foldchange", "genotype:'cycC mutant' vs 'wild type'.t-statistic")
+                contains("Gene name", "Design Element", "genotype:'cycC mutant' vs 'wild type'.p-value", "genotype:'cycC mutant' vs 'wild type'.log2foldchange", "genotype:'cycC mutant' vs 'wild type'.t-statistic", "genotype:'cdk8 mutant' vs 'wild type'.p-value", "genotype:'cdk8 mutant' vs 'wild type'.log2foldchange", "genotype:'cdk8 mutant' vs 'wild type'.t-statistic")
         );
 
     }
@@ -68,7 +68,7 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
-                contains("Irc", "1633391_at", "NA", "NA", "NA", "4.32183975431433E-4", "0.676040000000002", "8.29055586787586")
+                contains("Irc", "1633391_at", "4.32183975431433E-4", "0.676040000000002", "8.29055586787586", "NA", "NA", "NA")
         );
 
     }

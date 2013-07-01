@@ -40,7 +40,7 @@ import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.SortedSet;
+import java.util.Set;
 
 public abstract class DifferentialQueryPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences> {
 
@@ -65,7 +65,7 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
 
         DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
 
-        SortedSet<Contrast> contrasts = experiment.getContrasts();
+        Set<Contrast> contrasts = experiment.getContrasts();
 
         model.addAttribute("allQueryFactors", contrasts);
 

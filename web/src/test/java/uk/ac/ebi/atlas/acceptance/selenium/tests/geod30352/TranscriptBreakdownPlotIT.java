@@ -39,14 +39,14 @@ public class TranscriptBreakdownPlotIT extends SeleniumFixture {
 
     @Before
     public void initSubject() {
-        subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_E_GEOD_30352_ACCESSION,"serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=ENSG00000058668&exactMatch=true&_exactMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
+        subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=ENSG00000058668&exactMatch=true&_exactMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
         subject.get();
     }
 
     @Test
     public void verifyButtonClickKidneyProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 3);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 (9 transcripts) in kidney"));
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 in kidney\n4 out of 9 transcripts are expressed."));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746", "ENST00000341360", "ENST00000357681", "Others"));
         assertThat(page.getTranscriptColor(0), not("white"));
         assertThat(page.getTranscriptColor(1), is("white"));
@@ -58,7 +58,7 @@ public class TranscriptBreakdownPlotIT extends SeleniumFixture {
     @Test
     public void verifyButtonClickPrefrontalCortexProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 5);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 (9 transcripts) in prefrontal cortex"));
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ATP2B4 in prefrontal cortex\n5 out of 9 transcripts are expressed."));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000484746", "ENST00000341360", "ENST00000367218", "Others"));
         assertThat(page.getTranscriptColor(0), not("white"));
         assertThat(page.getTranscriptColor(1), is("white"));

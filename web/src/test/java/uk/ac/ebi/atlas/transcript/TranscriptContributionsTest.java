@@ -41,6 +41,13 @@ public class TranscriptContributionsTest {
     }
 
     @Test
+    public void testSetGetExpressedTranscriptsCount() throws Exception {
+        assertThat(subject.getExpressedTranscriptsCount(), is(0));
+        subject.setExpressedTranscriptsCount(3);
+        assertThat(subject.getExpressedTranscriptsCount(), is(3));
+    }
+
+    @Test
     public void testGetTranscriptPercentageRates() throws Exception {
         //given
         subject.put("t1", 3d);

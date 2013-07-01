@@ -67,7 +67,7 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
         List<String> result = Lists.newArrayList(runAccession);
         ScanNode scanNode = mageTabLimpopoExpDesignParser.getScanNodeForRunAccession(runAccession);
         for (String characteristic : characteristics) {
-            List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForScanNode(scanNode, characteristic);
+            List<String> characteristicValueForScanNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForSDRFNode(scanNode, characteristic);
             if (!characteristicValueForScanNode.isEmpty()) {
                 result.add(characteristicValueForScanNode.get(0));
             } else {

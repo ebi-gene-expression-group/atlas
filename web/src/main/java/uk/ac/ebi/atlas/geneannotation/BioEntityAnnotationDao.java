@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import uk.ac.ebi.atlas.geneannotation.mirna.MiRNAEntity;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -67,8 +68,49 @@ public class BioEntityAnnotationDao extends AnnotationDao {
         return jdbcTemplate.batchUpdate(INSERT_QUERY, statementSetter);
     }
 
+    public int saveMiRnaAnnotations(List<MiRNAEntity> entities) {
+
+
+        List<List<MiRNAEntity>> partitionsOfEntries = Lists.partition(entities, BATCH_SIZE);
+
+        int total = 0;
+        for (List<MiRNAEntity> partition : partitionsOfEntries) {
+            int[] rows = performBatchStatement(partition);
+            total += rows.length;
+        }
+
+        LOGGER.info("Updated " + total + " bioentities");
+        return total;
+    }
+
+    private int[] performBatchStatement(final List<MiRNAEntity> entities) {
+
+        BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                ps.setString(1, entities.get(i).getIdentifier());
+                ps.setString(2, entities.get(i).getAccession());
+                ps.setString(3, entities.get(i).getOrganism());
+                ps.setString(4, BioEntityType.MIRNA.getName());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return entities.size();
+            }
+        };
+
+        return jdbcTemplate.batchUpdate(INSERT_QUERY, statementSetter);
+    }
+
+
     public int deleteAnnotations(String organism, String type) {
         return jdbcTemplate.update(DELETE_QUERY, new Object[]{organism, type});
+    }
+
+    public int deleteAnnotations(String type) {
+        String query = "DELETE FROM bioentity_name WHERE  type = ?";
+        return jdbcTemplate.update(query, new Object[]{type});
     }
 
     public String getName(String identifier) {

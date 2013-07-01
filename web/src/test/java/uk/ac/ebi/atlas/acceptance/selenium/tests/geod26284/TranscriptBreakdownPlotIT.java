@@ -45,7 +45,7 @@ public class TranscriptBreakdownPlotIT extends SeleniumFixture {
     @Test
     public void verifyButtonClickFirstProfile() {
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(9, 3);
-        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for PTBP3 (8 transcripts) in IMR-90"));
+        assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for PTBP3 in IMR-90\n4 out of 8 transcripts are expressed."));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000374257", "ENST00000343327", "ENST00000374255", "Others"));
     }
 

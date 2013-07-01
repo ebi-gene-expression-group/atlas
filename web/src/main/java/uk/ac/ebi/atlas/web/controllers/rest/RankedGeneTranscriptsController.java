@@ -61,7 +61,8 @@ public class RankedGeneTranscriptsController {
 
         Factor selectedQueryFactor = new Factor(factorType, factorValue);
         FactorSet selectedFactorGroup = new FactorSet().add(selectedQueryFactor);
-        Type factorsCollectionType = new TypeToken<Collection<Factor>>(){}.getType();
+        Type factorsCollectionType = new TypeToken<Collection<Factor>>() {
+        }.getType();
         Gson gson = new Gson();
         Collection<Factor> selectedFilterFactors = gson.fromJson(selectedFilterFactorsJson, factorsCollectionType);
         selectedFactorGroup.addAll(selectedFilterFactors);
