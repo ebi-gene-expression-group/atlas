@@ -29,6 +29,7 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 
 import javax.inject.Named;
 import java.util.*;
@@ -41,8 +42,6 @@ import static java.lang.Math.min;
 public class DifferentialGeneProfileProperties {
 
     private Map<String, DifferentialProfilesList<DifferentialProfile>> experimentToDifferentialProfilesListMap = Maps.newHashMap();
-
-    private String geneQuery;
 
     private double fdrCutoff;
 
@@ -116,7 +115,11 @@ public class DifferentialGeneProfileProperties {
                 DifferentialProfile profile = (DifferentialProfile) item;
                 for (Object condition : profile.getConditions()) {
                     Contrast contrast = (Contrast) condition;
-                    DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(geneQuery,
+                    String identifier = profile.getId();
+                    if (profile instanceof MicroarrayProfile) {
+                        identifier = ((MicroarrayProfile) profile).getDesignElementName();
+                    }
+                    DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(identifier,
                             contrast, experimentAccession, (DifferentialExpression) profile.getExpression(contrast));
                     differentialGeneProfileLinks.add(differentialGeneProfileLink);
                 }
@@ -146,10 +149,6 @@ public class DifferentialGeneProfileProperties {
             }
         }
         return count;
-    }
-
-    public void setGeneQuery(String geneQuery) {
-        this.geneQuery = geneQuery;
     }
 
     public void setFdrCutoff(double fdrCutoff) {
