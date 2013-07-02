@@ -62,6 +62,8 @@ public class SolrQueryService {
 
     private static final String BIOENTITY_TYPE_GENE = "ensgene";
 
+    private static final String BIOENTITY_TYPE_MIRNA = "mirna";
+
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
@@ -97,7 +99,7 @@ public class SolrQueryService {
 
     public Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
 
-        String queryString = buildGeneQuery(geneQuery, exactMatch, BIOENTITY_TYPE_GENE, species);
+        String queryString = buildGeneQuery(geneQuery, exactMatch, species, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA);
 
         return fetchGeneIdentifiersFromSolr(queryString);
     }
@@ -133,8 +135,8 @@ public class SolrQueryService {
 
         SolrQuery query = new SolrQuery("identifier:" + identifier);
         Collection<String> species = extractAllSpecies(query);
-        if(species.size() == 1) {
-           return species.iterator().next();
+        if (species.size() == 1) {
+            return species.iterator().next();
         }
         throw new IllegalStateException("Found more than one specie for identifier: " + identifier);
 
@@ -254,7 +256,7 @@ public class SolrQueryService {
         return geneNames;
     }
 
-    String buildGeneQuery(String query, boolean exactMatch, String bioentityType, String species) {
+    String buildGeneQuery(String query, boolean exactMatch, String species, String... bioEntityTypes) {
         String propertyName = exactMatch ? PROPERTY_LOWER_FIELD : "property_search";
 
         String escapedGeneQuery = customEscape(query);
@@ -265,12 +267,17 @@ public class SolrQueryService {
                         .append("(" + propertyName + ":").append(escapedGeneQuery).append(")")
                         .append(" AND species:\"")
                         .append(species)
-                        .append("\"")
-                        .append(" AND type:\"")
-                        .append(bioentityType)
-                        .append("\"");
-        return sb.toString();
+                        .append("\" AND (");
+        for (String bioEntityType : bioEntityTypes) {
+            sb.append("type:\"")
+                    .append(bioEntityType)
+                    .append("\" OR ");
+        }
+        int indexOfOR = sb.lastIndexOf(" OR ");
+        sb.delete(indexOfOR, indexOfOR + 4);
+        sb.append(")");
 
+        return sb.toString();
     }
 
     String buildCompositeQueryIdentifier(String identifier, List<String> propertyTypes) {
