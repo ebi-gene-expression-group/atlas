@@ -101,11 +101,11 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
         double averageExpressionLevelOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
 
-        Sets.SetView<Factor> remainingQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
-        double maxExpressionLevelOnRemainingQueryFactors = baselineProfile.getMaxExpressionLevelOn(remainingQueryFactors);
+        Sets.SetView<Factor> nonSelectedQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
+        double maxExpressionLevelOnRemainingQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);
 
         if (maxExpressionLevelOnRemainingQueryFactors == 0) {
-            if (remainingQueryFactors.isEmpty()) {
+            if (nonSelectedQueryFactors.isEmpty()) {
                 return averageExpressionLevelOnSelectedQueryFactors;
             }
             return averageExpressionLevelOnSelectedQueryFactors / cutoffDivisor;
