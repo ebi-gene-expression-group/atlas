@@ -22,6 +22,8 @@ REMOVE_PREVIOUS_REFERENCE=$5
 
 UC_ORGANISM=`capitalize_first_letter $ORGANISM`
 
+pushd $EREAP_CLONE/data/reference
+
 # Create an organism-specifc subdirectory - if it doesn't already exist
 if [ ! -d "$ORGANISM" ]
 then
@@ -39,6 +41,7 @@ wget -L ${PUB_FTP_BASE}/release-${VERSION}/fasta/${ORGANISM}/dna/${UC_ORGANISM}.
 wget -L ${PUB_FTP_BASE}/release-${VERSION}/gtf/${ORGANISM}/${UC_ORGANISM}.${BUILD_IDENTIFIER}.${VERSION}.gtf.gz
 wget -L ${PUB_FTP_BASE}/release-${VERSION}/fasta/${ORGANISM}/cdna/${UC_ORGANISM}.${BUILD_IDENTIFIER}.${VERSION}.cdna.all.fa.gz
 
+popd
 popd
 
 exit 0

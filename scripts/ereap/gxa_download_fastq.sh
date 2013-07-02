@@ -14,6 +14,8 @@ PROCESSING_DIR=$1
 PATH_TO_SDRF=$2
 LIBS=$3
 
+pushd $EREAP_CLONE/data/raw_data
+
 # Remove auxiliary files  
 rm -rf *.aux
 
@@ -134,5 +136,7 @@ while read o; do
 
     popd
 done < ${EXP_ACC}_unique_organisms.aux
+
+popd
 
 exit 0
