@@ -89,15 +89,16 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     public double getExpressionLevelFoldChangeOn(DifferentialProfile differentialProfile) {
 
-        double averageExpressionLevelOnSelected = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
+        double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
 
         Sets.SetView<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
-        double averageExpressionLevelOnRemaining = differentialProfile.getAverageExpressionLevelOn(nonSelectedQueryContrasts, regulation);
-        if (averageExpressionLevelOnRemaining == 0) {
-            averageExpressionLevelOnRemaining = cutoff;
+        double averageExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(nonSelectedQueryContrasts, regulation);
+
+        if (averageExpressionLevelOnNonSelectedQueryContrasts == 0) {
+            averageExpressionLevelOnNonSelectedQueryContrasts = cutoff;
         }
 
-        return averageExpressionLevelOnRemaining / averageExpressionLevelOnSelected;
+        return averageExpressionLevelOnNonSelectedQueryContrasts / averageExpressionLevelOnSelectedQueryContrasts;
     }
 
 }
