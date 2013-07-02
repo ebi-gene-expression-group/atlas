@@ -33,7 +33,7 @@
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
-        <c:if test="${type == 'MICROARRAY'}">
+        <c:if test="${type.isMicroarray()}">
             <form:hidden path="arrayDesignAccession"/>
         </c:if>
 
@@ -45,7 +45,7 @@
                     <span data-help-loc="#geneSearch"/>
                 </td>
 
-                <c:if test="${type != 'BASELINE'}">
+                <c:if test="${!type.isBaseline()}">
                     <td> <!-- empty placeholder above Contrasts --> </td>
                 </c:if>
 
@@ -58,11 +58,11 @@
 
                 <td>
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
-                    <span data-help-loc="#factorSearch${type eq 'BASELINE' ? '' : '-differential'}"/>
+                    <span data-help-loc="#factorSearch${type.isBaseline() ? '' : '-differential'}"/>
                 </td>
                 <td style="width:100%;display:block">
                     <form:label
-                            path="cutoff">${type eq 'BASELINE' ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
+                            path="cutoff">${type.isBaseline() ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
                     <span data-help-loc="#cutoff"/>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
@@ -87,7 +87,7 @@
                                                path="exactMatch"
                                                label="Exact match"/>
                             </span>
-                            <c:if test="${type eq 'BASELINE'}">
+                            <c:if test="${type.isBaseline()}">
                                 <span data-help-loc="#gene-set-match" style="float:right;"></span>
                             <span style="float:right;">
                                 <form:checkbox id="geneSetMatch"
@@ -105,16 +105,16 @@
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>
                 </c:if>
-                <c:if test="${type != 'BASELINE'}">
+                <c:if test="${!type.isBaseline()}">
                     <td>
                         <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
                 <td>
                     <div>
-                        <c:set var="isSingleContrast" value="${(type != 'BASELINE') && allQueryFactors.size() == 1}"/>
-                        <c:set var="itemLabel" value="${type eq 'BASELINE'? 'value' : 'displayName'}"/>
-                        <c:set var="itemValue" value="${type eq 'BASELINE'? 'value' : 'id'}"/>
+                        <c:set var="isSingleContrast" value="${(!type.isBaseline()) && allQueryFactors.size() == 1}"/>
+                        <c:set var="itemLabel" value="${type.isBaseline() ? 'value' : 'displayName'}"/>
+                        <c:set var="itemValue" value="${type.isBaseline() ? 'value' : 'id'}"/>
                         <form:select path="queryFactorValues" data-placeholder="(Any ${queryFactorName})"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
@@ -127,7 +127,7 @@
                                        label="Specific"
                                        disabled="${isSingleContrast ? true : false}"/>
                     </span>
-                    <span data-help-loc="#specific${type != 'BASELINE' ? '' : '-differential'}"
+                    <span data-help-loc="#specific${!type.isBaseline() ? '' : '-differential'}"
                           style="display:inline-block"/>
                 </td>
                 <td>

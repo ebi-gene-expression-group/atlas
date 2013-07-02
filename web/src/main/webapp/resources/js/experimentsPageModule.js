@@ -46,10 +46,7 @@ var experimentsPageModule = (function ($) {
         if (data === 'BASELINE') {
             return '<img src="resources/images/allup2_transparent_bkg.png" title="baseline"/>';
         }
-        if (data === 'DIFFERENTIAL') {
-            return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
-        }
-        if (data === 'MICROARRAY') {
+        if (data === 'DIFFERENTIAL' || data === 'MICROARRAY') {
             return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
         }
         return data;

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.geneannotation;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.geneannotation.mirna.MiRNAEntity;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -60,5 +62,12 @@ public class BioEntityAnnotationDaoIT {
         subject.saveAnnotations(annotations, ORGANISM, "gene");
         assertThat(subject.getName("ens1"), is("gene1"));
         assertThat(subject.getName("not there"), is(nullValue()));
+    }
+
+    @Test
+    public void testSaveMiRnaAnnotations() throws Exception {
+        MiRNAEntity entity = new MiRNAEntity("mir1", "acc1", "org1", "name1");
+        subject.saveMiRnaAnnotations(Lists.newArrayList(entity));
+        assertThat(subject.getName("mir1"), is("acc1"));
     }
 }

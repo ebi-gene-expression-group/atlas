@@ -125,7 +125,7 @@ public final class ExperimentDispatcher {
 
         String requestURL = getRequestURL(request);
 
-        return "forward:" + requestURL + "?type=" + experiment.getType();
+        return "forward:" + requestURL + "?type=" + experiment.getType().getParent();
     }
 
     @RequestMapping(value = "/widgets/heatmap/protein")
@@ -152,7 +152,7 @@ public final class ExperimentDispatcher {
 
             String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
 
-            return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
+            return "forward:" + requestURL + "?type=" + experiment.getType().getParent() + organismParameters;
         } else {
             model.addAttribute("identifier", bioEntityAccession);
             return "widget-error";

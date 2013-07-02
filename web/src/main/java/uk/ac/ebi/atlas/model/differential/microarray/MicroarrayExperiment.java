@@ -38,11 +38,11 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
     private boolean isTwoColour = false;
 
-    public MicroarrayExperiment(String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile,
+    public MicroarrayExperiment(ExperimentType type, String accession, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile,
                                 Set<String> species, SortedSet<String> arrayDesignAccessions, boolean twoColour,
                                 List<String> pubMedIds, ExperimentDesign experimentDesign) {
 
-        super(ExperimentType.MICROARRAY, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
+        super(type, accession, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
 
         isTwoColour = twoColour;
