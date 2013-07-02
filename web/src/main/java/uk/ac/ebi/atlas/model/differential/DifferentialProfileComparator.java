@@ -81,9 +81,9 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     protected int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
                                    Set<Contrast> contrasts) {
 
-        double averageExpressionLevelOn1 = firstProfile.getAverageExpressionLevelOn(contrasts, regulation);
-        double averageExpressionLevelOn2 = otherProfile.getAverageExpressionLevelOn(contrasts, regulation);
-        return Double.compare(averageExpressionLevelOn1, averageExpressionLevelOn2);
+        double firstProfileAverageExpressionLevel = firstProfile.getAverageExpressionLevelOn(contrasts, regulation);
+        double otherProfileAverageExpressionLevel = otherProfile.getAverageExpressionLevelOn(contrasts, regulation);
+        return Double.compare(firstProfileAverageExpressionLevel, otherProfileAverageExpressionLevel);
 
     }
 
