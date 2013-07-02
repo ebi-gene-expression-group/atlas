@@ -33,17 +33,17 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     private static final double DEFAULT_CUTOFF = 0.05;
     private boolean isSpecific;
-    private Set<Contrast> selectedQueryFactors;
-    private Set<Contrast> allQueryFactors;
+    private Set<Contrast> selectedQueryContrasts;
+    private Set<Contrast> allQueryContrasts;
     private Regulation regulation;
     private double cutoff = DEFAULT_CUTOFF;
 
 
-    public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectedQueryFactors,
-                                         Set<Contrast> allQueryFactors, Regulation regulation, double cutoff) {
+    public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectedQueryContrasts,
+                                         Set<Contrast> allQueryContrasts, Regulation regulation, double cutoff) {
         this.isSpecific = isSpecific;
-        this.selectedQueryFactors = selectedQueryFactors;
-        this.allQueryFactors = allQueryFactors;
+        this.selectedQueryContrasts = selectedQueryContrasts;
+        this.allQueryContrasts = allQueryContrasts;
         //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
         this.regulation = regulation;
         this.cutoff = cutoff;
@@ -53,51 +53,52 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     public int compare(DifferentialProfile firstProfile, DifferentialProfile otherProfile) {
 
         // A1:
-        if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
-            int comparison = Integer.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
-            if (0 == comparison) {
-                comparison = compareOnAverage(firstProfile, otherProfile, allQueryFactors);
+        if (isSpecific && CollectionUtils.isEmpty(selectedQueryContrasts)) {
+            int order = Integer.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
+            if (0 == order) {
+                order = compareOnAverage(firstProfile, otherProfile, allQueryContrasts);
             }
-            return comparison;
+            return order;
         }
 
         // B1:
-        if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
+        if (isSpecific && !CollectionUtils.isEmpty(selectedQueryContrasts)) {
             return Ordering.natural().reverse().compare(
                     getExpressionLevelFoldChangeOn(firstProfile),
                     getExpressionLevelFoldChangeOn(otherProfile));
         }
 
         // A2
-        if (!isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
-            return compareOnAverage(firstProfile, otherProfile, allQueryFactors);
+        if (!isSpecific && CollectionUtils.isEmpty(selectedQueryContrasts)) {
+            return compareOnAverage(firstProfile, otherProfile, allQueryContrasts);
         }
 
         //B2
-        return compareOnAverage(firstProfile, otherProfile, selectedQueryFactors);
+        return compareOnAverage(firstProfile, otherProfile, selectedQueryContrasts);
 
     }
 
     protected int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
-                                   Set<Contrast> averageOn) {
+                                   Set<Contrast> contrasts) {
 
-        double averageExpressionLevelOn1 = firstProfile.getAverageExpressionLevelOn(averageOn, regulation);
-        double averageExpressionLevelOn2 = otherProfile.getAverageExpressionLevelOn(averageOn, regulation);
-        return Double.compare(averageExpressionLevelOn1, averageExpressionLevelOn2);
+        double firstProfileAverageExpressionLevel = firstProfile.getAverageExpressionLevelOn(contrasts, regulation);
+        double otherProfileAverageExpressionLevel = otherProfile.getAverageExpressionLevelOn(contrasts, regulation);
+        return Double.compare(firstProfileAverageExpressionLevel, otherProfileAverageExpressionLevel);
 
     }
 
-    public double getExpressionLevelFoldChangeOn(DifferentialProfile profile) {
+    public double getExpressionLevelFoldChangeOn(DifferentialProfile differentialProfile) {
 
-        double averageExpressionLevelOnSelected = profile.getAverageExpressionLevelOn(selectedQueryFactors, regulation);
+        double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
 
-        Sets.SetView<Contrast> remainingFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
-        double averageExpressionLevelOnRemaining = profile.getAverageExpressionLevelOn(remainingFactors, regulation);
-        if (averageExpressionLevelOnRemaining == 0) {
-            averageExpressionLevelOnRemaining = cutoff;
+        Sets.SetView<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
+        double averageExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(nonSelectedQueryContrasts, regulation);
+
+        if (averageExpressionLevelOnNonSelectedQueryContrasts == 0) {
+            averageExpressionLevelOnNonSelectedQueryContrasts = cutoff;
         }
 
-        return averageExpressionLevelOnRemaining / averageExpressionLevelOnSelected;
+        return averageExpressionLevelOnNonSelectedQueryContrasts / averageExpressionLevelOnSelectedQueryContrasts;
     }
 
 }

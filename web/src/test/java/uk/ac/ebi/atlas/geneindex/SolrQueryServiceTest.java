@@ -92,10 +92,10 @@ public class SolrQueryServiceTest {
     public void testBuildGeneQuery() throws Exception {
 
         // given
-        String s = subject.buildGeneQuery("query_string", false, "ensgene", "sapiens");
+        String s = subject.buildGeneQuery("query_string", false, "sapiens", "ensgene");
 
         // then
-        assertThat(s, is("{!lucene q.op=OR df=property_search} (property_search:query_string) AND species:\"sapiens\" AND type:\"ensgene\""));
+        assertThat(s, is("{!lucene q.op=OR df=property_search} (property_search:query_string) AND species:\"sapiens\" AND (type:\"ensgene\")"));
 
     }
 
@@ -103,11 +103,11 @@ public class SolrQueryServiceTest {
     public void testBuildGeneQueryMultiTerms() {
 
         String query = "GO:0008134 \"p53 binding";
-        assertThat(subject.buildGeneQuery(query, false, "ensgene", "sapiens"), containsString("(property_search:GO\\:0008134 \"p53 binding)"));
+        assertThat(subject.buildGeneQuery(query, false, "sapiens", "ensgene"), containsString("(property_search:GO\\:0008134 \"p53 binding)"));
 
         query = query + "\"";
 
-        assertThat(subject.buildGeneQuery(query, false, "ensgene", "sapiens"), containsString("(property_search:GO\\:0008134 \"p53 binding\")"));
+        assertThat(subject.buildGeneQuery(query, false, "sapiens", "ensgene"), containsString("(property_search:GO\\:0008134 \"p53 binding\")"));
 
     }
 }

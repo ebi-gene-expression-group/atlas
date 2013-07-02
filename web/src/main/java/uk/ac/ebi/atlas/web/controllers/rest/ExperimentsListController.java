@@ -49,13 +49,15 @@ public class ExperimentsListController {
         this.experimentInfoListBuilder = experimentInfoListBuilder;
     }
 
+    /**
+     * Used by experiments table page
+     */
     @RequestMapping(value = "/json/experiments", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getExperimentsList() {
 
         List<ExperimentInfo> experimentInfos = experimentInfoListBuilder.build();
-        // this is required for the initial sorting order on the experiments page, which the IT relies on
         Collections.sort(experimentInfos);
         ExperimentInfoWrapper experimentInfoWrapper = new ExperimentInfoWrapper(experimentInfos);
 
@@ -63,7 +65,9 @@ public class ExperimentsListController {
         return gson.toJson(experimentInfoWrapper);
     }
 
-    /* This is a wrapper class used via Gson to produce the right JSON input for DataTables. */
+    /**
+     *  This is a wrapper class used via Gson to produce the right JSON input for DataTables.
+     */
     public class ExperimentInfoWrapper {
 
         private List<ExperimentInfo> aaData;

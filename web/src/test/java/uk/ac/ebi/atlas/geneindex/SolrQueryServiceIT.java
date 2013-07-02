@@ -43,6 +43,9 @@ import static org.hamcrest.Matchers.*;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class SolrQueryServiceIT {
 
+    private static final String BIOENTITY_TYPE_GENE = "ensgene";
+    private static final String BIOENTITY_TYPE_PROTEIN = "ensprotein";
+
     @Inject
     private SolrQueryService subject;
 
@@ -50,7 +53,7 @@ public class SolrQueryServiceIT {
     public void testGetSolrResultsForQuery() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm", false, "ensgene", "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens", BIOENTITY_TYPE_GENE);
         List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
 
         // then
@@ -62,7 +65,7 @@ public class SolrQueryServiceIT {
     public void testGetSolrResultsForMultiTermQuery() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm splicing", false, "ensgene", "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm splicing", false, "homo sapiens", BIOENTITY_TYPE_GENE);
         List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
 
         // then
@@ -86,7 +89,7 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolr() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("aspm", false, "ensgene", "homo sapiens");
+        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens", BIOENTITY_TYPE_GENE);
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
@@ -99,7 +102,7 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolrMany() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("protein", false, "ensgene", "homo sapiens");
+        String queryString = subject.buildGeneQuery("protein", false, "homo sapiens", BIOENTITY_TYPE_GENE);
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then
@@ -112,7 +115,7 @@ public class SolrQueryServiceIT {
     public void testFetchProteinIdentifiersFromSolrMany() throws SolrServerException {
 
         // given
-        String queryString = subject.buildGeneQuery("protein", false, "ensprotein", "homo sapiens");
+        String queryString = subject.buildGeneQuery("protein", false, "homo sapiens", BIOENTITY_TYPE_PROTEIN);
         Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
 
         // then

@@ -29,7 +29,6 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.commons.mail.EmailMessage;
 import uk.ac.ebi.atlas.commons.mail.MailService;
@@ -61,15 +60,15 @@ public class FeedbackEmailController {
         this.applicationProperties = applicationProperties;
     }
 
-    @RequestMapping(value = "/email", method = RequestMethod.PUT)
+    @RequestMapping(value = "/email", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String sendFeedbackMail(@RequestBody MultiValueMap<String, String> body) {
+    public String sendFeedbackMail(@RequestParam("feedback") String feedback, @RequestParam("email") String email) {
 
-        // capture input data
-        emailMessage.setBody(body.get("feedback").get(0));
-        emailMessage.setSender(body.get("email").get(0));
-        if (StringUtils.isEmpty(emailMessage.getSender())) {
+        emailMessage.setBody(feedback);
+        if (StringUtils.isNotEmpty(email)) {
+            emailMessage.setSender(email);
+        } else {
             emailMessage.setSender(applicationProperties.getFeedbackEmailAddress());
         }
         emailMessage.setSubject(ATLAS_FEEDBACK_SUBJECT);
