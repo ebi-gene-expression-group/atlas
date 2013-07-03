@@ -77,7 +77,7 @@ public class DifferentialGeneProfileService {
         this.differentialGeneProfileProperties = differentialGeneProfileProperties;
     }
 
-    public DifferentialGeneProfileProperties initDifferentialProfilesListMapForIdentifier(String identifier, double cutoff) {
+    public DifferentialGeneProfileProperties initDifferentialProfilesListMapForIdentifier(String geneQuery, double cutoff) {
 
         // just being paranoid here, maybe not necessary because of request scope
         differentialGeneProfileProperties.clear();
@@ -85,28 +85,25 @@ public class DifferentialGeneProfileService {
         // set cutoff used to calculate profile lists for showing on web page
         differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
-        // set identifier as gene query
-        differentialGeneProfileProperties.setGeneQuery(identifier);
-
         for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
             try {
-                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, identifier, cutoff);
+                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, geneQuery, cutoff);
                 if (!retrievedProfilesList.isEmpty()) {
                     differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
                 }
             } catch (GenesNotFoundException e) {
-                // this happens when the experiment species is different from the identifier one
+                // this happens when the experiment does not match the geneQuery
             }
         }
 
         for (String experimentAccession : applicationProperties.getMicroarrayExperimentsIdentifiers()) {
             try {
-                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, identifier, cutoff);
+                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, geneQuery, cutoff);
                 if (!retrievedProfilesList.isEmpty()) {
                     differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
                 }
             } catch (GenesNotFoundException e) {
-                // this happens when the experiment species is different from the identifier one
+                // this happens when the experiment does not match the geneQuery
             }
         }
 
@@ -115,7 +112,7 @@ public class DifferentialGeneProfileService {
 
     DifferentialProfilesList retrieveDifferentialProfilesForRnaSeqExperiment(String experimentAccession, String geneQuery, double cutoff) throws GenesNotFoundException {
 
-        // no need to worry about species for now, as a identifier in geneQuery is already species specific
+        // no need to worry about species for now, as an identifier in geneQuery is already species specific
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
         differentialRequestPreferences.setGeneQuery(geneQuery.toLowerCase());
         differentialRequestPreferences.setCutoff(cutoff);
@@ -129,7 +126,7 @@ public class DifferentialGeneProfileService {
 
     DifferentialProfilesList retrieveDifferentialProfilesForMicroarrayExperiment(String experimentAccession, String geneQuery, double cutoff) throws GenesNotFoundException {
 
-        // no need to worry about species for now, as a identifier in geneQuery is already species specific
+        // no need to worry about species for now, as an identifier in geneQuery is already species specific
         MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
         microarrayRequestPreferences.setGeneQuery(geneQuery.toLowerCase());
         microarrayRequestPreferences.setCutoff(cutoff);

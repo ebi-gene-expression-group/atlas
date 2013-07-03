@@ -171,11 +171,16 @@ var heatmapModule = (function ($) {
                         s = 's';
                     }
 
+                    var is = 'is';
+                    if (totalCount > 1) {
+                        is = 'are';
+                    }
+
                     $('#transcript-breakdown-title').html("Expression Level Breakdown for " +
                         "<a id='geneid' href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
                         "' target='_blank'" + "title='View gene in Ensembl'" + ">" + geneName + "</a> in " + factorValue +
-                        "<br/>" + expressedCount + " out of " + totalCount + " transcript" + s +
-                        " are expressed.");
+                        "<br/>(" + expressedCount + " out of " + totalCount + " transcript" + s +
+                        " " + is + " expressed):");
 
                 }
             }).fail(function (data) {

@@ -3,15 +3,13 @@
 # @date:   08 Feb 2013
 
 # This script allows to find the errors in atlas.log and catalina-<YYYY-MM-DD>.out along with their usage context in access.log<YYYY-MM-DD>
-# This script is to be run on www-test.ebi.ac.uk/gxa (ves-hx-75:8080/gxa) machine
-
 if [ $# -lt 1 ]; then
-        echo "Usage: $0 HOSTNAME"
+        echo "Usage: $0 HOSTNAME WEBLOG_DIR"
         exit;
 fi
 
 HOSTNAME=$1
-WEBLOG_DIR=/nfs/public/rw/webadmin/tomcat/bases/fg/tc-fg-gxa_test/logs
+WEBLOG_DIR=$2
 
 today="`eval date +%Y-%m-%d`"
 process_file="/tmp/find_web_errors.$today"
