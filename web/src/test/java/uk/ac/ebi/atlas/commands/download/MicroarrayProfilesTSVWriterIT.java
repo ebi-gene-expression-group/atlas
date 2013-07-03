@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.is;
@@ -69,18 +70,23 @@ public class MicroarrayProfilesTSVWriterIT {
     private MicroarrayExperiment microarrayExperiment;
 
     @PostConstruct
-    private void initContext(){
+    private void initContext() {
+
         configurationDao.addExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
 
         microarrayExperiment = microarrayExperimentsCache.getExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
-                                .withPreferences(requestPreferences).build();
-
+                .withPreferences(requestPreferences).build();
 
     }
 
+    @PreDestroy
+    public void cleanup() {
+        configurationDao.deleteExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION);
+    }
+
     @Test
-    public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasts(){
+    public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasts() {
 
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g2_g3")));
 
