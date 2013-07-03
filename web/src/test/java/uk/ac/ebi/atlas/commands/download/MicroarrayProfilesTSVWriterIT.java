@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Sets;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -36,8 +38,6 @@ import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.is;
@@ -69,8 +69,8 @@ public class MicroarrayProfilesTSVWriterIT {
 
     private MicroarrayExperiment microarrayExperiment;
 
-    @PostConstruct
-    private void initContext() {
+    @Before
+    public void setUp() throws Exception {
 
         configurationDao.addExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
 
@@ -80,8 +80,8 @@ public class MicroarrayProfilesTSVWriterIT {
 
     }
 
-    @PreDestroy
-    public void cleanup() {
+    @After
+    public void tearDown() throws Exception {
         configurationDao.deleteExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION);
     }
 

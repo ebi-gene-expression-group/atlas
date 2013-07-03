@@ -70,10 +70,10 @@ public class SolrQueryServiceTest {
     public void testBuildCompositeQuery() {
 
         // given
-        String s = subject.buildCompositeQuery("geneName", "ensgene", "species", new String[]{"prototype1", "prototype2"});
+        String s = subject.buildCompositeQuery("geneName", "species", new String[]{"prototype1", "prototype2"}, "ensgene");
 
         // then
-        assertThat(s, is("property_edgengram:\"geneName\" AND species:\"species\" AND type:\"ensgene\" AND (property_type:\"prototype1\" OR property_type:\"prototype2\")"));
+        assertThat(s, is("property_edgengram:\"geneName\" AND species:\"species\" AND (type:\"ensgene\") AND (property_type:\"prototype1\" OR property_type:\"prototype2\")"));
 
     }
 
