@@ -30,6 +30,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.configuration.ConfigurationDao;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -57,6 +59,9 @@ public class MicroarrayProfilesTSVWriterIT {
     @Inject
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
+    @Inject
+    private ConfigurationDao configurationDao;
+
     private MicroarrayRequestContext microarrayRequestContext;
 
     private MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
@@ -65,9 +70,13 @@ public class MicroarrayProfilesTSVWriterIT {
 
     @PostConstruct
     private void initContext(){
+        configurationDao.addExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
+
         microarrayExperiment = microarrayExperimentsCache.getExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                                 .withPreferences(requestPreferences).build();
+
+
     }
 
     @Test

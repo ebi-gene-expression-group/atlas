@@ -41,7 +41,7 @@
                         <c:if test="${type.isMicroarray()}">
                             <td>
                                 <c:choose>
-                                    <c:when test="${isTwoColour eq 'true'}">
+                                    <c:when test="${type.isTwoColour()}">
                                         <a id="download-logFold" class="button-image"
                                            title="Download all log fold expression changes for the experiment"
                                            href="${logFoldUrl}">
@@ -57,7 +57,7 @@
 
                             </td>
                         </c:if>
-                        <c:if test="${type.isBaseline()}">
+                        <c:if test="${!type.isBaseline()}">
                             <td>
                                 <a id="download-analytics" class="button-image"
                                    title="Download all analytics for the experiment"

@@ -49,6 +49,10 @@ public enum ExperimentType {
         return equals(DIFFERENTIAL);
     }
 
+    public boolean isTwoColour() {
+        return equals(TWOCOLOUR);
+    }
+
     public ExperimentType getParent() {
         return parent == null ? this : parent;
     }
