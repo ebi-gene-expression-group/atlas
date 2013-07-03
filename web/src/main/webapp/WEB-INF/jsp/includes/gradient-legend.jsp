@@ -28,7 +28,7 @@
 <div style="float:right; padding-left: 100px">
     <%--<div style="float:left">--%>
     <c:choose>
-        <c:when test="${type eq 'BASELINE'}">
+        <c:when test="${type.isBaseline()}">
             <div style="float:left">
                 <table style="font-size:10px;" id="baseline-heatmap-legend">
 

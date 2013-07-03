@@ -55,7 +55,7 @@
                            title="">${geneNamesProvider.getGeneName(geneId)}</a>
                     </display:column>
 
-                    <c:if test="${type eq 'MICROARRAY'}">
+                    <c:if test="${type.isMicroarray()}">
                         <display:column title="" class="design-element">
                             ${geneProfile.designElementName}
                         </display:column>
@@ -69,7 +69,7 @@
                         <c:choose>
                             <c:when test="${expressionLevel != 0}">
                                 <c:choose>
-                                    <c:when test="${type eq 'BASELINE'}">
+                                    <c:when test="${type.isBaseline()}">
                                         <c:set var="cellColour"
                                                value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
                                     </c:when>
@@ -94,22 +94,22 @@
                         </c:choose>
 
                         <c:set var="columnHeader"
-                               value="${type eq 'BASELINE' ? queryFactor.value : queryFactor.displayName}"/>
+                               value="${type.isBaseline() ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div ${type != 'BASELINE' ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''} data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
+                                title="<div ${!type.isBaseline() ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''} data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
                                 headerClass='rotated_cell vertical-header-cell'
                                 style="${style}">
 
                             <c:if test="${expressionLevel != 0}">
                                 <c:choose>
-                                    <c:when test="${type eq 'BASELINE'}">
+                                    <c:when test="${type.isBaseline()}">
                                         <fmt:formatNumber type="number"
                                                           maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                           value="${expressionLevel}" groupingUsed="false"
                                                           var="expressionLevel"/>
                                     </c:when>
-                                    <c:when test="${type != 'BASELINE'}">
+                                    <c:when test="${!type.isBaseline()}">
                                         <c:choose>
                                             <c:when test="${geneProfile.getExpression(queryFactor).notApplicable}">
                                                 <c:set var="foldChange" value="N/A"/>
@@ -132,10 +132,10 @@
                                     </c:when>
                                 </c:choose>
 
-                                <div class="hide_cell" ${type == 'MICROARRAY' ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                                    ${type != 'BASELINE' ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
+                                <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                                    ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
                                      data-organism-part="${columnHeader}" data-color="${cellColour}">
-                                        ${type != 'BASELINE' ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
+                                        ${!type.isBaseline() ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
 
                             </c:if>
@@ -179,11 +179,11 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
-            if (${preferences.geneSetMatch == false}) {
+            if (${preferences.geneSetMatch == false && !type.isMicroRna()}) {
                 genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
             }
 
-            if (${type == "BASELINE"}) {
+            if (${type.isBaseline()}) {
 
                 var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"};
 
@@ -191,9 +191,9 @@
 
                 heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget);
 
-            } else if (${type == "MICROARRAY"}) {
+            } else if (${type.isMicroarray()}) {
 
-                var arrayDesignAccession = ${type == "MICROARRAY" ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
+                var arrayDesignAccession = ${type.isMicroarray() ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
 
                 heatmapModule.initMicroarrayHeatmap('${experimentAccession}', arrayDesignAccession, ${preferences.cutoff}, '${preferences.geneQuery}');
 

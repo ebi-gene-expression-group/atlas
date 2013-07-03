@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.configuration;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,10 +63,12 @@ public class ConfigurationDaoIT {
 
     @Before
     public void setUp() throws Exception {
-
-        subject.deleteExperimentConfiguration(E_MTAB_513);
         subject.addExperimentConfiguration(E_MTAB_513, TYPE_BASELINE);
+    }
 
+    @After
+    public void tearDown() throws Exception {
+        subject.deleteExperimentConfiguration(E_MTAB_513);
     }
 
     @Test
@@ -106,14 +109,13 @@ public class ConfigurationDaoIT {
 
     @Test
     public void testAddExperimentConfiguration() throws Exception {
-        // cleanup just in case
-        subject.deleteExperimentConfiguration(E_MTAB_1066);
         List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations();
         int size = experimentConfigurations.size();
         assertThat(subject.addExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY), is(1));
         experimentConfigurations = subject.getExperimentConfigurations();
         assertThat(experimentConfigurations.size(), is(size + 1));
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY)));
+        subject.deleteExperimentConfiguration(E_MTAB_1066);
     }
 
     @Test

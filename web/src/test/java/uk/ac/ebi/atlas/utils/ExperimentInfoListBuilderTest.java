@@ -93,6 +93,7 @@ public class ExperimentInfoListBuilderTest {
         when(baselineExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(differentialExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(microarrayExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
+        when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY);
 
         when(baselineExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
         when(baselineExperimentMock.getAccession()).thenReturn(ACCESSION);
@@ -111,10 +112,12 @@ public class ExperimentInfoListBuilderTest {
         when(microarrayExperimentMock.getAssayAccessions()).thenReturn(Sets.newHashSet(ASSAY_1, ASSAY_2));
         when(microarrayExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST)));
         when(microarrayExperimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY)));
+        when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY);
 
         when(differentialExperimentMock.getAccession()).thenReturn(DIFFERENTIAL);
         when(differentialExperimentMock.getAssayAccessions()).thenReturn(Sets.newHashSet(ASSAY_1, ASSAY_2));
         when(differentialExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST)));
+        when(differentialExperimentMock.getType()).thenReturn(ExperimentType.DIFFERENTIAL);
 
         when(baselineExperimentMock.getExperimentRunAccessions()).thenReturn(Sets.newHashSet("RUN"));
 

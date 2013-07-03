@@ -72,7 +72,7 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    protected boolean isDisplyedInPropertyList(String propertyType) {
+    protected boolean isDisplayedInPropertyList(String propertyType) {
         return true;
     }
 

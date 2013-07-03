@@ -30,8 +30,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
+import uk.ac.ebi.atlas.configuration.ConfigurationDao;
+import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -64,19 +67,25 @@ public class MicroarrayExperimentLoaderTest {
     private MAGETABInvestigation investigationMock;
 
     @Mock
+    private ConfigurationDao configurationDaoMock;
+
+    @Mock
     private ExperimentDesign experimentDesignMock;
 
     private MicroarrayExperimentLoader subject;
 
+
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentLoader(configurationTraderMock, "{0}{1}");
+        subject = new MicroarrayExperimentLoader(configurationTraderMock, "{0}{1}", configurationDaoMock);
         subject.setMageTabLimpopoUtils(mageTabLimpopoUtilsMock);
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
         when(mageTabLimpopoUtilsMock.extractSpeciesFromSDRF(investigationMock)).thenReturn(Sets.newHashSet(SPECIES));
+
+        when(configurationDaoMock.getExperimentConfiguration(ACCESSION)).thenReturn(new ExperimentConfiguration(ACCESSION, ExperimentType.MICROARRAY));
     }
 
     @Test

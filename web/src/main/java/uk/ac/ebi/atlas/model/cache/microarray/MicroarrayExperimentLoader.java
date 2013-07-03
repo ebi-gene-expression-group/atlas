@@ -24,6 +24,8 @@ package uk.ac.ebi.atlas.model.cache.microarray;
 
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
+import uk.ac.ebi.atlas.configuration.ConfigurationDao;
+import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.cache.ExperimentLoader;
@@ -47,11 +49,14 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
 
     private String logFoldChangePathTemplate;
 
+    private ConfigurationDao configurationDao;
+
     @Inject
     public MicroarrayExperimentLoader(ConfigurationTrader configurationTrader,
-                                      @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate) {
+                                      @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate, ConfigurationDao configurationDao) {
         this.configurationTrader = configurationTrader;
         this.logFoldChangePathTemplate = logFoldChangePathTemplate;
+        this.configurationDao = configurationDao;
     }
 
     @Override
@@ -69,7 +74,8 @@ public class MicroarrayExperimentLoader extends ExperimentLoader<MicroarrayExper
 
         boolean hasLogFoldChangeFile = new File(logFoldChangeFileLocation).exists();
 
-        return new MicroarrayExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
+        ExperimentConfiguration experimentConfiguration = configurationDao.getExperimentConfiguration(accession);
+        return new MicroarrayExperiment(experimentConfiguration.getExperimentType(), accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
 
     }
 }

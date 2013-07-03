@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,7 +54,7 @@ public class MicroarrayExperimentTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperiment("accession", Sets.newHashSet(contrastMock), "description", false,
+        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY, "accession", Sets.newHashSet(contrastMock), "description", false,
                 Sets.newHashSet("species"), Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)), false,
                 Lists.newArrayList(PUBMEDID), experimentDesignMock);
     }
