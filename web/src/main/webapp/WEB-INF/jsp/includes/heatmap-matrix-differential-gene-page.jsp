@@ -95,7 +95,7 @@
                                               value="${expression.foldChange}"
                                               groupingUsed="false"
                                               var="foldChange"/>
-                            <c:if test="${type == 'MICROARRAY'}">
+                            <c:if test="${type.isMicroarray()}">
                                 <fmt:formatNumber type="number"
                                                   maxFractionDigits="2"
                                                   value="${expression.tstatistic}"
@@ -105,7 +105,7 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <div class="hide_cell" ${type == 'MICROARRAY' ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                         ${'data-fold-change="'.concat(foldChange).concat('"')}
                          data-organism-part="${firstInRow}" data-color="${cellColour}">
                             ${numberUtils.htmlFormatDouble(expressionLevel)}

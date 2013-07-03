@@ -90,7 +90,6 @@ public final class ExperimentDispatcher {
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
     private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
-    private static final String IS_TWO_COLOUR = "isTwoColour";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
@@ -125,7 +124,7 @@ public final class ExperimentDispatcher {
 
         String requestURL = getRequestURL(request);
 
-        return "forward:" + requestURL + "?type=" + experiment.getType();
+        return "forward:" + requestURL + "?type=" + experiment.getType().getParent();
     }
 
     @RequestMapping(value = "/widgets/heatmap/protein")
@@ -152,7 +151,7 @@ public final class ExperimentDispatcher {
 
             String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
 
-            return "forward:" + requestURL + "?type=" + experiment.getType() + organismParameters;
+            return "forward:" + requestURL + "?type=" + experiment.getType().getParent() + organismParameters;
         } else {
             model.addAttribute("identifier", bioEntityAccession);
             return "widget-error";
@@ -195,7 +194,6 @@ public final class ExperimentDispatcher {
             MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
             model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
-            model.addAttribute(IS_TWO_COLOUR, microarrayExperiment.isTwoColour());
 
             return microarrayExperiment;
         }

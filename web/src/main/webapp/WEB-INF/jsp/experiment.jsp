@@ -122,7 +122,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
             var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
 
-            if ('${type}' !== 'BASELINE') {
+            if (${!type.isBaseline()}) {
 
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
@@ -144,7 +144,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
                 //ToDo: this should be replaced with a JSON array directly sent from backend layer
                 var allQueryFactorValues = [${allQueryFactors.size()}];
             <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
-                allQueryFactorValues[${i.index}] = "${type == 'BASELINE' ? queryFactor.value : queryFactor.displayName}";
+                allQueryFactorValues[${i.index}] = "${type.isBaseline() ? queryFactor.value : queryFactor.displayName}";
             </c:forEach>
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {

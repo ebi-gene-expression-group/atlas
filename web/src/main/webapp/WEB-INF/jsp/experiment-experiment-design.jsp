@@ -43,7 +43,7 @@
             </tr>
         </table>
 
-        <c:if test="${type != 'BASELINE'}">
+        <c:if test="${!type.isBaseline()}">
             <table cellpadding="0" cellspacing="0" border="0"
                    style="float: right; padding: 0px 3px 10px 0px; margin-bottom: 0.2em;">
                 <tr>
@@ -95,7 +95,7 @@
 
             helpTooltipsModule.init('experiment-design', '${pageContext.request.contextPath}');
 
-            <c:if test="${type != 'BASELINE'}">
+            <c:if test="${!type.isBaseline()}">
             $('#selectedContrast').change(function () {
                 $('#prefForm').submit();
             });

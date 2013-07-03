@@ -129,7 +129,8 @@ public class ExperimentInfoListBuilder {
         experimentInfo.setExperimentAccession(experiment.getAccession());
         experimentInfo.setExperimentDescription(experiment.getDescription());
         experimentInfo.setSpecies(experiment.getSpecies());
-        experimentInfo.setExperimentType(experiment.getType());
+        //ToDo: there are only types (BASELINE, DIFFERENTIAL, MICROARRAY)
+        experimentInfo.setExperimentType(experiment.getType().getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
 
         return experimentInfo;

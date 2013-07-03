@@ -25,6 +25,35 @@ package uk.ac.ebi.atlas.model;
 
 public enum ExperimentType {
 
-    BASELINE, DIFFERENTIAL, MICROARRAY, TWOCOLOUR, MICRORNA
+    BASELINE(null), DIFFERENTIAL(null), MICROARRAY(null), TWOCOLOUR(MICROARRAY), MICRORNA(MICROARRAY);
 
+    private ExperimentType parent;
+
+    private ExperimentType(ExperimentType parent) {
+        this.parent = parent;
+    }
+
+    public boolean isMicroarray() {
+        return getParent().equals(MICROARRAY);
+    }
+
+    public boolean isBaseline() {
+        return equals(BASELINE);
+    }
+
+    public boolean isMicroRna() {
+        return equals(MICRORNA);
+    }
+
+    public boolean isDifferential() {
+        return equals(DIFFERENTIAL);
+    }
+
+    public boolean isTwoColour() {
+        return equals(TWOCOLOUR);
+    }
+
+    public ExperimentType getParent() {
+        return parent == null ? this : parent;
+    }
 }

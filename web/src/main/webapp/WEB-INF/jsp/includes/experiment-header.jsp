@@ -30,7 +30,7 @@
                                title="Experiment Design" href="experiments/${experimentAccession}/experiment-design">
                                 <img src="resources/images/experiment_design_icon.png"/></a>
                         </td>
-                        <c:if test="${type eq 'DIFFERENTIAL'}">
+                        <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"
                                    title="Download all raw counts for the experiment"
@@ -38,10 +38,10 @@
                                     <img src="resources/images/download_blue_small_raw.png"/></a>
                             </td>
                         </c:if>
-                        <c:if test="${type eq 'MICROARRAY'}">
+                        <c:if test="${type.isMicroarray()}">
                             <td>
                                 <c:choose>
-                                    <c:when test="${isTwoColour eq 'true'}">
+                                    <c:when test="${type.isTwoColour()}">
                                         <a id="download-logFold" class="button-image"
                                            title="Download all log fold expression changes for the experiment"
                                            href="${logFoldUrl}">
@@ -57,7 +57,7 @@
 
                             </td>
                         </c:if>
-                        <c:if test="${type != 'BASELINE'}">
+                        <c:if test="${!type.isBaseline()}">
                             <td>
                                 <a id="download-analytics" class="button-image"
                                    title="Download all analytics for the experiment"
