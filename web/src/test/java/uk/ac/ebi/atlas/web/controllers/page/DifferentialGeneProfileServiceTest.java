@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +37,7 @@ import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -45,7 +47,9 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,9 +64,13 @@ public class DifferentialGeneProfileServiceTest {
     private static final String IDENTIFIER = "identifier";
     private static final double CUTOFF = 0.05;
     private static final String ARRAY_DESIGN_ACCESSION = "AFFY";
+    private static final String SPECIE = "SPECIE";
 
     @Mock
     private ApplicationProperties applicationPropertiesMock;
+
+    @Mock
+    private SolrClient solrClientMock;
 
     @Mock
     private RankRnaSeqProfilesCommand rankRnaSeqProfilesCommandMock;
@@ -110,14 +118,17 @@ public class DifferentialGeneProfileServiceTest {
     @Before
     public void setUp() throws Exception {
         when(applicationPropertiesMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
+        when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(Lists.newArrayList(SPECIE));
 
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(differentialExperimentMock);
         when(microarrayExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentMock);
 
         when(differentialExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
+        when(differentialExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIE));
 
         when(microarrayExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(microarrayExperimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSION)));
+        when(microarrayExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIE));
 
         when(rankRnaSeqProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesList);
         when(rankMicroarrayProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesList);
@@ -136,7 +147,7 @@ public class DifferentialGeneProfileServiceTest {
         // to have a non-empty list
         differentialProfilesList.add(differentialProfileMock);
 
-        subject = new DifferentialGeneProfileService(applicationPropertiesMock,
+        subject = new DifferentialGeneProfileService(applicationPropertiesMock, solrClientMock,
                 rnaSeqRequestContextBuilderMock, microarrayRequestContextBuilderMock,
                 rnaSeqDiffExperimentsCacheMock, microarrayExperimentsCacheMock,
                 rankProfilesCommandFactoryMock, differentialGeneProfilePropertiesMock);
@@ -156,7 +167,7 @@ public class DifferentialGeneProfileServiceTest {
 
     @Test
     public void testRetrieveDifferentialProfileForExperiment() throws Exception {
-        DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF);
+        DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF, SPECIE);
         assertThat(profilesList.size(), is(1));
         verify(differentialExperimentMock).getAccession();
         verify(rnaSeqRequestContextBuilderMock).forExperiment(differentialExperimentMock);
@@ -167,13 +178,35 @@ public class DifferentialGeneProfileServiceTest {
 
     @Test
     public void testRetrieveDifferentialProfilesForMicroarrayExperiment() throws Exception {
-        DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForMicroarrayExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF);
+        Collection<DifferentialProfilesList> profilesLists = subject.retrieveDifferentialProfilesForMicroarrayExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF, SPECIE);
+        assertThat(profilesLists.size(), is(1));
+        DifferentialProfilesList profilesList = profilesLists.iterator().next();
         assertThat(profilesList.size(), is(1));
         verify(microarrayExperimentMock).getAccession();
         verify(microarrayRequestContextBuilderMock).forExperiment(microarrayExperimentMock);
         verify(microarrayRequestContextBuilderMock).withPreferences(any(MicroarrayRequestPreferences.class));
         verify(microarrayRequestContextBuilderMock).build();
         verify(rankMicroarrayProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
+    }
+
+    @Test
+    public void testRetrieveDifferentialProfileForExperimentWrongSpecie() throws Exception {
+        when(differentialExperimentMock.getSpecies()).thenReturn(Collections.<String>emptySet());
+        DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF, SPECIE);
+        assertThat(profilesList.isEmpty(), is(true));
+    }
+
+    @Test
+    public void testRetrieveDifferentialProfileForMicroarrayExperiment() throws Exception {
+        when(microarrayExperimentMock.getSpecies()).thenReturn(Collections.<String>emptySet());
+        Collection<DifferentialProfilesList> profilesLists = subject.retrieveDifferentialProfilesForMicroarrayExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF, SPECIE);
+        assertThat(profilesLists.isEmpty(), is(true));
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetDifferentialProfilesListMultipleSpecies() throws Exception {
+        when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(Lists.newArrayList(SPECIE, "ANOTHER"));
+        subject.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF);
     }
 
 }

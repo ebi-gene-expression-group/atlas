@@ -61,7 +61,7 @@ public class ProteinPageController extends BioEntityPageController {
     }
 
     @Override
-    protected boolean isDisplyedInPropertyList(String propertyType) {
+    protected boolean isDisplayedInPropertyList(String propertyType) {
         return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION);
     }
 }
