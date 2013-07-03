@@ -72,7 +72,9 @@ public class MicroarrayProfilesTSVWriterIT {
     @Before
     public void setUp() throws Exception {
 
-        configurationDao.addExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
+        if (configurationDao.getExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION) == null) {
+            configurationDao.addExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
+        }
 
         microarrayExperiment = microarrayExperimentsCache.getExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
