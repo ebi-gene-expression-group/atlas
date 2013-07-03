@@ -60,7 +60,7 @@ public class GenePageController extends BioEntityPageController {
 
         DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
                 differentialGeneProfileService.initDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
-                DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
+                        DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
         model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
 
         // setting FDR as cutoff
@@ -73,7 +73,7 @@ public class GenePageController extends BioEntityPageController {
     }
 
     @Override
-    protected boolean isDisplyedInPropertyList(String propertyType) {
+    protected boolean isDisplayedInPropertyList(String propertyType) {
         return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(GENE_NAME_PROPERTY_TYPE);
     }
 
