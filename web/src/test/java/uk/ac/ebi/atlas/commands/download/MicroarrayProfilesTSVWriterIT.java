@@ -69,18 +69,20 @@ public class MicroarrayProfilesTSVWriterIT {
     private MicroarrayExperiment microarrayExperiment;
 
     @PostConstruct
-    private void initContext(){
+    private void initContext() {
+
+        configurationDao.deleteExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION);
         configurationDao.addExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
 
         microarrayExperiment = microarrayExperimentsCache.getExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
-                                .withPreferences(requestPreferences).build();
+                .withPreferences(requestPreferences).build();
 
 
     }
 
     @Test
-    public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasts(){
+    public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasts() {
 
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g2_g3")));
 
