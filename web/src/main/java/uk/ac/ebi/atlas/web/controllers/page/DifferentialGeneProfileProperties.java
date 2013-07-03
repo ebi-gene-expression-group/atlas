@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 
 import javax.inject.Named;
 import java.util.*;
@@ -116,9 +115,6 @@ public class DifferentialGeneProfileProperties {
                 for (Object condition : profile.getConditions()) {
                     Contrast contrast = (Contrast) condition;
                     String identifier = profile.getId();
-                    if (profile instanceof MicroarrayProfile) {
-                        identifier = ((MicroarrayProfile) profile).getDesignElementName();
-                    }
                     DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(identifier,
                             contrast, experimentAccession, (DifferentialExpression) profile.getExpression(contrast));
                     differentialGeneProfileLinks.add(differentialGeneProfileLink);
