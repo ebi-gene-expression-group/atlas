@@ -59,10 +59,8 @@ public class MicroarrayQueryPageController extends DifferentialQueryPageControll
 
     @Override
     protected void initExtraRequestPreferences(MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
-        //      if there is only one array design we want to preselect it...
-        if (experiment.getArrayDesignAccessions().size() == 1) {
-            requestPreferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
-        }
+        // preselect first array design accession
+        requestPreferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
     }
 
 }
