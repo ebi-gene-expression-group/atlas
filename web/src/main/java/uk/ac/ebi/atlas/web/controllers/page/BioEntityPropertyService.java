@@ -27,7 +27,6 @@ import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
@@ -155,7 +154,7 @@ public class BioEntityPropertyService {
         String link = bioEntityCardProperties.getLinkTemplate(propertyType);
         if (link != null) {
 
-            link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies);
+            link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies, identifier);
 
             return new PropertyLink(linkText, link);
         }
