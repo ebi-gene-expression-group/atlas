@@ -27,6 +27,7 @@ import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
@@ -58,6 +59,7 @@ public class BioEntityPropertyService {
     private String species;
 
     private SortedSet<String> entityNames;
+
     private String identifier;
 
     private ReactomeBiomartClient reactomeBiomartClient;
