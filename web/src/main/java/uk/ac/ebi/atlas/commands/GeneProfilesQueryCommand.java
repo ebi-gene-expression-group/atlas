@@ -86,7 +86,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
         return new GeneProfileInputStreamFilter(inputStream, geneQueryResponse.getAllGeneIds(), requestContext.getSelectedQueryFactors());
     }
 
-    protected abstract ObjectInputStream<K> createInputStream(String experimentAccession);
+    public abstract ObjectInputStream<K> createInputStream(String experimentAccession);
 
-    protected abstract T execute(ObjectInputStream<K> inputStream, RequestContext requestContext);
+    public abstract T execute(ObjectInputStream<K> inputStream, RequestContext requestContext);
 }

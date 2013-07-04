@@ -56,33 +56,33 @@ public class WriteBaselineProfilesCommand extends GeneProfilesQueryCommand<Long,
 
     @Inject
     public WriteBaselineProfilesCommand(BaselineProfilesTSVWriter baselineProfilesTSVWriter
-                                        , BaselineRequestContext requestContext
-                                        , GeneSetProfilesBuilder geneSetProfilesBuilder) {
+            , BaselineRequestContext requestContext
+            , GeneSetProfilesBuilder geneSetProfilesBuilder) {
         super(requestContext);
         this.baselineProfilesTSVWriter = baselineProfilesTSVWriter;
         this.geneSetProfilesBuilder = geneSetProfilesBuilder;
     }
 
     @Override
-    protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
+    public ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createBaselineProfileInputStream(experimentAccession);
     }
 
     @Override
-    protected Long execute(ObjectInputStream<BaselineProfile> inputStream, RequestContext requestContext) {
+    public Long execute(ObjectInputStream<BaselineProfile> inputStream, RequestContext requestContext) {
         try {
-            if (requestContext.isGeneSetMatch()){
+            if (requestContext.isGeneSetMatch()) {
                 BaselineProfileComparator baselineProfileComparator =
                         new BaselineProfileComparator(requestContext.isSpecific()
-                                                     ,requestContext.getSelectedQueryFactors()
-                                                     ,requestContext.getAllQueryFactors()
-                                                     ,requestContext.getCutoff());
+                                , requestContext.getSelectedQueryFactors()
+                                , requestContext.getAllQueryFactors()
+                                , requestContext.getCutoff());
 
                 BaselineProfilesList geneSetProfiles =
-                                    geneSetProfilesBuilder.forGeneQueryResponse(requestContext.getGeneQueryResponse())
-                                      .withInputStream(inputStream)
-                                      .withBaselineComparator(baselineProfileComparator)
-                                      .build();
+                        geneSetProfilesBuilder.forGeneQueryResponse(requestContext.getGeneQueryResponse())
+                                .withInputStream(inputStream)
+                                .withBaselineComparator(baselineProfileComparator)
+                                .build();
 
                 return baselineProfilesTSVWriter.write(geneSetProfiles, requestContext.getAllQueryFactors());
             }

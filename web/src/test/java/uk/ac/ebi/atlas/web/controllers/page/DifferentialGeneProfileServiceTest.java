@@ -33,10 +33,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.RankProfilesCommandFactory;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.context.*;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
@@ -61,7 +59,7 @@ import static org.mockito.Mockito.*;
 public class DifferentialGeneProfileServiceTest {
 
     private static final String EXPERIMENT_ACCESSION = "experimentAccession";
-    private static final String IDENTIFIER = "identifier";
+    private static final String IDENTIFIER = "IDENTIFIER";
     private static final double CUTOFF = 0.05;
     private static final String ARRAY_DESIGN_ACCESSION = "AFFY";
     private static final String SPECIE = "SPECIE";
@@ -130,8 +128,9 @@ public class DifferentialGeneProfileServiceTest {
         when(microarrayExperimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSION)));
         when(microarrayExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIE));
 
-        when(rankRnaSeqProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesList);
-        when(rankMicroarrayProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(differentialProfilesList);
+
+        when(rankRnaSeqProfilesCommandMock.execute(any(ObjectInputStream.class), any(RequestContext.class))).thenReturn(differentialProfilesList);
+        when(rankMicroarrayProfilesCommandMock.execute(any(ObjectInputStream.class), any(RequestContext.class))).thenReturn(differentialProfilesList);
 
         when(rnaSeqRequestContextBuilderMock.forExperiment(differentialExperimentMock)).thenReturn(rnaSeqRequestContextBuilderMock);
         when(rnaSeqRequestContextBuilderMock.withPreferences(any(DifferentialRequestPreferences.class))).thenReturn(rnaSeqRequestContextBuilderMock);
@@ -169,11 +168,11 @@ public class DifferentialGeneProfileServiceTest {
     public void testRetrieveDifferentialProfileForExperiment() throws Exception {
         DifferentialProfilesList profilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF, SPECIE);
         assertThat(profilesList.size(), is(1));
-        verify(differentialExperimentMock).getAccession();
+        verify(differentialExperimentMock).getSpecies();
         verify(rnaSeqRequestContextBuilderMock).forExperiment(differentialExperimentMock);
         verify(rnaSeqRequestContextBuilderMock).withPreferences(any(DifferentialRequestPreferences.class));
         verify(rnaSeqRequestContextBuilderMock).build();
-        verify(rankRnaSeqProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
+        verify(rankRnaSeqProfilesCommandMock).execute(any(ObjectInputStream.class), any(RequestContext.class));
     }
 
     @Test
@@ -182,11 +181,11 @@ public class DifferentialGeneProfileServiceTest {
         assertThat(profilesLists.size(), is(1));
         DifferentialProfilesList profilesList = profilesLists.iterator().next();
         assertThat(profilesList.size(), is(1));
-        verify(microarrayExperimentMock).getAccession();
+        verify(microarrayExperimentMock).getSpecies();
         verify(microarrayRequestContextBuilderMock).forExperiment(microarrayExperimentMock);
         verify(microarrayRequestContextBuilderMock).withPreferences(any(MicroarrayRequestPreferences.class));
         verify(microarrayRequestContextBuilderMock).build();
-        verify(rankMicroarrayProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
+        verify(rankMicroarrayProfilesCommandMock).execute(any(ObjectInputStream.class), any(RequestContext.class));
     }
 
     @Test

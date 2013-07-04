@@ -24,18 +24,20 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
-import uk.ac.ebi.atlas.commands.RankProfilesCommandFactory;
-import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
+import uk.ac.ebi.atlas.commands.*;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -43,6 +45,7 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -128,7 +131,7 @@ public class DifferentialGeneProfileService {
         return differentialGeneProfileProperties;
     }
 
-    DifferentialProfilesList retrieveDifferentialProfilesForRnaSeqExperiment(String experimentAccession, String geneQuery, double cutoff, String specie) throws GenesNotFoundException {
+    DifferentialProfilesList retrieveDifferentialProfilesForRnaSeqExperiment(String experimentAccession, String identifier, double cutoff, String specie) throws GenesNotFoundException {
 
         // limit experiment selection by specie
         DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
@@ -137,16 +140,19 @@ public class DifferentialGeneProfileService {
         }
 
         DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
-        differentialRequestPreferences.setGeneQuery(geneQuery.toLowerCase());
         differentialRequestPreferences.setCutoff(cutoff);
 
-        rnaSeqRequestContextBuilder.withPreferences(differentialRequestPreferences).forExperiment(differentialExperiment).build();
+        RnaSeqRequestContext rnaSeqRequestContext = rnaSeqRequestContextBuilder.withPreferences(differentialRequestPreferences).forExperiment(differentialExperiment).build();
 
         RankRnaSeqProfilesCommand rankRnaSeqProfilesCommand = rankProfilesCommandFactory.getRankRnaSeqProfilesCommand();
-        return rankRnaSeqProfilesCommand.execute(differentialExperiment.getAccession());
+
+        GeneProfileInputStreamFilter geneProfileInputStreamFilter = createGeneProfileInputStreamFilter(experimentAccession, identifier, rankRnaSeqProfilesCommand);
+
+        return rankRnaSeqProfilesCommand.execute(geneProfileInputStreamFilter, rnaSeqRequestContext);
     }
 
-    Collection<DifferentialProfilesList> retrieveDifferentialProfilesForMicroarrayExperiment(String experimentAccession, String geneQuery, double cutoff, String specie) throws GenesNotFoundException {
+
+    Collection<DifferentialProfilesList> retrieveDifferentialProfilesForMicroarrayExperiment(String experimentAccession, String identifier, double cutoff, String specie) throws GenesNotFoundException {
 
         // limit experiment selection by specie
         MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
@@ -155,7 +161,6 @@ public class DifferentialGeneProfileService {
         }
 
         MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
-        microarrayRequestPreferences.setGeneQuery(geneQuery.toLowerCase());
         microarrayRequestPreferences.setCutoff(cutoff);
 
         Collection<DifferentialProfilesList> results = Lists.newArrayList();
@@ -163,14 +168,24 @@ public class DifferentialGeneProfileService {
         for (String arrayDesignAccession : arrayDesignAccessions) {
             microarrayRequestPreferences.setArrayDesignAccession(arrayDesignAccession);
 
-            microarrayRequestContextBuilder.withPreferences(microarrayRequestPreferences).forExperiment(microarrayExperiment).build();
+            MicroarrayRequestContext microarrayRequestContext = microarrayRequestContextBuilder.withPreferences(microarrayRequestPreferences).forExperiment(microarrayExperiment).build();
 
             RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand = rankProfilesCommandFactory.getRankMicroarrayProfilesCommand();
-            DifferentialProfilesList differentialProfilesList = rankMicroarrayProfilesCommand.execute(microarrayExperiment.getAccession());
+
+            GeneProfileInputStreamFilter geneProfileInputStreamFilter = createGeneProfileInputStreamFilter(experimentAccession, identifier, rankMicroarrayProfilesCommand);
+
+            DifferentialProfilesList differentialProfilesList = rankMicroarrayProfilesCommand.execute(geneProfileInputStreamFilter, microarrayRequestContext);
             results.add(differentialProfilesList);
         }
 
         return results;
+    }
+
+    private GeneProfileInputStreamFilter createGeneProfileInputStreamFilter(String experimentAccession, String identifier, RankProfilesCommand rankRnaSeqProfilesCommand) {
+        // this is to by-pass any Solr query as we are already working with identifier here
+        ObjectInputStream<RnaSeqProfile> inputStream = rankRnaSeqProfilesCommand.createInputStream(experimentAccession);
+        ArrayList<String> uppercaseGeneIDs = Lists.newArrayList(identifier.toUpperCase());
+        return new GeneProfileInputStreamFilter(inputStream, uppercaseGeneIDs, Collections.emptySet());
     }
 
 }

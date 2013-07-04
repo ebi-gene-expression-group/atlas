@@ -81,12 +81,12 @@ public class GeneProfilesQueryCommandTest {
 
         subject = new GeneProfilesQueryCommand<GeneProfilesList, BaselineProfile>(requestContextMock) {
             @Override
-            protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
+            public ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
                 return largeInputStream;
             }
 
             @Override
-            protected GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream, RequestContext requestContext) {
+            public GeneProfilesList execute(ObjectInputStream<BaselineProfile> inputStream, RequestContext requestContext) {
                 return null;
             }
         };

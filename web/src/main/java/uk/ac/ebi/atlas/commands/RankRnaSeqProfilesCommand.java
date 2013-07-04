@@ -71,7 +71,7 @@ public class RankRnaSeqProfilesCommand extends RankProfilesCommand<DifferentialP
     }
 
     @Override
-    protected ObjectInputStream<RnaSeqProfile> createInputStream(String experimentAccession) {
+    public ObjectInputStream<RnaSeqProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createDifferentialProfileInputStream(experimentAccession);
     }
 }
