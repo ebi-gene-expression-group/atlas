@@ -108,7 +108,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = namePropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -117,7 +117,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = synonymPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -126,7 +126,7 @@ public class SolrQueryService {
 
         String[] propertyTypes = identifierPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
 
-        String queryString = buildCompositeQuery(geneName, BIOENTITY_TYPE_GENE, species, propertyTypes);
+        String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA);
 
         return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
@@ -264,18 +264,11 @@ public class SolrQueryService {
         StringBuilder sb =
                 new StringBuilder()
                         .append("{!lucene q.op=OR df=" + propertyName + "} ")
-                        .append("(" + propertyName + ":").append(escapedGeneQuery).append(")")
-                        .append(" AND species:\"")
-                        .append(species)
-                        .append("\" AND (");
-        for (String bioEntityType : bioEntityTypes) {
-            sb.append("type:\"")
-                    .append(bioEntityType)
-                    .append("\" OR ");
-        }
-        int indexOfOR = sb.lastIndexOf(" OR ");
-        sb.delete(indexOfOR, indexOfOR + 4);
-        sb.append(")");
+                        .append("(" + propertyName + ":").append(escapedGeneQuery).append(")");
+
+        appendSpecies(sb, species);
+
+        appendBioEntityTypes(sb, bioEntityTypes);
 
         return sb.toString();
     }
@@ -299,16 +292,15 @@ public class SolrQueryService {
         return query.toString();
     }
 
-    String buildCompositeQuery(String geneName, String bioentityType, String species, String[] propertyTypes) {
+    String buildCompositeQuery(String geneName, String species, String[] propertyTypes, String... bioentityTypes) {
 
         StringBuilder query = new StringBuilder();
         query.append("property_edgengram:\"");
         query.append(geneName);
-        query.append("\" AND species:\"");
-        query.append(species);
-        query.append("\" AND type:\"");
-        query.append(bioentityType);
-        query.append("\" AND (");
+        query.append("\"");
+        appendSpecies(query, species);
+        appendBioEntityTypes(query, bioentityTypes);
+        query.append(" AND (");
         for (int i = 0; i < propertyTypes.length; i++) {
             query.append("property_type:\"");
             query.append(propertyTypes[i]);
@@ -336,5 +328,23 @@ public class SolrQueryService {
 
     String customEscape(String searchText) {
         return searchText.replace(":", "\\:");
+    }
+
+    private void appendSpecies(StringBuilder sb, String species) {
+        sb.append(" AND species:\"")
+                .append(species)
+                .append("\"");
+    }
+
+    private void appendBioEntityTypes(StringBuilder sb, String[] bioEntityTypes) {
+        sb.append(" AND (");
+        for (String bioEntityType : bioEntityTypes) {
+            sb.append("type:\"")
+                    .append(bioEntityType)
+                    .append("\" OR ");
+        }
+        int indexOfOR = sb.lastIndexOf(" OR ");
+        sb.delete(indexOfOR, indexOfOR + 4);
+        sb.append(")");
     }
 }

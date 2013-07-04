@@ -69,6 +69,10 @@ public class ConfigurationDaoIT {
     @After
     public void tearDown() throws Exception {
         subject.deleteExperimentConfiguration(E_MTAB_513);
+        subject.deleteExperimentConfiguration(E_MTAB_1066);
+        subject.deleteExperimentConfiguration(ANOTHER_ACCESION);
+        subject.deleteExperimentConfiguration(YET_ANOTHER_ACCESSION);
+        subject.deleteExperimentConfiguration(YET_YET_ANOTHER_ACCESSION);
     }
 
     @Test
@@ -90,9 +94,6 @@ public class ConfigurationDaoIT {
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY)));
         experimentConfigurations = subject.getExperimentConfigurations(TYPE_MICRORNA);
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(YET_YET_ANOTHER_ACCESSION, TYPE_MICRORNA)));
-        subject.deleteExperimentConfiguration(ANOTHER_ACCESION);
-        subject.deleteExperimentConfiguration(YET_ANOTHER_ACCESSION);
-        subject.deleteExperimentConfiguration(YET_YET_ANOTHER_ACCESSION);
     }
 
     @Test
@@ -115,7 +116,6 @@ public class ConfigurationDaoIT {
         experimentConfigurations = subject.getExperimentConfigurations();
         assertThat(experimentConfigurations.size(), is(size + 1));
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY)));
-        subject.deleteExperimentConfiguration(E_MTAB_1066);
     }
 
     @Test
