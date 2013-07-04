@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.differential.microarray;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +34,7 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
 import java.util.Set;
+import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -65,4 +67,21 @@ public class MicroarrayExperimentConfigurationIT {
         assertThat(contrasts.size(), is(2));
     }
 
+    @Test
+    public void testFirstContrast() throws Exception {
+        SortedSet<Contrast> contrasts = Sets.newTreeSet(subject.getContrasts());
+        Contrast first = contrasts.first();
+        assertThat(first.getId(), is("g3_g4"));
+        assertThat(first.getDisplayName(), is("genotype:'p107 -/-' vs 'wild type' on A-AFFY-23"));
+        //assertThat(first.getReferenceAssayGroup(), hasItems("9859-11, chip MOE430A", "9887-4, chip MOE430A", "9619-6, chip MOE430A"));
+        //assertThat(first.getTestAssayGroup(), hasItems("9447-4 -/-, chip MOE430A", "9887-6 p107 -/-, chip MOE430A", "9619-3 p107 -/-, chip MOE430A", "9859-12 p107 -/-, chip MOE430A"));
+    }
+
+    @Test
+    public void testLastContrast() throws Exception {
+        SortedSet<Contrast> contrasts = Sets.newTreeSet(subject.getContrasts());
+        Contrast last = contrasts.last();
+        assertThat(last.getId(), is("g2_g1"));
+        assertThat(last.getDisplayName(), is("genotype:'p107 -/-' vs 'wild type' on A-AFFY-24"));
+    }
 }
