@@ -90,7 +90,7 @@ public class GeneSetPageController extends BioEntityPageController {
         propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(query));
         SortedSet<String> names = Sets.newTreeSet();
         names.add(query);
-        bioEntityPropertyService.init(species.iterator().next(), propertyValuesByType, names);
+        bioEntityPropertyService.init(identifier, species.iterator().next(), propertyValuesByType, names);
     }
 
     @Override

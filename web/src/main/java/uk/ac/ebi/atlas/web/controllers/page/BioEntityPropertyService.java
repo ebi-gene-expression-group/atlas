@@ -55,6 +55,8 @@ public class BioEntityPropertyService {
 
     private SortedSetMultimap<String, String> propertyValuesByType;
 
+    private String identifier;
+
     private String species;
 
     private SortedSet<String> entityNames;
@@ -69,7 +71,8 @@ public class BioEntityPropertyService {
         this.reactomeBiomartClient = reactomeBiomartClient;
     }
 
-    void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames) {
+    void init(String identifier, String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames) {
+        this.identifier = identifier;
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
         this.entityNames = entityNames;
@@ -138,7 +141,7 @@ public class BioEntityPropertyService {
         String link = bioEntityCardProperties.getLinkTemplate(propertyType);
         if (link != null) {
 
-            link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies);
+            link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies, identifier);
 
             return new PropertyLink(linkText, link);
         }
