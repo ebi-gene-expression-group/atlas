@@ -62,11 +62,11 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
     @Override
     protected Comparator<BaselineProfile> createGeneProfileComparator(RequestContext requestContext) {
         return new BaselineProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
-                                                requestContext.getAllQueryFactors(), requestContext.getCutoff());
+                requestContext.getAllQueryFactors(), requestContext.getCutoff());
     }
 
     @Override
-    protected ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
+    public ObjectInputStream<BaselineProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createBaselineProfileInputStream(experimentAccession);
     }
 
@@ -76,8 +76,8 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
                                                                Comparator<BaselineProfile> baselineProfileComparator) {
 
         return geneSetProfilesBuilder.forGeneQueryResponse(geneQueryResponse)
-                                     .withInputStream(inputStream)
-                                     .withBaselineComparator(baselineProfileComparator).build();
+                .withInputStream(inputStream)
+                .withBaselineComparator(baselineProfileComparator).build();
     }
 
 }

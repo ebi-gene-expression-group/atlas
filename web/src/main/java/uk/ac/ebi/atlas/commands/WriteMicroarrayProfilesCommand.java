@@ -60,12 +60,12 @@ public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Lon
     }
 
     @Override
-    protected ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
+    public ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createMicroarrayProfileInputStream(experimentAccession, requestContext.getArrayDesignAccession());
     }
 
     @Override
-    protected Long execute(ObjectInputStream<MicroarrayProfile> inputStream, RequestContext requestContext) {
+    public Long execute(ObjectInputStream<MicroarrayProfile> inputStream, RequestContext requestContext) {
         try {
             return geneProfileTsvWriter.write(inputStream, experiment.getContrasts());
         } catch (IOException e) {

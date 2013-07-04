@@ -34,7 +34,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Queue;
 
-public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends Profile> extends GeneProfilesQueryCommand<T,K> {
+public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends Profile> extends GeneProfilesQueryCommand<T, K> {
 
     @Inject
     protected RankProfilesCommand(RequestContext requestContext) {
@@ -42,7 +42,7 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
     }
 
     @Override
-    protected T execute(ObjectInputStream<K> inputStream, RequestContext requestContext) {
+    public T execute(ObjectInputStream<K> inputStream, RequestContext requestContext) {
 
         Comparator<K> profilesComparator = createGeneProfileComparator(requestContext);
 
@@ -52,7 +52,7 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
 
         T list = null;
 
-        if (!requestContext.isGeneSetMatch()){
+        if (!requestContext.isGeneSetMatch()) {
 
             K geneProfile;
 
@@ -78,7 +78,7 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
 
     protected abstract Comparator<K> createGeneProfileComparator(RequestContext requestContext);
 
-    MinMaxPriorityQueue<K> buildRankingQueue(int heatmapMatrixSize, Comparator<K> profilesComparator){
+    MinMaxPriorityQueue<K> buildRankingQueue(int heatmapMatrixSize, Comparator<K> profilesComparator) {
         return MinMaxPriorityQueue.orderedBy(profilesComparator).maximumSize(heatmapMatrixSize).create();
     }
 

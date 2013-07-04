@@ -58,12 +58,12 @@ public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<L
     }
 
     @Override
-    protected ObjectInputStream<RnaSeqProfile> createInputStream(String experimentAccession) {
+    public ObjectInputStream<RnaSeqProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createDifferentialProfileInputStream(experimentAccession);
     }
 
     @Override
-    protected Long execute(ObjectInputStream<RnaSeqProfile> inputStream, RequestContext requestContext) {
+    public Long execute(ObjectInputStream<RnaSeqProfile> inputStream, RequestContext requestContext) {
         try {
             return geneProfileTsvWriter.write(inputStream, experiment.getContrasts());
         } catch (IOException e) {

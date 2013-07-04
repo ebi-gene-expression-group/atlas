@@ -66,7 +66,7 @@ public class RankMicroarrayProfilesCommand extends RankProfilesCommand<Different
     }
 
     @Override
-    protected ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
+    public ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
         return inputStreamFactory.createMicroarrayProfileInputStream(experimentAccession, requestContext.getArrayDesignAccession());
     }
 
