@@ -27,6 +27,7 @@ import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
@@ -58,21 +59,26 @@ public class BioEntityPropertyService {
     private String species;
 
     private SortedSet<String> entityNames;
+    private String identifier;
 
     private ReactomeBiomartClient reactomeBiomartClient;
 
+    private ArrayDesignDao arrayDesignDao;
+
     @Inject
-    public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient) {
+    public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient, ArrayDesignDao arrayDesignDao) {
         this.solrClient = solrClient;
         this.uniProtClient = uniProtClient;
         this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeBiomartClient = reactomeBiomartClient;
+        this.arrayDesignDao = arrayDesignDao;
     }
 
-    void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames) {
+    void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
         this.entityNames = entityNames;
+        this.identifier = identifier;
     }
 
     public String getSpecies() {
@@ -83,13 +89,24 @@ public class BioEntityPropertyService {
     public List<PropertyLink> getPropertyLinks(String propertyType) {
         if ("reactome".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
             addReactomePropertyValues();
+        } else if ("designelement_accession".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
+            addDesignElements();
         }
+
+
         List<PropertyLink> propertyLinks = Lists.newArrayList();
         for (String propertyValue : propertyValuesByType.get(propertyType)) {
 
             propertyLinks.add(createLink(propertyType, propertyValue, species));
         }
         return propertyLinks;
+    }
+
+    private void addDesignElements() {
+        List<String> designElements = arrayDesignDao.getDesignElements(identifier);
+        if(!designElements.isEmpty()) {
+            propertyValuesByType.putAll("designelement_accession", designElements);
+        }
     }
 
     public String getBioEntityDescription() {

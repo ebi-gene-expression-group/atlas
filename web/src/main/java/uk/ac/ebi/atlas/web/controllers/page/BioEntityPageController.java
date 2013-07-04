@@ -99,6 +99,6 @@ public abstract class BioEntityPageController {
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);
         }
-        bioEntityPropertyService.init(specie, propertyValuesByType, entityNames);
+        bioEntityPropertyService.init(specie, propertyValuesByType, entityNames, identifier);
     }
 }

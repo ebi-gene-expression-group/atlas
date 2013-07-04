@@ -98,4 +98,8 @@ public class ArrayDesignDao extends AnnotationDao {
         return count > 0;
     }
 
+    public List<String> getDesignElements(String geneIdentifier) {
+        String query = "select designelement from designelement_mapping where identifier=?";
+        return jdbcTemplate.queryForList(query, new String[]{geneIdentifier}, String.class);
+    }
 }

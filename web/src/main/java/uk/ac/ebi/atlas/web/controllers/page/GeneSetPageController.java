@@ -78,19 +78,19 @@ public class GeneSetPageController extends BioEntityPageController {
 
     @Override
     protected void initBioEntityPropertyService(String identifier) {
-        String query = identifier.replaceAll("\"", "");
-        Collection<String> species = solrClient.getSpeciesForPropertyValue(query);
+        String trimmedIdentifier = identifier.replaceAll("\"", "");
+        Collection<String> species = solrClient.getSpeciesForPropertyValue(trimmedIdentifier);
 
         if (species.size() != 1) {
             throw new ResourceNotFoundException("Cannot find data form a single organism for geneset with ID " + identifier);
         }
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
-        propertyValuesByType.put("reactome", query.toUpperCase());
-        propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(query));
+        propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
+        propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(trimmedIdentifier));
         SortedSet<String> names = Sets.newTreeSet();
-        names.add(query);
-        bioEntityPropertyService.init(species.iterator().next(), propertyValuesByType, names);
+        names.add(trimmedIdentifier);
+        bioEntityPropertyService.init(species.iterator().next(), propertyValuesByType, names, trimmedIdentifier);
     }
 
     @Override
