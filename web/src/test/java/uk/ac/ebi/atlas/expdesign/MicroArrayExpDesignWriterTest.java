@@ -51,7 +51,7 @@ public class MicroArrayExpDesignWriterTest {
     private static final String AGE = "age";
     private static final String ORGANISM = "organism";
     private static final String RNA = "RNA";
-    private static final String[] EXPECTED_ASSAY = new String[]{"ASSAY", "ARRAY", "60", "Homo sapiens", "male", "total RNA", "60"};
+    private static final String[] EXPECTED_ASSAY = new String[]{"ASSAY", "ARRAY", "60 years", "Homo sapiens", "male", "total RNA", "60 years"};
     private static final String[] EXPECTED_HEADER = new String[]{"Assay", "Array", "Sample Characteristics[age]", "Sample Characteristics[organism]", "Sample Characteristics[sex]", "Factor Values[RNA]", "Factor Values[age]"};
 
     MicroArrayExpDesignWriter subject;
@@ -73,6 +73,9 @@ public class MicroArrayExpDesignWriterTest {
 
     List<String> factorsList = Lists.newArrayList(factors);
 
+    @Mock
+    private PropertyMergeService propertyMergeServiceMock;
+
     @Before
     public void setUp() throws Exception {
         Collections.sort(characteristicsList);
@@ -83,13 +86,15 @@ public class MicroArrayExpDesignWriterTest {
         when(mageTabLimpopoExpDesignParserMock.getHybridizationNodeForAssay(ASSAY)).thenReturn(scanNodeMock);
         when(mageTabLimpopoExpDesignParserMock.findArrayForHybridizationNode(scanNodeMock)).thenReturn(ARRAY);
         when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForSDRFNode(scanNodeMock, SEX)).thenReturn(Lists.newArrayList("male"));
-        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForSDRFNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60"));
+        when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForSDRFNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60", "year"));
         when(mageTabLimpopoExpDesignParserMock.findCharacteristicValueForSDRFNode(scanNodeMock, ORGANISM)).thenReturn(Lists.newArrayList("Homo sapiens"));
         when(mageTabLimpopoExpDesignParserMock.findFactorValueForHybridizationNode(scanNodeMock, RNA)).thenReturn(Lists.newArrayList("total RNA"));
-        when(mageTabLimpopoExpDesignParserMock.findFactorValueForHybridizationNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60"));
+        when(mageTabLimpopoExpDesignParserMock.findFactorValueForHybridizationNode(scanNodeMock, AGE)).thenReturn(Lists.newArrayList("60", "year"));
         when(mageTabLimpopoExpDesignParserMock.extractAssays()).thenReturn(Sets.newHashSet(ASSAY));
 
-        subject = new MicroArrayExpDesignWriter(mageTabLimpopoExpDesignParserMock);
+        when(propertyMergeServiceMock.mergeValueAndUnit("60", "year")).thenReturn("60 years");
+
+        subject = new MicroArrayExpDesignWriter(mageTabLimpopoExpDesignParserMock, propertyMergeServiceMock);
     }
 
     @Test
