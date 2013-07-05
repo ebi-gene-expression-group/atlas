@@ -54,22 +54,21 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
             return true;
         }
 
-        return isOverExpressedInSelectedFactors(baselineProfile);
+        return isOverExpressedInSelectedQueryFactors(baselineProfile);
 
     }
 
-    boolean isOverExpressedInSelectedFactors(BaselineProfile baselineProfile) {
+    boolean isOverExpressedInSelectedQueryFactors(BaselineProfile baselineProfile) {
 
-        double averageOnSelected = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
-        Set<Factor> remainingFactors = Sets.newHashSet(allQueryFactors);
-        remainingFactors.removeAll(selectedQueryFactors);
+        double averageOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
+        Set<Factor> nonSelectedQueryFactors = Sets.newHashSet(allQueryFactors);
+        nonSelectedQueryFactors.removeAll(selectedQueryFactors);
 
-        double maxOnRest = baselineProfile.getMaxExpressionLevelOn(remainingFactors);
+        double maxOnNonSelectedQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);
 
-        return (averageOnSelected / maxOnRest) > 1;
+        return averageOnSelectedQueryFactors > maxOnNonSelectedQueryFactors;
 
     }
-
 
     BaselineProfilePrecondition setSpecific(boolean specific) {
         this.specific = specific;
