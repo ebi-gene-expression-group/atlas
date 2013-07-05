@@ -33,6 +33,9 @@ abstract class TablePage extends AtlasPage {
     @FindBy(id = "experimentReferences")
     private WebElement experimentReferences;
 
+    @FindBy(id = "experimentArrayDesigns")
+    private WebElement experimentArrayDesigns;
+
     TablePage(WebDriver driver) {
         this(driver, null);
     }
@@ -151,5 +154,9 @@ abstract class TablePage extends AtlasPage {
 
     public String getExperimentReferences() {
         return experimentReferences.getText();
+    }
+
+    public String getExperimentArrayDesigns() {
+        return experimentArrayDesigns.getText();
     }
 }

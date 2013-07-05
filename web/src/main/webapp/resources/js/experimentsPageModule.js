@@ -125,6 +125,10 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatArrayDesign(data, type, full);
                     } }
+            ],
+            "aLengthMenu":[
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
             ]
         });
 
