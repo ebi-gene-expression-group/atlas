@@ -51,7 +51,7 @@ public class MicroarrayExperimentConfigurationTest {
         List list = new ArrayList<>();
         list.add(ARRAYDESIGN);
         when(xmlConfigurationMock.getList("analytics/array_design")).thenReturn(list);
-        subject = new MicroarrayExperimentConfiguration(xmlConfigurationMock);
+        subject = new MicroarrayExperimentConfiguration(xmlConfigurationMock, null);
     }
 
     @Test

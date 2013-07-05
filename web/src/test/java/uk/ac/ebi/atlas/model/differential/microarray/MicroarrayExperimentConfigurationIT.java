@@ -39,6 +39,7 @@ import java.util.SortedSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -73,8 +74,8 @@ public class MicroarrayExperimentConfigurationIT {
         Contrast first = contrasts.first();
         assertThat(first.getId(), is("g3_g4"));
         assertThat(first.getDisplayName(), is("genotype:'p107 -/-' vs 'wild type' on A-AFFY-23"));
-        //assertThat(first.getReferenceAssayGroup(), hasItems("9859-11, chip MOE430A", "9887-4, chip MOE430A", "9619-6, chip MOE430A"));
-        //assertThat(first.getTestAssayGroup(), hasItems("9447-4 -/-, chip MOE430A", "9887-6 p107 -/-, chip MOE430A", "9619-3 p107 -/-, chip MOE430A", "9859-12 p107 -/-, chip MOE430A"));
+        assertThat(first.getReferenceAssayGroup(), hasItems("9859-11, chip MOE430A", "9887-4, chip MOE430A", "9619-6, chip MOE430A"));
+        assertThat(first.getTestAssayGroup(), hasItems("9447-4 -/-, chip MOE430A", "9887-6 p107 -/-, chip MOE430A", "9619-3 p107 -/-, chip MOE430A", "9859-12 p107 -/-, chip MOE430A"));
     }
 
     @Test

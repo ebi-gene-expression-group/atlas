@@ -27,12 +27,18 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperimentConfiguration;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import javax.inject.Named;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.MessageFormat;
@@ -61,14 +67,35 @@ public class ConfigurationTrader {
 
         XMLConfiguration xmlConfiguration = getXmlConfiguration(differentialConfigurationPathTemplate, experimentAccession);
         xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
-        if (isMicroarray){
-            return new MicroarrayExperimentConfiguration(xmlConfiguration);
+        Document document = parseConfigurationXml(experimentAccession);
+        if (isMicroarray) {
+            return new MicroarrayExperimentConfiguration(xmlConfiguration, document);
         }
-        return new DifferentialExperimentConfiguration(xmlConfiguration);
+        return new DifferentialExperimentConfiguration(xmlConfiguration, document);
     }
+
 
     public MicroarrayExperimentConfiguration getMicroarrayExperimentConfiguration(String experimentAccession) {
         return (MicroarrayExperimentConfiguration) getDifferentialExperimentConfiguration(experimentAccession, true);
+    }
+
+    private Document parseConfigurationXml(String experimentAccession) {
+        String path = MessageFormat.format(differentialConfigurationPathTemplate, experimentAccession);
+        File file = new File(path);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            return builder.parse(file.toURI().toString());
+        } catch (ParserConfigurationException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException("Problem parsing configuration file.", e);
+        } catch (SAXException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException("Problem parsing configuration file.", e);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException("Problem parsing configuration file.", e);
+        }
     }
 
     private XMLConfiguration getXmlConfiguration(String pathTemplate, String experimentAccession) {
