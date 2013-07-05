@@ -47,7 +47,7 @@
     </div>
     <div id="experimentOrganisms">Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
     <c:if test="${allArrayDesigns!=null}">
-        <div>Array Design(s):
+        <div id="experimentArrayDesigns">Array Design(s):
             <c:forEach items="${allArrayDesigns}" var="arrayDesign">
                 <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
                    href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"

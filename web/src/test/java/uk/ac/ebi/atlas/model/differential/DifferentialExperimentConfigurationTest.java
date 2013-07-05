@@ -22,49 +22,59 @@
 
 package uk.ac.ebi.atlas.model.differential;
 
-import org.apache.commons.configuration.SubnodeConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.w3c.dom.Document;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.ByteArrayInputStream;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class DifferentialExperimentConfigurationTest {
 
-    public static final String CONTRAST_ID = "contrastId";
-    public static final String REFERENCE_ASSAY_GROUP = "reference_assay_group";
-    public static final String TEST_ASSAY_GROUP = "test_assay_group";
-    public static final String NAME = "name";
-
-    @Mock
-    XMLConfiguration xmlConfigurationMock;
-
-    @Mock
-    SubnodeConfiguration configurationMock;
+    private static final String CONTRAST_ID = "contrastId";
+    private static final String REFERENCE_ASSAY_GROUP = "reference_assay_group";
+    private static final String TEST_ASSAY_GROUP = "test_assay_group";
+    private static final String NAME = "name";
+    private static final String XML_CONTENT =
+            "<configuration>" +
+                    "    <analytics>" +
+                    "        <assay_groups>" +
+                    "            <assay_group id=\"" + REFERENCE_ASSAY_GROUP + "\">" +
+                    "                <assay>" + REFERENCE_ASSAY_GROUP + "</assay>" +
+                    "            </assay_group>" +
+                    "            <assay_group id=\"" + TEST_ASSAY_GROUP + "\">" +
+                    "                <assay>" + TEST_ASSAY_GROUP + "</assay>" +
+                    "            </assay_group>" +
+                    "        </assay_groups>" +
+                    "        <contrasts>" +
+                    "            <contrast id=\"" + CONTRAST_ID + "\">" +
+                    "                <name>" + NAME + "</name>" +
+                    "                <reference_assay_group>" + REFERENCE_ASSAY_GROUP + "</reference_assay_group>" +
+                    "                <test_assay_group>" + TEST_ASSAY_GROUP + "</test_assay_group>" +
+                    "            </contrast>" +
+                    "        </contrasts>" +
+                    "    </analytics>" +
+                    "</configuration>";
 
     DifferentialExperimentConfiguration subject;
 
     @Before
     public void setUp() throws Exception {
-        when(xmlConfigurationMock.getStringArray("analytics/contrasts/contrast/@id")).thenReturn(new String[]{CONTRAST_ID});
-        when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + REFERENCE_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{REFERENCE_ASSAY_GROUP});
-        when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + TEST_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{TEST_ASSAY_GROUP});
-        when(xmlConfigurationMock.configurationAt("analytics/contrasts/contrast[@id=\'" + CONTRAST_ID + "\']")).thenReturn(configurationMock);
-        when(configurationMock.getString(NAME)).thenReturn(NAME);
-        when(configurationMock.getString(REFERENCE_ASSAY_GROUP)).thenReturn(REFERENCE_ASSAY_GROUP);
-        when(configurationMock.getString(TEST_ASSAY_GROUP)).thenReturn(TEST_ASSAY_GROUP);
+        XMLConfiguration xmlConfiguration = new XMLConfiguration();
+        xmlConfiguration.load(new ByteArrayInputStream(XML_CONTENT.getBytes()));
 
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(new ByteArrayInputStream(XML_CONTENT.getBytes()));
 
-        subject = new DifferentialExperimentConfiguration(xmlConfigurationMock);
+        subject = new DifferentialExperimentConfiguration(xmlConfiguration, doc);
     }
 
     @Test
