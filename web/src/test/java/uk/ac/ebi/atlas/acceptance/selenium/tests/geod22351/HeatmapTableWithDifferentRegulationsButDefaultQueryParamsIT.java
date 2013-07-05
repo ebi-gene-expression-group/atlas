@@ -64,13 +64,13 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getGeneCount(), containsString("of 40"));
 
         assertThat(subject.getSelectedProfiles().size(), is(40));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Ch25h", "Ccl4", "C1qc"));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("1.7" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
-        assertThat(subject.getLastGeneProfile().get(0), is("5.09" + " \u00D7 " + "10-9"));
+        assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
     }
 
     @Test
@@ -80,13 +80,13 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getGeneCount(), containsString("of 9"));
 
         assertThat(subject.getSelectedProfiles().size(), is(9));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Tm7sf2", "Mybpc3", "Pmp2"));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Gm15512", "Pla2g3", "Pmp2"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("0.014"));
+        assertThat(subject.getGeneProfile(1).get(0), is("6.61" + " \u00D7 " + "10-5"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
-        assertThat(subject.getLastGeneProfile().get(0), is("6.61" + " \u00D7 " + "10-5"));
+        assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
     }
 
     @Test
@@ -96,13 +96,13 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getGeneCount(), containsString("of 49"));
 
         assertThat(subject.getSelectedProfiles().size(), is(49));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Ch25h", "Tm7sf2", "Ccl4"));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Gpnmb", "Cst7", "Itgax"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("1.7" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
-        assertThat(subject.getLastGeneProfile().get(0), is("5.09" + " \u00D7 " + "10-9"));
+        assertThat(subject.getLastGeneProfile().get(0), is("0.041"));
     }
 
     @Test
@@ -112,8 +112,8 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
 
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, ExperimentType.DIFFERENTIAL), is("Adjusted P-value"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 1, ExperimentType.DIFFERENTIAL), startsWith("Log2-fold"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, ExperimentType.DIFFERENTIAL), is("1.7" + " \u00D7 " + "10-6"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 1, ExperimentType.DIFFERENTIAL), is("3.01"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, ExperimentType.DIFFERENTIAL), is("<10-10"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 1, ExperimentType.DIFFERENTIAL), is("2.73"));
     }
 
 }
