@@ -44,6 +44,7 @@
         <contrasts>
             <contrast id="g3_g4">
                 <name>genotype:'p107 -/-' vs 'wild type' on A-AFFY-23</name>
+
                 <reference_assay_group>g3</reference_assay_group>
                 <test_assay_group>g4</test_assay_group>
             </contrast>
