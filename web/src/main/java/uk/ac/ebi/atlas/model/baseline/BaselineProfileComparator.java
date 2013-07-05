@@ -75,8 +75,8 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
             // reverse because we want lower values to come first
-            return Ordering.natural().reverse().compare(getExpressionLevelFoldChangeOn(firstBaselineProfile),
-                    getExpressionLevelFoldChangeOn(otherBaselineProfile));
+            return Ordering.natural().reverse().compare(getExpressionLevelFoldChange(firstBaselineProfile),
+                    getExpressionLevelFoldChange(otherBaselineProfile));
         }
 
         // A2
@@ -97,11 +97,11 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                         otherBaselineProfile.getAverageExpressionLevelOn(factors));
     }
 
-    public double getExpressionLevelFoldChangeOn(BaselineProfile baselineProfile) {
+    public double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {
 
         double averageExpressionLevelOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
 
-        Sets.SetView<Factor> nonSelectedQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
+        Set<Factor> nonSelectedQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
         double maxExpressionLevelOnNonSelectedQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);
 
         if (maxExpressionLevelOnNonSelectedQueryFactors == 0) {
@@ -109,8 +109,8 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                 return averageExpressionLevelOnSelectedQueryFactors;
             }
             return averageExpressionLevelOnSelectedQueryFactors / cutoffDivisor;
-
         }
+
         return averageExpressionLevelOnSelectedQueryFactors / maxExpressionLevelOnNonSelectedQueryFactors;
     }
 

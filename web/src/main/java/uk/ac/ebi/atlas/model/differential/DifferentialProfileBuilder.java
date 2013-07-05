@@ -50,7 +50,7 @@ public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, 
         differentialExpressionPrecondition.setCutoff(requestContext.getCutoff()).setRegulation(requestContext.getRegulation());
 
         differentialProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
-                .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
+                .setSelectedQueryContrasts(requestContext.getSelectedQueryFactors())
                 .setRegulation(requestContext.getRegulation());
 
     }

@@ -162,7 +162,7 @@ public class BaselineProfileComparatorTest {
     public void testGetExpressionLevelFoldChangeOnForSpecificity1ShouldIncreaseExpLevel() {
         subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
 
-        double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity1);
+        double averageExpressionLevel = subject.getExpressionLevelFoldChange(geneWithSpecificity1);
         assertThat(averageExpressionLevel, Matchers.is(10d));
 
     }
@@ -172,7 +172,7 @@ public class BaselineProfileComparatorTest {
     public void testGetExpressionLevelFoldChangeOnForCutoff0() {
         subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0d);
 
-        double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity1);
+        double averageExpressionLevel = subject.getExpressionLevelFoldChange(geneWithSpecificity1);
         assertThat(averageExpressionLevel, is(55.55555555555556));
 
     }
@@ -181,7 +181,7 @@ public class BaselineProfileComparatorTest {
     public void testGetExpressionLevelFoldChangeOnForSpecificityGraterThen1() {
         subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
 
-        double averageExpressionLevel = subject.getExpressionLevelFoldChangeOn(geneWithSpecificity16);
+        double averageExpressionLevel = subject.getExpressionLevelFoldChange(geneWithSpecificity16);
         assertThat(averageExpressionLevel, is(4.0));
 
     }

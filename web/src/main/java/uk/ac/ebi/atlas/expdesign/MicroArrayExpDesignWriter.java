@@ -40,9 +40,12 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
 
     private MicroArrayExpDesignMageTabParser mageTabLimpopoExpDesignParser;
 
+    private PropertyMergeService propertyMergeService;
+
     @Inject
-    public MicroArrayExpDesignWriter(MicroArrayExpDesignMageTabParser mageTabLimpopoExpDesignParser) {
+    public MicroArrayExpDesignWriter(MicroArrayExpDesignMageTabParser mageTabLimpopoExpDesignParser, PropertyMergeService propertyMergeService) {
         this.mageTabLimpopoExpDesignParser = mageTabLimpopoExpDesignParser;
+        this.propertyMergeService = propertyMergeService;
     }
 
     @Override
@@ -70,19 +73,22 @@ public class MicroArrayExpDesignWriter implements ExpDesignWriter {
         String array = mageTabLimpopoExpDesignParser.findArrayForHybridizationNode(hybridizationNode);
         result.add(array);
         for (String characteristic : characteristics) {
-            List<String> characteristicValueForSDRFNode = mageTabLimpopoExpDesignParser.findCharacteristicValueForSDRFNode(hybridizationNode, characteristic);
-            addNodeValue(result, characteristicValueForSDRFNode);
+            List<String> characteristicValues = mageTabLimpopoExpDesignParser.findCharacteristicValueForSDRFNode(hybridizationNode, characteristic);
+            addNodeValue(result, characteristicValues);
         }
         for (String factor : factors) {
-            List<String> factorValueForHybridizationNode = mageTabLimpopoExpDesignParser.findFactorValueForHybridizationNode(hybridizationNode, factor);
-            addNodeValue(result, factorValueForHybridizationNode);
+            List<String> factorValues = mageTabLimpopoExpDesignParser.findFactorValueForHybridizationNode(hybridizationNode, factor);
+            addNodeValue(result, factorValues);
         }
         return result.toArray(new String[result.size()]);
     }
 
-    private void addNodeValue(List<String> result, List<String> factorValueForScanNode) {
-        if (!factorValueForScanNode.isEmpty()) {
-            result.add(factorValueForScanNode.get(0));
+    private void addNodeValue(List<String> result, List<String> values) {
+        //Limpopo parser returns 2 values in a case there is a unit present
+        if (values.size() == 2) {
+            result.add(propertyMergeService.mergeValueAndUnit(values.get(0), values.get(1)));
+        } else if (values.size() == 1) {
+            result.add(values.get(0));
         } else {
             result.add("");
         }

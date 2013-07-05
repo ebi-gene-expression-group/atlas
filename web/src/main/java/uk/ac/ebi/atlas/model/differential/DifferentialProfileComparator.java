@@ -31,12 +31,11 @@ import java.util.Set;
 
 public class DifferentialProfileComparator<T extends DifferentialProfile> implements Comparator<T> {
 
-    private static final double DEFAULT_CUTOFF = 0.05;
     private boolean isSpecific;
     private Set<Contrast> selectedQueryContrasts;
     private Set<Contrast> allQueryContrasts;
     private Regulation regulation;
-    private double cutoff = DEFAULT_CUTOFF;
+    private double cutoff;
 
 
     public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectedQueryContrasts,
@@ -64,8 +63,8 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryContrasts)) {
             return Ordering.natural().reverse().compare(
-                    getExpressionLevelFoldChangeOn(firstProfile),
-                    getExpressionLevelFoldChangeOn(otherProfile));
+                    getExpressionLevelFoldChange(firstProfile),
+                    getExpressionLevelFoldChange(otherProfile));
         }
 
         // A2
@@ -87,18 +86,25 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     }
 
-    public double getExpressionLevelFoldChangeOn(DifferentialProfile differentialProfile) {
+    public double getExpressionLevelFoldChange(DifferentialProfile differentialProfile) {
+
+        Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
+
+        double minExpressionLevelOnNonSelectedQueryContrasts;
+
+        if (nonSelectedQueryContrasts.isEmpty()){
+            minExpressionLevelOnNonSelectedQueryContrasts = cutoff;
+        } else {
+            minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
+        }
 
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
 
-        Sets.SetView<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
-        double averageExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(nonSelectedQueryContrasts, regulation);
-
-        if (averageExpressionLevelOnNonSelectedQueryContrasts == 0) {
-            averageExpressionLevelOnNonSelectedQueryContrasts = cutoff;
+        if (averageExpressionLevelOnSelectedQueryContrasts == 0) {
+            return minExpressionLevelOnNonSelectedQueryContrasts / Double.MIN_VALUE;
         }
 
-        return averageExpressionLevelOnNonSelectedQueryContrasts / averageExpressionLevelOnSelectedQueryContrasts;
+        return minExpressionLevelOnNonSelectedQueryContrasts / averageExpressionLevelOnSelectedQueryContrasts;
     }
 
 }

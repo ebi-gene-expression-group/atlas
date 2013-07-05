@@ -58,7 +58,7 @@ public class DifferentialProfilePreconditionTest {
         subject = new DifferentialProfilePrecondition();
         subject.setAllQueryFactors(allQueryFactors);
         subject.setRegulation(Regulation.UP_DOWN);
-        subject.setSelectedQueryFactors(selectedQueryFactors);
+        subject.setSelectedQueryContrasts(selectedQueryFactors);
     }
 
     @Test

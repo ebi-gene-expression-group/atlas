@@ -28,6 +28,7 @@ import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -119,4 +120,14 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
+    public double getMinExpressionLevelOn(Set<Contrast> queryContrasts, Regulation regulation) {
+        checkArgument(CollectionUtils.isNotEmpty(queryContrasts));
+
+        double expressionLevel = Double.MAX_VALUE;
+
+        for (Contrast condition : queryContrasts) {
+            expressionLevel = min(expressionLevel, getExpressionLevel(condition));
+        }
+        return expressionLevel;
+    }
 }
