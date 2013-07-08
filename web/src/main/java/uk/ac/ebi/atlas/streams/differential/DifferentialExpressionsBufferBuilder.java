@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.streams.differential;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -42,7 +43,7 @@ public abstract class DifferentialExpressionsBufferBuilder<T extends Expression,
     private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionsBufferBuilder.class);
     private ExperimentsCache<K> experimentsCache;
     private String experimentAccession;
-    private List<Contrast> orderedContrasts = new LinkedList<>();
+    private List<Contrast> orderedContrasts;
 
     public DifferentialExpressionsBufferBuilder(ExperimentsCache<K> experimentsCache) {
         this.experimentsCache = experimentsCache;
@@ -68,7 +69,7 @@ public abstract class DifferentialExpressionsBufferBuilder<T extends Expression,
 
         List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
 
-        orderedContrasts.clear();
+        orderedContrasts = new LinkedList<>();
         for (String columnHeader : columnHeaders) {
             if (columnHeader.endsWith(".p-value")) {
                 String contrastId = StringUtils.substringBefore(columnHeader, ".");
@@ -82,7 +83,7 @@ public abstract class DifferentialExpressionsBufferBuilder<T extends Expression,
     @Override
     public TsvRowBuffer<T> build() {
 
-        checkState(!orderedContrasts.isEmpty(), "Builder state not ready for creating the ExpressionBuffer");
+        checkState(!CollectionUtils.isEmpty(orderedContrasts), "Builder state not ready for creating the ExpressionBuffer");
 
         return getBufferInstance(orderedContrasts);
 
