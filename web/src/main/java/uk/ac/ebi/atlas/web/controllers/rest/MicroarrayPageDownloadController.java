@@ -41,6 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Controller
 @Scope("request")
@@ -52,6 +56,7 @@ public class MicroarrayPageDownloadController {
     private static final String ANALYTICS_TSV = "-analytics.tsv";
     private static final String PARAMS_TYPE_MICROARRAY = "type=MICROARRAY";
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
+    private static final String QUERY_RESULTS_TSV = "-query-results.tsv";
 
     private final MicroarrayRequestContextBuilder requestContextBuilder;
 
@@ -75,29 +80,58 @@ public class MicroarrayPageDownloadController {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        preferences.setArrayDesignAccession(getSelectedArrayDesign(preferences, experiment));
-
-
-        String arrayDesign = preferences.getArrayDesignAccession();
-
         LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: " + preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "_" + arrayDesign + "-query-results.tsv\"");
+        prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
 
-        response.setContentType("text/plain; charset=utf-8");
+        if (experiment.getArrayDesignAccessions().size() == 1) {
 
-        requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+            preferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
+            requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
 
-        writeGeneProfilesCommand.setResponseWriter(response.getWriter());
-        writeGeneProfilesCommand.setExperiment(experiment);
+            writeGeneProfilesCommand.setResponseWriter(response.getWriter());
+            writeGeneProfilesCommand.setExperiment(experiment);
 
-        try {
+            try {
 
-            long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
-            LOGGER.info("<downloadMicroarrayGeneProfiles> streamed " + genesCount + "gene expression profiles");
+                long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
+                LOGGER.info("<downloadMicroarrayGeneProfiles> streamed " + genesCount + "gene expression profiles");
 
-        } catch (GenesNotFoundException e) {
-            LOGGER.info("<downloadMicroarrayGeneProfiles> no genes found");
+            } catch (GenesNotFoundException e) {
+                LOGGER.info("<downloadMicroarrayGeneProfiles> no genes found");
+            }
+
+        } else {
+
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+
+            for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
+
+                String filename = experiment.getAccession() + selectedArrayDesign + QUERY_RESULTS_TSV;
+
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
+
+                preferences.setArrayDesignAccession(selectedArrayDesign);
+                requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+
+                writeGeneProfilesCommand.setResponseWriter(new PrintWriter(zipOutputStream));
+                writeGeneProfilesCommand.setExperiment(experiment);
+
+                try {
+
+                    long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
+                    LOGGER.info("<downloadMicroarrayGeneProfiles> zipped " + genesCount + " in " + filename);
+
+                } catch (GenesNotFoundException e) {
+                    LOGGER.info("<downloadMicroarrayGeneProfiles> no genes found");
+                }
+
+                zipOutputStream.closeEntry();
+            }
+
+            zipOutputStream.close();
         }
 
     }
@@ -109,17 +143,47 @@ public class MicroarrayPageDownloadController {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        String selectedArrayDesign = getSelectedArrayDesign(preferences, experiment);
+        prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), NORMALIZED_EXPRESSIONS_TSV);
 
-        prepareResponse(response, experiment.getAccession(), selectedArrayDesign, NORMALIZED_EXPRESSIONS_TSV);
+        if (experiment.getArrayDesignAccessions().size() == 1) {
 
-        ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
-                selectedArrayDesign,
-                response.getWriter());
+            String selectedArrayDesign = experiment.getArrayDesignAccessions().first();
 
-        long genesCount = writer.write();
+            ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
+                    selectedArrayDesign,
+                    response.getWriter());
 
-        LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
+            long genesCount = writer.write();
+
+            LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
+
+            writer.close();
+
+        } else {
+
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+
+            for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
+
+                String filename = experiment.getAccession() + selectedArrayDesign + NORMALIZED_EXPRESSIONS_TSV;
+
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
+
+                ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
+                        selectedArrayDesign,
+                        new PrintWriter(zipOutputStream));
+
+                long genesCount = writer.write();
+
+                LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> zipped " + genesCount + " in " + filename);
+
+                zipOutputStream.closeEntry();
+            }
+
+            zipOutputStream.close();
+        }
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/logFold.tsv", params = PARAMS_TYPE_MICROARRAY)
@@ -129,17 +193,47 @@ public class MicroarrayPageDownloadController {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        String selectedArrayDesign = getSelectedArrayDesign(preferences, experiment);
+        prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), LOG_FOLD_CHANGES_TSV);
 
-        prepareResponse(response, experiment.getAccession(), selectedArrayDesign, LOG_FOLD_CHANGES_TSV);
+        if (experiment.getArrayDesignAccessions().size() == 1) {
 
-        ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
-                selectedArrayDesign,
-                response.getWriter());
+            String selectedArrayDesign = experiment.getArrayDesignAccessions().first();
 
-        long genesCount = writer.write();
+            ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
+                    selectedArrayDesign,
+                    response.getWriter());
 
-        LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> streamed " + genesCount + " gene expression profiles");
+            long genesCount = writer.write();
+
+            LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> streamed " + genesCount + " gene expression profiles");
+
+            writer.close();
+
+        } else {
+
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+
+            for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
+
+                String filename = experiment.getAccession() + selectedArrayDesign + LOG_FOLD_CHANGES_TSV;
+
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
+
+                ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
+                        selectedArrayDesign,
+                        new PrintWriter(zipOutputStream));
+
+                long genesCount = writer.write();
+
+                LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> zipped " + genesCount + " in " + filename);
+
+                zipOutputStream.closeEntry();
+            }
+
+            zipOutputStream.close();
+        }
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_MICROARRAY)
@@ -149,30 +243,64 @@ public class MicroarrayPageDownloadController {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        String selectedArrayDesign = getSelectedArrayDesign(preferences, experiment);
+        prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), ANALYTICS_TSV);
 
-        prepareResponse(response, experiment.getAccession(), selectedArrayDesign, ANALYTICS_TSV);
+        if (experiment.getArrayDesignAccessions().size() == 1) {
 
-        ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
-                selectedArrayDesign,
-                response.getWriter());
+            String selectedArrayDesign = experiment.getArrayDesignAccessions().first();
 
+            ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
+                    selectedArrayDesign,
+                    response.getWriter());
 
-        long genesCount = writer.write();
+            long genesCount = writer.write();
 
-        LOGGER.info("<download" + ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info("<download" + ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
+
+            writer.close();
+
+        } else {
+
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+
+            for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
+
+                String filename = experiment.getAccession() + selectedArrayDesign + ANALYTICS_TSV;
+
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
+
+                ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
+                        selectedArrayDesign,
+                        new PrintWriter(zipOutputStream));
+
+                long genesCount = writer.write();
+
+                LOGGER.info("<download" + ANALYTICS_TSV + "> zipped " + genesCount + " in " + filename);
+
+                zipOutputStream.closeEntry();
+            }
+
+            zipOutputStream.close();
+        }
+
     }
 
+    private void prepareResponse(HttpServletResponse response, String experimentAccession, Set<String> arrayDesignAccessions, String fileExtension) {
 
-    private String getSelectedArrayDesign(MicroarrayRequestPreferences preferences, MicroarrayExperiment experiment) {
-        String arrayDesignAccession = preferences.getArrayDesignAccession();
-        return arrayDesignAccession == null ? experiment.getArrayDesignAccessions().first() : arrayDesignAccession;
-    }
+        if (arrayDesignAccessions.size() > 1) {
 
-    private void prepareResponse(HttpServletResponse response, String experimentAccession, String arrayDesignAccession, String fileExtension) {
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "_" + arrayDesignAccession + fileExtension + "\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + ".zip\"");
+            response.setContentType("application/octet-stream");
 
-        response.setContentType("text/plain; charset=utf-8");
+        } else {
+
+            String arrayDesignAccession = arrayDesignAccessions.iterator().next();
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "_" + arrayDesignAccession + fileExtension + "\"");
+            response.setContentType("text/plain; charset=utf-8");
+
+        }
     }
 
 }
