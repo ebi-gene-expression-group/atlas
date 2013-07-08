@@ -40,25 +40,23 @@ import static com.google.common.base.Preconditions.checkState;
 public class MicroarrayProfileBuilder extends DifferentialProfileBuilder<MicroarrayProfile, MicroarrayRequestContext> {
 
     private String designElementName;
-    private MicroarrayRequestContext requestContext;
+
+    private String arrayDesignAccession;
 
     private final DesignElementMappingProvider designElementMappingProvider;
-
 
     @Inject
     protected MicroarrayProfileBuilder(MicroarrayRequestContext requestContext,
                                        DifferentialExpressionPrecondition differentialExpressionPrecondition,
                                        DifferentialProfilePrecondition differentialProfilePrecondition, DesignElementMappingProvider designElementMappingProvider) {
         super(requestContext, differentialExpressionPrecondition, differentialProfilePrecondition);
-        this.requestContext = requestContext;
         this.designElementMappingProvider = designElementMappingProvider;
     }
 
     @Override
     protected MicroarrayProfile createProfile() {
         checkState(designElementName != null, "Please invoke withDesignElementName before create");
-
-        String arrayDesignAccession = requestContext.getArrayDesignAccession();
+        checkState(arrayDesignAccession != null, "Please invoke withArrayDesignAccession before create");
 
         String geneId = designElementMappingProvider.getEnsGeneId(arrayDesignAccession, designElementName);
 
@@ -71,6 +69,11 @@ public class MicroarrayProfileBuilder extends DifferentialProfileBuilder<Microar
 
     public MicroarrayProfileBuilder withDesignElementName(String designElementName) {
         this.designElementName = designElementName;
+        return this;
+    }
+
+    public MicroarrayProfileBuilder withArrayDesignAccession(String arrayDesignAccession) {
+        this.arrayDesignAccession = arrayDesignAccession;
         return this;
     }
 

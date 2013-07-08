@@ -16,6 +16,8 @@ public class DifferentialExperimentConfiguration {
 
     private Document document;
 
+    private XPath xpath = XPathFactory.newInstance().newXPath();
+
     public DifferentialExperimentConfiguration(XMLConfiguration xmlConfiguration, Document document) {
         this.xmlConfiguration = xmlConfiguration;
         this.document = document;
@@ -42,8 +44,6 @@ public class DifferentialExperimentConfiguration {
     AssayGroup getAssayGroup(String id) {
         try {
 
-            XPathFactory xPathfactory = XPathFactory.newInstance();
-            XPath xpath = xPathfactory.newXPath();
             XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group[@id='" + id + "']/assay");
 
             NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);

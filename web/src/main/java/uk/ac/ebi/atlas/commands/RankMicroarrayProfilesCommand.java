@@ -27,10 +27,12 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
@@ -38,6 +40,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Comparator;
 import java.util.Queue;
+import java.util.Vector;
 
 @Named
 @Scope("prototype")
@@ -67,7 +70,14 @@ public class RankMicroarrayProfilesCommand extends RankProfilesCommand<Different
 
     @Override
     public ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
-        return inputStreamFactory.createMicroarrayProfileInputStream(experimentAccession, requestContext.getArrayDesignAccession());
+        MicroarrayExperiment microarrayExperiment = requestContext.getExperiment();
+
+        Vector<ObjectInputStream<MicroarrayProfile>> inputStreams = new Vector<>();
+        for (String arrayDesignAccession : microarrayExperiment.getArrayDesignAccessions()) {
+            inputStreams.add(inputStreamFactory.createMicroarrayProfileInputStream(experimentAccession, arrayDesignAccession));
+        }
+
+        return new SequenceObjectInputStream<>(inputStreams.elements());
     }
 
     @Override

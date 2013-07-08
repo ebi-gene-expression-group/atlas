@@ -33,45 +33,47 @@ import java.util.Set;
 @Scope("prototype")
 public class DifferentialProfilePrecondition implements Predicate<DifferentialProfile> {
 
-    private Set<Contrast> selectedQueryFactors;
+    private boolean specific;
+
+    private Set<Contrast> selectedQueryContrasts;
     private Regulation regulation;
     private Set<Contrast> allQueryFactors;
 
-    protected DifferentialProfilePrecondition setSelectedQueryFactors(Set<Contrast> selectedQueryFactors) {
-        this.selectedQueryFactors = selectedQueryFactors;
+    DifferentialProfilePrecondition setSelectedQueryContrasts(Set<Contrast> selectedQueryContrasts) {
+        this.selectedQueryContrasts = selectedQueryContrasts;
         return this;
     }
 
-    protected DifferentialProfilePrecondition setAllQueryFactors(Set<Contrast> allQueryFactors) {
+    DifferentialProfilePrecondition setAllQueryFactors(Set<Contrast> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }
 
-    protected DifferentialProfilePrecondition setRegulation(Regulation regulation) {
+    DifferentialProfilePrecondition setRegulation(Regulation regulation) {
         this.regulation = regulation;
         return this;
     }
 
-    public boolean apply(DifferentialProfile profile) {
-        if (profile.isEmpty()) {
+    DifferentialProfilePrecondition setSpecific(boolean specific) {
+        this.specific = specific;
+        return this;
+    }
+
+    public boolean apply(DifferentialProfile differentialProfile) {
+        if (differentialProfile.isEmpty()) {
             return false;
         }
 
-        double averageExpressionLevelOnSelectedFactors = averageExpressionLevelOnSelectedFactors(profile);
-        double averageExpressionLevelOnNonSelectedFactors = averageExpressionLevelOnNonSelectedFactors(profile);
+        if (!specific || selectedQueryContrasts.isEmpty()) {
+            return true;
+        }
 
-        return averageExpressionLevelOnNonSelectedFactors == 0 ||
-                averageExpressionLevelOnSelectedFactors < averageExpressionLevelOnNonSelectedFactors;
+        double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
+        Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryFactors, selectedQueryContrasts);
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
 
-    }
+        return averageExpressionLevelOnSelectedQueryContrasts < minExpressionLevelOnNonSelectedQueryContrasts;
 
-    private double averageExpressionLevelOnSelectedFactors(DifferentialProfile profile) {
-        return profile.getAverageExpressionLevelOn(selectedQueryFactors, regulation);
-    }
-
-    private double averageExpressionLevelOnNonSelectedFactors(DifferentialProfile profile) {
-        Set<Contrast> remainingFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
-        return profile.getAverageExpressionLevelOn(remainingFactors, regulation);
     }
 
 }

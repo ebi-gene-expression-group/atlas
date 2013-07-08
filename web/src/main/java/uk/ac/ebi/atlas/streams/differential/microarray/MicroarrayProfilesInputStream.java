@@ -32,15 +32,18 @@ import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProfile, DifferentialExpression> {
 
+    private String arrayDesignAccession;
 
     private MicroarrayProfileBuilder microarrayProfileBuilder;
 
     public MicroarrayProfilesInputStream(CSVReader csvReader,
                                          String experimentAccession,
+                                         String arrayDesignAccession,
                                          MicroarrayExpressionsBufferBuilder expressionsBufferBuilder,
                                          MicroarrayProfileBuilder microarrayProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
+        this.arrayDesignAccession = arrayDesignAccession;
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 
@@ -53,6 +56,6 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
     }
 
     protected void addGeneColumnValueToBuilder(String designElementName) {
-        microarrayProfileBuilder.withDesignElementName(designElementName);
+        microarrayProfileBuilder.withDesignElementName(designElementName).withArrayDesignAccession(arrayDesignAccession);
     }
 }

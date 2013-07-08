@@ -107,7 +107,7 @@ public class InputStreamFactory {
     public ObjectInputStream<MicroarrayProfile> createMicroarrayProfileInputStream(String experimentAccession, String arrayDesignAccession) {
         String tsvFileURL = MessageFormat.format(microarrayExperimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
         CSVReader csvReader = tsvReaderUtils.build(tsvFileURL);
-        return new MicroarrayProfilesInputStream(csvReader, experimentAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder);
+        return new MicroarrayProfilesInputStream(csvReader, experimentAccession, arrayDesignAccession, microarrayExpressionsBufferBuilder, microarrayProfileBuilder);
     }
 
 }

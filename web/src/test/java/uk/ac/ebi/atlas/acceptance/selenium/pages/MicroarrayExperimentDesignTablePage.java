@@ -26,9 +26,7 @@ import org.openqa.selenium.WebDriver;
 
 public class MicroarrayExperimentDesignTablePage extends DifferentialExperimentDesignTablePage {
 
-    public static String EXPERIMENT_ACCESSION = "E-MTAB-1066";
-
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design";
+    private String experimentAccession = "E-MTAB-1066";
 
     public MicroarrayExperimentDesignTablePage(WebDriver driver) {
         super(driver);
@@ -40,7 +38,11 @@ public class MicroarrayExperimentDesignTablePage extends DifferentialExperimentD
 
     @Override
     protected String getPageURI() {
-        return DEFAULT_PAGE_URI;
+        return "/gxa/experiments/" + experimentAccession + "/experiment-design";
+    }
+
+    public void setExperimentAccession(String experimentAccession) {
+        this.experimentAccession = experimentAccession;
     }
 
 }

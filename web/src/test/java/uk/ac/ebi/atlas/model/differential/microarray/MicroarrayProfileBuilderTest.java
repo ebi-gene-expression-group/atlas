@@ -42,11 +42,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayProfileBuilderTest {
 
-    public static final String DESIGN_ELEMENT_NAME = "designElementName";
-    public static final String ARRAY_DESIGN = "arraydesign";
-    public static final String CONTRAST_NAME1 = "a";
-    public static final String CONTRAST_NAME2 = "b";
-    public static final String GENE_ID = "geneId";
+    private static final String DESIGN_ELEMENT_NAME = "designElementName";
+    private static final String ARRAY_DESIGN = "arraydesign";
+    private static final String CONTRAST_NAME1 = "a";
+    private static final String CONTRAST_NAME2 = "b";
+    private static final String GENE_ID = "geneId";
 
     @Mock
     Contrast contrastMock1;
@@ -77,7 +77,6 @@ public class MicroarrayProfileBuilderTest {
         when(contextMock.getRegulation()).thenReturn(Regulation.UP_DOWN);
         when(contextMock.getAllQueryFactors()).thenReturn(sortedSet);
         when(contextMock.getSelectedQueryFactors()).thenReturn(Sets.newHashSet(contrastMock1));
-        when(contextMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
 
         when(expressionMock.isUnderExpressed()).thenReturn(true);
 
@@ -89,7 +88,7 @@ public class MicroarrayProfileBuilderTest {
 
     @Test
     public void testCreate() throws Exception {
-        MicroarrayProfileBuilder builder = subject.withDesignElementName(DESIGN_ELEMENT_NAME);
+        MicroarrayProfileBuilder builder = subject.withDesignElementName(DESIGN_ELEMENT_NAME).withArrayDesignAccession(ARRAY_DESIGN);
         builder.addExpression(expressionMock);
         MicroarrayProfile profile = builder.create();
         assertThat(profile.getDesignElementName(), is(DESIGN_ELEMENT_NAME));
