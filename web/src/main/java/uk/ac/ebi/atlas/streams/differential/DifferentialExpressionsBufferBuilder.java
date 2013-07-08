@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 public abstract class DifferentialExpressionsBufferBuilder<T extends Expression, K extends DifferentialExperiment> implements TsvRowBufferBuilder<T> {
 
-    private static final Logger LOGGER = Logger.getLogger(RnaSeqExpressionsBufferBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionsBufferBuilder.class);
     private ExperimentsCache<K> experimentsCache;
     private String experimentAccession;
     private List<Contrast> orderedContrasts = new LinkedList<>();
@@ -68,6 +68,7 @@ public abstract class DifferentialExpressionsBufferBuilder<T extends Expression,
 
         List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
 
+        orderedContrasts.clear();
         for (String columnHeader : columnHeaders) {
             if (columnHeader.endsWith(".p-value")) {
                 String contrastId = StringUtils.substringBefore(columnHeader, ".");
