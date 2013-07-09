@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 public abstract class DesignWriter {
 

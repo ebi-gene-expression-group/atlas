@@ -99,6 +99,7 @@ public class ExpDesignMageTabParser {
         return Collections.emptyList();
     }
 
+    //TODO: used only in RnaSeqExpDesignMageTabParser
     protected Collection<ScanNode> getScanNodes() {
         return scanNodes;
     }
