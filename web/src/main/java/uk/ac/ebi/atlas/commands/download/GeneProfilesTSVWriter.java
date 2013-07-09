@@ -95,14 +95,14 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
 
     protected abstract String[] getProfileIdColumnHeaders();
 
-    protected String[] buildCsvColumnHeaders(Set<K> factorValues) {
+    protected String[] buildCsvColumnHeaders(Set<K> conditionValues) {
         String[] profileIdColumnHeaders = getProfileIdColumnHeaders();
-        String[] conditionColumnHeaders = getConditionColumnHeaders(factorValues);
+        String[] conditionColumnHeaders = getConditionColumnHeaders(conditionValues);
         return buildCsvRow(profileIdColumnHeaders, conditionColumnHeaders);
     }
 
-    String[] buildCsvRow(final T geneProfile, Set<K> factors) {
-        String[] expressionLevels = extractConditionLevels(geneProfile, factors);
+    String[] buildCsvRow(final T geneProfile, Set<K> conditions) {
+        String[] expressionLevels = extractConditionLevels(geneProfile, conditions);
 
         String[] rowHeaders = getRowHeaders(geneProfile);
         return buildCsvRow(rowHeaders, expressionLevels);
@@ -119,11 +119,15 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
 
     protected abstract String getSecondaryRowHeader(T profile);
 
-    protected String[] extractConditionLevels(T geneProfile, Set<K> factors) {
-        String[] expressionLevels = new String[factors.size()];
+    protected String[] extractConditionLevels(T geneProfile, Set<K> conditions) {
+        String[] expressionLevels = new String[conditions.size()];
         int i = 0;
-        for (K factor : factors) {
-            expressionLevels[i++] = removeTrailingZero(geneProfile.getExpressionLevel(factor));
+        for (K condition: conditions) {
+            Double expressionLevel = geneProfile.getExpressionLevel(condition);
+            if (expressionLevel != null){
+                expressionLevels[i] = removeTrailingZero(expressionLevel);
+            }
+            i++;
         }
         return expressionLevels;
     }

@@ -65,33 +65,32 @@
 
                         <c:set var="expressionLevel"
                                value="${geneProfile.getExpressionLevel(queryFactor)}"/>
+                        <!-- first we preset the style to empty value because this code is being executed within a loop,
+                        if we didn't do this the style value would be depending on the results of the previous loop iteration -->
+                        <c:set var="style" value=""/>
+                        <!-- then we check if expressionLevel is not null we set the style value to the right shade of gradient -->
+                        <c:if test="${not empty expressionLevel}">
+                            <c:choose>
+                                <c:when test="${type.isBaseline()}">
+                                <c:set var="cellColour"
+                                       value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${geneProfile.getExpression(queryFactor).overExpressed}">
+                                            <c:set var="cellColour"
+                                                   value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="cellColour"
+                                                   value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:set var="style" value="background-color:${cellColour}"/>
 
-                        <c:choose>
-                            <c:when test="${expressionLevel != 0}">
-                                <c:choose>
-                                    <c:when test="${type.isBaseline()}">
-                                        <c:set var="cellColour"
-                                               value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:choose>
-                                            <c:when test="${geneProfile.getExpression(queryFactor).overExpressed}">
-                                                <c:set var="cellColour"
-                                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:set var="cellColour"
-                                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:otherwise>
-                                </c:choose>
-                                <c:set var="style" value="background-color:${cellColour}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="style" value=""/>
-                            </c:otherwise>
-                        </c:choose>
+                        </c:if>
 
                         <c:set var="columnHeader"
                                value="${type.isBaseline() ? queryFactor.value : queryFactor.displayName}"/>
@@ -101,7 +100,7 @@
                                 headerClass='rotated_cell vertical-header-cell'
                                 style="${style}">
 
-                            <c:if test="${expressionLevel != 0}">
+                            <c:if test="${not empty expressionLevel}">
                                 <c:choose>
                                     <c:when test="${type.isBaseline()}">
                                         <fmt:formatNumber type="number"

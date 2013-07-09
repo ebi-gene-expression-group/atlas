@@ -28,11 +28,13 @@ import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 
 public class BaselineProfile extends Profile<Factor, BaselineExpression> {
+    private static final double MIN_LEVEL = 0D;
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
@@ -55,40 +57,46 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     }
 
     public double getAverageExpressionLevelOn(Set<Factor> factors) {
+        checkArgument(!CollectionUtils.isEmpty(factors), "This method must be invoked with a non empty set of conditions");
+
         double expressionLevel = 0D;
 
-        if (CollectionUtils.isEmpty(factors)) {
-            return expressionLevel;
-        }
-
         for (Factor condition : factors) {
-            expressionLevel += getExpressionLevel(condition);
+            Double level = getExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel += level;
+            }
         }
         return expressionLevel / factors.size();
     }
 
     public double getMaxExpressionLevelOn(Set<Factor> factors) {
-        double expressionLevel = 0D;
+        checkArgument(!CollectionUtils.isEmpty(factors), "factors set is supposed to be not empty");
 
-        if (CollectionUtils.isEmpty(factors)) {
-            return expressionLevel;
-        }
+        double expressionLevel = MIN_LEVEL;
 
         for (Factor condition : factors) {
-            expressionLevel = max(expressionLevel, getExpressionLevel(condition));
+            Double level = getExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel = max(expressionLevel, level);
+            }
         }
         return expressionLevel;
     }
 
     public BaselineProfile sumProfile(BaselineProfile otherProfile) {
         for (Factor factor : otherProfile.getConditions()) {
-            double otherExpressionLevel = otherProfile.getExpressionLevel(factor);
+            Double otherExpressionLevel = otherProfile.getExpressionLevel(factor);
 
-            if (otherExpressionLevel != 0) {
-                double thisExpressionLevel = getExpressionLevel(factor);
+            if (otherExpressionLevel != null) {
+                double totalExpressionLevel = otherExpressionLevel;
+                Double thisExpressionLevel = getExpressionLevel(factor);
+                if (thisExpressionLevel != null) {
+                    totalExpressionLevel += thisExpressionLevel;
+                }
                 FactorGroup factorGroup = otherProfile.getExpression(factor).getFactorGroup();
                 BaselineExpression totalExpression =
-                        new BaselineExpression(thisExpressionLevel + otherExpressionLevel, factorGroup);
+                        new BaselineExpression(totalExpressionLevel, factorGroup);
                 add(factor.getType(), totalExpression);
             }
         }

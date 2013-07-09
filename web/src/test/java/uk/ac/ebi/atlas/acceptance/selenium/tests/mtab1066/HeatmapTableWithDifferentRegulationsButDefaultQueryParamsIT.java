@@ -95,12 +95,13 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
 
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, ExperimentType.MICROARRAY), is("Adjusted P-value"));
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 1, ExperimentType.MICROARRAY), is("T-statistic"));
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 2, ExperimentType.MICROARRAY), startsWith("Log2-fold"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, ExperimentType.MICROARRAY), is("8.36 × 10-6"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 1, ExperimentType.MICROARRAY), is("-19.16"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 2, ExperimentType.MICROARRAY), is("-1.56"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 0, ExperimentType.MICROARRAY), is("Adjusted P-value"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.MICROARRAY), is("T-statistic"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 2, ExperimentType.MICROARRAY), startsWith("Log2-fold"));
+
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY), is("8.36 × 10-6"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.MICROARRAY), is("-19.16"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY), is("-1.56"));
     }
 
 }

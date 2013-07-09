@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.streams.differential.microarray;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,8 +32,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.configuration.ConfigurationDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -47,6 +50,7 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -78,6 +82,9 @@ public class MicroarrayProfilesInputStreamIT {
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
     @Inject
+    private ConfigurationDao configurationDao;
+
+    @Inject
     private DesignElementMappingLoader designElementLoader;
 
     private MicroarrayRequestContext microarrayRequestContext;
@@ -88,8 +95,19 @@ public class MicroarrayProfilesInputStreamIT {
 
     private MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
 
+    private MicroarrayExperiment microarrayExperiment;
+
+    @After
+    public void tearDown() throws Exception {
+        configurationDao.deleteExperimentConfiguration(EXPERIMENT_ACCESSION);
+    }
+
     @Before
     public void initSubject() throws Exception {
+
+        if (configurationDao.getExperimentConfiguration(EXPERIMENT_ACCESSION) == null) {
+            configurationDao.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
+        }
 
         designElementLoader.loadMappings(ARRAY_DESIGN_ACCESSION, ArrayDesignType.MICRO_ARRAY);
 
@@ -114,8 +132,8 @@ public class MicroarrayProfilesInputStreamIT {
         //then
         assertThat(microarrayProfile.getId(), is(GENE_ID_UPDOWN_1));
         assertThat(microarrayProfile.getSpecificity(), is(1));
-        double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
-        assertThat(expressionLevel, is(0.0));
+        Double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
+        assertThat(expressionLevel, is(nullValue()));
 
         //given we poll again
         microarrayProfile = subject.readNext();
@@ -153,8 +171,8 @@ public class MicroarrayProfilesInputStreamIT {
         //then
         assertThat(microarrayProfile.getId(), is(GENE_ID_UP_1));
         assertThat(microarrayProfile.getSpecificity(), is(1));
-        double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
-        assertThat(expressionLevel, is(0.0));
+        Double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
+        assertThat(expressionLevel, is(nullValue()));
 
         //given we poll again
         microarrayProfile = subject.readNext();
@@ -193,7 +211,7 @@ public class MicroarrayProfilesInputStreamIT {
         //then
         assertThat(microarrayProfile.getId(), is(GENE_ID_DOWN_1));
         assertThat(microarrayProfile.getSpecificity(), is(2));
-        double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
+        Double expressionLevel = microarrayProfile.getExpressionLevel(contrast);
         assertThat(expressionLevel, is(0.00146761846818228));
         MicroarrayExpression microarrayExpression = microarrayProfile.getExpression(contrast);
         assertThat(microarrayExpression.getFoldChange(), is(-0.672350666666665));
@@ -206,7 +224,7 @@ public class MicroarrayProfilesInputStreamIT {
         assertThat(microarrayProfile.getId(), is(GENE_ID_DOWN_2));
         assertThat(microarrayProfile.getSpecificity(), is(1));
         expressionLevel = microarrayProfile.getExpressionLevel(contrast);
-        assertThat(expressionLevel, is(0.0));
+        assertThat(expressionLevel, is(nullValue()));
 
         microarrayProfile = subject.readNext();
 

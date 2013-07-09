@@ -72,7 +72,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
             return compareOnAverage(firstProfile, otherProfile, allQueryContrasts);
         }
 
-        //B2
+        // B2 - !specific && !CollectionUtils.isEmpty
         return compareOnAverage(firstProfile, otherProfile, selectedQueryContrasts);
 
     }
@@ -90,13 +90,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
 
-        double minExpressionLevelOnNonSelectedQueryContrasts;
-
-        if (nonSelectedQueryContrasts.isEmpty()){
-            minExpressionLevelOnNonSelectedQueryContrasts = cutoff;
-        } else {
-            minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
-        }
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
 
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
 

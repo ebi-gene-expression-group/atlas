@@ -49,7 +49,7 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
 
         assertThat(gradientMinLabels, contains("0.041"));
-        assertThat(gradientMaxLabels, contains("<10-10"));
+        assertThat(gradientMaxLabels, contains("0"));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
 
         assertThat(gradientMinLabels, contains("0.041", "0.041"));
-        assertThat(gradientMaxLabels, contains("6.61 × 10-5", "<10-10"));
+        assertThat(gradientMaxLabels, contains("6.61 × 10-5", "0"));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
 
         assertThat(gradientMinLabels, contains("7.19 × 10-6"));
-        assertThat(gradientMaxLabels, contains("<10-10"));
+        assertThat(gradientMaxLabels, contains("0"));
 
         List<String> startColor = subject.getDiffGradientStartColor();
         List<String> endColor = subject.getDiffGradientEndColor();

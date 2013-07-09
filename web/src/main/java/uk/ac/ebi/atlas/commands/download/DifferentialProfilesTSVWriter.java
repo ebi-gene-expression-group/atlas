@@ -125,7 +125,6 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     final String[] getExpressionLevelStrings(K expression) {
         String[] expressionLevelData = new String[getExpressionColumnsHeaders().size()];
         if (expression == null) {
-            Arrays.fill(expressionLevelData, "NA");
             return expressionLevelData;
         }
         List<String> expressionStrings = Lists.transform(getExpressionLevelData(expression), expressionValueToString());

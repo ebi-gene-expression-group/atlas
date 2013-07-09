@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.acceptance.rest;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
+import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
 
 import java.util.Arrays;
@@ -65,6 +66,6 @@ public class EndPoint {
         String bodyAsString = getResponseBody().asString();
         String[] rows = bodyAsString.split("\n");
         String row = rows[rowIndex];
-        return Arrays.asList(row.split("\t"));
+        return Arrays.asList(StringUtils.splitPreserveAllTokens(row, "\t"));
     }
 }

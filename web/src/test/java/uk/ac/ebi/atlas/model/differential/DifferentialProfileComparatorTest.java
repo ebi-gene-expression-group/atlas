@@ -126,11 +126,12 @@ public class DifferentialProfileComparatorTest {
 
     @Test
     public void testGetExpressionLevelFoldChangeOnWhenAllContrastsAreSelected() throws Exception {
-        subject = new DifferentialProfileComparator(true, selectedContrasts, selectedContrasts, Regulation.UP, 0.05);
+        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP, 0.05);
 
         //when
+        when(profileMock1.getMinExpressionLevelOn(nonSelectedContrasts, Regulation.UP)).thenReturn(0.05);
+        //when
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts, Regulation.UP)).thenReturn(0.025);
-
         //then
         assertThat(subject.getExpressionLevelFoldChange(profileMock1), is(2D));
     }

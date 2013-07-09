@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,10 +30,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.GeneProfileInputStreamMock;
-import uk.ac.ebi.atlas.model.baseline.GeneSetProfilesBuilder;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import java.util.List;
@@ -40,6 +38,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -115,11 +114,22 @@ public class RankBaselineProfilesCommandTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenEmptyConditions() throws Exception {
+        //given
+        when(requestContextMock.isSpecific()).thenReturn(false);
+        //when
+        List<BaselineProfile> top3Objects = subject.execute(largeInputStream, requestContextMock);
+    }
+
+        @Test
     public void rankedObjectsShouldBeInAscendingOrder() throws Exception {
 
         //given
-        when(requestContextMock.isSpecific()).thenReturn(false);
+        given(requestContextMock.isSpecific()).willReturn(false);
+        //and
+        given(requestContextMock.getSelectedQueryFactors()).willReturn(Sets.newHashSet(mock(Factor.class)));
+
 
         //when
         List<BaselineProfile> top3Objects = subject.execute(largeInputStream, requestContextMock);
