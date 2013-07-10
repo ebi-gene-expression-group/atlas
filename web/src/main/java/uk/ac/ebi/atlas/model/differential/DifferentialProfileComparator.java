@@ -62,9 +62,14 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryContrasts)) {
-            return Ordering.natural().reverse().compare(
+            int order = Ordering.natural().reverse().compare(
                     getExpressionLevelFoldChange(firstProfile),
                     getExpressionLevelFoldChange(otherProfile));
+            if (0 != order) {
+                return order;
+            }
+            return compareOnAverage(firstProfile, otherProfile, selectedQueryContrasts);
+
         }
 
         // A2
