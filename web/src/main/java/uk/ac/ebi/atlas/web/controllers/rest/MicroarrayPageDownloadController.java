@@ -107,7 +107,7 @@ public class MicroarrayPageDownloadController {
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
-                String filename = experiment.getAccession() + selectedArrayDesign + QUERY_RESULTS_TSV;
+                String filename = experiment.getAccession() + "_" + selectedArrayDesign + QUERY_RESULTS_TSV;
 
                 ZipEntry ze = new ZipEntry(filename);
 
@@ -165,7 +165,7 @@ public class MicroarrayPageDownloadController {
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
-                String filename = experiment.getAccession() + selectedArrayDesign + NORMALIZED_EXPRESSIONS_TSV;
+                String filename = experiment.getAccession() + "_" + selectedArrayDesign + NORMALIZED_EXPRESSIONS_TSV;
 
                 ZipEntry ze = new ZipEntry(filename);
 
@@ -215,7 +215,7 @@ public class MicroarrayPageDownloadController {
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
-                String filename = experiment.getAccession() + selectedArrayDesign + LOG_FOLD_CHANGES_TSV;
+                String filename = experiment.getAccession() + "_" + selectedArrayDesign + LOG_FOLD_CHANGES_TSV;
 
                 ZipEntry ze = new ZipEntry(filename);
 
@@ -265,7 +265,7 @@ public class MicroarrayPageDownloadController {
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
-                String filename = experiment.getAccession() + selectedArrayDesign + ANALYTICS_TSV;
+                String filename = experiment.getAccession() + "_" + selectedArrayDesign + ANALYTICS_TSV;
 
                 ZipEntry ze = new ZipEntry(filename);
 
