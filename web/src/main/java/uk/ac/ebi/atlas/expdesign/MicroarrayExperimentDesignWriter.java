@@ -1,20 +1,18 @@
 package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Lists;
-import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
-import javax.inject.Named;
 import java.util.List;
 
-@Named
-@Scope("prototype")
+
 public class MicroarrayExperimentDesignWriter extends ExperimentDesignWriter {
 
-    private MicroarrayMageTabParser parser;
+    private MageTabParser<HybridizationNode> parser;
 
 
-    public MicroarrayExperimentDesignWriter(MicroarrayMageTabParser parser) {
+    public MicroarrayExperimentDesignWriter(MageTabParser<HybridizationNode> parser) {
         this.parser = parser;
     }
 

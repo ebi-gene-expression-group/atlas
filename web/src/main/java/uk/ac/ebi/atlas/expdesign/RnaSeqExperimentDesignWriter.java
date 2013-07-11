@@ -3,14 +3,12 @@ package uk.ac.ebi.atlas.expdesign;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
-import javax.inject.Inject;
 import java.util.List;
 
 public class RnaSeqExperimentDesignWriter extends ExperimentDesignWriter {
 
     private RnaSeqMageTabParser parser;
 
-    @Inject
     public RnaSeqExperimentDesignWriter(RnaSeqMageTabParser parser) {
         this.parser = parser;
     }
