@@ -82,6 +82,7 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
     List<String> findFactorValueForScanNode(ScanNode scanNode, String factor) {
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
+
         if (assayNodes.size() != 1) {
             throw new IllegalStateException("There is no one to one mapping between scanNode and assayNode. " + scanNode);
         }

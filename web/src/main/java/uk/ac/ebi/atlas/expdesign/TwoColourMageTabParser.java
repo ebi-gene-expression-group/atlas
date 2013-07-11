@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.expdesign;
 
+import com.google.common.base.Joiner;
+import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.LabeledExtractNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -11,24 +14,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MicroarrayMageTabParser extends MageTabParser<HybridizationNode> {
-
+public class TwoColourMageTabParser extends MageTabParser<HybridizationNode> {
 
     @Override
     protected Map<String, HybridizationNode> getAssayNameToNode() {
-        Map<String, HybridizationNode> assayNameToNode = new HashMap<>();
-
+        Map<String, HybridizationNode> nameToNode = new HashMap<>();
         Collection<HybridizationNode> nodes = getInvestigation().SDRF.getNodes(HybridizationNode.class);
         for (HybridizationNode node : nodes) {
-            assayNameToNode.put(node.getNodeName(), node);
+            // Assemble assay accession for each channel separately
+            for (int channelNo = 1; channelNo <= 2; channelNo++) {
+                nameToNode.put(addLabelToAssayName(node.getNodeName(), getInvestigation().SDRF.getLabelForChannel(channelNo)), node);
+            }
         }
-        return assayNameToNode;
+        return nameToNode;
     }
-
 
     @Override
     protected Collection<SourceNode> getUpstreamSourceNodes(String assayName, HybridizationNode assayNode) {
-        return GraphUtils.findUpstreamNodes(assayNode, SourceNode.class);
+        Collection<SourceNode> upstreamSources = null;
+
+        for (LabeledExtractNode labeledExtractNode : GraphUtils.findUpstreamNodes(assayNode, LabeledExtractNode.class)) {
+            if (getLabelFromAssayName(assayName).equals(labeledExtractNode.label.getAttributeValue())) {
+                upstreamSources =
+                        GraphUtils.findUpstreamNodes(labeledExtractNode, SourceNode.class);
+            }
+        }
+        return upstreamSources;
     }
 
     @Override
@@ -36,6 +47,7 @@ public class MicroarrayMageTabParser extends MageTabParser<HybridizationNode> {
         return node.factorValues;
     }
 
+    //ToDo: this implementation exactly the same for MicroarrayMageTabParser, but not needed for RnaSeq
     @Override
     protected void addArrays(ExperimentDesign experimentDesign) {
         Map<String, HybridizationNode> assayNameToNode = getAssayNameToNode();
@@ -46,6 +58,14 @@ public class MicroarrayMageTabParser extends MageTabParser<HybridizationNode> {
             }
             experimentDesign.putArrayDesign(assayName, assayNameToNode.get(assayName).arrayDesigns.get(0).getAttributeValue());
         }
+    }
+
+    protected String addLabelToAssayName(String assayName, String label) {
+        return Joiner.on(".").join(assayName, label);
+    }
+
+    protected String getLabelFromAssayName(String assayName) {
+        return StringUtils.substringAfter(assayName, ".");
     }
 
 }

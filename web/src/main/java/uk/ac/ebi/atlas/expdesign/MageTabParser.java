@@ -4,8 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
@@ -17,15 +16,19 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import javax.inject.Inject;
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-public abstract class MageTabParser {
+public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
     private MageTabLimpopoUtils mageTabLimpopoUtils;
 
     private PropertyMergeService propertyMergeService;
 
     private MAGETABInvestigation investigation;
+
+    private ExperimentDesign experimentDesign;
 
     @Inject
     public void setPropertyMergeService(PropertyMergeService propertyMergeService) {
@@ -39,7 +42,7 @@ public abstract class MageTabParser {
 
     public ExperimentDesign parse(String experimentAccession) throws MalformedURLException, ParseException, ExperimentDesignWritingException {
 
-        ExperimentDesign experimentDesign = new ExperimentDesign();
+        experimentDesign = new ExperimentDesign();
 
         investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
 
@@ -56,25 +59,30 @@ public abstract class MageTabParser {
     }
 
     protected void addCharacteristics(ExperimentDesign experimentDesign) {
-        for (String assay : extractAssays()) {
-            HybridizationNode node = getNode(assay);
-            Collection<SourceNode> sourceNodes = GraphUtils.findUpstreamNodes(node, SourceNode.class);
+
+        Map<String, T> assayNameToNode = getAssayNameToNode();
+        for (String assayName : assayNameToNode.keySet()) {
+
+            Collection<SourceNode> sourceNodes = getUpstreamSourceNodes(assayName, assayNameToNode.get(assayName));
+
             if (sourceNodes.size() != 1) {
-                throw new IllegalStateException("There is no one to one mapping between sdrfNode and sourceNode for sdrfNode: " + node);
+                throw new IllegalStateException("There is no one to one mapping between sdrfNode and sourceNode for sdrfNode: " + assayName);
             }
 
             SourceNode sourceNode = sourceNodes.iterator().next();
             for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
 
-                String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
-                experimentDesign.putSample(assay, characteristicsAttribute.type, value);
-            }
 
+                String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
+                experimentDesign.putSample(assayName, characteristicsAttribute.type, value);
+            }
         }
+
     }
 
     // Set containing all factors for which values need doses merged into them
     private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet();
+
 
     static {
         FACTORS_NEEDING_DOSE.add("compound");
@@ -88,10 +96,13 @@ public abstract class MageTabParser {
         String compoundFactorValue = null;
         String compoundFactorType = null;
 
-        for (String assay : extractAssays()) {
 
-            HybridizationNode node = getNode(assay);
-            for (FactorValueAttribute factor : node.factorValues) {
+        Map<String, T> assayNameToNode = getAssayNameToNode();
+
+        for (String assayName : assayNameToNode.keySet()) {
+
+
+            for (FactorValueAttribute factor : getFactorAttributes(assayNameToNode.get(assayName))) {
 
                 String factorType = factor.type;
                 String factorValue = cleanValueAndUnitIfNeeded(factor.getNodeName(), factor.unit);
@@ -101,7 +112,7 @@ public abstract class MageTabParser {
                     compoundFactorValue = factorValue;
 
                 } else if (DOSE.equals(factor.type.toLowerCase())) {
-                    if (StringUtils.isNotEmpty(compoundFactorValue) ) {
+                    if (StringUtils.isNotEmpty(compoundFactorValue)) {
 
                         factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
                         factorType = compoundFactorType;
@@ -112,12 +123,13 @@ public abstract class MageTabParser {
                         throw new IllegalStateException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
                     }
 
-                    experimentDesign.putFactor(assay, factorType, factorValue);
+                    experimentDesign.putFactor(assayName, factorType, factorValue);
                 }
             }
 
-            if(StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
-                experimentDesign.putFactor(assay, compoundFactorType, compoundFactorValue);
+            //Add compound factor in a case there was no dose corresponding to it
+            if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
+                experimentDesign.putFactor(assayName, compoundFactorType, compoundFactorValue);
             }
 
         }
@@ -136,12 +148,12 @@ public abstract class MageTabParser {
         return value;
     }
 
-    protected abstract Set<String> extractAssays();
-
-    protected abstract HybridizationNode getNode(String assay);
+    protected abstract List<FactorValueAttribute> getFactorAttributes(T node);
 
     protected abstract void addArrays(ExperimentDesign experimentDesign);
-//    {
-//        return investigation.SDRF.getNode(assay, HybridizationNode.class);
-//    }
+
+    protected abstract Map<String, T> getAssayNameToNode();
+
+    protected abstract Collection<SourceNode> getUpstreamSourceNodes(String assayName, T assayNode);
+
 }
