@@ -32,6 +32,8 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValue
 import javax.inject.Named;
 import java.util.*;
 
+//ToDo: (N) to be removed
+
 @Named
 @Scope("prototype")
 public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {

@@ -26,10 +26,10 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
-import uk.ac.ebi.atlas.expdesign.ExpDesignWriter;
-import uk.ac.ebi.atlas.expdesign.ExpDesignWriterBuilder;
+import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriter;
+import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriterFactory;
+import uk.ac.ebi.atlas.expdesign.ExperimentDesignWritingException;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
@@ -50,38 +50,39 @@ public class ExperimentManager {
     private static final Logger LOGGER = Logger.getLogger(ExperimentManager.class);
 
     private ExpDesignTsvWriter expDesignTsvWriter;
-    private ExpDesignWriterBuilder expDesignWriterBuilder;
     private TranscriptProfilesLoader transcriptProfileLoader;
     private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
+    private ExperimentDesignWriterFactory experimentDesignWriterFactory;
 
     @Inject
     public ExperimentManager(ExpDesignTsvWriter expDesignTsvWriter,
-                             ExpDesignWriterBuilder expDesignWriterBuilder,
                              TranscriptProfilesLoader transcriptProfileLoader,
                              ArrayDesignDao arrayDesignDao,
                              ConfigurationTrader configurationTrader,
-                             DesignElementMappingLoader designElementLoader) {
+                             DesignElementMappingLoader designElementLoader, ExperimentDesignWriterFactory experimentDesignWriterFactory) {
         this.expDesignTsvWriter = expDesignTsvWriter;
-        this.expDesignWriterBuilder = expDesignWriterBuilder;
         this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
+        this.experimentDesignWriterFactory = experimentDesignWriterFactory;
     }
 
     public void generateExpDesign(String accession, ExperimentType experimentType) {
-        ExpDesignWriter expDesignWriter = expDesignWriterBuilder.forExperimentType(experimentType).build();
+
+        ExperimentDesignWriter experimentDesignWriter = experimentType.createExperimentDesignWriter(experimentDesignWriterFactory);
 
         try (CSVWriter csvWriter = expDesignTsvWriter.forExperimentAccession(accession)) {
-            expDesignWriter.forExperimentAccession(accession, csvWriter);
+            experimentDesignWriter.write(accession, csvWriter);
             csvWriter.flush();
             LOGGER.info("<generateExpDesign> written ExpDesign file: " + expDesignTsvWriter.getFileAbsolutePath());
         } catch (IOException e) {
             LOGGER.error("<generateExpDesign> error writing to file: " + e.getMessage());
             throw new IllegalStateException(e.getMessage());
-        } catch (ParseException e) {
+
+        } catch (ExperimentDesignWritingException e) {
             LOGGER.error("<generateExpDesign> error parsing SDRF: " + e.getMessage());
             File expDesignTsv = new File(expDesignTsvWriter.getFileAbsolutePath());
             String outcomeDelete = expDesignTsv.delete() ? " success" : " fail";

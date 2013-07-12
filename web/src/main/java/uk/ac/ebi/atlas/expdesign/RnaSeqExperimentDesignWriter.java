@@ -5,11 +5,13 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.util.List;
 
+//ToDo: (N) to be tested
+
 public class RnaSeqExperimentDesignWriter extends ExperimentDesignWriter {
 
-    private RnaSeqMageTabParser parser;
+    private RnaSeqExperimentDesignMageTabParser parser;
 
-    public RnaSeqExperimentDesignWriter(RnaSeqMageTabParser parser) {
+    public RnaSeqExperimentDesignWriter(RnaSeqExperimentDesignMageTabParser parser) {
         this.parser = parser;
     }
 
@@ -26,7 +28,7 @@ public class RnaSeqExperimentDesignWriter extends ExperimentDesignWriter {
     }
 
     @Override
-    protected MageTabParser getMageTabParser() {
-        return null;
+    protected ExperimentDesignMageTabParser getMageTabParser() {
+        return parser;
     }
 }

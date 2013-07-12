@@ -86,16 +86,13 @@ public class ExperimentManagerTest {
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
-    private ExpDesignWriterBuilder expDesignWriterBuilder;
-
     private ExperimentManager subject;
+
+    @Mock
+    private ExperimentDesignWriterFactory experimentDesignWriterFactory;
 
     @Before
     public void setUp() throws Exception {
-        expDesignWriterBuilder = new ExpDesignWriterBuilder(
-                rnaSeqExpDesignWriterMock,
-                microArrayExpDesignWriterMock,
-                twoColourExpDesignWriterMock);
 
         when(expDesignTsvWriterMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(csvWriterMock);
         when(expDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
@@ -104,8 +101,8 @@ public class ExperimentManagerTest {
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
-        subject = new ExperimentManager(expDesignTsvWriterMock, expDesignWriterBuilder, transcriptProfileLoaderMock,
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock);
+        subject = new ExperimentManager(expDesignTsvWriterMock, transcriptProfileLoaderMock,
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDesignWriterFactory);
     }
 
     @Test

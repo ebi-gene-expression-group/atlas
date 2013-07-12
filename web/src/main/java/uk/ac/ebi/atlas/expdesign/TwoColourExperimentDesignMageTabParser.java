@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.LabeledExtractNode;
@@ -9,12 +10,17 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TwoColourMageTabParser extends MageTabParser<HybridizationNode> {
+//ToDo: (N) to be tested
+
+@Named
+@Scope("prototype")
+public class TwoColourExperimentDesignMageTabParser extends ExperimentDesignMageTabParser<HybridizationNode> {
 
     @Override
     protected Map<String, HybridizationNode> getAssayNameToNode() {
@@ -47,7 +53,7 @@ public class TwoColourMageTabParser extends MageTabParser<HybridizationNode> {
         return node.factorValues;
     }
 
-    //ToDo: this implementation exactly the same for MicroarrayMageTabParser, but not needed for RnaSeq
+    //ToDo: this implementation is exactly the same for MicroarrayExperimentDesignMageTabParser, but not needed for RnaSeq
     @Override
     protected void addArrays(ExperimentDesign experimentDesign) {
         Map<String, HybridizationNode> assayNameToNode = getAssayNameToNode();

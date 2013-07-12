@@ -9,10 +9,10 @@ import java.util.List;
 
 public class MicroarrayExperimentDesignWriter extends ExperimentDesignWriter {
 
-    private MageTabParser<HybridizationNode> parser;
+    private ExperimentDesignMageTabParser<HybridizationNode> parser;
 
 
-    public MicroarrayExperimentDesignWriter(MageTabParser<HybridizationNode> parser) {
+    public MicroarrayExperimentDesignWriter(ExperimentDesignMageTabParser<HybridizationNode> parser) {
         this.parser = parser;
     }
 
@@ -29,7 +29,7 @@ public class MicroarrayExperimentDesignWriter extends ExperimentDesignWriter {
     }
 
     @Override
-    protected MageTabParser getMageTabParser() {
+    protected ExperimentDesignMageTabParser getMageTabParser() {
         return parser;
     }
 }

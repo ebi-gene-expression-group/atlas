@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class MageTabParser<T extends AbstractSDRFNode> {
+public abstract class ExperimentDesignMageTabParser<T extends AbstractSDRFNode> {
 
     private MageTabLimpopoUtils mageTabLimpopoUtils;
 
@@ -40,14 +40,19 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
-    public ExperimentDesign parse(String experimentAccession) throws MalformedURLException, ParseException, ExperimentDesignWritingException {
+    public ExperimentDesign parse(String experimentAccession)  throws ExperimentDesignWritingException{
+
+
+        try {
+            investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+        } catch (ParseException | MalformedURLException e) {
+            throw new ExperimentDesignWritingException("Cannot read or parse SDRF file: ", e);
+        }
 
         experimentDesign = new ExperimentDesign();
 
-        investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
-
-        addCharacteristics(experimentDesign);
-        addFactorValues(experimentDesign);
+        addCharacteristics();
+        addFactorValues();
 
         addArrays(experimentDesign);
 
@@ -58,7 +63,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return investigation;
     }
 
-    protected void addCharacteristics(ExperimentDesign experimentDesign) {
+    protected void addCharacteristics() {
 
         Map<String, T> assayNameToNode = getAssayNameToNode();
         for (String assayName : assayNameToNode.keySet()) {
@@ -91,7 +96,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
     private static final String DOSE = "dose";
 
-    protected void addFactorValues(ExperimentDesign experimentDesign) {
+    protected void addFactorValues() {
 
         String compoundFactorValue = null;
         String compoundFactorType = null;
@@ -100,7 +105,6 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         Map<String, T> assayNameToNode = getAssayNameToNode();
 
         for (String assayName : assayNameToNode.keySet()) {
-
 
             for (FactorValueAttribute factor : getFactorAttributes(assayNameToNode.get(assayName))) {
 
@@ -123,8 +127,8 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
                         throw new IllegalStateException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
                     }
 
-                    experimentDesign.putFactor(assayName, factorType, factorValue);
                 }
+                experimentDesign.putFactor(assayName, factorType, factorValue);
             }
 
             //Add compound factor in a case there was no dose corresponding to it
@@ -142,7 +146,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
                 if (StringUtils.isEmpty(unit.getAttributeType())) {
                     throw new IllegalStateException("Unable to find unit value for factor value: " + value);
                 }
-                value = propertyMergeService.mergeValueAndUnit(value, unit.getAttributeType());
+                value = propertyMergeService.mergeValueAndUnit(value, unit.getAttributeValue());
             }
         }
         return value;

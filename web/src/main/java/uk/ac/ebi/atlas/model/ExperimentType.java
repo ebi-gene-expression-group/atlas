@@ -46,7 +46,7 @@ public enum ExperimentType {
     }, TWOCOLOUR(MICROARRAY) {
         @Override
         public ExperimentDesignWriter createExperimentDesignWriter(ExperimentDesignWriterFactory factory) {
-            return factory.getMicroarrayWriter();
+            return factory.getTwoColourWriter();
         }
     }, MICRORNA(MICROARRAY) {
         @Override

@@ -6,12 +6,12 @@ import javax.inject.Named;
 @Named
 public class ExperimentDesignWriterFactory {
 
-    private MicroarrayMageTabParser microarrayMageTabParser;
-    private RnaSeqMageTabParser rnaSeqMageTabParser;
-    private TwoColourMageTabParser twoColourMageTabParser;
+    private MicroarrayExperimentDesignMageTabParser microarrayMageTabParser;
+    private RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser;
+    private TwoColourExperimentDesignMageTabParser twoColourMageTabParser;
 
     @Inject
-    public ExperimentDesignWriterFactory(MicroarrayMageTabParser microarrayMageTabParser, RnaSeqMageTabParser rnaSeqMageTabParser, TwoColourMageTabParser twoColourMageTabParser) {
+    public ExperimentDesignWriterFactory(MicroarrayExperimentDesignMageTabParser microarrayMageTabParser, RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser, TwoColourExperimentDesignMageTabParser twoColourMageTabParser) {
         this.microarrayMageTabParser = microarrayMageTabParser;
         this.rnaSeqMageTabParser = rnaSeqMageTabParser;
         this.twoColourMageTabParser = twoColourMageTabParser;

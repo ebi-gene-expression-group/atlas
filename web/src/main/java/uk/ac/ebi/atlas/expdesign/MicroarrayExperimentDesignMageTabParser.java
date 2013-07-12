@@ -1,17 +1,21 @@
 package uk.ac.ebi.atlas.expdesign;
 
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MicroarrayMageTabParser extends MageTabParser<HybridizationNode> {
+@Named
+@Scope("prototype")
+public class MicroarrayExperimentDesignMageTabParser extends ExperimentDesignMageTabParser<HybridizationNode> {
 
 
     @Override

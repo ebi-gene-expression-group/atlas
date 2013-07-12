@@ -27,6 +27,8 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 
 import java.io.IOException;
 
+//ToDo: (N) to be removed
+
 public interface ExpDesignWriter {
 
     void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException;

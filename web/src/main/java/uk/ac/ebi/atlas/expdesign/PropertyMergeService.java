@@ -128,7 +128,7 @@ public class PropertyMergeService {
     }
 
     protected boolean isValidEFOTerm(String unit) {
-        //ToDo: implement when bioportal client is ready
+        //ToDo (N): implement when bioportal client is ready
         return true;
     }
 }
