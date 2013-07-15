@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,15 +72,6 @@ public class AnnotationLoaderController {
         return "Updated " + count + " miRNA names";
     }
 
-    @RequestMapping("/updateAllAnnotations")
-    @ResponseBody
-//ToDo: this will not work once we add MicroRna
-    public String updateAnnotationsForAllLoadedExperiments() {
-
-        return updateAnnotations(applicationProperties.getBiomartDatasetIdentifiers());
-
-    }
-
     @RequestMapping("/updateDesignElements")
     @ResponseBody
     public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign,
@@ -98,12 +89,6 @@ public class AnnotationLoaderController {
         return "Updated";
     }
 
-//    @RequestMapping("/updateAllArrayDesigns")
-//    @ResponseBody
-//    public String updateAllArrayDesigns() {
-//        designElementLoader.loadMappings(applicationProperties.getArrayDesignAccessions());
-//        return "Updated";
-//    }
 }
 
 
