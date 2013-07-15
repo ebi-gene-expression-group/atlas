@@ -34,6 +34,8 @@ import static java.lang.Math.min;
 
 public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> {
 
+    private static final double MIN_EXPRESSION_LEVEL = 1D;
+    private static final int MAX_PVALUE = 1;
     private double maxUpRegulatedExpressionLevel = 0D;
     private double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
     private double maxDownRegulatedExpressionLevel = 0D;
@@ -79,21 +81,23 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     public double getAverageExpressionLevelOn(Set<Contrast> conditions, Regulation regulation) {
+        checkArgument(!CollectionUtils.isEmpty(conditions),
+                "This method must be invoked with all conditions when the set of selected conditions is empty");
+
         double expressionLevel = 0D;
 
-        if (CollectionUtils.isEmpty(conditions)) {
-            return expressionLevel;
+        for (Contrast condition : conditions) {
+            Double level = getExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel += level;
+            } else {
+                expressionLevel += MIN_EXPRESSION_LEVEL;
+            }
+
         }
 
-        for (Contrast condition : conditions) {
-            DifferentialExpression expression = getExpression(condition);
-            if (expression != null && expression.isRegulatedLike(regulation)) {
-                expressionLevel += expression.getLevel();
-            }
-        }
         return expressionLevel / conditions.size();
     }
-
 
     @Override
     protected void updateProfileExpression(DifferentialExpression differentialExpression) {
@@ -121,12 +125,18 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     public double getMinExpressionLevelOn(Set<Contrast> queryContrasts, Regulation regulation) {
-        checkArgument(CollectionUtils.isNotEmpty(queryContrasts));
+        //checkArgument(CollectionUtils.isNotEmpty(queryContrasts));
+        if(queryContrasts.isEmpty()){
+            return MAX_PVALUE;
+        }
 
-        double expressionLevel = Double.MAX_VALUE;
+        double expressionLevel = MAX_PVALUE;
 
         for (Contrast condition : queryContrasts) {
-            expressionLevel = min(expressionLevel, getExpressionLevel(condition));
+            Double level = getExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel = min(expressionLevel, level);
+            }
         }
         return expressionLevel;
     }

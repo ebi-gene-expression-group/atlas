@@ -84,7 +84,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
             return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allQueryFactors);
         }
 
-        //B2
+        //B2 - !isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)
         return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, selectedQueryFactors);
 
     }
@@ -102,6 +102,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         double averageExpressionLevelOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
 
         Set<Factor> nonSelectedQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
+
         double maxExpressionLevelOnNonSelectedQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);
 
         if (maxExpressionLevelOnNonSelectedQueryFactors == 0) {

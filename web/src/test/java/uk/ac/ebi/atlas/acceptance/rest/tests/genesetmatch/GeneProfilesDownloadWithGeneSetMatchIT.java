@@ -58,7 +58,7 @@ public class GeneProfilesDownloadWithGeneSetMatchIT {
         List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
-                contains("\"Alpha-1-acid glycoprotein\"", "0", "0", "0.5", "0.5", "6451", "0", "0", "3" ));
+                contains("\"Alpha-1-acid glycoprotein\"", "", "", "0.5", "0.5", "6451", "", "", "3" ));
 
     }
 

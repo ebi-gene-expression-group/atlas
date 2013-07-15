@@ -39,7 +39,6 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnnotationLoaderControllerTest {
@@ -49,7 +48,6 @@ public class AnnotationLoaderControllerTest {
     public static final String UPDATED = "Updated";
 
     public static final ArrayDesignType ARRAY_DESIGN_TYPE = ArrayDesignType.MICRO_ARRAY;
-    public static final String BIOENTITY_TYPE = "gene";
 
     AnnotationLoaderController subject;
 
@@ -77,16 +75,6 @@ public class AnnotationLoaderControllerTest {
     }
 
     @Test
-    public void testUpdateAnnotationsForAllLoadedExperiments() throws Exception {
-        Set<String> set = Sets.newHashSet(SPECIES);
-        when(applicationPropertiesMock.getBiomartDatasetIdentifiers()).thenReturn(set);
-
-        String result = subject.updateAnnotationsForAllLoadedExperiments();
-        assertThat(result, is(UPDATED));
-        verify(geneNamesImportCommandMock).loadGeneNames(Mockito.eq(set));
-    }
-
-    @Test
     public void testUpdateDesignElements() throws Exception {
 
         String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE.getName());
@@ -96,7 +84,6 @@ public class AnnotationLoaderControllerTest {
 
     @Test
     public void testUpdateAllArrayDesigns() throws Exception {
-
 
         String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE.getName());
         assertThat(result, is(UPDATED));

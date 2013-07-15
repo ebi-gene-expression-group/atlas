@@ -54,9 +54,12 @@ public abstract class Profile<K, T extends Expression> {
         return expressionsByCondition.size();
     }
 
-    public double getExpressionLevel(K condition) {
+    public Double getExpressionLevel(K condition) {
         Expression expression = expressionsByCondition.get(condition);
-        return expression == null ? 0 : expression.getLevel();
+        if (expression != null) {
+            return expression.getLevel();
+        }
+        return null;
     }
 
     protected abstract void updateProfileExpression(T expression);

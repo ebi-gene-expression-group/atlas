@@ -12,5 +12,8 @@ curl "http://localhost:9090/gxa/loadExperiment?accession=E-MTAB-698&type=DIFFERE
 #MICROARRAY
 curl "http://localhost:9090/gxa/loadExperiment?accession=E-MTAB-1066&type=MICROARRAY"
 curl "http://localhost:9090/gxa/loadExperiment?accession=E-TABM-51&type=MICROARRAY"
+curl "http://localhost:9090/gxa/loadExperiment?accession=E-GEOD-3779&type=MICROARRAY"
+#MICRORNA
+curl "http://localhost:9090/gxa/loadExperiment?accession=E-TABM-713&type=MICRORNA"
 #TWOCOLOUR
 curl "http://localhost:9090/gxa/loadExperiment?accession=E-GEOD-43049&type=TWOCOLOUR"

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.utils;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,29 +35,32 @@ import java.text.MessageFormat;
 @Scope("prototype")
 public class ReactomeBiomartClient {
 
-    public static final String REACTOME_BIOMART_URL = "http://reactomerelease.oicr.on.ca:5555/biomart/martservice?query=" +
+    private static final String REACTOME_BIOMART_QUERY =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "<!DOCTYPE Query>\n" +
-            "<Query  virtualSchemaName = \"default\" formatter = \"TSV\" header = \"0\" uniqueRows = \"0\" count = \"\" datasetConfigVersion = \"0.6\" >\n" +
-            "<Dataset name = \"pathway\" interface = \"default\" >\n" +
-            "<Filter name = \"pathway_id_list\" value = \"{0}\"/>\n" +
-            "<Attribute name = \"stableidentifier_identifier\" />\n" +
-            "<Attribute name = \"_displayname\" />\n" +
-            "</Dataset>\n" +
-            "</Query>";
+                    "<!DOCTYPE Query>\n" +
+                    "<Query  virtualSchemaName = \"default\" formatter = \"TSV\" header = \"0\" uniqueRows = \"0\" count = \"\" datasetConfigVersion = \"0.6\" >\n" +
+                    "<Dataset name = \"pathway\" interface = \"default\" >\n" +
+                    "<Filter name = \"pathway_id_list\" value = \"{0}\"/>\n" +
+                    "<Attribute name = \"stableidentifier_identifier\" />\n" +
+                    "<Attribute name = \"_displayname\" />\n" +
+                    "</Dataset>\n" +
+                    "</Query>";
 
     private RestTemplate restTemplate;
 
+    private String reactomeURL;
+
     @Inject
-    public ReactomeBiomartClient(RestTemplate restTemplate) {
+    public ReactomeBiomartClient(RestTemplate restTemplate, @Value("#{configuration['reactome.biomart.query.url']}") String reactomeURL) {
         this.restTemplate = restTemplate;
+        this.reactomeURL = reactomeURL;
     }
 
     /**
      * @return pathway name if non empty, otherwise null
      */
     public String fetchPathwayName(String reactomeId) {
-        String url = MessageFormat.format(REACTOME_BIOMART_URL, reactomeId);
+        String url = MessageFormat.format(reactomeURL + REACTOME_BIOMART_QUERY, reactomeId);
         String result = restTemplate.getForObject(url, String.class);
 
         return StringUtils.trimToEmpty(StringUtils.substringAfterLast(result, "\t"));

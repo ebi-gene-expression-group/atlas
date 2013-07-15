@@ -88,7 +88,13 @@ public class GEOD22351GeneProfilesDownloadControllerIT {
     @Test
     public void verifySecondLine() {
 
-        List<String> secondLine = subject.getRowValues(4);
+        List<String> firstLine = subject.getRowValues(4);
+
+        assertThat(firstLine,
+                contains("Arl8b", "ENSMUSG00000030105", "0.0", "0.474360080385946")
+        );
+
+        List<String> secondLine = subject.getRowValues(5);
 
         assertThat(secondLine,
                 contains("Ch25h", "ENSMUSG00000050370", "1.70428798138445E-6", "3.01033089730209")
@@ -101,7 +107,7 @@ public class GEOD22351GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(53));
+        assertThat(lines.length, is(54));
     }
 
 }

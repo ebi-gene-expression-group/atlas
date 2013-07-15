@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.mtab1066;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.geod3779;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
@@ -28,80 +28,79 @@ import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
 
-    private static final String E_MTAB_1066_ACCESSION = "E-MTAB-1066";
+    private static final String E_GEOD_3779_ACCESSION = "E-GEOD-3779";
     protected HeatmapTablePage subject;
 
     @Test
     public void verifyResultsWithRegulationUp() {
-        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP&displayLevels=true");
+        subject = new HeatmapTablePage(driver, E_GEOD_3779_ACCESSION, "regulation=UP&displayLevels=true&cutoff=1");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 72"));
+        assertThat(subject.getGeneCount(), is("Showing 21 of 21 genes found:"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(50));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Irc", "CG8303", "Ykt6"));
+        assertThat(subject.getSelectedProfiles().size(), is(21));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Snx30", "Mycl1", "Scn2a1"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("4.32 × 10-4"));
-        assertThat(subject.getGeneProfile(1).get(1), is(""));
-
-        assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("6.23 × 10-4"));
-        assertThat(subject.getLastGeneProfile().get(1), is("0.004"));
-    }
-
-    @Test
-    public void verifyResultsWithRegulationDown() {
-        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=DOWN&displayLevels=true");
-        subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 104"));
-
-        assertThat(subject.getSelectedProfiles().size(), is(50));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
-
-        assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("0.02"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
         assertThat(subject.getLastGeneProfile().get(0), is(""));
-        assertThat(subject.getLastGeneProfile().get(1), is("0.043"));
+        assertThat(subject.getLastGeneProfile().get(1), is("0.987"));
     }
 
     @Test
-    public void verifyResultsWithRegulationUpDown() {
-        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
+    public void verifyResultsWithRegulationDown() {
+        subject = new HeatmapTablePage(driver, E_GEOD_3779_ACCESSION, "regulation=DOWN&displayLevels=true&cutoff=1");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 175"));
+        assertThat(subject.getGeneCount(), is("Showing 39 of 39 genes found:"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(50));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
+        assertThat(subject.getSelectedProfiles().size(), is(39));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Nhlrc1", "4933433P14Rik", "Snx30"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("0.914"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("0.022"));
+        assertThat(subject.getLastGeneProfile().get(0), is("0.993"));
         assertThat(subject.getLastGeneProfile().get(1), is(""));
     }
 
     @Test
+    public void verifyResultsWithRegulationUpDown() {
+        subject = new HeatmapTablePage(driver, E_GEOD_3779_ACCESSION, "regulation=UP_DOWN&displayLevels=true&cutoff=1");
+        subject.get();
+        assertThat(subject.getGeneCount(), is("Showing 50 of 60 genes found:"));
+
+        assertThat(subject.getSelectedProfiles().size(), is(50));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Snx30", "Mycl1", "Snx30"));
+
+        assertThat(subject.getGeneProfile(1).size(), is(2));
+        assertThat(subject.getGeneProfile(1).get(0), is("0.02"));
+        assertThat(subject.getGeneProfile(1).get(1), is(""));
+
+        assertThat(subject.getLastGeneProfile().size(), is(2));
+        assertThat(subject.getLastGeneProfile().get(0), is(""));
+        assertThat(subject.getLastGeneProfile().get(1), is("0.979"));
+    }
+
+    @Test
     public void heatmapCellTooltipTest() {
-        subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
+        subject = new HeatmapTablePage(driver, E_GEOD_3779_ACCESSION, "regulation=UP_DOWN&displayLevels=true&cutoff=1");
         subject.get();
 
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 0, ExperimentType.MICROARRAY), is("Adjusted P-value"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.MICROARRAY), is("T-statistic"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 2, ExperimentType.MICROARRAY), startsWith("Log2-fold"));
 
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY), is("8.36 × 10-6"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.MICROARRAY), is("-19.16"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY), is("-1.56"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY), is("0.02"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.MICROARRAY), is("0.12"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY), is("0.01"));
     }
 
 }

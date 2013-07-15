@@ -39,8 +39,15 @@ public class MicroarrayExpressionsBuffer extends TsvRowBuffer<MicroarrayExpressi
 
     private Iterator<Contrast> expectedContrasts;
 
+    private List<Contrast> orderedContrasts;
+
     MicroarrayExpressionsBuffer(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
+        this.orderedContrasts = orderedContrasts;
+    }
+
+    public List<Contrast> getOrderedContrasts() {
+        return orderedContrasts;
     }
 
     public MicroarrayExpression pollExpression(Queue<String> tsvRow) {

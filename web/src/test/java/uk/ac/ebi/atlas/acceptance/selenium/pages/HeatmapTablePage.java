@@ -289,8 +289,8 @@ public class HeatmapTablePage extends TablePage {
         return getGeneAnchor(getHeatmapTable(), profileIndex + 1);
     }
 
-    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex, ExperimentType experimentType) {
-        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex);
+    public String getDifferentialExperimentTooltipTableHeader(int zeroBasedProfileIndex, int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex, ExperimentType experimentType) {
+        WebElement firstGeneProfileCell = getGeneProfileCell(zeroBasedProfileIndex, zeroBasedExpressionLevelIndex);
         hoverOnElement(firstGeneProfileCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
@@ -299,7 +299,7 @@ public class HeatmapTablePage extends TablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getDifferentialExperimentTooltipTableCell(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableCellIndex, ExperimentType experimentType) {
+    public String getDifferentialExperimentTooltipTableCell(int zeroBasedProfileIndex, int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableCellIndex, ExperimentType experimentType) {
         hoverOnElement(getGeneProfileCell(0, zeroBasedExpressionLevelIndex));
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedTooltipTableCellIndex + 1) + "]");

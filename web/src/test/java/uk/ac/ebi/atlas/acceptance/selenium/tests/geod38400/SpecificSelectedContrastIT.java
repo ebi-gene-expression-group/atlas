@@ -52,14 +52,17 @@ public class SpecificSelectedContrastIT extends SeleniumFixture {
         assertThat(subject.getGeneCount(), containsString("of 34"));
 
         assertThat(subject.getSelectedProfiles().size(), is(34));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("AT5G26220/T19G15_70","ATP6-1","SQP1"));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("T5N23_130", "AT3G29644", "GRXS4"));
+
+        //This one drops down because of fold change algorithm
+        assertThat(subject.getSelectedProfiles().get(26), is("DML1"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(2), is("0.032"));
+        assertThat(subject.getGeneProfile(1).get(2), is("<10-10"));
 
         assertThat(subject.getGeneProfile(2).size(), is(3));
-        assertThat(subject.getGeneProfile(2).get(0), is(""));
-        assertThat(subject.getGeneProfile(2).get(2), is("0.002"));
+        assertThat(subject.getGeneProfile(2).get(0), is("0.014"));
+        assertThat(subject.getGeneProfile(2).get(2), is("6.64" + " \u00D7 " + "10-9"));
     }
 
 }

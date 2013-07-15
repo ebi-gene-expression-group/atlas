@@ -34,9 +34,12 @@ import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -78,14 +81,19 @@ public class BaselineProfileTest {
         assertThat(subject.getSpecificity(), is(3));
     }
 
-    @Test
-    public void averageExpressionLevelOnNullCollection() {
-        assertThat(subject.getAverageExpressionLevelOn(null), is(0D));
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenQueryFactorsIsEmpty() {
+        subject.getAverageExpressionLevelOn(new HashSet<Factor>());
     }
 
     @Test
     public void averageExpressionLevelOnEmptyCollection() {
-        assertThat(subject.getAverageExpressionLevelOn(new HashSet<Factor>()), is(0D));
+        //given
+        Set<Factor> queryFactors = Sets.newHashSet(mock(Factor.class));
+        //when
+        double averageExpressionLevel = subject.getAverageExpressionLevelOn(queryFactors);
+        //then
+        assertThat(averageExpressionLevel, is(0D));
     }
 
     @Test
@@ -120,7 +128,7 @@ public class BaselineProfileTest {
         assertThat(subject.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1)));
         assertThat(subject.getExpressionLevel(factor2), is(6D));
         assertThat(subject.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3)));
-        assertThat(subject.getExpressionLevel(factor4), is(0D));
+        assertThat(subject.getExpressionLevel(factor4), is(nullValue()));
 
     }
 
@@ -132,7 +140,7 @@ public class BaselineProfileTest {
         assertThat(sumProfile.getExpressionLevel(factor1), is(0.7D));
         assertThat(sumProfile.getExpressionLevel(factor2), is(1.0D));
         assertThat(sumProfile.getExpressionLevel(factor3), is(1.0D));
-        assertThat(sumProfile.getExpressionLevel(factor4), is(0D));
+        assertThat(sumProfile.getExpressionLevel(factor4), is(nullValue()));
 
     }
 

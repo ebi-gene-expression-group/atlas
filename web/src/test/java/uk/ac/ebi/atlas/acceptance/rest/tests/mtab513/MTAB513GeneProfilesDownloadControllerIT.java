@@ -68,8 +68,24 @@ public class MTAB513GeneProfilesDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
-                contains("CU463998.3", "ENSG00000244656", "0", "0", "0", "0", "0", "57", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0")
+                hasItems("CU463998.3", "ENSG00000244656",  "57")
         );
+
+        assertThat(secondLine.get(2), isEmptyString());
+        assertThat(secondLine.get(3), isEmptyString());
+        assertThat(secondLine.get(4), isEmptyString());
+        assertThat(secondLine.get(5), isEmptyString());
+        assertThat(secondLine.get(6), isEmptyString());
+        assertThat(secondLine.get(8), isEmptyString());
+        assertThat(secondLine.get(9), isEmptyString());
+        assertThat(secondLine.get(10), isEmptyString());
+        assertThat(secondLine.get(11), isEmptyString());
+        assertThat(secondLine.get(12), isEmptyString());
+        assertThat(secondLine.get(13), isEmptyString());
+        assertThat(secondLine.get(14), isEmptyString());
+        assertThat(secondLine.get(15), isEmptyString());
+        assertThat(secondLine.get(16), isEmptyString());
+        assertThat(secondLine.get(17), isEmptyString());
 
     }
 

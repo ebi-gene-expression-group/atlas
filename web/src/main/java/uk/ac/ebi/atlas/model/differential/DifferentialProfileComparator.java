@@ -62,9 +62,14 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryContrasts)) {
-            return Ordering.natural().reverse().compare(
+            int order = Ordering.natural().reverse().compare(
                     getExpressionLevelFoldChange(firstProfile),
                     getExpressionLevelFoldChange(otherProfile));
+            if (0 != order) {
+                return order;
+            }
+            return compareOnAverage(firstProfile, otherProfile, selectedQueryContrasts);
+
         }
 
         // A2
@@ -72,7 +77,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
             return compareOnAverage(firstProfile, otherProfile, allQueryContrasts);
         }
 
-        //B2
+        // B2 - !specific && !CollectionUtils.isEmpty
         return compareOnAverage(firstProfile, otherProfile, selectedQueryContrasts);
 
     }
@@ -90,13 +95,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
 
-        double minExpressionLevelOnNonSelectedQueryContrasts;
-
-        if (nonSelectedQueryContrasts.isEmpty()){
-            minExpressionLevelOnNonSelectedQueryContrasts = cutoff;
-        } else {
-            minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
-        }
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
 
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
 

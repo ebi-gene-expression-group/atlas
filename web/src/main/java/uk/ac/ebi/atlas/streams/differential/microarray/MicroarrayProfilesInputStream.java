@@ -24,13 +24,16 @@ package uk.ac.ebi.atlas.streams.differential.microarray;
 
 
 import au.com.bytecode.opencsv.CSVReader;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
+import java.util.List;
 
-public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProfile, DifferentialExpression> {
+
+public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProfile, MicroarrayExpression> {
 
     private String arrayDesignAccession;
 
@@ -47,11 +50,16 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 
+    public List<Contrast> getOrderedContrasts() {
+        MicroarrayExpressionsBuffer tsvRowBuffer = (MicroarrayExpressionsBuffer) this.getTsvRowBuffer();
+        return tsvRowBuffer.getOrderedContrasts();
+    }
+
     protected MicroarrayProfile createProfile() {
         return microarrayProfileBuilder.create();
     }
 
-    protected void addExpressionToBuilder(DifferentialExpression expression) {
+    protected void addExpressionToBuilder(MicroarrayExpression expression) {
         microarrayProfileBuilder.addExpression(expression);
     }
 

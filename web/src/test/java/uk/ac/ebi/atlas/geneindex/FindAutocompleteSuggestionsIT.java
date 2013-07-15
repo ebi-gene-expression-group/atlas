@@ -192,6 +192,6 @@ public class FindAutocompleteSuggestionsIT {
         List<String> properties = subject.findGenePropertySuggestions("p b", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties, hasItems("p b", "p binding", "protein binding"));
+        assertThat(properties, hasItems("protein b", "p binding", "protein binding"));
     }
 }

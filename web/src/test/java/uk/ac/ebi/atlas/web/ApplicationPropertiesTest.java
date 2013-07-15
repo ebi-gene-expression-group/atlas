@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,10 +67,8 @@ public class ApplicationPropertiesTest {
     private static final String E_GEOD_22351 = "E-GEOD-22351";
     private static final String E_GEOD_38400 = "E-GEOD-38400";
     private static final String E_GEOD_21860 = "E-GEOD-21860";
-    private static final String BIOMART_DATASET_NAMES = "biomart.dataset.names";
     private static final String A_AFFY_35 = "A-AFFY-35";
     private static final String A_AGIL_28 = "A-AGIL-28";
-    private static final String ARRAYDESIGN_PROPERTY_KEY = "arraydesign.accessions";
     private static final String EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE = "experiment.arrayexpress.arrays.url.template";
     private static final String ARRAYEXPRESS_ARRAYS_URL = "http://www.ebi.ac.uk/arrayexpress/arrays/";
     private static final String EXPERIMENT_PUBMED_URL_TEMPLATE = "experiment.pubmed.url.template";
@@ -108,8 +106,6 @@ public class ApplicationPropertiesTest {
         when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_REST_URL + "{0}");
         when(configurationMock.getProperty(FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
 
-        when(configurationMock.getProperty(BIOMART_DATASET_NAMES)).thenReturn(HOMO_SAPIENS_SPECIE + LIST_SEPARATOR + MOUSE_SPECIE);
-        when(configurationMock.getProperty(ARRAYDESIGN_PROPERTY_KEY)).thenReturn(A_AFFY_35 + LIST_SEPARATOR + A_AGIL_28);
         when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_ARRAYS_URL + "{0}");
         when(configurationMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
         when(configurationMock.getProperty(EXPERIMENT_ATLAS_URL_TEMPLATE)).thenReturn(ATLAS_URL + "{0}");
@@ -208,13 +204,4 @@ public class ApplicationPropertiesTest {
         assertThat(subject.getMicroRNAExperimentsIdentifiers(), containsInAnyOrder(E_TABM_713));
     }
 
-    @Test
-    public void testGetBiomartDatasetIdentifiers() throws Exception {
-        assertThat(subject.getBiomartDatasetIdentifiers(), containsInAnyOrder(HOMO_SAPIENS_SPECIE, MOUSE_SPECIE));
-    }
-
-    @Test
-    public void testGetArrayDesignAccessions() throws Exception {
-        assertThat(subject.getArrayDesignAccessions(), containsInAnyOrder(A_AFFY_35, A_AGIL_28));
-    }
 }

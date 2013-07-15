@@ -37,6 +37,10 @@ public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T>
         this.inputStream = inputStream;
     }
 
+    public ObjectInputStream<T> getWrappedInputStream() {
+        return inputStream;
+    }
+
     @Override
     public T readNext() {
 

@@ -47,6 +47,7 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         this.headerBuilder = headerBuilder;
     }
 
+    @Override
     public Long write() throws IOException {
 
         long lineCount = 0;
@@ -66,9 +67,13 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         }
 
         csvWriter.flush();
-        csvWriter.close();
 
         return lineCount;
+    }
+
+    @Override
+    public void close() throws IOException {
+        csvWriter.close();
     }
 
     protected String getGeneName(String accession) {
