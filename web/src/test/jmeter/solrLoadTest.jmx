@@ -665,8 +665,8 @@
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
               <stringProp name="-232329682">responseHeader</stringProp>
-              <stringProp name="-2062925482">ensmusg00000064945</stringProp>
-              <stringProp name="-2060071345">ensmusg00000097333</stringProp>
+              <stringProp name="-1095693936">ensmusg0000006</stringProp>
+              <stringProp name="-1095693933">ensmusg0000009</stringProp>
               <stringProp name="-1889582221">&quot;numFound&quot;:30</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
