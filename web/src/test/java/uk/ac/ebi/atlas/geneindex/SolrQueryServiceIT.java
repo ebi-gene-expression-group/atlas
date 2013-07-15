@@ -107,7 +107,7 @@ public class SolrQueryServiceIT {
 
         // then
         assertThat(geneIds.size(), lessThan(200000));
-        assertThat(geneIds, hasItems("ENSG00000270144", "ENSG00000214919"));
+        assertThat(geneIds, hasItems("ENSG00000126773", "ENSG00000183878"));
 
     }
 
