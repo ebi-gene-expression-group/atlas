@@ -86,6 +86,7 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
     protected abstract T load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
     private String fetchExperimentDescription(String experimentAccession) {
+        // TODO: move this information to database and only call once during experiment load
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
         } catch (Exception e) {
@@ -95,11 +96,13 @@ public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
     }
 
     protected Set<String> extractSpecies(String experimentAccession) throws MalformedURLException, ParseException {
+        // TODO: move this information to database and only call once during experiment load
         MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
         return mageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
     }
 
     protected List<String> extractPubMedIds(String experimentAccession) throws MalformedURLException, ParseException {
+        // TODO: move this information to database and only call once during experiment load
         MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
         return mageTabLimpopoUtils.extractPubMedIdsFromIDF(investigation);
     }
