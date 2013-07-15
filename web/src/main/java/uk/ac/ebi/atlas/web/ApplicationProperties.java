@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,10 +113,6 @@ public class ApplicationProperties {
     public Set<String> getMicroRNAExperimentsIdentifiers() {
         // currently not yet used
         return getExperimentIdentifiersForType(ExperimentType.MICRORNA);
-    }
-
-    public Set<String> getBiomartDatasetIdentifiers() {
-        return getStringValues("biomart.dataset.names");
     }
 
     public Set<String> getArrayDesignAccessions() {
