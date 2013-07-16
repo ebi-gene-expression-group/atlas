@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/* (B) reuse? or throw away
 package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -127,3 +127,4 @@ public class MicroArrayExpDesignWriterTest {
         assertThat(subject.composeExperimentAssay(ASSAY, characteristicsList, factorsList), is(EXPECTED_ASSAY));
     }
 }
+*/

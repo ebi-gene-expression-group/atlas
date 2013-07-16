@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -99,3 +99,5 @@ public class RnaSeqExpDesignWriter implements ExpDesignWriter {
     }
 
 }
+
+*/

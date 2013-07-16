@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.SDRF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
@@ -40,16 +41,19 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public abstract class ExperimentDesignMageTabParser<T extends AbstractSDRFNode> {
+
+    private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet("compound", "irradiate");
+
+    private static final String DOSE = "dose";
 
     private MageTabLimpopoUtils mageTabLimpopoUtils;
 
     private PropertyMergeService propertyMergeService;
 
-    private MAGETABInvestigation investigation;
+    private Set<AssayNode<T>> assayNodes;
 
     private ExperimentDesign experimentDesign;
 
@@ -66,7 +70,8 @@ public abstract class ExperimentDesignMageTabParser<T extends AbstractSDRFNode> 
     public ExperimentDesign parse(String experimentAccession)  throws IOException{
 
         try {
-            investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+            MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+            assayNodes = getAssayNodes(investigation.SDRF);
         } catch (ParseException | MalformedURLException e) {
             throw new IOException("Cannot read or parse SDRF file: ", e);
         }
@@ -76,24 +81,19 @@ public abstract class ExperimentDesignMageTabParser<T extends AbstractSDRFNode> 
         addCharacteristics();
         addFactorValues();
 
-        addArrays(experimentDesign);
+        addArrays(experimentDesign, assayNodes);
 
         return experimentDesign;
     }
 
-    protected MAGETABInvestigation getInvestigation() {
-        return investigation;
-    }
-
     protected void addCharacteristics() {
 
-        Map<String, T> assayNameToNode = getAssayNameToNode();
-        for (String assayName : assayNameToNode.keySet()) {
+        for (AssayNode<T> assayNode : assayNodes) {
 
-            Collection<SourceNode> sourceNodes = getUpstreamSourceNodes(assayName, assayNameToNode.get(assayName));
+            Collection<SourceNode> sourceNodes = findUpstreamSourceNodes(assayNode);
 
             if (sourceNodes.size() != 1) {
-                throw new IllegalStateException("There is no one to one mapping between sdrfNode and sourceNode for sdrfNode: " + assayName);
+                throw new IllegalStateException("There is no one to one mapping between sdrfNode and sourceNode for sdrfNode: " + assayNode);
             }
 
             SourceNode sourceNode = sourceNodes.iterator().next();
@@ -101,34 +101,20 @@ public abstract class ExperimentDesignMageTabParser<T extends AbstractSDRFNode> 
 
 
                 String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
-                experimentDesign.putSample(assayName, characteristicsAttribute.type, value);
+                experimentDesign.putSample(assayNode.getName(), characteristicsAttribute.type, value);
             }
         }
 
     }
-
-    // Set containing all factors for which values need doses merged into them
-    private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet();
-
-
-    static {
-        FACTORS_NEEDING_DOSE.add("compound");
-        FACTORS_NEEDING_DOSE.add("irradiate");
-    }
-
-    private static final String DOSE = "dose";
 
     protected void addFactorValues() {
 
         String compoundFactorValue = null;
         String compoundFactorType = null;
 
+        for (AssayNode<T> assayNode : assayNodes) {
 
-        Map<String, T> assayNameToNode = getAssayNameToNode();
-
-        for (String assayName : assayNameToNode.keySet()) {
-
-            for (FactorValueAttribute factor : getFactorAttributes(assayNameToNode.get(assayName))) {
+            for (FactorValueAttribute factor : getFactorAttributes(assayNode.getSdrfNode())) {
 
                 String factorType = factor.type;
                 String factorValue = cleanValueAndUnitIfNeeded(factor.getNodeName(), factor.unit);
@@ -150,12 +136,12 @@ public abstract class ExperimentDesignMageTabParser<T extends AbstractSDRFNode> 
                     }
 
                 }
-                experimentDesign.putFactor(assayName, factorType, factorValue);
+                experimentDesign.putFactor(assayNode.getName(), factorType, factorValue);
             }
 
             //Add compound factor in a case there was no dose corresponding to it
             if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
-                experimentDesign.putFactor(assayName, compoundFactorType, compoundFactorValue);
+                experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue);
             }
 
         }
@@ -174,12 +160,12 @@ public abstract class ExperimentDesignMageTabParser<T extends AbstractSDRFNode> 
         return value;
     }
 
-    protected abstract List<FactorValueAttribute> getFactorAttributes(T node);
+    protected abstract List<FactorValueAttribute> getFactorAttributes(T sdrfNode);
 
-    protected abstract void addArrays(ExperimentDesign experimentDesign);
+    protected abstract void addArrays(ExperimentDesign experimentDesign, Set<AssayNode<T>> assayNodes);
 
-    protected abstract Map<String, T> getAssayNameToNode();
+    protected abstract Set<AssayNode<T>> getAssayNodes(SDRF sdrf);
 
-    protected abstract Collection<SourceNode> getUpstreamSourceNodes(String assayName, T assayNode);
+    protected abstract Collection<SourceNode> findUpstreamSourceNodes(AssayNode<T> assayNode);
 
 }

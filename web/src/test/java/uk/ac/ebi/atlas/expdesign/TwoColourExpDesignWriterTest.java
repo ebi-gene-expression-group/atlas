@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/* (B) reuse or throw away
 package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -123,3 +123,4 @@ public class TwoColourExpDesignWriterTest {
         assertThat(subject.composeExperimentAssay(Pair.of(ASSAY, 1), characteristicsList, factorsList), is(EXPECTED_ASSAY));
     }
 }
+*/

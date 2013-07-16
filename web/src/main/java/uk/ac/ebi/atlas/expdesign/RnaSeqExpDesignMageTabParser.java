@@ -21,7 +21,7 @@
  */
 
 package uk.ac.ebi.atlas.expdesign;
-
+/*
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
@@ -99,3 +99,5 @@ public class RnaSeqExpDesignMageTabParser extends ExpDesignMageTabParser {
         return Collections.emptyList();
     }
 }
+
+*/

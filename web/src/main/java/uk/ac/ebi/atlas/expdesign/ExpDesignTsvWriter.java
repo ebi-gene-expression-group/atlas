@@ -37,7 +37,7 @@ import java.text.MessageFormat;
 import static com.google.common.base.Preconditions.checkState;
 
 /*
-ToDo (B) : this needs to be reanamed... what is this? a builder or what?? f#$*!!!
+ToDo (B) : this needs to be renamed... what is this? a builder or what?? f#$*!!!
  */
 @Named("expDesignTsvWriter")
 @Scope("prototype")

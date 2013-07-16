@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -34,3 +34,4 @@ public interface ExpDesignWriter {
     void forExperimentAccession(String experimentAccession, CSVWriter csvWriter) throws IOException, ParseException;
 
 }
+*/

@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.expdesign;
 
 import com.google.common.collect.Sets;
@@ -135,3 +135,4 @@ public class TwoColourExpDesignMageTabParser extends ExpDesignMageTabParser {
     }
 
 }
+*/

@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -102,3 +102,5 @@ public class TwoColourExpDesignWriter implements ExpDesignWriter {
         return result.toArray(new String[result.size()]);
     }
 }
+
+*/

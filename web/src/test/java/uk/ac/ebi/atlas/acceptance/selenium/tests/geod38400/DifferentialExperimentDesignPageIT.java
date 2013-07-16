@@ -33,7 +33,6 @@ import static org.hamcrest.Matchers.*;
 public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
 
     public static final String NRPE1_MUTANT_VS_WILD_TYPE = "nrpe1 mutant vs wild type";
-    public static final String IDN2_MUTANT_VS_WILD_TYPE = "idn2 mutant vs wild type";
     private DifferentialExperimentDesignTablePage subject;
 
     @Before

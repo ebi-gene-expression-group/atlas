@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.expdesign.ExpDesignParser;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
@@ -40,7 +41,10 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Set;
 
-public abstract class ExperimentLoader<T> extends CacheLoader<String, T> {
+//import uk.ac.ebi.atlas.expdesign.ExpDesignParser;
+//import uk.ac.ebi.atlas.expdesign.ExpDesignMageTabParser;
+
+public abstract class ExperimentLoader<T extends Experiment> extends CacheLoader<String, T> {
     private static final Logger LOGGER = Logger.getLogger(ExperimentLoader.class);
 
     @Value("#{configuration['experiment.extra-info-image.path.template']}")

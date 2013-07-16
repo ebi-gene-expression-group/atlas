@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/* (B) reuse
 package uk.ac.ebi.atlas.expdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -119,3 +119,5 @@ public class RnaSeqExpDesignWriterTest {
         assertThat(subject.composeExperimentRun(RUN, characteristicsList, factorsList), is(EXPECTED_RUN));
     }
 }
+
+*/

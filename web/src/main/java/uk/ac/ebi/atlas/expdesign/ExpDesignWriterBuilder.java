@@ -19,6 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
+/*
 
 package uk.ac.ebi.atlas.expdesign;
 
@@ -31,7 +32,6 @@ import javax.inject.Named;
 import static com.google.common.base.Preconditions.checkState;
 
 //ToDo: (N) to be removed
-
 @Named
 @Scope("prototype")
 public class ExpDesignWriterBuilder {
@@ -73,3 +73,4 @@ public class ExpDesignWriterBuilder {
     }
 
 }
+*/

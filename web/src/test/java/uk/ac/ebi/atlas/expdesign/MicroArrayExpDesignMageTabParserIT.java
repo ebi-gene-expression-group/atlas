@@ -27,64 +27,35 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MicroArrayExpDesignMageTabParserIT {
 
-    private static final String EXPERIMENT_ACCESSION_E_MTAB_1066 = "E-MTAB-1066";
+    private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-MTAB-1066";
 
+    @Named("microarrayExperimentDesignMageTabParser")
     @Inject
-    private MicroArrayExpDesignMageTabParser subject;
+    private MicroarrayExperimentDesignMageTabParser subject;
 
     @Test
-    public void testExtractAssays1066() throws Exception {
-        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        assertThat(subject.extractAssays(), containsInAnyOrder("C1", "C2", "C3", "K1", "K2", "K3", "WT1", "WT2", "WT3"));
+    public void asTableDataShouldReturnTheRightStuff() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION);
+
+        assertThat(experimentDesign.asTableData().size(), is(9));
+        assertThat(experimentDesign.asTableData().get(0), arrayContaining("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", null, "cycC mutant"));
+        assertThat(experimentDesign.asTableData().get(8), arrayContaining("WT3", "A-AFFY-35", "3rd instar larva", "wild_type", "Drosophila melanogaster", "Oregon R", "wild_type"));
+
     }
 
-    @Test
-    public void testGetHybridizationNodeForAssay1066() throws Exception {
-        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        assertThat(subject.getHybridizationNodeForAssay("C1"), is(not(nullValue())));
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testGetHybridizationNodeForNonExistingAssay() throws Exception {
-        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        subject.getHybridizationNodeForAssay("C14");
-    }
-
-    @Test
-    public void testFindArrayForHybridizationNode1066() throws Exception {
-        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        HybridizationNode scanNode = subject.getHybridizationNodeForAssay("C1");
-        assertThat(subject.findArrayForHybridizationNode(scanNode), is("A-AFFY-35"));
-    }
-
-    @Test
-    public void testExtractFactors1066() throws Exception {
-        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-        assertThat(subject.extractFactors(), containsInAnyOrder("GENOTYPE"));
-    }
-
-    @Test
-    public void testFindFactorValueForHybridizationNodeAssay1066() throws Exception {
-        subject.init(EXPERIMENT_ACCESSION_E_MTAB_1066);
-
-        // C1	A-AFFY-35	3rd instar larva	cycC mutant,w1118; +; cycCY5	Drosophila melanogaster
-        HybridizationNode scanNode = subject.getHybridizationNodeForAssay("C1");
-        assertThat(subject.findFactorValueForHybridizationNode(scanNode, "GENOTYPE"), hasItem("cycC mutant"));
-
-        // WT3	A-AFFY-35	3rd instar larva	wild type	Drosophila melanogaster	Oregon R
-        scanNode = subject.getHybridizationNodeForAssay("WT3");
-        assertThat(subject.findFactorValueForHybridizationNode(scanNode, "GENOTYPE"), hasItem("wild_type"));
-    }
 }
