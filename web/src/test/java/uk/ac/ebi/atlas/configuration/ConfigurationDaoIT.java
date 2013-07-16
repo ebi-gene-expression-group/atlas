@@ -112,7 +112,7 @@ public class ConfigurationDaoIT {
     public void testAddExperimentConfiguration() throws Exception {
         List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations();
         int size = experimentConfigurations.size();
-        assertThat(subject.addExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY), is(1));
+        assertThat(subject.addExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY), is(true));
         experimentConfigurations = subject.getExperimentConfigurations();
         assertThat(experimentConfigurations.size(), is(size + 1));
         assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_1066, TYPE_MICROARRAY)));
@@ -122,7 +122,7 @@ public class ConfigurationDaoIT {
     public void testDeleteExperimentConfiguration() throws Exception {
         List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations();
         int size = experimentConfigurations.size();
-        assertThat(subject.deleteExperimentConfiguration(E_MTAB_513), is(1));
+        assertThat(subject.deleteExperimentConfiguration(E_MTAB_513), is(true));
         assertThat(subject.getExperimentConfigurations().size(), is(size - 1));
     }
 }

@@ -73,29 +73,27 @@ public class ExperimentLoaderController {
 
             experimentManager.generateExpDesign(accession, experimentType);
 
-            if (experimentType == ExperimentType.BASELINE) {
-                experimentManager.loadTranscripts(accession);
+            switch (experimentType) {
+                case BASELINE:
+                    experimentManager.loadTranscripts(accession);
+                    break;
+                case MICROARRAY:
+                case TWOCOLOUR:
+                    experimentManager.loadArrayDesign(accession, ArrayDesignType.MICRO_ARRAY);
+                    break;
+                case MICRORNA:
+                    experimentManager.loadArrayDesign(accession, ArrayDesignType.MICRO_RNA);
+                    break;
             }
 
-            if (experimentType == ExperimentType.MICROARRAY || experimentType == ExperimentType.TWOCOLOUR) {
-                experimentManager.loadArrayDesign(accession, ArrayDesignType.MICRO_ARRAY);
+            if (! configurationDao.addExperimentConfiguration(accession, experimentType)) {
+                return "Failure storing configuration for experiment " + accession;
             }
+            return "Experiment " + accession + " loaded.";
 
-            if (experimentType == ExperimentType.MICRORNA) {
-                experimentManager.loadArrayDesign(accession, ArrayDesignType.MICRO_RNA);
-            }
-
-            if (configurationDao.addExperimentConfiguration(accession, experimentType) == 1) {
-                LOGGER.info("<loadExperiment> Experiment " + accession + " loaded.");
-                return "Experiment " + accession + " loaded.";
-            }
-
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             return e.getMessage();
         }
-
-        LOGGER.error("<loadExperiment> An illegal state has been reached.");
-        throw new IllegalStateException("<loadExperiment> An illegal state has been reached.");
     }
 
     @RequestMapping("/deleteExperiment")
@@ -107,20 +105,12 @@ public class ExperimentLoaderController {
             return "Experiment accession cannot be empty.";
         }
 
-        int returnValue = configurationDao.deleteExperimentConfiguration(accession);
-        if (returnValue == 1) {
-            if (geneProfileDao.deleteTranscriptProfilesForExperiment(accession) > 0) {
-                LOGGER.info("<deleteExperiment> Transcripts for Experiment " + accession + " deleted.");
-            }
-            LOGGER.info("<deleteExperiment> Experiment " + accession + " deleted.");
-            return "Experiment " + accession + " deleted.";
-        } else if (returnValue == 0) {
-            LOGGER.error("<deleteExperiment> Experiment " + accession + " not present.");
+        if (configurationDao.deleteExperimentConfiguration(accession)) {
+            int deletedTranscriptsCount = geneProfileDao.deleteTranscriptProfilesForExperiment(accession);
+            return "Experiment " + accession + " deleted. " + deletedTranscriptsCount + " transcript profiles deleted for the given experiment.";
+        } else {
             return "Experiment " + accession + " not present.";
         }
-
-        LOGGER.error("<deleteExperiment> An illegal state has been reached.");
-        throw new IllegalStateException("<deleteExperiment> An illegal state has been reached.");
     }
 
     @RequestMapping("/listExperiments")

@@ -36,6 +36,9 @@ import java.text.MessageFormat;
 
 import static com.google.common.base.Preconditions.checkState;
 
+/*
+ToDo (B) : this needs to be reanamed... what is this? a builder or what?? f#$*!!!
+ */
 @Named("expDesignTsvWriter")
 @Scope("prototype")
 public class ExpDesignTsvWriter {
@@ -55,6 +58,7 @@ public class ExpDesignTsvWriter {
         return new CSVWriter(writer, '\t');
     }
 
+    //ToDo (B) remove this...
     public String getFileAbsolutePath() {
         checkState(file != null, "Please invoke forExperimentAccession first !");
         return file.getAbsolutePath();

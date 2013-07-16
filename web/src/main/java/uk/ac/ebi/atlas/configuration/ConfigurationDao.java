@@ -83,18 +83,22 @@ public class ConfigurationDao {
         }
     }
 
-    public int addExperimentConfiguration(String experimentAccession, ExperimentType experimentType) {
+    public boolean addExperimentConfiguration(String experimentAccession, ExperimentType experimentType) {
 
         JdbcTemplate insert = new JdbcTemplate(dataSource);
 
-        return insert.update(EXPERIMENT_CONFIGURATION_INSERT, experimentAccession, experimentType.name());
+        int updatedRecordsCount = insert.update(EXPERIMENT_CONFIGURATION_INSERT, experimentAccession, experimentType.name());
+
+        return updatedRecordsCount == 1;
     }
 
-    public int deleteExperimentConfiguration(String experimentAccession) {
+    public boolean deleteExperimentConfiguration(String experimentAccession) {
 
         JdbcTemplate delete = new JdbcTemplate(dataSource);
 
-        return delete.update(EXPERIMENT_CONFIGURATION_DELETE, experimentAccession);
+        int deletedRecordsCount =  delete.update(EXPERIMENT_CONFIGURATION_DELETE, experimentAccession);
+
+        return deletedRecordsCount == 1;
     }
 
 }

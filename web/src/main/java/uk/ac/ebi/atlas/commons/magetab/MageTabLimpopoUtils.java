@@ -80,10 +80,10 @@ public class MageTabLimpopoUtils {
         MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
         File idfFile = new File(idfFileLocation);
         if (idfFile.exists()) {
-            LOGGER.info("<parseInvestigation> investigation file exists on the filesystem, going to use it");
+            LOGGER.info("<parseInvestigation> MAGETAB investigation file exists on the filesystem, going to use it");
             return mageTabParser.parse(idfFile);
         } else {
-            LOGGER.info("<parseInvestigation> investigation file not found on the filesystem, going to use online file");
+            LOGGER.debug("<parseInvestigation> MAGETAB investigation file not found on the filesystem, going to use online file");
             URL idfFileURL = new URL(MessageFormat.format(idfUrlTemplate, experimentAccession));
             return mageTabParser.parse(idfFileURL);
         }

@@ -29,7 +29,6 @@ import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
 import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriter;
 import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriterFactory;
-import uk.ac.ebi.atlas.expdesign.ExperimentDesignWritingException;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
@@ -70,24 +69,23 @@ public class ExperimentManager {
         this.experimentDesignWriterFactory = experimentDesignWriterFactory;
     }
 
-    public void generateExpDesign(String accession, ExperimentType experimentType) {
+    public void generateExpDesign(String accession, ExperimentType experimentType) throws IOException{
 
         ExperimentDesignWriter experimentDesignWriter = experimentType.createExperimentDesignWriter(experimentDesignWriterFactory);
 
         try (CSVWriter csvWriter = expDesignTsvWriter.forExperimentAccession(accession)) {
             experimentDesignWriter.write(accession, csvWriter);
             csvWriter.flush();
-            LOGGER.info("<generateExpDesign> written ExpDesign file: " + expDesignTsvWriter.getFileAbsolutePath());
         } catch (IOException e) {
-            LOGGER.error("<generateExpDesign> error writing to file: " + e.getMessage());
-            throw new IllegalStateException(e.getMessage());
-
-        } catch (ExperimentDesignWritingException e) {
-            LOGGER.error("<generateExpDesign> error parsing SDRF: " + e.getMessage());
-            File expDesignTsv = new File(expDesignTsvWriter.getFileAbsolutePath());
-            String outcomeDelete = expDesignTsv.delete() ? " success" : " fail";
-            LOGGER.error("<generateExpDesign> ExpDesign cleanup " + expDesignTsvWriter.getFileAbsolutePath() + outcomeDelete);
-            throw new IllegalStateException(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
+            File expDesignTsvFile = new File(expDesignTsvWriter.getFileAbsolutePath());
+            if (expDesignTsvFile.exists()) {
+                boolean successfulDelete = expDesignTsvFile.delete();
+                if (!successfulDelete){
+                    throw new IllegalStateException("Generation of ExperimentDesign file failed and also clean up of file failed");
+                }
+            }
+            throw e;
         }
     }
 

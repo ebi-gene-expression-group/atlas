@@ -74,8 +74,8 @@ public class ExperimentLoaderControllerTest {
                 geneProfileDaoMock, experimentCheckerMock, experimentManagerMock);
 
         when(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(null);
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(1);
-        when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(1);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(true);
+        when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(true);
         when(configurationDaoMock.getExperimentConfigurations()).thenReturn(
                 Lists.newArrayList(new ExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))));
 
@@ -92,7 +92,7 @@ public class ExperimentLoaderControllerTest {
     @Test
     public void testLoadExpDesignForDifferential() throws Exception {
         when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, DIFFERENTIAL_TYPE)).thenReturn(ExperimentType.DIFFERENTIAL);
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(DIFFERENTIAL_TYPE))).thenReturn(1);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(DIFFERENTIAL_TYPE))).thenReturn(true);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, DIFFERENTIAL_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
         verify(experimentManagerMock, times(0)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
@@ -101,7 +101,7 @@ public class ExperimentLoaderControllerTest {
     @Test
     public void testLoadExpDesignMicroArray() throws Exception {
         when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, MICROARRAY_TYPE)).thenReturn(ExperimentType.MICROARRAY);
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICROARRAY_TYPE))).thenReturn(1);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICROARRAY_TYPE))).thenReturn(true);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, MICROARRAY_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
         verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
@@ -110,7 +110,7 @@ public class ExperimentLoaderControllerTest {
     @Test
     public void testLoadExpDesignTwoColour() throws Exception {
         when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE)).thenReturn(ExperimentType.TWOCOLOUR);
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(TWOCOLOUR_TYPE))).thenReturn(1);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(TWOCOLOUR_TYPE))).thenReturn(true);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
         verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
@@ -119,7 +119,7 @@ public class ExperimentLoaderControllerTest {
     @Test
     public void testLoadExpDesignMicroRNA() throws Exception {
         when(experimentCheckerMock.checkAccessionAndType(EXPERIMENT_ACCESSION, MICRORNA_TYPE)).thenReturn(ExperimentType.MICRORNA);
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICRORNA_TYPE))).thenReturn(1);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(MICRORNA_TYPE))).thenReturn(true);
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, MICRORNA_TYPE), is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentManagerMock, times(0)).loadTranscripts(EXPERIMENT_ACCESSION);
         verify(experimentManagerMock, times(1)).loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_RNA);
@@ -162,15 +162,16 @@ public class ExperimentLoaderControllerTest {
         assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is(TEST_EXCEPTION));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testLoadExperimentIllegalState() throws Exception {
-        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(0);
+        when(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.valueOf(BASELINE_TYPE))).thenReturn(false);
         subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE);
+        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, BASELINE_TYPE), is("Failure storing configuration for experiment " + EXPERIMENT_ACCESSION));
     }
 
     @Test
     public void testDeleteExperiment() throws Exception {
-        assertThat(subject.deleteExperiment(EXPERIMENT_ACCESSION), is("Experiment " + EXPERIMENT_ACCESSION + " deleted."));
+        assertThat(subject.deleteExperiment(EXPERIMENT_ACCESSION), is("Experiment " + EXPERIMENT_ACCESSION + " deleted. 0 transcript profiles deleted for the given experiment."));
         verify(geneProfileDaoMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
     }
 
@@ -181,14 +182,8 @@ public class ExperimentLoaderControllerTest {
 
     @Test
     public void testDeleteExperimentNonExisting() throws Exception {
-        when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(0);
+        when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(false);
         assertThat(subject.deleteExperiment(EXPERIMENT_ACCESSION), is("Experiment " + EXPERIMENT_ACCESSION + " not present."));
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testDeleteExperimentIllegalState() throws Exception {
-        when(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(-1);
-        subject.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Test

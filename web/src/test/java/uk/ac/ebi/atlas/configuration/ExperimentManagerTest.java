@@ -30,8 +30,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.expdesign.*;
+import uk.ac.ebi.atlas.expdesign.ExpDesignTsvWriter;
+import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriter;
+import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriterFactory;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
@@ -42,31 +43,25 @@ import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import java.io.IOException;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentManagerTest {
 
-    private static final ExperimentType BASELINE_TYPE = ExperimentType.BASELINE;
-    private static final ExperimentType DIFFERENTIAL_TYPE = ExperimentType.DIFFERENTIAL;
-    private static final ExperimentType MICROARRAY_TYPE = ExperimentType.MICROARRAY;
-    private static final ExperimentType TWOCOLOUR_TYPE = ExperimentType.TWOCOLOUR;
-    private static final ExperimentType MICRORNA_TYPE = ExperimentType.MICRORNA;
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
     private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
 
     @Mock
-    private RnaSeqExpDesignWriter rnaSeqExpDesignWriterMock;
+    private ExperimentType experimentTypeMock;
 
     @Mock
-    private MicroArrayExpDesignWriter microArrayExpDesignWriterMock;
+    private ExperimentDesignWriter experimentDesignWriterMock;
 
     @Mock
-    private TwoColourExpDesignWriter twoColourExpDesignWriterMock;
-
-    @Mock
-    private ExpDesignTsvWriter expDesignTsvWriterMock;
+    private ExpDesignTsvWriter experimentDesignTsvWriterMock;
 
     @Mock
     private CSVWriter csvWriterMock;
@@ -89,79 +84,48 @@ public class ExperimentManagerTest {
     private ExperimentManager subject;
 
     @Mock
-    private ExperimentDesignWriterFactory experimentDesignWriterFactory;
+    private ExperimentDesignWriterFactory experimentDesignWriterFactoryMock;
 
     @Before
     public void setUp() throws Exception {
 
-        when(expDesignTsvWriterMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(csvWriterMock);
-        when(expDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
+        when(experimentDesignTsvWriterMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(csvWriterMock);
+        when(experimentDesignTsvWriterMock.getFileAbsolutePath()).thenReturn("UNIT_TEST");
 
         when(transcriptProfileLoaderMock.load(EXPERIMENT_ACCESSION)).thenReturn(0);
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
-        subject = new ExperimentManager(expDesignTsvWriterMock, transcriptProfileLoaderMock,
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDesignWriterFactory);
+        given(experimentTypeMock.createExperimentDesignWriter(experimentDesignWriterFactoryMock)).willReturn(experimentDesignWriterMock);
+
+        subject = new ExperimentManager(experimentDesignTsvWriterMock, transcriptProfileLoaderMock,
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDesignWriterFactoryMock);
     }
 
     @Test
-    public void testGenerateExpDesign() throws Exception {
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-        verify(expDesignTsvWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION);
-    }
+    public void generateExperimentDesignShouldUseTheCsvWriter() throws Exception {
 
-    @Test
-    public void testGenerateExpDesignForBaseline() throws Exception {
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, BASELINE_TYPE);
-        verify(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, experimentTypeMock);
+        verify(experimentDesignTsvWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(experimentTypeMock).createExperimentDesignWriter(experimentDesignWriterFactoryMock);
+        verify(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION, csvWriterMock);
         verify(csvWriterMock).flush();
     }
 
-    @Test
-    public void testGenerateExpDesignForDifferential() throws Exception {
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, DIFFERENTIAL_TYPE);
-        verify(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
-        verify(csvWriterMock).flush();
+    @Test(expected = IOException.class)
+    public void shouldThrowIllegalStateExceptionWhenClosingCsvWriterFails() throws Exception {
+
+        willThrow(new IOException()).given(csvWriterMock).close();
+
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, experimentTypeMock);
     }
 
-    @Test
-    public void testGenerateExpDesignForMicroArray() throws Exception {
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, MICROARRAY_TYPE);
-        verify(microArrayExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
-        verify(csvWriterMock).flush();
-    }
+    @Test(expected = IOException.class)
+    public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
 
-    @Test
-    public void testGenerateExpDesignForTwoColour() throws Exception {
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE);
-        verify(twoColourExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
-        verify(csvWriterMock).flush();
-    }
+        willThrow(new IOException()).given(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION, csvWriterMock);
 
-    @Test
-    public void testGenerateExpDesignForMicroRNA() throws Exception {
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, MICRORNA_TYPE);
-        verify(microArrayExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
-        verify(csvWriterMock).flush();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testCsvWriterIOException() throws Exception {
-        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(csvWriterMock).close();
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testParseExceptionForBaseLine() throws Exception {
-        Mockito.doThrow(new ParseException(TEST_EXCEPTION)).when(rnaSeqExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testParseExceptionForTwoColour() throws Exception {
-        Mockito.doThrow(new ParseException(TEST_EXCEPTION)).when(twoColourExpDesignWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION, csvWriterMock);
-        subject.generateExpDesign(EXPERIMENT_ACCESSION, TWOCOLOUR_TYPE);
+        subject.generateExpDesign(EXPERIMENT_ACCESSION, experimentTypeMock);
     }
 
     @Test
