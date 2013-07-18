@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.collect.Sets;
 import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.configuration.ConfigurationDao;
-import uk.ac.ebi.atlas.configuration.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;

@@ -1,9 +1,30 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.commons.readers.impl;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.ByteArrayInputStream;
@@ -13,7 +34,6 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TsvReaderImplTest {
@@ -23,25 +43,21 @@ public class TsvReaderImplTest {
 
     private TsvReaderImpl subject;
 
-    @Mock
-    private TsvInputStreamReaderBuilder tsvInputStreamReaderBuilderMock;
+    private InputStreamReader tsvFileInputStreamReaderMock;
 
     @Before
     public void setUp() throws Exception {
 
         String data = "#Comment\nColumn1\tColumn2\tColumn3\nData1\tData2\tData3";
 
-        when(tsvInputStreamReaderBuilderMock.withPathTemplate(PATH_TEMPLATE)).thenReturn(tsvInputStreamReaderBuilderMock);
-        when(tsvInputStreamReaderBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(tsvInputStreamReaderBuilderMock);
-        when(tsvInputStreamReaderBuilderMock.build()).thenReturn(new InputStreamReader(new ByteArrayInputStream(data.getBytes())));
+        tsvFileInputStreamReaderMock = new InputStreamReader(new ByteArrayInputStream(data.getBytes()));
 
-        subject = new TsvReaderImpl(tsvInputStreamReaderBuilderMock);
-        subject.setPathTemplate(PATH_TEMPLATE);
+        subject = new TsvReaderImpl(tsvFileInputStreamReaderMock);
     }
 
     @Test
     public void testReadAll() {
-        List<String[]> result = subject.readAll(EXPERIMENT_ACCESSION);
+        List<String[]> result = subject.readAll();
         assertThat(result.size(), is(2));
         assertThat(result.get(0), hasItemInArray("Column1"));
         assertThat(result.get(0), hasItemInArray("Column2"));
@@ -53,7 +69,7 @@ public class TsvReaderImplTest {
 
     @Test
     public void testReadLine() {
-        String[] result = subject.readLine(EXPERIMENT_ACCESSION, 2);
+        String[] result = subject.readLine(2);
         assertThat(result.length, is(3));
         assertThat(result, hasItemInArray("Data1"));
         assertThat(result, hasItemInArray("Data2"));
@@ -62,23 +78,23 @@ public class TsvReaderImplTest {
 
     @Test
     public void testReadAndFilter() {
-        TsvReaderImpl.IsComment isCommentPredicate = new TsvReaderImpl.IsComment();
-        List<String[]> result = subject.readAndFilter(EXPERIMENT_ACCESSION, isCommentPredicate);
+        TsvReaderImpl.IsCommentPredicate commentPredicatePredicate = new TsvReaderImpl.IsCommentPredicate();
+        List<String[]> result = subject.readAndFilter(commentPredicatePredicate);
         assertThat(result.size(), is(1));
         assertThat(result.get(0), hasItemInArray("#Comment"));
     }
 
     @Test
     public void testIsComment() {
-        TsvReaderImpl.IsComment isCommentPredicate = new TsvReaderImpl.IsComment();
-        assertThat(isCommentPredicate.apply("  #  Xyz"), is(true));
-        assertThat(isCommentPredicate.apply(" #Xyz"), is(true));
-        assertThat(isCommentPredicate.apply("#Xyz"), is(true));
+        TsvReaderImpl.IsCommentPredicate commentPredicatePredicate = new TsvReaderImpl.IsCommentPredicate();
+        assertThat(commentPredicatePredicate.apply("  #  Xyz"), is(true));
+        assertThat(commentPredicatePredicate.apply(" #Xyz"), is(true));
+        assertThat(commentPredicatePredicate.apply("#Xyz"), is(true));
     }
 
     @Test
     public void testIsNotComment() {
-        TsvReaderImpl.IsNotComment isNotCommentPredicate = new TsvReaderImpl.IsNotComment();
+        TsvReaderImpl.IsNotCommentPredicate isNotCommentPredicate = new TsvReaderImpl.IsNotCommentPredicate();
         assertThat(isNotCommentPredicate.apply("  #  Xyz"), is(false));
         assertThat(isNotCommentPredicate.apply(" #Xyz"), is(false));
         assertThat(isNotCommentPredicate.apply("#Xyz"), is(false));

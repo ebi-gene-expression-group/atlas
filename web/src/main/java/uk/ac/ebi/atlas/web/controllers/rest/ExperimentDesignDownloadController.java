@@ -45,13 +45,11 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;
 
-    private TsvReader tsvReader;
-
     private TsvReaderBuilder tsvReaderBuilder;
 
     @PostConstruct
     protected void initializeTsvReader() {
-        this.tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
+        this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
     }
 
     public ExperimentDesignDownloadController(TsvReaderBuilder tsvReaderBuilder) {
@@ -61,8 +59,10 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
     protected void extractExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
         T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
+        TsvReader tsvReader = tsvReaderBuilder.withExperimentAccession(experiment.getAccession()).build();
+
         // read contents from file
-        List<String[]> csvLines = new ArrayList<>(tsvReader.readAll(experiment.getAccession()));
+        List<String[]> csvLines = new ArrayList<>(tsvReader.readAll());
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
         // modify header by adding new column

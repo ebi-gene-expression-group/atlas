@@ -76,6 +76,7 @@ public class BaselineDesignDownloadControllerTest {
     public void setUp() throws Exception {
 
         when(tsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(tsvReaderBuilderMock);
+        when(tsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(tsvReaderBuilderMock);
         when(tsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
         subject = new BaselineDesignDownloadController(tsvReaderBuilderMock);
@@ -92,7 +93,7 @@ public class BaselineDesignDownloadControllerTest {
 
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(tsvReaderMock.readAll(EXPERIMENT_ACCESSION)).thenReturn(designs);
+        when(tsvReaderMock.readAll()).thenReturn(designs);
 
         Set<String> runAccessions = Sets.newHashSet(RUN_ACCESSION);
         when(experimentMock.getExperimentRunAccessions()).thenReturn(runAccessions);

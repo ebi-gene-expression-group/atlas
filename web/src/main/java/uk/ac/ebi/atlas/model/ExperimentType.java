@@ -23,8 +23,8 @@
 package uk.ac.ebi.atlas.model;
 
 
-import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriter;
-import uk.ac.ebi.atlas.expdesign.ExperimentDesignWriterFactory;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterFactory;
 
 public enum ExperimentType {
 

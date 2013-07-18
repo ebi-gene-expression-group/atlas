@@ -32,7 +32,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.configuration.ConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ConfigurationDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ExperimentType;

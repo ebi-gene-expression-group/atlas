@@ -25,40 +25,27 @@ package uk.ac.ebi.atlas.commons.readers.impl;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-@Named
-@Scope("prototype")
 public class TsvReaderImpl implements TsvReader {
 
     private static final Logger LOGGER = Logger.getLogger(TsvReaderImpl.class);
 
-    private TsvInputStreamReaderBuilder tsvInputStreamReaderBuilder;
+    private InputStreamReader tsvFileInputStreamReader;
 
-    @Inject
-    TsvReaderImpl(TsvInputStreamReaderBuilder tsvInputStreamReaderBuilder) {
-        this.tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder;
-    }
-
-    public void setPathTemplate(String pathTemplate) {
-        tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder.withPathTemplate(pathTemplate);
+    public TsvReaderImpl(InputStreamReader tsvFileInputStreamReader) {
+        this.tsvFileInputStreamReader = tsvFileInputStreamReader;
     }
 
     @Override
-    public String[] readLine(String experimentAccession, long lineIndex) {
+    public String[] readLine(long lineIndex) {
 
-        tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder.forExperimentAccession(experimentAccession);
-
-        try (InputStreamReader reader = tsvInputStreamReaderBuilder.build();
-             CSVReader csvReader = new CSVReader(reader, '\t')) {
+        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')){
             String[] line = null;
             for (int i = 0; i <= lineIndex; i++) {
                 line = csvReader.readNext();
@@ -67,21 +54,18 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file from path " + tsvInputStreamReaderBuilder.getFileSystemPath().toString(), e);
+            throw new IllegalStateException("Cannot read Tsv file", e);
         }
     }
 
     @Override
-    public List<String[]> readAll(String experimentAccession) {
-        return readAndFilter(experimentAccession, new IsNotComment());
+    public List<String[]> readAll() {
+        return readAndFilter(new IsNotCommentPredicate());
     }
 
-    List<String[]> readAndFilter(String experimentAccession, Predicate<String> acceptanceCriteria) {
+    List<String[]> readAndFilter(Predicate<String> acceptanceCriteria) {
 
-        tsvInputStreamReaderBuilder = tsvInputStreamReaderBuilder.forExperimentAccession(experimentAccession);
-
-        try (InputStreamReader reader = tsvInputStreamReaderBuilder.build();
-             CSVReader csvReader = new CSVReader(reader, '\t')) {
+        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')){
             List<String[]> rows = new ArrayList<>();
             for (String[] row : csvReader.readAll()) {
                 if (acceptanceCriteria.apply(row[0])) {
@@ -92,11 +76,11 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file from path " + tsvInputStreamReaderBuilder.getFileSystemPath().toString(), e);
+            throw new IllegalStateException("Cannot read Tsv file", e);
         }
     }
 
-    protected static class IsComment implements Predicate<String> {
+    protected static class IsCommentPredicate implements Predicate<String> {
 
         @Override
         public boolean apply(String rowHeader) {
@@ -104,7 +88,7 @@ public class TsvReaderImpl implements TsvReader {
         }
     }
 
-    protected static class IsNotComment extends IsComment {
+    protected static class IsNotCommentPredicate extends IsCommentPredicate {
 
         @Override
         public boolean apply(String rowHeader) {

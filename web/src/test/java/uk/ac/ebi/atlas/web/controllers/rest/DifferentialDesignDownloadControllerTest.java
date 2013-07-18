@@ -77,6 +77,7 @@ public class DifferentialDesignDownloadControllerTest {
     @Before
     public void setUp() throws Exception {
         when(tsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(tsvReaderBuilderMock);
+        when(tsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(tsvReaderBuilderMock);
         when(tsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
         subject = new DifferentialDesignDownloadController(tsvReaderBuilderMock);
@@ -89,7 +90,7 @@ public class DifferentialDesignDownloadControllerTest {
 
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(tsvReaderMock.readAll(EXPERIMENT_ACCESSION)).thenReturn(designs);
+        when(tsvReaderMock.readAll()).thenReturn(designs);
 
         when(experimentMock.getAssayAccessions()).thenReturn(assayAccessions);
 

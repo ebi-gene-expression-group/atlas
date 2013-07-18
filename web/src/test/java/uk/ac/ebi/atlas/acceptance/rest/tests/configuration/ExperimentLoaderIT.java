@@ -41,7 +41,7 @@ public class ExperimentLoaderIT {
     public void testDeleteAndLoadExperiment() {
         EndPoint endPoint = new EndPoint("/gxa/deleteExperiment?accession=E-MTAB-599");
         String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment E-MTAB-599 deleted. 91966 transcript profiles deleted for the given experiment."));
+        assertThat(result, is("Experiment E-MTAB-599 successfully deleted."));
         endPoint = new EndPoint("/gxa/listExperiments");
         result = endPoint.getResponseBody().asString();
         assertThat(result, not(containsString("E-MTAB-599")));
@@ -58,7 +58,7 @@ public class ExperimentLoaderIT {
     public void testDeleteNonExisting() {
         EndPoint endPoint = new EndPoint("/gxa/deleteExperiment?accession=E-MTAB-BLA");
         String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment E-MTAB-BLA not present."));
+        assertThat(result, is("Experiment E-MTAB-BLA was not found in the set of the imported experiments."));
     }
 
     @Test

@@ -52,9 +52,9 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
 
         // then
         assertThat(subject.getExperimentDesignTableHeader().size(), is(12));
-        assertThat(subject.getFirstExperimentDesign(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(E_GEOD_3779 + "/experiment-design.tsv"));
-        assertThat(subject.getLastExperimentDesign(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
 
         // and
         assertThat(subject.getLineColor(1), is("transparent"));
@@ -72,8 +72,8 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         // then
         assertThat(subject.getSelectedContrast(), is(DEFAULT));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(12));
-        assertThat(subject.getFirstExperimentDesign(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
-        assertThat(subject.getLastExperimentDesign(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
 
         // and
         assertThat(subject.getLineColor(1), is("transparent"));
@@ -91,8 +91,8 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         // then
         assertThat(subject.getSelectedContrast(), is(OTHER));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(12));
-        assertThat(subject.getFirstExperimentDesign(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
-        assertThat(subject.getLastExperimentDesign(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(130, 205, 205, 1)"));
