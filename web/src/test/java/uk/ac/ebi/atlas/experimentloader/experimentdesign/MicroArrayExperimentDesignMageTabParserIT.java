@@ -42,7 +42,7 @@ import static org.hamcrest.Matchers.is;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MicroArrayExperimentDesignMageTabParserIT {
 
-    private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-MTAB-1066";
+    private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-MEXP-1276";
 
     @Named("microarrayExperimentDesignMageTabParser")
     @Inject
@@ -52,9 +52,9 @@ public class MicroArrayExperimentDesignMageTabParserIT {
     public void asTableDataShouldReturnTheRightStuff() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION);
 
-        assertThat(experimentDesign.asTableData().size(), is(9));
-        assertThat(experimentDesign.asTableData().get(0), arrayContaining("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", null, "cycC mutant"));
-        assertThat(experimentDesign.asTableData().get(8), arrayContaining("WT3", "A-AFFY-35", "3rd instar larva", "wild_type", "Drosophila melanogaster", "Oregon R", "wild_type"));
+        assertThat(experimentDesign.asTableData().size(), is(6));
+        assertThat(experimentDesign.asTableData().get(0), arrayContaining("G-DBZ1","A-AFFY-36","8 to 12 weeks","fresh_sample","adult","normal","wild type","birth","Mus musculus","pancreas","female","C57BL/6","dibenzazepine 10 micromoles per kilogram"));
+        assertThat(experimentDesign.asTableData().get(5), arrayContaining("G-Vehicle3","A-AFFY-36","8 to 12 weeks","fresh_sample","adult","normal","wild type","birth","Mus musculus","pancreas","female","C57BL/6","none"));
 
     }
 
