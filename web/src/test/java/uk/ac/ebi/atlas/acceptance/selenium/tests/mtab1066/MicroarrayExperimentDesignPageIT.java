@@ -50,7 +50,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
 
         // then
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
-        assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith("E-MTAB-1066/experiment-design.tsv"));
 
         // and
@@ -69,7 +69,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         // then
         assertThat(subject.getSelectedContrast(), is(DEFAULT));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
-        assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(130, 205, 205, 1)"));
@@ -87,7 +87,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         // then
         assertThat(subject.getSelectedContrast(), is(OTHER));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
-        assertThat(subject.getFirstExperimentDesign(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("C1", "A-AFFY-35", "3rd instar larva", "w1118; +; cycCY5", "Drosophila melanogaster", "", "cycC mutant"));
 
         // and
         assertThat(subject.getLineColor(1), is("transparent"));

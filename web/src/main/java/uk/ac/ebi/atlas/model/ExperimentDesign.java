@@ -35,9 +35,9 @@ public class ExperimentDesign implements Serializable {
 
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
 
-    private Map<String, ExpDesignValues> samples = Maps.newHashMap();
+    private Map<String, ExperimentDesignValues> samples = Maps.newHashMap();
 
-    private Map<String, ExpDesignValues> factors = Maps.newHashMap();
+    private Map<String, ExperimentDesignValues> factors = Maps.newHashMap();
 
     private Map<String, String> arrayDesigns = Maps.newHashMap();
 
@@ -45,7 +45,7 @@ public class ExperimentDesign implements Serializable {
 
     public void putSample(String runOrAssay, String sampleHeader, String sampleValue) {
         if (!samples.containsKey(runOrAssay)) {
-            samples.put(runOrAssay, new ExpDesignValues());
+            samples.put(runOrAssay, new ExperimentDesignValues());
         }
         samples.get(runOrAssay).put(sampleHeader, sampleValue);
         sampleHeaders.add(sampleHeader);
@@ -53,7 +53,7 @@ public class ExperimentDesign implements Serializable {
 
     public void putFactor(String runOrAssay, String factorHeader, String factorValue) {
         if (!factors.containsKey(runOrAssay)) {
-            factors.put(runOrAssay, new ExpDesignValues());
+            factors.put(runOrAssay, new ExperimentDesignValues());
         }
         factors.get(runOrAssay).put(factorHeader, factorValue);
         factorHeaders.add(factorHeader);
@@ -84,17 +84,17 @@ public class ExperimentDesign implements Serializable {
     }
 
     public String getSampleValue(String runOrAssay, String sampleHeader) {
-        ExpDesignValues expDesignValues = samples.get(runOrAssay);
-        if (expDesignValues != null) {
-            return expDesignValues.get(sampleHeader);
+        ExperimentDesignValues experimentDesignValues = samples.get(runOrAssay);
+        if (experimentDesignValues != null) {
+            return experimentDesignValues.get(sampleHeader);
         }
         return null;
     }
 
     public String getFactorValue(String runOrAssay, String factorHeader) {
-        ExpDesignValues expDesignValues = factors.get(runOrAssay);
-        if (expDesignValues != null) {
-            return expDesignValues.get(factorHeader);
+        ExperimentDesignValues experimentDesignValues = factors.get(runOrAssay);
+        if (experimentDesignValues != null) {
+            return experimentDesignValues.get(factorHeader);
         }
         return null;
     }
@@ -130,7 +130,7 @@ public class ExperimentDesign implements Serializable {
         return row.toArray(new String[row.size()]);
     }
 
-    private class ExpDesignValues extends HashMap<String, String> {
+    private class ExperimentDesignValues extends HashMap<String, String> {
 
     }
 

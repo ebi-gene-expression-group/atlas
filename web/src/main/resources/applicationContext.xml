@@ -44,7 +44,7 @@
     <util:properties id="bioEntityCardPropertyFile" location="classpath:bundles/bioEntityCard.properties"/>
     <util:properties id="speciesToExperimentPropertyFile" location="classpath:bundles/speciesToExperiment.properties"/>
 
-    <bean id="baselineExperimentLoader" class="uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentLoader">
+    <bean id="baselineExperimentLoader" class="uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCacheLoader">
         <lookup-method name="createExperimentBuilder" bean="baselineExperimentBuilder"/>
     </bean>
 
@@ -53,7 +53,7 @@
         <lookup-method name="getRankMicroarrayProfilesCommand" bean="rankMicroarrayProfilesCommand"/>
     </bean>
 
-    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.model.cache.baseline.BarChartTraderLoader">
+    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.model.cache.baseline.BarChartTradersCacheLoader">
         <lookup-method name="createBitIndexBuilder" bean="bitIndexBuilder"/>
     </bean>
 

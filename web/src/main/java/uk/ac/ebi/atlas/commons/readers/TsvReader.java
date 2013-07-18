@@ -27,8 +27,8 @@ import java.util.List;
 
 public interface TsvReader {
 
-    String[] readLine(String experimentAccession, long lineIndex);
+    String[] readLine(long lineIndex);
 
-    List<String[]> readAll(String experimentAccession);
+    List<String[]> readAll();
 
 }

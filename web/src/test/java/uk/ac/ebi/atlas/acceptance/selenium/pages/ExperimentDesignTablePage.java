@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 
 public class ExperimentDesignTablePage extends TablePage {
 
-    public static String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    public static String DEFAULT_EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design";
+    private static final String PAGE_URI_TEMPLATE = "/gxa/experiments/{0}/experiment-design";
 
     @FindBy(id = "experiment-design-table")
     protected WebElement experimentDesignTable;
@@ -59,17 +60,20 @@ public class ExperimentDesignTablePage extends TablePage {
     @FindBy(xpath = "//thead/tr[2]/th[3]")
     private WebElement thirdColumnHeader;
 
+    private String experimentAccession;
+
     public ExperimentDesignTablePage(WebDriver driver) {
         this(driver, null);
     }
 
-    public ExperimentDesignTablePage(WebDriver driver, String httpParameters) {
-        super(driver, httpParameters);
+    public ExperimentDesignTablePage(WebDriver driver, String experimentAccession) {
+        super(driver, null);
+        this.experimentAccession = experimentAccession == null? DEFAULT_EXPERIMENT_ACCESSION : experimentAccession;
     }
 
     @Override
     protected String getPageURI() {
-        return DEFAULT_PAGE_URI;
+        return MessageFormat.format(PAGE_URI_TEMPLATE, experimentAccession);
     }
 
     public String getDownloadExperimentDesignLink() {
@@ -101,11 +105,11 @@ public class ExperimentDesignTablePage extends TablePage {
         return getTableHeaders(experimentDesignTable);
     }
 
-    public List<String> getFirstExperimentDesign() {
+    public List<String> getFirstExperimentDesignTableLine() {
         return getRowValues(experimentDesignTable, 1);
     }
 
-    public List<String> getLastExperimentDesign() {
+    public List<String> getLastExperimentDesignTableLine() {
         return getLastRowValues(experimentDesignTable);
     }
 

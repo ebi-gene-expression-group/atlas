@@ -60,8 +60,8 @@ public class ReactomeBiomartClient {
      * @return pathway name if non empty, otherwise null
      */
     public String fetchPathwayName(String reactomeId) {
-        String url = MessageFormat.format(reactomeURL + REACTOME_BIOMART_QUERY, reactomeId);
-        String result = restTemplate.getForObject(url, String.class);
+        String reactomeQuery = MessageFormat.format(REACTOME_BIOMART_QUERY, reactomeId);
+        String result = restTemplate.getForObject(reactomeURL, String.class, reactomeQuery);
 
         return StringUtils.trimToEmpty(StringUtils.substringAfterLast(result, "\t"));
     }

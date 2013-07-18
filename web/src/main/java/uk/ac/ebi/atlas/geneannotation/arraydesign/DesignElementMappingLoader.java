@@ -1,10 +1,32 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.geneannotation.arraydesign;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
-import uk.ac.ebi.atlas.geneannotation.FileAnnotationMappingExtractor;
-import uk.ac.ebi.atlas.geneannotation.RestAnnotationMappingExtractor;
+import uk.ac.ebi.atlas.geneannotation.FileBasedPropertyMappingFinder;
+import uk.ac.ebi.atlas.geneannotation.RestClientBasedPropertyMappingFinder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,16 +42,15 @@ public class DesignElementMappingLoader {
     @Value("#{configuration['de.mirna.mapping.path.template']}")
     private String micrornaMappingPath;
 
-
     private ArrayDesignDao arrayDesignDao;
 
-    private RestAnnotationMappingExtractor restAnnotationMappingExtractor;
-    private FileAnnotationMappingExtractor fileAnnotationMappingExtractor;
+    private RestClientBasedPropertyMappingFinder annotationMappingRestClient;
+    private FileBasedPropertyMappingFinder fileAnnotationMappingExtractor;
 
     @Inject
-    public DesignElementMappingLoader(ArrayDesignDao arrayDesignDao, RestAnnotationMappingExtractor restAnnotationMappingExtractor, FileAnnotationMappingExtractor fileAnnotationMappingExtractor) {
+    public DesignElementMappingLoader(ArrayDesignDao arrayDesignDao, RestClientBasedPropertyMappingFinder annotationMappingRestClient, FileBasedPropertyMappingFinder fileAnnotationMappingExtractor) {
         this.arrayDesignDao = arrayDesignDao;
-        this.restAnnotationMappingExtractor = restAnnotationMappingExtractor;
+        this.annotationMappingRestClient = annotationMappingRestClient;
         this.fileAnnotationMappingExtractor = fileAnnotationMappingExtractor;
     }
 
@@ -39,9 +60,9 @@ public class DesignElementMappingLoader {
 
         Map<String, String> annotations;
         if (type.equals(ArrayDesignType.MICRO_ARRAY)) {
-            annotations = restAnnotationMappingExtractor.extractAnnotationsMap(gxaMappingUrl, annotatedSubject);
+            annotations = annotationMappingRestClient.executeQuery(gxaMappingUrl, annotatedSubject);
         } else {
-            annotations = fileAnnotationMappingExtractor.extractAnnotationsMap(micrornaMappingPath, annotatedSubject);
+            annotations = fileAnnotationMappingExtractor.executeQuery(micrornaMappingPath, annotatedSubject);
         }
 
         saveMappings(annotations, annotatedSubject, type.getName());

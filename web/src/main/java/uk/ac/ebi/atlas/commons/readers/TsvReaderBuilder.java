@@ -25,27 +25,44 @@ package uk.ac.ebi.atlas.commons.readers;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 
-import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.MessageFormat;
 
 @Named
 @Scope("prototype")
 public class TsvReaderBuilder {
 
-    private TsvReaderImpl tsvReader;
+    private String experimentAccession;
 
-    @Inject
-    TsvReaderBuilder(TsvReaderImpl tsvReader) {
-        this.tsvReader = tsvReader;
+    private String tsvFilePathTemplate;
+
+    TsvReaderBuilder() {
+    }
+
+    public TsvReaderBuilder withExperimentAccession(String experimentAccession){
+        this.experimentAccession = experimentAccession;
+        return this;
     }
 
     public TsvReaderBuilder forTsvFilePathTemplate(String tsvFilePathTemplate) {
-        this.tsvReader.setPathTemplate(tsvFilePathTemplate);
+        this.tsvFilePathTemplate = tsvFilePathTemplate;
         return this;
     }
 
     public TsvReader build() {
-        return tsvReader;
+        String tsvFilePath = MessageFormat.format(tsvFilePathTemplate, experimentAccession);
+        Path tsvFileSystemPath = FileSystems.getDefault().getPath(tsvFilePath);
+        try {
+            InputStreamReader tsvFileInputStreamReader = new InputStreamReader(Files.newInputStream(tsvFileSystemPath));
+            return new TsvReaderImpl(tsvFileInputStreamReader);
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot read Tsv file from path " + tsvFileSystemPath.toString(), e);
+        }
     }
 
 

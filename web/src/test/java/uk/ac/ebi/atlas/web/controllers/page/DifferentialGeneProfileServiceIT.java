@@ -32,7 +32,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.controllers.rest.ExperimentLoaderController;
+import uk.ac.ebi.atlas.web.controllers.rest.LoadExperimentsController;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -70,15 +70,15 @@ public class DifferentialGeneProfileServiceIT {
     private DifferentialGeneProfileService subject;
 
     @Inject
-    private ExperimentLoaderController experimentLoaderController;
+    private LoadExperimentsController loadExperimentsController;
 
     @Before
     public void setup() throws Exception {
-        experimentLoaderController.loadExperiment(E_GEOD_21860, ExperimentType.DIFFERENTIAL.name());
-        experimentLoaderController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL.name());
-        experimentLoaderController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL.name());
-        experimentLoaderController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL.name());
-        experimentLoaderController.loadExperiment(E_MTAB_1066, ExperimentType.MICROARRAY.name());
+        loadExperimentsController.loadExperiment(E_GEOD_21860, ExperimentType.DIFFERENTIAL);
+        loadExperimentsController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL);
+        loadExperimentsController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL);
+        loadExperimentsController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL);
+        loadExperimentsController.loadExperiment(E_MTAB_1066, ExperimentType.MICROARRAY);
     }
 
     @Test

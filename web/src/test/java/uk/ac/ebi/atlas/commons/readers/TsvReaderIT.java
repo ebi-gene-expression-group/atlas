@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.commons.readers;
 
 import org.junit.Before;
@@ -34,12 +56,13 @@ public class TsvReaderIT {
 
     @Before
     public void setUp() throws Exception {
-        subject = tsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate).build();
+        subject = tsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate)
+                                  .withExperimentAccession(EXPERIMENT_ACCESSION).build();
     }
 
     @Test
     public void readLine() {
-        String[] firstLine = subject.readLine(EXPERIMENT_ACCESSION, 0L);
+        String[] firstLine = subject.readLine(0L);
         assertThat(firstLine, arrayContaining("# Pipeline version", "0.1.6"));
     }
 
@@ -47,7 +70,7 @@ public class TsvReaderIT {
     public void readAll() {
 
         // given
-        List<String[]> result = subject.readAll(EXPERIMENT_ACCESSION);
+        List<String[]> result = subject.readAll();
         String[] firstLine = result.get(0);
         String[] lastLine = result.get(result.size() - 1);
 
@@ -61,7 +84,7 @@ public class TsvReaderIT {
 
         // given
         subject = tsvReaderBuilder.forTsvFilePathTemplate(experimentDesignTemplate).build();
-        List<String[]> result = subject.readAll(EXPERIMENT_ACCESSION);
+        List<String[]> result = subject.readAll();
         String[] firstLine = result.get(0);
         String[] lastLine = result.get(result.size() - 1);
 

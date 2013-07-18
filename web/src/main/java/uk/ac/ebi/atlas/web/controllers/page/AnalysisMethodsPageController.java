@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import java.io.IOException;
 @Scope("request")
 public class AnalysisMethodsPageController {
 
-    private TsvReader tsvReader;
+    private TsvReaderBuilder tsvReaderBuilder;
 
     private DownloadURLBuilder downloadURLBuilder;
 
@@ -49,14 +49,16 @@ public class AnalysisMethodsPageController {
                                          @Value("#{configuration['experiment.analysis-method.path.template']}")
                                          String pathTemplate) {
 
-        this.tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate).build();
+        this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
         this.downloadURLBuilder = downloadURLBuilder;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")
     public String showGeneProfiles(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
 
-        model.addAttribute("csvLines", tsvReader.readAll(experimentAccession));
+        TsvReader tsvReader = tsvReaderBuilder.withExperimentAccession(experimentAccession).build();
+
+        model.addAttribute("csvLines", tsvReader.readAll());
 
         model.addAttribute("experimentAccession", experimentAccession);
 
