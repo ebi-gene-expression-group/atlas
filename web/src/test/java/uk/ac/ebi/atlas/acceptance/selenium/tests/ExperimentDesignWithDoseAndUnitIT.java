@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-/*
+
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
@@ -46,4 +46,3 @@ public class ExperimentDesignWithDoseAndUnitIT extends SinglePageSeleniumFixture
     }
 
 }
-*/
