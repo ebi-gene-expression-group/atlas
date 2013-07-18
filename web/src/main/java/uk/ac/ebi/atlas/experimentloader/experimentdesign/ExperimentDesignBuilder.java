@@ -25,9 +25,9 @@ package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 //ToDo (B) remove the MageTabParser hirarchy and introduce an ExperimentDesignBuilder hierarchy,
 //ToDo (B) because it is not the "parsing" of magetab that change depending on the experiment type, but is the way we build the Experiment that changes.
 //ToDo (B) Here we should have dependency with PropertyMergeService, not in the MageTabParser
-//ToDo (B) The implementation could be in a impl package
+//ToDo (B) The implementing subclasses could be moved to an impl package
 
-public class ExperimentDesignBuilder {
+public abstract class ExperimentDesignBuilder {
 
 
 }

@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 public class BioontologyClient {
 
-    private static final String NUMBER_OF_HITS_XPATH = "//ontologyHitList/ontologyHitBean/numHits/text()";
+    private static final String NUM_HITS_JSON_PATH = "$..numHits";
 
     @Value("#{configuration['bioontology.query.url']}")
     private String bioontologyServiceEndPoint;
@@ -51,7 +51,7 @@ public class BioontologyClient {
 
         String jsonResponse = restTemplate.getForObject(bioontologyServiceEndPoint, String.class, ontologyTerm);
 
-        List<Integer> hitsCount = JsonPath.read(jsonResponse,"$..numHits");
+        List<Integer> hitsCount = JsonPath.read(jsonResponse, NUM_HITS_JSON_PATH);
 
         checkState(hitsCount.size() == 1, "invalid nuber of numHits elements in the bioontology service response: "
                                             + jsonResponse);
