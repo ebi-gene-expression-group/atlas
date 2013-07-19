@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterFactory;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
@@ -78,7 +78,7 @@ public class ExperimentCRUDTest {
     private ExperimentCRUD subject;
 
     @Mock
-    private ExperimentDesignWriterFactory experimentDesignWriterFactoryMock;
+    private ExperimentDesignWriterBuilder experimentDesignWriterBuilderMock;
 
     @Mock
     private ConfigurationDao configurationDaoMock;
@@ -93,17 +93,21 @@ public class ExperimentCRUDTest {
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
-        given(experimentDesignWriterFactoryMock.create(ExperimentType.BASELINE, EXPERIMENT_ACCESSION)).willReturn(experimentDesignWriterMock);
+        given(experimentDesignWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignWriterBuilderMock);
+        given(experimentDesignWriterBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(experimentDesignWriterBuilderMock);
+        given(experimentDesignWriterBuilderMock.build()).willReturn(experimentDesignWriterMock);
 
         subject = new ExperimentCRUD(transcriptProfileLoaderMock,
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, configurationDaoMock, geneProfileDaoMock, experimentDesignWriterFactoryMock);
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, configurationDaoMock, geneProfileDaoMock, experimentDesignWriterBuilderMock);
     }
 
     @Test
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
         subject.generateDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-        verify(experimentDesignWriterFactoryMock).create(ExperimentType.BASELINE, EXPERIMENT_ACCESSION);
+        verify(experimentDesignWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(experimentDesignWriterBuilderMock).withExperimentType(ExperimentType.BASELINE);
+        verify(experimentDesignWriterBuilderMock).build();
         verify(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION);
     }
 

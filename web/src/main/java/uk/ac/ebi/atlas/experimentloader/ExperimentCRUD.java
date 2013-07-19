@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterFactory;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
@@ -53,7 +53,7 @@ public class ExperimentCRUD {
     private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
-    private ExperimentDesignWriterFactory experimentDesignWriterFactory;
+    private ExperimentDesignWriterBuilder experimentDesignWriterBuilder;
     private ConfigurationDao configurationDao;
     private GeneProfileDao geneProfileDao;
 
@@ -64,14 +64,14 @@ public class ExperimentCRUD {
                           DesignElementMappingLoader designElementLoader,
                           ConfigurationDao configurationDao,
                           GeneProfileDao geneProfileDao,
-                          ExperimentDesignWriterFactory experimentDesignWriterFactory) {
+                          ExperimentDesignWriterBuilder experimentDesignWriterBuilder) {
         this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
         this.geneProfileDao = geneProfileDao;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
         this.configurationDao = configurationDao;
-        this.experimentDesignWriterFactory = experimentDesignWriterFactory;
+        this.experimentDesignWriterBuilder = experimentDesignWriterBuilder;
     }
 
     public void importExperiment(String accession, ExperimentType experimentType) throws IOException{
@@ -105,7 +105,10 @@ public class ExperimentCRUD {
 
     void generateDesignFile(String accession, ExperimentType experimentType) throws IOException{
 
-        ExperimentDesignWriter experimentDesignWriter = experimentDesignWriterFactory.create(experimentType, accession);
+        ExperimentDesignWriter experimentDesignWriter =
+                                experimentDesignWriterBuilder.forExperimentAccession(accession)
+                                                             .withExperimentType(experimentType)
+                                                             .build();
 
         experimentDesignWriter.write(accession);
     }

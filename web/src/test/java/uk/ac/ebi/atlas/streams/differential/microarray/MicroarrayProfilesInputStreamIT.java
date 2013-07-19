@@ -95,8 +95,6 @@ public class MicroarrayProfilesInputStreamIT {
 
     private MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
 
-    private MicroarrayExperiment microarrayExperiment;
-
     @After
     public void tearDown() throws Exception {
         configurationDao.deleteExperimentConfiguration(EXPERIMENT_ACCESSION);

@@ -43,6 +43,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+//ToDo (B): maybe this should not be a hierarchy but should rather "use" an ExperimentDesignBuilder (family) to build ExperimentDesign differently depending on the ExperimentType.
+//ToDo (B): Single Responsibility Principle...
 public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
     private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet("compound", "irradiate");

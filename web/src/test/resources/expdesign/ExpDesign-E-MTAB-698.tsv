@@ -1,4 +1,4 @@
-"Run"	"Sample Characteristics[Age]"	"Sample Characteristics[BioSourceProvider]"	"Sample Characteristics[BioSourceType]"	"Sample Characteristics[DevelopmentalStage]"	"Sample Characteristics[Organism]"	"Sample Characteristics[OrganismPart]"	"Sample Characteristics[Sex]"	"Sample Characteristics[StrainOrLine]"	"Factor Values[sex]"
+"Run"	"Sample Characteristics[Age]"	"Sample Characteristics[BioSourceProvider]"	"Sample Characteristics[BioSourceType]"	"Sample Characteristics[DevelopmentalStage]"	"Sample Characteristics[OrganismPart]"	"Sample Characteristics[Organism]"	"Sample Characteristics[Sex]"	"Sample Characteristics[StrainOrLine]"	"Factor Values[sex]"
 "ERR036348"	"8 weeks"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"female"	"C57BL/6J"	"female"
 "ERR036349"	"8 weeks"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"female"	"C57BL/6J"	"female"
 "ERR036350"	"8 weeks"	"The Scripps Research Institute, La Jolla, California, USA"	"fresh_sample"	"adult"	"Mus musculus"	"vomeronasal organ"	"male"	"C57BL/6J"	"male"

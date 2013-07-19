@@ -23,32 +23,42 @@
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import org.apache.log4j.Logger;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.List;
+import java.util.SortedSet;
 
-public abstract class ExperimentDesignWriter {
-    private static final Logger LOGGER = Logger.getLogger(ExperimentDesignWriter.class);
+public class ExperimentDesignWriter {
 
-    private static final String CHARACTERISTIC_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
-    private static final String FACTOR_VALUE_HEADER_TEMPLATE = "Factor Values[{0}]";
+    private static final String SAMPLE_NAME_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
+    private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Values[{0}]";
 
     private CSVWriter csvWriter;
+    private MageTabParser<HybridizationNode> mageTabParser;
+    private ExperimentType experimentType;
 
-    ExperimentDesignWriter(CSVWriter csvWriter){
+    ExperimentDesignWriter(CSVWriter csvWriter, MageTabParser mageTabParser, ExperimentType experimentType){
         this.csvWriter = csvWriter;
+        this.mageTabParser = mageTabParser;
+        this.experimentType = experimentType;
     }
 
     public void write(String experimentAccession) throws IOException {
         try {
 
-            ExperimentDesign experimentDesign = getMageTabParser().parse(experimentAccession);
-            csvWriter.writeNext(buildColumnHeaders(experimentDesign));
+            ExperimentDesign experimentDesign = mageTabParser.parse(experimentAccession);
+            String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
+            csvWriter.writeNext(columnHeaders);
             csvWriter.writeAll(experimentDesign.asTableData());
-
             csvWriter.flush();
         }finally {
             csvWriter.close();
@@ -56,22 +66,34 @@ public abstract class ExperimentDesignWriter {
 
     }
 
-    String[] buildColumnHeaders(ExperimentDesign experimentDesign) {
-        List<String> headers = getCommonColumnHeaders();
-        for (String characteristic : experimentDesign.getSampleHeaders()) {
-            headers.add(formatColumnHeader(CHARACTERISTIC_HEADER_TEMPLATE, characteristic));
-        }
-        for (String factorValue : experimentDesign.getFactorHeaders()) {
-            headers.add(formatColumnHeader(FACTOR_VALUE_HEADER_TEMPLATE, factorValue));
-        }
+    String[] buildColumnHeaders(ExperimentType experimentType, ExperimentDesign experimentDesign) {
+
+        List<String> headers = Lists.newArrayList(getCommonColumnHeaders(experimentType));
+        headers.addAll(toHeaders(experimentDesign.getSampleHeaders(), SAMPLE_NAME_HEADER_TEMPLATE));
+        headers.addAll(toHeaders(experimentDesign.getFactorHeaders(), FACTOR_NAME_HEADER_TEMPLATE));
+
         return headers.toArray(new String[headers.size()]);
     }
 
-    private String formatColumnHeader(String template, String... parameters){
-        return MessageFormat.format(template, parameters);
+    SortedSet toHeaders(SortedSet<String> propertyNames, final String headerTemplate) {
+        Collection<String> headers = Collections2.transform(propertyNames, new Function<String, String>() {
+            @Override
+            public String apply(String propertyName) {
+                return MessageFormat.format(headerTemplate, propertyName);
+            }
+        });
+        return Sets.newTreeSet(headers);
     }
 
-    protected abstract List<String> getCommonColumnHeaders();
-
-    protected abstract MageTabParser getMageTabParser();
+    protected List<String> getCommonColumnHeaders(ExperimentType experimentType){
+        switch(experimentType.getParent()){
+            case MICROARRAY:
+                return Lists.newArrayList("Assay", "Array");
+            case BASELINE:
+            case DIFFERENTIAL:
+                return Lists.newArrayList("Run");
+            default:
+                throw new IllegalStateException("Invalid parent type: " + experimentType.getParent());
+        }
+    }
 }

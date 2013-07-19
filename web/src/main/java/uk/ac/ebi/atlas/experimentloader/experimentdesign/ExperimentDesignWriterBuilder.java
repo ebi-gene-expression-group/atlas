@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 @Named
-public class ExperimentDesignWriterFactory {
+public class ExperimentDesignWriterBuilder {
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String targetFilePathTemplate;
@@ -43,16 +43,29 @@ public class ExperimentDesignWriterFactory {
     private RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser;
     private TwoColourExperimentDesignMageTabParser twoColourMageTabParser;
 
+    private String experimentAccession;
+    private ExperimentType experimentType;
+
     @Inject
-    public ExperimentDesignWriterFactory(@Named("microarrayExperimentDesignMageTabParser")MicroarrayExperimentDesignMageTabParser microarrayMageTabParser,
+    public ExperimentDesignWriterBuilder(@Named("microarrayExperimentDesignMageTabParser") MicroarrayExperimentDesignMageTabParser microarrayMageTabParser,
                                          RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser,
-                                         @Named("twoColourExperimentDesignMageTabParser")TwoColourExperimentDesignMageTabParser twoColourMageTabParser) {
+                                         @Named("twoColourExperimentDesignMageTabParser") TwoColourExperimentDesignMageTabParser twoColourMageTabParser) {
         this.microarrayMageTabParser = microarrayMageTabParser;
         this.rnaSeqMageTabParser = rnaSeqMageTabParser;
         this.twoColourMageTabParser = twoColourMageTabParser;
     }
 
-    public ExperimentDesignWriter create(ExperimentType experimentType, String experimentAccession) throws IOException {
+    public ExperimentDesignWriterBuilder forExperimentAccession(String experimentAccession){
+        this.experimentAccession = experimentAccession;
+        return this;
+    }
+
+    public ExperimentDesignWriterBuilder withExperimentType(ExperimentType experimentType){
+        this.experimentType = experimentType;
+        return this;
+    }
+
+    public ExperimentDesignWriter build() throws IOException {
 
         String targetFilePath = MessageFormat.format(targetFilePathTemplate, experimentAccession);
 
@@ -62,15 +75,17 @@ public class ExperimentDesignWriterFactory {
 
         CSVWriter csvWriter = new CSVWriter(writer, '\t');
 
+        //ToDo (B) maybe it is silly that we need to inject different type of parsers.
+        //ToDo (B) maybe we should have one only MageTabParser class and the MageTabParser should use different specialized ExperimentDesignBuilder to build the ExperimentDesign
         switch(experimentType){
             case MICRORNA:
             case MICROARRAY:
-                return new MicroarrayExperimentDesignWriter(microarrayMageTabParser, csvWriter);
+                return new ExperimentDesignWriter(csvWriter, microarrayMageTabParser, experimentType);
             case TWOCOLOUR:
-                return new MicroarrayExperimentDesignWriter(twoColourMageTabParser, csvWriter);
+                return new ExperimentDesignWriter(csvWriter, twoColourMageTabParser, experimentType);
             case BASELINE:
             case DIFFERENTIAL:
-                return new RnaSeqExperimentDesignWriter(rnaSeqMageTabParser, csvWriter);
+                return new ExperimentDesignWriter(csvWriter, rnaSeqMageTabParser, experimentType);
             default:
                 throw new IllegalStateException("Unknown experimentType: " + experimentType);
         }
