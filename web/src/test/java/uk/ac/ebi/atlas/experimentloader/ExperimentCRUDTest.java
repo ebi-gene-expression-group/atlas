@@ -56,9 +56,6 @@ public class ExperimentCRUDTest {
     private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
 
     @Mock
-    private ExperimentType experimentTypeMock;
-
-    @Mock
     private ExperimentDesignWriter experimentDesignWriterMock;
 
     @Mock
@@ -103,7 +100,7 @@ public class ExperimentCRUDTest {
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
-        given(experimentTypeMock.createExperimentDesignWriter(experimentDesignWriterFactoryMock)).willReturn(experimentDesignWriterMock);
+        given(experimentDesignWriterFactoryMock.create(any(ExperimentType.class))).willReturn(experimentDesignWriterMock);
 
         subject = new ExperimentCRUD(experimentDesignTsvWriterMock, transcriptProfileLoaderMock,
                 arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, configurationDaoMock, geneProfileDaoMock, experimentDesignWriterFactoryMock);
@@ -112,9 +109,9 @@ public class ExperimentCRUDTest {
     @Test
     public void generateExperimentDesignShouldUseTheCsvWriter() throws Exception {
 
-        subject.generateDesignFile(EXPERIMENT_ACCESSION, experimentTypeMock);
+        subject.generateDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
         verify(experimentDesignTsvWriterMock).forExperimentAccession(EXPERIMENT_ACCESSION);
-        verify(experimentTypeMock).createExperimentDesignWriter(experimentDesignWriterFactoryMock);
+        verify(experimentDesignWriterFactoryMock).create(ExperimentType.BASELINE);
         verify(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION, csvWriterMock);
         verify(csvWriterMock).flush();
     }
@@ -124,7 +121,7 @@ public class ExperimentCRUDTest {
 
         willThrow(new IOException()).given(csvWriterMock).close();
 
-        subject.generateDesignFile(EXPERIMENT_ACCESSION, experimentTypeMock);
+        subject.generateDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 
     @Test(expected = IOException.class)
@@ -132,7 +129,7 @@ public class ExperimentCRUDTest {
 
         willThrow(new IOException()).given(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION, csvWriterMock);
 
-        subject.generateDesignFile(EXPERIMENT_ACCESSION, experimentTypeMock);
+        subject.generateDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 
     @Test
@@ -158,20 +155,7 @@ public class ExperimentCRUDTest {
     public void testLoadArrayDesignNotPresent() throws Exception {
         when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
         subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
-        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
+        verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
     }
 
-    @Test
-    public void testLoadArrayDesignMicroRNAPresent() throws Exception {
-        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(true);
-        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_RNA);
-        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_RNA);
-    }
-
-    @Test
-    public void testLoadArrayDesignMicroRNANotPresent() throws Exception {
-        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
-        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_RNA);
-        verify(designElementLoaderMock, times(1)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_RNA);
-    }
 }

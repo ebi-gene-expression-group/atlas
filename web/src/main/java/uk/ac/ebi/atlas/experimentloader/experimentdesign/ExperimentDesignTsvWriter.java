@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.checkState;
 /*
 ToDo (B) : this needs renaming... what is this? a builder or what?? f#$*!!!
  */
-@Named("expDesignTsvWriter")
+@Named
 @Scope("prototype")
 public class ExperimentDesignTsvWriter {
 

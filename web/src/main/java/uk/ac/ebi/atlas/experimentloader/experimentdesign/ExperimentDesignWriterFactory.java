@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
+import uk.ac.ebi.atlas.model.ExperimentType;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -41,17 +43,19 @@ public class ExperimentDesignWriterFactory {
         this.twoColourMageTabParser = twoColourMageTabParser;
     }
 
-    public ExperimentDesignWriter getMicroarrayWriter() {
-        return new MicroarrayExperimentDesignWriter(microarrayMageTabParser);
+
+    public ExperimentDesignWriter create(ExperimentType experimentType) {
+        switch(experimentType){
+            case MICRORNA:
+            case MICROARRAY:
+                return new MicroarrayExperimentDesignWriter(microarrayMageTabParser);
+            case TWOCOLOUR:
+                return new MicroarrayExperimentDesignWriter(twoColourMageTabParser);
+            case BASELINE:
+            case DIFFERENTIAL:
+                return new RnaSeqExperimentDesignWriter(rnaSeqMageTabParser);
+            default:
+                throw new IllegalStateException("Unknown experimentType: " + experimentType);
+        }
     }
-
-    public ExperimentDesignWriter getRnaseqWriter() {
-        return new RnaSeqExperimentDesignWriter(rnaSeqMageTabParser);
-    }
-
-    public ExperimentDesignWriter getTwoColourWriter() {
-        return new MicroarrayExperimentDesignWriter(twoColourMageTabParser);
-    }
-
-
 }

@@ -23,39 +23,15 @@
 package uk.ac.ebi.atlas.model;
 
 
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterFactory;
-
 public enum ExperimentType {
 
-    BASELINE(null) {
-        @Override
-        public ExperimentDesignWriter createExperimentDesignWriter(ExperimentDesignWriterFactory factory) {
-            return factory.getRnaseqWriter();
-        }
-    }, DIFFERENTIAL(null) {
-        @Override
-        public ExperimentDesignWriter createExperimentDesignWriter(ExperimentDesignWriterFactory factory) {
-            return factory.getRnaseqWriter();
-        }
-    }, MICROARRAY(null) {
-        @Override
-        public ExperimentDesignWriter createExperimentDesignWriter(ExperimentDesignWriterFactory factory) {
-            return factory.getMicroarrayWriter();
-        }
-    }, TWOCOLOUR(MICROARRAY) {
-        @Override
-        public ExperimentDesignWriter createExperimentDesignWriter(ExperimentDesignWriterFactory factory) {
-            return factory.getTwoColourWriter();
-        }
-    }, MICRORNA(MICROARRAY) {
-        @Override
-        public ExperimentDesignWriter createExperimentDesignWriter(ExperimentDesignWriterFactory factory) {
-            return factory.getMicroarrayWriter();
-        }
-    };
+    BASELINE(), DIFFERENTIAL(), MICROARRAY()
+    , TWOCOLOUR(MICROARRAY), MICRORNA(MICROARRAY);
 
     private ExperimentType parent;
+
+    private ExperimentType() {
+    }
 
     private ExperimentType(ExperimentType parent) {
         this.parent = parent;
@@ -85,5 +61,4 @@ public enum ExperimentType {
         return parent == null ? this : parent;
     }
 
-    public abstract ExperimentDesignWriter createExperimentDesignWriter(ExperimentDesignWriterFactory factory);
 }

@@ -24,12 +24,16 @@ package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import com.google.common.collect.Lists;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 
+@Named
 public class RnaSeqExperimentDesignWriter extends ExperimentDesignWriter {
 
     private RnaSeqExperimentDesignMageTabParser parser;
 
+    @Inject
     public RnaSeqExperimentDesignWriter(RnaSeqExperimentDesignMageTabParser parser) {
         this.parser = parser;
     }

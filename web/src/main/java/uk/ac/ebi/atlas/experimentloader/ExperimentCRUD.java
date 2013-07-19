@@ -111,7 +111,7 @@ public class ExperimentCRUD {
 
     void generateDesignFile(String accession, ExperimentType experimentType) throws IOException{
 
-        ExperimentDesignWriter experimentDesignWriter = experimentType.createExperimentDesignWriter(experimentDesignWriterFactory);
+        ExperimentDesignWriter experimentDesignWriter = experimentDesignWriterFactory.create(experimentType);
 
         try (CSVWriter csvWriter = experimentDesignTsvWriter.forExperimentAccession(accession)) {
             experimentDesignWriter.write(accession, csvWriter);

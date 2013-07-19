@@ -127,8 +127,8 @@ public class BioEntityPage extends HeatmapTablePage {
 
     public boolean isBaselineProfileExpanded() {
         By heatmapTable = By.id("heatmap-table");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(heatmapTable));
+        WebDriverWait wait = new WebDriverWait(driver, 4L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(heatmapTable));
         return baselineProfilePaneBody.isDisplayed();
     }
 
