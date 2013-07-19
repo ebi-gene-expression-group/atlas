@@ -36,8 +36,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-//ToDo: (N) to be tested
-
 @Named
 @Scope("prototype")
 public class RnaSeqExperimentDesignMageTabParser extends MageTabParser<ScanNode> {

@@ -36,8 +36,6 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.Set;
 
-//ToDo: (N) to be tested
-
 @Named("twoColourExperimentDesignMageTabParser")
 @Scope("prototype")
 public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperimentDesignMageTabParser {

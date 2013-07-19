@@ -114,16 +114,16 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         for (AssayNode<T> assayNode : assayNodes) {
 
-            for (FactorValueAttribute factor : getFactorAttributes(assayNode.getSdrfNode())) {
+            for (FactorValueAttribute factorValueAttribute : getFactorAttributes(assayNode.getSdrfNode())) {
 
-                String factorType = factor.type;
-                String factorValue = cleanValueAndUnitIfNeeded(factor.getNodeName(), factor.unit);
+                String factorType = factorValueAttribute.type; //(B) isn't that factorName
+                String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
 
-                if (FACTORS_NEEDING_DOSE.contains(factor.type.toLowerCase())) {
+                if (FACTORS_NEEDING_DOSE.contains(factorValueAttribute.type.toLowerCase())) {
                     compoundFactorType = factorType;
                     compoundFactorValue = factorValue;
 
-                } else if (DOSE.equals(factor.type.toLowerCase())) {
+                } else if (DOSE.equals(factorValueAttribute.type.toLowerCase())) {
                     if (StringUtils.isNotEmpty(compoundFactorValue)) {
 
                         factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);

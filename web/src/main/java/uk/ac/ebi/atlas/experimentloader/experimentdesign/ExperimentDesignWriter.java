@@ -26,22 +26,40 @@ import au.com.bytecode.opencsv.CSVWriter;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.io.IOException;
-
-//ToDo: (N) to be tested
+import java.text.MessageFormat;
+import java.util.List;
 
 public abstract class ExperimentDesignWriter {
+
+    private static final String CHARACTERISTIC_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
+    private static final String FACTOR_VALUE_HEADER_TEMPLATE = "Factor Values[{0}]";
+
 
     public void write(String experimentAccession, CSVWriter csvWriter) throws IOException {
 
         ExperimentDesign experimentDesign = getMageTabParser().parse(experimentAccession);
-        csvWriter.writeNext(composeHeader(experimentDesign));
+        csvWriter.writeNext(buildColumnHeaders(experimentDesign));
 
         csvWriter.writeAll(experimentDesign.asTableData());
 
-
     }
 
-    protected abstract String[] composeHeader(ExperimentDesign experimentDesign);
+    String[] buildColumnHeaders(ExperimentDesign experimentDesign) {
+        List<String> headers = getCommonColumnHeaders();
+        for (String characteristic : experimentDesign.getSampleHeaders()) {
+            headers.add(formatColumnHeader(CHARACTERISTIC_HEADER_TEMPLATE, characteristic));
+        }
+        for (String factorValue : experimentDesign.getFactorHeaders()) {
+            headers.add(formatColumnHeader(FACTOR_VALUE_HEADER_TEMPLATE, factorValue));
+        }
+        return headers.toArray(new String[headers.size()]);
+    }
+
+    private String formatColumnHeader(String template, String... parameters){
+        return MessageFormat.format(template, parameters);
+    }
+
+    protected abstract List<String> getCommonColumnHeaders();
 
     protected abstract MageTabParser getMageTabParser();
 }
