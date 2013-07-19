@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 
@@ -31,7 +32,8 @@ public class MicroarrayExperimentDesignWriter extends ExperimentDesignWriter {
 
     private MageTabParser<HybridizationNode> parser;
 
-    public MicroarrayExperimentDesignWriter(MageTabParser<HybridizationNode> parser) {
+    MicroarrayExperimentDesignWriter(MageTabParser<HybridizationNode> parser, CSVWriter csvWriter) {
+        super(csvWriter);
         this.parser = parser;
     }
 

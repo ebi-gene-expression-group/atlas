@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,10 +44,12 @@ public class RnaSeqExperimentDesignWriterTest {
     private RnaSeqExperimentDesignMageTabParser rnaSeqExperimentDesignMageTabParserMock;
     @Mock
     private ExperimentDesign experimentDesignMock;
+    @Mock
+    private CSVWriter csvWriterMock;
 
     @Before
     public void setUp() throws Exception {
-        subject = new RnaSeqExperimentDesignWriter(rnaSeqExperimentDesignMageTabParserMock);
+        subject = new RnaSeqExperimentDesignWriter(rnaSeqExperimentDesignMageTabParserMock, csvWriterMock);
     }
 
     @Test

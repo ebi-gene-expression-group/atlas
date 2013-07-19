@@ -22,19 +22,17 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.List;
 
-@Named
 public class RnaSeqExperimentDesignWriter extends ExperimentDesignWriter {
 
     private RnaSeqExperimentDesignMageTabParser parser;
 
-    @Inject
-    public RnaSeqExperimentDesignWriter(RnaSeqExperimentDesignMageTabParser parser) {
+    public RnaSeqExperimentDesignWriter(RnaSeqExperimentDesignMageTabParser parser, CSVWriter csvWriter) {
+        super(csvWriter);
         this.parser = parser;
     }
 

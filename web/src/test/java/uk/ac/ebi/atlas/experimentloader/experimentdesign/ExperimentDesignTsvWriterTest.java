@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/* (B) remove this...
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -64,3 +64,5 @@ public class ExperimentDesignTsvWriterTest {
         assertThat(subject.getPathString(EXPERIMENT_ACCESSION), is(EXPERIMENT_ACCESSION));
     }
 }
+
+*/

@@ -29,5 +29,8 @@ package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 public abstract class ExperimentDesignBuilder {
 
+    //ExperimentDesignBuilder withCharacteristics();
+
+
 
 }

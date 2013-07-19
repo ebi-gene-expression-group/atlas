@@ -59,7 +59,7 @@ public class MicroarrayExperimentDesignWriterTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentDesignWriter(mageTabParserMock);
+        subject = new MicroarrayExperimentDesignWriter(mageTabParserMock, csvWriterMock);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class MicroarrayExperimentDesignWriterTest {
         List<String[]> tableDataMock = Lists.newArrayList();
         given(experimentDesignMock.asTableData()).willReturn(tableDataMock);
 
-        subject.write(EXPERIMENT_ACCESSION, csvWriterMock);
+        subject.write(EXPERIMENT_ACCESSION);
 
         verify(mageTabParserMock).parse(EXPERIMENT_ACCESSION);
         verify(csvWriterMock).writeNext(any(String[].class));

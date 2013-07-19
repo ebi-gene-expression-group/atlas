@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.io.IOException;
@@ -30,17 +31,28 @@ import java.text.MessageFormat;
 import java.util.List;
 
 public abstract class ExperimentDesignWriter {
+    private static final Logger LOGGER = Logger.getLogger(ExperimentDesignWriter.class);
 
     private static final String CHARACTERISTIC_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
     private static final String FACTOR_VALUE_HEADER_TEMPLATE = "Factor Values[{0}]";
 
+    private CSVWriter csvWriter;
 
-    public void write(String experimentAccession, CSVWriter csvWriter) throws IOException {
+    ExperimentDesignWriter(CSVWriter csvWriter){
+        this.csvWriter = csvWriter;
+    }
 
-        ExperimentDesign experimentDesign = getMageTabParser().parse(experimentAccession);
-        csvWriter.writeNext(buildColumnHeaders(experimentDesign));
+    public void write(String experimentAccession) throws IOException {
+        try {
 
-        csvWriter.writeAll(experimentDesign.asTableData());
+            ExperimentDesign experimentDesign = getMageTabParser().parse(experimentAccession);
+            csvWriter.writeNext(buildColumnHeaders(experimentDesign));
+            csvWriter.writeAll(experimentDesign.asTableData());
+
+            csvWriter.flush();
+        }finally {
+            csvWriter.close();
+        }
 
     }
 

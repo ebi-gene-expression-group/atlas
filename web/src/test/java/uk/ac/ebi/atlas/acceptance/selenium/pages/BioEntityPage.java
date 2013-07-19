@@ -126,9 +126,8 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public boolean isBaselineProfileExpanded() {
-        By heatmapTable = By.id("heatmap-table");
         WebDriverWait wait = new WebDriverWait(driver, 4L);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(heatmapTable));
+        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
         return baselineProfilePaneBody.isDisplayed();
     }
 

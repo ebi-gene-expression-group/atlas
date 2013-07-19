@@ -22,13 +22,22 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.MessageFormat;
 
 @Named
 public class ExperimentDesignWriterFactory {
+
+    @Value("#{configuration['experiment.experiment-design.path.template']}")
+    private String targetFilePathTemplate;
 
     private MicroarrayExperimentDesignMageTabParser microarrayMageTabParser;
     private RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser;
@@ -43,17 +52,25 @@ public class ExperimentDesignWriterFactory {
         this.twoColourMageTabParser = twoColourMageTabParser;
     }
 
+    public ExperimentDesignWriter create(ExperimentType experimentType, String experimentAccession) throws IOException {
 
-    public ExperimentDesignWriter create(ExperimentType experimentType) {
+        String targetFilePath = MessageFormat.format(targetFilePathTemplate, experimentAccession);
+
+        File experimentDesignFile = new File(targetFilePath);
+
+        FileWriter writer = new FileWriter(experimentDesignFile);
+
+        CSVWriter csvWriter = new CSVWriter(writer, '\t');
+
         switch(experimentType){
             case MICRORNA:
             case MICROARRAY:
-                return new MicroarrayExperimentDesignWriter(microarrayMageTabParser);
+                return new MicroarrayExperimentDesignWriter(microarrayMageTabParser, csvWriter);
             case TWOCOLOUR:
-                return new MicroarrayExperimentDesignWriter(twoColourMageTabParser);
+                return new MicroarrayExperimentDesignWriter(twoColourMageTabParser, csvWriter);
             case BASELINE:
             case DIFFERENTIAL:
-                return new RnaSeqExperimentDesignWriter(rnaSeqMageTabParser);
+                return new RnaSeqExperimentDesignWriter(rnaSeqMageTabParser, csvWriter);
             default:
                 throw new IllegalStateException("Unknown experimentType: " + experimentType);
         }

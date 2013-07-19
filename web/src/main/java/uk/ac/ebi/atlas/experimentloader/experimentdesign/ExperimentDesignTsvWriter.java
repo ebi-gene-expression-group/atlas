@@ -22,23 +22,9 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
-import au.com.bytecode.opencsv.CSVWriter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.text.MessageFormat;
-
-import static com.google.common.base.Preconditions.checkState;
-
 /*
 ToDo (B) : this needs renaming... what is this? a builder or what?? f#$*!!!
- */
+
 @Named
 @Scope("prototype")
 public class ExperimentDesignTsvWriter {
@@ -68,4 +54,14 @@ public class ExperimentDesignTsvWriter {
         return MessageFormat.format(pathTemplate, experimentAccession);
     }
 
+    public void rollback() {
+        if (file.exists()) {
+            boolean successfulDelete = file.delete();
+            if (!successfulDelete){
+                throw new IllegalStateException("Generation of ExperimentDesign file failed and also clean up of file failed");
+            }
+        }
+    }
 }
+
+*/

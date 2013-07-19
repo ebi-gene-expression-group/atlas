@@ -22,11 +22,9 @@
 
 package uk.ac.ebi.atlas.experimentloader;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignTsvWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterFactory;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
@@ -40,7 +38,6 @@ import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -52,7 +49,6 @@ public class ExperimentCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
 
-    private ExperimentDesignTsvWriter experimentDesignTsvWriter;
     private TranscriptProfilesLoader transcriptProfileLoader;
     private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
@@ -62,15 +58,13 @@ public class ExperimentCRUD {
     private GeneProfileDao geneProfileDao;
 
     @Inject
-    public ExperimentCRUD(ExperimentDesignTsvWriter experimentDesignTsvWriter,
-                          TranscriptProfilesLoader transcriptProfileLoader,
+    public ExperimentCRUD(TranscriptProfilesLoader transcriptProfileLoader,
                           ArrayDesignDao arrayDesignDao,
                           ConfigurationTrader configurationTrader,
                           DesignElementMappingLoader designElementLoader,
                           ConfigurationDao configurationDao,
                           GeneProfileDao geneProfileDao,
                           ExperimentDesignWriterFactory experimentDesignWriterFactory) {
-        this.experimentDesignTsvWriter = experimentDesignTsvWriter;
         this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
         this.geneProfileDao = geneProfileDao;
@@ -111,22 +105,9 @@ public class ExperimentCRUD {
 
     void generateDesignFile(String accession, ExperimentType experimentType) throws IOException{
 
-        ExperimentDesignWriter experimentDesignWriter = experimentDesignWriterFactory.create(experimentType);
+        ExperimentDesignWriter experimentDesignWriter = experimentDesignWriterFactory.create(experimentType, accession);
 
-        try (CSVWriter csvWriter = experimentDesignTsvWriter.forExperimentAccession(accession)) {
-            experimentDesignWriter.write(accession, csvWriter);
-            csvWriter.flush();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            File expDesignTsvFile = new File(experimentDesignTsvWriter.getFileAbsolutePath());
-            if (expDesignTsvFile.exists()) {
-                boolean successfulDelete = expDesignTsvFile.delete();
-                if (!successfulDelete){
-                    throw new IllegalStateException("Generation of ExperimentDesign file failed and also clean up of file failed");
-                }
-            }
-            throw e;
-        }
+        experimentDesignWriter.write(accession);
     }
 
     void loadTranscripts(String accession) {
