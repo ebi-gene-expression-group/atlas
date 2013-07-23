@@ -23,17 +23,15 @@
 package uk.ac.ebi.atlas.acceptance.selenium.fixture.internal;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.WebDriverFactory;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.DriverFactory;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-
-public class RemoteWebDriverFactory implements WebDriverFactory {
+public class FirefoxDriverFactory implements DriverFactory {
 
     private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
+
+    protected FirefoxDriver driver;
+
     @Override
     public WebDriver create() {
         return initializeDriver();
@@ -41,20 +39,7 @@ public class RemoteWebDriverFactory implements WebDriverFactory {
 
     private WebDriver initializeDriver() {
 
-        try {
-
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            capabilities.setJavascriptEnabled(true);
-            capabilities.setBrowserName("firefox");
-
-            return new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
-
-        } catch (MalformedURLException e) {
-
-            e.printStackTrace();
-            throw new IllegalStateException(e);
-
-        }
+        return new FirefoxDriver();
 
     }
 

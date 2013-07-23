@@ -25,24 +25,15 @@ package uk.ac.ebi.atlas.acceptance.selenium.fixture.internal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.WebDriverFactory;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.DriverFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
-/*
-In order to use this fixture you must have PhantomJS installed on your machine and you must start it:
-as a webrunner server with the following command line:
-phantomjs --webdriver=4444
- */
-public class PhantomJSWebDriverFactory implements WebDriverFactory {
+public class RemoteDriverFactory implements DriverFactory {
 
-    private static final String SELENIUM_SERVER_URL = "http://127.0.0.1:4444/wd/hub";
-
-    protected WebDriver driver;
-
-
+    private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
     @Override
     public WebDriver create() {
         return initializeDriver();
@@ -57,6 +48,7 @@ public class PhantomJSWebDriverFactory implements WebDriverFactory {
             capabilities.setBrowserName("firefox");
 
             return new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
+
         } catch (MalformedURLException e) {
 
             e.printStackTrace();
@@ -65,6 +57,5 @@ public class PhantomJSWebDriverFactory implements WebDriverFactory {
         }
 
     }
-
 
 }
