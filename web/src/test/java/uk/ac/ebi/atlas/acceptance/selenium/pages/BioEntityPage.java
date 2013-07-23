@@ -119,13 +119,10 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public void clickInfoCard() {
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
-        wait.until(ExpectedConditions.visibilityOf(infoPaneHeader));
-
         infoPaneHeader.click();
 
         By infoCardBodyId = By.id("infoBody");
-        wait = new WebDriverWait(driver, 4L);
+        WebDriverWait wait = new WebDriverWait(driver, 4L);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(infoCardBodyId));
     }
 
@@ -136,8 +133,6 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public boolean isDifferentialProfileExpanded() {
-        WebDriverWait wait = new WebDriverWait(driver, 4L);
-        wait.withTimeout(1L, TimeUnit.SECONDS);
         return diffProfilePaneBody.isDisplayed();
     }
 
