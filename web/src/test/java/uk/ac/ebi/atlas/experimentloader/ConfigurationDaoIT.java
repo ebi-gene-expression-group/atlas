@@ -88,7 +88,7 @@ public class ConfigurationDaoIT {
         subject.addExperimentConfiguration(MICROARRAY_ACCESSION, TYPE_MICROARRAY);
         subject.addExperimentConfiguration(MICRORNA_ACCESSION, TYPE_MICRORNA);
         Set<String> experimentAccessions = subject.getExperimentAccessions(TYPE_BASELINE);
-        assertThat(experimentAccessions, contains(E_MTAB_513));
+        assertThat(experimentAccessions, hasItem(E_MTAB_513));
         experimentAccessions = subject.getExperimentAccessions(TYPE_DIFFERENTIAL);
         assertThat(experimentAccessions, hasItem(DIFFERENTIAL_ACCESION));
         experimentAccessions = subject.getExperimentAccessions(TYPE_MICROARRAY);
