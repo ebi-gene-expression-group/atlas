@@ -51,9 +51,9 @@ public class ConfigurationDaoIT {
     private static final ExperimentType TYPE_DIFFERENTIAL = ExperimentType.DIFFERENTIAL;
     private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY;
     private static final ExperimentType TYPE_MICRORNA = ExperimentType.MICRORNA;
-    private static final String ANOTHER_ACCESION = "ANOTHER";
-    private static final String YET_ANOTHER_ACCESSION = "YET ANOTHER";
-    private static final String YET_YET_ANOTHER_ACCESSION = "YET YET ANOTHER";
+    private static final String DIFFERENTIAL_ACCESION = "ANOTHER";
+    private static final String MICROARRAY_ACCESSION = "YET ANOTHER";
+    private static final String MICRORNA_ACCESSION = "YET YET ANOTHER";
 
     @Inject
     @Qualifier("dataSource")
@@ -71,9 +71,9 @@ public class ConfigurationDaoIT {
     public void tearDown() throws Exception {
         subject.deleteExperimentConfiguration(E_MTAB_513);
         subject.deleteExperimentConfiguration(E_MTAB_1066);
-        subject.deleteExperimentConfiguration(ANOTHER_ACCESION);
-        subject.deleteExperimentConfiguration(YET_ANOTHER_ACCESSION);
-        subject.deleteExperimentConfiguration(YET_YET_ANOTHER_ACCESSION);
+        subject.deleteExperimentConfiguration(DIFFERENTIAL_ACCESION);
+        subject.deleteExperimentConfiguration(MICROARRAY_ACCESSION);
+        subject.deleteExperimentConfiguration(MICRORNA_ACCESSION);
     }
 
     @Test
@@ -84,17 +84,17 @@ public class ConfigurationDaoIT {
 
     @Test
     public void testGetExperimentConfigurationsByType() throws Exception {
-        subject.addExperimentConfiguration(ANOTHER_ACCESION, TYPE_DIFFERENTIAL);
-        subject.addExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY);
-        subject.addExperimentConfiguration(YET_YET_ANOTHER_ACCESSION, TYPE_MICRORNA);
+        subject.addExperimentConfiguration(DIFFERENTIAL_ACCESION, TYPE_DIFFERENTIAL);
+        subject.addExperimentConfiguration(MICROARRAY_ACCESSION, TYPE_MICROARRAY);
+        subject.addExperimentConfiguration(MICRORNA_ACCESSION, TYPE_MICRORNA);
         Set<String> experimentAccessions = subject.getExperimentAccessions(TYPE_BASELINE);
         assertThat(experimentAccessions, contains(E_MTAB_513));
         experimentAccessions = subject.getExperimentAccessions(TYPE_DIFFERENTIAL);
-        assertThat(experimentAccessions, contains(ANOTHER_ACCESION));
+        assertThat(experimentAccessions, hasItem(DIFFERENTIAL_ACCESION));
         experimentAccessions = subject.getExperimentAccessions(TYPE_MICROARRAY);
-        assertThat(experimentAccessions, contains(YET_ANOTHER_ACCESSION));
+        assertThat(experimentAccessions, hasItem(MICROARRAY_ACCESSION));
         experimentAccessions = subject.getExperimentAccessions(TYPE_MICRORNA);
-        assertThat(experimentAccessions, contains(YET_YET_ANOTHER_ACCESSION));
+        assertThat(experimentAccessions, hasItem(MICRORNA_ACCESSION));
     }
 
     @Test
