@@ -30,8 +30,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
-import uk.ac.ebi.atlas.experimentloader.ConfigurationDao;
 import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -67,7 +67,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
     private MAGETABInvestigation investigationMock;
 
     @Mock
-    private ConfigurationDao configurationDaoMock;
+    private ExperimentConfigurationDao experimentConfigurationDaoMock;
 
     @Mock
     private ExperimentDesign experimentDesignMock;
@@ -77,7 +77,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", configurationDaoMock);
+        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", experimentConfigurationDaoMock);
         subject.setMageTabLimpopoUtils(mageTabLimpopoUtilsMock);
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
@@ -85,7 +85,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
         when(mageTabLimpopoUtilsMock.extractSpeciesFromSDRF(investigationMock)).thenReturn(Sets.newHashSet(SPECIES));
 
-        when(configurationDaoMock.getExperimentConfiguration(ACCESSION)).thenReturn(new ExperimentConfiguration(ACCESSION, ExperimentType.MICROARRAY));
+        when(experimentConfigurationDaoMock.getExperimentConfiguration(ACCESSION)).thenReturn(new ExperimentConfiguration(ACCESSION, ExperimentType.MICROARRAY));
     }
 
     @Test

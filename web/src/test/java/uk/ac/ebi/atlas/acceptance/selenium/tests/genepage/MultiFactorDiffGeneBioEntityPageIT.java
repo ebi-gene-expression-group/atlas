@@ -45,7 +45,6 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
 
     @Test
     public void checkPaneExpansion() {
-        assertThat(subject.isInfoCardExpanded(), is(false));
         assertThat(subject.isDifferentialProfileExpanded(), is(true));
     }
 

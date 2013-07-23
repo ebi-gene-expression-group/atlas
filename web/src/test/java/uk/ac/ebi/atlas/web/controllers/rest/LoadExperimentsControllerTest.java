@@ -28,10 +28,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.ConfigurationDao;
 import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.GeneProfileDao;
 
@@ -48,7 +48,7 @@ public class LoadExperimentsControllerTest {
     private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
 
     @Mock
-    private ConfigurationDao configurationDaoMock;
+    private ExperimentConfigurationDao experimentConfigurationDaoMock;
 
     @Mock
     private GeneProfileDao geneProfileDaoMock;
@@ -66,10 +66,10 @@ public class LoadExperimentsControllerTest {
 
         subject = new LoadExperimentsController(experimentCheckerMock, experimentCRUDMock);
 
-        given(configurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).willReturn(null);
-        given(configurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.BASELINE)).willReturn(true);
-        given(configurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).willReturn(true);
-        given(configurationDaoMock.findAllExperimentConfigurations()).willReturn(
+        given(experimentConfigurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).willReturn(null);
+        given(experimentConfigurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.BASELINE)).willReturn(true);
+        given(experimentConfigurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).willReturn(true);
+        given(experimentConfigurationDaoMock.findAllExperimentConfigurations()).willReturn(
                 Lists.newArrayList(new ExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.BASELINE)));
 
     }

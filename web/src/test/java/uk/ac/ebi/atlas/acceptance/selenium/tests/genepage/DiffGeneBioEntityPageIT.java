@@ -45,7 +45,6 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkPaneExpansion() {
-        assertThat(subject.isInfoCardExpanded(), is(false));
         assertThat(subject.isDifferentialProfileExpanded(), is(true));
     }
 
@@ -67,6 +66,7 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getContastSummaryTooltipTableHeader(0, 2), is("Reference value"));
     }
 
+    //This is not working with PhantomJS browser :((
     @Test
     public void checkContrastSummaryTooltipTableFirstRow() {
         assertThat(subject.getContastSummaryTooltipTableData(0, 0, 0), is("genotype"));
@@ -74,6 +74,7 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getContastSummaryTooltipTableData(0, 0, 2), is("wild type"));
     }
 
+    //This is not working with PhantomJS browser :((
     @Test
     public void checkContrastSummaryTooltipTableLastRow() {
         assertThat(subject.getContastSummaryTooltipTableData(0, 5, 0), is("Organism"));

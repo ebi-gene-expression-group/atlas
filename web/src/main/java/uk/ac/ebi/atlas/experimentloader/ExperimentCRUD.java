@@ -54,7 +54,7 @@ public class ExperimentCRUD {
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
     private ExperimentDesignWriterBuilder experimentDesignWriterBuilder;
-    private ConfigurationDao configurationDao;
+    private ExperimentConfigurationDao experimentConfigurationDao;
     private GeneProfileDao geneProfileDao;
 
     @Inject
@@ -62,7 +62,7 @@ public class ExperimentCRUD {
                           ArrayDesignDao arrayDesignDao,
                           ConfigurationTrader configurationTrader,
                           DesignElementMappingLoader designElementLoader,
-                          ConfigurationDao configurationDao,
+                          ExperimentConfigurationDao experimentConfigurationDao,
                           GeneProfileDao geneProfileDao,
                           ExperimentDesignWriterBuilder experimentDesignWriterBuilder) {
         this.transcriptProfileLoader = transcriptProfileLoader;
@@ -70,7 +70,7 @@ public class ExperimentCRUD {
         this.geneProfileDao = geneProfileDao;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
-        this.configurationDao = configurationDao;
+        this.experimentConfigurationDao = experimentConfigurationDao;
         this.experimentDesignWriterBuilder = experimentDesignWriterBuilder;
     }
 
@@ -78,7 +78,7 @@ public class ExperimentCRUD {
         checkNotNull(accession);
         checkNotNull(experimentType);
 
-        if (configurationDao.getExperimentConfiguration(accession) != null) {
+        if (experimentConfigurationDao.getExperimentConfiguration(accession) != null) {
             throw new IllegalStateException("Experiment with experimentAccession " + accession + " already exists.");
         }
 
@@ -97,7 +97,7 @@ public class ExperimentCRUD {
                 break;
         }
 
-        if (! configurationDao.addExperimentConfiguration(accession, experimentType)) {
+        if (! experimentConfigurationDao.addExperimentConfiguration(accession, experimentType)) {
             throw new IllegalStateException("Failure storing configuration for experiment " + accession);
         }
 
@@ -144,7 +144,7 @@ public class ExperimentCRUD {
     public void deleteExperiment(String accession){
         checkNotNull(accession);
 
-        boolean experimentFound = configurationDao.deleteExperimentConfiguration(accession);
+        boolean experimentFound = experimentConfigurationDao.deleteExperimentConfiguration(accession);
         if (!experimentFound) {
             throw new IllegalArgumentException("Experiment " + accession + " was not found in the set of the imported experiments.");
         }
@@ -154,6 +154,6 @@ public class ExperimentCRUD {
 
 
     public List<ExperimentConfiguration> findAllExperiments() {
-        return configurationDao.findAllExperimentConfigurations();
+        return experimentConfigurationDao.findAllExperimentConfigurations();
     }
 }

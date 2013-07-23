@@ -30,12 +30,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.commons.ExperimentResolver;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -94,24 +91,23 @@ public final class ExperimentDispatcher {
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
 
+    /*
     private BaselineExperimentsCache baselineExperimentsCache;
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
     private MicroarrayExperimentsCache microarrayExperimentsCache;
+    */
     private ApplicationProperties applicationProperties;
 
     private SolrClient solrClient;
 
-    private ExperimentResolver experimentResolver;
+    private ExperimentTrader experimentTrader;
 
     @Inject
-    private ExperimentDispatcher(BaselineExperimentsCache baselineExperimentsCache, RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                                 MicroarrayExperimentsCache microarrayExperimentsCache, ApplicationProperties applicationProperties, SolrClient solrClient, ExperimentResolver experimentResolver) {
-        this.baselineExperimentsCache = baselineExperimentsCache;
-        this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
-        this.microarrayExperimentsCache = microarrayExperimentsCache;
+    private ExperimentDispatcher(ExperimentTrader experimentTrader,
+                                 ApplicationProperties applicationProperties, SolrClient solrClient) {
+        this.experimentTrader = experimentTrader;
         this.applicationProperties = applicationProperties;
         this.solrClient = solrClient;
-        this.experimentResolver = experimentResolver;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}",
@@ -140,7 +136,7 @@ public final class ExperimentDispatcher {
             return "widget-error";
         }
         String specie = species.iterator().next();
-        String experimentAccession = experimentResolver.getExperimentAccessionBySpecies(specie);
+        String experimentAccession = applicationProperties.getExperimentAccessionBySpecies(specie);
 
         if (!StringUtils.isEmpty(experimentAccession)) {
             Experiment experiment = getExperiment(experimentAccession, model);
@@ -182,23 +178,16 @@ public final class ExperimentDispatcher {
         model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
     }
 
-    //ToDo: refactor - create different methods for diff experiment types
     Experiment getExperiment(String experimentAccession, Model model) {
-        if (applicationProperties.getBaselineExperimentsIdentifiers().contains(experimentAccession)) {
-            return baselineExperimentsCache.getExperiment(experimentAccession);
-        }
-        if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
-            return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-        }
-        if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
-            MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
-            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession);
+        //ToDo: (B) verify why we need to do this here and not in the delegated controller...?
+        if (experiment instanceof MicroarrayExperiment){
 
-            return microarrayExperiment;
+            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment)experiment).getArrayDesignAccessions());
+
         }
-        throw new ResourceNotFoundException("Experiment not found with accession: " + experimentAccession);
-
+        return experiment;
     }
 
 

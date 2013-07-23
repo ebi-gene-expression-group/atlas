@@ -32,11 +32,13 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class HeatmapTablePage extends TablePage {
@@ -158,23 +160,12 @@ public class HeatmapTablePage extends TablePage {
         return result;
     }
 
-    public List<String> getDiffGradientStartColor() {
+    public List<String> getDiffGradientColors() {
         List<String> result = new ArrayList<>();
-        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("color-gradient"))) {
-            String style = element.getCssValue("background-image");
-            style = style.substring(style.indexOf("rgb(") + 4, style.indexOf("), "));
-            result.add(style);
-        }
-        return result;
-    }
-
-    public List<String> getDiffGradientEndColor() {
-        List<String> result = new ArrayList<>();
-        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("color-gradient"))) {
-            String style = element.getCssValue("background-image");
-            style = style.substring(style.lastIndexOf("rgb(") + 4, style.lastIndexOf("))"));
-            result.add(style);
-        }
+        WebElement element = diffHeatmapTableLegend.findElement(By.className("color-gradient"));
+        String style = element.getCssValue("background-image");
+        result.add(StringUtils.substringBetween(style,"from(rgb(",")"));
+        result.add(StringUtils.substringBetween(style,"to(rgb(",")"));
         return result;
     }
 
@@ -294,7 +285,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnElement(firstGeneProfileCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        FluentWait wait = new WebDriverWait(driver, 4L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -303,7 +294,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnElement(getGeneProfileCell(0, zeroBasedExpressionLevelIndex));
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedTooltipTableCellIndex + 1) + "]");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        FluentWait wait = new WebDriverWait(driver, 4L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -319,9 +310,6 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getGenePropertyTooltipHighlightedTerms(int zeroBasedProfileIndex) {
-        WebElement geneProfileHeaderCell = getGeneAnchor(zeroBasedProfileIndex);
-        hoverOnElement(geneProfileHeaderCell);
-
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='highlight']");
         WebDriverWait wait = new WebDriverWait(driver, 3L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));

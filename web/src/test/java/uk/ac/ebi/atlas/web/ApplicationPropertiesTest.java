@@ -28,8 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.ConfigurationDao;
 import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
@@ -88,52 +88,55 @@ public class ApplicationPropertiesTest {
     private BaselineExperimentsCache experimentCacheMock;
 
     @Mock
-    private Properties configurationMock;
+    private Properties configurationPropertiesMock;
 
     @Mock
-    private ConfigurationDao configurationDaoMock;
+    private ExperimentConfigurationDao experimentConfigurationDaoMock;
+
+    @Mock
+    private Properties speciesToExperimentPropertiesMock;
 
     private ApplicationProperties subject;
 
     @Before
     public void setUp() throws Exception {
-        when(configurationMock.getProperty(ORGANISM_PARTS_PROPERTY_KEY)).thenReturn("heart" + LIST_SEPARATOR + "wind" + LIST_SEPARATOR + "fire");
-        when(configurationMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".male")).thenReturn(HOMO_SAPIENS_FILE_NAME);
-        when(configurationMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".female")).thenReturn(FEMALE_SAPIENS_FILE_NAME);
-        when(configurationMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + MOUSE_SPECIE)).thenReturn(MOUSE_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ORGANISM_PARTS_PROPERTY_KEY)).thenReturn("heart" + LIST_SEPARATOR + "wind" + LIST_SEPARATOR + "fire");
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".male")).thenReturn(HOMO_SAPIENS_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".female")).thenReturn(FEMALE_SAPIENS_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + MOUSE_SPECIE)).thenReturn(MOUSE_FILE_NAME);
 
-        when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_URL + "{0}");
-        when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_REST_URL + "{0}");
-        when(configurationMock.getProperty(FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
+        when(configurationPropertiesMock.getProperty(EXPERIMENT_ARRAYEXPRESS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_URL + "{0}");
+        when(configurationPropertiesMock.getProperty(EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_REST_URL + "{0}");
+        when(configurationPropertiesMock.getProperty(FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
 
-        when(configurationMock.getProperty(EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_ARRAYS_URL + "{0}");
-        when(configurationMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
-        when(configurationMock.getProperty(EXPERIMENT_ATLAS_URL_TEMPLATE)).thenReturn(ATLAS_URL + "{0}");
+        when(configurationPropertiesMock.getProperty(EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_ARRAYS_URL + "{0}");
+        when(configurationPropertiesMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
+        when(configurationPropertiesMock.getProperty(EXPERIMENT_ATLAS_URL_TEMPLATE)).thenReturn(ATLAS_URL + "{0}");
 
-        when(configurationMock.getProperty("integration.experiment.identifiers")).thenReturn("");
+        when(configurationPropertiesMock.getProperty("integration.experiment.identifiers")).thenReturn("");
 
         when(homoSapiensExperimentMock.getFirstSpecies()).thenReturn(HOMO_SAPIENS_SPECIE);
         when(mouseExperimentMock.getFirstSpecies()).thenReturn(MOUSE_SPECIE);
 
         ExperimentConfiguration emtab513 = new ExperimentConfiguration(E_MTAB_513, ExperimentType.BASELINE);
         ExperimentConfiguration emtab599 = new ExperimentConfiguration(E_MTAB_599, ExperimentType.BASELINE);
-        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.BASELINE)).thenReturn(Lists.newArrayList(emtab513, emtab599));
+        when(experimentConfigurationDaoMock.getExperimentConfigurations(ExperimentType.BASELINE)).thenReturn(Lists.newArrayList(emtab513, emtab599));
 
         ExperimentConfiguration egeod22351 = new ExperimentConfiguration(E_GEOD_22351, ExperimentType.DIFFERENTIAL);
         ExperimentConfiguration egeod38400 = new ExperimentConfiguration(E_GEOD_38400, ExperimentType.DIFFERENTIAL);
         ExperimentConfiguration egeod21860 = new ExperimentConfiguration(E_GEOD_21860, ExperimentType.DIFFERENTIAL);
-        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.DIFFERENTIAL)).thenReturn(Lists.newArrayList(egeod21860, egeod22351, egeod38400));
+        when(experimentConfigurationDaoMock.getExperimentConfigurations(ExperimentType.DIFFERENTIAL)).thenReturn(Lists.newArrayList(egeod21860, egeod22351, egeod38400));
 
         ExperimentConfiguration emtab1066 = new ExperimentConfiguration(E_MTAB_1066, ExperimentType.MICROARRAY);
-        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.MICROARRAY)).thenReturn(Lists.newArrayList(emtab1066));
+        when(experimentConfigurationDaoMock.getExperimentConfigurations(ExperimentType.MICROARRAY)).thenReturn(Lists.newArrayList(emtab1066));
 
         ExperimentConfiguration egeod43049 = new ExperimentConfiguration(E_GEOD_43049, ExperimentType.TWOCOLOUR);
-        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.TWOCOLOUR)).thenReturn(Lists.newArrayList(egeod43049));
+        when(experimentConfigurationDaoMock.getExperimentConfigurations(ExperimentType.TWOCOLOUR)).thenReturn(Lists.newArrayList(egeod43049));
 
         ExperimentConfiguration etabm713 = new ExperimentConfiguration(E_TABM_713, ExperimentType.MICRORNA);
-        when(configurationDaoMock.getExperimentConfigurations(ExperimentType.MICRORNA)).thenReturn(Lists.newArrayList(etabm713));
+        when(experimentConfigurationDaoMock.getExperimentConfigurations(ExperimentType.MICRORNA)).thenReturn(Lists.newArrayList(etabm713));
 
-        subject = new ApplicationProperties(configurationMock, configurationDaoMock);
+        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, experimentConfigurationDaoMock);
     }
 
     @Test
@@ -192,16 +195,6 @@ public class ApplicationPropertiesTest {
     @Test
     public void testGetMicroarrayExperimentsIdentifiers() throws Exception {
         assertThat(subject.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066, E_GEOD_43049, E_TABM_713));
-    }
-
-    @Test
-    public void testGetTwoColourExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getTwoColourExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_43049));
-    }
-
-    @Test
-    public void testGetMicroRNAExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getMicroRNAExperimentsIdentifiers(), containsInAnyOrder(E_TABM_713));
     }
 
 }

@@ -81,7 +81,7 @@ public class ExperimentCRUDTest {
     private ExperimentDesignWriterBuilder experimentDesignWriterBuilderMock;
 
     @Mock
-    private ConfigurationDao configurationDaoMock;
+    private ExperimentConfigurationDao experimentConfigurationDaoMock;
 
     @Mock
     private GeneProfileDao geneProfileDaoMock;
@@ -98,7 +98,7 @@ public class ExperimentCRUDTest {
         given(experimentDesignWriterBuilderMock.build()).willReturn(experimentDesignWriterMock);
 
         subject = new ExperimentCRUD(transcriptProfileLoaderMock,
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, configurationDaoMock, geneProfileDaoMock, experimentDesignWriterBuilderMock);
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentConfigurationDaoMock, geneProfileDaoMock, experimentDesignWriterBuilderMock);
     }
 
     @Test

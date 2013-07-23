@@ -30,6 +30,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Collections;
@@ -129,6 +130,8 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
     }
 
     private List<WebElement> getYTicks(WebElement axisDiv){
+        WebDriverWait wait = new WebDriverWait(driver, 4L);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("tickLabel")));
         List<WebElement> ticks = axisDiv.findElements(By.className("tickLabel"));
         return ticks;
     }

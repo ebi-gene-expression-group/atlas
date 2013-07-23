@@ -32,9 +32,11 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 import java.util.List;
 
+//ToDo: (B) this should become ExperimentDAO
+
 @Named
 @Scope("prototype")
-public class ConfigurationDao {
+public class ExperimentConfigurationDao {
 
     private static final String EXPERIMENT_CONFIGURATION_SELECT = "SELECT experiment_accession, experiment_type " +
             "FROM experiment_configuration";

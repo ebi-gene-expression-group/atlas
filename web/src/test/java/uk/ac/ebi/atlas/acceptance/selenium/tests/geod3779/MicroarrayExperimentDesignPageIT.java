@@ -57,9 +57,9 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
 
         // and
-        assertThat(subject.getLineColor(1), is("transparent"));
+        assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
         assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(9), is("transparent"));
+        assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
 
     }
 
@@ -76,9 +76,9 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
 
         // and
-        assertThat(subject.getLineColor(1), is("transparent"));
+        assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
         assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(9), is("transparent"));
+        assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
 
     }
 
@@ -96,7 +96,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(4), is("transparent"));
+        assertThat(subject.getLineColor(4), isOneOf("transparent","rgba(0, 0, 0, 0)"));
         assertThat(subject.getLineColor(9), is("rgba(130, 205, 205, 1)"));
 
     }

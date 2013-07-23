@@ -123,14 +123,4 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsIT extends Se
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("brain"));
     }
 
-    @Test
-    public void verifyQueryFactorLabelAndHeatmapHeadersForMusMusculus() {
-        subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Mus%20musculus");
-        subject.get();
-
-        assertThat(subject.getQueryFactorLabel(), is("Organism Part"));
-
-        assertThat(subject.getFactorValueHeaders().size(), is(6));
-        assertThat(subject.getFactorValueHeaders().get(0), startsWith("brain"));
-    }
 }

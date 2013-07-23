@@ -31,6 +31,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BioEntityPage extends HeatmapTablePage {
 
@@ -118,11 +119,14 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public void clickInfoCard() {
+        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        wait.until(ExpectedConditions.visibilityOf(infoPaneHeader));
+
         infoPaneHeader.click();
 
-        By byBioEntityCardClass = By.id("bioEntityCardTable");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
+        By infoCardBodyId = By.id("infoBody");
+        wait = new WebDriverWait(driver, 4L);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(infoCardBodyId));
     }
 
     public boolean isBaselineProfileExpanded() {
@@ -132,6 +136,8 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public boolean isDifferentialProfileExpanded() {
+        WebDriverWait wait = new WebDriverWait(driver, 4L);
+        wait.withTimeout(1L, TimeUnit.SECONDS);
         return diffProfilePaneBody.isDisplayed();
     }
 
@@ -153,6 +159,7 @@ public class BioEntityPage extends HeatmapTablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
+    //This is not working with PhantomJS browser :((
     public String getContastSummaryTooltipTableData(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableRowIndex,
                                                     int zeroBasedTooltipTableColumnIndex) {
         WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
@@ -160,7 +167,7 @@ public class BioEntityPage extends HeatmapTablePage {
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
                 + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        WebDriverWait wait = new WebDriverWait(driver, 4L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -186,6 +193,8 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public String getWidgetBody() {
+        WebDriverWait wait = new WebDriverWait(driver, 3L);
+        wait.until(ExpectedConditions.visibilityOf(widgetBody));
         return widgetBody.getText();
     }
 

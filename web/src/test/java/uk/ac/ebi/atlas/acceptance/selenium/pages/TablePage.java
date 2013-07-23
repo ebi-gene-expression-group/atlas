@@ -1,3 +1,25 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import com.google.common.base.Function;
@@ -93,7 +115,7 @@ abstract class TablePage extends AtlasPage {
     protected List<WebElement> getNonEmptyCellsFromFirstTableRow(WebElement table) {
         List<WebElement> nonEmptyCells = new ArrayList<>();
         for (WebElement cell : getFirstTableRow(table)) {
-            if (!cell.getCssValue("background-color").equals("transparent")) {
+            if (!cell.getCssValue("background-color").equals("transparent") && !cell.getCssValue("background-color").equals("rgba(0, 0, 0, 0)")) {
                 nonEmptyCells.add(cell);
             }
         }

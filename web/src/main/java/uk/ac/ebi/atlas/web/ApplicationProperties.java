@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.collect.Sets;
 import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentloader.ConfigurationDao;
 import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
@@ -40,14 +40,19 @@ import java.util.Set;
 @Scope("singleton")
 public class ApplicationProperties {
 
+    private Properties speciesToExperimentProperties;
+
     private Properties configurationProperties;
 
-    private ConfigurationDao configurationDao;
+    private ExperimentConfigurationDao experimentConfigurationDao;
 
     @Inject
-    ApplicationProperties(@Named("configuration") Properties configurationProperties, ConfigurationDao configurationDao) {
+    ApplicationProperties(@Named("configuration") Properties configurationProperties,
+                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties,
+                          ExperimentConfigurationDao experimentConfigurationDao) {
+        this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.configurationProperties = configurationProperties;
-        this.configurationDao = configurationDao;
+        this.experimentConfigurationDao = experimentConfigurationDao;
     }
 
     public String getAnatomogramFileName(String specie, boolean isMale) {
@@ -89,6 +94,7 @@ public class ApplicationProperties {
         return configurationProperties.getProperty("feedback.email");
     }
 
+    //ToDo (B): all these methods that use a DAO must be removed from this class. DAO will be accessed directly and only in cache loaders.
     public Set<String> getBaselineExperimentsIdentifiers() {
         return getExperimentIdentifiersForType(ExperimentType.BASELINE);
     }
@@ -105,14 +111,20 @@ public class ApplicationProperties {
         return identifiersForType;
     }
 
-    public Set<String> getTwoColourExperimentsIdentifiers() {
-        // this type distinction is required for SDRF parsing
-        return getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR);
-    }
-
-    public Set<String> getMicroRNAExperimentsIdentifiers() {
-        // currently not yet used
-        return getExperimentIdentifiersForType(ExperimentType.MICRORNA);
+    private Set<String> getExperimentIdentifiersForType(ExperimentType experimentType) {
+        Set<String> integrationIdentifiers = Collections.emptySet();
+        if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
+            integrationIdentifiers = getStringValues("integration.experiment.identifiers");
+        }
+        Set<String> results = Sets.newHashSet();
+        for (ExperimentConfiguration experimentConfiguration : experimentConfigurationDao.getExperimentConfigurations(experimentType)) {
+            results.add(experimentConfiguration.getExperimentAccession());
+        }
+        // this filtering is for integration tests using only subset of all experiments
+        if (!integrationIdentifiers.isEmpty()) {
+            results.retainAll(integrationIdentifiers);
+        }
+        return results;
     }
 
     public Set<String> getArrayDesignAccessions() {
@@ -123,20 +135,8 @@ public class ApplicationProperties {
         return Sets.newHashSet(configurationProperties.getProperty(propertyKey).trim().split(","));
     }
 
-    private Set<String> getExperimentIdentifiersForType(ExperimentType experimentType) {
-        Set<String> integrationIdentifiers = Collections.emptySet();
-        if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
-            integrationIdentifiers = getStringValues("integration.experiment.identifiers");
-        }
-        Set<String> results = Sets.newHashSet();
-        for (ExperimentConfiguration experimentConfiguration : configurationDao.getExperimentConfigurations(experimentType)) {
-            results.add(experimentConfiguration.getExperimentAccession());
-        }
-        // this filtering is for integration tests using only subset of all experiments
-        if (!integrationIdentifiers.isEmpty()) {
-            results.retainAll(integrationIdentifiers);
-        }
-        return results;
+    public String getExperimentAccessionBySpecies(String species) {
+        return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
     }
 
 }

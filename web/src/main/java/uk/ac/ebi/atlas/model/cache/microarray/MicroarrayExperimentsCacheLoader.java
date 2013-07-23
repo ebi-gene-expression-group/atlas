@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.model.cache.microarray;
 
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.experimentloader.ConfigurationDao;
 import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCacheLoader;
@@ -49,14 +49,14 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     private String logFoldChangePathTemplate;
 
-    private ConfigurationDao configurationDao;
+    private ExperimentConfigurationDao experimentConfigurationDao;
 
     @Inject
     public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader,
-                                            @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate, ConfigurationDao configurationDao) {
+                                            @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate, ExperimentConfigurationDao experimentConfigurationDao) {
         this.configurationTrader = configurationTrader;
         this.logFoldChangePathTemplate = logFoldChangePathTemplate;
-        this.configurationDao = configurationDao;
+        this.experimentConfigurationDao = experimentConfigurationDao;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
         boolean hasLogFoldChangeFile = new File(logFoldChangeFileLocation).exists();
 
-        ExperimentConfiguration experimentConfiguration = configurationDao.getExperimentConfiguration(accession);
+        ExperimentConfiguration experimentConfiguration = experimentConfigurationDao.getExperimentConfiguration(accession);
         return new MicroarrayExperiment(experimentConfiguration.getExperimentType(), accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
 
     }

@@ -59,7 +59,7 @@ public class ConfigurationDaoIT {
     private DataSource dataSource;
 
     @Inject
-    private ConfigurationDao subject;
+    private ExperimentConfigurationDao subject;
 
     @Before
     public void setUp() throws Exception {
