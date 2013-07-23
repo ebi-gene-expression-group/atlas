@@ -20,13 +20,27 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.utils;
+package uk.ac.ebi.atlas.acceptance.selenium.fixture.internal;
 
-public class SeleniumFixture extends SinglePageSeleniumFixture{
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.WebDriverFactory;
 
+public class FirefoxWebDriverFactory implements WebDriverFactory {
+
+    private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
+
+    protected FirefoxDriver driver;
 
     @Override
-    protected void getStartingPage() {
-        //do nothing... test classes extending this fixture are responsible of instantiating and using Page classes
+    public WebDriver create() {
+        return initializeDriver();
     }
+
+    private WebDriver initializeDriver() {
+
+        return new FirefoxDriver();
+
+    }
+
 }

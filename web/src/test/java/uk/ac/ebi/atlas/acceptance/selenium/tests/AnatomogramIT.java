@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

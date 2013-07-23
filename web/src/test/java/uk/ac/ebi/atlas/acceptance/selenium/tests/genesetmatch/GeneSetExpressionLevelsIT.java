@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.genesetmatch;
 
 import org.junit.Before;
 import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;

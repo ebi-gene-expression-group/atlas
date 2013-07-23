@@ -23,8 +23,8 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HomePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SinglePageSeleniumFixture;
 
 import java.util.List;
 

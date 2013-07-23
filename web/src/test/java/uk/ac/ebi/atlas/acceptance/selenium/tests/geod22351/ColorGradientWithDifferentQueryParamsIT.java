@@ -23,8 +23,8 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod22351;
 
 import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 
 import java.util.List;
 

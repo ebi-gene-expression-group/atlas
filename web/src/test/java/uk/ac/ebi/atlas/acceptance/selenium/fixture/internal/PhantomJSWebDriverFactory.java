@@ -20,64 +20,51 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.utils;
+package uk.ac.ebi.atlas.acceptance.selenium.fixture.internal;
 
-import org.junit.After;
-import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.WebDriverFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public abstract class SinglePageSeleniumFixture {
+/*
+In order to use this fixture you must have PhantomJS installed on your machine and you must start it:
+as a webrunner server with the following command line:
+phantomjs --webdriver=4444
+ */
+public class PhantomJSWebDriverFactory implements WebDriverFactory {
 
-    private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
+    private static final String SELENIUM_SERVER_URL = "http://127.0.0.1:4444/wd/hub";
 
-    //Uncomment this if you want to use local firefox browser
-    //protected FirefoxDriver driver;
-
-    //comment this if you want to use local firefox browser
     protected WebDriver driver;
 
 
-    @Before
-    public void bootstrapTest() {
-        initializeFirefoxDriver();
-        getStartingPage();
+    @Override
+    public WebDriver create() {
+        return initializeDriver();
     }
 
-    @After
-    public void closeDriver() {
-        driver.quit();
-    }
+    private WebDriver initializeDriver() {
 
-    private void initializeFirefoxDriver() {
-
-        //uncomment this if you want to use local firefox driver
-        //driver = new FirefoxDriver();
-
-
-        //comment this if you want to use local firefox browser
         try {
 
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setJavascriptEnabled(true);
             capabilities.setBrowserName("firefox");
 
-            this.driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
-
+            return new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), capabilities);
         } catch (MalformedURLException e) {
 
             e.printStackTrace();
+            throw new IllegalStateException(e);
 
         }
-        //
 
     }
 
-    protected abstract void getStartingPage();
 
 }

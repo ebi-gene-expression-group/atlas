@@ -23,8 +23,8 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.mtab1066;
 
 import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.utils.SeleniumFixture;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import static org.hamcrest.Matchers.*;
