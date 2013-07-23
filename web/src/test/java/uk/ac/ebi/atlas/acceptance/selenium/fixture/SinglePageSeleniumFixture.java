@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.fixture;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.internal.RemoteDriverFactory;
 
 
 public abstract class SinglePageSeleniumFixture {
