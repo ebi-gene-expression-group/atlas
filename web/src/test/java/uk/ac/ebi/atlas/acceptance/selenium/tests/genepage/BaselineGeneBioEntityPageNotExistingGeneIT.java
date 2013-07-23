@@ -45,7 +45,6 @@ public class BaselineGeneBioEntityPageNotExistingGeneIT extends SinglePageSeleni
     @Test
     public void checkPaneExpansion() {
         assertThat(subject.isBaselineProfileExpanded(), is(true));
-        assertThat(subject.isInfoCardExpanded(), is(false));
         assertThat(subject.isDifferentialProfileExpanded(), is(false));
     }
 

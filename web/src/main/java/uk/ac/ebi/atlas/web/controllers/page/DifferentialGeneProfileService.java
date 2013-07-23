@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -38,7 +39,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -54,8 +54,6 @@ import java.util.Set;
 @Scope("request")
 public class DifferentialGeneProfileService {
 
-    private ApplicationProperties applicationProperties;
-
     private SolrClient solrClient;
 
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
@@ -70,8 +68,10 @@ public class DifferentialGeneProfileService {
 
     private DifferentialGeneProfileProperties differentialGeneProfileProperties;
 
+    private ExperimentTrader experimentTrader;
+
     @Inject
-    public DifferentialGeneProfileService(ApplicationProperties applicationProperties,
+    public DifferentialGeneProfileService(ExperimentTrader experimentTrader,
                                           SolrClient solrClient,
                                           RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           MicroarrayRequestContextBuilder microarrayRequestContextBuilder,
@@ -79,7 +79,7 @@ public class DifferentialGeneProfileService {
                                           MicroarrayExperimentsCache microarrayExperimentsCache,
                                           RankProfilesCommandFactory rankProfilesCommandFactory,
                                           DifferentialGeneProfileProperties differentialGeneProfileProperties) {
-        this.applicationProperties = applicationProperties;
+        this.experimentTrader = experimentTrader;
         this.solrClient = solrClient;
         this.rnaSeqRequestContextBuilder = rnaSeqRequestContextBuilder;
         this.microarrayRequestContextBuilder = microarrayRequestContextBuilder;
@@ -104,7 +104,7 @@ public class DifferentialGeneProfileService {
         // set cutoff used to calculate profile lists for showing on web page
         differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
-        for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getDifferentialExperimentsIdentifiers()) {
             try {
                 DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, geneQuery, cutoff, specie);
                 if (!retrievedProfilesList.isEmpty()) {
@@ -115,7 +115,7 @@ public class DifferentialGeneProfileService {
             }
         }
 
-        for (String experimentAccession : applicationProperties.getMicroarrayExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getMicroarrayExperimentsIdentifiers()) {
             try {
                 Collection<DifferentialProfilesList> retrievedProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, geneQuery, cutoff, specie);
                 if (!retrievedProfilesLists.isEmpty()) {

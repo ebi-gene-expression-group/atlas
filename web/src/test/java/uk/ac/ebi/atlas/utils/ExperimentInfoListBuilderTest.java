@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
@@ -36,7 +37,6 @@ import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class ExperimentInfoListBuilderTest {
     private static final String DIFFERENTIAL = "DIFFERENTIAL";
 
     @Mock
-    private ApplicationProperties applicationPropertiesMock;
+    private ExperimentTrader experimentTraderMock;
 
     @Mock
     private BaselineExperimentsCache baselineExperimentsCacheMock;
@@ -100,9 +100,9 @@ public class ExperimentInfoListBuilderTest {
         when(baselineExperimentMock.getDescription()).thenReturn(DESCRIPTION);
         when(baselineExperimentMock.getType()).thenReturn(ExperimentType.BASELINE);
 
-        when(applicationPropertiesMock.getBaselineExperimentsIdentifiers()).thenReturn(Sets.newHashSet(ACCESSION));
-        when(applicationPropertiesMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
-        when(applicationPropertiesMock.getMicroarrayExperimentsIdentifiers()).thenReturn(Sets.newHashSet(MICROARRAY));
+        when(experimentTraderMock.getBaselineExperimentsIdentifiers()).thenReturn(Sets.newHashSet(ACCESSION));
+        when(experimentTraderMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
+        when(experimentTraderMock.getMicroarrayExperimentsIdentifiers()).thenReturn(Sets.newHashSet(MICROARRAY));
 
         when(baselineExperimentsCacheMock.getExperiment(ACCESSION)).thenReturn(baselineExperimentMock);
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(DIFFERENTIAL)).thenReturn(differentialExperimentMock);
@@ -121,7 +121,7 @@ public class ExperimentInfoListBuilderTest {
 
         when(baselineExperimentMock.getExperimentRunAccessions()).thenReturn(Sets.newHashSet("RUN"));
 
-        subject = new ExperimentInfoListBuilder(applicationPropertiesMock,
+        subject = new ExperimentInfoListBuilder(experimentTraderMock,
                 baselineExperimentsCacheMock,
                 rnaSeqDiffExperimentsCacheMock,
                 microarrayExperimentsCacheMock);

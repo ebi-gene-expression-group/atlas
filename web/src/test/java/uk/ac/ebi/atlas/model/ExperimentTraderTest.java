@@ -1,0 +1,114 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.model;
+
+import com.google.common.collect.Sets;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
+
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
+
+@RunWith(MockitoJUnitRunner.class)
+public class ExperimentTraderTest {
+
+    private static final String E_TABM_713 = "E-TABM-713";
+    private static final String E_MTAB_513 = "E-MTAB-513";
+    private static final String E_MTAB_599 = "E-MTAB-599";
+    private static final String E_MTAB_1066 = "E-MTAB-1066";
+    private static final String E_GEOD_43049 = "E-GEOD-43049";
+    private static final String E_GEOD_22351 = "E-GEOD-22351";
+    private static final String E_GEOD_38400 = "E-GEOD-38400";
+    private static final String E_GEOD_21860 = "E-GEOD-21860";
+
+    private ExperimentTrader subject;
+
+    @Mock
+    private ExperimentConfigurationDao experimentConfigurationDaoMock;
+    @Mock
+    private ApplicationProperties applicationPropertiesMock;
+    @Mock
+    private BaselineExperimentsCache baselineExperimentsCacheMock;
+    @Mock
+    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCacheMock;
+    @Mock
+    private MicroarrayExperimentsCache microarrayExperimentsCacheMock;
+    @Mock
+    ExperimentConfiguration experimentConfigurationMock;
+
+
+    @Before
+    public void initSubject(){
+        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.BASELINE)).thenReturn(Sets.newHashSet(E_MTAB_513, E_MTAB_599));
+
+        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
+
+        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.MICROARRAY)).thenReturn(Sets.newHashSet(E_MTAB_1066));
+
+        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.TWOCOLOUR)).thenReturn(Sets.newHashSet(E_GEOD_43049));
+
+        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.MICRORNA)).thenReturn(Sets.newHashSet(E_TABM_713));
+
+        subject = new ExperimentTrader(experimentConfigurationDaoMock, applicationPropertiesMock,
+                                        baselineExperimentsCacheMock,
+                                        rnaSeqDiffExperimentsCacheMock,
+                                        microarrayExperimentsCacheMock);
+    }
+
+    @Test
+    public void testGetBaselineExperimentsIdentifiers() throws Exception {
+        assertThat(subject.getBaselineExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_513, E_MTAB_599));
+    }
+
+    @Test
+    public void testGetDifferentialExperimentsIdentifiers() throws Exception {
+        assertThat(subject.getDifferentialExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
+    }
+
+    @Test
+    public void testGetMicroarrayExperimentsIdentifiers() throws Exception {
+        assertThat(subject.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066, E_GEOD_43049, E_TABM_713));
+    }
+
+    @Test
+    public void getExperimentShouldUseTheCache(){
+        given(experimentConfigurationMock.getExperimentType()).willReturn(ExperimentType.MICROARRAY);
+        given(experimentConfigurationDaoMock.getExperimentConfiguration(E_GEOD_21860)).willReturn(experimentConfigurationMock);
+        subject.getExperiment(E_GEOD_21860);
+        verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
+        verify(rnaSeqDiffExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);
+        verify(microarrayExperimentsCacheMock).getExperiment(E_GEOD_21860);
+    }
+
+}

@@ -29,9 +29,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -45,7 +45,7 @@ import java.util.Map;
 public class HomePageController {
     private static final Logger LOGGER = Logger.getLogger(HomePageController.class);
 
-    private ApplicationProperties properties;
+    private ExperimentTrader experimentTrader;
 
     private BaselineExperimentsCache experimentsCache;
 
@@ -56,8 +56,9 @@ public class HomePageController {
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public HomePageController(ApplicationProperties properties, BaselineExperimentsCache experimentsCache) {
-        this.properties = properties;
+    public HomePageController(ExperimentTrader experimentTrader,
+                              BaselineExperimentsCache experimentsCache) {
+        this.experimentTrader = experimentTrader;
         this.experimentsCache = experimentsCache;
     }
 
@@ -76,7 +77,7 @@ public class HomePageController {
     @PostConstruct
     private void loadExperimentAccessionsBySpecie() {
 
-        for (String experimentAccession : properties.getBaselineExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getBaselineExperimentsIdentifiers()) {
             String displayName = null;
             try {
                 displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
@@ -104,7 +105,7 @@ public class HomePageController {
         };
         experimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
 
-        for (String experimentAccession : properties.getBaselineExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getBaselineExperimentsIdentifiers()) {
 
             try {
                 BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);

@@ -32,13 +32,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.ContrastProperty;
 import uk.ac.ebi.atlas.model.differential.ContrastSummary;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -50,17 +50,17 @@ public class ContrastSummaryController {
 
     protected static final String ARRAY_DESIGN = "array design";
 
-    private ApplicationProperties applicationProperties;
-
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
     private MicroarrayExperimentsCache microarrayExperimentsCache;
 
+    private ExperimentTrader experimentTrader;
+
     @Inject
-    public ContrastSummaryController(ApplicationProperties applicationProperties,
+    public ContrastSummaryController(ExperimentTrader experimentTrader,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                      MicroarrayExperimentsCache microarrayExperimentsCache) {
-        this.applicationProperties = applicationProperties;
+        this.experimentTrader = experimentTrader;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
     }
@@ -73,9 +73,9 @@ public class ContrastSummaryController {
 
         DifferentialExperiment differentialExperiment;
 
-        if (applicationProperties.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
+        if (experimentTrader.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
             differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-        } else if (applicationProperties.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
+        } else if (experimentTrader.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
             differentialExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
         } else {
             throw new IllegalStateException("Experiment for accession " + experimentAccession + " not found.");

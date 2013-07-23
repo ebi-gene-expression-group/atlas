@@ -25,14 +25,11 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.collect.Sets;
 import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
 import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
-import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
-import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 
@@ -94,37 +91,12 @@ public class ApplicationProperties {
         return configurationProperties.getProperty("feedback.email");
     }
 
-    //ToDo (B): all these methods that use a DAO must be removed from this class. DAO will be accessed directly and only in cache loaders.
-    public Set<String> getBaselineExperimentsIdentifiers() {
-        return getExperimentIdentifiersForType(ExperimentType.BASELINE);
-    }
-
-    public Set<String> getDifferentialExperimentsIdentifiers() {
-        return getExperimentIdentifiersForType(ExperimentType.DIFFERENTIAL);
-    }
-
-    public Set<String> getMicroarrayExperimentsIdentifiers() {
-        Set<String> identifiersForType = getExperimentIdentifiersForType(ExperimentType.MICROARRAY);
-        // as two colour is a subtype of micro array, they need to be added here
-        identifiersForType.addAll(getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR));
-        identifiersForType.addAll(getExperimentIdentifiersForType(ExperimentType.MICRORNA));
-        return identifiersForType;
-    }
-
-    private Set<String> getExperimentIdentifiersForType(ExperimentType experimentType) {
-        Set<String> integrationIdentifiers = Collections.emptySet();
+    public Set<String> getTestCaseExperimentAccessions(){
+        Set<String> testCaseExperimentAccessions = Sets.newHashSet();
         if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
-            integrationIdentifiers = getStringValues("integration.experiment.identifiers");
+            testCaseExperimentAccessions.addAll(getStringValues("integration.experiment.identifiers"));
         }
-        Set<String> results = Sets.newHashSet();
-        for (ExperimentConfiguration experimentConfiguration : experimentConfigurationDao.getExperimentConfigurations(experimentType)) {
-            results.add(experimentConfiguration.getExperimentAccession());
-        }
-        // this filtering is for integration tests using only subset of all experiments
-        if (!integrationIdentifiers.isEmpty()) {
-            results.retainAll(integrationIdentifiers);
-        }
-        return results;
+        return testCaseExperimentAccessions;
     }
 
     public Set<String> getArrayDesignAccessions() {

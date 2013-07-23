@@ -64,6 +64,7 @@ public class LoadExperimentsController {
             return "Experiment " + accession + " loaded.";
 
         } catch (Exception e) {
+            LOGGER.error(e.getMessage(),e);
             return e.getMessage();
         }
     }

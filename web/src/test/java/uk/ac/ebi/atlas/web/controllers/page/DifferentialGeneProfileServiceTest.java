@@ -36,13 +36,13 @@ import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.*;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -65,7 +65,7 @@ public class DifferentialGeneProfileServiceTest {
     private static final String SPECIE = "SPECIE";
 
     @Mock
-    private ApplicationProperties applicationPropertiesMock;
+    private ExperimentTrader experimentTraderMock;
 
     @Mock
     private SolrClient solrClientMock;
@@ -115,7 +115,7 @@ public class DifferentialGeneProfileServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        when(applicationPropertiesMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
+        when(experimentTraderMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
         when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(Lists.newArrayList(SPECIE));
 
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(differentialExperimentMock);
@@ -146,7 +146,7 @@ public class DifferentialGeneProfileServiceTest {
         // to have a non-empty list
         differentialProfilesList.add(differentialProfileMock);
 
-        subject = new DifferentialGeneProfileService(applicationPropertiesMock, solrClientMock,
+        subject = new DifferentialGeneProfileService(experimentTraderMock, solrClientMock,
                 rnaSeqRequestContextBuilderMock, microarrayRequestContextBuilderMock,
                 rnaSeqDiffExperimentsCacheMock, microarrayExperimentsCacheMock,
                 rankProfilesCommandFactoryMock, differentialGeneProfilePropertiesMock);
@@ -155,8 +155,8 @@ public class DifferentialGeneProfileServiceTest {
     @Test
     public void testGetDifferentialProfilesList() throws Exception {
         assertThat(subject.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
-        verify(applicationPropertiesMock).getDifferentialExperimentsIdentifiers();
-        verify(applicationPropertiesMock).getMicroarrayExperimentsIdentifiers();
+        verify(experimentTraderMock).getDifferentialExperimentsIdentifiers();
+        verify(experimentTraderMock).getMicroarrayExperimentsIdentifiers();
         verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);
         verify(differentialGeneProfilePropertiesMock).clear();
         ArgumentCaptor<DifferentialProfilesList> argumentCaptor = ArgumentCaptor.forClass(DifferentialProfilesList.class);

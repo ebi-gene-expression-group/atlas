@@ -26,13 +26,13 @@ import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,20 +42,20 @@ import java.util.List;
 @Scope("prototype")
 public class ExperimentInfoListBuilder {
 
-    private ApplicationProperties applicationProperties;
-
     private BaselineExperimentsCache baselineExperimentsCache;
 
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
     private MicroarrayExperimentsCache microarrayExperimentsCache;
 
+    private ExperimentTrader experimentTrader;
+
     @Inject
-    public ExperimentInfoListBuilder(ApplicationProperties applicationProperties,
+    public ExperimentInfoListBuilder(ExperimentTrader experimentTrader,
                                      BaselineExperimentsCache baselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                      MicroarrayExperimentsCache microarrayExperimentsCache) {
-        this.applicationProperties = applicationProperties;
+        this.experimentTrader = experimentTrader;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
@@ -75,7 +75,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
-        for (String experimentAccession : applicationProperties.getMicroarrayExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getMicroarrayExperimentsIdentifiers()) {
             MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
@@ -93,7 +93,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
-        for (String experimentAccession : applicationProperties.getDifferentialExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getDifferentialExperimentsIdentifiers()) {
             DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
@@ -110,7 +110,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
-        for (String experimentAccession : applicationProperties.getBaselineExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getBaselineExperimentsIdentifiers()) {
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);

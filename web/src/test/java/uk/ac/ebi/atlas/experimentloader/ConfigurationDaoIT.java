@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -86,14 +87,14 @@ public class ConfigurationDaoIT {
         subject.addExperimentConfiguration(ANOTHER_ACCESION, TYPE_DIFFERENTIAL);
         subject.addExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY);
         subject.addExperimentConfiguration(YET_YET_ANOTHER_ACCESSION, TYPE_MICRORNA);
-        List<ExperimentConfiguration> experimentConfigurations = subject.getExperimentConfigurations(TYPE_BASELINE);
-        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(E_MTAB_513, TYPE_BASELINE)));
-        experimentConfigurations = subject.getExperimentConfigurations(TYPE_DIFFERENTIAL);
-        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(ANOTHER_ACCESION, TYPE_DIFFERENTIAL)));
-        experimentConfigurations = subject.getExperimentConfigurations(TYPE_MICROARRAY);
-        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(YET_ANOTHER_ACCESSION, TYPE_MICROARRAY)));
-        experimentConfigurations = subject.getExperimentConfigurations(TYPE_MICRORNA);
-        assertThat(experimentConfigurations, hasItem(new ExperimentConfiguration(YET_YET_ANOTHER_ACCESSION, TYPE_MICRORNA)));
+        Set<String> experimentAccessions = subject.getExperimentAccessions(TYPE_BASELINE);
+        assertThat(experimentAccessions, contains(E_MTAB_513));
+        experimentAccessions = subject.getExperimentAccessions(TYPE_DIFFERENTIAL);
+        assertThat(experimentAccessions, contains(ANOTHER_ACCESION));
+        experimentAccessions = subject.getExperimentAccessions(TYPE_MICROARRAY);
+        assertThat(experimentAccessions, contains(YET_ANOTHER_ACCESSION));
+        experimentAccessions = subject.getExperimentAccessions(TYPE_MICRORNA);
+        assertThat(experimentAccessions, contains(YET_YET_ANOTHER_ACCESSION));
     }
 
     @Test

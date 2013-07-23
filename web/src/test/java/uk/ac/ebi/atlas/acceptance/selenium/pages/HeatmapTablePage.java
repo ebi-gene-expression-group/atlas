@@ -161,12 +161,9 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getDiffGradientColors() {
-        List<String> result = new ArrayList<>();
         WebElement element = diffHeatmapTableLegend.findElement(By.className("color-gradient"));
         String style = element.getCssValue("background-image");
-        result.add(StringUtils.substringBetween(style,"from(rgb(",")"));
-        result.add(StringUtils.substringBetween(style,"to(rgb(",")"));
-        return result;
+        return Lists.newArrayList(StringUtils.substringsBetween(style,"rgb(",")"));
     }
 
     public String getDownloadExpressionProfilesLink() {

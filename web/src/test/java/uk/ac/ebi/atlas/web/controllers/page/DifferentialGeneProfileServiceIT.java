@@ -28,10 +28,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.controllers.rest.LoadExperimentsController;
 
 import javax.inject.Inject;
@@ -64,7 +64,7 @@ public class DifferentialGeneProfileServiceIT {
     private static final String DROSOPHILA_MELANOGASTER = "Drosophila melanogaster";
 
     @Inject
-    private ApplicationProperties properties;
+    private ExperimentTrader experimentTrader;
 
     @Inject
     private DifferentialGeneProfileService subject;
@@ -83,8 +83,8 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testForAccessions() throws Exception {
-        assertThat(properties.getDifferentialExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860, E_MTAB_698));
-        assertThat(properties.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066));
+        assertThat(experimentTrader.getDifferentialExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860, E_MTAB_698));
+        assertThat(experimentTrader.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066));
     }
 
     @Test

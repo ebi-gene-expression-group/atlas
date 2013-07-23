@@ -22,15 +22,20 @@
 
 package uk.ac.ebi.atlas.experimentloader;
 
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Set;
 
 //ToDo: (B) this should become ExperimentDAO
 
@@ -44,8 +49,8 @@ public class ExperimentConfigurationDao {
     private static final String EXPERIMENT_CONFIGURATION_BY_ACCESSION = "SELECT experiment_accession, experiment_type " +
             "FROM experiment_configuration WHERE experiment_accession = ?";
 
-    private static final String EXPERIMENT_CONFIGURATION_BY_TYPE = "SELECT experiment_accession, experiment_type " +
-            "FROM experiment_configuration WHERE experiment_type = ?";
+    private static final String EXPERIMENT_ACCESSIONS_BY_TYPE = "SELECT experiment_accession " +
+            "FROM experiment_configuration WHERE experiment_type IN(:experimentTypes)";
 
     private static final String EXPERIMENT_CONFIGURATION_INSERT = "INSERT INTO experiment_configuration " +
             "(experiment_accession, experiment_type) VALUES (?, ?)";
@@ -64,25 +69,19 @@ public class ExperimentConfigurationDao {
         return select.query(EXPERIMENT_CONFIGURATION_SELECT, new ExperimentConfigurationRowMapper());
     }
 
-    public List<ExperimentConfiguration> getExperimentConfigurations(ExperimentType experimentType) {
+    public Set<String> getExperimentAccessions(ExperimentType... experimentTypes) {
 
-        JdbcTemplate select = new JdbcTemplate(dataSource);
+        NamedParameterJdbcTemplate select = new NamedParameterJdbcTemplate(dataSource);
 
-        return select.query(EXPERIMENT_CONFIGURATION_BY_TYPE,
-                new ExperimentConfigurationRowMapper(), experimentType.name());
-    }
-
-    public ExperimentConfiguration getExperimentConfiguration(String experimentAccession) {
-
-        JdbcTemplate select = new JdbcTemplate(dataSource);
-
-        List<ExperimentConfiguration> list = select.query(EXPERIMENT_CONFIGURATION_BY_ACCESSION,
-                new ExperimentConfigurationRowMapper(), experimentAccession);
-        if (list.size() == 1) {
-            return list.get(0);
-        } else {
-            return null;
+        Set<String> experimentTypeNames = Sets.newHashSet();
+        for (ExperimentType experimentType: experimentTypes){
+            experimentTypeNames.add(experimentType.name());
         }
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource("experimentTypes",experimentTypeNames);
+        List<String> experimentAccessions = select.queryForList(EXPERIMENT_ACCESSIONS_BY_TYPE, parameters, String.class);
+
+        return Sets.newHashSet(experimentAccessions);
     }
 
     public boolean addExperimentConfiguration(String experimentAccession, ExperimentType experimentType) {
@@ -103,4 +102,18 @@ public class ExperimentConfigurationDao {
         return deletedRecordsCount == 1;
     }
 
+    public ExperimentConfiguration getExperimentConfiguration(String experimentAccession) {
+        try {
+
+            JdbcTemplate select = new JdbcTemplate(dataSource);
+
+            ExperimentConfiguration experimentConfiguration = select.queryForObject(EXPERIMENT_CONFIGURATION_BY_ACCESSION,
+                    new ExperimentConfigurationRowMapper(), experimentAccession);
+
+            return experimentConfiguration;
+
+        } catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
 }
