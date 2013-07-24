@@ -63,8 +63,6 @@ public class MicroarrayProfilesTSVWriterIT {
     @Inject
     private ExperimentDAO experimentDAO;
 
-    private MicroarrayRequestContext microarrayRequestContext;
-
     private MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
 
     private MicroarrayExperiment microarrayExperiment;
@@ -75,14 +73,12 @@ public class MicroarrayProfilesTSVWriterIT {
         experimentDAO.addExperiment(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY, false);
 
         microarrayExperiment = microarrayExperimentsCache.getExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
-        microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
-                .withPreferences(requestPreferences).build();
 
     }
 
     @After
     public void tearDown() throws Exception {
-        experimentDAO.deleteExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION);
+        experimentDAO.deleteExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -90,7 +86,7 @@ public class MicroarrayProfilesTSVWriterIT {
 
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g2_g3")));
 
-        microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
+        microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                 .withPreferences(requestPreferences).build();
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");

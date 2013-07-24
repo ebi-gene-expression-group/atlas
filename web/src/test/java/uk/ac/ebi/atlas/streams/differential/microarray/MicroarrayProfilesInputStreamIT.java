@@ -97,7 +97,7 @@ public class MicroarrayProfilesInputStreamIT {
 
     @After
     public void tearDown() throws Exception {
-        experimentDAO.deleteExperimentConfiguration(EXPERIMENT_ACCESSION);
+        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Before

@@ -98,7 +98,7 @@ public class ExperimentDAO {
         jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession, experimentType.name(), isPrivate);
     }
 
-    public void deleteExperimentConfiguration(String experimentAccession) {
+    public void deleteExperiment(String experimentAccession) {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 

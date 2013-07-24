@@ -135,7 +135,7 @@ public class ExperimentCRUD {
     public void deleteExperiment(String experimentAccession){
         checkNotNull(experimentAccession);
 
-        experimentDAO.deleteExperimentConfiguration(experimentAccession);
+        experimentDAO.deleteExperiment(experimentAccession);
 
         transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
     }

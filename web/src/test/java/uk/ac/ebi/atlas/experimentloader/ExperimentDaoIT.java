@@ -74,10 +74,10 @@ public class ExperimentDAOIT {
 
     @After
     public void tearDown() throws Exception {
-        subject.deleteExperimentConfiguration(E_MTAB_513);
-        subject.deleteExperimentConfiguration(DIFFERENTIAL_ACCESION);
-        subject.deleteExperimentConfiguration(MICROARRAY_ACCESSION);
-        subject.deleteExperimentConfiguration(MICRORNA_ACCESSION);
+        subject.deleteExperiment(E_MTAB_513);
+        subject.deleteExperiment(DIFFERENTIAL_ACCESION);
+        subject.deleteExperiment(MICROARRAY_ACCESSION);
+        subject.deleteExperiment(MICRORNA_ACCESSION);
     }
 
     @Test
@@ -118,14 +118,14 @@ public class ExperimentDAOIT {
         experimentDTOs = subject.findAllExperiments();
         assertThat(experimentDTOs.size(), is(size + 1));
         assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_1066, TYPE_MICROARRAY, new Date(), false)));
-        subject.deleteExperimentConfiguration(E_MTAB_1066);
+        subject.deleteExperiment(E_MTAB_1066);
     }
 
     @Test
     public void testDeleteExperiment() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
         int size = experimentDTOs.size();
-        subject.deleteExperimentConfiguration(E_MTAB_513);
+        subject.deleteExperiment(E_MTAB_513);
         assertThat(subject.findAllExperiments().size(), is(size - 1));
         subject.addExperiment(E_MTAB_513, ExperimentType.BASELINE, false);
     }
