@@ -48,22 +48,17 @@ import static org.hamcrest.Matchers.*;
 public class DifferentialGeneProfileServiceIT {
 
     private static final String E_GEOD_22351 = "E-GEOD-22351";
-    private static final String E_GEOD_21860 = "E-GEOD-21860";
     private static final String E_MTAB_698 = "E-MTAB-698";
     private static final String E_GEOD_38400 = "E-GEOD-38400";
-    private static final String E_MTAB_1066 = "E-MTAB-1066";
 
     private static final String FIRST_IDENTIFIER = "ENSMUSG00000029816";
     private static final String SECOND_IDENTIFIER = "ENSMUSG00000036887";
     private static final String THIRD_IDENTIFIER = "ENSMUSG00000026628";
     private static final String FOURTH_IDENTIFIER = "AT3G29644";
-    private static final String FIFTH_IDENTIFIER = "FBgn0035109";
-    private static final String SIXTH_IDENTIFIER = "FBgn0032801";
 
     private static final double FDR_CUTOFF = 0.5;
     private static final String MUS_MUSCULUS = "Mus musculus";
     private static final String ARABIDOPSIS_THALIANA = "Arabidopsis thaliana";
-    private static final String DROSOPHILA_MELANOGASTER = "Drosophila melanogaster";
 
     @Inject
     private ExperimentTrader experimentTrader;
@@ -74,25 +69,20 @@ public class DifferentialGeneProfileServiceIT {
     @Inject
     private LoadExperimentsController loadExperimentsController;
 
-    private static boolean dbInitialized;
-
     @Before
     public void initDatabase() throws IOException {
-        if (!dbInitialized){
-            loadExperimentsController.loadExperiment(E_GEOD_21860, ExperimentType.DIFFERENTIAL, false);
-            loadExperimentsController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL, false);
-            loadExperimentsController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL, false);
-            loadExperimentsController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL, false);
-            loadExperimentsController.loadExperiment(E_MTAB_1066, ExperimentType.MICROARRAY, false);
-            dbInitialized = true;
-        }
+        loadExperimentsController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL, false);
+        loadExperimentsController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL, false);
+        loadExperimentsController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL, false);
     }
 
-    @Test
-    public void shouldReturnTheRightAccessions() throws Exception {
-        assertThat(experimentTrader.getDifferentialExperimentAccessions(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860, E_MTAB_698));
-        assertThat(experimentTrader.getMicroarrayExperimentAccessions(), containsInAnyOrder(E_MTAB_1066));
+    @After
+    public void tearDown() throws IOException {
+        loadExperimentsController.deleteExperiment(E_GEOD_38400);
+        loadExperimentsController.deleteExperiment(E_GEOD_22351);
+        loadExperimentsController.deleteExperiment(E_MTAB_698);
     }
+
 
     @Test
     public void testGetDifferentialProfilesListForIdentifierFirst() throws Exception {
@@ -109,13 +99,9 @@ public class DifferentialGeneProfileServiceIT {
     public void testGetDifferentialProfilesListForIdentifierSecond() throws Exception {
         DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListMapForIdentifier(SECOND_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialGeneProfileProperties, is(not(nullValue())));
-        assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), containsInAnyOrder(E_GEOD_21860, E_GEOD_22351));
-        DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_21860);
+        assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), containsInAnyOrder(E_GEOD_22351));
+        DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_22351);
         DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesListForExperiment.get(0);
-        assertThat(differentialProfile.getId(), is(SECOND_IDENTIFIER));
-        assertThat(differentialProfile.getConditions().size(), is(1));
-        differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_22351);
-        differentialProfile = (DifferentialProfile) differentialProfilesListForExperiment.get(0);
         assertThat(differentialProfile.getId(), is(SECOND_IDENTIFIER));
         assertThat(differentialProfile.getConditions().size(), is(1));
     }
@@ -155,14 +141,6 @@ public class DifferentialGeneProfileServiceIT {
         assertThat(differentialProfile.getId(), is(FIRST_IDENTIFIER));
     }
 
-    @Test
-    public void testRetrieveDifferentialProfileForExperimentEGEOD21860Second() throws Exception {
-        DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_21860, SECOND_IDENTIFIER, FDR_CUTOFF, MUS_MUSCULUS);
-        assertThat(differentialProfilesList, is(not(nullValue())));
-        assertThat(differentialProfilesList.size(), is(1));
-        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
-        assertThat(differentialProfile.getId(), is(SECOND_IDENTIFIER));
-    }
 
     @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD22351Second() throws Exception {
@@ -201,37 +179,8 @@ public class DifferentialGeneProfileServiceIT {
     }
 
     @Test
-    public void testRetrieveDifferentialProfilesForMicroarrayExperimentEMTAB1066Fifth() throws Exception {
-        Collection<DifferentialProfilesList> differentialProfilesLists = subject.retrieveDifferentialProfilesForMicroarrayExperiment(E_MTAB_1066, FIFTH_IDENTIFIER, FDR_CUTOFF, DROSOPHILA_MELANOGASTER);
-        assertThat(differentialProfilesLists, is(not(nullValue())));
-        assertThat(differentialProfilesLists.size(), is(1));
-        DifferentialProfilesList differentialProfilesList = differentialProfilesLists.iterator().next();
-        assertThat(differentialProfilesLists.size(), is(1));
-        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
-        assertThat(differentialProfile.getId(), is(FIFTH_IDENTIFIER));
-    }
-
-    @Test
-    public void testRetrieveDifferentialProfilesForMicroarrayExperimentEMTAB1066Sixth() throws Exception {
-        Collection<DifferentialProfilesList> differentialProfilesLists = subject.retrieveDifferentialProfilesForMicroarrayExperiment(E_MTAB_1066, SIXTH_IDENTIFIER, FDR_CUTOFF, DROSOPHILA_MELANOGASTER);
-        assertThat(differentialProfilesLists, is(not(nullValue())));
-        assertThat(differentialProfilesLists.size(), is(1));
-        DifferentialProfilesList differentialProfilesList = differentialProfilesLists.iterator().next();
-        assertThat(differentialProfilesList.size(), is(1));
-        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesList.get(0);
-        assertThat(differentialProfile.getId(), is(SIXTH_IDENTIFIER));
-        assertThat(differentialProfile.getConditions().size(), is(2));
-    }
-
-    @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD22351WrongSpecie() throws Exception {
         DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_22351, FIRST_IDENTIFIER, FDR_CUTOFF, "BLA");
         assertThat(differentialProfilesList.isEmpty(), is(true));
-    }
-
-    @Test
-    public void testRetrieveDifferentialProfilesForMicroarrayExperimentEMTAB1066WrongSpecie() throws Exception {
-        Collection<DifferentialProfilesList> differentialProfilesLists = subject.retrieveDifferentialProfilesForMicroarrayExperiment(E_MTAB_1066, SIXTH_IDENTIFIER, FDR_CUTOFF, "BLA");
-        assertThat(differentialProfilesLists.isEmpty(), is(true));
     }
 }
