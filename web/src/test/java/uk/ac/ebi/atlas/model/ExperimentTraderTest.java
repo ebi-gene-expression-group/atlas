@@ -28,8 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
@@ -55,7 +55,7 @@ public class ExperimentTraderTest {
     private ExperimentTrader subject;
 
     @Mock
-    private ExperimentConfigurationDao experimentConfigurationDaoMock;
+    private ExperimentDAO experimentDAOMock;
     @Mock
     private ApplicationProperties applicationPropertiesMock;
     @Mock
@@ -65,22 +65,22 @@ public class ExperimentTraderTest {
     @Mock
     private MicroarrayExperimentsCache microarrayExperimentsCacheMock;
     @Mock
-    ExperimentConfiguration experimentConfigurationMock;
+    ExperimentDTO experimentDTOMock;
 
 
     @Before
     public void initSubject(){
-        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.BASELINE)).thenReturn(Sets.newHashSet(E_MTAB_513, E_MTAB_599));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.BASELINE)).thenReturn(Sets.newHashSet(E_MTAB_513, E_MTAB_599));
 
-        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
 
-        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.MICROARRAY)).thenReturn(Sets.newHashSet(E_MTAB_1066));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY)).thenReturn(Sets.newHashSet(E_MTAB_1066));
 
-        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.TWOCOLOUR)).thenReturn(Sets.newHashSet(E_GEOD_43049));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.TWOCOLOUR)).thenReturn(Sets.newHashSet(E_GEOD_43049));
 
-        when(experimentConfigurationDaoMock.getExperimentAccessions(ExperimentType.MICRORNA)).thenReturn(Sets.newHashSet(E_TABM_713));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICRORNA)).thenReturn(Sets.newHashSet(E_TABM_713));
 
-        subject = new ExperimentTrader(experimentConfigurationDaoMock, applicationPropertiesMock,
+        subject = new ExperimentTrader(experimentDAOMock, applicationPropertiesMock,
                                         baselineExperimentsCacheMock,
                                         rnaSeqDiffExperimentsCacheMock,
                                         microarrayExperimentsCacheMock);
@@ -88,23 +88,23 @@ public class ExperimentTraderTest {
 
     @Test
     public void testGetBaselineExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getBaselineExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_513, E_MTAB_599));
+        assertThat(subject.getBaselineExperimentAccessions(), containsInAnyOrder(E_MTAB_513, E_MTAB_599));
     }
 
     @Test
     public void testGetDifferentialExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getDifferentialExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
+        assertThat(subject.getDifferentialExperimentAccessions(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
     }
 
     @Test
     public void testGetMicroarrayExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066, E_GEOD_43049, E_TABM_713));
+        assertThat(subject.getMicroarrayExperimentAccessions(), containsInAnyOrder(E_MTAB_1066, E_GEOD_43049, E_TABM_713));
     }
 
     @Test
     public void getExperimentShouldUseTheCache(){
-        given(experimentConfigurationMock.getExperimentType()).willReturn(ExperimentType.MICROARRAY);
-        given(experimentConfigurationDaoMock.getExperimentConfiguration(E_GEOD_21860)).willReturn(experimentConfigurationMock);
+        given(experimentDTOMock.getExperimentType()).willReturn(ExperimentType.MICROARRAY);
+        given(experimentDAOMock.findPublicExperiment(E_GEOD_21860)).willReturn(experimentDTOMock);
         subject.getExperiment(E_GEOD_21860);
         verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
         verify(rnaSeqDiffExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);

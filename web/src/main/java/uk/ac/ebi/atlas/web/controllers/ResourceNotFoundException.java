@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public final class ResourceNotFoundException extends RuntimeException {
+
+    public ResourceNotFoundException(Exception exception){
+        super(exception);
+    }
     public ResourceNotFoundException(String message){
         super(message);
     }

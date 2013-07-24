@@ -49,18 +49,18 @@ public class TranscriptProfilesLoader {
 
     private TsvReaderUtils tsvReaderUtils;
 
-    private GeneProfileDao geneProfileDao;
+    private TranscriptProfileDAO transcriptProfileDAO;
 
     @Inject
-    public TranscriptProfilesLoader(TsvReaderUtils tsvReaderUtils, GeneProfileDao geneProfileDao,
+    public TranscriptProfilesLoader(TsvReaderUtils tsvReaderUtils, TranscriptProfileDAO transcriptProfileDAO,
                                     @Value("#{configuration['experiment.transcripts.path.template']}") String transcriptFileUrlTemplate) {
         this.tsvReaderUtils = tsvReaderUtils;
-        this.geneProfileDao = geneProfileDao;
+        this.transcriptProfileDAO = transcriptProfileDAO;
         this.transcriptFileUrlTemplate = transcriptFileUrlTemplate;
     }
 
     public int load(String experimentAccession) throws IOException {
-        geneProfileDao.deleteTranscriptProfilesForExperiment(experimentAccession);
+        transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
 
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
         try (CSVReader csvReader = tsvReaderUtils.build(fileURL)) {
@@ -76,13 +76,13 @@ public class TranscriptProfilesLoader {
                 TranscriptProfile transcriptProfile = createTranscriptProfile(line);
                 transcriptProfilesBatch.add(transcriptProfile);
                 if (count % BATCH_SIZE == 0) {
-                    geneProfileDao.addTranscriptProfiles(experimentAccession, transcriptProfilesBatch);
+                    transcriptProfileDAO.addTranscriptProfiles(experimentAccession, transcriptProfilesBatch);
                     transcriptProfilesBatch.clear();
                 }
                 count++;
             }
             if (transcriptProfilesBatch.size() > 0) {
-                geneProfileDao.addTranscriptProfiles(experimentAccession, transcriptProfilesBatch);
+                transcriptProfileDAO.addTranscriptProfiles(experimentAccession, transcriptProfilesBatch);
             }
 
             return count;

@@ -77,7 +77,7 @@ public class HomePageController {
     @PostConstruct
     private void loadExperimentAccessionsBySpecie() {
 
-        for (String experimentAccession : experimentTrader.getBaselineExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
             String displayName = null;
             try {
                 displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
@@ -105,7 +105,7 @@ public class HomePageController {
         };
         experimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
 
-        for (String experimentAccession : experimentTrader.getBaselineExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
 
             try {
                 BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);

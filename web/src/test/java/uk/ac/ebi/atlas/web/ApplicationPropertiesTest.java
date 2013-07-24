@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
@@ -78,7 +78,7 @@ public class ApplicationPropertiesTest {
     private Properties configurationPropertiesMock;
 
     @Mock
-    private ExperimentConfigurationDao experimentConfigurationDaoMock;
+    private ExperimentDAO experimentDAOMock;
 
     @Mock
     private Properties speciesToExperimentPropertiesMock;
@@ -105,7 +105,7 @@ public class ApplicationPropertiesTest {
         when(homoSapiensExperimentMock.getFirstSpecies()).thenReturn(HOMO_SAPIENS_SPECIE);
         when(mouseExperimentMock.getFirstSpecies()).thenReturn(MOUSE_SPECIE);
 
-        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, experimentConfigurationDaoMock);
+        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, experimentDAOMock);
     }
 
     @Test

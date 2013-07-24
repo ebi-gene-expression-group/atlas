@@ -100,9 +100,9 @@ public class ExperimentInfoListBuilderTest {
         when(baselineExperimentMock.getDescription()).thenReturn(DESCRIPTION);
         when(baselineExperimentMock.getType()).thenReturn(ExperimentType.BASELINE);
 
-        when(experimentTraderMock.getBaselineExperimentsIdentifiers()).thenReturn(Sets.newHashSet(ACCESSION));
-        when(experimentTraderMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
-        when(experimentTraderMock.getMicroarrayExperimentsIdentifiers()).thenReturn(Sets.newHashSet(MICROARRAY));
+        when(experimentTraderMock.getBaselineExperimentAccessions()).thenReturn(Sets.newHashSet(ACCESSION));
+        when(experimentTraderMock.getDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
+        when(experimentTraderMock.getMicroarrayExperimentAccessions()).thenReturn(Sets.newHashSet(MICROARRAY));
 
         when(baselineExperimentsCacheMock.getExperiment(ACCESSION)).thenReturn(baselineExperimentMock);
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(DIFFERENTIAL)).thenReturn(differentialExperimentMock);

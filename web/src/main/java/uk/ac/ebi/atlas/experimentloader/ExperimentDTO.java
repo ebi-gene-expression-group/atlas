@@ -25,15 +25,23 @@ package uk.ac.ebi.atlas.experimentloader;
 import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-public class ExperimentConfiguration {
+import java.util.Date;
+
+public class ExperimentDTO {
 
     private String experimentAccession;
 
     private ExperimentType experimentType;
 
-    public ExperimentConfiguration(String experimentAccession, ExperimentType experimentType) {
+    private Date lastUpdate;
+
+    private boolean isPrivate;
+
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Date lastUpdate, boolean isPrivate) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
+        this.lastUpdate = lastUpdate;
+        this.isPrivate = isPrivate;
     }
 
     public String getExperimentAccession() {
@@ -44,6 +52,10 @@ public class ExperimentConfiguration {
         return experimentType;
     }
 
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(experimentAccession, experimentType);
@@ -51,8 +63,8 @@ public class ExperimentConfiguration {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ExperimentConfiguration) {
-            ExperimentConfiguration other = (ExperimentConfiguration) obj;
+        if (obj instanceof ExperimentDTO) {
+            ExperimentDTO other = (ExperimentDTO) obj;
             return this.experimentAccession.equals(other.experimentAccession)
                     && this.experimentType.equals(other.experimentType);
         }
@@ -63,6 +75,12 @@ public class ExperimentConfiguration {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("ExperimentAccession", experimentAccession)
-                .add("ExperimentType", experimentType).toString();
+                .add("ExperimentType", experimentType)
+                .add("isPrivate", isPrivate)
+                .add("lastUpdate", lastUpdate).toString();
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
     }
 }

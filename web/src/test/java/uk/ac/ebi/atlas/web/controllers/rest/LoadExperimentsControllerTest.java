@@ -30,28 +30,31 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.transcript.GeneProfileDao;
+import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoadExperimentsControllerTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-    private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
+    private static final String EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE";
 
     @Mock
-    private ExperimentConfigurationDao experimentConfigurationDaoMock;
+    private ExperimentDAO experimentDAOMock;
 
     @Mock
-    private GeneProfileDao geneProfileDaoMock;
+    private TranscriptProfileDAO transcriptProfileDAOMock;
 
     @Mock
     private ExperimentChecker experimentCheckerMock;
@@ -66,26 +69,26 @@ public class LoadExperimentsControllerTest {
 
         subject = new LoadExperimentsController(experimentCheckerMock, experimentCRUDMock);
 
-        given(experimentConfigurationDaoMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).willReturn(null);
-        given(experimentConfigurationDaoMock.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.BASELINE)).willReturn(true);
-        given(experimentConfigurationDaoMock.deleteExperimentConfiguration(EXPERIMENT_ACCESSION)).willReturn(true);
-        given(experimentConfigurationDaoMock.findAllExperimentConfigurations()).willReturn(
-                Lists.newArrayList(new ExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.BASELINE)));
+        given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
+        given(experimentDAOMock.findAllExperiments()).willReturn(
+                Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, new Date(), false)));
 
     }
 
     @Test
     public void loadExperimentShouldSucceed() throws Exception {
-        String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
         assertThat(responseText, is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
         verify(experimentCheckerMock).checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-        verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void loadExperimentShouldFail() throws Exception {
-        doThrow(new IllegalStateException(TEST_EXCEPTION)).when(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR);
-        assertThat(subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR), is(TEST_EXCEPTION));
+        willThrow(new IllegalStateException(EXCEPTION_MESSAGE))
+                .given(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR, false);
+
+        subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR, false);
     }
 
     @Test
@@ -95,18 +98,13 @@ public class LoadExperimentsControllerTest {
     }
 
     @Test
-    public void exceptionMessageShouldBeReturnedAsResponseText() throws Exception {
-        doThrow(new IllegalStateException(TEST_EXCEPTION)).when(experimentCRUDMock).deleteExperiment(EXPERIMENT_ACCESSION);
-        String responseText = subject.deleteExperiment(EXPERIMENT_ACCESSION);
-        assertThat(responseText, is(TEST_EXCEPTION));
-    }
-
-    @Test
     public void testListExperiments() throws Exception {
         given(experimentCRUDMock.findAllExperiments())
-                .willReturn(Lists.newArrayList(new ExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.BASELINE)));
+            .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE,
+                    new GregorianCalendar(39 + 1900, 12, 12).getTime(), false)));
 
-        assertThat(subject.listExperiments(), is("[{\"experimentAccession\":\"" + EXPERIMENT_ACCESSION + "\",\"experimentType\":\"BASELINE\"}]"));
+        assertThat(subject.listExperiments(), is(
+                "[{\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false}]"));
     }
 
 }

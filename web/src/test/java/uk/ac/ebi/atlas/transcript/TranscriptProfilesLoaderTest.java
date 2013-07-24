@@ -58,7 +58,7 @@ public class TranscriptProfilesLoaderTest {
     private TsvReaderUtils tsvReaderUtilsMock;
 
     @Mock
-    private GeneProfileDao geneProfileDaoMock;
+    private TranscriptProfileDAO transcriptProfileDAOMock;
 
     private TranscriptProfilesLoader subject;
 
@@ -67,16 +67,16 @@ public class TranscriptProfilesLoaderTest {
         csvReader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(("\n" + Joiner.on(",").join(A_CSV_LINE)).getBytes())));
         when(tsvReaderUtilsMock.build(contains(EXPERIMENT_ACCESSION))).thenReturn(csvReader);
 
-        subject = new TranscriptProfilesLoader(tsvReaderUtilsMock, geneProfileDaoMock, A_URL_TEMPLATE_MOCK + "{0}");
+        subject = new TranscriptProfilesLoader(tsvReaderUtilsMock, transcriptProfileDAOMock, A_URL_TEMPLATE_MOCK + "{0}");
     }
 
     @Test
     public void testLoad() throws Exception {
         subject.load(EXPERIMENT_ACCESSION);
-        verify(geneProfileDaoMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
+        verify(transcriptProfileDAOMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
         verify(tsvReaderUtilsMock).build(A_URL_TEMPLATE_MOCK + EXPERIMENT_ACCESSION);
-        verify(geneProfileDaoMock).addTranscriptProfiles(EXPERIMENT_ACCESSION, Collections.EMPTY_LIST);
-        verify(geneProfileDaoMock).addTranscriptProfiles(anyString(), anyListOf(TranscriptProfile.class));
+        verify(transcriptProfileDAOMock).addTranscriptProfiles(EXPERIMENT_ACCESSION, Collections.EMPTY_LIST);
+        verify(transcriptProfileDAOMock).addTranscriptProfiles(anyString(), anyListOf(TranscriptProfile.class));
     }
 
     @Test

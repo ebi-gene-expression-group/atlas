@@ -115,7 +115,7 @@ public class DifferentialGeneProfileServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        when(experimentTraderMock.getDifferentialExperimentsIdentifiers()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
+        when(experimentTraderMock.getDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
         when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(Lists.newArrayList(SPECIE));
 
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(differentialExperimentMock);
@@ -155,8 +155,8 @@ public class DifferentialGeneProfileServiceTest {
     @Test
     public void testGetDifferentialProfilesList() throws Exception {
         assertThat(subject.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
-        verify(experimentTraderMock).getDifferentialExperimentsIdentifiers();
-        verify(experimentTraderMock).getMicroarrayExperimentsIdentifiers();
+        verify(experimentTraderMock).getDifferentialExperimentAccessions();
+        verify(experimentTraderMock).getMicroarrayExperimentAccessions();
         verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);
         verify(differentialGeneProfilePropertiesMock).clear();
         ArgumentCaptor<DifferentialProfilesList> argumentCaptor = ArgumentCaptor.forClass(DifferentialProfilesList.class);

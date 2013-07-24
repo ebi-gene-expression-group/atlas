@@ -27,14 +27,27 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
-public class ExperimentConfigurationRowMapper implements RowMapper<ExperimentConfiguration> {
+public class ExperimentDTORowMapper implements RowMapper<ExperimentDTO> {
 
     @Override
-    public ExperimentConfiguration mapRow(ResultSet resultSet, int i) throws SQLException {
+    public ExperimentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
+        return buildExperimentDTO(resultSet);
+    }
+
+    ExperimentDTO buildExperimentDTO(ResultSet resultSet) throws SQLException {
         String experimentAccession = resultSet.getString("experiment_accession");
-        String experimentType = resultSet.getString("experiment_type");
-        return new ExperimentConfiguration(experimentAccession, ExperimentType.valueOf(experimentType));
+        ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("experiment_type"));
+        Date lastUpdate = resultSet.getTimestamp("last_update");
+        boolean isPrivate = false;
+        if (resultSet.getMetaData().getColumnCount() == 4){
+            isPrivate = resultSet.getBoolean("private");
+        }
+        return new ExperimentDTO(experimentAccession
+                                            ,experimentType
+                                            ,lastUpdate
+                                            , isPrivate);
     }
 
 }

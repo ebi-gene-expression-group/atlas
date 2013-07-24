@@ -73,9 +73,9 @@ public class ContrastSummaryController {
 
         DifferentialExperiment differentialExperiment;
 
-        if (experimentTrader.getDifferentialExperimentsIdentifiers().contains(experimentAccession)) {
+        if (experimentTrader.getDifferentialExperimentAccessions().contains(experimentAccession)) {
             differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-        } else if (experimentTrader.getMicroarrayExperimentsIdentifiers().contains(experimentAccession)) {
+        } else if (experimentTrader.getMicroarrayExperimentAccessions().contains(experimentAccession)) {
             differentialExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
         } else {
             throw new IllegalStateException("Experiment for accession " + experimentAccession + " not found.");

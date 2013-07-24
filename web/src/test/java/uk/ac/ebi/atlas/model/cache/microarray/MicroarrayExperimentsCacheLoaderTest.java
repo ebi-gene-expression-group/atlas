@@ -30,14 +30,16 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+
+import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -67,7 +69,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
     private MAGETABInvestigation investigationMock;
 
     @Mock
-    private ExperimentConfigurationDao experimentConfigurationDaoMock;
+    private ExperimentDAO experimentDAOMock;
 
     @Mock
     private ExperimentDesign experimentDesignMock;
@@ -77,7 +79,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", experimentConfigurationDaoMock);
+        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", experimentDAOMock);
         subject.setMageTabLimpopoUtils(mageTabLimpopoUtilsMock);
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
@@ -85,7 +87,8 @@ public class MicroarrayExperimentsCacheLoaderTest {
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
         when(mageTabLimpopoUtilsMock.extractSpeciesFromSDRF(investigationMock)).thenReturn(Sets.newHashSet(SPECIES));
 
-        when(experimentConfigurationDaoMock.getExperimentConfiguration(ACCESSION)).thenReturn(new ExperimentConfiguration(ACCESSION, ExperimentType.MICROARRAY));
+        ExperimentDTO experimentDTO = new ExperimentDTO(ACCESSION, ExperimentType.MICROARRAY, new Date(), false);
+        when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTO);
     }
 
     @Test

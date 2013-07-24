@@ -75,7 +75,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
-        for (String experimentAccession : experimentTrader.getMicroarrayExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
             MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
@@ -93,7 +93,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
-        for (String experimentAccession : experimentTrader.getDifferentialExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getDifferentialExperimentAccessions()) {
             DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
@@ -110,7 +110,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
-        for (String experimentAccession : experimentTrader.getBaselineExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);

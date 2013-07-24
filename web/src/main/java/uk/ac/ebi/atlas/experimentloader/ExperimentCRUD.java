@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.experimentloader;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
@@ -33,7 +32,7 @@ import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.transcript.GeneProfileDao;
+import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import javax.inject.Inject;
@@ -54,32 +53,32 @@ public class ExperimentCRUD {
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
     private ExperimentDesignWriterBuilder experimentDesignWriterBuilder;
-    private ExperimentConfigurationDao experimentConfigurationDao;
-    private GeneProfileDao geneProfileDao;
+    private ExperimentDAO experimentDAO;
+    private TranscriptProfileDAO transcriptProfileDAO;
 
     @Inject
     public ExperimentCRUD(TranscriptProfilesLoader transcriptProfileLoader,
                           ArrayDesignDao arrayDesignDao,
                           ConfigurationTrader configurationTrader,
                           DesignElementMappingLoader designElementLoader,
-                          ExperimentConfigurationDao experimentConfigurationDao,
-                          GeneProfileDao geneProfileDao,
+                          ExperimentDAO experimentDAO,
+                          TranscriptProfileDAO transcriptProfileDAO,
                           ExperimentDesignWriterBuilder experimentDesignWriterBuilder) {
         this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
-        this.geneProfileDao = geneProfileDao;
+        this.transcriptProfileDAO = transcriptProfileDAO;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
-        this.experimentConfigurationDao = experimentConfigurationDao;
+        this.experimentDAO = experimentDAO;
         this.experimentDesignWriterBuilder = experimentDesignWriterBuilder;
     }
 
-    public void importExperiment(String accession, ExperimentType experimentType) throws IOException{
+    public void importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException{
         checkNotNull(accession);
         checkNotNull(experimentType);
 
-        if (experimentConfigurationDao.getExperimentConfiguration(accession) != null) {
-            throw new IllegalStateException("Experiment with experimentAccession " + accession + " already exists.");
+        if (experimentDAO.isImported(accession)) {
+            throw new IllegalStateException("Experiment with experimentAccession " + accession + " has been already imported.");
         }
 
         generateDesignFile(accession, experimentType);
@@ -97,9 +96,7 @@ public class ExperimentCRUD {
                 break;
         }
 
-        if (! experimentConfigurationDao.addExperimentConfiguration(accession, experimentType)) {
-            throw new IllegalStateException("Failure storing configuration for experiment " + accession);
-        }
+        experimentDAO.addExperiment(accession, experimentType, isPrivate);
 
     }
 
@@ -115,13 +112,7 @@ public class ExperimentCRUD {
 
     void loadTranscripts(String accession) {
         try {
-            StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-
-            stopWatch.start();
-            int count = transcriptProfileLoader.load(accession);
-            stopWatch.stop();
-
-            LOGGER.info("<loadTranscripts> Inserted " + count + " transcript profiles and took " + stopWatch.getLastTaskInfo().getTimeSeconds() + "secs");
+            transcriptProfileLoader.load(accession);
         } catch (IOException e) {
             LOGGER.error("<loadTranscripts> error reading from file: " + e.getMessage());
             throw new IllegalStateException(e.getMessage());
@@ -141,19 +132,21 @@ public class ExperimentCRUD {
 
     }
 
-    public void deleteExperiment(String accession){
-        checkNotNull(accession);
+    public void deleteExperiment(String experimentAccession){
+        checkNotNull(experimentAccession);
 
-        boolean experimentFound = experimentConfigurationDao.deleteExperimentConfiguration(accession);
-        if (!experimentFound) {
-            throw new IllegalArgumentException("Experiment " + accession + " was not found in the set of the imported experiments.");
-        }
-        int deletedTranscriptsCount = geneProfileDao.deleteTranscriptProfilesForExperiment(accession);
-        LOGGER.info("<deleteExperiment> deleted transcripts count for experiment with accession " + accession + ": " + deletedTranscriptsCount);
+        experimentDAO.deleteExperimentConfiguration(experimentAccession);
+
+        transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
     }
 
 
-    public List<ExperimentConfiguration> findAllExperiments() {
-        return experimentConfigurationDao.findAllExperimentConfigurations();
+    public List<ExperimentDTO> findAllExperiments() {
+        return experimentDAO.findAllExperiments();
     }
+
+    public void updateExperiment(String experimentAccession, boolean isPrivate) {
+        experimentDAO.updateExperiment(experimentAccession, isPrivate);
+    }
+
 }

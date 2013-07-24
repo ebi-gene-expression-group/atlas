@@ -25,13 +25,12 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfiguration;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,17 +43,17 @@ public class ExperimentTrader {
     private BaselineExperimentsCache baselineExperimentsCache;
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
     private MicroarrayExperimentsCache microarrayExperimentsCache;
-    private ExperimentConfigurationDao experimentConfigurationDao;
+    private ExperimentDAO experimentDAO;
     private ApplicationProperties applicationProperties;
 
     @Inject
-    ExperimentTrader(ExperimentConfigurationDao experimentConfigurationDao,
+    ExperimentTrader(ExperimentDAO experimentDAO,
                      ApplicationProperties applicationProperties,
                      BaselineExperimentsCache baselineExperimentsCache,
                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                      MicroarrayExperimentsCache microarrayExperimentsCache){
 
-        this.experimentConfigurationDao = experimentConfigurationDao;
+        this.experimentDAO = experimentDAO;
         this.applicationProperties = applicationProperties;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
@@ -63,15 +62,9 @@ public class ExperimentTrader {
 
     public Experiment getExperiment(String experimentAccession){
 
-        ExperimentConfiguration experimentConfiguration = experimentConfigurationDao.getExperimentConfiguration(experimentAccession);
+        ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
 
-        if (experimentConfiguration == null) {
-
-            throw new ResourceNotFoundException("Experiment not found with accession: " + experimentAccession);
-
-        }
-
-        return getExperimentFromCache(experimentAccession, experimentConfiguration.getExperimentType());
+        return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
 
     }
 
@@ -92,25 +85,25 @@ public class ExperimentTrader {
 
     }
 
-    public Set<String> getBaselineExperimentsIdentifiers() {
-        return getExperimentIdentifiersForType(ExperimentType.BASELINE);
+    public Set<String> getBaselineExperimentAccessions() {
+        return getPublicExperimentAccessions(ExperimentType.BASELINE);
     }
 
-    public Set<String> getDifferentialExperimentsIdentifiers() {
-        return getExperimentIdentifiersForType(ExperimentType.DIFFERENTIAL);
+    public Set<String> getDifferentialExperimentAccessions() {
+        return getPublicExperimentAccessions(ExperimentType.DIFFERENTIAL);
     }
 
-    public Set<String> getMicroarrayExperimentsIdentifiers() {
+    public Set<String> getMicroarrayExperimentAccessions() {
         Set<String> identifiers = Sets.newHashSet();
-        identifiers.addAll(getExperimentIdentifiersForType(ExperimentType.MICROARRAY));
+        identifiers.addAll(getPublicExperimentAccessions(ExperimentType.MICROARRAY));
         // as two colour is a subtype of micro array, they need to be added here
-        identifiers.addAll((getExperimentIdentifiersForType(ExperimentType.TWOCOLOUR)));
-        identifiers.addAll((getExperimentIdentifiersForType(ExperimentType.MICRORNA)));
+        identifiers.addAll((getPublicExperimentAccessions(ExperimentType.TWOCOLOUR)));
+        identifiers.addAll((getPublicExperimentAccessions(ExperimentType.MICRORNA)));
         return identifiers;
     }
 
-    private Set<String> getExperimentIdentifiersForType(ExperimentType... experimentType) {
-        Set<String> experimentAccessions = experimentConfigurationDao.getExperimentAccessions(experimentType);
+    Set<String> getPublicExperimentAccessions(ExperimentType... experimentType) {
+        Set<String> experimentAccessions = experimentDAO.findPublicExperimentAccessions(experimentType);
 
         // this filtering is for integration tests using only subset of all experiments
         Set<String> testCaseExperimentAccession = applicationProperties.getTestCaseExperimentAccessions();

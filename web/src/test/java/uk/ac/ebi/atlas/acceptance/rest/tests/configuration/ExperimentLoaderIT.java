@@ -46,7 +46,7 @@ public class ExperimentLoaderIT {
         result = endPoint.getResponseBody().asString();
         assertThat(result, not(containsString("E-MTAB-599")));
 
-        endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-599&type=BASELINE");
+        endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-599&type=BASELINE&private=false");
         result = endPoint.getResponseBody().asString();
         assertThat(result, is("Experiment E-MTAB-599 loaded."));
         endPoint = new EndPoint("/gxa/listExperiments");
@@ -58,18 +58,18 @@ public class ExperimentLoaderIT {
     public void testDeleteNonExisting() {
         EndPoint endPoint = new EndPoint("/gxa/deleteExperiment?accession=E-MTAB-BLA");
         String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment E-MTAB-BLA was not found in the set of the imported experiments."));
+        assertThat(result, is("Experiment not found for accession E-MTAB-BLA"));
     }
 
     @Test
-    public void testLoadExisting() {
+    public void loadShouldFailWhenExperimentHasAlreadyBeenImported() {
         EndPoint endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-599&type=BASELINE");
         String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment with experimentAccession E-MTAB-599 already exists."));
+        assertThat(result, is("Experiment with experimentAccession E-MTAB-599 has been already imported."));
     }
 
     @Test
-    public void testLoadNonExistingDirectory() {
+    public void testLoadInvalidExperiment() {
         EndPoint endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-BLA&type=BASELINE");
         String result = endPoint.getResponseBody().asString();
         assertThat(result, containsString("Required file can not be read"));

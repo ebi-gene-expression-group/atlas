@@ -36,52 +36,52 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class GeneProfileDaoIT {
+public class TranscriptProfileDAOIT {
 
     private static final String EXPERIMENT_ACCESSION = "experiment_accession";
-    private static final String GENE_ID = "geneId";
-    public static final String GENE_ID_2 = "geneID2";
+    private static final String GENE_ID_1 = "geneId1";
+    private static final String GENE_ID_2 = "geneId2";
 
     @Inject
-    private GeneProfileDao subject;
+    private TranscriptProfileDAO subject;
 
-    private TranscriptProfile transcriptProfile1 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
-    private TranscriptProfile transcriptProfile2 = new TranscriptProfile(GENE_ID, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
+    private TranscriptProfile transcriptProfile1 = new TranscriptProfile(GENE_ID_1, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
+    private TranscriptProfile transcriptProfile2 = new TranscriptProfile(GENE_ID_1, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
     private TranscriptProfile transcriptProfile3 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_1", Lists.newArrayList(2D, 3D));
     private TranscriptProfile transcriptProfile4 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_2", Lists.newArrayList(1D, 3D));
+    private TranscriptProfile transcriptProfile5 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_5", Lists.newArrayList(4D, 5D));
+    private TranscriptProfile transcriptProfile6 = new TranscriptProfile(GENE_ID_2, "A_TRANSCRIPT_ID_6", Lists.newArrayList(5D, 4D));
 
     @Before
     public void setup() {
-
         subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
         subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile1);
         subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile2);
-
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile3);
+        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile4);
     }
 
     @Test
-    public void testAddTranscriptProfiles() {
+    public void addedTranscriptProfilesShouldBeFoundWhenQueryingByGeneID() {
 
-        List<TranscriptProfile> profiles = Lists.newArrayList(transcriptProfile3, transcriptProfile4);
+        List<TranscriptProfile> profiles = Lists.newArrayList(transcriptProfile5, transcriptProfile6);
         subject.addTranscriptProfiles(EXPERIMENT_ACCESSION, profiles);
 
-        Collection<TranscriptProfile> transcriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_2);
-
-        assertThat(transcriptProfiles, containsInAnyOrder(transcriptProfile3, transcriptProfile4));
+        Collection<TranscriptProfile> transcriptProfiles = subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_2);
+        assertThat(transcriptProfiles, containsInAnyOrder(transcriptProfile3, transcriptProfile4, transcriptProfile5, transcriptProfile6));
 
     }
 
     @Test
     public void testDeserializeTranscriptProfiles() {
 
-        Collection<TranscriptProfile> deserializedTranscriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID);
+        Collection<TranscriptProfile> deserializedTranscriptProfiles = subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_1);
 
         assertThat(deserializedTranscriptProfiles, containsInAnyOrder(transcriptProfile1, transcriptProfile2));
 
@@ -90,7 +90,7 @@ public class GeneProfileDaoIT {
     @Test
     public void testFailsToFindNotExistingTranscriptProfile() {
 
-        Collection<TranscriptProfile> transcriptProfiles = subject.getTranscriptProfiles(EXPERIMENT_ACCESSION, "not valid");
+        Collection<TranscriptProfile> transcriptProfiles = subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, "not valid");
 
         assertThat(transcriptProfiles, is(empty()));
 
@@ -99,27 +99,27 @@ public class GeneProfileDaoIT {
     @Test
     public void testDeleteTranscriptProfilesForGeneId() {
 
-        int records = subject.deleteTranscriptProfilesForExperimentAndGene(EXPERIMENT_ACCESSION, GENE_ID);
-        assertThat(records, is(2));
+        subject.deleteTranscriptProfilesForExperimentAndGene(EXPERIMENT_ACCESSION, GENE_ID_1);
+        assertThat(subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_1), is(empty()));
+        assertThat(subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_2), hasSize(2));
 
     }
 
     @Test
     public void testDeleteTranscriptProfilesForExperiment() {
 
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile3);
-        subject.addTranscriptProfile(EXPERIMENT_ACCESSION, transcriptProfile4);
-
-        int records = subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
-        assertThat(records, is(4));
+        subject.deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
+        assertThat(subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_1), is(empty()));
+        assertThat(subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_2), is(empty()));
 
     }
 
     @Test
     public void testDeleteTranscriptProfilesForNonExistingExperiment() {
 
-        int records = subject.deleteTranscriptProfilesForExperiment("BLA");
-        assertThat(records, is(0));
+        subject.deleteTranscriptProfilesForExperiment("UNKNOWN");
+        assertThat(subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_1), hasSize(2));
+        assertThat(subject.findTranscriptProfiles(EXPERIMENT_ACCESSION, GENE_ID_2), hasSize(2));
 
     }
 }

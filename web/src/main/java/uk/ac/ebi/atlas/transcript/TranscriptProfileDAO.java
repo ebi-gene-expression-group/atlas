@@ -23,11 +23,13 @@
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Maps;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
 import javax.inject.Inject;
@@ -41,7 +43,8 @@ import java.util.Map;
 
 @Named
 @Scope("prototype")
-public class GeneProfileDao {
+public class TranscriptProfileDAO {
+    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
 
     private static final String TRANSCRIPT_PROFILE_QUERY = "SELECT gene_id, transcript_id, transcript_expressions " +
             "FROM experiment_transcripts WHERE experiment_accession = ? AND gene_id = ?";
@@ -57,12 +60,12 @@ public class GeneProfileDao {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public GeneProfileDao(@Qualifier("dataSource") DataSource dataSource) {
+    public TranscriptProfileDAO(@Qualifier("dataSource") DataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public Collection<TranscriptProfile> getTranscriptProfiles(String experimentAccession, String geneId) {
+    public Collection<TranscriptProfile> findTranscriptProfiles(String experimentAccession, String geneId) {
         return jdbcTemplate.query(TRANSCRIPT_PROFILE_QUERY,
                 new String[]{experimentAccession, geneId},
                 new TranscriptProfileRowMapper());
@@ -99,13 +102,15 @@ public class GeneProfileDao {
         new SimpleJdbcInsert(dataSource).withTableName("experiment_transcripts").execute(insertParameters);
     }
 
-    public int deleteTranscriptProfilesForExperimentAndGene(String experimentAccession, String geneId) {
-        return jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ? AND gene_id = ?",
+    public void deleteTranscriptProfilesForExperimentAndGene(String experimentAccession, String geneId) {
+        jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ? AND gene_id = ?",
                 new Object[]{experimentAccession, geneId});
+
     }
 
-    public int deleteTranscriptProfilesForExperiment(String experimentAccession) {
-        return jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ?",
+    public void deleteTranscriptProfilesForExperiment(String experimentAccession) {
+        jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ?",
                 new Object[]{experimentAccession});
+
     }
 }

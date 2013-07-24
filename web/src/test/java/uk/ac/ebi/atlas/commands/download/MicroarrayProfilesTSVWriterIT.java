@@ -32,7 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
@@ -61,7 +61,7 @@ public class MicroarrayProfilesTSVWriterIT {
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
     @Inject
-    private ExperimentConfigurationDao experimentConfigurationDao;
+    private ExperimentDAO experimentDAO;
 
     private MicroarrayRequestContext microarrayRequestContext;
 
@@ -72,9 +72,7 @@ public class MicroarrayProfilesTSVWriterIT {
     @Before
     public void setUp() throws Exception {
 
-        if (experimentConfigurationDao.getExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION) == null) {
-            experimentConfigurationDao.addExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
-        }
+        experimentDAO.addExperiment(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY, false);
 
         microarrayExperiment = microarrayExperimentsCache.getExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
@@ -84,7 +82,7 @@ public class MicroarrayProfilesTSVWriterIT {
 
     @After
     public void tearDown() throws Exception {
-        experimentConfigurationDao.deleteExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION);
+        experimentDAO.deleteExperimentConfiguration(MICROARRAY_EXPERIMENT_ACCESSION);
     }
 
     @Test

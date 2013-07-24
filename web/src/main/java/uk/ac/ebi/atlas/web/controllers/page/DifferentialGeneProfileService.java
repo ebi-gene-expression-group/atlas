@@ -104,7 +104,7 @@ public class DifferentialGeneProfileService {
         // set cutoff used to calculate profile lists for showing on web page
         differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
-        for (String experimentAccession : experimentTrader.getDifferentialExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getDifferentialExperimentAccessions()) {
             try {
                 DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, geneQuery, cutoff, specie);
                 if (!retrievedProfilesList.isEmpty()) {
@@ -115,7 +115,7 @@ public class DifferentialGeneProfileService {
             }
         }
 
-        for (String experimentAccession : experimentTrader.getMicroarrayExperimentsIdentifiers()) {
+        for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
             try {
                 Collection<DifferentialProfilesList> retrievedProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, geneQuery, cutoff, specie);
                 if (!retrievedProfilesLists.isEmpty()) {

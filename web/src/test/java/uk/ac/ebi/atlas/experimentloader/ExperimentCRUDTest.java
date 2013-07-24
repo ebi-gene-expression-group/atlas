@@ -28,7 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterBuilder;
@@ -38,7 +37,7 @@ import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.transcript.GeneProfileDao;
+import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import java.io.IOException;
@@ -81,10 +80,10 @@ public class ExperimentCRUDTest {
     private ExperimentDesignWriterBuilder experimentDesignWriterBuilderMock;
 
     @Mock
-    private ExperimentConfigurationDao experimentConfigurationDaoMock;
+    private ExperimentDAO experimentDAOMock;
 
     @Mock
-    private GeneProfileDao geneProfileDaoMock;
+    private TranscriptProfileDAO transcriptProfileDAOMock;
 
     @Before
     public void setUp() throws Exception {
@@ -98,7 +97,7 @@ public class ExperimentCRUDTest {
         given(experimentDesignWriterBuilderMock.build()).willReturn(experimentDesignWriterMock);
 
         subject = new ExperimentCRUD(transcriptProfileLoaderMock,
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentConfigurationDaoMock, geneProfileDaoMock, experimentDesignWriterBuilderMock);
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock, transcriptProfileDAOMock, experimentDesignWriterBuilderMock);
     }
 
     @Test
@@ -113,9 +112,7 @@ public class ExperimentCRUDTest {
 
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
-
         willThrow(new IOException()).given(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION);
-
         subject.generateDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 
@@ -127,7 +124,7 @@ public class ExperimentCRUDTest {
 
     @Test(expected = IllegalStateException.class)
     public void testTranscriptLoaderException() throws Exception {
-        Mockito.doThrow(new IOException(TEST_EXCEPTION)).when(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
+        willThrow(new IOException(TEST_EXCEPTION)).given(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
         subject.loadTranscripts(EXPERIMENT_ACCESSION);
     }
 
@@ -144,5 +141,12 @@ public class ExperimentCRUDTest {
         subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
         verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
     }
+
+    @Test
+    public void updateExperimentShouldDelegateToDAO() throws Exception {
+        subject.updateExperiment(EXPERIMENT_ACCESSION, true);
+        verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, true);
+    }
+
 
 }

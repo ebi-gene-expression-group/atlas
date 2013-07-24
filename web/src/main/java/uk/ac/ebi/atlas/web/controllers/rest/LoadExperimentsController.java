@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +35,7 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
+import java.io.IOException;
 
 @Controller
 @Scope("request")
@@ -52,33 +54,40 @@ public class LoadExperimentsController {
         this.experimentCRUD = experimentCRUD;
     }
 
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public String handleException(Exception e) {
+        LOGGER.error(e.getMessage(),e);
+        return e.getMessage();
+    }
+
     @RequestMapping("/loadExperiment")
     @ResponseBody
-    public String loadExperiment(@RequestParam("accession") String accession, @RequestParam("type") ExperimentType experimentType) {
+    public String loadExperiment(@RequestParam("accession") String experimentAccession,
+                                 @RequestParam("type") ExperimentType experimentType,
+                                 @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
 
-        try {
-            experimentChecker.checkAllFilesPresent(accession, experimentType);
+        experimentChecker.checkAllFilesPresent(experimentAccession, experimentType);
 
-            experimentCRUD.importExperiment(accession, experimentType);
+        experimentCRUD.importExperiment(experimentAccession, experimentType, isPrivate);
 
-            return "Experiment " + accession + " loaded.";
-
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(),e);
-            return e.getMessage();
-        }
+        return "Experiment " + experimentAccession + " loaded.";
     }
 
     @RequestMapping("/deleteExperiment")
     @ResponseBody
-    public String deleteExperiment(@RequestParam("accession") String accession) {
+    public String deleteExperiment(@RequestParam("accession") String experimentAccession) {
 
-        try{
-            experimentCRUD.deleteExperiment(accession);
-            return "Experiment " + accession + " successfully deleted.";
-        } catch (Exception e) {
-            return e.getMessage();
-        }
+        experimentCRUD.deleteExperiment(experimentAccession);
+        return "Experiment " + experimentAccession + " successfully deleted.";
+    }
+
+    @RequestMapping("/updateExperiment")
+    @ResponseBody
+    public String publishExperiment(@RequestParam("accession") String experimentAccession, @RequestParam("private") boolean isPrivate) {
+
+        experimentCRUD.updateExperiment(experimentAccession, isPrivate);
+        return "Experiment " + experimentAccession + " successfully published.";
     }
 
     @RequestMapping("/listExperiments")

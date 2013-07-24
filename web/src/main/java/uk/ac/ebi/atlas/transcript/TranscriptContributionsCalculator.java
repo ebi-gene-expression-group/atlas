@@ -40,19 +40,19 @@ public class TranscriptContributionsCalculator {
 
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
 
-    private GeneProfileDao geneProfileDao;
+    private TranscriptProfileDAO transcriptProfileDAO;
 
     private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public TranscriptContributionsCalculator(GeneProfileDao geneProfileDao, BaselineExperimentsCache experimentsCache) {
-        this.geneProfileDao = geneProfileDao;
+    public TranscriptContributionsCalculator(TranscriptProfileDAO transcriptProfileDAO, BaselineExperimentsCache experimentsCache) {
+        this.transcriptProfileDAO = transcriptProfileDAO;
         this.experimentsCache = experimentsCache;
     }
 
     public TranscriptContributions getTranscriptsContribution(String geneId, String experimentAccession, FactorGroup factorGroup) {
 
-        List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(geneProfileDao.getTranscriptProfiles(experimentAccession, geneId));
+        List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(transcriptProfileDAO.findTranscriptProfiles(experimentAccession, geneId));
 
         int factorIndex = getFactorIndex(experimentAccession, factorGroup);
 

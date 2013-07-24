@@ -30,13 +30,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExperimentConfigurationRowMapperTest {
+public class ExperimentDTORowMapperTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String BASELINE = "BASELINE";
@@ -44,19 +46,23 @@ public class ExperimentConfigurationRowMapperTest {
     @Mock
     private ResultSet resultSetMock;
 
-    private ExperimentConfigurationRowMapper subject;
+    @Mock
+    private ResultSetMetaData metadataMock;
+
+    private ExperimentDTORowMapper subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentConfigurationRowMapper();
+        subject = new ExperimentDTORowMapper();
         when(resultSetMock.getString("experiment_accession")).thenReturn(EXPERIMENT_ACCESSION);
         when(resultSetMock.getString("experiment_type")).thenReturn(BASELINE);
     }
 
     @Test
-    public void testMapRow() throws Exception {
-        ExperimentConfiguration experimentConfiguration = subject.mapRow(resultSetMock, 0);
-        assertThat(experimentConfiguration.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(experimentConfiguration.getExperimentType(), is(ExperimentType.valueOf(BASELINE)));
+    public void buildExperimentDTOShouldSucceed() throws Exception {
+        given(resultSetMock.getMetaData()).willReturn(metadataMock);
+        ExperimentDTO experimentDTO = subject.buildExperimentDTO(resultSetMock);
+        assertThat(experimentDTO.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
+        assertThat(experimentDTO.getExperimentType(), is(ExperimentType.valueOf(BASELINE)));
     }
 }

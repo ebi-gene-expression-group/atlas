@@ -47,7 +47,7 @@ public class ExperimentCheckerTest {
     private static final String NON_EXISTING_PATH = "NON-EXISTING-PATH";
 
     @Mock
-    private ExperimentConfiguration experimentConfigurationMock;
+    private ExperimentDTO experimentDTOMock;
 
     @Mock
     private Properties configurationPropertiesMock;

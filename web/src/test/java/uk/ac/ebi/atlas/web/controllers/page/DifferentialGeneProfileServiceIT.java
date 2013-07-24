@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.web.controllers.rest.LoadExperimentsController;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -72,19 +73,24 @@ public class DifferentialGeneProfileServiceIT {
     @Inject
     private LoadExperimentsController loadExperimentsController;
 
+    private static boolean dbInitialized;
+
     @Before
-    public void setup() throws Exception {
-        loadExperimentsController.loadExperiment(E_GEOD_21860, ExperimentType.DIFFERENTIAL);
-        loadExperimentsController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL);
-        loadExperimentsController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL);
-        loadExperimentsController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL);
-        loadExperimentsController.loadExperiment(E_MTAB_1066, ExperimentType.MICROARRAY);
+    public void initDatabase() throws IOException {
+        if (!dbInitialized){
+            loadExperimentsController.loadExperiment(E_GEOD_21860, ExperimentType.DIFFERENTIAL, false);
+            loadExperimentsController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL, false);
+            loadExperimentsController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL, false);
+            loadExperimentsController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL, false);
+            loadExperimentsController.loadExperiment(E_MTAB_1066, ExperimentType.MICROARRAY, false);
+            dbInitialized = true;
+        }
     }
 
     @Test
-    public void testForAccessions() throws Exception {
-        assertThat(experimentTrader.getDifferentialExperimentsIdentifiers(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860, E_MTAB_698));
-        assertThat(experimentTrader.getMicroarrayExperimentsIdentifiers(), containsInAnyOrder(E_MTAB_1066));
+    public void shouldReturnTheRightAccessions() throws Exception {
+        assertThat(experimentTrader.getDifferentialExperimentAccessions(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860, E_MTAB_698));
+        assertThat(experimentTrader.getMicroarrayExperimentAccessions(), containsInAnyOrder(E_MTAB_1066));
     }
 
     @Test

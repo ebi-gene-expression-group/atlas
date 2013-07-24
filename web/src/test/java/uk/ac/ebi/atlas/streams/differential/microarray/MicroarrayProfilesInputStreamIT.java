@@ -32,7 +32,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentloader.ExperimentConfigurationDao;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -82,7 +82,7 @@ public class MicroarrayProfilesInputStreamIT {
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
     @Inject
-    private ExperimentConfigurationDao experimentConfigurationDao;
+    private ExperimentDAO experimentDAO;
 
     @Inject
     private DesignElementMappingLoader designElementLoader;
@@ -97,15 +97,13 @@ public class MicroarrayProfilesInputStreamIT {
 
     @After
     public void tearDown() throws Exception {
-        experimentConfigurationDao.deleteExperimentConfiguration(EXPERIMENT_ACCESSION);
+        experimentDAO.deleteExperimentConfiguration(EXPERIMENT_ACCESSION);
     }
 
     @Before
     public void initSubject() throws Exception {
 
-        if (experimentConfigurationDao.getExperimentConfiguration(EXPERIMENT_ACCESSION) == null) {
-            experimentConfigurationDao.addExperimentConfiguration(EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
-        }
+        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY, false);
 
         designElementLoader.loadMappings(ARRAY_DESIGN_ACCESSION, ArrayDesignType.MICRO_ARRAY);
 

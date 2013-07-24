@@ -26,20 +26,22 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.Date;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-public class ExperimentConfigurationTest {
+public class ExperimentDTOTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.BASELINE;
 
-    private ExperimentConfiguration subject;
+    private ExperimentDTO subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentConfiguration(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE);
+        subject = new ExperimentDTO(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, new Date(), false);
     }
 
     @Test
@@ -55,12 +57,7 @@ public class ExperimentConfigurationTest {
     @Test
     public void testEquals() throws Exception {
         assertThat(subject.equals(null), is(false));
-        assertThat(subject.equals(new ExperimentConfiguration(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE)), is(true));
-    }
-
-    @Test
-    public void testToString() throws Exception {
-        assertThat(subject.toString(), is("ExperimentConfiguration{ExperimentAccession=EXPERIMENT_ACCESSION, ExperimentType=BASELINE}"));
+        assertThat(subject.equals(new ExperimentDTO(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, new Date(), false)), is(true));
     }
 
     @Test
