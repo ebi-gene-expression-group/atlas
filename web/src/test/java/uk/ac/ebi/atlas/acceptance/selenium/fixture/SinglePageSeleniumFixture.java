@@ -42,7 +42,7 @@ public abstract class SinglePageSeleniumFixture {
     public void initDriver() {
         // change the factory to FirefoxDriverFactory or PhantomJSDriverFactory
         // if you want to use a local browser
-        driver = new PhantomJSDriverFactory().create();
+        driver = new RemoteDriverFactory().create();
         getStartingPage();
     }
 
