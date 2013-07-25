@@ -59,6 +59,7 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
         assertThat(subject.getSelectedProfiles().size(), is(2));
     }
 
+    //This will fail with PhantomJS
     @Test
     public void checkContrastSummaryTooltipTableHeader() {
         assertThat(subject.getContastSummaryTooltipTableHeader(0, 0), is("Property"));

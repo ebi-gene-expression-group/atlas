@@ -28,6 +28,8 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
@@ -52,12 +54,19 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
     private ExperimentDesignParser experimentDesignParser;
 
+    private ExperimentDAO experimentDAO;
+
     protected ExperimentsCacheLoader() {
     }
 
     @Inject
     public void setMageTabLimpopoUtils(MageTabLimpopoUtils mageTabLimpopoUtils) {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
+    }
+
+    @Inject
+    public void setMageTabLimpopoUtils(ExperimentDAO experimentDAO) {
+        this.experimentDAO = experimentDAO;
     }
 
     @Inject
@@ -79,11 +88,13 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
 
-        return load(experimentAccession, fetchExperimentDescription(experimentAccession), hasExtraInfoFile, experimentDesign);
+        ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
+
+        return load(experimentDTO, fetchExperimentDescription(experimentAccession), hasExtraInfoFile, experimentDesign);
 
     }
 
-    protected abstract T load(String experimentAccession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
+    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
     private String fetchExperimentDescription(String experimentAccession) {
         // TODO: move this information to database and only call once during experiment load

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.text.MessageFormat;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -47,13 +44,13 @@ public class BaselineExperiment extends Experiment {
     private ExperimentalFactors experimentalFactors;
 
 
-    BaselineExperiment(String accession, ExperimentalFactors experimentalFactors,
+    BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        Map<String, ExperimentRun> experimentRuns, String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
                        String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
                        List<String> pubMedIds, ExperimentDesign experimentDesign) {
 
-        super(ExperimentType.BASELINE, accession, displayName, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
+        super(ExperimentType.BASELINE, accession, lastUpdate, displayName, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;

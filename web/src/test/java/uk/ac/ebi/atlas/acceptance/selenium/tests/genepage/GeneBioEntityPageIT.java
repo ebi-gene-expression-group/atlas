@@ -46,6 +46,7 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus musculus glycoprotein (transmembrane) nmb"));
     }
 
+    //This will fail with PhantomJS
     @Test
     public void checkCardExpansion() {
         assertThat(subject.isInfoCardExpanded(), is(true));

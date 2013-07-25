@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Sets;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,11 +32,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.*;
@@ -63,14 +66,27 @@ public class BaselineProfilesTSVWriterIT {
 
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
-    @PostConstruct
-    private void initContext(){
+    @Inject
+    private ExperimentDAO experimentDAO;
+
+    @Before
+    public void setUp() throws Exception {
+
+        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+        experimentDAO.addExperiment(MULTIDIMENSIONAL_EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         baselineRequestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
-                                .withPreferences(requestPreferences).build();
+                .withPreferences(requestPreferences).build();
+
     }
 
+    @After
+    public void tearDown() throws Exception {
+        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
+        experimentDAO.deleteExperiment(MULTIDIMENSIONAL_EXPERIMENT_ACCESSION);
+    }
 
     @Test
     public void headerTextShouldContainThreeRows(){

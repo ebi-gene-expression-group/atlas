@@ -143,7 +143,7 @@ public final class ExperimentDispatcher {
             prepareModel(request, model, experiment);
             String requestURL = getRequestURL(request);
 
-            String mappedSpecies = experiment.getRequestSpecieName(specie);
+            String mappedSpecies = experiment.getRequestSpeciesName(specie);
 
             String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
 

@@ -59,6 +59,7 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getSelectedProfiles().size(), is(3));
     }
 
+    //This is not working with PhantomJS browser :((
     @Test
     public void checkContrastSummaryTooltipTableHeader() {
         assertThat(subject.getContastSummaryTooltipTableHeader(0, 0), is("Property"));
@@ -82,6 +83,7 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getContastSummaryTooltipTableData(0, 5, 2), is("Arabidopsis thaliana"));
     }
 
+    //This is not working with PhantomJS browser :((
     @Test
     public void checkContrastSummaryTooltipExperimentAndContrastDescription() {
         assertThat(subject.getContastSummaryTooltipExperimentDescription(0), is("RNA-seq of Arabidopsis mutants with defects in long-non-coding-RNA-mediated transcriptional silencing"));

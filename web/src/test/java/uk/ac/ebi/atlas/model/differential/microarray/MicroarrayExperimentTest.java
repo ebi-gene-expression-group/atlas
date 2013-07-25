@@ -33,6 +33,8 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
+import java.util.Date;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
@@ -54,7 +56,7 @@ public class MicroarrayExperimentTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY, "accession", Sets.newHashSet(contrastMock), "description", false,
+        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY, "accession", new Date(), Sets.newHashSet(contrastMock), "description", false,
                 Sets.newHashSet("species"), Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)), false,
                 Lists.newArrayList(PUBMEDID), experimentDesignMock);
     }

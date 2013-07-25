@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import com.jayway.jsonpath.JsonPath;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,6 +35,8 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 public class BioontologyClient {
+
+    private static final Logger LOGGER = Logger.getLogger(BioontologyClient.class);
 
     private static final String NUM_HITS_JSON_PATH = "$..numHits";
 
@@ -48,16 +51,20 @@ public class BioontologyClient {
     }
 
     public boolean isValid(String ontologyTerm) {
+        try{
+            String jsonResponse = restTemplate.getForObject(bioontologyServiceEndPoint, String.class, ontologyTerm);
 
-        String jsonResponse = restTemplate.getForObject(bioontologyServiceEndPoint, String.class, ontologyTerm);
+            List<Integer> hitsCount = JsonPath.read(jsonResponse, NUM_HITS_JSON_PATH);
 
-        List<Integer> hitsCount = JsonPath.read(jsonResponse, NUM_HITS_JSON_PATH);
+            checkState(hitsCount.size() == 1, "invalid nuber of numHits elements in the bioontology service response: "
+                                                + jsonResponse);
 
-        checkState(hitsCount.size() == 1, "invalid nuber of numHits elements in the bioontology service response: "
-                                            + jsonResponse);
+            return 0 != hitsCount.get(0);
 
-        return 0 != hitsCount.get(0);
-
+        }catch (RuntimeException e){
+            LOGGER.error(e.getMessage(), e);
+            throw e;
+        }
     }
 
 }

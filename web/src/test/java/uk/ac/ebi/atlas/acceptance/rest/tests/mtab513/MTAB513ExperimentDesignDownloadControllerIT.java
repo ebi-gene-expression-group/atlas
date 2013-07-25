@@ -83,7 +83,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> line = subject.getRowValues(17);
 
         assertThat(line,
-                contains("ERR030872", "Homo sapiens", "60", "Caucasian", "thyroid", "female", "thyroid", "Yes")
+                contains("ERR030872", "Homo sapiens", "60 years", "Caucasian", "thyroid", "female", "thyroid", "Yes")
         );
 
     }

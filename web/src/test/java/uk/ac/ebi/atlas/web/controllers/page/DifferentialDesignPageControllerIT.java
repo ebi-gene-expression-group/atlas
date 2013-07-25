@@ -14,7 +14,8 @@
  * limitations under the License.
  *
  *
- * For further details of the Gene Expression Atlas project, including source code, * downloads and documentation, please see:
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
  *
  * http://gxa.github.com/gxa
  */
@@ -24,6 +25,7 @@ package uk.ac.ebi.atlas.web.controllers.page;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +35,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
@@ -73,13 +77,25 @@ public class DifferentialDesignPageControllerIT {
 
     Model model = new BindingAwareModelMap();
 
+    @Inject
+    private ExperimentDAO experimentDAO;
+
     @Before
-    public void setUp() throws Exception {
+    public void initSubject() throws Exception {
+
+        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.DIFFERENTIAL, false);
+
         requestMock = mock(HttpServletRequest.class);
         preferencesMock = mock(DifferentialDesignRequestPreferences.class);
         DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(differentialExperiment);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
+
+    }
+
+    @After
+    public void tearDown(){
+        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Test

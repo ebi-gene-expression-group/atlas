@@ -23,12 +23,15 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Sets;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
 import javax.inject.Inject;
@@ -42,6 +45,8 @@ import static org.hamcrest.Matchers.is;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class ExperimentalFactorsIT {
 
+    private static final String BASELINE_EXPERIMENT_ACCESSION = "E-GEOD-26284";
+
     @Inject
     private BaselineExperimentsCache experimentsCache;
 
@@ -49,12 +54,22 @@ public class ExperimentalFactorsIT {
 
     ExperimentalFactors subject;
 
-    @Before
-    public void initSubject() {
+    @Inject
+    private ExperimentDAO experimentDAO;
 
-        experiment = experimentsCache.getExperiment("E-GEOD-26284");
+    @Before
+    public void setUp() throws Exception {
+
+        experimentDAO.addExperiment(BASELINE_EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+
+        experiment = experimentsCache.getExperiment(BASELINE_EXPERIMENT_ACCESSION);
         subject = experiment.getExperimentalFactors();
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        experimentDAO.deleteExperiment(BASELINE_EXPERIMENT_ACCESSION);
     }
 
     @Test

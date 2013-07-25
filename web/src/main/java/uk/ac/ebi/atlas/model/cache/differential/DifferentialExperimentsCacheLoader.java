@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.cache.differential;
 
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCacheLoader;
@@ -47,15 +48,17 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
     }
 
     @Override
-    protected DifferentialExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected DifferentialExperiment load(ExperimentDTO experimentDTO, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
-        DifferentialExperimentConfiguration differentialExperimentConfiguration = configurationTrader.getDifferentialExperimentConfiguration(accession);
+        String experimentAccession = experimentDTO.getExperimentAccession();
+
+        DifferentialExperimentConfiguration differentialExperimentConfiguration = configurationTrader.getDifferentialExperimentConfiguration(experimentAccession);
         Set<Contrast> contrasts = differentialExperimentConfiguration.getContrasts();
 
-        Set<String> species = extractSpecies(accession);
-        List<String> pubMedIds = extractPubMedIds(accession);
+        Set<String> species = extractSpecies(experimentAccession);
+        List<String> pubMedIds = extractPubMedIds(experimentAccession);
 
-        return new DifferentialExperiment(accession, contrasts, experimentDescription, hasExtraInfoFile, species, pubMedIds, experimentDesign);
+        return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasExtraInfoFile, species, pubMedIds, experimentDesign);
 
     }
 }

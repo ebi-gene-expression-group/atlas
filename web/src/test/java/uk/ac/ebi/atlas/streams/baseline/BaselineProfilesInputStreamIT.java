@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.streams.baseline;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +32,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
@@ -70,8 +73,13 @@ public class BaselineProfilesInputStreamIT {
 
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
+    @Inject
+    private ExperimentDAO experimentDAO;
+
     @Before
-    public void initSubject() throws Exception {
+    public void setUp() throws Exception {
+        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+
         requestPreferences.setCutoff(0.5d);
         requestPreferences.setQueryFactorType("ORGANISM_PART");
 
@@ -80,7 +88,11 @@ public class BaselineProfilesInputStreamIT {
         baselineRequestContext = baselineRequestContextBuilder.forExperiment(experiment).withPreferences(requestPreferences).build();
 
         subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION);
+    }
 
+    @After
+    public void tearDown() throws Exception {
+        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Test

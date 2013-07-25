@@ -90,6 +90,6 @@ public class TsvReaderIT {
 
         // then
         assertThat(firstLine, arrayContaining("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics[sex]", "Factor Values[organism part]"));
-        assertThat(lastLine, arrayContaining("ERR030903", "Homo sapiens", "60", "Caucasian", "thyroid", "female", "thyroid"));
+        assertThat(lastLine, arrayContaining("ERR030903", "Homo sapiens", "60 years", "Caucasian", "thyroid", "female", "thyroid"));
     }
 }

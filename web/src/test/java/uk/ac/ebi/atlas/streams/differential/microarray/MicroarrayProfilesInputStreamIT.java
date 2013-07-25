@@ -95,11 +95,6 @@ public class MicroarrayProfilesInputStreamIT {
 
     private MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
 
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
-    }
-
     @Before
     public void initSubject() throws Exception {
 
@@ -117,6 +112,11 @@ public class MicroarrayProfilesInputStreamIT {
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                 .withPreferences(microarrayRequestPreferences).build();
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Test

@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
+import java.util.Date;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
@@ -77,7 +79,7 @@ public class DifferentialExperimentTest {
         when(contrastMock2.getReferenceAssayGroup()).thenReturn(assayGroupMock2);
         when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
 
-        subject = new DifferentialExperiment("accession", Sets.newHashSet(contrastMock1, contrastMock2), "description",
+        subject = new DifferentialExperiment("accession", new Date(), Sets.newHashSet(contrastMock1, contrastMock2), "description",
                 false, Sets.newHashSet("species"), Lists.newArrayList(PUBMEDID), experimentDesignMock);
     }
 

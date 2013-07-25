@@ -26,6 +26,7 @@
 package uk.ac.ebi.atlas.model.cache.baseline;
 
 import com.google.common.collect.Sets;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +34,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -51,13 +54,27 @@ import static org.hamcrest.Matchers.hasItems;
 public class BaselineExperimentsCacheLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";
+    private static final String ILLUMINA_EXPERIMENT_ACCESSION = "E-MTAB-513";
     private static final String RUN_ACCESSION = "SRR306774";
 
     @Inject
     private BaselineExperimentsCacheLoader subject;
 
+    @Inject
+    private ExperimentDAO experimentDAO;
+
     @Before
-    public void initSubject() throws IOException, ParseException {
+    public void setUp() throws Exception {
+
+        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+        experimentDAO.addExperiment(ILLUMINA_EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
+        experimentDAO.deleteExperiment(ILLUMINA_EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -89,7 +106,7 @@ public class BaselineExperimentsCacheLoaderIT {
     public void illuminaBodymapExperimentRunShouldContainTheRightFactorsTest() throws Exception {
         Factor organismPartFactor = new Factor("ORGANISM_PART","liver");
         //given
-        BaselineExperiment experiment = subject.load("E-MTAB-513");
+        BaselineExperiment experiment = subject.load(ILLUMINA_EXPERIMENT_ACCESSION);
         //when
         FactorGroup factorGroup = experiment.getFactorGroup("ERR030887");
         //then

@@ -23,17 +23,19 @@
 package uk.ac.ebi.atlas.model.baseline.barcharts;
 
 import com.google.common.collect.Sets;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressionPrecondition;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.BarChartTradersCache;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.SortedMap;
 
@@ -46,6 +48,8 @@ import static org.hamcrest.Matchers.hasEntry;
 public class BarChartTraderIT {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
+    private static final String BASELINE_EXPERIMENT_ACCESSION = "E-MTAB-599";
+
     @Inject
     private BarChartTradersCache barChartTradersCache;
 
@@ -54,14 +58,21 @@ public class BarChartTraderIT {
 
     private BarChartTrader subject;
 
-
-    @PostConstruct
-    public void initSpringBeans() {
-    }
+    @Inject
+    private ExperimentDAO experimentDAO;
 
     @Before
-    public void initSubject() {
-        this.subject = barChartTradersCache.getBarchartTrader("E-MTAB-599");
+    public void setUp() throws Exception {
+
+        experimentDAO.addExperiment(BASELINE_EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+
+        this.subject = barChartTradersCache.getBarchartTrader(BASELINE_EXPERIMENT_ACCESSION);
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        experimentDAO.deleteExperiment(BASELINE_EXPERIMENT_ACCESSION);
     }
 
     @Test

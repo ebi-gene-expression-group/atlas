@@ -87,7 +87,7 @@ public class LoadExperimentsController {
     public String publishExperiment(@RequestParam("accession") String experimentAccession, @RequestParam("private") boolean isPrivate) {
 
         experimentCRUD.updateExperiment(experimentAccession, isPrivate);
-        return "Experiment " + experimentAccession + " successfully published.";
+        return "Experiment " + experimentAccession + " successfully updated.";
     }
 
     @RequestMapping("/listExperiments")

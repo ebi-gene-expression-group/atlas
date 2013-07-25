@@ -32,6 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
+import java.util.Date;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -82,7 +83,7 @@ public class BaselineExperimentTest {
         experimentRunsMock.put(runMock1.getAccession(), runMock1);
         experimentRunsMock.put(runMock2.getAccession(), runMock2);
 
-        subject = new BaselineExperiment("accession", experimentalFactorsMock,
+        subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
                 experimentRunsMock, "description",
                 "displayName", Sets.newHashSet("species"), speciesMapping, DEFAULT_QUERY_FACTOR_TYPE,
                 Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID), experimentDesignMock);

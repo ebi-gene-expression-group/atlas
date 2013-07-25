@@ -90,7 +90,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getLastGeneProfile().get(1), is(""));
     }
 
-    //This is not going to work with PhantomJS because there is a hover action required :(
+    //This will fail with PhantomJS
     @Test
     public void heatmapCellTooltipTest() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");

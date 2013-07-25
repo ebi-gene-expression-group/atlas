@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,9 +38,11 @@ public class Experiment implements Serializable {
     private String description;
     private String displayName;
     private boolean hasExtraInfoFile;
+    private Date lastUpdate;
 
-    public Experiment(ExperimentType type, String accession, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+    public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
         this.type = type;
+        this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
         this.accession = accession;
         this.displayName = displayName;
@@ -51,12 +53,16 @@ public class Experiment implements Serializable {
         this.pubMedIds = pubMedIds;
     }
 
-    public Experiment(ExperimentType type, String accession, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(type, accession, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
+    public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
     }
 
     public ExperimentType getType() {
         return type;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
     }
 
     public ExperimentDesign getExperimentDesign() {
@@ -98,10 +104,10 @@ public class Experiment implements Serializable {
         return Collections.unmodifiableMap(speciesMapping);
     }
 
-    public String getRequestSpecieName(String specie) {
-        String specieName = speciesMapping.get(specie);
-        if (specieName != null) {
-            return Character.toUpperCase(specieName.charAt(0)) + specieName.substring(1);
+    public String getRequestSpeciesName(String species) {
+        String speciesName = speciesMapping.get(species);
+        if (speciesName != null) {
+            return Character.toUpperCase(speciesName.charAt(0)) + speciesName.substring(1);
         }
         return "";
     }

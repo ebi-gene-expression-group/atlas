@@ -46,6 +46,7 @@ public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getBioEntityCardTitle(), is("Q8N349 Homo sapiens olfactory receptor, family 2, subfamily L, member 13"));
     }
 
+    //This will fail with PhantomJS
     @Test
     public void checkCardExpansion() {
         assertThat(subject.isInfoCardExpanded(), is(true));

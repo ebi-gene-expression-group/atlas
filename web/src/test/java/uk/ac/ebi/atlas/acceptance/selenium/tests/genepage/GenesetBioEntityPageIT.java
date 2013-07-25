@@ -47,6 +47,7 @@ public class GenesetBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getBioEntityCardTitle(), is("REACT_1698 Homo sapiens Metabolism of nucleotides"));
     }
 
+    //This will fail with PhantomJS
     @Test
     public void checkCardExpansion() {
         assertThat(subject.isInfoCardExpanded(), is(true));

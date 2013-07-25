@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Sets;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,11 +32,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.*;
@@ -62,13 +65,24 @@ public class RnaSeqProfilesTSVWriterIT {
 
     private DifferentialExperiment differentialExperiment;
 
-    @PostConstruct
-    private void initContext(){
+    @Inject
+    private ExperimentDAO experimentDAO;
+
+    @Before
+    public void setUp() throws Exception {
+
+        experimentDAO.addExperiment(RNA_SEQ_EXPERIMENT_ACCESSION, ExperimentType.DIFFERENTIAL, false);
+
         differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(RNA_SEQ_EXPERIMENT_ACCESSION);
         rnaSeqRequestContext = rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
-                                .withPreferences(requestPreferences).build();
+                .withPreferences(requestPreferences).build();
+
     }
 
+    @After
+    public void tearDown() throws Exception {
+        experimentDAO.deleteExperiment(RNA_SEQ_EXPERIMENT_ACCESSION);
+    }
 
     @Test
     public void headerTextShouldContainThreeRows(){

@@ -45,7 +45,7 @@ public class GenePropertiesTooltipIT extends SinglePageSeleniumFixture {
         subject.get();
     }
 
-    //This is not working with PhantomJS browser :((
+    //This will fail with PhantomJS
     @Test
     public void matchingGeneQueryTermsShouldBeHighlighted() throws InterruptedException {
         //given

@@ -60,22 +60,23 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
     }
 
     @Override
-    protected MicroarrayExperiment load(String accession, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
-        MicroarrayExperimentConfiguration microarrayExperimentConfiguration = configurationTrader.getMicroarrayExperimentConfiguration(accession);
+        String experimentAccession = experimentDTO.getExperimentAccession();
+
+        MicroarrayExperimentConfiguration microarrayExperimentConfiguration = configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
         Set<Contrast> contrasts = microarrayExperimentConfiguration.getContrasts();
 
-        Set<String> species = extractSpecies(accession);
-        List<String> pubMedIds = extractPubMedIds(accession);
+        Set<String> species = extractSpecies(experimentAccession);
+        List<String> pubMedIds = extractPubMedIds(experimentAccession);
 
         SortedSet<String> arrayDesignNames = microarrayExperimentConfiguration.getArrayDesignNames();
 
-        String logFoldChangeFileLocation = MessageFormat.format(logFoldChangePathTemplate, accession, arrayDesignNames.first());
+        String logFoldChangeFileLocation = MessageFormat.format(logFoldChangePathTemplate, experimentAccession, arrayDesignNames.first());
 
         boolean hasLogFoldChangeFile = new File(logFoldChangeFileLocation).exists();
 
-        ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(accession);
-        return new MicroarrayExperiment(experimentDTO.getExperimentType(), accession, contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
+        return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
 
     }
 }

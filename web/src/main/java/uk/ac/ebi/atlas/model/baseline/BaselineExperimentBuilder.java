@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,6 +56,7 @@ public class BaselineExperimentBuilder {
     private List<FactorGroup> orderedFactorGroups;
     private List<String> pubMedIds;
     private ExperimentDesign experimentDesign;
+    private Date lastUpdate;
 
     @Inject
     BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -143,7 +145,7 @@ public class BaselineExperimentBuilder {
             displayName = experimentAccession;
         }
 
-        return new BaselineExperiment(experimentAccession, experimentalFactors, experimentRuns, description,
+        return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, experimentRuns, description,
                 displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile,
                 pubMedIds, experimentDesign);
     }
@@ -156,6 +158,11 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withOrderedFactorGroups(List<FactorGroup> orderedFactorGroups) {
         this.orderedFactorGroups = orderedFactorGroups;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
         return this;
     }
 }
