@@ -38,6 +38,8 @@ import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -89,6 +91,8 @@ public class ExperimentInfoListBuilderTest {
     @Before
     public void setUp() throws Exception {
 
+        Date lastUpdateStub = new GregorianCalendar(39 + 1900, 12, 12).getTime();
+
         when(experimentDesignMock.getFactorHeaders()).thenReturn(Sets.newTreeSet(Sets.newHashSet(FACTOR_NAME)));
         when(baselineExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(differentialExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
@@ -97,6 +101,7 @@ public class ExperimentInfoListBuilderTest {
 
         when(baselineExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
         when(baselineExperimentMock.getAccession()).thenReturn(ACCESSION);
+        when(baselineExperimentMock.getLastUpdate()).thenReturn(lastUpdateStub);
         when(baselineExperimentMock.getDescription()).thenReturn(DESCRIPTION);
         when(baselineExperimentMock.getType()).thenReturn(ExperimentType.BASELINE);
 
@@ -109,12 +114,14 @@ public class ExperimentInfoListBuilderTest {
         when(microarrayExperimentsCacheMock.getExperiment(MICROARRAY)).thenReturn(microarrayExperimentMock);
 
         when(microarrayExperimentMock.getAccession()).thenReturn(MICROARRAY);
+        when(microarrayExperimentMock.getLastUpdate()).thenReturn(lastUpdateStub);
         when(microarrayExperimentMock.getAssayAccessions()).thenReturn(Sets.newHashSet(ASSAY_1, ASSAY_2));
         when(microarrayExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST)));
         when(microarrayExperimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY)));
         when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY);
 
         when(differentialExperimentMock.getAccession()).thenReturn(DIFFERENTIAL);
+        when(differentialExperimentMock.getLastUpdate()).thenReturn(lastUpdateStub);
         when(differentialExperimentMock.getAssayAccessions()).thenReturn(Sets.newHashSet(ASSAY_1, ASSAY_2));
         when(differentialExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST)));
         when(differentialExperimentMock.getType()).thenReturn(ExperimentType.DIFFERENTIAL);
@@ -168,6 +175,7 @@ public class ExperimentInfoListBuilderTest {
     public void testExtractBasicExperimentInfo() throws Exception {
         ExperimentInfo experimentInfo = subject.extractBasicExperimentInfo(baselineExperimentMock);
         assertThat(experimentInfo.getExperimentAccession(), is(ACCESSION));
+        assertThat(experimentInfo.getLastUpdate(), is("12-01-1940"));
         assertThat(experimentInfo.getExperimentDescription(), is(DESCRIPTION));
         assertThat(experimentInfo.getSpecies(), contains(SPECIES));
         assertThat(experimentInfo.getExperimentType(), is(ExperimentType.BASELINE));
