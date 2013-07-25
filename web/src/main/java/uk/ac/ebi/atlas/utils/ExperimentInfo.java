@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.utils;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -35,6 +36,8 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
     private String experimentAccession;
 
     private String experimentDescription;
+
+    private String lastUpdate;
 
     private int numberOfAssays;
 
@@ -113,5 +116,13 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
     @Override
     public int compareTo(ExperimentInfo o) {
         return this.experimentAccession.compareTo(o.experimentAccession);
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

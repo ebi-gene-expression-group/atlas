@@ -125,7 +125,7 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void defaultExperimentsPage() {
-        assertThat(subject.getExperimentsTableHeader().size(), is(8));
+        assertThat(subject.getExperimentsTableHeader().size(), is(9));
         assertThat(subject.getExperimentsTableInfo(), startsWith("Showing 1 to " + numberResults + " of " + totalExperiments + " entries"));
         assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
         assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastAccession));
@@ -187,10 +187,10 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void sortOnThirdColumn() {
+    public void sortOnDescriptionColumn() {
         assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
         assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastAccession));
-        subject.clickThirdColumnHeader();
+        subject.clickFourthColumnHeader();
         List<ExperimentInfo> allInfos = Lists.newArrayList(baselineInfos);
         allInfos.addAll(differentialInfos);
         Collections.sort(allInfos, new Comparator<ExperimentInfo>() {
@@ -205,7 +205,7 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
         } else {
             assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentAccession()));
         }
-        subject.clickThirdColumnHeader();
+        subject.clickFourthColumnHeader();
         Collections.reverse(allInfos);
         assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentAccession()));
         if (allInfos.size() < 10) {

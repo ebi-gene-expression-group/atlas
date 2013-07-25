@@ -36,6 +36,8 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Named
@@ -127,6 +129,8 @@ public class ExperimentInfoListBuilder {
 
         ExperimentInfo experimentInfo = new ExperimentInfo();
         experimentInfo.setExperimentAccession(experiment.getAccession());
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        experimentInfo.setLastUpdate(dateFormat.format(experiment.getLastUpdate()));
         experimentInfo.setExperimentDescription(experiment.getDescription());
         experimentInfo.setSpecies(experiment.getSpecies());
         //ToDo: there are only types (BASELINE, DIFFERENTIAL, MICROARRAY)

@@ -56,6 +56,10 @@ var experimentsPageModule = (function ($) {
         return '<a href="http://www.ebi.ac.uk/arrayexpress/experiments/' + data + '" title="View in Array Express">' + data + '</a>';
     }
 
+    function formatLastUpdate(data, type, full) {
+        return data;
+    }
+
     function formatExperimentDescription(data, type, full) {
         return '<a href="experiments/' + full.experimentAccession + '" title="View in Expression Atlas">' + data + '</a>';
     }
@@ -100,6 +104,10 @@ var experimentsPageModule = (function ($) {
                 { "sTitle":"Experiment", "mData":"experimentAccession", "sClass":"center bb",
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
+                    } },
+                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb",
+                    "mRender":function (data, type, full) {
+                        return formatLastUpdate(data, type, full);
                     } },
                 { "sTitle":"Description", "mData":"experimentDescription", "sClass":"center bb padding",
                     "mRender":function (data, type, full) {

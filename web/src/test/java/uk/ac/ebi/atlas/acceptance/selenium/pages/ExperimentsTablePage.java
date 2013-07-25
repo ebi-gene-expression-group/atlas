@@ -47,8 +47,8 @@ public class ExperimentsTablePage extends TablePage {
     @FindBy(xpath = "//thead/tr[1]/th[2]")
     private WebElement secondColumnHeader;
 
-    @FindBy(xpath = "//thead/tr[1]/th[3]")
-    private WebElement thirdColumnHeader;
+    @FindBy(xpath = "//thead/tr[1]/th[4]")
+    private WebElement fourthColumnHeader;
 
     public ExperimentsTablePage(WebDriver driver) {
         super(driver);
@@ -67,8 +67,8 @@ public class ExperimentsTablePage extends TablePage {
         secondColumnHeader.click();
     }
 
-    public void clickThirdColumnHeader() {
-        thirdColumnHeader.click();
+    public void clickFourthColumnHeader() {
+        fourthColumnHeader.click();
     }
 
     public String getSearchFieldValue() {
