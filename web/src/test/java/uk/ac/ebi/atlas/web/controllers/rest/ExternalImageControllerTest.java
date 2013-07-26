@@ -48,9 +48,6 @@ public class ExternalImageControllerTest {
     public static final String EXTRA_INFO_PATH_TEMPLATE = "magetab/{0}/{0}-extra-info.png";
     public static final String RNA_SEQ_PATH_TEMPLATE = "magetab/{0}/{0}-{1}-mvaPlot.png";
     public static final String MICROARRAY_PATH_TEMPLATE = "magetab/{0}/{0}_{1}-{2}-mvaPlot.png";
-    public static final String CONTRAST_NAME = "contrastName";
-    public static final String ARRAY_DESIGN_ACCESSION = "arrayDesignAccession";
-    public static final String FILE_LOCATION = "fileLocation";
 
     @Mock
     private ImageIOUtils imageIOUtilsMock;
@@ -66,6 +63,9 @@ public class ExternalImageControllerTest {
 
     private ExternalImageController subject;
 
+    @Mock
+    private InputStream imageInputStreamMock;
+
     @Before
     public void setUp() throws Exception {
         subject = new ExternalImageController(imageIOUtilsMock,
@@ -73,50 +73,17 @@ public class ExternalImageControllerTest {
                 RNA_SEQ_PATH_TEMPLATE,
                 MICROARRAY_PATH_TEMPLATE);
 
-        when(imageIOUtilsMock.read(any(InputStream.class))).thenReturn(bufferedImageMock);
+        when(imageIOUtilsMock.read(imageInputStreamMock)).thenReturn(bufferedImageMock);
         when(responseMock.getOutputStream()).thenReturn(outputStreamMock);
         when(imageIOUtilsMock.write(bufferedImageMock, "png", outputStreamMock)).thenReturn(true);
     }
 
-    @Test
-    public void testStreamExtraInfoImage() throws Exception {
-        subject.streamExtraInfoImage(responseMock, EXPERIMENT_ACCESSION);
-
-        InputStream inputStream = Files.newInputStream(Paths.get(MessageFormat.format(EXTRA_INFO_PATH_TEMPLATE, EXPERIMENT_ACCESSION)));
-        verify(imageIOUtilsMock).read(inputStream);
-        verify(responseMock).setContentType("image/png");
-        verify(imageIOUtilsMock).write(bufferedImageMock, "png", outputStreamMock);
-        verify(outputStreamMock).close();
-    }
-
-    @Test
-    public void testStreamMicroarrayMaPlotImage() throws Exception {
-        subject.streamMicroarrayMaPlotImage(responseMock, EXPERIMENT_ACCESSION, ARRAY_DESIGN_ACCESSION, CONTRAST_NAME);
-
-        InputStream inputStream = Files.newInputStream(Paths.get(MessageFormat.format(MICROARRAY_PATH_TEMPLATE, EXPERIMENT_ACCESSION, ARRAY_DESIGN_ACCESSION, CONTRAST_NAME)));
-        verify(imageIOUtilsMock).read(inputStream);
-        verify(responseMock).setContentType("image/png");
-        verify(imageIOUtilsMock).write(bufferedImageMock, "png", outputStreamMock);
-        verify(outputStreamMock).close();
-    }
-
-    @Test
-    public void testStreamRnaSeqMaPlotImage() throws Exception {
-        subject.streamRnaSeqMaPlotImage(responseMock, EXPERIMENT_ACCESSION, CONTRAST_NAME);
-
-        InputStream inputStream = Files.newInputStream(Paths.get(MessageFormat.format(RNA_SEQ_PATH_TEMPLATE, EXPERIMENT_ACCESSION, CONTRAST_NAME)));
-        verify(imageIOUtilsMock).read(inputStream);
-        verify(responseMock).setContentType("image/png");
-        verify(imageIOUtilsMock).write(bufferedImageMock, "png", outputStreamMock);
-        verify(outputStreamMock).close();
-    }
 
     @Test
     public void testStreamExternalImage() throws Exception {
-        subject.streamExternalImage(responseMock, FILE_LOCATION);
+        subject.streamExternalImage(responseMock, imageInputStreamMock);
 
-        InputStream inputStream = Files.newInputStream(Paths.get(FILE_LOCATION));
-        verify(imageIOUtilsMock).read(inputStream);
+        verify(imageIOUtilsMock).read(imageInputStreamMock);
         verify(responseMock).setContentType("image/png");
         verify(imageIOUtilsMock).write(bufferedImageMock, "png", outputStreamMock);
         verify(outputStreamMock).close();

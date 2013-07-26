@@ -67,44 +67,49 @@ public class ExternalImageController {
 
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/extra-info.png")
-    public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession) {
+    public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession) throws IOException{
 
-        String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
+        String imagePath = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
 
-        streamExternalImage(response, extraInfoFileLocation);
+        InputStream imageInputStream = Files.newInputStream(Paths.get(imagePath));
+
+        streamExternalImage(response, imageInputStream);
 
     }
 
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{contrastName}/ma-plot.png")
     public void streamMicroarrayMaPlotImage(HttpServletResponse response, @PathVariable String experimentAccession,
-                                            @PathVariable String arrayDesignAccession, @PathVariable String contrastName) {
+                                            @PathVariable String arrayDesignAccession, @PathVariable String contrastName) throws IOException{
 
-        String microarrayMaPlotImageLocation = MessageFormat.format(microarrayPathTemplate, experimentAccession,
+        String imagePath = MessageFormat.format(microarrayPathTemplate, experimentAccession,
                 arrayDesignAccession,
                 contrastName);
 
-        streamExternalImage(response, microarrayMaPlotImageLocation);
+        InputStream imageInputStream = Files.newInputStream(Paths.get(imagePath));
+
+        streamExternalImage(response, imageInputStream);
 
     }
 
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/ma-plot.png")
     public void streamRnaSeqMaPlotImage(HttpServletResponse response, @PathVariable String experimentAccession
-            , @PathVariable String contrastName) {
+            , @PathVariable String contrastName) throws IOException{
 
-        String rnaSeqMaPlotImageLocation = MessageFormat.format(rnaSeqPathTemplate, experimentAccession, contrastName);
+        String rnaSeqMaPlotImagePath = MessageFormat.format(rnaSeqPathTemplate, experimentAccession, contrastName);
 
-        streamExternalImage(response, rnaSeqMaPlotImageLocation);
+        InputStream imageInputStream = Files.newInputStream(Paths.get(rnaSeqMaPlotImagePath));
+
+        streamExternalImage(response, imageInputStream);
 
     }
 
 
-    protected void streamExternalImage(HttpServletResponse response, String extraInfoFilePath) {
+    void streamExternalImage(HttpServletResponse response, InputStream extraInfoImageInputStream) {
         try {
 
-            InputStream imageInputStream = Files.newInputStream(Paths.get(extraInfoFilePath));
-            BufferedImage image = imageIOUtils.read(imageInputStream);
+            BufferedImage image = imageIOUtils.read(extraInfoImageInputStream);
 
             response.setContentType("image/png");
             OutputStream out = response.getOutputStream();
@@ -113,7 +118,7 @@ public class ExternalImageController {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Error loading external image with location " + extraInfoFilePath);
+            throw new IllegalStateException("Error loading external image");
         }
     }
 }
