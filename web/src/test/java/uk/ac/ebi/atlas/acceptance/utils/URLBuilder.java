@@ -43,11 +43,8 @@ public class URLBuilder {
     public String buildURL(String httpParameters) {
         String hostname = System.getProperty(SELENIUM_TEST_HOST_PROPERTY_KEY);
         if (StringUtils.isBlank(hostname)) {
-            System.out.println("selenium.test.host is null, so tests will be executed against local machine");
             hostname = getLocalHostAddress();
         }
-
-        System.out.println("running tests on local host address: " + hostname);
 
         String portNumber = System.getProperty(SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY);
         if (StringUtils.isBlank(portNumber)) {
