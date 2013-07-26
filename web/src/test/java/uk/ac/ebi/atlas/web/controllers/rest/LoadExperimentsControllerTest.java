@@ -79,7 +79,7 @@ public class LoadExperimentsControllerTest {
     public void loadExperimentShouldSucceed() throws Exception {
         String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
         assertThat(responseText, is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
-        verify(experimentCheckerMock).checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(experimentCheckerMock).checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
         verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
     }
 

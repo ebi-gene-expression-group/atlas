@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader;
 
-import org.apache.log4j.Logger;
+import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -30,17 +30,18 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfigu
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Properties;
+import java.util.Set;
 
-//ToDo (B) to be cleaned!
+import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
 public class ExperimentChecker {
-
-    private static final Logger LOGGER = Logger.getLogger(ExperimentChecker.class);
 
     private Properties configurationProperties;
 
@@ -53,73 +54,76 @@ public class ExperimentChecker {
         this.configurationTrader = configurationTrader;
     }
 
-    public void checkAllFilesPresent(String experimentAccession, ExperimentType experimentType) {
+    public void checkAllFiles(String experimentAccession, ExperimentType experimentType) {
 
         // every experiment should have analysis methods file
-        checkRequiredFileCanRead("experiment.analysis-method.path.template", experimentAccession);
+        checkFilePermission("experiment.analysis-method.path.template", experimentAccession);
 
         switch (experimentType) {
             case BASELINE:
-                checkBaseline(experimentAccession);
+                checkBaselineFiles(experimentAccession);
                 break;
             case DIFFERENTIAL:
-                checkDifferential(experimentAccession);
+                checkDifferentialFiles(experimentAccession);
                 break;
             case MICROARRAY:
-                checkMicroarray(experimentAccession);
+            case MICRORNA:
+                checkMicroarrayFiles(experimentAccession);
                 break;
             case TWOCOLOUR:
-                checkTwoColour(experimentAccession);
-                break;
-            case MICRORNA:
-                checkMicroarray(experimentAccession);
+                checkTwoColourFiles(experimentAccession);
                 break;
             default:
-                LOGGER.error("<checkAllFilesPresent> The specified experiment type is not supported.");
                 throw new IllegalStateException("The specified experiment type is not supported.");
         }
     }
 
-    protected void checkBaseline(String experimentAccession) {
-        checkRequiredFileCanRead("experiment.magetab.path.template", experimentAccession);
-        checkRequiredFileCanRead("experiment.transcripts.path.template", experimentAccession);
-        checkRequiredFileCanRead("experiment.factors.path.template", experimentAccession);
+
+    void checkBaselineFiles(String experimentAccession) {
+        Set<String> baselineExperimentPathTemplates =
+                Sets.newHashSet("experiment.magetab.path.template", "experiment.transcripts.path.template", "experiment.factors.path.template");
+
+        checkFilesPermissions(baselineExperimentPathTemplates, experimentAccession);
     }
 
-    protected void checkDifferential(String experimentAccession) {
-        checkRequiredFileCanRead("diff.experiment.configuration.path.template", experimentAccession);
-        checkRequiredFileCanRead("diff.experiment.data.path.template", experimentAccession);
-        checkRequiredFileCanRead("diff.experiment.raw-counts.path.template", experimentAccession);
+    void checkDifferentialFiles(String experimentAccession) {
+        Set<String> differentialExperimentPathTemplates =
+                Sets.newHashSet("diff.experiment.configuration.path.template", "diff.experiment.data.path.template", "diff.experiment.raw-counts.path.template");
+
+        checkFilesPermissions(differentialExperimentPathTemplates, experimentAccession);
     }
 
-    protected void checkMicroarray(String experimentAccession) {
-        checkRequiredFileCanRead("diff.experiment.configuration.path.template", experimentAccession);
+    void checkMicroarrayFiles(String experimentAccession) {
+        checkFilePermission("diff.experiment.configuration.path.template", experimentAccession);
+        MicroarrayExperimentConfiguration microarrayConfiguration =
+                        configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
+        for (String arrayDesign : microarrayConfiguration.getArrayDesignNames()) {
+            Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.normalized.data.path.template");
+            checkFilesPermissions(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
+        }
+    }
+
+    void checkTwoColourFiles(String experimentAccession) {
+        checkFilePermission("diff.experiment.configuration.path.template", experimentAccession);
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
                 configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
+
+        Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.log-fold-changes.data.path.template");
         for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
-            checkRequiredFileCanRead("microarray.experiment.data.path.template", experimentAccession, arrayDesign);
-            checkRequiredFileCanRead("microarray.normalized.data.path.template", experimentAccession, arrayDesign);
+            checkFilesPermissions(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
         }
     }
 
-    protected void checkTwoColour(String experimentAccession) {
-        checkRequiredFileCanRead("diff.experiment.configuration.path.template", experimentAccession);
-        MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
-                configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
-        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
-            checkRequiredFileCanRead("microarray.experiment.data.path.template", experimentAccession, arrayDesign);
-            checkRequiredFileCanRead("microarray.log-fold-changes.data.path.template", experimentAccession, arrayDesign);
+    void checkFilesPermissions(Set<String> pathTemplatePropertyKeys, String... pathArguments) {
+        for (String pathTemplatePropertyKey : pathTemplatePropertyKeys){
+            checkFilePermission(pathTemplatePropertyKey, pathArguments);
         }
     }
 
-    protected void checkRequiredFileCanRead(String configurationPropertyKey, String... templateContents) {
-        String dataFileUrlTemplate = configurationProperties.getProperty(configurationPropertyKey);
-        String dataFileURL = MessageFormat.format(dataFileUrlTemplate, templateContents);
-        File dataFile = new File(dataFileURL);
-        if (!dataFile.canRead()) {
-            LOGGER.error("<checkRequiredFileCanRead> Required file can not be read: " + dataFile.getAbsolutePath());
-            throw new IllegalStateException("Required file can not be read: " + dataFile.getAbsolutePath());
-        }
+    void checkFilePermission(String pathTemplatePropertyKey, String... pathArguments) {
+        String pathTemplate = configurationProperties.getProperty(pathTemplatePropertyKey);
+        Path path = Paths.get(MessageFormat.format(pathTemplate, pathArguments));
+        checkState(Files.isReadable(path), "Required file can not be read: " + path.toAbsolutePath().toString());
     }
 
 }

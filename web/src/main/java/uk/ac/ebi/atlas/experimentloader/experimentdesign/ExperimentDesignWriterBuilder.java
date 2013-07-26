@@ -28,9 +28,12 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 
 @Named
@@ -69,9 +72,9 @@ public class ExperimentDesignWriterBuilder {
 
         String targetFilePath = MessageFormat.format(targetFilePathTemplate, experimentAccession);
 
-        File experimentDesignFile = new File(targetFilePath);
+        Path experimentDesignPath = Paths.get(targetFilePath);
 
-        FileWriter writer = new FileWriter(experimentDesignFile);
+        BufferedWriter writer = Files.newBufferedWriter(experimentDesignPath, StandardCharsets.UTF_8);
 
         CSVWriter csvWriter = new CSVWriter(writer, '\t');
 

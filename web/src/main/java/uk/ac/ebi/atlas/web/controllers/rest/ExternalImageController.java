@@ -34,9 +34,11 @@ import uk.ac.ebi.atlas.utils.ImageIOUtils;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 
 @Controller
@@ -98,11 +100,11 @@ public class ExternalImageController {
     }
 
 
-    protected void streamExternalImage(HttpServletResponse response, String extraInfoFileLocation) {
+    protected void streamExternalImage(HttpServletResponse response, String extraInfoFilePath) {
         try {
 
-            File extraInfoFile = new File(extraInfoFileLocation);
-            BufferedImage image = imageIOUtils.read(extraInfoFile);
+            InputStream imageInputStream = Files.newInputStream(Paths.get(extraInfoFilePath));
+            BufferedImage image = imageIOUtils.read(imageInputStream);
 
             response.setContentType("image/png");
             OutputStream out = response.getOutputStream();
@@ -111,7 +113,7 @@ public class ExternalImageController {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Error loading external image with location " + extraInfoFileLocation);
+            throw new IllegalStateException("Error loading external image with location " + extraInfoFilePath);
         }
     }
 }

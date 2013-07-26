@@ -74,14 +74,14 @@ public class ExperimentCheckerTest {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty(CONFIGURATION_PROPERTY_KEY)).thenReturn(pathTemplate);
-        subject.checkRequiredFileCanRead(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
+        subject.checkFilePermission(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
         tempFile.delete();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testCheckRequiredFileCanReadException() throws Exception {
         when(configurationPropertiesMock.getProperty(CONFIGURATION_PROPERTY_KEY)).thenReturn(NON_EXISTING_PATH);
-        subject.checkRequiredFileCanRead(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
+        subject.checkFilePermission(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.transcripts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
-        subject.checkBaseline(EXPERIMENT_ACCESSION);
+        subject.checkBaselineFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
     }
@@ -103,7 +103,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
-        subject.checkDifferential(EXPERIMENT_ACCESSION);
+        subject.checkDifferentialFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
     }
@@ -115,7 +115,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.normalized.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
-        subject.checkMicroarray(EXPERIMENT_ACCESSION);
+        subject.checkMicroarrayFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
     }
@@ -127,7 +127,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.log-fold-changes.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
-        subject.checkTwoColour(EXPERIMENT_ACCESSION);
+        subject.checkTwoColourFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
     }
@@ -140,7 +140,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.transcripts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
-        subject.checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
     }
@@ -153,7 +153,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
-        subject.checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.DIFFERENTIAL);
+        subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.DIFFERENTIAL);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
     }
@@ -166,7 +166,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.normalized.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
-        subject.checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
+        subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
     }
@@ -179,7 +179,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.log-fold-changes.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
-        subject.checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR);
+        subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
     }
@@ -192,7 +192,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.normalized.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
-        subject.checkAllFilesPresent(EXPERIMENT_ACCESSION, ExperimentType.MICRORNA);
+        subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.MICRORNA);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
     }

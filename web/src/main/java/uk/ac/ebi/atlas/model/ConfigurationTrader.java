@@ -37,10 +37,10 @@ import javax.inject.Named;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 
 @Named
@@ -80,33 +80,24 @@ public class ConfigurationTrader {
     }
 
     private Document parseConfigurationXml(String experimentAccession) {
-        String path = MessageFormat.format(differentialConfigurationPathTemplate, experimentAccession);
-        File file = new File(path);
+        Path path = Paths.get(MessageFormat.format(differentialConfigurationPathTemplate, experimentAccession));
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            return builder.parse(file.toURI().toString());
-        } catch (ParserConfigurationException e) {
+            return builder.parse(Files.newInputStream(path));
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Problem parsing configuration file.", e);
-        } catch (SAXException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Problem parsing configuration file.", e);
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Problem parsing configuration file.", e);
+            throw new IllegalStateException("Problem parsing configuration file: " + path.toString(), e);
         }
     }
 
     private XMLConfiguration getXmlConfiguration(String pathTemplate, String experimentAccession) {
-        String path = MessageFormat.format(pathTemplate, experimentAccession);
-        Path fileSystemPath = FileSystems.getDefault().getPath(path);
+        Path path = Paths.get(MessageFormat.format(pathTemplate, experimentAccession));
         try {
-            File configFile = fileSystemPath.toFile();
-            return new XMLConfiguration(configFile);
+            return new XMLConfiguration(path.toFile());
         } catch (ConfigurationException cex) {
             LOGGER.error(cex.getMessage(), cex);
-            throw new IllegalStateException("Cannot read configuration from path " + fileSystemPath.toString(), cex);
+            throw new IllegalStateException("Cannot read configuration from path " + path.toString(), cex);
         }
     }
 

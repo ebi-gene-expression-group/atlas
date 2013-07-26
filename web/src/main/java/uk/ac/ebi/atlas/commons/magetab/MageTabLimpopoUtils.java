@@ -33,9 +33,11 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 
 import javax.inject.Named;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
@@ -78,10 +80,10 @@ public class MageTabLimpopoUtils {
         LOGGER.info("<parseInvestigation> idfFileLocation = " + idfFileLocation);
 
         MAGETABParser<MAGETABInvestigation> mageTabParser = new MAGETABParser<>();
-        File idfFile = new File(idfFileLocation);
-        if (idfFile.exists()) {
+        Path idfFilePath = Paths.get(idfFileLocation);
+        if (Files.exists(idfFilePath)) {
             LOGGER.info("<parseInvestigation> MAGETAB investigation file exists on the filesystem, going to use it");
-            return mageTabParser.parse(idfFile);
+            return mageTabParser.parse(idfFilePath.toFile());
         } else {
             LOGGER.debug("<parseInvestigation> MAGETAB investigation file not found on the filesystem, going to use online file");
             URL idfFileURL = new URL(MessageFormat.format(idfUrlTemplate, experimentAccession));

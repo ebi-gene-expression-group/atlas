@@ -35,9 +35,10 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Set;
@@ -84,7 +85,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
 
-        boolean hasExtraInfoFile = new File(extraInfoFileLocation).exists();
+        boolean hasExtraInfoFile = Files.exists(Paths.get(extraInfoFileLocation));
 
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
 

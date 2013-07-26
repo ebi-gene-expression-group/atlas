@@ -67,7 +67,7 @@ public class LoadExperimentsController {
                                  @RequestParam("type") ExperimentType experimentType,
                                  @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
 
-        experimentChecker.checkAllFilesPresent(experimentAccession, experimentType);
+        experimentChecker.checkAllFiles(experimentAccession, experimentType);
 
         experimentCRUD.importExperiment(experimentAccession, experimentType, isPrivate);
 

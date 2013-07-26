@@ -89,17 +89,7 @@ public class MicroarrayPageDownloadController {
             preferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
             requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
 
-            writeGeneProfilesCommand.setResponseWriter(response.getWriter());
-            writeGeneProfilesCommand.setExperiment(experiment);
-
-            try {
-
-                long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
-                LOGGER.info("<downloadMicroarrayGeneProfiles> streamed " + genesCount + "gene expression profiles");
-
-            } catch (GenesNotFoundException e) {
-                LOGGER.info("<downloadMicroarrayGeneProfiles> no genes found");
-            }
+            writeMicroarrayGeneProfiles(response.getWriter(), experiment);
 
         } else {
 
@@ -113,25 +103,32 @@ public class MicroarrayPageDownloadController {
 
                 zipOutputStream.putNextEntry(ze);
 
+                //(B) this is very broken. It's overriding the same parameter for every array design
                 preferences.setArrayDesignAccession(selectedArrayDesign);
                 requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+                //
 
-                writeGeneProfilesCommand.setResponseWriter(new PrintWriter(zipOutputStream));
-                writeGeneProfilesCommand.setExperiment(experiment);
-
-                try {
-
-                    long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
-                    LOGGER.info("<downloadMicroarrayGeneProfiles> zipped " + genesCount + " in " + filename);
-
-                } catch (GenesNotFoundException e) {
-                    LOGGER.info("<downloadMicroarrayGeneProfiles> no genes found");
-                }
+                writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experiment);
 
                 zipOutputStream.closeEntry();
             }
 
             zipOutputStream.close();
+        }
+
+    }
+
+    void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment){
+        writeGeneProfilesCommand.setResponseWriter(writer);
+        writeGeneProfilesCommand.setExperiment(experiment);
+
+        try {
+
+            long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
+            LOGGER.info("<writeMicroarrayGeneProfiles> wrote " + genesCount + " genes for experiment " + experiment.getAccession());
+
+        } catch (GenesNotFoundException e) {
+            LOGGER.info("<writeMicroarrayGeneProfiles> no genes found");
         }
 
     }

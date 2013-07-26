@@ -35,8 +35,9 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfigu
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Set;
@@ -74,7 +75,7 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
         String logFoldChangeFileLocation = MessageFormat.format(logFoldChangePathTemplate, experimentAccession, arrayDesignNames.first());
 
-        boolean hasLogFoldChangeFile = new File(logFoldChangeFileLocation).exists();
+        boolean hasLogFoldChangeFile = Files.exists(Paths.get(logFoldChangeFileLocation));
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
 
