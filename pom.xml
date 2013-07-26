@@ -247,6 +247,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
+                    <compilerArguments>
+                        <compilerArgument>-Xlint:unchecked</compilerArgument>
+                    </compilerArguments>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
                     <showDeprecation>true</showDeprecation>

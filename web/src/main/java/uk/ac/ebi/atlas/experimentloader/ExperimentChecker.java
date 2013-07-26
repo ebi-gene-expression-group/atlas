@@ -122,7 +122,7 @@ public class ExperimentChecker {
 
     void checkFilePermission(String pathTemplatePropertyKey, String... pathArguments) {
         String pathTemplate = configurationProperties.getProperty(pathTemplatePropertyKey);
-        Path path = Paths.get(MessageFormat.format(pathTemplate, pathArguments));
+        Path path = Paths.get(MessageFormat.format(pathTemplate, (Object[])pathArguments));
         checkState(Files.isReadable(path), "Required file can not be read: " + path.toAbsolutePath().toString());
     }
 

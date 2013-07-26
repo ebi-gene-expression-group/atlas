@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.geneindex;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.gson.JsonArray;
@@ -162,7 +163,7 @@ public class SolrClient {
         Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
 
         if (notSpellCheckableMatcher.find()) {
-            return Collections.EMPTY_LIST;
+            return Lists.newArrayList();
         }
 
         String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species.toLowerCase());
@@ -202,11 +203,10 @@ public class SolrClient {
         return StringUtils.split(collation, "\"")[0];
     }
 
-    String getJsonResponse(String restQueryTemplate, String... arguments) {
+    String getJsonResponse(String restQueryTemplate, Object... arguments) {
+        checkArgument(arguments != null && arguments.length > 0);
         try {
-            if (StringUtils.isBlank(arguments[0])) {
-                return StringUtils.EMPTY;
-            }
+
             return restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
 
         } catch (RestClientException e) {

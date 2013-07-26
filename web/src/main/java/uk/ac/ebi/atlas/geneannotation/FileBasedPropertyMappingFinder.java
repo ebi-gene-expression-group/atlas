@@ -46,11 +46,12 @@ public class FileBasedPropertyMappingFinder implements PropertyMappingFinder {
     public Map<String, String> executeQuery(String serverUrl, String... urlVariables) {
         Map<String, String> result = Maps.newHashMap();
 
-        String annotationFileLocation = MessageFormat.format(serverUrl, urlVariables);
+        String annotationFileLocation = MessageFormat.format(serverUrl, (Object[])urlVariables);
         CSVReader csvReader = tsvReaderUtils.build(annotationFileLocation);
         try {
+            String[] inputLine;
             //Skip first line with header
-            String[] inputLine = csvReader.readNext();
+            csvReader.readNext();
             while ((inputLine = csvReader.readNext()) != null) {
                 result.put(inputLine[0], inputLine[1]);
             }

@@ -79,7 +79,7 @@ public class ArrayDesignDao extends AnnotationDao {
     public void deleteMappings(String arrayDesign) {
         String query = "delete from designelement_mapping where arraydesign=?";
 
-        jdbcTemplate.update(query, new String[]{arrayDesign});
+        jdbcTemplate.update(query, new Object[]{arrayDesign});
     }
 
     public String getIdentifier(String arrayDesign, String designElement) {

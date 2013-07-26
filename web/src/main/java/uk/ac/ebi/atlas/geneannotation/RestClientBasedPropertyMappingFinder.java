@@ -43,7 +43,7 @@ public class RestClientBasedPropertyMappingFinder implements PropertyMappingFind
 
     public Map<String, String> executeQuery(String serverUrl, String... urlVariables) {
 
-        String jsonResponse = restTemplate.getForObject(serverUrl, String.class, urlVariables);
+        String jsonResponse = restTemplate.getForObject(serverUrl, String.class, (Object[])urlVariables);
 
         return fromJson(jsonResponse);
     }
