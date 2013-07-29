@@ -92,11 +92,11 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         this.filteredBySpecies = filteredBySpecies;
     }
 
-    void setRequestPreferences(K requestPreferences) {
+    protected void setRequestPreferences(K requestPreferences) {
         this.requestPreferences = requestPreferences;
     }
 
-    K getRequestPreferences() {
+    protected K getRequestPreferences() {
         return requestPreferences;
     }
 

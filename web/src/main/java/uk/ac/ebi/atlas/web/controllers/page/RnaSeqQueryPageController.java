@@ -31,6 +31,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
@@ -40,7 +43,7 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class RnaSeqQueryPageController extends DifferentialQueryPageController<DifferentialExperiment, DifferentialRequestPreferences> {
+public class RnaSeqQueryPageController extends DifferentialQueryPageController<DifferentialExperiment, DifferentialRequestPreferences, DifferentialProfilesList, RnaSeqProfile> {
 
     @Inject
     public RnaSeqQueryPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,

@@ -31,10 +31,7 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -42,15 +39,15 @@ import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
-public abstract class DifferentialQueryPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences> {
+public abstract class DifferentialQueryPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, V extends DifferentialProfilesList, Z extends Profile> {
 
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
-    private RankProfilesCommand<GeneProfilesList, Profile> rankProfilesCommand;
+    private RankProfilesCommand<V, Z> rankProfilesCommand;
 
 
     protected DifferentialQueryPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
-                                              RankProfilesCommand rankProfilesCommand,
+                                              RankProfilesCommand<V, Z> rankProfilesCommand,
                                               DownloadURLBuilder downloadURLBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.rankProfilesCommand = rankProfilesCommand;
