@@ -27,6 +27,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -37,16 +38,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 
-public class ExperimentDesignWriter {
+public class ExperimentDesignWriter<T extends AbstractSDRFNode> {
 
     private static final String SAMPLE_NAME_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
     private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Values[{0}]";
 
     private CSVWriter csvWriter;
-    private MageTabParser<HybridizationNode> mageTabParser;
+    private MageTabParser<T> mageTabParser;
     private ExperimentType experimentType;
 
-    ExperimentDesignWriter(CSVWriter csvWriter, MageTabParser mageTabParser, ExperimentType experimentType){
+    ExperimentDesignWriter(CSVWriter csvWriter, MageTabParser<T> mageTabParser, ExperimentType experimentType){
         this.csvWriter = csvWriter;
         this.mageTabParser = mageTabParser;
         this.experimentType = experimentType;
@@ -75,7 +76,7 @@ public class ExperimentDesignWriter {
         return headers.toArray(new String[headers.size()]);
     }
 
-    SortedSet toHeaders(SortedSet<String> propertyNames, final String headerTemplate) {
+    SortedSet<String> toHeaders(SortedSet<String> propertyNames, final String headerTemplate) {
         Collection<String> headers = Collections2.transform(propertyNames, new Function<String, String>() {
             @Override
             public String apply(String propertyName) {

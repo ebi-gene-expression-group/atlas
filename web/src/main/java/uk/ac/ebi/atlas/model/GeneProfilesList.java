@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -42,12 +43,12 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
     }
 
     @Override
-    public GeneProfilesList subList(int fromIndex, int toIndex) {
-        checkArgument(toIndex >= 0, "Upper index value must be larger than 0");
+    public List<T> subList(int fromIndex, int toIndex) {
+        checkArgument(0 <= toIndex, "Upper index value must be larger than 0");
         if (toIndex > size()) {
             return this;
         }
-        return new GeneProfilesList(super.subList(fromIndex, toIndex));
+        return super.subList(fromIndex, toIndex);
     }
 
     public Integer getTotalResultCount() {

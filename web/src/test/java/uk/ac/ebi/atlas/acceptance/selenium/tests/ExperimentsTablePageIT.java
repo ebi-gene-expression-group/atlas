@@ -45,6 +45,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -108,8 +109,8 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
 
         subject = new ExperimentsTablePage(driver);
         subject.get();
-        WebDriverWait wait = new WebDriverWait(driver, 15);
-        wait.until(new ExpectedCondition<Boolean>() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.pollingEvery(5, TimeUnit.SECONDS).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
                 return !subject.getExperimentsTableInfo().startsWith("Showing 0");

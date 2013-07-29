@@ -44,7 +44,7 @@ public class MicroarrayExperimentDesignMageTabParser extends MageTabParser<Hybri
     protected Set<AssayNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
         Set<AssayNode<HybridizationNode>> assayNodes = Sets.newLinkedHashSet();
         for (HybridizationNode node : sdrf.getNodes(HybridizationNode.class)) {
-            assayNodes.add(new AssayNode<HybridizationNode>(node.getNodeName(), node));
+            assayNodes.add(new AssayNode<>(node.getNodeName(), node));
         }
         return assayNodes;
     }

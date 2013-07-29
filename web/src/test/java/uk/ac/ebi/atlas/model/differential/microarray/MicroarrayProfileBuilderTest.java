@@ -58,7 +58,7 @@ public class MicroarrayProfileBuilderTest {
     MicroarrayRequestContext contextMock;
 
     @Mock
-    DifferentialExpression expressionMock;
+    MicroarrayExpression expressionMock;
 
     @Mock
     private DesignElementMappingProvider designElementMappingProvider;

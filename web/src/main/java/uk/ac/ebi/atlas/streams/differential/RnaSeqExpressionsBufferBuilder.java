@@ -44,7 +44,7 @@ public class RnaSeqExpressionsBufferBuilder extends DifferentialExpressionsBuffe
     }
 
     @Override
-    protected TsvRowBuffer getBufferInstance(List<Contrast> orderedContrasts) {
+    protected TsvRowBuffer<DifferentialExpression> getBufferInstance(List<Contrast> orderedContrasts) {
         return new RnaSeqDiffExpressionsBuffer(orderedContrasts);
     }
 

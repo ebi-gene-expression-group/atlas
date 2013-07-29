@@ -30,7 +30,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
@@ -40,7 +42,7 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class MicroarrayQueryPageController extends DifferentialQueryPageController<MicroarrayExperiment, MicroarrayRequestPreferences> {
+public class MicroarrayQueryPageController extends DifferentialQueryPageController<MicroarrayExperiment, MicroarrayRequestPreferences, DifferentialProfilesList, MicroarrayProfile> {
 
     @Inject
     public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder,

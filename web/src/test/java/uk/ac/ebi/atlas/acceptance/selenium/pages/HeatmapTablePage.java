@@ -212,8 +212,9 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public void clickDisplayLevelsButton() {
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("display-levels")));
+        WebDriverWait wait = new WebDriverWait(driver, 20L);
+        wait.pollingEvery(5, TimeUnit.SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("display-levels")));
 
         displayLevelsButton.click();
     }
