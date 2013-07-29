@@ -30,6 +30,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
@@ -65,20 +67,20 @@ public class GeneProfilesListTest {
     @Test(expected = IllegalArgumentException.class)
     public void sublistShouldThrowIllegalArguemntExceptionWhenUpperIndexIsLessThanZero() throws Exception {
         //when
-        GeneProfilesList e = subject.subList(0, -1);
+        List<BaselineProfile> e = subject.subList(0, -1);
         assertThat(e, is(nullValue()));
     }
 
     public void sublistTest() throws Exception {
         //when
-        GeneProfilesList<BaselineProfile> geneProfiles = subject.subList(0, 3);
+        List<BaselineProfile> geneProfiles = subject.subList(0, 3);
         //then
         assertThat(geneProfiles, contains(profile_5, profile_3, profile_4));
     }
 
     public void sublistShouldReturnEntireListWhenTopIndexLargerThanListSize() throws Exception {
         //when
-        GeneProfilesList<BaselineProfile> geneProfiles = subject.subList(0, 7);
+        List<BaselineProfile> geneProfiles = subject.subList(0, 7);
         //then
         assertThat(geneProfiles, hasSize(5));
     }
