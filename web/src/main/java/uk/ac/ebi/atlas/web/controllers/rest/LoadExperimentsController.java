@@ -84,7 +84,7 @@ public class LoadExperimentsController {
 
     @RequestMapping("/updateExperiment")
     @ResponseBody
-    public String publishExperiment(@RequestParam("accession") String experimentAccession, @RequestParam("private") boolean isPrivate) {
+    public String updateExperiment(@RequestParam("accession") String experimentAccession, @RequestParam("private") boolean isPrivate) {
 
         experimentCRUD.updateExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " successfully updated.";
