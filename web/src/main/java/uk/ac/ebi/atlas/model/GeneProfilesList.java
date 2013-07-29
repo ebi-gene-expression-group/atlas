@@ -44,11 +44,11 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
 
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
-        checkArgument(toIndex >= 0, "Upper index value must be larger than 0");
+        checkArgument(0 <= toIndex, "Upper index value must be larger than 0");
         if (toIndex > size()) {
             return this;
         }
-        return new GeneProfilesList(super.subList(fromIndex, toIndex));
+        return super.subList(fromIndex, toIndex);
     }
 
     public Integer getTotalResultCount() {

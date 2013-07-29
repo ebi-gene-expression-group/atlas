@@ -27,11 +27,11 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 
 import java.util.List;
 
-public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, K extends DifferentialRequestContext> {
+public abstract class DifferentialProfileBuilder<T extends DifferentialProfile<E>, K extends DifferentialRequestContext, E extends DifferentialExpression> {
 
     private K requestContext;
 
-    private List<DifferentialExpression> expressions = Lists.newArrayList();
+    private List<E> expressions = Lists.newArrayList();
 
     private DifferentialExpressionPrecondition differentialExpressionPrecondition;
     private DifferentialProfilePrecondition differentialProfilePrecondition;
@@ -55,7 +55,7 @@ public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, 
 
     }
 
-    public DifferentialProfileBuilder addExpression(DifferentialExpression expression) {
+    public DifferentialProfileBuilder addExpression(E expression) {
 
         expressions.add(expression);
         return this;
@@ -75,7 +75,7 @@ public abstract class DifferentialProfileBuilder<T extends DifferentialProfile, 
         T differentialProfile = createProfile();
 
         if (differentialProfile != null) {
-            for (DifferentialExpression expression : expressions) {
+            for (E expression : expressions) {
                 if (differentialExpressionPrecondition.apply(expression)) {
                     differentialProfile.add(expression);
                 }

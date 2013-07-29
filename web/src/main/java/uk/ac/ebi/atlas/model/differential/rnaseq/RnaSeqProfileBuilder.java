@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.differential.rnaseq;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
@@ -35,7 +36,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfile, RnaSeqRequestContext> {
+public class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfile, RnaSeqRequestContext,DifferentialExpression> {
 
     private String geneId;
 
