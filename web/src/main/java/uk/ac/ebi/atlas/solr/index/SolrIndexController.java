@@ -23,18 +23,15 @@
 package uk.ac.ebi.atlas.solr.index;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.inject.Inject;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Controller
-@Scope("singleton")
+//@Controller
+//@Scope("singleton")
 public class SolrIndexController {
     private static final Logger LOGGER = Logger.getLogger(SolrIndexBuilder.class);
 
@@ -44,7 +41,7 @@ public class SolrIndexController {
 
     private String status;
 
-    @Inject
+//    @Inject
     SolrIndexController(SolrIndexBuilder builder){
         this.builder = builder;
     }

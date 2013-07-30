@@ -30,11 +30,8 @@
         <property name="locations" value="classpath:configuration.properties"/>
     </bean>
 
-    <bean id="embeddedSolrServerFactory" class="uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory">
-    </bean>
-
-    <bean id="solrServer" class="org.apache.solr.client.solrj.embedded.EmbeddedSolrServer"
-          factory-bean="embeddedSolrServerFactory" factory-method="createEmbeddedSolrServerInstance" >
+    <bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg value="${index.server.url}"/>
     </bean>
 
 </beans>

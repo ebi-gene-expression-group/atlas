@@ -20,28 +20,18 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.index;
+package uk.ac.ebi.atlas.solr;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
+import org.apache.solr.core.CoreContainer;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PropertyStreamTest {
+public class EmbeddedSolrServerFactory {
 
-    private PropertyStream subject;
+    public EmbeddedSolrServer createEmbeddedSolrServerInstance() {
+        CoreContainer coreContainer =  new CoreContainer();
 
-
-    @Before
-    public void setUp() throws Exception {
-        subject = new PropertyStream(null);
-    }
-
-    @Test
-    public void testNext() throws Exception {
-
-        subject.next();
+        coreContainer.load();
+        return new EmbeddedSolrServer(coreContainer, "gxa");
 
     }
 }
