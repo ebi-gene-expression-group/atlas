@@ -39,7 +39,7 @@ import java.util.Set;
 import static au.com.bytecode.opencsv.CSVWriter.NO_ESCAPE_CHARACTER;
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
-public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements AutoCloseable {
+public abstract class GeneProfilesTSVWriter<T extends Profile, K> {
 
     private CSVWriter csvWriter;
     private PrintWriter responseWriter;
@@ -62,6 +62,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         }
 
         csvWriter.flush();
+        csvWriter.close();
 
         return (long) geneProfilesList.size();
     }
@@ -80,13 +81,9 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         }
 
         csvWriter.flush();
+        csvWriter.close();
 
         return count;
-    }
-
-    @Override
-    public void close() throws IOException {
-        csvWriter.close();
     }
 
     protected abstract String[] getConditionColumnHeaders(Set<K> conditions);
@@ -122,9 +119,9 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
     protected String[] extractConditionLevels(T geneProfile, Set<K> conditions) {
         String[] expressionLevels = new String[conditions.size()];
         int i = 0;
-        for (K condition: conditions) {
+        for (K condition : conditions) {
             Double expressionLevel = geneProfile.getExpressionLevel(condition);
-            if (expressionLevel != null){
+            if (expressionLevel != null) {
                 expressionLevels[i] = removeTrailingZero(expressionLevel);
             }
             i++;
