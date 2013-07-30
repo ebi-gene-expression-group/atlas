@@ -48,6 +48,7 @@ import java.util.TreeSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.contains;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -110,6 +111,11 @@ public class MicroarrayProfilesTSVWriterTest {
         conditions = Sets.newTreeSet();
         conditions.add(contrast1);
         conditions.add(contrast2);
+
+        //given
+        when(expressionMock.getFoldChange()).thenReturn(-0.978932452151424);
+        when(expressionMock.getLevel()).thenReturn(0.134707651014487);
+        when(expressionMock.getTstatistic()).thenReturn(0.0099999999);
     }
 
     @Test
@@ -122,11 +128,6 @@ public class MicroarrayProfilesTSVWriterTest {
 
     @Test
     public void testBuildExpressionsRow() throws Exception {
-
-        //given
-        when(expressionMock.getFoldChange()).thenReturn(-0.978932452151424);
-        when(expressionMock.getLevel()).thenReturn(0.134707651014487);
-        when(expressionMock.getTstatistic()).thenReturn(0.0099999999);
 
         SortedSet<Contrast> contrasts = new TreeSet<>();
         contrasts.add(new Contrast("id1", null, null, "name"));
@@ -166,5 +167,26 @@ public class MicroarrayProfilesTSVWriterTest {
         // because it is wrapped twice in CSVWriter implementation
         verify(responeWriterMock, times(2)).flush();
         verify(responeWriterMock, times(2)).close();
+    }
+
+    @Test
+    public void testGetExpressionColumnsHeaders() {
+        assertThat(subject.getExpressionColumnsHeaders(), contains("p-value", "log2foldchange", "t-statistic"));
+    }
+
+    @Test
+    public void testGetExpressionLevelData() {
+        assertThat(subject.getExpressionLevelData(expressionMock), contains(0.134707651014487, -0.978932452151424, 0.0099999999));
+    }
+
+    @Test
+    public void testGetProfileIdColumnHeaders() {
+        assertThat(subject.getProfileIdColumnHeaders(), arrayContaining(HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.DESIGN_ELEMENT));
+    }
+
+    @Test
+    public void testGetSecondaryRowHeader() {
+        when(geneProfileMock.getDesignElementName()).thenReturn("NAME");
+        assertThat(subject.getSecondaryRowHeader(geneProfileMock), Matchers.is("NAME"));
     }
 }
