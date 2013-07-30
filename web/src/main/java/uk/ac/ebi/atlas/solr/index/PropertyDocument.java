@@ -19,6 +19,15 @@ public class PropertyDocument {
     @Field("property_name")
     private String name;
 
+    public PropertyDocument(String bioentityType, String species, String name, String[] csvValues) {
+        this.bioentityType = bioentityType;
+        this.species = species;
+        this.name = name;
+        this.bioentityIdentifier = csvValues[0];
+        this.value = csvValues[1];
+
+    }
+
     public String getBioentityType() {
         return bioentityType;
     }

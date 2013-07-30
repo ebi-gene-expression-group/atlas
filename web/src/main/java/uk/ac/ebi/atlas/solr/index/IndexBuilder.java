@@ -13,18 +13,19 @@ public class IndexBuilder {
     private SolrServer solrServer;
     private PropertyStream propertyStream;
 
-
     @Inject
-    public IndexBuilder(SolrServer solrServer) {
+    public IndexBuilder(SolrServer solrServer, PropertyStream propertyStream) {
         this.solrServer = solrServer;
+        this.propertyStream = propertyStream;
     }
 
     public void build() throws IOException, SolrServerException {
 
-        PropertyDocument propertyDocument = new PropertyDocument();
-        propertyDocument.setBioentityIdentifier("hello");
+        PropertyDocument document;
+        while ((document = propertyStream.next()) != null) {
+            solrServer.addBean(document);
 
-        solrServer.addBean(propertyDocument);
+        }
 
         solrServer.commit();
 
