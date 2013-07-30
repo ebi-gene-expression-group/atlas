@@ -44,10 +44,14 @@ public class PropertyStream implements Closeable {
     PropertyStream(String dataDirectory) throws IOException {
         this.dataDirectory = dataDirectory;
         csvReader = buildCsvReader();
+        csvReader.readNext();//skipping the header row
     }
 
     public PropertyDocument next() throws IOException {
         String[] csvValues = csvReader.readNext();
+        if (csvValues == null){
+            return null;
+        }
         return new PropertyDocument("gene", "anopheles_gambiae", "design_element", csvValues);
     }
 
@@ -60,7 +64,7 @@ public class PropertyStream implements Closeable {
     CSVReader buildCsvReader() throws IOException {
         Path bioentityFilePath = Paths.get(dataDirectory + "anopheles_gambiae.A-AFFY-102.tsv");
         Reader fileReader = Files.newBufferedReader(bioentityFilePath, Charsets.UTF_8);
-        return new CSVReader(fileReader);
+        return new CSVReader(fileReader,'\t');
     }
 
 }
