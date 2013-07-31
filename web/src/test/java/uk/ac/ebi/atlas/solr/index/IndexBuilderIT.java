@@ -55,7 +55,7 @@ public class IndexBuilderIT {
     private String bioentityPropertyDirectory;
 
     @Inject
-    private IndexBuilder subject;
+    private BioentityIndex subject;
 
     @Inject
     private SolrServer embeddedSolrServer;
@@ -71,14 +71,13 @@ public class IndexBuilderIT {
     }
 
     @Test
-    public void embeddedSolrQueryShouldReturnIndexedProperties() throws IOException, SolrServerException {
-        subject.build(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.A-AFFY-102.tsv"));
+    public void addDesignElementsShouldSucceed() throws IOException, SolrServerException {
+        subject.add(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.A-AFFY-102.tsv"));
 
         SolrParams solrQuery = new SolrQuery("*:*");
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityPropertyDocument> bioentityPropertyDocuments = queryResponse.getBeans(BioentityPropertyDocument.class);
         assertThat(bioentityPropertyDocuments, hasSize(10));
-
 
     }
 

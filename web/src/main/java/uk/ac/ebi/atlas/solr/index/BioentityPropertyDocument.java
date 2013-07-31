@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.solr.index;
 
 import org.apache.solr.client.solrj.beans.Field;
 
+import java.util.Objects;
+
 public class BioentityPropertyDocument {
 
     @Field("bioentity_identifier")
@@ -22,12 +24,12 @@ public class BioentityPropertyDocument {
     public BioentityPropertyDocument(){
     }
 
-    public BioentityPropertyDocument(String bioentityType, String species, String name, String[] csvValues) {
+    BioentityPropertyDocument(String bioentityType, String species, String name, String bioentityIdentifier, String value) {
         this.bioentityType = bioentityType;
         this.species = species;
         this.name = name;
-        this.bioentityIdentifier = csvValues[0];
-        this.value = csvValues[1];
+        this.bioentityIdentifier = bioentityIdentifier;
+        this.value = value;
 
     }
 
@@ -69,5 +71,16 @@ public class BioentityPropertyDocument {
 
     public void setBioentityIdentifier(String bioentityIdentifier) {
         this.bioentityIdentifier = bioentityIdentifier;
+    }
+
+    @Override
+    public int hashCode() {return Objects.hash(bioentityIdentifier, bioentityType, species, value, name);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {return true;}
+        if (obj == null || getClass() != obj.getClass()) {return false;}
+        final BioentityPropertyDocument other = (BioentityPropertyDocument) obj;
+        return Objects.equals(this.bioentityIdentifier, other.bioentityIdentifier) && Objects.equals(this.bioentityType, other.bioentityType) && Objects.equals(this.species, other.species) && Objects.equals(this.value, other.value) && Objects.equals(this.name, other.name);
     }
 }

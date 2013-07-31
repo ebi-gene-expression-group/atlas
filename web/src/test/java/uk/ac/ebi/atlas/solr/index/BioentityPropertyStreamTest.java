@@ -35,7 +35,7 @@ public class BioentityPropertyStreamTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BioentityPropertyStream(null);
+        subject = new BioentityPropertyStream(null, null);
     }
 
     @Test

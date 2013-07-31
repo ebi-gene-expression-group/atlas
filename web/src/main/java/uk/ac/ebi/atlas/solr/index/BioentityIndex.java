@@ -32,20 +32,20 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 @Named
-public class IndexBuilder {
+public class BioentityIndex {
 
-    private static final Logger LOGGER = Logger.getLogger(IndexBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
     private final BioentityPropertyStreamBuilder bioentityPropertyStreamBuilder;
 
     private SolrServer solrServer;
 
     @Inject
-    public IndexBuilder(SolrServer solrServer, BioentityPropertyStreamBuilder bioentityPropertyStreamBuilder) {
+    public BioentityIndex(SolrServer solrServer, BioentityPropertyStreamBuilder bioentityPropertyStreamBuilder) {
         this.bioentityPropertyStreamBuilder = bioentityPropertyStreamBuilder;
         this.solrServer = solrServer;
     }
 
-    public void build(Path bioentityPropertiesFilePath) throws SolrServerException {
+    public void add(Path bioentityPropertiesFilePath) throws SolrServerException {
 
         try(BioentityPropertyStream bioentityBioentityPropertyStream =
                     bioentityPropertyStreamBuilder.forPath(bioentityPropertiesFilePath).build()){

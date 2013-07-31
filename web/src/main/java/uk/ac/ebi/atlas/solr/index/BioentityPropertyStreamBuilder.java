@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.solr.index;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Charsets;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Named;
 import java.io.IOException;
@@ -44,7 +45,14 @@ public class BioentityPropertyStreamBuilder {
     public BioentityPropertyStream build() throws IOException{
         Reader fileReader = Files.newBufferedReader(bioentityPropertiesFilePath, Charsets.UTF_8);
         CSVReader csvReader = new CSVReader(fileReader,'\t');
-        return new BioentityPropertyStream(csvReader);
+        return new BioentityPropertyStream(csvReader, getSpecies());
     }
 
+    String getFileName() {
+       return bioentityPropertiesFilePath.getFileName().toString();
+    }
+
+    String getSpecies() {
+        return StringUtils.substringBefore(getFileName(), ".");
+    }
 }

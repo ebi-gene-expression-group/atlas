@@ -29,7 +29,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IndexBuilderTest {
+public class BioentityIndexTest {
 
     @Mock
     private SolrServer solrServerMock;
@@ -40,11 +40,11 @@ public class IndexBuilderTest {
     @Mock
     private BioentityPropertyStream bioentityPropertyStreamMock;
 
-    private IndexBuilder subject;
+    private BioentityIndex subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new IndexBuilder(solrServerMock, bioentityPropertyStreamBuilderMock);
+        subject = new BioentityIndex(solrServerMock, bioentityPropertyStreamBuilderMock);
     }
 /*
     @Test
