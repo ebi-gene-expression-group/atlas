@@ -107,7 +107,7 @@
     <!--
     <dataDir>${solr.data.location}</dataDir>
     -->
-    <dataDir>/Users/nsklyar/ATLAS3.TEST/solr</dataDir>
+    <dataDir>${solr.data.location}</dataDir>
 
 
   <!-- The DirectoryFactory to use for indexes.

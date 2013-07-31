@@ -48,7 +48,7 @@ public class BioentityIndex {
         this.solrServer = solrServer;
     }
 
-    public void add(Path bioentityPropertiesFilePath) throws SolrServerException {
+    public void add(Path bioentityPropertiesFilePath) {
 
         try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
                     bioentityPropertyStreamBuilder.forPath(bioentityPropertiesFilePath).build()){
@@ -60,7 +60,7 @@ public class BioentityIndex {
             }
             solrServer.commit();
 
-        } catch(IOException e){
+        } catch(IOException|SolrServerException e){
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }

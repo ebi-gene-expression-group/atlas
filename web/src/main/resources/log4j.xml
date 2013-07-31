@@ -40,7 +40,7 @@
     </appender>
 
     <logger name="uk.ac.ebi.atlas" additivity="false">
-        <level value="DEBUG"/>
+        <level value="WARNING"/>
         <appender-ref ref="atlas"/>
     </logger>
 

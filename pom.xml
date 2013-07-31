@@ -42,6 +42,7 @@
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
         <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+        <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
         <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2-lime/atlas</h2.database.location>
         <solr.host>ves-ebi-7f</solr.host>
         <gxa.server.url>http://ves-hx-74:8080/gxa</gxa.server.url>
