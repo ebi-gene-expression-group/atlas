@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -56,7 +57,7 @@ public class GenePageController extends BioEntityPageController {
     }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
-    public String showGenePage(@RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
+    public String showGenePage(HttpServletRequest request, @RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
 
         DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
                 differentialGeneProfileService.initDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
@@ -69,7 +70,7 @@ public class GenePageController extends BioEntityPageController {
         model.addAttribute("preferences", requestPreferences);
         model.addAttribute("isGenePage", true);
 
-        return showGenePage(identifier, model);
+        return showGenePage(request, identifier, model);
     }
 
     @Override

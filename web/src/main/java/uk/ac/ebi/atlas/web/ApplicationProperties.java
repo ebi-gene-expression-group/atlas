@@ -81,17 +81,11 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, pubMedId);
     }
 
-    //This is invoked from jsp el
-    public String getAtlasURL(String experimentAccession) {
-        String atlasUrlTemplate = configurationProperties.getProperty("experiment.atlas.url.template");
-        return MessageFormat.format(atlasUrlTemplate, experimentAccession);
-    }
-
     public String getFeedbackEmailAddress() {
         return configurationProperties.getProperty("feedback.email");
     }
 
-    public Set<String> getTestCaseExperimentAccessions(){
+    public Set<String> getTestCaseExperimentAccessions() {
         Set<String> testCaseExperimentAccessions = Sets.newHashSet();
         if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
             testCaseExperimentAccessions.addAll(getStringValues("integration.experiment.identifiers"));

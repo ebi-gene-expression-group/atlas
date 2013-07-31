@@ -23,11 +23,6 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<c:set var="base" value="${pageContext.request.contextPath}"/>
-<c:if test="${not empty preferences.rootContext}">
-    <c:set var="base" value="${preferences.rootContext}"/>
-</c:if>
-
 <div id="content" class="block">
     <c:if test="${not empty identifier}">
         No baseline experiments were found for ${identifier}

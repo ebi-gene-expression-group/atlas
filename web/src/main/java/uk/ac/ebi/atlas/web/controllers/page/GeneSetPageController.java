@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
@@ -66,9 +67,9 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
-    public String showGenePage(@PathVariable String identifier, Model model) {
+    public String showGenePage(HttpServletRequest request, @PathVariable String identifier, Model model) {
         model.addAttribute("isGeneSet", true);
-        return super.showGenePage(identifier, model);
+        return super.showGenePage(request, identifier, model);
     }
 
     @Override

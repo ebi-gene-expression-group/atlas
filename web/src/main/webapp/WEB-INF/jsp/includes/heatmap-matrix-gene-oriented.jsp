@@ -51,7 +51,7 @@
                         <c:set var="geneId" value="${geneProfile.id}"/>
                         <c:set var="bioEntityType" value="${preferences.geneSetMatch? \"genesets\": \"genes\"}"/>
 
-                        <a class="genename" id="${geneId}" href='${bioEntityType}/${geneId}'
+                        <a class="genename" id="${geneId}" href='${serverUrl}/${bioEntityType}/${geneId}'
                            title="">${geneNamesProvider.getGeneName(geneId)}</a>
                     </display:column>
 
@@ -72,8 +72,8 @@
                         <c:if test="${not empty expressionLevel}">
                             <c:choose>
                                 <c:when test="${type.isBaseline()}">
-                                <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
+                                    <c:set var="cellColour"
+                                           value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
                                 </c:when>
                                 <c:otherwise>
                                     <c:choose>

@@ -36,13 +36,13 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -75,6 +75,9 @@ public class GenePageControllerTest {
 
     @Mock
     private DifferentialGeneProfileProperties differentialGeneProfilePropertiesMock;
+
+    @Mock
+    private HttpServletRequest httpServletRequestMock;
 
     private Properties properties = new Properties();
 
@@ -110,12 +113,23 @@ public class GenePageControllerTest {
     }
 
     @Test
+    public void testShowGenePageError() throws Exception {
+        solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES));
+        when(differentialGeneProfileServiceMock.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
+        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
+        assertThat(subject.showGenePage(httpServletRequestMock, null, IDENTIFIER, modelMock), is("widget-error"));
+    }
+
+    @Test
     public void testShowGenePage() throws Exception {
         solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES));
         when(differentialGeneProfileServiceMock.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
         when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
-        assertThat(subject.showGenePage(null, IDENTIFIER, modelMock), is("bioEntity"));
-        verify(differentialGeneProfileServiceMock).initDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF);
+        when(httpServletRequestMock.isSecure()).thenReturn(false);
+        when(httpServletRequestMock.getServerName()).thenReturn("localhost");
+        when(httpServletRequestMock.getServerPort()).thenReturn(9090);
+        when(httpServletRequestMock.getContextPath()).thenReturn("/gxa");
+        assertThat(subject.showGenePage(httpServletRequestMock, null, IDENTIFIER, modelMock), is("bioEntity"));
     }
 
 

@@ -21,11 +21,6 @@
   --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:set var="base" value="${pageContext.request.contextPath}"/>
-<c:if test="${not empty preferences.rootContext}">
-    <c:set var="base" value="${preferences.rootContext}"/>
-</c:if>
-
 <c:choose>
     <c:when test="${empty geneProfiles}">
         <c:if test="${not isPreferenceError}">
@@ -45,7 +40,7 @@
                 <span id="sex-toggle">
                     <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
                          style="width:20px;height:38px;padding:2px"
-                         src="${base}/resources/images/male_selected.png"/>
+                         src="${serverUrl}/resources/images/male_selected.png"/>
                 </span>
                             <!--
                             <span data-help-loc="#anatomogram"/>

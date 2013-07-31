@@ -142,11 +142,6 @@ public class ApplicationPropertiesTest {
     }
 
     @Test
-    public void testGetAtlasURL() throws Exception {
-        assertThat(subject.getAtlasURL(EXPERIMENT_ACCESSION), is(ATLAS_URL + EXPERIMENT_ACCESSION));
-    }
-
-    @Test
     public void testGetFeedbackEmailAddress() throws Exception {
         assertThat(subject.getFeedbackEmailAddress(), is(FEEDBACK_EMAIL_VALUE));
     }

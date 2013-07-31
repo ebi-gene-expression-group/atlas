@@ -41,6 +41,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.validation.Valid;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Set;
 
@@ -116,7 +118,12 @@ public final class ExperimentDispatcher {
 
         Experiment experiment = getExperiment(experimentAccession, model);
 
-        prepareModel(request, model, experiment);
+        try {
+            prepareModel(request, model, experiment);
+        } catch (MalformedURLException e) {
+            model.addAttribute("errorMessage", "Server URL could not be determined.");
+            return "widget-error";
+        }
 
         String requestURL = getRequestURL(request);
 
@@ -140,7 +147,12 @@ public final class ExperimentDispatcher {
 
         if (!StringUtils.isEmpty(experimentAccession)) {
             Experiment experiment = getExperiment(experimentAccession, model);
-            prepareModel(request, model, experiment);
+            try {
+                prepareModel(request, model, experiment);
+            } catch (MalformedURLException e) {
+                model.addAttribute("errorMessage", "Server URL could not be determined.");
+                return "widget-error";
+            }
             String requestURL = getRequestURL(request);
 
             String mappedSpecies = experiment.getRequestSpeciesName(specie);
@@ -162,7 +174,7 @@ public final class ExperimentDispatcher {
         return StringUtils.substringAfter(requestURI, contextPath);
     }
 
-    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
+    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) throws MalformedURLException {
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
         Set<String> allSpecies = experiment.getSpecies();
@@ -176,15 +188,17 @@ public final class ExperimentDispatcher {
         model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
 
         model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
+
+        addServerUrlToModel(model, request);
     }
 
     Experiment getExperiment(String experimentAccession, Model model) {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession);
         //ToDo: (B) verify why we need to do this here and not in the delegated controller...?
-        if (experiment instanceof MicroarrayExperiment){
+        if (experiment instanceof MicroarrayExperiment) {
 
-            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment)experiment).getArrayDesignAccessions());
+            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment) experiment).getArrayDesignAccessions());
 
         }
         return experiment;
@@ -197,6 +211,18 @@ public final class ExperimentDispatcher {
         String originalQueryString = ((HttpServletRequest) ((HttpServletRequestWrapper) request).getRequest()).getQueryString();
         return Joiner.on("?").skipNulls()
                 .join(new String[]{request.getRequestURI() + TSV_FILE_EXTENSION, originalQueryString}).toString();
+    }
+
+    public static void addServerUrlToModel(Model model, HttpServletRequest request) throws MalformedURLException {
+        String spec = request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        if (request.isSecure()) {
+            spec = "https://" + spec;
+        } else {
+            spec = "http://" + spec;
+        }
+
+        URL url = new URL(spec);
+        model.addAttribute("serverUrl", url.toExternalForm());
     }
 
 }
