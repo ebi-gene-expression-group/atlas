@@ -104,7 +104,7 @@
        replication is in use, this should match the replication
        configuration.
     -->
-  <dataDir>/Users/nsklyar/ATLAS3.TEST/solr</dataDir>
+  <dataDir>~/ATLAS3.TEST/solr</dataDir>
 
 
   <!-- The DirectoryFactory to use for indexes.
