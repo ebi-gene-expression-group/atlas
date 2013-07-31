@@ -140,4 +140,12 @@ public class SolrQueryServiceIT {
 
     }
 
+    @Test
+    public void testGetGeneIdsForSpecies() throws SolrServerException {
+
+        assertThat(subject.getGeneIdsForSpecies("homo sapiens"), hasItem("ENSG00000179218"));
+        assertThat(subject.getGeneIdsForSpecies("mus musculus"), hasItem("ENSMUSG00000029816"));
+
+    }
+
 }

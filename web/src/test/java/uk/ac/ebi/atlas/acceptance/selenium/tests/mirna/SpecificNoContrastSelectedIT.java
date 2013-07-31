@@ -40,10 +40,10 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
     public void verifyResultsWithRegulationUp() {
         subject = new HeatmapTablePage(driver, ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 42"));
+        assertThat(subject.getGeneCount(), containsString("of 38"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(42));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("MIMAT0003220", "MIMAT0000439", "MIMAT0003249"));
+        assertThat(subject.getSelectedProfiles().size(), is(38));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("MIMAT0003220", "MIMAT0003249", "MIMAT0002869"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("0.003"));
@@ -53,10 +53,10 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
     public void verifyResultsWithRegulationDown() {
         subject = new HeatmapTablePage(driver, ACCESSION, "regulation=DOWN&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 56"));
+        assertThat(subject.getGeneCount(), containsString("of 39"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(50));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("MIMAT0002184", "MIMAT0003227", "MIMAT0002184"));
+        assertThat(subject.getSelectedProfiles().size(), is(39));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("MIMAT0003227", "MIMAT0003304", "MIMAT0003883"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("1.81" + " \u00D7 " + "10-4"));
