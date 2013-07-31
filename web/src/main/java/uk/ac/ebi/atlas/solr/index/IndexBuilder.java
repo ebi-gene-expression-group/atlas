@@ -25,45 +25,43 @@ package uk.ac.ebi.atlas.solr.index;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.nio.file.Path;
 
 @Named
 public class IndexBuilder {
 
     private static final Logger LOGGER = Logger.getLogger(IndexBuilder.class);
-
-    @Value("#{configuration['bioentity.properties']}")
-    private String dataDirectory;
+    private final BioentityPropertyStreamBuilder bioentityPropertyStreamBuilder;
 
     private SolrServer solrServer;
 
     @Inject
-    public IndexBuilder(SolrServer solrServer) {
+    public IndexBuilder(SolrServer solrServer, BioentityPropertyStreamBuilder bioentityPropertyStreamBuilder) {
+        this.bioentityPropertyStreamBuilder = bioentityPropertyStreamBuilder;
         this.solrServer = solrServer;
     }
 
-    public void build() throws SolrServerException {
+    public void build(Path bioentityPropertiesFilePath) throws SolrServerException {
 
-        BioentityPropertyDocument document;
+        try(BioentityPropertyStream bioentityBioentityPropertyStream =
+                    bioentityPropertyStreamBuilder.forPath(bioentityPropertiesFilePath).build()){
 
-        try(PropertyStream bioentityPropertiesStream = buildBioentityPropertiesStream()){
-            while ((document = bioentityPropertiesStream.next()) != null) {
+            BioentityPropertyDocument document;
+
+            while ((document = bioentityBioentityPropertyStream.next()) != null) {
                 solrServer.addBean(document);
             }
             solrServer.commit();
+
         } catch(IOException e){
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
 
-    }
-
-    PropertyStream buildBioentityPropertiesStream() throws IOException {
-        return new PropertyStream(dataDirectory);
     }
 
 }

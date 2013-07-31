@@ -35,13 +35,16 @@ public class IndexBuilderTest {
     private SolrServer solrServerMock;
 
     @Mock
-    private PropertyStream propertyStreamMock;
+    private BioentityPropertyStreamBuilder bioentityPropertyStreamBuilderMock;
+
+    @Mock
+    private BioentityPropertyStream bioentityPropertyStreamMock;
 
     private IndexBuilder subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new IndexBuilder(solrServerMock);
+        subject = new IndexBuilder(solrServerMock, bioentityPropertyStreamBuilderMock);
     }
 /*
     @Test

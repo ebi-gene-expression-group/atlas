@@ -28,14 +28,14 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PropertyStreamTest {
+public class BioentityPropertyStreamTest {
 
-    private PropertyStream subject;
+    private BioentityPropertyStream subject;
 
 
     @Before
     public void setUp() throws Exception {
-        subject = new PropertyStream(null);
+        subject = new BioentityPropertyStream(null);
     }
 
     @Test

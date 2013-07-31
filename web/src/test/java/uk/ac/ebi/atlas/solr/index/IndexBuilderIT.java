@@ -31,6 +31,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -39,18 +40,19 @@ import org.xml.sax.SAXException;
 import javax.inject.Inject;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class IndexBuilderIT {
+
+    @Value("#{configuration['bioentity.properties']}")
+    private String bioentityPropertyDirectory;
 
     @Inject
     private IndexBuilder subject;
@@ -68,10 +70,9 @@ public class IndexBuilderIT {
         embeddedSolrServer.shutdown();
     }
 
-
     @Test
     public void embeddedSolrQueryShouldReturnIndexedProperties() throws IOException, SolrServerException {
-        subject.build();
+        subject.build(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.A-AFFY-102.tsv"));
 
         SolrParams solrQuery = new SolrQuery("*:*");
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);

@@ -23,27 +23,19 @@
 package uk.ac.ebi.atlas.solr.index;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Charsets;
 import org.apache.log4j.Logger;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public class PropertyStream implements Closeable {
+public class BioentityPropertyStream implements Closeable {
 
-    private static final Logger LOGGER = Logger.getLogger(PropertyStream.class);
+    private static final Logger LOGGER = Logger.getLogger(BioentityPropertyStream.class);
 
     private CSVReader csvReader;
 
-    private String dataDirectory;
-
-    PropertyStream(String dataDirectory) throws IOException {
-        this.dataDirectory = dataDirectory;
-        csvReader = buildCsvReader();
+    BioentityPropertyStream(CSVReader csvReader) throws IOException {
+        this.csvReader = csvReader;
         csvReader.readNext();//skipping the header row
     }
 
@@ -59,12 +51,6 @@ public class PropertyStream implements Closeable {
     public void close() throws IOException {
         LOGGER.debug("<close> close invoked on PropertyStream");
         csvReader.close();
-    }
-
-    CSVReader buildCsvReader() throws IOException {
-        Path bioentityFilePath = Paths.get(dataDirectory + "anopheles_gambiae.A-AFFY-102.tsv");
-        Reader fileReader = Files.newBufferedReader(bioentityFilePath, Charsets.UTF_8);
-        return new CSVReader(fileReader,'\t');
     }
 
 }
