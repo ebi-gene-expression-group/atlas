@@ -39,11 +39,13 @@ import org.xml.sax.SAXException;
 import javax.inject.Inject;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -73,7 +75,8 @@ public class IndexBuilderIT {
 
         SolrParams solrQuery = new SolrQuery("*:*");
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
-        assertThat(queryResponse.getBeans(PropertyDocument.class), is(not(empty())));
+        List<BioentityPropertyDocument> bioentityPropertyDocuments = queryResponse.getBeans(BioentityPropertyDocument.class);
+        assertThat(bioentityPropertyDocuments, hasSize(10));
 
 
     }

@@ -48,7 +48,7 @@ public class IndexBuilder {
 
     public void build() throws SolrServerException {
 
-        PropertyDocument document;
+        BioentityPropertyDocument document;
 
         try(PropertyStream bioentityPropertiesStream = buildBioentityPropertiesStream()){
             while ((document = bioentityPropertiesStream.next()) != null) {

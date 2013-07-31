@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.solr.index;
 
 import org.apache.solr.client.solrj.beans.Field;
 
-public class PropertyDocument {
+public class BioentityPropertyDocument {
 
     @Field("bioentity_identifier")
     private String bioentityIdentifier;
@@ -19,7 +19,10 @@ public class PropertyDocument {
     @Field("property_name")
     private String name;
 
-    public PropertyDocument(String bioentityType, String species, String name, String[] csvValues) {
+    public BioentityPropertyDocument(){
+    }
+
+    public BioentityPropertyDocument(String bioentityType, String species, String name, String[] csvValues) {
         this.bioentityType = bioentityType;
         this.species = species;
         this.name = name;

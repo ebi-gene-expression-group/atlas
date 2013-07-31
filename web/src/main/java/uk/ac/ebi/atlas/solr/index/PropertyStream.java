@@ -47,12 +47,12 @@ public class PropertyStream implements Closeable {
         csvReader.readNext();//skipping the header row
     }
 
-    public PropertyDocument next() throws IOException {
+    public BioentityPropertyDocument next() throws IOException {
         String[] csvValues = csvReader.readNext();
         if (csvValues == null){
             return null;
         }
-        return new PropertyDocument("gene", "anopheles_gambiae", "design_element", csvValues);
+        return new BioentityPropertyDocument("gene", "anopheles_gambiae", "design_element", csvValues);
     }
 
     @Override
