@@ -1,10 +1,32 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.solr.index;
 
 import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Objects;
 
-public class BioentityPropertyDocument {
+public class BioentityProperty {
 
     @Field("bioentity_identifier")
     private String bioentityIdentifier;
@@ -21,10 +43,10 @@ public class BioentityPropertyDocument {
     @Field("property_name")
     private String name;
 
-    public BioentityPropertyDocument(){
+    public BioentityProperty(){
     }
 
-    BioentityPropertyDocument(String bioentityType, String species, String name, String bioentityIdentifier, String value) {
+    BioentityProperty(String bioentityIdentifier, String bioentityType, String species, String name, String value) {
         this.bioentityType = bioentityType;
         this.species = species;
         this.name = name;
@@ -80,7 +102,7 @@ public class BioentityPropertyDocument {
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
-        final BioentityPropertyDocument other = (BioentityPropertyDocument) obj;
+        final BioentityProperty other = (BioentityProperty) obj;
         return Objects.equals(this.bioentityIdentifier, other.bioentityIdentifier) && Objects.equals(this.bioentityType, other.bioentityType) && Objects.equals(this.species, other.species) && Objects.equals(this.value, other.value) && Objects.equals(this.name, other.name);
     }
 }

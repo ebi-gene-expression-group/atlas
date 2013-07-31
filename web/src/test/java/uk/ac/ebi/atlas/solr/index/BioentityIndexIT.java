@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.hasSize;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
-public class IndexBuilderIT {
+public class BioentityIndexIT {
 
     @Value("#{configuration['bioentity.properties']}")
     private String bioentityPropertyDirectory;
@@ -65,9 +65,8 @@ public class IndexBuilderIT {
     }
 
     @After
-    public void cleanup() throws IOException, SolrServerException {
+    public void cleanupData() throws IOException, SolrServerException {
         embeddedSolrServer.deleteByQuery("*:*");
-        embeddedSolrServer.shutdown();
     }
 
     @Test
@@ -76,8 +75,19 @@ public class IndexBuilderIT {
 
         SolrParams solrQuery = new SolrQuery("*:*");
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
-        List<BioentityPropertyDocument> bioentityPropertyDocuments = queryResponse.getBeans(BioentityPropertyDocument.class);
-        assertThat(bioentityPropertyDocuments, hasSize(10));
+        List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
+        assertThat(bioentityProperties, hasSize(10));
+
+    }
+
+    @Test
+    public void addBioentityPropertiesShouldSucceed() throws IOException, SolrServerException {
+        subject.add(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.ensgene.tsv"));
+
+        SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
+        QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
+        List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
+        assertThat(bioentityProperties, hasSize(345));
 
     }
 

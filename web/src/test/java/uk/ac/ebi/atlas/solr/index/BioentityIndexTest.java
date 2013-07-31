@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.solr.index;
 
 import org.apache.solr.client.solrj.SolrServer;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -38,7 +39,7 @@ public class BioentityIndexTest {
     private BioentityPropertyStreamBuilder bioentityPropertyStreamBuilderMock;
 
     @Mock
-    private BioentityPropertyStream bioentityPropertyStreamMock;
+    private BioentityPropertiesStream bioentityPropertiesStreamMock;
 
     private BioentityIndex subject;
 
@@ -46,15 +47,8 @@ public class BioentityIndexTest {
     public void setUp() throws Exception {
         subject = new BioentityIndex(solrServerMock, bioentityPropertyStreamBuilderMock);
     }
-/*
+
     @Test
     public void testBuild() throws Exception {
-        given(propertyStreamMock.next()).willReturn(mock(PropertyDocument.class))
-                                        .willReturn(mock(PropertyDocument.class))
-                                        .willReturn(null);
-        subject.build();
-
-        verify(solrServerMock, times(2)).addBean(any(PropertyDocument.class));
-        verify(propertyStreamMock, times(3)).next();
-    }*/
+    }
 }

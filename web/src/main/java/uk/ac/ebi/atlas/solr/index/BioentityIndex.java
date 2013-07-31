@@ -25,13 +25,16 @@ package uk.ac.ebi.atlas.solr.index;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 @Named
+@Scope("prototype")
 public class BioentityIndex {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
@@ -47,13 +50,13 @@ public class BioentityIndex {
 
     public void add(Path bioentityPropertiesFilePath) throws SolrServerException {
 
-        try(BioentityPropertyStream bioentityBioentityPropertyStream =
+        try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
                     bioentityPropertyStreamBuilder.forPath(bioentityPropertiesFilePath).build()){
 
-            BioentityPropertyDocument document;
+            List<BioentityProperty> documents;
 
-            while ((document = bioentityBioentityPropertyStream.next()) != null) {
-                solrServer.addBean(document);
+            while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
+                solrServer.addBeans(documents);
             }
             solrServer.commit();
 

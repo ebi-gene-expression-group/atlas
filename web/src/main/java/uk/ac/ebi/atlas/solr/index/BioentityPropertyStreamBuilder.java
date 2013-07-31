@@ -25,7 +25,9 @@ package uk.ac.ebi.atlas.solr.index;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Charsets;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Reader;
@@ -33,19 +35,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Named
+@Scope("prototype")
 public class BioentityPropertyStreamBuilder {
 
+    private final BioentityPropertiesBuilder bioentityPropertiesBuilder
+            ;
     private Path bioentityPropertiesFilePath;
+
+    @Inject
+    public BioentityPropertyStreamBuilder(BioentityPropertiesBuilder bioentityPropertiesBuilder){
+        this.bioentityPropertiesBuilder = bioentityPropertiesBuilder;
+    }
 
     public BioentityPropertyStreamBuilder forPath(Path bioentityPropertiesFilePath){
         this.bioentityPropertiesFilePath = bioentityPropertiesFilePath;
         return this;
     }
 
-    public BioentityPropertyStream build() throws IOException{
+    public BioentityPropertiesStream build() throws IOException{
         Reader fileReader = Files.newBufferedReader(bioentityPropertiesFilePath, Charsets.UTF_8);
         CSVReader csvReader = new CSVReader(fileReader,'\t');
-        return new BioentityPropertyStream(csvReader, getSpecies());
+        return new BioentityPropertiesStream(csvReader, bioentityPropertiesBuilder, getSpecies());
     }
 
     String getFileName() {
