@@ -76,7 +76,6 @@ var experimentsPageModule = (function ($) {
                 return $('td:eq(' + iColumn + ') img', tr).attr("title");
             });
         };
-
         /* This was taken from datatables examples */
         $.extend($.fn.dataTableExt.oSort, {
             "title-numeric-pre":function (a) {
@@ -92,6 +91,9 @@ var experimentsPageModule = (function ($) {
                 return ((a < b) ? 1 : ((a > b) ? -1 : 0));
             }
         });
+
+        //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
+        $('#experiments-table').dataTable.defaults.oLanguage.sInfoEmpty =' ';
 
         $('#experiments-table').dataTable({
             "bProcessing":true,
