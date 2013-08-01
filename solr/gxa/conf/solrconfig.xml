@@ -105,9 +105,9 @@
        configuration.
     -->
     <!--
-    <dataDir>${solr.data.location}</dataDir>
+    you need to specify this as a JVM property: -Dsolr.data.dir=...
     -->
-    <dataDir>/Users/nsklyar/ATLAS3.TEST/solr</dataDir>
+    <dataDir>${solr.data.dir}</dataDir>
 
 
   <!-- The DirectoryFactory to use for indexes.
