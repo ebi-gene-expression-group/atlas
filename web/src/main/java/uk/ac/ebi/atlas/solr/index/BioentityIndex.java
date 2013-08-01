@@ -67,4 +67,23 @@ public class BioentityIndex {
 
     }
 
+    public void deleteAll() {
+        try {
+            solrServer.deleteByQuery("*:*");
+        } catch (SolrServerException | IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public void commit() {
+        try {
+            solrServer.commit();
+            solrServer.optimize();
+        } catch (SolrServerException | IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException(e);
+        }
+
+    }
 }
