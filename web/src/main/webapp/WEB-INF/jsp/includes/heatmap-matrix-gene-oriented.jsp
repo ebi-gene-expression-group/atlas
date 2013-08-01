@@ -51,7 +51,8 @@
                         <c:set var="geneId" value="${geneProfile.id}"/>
                         <c:set var="bioEntityType" value="${preferences.geneSetMatch? \"genesets\": \"genes\"}"/>
 
-                        <a class="genename" id="${geneId}" href='${serverUrl}/${bioEntityType}/${geneId}'
+                        <a class="genename" id="${geneId}"
+                           href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityType}/${geneId}'
                            title="">${geneNamesProvider.getGeneName(geneId)}</a>
                     </display:column>
 
@@ -152,7 +153,7 @@
                     -->
                     <a id="download-profiles-link"
                        title="Top 50 genes displayed on page. Download results to see the rest."
-                       href="${downloadUrl}"
+                       href="${applicationProperties.buildDownloadURL(pageContext.request)}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
                              src="${base}/resources/images/download_blue_small.png">

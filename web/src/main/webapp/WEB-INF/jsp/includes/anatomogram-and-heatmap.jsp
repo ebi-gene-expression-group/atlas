@@ -40,7 +40,7 @@
                 <span id="sex-toggle">
                     <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
                          style="width:20px;height:38px;padding:2px"
-                         src="${serverUrl}/resources/images/male_selected.png"/>
+                         src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/male_selected.png"/>
                 </span>
                             <!--
                             <span data-help-loc="#anatomogram"/>

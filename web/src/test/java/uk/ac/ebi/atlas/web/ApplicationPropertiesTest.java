@@ -31,10 +31,12 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -64,6 +66,13 @@ public class ApplicationPropertiesTest {
     private static final String EXPERIMENT_ATLAS_URL_TEMPLATE = "experiment.atlas.url.template";
     private static final String ATLAS_URL = "http://www-test.ebi.ac.uk/gxa/experiments/";
     private static final String PUB_MED_ID = "123456";
+
+    private static final String EXPERIMENT_URL = "http://x.y/z";
+    private static final String REQUEST_PARAMETERS = "p1=1&p2=2";
+    private static final String DOWNLOAD_URL = EXPERIMENT_URL + ".tsv?" + REQUEST_PARAMETERS;
+
+    @Mock
+    private HttpServletRequest httpServletRequestMock;
 
     @Mock
     private BaselineExperiment homoSapiensExperimentMock;
@@ -104,6 +113,10 @@ public class ApplicationPropertiesTest {
 
         when(homoSapiensExperimentMock.getFirstSpecies()).thenReturn(HOMO_SAPIENS_SPECIE);
         when(mouseExperimentMock.getFirstSpecies()).thenReturn(MOUSE_SPECIE);
+
+        //given
+        when(httpServletRequestMock.getAttribute("javax.servlet.forward.request_uri")).thenReturn(EXPERIMENT_URL);
+        when(httpServletRequestMock.getAttribute("javax.servlet.forward.query_string")).thenReturn(REQUEST_PARAMETERS);
 
         subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, experimentDAOMock);
     }
@@ -146,5 +159,36 @@ public class ApplicationPropertiesTest {
         assertThat(subject.getFeedbackEmailAddress(), is(FEEDBACK_EMAIL_VALUE));
     }
 
+    @Test
+    public void buildDownloadUrl() {
+        //when
+        String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
+
+        //then
+        assertThat(downloadUrl, is(DOWNLOAD_URL));
+    }
+
+    @Test
+    public void buildDownloadUrlWithoutQueryParameters() {
+        //given
+        given(httpServletRequestMock.getAttribute("javax.servlet.forward.query_string")).willReturn(null);
+
+        //when
+        String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
+
+        //then
+        assertThat(downloadUrl, is(EXPERIMENT_URL + ".tsv"));
+    }
+
+    @Test
+    public void buildServerUrl() throws Exception {
+
+        when(httpServletRequestMock.getServerName()).thenReturn("localhost");
+        when(httpServletRequestMock.getServerPort()).thenReturn(9090);
+        when(httpServletRequestMock.getContextPath()).thenReturn("/gxa");
+        when(httpServletRequestMock.isSecure()).thenReturn(false);
+
+        assertThat(subject.buildServerURL(httpServletRequestMock), is("http://localhost:9090/gxa"));
+    }
 
 }

@@ -114,7 +114,8 @@
     </tbody>
 </table>
 
-<script language="JavaScript" type="text/javascript" src="${serverUrl}/resources/js/heatmapModule.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${applicationProperties.buildServerURL(pageContext.request)}/resources/js/heatmapModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts

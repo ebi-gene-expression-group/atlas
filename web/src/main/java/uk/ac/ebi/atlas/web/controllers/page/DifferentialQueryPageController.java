@@ -82,8 +82,6 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
 
                 model.addAttribute("geneProfiles", differentialProfiles);
 
-                model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
-
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
             } catch (GenesNotFoundException e) {

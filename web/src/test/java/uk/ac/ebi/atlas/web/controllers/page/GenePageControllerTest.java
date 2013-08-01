@@ -113,14 +113,6 @@ public class GenePageControllerTest {
     }
 
     @Test
-    public void testShowGenePageError() throws Exception {
-        solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES));
-        when(differentialGeneProfileServiceMock.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
-        when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
-        assertThat(subject.showGenePage(httpServletRequestMock, null, IDENTIFIER, modelMock), is("widget-error"));
-    }
-
-    @Test
     public void testShowGenePage() throws Exception {
         solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES));
         when(differentialGeneProfileServiceMock.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);

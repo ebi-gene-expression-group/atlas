@@ -27,12 +27,10 @@ import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.net.MalformedURLException;
 import java.util.*;
 
 public abstract class BioEntityPageController {
@@ -67,13 +65,6 @@ public abstract class BioEntityPageController {
         model.addAttribute("entityIdentifier", identifier);
 
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
-
-        try {
-            ExperimentDispatcher.addServerUrlToModel(model, request);
-        } catch (MalformedURLException e) {
-            model.addAttribute("errorMessage", "Server URL could not be determined.");
-            return "widget-error";
-        }
 
         return "bioEntity";
     }

@@ -34,10 +34,12 @@
 <td width="100%">
     <div id="experimentDescription">
         <a id="goto-experiment" class="thick-link" title="Experiment Page"
-           href="${serverUrl}/experiments/${experimentAccession}">${experimentDescription}</a>
+           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}">${experimentDescription}</a>
         <c:if test="${hasExtraInfo}">
-            <a id="extra-info" href="${serverUrl}/external-resources/${experimentAccession}/extra-info.png">
-                <img alt="more information" src="${serverUrl}/resources/images/balloon-ellipsis-icon-left.png">
+            <a id="extra-info"
+               href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
+                <img alt="more information"
+                     src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/balloon-ellipsis-icon-left.png">
             </a>
         </c:if>
     </div>
