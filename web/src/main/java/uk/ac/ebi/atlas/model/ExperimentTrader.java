@@ -85,6 +85,8 @@ public class ExperimentTrader {
 
     }
 
+    //ToDo: to get Experiment accession we go 4 times to the DB (for each experiment type)
+
     public Set<String> getBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.BASELINE);
     }
