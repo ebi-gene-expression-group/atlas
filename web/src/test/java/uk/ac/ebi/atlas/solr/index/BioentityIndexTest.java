@@ -22,12 +22,28 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
+import com.google.common.collect.Lists;
 import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.mockito.AnswerWithSelf;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NotDirectoryException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BioentityIndexTest {
@@ -35,20 +51,84 @@ public class BioentityIndexTest {
     @Mock
     private SolrServer solrServerMock;
 
-    @Mock
-    private BioentityPropertyStreamBuilder bioentityPropertyStreamBuilderMock;
+    private BioentityPropertiesStreamBuilder streamBuilderMock;
 
     @Mock
-    private BioentityPropertiesStream bioentityPropertiesStreamMock;
+    private BioentityPropertiesStream propertiesStreamMock;
+
+    ArrayList<BioentityProperty> bioentityProperties;
+
+    private Path tempDirectoryPath;
+    private Path tempFilePath1;
+    private Path tempFilePath2;
 
     private BioentityIndex subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BioentityIndex(solrServerMock, bioentityPropertyStreamBuilderMock);
+        tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity-properties/mirbase");
+
+        tempDirectoryPath = Files.createDirectories(tempDirectoryPath);
+        tempFilePath1 = Files.createFile(tempDirectoryPath.resolve("temp-file1.tmp"));
+        tempFilePath2 = Files.createFile(tempDirectoryPath.resolve("temp-file2.tmp"));
+
+        streamBuilderMock = mock(BioentityPropertiesStreamBuilder.class, new AnswerWithSelf(BioentityPropertiesStreamBuilder.class));
+        given(streamBuilderMock.build()).willReturn(propertiesStreamMock);
+        bioentityProperties = Lists.newArrayList(mock(BioentityProperty.class));
+        given(propertiesStreamMock.next()).willReturn(bioentityProperties, bioentityProperties, null);
+
+        subject = new BioentityIndex(solrServerMock, streamBuilderMock);
+    }
+
+    @After
+    public void tearDown() throws IOException {
+        Files.delete(tempFilePath1);
+        Files.delete(tempFilePath2);
+        Files.delete(tempDirectoryPath);
     }
 
     @Test
-    public void testBuild() throws Exception {
+    public void shouldInvokeDeleteOnSolrServer() throws IOException, SolrServerException {
+        subject.deleteAll();
+
+        verify(solrServerMock).deleteByQuery("*:*");
+    }
+
+    @Test
+    public void shouldThrowIllegalStateExceptionInCaseOfFailure() throws IOException, SolrServerException {
+        given(solrServerMock.deleteByQuery(anyString())).willThrow(IOException.class);
+
+        subject.indexAll(Files.newDirectoryStream(tempDirectoryPath));
+    }
+
+    @Test(expected = NotDirectoryException.class)
+    public void indexAllShouldNotAcceptFilePath() throws IOException {
+
+        subject.indexAll(Files.newDirectoryStream(tempFilePath1));
+    }
+
+    @Test
+    public void indexAllShouldIterateOnNestedDirectoriesAndFiles() throws IOException, SolrServerException {
+
+        subject.indexAll(Files.newDirectoryStream(tempDirectoryPath));
+
+        InOrder inOrder = inOrder(streamBuilderMock);
+        inOrder.verify(streamBuilderMock).forPath(tempFilePath1);
+        inOrder.verify(streamBuilderMock).build();
+        inOrder.verify(streamBuilderMock).forPath(tempFilePath2);
+        inOrder.verify(streamBuilderMock).build();
+
+        //3 times on on tempFilePath1 and 1 time only (because streamMock is exhausted) on tempFilePath2
+        verify(propertiesStreamMock, times(4)).next();
+
+        verify(solrServerMock,times(2)).addBeans(bioentityProperties);
+        verify(solrServerMock, times(2)).commit();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void deleteAllShouldThrowIllegalStateExceptionInCaseOfFailure() throws IOException, SolrServerException {
+        given(solrServerMock.deleteByQuery(anyString())).willThrow(IOException.class);
+
+        subject.deleteAll();
     }
 }

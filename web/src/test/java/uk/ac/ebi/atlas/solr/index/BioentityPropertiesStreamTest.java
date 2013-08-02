@@ -82,7 +82,7 @@ public class BioentityPropertiesStreamTest {
     }
 
     @Test
-    public void shouldUseThePropertiesBuilder() throws IOException {
+    public void nextShouldUseThePropertiesBuilder() throws IOException {
         subject.next();
         verify(bioentityPropertiesBuilderMock).forBioentityType(BIOENTITY_TYPE);
         verify(bioentityPropertiesBuilderMock).forSpecies(SPECIES);
@@ -98,15 +98,21 @@ public class BioentityPropertiesStreamTest {
     }
 
     @Test
-    public void shouldReturnNullWhenCsvReaderIsExhausted() throws IOException {
+    public void nextShouldReturnNullWhenCsvReaderIsExhausted() throws IOException {
         given(csvReaderMock.readNext()).willReturn(null);
         assertThat(subject.next(), is(nullValue()));
     }
 
     @Test(expected=IOException.class)
-    public void shouldThrowException() throws IOException {
+    public void nextShouldThrowException() throws IOException {
         given(csvReaderMock.readNext()).willThrow(IOException.class);
         subject.next();
+    }
+
+    @Test
+    public void closeShouldCloseTheCsvReader() throws IOException {
+        subject.close();
+        verify(csvReaderMock).close();
     }
 
 

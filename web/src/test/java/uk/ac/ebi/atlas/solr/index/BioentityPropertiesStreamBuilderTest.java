@@ -35,10 +35,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BioentityPropertyStreamBuilderTest {
+public class BioentityPropertiesStreamBuilderTest {
     private static final String ANOPHELES_GAMBIAE = "anopheles_gambiae";
 
-    private BioentityPropertyStreamBuilder subject;
+    private BioentityPropertiesStreamBuilder subject;
 
     @Mock
     private BioentityPropertiesBuilder bioentityPropertiesBuilderMock;
@@ -46,7 +46,7 @@ public class BioentityPropertyStreamBuilderTest {
     @Before
     public void initSubject() {
 
-        subject = new BioentityPropertyStreamBuilder(bioentityPropertiesBuilderMock);
+        subject = new BioentityPropertiesStreamBuilder(bioentityPropertiesBuilderMock);
 
     }
 

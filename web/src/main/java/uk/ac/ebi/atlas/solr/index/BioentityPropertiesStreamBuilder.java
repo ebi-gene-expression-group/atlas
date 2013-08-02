@@ -36,18 +36,17 @@ import java.nio.file.Path;
 
 @Named
 @Scope("prototype")
-public class BioentityPropertyStreamBuilder {
+public class BioentityPropertiesStreamBuilder {
 
-    private final BioentityPropertiesBuilder bioentityPropertiesBuilder
-            ;
+    private final BioentityPropertiesBuilder bioentityPropertiesBuilder;
     private Path bioentityPropertiesFilePath;
 
     @Inject
-    public BioentityPropertyStreamBuilder(BioentityPropertiesBuilder bioentityPropertiesBuilder){
+    public BioentityPropertiesStreamBuilder(BioentityPropertiesBuilder bioentityPropertiesBuilder){
         this.bioentityPropertiesBuilder = bioentityPropertiesBuilder;
     }
 
-    public BioentityPropertyStreamBuilder forPath(Path bioentityPropertiesFilePath){
+    public BioentityPropertiesStreamBuilder forPath(Path bioentityPropertiesFilePath){
         this.bioentityPropertiesFilePath = bioentityPropertiesFilePath;
         return this;
     }

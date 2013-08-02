@@ -30,28 +30,50 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
 @Scope("prototype")
 public class BioentityIndex {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
-    private final BioentityPropertyStreamBuilder bioentityPropertyStreamBuilder;
+    private final BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder;
 
     private SolrServer solrServer;
 
     @Inject
-    public BioentityIndex(SolrServer solrServer, BioentityPropertyStreamBuilder bioentityPropertyStreamBuilder) {
-        this.bioentityPropertyStreamBuilder = bioentityPropertyStreamBuilder;
+    public BioentityIndex(SolrServer solrServer, BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder) {
+        this.bioentityPropertiesStreamBuilder = bioentityPropertiesStreamBuilder;
         this.solrServer = solrServer;
     }
 
-    public void add(Path bioentityPropertiesFilePath) {
+    public void indexAll(DirectoryStream<Path> bioentityPropertiesDirectoryStream) {
+
+        try (DirectoryStream<Path> directoryStream = bioentityPropertiesDirectoryStream) {
+            for (Path path : directoryStream) {
+                if (Files.isDirectory(path)){
+                    indexAll(Files.newDirectoryStream(path));
+                    return;
+                }
+                indexFile(path);
+            }
+        } catch(IOException e){
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException(e);
+        }
+
+    }
+
+    void indexFile(Path filePath){
+        checkArgument(Files.isRegularFile(filePath), "This is not a regular file: " + filePath);
 
         try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
-                    bioentityPropertyStreamBuilder.forPath(bioentityPropertiesFilePath).build()){
+                    bioentityPropertiesStreamBuilder.forPath(filePath).build()){
 
             List<BioentityProperty> documents;
 
@@ -64,8 +86,8 @@ public class BioentityIndex {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
-
     }
+
 
     public void deleteAll() {
         try {

@@ -69,9 +69,11 @@ public class BioentityIndexIT {
         embeddedSolrServer.deleteByQuery("*:*");
     }
 
+
+
     @Test
     public void addDesignElementsShouldSucceed() throws IOException, SolrServerException {
-        subject.add(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.A-AFFY-102.tsv"));
+        subject.indexFile(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.A-AFFY-102.tsv"));
 
         SolrParams solrQuery = new SolrQuery("*:*");
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
@@ -82,7 +84,7 @@ public class BioentityIndexIT {
 
     @Test
     public void addBioentityPropertiesShouldSucceed() throws IOException, SolrServerException {
-        subject.add(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.ensgene.tsv"));
+        subject.indexFile(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.ensgene.tsv"));
 
         SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);

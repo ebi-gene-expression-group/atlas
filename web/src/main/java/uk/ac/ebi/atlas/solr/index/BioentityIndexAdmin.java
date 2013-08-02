@@ -28,17 +28,15 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Named
 @Scope("prototype")
-public class BioentityIndexBuilder {
+public class BioentityIndexAdmin {
 
-    @Value("#{configuration['bioentity.properties']}")
-    private String bioentityPropertyDirectory;
+    private String bioentityPropertiesDirectory;
 
     @Value("#{configuration['solr.data.location']}")
     private String solrDataLocation;
@@ -46,18 +44,20 @@ public class BioentityIndexBuilder {
     private BioentityIndex bioentityIndex;
 
     @Inject
-    BioentityIndexBuilder(BioentityIndex bioentityIndex){
+    BioentityIndexAdmin(BioentityIndex bioentityIndex,
+                        @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory ){
+
         this.bioentityIndex = bioentityIndex;
+        this.bioentityPropertiesDirectory = bioentityPropertiesDirectory;
+
     }
 
-    public void index() throws IOException{
+    public void rebuildIndex() throws IOException {
         bioentityIndex.deleteAll();
 
-        try (DirectoryStream<Path> bioentityPropertyPathsStream = Files.newDirectoryStream(Paths.get(bioentityPropertyDirectory))) {
-            for (Path filePath : bioentityPropertyPathsStream) {
-                bioentityIndex.add(filePath);
-            }
-        }
+        Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
+
+        bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
 
         bioentityIndex.commit();
     }

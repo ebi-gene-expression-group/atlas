@@ -52,17 +52,13 @@ public class BioentityPropertiesStream implements Closeable {
     public List<BioentityProperty> next() throws IOException {
         String[] csvValues = csvReader.readNext();
         if (csvValues != null) {
-            return buildBioentityProperties(csvValues);
+            List<String> propertyValues = Lists.newArrayList(csvValues);
+            String bioentityIdentifier = propertyValues.remove(0);
+            return bioentityPropertiesBuilder.withBioentityIdentifier(bioentityIdentifier)
+                    .withPropertyValues(propertyValues)
+                    .build();
         }
         return null;
-    }
-
-    List<BioentityProperty> buildBioentityProperties(String[] csvValues) {
-        List<String> propertyValues = Lists.newArrayList(csvValues);
-        String bioentityIdentifier = propertyValues.remove(0);
-        return bioentityPropertiesBuilder.withBioentityIdentifier(bioentityIdentifier)
-                                        .withPropertyValues(propertyValues)
-                                        .build();
     }
 
     @Override
