@@ -130,7 +130,7 @@ public class MicroarrayProfilesTSVWriterTest {
     public void testBuildExpressionsRow() throws Exception {
 
         SortedSet<Contrast> contrasts = new TreeSet<>();
-        contrasts.add(new Contrast("id1", null, null, "name"));
+        contrasts.add(new Contrast("id1", null, null, null, "name"));
 
         //when
         String[] expressions = subject.extractConditionLevels(geneProfileMock, contrasts);

@@ -275,7 +275,7 @@ var heatmapModule = (function ($) {
         $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
     }
 
-    function initMaPlotButtons(experimentAccession, arrayDesignAccession) {
+    function initMaPlotButtons(experimentAccession) {
         var thElements = $(".factor-header").parent(),
             maPlotURL;
 
@@ -285,6 +285,8 @@ var heatmapModule = (function ($) {
 
         $(thElements).each(function () {
             var contrastName = $(this).children().attr("data-contrast-name");
+
+            var arrayDesignAccession = $(this).children().attr("data-array-design");
 
             maPlotURL = 'external-resources/' + experimentAccession + '/' + (arrayDesignAccession ? arrayDesignAccession + '/' : '' ) + contrastName + '/ma-plot.png';
             //append a button div now
@@ -325,14 +327,14 @@ var heatmapModule = (function ($) {
 
         var firstColumnHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
 
-        if (parameters.arrayDesignAccession) { //then it is a microarray experiment
+        if (parameters.isMicroarray) { //then it is a microarray experiment
             createAccessionHeaders([firstColumnHeader, "Design Element"]);
         } else {
             createAccessionHeaders([firstColumnHeader]);
         }
 
         if (experimentAccession !== undefined && parameters.cutoff === 0.05 && !parameters.geneQuery) {
-            initMaPlotButtons(experimentAccession, parameters.arrayDesignAccession);
+            initMaPlotButtons(experimentAccession);
         }
 
         $("#heatmap-div").show();
@@ -356,12 +358,8 @@ var heatmapModule = (function ($) {
         initHeatmap(experimentAccession, {cutoff:cutoff, geneQuery:geneQuery});
     }
 
-    function initMicroarrayHeatmap(experimentAccession, arrayDesignAccession, cutoff, geneQuery) {
-        initHeatmap(experimentAccession, {
-            arrayDesignAccession:arrayDesignAccession,
-            cutoff:cutoff,
-            geneQuery:geneQuery
-        });
+    function initMicroarrayHeatmap(experimentAccession, cutoff, geneQuery) {
+        initHeatmap(experimentAccession, {cutoff:cutoff, geneQuery:geneQuery, isMicroarray:true});
     }
 
     return {

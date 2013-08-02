@@ -97,7 +97,9 @@
                                value="${type.isBaseline() ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div ${!type.isBaseline() ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''} data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
+                                title="<div ${!type.isBaseline() ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''}
+                                    ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
+                                    data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
                                 headerClass='rotated_cell vertical-header-cell'
                                 style="${style}">
 
@@ -193,9 +195,7 @@
 
             } else if (${type.isMicroarray()}) {
 
-                var arrayDesignAccession = ${type.isMicroarray() ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
-
-                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', arrayDesignAccession, ${preferences.cutoff}, '${preferences.geneQuery}');
+                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
 
             } else {
                 heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');

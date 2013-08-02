@@ -48,9 +48,11 @@ public class DifferentialExperimentConfigurationTest {
     private static final String REFERENCE_ASSAY_GROUP = "reference_assay_group";
     private static final String TEST_ASSAY_GROUP = "test_assay_group";
     private static final String NAME = "name";
+    private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
     private static final String XML_CONTENT =
             "<configuration>" +
                     "    <analytics>" +
+                    "       <array_design>" + ARRAY_DESIGN + "</array_design>" +
                     "        <assay_groups>" +
                     "            <assay_group id=\"" + REFERENCE_ASSAY_GROUP + "\">" +
                     "                <assay>" + REFERENCE_ASSAY_GROUP + "</assay>" +
@@ -79,7 +81,7 @@ public class DifferentialExperimentConfigurationTest {
 
     @Before
     public void setUp() throws Exception {
-        when(xmlConfigurationMock.getStringArray("analytics/contrasts/contrast/@id")).thenReturn(new String[]{CONTRAST_ID});
+        when(xmlConfigurationMock.getStringArray("analytics[1]/contrasts/contrast/@id")).thenReturn(new String[]{CONTRAST_ID});
         when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + REFERENCE_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{REFERENCE_ASSAY_GROUP});
         when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + TEST_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{TEST_ASSAY_GROUP});
         when(xmlConfigurationMock.configurationAt("analytics/contrasts/contrast[@id=\'" + CONTRAST_ID + "\']")).thenReturn(configurationMock);
@@ -103,5 +105,6 @@ public class DifferentialExperimentConfigurationTest {
         assertThat(contrast.getDisplayName(), is(NAME));
         assertThat(contrast.getReferenceAssayGroup(), hasItem(REFERENCE_ASSAY_GROUP));
         assertThat(contrast.getTestAssayGroup(), hasItem(TEST_ASSAY_GROUP));
+        assertThat(contrast.getArrayDesignAccession(), is(ARRAY_DESIGN));
     }
 }

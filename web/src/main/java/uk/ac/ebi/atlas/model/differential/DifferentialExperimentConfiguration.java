@@ -24,21 +24,38 @@ public class DifferentialExperimentConfiguration {
     }
 
     public Set<Contrast> getContrasts() {
+
         Set<Contrast> contrasts = Sets.newLinkedHashSet();
-        String[] ids = xmlConfiguration.getStringArray("analytics/contrasts/contrast/@id");
-        for (String id : ids) {
-            Contrast contrast = getContrast(id);
-            contrasts.add(contrast);
+
+        NodeList array_designs = document.getElementsByTagName("array_design");
+        for (int i = 0; i < array_designs.getLength(); i++) {
+            Node currentArrayDesign = array_designs.item(i);
+            String arrayDesignAccession = currentArrayDesign.getFirstChild().getTextContent().trim();
+            parseContrastConfiguration("analytics[" + (i + 1) + "]/contrasts/contrast/@id", arrayDesignAccession, contrasts);
         }
+
+        // in case no array designs
+        if (array_designs.getLength() == 0) {
+            parseContrastConfiguration("analytics/contrasts/contrast/@id", null, contrasts);
+        }
+
         return contrasts;
     }
 
-    Contrast getContrast(String id) {
+    private void parseContrastConfiguration(String query, String arrayDesignAccession, Set<Contrast> contrasts) {
+        String[] ids = xmlConfiguration.getStringArray(query);
+        for (String id : ids) {
+            Contrast contrast = getContrast(id, arrayDesignAccession);
+            contrasts.add(contrast);
+        }
+    }
+
+    Contrast getContrast(String id, String arrayDesignAccession) {
         Configuration configuration = xmlConfiguration.configurationAt("analytics/contrasts/contrast[@id=\'" + id + "\']");
         String name = configuration.getString("name");
         String reference = configuration.getString("reference_assay_group");
         String test = configuration.getString("test_assay_group");
-        return new Contrast(id, getAssayGroup(reference), getAssayGroup(test), name);
+        return new Contrast(id, arrayDesignAccession, getAssayGroup(reference), getAssayGroup(test), name);
     }
 
     AssayGroup getAssayGroup(String id) {

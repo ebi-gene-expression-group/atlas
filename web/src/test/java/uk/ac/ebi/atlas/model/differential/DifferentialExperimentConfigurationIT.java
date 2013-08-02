@@ -42,6 +42,7 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class DifferentialExperimentConfigurationIT {
 
+    private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
 
     @Inject
     private ConfigurationTrader configurationTrader;
@@ -61,10 +62,11 @@ public class DifferentialExperimentConfigurationIT {
 
     @Test
     public void testGetContrast() throws Exception {
-        Contrast contrast = subject.getContrast("g1_g2");
+        Contrast contrast = subject.getContrast("g1_g2", ARRAY_DESIGN);
         assertThat(contrast.getDisplayName(), is("genotype:\'expressing human TDP-43\' vs \'non transgenic\'"));
         assertThat(Sets.newHashSet(contrast.getReferenceAssayGroup()), containsInAnyOrder("SRR057596", "SRR057598", "SRR057597"));
         assertThat(Sets.newHashSet(contrast.getTestAssayGroup()), containsInAnyOrder("SRR057599", "SRR057600", "SRR057601"));
+        assertThat(contrast.getArrayDesignAccession(), is(ARRAY_DESIGN));
     }
 
 }
