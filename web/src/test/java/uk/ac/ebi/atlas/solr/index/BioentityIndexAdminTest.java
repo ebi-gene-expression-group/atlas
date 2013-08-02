@@ -31,7 +31,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,22 +44,42 @@ public class BioentityIndexAdminTest {
     @Mock
     private BioentityIndex bioentityIndexMock;
 
+    @Mock
+    private BioentityIndexMonitor bioentityIndexMonitorMock;
+
     private BioentityIndexAdmin subject;
 
     @Before
     public void setup(){
-        subject = new BioentityIndexAdmin(bioentityIndexMock, BIOENTITY_PROPERTY_DIRECTORY);
+        subject = new BioentityIndexAdmin(bioentityIndexMock, bioentityIndexMonitorMock, BIOENTITY_PROPERTY_DIRECTORY);
     }
 
     @Test
     public void shouldUseBioentityIndex() throws IOException {
+
+        given(bioentityIndexMonitorMock.start()).willReturn(true);
+
         subject.rebuildIndex();
 
         verify(bioentityIndexMock).deleteAll();
         verify(bioentityIndexMock).indexAll(any(DirectoryStream.class));
-        verify(bioentityIndexMock).commit();
+        verify(bioentityIndexMock).optimize();
 
     }
+
+    @Test
+    public void shouldNotRunIndexingIfMonitorDoesntStart() throws IOException {
+
+        given(bioentityIndexMonitorMock.start()).willReturn(false);
+
+        subject.rebuildIndex();
+
+        verify(bioentityIndexMock,never()).deleteAll();
+        verify(bioentityIndexMock,never()).indexAll(any(DirectoryStream.class));
+        verify(bioentityIndexMock,never()).optimize();
+
+    }
+
 
 
 }

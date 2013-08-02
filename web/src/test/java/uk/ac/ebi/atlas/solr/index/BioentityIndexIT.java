@@ -25,13 +25,16 @@ package uk.ac.ebi.atlas.solr.index;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.SolrParams;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -47,9 +50,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
-public class BioentityIndexIT {
+public class BioentityIndexIT{
 
     @Value("#{configuration['bioentity.properties']}")
     private String bioentityPropertyDirectory;
@@ -57,8 +61,12 @@ public class BioentityIndexIT {
     @Inject
     private BioentityIndex subject;
 
+    private static SolrServer embeddedSolrServer;
+
     @Inject
-    private SolrServer embeddedSolrServer;
+    public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer){
+        BioentityIndexIT.embeddedSolrServer = embeddedSolrServer;
+    }
 
     @Before
     public void setup() throws ParserConfigurationException, SAXException, IOException {
@@ -66,13 +74,16 @@ public class BioentityIndexIT {
 
     @After
     public void cleanupData() throws IOException, SolrServerException {
-        embeddedSolrServer.deleteByQuery("*:*");
+        subject.deleteAll();
     }
 
-
+    @AfterClass
+    public static void shutdown() {
+        embeddedSolrServer.shutdown();
+    }
 
     @Test
-    public void addDesignElementsShouldSucceed() throws IOException, SolrServerException {
+    public void indexFileShouldSucceed() throws IOException, SolrServerException {
         subject.indexFile(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.A-AFFY-102.tsv"));
 
         SolrParams solrQuery = new SolrQuery("*:*");
@@ -86,11 +97,10 @@ public class BioentityIndexIT {
     public void addBioentityPropertiesShouldSucceed() throws IOException, SolrServerException {
         subject.indexFile(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.ensgene.tsv"));
 
-        SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
+        SolrParams solrQuery = new SolrQuery("*:*").setRows(10000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
         assertThat(bioentityProperties, hasSize(345));
 
     }
-
 }

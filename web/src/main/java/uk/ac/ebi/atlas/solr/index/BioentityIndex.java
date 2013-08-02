@@ -42,22 +42,32 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class BioentityIndex {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
+    private BioentityIndexMonitor bioentityIndexMonitor;
     private final BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder;
 
     private SolrServer solrServer;
 
     @Inject
-    public BioentityIndex(SolrServer solrServer, BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder) {
+    public BioentityIndex(BioentityIndexMonitor bioentityIndexMonitor, SolrServer solrServer, BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder) {
+        this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesStreamBuilder = bioentityPropertiesStreamBuilder;
         this.solrServer = solrServer;
     }
 
-    public void indexAll(DirectoryStream<Path> bioentityPropertiesDirectoryStream) {
+    public void indexAll(final DirectoryStream<Path> directoryStream) {
+        indexDirectory(directoryStream);
 
+        bioentityIndexMonitor.stop();
+
+    }
+
+    void indexDirectory(DirectoryStream<Path> bioentityPropertiesDirectoryStream){
         try (DirectoryStream<Path> directoryStream = bioentityPropertiesDirectoryStream) {
+
             for (Path path : directoryStream) {
+
                 if (Files.isDirectory(path)){
-                    indexAll(Files.newDirectoryStream(path));
+                    indexDirectory(Files.newDirectoryStream(path));
                     return;
                 }
                 indexFile(path);
@@ -66,7 +76,6 @@ public class BioentityIndex {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
-
     }
 
     void indexFile(Path filePath){
@@ -75,12 +84,17 @@ public class BioentityIndex {
         try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
                     bioentityPropertiesStreamBuilder.forPath(filePath).build()){
 
+            bioentityIndexMonitor.processing(filePath);
+
             List<BioentityProperty> documents;
 
             while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
                 solrServer.addBeans(documents);
             }
+
             solrServer.commit();
+
+            bioentityIndexMonitor.completed(filePath);
 
         } catch(IOException|SolrServerException e){
             LOGGER.error(e.getMessage(), e);
@@ -92,16 +106,18 @@ public class BioentityIndex {
     public void deleteAll() {
         try {
             solrServer.deleteByQuery("*:*");
+            solrServer.commit();
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
     }
 
-    public void commit() {
+    public void optimize() {
         try {
-            solrServer.commit();
+
             solrServer.optimize();
+
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);

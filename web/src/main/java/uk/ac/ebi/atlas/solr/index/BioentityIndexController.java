@@ -23,32 +23,34 @@
 package uk.ac.ebi.atlas.solr.index;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
+import javax.inject.Inject;
+import java.io.IOException;
 
-//@Controller
-//@Scope("singleton")
-public class SolrIndexController {
-    private static final Logger LOGGER = Logger.getLogger(SolrIndexBuilder.class);
+@Controller
+@Scope("request")
+public class BioentityIndexController {
+    private static final Logger LOGGER = Logger.getLogger(BioentityIndexController.class);
 
-    private SolrIndexBuilder builder;
+    private BioentityIndexAdmin bioentityIndexAdmin;
+    private BioentityIndexMonitor bioentityIndexMonitor;
 
-    private AtomicBoolean buildInProgress = new AtomicBoolean(false);
-
-    private String status;
-
-//    @Inject
-    SolrIndexController(SolrIndexBuilder builder){
-        this.builder = builder;
+    @Inject
+    BioentityIndexController(BioentityIndexAdmin bioentityIndexAdmin, BioentityIndexMonitor bioentityIndexMonitor){
+        this.bioentityIndexAdmin = bioentityIndexAdmin;
+        this.bioentityIndexMonitor = bioentityIndexMonitor;
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public String handleException(Exception e) {
+        bioentityIndexMonitor.failed(e);
+
         LOGGER.error(e.getMessage(),e);
         return e.getMessage();
     }
@@ -56,34 +58,17 @@ public class SolrIndexController {
     @RequestMapping(value = "/buildIndex/status")
     @ResponseBody
     public String buildStatus() {
-        return status != null ? status : "no build started since last application deployment";
+        return bioentityIndexMonitor.statusDescription();
     }
 
 
     @RequestMapping(value = "/buildIndex")
     @ResponseBody
-    public String build() {
+    public String build() throws IOException {
 
-        if (buildInProgress.compareAndSet(false, true)){
+        bioentityIndexAdmin.rebuildIndex();
 
-            status = "Index build starting";
-
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    builder.build(new IndexAllCommand(), new IndexBuilderService.ProgressUpdater() {
-                        public void update(String progress) {
-                            status = progress;
-                            LOGGER.info("<update> index build status: " + status);
-                        }
-                    });
-                    status = "Index build completed";
-                }
-            });
-
-        }
-
-        return status;
+        return bioentityIndexMonitor.statusDescription();
 
    }
 }

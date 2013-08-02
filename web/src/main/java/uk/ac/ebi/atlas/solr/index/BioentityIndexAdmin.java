@@ -36,6 +36,7 @@ import java.nio.file.Paths;
 @Scope("prototype")
 public class BioentityIndexAdmin {
 
+    private BioentityIndexMonitor bioentityIndexMonitor;
     private String bioentityPropertiesDirectory;
 
     @Value("#{configuration['solr.data.location']}")
@@ -44,22 +45,26 @@ public class BioentityIndexAdmin {
     private BioentityIndex bioentityIndex;
 
     @Inject
-    BioentityIndexAdmin(BioentityIndex bioentityIndex,
+    BioentityIndexAdmin(BioentityIndex bioentityIndex, BioentityIndexMonitor bioentityIndexMonitor,
                         @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory ){
 
         this.bioentityIndex = bioentityIndex;
+        this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesDirectory = bioentityPropertiesDirectory;
 
     }
 
     public void rebuildIndex() throws IOException {
-        bioentityIndex.deleteAll();
+        if (bioentityIndexMonitor.start()){
 
-        Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
+            bioentityIndex.deleteAll();
 
-        bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
+            Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
 
-        bioentityIndex.commit();
+            bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
+
+            bioentityIndex.optimize();
+        }
     }
 
 }

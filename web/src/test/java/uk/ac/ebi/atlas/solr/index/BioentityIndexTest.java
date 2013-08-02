@@ -51,10 +51,13 @@ public class BioentityIndexTest {
     @Mock
     private SolrServer solrServerMock;
 
-    private BioentityPropertiesStreamBuilder streamBuilderMock;
-
     @Mock
     private BioentityPropertiesStream propertiesStreamMock;
+
+    @Mock
+    private BioentityIndexMonitor bioentityIndexMonitorMock;
+
+    private BioentityPropertiesStreamBuilder streamBuilderMock;
 
     ArrayList<BioentityProperty> bioentityProperties;
 
@@ -77,7 +80,7 @@ public class BioentityIndexTest {
         bioentityProperties = Lists.newArrayList(mock(BioentityProperty.class));
         given(propertiesStreamMock.next()).willReturn(bioentityProperties, bioentityProperties, null);
 
-        subject = new BioentityIndex(solrServerMock, streamBuilderMock);
+        subject = new BioentityIndex(bioentityIndexMonitorMock, solrServerMock, streamBuilderMock);
     }
 
     @After
@@ -118,11 +121,16 @@ public class BioentityIndexTest {
         inOrder.verify(streamBuilderMock).forPath(tempFilePath2);
         inOrder.verify(streamBuilderMock).build();
 
+        inOrder = inOrder(bioentityIndexMonitorMock);
+        inOrder.verify(bioentityIndexMonitorMock).processing(tempFilePath1);
+        inOrder.verify(bioentityIndexMonitorMock).completed(tempFilePath1);
+        inOrder.verify(bioentityIndexMonitorMock).processing(tempFilePath2);
+        inOrder.verify(bioentityIndexMonitorMock).completed(tempFilePath2);
+
         //3 times on on tempFilePath1 and 1 time only (because streamMock is exhausted) on tempFilePath2
         verify(propertiesStreamMock, times(4)).next();
 
         verify(solrServerMock,times(2)).addBeans(bioentityProperties);
-        verify(solrServerMock, times(2)).commit();
     }
 
     @Test(expected = IllegalStateException.class)
@@ -131,4 +139,13 @@ public class BioentityIndexTest {
 
         subject.deleteAll();
     }
+
+    @Test
+    public void commitShouldCommitAndStopTheMonitor() throws IOException, SolrServerException {
+        subject.optimize();
+
+        verify(solrServerMock, only()).optimize();
+
+    }
+
 }
