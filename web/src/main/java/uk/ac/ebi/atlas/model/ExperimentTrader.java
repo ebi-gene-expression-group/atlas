@@ -51,7 +51,7 @@ public class ExperimentTrader {
                      ApplicationProperties applicationProperties,
                      BaselineExperimentsCache baselineExperimentsCache,
                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                     MicroarrayExperimentsCache microarrayExperimentsCache){
+                     MicroarrayExperimentsCache microarrayExperimentsCache) {
 
         this.experimentDAO = experimentDAO;
         this.applicationProperties = applicationProperties;
@@ -60,7 +60,7 @@ public class ExperimentTrader {
         this.microarrayExperimentsCache = microarrayExperimentsCache;
     }
 
-    public Experiment getExperiment(String experimentAccession){
+    public Experiment getExperiment(String experimentAccession) {
 
         ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
 
@@ -68,9 +68,29 @@ public class ExperimentTrader {
 
     }
 
+    public void removeExperimentFromCache(String experimentAccession, ExperimentType type) {
+
+        switch (type) {
+            case BASELINE:
+                baselineExperimentsCache.deleteExperiment(experimentAccession);
+                break;
+            case DIFFERENTIAL:
+                rnaSeqDiffExperimentsCache.deleteExperiment(experimentAccession);
+                break;
+            case MICROARRAY:
+            case TWOCOLOUR:
+            case MICRORNA:
+                microarrayExperimentsCache.deleteExperiment(experimentAccession);
+                break;
+            default:
+                throw new IllegalStateException("invalid enum value: " + type);
+        }
+
+    }
+
     private Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
 
-        switch(experimentType){
+        switch (experimentType) {
             case BASELINE:
                 return baselineExperimentsCache.getExperiment(experimentAccession);
             case DIFFERENTIAL:
@@ -85,7 +105,7 @@ public class ExperimentTrader {
 
     }
 
-    //ToDo: to get Experiment accession we go 4 times to the DB (for each experiment type)
+    //ToDo (NK): to get Experiment accession we go 4 times to the DB (for each experiment type)
 
     public Set<String> getBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.BASELINE);
@@ -114,8 +134,6 @@ public class ExperimentTrader {
         }
         return experimentAccessions;
     }
-
-
 
 
 }

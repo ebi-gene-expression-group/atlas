@@ -59,4 +59,9 @@ public class RnaSeqDiffExperimentsCache implements ExperimentsCache<Differential
         }
     }
 
+    @Override
+    public void deleteExperiment(String experimentAccession) {
+        experiments.invalidate(experimentAccession);
+    }
+
 }
