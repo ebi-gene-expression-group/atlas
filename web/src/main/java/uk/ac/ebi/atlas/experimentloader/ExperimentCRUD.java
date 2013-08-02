@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
@@ -55,6 +56,7 @@ public class ExperimentCRUD {
     private ExperimentDesignWriterBuilder experimentDesignWriterBuilder;
     private ExperimentDAO experimentDAO;
     private TranscriptProfileDAO transcriptProfileDAO;
+    private ExperimentTrader experimentTrader;
 
     @Inject
     public ExperimentCRUD(TranscriptProfilesLoader transcriptProfileLoader,
@@ -63,7 +65,7 @@ public class ExperimentCRUD {
                           DesignElementMappingLoader designElementLoader,
                           ExperimentDAO experimentDAO,
                           TranscriptProfileDAO transcriptProfileDAO,
-                          ExperimentDesignWriterBuilder experimentDesignWriterBuilder) {
+                          ExperimentDesignWriterBuilder experimentDesignWriterBuilder, ExperimentTrader experimentTrader) {
         this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
         this.transcriptProfileDAO = transcriptProfileDAO;
@@ -71,9 +73,10 @@ public class ExperimentCRUD {
         this.designElementLoader = designElementLoader;
         this.experimentDAO = experimentDAO;
         this.experimentDesignWriterBuilder = experimentDesignWriterBuilder;
+        this.experimentTrader = experimentTrader;
     }
 
-    public void importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException{
+    public void importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException {
         checkNotNull(accession);
         checkNotNull(experimentType);
 
@@ -81,7 +84,7 @@ public class ExperimentCRUD {
             throw new IllegalStateException("Experiment with experimentAccession " + accession + " has been already imported.");
         }
 
-        generateDesignFile(accession, experimentType);
+        generateExperimentDesignFile(accession, experimentType);
 
         switch (experimentType) {
             case BASELINE:
@@ -100,12 +103,12 @@ public class ExperimentCRUD {
 
     }
 
-    void generateDesignFile(String accession, ExperimentType experimentType) throws IOException{
+    void generateExperimentDesignFile(String accession, ExperimentType experimentType) throws IOException {
 
         ExperimentDesignWriter experimentDesignWriter =
-                                experimentDesignWriterBuilder.forExperimentAccession(accession)
-                                                             .withExperimentType(experimentType)
-                                                             .build();
+                experimentDesignWriterBuilder.forExperimentAccession(accession)
+                        .withExperimentType(experimentType)
+                        .build();
 
         experimentDesignWriter.write(accession);
     }
@@ -132,12 +135,16 @@ public class ExperimentCRUD {
 
     }
 
-    public void deleteExperiment(String experimentAccession){
+    public void deleteExperiment(String experimentAccession) {
         checkNotNull(experimentAccession);
+
+        ExperimentDTO experiment = experimentDAO.findExperiment(experimentAccession, true);
+        experimentTrader.removeExperimentFromCache(experiment.getExperimentAccession(), experiment.getExperimentType());
 
         experimentDAO.deleteExperiment(experimentAccession);
 
         transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
+
     }
 
 
@@ -147,6 +154,24 @@ public class ExperimentCRUD {
 
     public void updateExperiment(String experimentAccession, boolean isPrivate) {
         experimentDAO.updateExperiment(experimentAccession, isPrivate);
+    }
+
+    public int updateAllExperimentDesigns() {
+        List<ExperimentDTO> experiments = experimentDAO.findAllExperiments();
+        for (ExperimentDTO experiment : experiments) {
+            updateExperimentDesign(experiment);
+        }
+        return experiments.size();
+    }
+
+    void updateExperimentDesign(ExperimentDTO experiment) {
+        try {
+            experimentTrader.removeExperimentFromCache(experiment.getExperimentAccession(), experiment.getExperimentType());
+            generateExperimentDesignFile(experiment.getExperimentAccession(), experiment.getExperimentType());
+            LOGGER.info("updated design for experiment " + experiment.getExperimentAccession());
+        } catch (IOException e) {
+            throw new IllegalStateException("<updateExperimentDesign> error generateExperimentDesignFile : ", e);
+        }
     }
 
 }

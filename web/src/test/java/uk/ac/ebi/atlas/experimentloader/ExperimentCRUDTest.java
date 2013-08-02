@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
@@ -85,6 +86,9 @@ public class ExperimentCRUDTest {
     @Mock
     private TranscriptProfileDAO transcriptProfileDAOMock;
 
+    @Mock
+    private ExperimentTrader experimentTraderMock;
+
     @Before
     public void setUp() throws Exception {
 
@@ -97,13 +101,14 @@ public class ExperimentCRUDTest {
         given(experimentDesignWriterBuilderMock.build()).willReturn(experimentDesignWriterMock);
 
         subject = new ExperimentCRUD(transcriptProfileLoaderMock,
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock, transcriptProfileDAOMock, experimentDesignWriterBuilderMock);
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock, transcriptProfileDAOMock,
+                experimentDesignWriterBuilderMock, experimentTraderMock);
     }
 
     @Test
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
-        subject.generateDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
         verify(experimentDesignWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
         verify(experimentDesignWriterBuilderMock).withExperimentType(ExperimentType.BASELINE);
         verify(experimentDesignWriterBuilderMock).build();
@@ -113,7 +118,7 @@ public class ExperimentCRUDTest {
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
         willThrow(new IOException()).given(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION);
-        subject.generateDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 
     @Test
@@ -148,5 +153,9 @@ public class ExperimentCRUDTest {
         verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, true);
     }
 
-
+    @Test
+    public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
+        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, false));
+        verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+    }
 }
