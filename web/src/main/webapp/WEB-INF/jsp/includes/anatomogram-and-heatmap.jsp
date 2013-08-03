@@ -25,7 +25,14 @@
     <c:when test="${empty geneProfiles}">
         <c:if test="${not isPreferenceError}">
             <div id="heatmap-message">
-                No expressions found above the expression level cutoff for the query.
+                <c:choose>
+                    <c:when test="${type.isDifferential() || type.isMicroarray()}">
+                        No differential expressions found below the false discovery rate cutoff for the query.
+                    </c:when>
+                    <c:otherwise>
+                        No expressions found above the expression level cutoff for the query.
+                    </c:otherwise>
+                </c:choose>
             </div>
         </c:if>
     </c:when>
