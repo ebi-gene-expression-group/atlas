@@ -30,7 +30,7 @@
             <div>Contrast</div>
         </th>
         <th class="horizontal-header-cell" style="padding: 5px;">
-            <div class='factor-header' data-organism-part=''>Adjusted P-value</div>
+            <div class='factor-header' data-organism-part=''>Adjusted <i>p</i>-value</div>
         </th>
     </tr>
     </thead>
