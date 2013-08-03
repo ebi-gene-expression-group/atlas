@@ -95,7 +95,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         subject.get();
 
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 0, ExperimentType.MICROARRAY), is("Adjusted p-value"));
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.MICROARRAY), is("p-statistic"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.MICROARRAY), is("t-statistic"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 2, ExperimentType.MICROARRAY), startsWith("Log2-fold"));
 
         assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY), is("0.02"));
