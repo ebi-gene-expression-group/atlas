@@ -5,10 +5,11 @@ import java.util.List;
 public class AnnotationDao {
 
     protected String getOnly(List<String> objects) {
-        if (objects.size() == 1)
+        if (objects.size() == 1) {
             return objects.get(0);
-        else
+        } else {
             return null;
+        }
     }
 
 }

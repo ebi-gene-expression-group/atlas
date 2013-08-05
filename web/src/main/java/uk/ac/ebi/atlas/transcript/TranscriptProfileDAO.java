@@ -23,13 +23,11 @@
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Maps;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
 import javax.inject.Inject;
@@ -44,7 +42,6 @@ import java.util.Map;
 @Named
 @Scope("prototype")
 public class TranscriptProfileDAO {
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
 
     private static final String TRANSCRIPT_PROFILE_QUERY = "SELECT gene_id, transcript_id, transcript_expressions " +
             "FROM experiment_transcripts WHERE experiment_accession = ? AND gene_id = ?";
@@ -105,12 +102,10 @@ public class TranscriptProfileDAO {
     public void deleteTranscriptProfilesForExperimentAndGene(String experimentAccession, String geneId) {
         jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ? AND gene_id = ?",
                 new Object[]{experimentAccession, geneId});
-
     }
 
     public void deleteTranscriptProfilesForExperiment(String experimentAccession) {
         jdbcTemplate.update("DELETE FROM experiment_transcripts WHERE experiment_accession= ?",
                 new Object[]{experimentAccession});
-
     }
 }

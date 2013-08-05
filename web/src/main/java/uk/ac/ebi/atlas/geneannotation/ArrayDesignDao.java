@@ -44,7 +44,6 @@ public class ArrayDesignDao extends AnnotationDao {
 
     private static final Logger LOGGER = Logger.getLogger(ArrayDesignDao.class);
 
-    private static final int SUB_BATCH_SIZE = 100;
     private JdbcTemplate jdbcTemplate;
 
     @Inject

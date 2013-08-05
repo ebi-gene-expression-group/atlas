@@ -57,7 +57,9 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
             in = e.nextElement();
             if (in == null)
                 throw new NullPointerException();
-        } else in = null;
+        } else {
+            in = null;
+        }
 
     }
 

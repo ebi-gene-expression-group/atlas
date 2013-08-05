@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,28 +46,28 @@ public class MirbaseFastaParserTest {
 
     @Test
     public void testParseName() throws Exception {
-        ArrayList<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
+        List<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
 
         assertThat(subject.parseName(words), is("miR-551b-3p"));
     }
 
     @Test
     public void testParseIdentifier() throws Exception {
-        ArrayList<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
+        List<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
 
         assertThat(subject.parseIdentifier(words), is("rno-miR-551b-3p"));
     }
 
     @Test
     public void testParseAccession() throws Exception {
-        ArrayList<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
+        List<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
 
         assertThat(subject.parseAccession(words), is("MIMAT0005596"));
     }
 
     @Test
     public void testParseOrganism() throws Exception {
-        ArrayList<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
+        List<String> words = subject.splitLine(">rno-miR-551b-3p MIMAT0005596 Rattus norvegicus miR-551b-3p\n");
 
         assertThat(subject.parseOrganism(words), is("Rattus norvegicus"));
 

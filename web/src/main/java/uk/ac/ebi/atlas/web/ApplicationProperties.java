@@ -26,7 +26,6 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,15 +46,11 @@ public class ApplicationProperties {
 
     private Properties configurationProperties;
 
-    private ExperimentDAO experimentDAO;
-
     @Inject
     ApplicationProperties(@Named("configuration") Properties configurationProperties,
-                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties,
-                          ExperimentDAO experimentDAO) {
+                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties) {
         this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.configurationProperties = configurationProperties;
-        this.experimentDAO = experimentDAO;
     }
 
     public String getAnatomogramFileName(String specie, boolean isMale) {

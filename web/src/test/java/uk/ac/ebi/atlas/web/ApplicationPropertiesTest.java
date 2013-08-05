@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 
@@ -87,9 +86,6 @@ public class ApplicationPropertiesTest {
     private Properties configurationPropertiesMock;
 
     @Mock
-    private ExperimentDAO experimentDAOMock;
-
-    @Mock
     private Properties speciesToExperimentPropertiesMock;
 
     private ApplicationProperties subject;
@@ -118,7 +114,7 @@ public class ApplicationPropertiesTest {
         when(httpServletRequestMock.getAttribute("javax.servlet.forward.request_uri")).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getAttribute("javax.servlet.forward.query_string")).thenReturn(REQUEST_PARAMETERS);
 
-        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, experimentDAOMock);
+        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock);
     }
 
     @Test

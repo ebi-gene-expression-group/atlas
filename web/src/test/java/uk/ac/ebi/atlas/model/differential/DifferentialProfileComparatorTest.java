@@ -65,13 +65,13 @@ public class DifferentialProfileComparatorTest {
         selectedContrasts = Sets.newHashSet(contrastMock1);
         nonSelectedContrasts = Sets.newHashSet(contrastMock2, contrastMock3);
 
-        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP, 0.05);
+        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP);
     }
 
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
         //when
-        subject = new DifferentialProfileComparator(true, null, allContrasts, Regulation.UP, 0.05);
+        subject = new DifferentialProfileComparator(true, null, allContrasts, Regulation.UP);
 
         when(profileMock1.getSpecificity(Regulation.UP)).thenReturn(1);
         when(profileMock2.getSpecificity(Regulation.UP)).thenReturn(2);
@@ -85,11 +85,11 @@ public class DifferentialProfileComparatorTest {
     @Test
     public void lowerAverageAcrossSelectedContrasts() {
 
-         //when
+        //when
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts, Regulation.UP)).thenReturn(0.01);
         when(profileMock1.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock2, contrastMock3), Regulation.UP)).thenReturn(0.02);
         //and
-         //when
+        //when
         when(profileMock2.getAverageExpressionLevelOn(selectedContrasts, Regulation.UP)).thenReturn(0.01);
         when(profileMock2.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock2, contrastMock3), Regulation.UP)).thenReturn(0.04);
 
@@ -126,7 +126,7 @@ public class DifferentialProfileComparatorTest {
 
     @Test
     public void testGetExpressionLevelFoldChangeOnWhenAllContrastsAreSelected() throws Exception {
-        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP, 0.05);
+        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP);
 
         //when
         when(profileMock1.getMinExpressionLevelOn(nonSelectedContrasts, Regulation.UP)).thenReturn(0.05);

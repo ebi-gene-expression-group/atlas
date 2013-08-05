@@ -66,20 +66,20 @@ public class ValueAndUnitJoiner {
     private BioontologyClient bioontologyClient;
 
     @Inject
-    public ValueAndUnitJoiner(BioontologyClient bioontologyClient){
+    public ValueAndUnitJoiner(BioontologyClient bioontologyClient) {
         this.bioontologyClient = bioontologyClient;
     }
 
     public String pluraliseAndJoin(String value, String unit) {
-        unit = translateUnitToEFOIfApplicable(unit.trim());
+        String translatedUnit = translateUnitToEFOIfApplicable(unit.trim());
 
-        if (!bioontologyClient.isValid(unit)) {
-            throw new IllegalArgumentException("Unit: " + unit + " not found in bioontology");
+        if (!bioontologyClient.isValid(translatedUnit)) {
+            throw new IllegalArgumentException("Unit: " + translatedUnit + " not found in bioontology");
         }
 
-        value = value.trim();
+        String trimmedValue = value.trim();
 
-        return Joiner.on(" ").join(value, pluraliseUnitIfApplicable(unit, value));
+        return Joiner.on(" ").join(trimmedValue, pluraliseUnitIfApplicable(translatedUnit, trimmedValue));
     }
 
     /**
@@ -105,7 +105,7 @@ public class ValueAndUnitJoiner {
      */
     String pluraliseUnitIfApplicable(String unit, String value) {
         try {
-            if (StringUtils.isBlank(value) || NumberUtils.isDigits(value) && Integer.parseInt(value) == 1){
+            if (StringUtils.isBlank(value) || NumberUtils.isDigits(value) && Integer.parseInt(value) == 1) {
                 return unit;
             }
         } catch (NumberFormatException e) {

@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
@@ -47,7 +46,7 @@ public class MirbaseFastaParser {
         while ((line = br.readLine()) != null) {
             if (line.startsWith(NEW_ENTRY_SYMBOL)) {
 
-                ArrayList<String> words = splitLine(line);
+                List<String> words = splitLine(line);
 
                 entity = new MiRNAEntity(parseIdentifier(words), parseAccession(words), parseOrganism(words), parseName(words));
             } else {
@@ -59,23 +58,23 @@ public class MirbaseFastaParser {
         return entries;
     }
 
-    protected ArrayList<String> splitLine(String line) {
+    protected List<String> splitLine(String line) {
         return Lists.newArrayList(Splitter.on(" ").omitEmptyStrings().trimResults().split(line));
     }
 
-    protected String parseName(ArrayList<String> words) {
+    protected String parseName(List<String> words) {
         return words.get(words.size() - 1);
     }
 
-    protected String parseIdentifier(ArrayList<String> words) {
+    protected String parseIdentifier(List<String> words) {
         return words.get(0).replaceFirst(NEW_ENTRY_SYMBOL, "");
     }
 
-    protected String parseAccession(ArrayList<String> words) {
+    protected String parseAccession(List<String> words) {
         return words.get(1);
     }
 
-    protected String parseOrganism(ArrayList<String> words) {
+    protected String parseOrganism(List<String> words) {
         StringBuffer stringBuffer = new StringBuffer();
         for (String s : words.subList(2, words.size() - 1)) {
             stringBuffer.append(s).append(" ");

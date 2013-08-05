@@ -69,7 +69,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
-    public ExperimentDesign parse(String experimentAccession)  throws IOException{
+    public ExperimentDesign parse(String experimentAccession) throws IOException {
 
         try {
             MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
@@ -150,16 +150,17 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
     }
 
     protected String cleanValueAndUnitIfNeeded(String value, UnitAttribute unit) {
-        if (!StringUtils.isEmpty(value)) {
-            value.replaceAll("( )+", " ").replaceAll("(_)+", "_").trim();
+        String returnValue = value;
+        if (!StringUtils.isEmpty(returnValue)) {
+            returnValue.replaceAll("( )+", " ").replaceAll("(_)+", "_").trim();
             if (unit != null) {
                 if (StringUtils.isEmpty(unit.getAttributeType())) {
-                    throw new IllegalStateException("Unable to find unit value for factor value: " + value);
+                    throw new IllegalStateException("Unable to find unit value for factor value: " + returnValue);
                 }
-                value = valueAndUnitJoiner.pluraliseAndJoin(value, unit.getAttributeValue());
+                returnValue = valueAndUnitJoiner.pluraliseAndJoin(returnValue, unit.getAttributeValue());
             }
         }
-        return value;
+        return returnValue;
     }
 
     protected abstract List<FactorValueAttribute> getFactorAttributes(T sdrfNode);

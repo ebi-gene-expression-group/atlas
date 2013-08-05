@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.model.cache.microarray;
 
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -50,14 +49,11 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     private String logFoldChangePathTemplate;
 
-    private ExperimentDAO experimentDAO;
-
     @Inject
     public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader,
-                                            @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate, ExperimentDAO experimentDAO) {
+                                            @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate) {
         this.configurationTrader = configurationTrader;
         this.logFoldChangePathTemplate = logFoldChangePathTemplate;
-        this.experimentDAO = experimentDAO;
     }
 
     @Override
