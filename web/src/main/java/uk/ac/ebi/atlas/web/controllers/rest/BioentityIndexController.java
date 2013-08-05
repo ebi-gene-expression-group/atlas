@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.index;
+package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -28,6 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.solr.index.BioentityIndexAdmin;
+import uk.ac.ebi.atlas.solr.index.BioentityIndexMonitor;
 
 import javax.inject.Inject;
 import java.io.IOException;
