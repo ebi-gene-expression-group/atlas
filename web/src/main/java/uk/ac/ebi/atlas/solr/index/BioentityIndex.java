@@ -35,8 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 @Named
 @Scope("prototype")
 public class BioentityIndex {
@@ -71,9 +69,9 @@ public class BioentityIndex {
 
                 if (Files.isDirectory(path)){
                     indexDirectory(Files.newDirectoryStream(path));
-                    return;
+                } else if (Files.isRegularFile(path)){
+                    indexFile(path);
                 }
-                indexFile(path);
             }
         } catch(IOException e){
             LOGGER.error(e.getMessage(), e);
@@ -82,7 +80,6 @@ public class BioentityIndex {
     }
 
     void indexFile(Path filePath){
-        checkArgument(Files.isRegularFile(filePath), "This is not a regular file: " + filePath);
 
         if (filePath.toString().endsWith(".tsv")){
 
@@ -95,19 +92,19 @@ public class BioentityIndex {
 
                 Collection<BioentityProperty> documents;
 
-//                int i = 0;
+//              int i = 0;
 
                 while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
 
-//                    i += documents.size();
+//                  i += documents.size();
 
                     solrServer.addBeans(documents);
 
-//                    if (i >= BATCH_SIZE){
-//                        solrServer.commit();
-//                        i = 0;
-//                        LOGGER.debug("<indexFile> committed " + BATCH_SIZE + " properties from file: " + filePath);
-//                    }
+//                  if (i >= BATCH_SIZE){
+//                     solrServer.commit();
+//                     i = 0;
+//                     LOGGER.debug("<indexFile> committed " + BATCH_SIZE + " properties from file: " + filePath);
+//                  }
 
 
                 }
