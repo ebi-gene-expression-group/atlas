@@ -35,9 +35,9 @@ public class BioentityPropertiesStream implements Closeable {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityPropertiesStream.class);
 
-    private BioentityPropertiesBuilder bioentityPropertiesBuilder;
+    private static final double BATCH_SIZE = 50000;
 
-    private Iterable<BioentityProperty> propertiesBuffer = Lists.newArrayList();
+    private BioentityPropertiesBuilder bioentityPropertiesBuilder;
 
     private CSVReader csvReader;
 
@@ -53,15 +53,27 @@ public class BioentityPropertiesStream implements Closeable {
     }
 
     public Collection<BioentityProperty> next() throws IOException {
-        String[] csvValues = csvReader.readNext();
-        if (csvValues != null) {
+        Collection<BioentityProperty> propertiesBuffer = Lists.newArrayList();
+
+        String[] csvValues;
+        while((csvValues = csvReader.readNext()) !=null && propertiesBuffer.size() <= BATCH_SIZE){
+
             List<String> propertyValues = Lists.newArrayList(csvValues);
             String bioentityIdentifier = propertyValues.remove(0);
-            return bioentityPropertiesBuilder.withBioentityIdentifier(bioentityIdentifier)
-                    .withPropertyValues(propertyValues)
-                    .build();
+            Collection<BioentityProperty> properties = bioentityPropertiesBuilder
+                                                        .withBioentityIdentifier(bioentityIdentifier)
+                                                        .withPropertyValues(propertyValues)
+                                                        .build();
+            propertiesBuffer.addAll(properties);
+
         }
+
+        if (propertiesBuffer.size() > 0){
+            return propertiesBuffer;
+        }
+
         return null;
+
     }
 
     @Override
