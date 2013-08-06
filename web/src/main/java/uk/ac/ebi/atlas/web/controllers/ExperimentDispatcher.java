@@ -88,11 +88,6 @@ public final class ExperimentDispatcher {
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
 
-    /*
-    private BaselineExperimentsCache baselineExperimentsCache;
-    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
-    private MicroarrayExperimentsCache microarrayExperimentsCache;
-    */
     private ApplicationProperties applicationProperties;
 
     private SolrClient solrClient;

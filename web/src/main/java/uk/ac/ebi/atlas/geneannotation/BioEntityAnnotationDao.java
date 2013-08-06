@@ -25,6 +25,10 @@ public class BioEntityAnnotationDao extends AnnotationDao {
     private static final String INSERT_QUERY = "INSERT INTO bioentity_name(identifier, name, organism, type) VALUES(?, ?, ?, ?)";
     private static final String DELETE_QUERY = "DELETE FROM bioentity_name WHERE organism = ? AND type = ?";
     private static final String SELECT_QUERY = "SELECT name FROM bioentity_name WHERE identifier = ?";
+    private static final int IDENTIFIER_INDEX = 1;
+    private static final int NAME_INDEX = 2;
+    private static final int ORGANISM_INDEX = 3;
+    private static final int TYPE_INDEX = 4;
 
     private JdbcTemplate jdbcTemplate;
 
@@ -53,10 +57,10 @@ public class BioEntityAnnotationDao extends AnnotationDao {
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, annotationEntries.get(i).getKey());
-                ps.setString(2, annotationEntries.get(i).getValue());
-                ps.setString(3, organism);
-                ps.setString(4, type);
+                ps.setString(IDENTIFIER_INDEX, annotationEntries.get(i).getKey());
+                ps.setString(NAME_INDEX, annotationEntries.get(i).getValue());
+                ps.setString(ORGANISM_INDEX, organism);
+                ps.setString(TYPE_INDEX, type);
             }
 
             @Override
@@ -88,10 +92,10 @@ public class BioEntityAnnotationDao extends AnnotationDao {
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, entities.get(i).getIdentifier());
-                ps.setString(2, entities.get(i).getAccession());
-                ps.setString(3, entities.get(i).getOrganism());
-                ps.setString(4, BioEntityType.MIRNA.getName());
+                ps.setString(IDENTIFIER_INDEX, entities.get(i).getIdentifier());
+                ps.setString(NAME_INDEX, entities.get(i).getAccession());
+                ps.setString(ORGANISM_INDEX, entities.get(i).getOrganism());
+                ps.setString(TYPE_INDEX, BioEntityType.MIRNA.getName());
             }
 
             @Override

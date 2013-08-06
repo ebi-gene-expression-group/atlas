@@ -58,6 +58,11 @@ public class MicroarrayPageDownloadController {
     private static final String PARAMS_TYPE_MICROARRAY = "type=MICROARRAY";
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
     private static final String QUERY_RESULTS_TSV = "-query-results.tsv";
+    private static final String TMP_FILEEXT = ".tmp";
+    private static final String MESSAGE_FIRST_PART = "<download";
+    private static final String MESSAGE_STREAMED_PART = "> streamed ";
+    private static final String MESSAGE_ZIPPED_PART = "> zipped ";
+    private static final String MESSAGE_LAST_PART = " gene expression profiles";
 
     private final MicroarrayRequestContextBuilder requestContextBuilder;
 
@@ -65,8 +70,9 @@ public class MicroarrayPageDownloadController {
 
     private DataWriterFactory dataWriterFactory;
 
+    private static final int BUFFER_SIZE = 4096 * 1024;
     // 4MB buffer
-    private static final byte[] BUFFER = new byte[4096 * 1024];
+    private static final byte[] BUFFER = new byte[BUFFER_SIZE];
 
     @Inject
     public MicroarrayPageDownloadController(
@@ -104,7 +110,7 @@ public class MicroarrayPageDownloadController {
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + QUERY_RESULTS_TSV;
 
                 // create a temp file
-                File tempFile = File.createTempFile(filename, ".tmp");
+                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
 
                 //(B) this is very broken. It's overriding the same parameter for every array design
                 preferences.setArrayDesignAccession(selectedArrayDesign);
@@ -154,7 +160,7 @@ public class MicroarrayPageDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info(MESSAGE_FIRST_PART + NORMALIZED_EXPRESSIONS_TSV + MESSAGE_STREAMED_PART + genesCount + MESSAGE_LAST_PART);
 
             writer.close();
 
@@ -167,7 +173,7 @@ public class MicroarrayPageDownloadController {
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + NORMALIZED_EXPRESSIONS_TSV;
 
                 // create a temp file
-                File tempFile = File.createTempFile(filename, ".tmp");
+                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
                         selectedArrayDesign,
@@ -175,7 +181,7 @@ public class MicroarrayPageDownloadController {
 
                 long genesCount = writer.write();
 
-                LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> zipped " + genesCount + " in " + filename);
+                LOGGER.info(MESSAGE_FIRST_PART + NORMALIZED_EXPRESSIONS_TSV + MESSAGE_ZIPPED_PART + genesCount + " in " + filename);
 
                 tempFiles.add(tempFile);
             }
@@ -204,7 +210,7 @@ public class MicroarrayPageDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info(MESSAGE_FIRST_PART + LOG_FOLD_CHANGES_TSV + MESSAGE_STREAMED_PART + genesCount + MESSAGE_LAST_PART);
 
             writer.close();
 
@@ -217,7 +223,7 @@ public class MicroarrayPageDownloadController {
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + LOG_FOLD_CHANGES_TSV;
 
                 // create a temp file
-                File tempFile = File.createTempFile(filename, ".tmp");
+                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
                         selectedArrayDesign,
@@ -225,7 +231,7 @@ public class MicroarrayPageDownloadController {
 
                 long genesCount = writer.write();
 
-                LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> zipped " + genesCount + " in " + filename);
+                LOGGER.info(MESSAGE_FIRST_PART + LOG_FOLD_CHANGES_TSV + MESSAGE_ZIPPED_PART + genesCount + " in " + filename);
 
                 tempFiles.add(tempFile);
             }
@@ -253,7 +259,7 @@ public class MicroarrayPageDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info("<download" + ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info(MESSAGE_FIRST_PART + ANALYTICS_TSV + MESSAGE_STREAMED_PART + genesCount + MESSAGE_LAST_PART);
 
             writer.close();
 
@@ -266,7 +272,7 @@ public class MicroarrayPageDownloadController {
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + ANALYTICS_TSV;
 
                 // create a temp file
-                File tempFile = File.createTempFile(filename, ".tmp");
+                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
                         selectedArrayDesign,
@@ -274,7 +280,7 @@ public class MicroarrayPageDownloadController {
 
                 long genesCount = writer.write();
 
-                LOGGER.info("<download" + ANALYTICS_TSV + "> zipped " + genesCount + " in " + filename);
+                LOGGER.info(MESSAGE_FIRST_PART + ANALYTICS_TSV + MESSAGE_ZIPPED_PART + genesCount + " in " + filename);
 
                 tempFiles.add(tempFile);
             }
@@ -306,9 +312,10 @@ public class MicroarrayPageDownloadController {
 
         for (File tempFile : tempFiles) {
 
-            int lastIndex = tempFile.getName().lastIndexOf(".tsv");
+            String fileExt = ".tsv";
+            int lastIndex = tempFile.getName().lastIndexOf(fileExt);
 
-            String filename = tempFile.getName().substring(0, lastIndex + 4);
+            String filename = tempFile.getName().substring(0, lastIndex + fileExt.length());
 
             ZipEntry ze = new ZipEntry(filename);
 

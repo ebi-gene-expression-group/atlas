@@ -105,7 +105,7 @@ public class BioEntityPropertyService {
 
     private void addDesignElements() {
         List<String> designElements = arrayDesignDao.getDesignElements(identifier);
-        if(!designElements.isEmpty()) {
+        if (!designElements.isEmpty()) {
             propertyValuesByType.putAll("designelement_accession", designElements);
         }
     }
@@ -135,12 +135,12 @@ public class BioEntityPropertyService {
     }
 
     String transformOrthologToSymbol(String identifier) {
-        Collection<String> species = solrClient.findSpeciesForGeneId(identifier);
+        Collection<String> speciesForGeneId = solrClient.findSpeciesForGeneId(identifier);
 
-        if (species.size() == 1) {
+        if (speciesForGeneId.size() == 1) {
             List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
             if (!valuesForGeneId.isEmpty()) {
-                String speciesName = StringUtils.capitalize(species.iterator().next());
+                String speciesName = StringUtils.capitalize(speciesForGeneId.iterator().next());
                 String symbol = valuesForGeneId.get(0);
                 return symbol + " (" + speciesName + ")";
             }

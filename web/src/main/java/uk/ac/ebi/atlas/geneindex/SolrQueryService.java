@@ -53,7 +53,7 @@ public class SolrQueryService {
     private static final int MAX_RETRIES = 1;
     private static final int DEFAULT_LIMIT = 15;
     private static final String CONFIG_SPLIT_REGEX = ",";
-    public static final String PROPERTY_LOWER_FIELD = "property_lower";
+    private static final String PROPERTY_LOWER_FIELD = "property_lower";
     public static final String IDENTIFIER_FIELD = "identifier";
     private static final String SPECIES_FIELD = "species";
     private static final String PROPERTY_FIELD = "property";
@@ -63,6 +63,7 @@ public class SolrQueryService {
     private static final String BIOENTITY_TYPE_GENE = "ensgene";
 
     private static final String BIOENTITY_TYPE_MIRNA = "mirna";
+    private static final int NUMBER_OF_MAX_SPECIES = 100;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -191,7 +192,7 @@ public class SolrQueryService {
         Collection<String> species = Sets.newHashSet();
 
         query.setFields(SPECIES_FIELD);
-        query.setRows(100);
+        query.setRows(NUMBER_OF_MAX_SPECIES);
 
         QueryResponse solrResponse = executeSolrQuery(query);
         SolrDocumentList results = solrResponse.getResults();
@@ -356,8 +357,9 @@ public class SolrQueryService {
                     .append(bioEntityType)
                     .append("\" OR ");
         }
-        int indexOfOR = sb.lastIndexOf(" OR ");
-        sb.delete(indexOfOR, indexOfOR + 4);
+        String or = " OR ";
+        int indexOfOR = sb.lastIndexOf(or);
+        sb.delete(indexOfOR, indexOfOR + or.length());
         sb.append(")");
     }
 }

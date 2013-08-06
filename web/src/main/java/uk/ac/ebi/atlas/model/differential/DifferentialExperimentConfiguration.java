@@ -27,15 +27,15 @@ public class DifferentialExperimentConfiguration {
 
         Set<Contrast> contrasts = Sets.newLinkedHashSet();
 
-        NodeList array_designs = document.getElementsByTagName("array_design");
-        for (int i = 0; i < array_designs.getLength(); i++) {
-            Node currentArrayDesign = array_designs.item(i);
+        NodeList arrayDesigns = document.getElementsByTagName("array_design");
+        for (int i = 0; i < arrayDesigns.getLength(); i++) {
+            Node currentArrayDesign = arrayDesigns.item(i);
             String arrayDesignAccession = currentArrayDesign.getFirstChild().getTextContent().trim();
             parseContrastConfiguration("analytics[" + (i + 1) + "]/contrasts/contrast/@id", arrayDesignAccession, contrasts);
         }
 
         // in case no array designs
-        if (array_designs.getLength() == 0) {
+        if (arrayDesigns.getLength() == 0) {
             parseContrastConfiguration("analytics/contrasts/contrast/@id", null, contrasts);
         }
 

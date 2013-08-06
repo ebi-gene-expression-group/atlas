@@ -28,7 +28,6 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
@@ -47,7 +46,7 @@ public class ExperimentDesignWriter<T extends AbstractSDRFNode> {
     private MageTabParser<T> mageTabParser;
     private ExperimentType experimentType;
 
-    ExperimentDesignWriter(CSVWriter csvWriter, MageTabParser<T> mageTabParser, ExperimentType experimentType){
+    ExperimentDesignWriter(CSVWriter csvWriter, MageTabParser<T> mageTabParser, ExperimentType experimentType) {
         this.csvWriter = csvWriter;
         this.mageTabParser = mageTabParser;
         this.experimentType = experimentType;
@@ -61,7 +60,7 @@ public class ExperimentDesignWriter<T extends AbstractSDRFNode> {
             csvWriter.writeNext(columnHeaders);
             csvWriter.writeAll(experimentDesign.asTableData());
             csvWriter.flush();
-        }finally {
+        } finally {
             csvWriter.close();
         }
 
@@ -86,8 +85,8 @@ public class ExperimentDesignWriter<T extends AbstractSDRFNode> {
         return Sets.newTreeSet(headers);
     }
 
-    protected List<String> getCommonColumnHeaders(ExperimentType experimentType){
-        switch(experimentType.getParent()){
+    protected List<String> getCommonColumnHeaders(ExperimentType experimentType) {
+        switch (experimentType.getParent()) {
             case MICROARRAY:
                 return Lists.newArrayList("Assay", "Array");
             case BASELINE:

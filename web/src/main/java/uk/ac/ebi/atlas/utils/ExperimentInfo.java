@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.utils;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.util.Date;
 import java.util.Set;
 import java.util.SortedSet;
 

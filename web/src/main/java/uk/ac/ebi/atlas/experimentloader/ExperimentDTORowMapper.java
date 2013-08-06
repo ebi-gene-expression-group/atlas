@@ -31,6 +31,8 @@ import java.util.Date;
 
 public class ExperimentDTORowMapper implements RowMapper<ExperimentDTO> {
 
+    private static final int PRIVATE_COLUMN_COUNT = 4;
+
     @Override
     public ExperimentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
         return buildExperimentDTO(resultSet);
@@ -41,13 +43,13 @@ public class ExperimentDTORowMapper implements RowMapper<ExperimentDTO> {
         ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("experiment_type"));
         Date lastUpdate = resultSet.getTimestamp("last_update");
         boolean isPrivate = false;
-        if (resultSet.getMetaData().getColumnCount() == 4){
+        if (resultSet.getMetaData().getColumnCount() == PRIVATE_COLUMN_COUNT) {
             isPrivate = resultSet.getBoolean("private");
         }
         return new ExperimentDTO(experimentAccession
-                                            ,experimentType
-                                            ,lastUpdate
-                                            , isPrivate);
+                , experimentType
+                , lastUpdate
+                , isPrivate);
     }
 
 }

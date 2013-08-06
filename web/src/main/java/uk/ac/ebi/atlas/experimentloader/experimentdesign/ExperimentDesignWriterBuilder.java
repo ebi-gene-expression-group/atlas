@@ -24,8 +24,6 @@ package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
@@ -60,12 +58,12 @@ public class ExperimentDesignWriterBuilder {
         this.twoColourMageTabParser = twoColourMageTabParser;
     }
 
-    public ExperimentDesignWriterBuilder forExperimentAccession(String experimentAccession){
+    public ExperimentDesignWriterBuilder forExperimentAccession(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
     }
 
-    public ExperimentDesignWriterBuilder withExperimentType(ExperimentType experimentType){
+    public ExperimentDesignWriterBuilder withExperimentType(ExperimentType experimentType) {
         this.experimentType = experimentType;
         return this;
     }
@@ -82,7 +80,7 @@ public class ExperimentDesignWriterBuilder {
 
         //ToDo (B) maybe it is silly that we need to inject different type of parsers.
         //ToDo (B) maybe we should have one only MageTabParser class and the MageTabParser should use different specialized ExperimentDesignBuilder to build the ExperimentDesign
-        switch(experimentType){
+        switch (experimentType) {
             case MICRORNA:
             case MICROARRAY:
                 return new ExperimentDesignWriter(csvWriter, microarrayMageTabParser, experimentType);

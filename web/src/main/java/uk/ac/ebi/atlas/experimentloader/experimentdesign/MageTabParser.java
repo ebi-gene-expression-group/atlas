@@ -118,7 +118,8 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
             for (FactorValueAttribute factorValueAttribute : getFactorAttributes(assayNode.getSdrfNode())) {
 
-                String factorType = factorValueAttribute.type; //(B) isn't that factorName
+                //(B) isn't that factorName
+                String factorType = factorValueAttribute.type;
                 String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
 
                 if (FACTORS_NEEDING_DOSE.contains(factorValueAttribute.type.toLowerCase())) {
@@ -152,7 +153,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
     protected String cleanValueAndUnitIfNeeded(String value, UnitAttribute unit) {
         String returnValue = value;
         if (!StringUtils.isEmpty(returnValue)) {
-            returnValue.replaceAll("( )+", " ").replaceAll("(_)+", "_").trim();
+            returnValue = returnValue.replaceAll("( )+", " ").replaceAll("(_)+", "_").trim();
             if (unit != null) {
                 if (StringUtils.isEmpty(unit.getAttributeType())) {
                     throw new IllegalStateException("Unable to find unit value for factor value: " + returnValue);
