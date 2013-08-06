@@ -32,7 +32,6 @@ import uk.ac.ebi.atlas.solr.index.BioentityIndexAdmin;
 import uk.ac.ebi.atlas.solr.index.BioentityIndexMonitor;
 
 import javax.inject.Inject;
-import java.io.IOException;
 
 @Controller
 @Scope("request")
@@ -66,7 +65,7 @@ public class BioentityIndexController {
 
     @RequestMapping(value = "/buildIndex")
     @ResponseBody
-    public String build() throws IOException {
+    public String build() {
 
         bioentityIndexAdmin.rebuildIndex();
 

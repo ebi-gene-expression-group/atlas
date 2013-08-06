@@ -40,12 +40,12 @@
     </appender>
 
     <logger name="uk.ac.ebi.atlas" additivity="false">
-        <level value="WARNING"/>
+        <level value="DEBUG"/>
         <appender-ref ref="atlas"/>
     </logger>
 
     <root>
-        <level value="WARNING"/>
+        <level value="ERROR"/>
         <appender-ref ref="atlas"/>
         <appender-ref ref="console"/>
     </root>

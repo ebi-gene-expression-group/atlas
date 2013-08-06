@@ -40,8 +40,8 @@ import static com.google.common.base.Preconditions.checkState;
 public class BioentityIndexMonitor {
 
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
-            + ",\ntotal time elapsed: {0},\nfile being processed: {1},\n files successfully processed:"
-            + "\n{2}";
+            + ",\ntotal time elapsed: {0} minutes,\nfile being processed: {1}, time elapsed for current file: {2} seconds,\n files successfully processed:"
+            + "\n{3}";
 
     private static final String IN_PROGRESS_STATUS_DESCRIPTION_TEMPLATE = Status.IN_PROGRESS
             + ",\ntotal time elapsed: {0},\n files successfully processed:"
@@ -59,17 +59,22 @@ public class BioentityIndexMonitor {
 
     private Stopwatch currentFileStopwatch = new Stopwatch();
 
-    void init(){
-        status = Status.STARTED;
+    public BioentityIndexMonitor(){
+        status = Status.INITIALIZED;
+    }
+
+    void startMonitoring(){
+        totalTimeStopwatch.reset();
+        totalTimeStopwatch.start();
         completedFiles.clear();
         currentFile = null;
+
+        status = Status.STARTED;
     }
 
     public synchronized boolean start(){
-        if (null == status || Status.COMPLETED == status || Status.FAILED == status){
-            totalTimeStopwatch.reset();
-            totalTimeStopwatch.start();
-            init();
+        if (Status.INITIALIZED == status || Status.COMPLETED == status || Status.FAILED == status){
+            startMonitoring();
             return true;
         }
         return false;
@@ -81,7 +86,7 @@ public class BioentityIndexMonitor {
     }
 
     public synchronized void processing(Path filePath) {
-        checkState(null == status || Status.STARTED == status || Status.IN_PROGRESS == status, "Illegal status: " + status);
+        checkState(Status.INITIALIZED == status || Status.STARTED == status || Status.IN_PROGRESS == status, "Illegal status: " + status);
         status = Status.PROCESSING;
         currentFile = filePath;
         currentFileStopwatch.start();
@@ -108,14 +113,14 @@ public class BioentityIndexMonitor {
     }
 
     public static enum Status {
-        STARTED, PROCESSING, IN_PROGRESS, COMPLETED, FAILED;
+        INITIALIZED, STARTED, PROCESSING, IN_PROGRESS, COMPLETED, FAILED;
     }
 
     public String statusDescription(){
         switch(status){
             case PROCESSING:
                 return MessageFormat.format(PROCESSING_STATUS_DESCRIPTION_TEMPLATE,
-                        totalTimeStopwatch.elapsed(TimeUnit.MINUTES), currentFile, StringUtils.join(completedFiles, "\n"));
+                        totalTimeStopwatch.elapsed(TimeUnit.MINUTES), currentFile, currentFileStopwatch.elapsed(TimeUnit.SECONDS), StringUtils.join(completedFiles, "\n"));
             case IN_PROGRESS:
                 return MessageFormat.format(IN_PROGRESS_STATUS_DESCRIPTION_TEMPLATE,
                         totalTimeStopwatch.elapsed(TimeUnit.MINUTES), StringUtils.join(completedFiles, "\n"));

@@ -71,7 +71,7 @@ public class BioentityIndexAdminIT{
     }
 
     @AfterClass
-    public static void shutDown() throws IOException, SolrServerException {
+    public static void shutDown() {
         embeddedSolrServer.shutdown();
     }
 
@@ -79,10 +79,12 @@ public class BioentityIndexAdminIT{
     public void rebuildIndexShouldSucceed() throws Exception {
         subject.rebuildIndex();
 
+        Thread.sleep(3000);
+
         SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
-        assertThat(bioentityProperties, hasSize(676));
+        assertThat(bioentityProperties, hasSize(620));
 
         BioentityIndexMonitor.Status status = bioentityIndexMonitor.getStatus();
         assertThat(status, is(BioentityIndexMonitor.Status.COMPLETED));

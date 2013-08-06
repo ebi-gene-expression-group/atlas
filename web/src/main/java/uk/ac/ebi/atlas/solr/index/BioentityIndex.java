@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -42,6 +42,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class BioentityIndex {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
+
+    private static final int BATCH_SIZE = 100000;
+
     private BioentityIndexMonitor bioentityIndexMonitor;
     private final BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder;
 
@@ -81,25 +84,45 @@ public class BioentityIndex {
     void indexFile(Path filePath){
         checkArgument(Files.isRegularFile(filePath), "This is not a regular file: " + filePath);
 
-        try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
-                    bioentityPropertiesStreamBuilder.forPath(filePath).build()){
+        if (filePath.toString().endsWith(".tsv")){
 
-            bioentityIndexMonitor.processing(filePath);
+            try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
+                        bioentityPropertiesStreamBuilder.forPath(filePath).build()){
 
-            List<BioentityProperty> documents;
+                LOGGER.info("<indexFile> streaming started for file: " + filePath);
 
-            while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
-                solrServer.addBeans(documents);
+                bioentityIndexMonitor.processing(filePath);
+
+                Collection<BioentityProperty> documents;
+
+//                int i = 0;
+
+                while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
+
+//                    i += documents.size();
+
+                    solrServer.addBeans(documents);
+
+//                    if (i >= BATCH_SIZE){
+//                        solrServer.commit();
+//                        i = 0;
+//                        LOGGER.debug("<indexFile> committed " + BATCH_SIZE + " properties from file: " + filePath);
+//                    }
+
+
+                }
+                solrServer.commit();
+
+                bioentityIndexMonitor.completed(filePath);
+
+            } catch(IOException|SolrServerException e){
+                LOGGER.error(e.getMessage(), e);
+                throw new IllegalStateException(e);
             }
 
-            solrServer.commit();
 
-            bioentityIndexMonitor.completed(filePath);
-
-        } catch(IOException|SolrServerException e){
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
         }
+
     }
 
 

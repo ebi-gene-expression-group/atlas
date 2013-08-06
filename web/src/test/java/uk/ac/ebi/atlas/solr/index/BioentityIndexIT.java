@@ -94,13 +94,13 @@ public class BioentityIndexIT{
     }
 
     @Test
-    public void addBioentityPropertiesShouldSucceed() throws IOException, SolrServerException {
+    public void addBioentityPropertiesShouldSucceed() throws IOException, SolrServerException, InterruptedException {
         subject.indexFile(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.ensgene.tsv"));
 
         SolrParams solrQuery = new SolrQuery("*:*").setRows(10000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
-        assertThat(bioentityProperties, hasSize(345));
+        assertThat(bioentityProperties, hasSize(305));
 
     }
 }

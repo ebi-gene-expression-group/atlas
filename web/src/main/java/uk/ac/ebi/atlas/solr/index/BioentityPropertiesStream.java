@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class BioentityPropertiesStream implements Closeable {
@@ -35,6 +36,8 @@ public class BioentityPropertiesStream implements Closeable {
     private static final Logger LOGGER = Logger.getLogger(BioentityPropertiesStream.class);
 
     private BioentityPropertiesBuilder bioentityPropertiesBuilder;
+
+    private Iterable<BioentityProperty> propertiesBuffer = Lists.newArrayList();
 
     private CSVReader csvReader;
 
@@ -49,7 +52,7 @@ public class BioentityPropertiesStream implements Closeable {
                                             .forPropertyNames(csvHeaders);
     }
 
-    public List<BioentityProperty> next() throws IOException {
+    public Collection<BioentityProperty> next() throws IOException {
         String[] csvValues = csvReader.readNext();
         if (csvValues != null) {
             List<String> propertyValues = Lists.newArrayList(csvValues);

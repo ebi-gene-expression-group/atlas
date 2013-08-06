@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 import com.jayway.restassured.response.Response;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
@@ -31,36 +32,32 @@ import static org.hamcrest.Matchers.is;
 
 public class BioentityIndexControllerIT {
 
-    private static final String STATUS_SERVICE_END_POINT_URL = "/gxa/buildIndex/satus";
+    private static final String STATUS_SERVICE_END_POINT_URL = "/gxa/buildIndex/status";
     private static final String BUILD_INDEX_SERVICE_END_POINT_URL = "/gxa/buildIndex";
 
     private EndPoint statusServiceEndPoint = new EndPoint(STATUS_SERVICE_END_POINT_URL);
     private EndPoint buildIndexServiceEndPoint = new EndPoint(BUILD_INDEX_SERVICE_END_POINT_URL);
 
     @Test
-    public void statusShouldBe() {
+    public void statusShouldBeInitialized() {
         Response response = statusServiceEndPoint.getResponse();
 
         // http status code OK
         assertThat(response.getStatusCode(), is(200));
 
-        assertThat(response.getBody().asString(), is("fsdfdf"));
+        assertThat(response.getBody().asString(), is("INITIALIZED"));
 
     }
 
-/*
     @Test
-    public void shouldReturnNonEmptyJSonObject(){
+    public void statusShouldNotBeInitialized(){
         //given
-        ResponseBody responseBody = buildIndexServiceEndPoint.getResponse().body();
-        String jsonString = responseBody.asString();
+        String responseBody = buildIndexServiceEndPoint.getResponse().body().asString();
 
-        //when
-
-        assertThat(suggestions, hasItems("asp","aspm"));
+        assertThat(responseBody, is(Matchers.not("INITIALIZED")));
+        assertThat(responseBody, is(Matchers.not("FAILED")));
 
     }
-*/
 
 }
 

@@ -22,19 +22,21 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.Executors;
 
 @Named
 @Scope("prototype")
 public class BioentityIndexAdmin {
+    private static final Logger LOGGER = Logger.getLogger(BioentityIndexAdmin.class);
 
     private BioentityIndexMonitor bioentityIndexMonitor;
     private String bioentityPropertiesDirectory;
@@ -54,16 +56,29 @@ public class BioentityIndexAdmin {
 
     }
 
-    public void rebuildIndex() throws IOException {
+    public void rebuildIndex() {
         if (bioentityIndexMonitor.start()){
 
-            bioentityIndex.deleteAll();
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bioentityIndex.deleteAll();
 
-            Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
+                        Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
 
-            bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
+                        bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
 
-            bioentityIndex.optimize();
+                        bioentityIndex.optimize();
+                    } catch (Exception e) {
+                        LOGGER.error(e.getMessage(), e);
+                        bioentityIndexMonitor.failed(e);
+                        throw new IllegalStateException(e);
+                    }
+                }
+            });
+
+
         }
     }
 

@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.solr.index;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -55,14 +56,18 @@ public class BioentityIndexAdminTest {
     }
 
     @Test
-    public void shouldUseBioentityIndex() throws IOException {
+    public void shouldUseBioentityIndex() throws IOException, InterruptedException {
 
         given(bioentityIndexMonitorMock.start()).willReturn(true);
 
         subject.rebuildIndex();
 
+        Thread.sleep(1000);
+
         verify(bioentityIndexMock).deleteAll();
-        verify(bioentityIndexMock).indexAll(any(DirectoryStream.class));
+
+        ArgumentCaptor<DirectoryStream> argumentCaptor = ArgumentCaptor.forClass(DirectoryStream.class);
+        verify(bioentityIndexMock).indexAll(argumentCaptor.capture());
         verify(bioentityIndexMock).optimize();
 
     }
