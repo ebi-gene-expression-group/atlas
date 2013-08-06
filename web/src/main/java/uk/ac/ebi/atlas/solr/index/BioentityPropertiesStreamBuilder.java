@@ -38,7 +38,7 @@ import java.nio.file.Path;
 @Scope("prototype")
 public class BioentityPropertiesStreamBuilder {
 
-    private final BioentityPropertiesBuilder bioentityPropertiesBuilder;
+    private BioentityPropertiesBuilder bioentityPropertiesBuilder;
     private Path bioentityPropertiesFilePath;
 
     @Inject

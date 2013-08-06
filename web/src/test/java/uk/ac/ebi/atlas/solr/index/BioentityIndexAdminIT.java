@@ -25,12 +25,14 @@ package uk.ac.ebi.atlas.solr.index;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.SolrParams;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -41,34 +43,51 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS) //this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
-public class BioentityIndexAdminIT {
+public class BioentityIndexAdminIT{
 
     @Inject
     private BioentityIndexAdmin subject;
 
     @Inject
-    private SolrServer embeddedSolrServer;
+    private BioentityIndexMonitor bioentityIndexMonitor;
 
-    @Before
-    public void init() {
+    private static SolrServer embeddedSolrServer;
+
+    @Inject
+    public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer){
+        BioentityIndexAdminIT.embeddedSolrServer = embeddedSolrServer;
     }
 
     @After
     public void cleanupData() throws IOException, SolrServerException {
         embeddedSolrServer.deleteByQuery("*:*");
+        embeddedSolrServer.commit();
+    }
+
+    @AfterClass
+    public static void shutDown() {
+        embeddedSolrServer.shutdown();
     }
 
     @Test
-    public void testIndex() throws Exception {
+    public void rebuildIndexShouldSucceed() throws Exception {
         subject.rebuildIndex();
+
+        Thread.sleep(3000);
 
         SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
-        assertThat(bioentityProperties, hasSize(676));
+        assertThat(bioentityProperties, hasSize(620));
+
+        BioentityIndexMonitor.Status status = bioentityIndexMonitor.getStatus();
+        assertThat(status, is(BioentityIndexMonitor.Status.COMPLETED));
     }
+
 }

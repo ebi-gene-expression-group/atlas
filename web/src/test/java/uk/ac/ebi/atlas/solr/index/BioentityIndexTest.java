@@ -51,16 +51,20 @@ public class BioentityIndexTest {
     @Mock
     private SolrServer solrServerMock;
 
-    private BioentityPropertiesStreamBuilder streamBuilderMock;
-
     @Mock
     private BioentityPropertiesStream propertiesStreamMock;
+
+    @Mock
+    private BioentityIndexMonitor bioentityIndexMonitorMock;
+
+    private BioentityPropertiesStreamBuilder streamBuilderMock;
 
     ArrayList<BioentityProperty> bioentityProperties;
 
     private Path tempDirectoryPath;
-    private Path tempFilePath1;
-    private Path tempFilePath2;
+    private Path tsvFilePath1;
+    private Path tsvFilePath2;
+    private Path nonTsvFilePath;
 
     private BioentityIndex subject;
 
@@ -69,21 +73,23 @@ public class BioentityIndexTest {
         tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity-properties/mirbase");
 
         tempDirectoryPath = Files.createDirectories(tempDirectoryPath);
-        tempFilePath1 = Files.createFile(tempDirectoryPath.resolve("temp-file1.tmp"));
-        tempFilePath2 = Files.createFile(tempDirectoryPath.resolve("temp-file2.tmp"));
+        tsvFilePath1 = Files.createFile(tempDirectoryPath.resolve("temp-file1.tsv"));
+        tsvFilePath2 = Files.createFile(tempDirectoryPath.resolve("temp-file2.tsv"));
+        nonTsvFilePath = Files.createFile(tempDirectoryPath.resolve("temp-file.abc"));
 
         streamBuilderMock = mock(BioentityPropertiesStreamBuilder.class, new AnswerWithSelf(BioentityPropertiesStreamBuilder.class));
         given(streamBuilderMock.build()).willReturn(propertiesStreamMock);
         bioentityProperties = Lists.newArrayList(mock(BioentityProperty.class));
         given(propertiesStreamMock.next()).willReturn(bioentityProperties, bioentityProperties, null);
 
-        subject = new BioentityIndex(solrServerMock, streamBuilderMock);
+        subject = new BioentityIndex(bioentityIndexMonitorMock, solrServerMock, streamBuilderMock);
     }
 
     @After
     public void tearDown() throws IOException {
-        Files.delete(tempFilePath1);
-        Files.delete(tempFilePath2);
+        Files.delete(tsvFilePath1);
+        Files.delete(tsvFilePath2);
+        Files.delete(nonTsvFilePath);
         Files.delete(tempDirectoryPath);
     }
 
@@ -104,7 +110,7 @@ public class BioentityIndexTest {
     @Test(expected = NotDirectoryException.class)
     public void indexAllShouldNotAcceptFilePath() throws IOException {
 
-        subject.indexAll(Files.newDirectoryStream(tempFilePath1));
+        subject.indexAll(Files.newDirectoryStream(tsvFilePath1));
     }
 
     @Test
@@ -112,17 +118,24 @@ public class BioentityIndexTest {
 
         subject.indexAll(Files.newDirectoryStream(tempDirectoryPath));
 
+        verify(streamBuilderMock, times(0)).forPath(nonTsvFilePath);
+
         InOrder inOrder = inOrder(streamBuilderMock);
-        inOrder.verify(streamBuilderMock).forPath(tempFilePath1);
+        inOrder.verify(streamBuilderMock).forPath(tsvFilePath1);
         inOrder.verify(streamBuilderMock).build();
-        inOrder.verify(streamBuilderMock).forPath(tempFilePath2);
+        inOrder.verify(streamBuilderMock).forPath(tsvFilePath2);
         inOrder.verify(streamBuilderMock).build();
 
-        //3 times on on tempFilePath1 and 1 time only (because streamMock is exhausted) on tempFilePath2
+        inOrder = inOrder(bioentityIndexMonitorMock);
+        inOrder.verify(bioentityIndexMonitorMock).processing(tsvFilePath1);
+        inOrder.verify(bioentityIndexMonitorMock).completed(tsvFilePath1);
+        inOrder.verify(bioentityIndexMonitorMock).processing(tsvFilePath2);
+        inOrder.verify(bioentityIndexMonitorMock).completed(tsvFilePath2);
+
+        //3 times on on tsvFilePath1 and 1 time only (because streamMock is exhausted) on tsvFilePath2
         verify(propertiesStreamMock, times(4)).next();
 
         verify(solrServerMock,times(2)).addBeans(bioentityProperties);
-        verify(solrServerMock, times(2)).commit();
     }
 
     @Test(expected = IllegalStateException.class)
@@ -131,4 +144,13 @@ public class BioentityIndexTest {
 
         subject.deleteAll();
     }
+
+    @Test
+    public void commitShouldCommitAndStopTheMonitor() throws IOException, SolrServerException {
+        subject.optimize();
+
+        verify(solrServerMock, only()).optimize();
+
+    }
+
 }

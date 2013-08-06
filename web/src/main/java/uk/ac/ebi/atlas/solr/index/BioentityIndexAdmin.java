@@ -22,20 +22,23 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.Executors;
 
 @Named
 @Scope("prototype")
 public class BioentityIndexAdmin {
+    private static final Logger LOGGER = Logger.getLogger(BioentityIndexAdmin.class);
 
+    private BioentityIndexMonitor bioentityIndexMonitor;
     private String bioentityPropertiesDirectory;
 
     @Value("#{configuration['solr.data.location']}")
@@ -44,22 +47,39 @@ public class BioentityIndexAdmin {
     private BioentityIndex bioentityIndex;
 
     @Inject
-    BioentityIndexAdmin(BioentityIndex bioentityIndex,
+    BioentityIndexAdmin(BioentityIndex bioentityIndex, BioentityIndexMonitor bioentityIndexMonitor,
                         @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory ){
 
         this.bioentityIndex = bioentityIndex;
+        this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesDirectory = bioentityPropertiesDirectory;
 
     }
 
-    public void rebuildIndex() throws IOException {
-        bioentityIndex.deleteAll();
+    public void rebuildIndex() {
+        if (bioentityIndexMonitor.start()){
 
-        Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bioentityIndex.deleteAll();
 
-        bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
+                        Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
 
-        bioentityIndex.commit();
+                        bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
+
+                        bioentityIndex.optimize();
+                    } catch (Exception e) {
+                        LOGGER.error(e.getMessage(), e);
+                        bioentityIndexMonitor.failed(e);
+                        throw new IllegalStateException(e);
+                    }
+                }
+            });
+
+
+        }
     }
 
 }

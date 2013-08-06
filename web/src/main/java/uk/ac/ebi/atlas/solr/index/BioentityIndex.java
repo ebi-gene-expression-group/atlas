@@ -33,75 +33,111 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
+import java.util.Collection;
 
 @Named
 @Scope("prototype")
 public class BioentityIndex {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
+
+    private static final int BATCH_SIZE = 100000;
+
+    private BioentityIndexMonitor bioentityIndexMonitor;
     private final BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder;
 
     private SolrServer solrServer;
 
     @Inject
-    public BioentityIndex(SolrServer solrServer, BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder) {
+    public BioentityIndex(BioentityIndexMonitor bioentityIndexMonitor, SolrServer solrServer, BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder) {
+        this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesStreamBuilder = bioentityPropertiesStreamBuilder;
         this.solrServer = solrServer;
     }
 
-    public void indexAll(DirectoryStream<Path> bioentityPropertiesDirectoryStream) {
+    public void indexAll(final DirectoryStream<Path> directoryStream) {
+        indexDirectory(directoryStream);
 
+        bioentityIndexMonitor.stop();
+
+    }
+
+    void indexDirectory(DirectoryStream<Path> bioentityPropertiesDirectoryStream){
         try (DirectoryStream<Path> directoryStream = bioentityPropertiesDirectoryStream) {
+
             for (Path path : directoryStream) {
+
                 if (Files.isDirectory(path)){
-                    indexAll(Files.newDirectoryStream(path));
-                    return;
+                    indexDirectory(Files.newDirectoryStream(path));
+                } else if (Files.isRegularFile(path)){
+                    indexFile(path);
                 }
-                indexFile(path);
             }
         } catch(IOException e){
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
-
     }
 
     void indexFile(Path filePath){
-        checkArgument(Files.isRegularFile(filePath), "This is not a regular file: " + filePath);
 
-        try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
-                    bioentityPropertiesStreamBuilder.forPath(filePath).build()){
+        if (filePath.toString().endsWith(".tsv")){
 
-            List<BioentityProperty> documents;
+            try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
+                        bioentityPropertiesStreamBuilder.forPath(filePath).build()){
 
-            while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
-                solrServer.addBeans(documents);
+                LOGGER.info("<indexFile> streaming started for file: " + filePath);
+
+                bioentityIndexMonitor.processing(filePath);
+
+                Collection<BioentityProperty> documents;
+
+//              int i = 0;
+
+                while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
+
+//                  i += documents.size();
+
+                    solrServer.addBeans(documents);
+
+//                  if (i >= BATCH_SIZE){
+//                     solrServer.commit();
+//                     i = 0;
+//                     LOGGER.debug("<indexFile> committed " + BATCH_SIZE + " properties from file: " + filePath);
+//                  }
+
+
+                }
+                solrServer.commit();
+
+                bioentityIndexMonitor.completed(filePath);
+
+            } catch(IOException|SolrServerException e){
+                LOGGER.error(e.getMessage(), e);
+                throw new IllegalStateException(e);
             }
-            solrServer.commit();
 
-        } catch(IOException|SolrServerException e){
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
+
         }
+
     }
 
 
     public void deleteAll() {
         try {
             solrServer.deleteByQuery("*:*");
+            solrServer.commit();
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
     }
 
-    public void commit() {
+    public void optimize() {
         try {
-            solrServer.commit();
+
             solrServer.optimize();
+
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);

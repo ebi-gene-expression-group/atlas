@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
-import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +29,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -37,6 +37,8 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BioentityPropertiesBuilder {
     private static final String DESIGN_ELEMENT_PROPERTY_NAME = "design_element";
+    private static final String SEPARATOR = "@@";
+    private static final Pattern SEPARATOR_PATTERN = Pattern.compile(SEPARATOR);
 
     private String bioentityIdentifier;
     private String bioentityType;
@@ -77,23 +79,35 @@ public class BioentityPropertiesBuilder {
                 && StringUtils.isNotBlank(bioentityIdentifier)
                 && CollectionUtils.isNotEmpty(propertyValues));
 
+
         if (isDesignElementProperty()) {
-            return Lists.newArrayList(new BioentityProperty(bioentityIdentifier, bioentityType,
-                    species, DESIGN_ELEMENT_PROPERTY_NAME, propertyValues.get(0)));
+            return buildDesignMappingProperty();
         }
-        return buildBioentityPropertiesForConcatenatedValues();
+        return buildBioentityProperties();
     }
 
+    private List<BioentityProperty> buildDesignMappingProperty() {
+        List designMappingProperty = Lists.newArrayList();
+        String designMapping =  propertyValues.get(0);
+        if (StringUtils.isNotBlank(designMapping)){
+            designMappingProperty.add(new BioentityProperty(bioentityIdentifier, bioentityType,
+                    species, DESIGN_ELEMENT_PROPERTY_NAME, propertyValues.get(0)));
+        }
+        return designMappingProperty;
+    }
 
-
-    List<BioentityProperty> buildBioentityPropertiesForConcatenatedValues() {
+    private List<BioentityProperty> buildBioentityProperties() {
         List<BioentityProperty> bioentityProperties = Lists.newArrayList();
         for (int i = 0; i < propertyValues.size(); i++) {
-            for (String value: Splitter.on("@@").split(propertyValues.get(i))){
-                BioentityProperty bioentityProperty =
-                        new BioentityProperty(bioentityIdentifier, bioentityType,
-                                species, propertyNames.get(i), value);
-                bioentityProperties.add(bioentityProperty);
+
+            String [] values = SEPARATOR_PATTERN.split(propertyValues.get(i));
+            for (String value: values){
+                if (StringUtils.isNotBlank(value)){
+                    BioentityProperty bioentityProperty =
+                            new BioentityProperty(bioentityIdentifier, bioentityType,
+                                    species, propertyNames.get(i), value);
+                    bioentityProperties.add(bioentityProperty);
+                }
             }
         }
         return bioentityProperties;

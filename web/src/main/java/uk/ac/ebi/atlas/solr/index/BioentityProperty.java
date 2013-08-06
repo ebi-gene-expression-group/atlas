@@ -22,9 +22,12 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class BioentityProperty {
 
@@ -43,10 +46,13 @@ public class BioentityProperty {
     @Field("property_name")
     private String name;
 
+    //Default constructor required by Solr API
     public BioentityProperty(){
     }
 
     BioentityProperty(String bioentityIdentifier, String bioentityType, String species, String name, String value) {
+        checkArgument(StringUtils.isNotBlank(value),"Invalid blank property value");
+
         this.bioentityType = bioentityType;
         this.species = species;
         this.name = name;
@@ -96,13 +102,21 @@ public class BioentityProperty {
     }
 
     @Override
-    public int hashCode() {return Objects.hash(bioentityIdentifier, bioentityType, species, value, name);}
+    public int hashCode() {return Objects.hash(bioentityIdentifier,
+                                                bioentityType,
+                                                species,
+                                                value,
+                                                name);}
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
         final BioentityProperty other = (BioentityProperty) obj;
-        return Objects.equals(this.bioentityIdentifier, other.bioentityIdentifier) && Objects.equals(this.bioentityType, other.bioentityType) && Objects.equals(this.species, other.species) && Objects.equals(this.value, other.value) && Objects.equals(this.name, other.name);
+        return Objects.equals(bioentityIdentifier, other.bioentityIdentifier)
+                && Objects.equals(bioentityType, other.bioentityType)
+                && Objects.equals(species, other.species)
+                && Objects.equals(value, other.value)
+                && Objects.equals(name, other.name);
     }
 }
