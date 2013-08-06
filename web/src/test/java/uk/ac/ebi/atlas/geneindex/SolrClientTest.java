@@ -56,7 +56,7 @@ public class SolrClientTest {
 
     //private static final String GENE_PAGE_PROPERTY_TYPES = "synonym,ortholog,goterm,interproterm,ensfamily_description,enstranscript,mgi_description,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
 
-    private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym","ortholog","goterm","interproterm","ensfamily_description","enstranscript","mgi_description","entrezgene","uniprot","mgi_id","gene_biotype","designelement_accession");
+    private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym", "ortholog", "goterm", "interproterm", "ensfamily_description", "enstranscript", "mgi_description", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "designelement_accession");
 
     private static final String EXPECTED_GENE_PAGE_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"ortholog\" OR property_type:\"goterm\" OR property_type:\"interproterm\" OR property_type:\"ensfamily_description\" OR property_type:\"enstranscript\" OR property_type:\"mgi_description\" OR property_type:\"entrezgene\" OR property_type:\"uniprot\" OR property_type:\"mgi_id\" OR property_type:\"gene_biotype\" OR property_type:\"designelement_accession\")";
 
@@ -64,7 +64,7 @@ public class SolrClientTest {
 
     private static final List<String> TOOLTIP_PROPERTY_TYPES = Arrays.asList(CSV_TOOLTIP_PROPERTY_TYPES.split(","));
 
-    private static final String EXPECTED_TOOLTIP_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"goterm\" OR property_type:\"interproterm\")";
+    private static final String EXPECTED_TOOLTIP_QUERY = SolrQueryService.IDENTIFIER_FIELD + ":\"ENSG00000132604\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"synonym\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"goterm\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"interproterm\")";
 
     private static final String MUS_MUSCULUS = "mus musculus";
     private static final HashSet<String> SPECIES = Sets.newHashSet(MUS_MUSCULUS);

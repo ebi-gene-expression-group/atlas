@@ -73,7 +73,7 @@ public class SolrQueryServiceTest {
         String s = subject.buildCompositeQuery("geneName", "species", new String[]{"prototype1", "prototype2"}, "ensgene");
 
         // then
-        assertThat(s, is("property_edgengram:\"geneName\" AND species:\"species\" AND (type:\"ensgene\") AND (property_type:\"prototype1\" OR property_type:\"prototype2\")"));
+        assertThat(s, is(SolrQueryService.PROPERTY_EDGENGRAM_FIELD + ":\"geneName\" AND species:\"species\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"ensgene\") AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
 
     }
 
@@ -84,7 +84,7 @@ public class SolrQueryServiceTest {
         String s = subject.buildCompositeQueryIdentifier("ENSMUS000000", Lists.newArrayList("prototype1", "prototype2"));
 
         // then
-        assertThat(s, is("identifier:\"ENSMUS000000\" AND (property_type:\"prototype1\" OR property_type:\"prototype2\")"));
+        assertThat(s, is(SolrQueryService.IDENTIFIER_FIELD + ":\"ENSMUS000000\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
 
     }
 
@@ -95,7 +95,7 @@ public class SolrQueryServiceTest {
         String s = subject.buildGeneQuery("query_string", false, "sapiens", "ensgene");
 
         // then
-        assertThat(s, is("{!lucene q.op=OR df=property_search} (property_search:query_string) AND species:\"sapiens\" AND (type:\"ensgene\")"));
+        assertThat(s, is("{!lucene q.op=OR df=" + SolrQueryService.PROPERTY_SEARCH_FIELD + "} (" + SolrQueryService.PROPERTY_SEARCH_FIELD + ":query_string) AND species:\"sapiens\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"ensgene\")"));
 
     }
 
@@ -103,11 +103,11 @@ public class SolrQueryServiceTest {
     public void testBuildGeneQueryMultiTerms() {
 
         String query = "GO:0008134 \"p53 binding";
-        assertThat(subject.buildGeneQuery(query, false, "sapiens", "ensgene"), containsString("(property_search:GO\\:0008134 \"p53 binding)"));
+        assertThat(subject.buildGeneQuery(query, false, "sapiens", "ensgene"), containsString("(" + SolrQueryService.PROPERTY_SEARCH_FIELD + ":GO\\:0008134 \"p53 binding)"));
 
         query = query + "\"";
 
-        assertThat(subject.buildGeneQuery(query, false, "sapiens", "ensgene"), containsString("(property_search:GO\\:0008134 \"p53 binding\")"));
+        assertThat(subject.buildGeneQuery(query, false, "sapiens", "ensgene"), containsString("(" + SolrQueryService.PROPERTY_SEARCH_FIELD + ":GO\\:0008134 \"p53 binding\")"));
 
     }
 }
