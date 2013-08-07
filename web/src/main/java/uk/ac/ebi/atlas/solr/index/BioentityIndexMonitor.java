@@ -22,15 +22,16 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
@@ -43,19 +44,21 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("singleton")
 public class BioentityIndexMonitor extends Observable {
 
+    @Value("#{configuration['bioentity.properties']}")
+    private String bioentityPropertiesDirectory;
+
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
-            + ",\ntotal time elapsed: {0} minutes,\nfile being processed: {1}, time elapsed for current file: {2} seconds,\n files successfully processed:"
-            + "\n{3}";
+            + ",\ntotal time elapsed: {0} minutes,\nestimated progress: {1}%,\nestimated minutes to completion: {2},\nfile being processed: {3}"
+            + ",\ntime elapsed for current file: {4} seconds,\nfiles successfully processed:\n{5}\n";
 
     private static final String IN_PROGRESS_STATUS_DESCRIPTION_TEMPLATE = Status.IN_PROGRESS
-            + ",\ntotal time elapsed: {0},\n files successfully processed:"
-            + "\n{1}";
+            + ",\ntotal time elapsed: {0} minutes,\nestimated progress: {1}%,\nestimated minutes to completion: {2},\nfiles successfully processed:\n{3}\n";
 
     public Status status;
 
     private Path currentFile;
 
-    private List<ProcessedFile> completedFiles = Lists.newArrayList();
+    private IndexingProgress indexingProgress;
 
     private Exception failureReason;
 
@@ -65,20 +68,14 @@ public class BioentityIndexMonitor extends Observable {
 
     public BioentityIndexMonitor(){
         status = Status.INITIALIZED;
-    }
-
-    void startMonitoring(){
-        totalTimeStopwatch.reset();
-        totalTimeStopwatch.start();
-        completedFiles.clear();
-        currentFile = null;
-
-        status = Status.STARTED;
+        indexingProgress = new IndexingProgress();
     }
 
     public synchronized boolean start(){
         if (Status.INITIALIZED == status || Status.COMPLETED == status || Status.FAILED == status){
-            startMonitoring();
+            totalTimeStopwatch.reset().start();
+            currentFile = null;
+            status = Status.STARTED;
             return true;
         }
         return false;
@@ -101,7 +98,7 @@ public class BioentityIndexMonitor extends Observable {
         checkState(Status.PROCESSING == status, "Illegal status: " + status);
 
         status = Status.IN_PROGRESS;
-        completedFiles.add(new ProcessedFile(filePath, currentFileStopwatch.elapsed(TimeUnit.SECONDS)));
+        indexingProgress.completed(filePath, currentFileStopwatch.elapsed(TimeUnit.SECONDS));
         currentFileStopwatch.reset();
     }
 
@@ -128,38 +125,33 @@ public class BioentityIndexMonitor extends Observable {
     }
 
     public String statusDescription(){
+        long totalDiskSpace = FileUtils.sizeOf(Paths.get(bioentityPropertiesDirectory.toString()).toFile());
+
         switch(status){
             case PROCESSING:
                 return MessageFormat.format(PROCESSING_STATUS_DESCRIPTION_TEMPLATE,
-                        totalTimeStopwatch.elapsed(TimeUnit.MINUTES), currentFile, currentFileStopwatch.elapsed(TimeUnit.SECONDS), StringUtils.join(completedFiles, "\n"));
+                        totalTimeStopwatch.elapsed(TimeUnit.MINUTES),
+                        indexingProgress.progress(totalDiskSpace),
+                        indexingProgress.minutesToCompletion(totalDiskSpace),
+                        currentFile,
+                        currentFileStopwatch.elapsed(TimeUnit.SECONDS),
+                        Joiner.on("\n").join(indexingProgress));
             case IN_PROGRESS:
                 return MessageFormat.format(IN_PROGRESS_STATUS_DESCRIPTION_TEMPLATE,
-                        totalTimeStopwatch.elapsed(TimeUnit.MINUTES), StringUtils.join(completedFiles, "\n"));
+                        totalTimeStopwatch.elapsed(TimeUnit.MINUTES),
+                        indexingProgress.progress(totalDiskSpace),
+                        indexingProgress.minutesToCompletion(totalDiskSpace),
+                        Joiner.on("\n").join(indexingProgress));
             case FAILED:
-                return status + ", reason:\n" + failureReason.getMessage();
+                return status + ", reason:\n" + failureReason.getMessage()+"\n";
             case COMPLETED:
                 return status + ", time taken: " + totalTimeStopwatch.elapsed(TimeUnit.MINUTES)
-                              + ",\ncompleted files:\n" + StringUtils.join(completedFiles, "\n");
+                              + ",\ncompleted files:\n"
+                              + Joiner.on("\n").join(indexingProgress)+"\n";
             default:
                 return status.toString();
         }
     }
 
-    static class ProcessedFile{
-        private final Path filePath;
-        private final long seconds;
 
-        ProcessedFile(Path filePath, long seconds){
-
-            this.filePath = filePath;
-            this.seconds = seconds;
-
-        }
-
-        @Override
-        public String toString(){
-            return filePath + ", time taken: " + seconds + " seconds";
-        }
-
-    }
 }

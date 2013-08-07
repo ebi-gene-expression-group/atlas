@@ -26,7 +26,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    <bean scope="prototype" id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
         <constructor-arg value="http://${solr.host}:8983/solr/"/>
     </bean>
 

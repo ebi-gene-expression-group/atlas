@@ -61,6 +61,8 @@ public class BioentityIndexAdmin {
     }
 
     public void rebuildIndex() {
+        final Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
+
         if (bioentityIndexMonitor.start()){
 
             executorService.execute(new Runnable() {
@@ -69,11 +71,8 @@ public class BioentityIndexAdmin {
                     try {
                         bioentityIndex.deleteAll();
 
-                        Path bioentityPropertiesPath = Paths.get(bioentityPropertiesDirectory);
-
                         bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
 
-                        bioentityIndex.optimize();
                     } catch (Exception e) {
                         LOGGER.error(e.getMessage(), e);
                         bioentityIndexMonitor.failed(e);

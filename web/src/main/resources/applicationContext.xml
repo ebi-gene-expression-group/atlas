@@ -57,7 +57,7 @@
         <lookup-method name="createBitIndexBuilder" bean="bitIndexBuilder"/>
     </bean>
 
-    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" factory-method="newSingleThreadExecutor" />
+    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype" factory-method="newSingleThreadExecutor" />
 
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
         <constructor-arg ref="httpClientConnectionManager"/>

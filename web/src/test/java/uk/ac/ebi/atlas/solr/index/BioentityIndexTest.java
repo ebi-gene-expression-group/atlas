@@ -98,6 +98,7 @@ public class BioentityIndexTest {
         subject.deleteAll();
 
         verify(solrServerMock).deleteByQuery("*:*");
+        verify(solrServerMock).commit();
     }
 
     @Test
@@ -132,10 +133,12 @@ public class BioentityIndexTest {
         inOrder.verify(bioentityIndexMonitorMock).processing(tsvFilePath2);
         inOrder.verify(bioentityIndexMonitorMock).completed(tsvFilePath2);
 
-        //3 times on on tsvFilePath1 and 1 time only (because streamMock is exhausted) on tsvFilePath2
+        //3 times on on tsvFilePath1 and 1 time only (because we are using the same propertiesStreamMock for both files) on tsvFilePath2
         verify(propertiesStreamMock, times(4)).next();
 
         verify(solrServerMock,times(2)).addBeans(bioentityProperties);
+
+        verify(solrServerMock).optimize();
     }
 
     @Test(expected = IllegalStateException.class)
@@ -143,14 +146,6 @@ public class BioentityIndexTest {
         given(solrServerMock.deleteByQuery(anyString())).willThrow(IOException.class);
 
         subject.deleteAll();
-    }
-
-    @Test
-    public void commitShouldCommitAndStopTheMonitor() throws IOException, SolrServerException {
-        subject.optimize();
-
-        verify(solrServerMock, only()).optimize();
-
     }
 
 }

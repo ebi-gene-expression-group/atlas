@@ -56,6 +56,8 @@ public class BioentityIndex {
     public void indexAll(final DirectoryStream<Path> directoryStream) {
         indexDirectory(directoryStream);
 
+        optimize();
+
         bioentityIndexMonitor.stop();
 
     }
@@ -120,7 +122,7 @@ public class BioentityIndex {
         }
     }
 
-    public void optimize() {
+    void optimize() {
         try {
 
             solrServer.optimize();

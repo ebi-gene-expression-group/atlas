@@ -26,7 +26,6 @@ import com.google.common.util.concurrent.MoreExecutors;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -68,9 +67,7 @@ public class BioentityIndexAdminTest {
 
         verify(bioentityIndexMock).deleteAll();
 
-        ArgumentCaptor<DirectoryStream> argumentCaptor = ArgumentCaptor.forClass(DirectoryStream.class);
-        verify(bioentityIndexMock).indexAll(argumentCaptor.capture());
-        verify(bioentityIndexMock).optimize();
+        verify(bioentityIndexMock).indexAll(any(DirectoryStream.class));
 
     }
 
