@@ -32,7 +32,7 @@
         <th rowspan="1" colspan="1">
             <input type="hidden" class="search_init">
             <select>
-                <option value="">Baseline & Differential</option>
+                <option value="">All</option>
                 <option value="baseline">Baseline</option>
                 <option value="differential">Differential</option>
             </select>
