@@ -26,7 +26,34 @@
 <div class="experimentsPageHeading">Experiments in Expression Atlas</div>
 
 <table cellspacing="0" cellpadding="0" border="0" id="experiments-table" class="display">
-
+    <thead/>
+    <tfoot>
+    <tr>
+        <th rowspan="1" colspan="1">
+            <input type="hidden" class="search_init">
+            <select>
+                <option value="">Baseline & Differential</option>
+                <option value="baseline">Baseline</option>
+                <option value="differential">Differential</option>
+            </select>
+        </th>
+        <th><input type="hidden" class="search_init"></th>
+        <th><input type="hidden" class="search_init"></th>
+        <th rowspan="1" colspan="1">
+            <input type="text" class="search_init" value="Search description" name="search_description">
+        </th>
+        <th><input type="hidden" class="search_init"></th>
+        <th><input type="hidden" class="search_init"></th>
+        <th rowspan="1" colspan="1">
+            <input type="text" class="search_init" value="Search organisms" name="search_organisms">
+        </th>
+        <th rowspan="1" colspan="1">
+            <input type="text" class="search_init" value="Search factors" name="search_factors">
+        </th>
+        <th><input type="hidden" class="search_init"></th>
+    </tr>
+    </tfoot>
+    <tbody/>
 </table>
 
 <script type="text/javascript" language="javascript"
