@@ -26,7 +26,6 @@ import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -48,7 +47,6 @@ public abstract class ExperimentPageRequestPreferences {
             message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
     private String geneQuery = getDefaultGeneQuery();
 
-    @Min(value = EXPRESSION_LEVEL_MIN, message = "The expression level cutoff must be greater than 0")
     private Double cutoff = getDefaultCutoff();
 
     private String serializedFilterFactors;

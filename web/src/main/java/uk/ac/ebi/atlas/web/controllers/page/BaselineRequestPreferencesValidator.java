@@ -28,7 +28,7 @@ import org.springframework.validation.Validator;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
-public class RequestPreferencesValidator implements Validator {
+public class BaselineRequestPreferencesValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -40,6 +40,9 @@ public class RequestPreferencesValidator implements Validator {
         ExperimentPageRequestPreferences requestPreferences = (ExperimentPageRequestPreferences) object;
         if (requestPreferences.isGeneSetMatch() && StringUtils.isBlank(requestPreferences.getGeneQuery())) {
             errors.reject("geneSetWithEmptyQuery", "Please specify gene set id in the 'Gene Query' text area or uncheck the 'Gene set' option");
+        }
+        if (requestPreferences.getCutoff() < 0 ) {
+            errors.reject("cutoffOutOfRange", "The expression level cutoff must be greater than 0");
         }
     }
 }

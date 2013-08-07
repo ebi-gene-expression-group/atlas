@@ -86,7 +86,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(new RequestPreferencesValidator());
+        binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=BASELINE"})
