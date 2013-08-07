@@ -41,8 +41,6 @@ public class BioentityIndex {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
 
-    private static final int BATCH_SIZE = 100000;
-
     private BioentityIndexMonitor bioentityIndexMonitor;
     private final BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder;
 
@@ -92,20 +90,9 @@ public class BioentityIndex {
 
                 Collection<BioentityProperty> documents;
 
-//              int i = 0;
-
                 while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
 
-//                  i += documents.size();
-
                     solrServer.addBeans(documents);
-
-//                  if (i >= BATCH_SIZE){
-//                     solrServer.commit();
-//                     i = 0;
-//                     LOGGER.debug("<indexFile> committed " + BATCH_SIZE + " properties from file: " + filePath);
-//                  }
-
 
                 }
                 solrServer.commit();

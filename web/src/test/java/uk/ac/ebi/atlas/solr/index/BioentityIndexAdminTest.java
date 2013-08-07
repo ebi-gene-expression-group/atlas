@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
+import com.google.common.util.concurrent.MoreExecutors;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
+import java.util.concurrent.ExecutorService;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -48,11 +50,13 @@ public class BioentityIndexAdminTest {
     @Mock
     private BioentityIndexMonitor bioentityIndexMonitorMock;
 
+    private ExecutorService sameThreadExecutorService = MoreExecutors.sameThreadExecutor();
+
     private BioentityIndexAdmin subject;
 
     @Before
     public void setup(){
-        subject = new BioentityIndexAdmin(bioentityIndexMock, bioentityIndexMonitorMock, BIOENTITY_PROPERTY_DIRECTORY);
+        subject = new BioentityIndexAdmin(bioentityIndexMock, bioentityIndexMonitorMock, BIOENTITY_PROPERTY_DIRECTORY, sameThreadExecutorService);
     }
 
     @Test
@@ -61,8 +65,6 @@ public class BioentityIndexAdminTest {
         given(bioentityIndexMonitorMock.start()).willReturn(true);
 
         subject.rebuildIndex();
-
-        Thread.sleep(1000);
 
         verify(bioentityIndexMock).deleteAll();
 

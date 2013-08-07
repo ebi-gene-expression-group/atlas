@@ -31,13 +31,17 @@ import javax.inject.Named;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkState;
 
+//Monitor can be checked in poll way, for example from synchronous channels like http,
+//or can be also "observed" by client that implements the Observer interface
+//(these clients will be notified of completion or failure)
 @Named
 @Scope("singleton")
-public class BioentityIndexMonitor {
+public class BioentityIndexMonitor extends Observable {
 
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
             + ",\ntotal time elapsed: {0} minutes,\nfile being processed: {1}, time elapsed for current file: {2} seconds,\n files successfully processed:"
@@ -83,6 +87,7 @@ public class BioentityIndexMonitor {
     public synchronized void stop() {
         status = Status.COMPLETED;
         totalTimeStopwatch.stop();
+        notifyStatus();
     }
 
     public synchronized void processing(Path filePath) {
@@ -106,6 +111,12 @@ public class BioentityIndexMonitor {
         failureReason = e;
         status = Status.FAILED;
         totalTimeStopwatch.stop();
+        notifyStatus();
+    }
+
+    private void notifyStatus(){
+        setChanged();
+        notifyObservers(status);
     }
 
     public Status getStatus() {

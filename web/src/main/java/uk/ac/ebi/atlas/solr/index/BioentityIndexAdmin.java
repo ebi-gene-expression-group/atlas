@@ -31,7 +31,7 @@ import javax.inject.Named;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 @Named
 @Scope("prototype")
@@ -40,26 +40,30 @@ public class BioentityIndexAdmin {
 
     private BioentityIndexMonitor bioentityIndexMonitor;
     private String bioentityPropertiesDirectory;
+    private ExecutorService executorService;
 
     @Value("#{configuration['solr.data.location']}")
     private String solrDataLocation;
 
     private BioentityIndex bioentityIndex;
 
+    // Injecting the ExecutorService allows us to inject a sameThreadExecutor in our unit tests,
+    // so that verifications can be executed on the runnable task being started
     @Inject
     BioentityIndexAdmin(BioentityIndex bioentityIndex, BioentityIndexMonitor bioentityIndexMonitor,
-                        @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory ){
+                        @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory,
+                        @Named("singleThreadExecutorService") ExecutorService executorService){
 
         this.bioentityIndex = bioentityIndex;
         this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesDirectory = bioentityPropertiesDirectory;
-
+        this.executorService = executorService;
     }
 
     public void rebuildIndex() {
         if (bioentityIndexMonitor.start()){
 
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
+            executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {

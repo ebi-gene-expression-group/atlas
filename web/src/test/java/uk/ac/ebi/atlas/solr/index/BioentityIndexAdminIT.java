@@ -30,6 +30,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.SolrParams;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
@@ -40,16 +41,20 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.concurrent.CountDownLatch;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS) //this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
-public class BioentityIndexAdminIT{
+public class BioentityIndexAdminIT implements Observer{
 
     @Inject
     private BioentityIndexAdmin subject;
@@ -57,11 +62,19 @@ public class BioentityIndexAdminIT{
     @Inject
     private BioentityIndexMonitor bioentityIndexMonitor;
 
+    private CountDownLatch updateEventLatch; // used to react to event
+
     private static SolrServer embeddedSolrServer;
 
     @Inject
     public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer){
         BioentityIndexAdminIT.embeddedSolrServer = embeddedSolrServer;
+    }
+
+    @Before
+    public void init(){
+        updateEventLatch = new CountDownLatch(1);
+        bioentityIndexMonitor.addObserver(this);
     }
 
     @After
@@ -75,11 +88,11 @@ public class BioentityIndexAdminIT{
         embeddedSolrServer.shutdown();
     }
 
-    @Test
+    @Test(timeout = 3000) //expect the indexing to happen in less than 2 seconds
     public void rebuildIndexShouldSucceed() throws Exception {
         subject.rebuildIndex();
 
-        Thread.sleep(3000);
+        updateEventLatch.await();
 
         SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
@@ -90,4 +103,10 @@ public class BioentityIndexAdminIT{
         assertThat(status, is(BioentityIndexMonitor.Status.COMPLETED));
     }
 
+    @Override
+    public void update(Observable observable, Object argument) {
+        assertTrue(observable == bioentityIndexMonitor);
+
+        updateEventLatch.countDown();
+    }
 }
