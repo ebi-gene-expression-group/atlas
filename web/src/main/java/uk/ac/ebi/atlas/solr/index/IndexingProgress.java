@@ -26,13 +26,17 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 
+import javax.inject.Named;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 
+@Named
+@Scope("singleton")
 public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile>{
     private static final Logger LOGGER = Logger.getLogger(IndexingProgress.class);
 
@@ -62,6 +66,12 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
     @Override
     public Iterator<ProcessedFile> iterator() {
         return Iterators.unmodifiableIterator(processedFiles.iterator());
+    }
+
+    public void reset() {
+        totalTimeTaken = 0;
+        processedDiskSpace = 0;
+        processedFiles.clear();
     }
 
     static class ProcessedFile{

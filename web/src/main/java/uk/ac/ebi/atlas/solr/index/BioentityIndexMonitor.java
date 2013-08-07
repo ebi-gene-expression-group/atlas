@@ -28,6 +28,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,14 +67,16 @@ public class BioentityIndexMonitor extends Observable {
 
     private Stopwatch currentFileStopwatch = new Stopwatch();
 
-    public BioentityIndexMonitor(){
+    @Inject
+    public BioentityIndexMonitor(IndexingProgress indexingProgress){
         status = Status.INITIALIZED;
-        indexingProgress = new IndexingProgress();
+        this.indexingProgress = indexingProgress;
     }
 
     public synchronized boolean start(){
         if (Status.INITIALIZED == status || Status.COMPLETED == status || Status.FAILED == status){
             totalTimeStopwatch.reset().start();
+            indexingProgress.reset();
             currentFile = null;
             status = Status.STARTED;
             return true;
@@ -91,15 +94,15 @@ public class BioentityIndexMonitor extends Observable {
         checkState(Status.INITIALIZED == status || Status.STARTED == status || Status.IN_PROGRESS == status, "Illegal status: " + status);
         status = Status.PROCESSING;
         currentFile = filePath;
-        currentFileStopwatch.start();
+        currentFileStopwatch.reset().start();
     }
 
     public synchronized void completed(Path filePath) {
         checkState(Status.PROCESSING == status, "Illegal status: " + status);
 
         status = Status.IN_PROGRESS;
+        currentFileStopwatch.stop();
         indexingProgress.completed(filePath, currentFileStopwatch.elapsed(TimeUnit.SECONDS));
-        currentFileStopwatch.reset();
     }
 
     public synchronized void failed(Exception e) {
@@ -129,18 +132,13 @@ public class BioentityIndexMonitor extends Observable {
 
         switch(status){
             case PROCESSING:
+            case IN_PROGRESS:
                 return MessageFormat.format(PROCESSING_STATUS_DESCRIPTION_TEMPLATE,
                         totalTimeStopwatch.elapsed(TimeUnit.MINUTES),
                         indexingProgress.progress(totalDiskSpace),
                         indexingProgress.minutesToCompletion(totalDiskSpace),
                         currentFile,
                         currentFileStopwatch.elapsed(TimeUnit.SECONDS),
-                        Joiner.on("\n").join(indexingProgress));
-            case IN_PROGRESS:
-                return MessageFormat.format(IN_PROGRESS_STATUS_DESCRIPTION_TEMPLATE,
-                        totalTimeStopwatch.elapsed(TimeUnit.MINUTES),
-                        indexingProgress.progress(totalDiskSpace),
-                        indexingProgress.minutesToCompletion(totalDiskSpace),
                         Joiner.on("\n").join(indexingProgress));
             case FAILED:
                 return status + ", reason:\n" + failureReason.getMessage()+"\n";

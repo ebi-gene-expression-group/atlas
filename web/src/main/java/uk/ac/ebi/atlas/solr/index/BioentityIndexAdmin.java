@@ -76,10 +76,10 @@ public class BioentityIndexAdmin {
                     } catch (Exception e) {
                         LOGGER.error(e.getMessage(), e);
                         bioentityIndexMonitor.failed(e);
-                        throw new IllegalStateException(e);
                     }
                 }
             });
+            executorService.shutdown();
 
 
         }
