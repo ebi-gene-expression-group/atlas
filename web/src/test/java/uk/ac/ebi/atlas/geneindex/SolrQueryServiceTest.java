@@ -73,8 +73,11 @@ public class SolrQueryServiceTest {
         String s = subject.buildCompositeQuery("geneName", "species", new String[]{"prototype1", "prototype2"}, "ensgene");
 
         // then
-        assertThat(s, is(SolrQueryService.PROPERTY_EDGENGRAM_FIELD + ":\"geneName\" AND species:\"species\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"ensgene\") AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
-
+        assertThat(s, is(SolrQueryService.PROPERTY_EDGENGRAM_FIELD + ":\"geneName\" AND " +
+                SolrQueryService.SPECIES_FIELD + ":\"species\" AND (" +
+                SolrQueryService.BIOENTITY_TYPE + ":\"ensgene\") AND (" +
+                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " +
+                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
     }
 
     @Test
@@ -84,8 +87,9 @@ public class SolrQueryServiceTest {
         String s = subject.buildCompositeQueryIdentifier("ENSMUS000000", Lists.newArrayList("prototype1", "prototype2"));
 
         // then
-        assertThat(s, is(SolrQueryService.IDENTIFIER_FIELD + ":\"ENSMUS000000\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
-
+        assertThat(s, is(SolrQueryService.IDENTIFIER_FIELD + ":\"ENSMUS000000\" AND (" +
+                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " +
+                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
     }
 
     @Test
@@ -95,7 +99,10 @@ public class SolrQueryServiceTest {
         String s = subject.buildGeneQuery("query_string", false, "sapiens", "ensgene");
 
         // then
-        assertThat(s, is("{!lucene q.op=OR df=" + SolrQueryService.PROPERTY_SEARCH_FIELD + "} (" + SolrQueryService.PROPERTY_SEARCH_FIELD + ":query_string) AND species:\"sapiens\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"ensgene\")"));
+        assertThat(s, is("{!lucene q.op=OR df=" + SolrQueryService.PROPERTY_SEARCH_FIELD + "} (" +
+                SolrQueryService.PROPERTY_SEARCH_FIELD + ":query_string) AND " +
+                SolrQueryService.SPECIES_FIELD + ":\"sapiens\" AND (" +
+                SolrQueryService.BIOENTITY_TYPE + ":\"ensgene\")"));
 
     }
 

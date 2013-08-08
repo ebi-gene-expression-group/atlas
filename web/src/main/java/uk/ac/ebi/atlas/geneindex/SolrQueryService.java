@@ -47,6 +47,8 @@ import java.util.Set;
 public class SolrQueryService {
 
     public static final String IDENTIFIER_FIELD = "bioentity_identifier";
+    public static final String BIOENTITY_TYPE = "bioentity_type";
+    public static final String SPECIES_FIELD = "species";
     public static final String PROPERTY_TYPE_FIELD = "property_name";
     public static final String PROPERTY_SEARCH_FIELD = "property_value_search";
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
@@ -56,7 +58,6 @@ public class SolrQueryService {
     private static final int PROPERTY_VALUES_LIMIT = 1000;
     private static final int DEFAULT_LIMIT = 15;
     private static final String CONFIG_SPLIT_REGEX = ",";
-    private static final String SPECIES_FIELD = "species";
     private static final String PROPERTY_FIELD = "property_value";
 
     // changed from 100000
@@ -325,7 +326,7 @@ public class SolrQueryService {
     }
 
     private void appendSpecies(StringBuilder sb, String species) {
-        sb.append(" AND species:\"")
+        sb.append(" AND " + SPECIES_FIELD + ":\"")
                 .append(species)
                 .append("\"");
     }
@@ -333,7 +334,7 @@ public class SolrQueryService {
     private void appendBioEntityTypes(StringBuilder sb, String[] bioEntityTypes) {
         sb.append(" AND (");
         for (String bioEntityType : bioEntityTypes) {
-            sb.append(PROPERTY_TYPE_FIELD + ":\"")
+            sb.append(BIOENTITY_TYPE + ":\"")
                     .append(bioEntityType)
                     .append("\" OR ");
         }
