@@ -207,7 +207,7 @@
 
         contrastInfoTooltipModule.init('${pageContext.request.contextPath}');
 
-        var widgetParameters = "&propertyType=identifier";
+        var widgetParameters = "&propertyType=bioentity_identifier";
         if (${isGeneSet == true}) {
             widgetParameters = "&geneSetMatch=true";
         }
