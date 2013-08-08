@@ -57,7 +57,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class DifferentialDesignPageControllerIT {
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
