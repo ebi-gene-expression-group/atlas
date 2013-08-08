@@ -98,12 +98,12 @@
 
                         <display:column
                                 title="<div data-organism-part=\"${columnHeader}\"
-                                    title=\"${type.isBaseline() ? columnHeader : ''}\"
+                                    ${type.isBaseline() ? 'title=\"'.concat(columnHeader).concat('\"') : ''}
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-experiment-accession=\"'.concat(experimentAccession).concat('\"') : ''}
-                                    class=\"factor-header rotate_text ${!type.isBaseline() ? 'contrastNameCell' : ''}\"></div>"
-                                headerClass="rotated_cell vertical-header-cell"
+                                    class=\"factor-header rotate_text\"></div>"
+                                headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : ''}"
                                 style="${style}">
 
                             <c:if test="${not empty expressionLevel}">
