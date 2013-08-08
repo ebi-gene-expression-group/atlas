@@ -26,7 +26,6 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,15 +46,11 @@ public class ApplicationProperties {
 
     private Properties configurationProperties;
 
-    private ExperimentDAO experimentDAO;
-
     @Inject
     ApplicationProperties(@Named("configuration") Properties configurationProperties,
-                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties,
-                          ExperimentDAO experimentDAO) {
+                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties) {
         this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.configurationProperties = configurationProperties;
-        this.experimentDAO = experimentDAO;
     }
 
     public String getAnatomogramFileName(String specie, boolean isMale) {
@@ -87,17 +82,11 @@ public class ApplicationProperties {
         return MessageFormat.format(arrayExpressUrlTemplate, pubMedId);
     }
 
-    //This is invoked from jsp el
-    public String getAtlasURL(String experimentAccession) {
-        String atlasUrlTemplate = configurationProperties.getProperty("experiment.atlas.url.template");
-        return MessageFormat.format(atlasUrlTemplate, experimentAccession);
-    }
-
     public String getFeedbackEmailAddress() {
         return configurationProperties.getProperty("feedback.email");
     }
 
-    public Set<String> getTestCaseExperimentAccessions(){
+    public Set<String> getTestCaseExperimentAccessions() {
         Set<String> testCaseExperimentAccessions = Sets.newHashSet();
         if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
             testCaseExperimentAccessions.addAll(getStringValues("integration.experiment.identifiers"));

@@ -22,10 +22,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="base" value="${pageContext.request.contextPath}"/>
-<c:if test="${not empty preferences.rootContext}">
-    <c:set var="base" value="${preferences.rootContext}"/>
-</c:if>
 
 <td style="width:140px;padding-right:20px">
     <div class="experiment-accession">
@@ -38,10 +34,12 @@
 <td width="100%">
     <div id="experimentDescription">
         <a id="goto-experiment" class="thick-link" title="Experiment Page"
-           href="${applicationProperties.getAtlasURL(experimentAccession)}">${experimentDescription}</a>
+           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}">${experimentDescription}</a>
         <c:if test="${hasExtraInfo}">
-            <a id="extra-info" href="${base}/external-resources/${experimentAccession}/extra-info.png">
-                <img alt="more information" src="${base}/resources/images/balloon-ellipsis-icon-left.png">
+            <a id="extra-info"
+               href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
+                <img alt="more information"
+                     src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/balloon-ellipsis-icon-left.png">
             </a>
         </c:if>
     </div>
