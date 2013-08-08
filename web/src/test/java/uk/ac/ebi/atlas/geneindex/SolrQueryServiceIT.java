@@ -54,7 +54,7 @@ public class SolrQueryServiceIT {
 
         // given
         String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
+        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property_value", 100);
 
         // then
         assertThat(geneNames, contains("ASPM"));
@@ -66,7 +66,7 @@ public class SolrQueryServiceIT {
 
         // given
         String queryString = subject.buildGeneQuery("aspm splicing", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
+        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property_value", 100);
 
         // then
         assertThat(geneNames, hasItems("ASPM", "RNA splicing", "mRNA splicing, via spliceosome", "RNA splicing, via transesterification reactions"));
