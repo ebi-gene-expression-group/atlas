@@ -53,7 +53,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS) //this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextEmbedded.xml"})
 public class BioentityIndexAdminIT implements Observer{
 
     @Inject

@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.hasSize;
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextEmbedded.xml"})
 public class BioentityIndexIT{
 
     @Value("#{configuration['bioentity.properties']}")
