@@ -37,6 +37,10 @@ var contrastInfoTooltipModule = (function ($) {
 
                 var experimentAccession = $(this).attr("data-experiment-accession"),
                     contrastId = $(this).attr("data-contrast-id");
+                if (experimentAccession === undefined) {
+                    experimentAccession = $(this).find(":nth-child(1)").attr("data-experiment-accession");
+                    contrastId = $(this).find(":nth-child(1)").attr("data-contrast-id");
+                }
                 //callback($("#contrastInfo").html());
 
                 $.ajax({
