@@ -59,7 +59,7 @@ public class BioentityIndexController {
     @RequestMapping(value = "/buildIndex/status")
     @ResponseBody
     public String buildStatus() {
-        return bioentityIndexMonitor.statusDescription();
+        return bioentityIndexMonitor.reportProgress();
     }
 
 
@@ -69,7 +69,7 @@ public class BioentityIndexController {
 
         bioentityIndexAdmin.rebuildIndex();
 
-        return bioentityIndexMonitor.statusDescription();
+        return bioentityIndexMonitor.reportProgress();
 
    }
 }

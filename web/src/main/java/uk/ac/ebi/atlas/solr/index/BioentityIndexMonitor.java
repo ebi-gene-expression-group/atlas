@@ -38,9 +38,22 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkState;
 
-//Monitor can be checked in poll way, for example from synchronous channels like http,
-//or can be also "observed" by client that implements the Observer interface
-//(these clients will be notified of completion or failure)
+/**
+ * BioentityIndexMonitor can be polled by clients to get a progress report, useful for synchronous request protocols like HTTP REST,
+ * or can be also "observed" by Observer clients that want to be notified of indexing completion or failure
+ * (for example useful in tests that need to wait for completion before doing any assertion)
+ *
+ * A more elaborate but maybe better distributed design would be to have BioentityIndexMonitor only used for polling progress report
+ * and BioentityIndex be the Observable that can be listened for processing and completion events;
+ * Pros would be:
+ * -Monitor would not be Observable anymore
+ * -BioentityIndex would not depend on Monitor BioentityIndexMonitor, making it usable and testable independently of BioentityIndexMonitor stopwatch state
+ * -BioentityIndexMonitor would be updating progress state without the need for synchronous messages, by being an Observer of BioentityIndex
+ * Cons would be:
+ * -BioentityIndex would have to be Observable not only for completion but also for file processing events
+ * -BioentityIndexMonitor would have to be an Observer and implement its own update
+ * -Similar responsibility (progress report and progress events) would be executed by separate classes
+ */
 @Named
 @Scope("singleton")
 public class BioentityIndexMonitor extends Observable {
@@ -51,9 +64,6 @@ public class BioentityIndexMonitor extends Observable {
     private static final String PROCESSING_STATUS_DESCRIPTION_TEMPLATE = Status.PROCESSING
             + ",\ntotal time elapsed: {0} minutes,\nestimated progress: {1}%,\nestimated minutes to completion: {2},\nfile being processed: {3}"
             + ",\ntime elapsed for current file: {4} seconds,\nfiles successfully processed:\n{5}\n";
-
-    private static final String IN_PROGRESS_STATUS_DESCRIPTION_TEMPLATE = Status.IN_PROGRESS
-            + ",\ntotal time elapsed: {0} minutes,\nestimated progress: {1}%,\nestimated minutes to completion: {2},\nfiles successfully processed:\n{3}\n";
 
     public Status status;
 
@@ -127,7 +137,7 @@ public class BioentityIndexMonitor extends Observable {
         INITIALIZED, STARTED, PROCESSING, IN_PROGRESS, COMPLETED, FAILED;
     }
 
-    public String statusDescription(){
+    public String reportProgress(){
         long totalDiskSpace = FileUtils.sizeOf(Paths.get(bioentityPropertiesDirectory.toString()).toFile());
 
         switch(status){
