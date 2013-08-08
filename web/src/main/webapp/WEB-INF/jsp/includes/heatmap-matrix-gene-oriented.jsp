@@ -51,7 +51,8 @@
                         <c:set var="geneId" value="${geneProfile.id}"/>
                         <c:set var="bioEntityType" value="${preferences.geneSetMatch? \"genesets\": \"genes\"}"/>
 
-                        <a class="genename" id="${geneId}" href='${bioEntityType}/${geneId}'
+                        <a class="genename" id="${geneId}"
+                           href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityType}/${geneId}'
                            title="">${geneNamesProvider.getGeneName(geneId)}</a>
                     </display:column>
 
@@ -72,8 +73,8 @@
                         <c:if test="${not empty expressionLevel}">
                             <c:choose>
                                 <c:when test="${type.isBaseline()}">
-                                <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
+                                    <c:set var="cellColour"
+                                           value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
                                 </c:when>
                                 <c:otherwise>
                                     <c:choose>
@@ -96,8 +97,13 @@
                                value="${type.isBaseline() ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div ${!type.isBaseline() ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''} data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
-                                headerClass='rotated_cell vertical-header-cell'
+                                title="<div data-organism-part=\"${columnHeader}\"
+                                    title=\"${type.isBaseline() ? columnHeader : ''}\"
+                                    ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
+                                    ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
+                                    ${!type.isBaseline() ? 'data-experiment-accession=\"'.concat(experimentAccession).concat('\"') : ''}
+                                    class=\"factor-header rotate_text ${!type.isBaseline() ? 'contrastNameCell' : ''}\"></div>"
+                                headerClass="rotated_cell vertical-header-cell"
                                 style="${style}">
 
                             <c:if test="${not empty expressionLevel}">
@@ -152,7 +158,7 @@
                     -->
                     <a id="download-profiles-link"
                        title="Top 50 genes displayed on page. Download results to see the rest."
-                       href="${downloadUrl}"
+                       href="${applicationProperties.buildDownloadURL(pageContext.request)}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
                              src="${base}/resources/images/download_blue_small.png">
@@ -167,12 +173,35 @@
 
 <div id="genenametooltip-content" style="display: none"/>
 
+<section id="contrastInfo" style="display:none">
+    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
+    <div id="contrastDescription" style="text-align: center"></div>
+    <table class='table-grid' style="padding: 0px; margin: 0px;">
+        <thead>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Test value
+            </th>
+            <th class='header-cell'>
+                Reference value
+            </th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/highlight.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/genePropertiesTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/heatmapModule.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${base}/resources/js/contrastInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -192,12 +221,14 @@
 
             } else if (${type.isMicroarray()}) {
 
-                var arrayDesignAccession = ${type.isMicroarray() ? "'".concat(preferences.arrayDesignAccession).concat("'") : 'null'};
-
-                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', arrayDesignAccession, ${preferences.cutoff}, '${preferences.geneQuery}');
+                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
 
             } else {
                 heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
+            }
+
+            if (!${type.isBaseline()}) {
+                contrastInfoTooltipModule.init('${base}');
             }
 
         });

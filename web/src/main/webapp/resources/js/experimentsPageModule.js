@@ -65,8 +65,15 @@ var experimentsPageModule = (function ($) {
     }
 
     function formatArrayDesign(data, type, full) {
-        return '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + data + '" title="View in Array Express">' + data + '</a>';
+        var result = "";
+        $(data).each(function (index, elem) {
+            result = result + '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + elem + '" title="View in Array Express">' + elem + '</a><br/>';
+        });
+
+        return result;
     }
+
+    var asInitVals = new Array();
 
     function init() {
 
@@ -76,7 +83,6 @@ var experimentsPageModule = (function ($) {
                 return $('td:eq(' + iColumn + ') img', tr).attr("title");
             });
         };
-
         /* This was taken from datatables examples */
         $.extend($.fn.dataTableExt.oSort, {
             "title-numeric-pre":function (a) {
@@ -93,7 +99,10 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $('#experiments-table').dataTable({
+        //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
+        $('#experiments-table').dataTable.defaults.oLanguage.sInfoEmpty = ' ';
+
+        var oTable = $('#experiments-table').dataTable({
             "bProcessing":true,
             "sAjaxSource":"json/experiments",
             "aoColumns":[
@@ -101,11 +110,11 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatExperimentType(data, type, full);
                     } },
-                { "sTitle":"Experiment", "mData":"experimentAccession", "sClass":"center bb",
+                { "sTitle":"Experiment", "mData":"experimentAccession", "sClass":"center bb nowrap",
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
                     } },
-                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb",
+                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb nowrap",
                     "mRender":function (data, type, full) {
                         return formatLastUpdate(data, type, full);
                     } },
@@ -137,10 +146,45 @@ var experimentsPageModule = (function ($) {
             "aLengthMenu":[
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
-            ]
+            ],
+            "oLanguage":{
+                "sSearch":"Search all columns:"
+            }
         });
 
         $("#experiments-table th").addClass("header-cell bt");
+
+        $("#experiments-table tfoot input").keyup(function () {
+            /* Filter on the column (the index) of this element */
+            oTable.fnFilter(this.value, $("#experiments-table tfoot input").index(this));
+        });
+
+        $("#experiments-table tfoot select").change(function () {
+            /* same for drop down filter */
+            oTable.fnFilter(this.value, $("#experiments-table tfoot select").index(this));
+        });
+
+        /*
+         * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+         * the footer
+         */
+        $("#experiments-table tfoot input").each(function (i) {
+            asInitVals[i] = this.value;
+        });
+
+        $("#experiments-table tfoot input").focus(function () {
+            if (this.className === "search_init") {
+                this.className = "";
+                this.value = "";
+            }
+        });
+
+        $("#experiments-table tfoot input").blur(function (i) {
+            if (this.value === "") {
+                this.className = "search_init";
+                this.value = asInitVals[$("#experiments-table tfoot input").index(this)];
+            }
+        });
 
     }
 

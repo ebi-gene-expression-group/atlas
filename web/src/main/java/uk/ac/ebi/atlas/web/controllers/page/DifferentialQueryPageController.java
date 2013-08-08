@@ -25,6 +25,8 @@ package uk.ac.ebi.atlas.web.controllers.page;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
@@ -52,6 +54,11 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.rankProfilesCommand = rankProfilesCommand;
         this.downloadURLBuilder = downloadURLBuilder;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new DifferentialRequestPreferencesValidator());
     }
 
     public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
