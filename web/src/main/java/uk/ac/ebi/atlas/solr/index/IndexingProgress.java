@@ -34,13 +34,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Named
 @Scope("singleton")
 public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile>{
     private static final Logger LOGGER = Logger.getLogger(IndexingProgress.class);
 
-    private List<ProcessedFile> processedFiles = Lists.newArrayList();
+    // This list may be iterated from a different thread than the index build thread, generating a
+    // ConcurrentModificationException if we didn't use a thread safe implementation like CopyOnWriteArrayList
+    private List<ProcessedFile> processedFiles = new CopyOnWriteArrayList<>();
 
     private long processedDiskSpace;
     private long totalTimeTaken;

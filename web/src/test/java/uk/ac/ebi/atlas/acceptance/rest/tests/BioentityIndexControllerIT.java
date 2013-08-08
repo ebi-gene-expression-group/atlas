@@ -32,10 +32,10 @@ import static org.hamcrest.Matchers.is;
 public class BioentityIndexControllerIT {
 
     private static final String STATUS_SERVICE_END_POINT_URL = "/gxa/buildIndex/status";
-    private static final String BUILD_INDEX_SERVICE_END_POINT_URL = "/gxa/buildIndex";
+//  private static final String BUILD_INDEX_SERVICE_END_POINT_URL = "/gxa/buildIndex";
 
     private EndPoint statusServiceEndPoint = new EndPoint(STATUS_SERVICE_END_POINT_URL);
-    private EndPoint buildIndexServiceEndPoint = new EndPoint(BUILD_INDEX_SERVICE_END_POINT_URL);
+//  private EndPoint buildIndexServiceEndPoint = new EndPoint(BUILD_INDEX_SERVICE_END_POINT_URL);
 
     @Test
     public void statusShouldBeInitialized() {
