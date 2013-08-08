@@ -115,7 +115,7 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
 
-        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 0, ExperimentType.DIFFERENTIAL), is("Adjusted P-value"));
+        assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 0, ExperimentType.DIFFERENTIAL), is("Adjusted p-value"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.DIFFERENTIAL), startsWith("Log2-fold"));
 
         assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.DIFFERENTIAL), is("0"));
