@@ -42,26 +42,26 @@ public class BioentityPropertiesStreamBuilder {
     private Path bioentityPropertiesFilePath;
 
     @Inject
-    public BioentityPropertiesStreamBuilder(BioentityPropertiesBuilder bioentityPropertiesBuilder){
+    public BioentityPropertiesStreamBuilder(BioentityPropertiesBuilder bioentityPropertiesBuilder) {
         this.bioentityPropertiesBuilder = bioentityPropertiesBuilder;
     }
 
-    public BioentityPropertiesStreamBuilder forPath(Path bioentityPropertiesFilePath){
+    public BioentityPropertiesStreamBuilder forPath(Path bioentityPropertiesFilePath) {
         this.bioentityPropertiesFilePath = bioentityPropertiesFilePath;
         return this;
     }
 
-    public BioentityPropertiesStream build() throws IOException{
+    public BioentityPropertiesStream build() throws IOException {
         Reader fileReader = Files.newBufferedReader(bioentityPropertiesFilePath, Charsets.UTF_8);
-        CSVReader csvReader = new CSVReader(fileReader,'\t');
+        CSVReader csvReader = new CSVReader(fileReader, '\t');
         return new BioentityPropertiesStream(csvReader, bioentityPropertiesBuilder, getSpecies());
     }
 
     String getFileName() {
-       return bioentityPropertiesFilePath.getFileName().toString();
+        return bioentityPropertiesFilePath.getFileName().toString();
     }
 
     String getSpecies() {
-        return StringUtils.substringBefore(getFileName(), ".");
+        return StringUtils.substringBefore(getFileName(), ".").replaceAll("_", " ");
     }
 }
