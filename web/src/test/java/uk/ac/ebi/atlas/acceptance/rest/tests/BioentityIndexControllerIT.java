@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 import com.jayway.restassured.response.Response;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
@@ -49,15 +48,18 @@ public class BioentityIndexControllerIT {
 
     }
 
-    @Test
-    public void statusShouldNotBeInitialized(){
-        //given
-        String responseBody = buildIndexServiceEndPoint.getResponse().body().asString();
-
-        assertThat(responseBody, is(Matchers.not("INITIALIZED")));
-        assertThat(responseBody, is(Matchers.not("FAILED")));
-
-    }
+//  This would delete and rebuild the index on the target solr....
+//  don't do it, unless you configure solr server to your localhost instance
+//
+//  @Test
+//  public void statusShouldNotBeInitialized(){
+//      //given
+//      String responseBody = buildIndexServiceEndPoint.getResponse().body().asString();
+//
+//      assertThat(responseBody, is(Matchers.not("INITIALIZED")));
+//      assertThat(responseBody, is(Matchers.not("FAILED")));
+//
+//  }
 
 }
 
