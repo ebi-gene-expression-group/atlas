@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BioentityPropertiesStreamBuilderTest {
-    private static final String ANOPHELES_GAMBIAE = "anopheles_gambiae";
+    private static final String ANOPHELES_GAMBIAE = "anopheles gambiae";
 
     private BioentityPropertiesStreamBuilder subject;
 
