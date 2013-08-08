@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextEmbedded.xml"})
 public class BioEntityAnnotationDaoIT {
 
     @Inject

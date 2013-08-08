@@ -46,7 +46,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class MicroarrayProfilesTSVWriterIT {
 
     private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-MTAB-1066";

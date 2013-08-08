@@ -40,7 +40,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class SolrQueryServiceIT {
 
     private static final String BIOENTITY_TYPE_GENE = "ensgene";

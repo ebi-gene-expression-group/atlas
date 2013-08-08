@@ -45,7 +45,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class RnaSeqProfilesTSVWriterIT {
 
     private static final String RNA_SEQ_EXPERIMENT_ACCESSION = "E-GEOD-38400";

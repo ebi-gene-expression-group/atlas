@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class RnaSeqExperimentDesignMageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";

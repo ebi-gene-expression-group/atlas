@@ -42,7 +42,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class ExperimentalFactorsIT {
 
     private static final String BASELINE_EXPERIMENT_ACCESSION = "E-GEOD-26284";
