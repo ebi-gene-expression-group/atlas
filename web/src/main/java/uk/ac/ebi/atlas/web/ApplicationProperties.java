@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -29,6 +30,9 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.Set;
@@ -36,6 +40,8 @@ import java.util.Set;
 @Named("applicationProperties")
 @Scope("singleton")
 public class ApplicationProperties {
+
+    private static final String TSV_FILE_EXTENSION = ".tsv";
 
     private Properties speciesToExperimentProperties;
 
@@ -109,6 +115,25 @@ public class ApplicationProperties {
 
     public String getExperimentAccessionBySpecies(String species) {
         return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
+    }
+
+    public String buildServerURL(HttpServletRequest request) throws MalformedURLException {
+        String spec = request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        if (request.isSecure()) {
+            spec = "https://" + spec;
+        } else {
+            spec = "http://" + spec;
+        }
+
+        URL url = new URL(spec);
+        return url.toExternalForm();
+    }
+
+    public String buildDownloadURL(HttpServletRequest request) {
+        // get original query string, not the one modified by ExperimentDispatcher
+        String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
+        return Joiner.on("?").skipNulls()
+                .join(new String[]{request.getAttribute("javax.servlet.forward.request_uri") + TSV_FILE_EXTENSION, queryString}).toString();
     }
 
 }
