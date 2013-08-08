@@ -110,6 +110,8 @@ public class BioentityPropertiesBuilder {
                 }
             }
         }
+        bioentityProperties.add(new BioentityProperty(bioentityIdentifier, bioentityType, species, bioentityType, bioentityIdentifier));
+
         return bioentityProperties;
     }
 
