@@ -54,11 +54,7 @@ public class SolrClientTest {
 
     private static final String IDENTIFIER = "ENSG00000132604";
 
-    //private static final String GENE_PAGE_PROPERTY_TYPES = "synonym,ortholog,goterm,interproterm,ensfamily_description,enstranscript,mgi_description,entrezgene,uniprot,mgi_id,gene_biotype,designelement_accession";
-
     private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym", "ortholog", "goterm", "interproterm", "ensfamily_description", "enstranscript", "mgi_description", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "designelement_accession");
-
-    private static final String EXPECTED_GENE_PAGE_QUERY = "identifier:\"ENSG00000132604\" AND (property_type:\"synonym\" OR property_type:\"ortholog\" OR property_type:\"goterm\" OR property_type:\"interproterm\" OR property_type:\"ensfamily_description\" OR property_type:\"enstranscript\" OR property_type:\"mgi_description\" OR property_type:\"entrezgene\" OR property_type:\"uniprot\" OR property_type:\"mgi_id\" OR property_type:\"gene_biotype\" OR property_type:\"designelement_accession\")";
 
     private static final String CSV_TOOLTIP_PROPERTY_TYPES = "synonym,goterm,interproterm";
 
