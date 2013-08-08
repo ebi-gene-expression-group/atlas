@@ -65,7 +65,12 @@ var experimentsPageModule = (function ($) {
     }
 
     function formatArrayDesign(data, type, full) {
-        return '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + data + '" title="View in Array Express">' + data + '</a>';
+        var result = "";
+        $(data).each(function (index, elem) {
+            result = result + '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + elem + '" title="View in Array Express">' + elem + '</a><br/>';
+        });
+
+        return result;
     }
 
     var asInitVals = new Array();
@@ -105,11 +110,11 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatExperimentType(data, type, full);
                     } },
-                { "sTitle":"Experiment", "mData":"experimentAccession", "sClass":"center bb",
+                { "sTitle":"Experiment", "mData":"experimentAccession", "sClass":"center bb nowrap",
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
                     } },
-                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb",
+                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb nowrap",
                     "mRender":function (data, type, full) {
                         return formatLastUpdate(data, type, full);
                     } },

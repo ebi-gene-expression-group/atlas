@@ -450,3 +450,7 @@ a.help-icon {
     padding-left: 85px !important;
     padding-right: 85px !important;
 }
+
+#experiments-table .nowrap {
+    white-space: nowrap;
+}
