@@ -97,10 +97,13 @@
                                value="${type.isBaseline() ? queryFactor.value : queryFactor.displayName}"/>
 
                         <display:column
-                                title="<div ${!type.isBaseline() ? 'data-contrast-name=\"'.concat(queryFactor.id).concat('\"') : ''}
+                                title="<div data-organism-part=\"${columnHeader}\"
+                                    title=\"${type.isBaseline() ? columnHeader : ''}\"
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
-                                    data-organism-part=\"${columnHeader}\" class=\"factor-header rotate_text\" title=\"${columnHeader}\"></div>"
-                                headerClass='rotated_cell vertical-header-cell'
+                                    ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
+                                    ${!type.isBaseline() ? 'data-experiment-accession=\"'.concat(experimentAccession).concat('\"') : ''}
+                                    class=\"factor-header rotate_text ${!type.isBaseline() ? 'contrastNameCell' : ''}\"></div>"
+                                headerClass="rotated_cell vertical-header-cell"
                                 style="${style}">
 
                             <c:if test="${not empty expressionLevel}">
@@ -170,12 +173,35 @@
 
 <div id="genenametooltip-content" style="display: none"/>
 
+<section id="contrastInfo" style="display:none">
+    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
+    <div id="contrastDescription" style="text-align: center"></div>
+    <table class='table-grid' style="padding: 0px; margin: 0px;">
+        <thead>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Test value
+            </th>
+            <th class='header-cell'>
+                Reference value
+            </th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/highlight.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/genePropertiesTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/heatmapModule.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${base}/resources/js/contrastInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -199,6 +225,10 @@
 
             } else {
                 heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
+            }
+
+            if (!${type.isBaseline()}) {
+                contrastInfoTooltipModule.init('${base}');
             }
 
         });
