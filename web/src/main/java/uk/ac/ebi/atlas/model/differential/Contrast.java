@@ -4,12 +4,14 @@ import com.google.common.base.Objects;
 
 public class Contrast implements Comparable<Contrast> {
     private String id;
+    private String arrayDesignAccession;
     private AssayGroup referenceAssayGroup;
     private AssayGroup testAssayGroup;
     private String displayName;
 
-    public Contrast(String id, AssayGroup referenceAssayGroup, AssayGroup testAssayGroup, String displayName) {
+    public Contrast(String id, String arrayDesignAccession, AssayGroup referenceAssayGroup, AssayGroup testAssayGroup, String displayName) {
         this.id = id;
+        this.arrayDesignAccession = arrayDesignAccession;
         this.referenceAssayGroup = referenceAssayGroup;
         this.testAssayGroup = testAssayGroup;
         this.displayName = displayName;
@@ -17,6 +19,10 @@ public class Contrast implements Comparable<Contrast> {
 
     public String getId() {
         return id;
+    }
+
+    public String getArrayDesignAccession() {
+        return arrayDesignAccession;
     }
 
     public AssayGroup getReferenceAssayGroup() {
@@ -35,6 +41,7 @@ public class Contrast implements Comparable<Contrast> {
     public String toString() {
         return "Contrast{" +
                 "id='" + id + '\'' +
+                ", arrayDesignAccesion=" + arrayDesignAccession +
                 ", referenceAssayGroup=" + referenceAssayGroup +
                 ", testAssayGroup=" + testAssayGroup +
                 ", displayName='" + displayName + '\'' +

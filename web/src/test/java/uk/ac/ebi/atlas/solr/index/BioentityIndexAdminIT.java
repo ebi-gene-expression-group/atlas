@@ -51,10 +51,11 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS) //this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+//this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextEmbedded.xml"})
-public class BioentityIndexAdminIT implements Observer{
+public class BioentityIndexAdminIT implements Observer {
 
     @Inject
     private BioentityIndexAdmin subject;
@@ -67,12 +68,12 @@ public class BioentityIndexAdminIT implements Observer{
     private static SolrServer embeddedSolrServer;
 
     @Inject
-    public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer){
+    public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer) {
         BioentityIndexAdminIT.embeddedSolrServer = embeddedSolrServer;
     }
 
     @Before
-    public void init(){
+    public void init() {
         updateEventLatch = new CountDownLatch(1);
         bioentityIndexMonitor.addObserver(this);
     }
@@ -97,7 +98,7 @@ public class BioentityIndexAdminIT implements Observer{
         SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
-        assertThat(bioentityProperties, hasSize(620));
+        assertThat(bioentityProperties, hasSize(640));
 
         BioentityIndexMonitor.Status status = bioentityIndexMonitor.getStatus();
         assertThat(status, is(BioentityIndexMonitor.Status.COMPLETED));

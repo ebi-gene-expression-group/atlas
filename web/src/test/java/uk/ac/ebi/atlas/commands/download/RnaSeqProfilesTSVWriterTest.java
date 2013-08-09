@@ -93,7 +93,7 @@ public class RnaSeqProfilesTSVWriterTest {
         when(expressionMock.getLevel()).thenReturn(0.134707651014487);
 
         SortedSet<Contrast> contrasts = new TreeSet<>();
-        contrasts.add(new Contrast("id1", null, null, "name"));
+        contrasts.add(new Contrast("id1", null, null, null, "name"));
 
         //when
         String[] expressions = subject.extractConditionLevels(geneProfileMock, contrasts);
@@ -113,7 +113,7 @@ public class RnaSeqProfilesTSVWriterTest {
     }
 
     @Test
-    public void testRemoveTrailingZero(){
+    public void testRemoveTrailingZero() {
         assertThat(subject.removeTrailingZero(1.111111), is("1.1111"));
         assertThat(subject.removeTrailingZero(1.100111), is("1.1001"));
         assertThat(subject.removeTrailingZero(1.111100), is("1.1111"));

@@ -50,10 +50,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextEmbedded.xml"})
-public class BioentityIndexIT{
+public class BioentityIndexIT {
 
     @Value("#{configuration['bioentity.properties']}")
     private String bioentityPropertyDirectory;
@@ -64,7 +64,7 @@ public class BioentityIndexIT{
     private static SolrServer embeddedSolrServer;
 
     @Inject
-    public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer){
+    public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer) {
         BioentityIndexIT.embeddedSolrServer = embeddedSolrServer;
     }
 
@@ -100,7 +100,7 @@ public class BioentityIndexIT{
         SolrParams solrQuery = new SolrQuery("*:*").setRows(10000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
-        assertThat(bioentityProperties, hasSize(305));
+        assertThat(bioentityProperties, hasSize(315));
 
     }
 }
