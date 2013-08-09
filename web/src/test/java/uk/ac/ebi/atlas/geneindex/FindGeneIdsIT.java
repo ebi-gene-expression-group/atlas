@@ -76,7 +76,7 @@ public class FindGeneIdsIT {
     @Test
     public void shouldReturnEmptyResultWhenThereIsNoMatchingId() throws URISyntaxException, GenesNotFoundException {
         //given
-        String query = "\"NOT THERE\"";
+        String query = "\"NOTHING FOUND\"";
 
         GeneQueryResponse geneQueryResponse = subject.findGeneSets(query, false, SPECIES, false);
 
