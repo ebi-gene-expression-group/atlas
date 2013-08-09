@@ -30,7 +30,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">ves-ebi-7f.ebi.ac.uk</stringProp>
+          <stringProp name="HTTPSampler.domain">lime</stringProp>
           <stringProp name="HTTPSampler.port">8983</stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
@@ -40,12 +40,12 @@
           <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
         </ConfigTestElement>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_search:&quot;protein_coding&quot; AND species:&quot;homo sapiens&quot; AND type:&quot;ensgene&quot;" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_value_search:&quot;protein_coding&quot; AND species:&quot;homo sapiens&quot; AND bioentity_type:&quot;ensgene&quot;" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">property_search:&quot;protein_coding&quot; AND species:&quot;homo sapiens&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">property_value_search:&quot;protein_coding&quot; AND species:&quot;homo sapiens&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -66,7 +66,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -122,12 +122,12 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_search:&quot;protein binding&quot; OR property_search:&quot;regulation&quot; AND species:&quot;homo sapiens&quot; AND type:&quot;ensgene&quot;" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_value_search:&quot;protein binding&quot; OR property_value_search:&quot;regulation&quot; AND species:&quot;homo sapiens&quot; AND bioentity_type:&quot;ensgene&quot;" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">property_search:&quot;protein binding&quot; OR property_search:&quot;regulation&quot; AND species:&quot;homo sapiens&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">property_value_search:&quot;protein binding&quot; OR property_value_search:&quot;regulation&quot; AND species:&quot;homo sapiens&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -148,7 +148,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -209,7 +209,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">species:&quot;homo sapiens&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">species:&quot;homo sapiens&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -230,7 +230,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -284,12 +284,12 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_search:&quot;BRCA1&quot; OR property_search:&quot;ASPM&quot; AND species:&quot;mus musculus&quot; AND type:&quot;ensgene&quot;" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_value_search:&quot;BRCA1&quot; OR property_value_search:&quot;ASPM&quot; AND species:&quot;mus musculus&quot; AND bioentity_type:&quot;ensgene&quot;" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">property_search:&quot;BRCA1&quot; OR property_search:&quot;ASPM&quot; AND species:&quot;mus musculus&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">property_value_search:&quot;BRCA1&quot; OR property_value_search:&quot;ASPM&quot; AND species:&quot;mus musculus&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -310,7 +310,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -366,12 +366,12 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_search:&quot;kinase&quot; AND species:&quot;mus musculus&quot; AND type:&quot;ensgene&quot;" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_value_search:&quot;kinase&quot; AND species:&quot;mus musculus&quot; AND bioentity_type:&quot;ensgene&quot;" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">property_search:&quot;kinase&quot; AND species:&quot;mus musculus&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">property_value_search:&quot;kinase&quot; AND species:&quot;mus musculus&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -392,7 +392,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -448,19 +448,19 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_type:&quot;symbol&quot;&amp;facet.field=property_lower&amp;facet=true&amp;rows=0&amp;facet.limit=15&amp;facet.mincount=1" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_value_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_name:&quot;symbol&quot; AND bioentity_type:&quot;ensgene&quot;&amp;facet.field=property_value_lower&amp;facet=true&amp;rows=0&amp;facet.limit=15&amp;facet.mincount=1" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">property_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_type:&quot;symbol&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">property_value_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_name:&quot;symbol&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
               </elementProp>
               <elementProp name="facet.field" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">property_lower</stringProp>
+                <stringProp name="Argument.value">property_value_lower</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">facet.field</stringProp>
@@ -679,12 +679,12 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_search by group for &quot;aspm&quot;" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_value_search by group for &quot;aspm&quot;" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">{!lucene q.op=OR df=property_search} property_search:aspm AND species:&quot;homo sapiens&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">{!lucene q.op=OR df=property_value_search} property_value_search:aspm AND species:&quot;homo sapiens&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -712,7 +712,7 @@
               </elementProp>
               <elementProp name="group.field" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">group.field</stringProp>
@@ -726,7 +726,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -773,12 +773,12 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_search by group for &quot;protein&quot;" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="property_value_search by group for &quot;protein&quot;" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">{!lucene q.op=OR df=property_search} property_search:protein AND species:&quot;homo sapiens&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">{!lucene q.op=OR df=property_value_search} property_value_search:protein AND species:&quot;homo sapiens&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -806,7 +806,7 @@
               </elementProp>
               <elementProp name="group.field" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">group.field</stringProp>
@@ -820,7 +820,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -1019,7 +1019,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">ves-ebi-7f.ebi.ac.uk</stringProp>
+          <stringProp name="HTTPSampler.domain">lime</stringProp>
           <stringProp name="HTTPSampler.port">8983</stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
@@ -1029,12 +1029,12 @@
           <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
         </ConfigTestElement>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="warmup: property_search:&quot;protein_coding&quot;" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="warmup: property_value_search:&quot;protein_coding&quot;" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">property_search:&quot;protein_coding&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">property_value_search:&quot;protein_coding&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
@@ -1055,7 +1055,7 @@
               </elementProp>
               <elementProp name="fl" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">identifier</stringProp>
+                <stringProp name="Argument.value">bioentity_identifier</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">fl</stringProp>
@@ -1106,19 +1106,19 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="warmup: property_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_type:&quot;symbol&quot;&amp;facet.field=property_lower&amp;facet=true&amp;rows=0&amp;facet.limit=15&amp;facet.mincount=1" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="warmup: property_value_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_name:&quot;symbol&quot; AND bioentity_type:&quot;ensgene&quot;&amp;facet.field=property_value_lower&amp;facet=true&amp;rows=0&amp;facet.limit=15&amp;facet.mincount=1" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="q" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">property_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_type:&quot;symbol&quot; AND type:&quot;ensgene&quot;</stringProp>
+                <stringProp name="Argument.value">property_value_edgengram:&quot;asp&quot; AND species:&quot;homo sapiens&quot; AND property_name:&quot;symbol&quot; AND bioentity_type:&quot;ensgene&quot;</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">q</stringProp>
               </elementProp>
               <elementProp name="facet.field" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">property_lower</stringProp>
+                <stringProp name="Argument.value">property_value_lower</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">facet.field</stringProp>
