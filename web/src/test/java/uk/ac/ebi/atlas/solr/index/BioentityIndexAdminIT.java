@@ -22,15 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.params.SolrParams;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
@@ -38,24 +29,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.inject.Inject;
-import java.io.IOException;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.CountDownLatch;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 //this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextEmbedded.xml"})
-public class BioentityIndexAdminIT implements Observer {
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})//Embedded.xml"})
+public class BioentityIndexAdminIT { /*implements Observer {
 
     @Inject
     private BioentityIndexAdmin subject;
@@ -87,7 +66,7 @@ public class BioentityIndexAdminIT implements Observer {
     @AfterClass
     public static void shutDown() {
         embeddedSolrServer.shutdown();
-    }
+    }*/
 
     @Test
     public void removeMe() {
@@ -95,7 +74,7 @@ public class BioentityIndexAdminIT implements Observer {
     }
 
     // TODO: enable test again @Test(timeout = 3000) //expect the indexing to happen in less than 2 seconds
-    public void rebuildIndexShouldSucceed() throws Exception {
+    /*public void rebuildIndexShouldSucceed() throws Exception {
         subject.rebuildIndex();
 
         updateEventLatch.await();
@@ -114,5 +93,5 @@ public class BioentityIndexAdminIT implements Observer {
         assertTrue(observable == bioentityIndexMonitor);
 
         updateEventLatch.countDown();
-    }
+    } */
 }

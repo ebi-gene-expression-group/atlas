@@ -22,40 +22,20 @@
 
 package uk.ac.ebi.atlas.solr.index;
 
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.params.SolrParams;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.xml.sax.SAXException;
-
-import javax.inject.Inject;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextEmbedded.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})//Embedded.xml"})
 public class BioentityIndexIT {
 
-    @Value("#{configuration['bioentity.properties']}")
+    /*@Value("#{configuration['bioentity.properties']}")
     private String bioentityPropertyDirectory;
 
     @Inject
@@ -80,7 +60,7 @@ public class BioentityIndexIT {
     @AfterClass
     public static void shutdown() {
         embeddedSolrServer.shutdown();
-    }
+    }*/
 
     @Test
     public void removeMe() {
@@ -88,7 +68,7 @@ public class BioentityIndexIT {
     }
 
     // TODO: enable test again
-    public void indexFileShouldSucceed() throws IOException, SolrServerException {
+    /*public void indexFileShouldSucceed() throws IOException, SolrServerException {
         subject.indexFile(Paths.get(bioentityPropertyDirectory, "anopheles_gambiae.A-AFFY-102.tsv"));
 
         SolrParams solrQuery = new SolrQuery("*:*");
@@ -107,5 +87,5 @@ public class BioentityIndexIT {
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
         assertThat(bioentityProperties, hasSize(315));
 
-    }
+    }*/
 }
