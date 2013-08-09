@@ -54,7 +54,7 @@ public class SolrClientTest {
 
     private static final String IDENTIFIER = "ENSG00000132604";
 
-    private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym", "ortholog", "goterm", "interproterm", "ensfamily_description", "enstranscript", "mgi_description", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "designelement_accession");
+    private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym", "ortholog", "goterm", "interproterm", "ensfamily_description", "enstranscript", "mgi_description", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "design_element");
 
     private static final String CSV_TOOLTIP_PROPERTY_TYPES = "synonym,goterm,interproterm";
 
