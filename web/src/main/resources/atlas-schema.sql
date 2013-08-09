@@ -5,13 +5,6 @@ CREATE TABLE IF NOT EXISTS experiment_transcripts(
     transcript_expressions ARRAY NOT NULL,
     PRIMARY KEY (experiment_accession, gene_id, transcript_id)
 );
--- to be removed remove after migration deployment
-CREATE TABLE IF NOT EXISTS experiment_configuration(
-    experiment_accession VARCHAR(255) NOT NULL,
-    experiment_type VARCHAR(50) NOT NULL,
-    PRIMARY KEY (experiment_accession)
-);
---
 
 CREATE TABLE IF NOT EXISTS experiment(
     experiment_accession VARCHAR(255) NOT NULL,
@@ -41,11 +34,7 @@ CREATE OR REPLACE VIEW public_experiment AS
 SELECT experiment_accession, experiment_type, last_update
 FROM experiment WHERE PRIVATE=false;
 
--- migrate public experiments
-MERGE INTO experiment (experiment_accession, experiment_type, private)
-SELECT experiment_accession, experiment_type,false
-FROM experiment_configuration;
-COMMIT;
-
 -- enable the next statement only after successful migration
--- DROP TABLE IF EXIST experiment_configuration
+DROP TABLE IF EXISTS experiment_configuration;
+
+ALTER TABLE EXPERIMENT ADD COLUMN IF NOT EXISTS access_key UUID NOT NULL DEFAULT RANDOM_UUID();

@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
@@ -60,13 +61,24 @@ public class ExperimentTrader {
         this.microarrayExperimentsCache = microarrayExperimentsCache;
     }
 
-    public Experiment getExperiment(String experimentAccession) {
+    public Experiment getPublicExperiment(String experimentAccession) {
 
         ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
 
         return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
 
     }
+
+    public Experiment getExperiment(String experimentAccession, String accessKey) {
+
+        if (StringUtils.isBlank(accessKey)){
+            return getPublicExperiment(experimentAccession);
+        }
+        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, accessKey);
+
+        return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
+    }
+
 
     public void removeExperimentFromCache(String experimentAccession, ExperimentType type) {
 
@@ -134,6 +146,5 @@ public class ExperimentTrader {
         }
         return experimentAccessions;
     }
-
 
 }

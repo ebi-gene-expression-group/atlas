@@ -37,9 +37,11 @@ import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
@@ -49,6 +51,7 @@ public class LoadExperimentsControllerTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE";
+    private static final String ACCESS_KEY = "AN_UUID";
 
     @Mock
     private ExperimentDAO experimentDAOMock;
@@ -71,14 +74,14 @@ public class LoadExperimentsControllerTest {
 
         given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
         given(experimentDAOMock.findAllExperiments()).willReturn(
-                Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, new Date(), false)));
-
+                Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, new Date(), false, ACCESS_KEY)));
+        given(experimentDAOMock.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false)).willReturn(UUID.randomUUID());
     }
 
     @Test
     public void loadExperimentShouldSucceed() throws Exception {
         String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
-        assertThat(responseText, is("Experiment " + EXPERIMENT_ACCESSION + " loaded."));
+        assertThat(responseText, startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:"));
         verify(experimentCheckerMock).checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
         verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
     }
@@ -101,10 +104,10 @@ public class LoadExperimentsControllerTest {
     public void testListExperiments() throws Exception {
         given(experimentCRUDMock.findAllExperiments())
             .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE,
-                    new GregorianCalendar(39 + 1900, 12, 12).getTime(), false)));
+                    new GregorianCalendar(39 + 1900, 12, 12).getTime(), false, ACCESS_KEY)));
 
         assertThat(subject.listExperiments(), is(
-                "[{\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false}]"));
+                "[{\"accessKey\":\"AN_UUID\",\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false}]"));
     }
 
 }

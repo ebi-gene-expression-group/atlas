@@ -47,8 +47,8 @@ public class ProteinPageController extends BioEntityPageController {
     }
 
     @RequestMapping(value = "/proteins/{identifier:.*}")
-    public String showGenePage(HttpServletRequest request, @PathVariable String identifier, Model model) {
-        return super.showGenePage(request, identifier, model);
+    public String showBioentityPage(HttpServletRequest request, @PathVariable String identifier, Model model) {
+        return super.showBioentityPage(request, identifier, model);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ProteinPageController extends BioEntityPageController {
     }
 
     @Override
-    String getEntityNamePropertyType() {
+    String getBioentityPropertyName() {
         return GENE_NAME_PROPERTY_TYPE;
     }
 

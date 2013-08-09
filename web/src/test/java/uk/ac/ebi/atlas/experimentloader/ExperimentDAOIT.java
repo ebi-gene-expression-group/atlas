@@ -56,6 +56,7 @@ public class ExperimentDAOIT {
     private static final String DIFFERENTIAL_ACCESION = "DIFFERENTIAL_ACCESSION";
     private static final String MICROARRAY_ACCESSION = "MICROARRAY_ACCESSION";
     private static final String MICRORNA_ACCESSION = "MICRORNA_ACCESSION";
+    private static final String ACCESS_KEY = "AN_UUID";
 
     @Inject
     @Qualifier("dataSource")
@@ -83,7 +84,7 @@ public class ExperimentDAOIT {
     @Test
     public void testFindExperiments() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
-        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, new Date(), false)));
+        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, new Date(), false, ACCESS_KEY)));
     }
 
     @Test
@@ -117,7 +118,7 @@ public class ExperimentDAOIT {
         subject.addExperiment(E_MTAB_1066, TYPE_MICROARRAY, false);
         experimentDTOs = subject.findAllExperiments();
         assertThat(experimentDTOs.size(), is(size + 1));
-        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_1066, TYPE_MICROARRAY, new Date(), false)));
+        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_1066, TYPE_MICROARRAY, new Date(), false, ACCESS_KEY)));
         subject.deleteExperiment(E_MTAB_1066);
     }
 

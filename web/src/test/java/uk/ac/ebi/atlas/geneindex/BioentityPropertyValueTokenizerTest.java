@@ -29,13 +29,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class GeneQueryTokenizerTest {
+public class BioentityPropertyValueTokenizerTest {
 
-    private GeneQueryTokenizer subject;
+    private BioentityPropertyValueTokenizer subject;
 
     @Before
     public void initSubject(){
-        subject = new GeneQueryTokenizer();
+        subject = new BioentityPropertyValueTokenizer();
     }
 
     @Test

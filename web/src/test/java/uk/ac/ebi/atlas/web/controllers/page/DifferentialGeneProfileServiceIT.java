@@ -37,7 +37,6 @@ import uk.ac.ebi.atlas.web.controllers.rest.LoadExperimentsController;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -86,7 +85,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testGetDifferentialProfilesListForIdentifierFirst() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListMapForIdentifier(FIRST_IDENTIFIER, FDR_CUTOFF);
+        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(FIRST_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialGeneProfileProperties, is(not(nullValue())));
         assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), contains(E_GEOD_22351));
         DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_22351);
@@ -97,7 +96,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testGetDifferentialProfilesListForIdentifierSecond() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListMapForIdentifier(SECOND_IDENTIFIER, FDR_CUTOFF);
+        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(SECOND_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialGeneProfileProperties, is(not(nullValue())));
         assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), containsInAnyOrder(E_GEOD_22351));
         DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_22351);
@@ -108,7 +107,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testGetDifferentialProfilesListForIdentifierThird() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListMapForIdentifier(THIRD_IDENTIFIER, FDR_CUTOFF);
+        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(THIRD_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialGeneProfileProperties, is(not(nullValue())));
         assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), containsInAnyOrder(E_MTAB_698, E_GEOD_22351));
         DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_MTAB_698);
@@ -123,7 +122,7 @@ public class DifferentialGeneProfileServiceIT {
 
     @Test
     public void testGetDifferentialProfilesListForIdentifierFourth() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListMapForIdentifier(FOURTH_IDENTIFIER, FDR_CUTOFF);
+        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(FOURTH_IDENTIFIER, FDR_CUTOFF);
         assertThat(differentialGeneProfileProperties, is(not(nullValue())));
         assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), contains(E_GEOD_38400));
         DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_38400);

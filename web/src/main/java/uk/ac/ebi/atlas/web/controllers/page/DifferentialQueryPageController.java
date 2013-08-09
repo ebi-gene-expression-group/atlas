@@ -65,7 +65,7 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
 
         T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        initRequestPreferences(requestPreferences, experiment);
+        initRequestPreferences(model, requestPreferences, experiment);
 
         DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
 
@@ -100,16 +100,16 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
         return "experiment";
     }
 
-    private void initRequestPreferences(K requestPreferences, T experiment) {
+    private void initRequestPreferences(Model model, K requestPreferences, T experiment) {
         //if there is only one contrast we want to preselect it... from Robert feedback
         if (experiment.getContrasts().size() == 1) {
             requestPreferences.setQueryFactorValues(experiment.getContrastIds());
         }
-        initExtraRequestPreferences(requestPreferences, experiment);
+        initExtraPageConfigurations(model, requestPreferences, experiment);
 
     }
 
-    protected abstract void initExtraRequestPreferences(K requestPreferences, T experiment);
+    protected abstract void initExtraPageConfigurations(Model model, K requestPreferences, T experiment);
 
     private DifferentialRequestContext initRequestContext(T experiment, DifferentialRequestPreferences requestPreferences) {
         return differentialRequestContextBuilder.forExperiment(experiment)

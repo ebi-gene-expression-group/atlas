@@ -135,17 +135,20 @@ public class BioEntityPropertyService {
     }
 
     String transformOrthologToSymbol(String identifier) {
-        Collection<String> speciesForGeneId = solrClient.findSpeciesForGeneId(identifier);
+        try{
+            String species = solrClient.findSpeciesForBioentityId(identifier);
 
-        if (speciesForGeneId.size() == 1) {
-            List<String> valuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
-            if (!valuesForGeneId.isEmpty()) {
-                String speciesName = StringUtils.capitalize(speciesForGeneId.iterator().next());
-                String symbol = valuesForGeneId.get(0);
-                return symbol + " (" + speciesName + ")";
+            String speciesToken = " (" + StringUtils.capitalize(species) + ")";
+
+            List<String> propertyValuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
+            if (!propertyValuesForGeneId.isEmpty()) {
+                String symbol = propertyValuesForGeneId.get(0);
+                return symbol + speciesToken;
             }
+            return identifier + speciesToken;
+        }catch(Exception e){
+            return identifier;
         }
-        return identifier;
     }
 
     PropertyLink createLink(String propertyType, String propertyValue, String species) {

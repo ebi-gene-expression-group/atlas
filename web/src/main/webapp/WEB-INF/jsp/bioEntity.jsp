@@ -43,7 +43,7 @@
             <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
                  src="resources/images/bioentity_info_transparent_bkg.png"/>
             <span class="bioEntityCardBioentityName">
-                <c:forEach var="entityName" varStatus="loopStatus" items="${bioEntityPropertyService.getEntityNames()}">
+                <c:forEach var="entityName" varStatus="loopStatus" items="${bioEntityPropertyService.entityNames}">
                     ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
                 </c:forEach>
             </span>

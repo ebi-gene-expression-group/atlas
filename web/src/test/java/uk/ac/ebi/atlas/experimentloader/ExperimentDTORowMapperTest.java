@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -56,6 +57,7 @@ public class ExperimentDTORowMapperTest {
         subject = new ExperimentDTORowMapper();
         when(resultSetMock.getString("experiment_accession")).thenReturn(EXPERIMENT_ACCESSION);
         when(resultSetMock.getString("experiment_type")).thenReturn(BASELINE);
+        when(resultSetMock.getObject("access_key")).thenReturn(UUID.randomUUID());
     }
 
     @Test

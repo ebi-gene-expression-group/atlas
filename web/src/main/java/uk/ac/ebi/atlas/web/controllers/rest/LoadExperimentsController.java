@@ -36,6 +36,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @Scope("request")
@@ -70,9 +71,9 @@ public class LoadExperimentsController {
 
         experimentChecker.checkAllFiles(experimentAccession, experimentType);
 
-        experimentCRUD.importExperiment(experimentAccession, experimentType, isPrivate);
+        UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, experimentType, isPrivate);
 
-        return "Experiment " + experimentAccession + " loaded.";
+        return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }
 
     @RequestMapping("/deleteExperiment")
@@ -85,7 +86,8 @@ public class LoadExperimentsController {
 
     @RequestMapping("/updateExperiment")
     @ResponseBody
-    public String updateExperiment(@RequestParam("accession") String experimentAccession, @RequestParam("private") boolean isPrivate) {
+    public String updateExperiment(@RequestParam("accession") String experimentAccession,
+                                   @RequestParam("private") boolean isPrivate) {
 
         experimentCRUD.updateExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " successfully updated.";

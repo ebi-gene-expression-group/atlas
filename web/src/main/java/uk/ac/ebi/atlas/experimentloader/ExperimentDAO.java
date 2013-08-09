@@ -37,6 +37,7 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -45,7 +46,7 @@ import static com.google.common.base.Preconditions.checkState;
 public class ExperimentDAO {
 
     private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
-            "(experiment_accession, experiment_type, private) VALUES (?, ?, ?)";
+            "(experiment_accession, experiment_type, private, access_key) VALUES (?, ?, ?, ?)";
 
     private static final String DELETE_EXPERIMENT = "DELETE FROM experiment WHERE experiment_accession = ?";
 
@@ -57,10 +58,13 @@ public class ExperimentDAO {
 
     private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession = ?";
 
-    private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM public_experiment WHERE experiment_accession = ?";
+    private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession = ? and private = FALSE";
 
     private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE = "SELECT experiment_accession " +
             "FROM public_experiment WHERE experiment_type IN(:experimentTypes)";
+
+    private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY = "SELECT * FROM experiment WHERE experiment_accession = ? AND access_key = ?";
+
 
     @Inject
     @Qualifier("dataSource")
@@ -91,11 +95,15 @@ public class ExperimentDAO {
         return Sets.newHashSet(experimentAccessions);
     }
 
-    public void addExperiment(String experimentAccession, ExperimentType experimentType, boolean isPrivate) {
+    public UUID addExperiment(String experimentAccession, ExperimentType experimentType, boolean isPrivate) {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession, experimentType.name(), isPrivate);
+        UUID accessKeyUUID = UUID.randomUUID();
+
+        jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession, experimentType.name(), isPrivate, accessKeyUUID);
+
+        return accessKeyUUID;
     }
 
     public void deleteExperiment(String experimentAccession) {
@@ -111,6 +119,20 @@ public class ExperimentDAO {
 
     public ExperimentDTO findPublicExperiment(String experimentAccession) {
         return findExperiment(experimentAccession, false);
+    }
+
+    public ExperimentDTO findExperiment(String experimentAccession, String accessKey) {
+        try{
+
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+            String findExperimentQuery = SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY;
+
+            return jdbcTemplate.queryForObject(findExperimentQuery, new ExperimentDTORowMapper(), experimentAccession, accessKey);
+
+        } catch(EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Experiments not found for accession: " + experimentAccession);
+        }
     }
 
     public ExperimentDTO findExperiment(String experimentAccession, boolean includePrivates) {

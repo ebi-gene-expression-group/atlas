@@ -36,12 +36,13 @@ public class ExperimentDTOTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.BASELINE;
+    private static final String ACCESS_KEY = "AN_UUID";
 
     private ExperimentDTO subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentDTO(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, new Date(), false);
+        subject = new ExperimentDTO(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, new Date(), false, ACCESS_KEY);
     }
 
     @Test
@@ -57,7 +58,7 @@ public class ExperimentDTOTest {
     @Test
     public void testEquals() throws Exception {
         assertThat(subject.equals(null), is(false));
-        assertThat(subject.equals(new ExperimentDTO(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, new Date(), false)), is(true));
+        assertThat(subject.equals(new ExperimentDTO(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, new Date(), false, ACCESS_KEY)), is(true));
     }
 
     @Test

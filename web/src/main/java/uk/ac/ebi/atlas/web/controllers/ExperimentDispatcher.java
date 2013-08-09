@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
-import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,14 +32,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -79,10 +76,8 @@ import java.util.Set;
 public final class ExperimentDispatcher {
 
     public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-    public static final String PROTEIN_IDENTIFIER_ATTRIBUTE = "uniprotAccession";
 
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
-    private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
     private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
@@ -104,9 +99,12 @@ public final class ExperimentDispatcher {
 
     @RequestMapping(value = {"/experiments/{experimentAccession}",
             "/experiments/{experimentAccession}/*"})
-    public String dispatch(HttpServletRequest request, @PathVariable String experimentAccession, Model model) {
+    public String dispatch(HttpServletRequest request, @PathVariable String experimentAccession,
+                           @RequestParam(value = "accessKey",required = false) String accessKey,
+                           Model model) {
 
-        Experiment experiment = getExperiment(experimentAccession, model);
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+
         prepareModel(request, model, experiment);
 
         String requestURL = getRequestURL(request);
@@ -121,21 +119,23 @@ public final class ExperimentDispatcher {
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                  Model model) {
 
-        Collection<String> species = solrClient.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
-        if (species.size() != 1) {
-            model.addAttribute("errorMessage", "No unambiguous species could be determined. Found: " + Joiner.on(", ").join(species));
+        String species = null;
+        try{
+            species = solrClient.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+        } catch(Exception e){
+            model.addAttribute("errorMessage", "Species could not be determined");
             return "widget-error";
         }
-        String specie = species.iterator().next();
-        String experimentAccession = applicationProperties.getExperimentAccessionBySpecies(specie);
+        String experimentAccession = applicationProperties.getExperimentAccessionBySpecies(species);
 
         if (!StringUtils.isEmpty(experimentAccession)) {
-            Experiment experiment = getExperiment(experimentAccession, model);
+            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+
             prepareModel(request, model, experiment);
 
             String requestURL = getRequestURL(request);
 
-            String mappedSpecies = experiment.getRequestSpeciesName(specie);
+            String mappedSpecies = experiment.getRequestSpeciesName(species);
 
             String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
 
@@ -168,18 +168,6 @@ public final class ExperimentDispatcher {
         model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
 
         model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
-    }
-
-    Experiment getExperiment(String experimentAccession, Model model) {
-
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession);
-        //ToDo: (B) verify why we need to do this here and not in the delegated controller...?
-        if (experiment instanceof MicroarrayExperiment) {
-
-            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment) experiment).getArrayDesignAccessions());
-
-        }
-        return experiment;
     }
 
 }

@@ -48,7 +48,7 @@ public class ExperimentLoaderIT {
 
         endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-599&type=BASELINE&private=false");
         result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment E-MTAB-599 loaded."));
+        assertThat(result, startsWith("Experiment E-MTAB-599 loaded, accessKey:"));
         endPoint = new EndPoint("/gxa/listExperiments");
         result = endPoint.getResponseBody().asString();
         assertThat(result, containsString("E-MTAB-599"));

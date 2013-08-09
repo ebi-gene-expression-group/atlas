@@ -56,10 +56,6 @@ public class DifferentialGeneProfileProperties {
         return experimentToDifferentialProfilesListMap.put(experimentAccession, differentialProfilesList);
     }
 
-    public void clear() {
-        experimentToDifferentialProfilesListMap.clear();
-    }
-
     public double getMaxUpRegulatedExpressionLevel() {
         double maxUpRegulatedExpressionLevel = 0;
         for (DifferentialProfilesList<DifferentialProfile> differentialProfilesList : experimentToDifferentialProfilesListMap.values()) {

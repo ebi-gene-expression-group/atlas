@@ -29,6 +29,8 @@ import java.util.Date;
 
 public class ExperimentDTO {
 
+    private final String accessKey;
+
     private String experimentAccession;
 
     private ExperimentType experimentType;
@@ -37,11 +39,12 @@ public class ExperimentDTO {
 
     private boolean isPrivate;
 
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Date lastUpdate, boolean isPrivate) {
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Date lastUpdate, boolean isPrivate, String accessKey) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
         this.lastUpdate = lastUpdate;
         this.isPrivate = isPrivate;
+        this.accessKey = accessKey;
     }
 
     public String getExperimentAccession() {
@@ -77,10 +80,15 @@ public class ExperimentDTO {
                 .add("ExperimentAccession", experimentAccession)
                 .add("ExperimentType", experimentType)
                 .add("isPrivate", isPrivate)
+                .add("accessKey", accessKey)
                 .add("lastUpdate", lastUpdate).toString();
     }
 
     public Date getLastUpdate() {
         return lastUpdate;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
     }
 }

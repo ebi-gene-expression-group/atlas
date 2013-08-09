@@ -27,11 +27,13 @@ import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 
 public abstract class BioEntityPageController {
 
@@ -58,9 +60,9 @@ public abstract class BioEntityPageController {
         this.solrClient = solrClient;
     }
 
-    public String showGenePage(HttpServletRequest request, String identifier, Model model) {
+    public String showBioentityPage(HttpServletRequest request, String identifier, Model model) {
 
-        initBioEntityPropertyService(identifier);
+        initBioentityPropertyService(identifier);
 
         model.addAttribute("entityIdentifier", identifier);
 
@@ -83,23 +85,18 @@ public abstract class BioEntityPageController {
 
     abstract List<String> getPagePropertyTypes();
 
-    abstract String getEntityNamePropertyType();
+    abstract String getBioentityPropertyName();
 
-    protected void initBioEntityPropertyService(String identifier) {
-        Collection<String> species = solrClient.findSpeciesForGeneId(identifier);
-
-        if (species.size() != 1) {
-            throw new ResourceNotFoundException("No unambiguous species could be determined.");
-        }
-        String specie = species.iterator().next();
+    protected void initBioentityPropertyService(String identifier) {
+        String species = solrClient.findSpeciesForBioentityId(identifier);
 
         List<String> queryPropertyTypes = getPagePropertyTypes();
 
         SortedSetMultimap<String, String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
-        SortedSet<String> entityNames = propertyValuesByType.get(getEntityNamePropertyType());
+        SortedSet<String> entityNames = propertyValuesByType.get(getBioentityPropertyName());
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);
         }
-        bioEntityPropertyService.init(specie, propertyValuesByType, entityNames, identifier);
+        bioEntityPropertyService.init(species, propertyValuesByType, entityNames, identifier);
     }
 }

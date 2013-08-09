@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +44,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -116,7 +114,7 @@ public class DifferentialGeneProfileServiceTest {
     @Before
     public void setUp() throws Exception {
         when(experimentTraderMock.getDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
-        when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(Lists.newArrayList(SPECIE));
+        when(solrClientMock.findSpeciesForBioentityId(IDENTIFIER)).thenReturn(SPECIE);
 
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(differentialExperimentMock);
         when(microarrayExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentMock);
@@ -154,11 +152,10 @@ public class DifferentialGeneProfileServiceTest {
 
     @Test
     public void testGetDifferentialProfilesList() throws Exception {
-        assertThat(subject.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
+        assertThat(subject.initDifferentialProfilesListForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
         verify(experimentTraderMock).getDifferentialExperimentAccessions();
         verify(experimentTraderMock).getMicroarrayExperimentAccessions();
         verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);
-        verify(differentialGeneProfilePropertiesMock).clear();
         ArgumentCaptor<DifferentialProfilesList> argumentCaptor = ArgumentCaptor.forClass(DifferentialProfilesList.class);
         verify(differentialGeneProfilePropertiesMock).putDifferentialProfilesListForExperiment(eq(EXPERIMENT_ACCESSION), argumentCaptor.capture());
         assertThat((DifferentialProfile) argumentCaptor.getValue().get(0), is(differentialProfileMock));
@@ -200,12 +197,6 @@ public class DifferentialGeneProfileServiceTest {
         when(microarrayExperimentMock.getSpecies()).thenReturn(Collections.<String>emptySet());
         Collection<DifferentialProfilesList> profilesLists = subject.retrieveDifferentialProfilesForMicroarrayExperiment(EXPERIMENT_ACCESSION, IDENTIFIER, CUTOFF, SPECIE);
         assertThat(profilesLists.isEmpty(), is(true));
-    }
-
-    @Test(expected = ResourceNotFoundException.class)
-    public void testGetDifferentialProfilesListMultipleSpecies() throws Exception {
-        when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(Lists.newArrayList(SPECIE, "ANOTHER"));
-        subject.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, CUTOFF);
     }
 
 }

@@ -49,7 +49,7 @@ public class JsonAutocompleteTest {
     private SolrQueryService solrQueryServiceMock;
 
     @Mock
-    private GeneQueryTokenizer geneQueryTokenizerMock;
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
     private SolrClient subject;
 
@@ -61,7 +61,7 @@ public class JsonAutocompleteTest {
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         jsonAutocompleteEmptyResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.emptySuggestions.json");
 
-        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, geneQueryTokenizerMock);
+        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
     }
 
     @Test

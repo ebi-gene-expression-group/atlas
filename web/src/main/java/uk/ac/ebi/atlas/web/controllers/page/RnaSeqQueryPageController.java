@@ -52,7 +52,7 @@ public class RnaSeqQueryPageController extends DifferentialQueryPageController<D
     }
 
     @Override
-    protected void initExtraRequestPreferences(DifferentialRequestPreferences requestPreferences, DifferentialExperiment experiment) {
+    protected void initExtraPageConfigurations(Model model, DifferentialRequestPreferences requestPreferences, DifferentialExperiment experiment) {
         //No extra initalizations required
     }
 

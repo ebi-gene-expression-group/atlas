@@ -41,7 +41,7 @@ public class SolrQueryServiceTest {
     private SolrQueryService subject;
 
     @Mock
-    private GeneQueryTokenizer geneQueryTokenizerMock;
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
     @Before
     public void setUp() throws Exception {

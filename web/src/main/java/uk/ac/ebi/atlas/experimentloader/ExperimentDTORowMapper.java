@@ -28,10 +28,9 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.UUID;
 
 public class ExperimentDTORowMapper implements RowMapper<ExperimentDTO> {
-
-    private static final int PRIVATE_COLUMN_COUNT = 4;
 
     @Override
     public ExperimentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -42,14 +41,14 @@ public class ExperimentDTORowMapper implements RowMapper<ExperimentDTO> {
         String experimentAccession = resultSet.getString("experiment_accession");
         ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("experiment_type"));
         Date lastUpdate = resultSet.getTimestamp("last_update");
-        boolean isPrivate = false;
-        if (resultSet.getMetaData().getColumnCount() == PRIVATE_COLUMN_COUNT) {
-            isPrivate = resultSet.getBoolean("private");
-        }
-        return new ExperimentDTO(experimentAccession
+        boolean isPrivate = resultSet.getBoolean("private");
+        UUID accessKeyUUID = (UUID)resultSet.getObject("access_key");
+        return new ExperimentDTO(
+                  experimentAccession
                 , experimentType
                 , lastUpdate
-                , isPrivate);
+                , isPrivate
+                , accessKeyUUID.toString());
     }
 
 }

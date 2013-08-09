@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 
 @Named
 @Scope("singleton")
-public class GeneQueryTokenizer {
+public class BioentityPropertyValueTokenizer {
 
     public static final String SPLIT_BY_SPACE_PRESERVING_DOUBLE_QUOTES_REGEXP = "\"([^\"]*)\"|(\\S+)";
 

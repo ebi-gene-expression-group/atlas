@@ -43,6 +43,7 @@ import javax.validation.Valid;
 @Controller
 @Scope("request")
 public class MicroarrayQueryPageController extends DifferentialQueryPageController<MicroarrayExperiment, MicroarrayRequestPreferences, DifferentialProfilesList, MicroarrayProfile> {
+    private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
 
     @Inject
     public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder,
@@ -60,7 +61,9 @@ public class MicroarrayQueryPageController extends DifferentialQueryPageControll
     }
 
     @Override
-    protected void initExtraRequestPreferences(MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
+    protected void initExtraPageConfigurations(Model model, MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
+        model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment) experiment).getArrayDesignAccessions());
+
         // preselect first array design accession
         requestPreferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
     }

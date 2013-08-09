@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.junit.Before;
@@ -38,7 +37,6 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,7 +50,7 @@ public class GenePageControllerTest {
     private static final String SYNONYMS = "Synonyms";
     private static final String GENE_ONTOLOGY = "Gene Ontology";
     private static final String IDENTIFIER = "IDENTIFIER";
-    private static final HashSet<String> SPECIES = Sets.newHashSet("SPECIES");
+    private static final String SPECIES = "SPECIES";
     private static final String SYMBOL = "symbol";
     private static final String DESCRIPTION = "description";
     private static final String SYNONYM = "synonym";
@@ -96,7 +94,7 @@ public class GenePageControllerTest {
         genePageProperties.put(GOTERM, GOTERM);
         genePageProperties.put(ORTHOLOG, ORTHOLOG);
 
-        when(solrClientMock.findSpeciesForGeneId(IDENTIFIER)).thenReturn(SPECIES);
+        when(solrClientMock.findSpeciesForBioentityId(IDENTIFIER)).thenReturn(SPECIES);
         when(solrClientMock.fetchGenePageProperties(IDENTIFIER, Lists.newArrayList(PROPERTY_TYPES.split(",")))).thenReturn(genePageProperties);
         when(solrClientMock.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
 
@@ -108,14 +106,14 @@ public class GenePageControllerTest {
         subject.setBioEntityCardProperties(bioEntityCardProperties);
         subject.setBioEntityPropertyService(bioEntityPropertyServiceMock);
         subject.setDifferentialGeneProfileService(differentialGeneProfileServiceMock);
-        subject.setGenePagePropertyTypes(PROPERTY_TYPES);
+        subject.setBioentityPropertyNames(PROPERTY_TYPES);
         subject.setSolrClient(solrClientMock);
     }
 
     @Test
     public void testShowGenePage() throws Exception {
         solrClientMock.fetchGenePageProperties(IDENTIFIER, Arrays.asList(PROPERTY_TYPES));
-        when(differentialGeneProfileServiceMock.initDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
+        when(differentialGeneProfileServiceMock.initDifferentialProfilesListForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
         when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
         when(httpServletRequestMock.isSecure()).thenReturn(false);
         when(httpServletRequestMock.getServerName()).thenReturn("localhost");

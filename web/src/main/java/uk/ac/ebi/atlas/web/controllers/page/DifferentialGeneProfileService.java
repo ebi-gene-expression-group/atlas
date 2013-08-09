@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.*;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
@@ -41,7 +42,6 @@ import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -89,24 +89,18 @@ public class DifferentialGeneProfileService {
         this.differentialGeneProfileProperties = differentialGeneProfileProperties;
     }
 
-    public DifferentialGeneProfileProperties initDifferentialProfilesListMapForIdentifier(String geneQuery, double cutoff) {
+    public DifferentialGeneProfileProperties initDifferentialProfilesListForIdentifier(String geneQuery, double cutoff) {
 
-        Collection<String> speciesForGeneId = solrClient.findSpeciesForGeneId(geneQuery);
-        if (speciesForGeneId.size() != 1) {
-            throw new ResourceNotFoundException("No unambiguous species could be determined.");
-        }
-        String specie = speciesForGeneId.iterator().next();
-        specie = specie.substring(0, 1).toUpperCase() + specie.substring(1);
+        String species = solrClient.findSpeciesForBioentityId(geneQuery);
 
-        // just being paranoid here, maybe not necessary because of request scope
-        differentialGeneProfileProperties.clear();
+        species = StringUtils.capitalize(species);
 
         // set cutoff used to calculate profile lists for showing on web page
         differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
         for (String experimentAccession : experimentTrader.getDifferentialExperimentAccessions()) {
             try {
-                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, geneQuery, cutoff, specie);
+                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, geneQuery, cutoff, species);
                 if (!retrievedProfilesList.isEmpty()) {
                     differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
                 }
@@ -117,7 +111,7 @@ public class DifferentialGeneProfileService {
 
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
             try {
-                Collection<DifferentialProfilesList> retrievedProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, geneQuery, cutoff, specie);
+                Collection<DifferentialProfilesList> retrievedProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, geneQuery, cutoff, species);
                 if (!retrievedProfilesLists.isEmpty()) {
                     for (DifferentialProfilesList differentialProfilesList : retrievedProfilesLists) {
                         differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, differentialProfilesList);

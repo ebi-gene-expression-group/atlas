@@ -31,8 +31,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.geneindex.BioentityPropertyValueTokenizer;
 import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
-import uk.ac.ebi.atlas.geneindex.GeneQueryTokenizer;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -48,7 +48,7 @@ public class GeneProfilesQueryCommandTest {
     private static final String A_GENE_IDENTIFIER = "A GENE IDENTIFIER";
 
     @Mock
-    private GeneQueryTokenizer geneQueryTokenizerMock;
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
     @Mock
     private SolrClient solrClientMock;

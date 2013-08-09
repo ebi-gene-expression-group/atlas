@@ -34,11 +34,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -67,9 +65,9 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
-    public String showGenePage(HttpServletRequest request, @PathVariable String identifier, Model model) {
+    public String showBioentityPage(HttpServletRequest request, @PathVariable String identifier, Model model) {
         model.addAttribute("isGeneSet", true);
-        return super.showGenePage(request, identifier, model);
+        return super.showBioentityPage(request, identifier, model);
     }
 
     @Override
@@ -78,20 +76,16 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    protected void initBioEntityPropertyService(String identifier) {
+    protected void initBioentityPropertyService(String identifier) {
         String trimmedIdentifier = identifier.replaceAll("\"", "");
-        Collection<String> species = solrClient.getSpeciesForPropertyValue(trimmedIdentifier);
-
-        if (species.size() != 1) {
-            throw new ResourceNotFoundException("Cannot find data form a single organism for geneset with ID " + identifier);
-        }
+        String species = solrClient.getSpeciesForPropertyValue(trimmedIdentifier);
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
         propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
         propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(trimmedIdentifier));
         SortedSet<String> names = Sets.newTreeSet();
         names.add(trimmedIdentifier);
-        bioEntityPropertyService.init(species.iterator().next(), propertyValuesByType, names, trimmedIdentifier);
+        bioEntityPropertyService.init(species, propertyValuesByType, names, trimmedIdentifier);
     }
 
     @Override
@@ -100,7 +94,7 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    String getEntityNamePropertyType() {
+    String getBioentityPropertyName() {
         return null;
     }
 

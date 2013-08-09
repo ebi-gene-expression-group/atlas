@@ -40,6 +40,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -76,7 +77,7 @@ public class ExperimentCRUD {
         this.experimentTrader = experimentTrader;
     }
 
-    public void importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException {
+    public UUID importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException {
         checkNotNull(accession);
         checkNotNull(experimentType);
 
@@ -99,7 +100,7 @@ public class ExperimentCRUD {
                 break;
         }
 
-        experimentDAO.addExperiment(accession, experimentType, isPrivate);
+        return experimentDAO.addExperiment(accession, experimentType, isPrivate);
 
     }
 

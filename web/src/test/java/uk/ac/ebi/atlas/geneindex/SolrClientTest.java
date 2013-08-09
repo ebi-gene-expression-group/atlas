@@ -80,7 +80,7 @@ public class SolrClientTest {
     private SolrQueryService solrQueryServiceMock;
 
     @Mock
-    private GeneQueryTokenizer geneQueryTokenizerMock;
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
     private SolrClient subject;
 
@@ -101,12 +101,12 @@ public class SolrClientTest {
         when(solrQueryServiceMock.getPropertyValuesForIdentifier(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
         when(solrQueryServiceMock.getSpeciesForPropertyValue(IDENTIFIER, SolrQueryService.IDENTIFIER_FIELD)).thenReturn(SPECIES);
 
-        when(geneQueryTokenizerMock.split(IDENTIFIER)).thenReturn(Lists.newArrayList(IDENTIFIER));
+        when(bioentityPropertyValueTokenizerMock.split(IDENTIFIER)).thenReturn(Lists.newArrayList(IDENTIFIER));
 
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(getClass(), "solrAutocompleteResponse.json");
         when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
 
-        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, geneQueryTokenizerMock);
+        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class SolrClientTest {
 
     @Test
     public void testFindSpeciesForGeneId() throws Exception {
-        assertThat(subject.findSpeciesForGeneId(IDENTIFIER), containsInAnyOrder(MUS_MUSCULUS));
+        assertThat(subject.findSpeciesForBioentityId(IDENTIFIER), is(MUS_MUSCULUS));
     }
 
     @Test
@@ -158,11 +158,11 @@ public class SolrClientTest {
         when(solrQueryServiceMock.getGeneIds("A", false, MUS_MUSCULUS)).thenReturn(Sets.newHashSet(IDENTIFIER));
         when(solrQueryServiceMock.getGeneIds("QUERY", false, MUS_MUSCULUS)).thenReturn(Sets.newHashSet(IDENTIFIER));
 
-        when(geneQueryTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
+        when(bioentityPropertyValueTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
 
         GeneQueryResponse geneQueryResponse = subject.findGeneSets(GENE_QUERY, false, MUS_MUSCULUS, true);
 
-        verify(geneQueryTokenizerMock).split("A QUERY");
+        verify(bioentityPropertyValueTokenizerMock).split("A QUERY");
 
         verify(solrQueryServiceMock).getGeneIds("A", false, MUS_MUSCULUS);
         verify(solrQueryServiceMock).getGeneIds("QUERY", false, MUS_MUSCULUS);

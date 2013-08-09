@@ -89,7 +89,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
 
-        ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
+        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
         return load(experimentDTO, fetchExperimentDescription(experimentAccession), hasExtraInfoFile, experimentDesign);
 

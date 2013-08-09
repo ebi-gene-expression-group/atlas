@@ -105,7 +105,7 @@ public class ExperimentTraderTest {
     public void getExperimentShouldUseTheCache(){
         given(experimentDTOMock.getExperimentType()).willReturn(ExperimentType.MICROARRAY);
         given(experimentDAOMock.findPublicExperiment(E_GEOD_21860)).willReturn(experimentDTOMock);
-        subject.getExperiment(E_GEOD_21860);
+        subject.getPublicExperiment(E_GEOD_21860);
         verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
         verify(rnaSeqDiffExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);
         verify(microarrayExperimentsCacheMock).getExperiment(E_GEOD_21860);

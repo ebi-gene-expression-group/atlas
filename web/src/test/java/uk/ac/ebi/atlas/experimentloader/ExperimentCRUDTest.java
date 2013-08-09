@@ -53,6 +53,7 @@ public class ExperimentCRUDTest {
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
     private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
+    private static final String ACCESS_KEY = "AN_UUID";
 
     @Mock
     private ExperimentDesignWriter experimentDesignWriterMock;
@@ -155,7 +156,7 @@ public class ExperimentCRUDTest {
 
     @Test
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
-        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, false));
+        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, false, ACCESS_KEY));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 }

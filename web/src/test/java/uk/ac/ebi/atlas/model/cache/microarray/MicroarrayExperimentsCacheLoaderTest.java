@@ -52,6 +52,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
     private static final String ACCESSION = "accession";
     private static final String ARRAYDESIGNS = "arraydesigns";
     private static final String SPECIES = "species";
+    private static final String ACCESS_KEY = "AN_UUID";
 
     @Mock
     private ConfigurationTrader configurationTraderMock;
@@ -91,7 +92,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
         when(mageTabLimpopoUtilsMock.extractSpeciesFromSDRF(investigationMock)).thenReturn(Sets.newHashSet(SPECIES));
 
-        ExperimentDTO experimentDTO = new ExperimentDTO(ACCESSION, ExperimentType.MICROARRAY, new Date(), false);
+        ExperimentDTO experimentDTO = new ExperimentDTO(ACCESSION, ExperimentType.MICROARRAY, new Date(), false, ACCESS_KEY);
         when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTO);
     }
 

@@ -40,15 +40,15 @@ import java.util.List;
 @Scope("request")
 public class GenePageController extends BioEntityPageController {
 
-    public static final String GENE_NAME_PROPERTY_TYPE = "symbol";
+    public static final String BIOENTITY_PROPERTY_NAME = "symbol";
 
-    private String genePagePropertyTypes;
+    private String bioentityPropertyNames;
 
     private DifferentialGeneProfileService differentialGeneProfileService;
 
     @Value("#{configuration['index.types.genepage']}")
-    void setGenePagePropertyTypes(String genePagePropertyTypes) {
-        this.genePagePropertyTypes = genePagePropertyTypes;
+    void setBioentityPropertyNames(String bioentityPropertyNames) {
+        this.bioentityPropertyNames = bioentityPropertyNames;
     }
 
     @Inject
@@ -60,7 +60,7 @@ public class GenePageController extends BioEntityPageController {
     public String showGenePage(HttpServletRequest request, @RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
 
         DifferentialGeneProfileProperties differentialProfilesListMapForIdentifier =
-                differentialGeneProfileService.initDifferentialProfilesListMapForIdentifier(identifier, cutoff == null ?
+                differentialGeneProfileService.initDifferentialProfilesListForIdentifier(identifier, cutoff == null ?
                         DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
         model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);
 
@@ -70,22 +70,22 @@ public class GenePageController extends BioEntityPageController {
         model.addAttribute("preferences", requestPreferences);
         model.addAttribute("isGenePage", true);
 
-        return showGenePage(request, identifier, model);
+        return showBioentityPage(request, identifier, model);
     }
 
     @Override
     protected boolean isDisplayedInPropertyList(String propertyType) {
-        return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(GENE_NAME_PROPERTY_TYPE);
+        return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(BIOENTITY_PROPERTY_NAME);
     }
 
     @Override
     List<String> getPagePropertyTypes() {
-        return Lists.newArrayList(genePagePropertyTypes.split(","));
+        return Lists.newArrayList(bioentityPropertyNames.split(","));
     }
 
     @Override
-    String getEntityNamePropertyType() {
-        return GENE_NAME_PROPERTY_TYPE;
+    String getBioentityPropertyName() {
+        return BIOENTITY_PROPERTY_NAME;
     }
 
 }

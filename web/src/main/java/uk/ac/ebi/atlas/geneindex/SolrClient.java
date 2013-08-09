@@ -36,10 +36,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,7 +58,7 @@ public class SolrClient {
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
-    private final GeneQueryTokenizer geneQueryTokenizer;
+    private final BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -67,10 +71,10 @@ public class SolrClient {
     private final SolrQueryService solrQueryService;
 
     @Inject
-    public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService, GeneQueryTokenizer geneQueryTokenizer) {
+    public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
         this.restTemplate = restTemplate;
         this.solrQueryService = solrQueryService;
-        this.geneQueryTokenizer = geneQueryTokenizer;
+        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
     }
 
     void setTooltipPropertyTypes(String tooltipPropertyTypes) {
@@ -98,7 +102,7 @@ public class SolrClient {
 
     }
 
-    public Collection<String> findSpeciesForGeneId(String identifier) {
+    public String findSpeciesForBioentityId(String identifier) {
 
         return getSpeciesForPropertyValue(identifier, SolrQueryService.IDENTIFIER_FIELD);
 
@@ -110,17 +114,20 @@ public class SolrClient {
 
     }
 
-    public Collection<String> getSpeciesForPropertyValue(String value) {
-        return getSpeciesForPropertyValue(value, "");
+    public String getSpeciesForPropertyValue(String propertyValue) {
+        return getSpeciesForPropertyValue(propertyValue, "");
     }
 
-    public Collection<String> getSpeciesForPropertyValue(String value, String type) {
-        List<String> partsOfGeneQuery = geneQueryTokenizer.split(value);
-        Collection<String> species = Sets.newHashSet();
-        for (String geneQueryPart : partsOfGeneQuery) {
-            species.addAll(solrQueryService.getSpeciesForPropertyValue(geneQueryPart, type));
+    public String getSpeciesForPropertyValue(String propertyValue, String propertyName) {
+        List<String> propertyValueTokens = bioentityPropertyValueTokenizer.split(propertyValue);
+        Set<String> species = Sets.newHashSet();
+        for (String propertyValueToken : propertyValueTokens) {
+            species.addAll(solrQueryService.getSpeciesForPropertyValue(propertyValueToken, propertyName));
         }
-        return species;
+        if (species.size() != 1) {
+            throw new ResourceNotFoundException("Exact species can't be determined for propertyValue: " + propertyValue + " and propertyName: " + propertyName);
+        }
+        return species.iterator().next();
     }
 
     public GeneQueryResponse findGeneSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
@@ -130,7 +137,7 @@ public class SolrClient {
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         if (tokenizeQuery) {
-            for (String queryToken : geneQueryTokenizer.split(geneQuery)) {
+            for (String queryToken : bioentityPropertyValueTokenizer.split(geneQuery)) {
                 Set<String> geneIds = solrQueryService.getGeneIds(queryToken, exactMatch, species);
                 geneQueryResponse.addGeneIds(queryToken, geneIds);
             }
