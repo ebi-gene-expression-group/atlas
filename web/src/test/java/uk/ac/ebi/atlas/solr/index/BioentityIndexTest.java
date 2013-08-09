@@ -124,19 +124,23 @@ public class BioentityIndexTest {
         InOrder inOrder = inOrder(streamBuilderMock);
         inOrder.verify(streamBuilderMock).forPath(tsvFilePath1);
         inOrder.verify(streamBuilderMock).build();
+
+        inOrder = inOrder(streamBuilderMock);
         inOrder.verify(streamBuilderMock).forPath(tsvFilePath2);
         inOrder.verify(streamBuilderMock).build();
 
         inOrder = inOrder(bioentityIndexMonitorMock);
         inOrder.verify(bioentityIndexMonitorMock).processing(tsvFilePath1);
         inOrder.verify(bioentityIndexMonitorMock).completed(tsvFilePath1);
+
+        inOrder = inOrder(bioentityIndexMonitorMock);
         inOrder.verify(bioentityIndexMonitorMock).processing(tsvFilePath2);
         inOrder.verify(bioentityIndexMonitorMock).completed(tsvFilePath2);
 
         //3 times on on tsvFilePath1 and 1 time only (because we are using the same propertiesStreamMock for both files) on tsvFilePath2
         verify(propertiesStreamMock, times(4)).next();
 
-        verify(solrServerMock,times(2)).addBeans(bioentityProperties);
+        verify(solrServerMock, times(2)).addBeans(bioentityProperties);
 
         verify(solrServerMock).optimize();
     }
