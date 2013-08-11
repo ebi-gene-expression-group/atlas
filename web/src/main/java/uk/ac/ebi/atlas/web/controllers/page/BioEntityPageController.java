@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +59,7 @@ public abstract class BioEntityPageController {
         this.solrClient = solrClient;
     }
 
-    public String showBioentityPage(HttpServletRequest request, String identifier, Model model) {
+    public String showBioentityPage(String identifier, Model model) {
 
         initBioentityPropertyService(identifier);
 

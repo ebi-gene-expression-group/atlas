@@ -164,9 +164,7 @@ public class MicroarrayProfilesTSVWriterTest {
         verify(responeWriterMock).write(subject.getTsvFileMasthead() + "\n");
         verify(responeWriterMock).write("Gene name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 131);
 
-        // because it is wrapped twice in CSVWriter implementation
-        verify(responeWriterMock, times(2)).flush();
-        verify(responeWriterMock, times(2)).close();
+        verify(responeWriterMock, times(1)).flush();
     }
 
     @Test

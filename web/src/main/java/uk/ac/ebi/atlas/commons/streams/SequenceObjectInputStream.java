@@ -32,8 +32,8 @@ import java.util.Enumeration;
  */
 public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
 
-    private Enumeration<ObjectInputStream<T>> e;
-    private ObjectInputStream<T> in;
+    Enumeration<ObjectInputStream<T>> e;
+    ObjectInputStream<T> in;
 
     public SequenceObjectInputStream(Enumeration<ObjectInputStream<T>> e) {
         this.e = e;
@@ -41,7 +41,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
             nextStream();
         } catch (IOException ex) {
             // This should never happen
-            throw new IllegalStateException(ex);
+            throw new Error("panic");
         }
     }
 
@@ -55,12 +55,9 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
 
         if (e.hasMoreElements()) {
             in = e.nextElement();
-            if (in == null) {
+            if (in == null)
                 throw new NullPointerException();
-            }
-        } else {
-            in = null;
-        }
+        } else in = null;
 
     }
 

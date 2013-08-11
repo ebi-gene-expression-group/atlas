@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commands.download.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
@@ -49,6 +50,8 @@ public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Lon
 
     private MicroarrayProfilesTSVWriter geneProfileTsvWriter;
     private MicroarrayRequestContext requestContext;
+
+    private MicroarrayExperiment experiment;
     private InputStreamFactory inputStreamFactory;
 
     @Inject
@@ -83,4 +86,9 @@ public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Lon
     public void setResponseWriter(PrintWriter responseWriter) {
         geneProfileTsvWriter.setResponseWriter(responseWriter);
     }
+
+    public void setExperiment(MicroarrayExperiment experiment) {
+        this.experiment = experiment;
+    }
+
 }

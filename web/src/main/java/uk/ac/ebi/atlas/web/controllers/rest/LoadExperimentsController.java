@@ -58,11 +58,10 @@ public class LoadExperimentsController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public String handleException(Exception e) {
-        LOGGER.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(),e);
         return e.getMessage();
     }
 
-    //ToDo (NK): Do we want to throw IOException here?
     @RequestMapping("/loadExperiment")
     @ResponseBody
     public String loadExperiment(@RequestParam("accession") String experimentAccession,
@@ -99,13 +98,6 @@ public class LoadExperimentsController {
         Gson gson = new Gson();
         return gson.toJson(experimentCRUD.findAllExperiments());
 
-    }
-
-    @RequestMapping("/updateAllExperimentDesigns")
-    @ResponseBody
-    public String updateAllExperimentDesigns()  {
-        int updatedExperimentsCount = experimentCRUD.updateAllExperimentDesigns();
-        return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
     }
 
 }

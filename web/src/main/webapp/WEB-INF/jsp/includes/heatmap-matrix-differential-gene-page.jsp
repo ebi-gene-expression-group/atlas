@@ -23,6 +23,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<c:set var="base" value="${pageContext.request.contextPath}"/>
+<c:if test="${not empty preferences.rootContext}">
+    <c:set var="base" value="${preferences.rootContext}"/>
+</c:if>
+
 <table id="diff-heatmap-table" class="table-grid">
     <thead>
     <tr>
@@ -30,7 +35,7 @@
             <div>Contrast</div>
         </th>
         <th class="horizontal-header-cell" style="padding: 5px;">
-            <div class='factor-header' data-organism-part=''>Adjusted <i>p</i>-value</div>
+            <div class='factor-header' data-organism-part=''>Adjusted P-value</div>
         </th>
     </tr>
     </thead>
@@ -114,8 +119,7 @@
     </tbody>
 </table>
 
-<script language="JavaScript" type="text/javascript"
-        src="${applicationProperties.buildServerURL(pageContext.request)}/resources/js/heatmapModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts

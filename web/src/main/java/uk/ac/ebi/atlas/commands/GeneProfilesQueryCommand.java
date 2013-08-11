@@ -33,7 +33,6 @@ import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Set;
 
 public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements Command<T> {
 
@@ -69,8 +68,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
         ObjectInputStream<K> inputStream = createInputStream(experimentAccession);
 
         if (StringUtils.isBlank(requestContext.getGeneQuery())) {
-            Set<String> geneIdsForSpecies = solrClient.findGeneIdsForSpecies(requestContext.getFilteredBySpecies());
-            return new GeneProfileInputStreamFilter(inputStream, geneIdsForSpecies, requestContext.getSelectedQueryFactors());
+            return new GeneProfileInputStreamFilter(inputStream, requestContext.getSelectedQueryFactors());
         }
 
         GeneQueryResponse geneQueryResponse = solrClient.findGeneSets(requestContext.getGeneQuery(),

@@ -59,9 +59,4 @@ public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayEx
         }
     }
 
-    @Override
-    public void deleteExperiment(String experimentAccession) {
-        experiments.invalidate(experimentAccession);
-    }
-
 }

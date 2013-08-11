@@ -21,18 +21,16 @@
   --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:set var="base" value="${pageContext.request.contextPath}"/>
+<c:if test="${not empty preferences.rootContext}">
+    <c:set var="base" value="${preferences.rootContext}"/>
+</c:if>
+
 <c:choose>
     <c:when test="${empty geneProfiles}">
         <c:if test="${not isPreferenceError}">
             <div id="heatmap-message">
-                <c:choose>
-                    <c:when test="${type.isDifferential() || type.isMicroarray()}">
-                        No differential expressions found below the false discovery rate cutoff for the query.
-                    </c:when>
-                    <c:otherwise>
-                        No expressions found above the expression level cutoff for the query.
-                    </c:otherwise>
-                </c:choose>
+                No expressions found above the expression level cutoff for the query.
             </div>
         </c:if>
     </c:when>
@@ -47,7 +45,7 @@
                 <span id="sex-toggle">
                     <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
                          style="width:20px;height:38px;padding:2px"
-                         src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/male_selected.png"/>
+                         src="${base}/resources/images/male_selected.png"/>
                 </span>
                             <!--
                             <span data-help-loc="#anatomogram"/>

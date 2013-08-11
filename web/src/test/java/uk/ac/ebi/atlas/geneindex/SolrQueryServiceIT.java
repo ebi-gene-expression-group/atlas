@@ -40,7 +40,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class SolrQueryServiceIT {
 
     private static final String BIOENTITY_TYPE_GENE = "ensgene";
@@ -54,7 +54,7 @@ public class SolrQueryServiceIT {
 
         // given
         String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
+        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property_value", 100);
 
         // then
         assertThat(geneNames, contains("ASPM"));
@@ -66,7 +66,7 @@ public class SolrQueryServiceIT {
 
         // given
         String queryString = subject.buildGeneQuery("aspm splicing", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property", 100);
+        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property_value", 100);
 
         // then
         assertThat(geneNames, hasItems("ASPM", "RNA splicing", "mRNA splicing, via spliceosome", "RNA splicing, via transesterification reactions"));
@@ -137,14 +137,6 @@ public class SolrQueryServiceIT {
 
         assertThat(subject.getPropertyValuesForIdentifier("ENSG00000179218", "symbol"), hasItem("CALR"));
         assertThat(subject.getPropertyValuesForIdentifier("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
-
-    }
-
-    @Test
-    public void testGetGeneIdsForSpecies() throws SolrServerException {
-
-        assertThat(subject.getGeneIdsForSpecies("homo sapiens"), hasItem("ENSG00000179218"));
-        assertThat(subject.getGeneIdsForSpecies("mus musculus"), hasItem("ENSMUSG00000029816"));
 
     }
 

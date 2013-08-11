@@ -57,11 +57,13 @@
         <lookup-method name="createBitIndexBuilder" bean="bitIndexBuilder"/>
     </bean>
 
+    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype" factory-method="newSingleThreadExecutor" />
+
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
         <constructor-arg ref="httpClientConnectionManager"/>
     </bean>
 
-    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingClientConnectionManager"
           destroy-method="shutdown">
     </bean>
 

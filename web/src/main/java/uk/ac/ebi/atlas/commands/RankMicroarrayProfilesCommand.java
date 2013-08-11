@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
@@ -39,10 +38,9 @@ import uk.ac.ebi.atlas.streams.InputStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Queue;
+import java.util.Vector;
 
 @Named
 @Scope("prototype")
@@ -67,19 +65,19 @@ public class RankMicroarrayProfilesCommand extends RankProfilesCommand<Different
     protected Comparator<MicroarrayProfile> createGeneProfileComparator(RequestContext requestContext) {
         Regulation regulation = ((DifferentialRequestContext) requestContext).getRegulation();
         return new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
-                requestContext.getAllQueryFactors(), regulation);
+                requestContext.getAllQueryFactors(), regulation, requestContext.getCutoff());
     }
 
     @Override
     public ObjectInputStream<MicroarrayProfile> createInputStream(String experimentAccession) {
         MicroarrayExperiment microarrayExperiment = requestContext.getExperiment();
 
-        List<ObjectInputStream<MicroarrayProfile>> inputStreams = Lists.newArrayList();
+        Vector<ObjectInputStream<MicroarrayProfile>> inputStreams = new Vector<>();
         for (String arrayDesignAccession : microarrayExperiment.getArrayDesignAccessions()) {
             inputStreams.add(inputStreamFactory.createMicroarrayProfileInputStream(experimentAccession, arrayDesignAccession));
         }
 
-        return new SequenceObjectInputStream<>(Collections.enumeration(inputStreams));
+        return new SequenceObjectInputStream<>(inputStreams.elements());
     }
 
     @Override

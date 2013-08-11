@@ -36,7 +36,7 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -65,9 +65,9 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
-    public String showBioentityPage(HttpServletRequest request, @PathVariable String identifier, Model model) {
+    public String showBioentityPage(@PathVariable String identifier, Model model) {
         model.addAttribute("isGeneSet", true);
-        return super.showBioentityPage(request, identifier, model);
+        return super.showBioentityPage(identifier, model);
     }
 
     @Override

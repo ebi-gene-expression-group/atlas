@@ -29,7 +29,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml</param-value>
+        <param-value>classpath:applicationContext.xml classpath:solrContext.xml</param-value>
     </context-param>
 
     <filter>
@@ -100,13 +100,5 @@
     <error-page>
         <location>/WEB-INF/jsp/error/layout-error-page.jsp</location>
     </error-page>
-<!--
-    <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>classpath:log4j.xml</param-value>
-    </context-param>
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
--->
+
 </web-app>

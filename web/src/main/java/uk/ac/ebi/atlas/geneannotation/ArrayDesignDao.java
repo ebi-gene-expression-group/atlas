@@ -43,11 +43,8 @@ import java.util.Map;
 public class ArrayDesignDao extends AnnotationDao {
 
     private static final Logger LOGGER = Logger.getLogger(ArrayDesignDao.class);
-    private static final int DESIGN_ELEMENT_INDEX = 1;
-    private static final int IDENTIFIER_INDEX = 2;
-    private static final int TYPE_INDEX = 3;
-    private static final int ARRAY_DESIGN_INDEX = 4;
 
+    private static final int SUB_BATCH_SIZE = 100;
     private JdbcTemplate jdbcTemplate;
 
     @Inject
@@ -63,10 +60,10 @@ public class ArrayDesignDao extends AnnotationDao {
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(DESIGN_ELEMENT_INDEX, keys.get(i));
-                ps.setString(IDENTIFIER_INDEX, annotations.get(keys.get(i)));
-                ps.setString(TYPE_INDEX, type);
-                ps.setString(ARRAY_DESIGN_INDEX, arrayDesign);
+                ps.setString(1, keys.get(i));
+                ps.setString(2, annotations.get(keys.get(i)));
+                ps.setString(3, type);
+                ps.setString(4, arrayDesign);
             }
 
             @Override

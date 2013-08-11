@@ -106,6 +106,7 @@ public class MicroarrayPageDownloadControllerTest {
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
         verify(writeGeneProfilesCommandMock).setResponseWriter(printWriterMock);
+        verify(writeGeneProfilesCommandMock).setExperiment(experimentMock);
         verify(writeGeneProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
     }
 

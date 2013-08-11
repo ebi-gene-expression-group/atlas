@@ -58,7 +58,7 @@ public class ExperimentLoaderIT {
     public void testDeleteNonExisting() {
         EndPoint endPoint = new EndPoint("/gxa/deleteExperiment?accession=E-MTAB-BLA");
         String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment not found for accession: E-MTAB-BLA"));
+        assertThat(result, is("Experiment not found for accession E-MTAB-BLA"));
     }
 
     @Test

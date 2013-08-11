@@ -38,7 +38,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class FetchGenePagePropertiesIT {
 
     @Inject
@@ -53,9 +53,9 @@ public class FetchGenePagePropertiesIT {
         // given
         Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", Arrays.asList(genePagePropertyTypes.split(",")));
 
-        // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,designelement_accession
+        // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,design_element
 
-        assertThat(properties.size(), Matchers.is(55));
+        assertThat(properties.size(), Matchers.greaterThan(50));
         assertThat(properties.get("synonym").size(), Matchers.is(2));
         assertThat(properties.get("synonym"), Matchers.hasItems("Dchil", "Osteoactivin"));
         assertThat(properties.get("ortholog"), Matchers.hasItems("ENSRNOG00000008816", "ENSGALG00000010949", "ENSBTAG00000000604", "ENSXETG00000007393", "ENSG00000136235"));
@@ -68,7 +68,7 @@ public class FetchGenePagePropertiesIT {
         assertThat(properties.get("mgi_id"), Matchers.hasItems("MGI:1934765"));
         assertThat(properties.get("mgi_description"), Matchers.hasItems("glycoprotein (transmembrane) nmb"));
         assertThat(properties.get("gene_biotype"), Matchers.hasItems("protein_coding"));
-        assertThat(properties.get("designelement_accession"), Matchers.hasItems("5548029", "108822_at", "5610568", "5182097", "5246058"));
+        assertThat(properties.get("design_element"), Matchers.hasItems("5548029", "108822_at", "5610568", "5182097", "5246058"));
     }
 
 

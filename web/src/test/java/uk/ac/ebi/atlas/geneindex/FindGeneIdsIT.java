@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class FindGeneIdsIT {
 
     @Inject
@@ -76,7 +76,7 @@ public class FindGeneIdsIT {
     @Test
     public void shouldReturnEmptyResultWhenThereIsNoMatchingId() throws URISyntaxException, GenesNotFoundException {
         //given
-        String query = "\"NOT THERE\"";
+        String query = "\"NOTHING FOUND\"";
 
         GeneQueryResponse geneQueryResponse = subject.findGeneSets(query, false, SPECIES, false);
 

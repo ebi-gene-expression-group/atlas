@@ -23,6 +23,16 @@ public class DifferentialRequestContext<T extends DifferentialExperiment> extend
     }
 
     @Override
+    protected void setRequestPreferences(DifferentialRequestPreferences requestPreferences) {
+        super.setRequestPreferences(requestPreferences);
+    }
+
+    @Override
+    protected DifferentialRequestPreferences getRequestPreferences() {
+        return super.getRequestPreferences();
+    }
+
+    @Override
     public String toString() {
         return Objects.toStringHelper(this.getClass())
                 .addValue(super.toString())

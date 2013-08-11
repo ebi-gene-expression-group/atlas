@@ -40,7 +40,7 @@ import javax.inject.Inject;
 @Configuration
 public class CacheConfiguration {
 
-    private static final int EXPERIMENTS_CACHE_MAX_SIZE = 10000;
+    private static final int EXPERIMENTS_CACHE_MAX_SIZE = 100;
 
     @Bean(name="baselineExperimentsLoadingCache")
     @Inject

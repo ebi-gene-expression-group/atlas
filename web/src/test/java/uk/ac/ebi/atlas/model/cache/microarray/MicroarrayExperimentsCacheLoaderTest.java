@@ -83,7 +83,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}");
+        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", experimentDAOMock);
         subject.setMageTabLimpopoUtils(mageTabLimpopoUtilsMock);
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);

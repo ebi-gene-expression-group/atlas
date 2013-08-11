@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -41,8 +40,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.*;
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -58,21 +57,12 @@ public class MicroarrayPageDownloadController {
     private static final String PARAMS_TYPE_MICROARRAY = "type=MICROARRAY";
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
     private static final String QUERY_RESULTS_TSV = "-query-results.tsv";
-    private static final String TMP_FILEEXT = ".tmp";
-    private static final String MESSAGE_FIRST_PART = "<download";
-    private static final String MESSAGE_STREAMED_PART = "> streamed ";
-    private static final String MESSAGE_ZIPPED_PART = "> zipped ";
-    private static final String MESSAGE_LAST_PART = " gene expression profiles";
 
     private final MicroarrayRequestContextBuilder requestContextBuilder;
 
     private WriteMicroarrayProfilesCommand writeGeneProfilesCommand;
 
     private DataWriterFactory dataWriterFactory;
-
-    private static final int BUFFER_SIZE = 4096 * 1024;
-    // 4MB buffer
-    private static final byte[] BUFFER = new byte[BUFFER_SIZE];
 
     @Inject
     public MicroarrayPageDownloadController(
@@ -103,32 +93,34 @@ public class MicroarrayPageDownloadController {
 
         } else {
 
-            List<File> tempFiles = Lists.newArrayList();
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + QUERY_RESULTS_TSV;
 
-                // create a temp file
-                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
 
                 //(B) this is very broken. It's overriding the same parameter for every array design
                 preferences.setArrayDesignAccession(selectedArrayDesign);
                 requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+                //
 
-                writeMicroarrayGeneProfiles(new PrintWriter(tempFile), experiment);
+                writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experiment);
 
-                tempFiles.add(tempFile);
+                zipOutputStream.closeEntry();
             }
 
-            writeTempFilesToZip(response, tempFiles);
-
+            zipOutputStream.close();
         }
 
     }
 
-    void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment) {
+    void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment){
         writeGeneProfilesCommand.setResponseWriter(writer);
+        writeGeneProfilesCommand.setExperiment(experiment);
 
         try {
 
@@ -160,35 +152,35 @@ public class MicroarrayPageDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info(MESSAGE_FIRST_PART + NORMALIZED_EXPRESSIONS_TSV + MESSAGE_STREAMED_PART + genesCount + MESSAGE_LAST_PART);
+            LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
 
             writer.close();
 
         } else {
 
-            List<File> tempFiles = Lists.newArrayList();
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + NORMALIZED_EXPRESSIONS_TSV;
 
-                // create a temp file
-                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
                         selectedArrayDesign,
-                        new PrintWriter(tempFile));
+                        new PrintWriter(zipOutputStream));
 
                 long genesCount = writer.write();
 
-                LOGGER.info(MESSAGE_FIRST_PART + NORMALIZED_EXPRESSIONS_TSV + MESSAGE_ZIPPED_PART + genesCount + " in " + filename);
+                LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> zipped " + genesCount + " in " + filename);
 
-                tempFiles.add(tempFile);
+                zipOutputStream.closeEntry();
             }
 
-            writeTempFilesToZip(response, tempFiles);
+            zipOutputStream.close();
         }
-
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/logFold.tsv", params = PARAMS_TYPE_MICROARRAY)
@@ -210,33 +202,34 @@ public class MicroarrayPageDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info(MESSAGE_FIRST_PART + LOG_FOLD_CHANGES_TSV + MESSAGE_STREAMED_PART + genesCount + MESSAGE_LAST_PART);
+            LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> streamed " + genesCount + " gene expression profiles");
 
             writer.close();
 
         } else {
 
-            List<File> tempFiles = Lists.newArrayList();
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + LOG_FOLD_CHANGES_TSV;
 
-                // create a temp file
-                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
                         selectedArrayDesign,
-                        new PrintWriter(tempFile));
+                        new PrintWriter(zipOutputStream));
 
                 long genesCount = writer.write();
 
-                LOGGER.info(MESSAGE_FIRST_PART + LOG_FOLD_CHANGES_TSV + MESSAGE_ZIPPED_PART + genesCount + " in " + filename);
+                LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> zipped " + genesCount + " in " + filename);
 
-                tempFiles.add(tempFile);
+                zipOutputStream.closeEntry();
             }
 
-            writeTempFilesToZip(response, tempFiles);
+            zipOutputStream.close();
         }
     }
 
@@ -259,33 +252,34 @@ public class MicroarrayPageDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info(MESSAGE_FIRST_PART + ANALYTICS_TSV + MESSAGE_STREAMED_PART + genesCount + MESSAGE_LAST_PART);
+            LOGGER.info("<download" + ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
 
             writer.close();
 
         } else {
 
-            List<File> tempFiles = Lists.newArrayList();
+            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
 
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + ANALYTICS_TSV;
 
-                // create a temp file
-                File tempFile = File.createTempFile(filename, TMP_FILEEXT);
+                ZipEntry ze = new ZipEntry(filename);
+
+                zipOutputStream.putNextEntry(ze);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
                         selectedArrayDesign,
-                        new PrintWriter(tempFile));
+                        new PrintWriter(zipOutputStream));
 
                 long genesCount = writer.write();
 
-                LOGGER.info(MESSAGE_FIRST_PART + ANALYTICS_TSV + MESSAGE_ZIPPED_PART + genesCount + " in " + filename);
+                LOGGER.info("<download" + ANALYTICS_TSV + "> zipped " + genesCount + " in " + filename);
 
-                tempFiles.add(tempFile);
+                zipOutputStream.closeEntry();
             }
 
-            writeTempFilesToZip(response, tempFiles);
+            zipOutputStream.close();
         }
 
     }
@@ -303,44 +297,6 @@ public class MicroarrayPageDownloadController {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "_" + arrayDesignAccession + fileExtension + "\"");
             response.setContentType("text/plain; charset=utf-8");
 
-        }
-    }
-
-    private void writeTempFilesToZip(HttpServletResponse response, List<File> tempFiles) throws IOException {
-
-        ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
-
-        for (File tempFile : tempFiles) {
-
-            String fileExt = ".tsv";
-            int lastIndex = tempFile.getName().lastIndexOf(fileExt);
-
-            String filename = tempFile.getName().substring(0, lastIndex + fileExt.length());
-
-            ZipEntry ze = new ZipEntry(filename);
-
-            zipOutputStream.putNextEntry(ze);
-
-            FileInputStream fileInputStream = new FileInputStream(tempFile);
-            copy(fileInputStream, zipOutputStream);
-            fileInputStream.close();
-
-            zipOutputStream.closeEntry();
-
-            // cleanup
-            tempFile.delete();
-        }
-
-        zipOutputStream.close();
-    }
-
-    /**
-     * copy input to output stream - available in several StreamUtils or Streams classes
-     */
-    public static void copy(InputStream input, OutputStream output) throws IOException {
-        int bytesRead;
-        while ((bytesRead = input.read(BUFFER)) != -1) {
-            output.write(BUFFER, 0, bytesRead);
         }
     }
 

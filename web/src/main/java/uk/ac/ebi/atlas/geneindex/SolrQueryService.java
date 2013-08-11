@@ -29,15 +29,15 @@ import com.google.common.collect.TreeMultimap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
@@ -46,24 +46,26 @@ import java.util.Set;
 @Named
 public class SolrQueryService {
 
+    public static final String IDENTIFIER_FIELD = "bioentity_identifier";
+    public static final String BIOENTITY_TYPE = "bioentity_type";
+    public static final String SPECIES_FIELD = "species";
+    public static final String PROPERTY_TYPE_FIELD = "property_name";
+    public static final String PROPERTY_SEARCH_FIELD = "property_value_search";
+    public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
+    public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
+
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
     private static final int PROPERTY_VALUES_LIMIT = 1000;
-    // changed from 2000
-    private static final int CONNECTION_TIMEOUT = 60000;
-    private static final int MAX_RETRIES = 1;
     private static final int DEFAULT_LIMIT = 15;
     private static final String CONFIG_SPLIT_REGEX = ",";
-    private static final String PROPERTY_LOWER_FIELD = "property_lower";
-    public static final String IDENTIFIER_FIELD = "identifier";
-    private static final String SPECIES_FIELD = "species";
-    private static final String PROPERTY_FIELD = "property";
+    private static final String PROPERTY_FIELD = "property_value";
+
     // changed from 100000
     private static final int MAX_GENE_IDS_TO_FETCH = 1000000;
 
     private static final String BIOENTITY_TYPE_GENE = "ensgene";
-
     private static final String BIOENTITY_TYPE_MIRNA = "mirna";
-    private static final int NUMBER_OF_MAX_SPECIES = 100;
+
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
@@ -80,16 +82,8 @@ public class SolrQueryService {
     @Value("#{configuration['index.types.description']}")
     private String descriptionPropertyTypes;
 
-    private HttpSolrServer solrServer;
-
-    @PostConstruct
-    private void initServer() {
-        solrServer = new HttpSolrServer(serverURL);
-        // defaults to 0.  > 1 not recommended.
-        solrServer.setMaxRetries(MAX_RETRIES);
-        // 5 seconds to establish TCP
-        solrServer.setConnectionTimeout(CONNECTION_TIMEOUT);
-    }
+    @Inject
+    private SolrServer solrServer;
 
     public SortedSetMultimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
 
@@ -101,19 +95,6 @@ public class SolrQueryService {
     public Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
 
         String queryString = buildGeneQuery(geneQuery, exactMatch, species, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA);
-
-        return fetchGeneIdentifiersFromSolr(queryString);
-    }
-
-    public Set<String> getGeneIdsForSpecies(String species) {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("species:\"").append(species).append("\"");
-
-        appendBioEntityTypes(sb, new String[]{BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA});
-
-        String queryString = sb.toString();
 
         return fetchGeneIdentifiersFromSolr(queryString);
     }
@@ -147,7 +128,7 @@ public class SolrQueryService {
 
     public String getSpeciesForIdentifier(String identifier) {
 
-        SolrQuery query = new SolrQuery("identifier:" + identifier);
+        SolrQuery query = new SolrQuery(IDENTIFIER_FIELD + ":" + identifier);
         Collection<String> species = extractAllSpecies(query);
         if (species.size() == 1) {
             return species.iterator().next();
@@ -176,7 +157,7 @@ public class SolrQueryService {
 
         List<String> results = Lists.newArrayList();
 
-        SolrQuery query = new SolrQuery("identifier:" + identifier + " AND property_type:" + propertyType);
+        SolrQuery query = new SolrQuery(IDENTIFIER_FIELD + ":" + identifier + " AND " + PROPERTY_TYPE_FIELD + ":" + propertyType);
         query.setFields(PROPERTY_FIELD);
         query.setRows(PROPERTY_VALUES_LIMIT);
 
@@ -192,7 +173,7 @@ public class SolrQueryService {
         Collection<String> species = Sets.newHashSet();
 
         query.setFields(SPECIES_FIELD);
-        query.setRows(NUMBER_OF_MAX_SPECIES);
+        query.setRows(100);
 
         QueryResponse solrResponse = executeSolrQuery(query);
         SolrDocumentList results = solrResponse.getResults();
@@ -238,7 +219,7 @@ public class SolrQueryService {
     SortedSetMultimap<String, String> querySolrForProperties(String queryString, int limitResults) {
         SolrQuery solrQuery = new SolrQuery(queryString);
         solrQuery.setRows(limitResults);
-        solrQuery.setFields(PROPERTY_FIELD, "property_type");
+        solrQuery.setFields(PROPERTY_FIELD, PROPERTY_TYPE_FIELD);
 
         LOGGER.debug("<querySolrForProperties> processing solr query: " + solrQuery.getQuery());
 
@@ -246,7 +227,7 @@ public class SolrQueryService {
 
         SortedSetMultimap<String, String> results = TreeMultimap.create();
         for (SolrDocument document : solrResponse.getResults()) {
-            String key = document.getFieldValue("property_type").toString();
+            String key = document.getFieldValue(PROPERTY_TYPE_FIELD).toString();
             String value = document.getFieldValue(PROPERTY_FIELD).toString();
             results.put(key, value);
         }
@@ -271,7 +252,7 @@ public class SolrQueryService {
     }
 
     String buildGeneQuery(String query, boolean exactMatch, String species, String... bioEntityTypes) {
-        String propertyName = exactMatch ? PROPERTY_LOWER_FIELD : "property_search";
+        String propertyName = exactMatch ? PROPERTY_LOWER_FIELD : PROPERTY_SEARCH_FIELD;
 
         String escapedGeneQuery = customEscape(query);
 
@@ -290,11 +271,11 @@ public class SolrQueryService {
     String buildCompositeQueryIdentifier(String identifier, List<String> propertyTypes) {
 
         StringBuilder query = new StringBuilder();
-        query.append("identifier:\"");
+        query.append(IDENTIFIER_FIELD + ":\"");
         query.append(identifier);
         query.append("\" AND (");
         for (int i = 0; i < propertyTypes.size(); i++) {
-            query.append("property_type:\"");
+            query.append(PROPERTY_TYPE_FIELD + ":\"");
             query.append(propertyTypes.get(i));
             if (i < propertyTypes.size() - 1) {
                 query.append("\" OR ");
@@ -309,14 +290,14 @@ public class SolrQueryService {
     String buildCompositeQuery(String geneName, String species, String[] propertyTypes, String... bioentityTypes) {
 
         StringBuilder query = new StringBuilder();
-        query.append("property_edgengram:\"");
+        query.append(PROPERTY_EDGENGRAM_FIELD + ":\"");
         query.append(geneName);
         query.append("\"");
         appendSpecies(query, species);
         appendBioEntityTypes(query, bioentityTypes);
         query.append(" AND (");
         for (int i = 0; i < propertyTypes.length; i++) {
-            query.append("property_type:\"");
+            query.append(PROPERTY_TYPE_FIELD + ":\"");
             query.append(propertyTypes[i]);
             if (i < propertyTypes.length - 1) {
                 query.append("\" OR ");
@@ -345,7 +326,7 @@ public class SolrQueryService {
     }
 
     private void appendSpecies(StringBuilder sb, String species) {
-        sb.append(" AND species:\"")
+        sb.append(" AND " + SPECIES_FIELD + ":\"")
                 .append(species)
                 .append("\"");
     }
@@ -353,13 +334,12 @@ public class SolrQueryService {
     private void appendBioEntityTypes(StringBuilder sb, String[] bioEntityTypes) {
         sb.append(" AND (");
         for (String bioEntityType : bioEntityTypes) {
-            sb.append("type:\"")
+            sb.append(BIOENTITY_TYPE + ":\"")
                     .append(bioEntityType)
                     .append("\" OR ");
         }
-        String or = " OR ";
-        int indexOfOR = sb.lastIndexOf(or);
-        sb.delete(indexOfOR, indexOfOR + or.length());
+        int indexOfOR = sb.lastIndexOf(" OR ");
+        sb.delete(indexOfOR, indexOfOR + 4);
         sb.append(")");
     }
 }

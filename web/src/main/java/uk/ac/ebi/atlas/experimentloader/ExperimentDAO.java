@@ -145,7 +145,7 @@ public class ExperimentDAO {
             return jdbcTemplate.queryForObject(findExperimentQuery, new ExperimentDTORowMapper(), experimentAccession);
 
         } catch(EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException("Experiment not found for accession: " + experimentAccession);
+            throw new ResourceNotFoundException("Experiment not found for experiment accession: " + experimentAccession);
         }
     }
 

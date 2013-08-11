@@ -30,7 +30,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -47,8 +46,8 @@ public class ProteinPageController extends BioEntityPageController {
     }
 
     @RequestMapping(value = "/proteins/{identifier:.*}")
-    public String showBioentityPage(HttpServletRequest request, @PathVariable String identifier, Model model) {
-        return super.showBioentityPage(request, identifier, model);
+    public String showBioentityPage(@PathVariable String identifier, Model model) {
+        return super.showBioentityPage(identifier, model);
     }
 
     @Override

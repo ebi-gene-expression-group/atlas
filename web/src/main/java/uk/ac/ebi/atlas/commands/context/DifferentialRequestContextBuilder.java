@@ -28,6 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Set;
 import java.util.SortedSet;

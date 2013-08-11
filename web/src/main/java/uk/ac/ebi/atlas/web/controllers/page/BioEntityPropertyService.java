@@ -90,7 +90,7 @@ public class BioEntityPropertyService {
     public List<PropertyLink> getPropertyLinks(String propertyType) {
         if ("reactome".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
             addReactomePropertyValues();
-        } else if ("designelement_accession".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
+        } else if ("design_element".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
             addDesignElements();
         }
 
@@ -106,7 +106,7 @@ public class BioEntityPropertyService {
     private void addDesignElements() {
         List<String> designElements = arrayDesignDao.getDesignElements(identifier);
         if (!designElements.isEmpty()) {
-            propertyValuesByType.putAll("designelement_accession", designElements);
+            propertyValuesByType.putAll("design_element", designElements);
         }
     }
 

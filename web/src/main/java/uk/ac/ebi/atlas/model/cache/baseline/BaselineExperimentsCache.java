@@ -59,9 +59,4 @@ public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperi
         }
     }
 
-    @Override
-    public void deleteExperiment(String experimentAccession) {
-        experiments.invalidate(experimentAccession);
-    }
-
 }
