@@ -151,10 +151,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
                     model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
                 }
 
-                //ToDo: maybe this can be directly built client side in javascript or EL
-                model.addAttribute("downloadUrl", ExperimentDispatcher.buildDownloadURL(request));
-
-
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
             }

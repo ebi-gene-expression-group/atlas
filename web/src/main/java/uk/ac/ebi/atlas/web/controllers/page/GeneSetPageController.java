@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 

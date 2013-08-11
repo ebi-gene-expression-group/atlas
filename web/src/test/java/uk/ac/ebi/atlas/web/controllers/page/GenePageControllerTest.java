@@ -113,7 +113,7 @@ public class GenePageControllerTest {
         when(differentialGeneProfileServiceMock.initDifferentialProfilesListForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF)).thenReturn(differentialGeneProfilePropertiesMock);
         when(differentialGeneProfilePropertiesMock.getFdrCutoff()).thenReturn(DifferentialRequestPreferences.DEFAULT_CUTOFF);
         assertThat(subject.showGenePage(null, IDENTIFIER, modelMock), is("bioEntity"));
-        verify(differentialGeneProfileServiceMock).initDifferentialProfilesListMapForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF);
+        verify(differentialGeneProfileServiceMock).initDifferentialProfilesListForIdentifier(IDENTIFIER, DifferentialRequestPreferences.DEFAULT_CUTOFF);
     }
 
 

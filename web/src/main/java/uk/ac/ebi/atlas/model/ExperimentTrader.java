@@ -84,15 +84,15 @@ public class ExperimentTrader {
 
         switch (type) {
             case BASELINE:
-                baselineExperimentsCache.deleteExperiment(experimentAccession);
+                baselineExperimentsCache.evictExperiment(experimentAccession);
                 break;
             case DIFFERENTIAL:
-                rnaSeqDiffExperimentsCache.deleteExperiment(experimentAccession);
+                rnaSeqDiffExperimentsCache.evictExperiment(experimentAccession);
                 break;
             case MICROARRAY:
             case TWOCOLOUR:
             case MICRORNA:
-                microarrayExperimentsCache.deleteExperiment(experimentAccession);
+                microarrayExperimentsCache.evictExperiment(experimentAccession);
                 break;
             default:
                 throw new IllegalStateException("invalid enum value: " + type);

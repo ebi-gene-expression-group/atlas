@@ -24,8 +24,6 @@ package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;

@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.solr.index;
 
 import com.google.common.collect.Iterators;
-import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;

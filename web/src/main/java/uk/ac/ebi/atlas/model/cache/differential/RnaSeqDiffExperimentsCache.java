@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,11 @@ public class RnaSeqDiffExperimentsCache implements ExperimentsCache<Differential
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
         }
+    }
+
+    @Override
+    public void evictExperiment(String experimentAccession) {
+        experiments.invalidate(experimentAccession);
     }
 
 }

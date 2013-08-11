@@ -19,6 +19,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
