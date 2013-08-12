@@ -100,7 +100,7 @@ public class LoadExperimentsController {
     @RequestMapping("/listExperiments")
     @ResponseBody
     public String listExperiments(@RequestParam(value="accession", required = false) Set<String> experimentAccessions) {
-        List<ExperimentDTO> experiments = null;
+        List<ExperimentDTO> experiments;
         if(CollectionUtils.isEmpty(experimentAccessions)){
             experiments = experimentCRUD.findAllExperiments();
         } else {

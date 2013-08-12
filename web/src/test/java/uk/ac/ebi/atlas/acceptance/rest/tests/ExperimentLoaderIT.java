@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.junit.After;
@@ -31,6 +33,7 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 
 import javax.naming.directory.SearchResult;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,6 +54,20 @@ public class ExperimentLoaderIT {
         EndPoint endPoint = new EndPoint("/gxa/listExperiments");
         String result = endPoint.getResponseBody().asString();
         assertThat(result, containsString("E-MTAB-599"));
+    }
+
+    @Test
+    public void testListSelectedExperiments() {
+        EndPoint endPoint = new EndPoint("/gxa/listExperiments?accession=E-MTAB-599,E-MTAB-513");
+        List<ExperimentDTO> experiments = fromJson(endPoint);
+        Collection<String> accessions = Collections2.transform(experiments, new Function<ExperimentDTO, String>(){
+            @Override
+            public String apply(uk.ac.ebi.atlas.experimentloader.ExperimentDTO experimentDTO) {
+                return experimentDTO.getExperimentAccession();
+            }
+        });
+        assertThat(experiments, hasSize(2));
+        assertThat(accessions, hasItems("E-MTAB-599", "E-MTAB-513"));
     }
 
     @Test
