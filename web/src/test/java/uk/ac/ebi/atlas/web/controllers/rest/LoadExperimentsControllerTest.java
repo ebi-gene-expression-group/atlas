@@ -106,7 +106,7 @@ public class LoadExperimentsControllerTest {
             .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE,
                     new GregorianCalendar(39 + 1900, 12, 12).getTime(), false, ACCESS_KEY)));
 
-        assertThat(subject.listExperiments(), is(
+        assertThat(subject.listExperiments(null), is(
                 "[{\"accessKey\":\"AN_UUID\",\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false}]"));
     }
 

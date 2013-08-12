@@ -40,6 +40,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -175,4 +176,7 @@ public class ExperimentCRUD {
         }
     }
 
+    public List<ExperimentDTO> findExperiments(Set<String> experimentAccessions) {
+        return experimentDAO.findExperiments(experimentAccessions, true);
+    }
 }
