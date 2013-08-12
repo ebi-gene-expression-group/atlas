@@ -107,9 +107,16 @@ public final class ExperimentDispatcher {
 
         prepareModel(request, model, experiment);
 
-        String requestURL = getRequestURL(request);
+        return "forward:" + buildForwardURL(request, experiment, accessKey);
+    }
 
-        return "forward:" + requestURL + "?type=" + experiment.getType().getParent();
+    private String buildForwardURL(HttpServletRequest request, Experiment experiment, String accessKey){
+        String requestURL = getRequestURL(request);
+        requestURL += "?type=" + experiment.getType().getParent();
+        if (StringUtils.isNotBlank(accessKey)){
+            requestURL += "&accessKey=" + accessKey;
+        }
+        return requestURL;
     }
 
     @RequestMapping(value = "/widgets/heatmap/protein")

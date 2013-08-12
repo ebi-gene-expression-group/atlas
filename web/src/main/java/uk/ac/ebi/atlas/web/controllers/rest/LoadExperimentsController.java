@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.gson.Gson;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -32,10 +33,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -95,9 +99,14 @@ public class LoadExperimentsController {
 
     @RequestMapping("/listExperiments")
     @ResponseBody
-    public String listExperiments() {
-        Gson gson = new Gson();
-        return gson.toJson(experimentCRUD.findAllExperiments());
+    public String listExperiments(@RequestParam(value="accession", required = false) Set<String> experimentAccessions) {
+        List<ExperimentDTO> experiments;
+        if(CollectionUtils.isEmpty(experimentAccessions)){
+            experiments = experimentCRUD.findAllExperiments();
+        } else {
+            experiments = experimentCRUD.findExperiments(experimentAccessions);
+        }
+        return new Gson().toJson(experiments);
 
     }
 

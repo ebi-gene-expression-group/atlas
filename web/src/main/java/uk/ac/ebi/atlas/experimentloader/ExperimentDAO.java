@@ -58,6 +58,10 @@ public class ExperimentDAO {
 
     private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession = ?";
 
+    private static final String SELECT_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession IN(:accessions)";
+
+    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession IN(:accessions) and private = FALSE";
+
     private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession = ? and private = FALSE";
 
     private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE = "SELECT experiment_accession " +
@@ -171,5 +175,22 @@ public class ExperimentDAO {
 
         return experimentCount == 1;
 
+    }
+
+    public List<ExperimentDTO> findExperiments(Set<String> experimentAccessions, boolean includePrivates) {
+        try{
+
+            NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+
+            String findExperimentsQuery = includePrivates ? SELECT_EXPERIMENTS_BY_ACCESSION : SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION;
+
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("accessions", experimentAccessions);
+
+            return jdbcTemplate.query(findExperimentsQuery, parameters, new ExperimentDTORowMapper());
+
+        } catch(EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("No experiments found for experiment accession: " + experimentAccessions);
+        }
     }
 }
