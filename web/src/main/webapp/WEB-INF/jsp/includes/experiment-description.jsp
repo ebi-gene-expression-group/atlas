@@ -27,6 +27,16 @@
     <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>
 </c:if>
 
+<c:if test="${isWidget && not empty param.accessKey}">
+    <c:set var="additionalQueryOptionsString"
+           value="&geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+</c:if>
+
+<c:if test="${isWidget && empty param.accessKey}">
+    <c:set var="additionalQueryOptionsString"
+           value="?geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+</c:if>
+
 <td style="width:140px;padding-right:20px">
     <div class="experiment-accession">
         <a id="goto-ae" class="thick-link"
@@ -37,8 +47,9 @@
 </td>
 <td width="100%">
     <div id="experimentDescription">
+
         <a id="goto-experiment" class="thick-link" title="Experiment Page"
-           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}">${experimentDescription}</a>
+           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}">${experimentDescription}</a>
         <c:if test="${hasExtraInfo}">
             <a id="extra-info"
                href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
