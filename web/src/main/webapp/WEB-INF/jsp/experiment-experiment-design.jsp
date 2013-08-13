@@ -28,6 +28,10 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<c:if test="${not empty param.accessKey}">
+    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>
+</c:if>
+
 <form:form method="get" commandName="preferences" id="prefForm">
 
     <div id="table-caption"><b>Experiment Design</b></div>
@@ -69,7 +73,7 @@
 
     <div id="download-button"><a id="download-experiment-design-link" title="Download experiment design"
                                  class="button-image" style="margin-bottom:5px"
-                                 href="experiments/${experimentAccession}/experiment-design.tsv" target="_blank">
+                                 href="experiments/${experimentAccession}/experiment-design.tsv${accessKeyQueryString}" target="_blank">
         <img id="download-experiment-design" alt="Download experiment design"
              src="resources/images/download_blue_small.png"></a>
     </div>
