@@ -56,35 +56,42 @@ public class BioentityIndex {
     public void indexAll(final DirectoryStream<Path> directoryStream) {
         indexDirectory(directoryStream);
 
+        try {
+            solrServer.commit();
+        } catch (IOException | SolrServerException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException(e);
+        }
+
         optimize();
 
         bioentityIndexMonitor.stop();
 
     }
 
-    void indexDirectory(DirectoryStream<Path> bioentityPropertiesDirectoryStream){
+    void indexDirectory(DirectoryStream<Path> bioentityPropertiesDirectoryStream) {
         try (DirectoryStream<Path> directoryStream = bioentityPropertiesDirectoryStream) {
 
             for (Path path : directoryStream) {
 
-                if (Files.isDirectory(path)){
+                if (Files.isDirectory(path)) {
                     indexDirectory(Files.newDirectoryStream(path));
-                } else if (Files.isRegularFile(path)){
+                } else if (Files.isRegularFile(path)) {
                     indexFile(path);
                 }
             }
-        } catch(IOException e){
+        } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
     }
 
-    void indexFile(Path filePath){
+    void indexFile(Path filePath) {
 
-        if (filePath.toString().endsWith(".tsv")){
+        if (filePath.toString().endsWith(".tsv")) {
 
-            try(BioentityPropertiesStream bioentityBioentityPropertiesStream =
-                        bioentityPropertiesStreamBuilder.forPath(filePath).build()){
+            try (BioentityPropertiesStream bioentityBioentityPropertiesStream =
+                         bioentityPropertiesStreamBuilder.forPath(filePath).build()) {
 
                 LOGGER.info("<indexFile> streaming started for file: " + filePath);
 
@@ -97,11 +104,11 @@ public class BioentityIndex {
                     solrServer.addBeans(documents);
 
                 }
-                solrServer.commit();
+                //solrServer.commit();
 
                 bioentityIndexMonitor.completed(filePath);
 
-            } catch(IOException|SolrServerException e){
+            } catch (IOException | SolrServerException e) {
                 LOGGER.error(e.getMessage(), e);
                 throw new IllegalStateException(e);
             }
