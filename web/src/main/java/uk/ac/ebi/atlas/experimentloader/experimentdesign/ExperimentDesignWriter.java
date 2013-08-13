@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
@@ -75,14 +76,12 @@ public class ExperimentDesignWriter<T extends AbstractSDRFNode> {
         return headers.toArray(new String[headers.size()]);
     }
 
-    SortedSet<String> toHeaders(SortedSet<String> propertyNames, final String headerTemplate) {
-        Collection<String> headers = Collections2.transform(propertyNames, new Function<String, String>() {
-            @Override
-            public String apply(String propertyName) {
-                return MessageFormat.format(headerTemplate, propertyName);
-            }
-        });
-        return Sets.newTreeSet(headers);
+    List<String> toHeaders(SortedSet<String> propertyNames, final String headerTemplate) {
+        List<String> headers = new ArrayList<>();
+        for (String propertyName: propertyNames){
+            headers.add(MessageFormat.format(headerTemplate, propertyName));
+        }
+        return headers;
     }
 
     protected List<String> getCommonColumnHeaders(ExperimentType experimentType){
