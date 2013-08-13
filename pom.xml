@@ -44,7 +44,7 @@
         <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
         <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
         <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2-lime/atlas</h2.database.location>
-        <solr.host>lime</solr.host>
+        <solr.host>localhost</solr.host>
         <gxa.server.url>http://ves-hx-74:8080/gxa</gxa.server.url>
         <deploy.host>
             <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
@@ -551,7 +551,6 @@
         <profile>
             <id>lime</id>
             <properties>
-                <solr.host>localhost</solr.host>
                 <deploy.host>lime</deploy.host>
                 <deploy.port>14092</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
@@ -580,8 +579,8 @@
         <profile>
             <id>local.integration.test</id>
             <properties>
-                <!-- change to integrate with a solr running on localhost rather than the default remote host
-                <solr.host>localhost</solr.host>  -->
+                <!-- change to integrate with a solr running on localhost rather than the default remote host -->
+                <solr.host>lime</solr.host>
                 <h2.database.location>${user.home}/ATLAS3.TEST/data/h2/atlas</h2.database.location>
                 <integration.experiment.identifiers>
                     E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276
