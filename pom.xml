@@ -570,6 +570,7 @@
             <id>integration.test</id>
             <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
+                <solr.host>lime</solr.host>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <integration.experiment.identifiers>
                     E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276
