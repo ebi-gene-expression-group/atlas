@@ -54,6 +54,15 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "geneCount")
     private WebElement geneCount;
 
+    @FindBy(id = "display-experiment")
+    private WebElement displayExperimentLink;
+
+    @FindBy(id = "display-experiment-design")
+    private WebElement displayExperimentDesignLink;
+
+    @FindBy(id = "display-analysis-methods")
+    private WebElement displayAnalysisLink;
+
     @FindBy(id = "download-profiles-link")
     private WebElement downloadExpressionProfilesLink;
 
@@ -164,6 +173,18 @@ public class HeatmapTablePage extends TablePage {
         WebElement element = diffHeatmapTableLegend.findElement(By.className("color-gradient"));
         String style = element.getCssValue("background-image");
         return Lists.newArrayList(StringUtils.substringsBetween(style,"rgb(",")"));
+    }
+
+    public String getDisplayExperimentLink() {
+        return displayExperimentLink.getAttribute("href");
+    }
+
+    public String getDisplayExperimentDesignLink() {
+        return displayExperimentDesignLink.getAttribute("href");
+    }
+
+    public String getDisplayExperimentAnalysisLink() {
+        return displayAnalysisLink.getAttribute("href");
     }
 
     public String getDownloadExpressionProfilesLink() {

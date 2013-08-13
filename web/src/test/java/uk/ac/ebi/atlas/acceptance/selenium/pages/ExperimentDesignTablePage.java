@@ -71,6 +71,11 @@ public class ExperimentDesignTablePage extends TablePage {
         this.experimentAccession = experimentAccession == null? DEFAULT_EXPERIMENT_ACCESSION : experimentAccession;
     }
 
+    public ExperimentDesignTablePage(WebDriver driver, String experimentAccession, String queryString) {
+        super(driver, queryString);
+        this.experimentAccession = experimentAccession == null? DEFAULT_EXPERIMENT_ACCESSION : experimentAccession;
+    }
+
     @Override
     protected String getPageURI() {
         return MessageFormat.format(PAGE_URI_TEMPLATE, experimentAccession);

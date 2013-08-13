@@ -31,6 +31,7 @@ import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.FeedbackHomePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
@@ -41,6 +42,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
@@ -86,6 +88,31 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
     @Test
     public void pageShouldBeAvailableWithAccessKey() {
         assertThat(subject.getExperimentDescription(), is("RNA-seq of vomeronasal tissue from adult male and female mice"));
+    }
+
+    @Test
+    public void buttonLinksShouldContainAccessKeyQueryString() {
+        assertThat(subject.getDisplayExperimentLink(), endsWith("?accessKey=" + accessKey));
+        assertThat(subject.getDownloadAnalyticsLink(), endsWith("?accessKey=" + accessKey));
+        assertThat(subject.getDisplayExperimentDesignLink(), endsWith("?accessKey=" + accessKey));
+        assertThat(subject.getDisplayExperimentAnalysisLink(), endsWith("?accessKey=" + accessKey));
+        assertThat(subject.getDownloadRawCountsLink(), endsWith("?accessKey=" + accessKey));
+        assertThat(subject.getDownloadAnalyticsLink(), endsWith("?accessKey=" + accessKey));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void experimentDesignPageWillFailWithoutAccessKey() {
+        ExperimentDesignTablePage experimentDesignPage = new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION);
+        experimentDesignPage.get();
+        experimentDesignPage.getExperimentDescription();
+    }
+
+    @Test
+    public void experimentDesignPageWillBeAvailableWithAccessKey() {
+        ExperimentDesignTablePage experimentDesignPage =
+                new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
+        experimentDesignPage.get();
+        experimentDesignPage.getExperimentDescription();
     }
 
 }
