@@ -228,7 +228,7 @@
             }
 
             if (!${type.isBaseline()}) {
-                contrastInfoTooltipModule.init('${base}');
+                contrastInfoTooltipModule.init('${base}', '${param.accessKey}');
             }
 
         });

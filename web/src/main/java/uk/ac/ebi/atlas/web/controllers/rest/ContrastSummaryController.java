@@ -69,17 +69,10 @@ public class ContrastSummaryController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTooltipContent(@RequestParam(value = "experimentAccession") String experimentAccession,
+                                    @RequestParam(value = "accessKey", required = false) String accessKey,
                                     @RequestParam(value = "contrastId") String contrastId) {
 
-        DifferentialExperiment differentialExperiment;
-
-        if (experimentTrader.getDifferentialExperimentAccessions().contains(experimentAccession)) {
-            differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-        } else if (experimentTrader.getMicroarrayExperimentAccessions().contains(experimentAccession)) {
-            differentialExperiment = microarrayExperimentsCache.getExperiment(experimentAccession);
-        } else {
-            throw new IllegalStateException("Experiment for accession " + experimentAccession + " not found.");
-        }
+        DifferentialExperiment differentialExperiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
         Contrast contrast = differentialExperiment.getContrast(contrastId);
         if (contrast == null) {
