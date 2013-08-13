@@ -551,6 +551,7 @@
         <profile>
             <id>lime</id>
             <properties>
+                <solr.host>localhost</solr.host>
                 <deploy.host>lime</deploy.host>
                 <deploy.port>14092</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
