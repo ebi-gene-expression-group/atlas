@@ -205,7 +205,7 @@
         });
 
 
-        contrastInfoTooltipModule.init('${pageContext.request.contextPath}');
+        contrastInfoTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');
 
         var widgetParameters = "&propertyType=bioentity_identifier";
         if (${isGeneSet == true}) {

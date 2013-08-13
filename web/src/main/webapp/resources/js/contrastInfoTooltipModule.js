@@ -26,7 +26,7 @@
 var contrastInfoTooltipModule = (function ($) {
     "use strict";
 
-    function initTooltip(contextRoot) {
+    function initTooltip(contextRoot, accessKey) {
 
         $(".contrastNameCell").attr("title", "").tooltip({
 
@@ -44,7 +44,12 @@ var contrastInfoTooltipModule = (function ($) {
                 //callback($("#contrastInfo").html());
 
                 $.ajax({
-                    url:contextRoot + "/rest/contrast-summary?experimentAccession=" + experimentAccession + "&contrastId=" + contrastId,
+                    url:contextRoot + "/rest/contrast-summary",
+                    data:{
+                        experimentAccession:experimentAccession,
+                        contrastId: contrastId,
+                        accessKey: accessKey
+                    },
                     type:"GET",
                     success:function (data) {
                         var experimentDescription = data.experimentDescription,
@@ -85,8 +90,8 @@ var contrastInfoTooltipModule = (function ($) {
     }
 
     return {
-        init:function (contextRoot) {
-            initTooltip(contextRoot);
+        init:function (contextRoot, accessKey) {
+            initTooltip(contextRoot, accessKey);
         }
     };
 }(jQuery));

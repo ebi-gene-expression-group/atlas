@@ -2,6 +2,9 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:if test="${not empty param.accessKey}">
+    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>
+</c:if>
 
 <section class="extra-padding">
 
@@ -16,25 +19,25 @@
                     <tr>
                         <td>
                             <a id="display-experiment" class="button-image"
-                               title="Experiment Page" href="experiments/${experimentAccession}">
+                               title="Experiment Page" href="experiments/${experimentAccession}${accessKeyQueryString}">
                                 <img src="resources/images/experiment_page_small.png"/></a>
                         </td>
                         <td>
                             <a id="display-analysis-methods" class="button-image" title="Analysis Methods"
-                               href="experiments/${experimentAccession}/analysis-methods">
+                               href="experiments/${experimentAccession}/analysis-methods${accessKeyQueryString}">
                                 <img style="width:23px;height:23px"
                                      src="resources/images/analysis_icon.png"/></a>
                         </td>
                         <td>
                             <a id="display-experiment-design" class="button-image"
-                               title="Experiment Design" href="experiments/${experimentAccession}/experiment-design">
+                               title="Experiment Design" href="experiments/${experimentAccession}/experiment-design${accessKeyQueryString}">
                                 <img src="resources/images/experiment_design_icon.png"/></a>
                         </td>
                         <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"
                                    title="Download all raw counts for the experiment"
-                                   href="${rawDownloadUrl}">
+                                   href="${rawDownloadUrl}${accessKeyQueryString}">
                                     <img src="resources/images/download_blue_small_raw.png"/></a>
                             </td>
                         </c:if>
@@ -44,13 +47,13 @@
                                     <c:when test="${type.isTwoColour()}">
                                         <a id="download-logFold" class="button-image"
                                            title="Download all log fold expression changes for the experiment"
-                                           href="${logFoldUrl}">
+                                           href="${logFoldUrl}${accessKeyQueryString}">
                                             <img src="resources/images/download_blue_small_logfold.png"/></a>
                                     </c:when>
                                     <c:otherwise>
                                         <a id="download-normalized" class="button-image"
                                            title="Download all normalized expressions for the experiment"
-                                           href="${normalizedUrl}">
+                                           href="${normalizedUrl}${accessKeyQueryString}">
                                             <img src="resources/images/download_blue_small_normalized.png"/></a>
                                     </c:otherwise>
                                 </c:choose>
@@ -61,7 +64,7 @@
                             <td>
                                 <a id="download-analytics" class="button-image"
                                    title="Download all analytics for the experiment"
-                                   href="${analyticsDownloadUrl}">
+                                   href="${analyticsDownloadUrl}${accessKeyQueryString}">
                                     <img src="resources/images/download_blue_small_analytics.png"/></a>
                             </td>
                         </c:if>
