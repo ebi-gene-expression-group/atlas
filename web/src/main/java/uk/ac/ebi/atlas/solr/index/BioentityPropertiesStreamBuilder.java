@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.solr.index;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Charsets;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -53,7 +54,7 @@ public class BioentityPropertiesStreamBuilder {
 
     public BioentityPropertiesStream build() throws IOException {
         Reader fileReader = Files.newBufferedReader(bioentityPropertiesFilePath, Charsets.UTF_8);
-        CSVReader csvReader = new CSVReader(fileReader, '\t');
+        CSVReader csvReader = new CSVReader(fileReader, '\t', CSVWriter.NO_QUOTE_CHARACTER);
         return new BioentityPropertiesStream(csvReader, bioentityPropertiesBuilder, getSpecies());
     }
 
