@@ -80,6 +80,12 @@ public class BioEntityPropertyService {
         this.propertyValuesByType = propertyValuesByType;
         this.entityNames = entityNames;
         this.identifier = identifier;
+
+        // this is to add mirbase sequence for ENSEMBL mirnas
+        if (propertyValuesByType.containsKey("mirbase_id") && !propertyValuesByType.containsKey("mirbase_sequence")) {
+            addMirBaseSequence();
+        }
+
     }
 
     public String getSpecies() {
@@ -94,13 +100,17 @@ public class BioEntityPropertyService {
             addDesignElements();
         }
 
-
         List<PropertyLink> propertyLinks = Lists.newArrayList();
         for (String propertyValue : propertyValuesByType.get(propertyType)) {
-
             propertyLinks.add(createLink(propertyType, propertyValue, species));
         }
         return propertyLinks;
+    }
+
+    private void addMirBaseSequence() {
+        String mirbase_id = propertyValuesByType.get("mirbase_id").first();
+        List<String> mirbase_sequence = solrClient.findPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
+        propertyValuesByType.putAll("mirbase_sequence", mirbase_sequence);
     }
 
     private void addDesignElements() {
@@ -135,7 +145,7 @@ public class BioEntityPropertyService {
     }
 
     String transformOrthologToSymbol(String identifier) {
-        try{
+        try {
             String species = solrClient.findSpeciesForBioentityId(identifier);
 
             String speciesToken = " (" + StringUtils.capitalize(species) + ")";
@@ -146,7 +156,7 @@ public class BioEntityPropertyService {
                 return symbol + speciesToken;
             }
             return identifier + speciesToken;
-        }catch(Exception e){
+        } catch (Exception e) {
             return identifier;
         }
     }
