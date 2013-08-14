@@ -76,6 +76,10 @@ public class GeneProfilesQueryCommandTest {
         when(solrClientMock.findGeneSets("A", false, SPECIES, false)).thenReturn(geneQueryResponse);
         when(solrClientMock.findGeneSets("QUERY", false, SPECIES, false)).thenReturn(geneQueryResponse);
 
+        // filter by species
+        when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
+        when(solrClientMock.findGeneIdsForSpecies(SPECIES)).thenReturn(Sets.newHashSet(A_GENE_IDENTIFIER));
+
         //a stream with 5 profile of 2 expressions
         largeInputStream = new GeneProfileInputStreamMock(5);
 
@@ -99,7 +103,7 @@ public class GeneProfilesQueryCommandTest {
 
         subject.execute("");
 
-        verify(solrClientMock, times(0)).findGeneSets(GENE_QUERY, false, SPECIES, false);
+        verify(solrClientMock, times(1)).findGeneIdsForSpecies(SPECIES);
     }
 
 }

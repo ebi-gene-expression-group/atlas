@@ -149,6 +149,13 @@ public class SolrClient {
 
     }
 
+    public Set<String> findGeneIdsForSpecies(String species) {
+
+        checkArgument(StringUtils.isNotBlank(species));
+
+        return solrQueryService.getGeneIdsForSpecies(species.toLowerCase());
+    }
+
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
         return solrQueryService.getGeneIdSuggestionsInName(geneName, species.toLowerCase());
