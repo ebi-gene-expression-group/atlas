@@ -60,12 +60,12 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("1728","2286","704","1344","1633","326","793","2380","156","1825","1265","1206","807","129","1040","425" ));
+        assertThat(subject.getFirstGeneProfile(), contains("1728", "2286", "704", "1344", "1633", "326", "793", "2380", "156", "1825", "1265", "1206", "807", "129", "1040", "425"));
     }
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("189"), is(true));
+        assertThat(subject.getGeneCount().contains("188"), is(true));
     }
 
 }
