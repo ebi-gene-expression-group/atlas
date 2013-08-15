@@ -197,11 +197,11 @@
         $("#differential-info-image").tooltip();
 
         $("#accordion").accordion({
-            collapsible: true,
-            active: openPanelIndex,
-            heightStyle: "content",
-            icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
-            header: "ul"
+            collapsible:true,
+            active:openPanelIndex,
+            heightStyle:"content",
+            icons:{ "header":"bioEntityCardIconPlus", "activeHeader":"bioEntityCardIconMinus" },
+            header:"ul"
         });
 
 
@@ -213,8 +213,8 @@
         }
 
         new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}' + widgetParameters,
-            target: "widgetBody"
+            featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
+            target:"widgetBody"
         });
     };
 </script>

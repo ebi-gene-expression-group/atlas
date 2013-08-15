@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
@@ -29,10 +30,7 @@ import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import javax.inject.Inject;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 
 public abstract class BioEntityPageController {
 
@@ -63,11 +61,20 @@ public abstract class BioEntityPageController {
 
         initBioentityPropertyService(identifier);
 
+        findEnsemblIDsForMirBaseID(identifier, model);
+
         model.addAttribute("entityIdentifier", identifier);
 
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         return "bioEntity";
+    }
+
+    private void findEnsemblIDsForMirBaseID(String mirBaseID, Model model) {
+        Set<String> ensemblIDs = solrClient.fetchGeneIdentifiersFromSolr(mirBaseID, "ensgene", "mirbase_id");
+        if (ensemblIDs.size() > 0) {
+            model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
+        }
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {

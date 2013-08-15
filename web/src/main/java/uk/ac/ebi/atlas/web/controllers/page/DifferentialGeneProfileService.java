@@ -45,10 +45,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 @Named("differentialGeneProfileService")
 @Scope("request")
@@ -92,15 +89,37 @@ public class DifferentialGeneProfileService {
     public DifferentialGeneProfileProperties initDifferentialProfilesListForIdentifier(String geneQuery, double cutoff) {
 
         String species = solrClient.findSpeciesForBioentityId(geneQuery);
-
         species = StringUtils.capitalize(species);
 
+        List<String> mirbase_id = solrClient.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
+        if (mirbase_id.size() > 0) {
+            // there should be a one to one mapping between ENSEMBL gene IDs and miRBase IDs
+            filterMatureRNADifferentialProfilesForIdentifier(mirbase_id.get(0), cutoff, species);
+        } else {
+            filterMatureRNADifferentialProfilesForIdentifier(geneQuery, cutoff, species);
+        }
+
+        return differentialGeneProfileProperties;
+    }
+
+    private void filterMatureRNADifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
+        Set<String> matureRNAsForMirbaseId = solrClient.fetchGeneIdentifiersFromSolr(identifier, "mirna", "hairpin_id");
+        if (matureRNAsForMirbaseId.size() > 0) {
+            for (String matureRNAIdentifier : matureRNAsForMirbaseId) {
+                processDifferentialProfilesForIdentifier(matureRNAIdentifier, cutoff, species);
+            }
+        } else {
+            processDifferentialProfilesForIdentifier(identifier, cutoff, species);
+        }
+    }
+
+    private void processDifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
         // set cutoff used to calculate profile lists for showing on web page
         differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
         for (String experimentAccession : experimentTrader.getDifferentialExperimentAccessions()) {
             try {
-                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, geneQuery, cutoff, species);
+                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, identifier, cutoff, species);
                 if (!retrievedProfilesList.isEmpty()) {
                     differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
                 }
@@ -111,7 +130,7 @@ public class DifferentialGeneProfileService {
 
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
             try {
-                Collection<DifferentialProfilesList> retrievedProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, geneQuery, cutoff, species);
+                Collection<DifferentialProfilesList> retrievedProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, identifier, cutoff, species);
                 if (!retrievedProfilesLists.isEmpty()) {
                     for (DifferentialProfilesList differentialProfilesList : retrievedProfilesLists) {
                         differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, differentialProfilesList);
@@ -121,9 +140,8 @@ public class DifferentialGeneProfileService {
                 // this happens when the experiment does not contain identifier
             }
         }
-
-        return differentialGeneProfileProperties;
     }
+
 
     DifferentialProfilesList retrieveDifferentialProfilesForRnaSeqExperiment(String experimentAccession, String identifier, double cutoff, String specie) throws GenesNotFoundException {
 

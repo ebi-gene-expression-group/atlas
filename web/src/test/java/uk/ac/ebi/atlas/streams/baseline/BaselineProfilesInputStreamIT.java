@@ -123,7 +123,7 @@ public class BaselineProfilesInputStreamIT {
             ++countProfiles;
         }
 
-        assertThat(countProfiles, is(264L));
+        assertThat(countProfiles, is(265L));
     }
 
     @Test
