@@ -197,7 +197,7 @@ public class SolrQueryService {
         return species;
     }
 
-    Set<String> fetchGeneIdentifiersFromSolr(String queryString) {
+    public Set<String> fetchGeneIdentifiersFromSolr(String queryString) {
         Set<String> results = Sets.newHashSet();
 
         SolrQuery solrQuery = new SolrQuery(queryString);
