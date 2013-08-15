@@ -37,8 +37,7 @@ public class GeneNamesProvider {
     }
 
     public String getGeneName(String ensGeneId) {
-        String value = bioEntityAnnotationDao.getName(ensGeneId);
-        return value == null ? ensGeneId : value;
+        return bioEntityAnnotationDao.getBioentityName(ensGeneId);
     }
 
 }

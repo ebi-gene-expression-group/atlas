@@ -16,7 +16,7 @@ public class DesignElementMappingProvider {
     }
 
     public String getEnsGeneId(String arrayDesign, String designElement) {
-        return arrayDesignDao.getIdentifier(arrayDesign, designElement);
+        return arrayDesignDao.getGeneIdentifier(arrayDesign, designElement);
     }
 
 }

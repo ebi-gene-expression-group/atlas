@@ -140,13 +140,13 @@ public class BioEntityAnnotationDao {
         return jdbcTemplate.update(query, new Object[]{type});
     }
 
-    public String getName(String identifier) {
+    public String getBioentityName(String identifier) {
         try{
 
             return jdbcTemplate.queryForObject(SELECT_QUERY, new String[]{identifier}, String.class);
 
         } catch(IncorrectResultSizeDataAccessException e) {
-            return StringUtils.EMPTY;
+            return identifier;
         }
     }
 

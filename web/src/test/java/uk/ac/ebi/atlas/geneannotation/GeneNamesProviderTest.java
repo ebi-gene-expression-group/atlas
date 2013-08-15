@@ -42,15 +42,13 @@ public class GeneNamesProviderTest {
 
     @Before
     public void initializeSubject() {
-        when(bioEntityAnnotationDaoMock.getName("e1")).thenReturn("g1");
+        when(bioEntityAnnotationDaoMock.getBioentityName("e1")).thenReturn("g1");
         subject = new GeneNamesProvider(bioEntityAnnotationDaoMock);
     }
 
     @Test
     public void testGetGeneName() throws Exception {
         assertThat(subject.getGeneName("e1"), is("g1"));
-
-        assertThat(subject.getGeneName("not there"), is("not there"));
     }
 
 

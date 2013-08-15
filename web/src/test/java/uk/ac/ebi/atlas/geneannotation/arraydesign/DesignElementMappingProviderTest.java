@@ -22,7 +22,7 @@ public class DesignElementMappingProviderTest {
 
     @Before
     public void initializeSubject() {
-        when(arrayDesignDaoMock.getIdentifier("ad1", "de1")).thenReturn("g1");
+        when(arrayDesignDaoMock.getGeneIdentifier("ad1", "de1")).thenReturn("g1");
         subject = new DesignElementMappingProvider(arrayDesignDaoMock);
     }
 

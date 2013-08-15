@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.geneannotation;
 
 import com.google.common.collect.Maps;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,9 +61,9 @@ public class ArrayDesignDaoIT {
     @Test
     public void testSaveGetMappings() throws Exception {
         subject.saveMappings(annotations, ARRAY_DESIGN, "ensembl");
-        assertThat(subject.getIdentifier(ARRAY_DESIGN, "de1"), is("ens1"));
-        assertThat(subject.getIdentifier("NOT EXISRING AD", "de1"), is(nullValue()));
-        assertThat(subject.getIdentifier(ARRAY_DESIGN, "not there"), is(nullValue()));
+        assertThat(subject.getGeneIdentifier(ARRAY_DESIGN, "de1"), is("ens1"));
+        assertThat(subject.getGeneIdentifier("NOT EXISRING AD", "de1"), is(StringUtils.EMPTY));
+        assertThat(subject.getGeneIdentifier(ARRAY_DESIGN, "not there"), is(StringUtils.EMPTY));
     }
 
     @Test

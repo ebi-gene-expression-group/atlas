@@ -76,20 +76,20 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         csvWriter.close();
     }
 
-    protected String getGeneName(String accession) {
+    String getGeneName(String accession) {
         return geneNamesProvider.getGeneName(accession);
     }
 
-    protected CSVReader getCsvReader(String experimentAccession) {
+    CSVReader getCsvReader(String experimentAccession) {
         String tsvFileURL = formatUrl(fileUrlTemplate, experimentAccession);
         return tsvReaderUtils.build(tsvFileURL);
     }
 
-    protected String formatUrl(String fileUrlTemplate, String experimentAccession) {
+    String formatUrl(String fileUrlTemplate, String experimentAccession) {
         return MessageFormat.format(fileUrlTemplate, experimentAccession);
     }
 
-    protected String[] buildHeader(String[] header) {
+    String[] buildHeader(String[] header) {
         return headerBuilder.buildHeader(header);
     }
 }

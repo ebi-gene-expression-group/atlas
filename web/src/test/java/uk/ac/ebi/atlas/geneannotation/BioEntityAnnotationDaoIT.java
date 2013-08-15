@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.geneannotation;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,14 +61,14 @@ public class BioEntityAnnotationDaoIT {
     @Test
     public void testSaveGetAnnotations() throws Exception {
         subject.saveAnnotations(annotations, ORGANISM, "gene");
-        assertThat(subject.getName("ens1"), is("gene1"));
-        assertThat(subject.getName("not there"), is(nullValue()));
+        assertThat(subject.getBioentityName("ens1"), is("gene1"));
+        assertThat(subject.getBioentityName("not there"), is("not there"));
     }
 
     @Test
     public void testSaveMiRnaAnnotations() throws Exception {
         MiRNAEntity entity = new MiRNAEntity("mir1", "acc1", "org1", "name1");
         subject.saveMiRnaAnnotations(Lists.newArrayList(entity));
-        assertThat(subject.getName("mir1"), is("acc1"));
+        assertThat(subject.getBioentityName("mir1"), is("acc1"));
     }
 }

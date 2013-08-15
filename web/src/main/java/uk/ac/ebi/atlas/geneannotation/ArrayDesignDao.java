@@ -83,7 +83,7 @@ public class ArrayDesignDao {
         jdbcTemplate.update(query, new Object[]{arrayDesign});
     }
 
-    public String getIdentifier(String arrayDesign, String designElement) {
+    public String getGeneIdentifier(String arrayDesign, String designElement) {
         try{
             String query = "select identifier from designelement_mapping where designelement=? and arraydesign=?";
 
