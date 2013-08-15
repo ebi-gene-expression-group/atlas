@@ -23,9 +23,11 @@
 package uk.ac.ebi.atlas.geneannotation;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -40,11 +42,10 @@ import java.util.Map;
 
 @Named
 @Scope("singleton")
-public class ArrayDesignDao extends AnnotationDao {
+public class ArrayDesignDao {
 
     private static final Logger LOGGER = Logger.getLogger(ArrayDesignDao.class);
 
-    private static final int SUB_BATCH_SIZE = 100;
     private JdbcTemplate jdbcTemplate;
 
     @Inject
@@ -83,11 +84,14 @@ public class ArrayDesignDao extends AnnotationDao {
     }
 
     public String getIdentifier(String arrayDesign, String designElement) {
-        String query = "select identifier from designelement_mapping where designelement=? and arraydesign=?";
+        try{
+            String query = "select identifier from designelement_mapping where designelement=? and arraydesign=?";
 
-        List<String> names = jdbcTemplate.queryForList(query, new String[]{designElement, arrayDesign}, String.class);
+            return jdbcTemplate.queryForObject(query, new String[]{designElement, arrayDesign}, String.class);
 
-        return getOnly(names);
+        } catch(IncorrectResultSizeDataAccessException e) {
+            return StringUtils.EMPTY;
+        }
     }
 
     public boolean isArrayDesignPresent(String arrayDesign) {

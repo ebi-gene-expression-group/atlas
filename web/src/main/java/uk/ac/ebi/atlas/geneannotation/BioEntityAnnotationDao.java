@@ -23,12 +23,17 @@
 package uk.ac.ebi.atlas.geneannotation;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import uk.ac.ebi.atlas.experimentloader.ExperimentDTORowMapper;
 import uk.ac.ebi.atlas.geneannotation.mirna.MiRNAEntity;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,7 +45,7 @@ import java.util.Map;
 
 @Named
 @Scope("singleton")
-public class BioEntityAnnotationDao extends AnnotationDao {
+public class BioEntityAnnotationDao {
 
     private static final Logger LOGGER = Logger.getLogger(BioEntityAnnotationDao.class);
     private static final int BATCH_SIZE = 1000;
@@ -136,10 +141,13 @@ public class BioEntityAnnotationDao extends AnnotationDao {
     }
 
     public String getName(String identifier) {
+        try{
 
-        List<String> names = jdbcTemplate.queryForList(SELECT_QUERY, new String[]{identifier}, String.class);
+            return jdbcTemplate.queryForObject(SELECT_QUERY, new String[]{identifier}, String.class);
 
-        return getOnly(names);
+        } catch(IncorrectResultSizeDataAccessException e) {
+            return StringUtils.EMPTY;
+        }
     }
 
 }
