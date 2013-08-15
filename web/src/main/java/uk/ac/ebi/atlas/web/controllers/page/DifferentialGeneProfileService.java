@@ -45,10 +45,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 @Named("differentialGeneProfileService")
 @Scope("request")
@@ -94,19 +91,29 @@ public class DifferentialGeneProfileService {
         String species = solrClient.findSpeciesForBioentityId(geneQuery);
         species = StringUtils.capitalize(species);
 
-        Set<String> matureRNAsForMirbaseId = solrClient.fetchGeneIdentifiersFromSolr(geneQuery, "hairpin_id");
-        if (matureRNAsForMirbaseId.size() > 0) {
-            for (String matureRNAIdentifier : matureRNAsForMirbaseId) {
-                processDiffernetialProfilesForIdentifier(matureRNAIdentifier, cutoff, species);
-            }
+        List<String> mirbase_id = solrClient.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
+        if (mirbase_id.size() > 0) {
+            // there should be a one to one mapping between ENSEMBL gene IDs and miRBase IDs
+            filterMatureRNADifferentialProfilesForIdentifier(mirbase_id.get(0), cutoff, species);
         } else {
-            processDiffernetialProfilesForIdentifier(geneQuery, cutoff, species);
+            filterMatureRNADifferentialProfilesForIdentifier(geneQuery, cutoff, species);
         }
 
         return differentialGeneProfileProperties;
     }
 
-    private void processDiffernetialProfilesForIdentifier(String identifier, double cutoff, String species) {
+    private void filterMatureRNADifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
+        Set<String> matureRNAsForMirbaseId = solrClient.fetchGeneIdentifiersFromSolr(identifier, "hairpin_id");
+        if (matureRNAsForMirbaseId.size() > 0) {
+            for (String matureRNAIdentifier : matureRNAsForMirbaseId) {
+                processDifferentialProfilesForIdentifier(matureRNAIdentifier, cutoff, species);
+            }
+        } else {
+            processDifferentialProfilesForIdentifier(identifier, cutoff, species);
+        }
+    }
+
+    private void processDifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
         // set cutoff used to calculate profile lists for showing on web page
         differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
