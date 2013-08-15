@@ -32,6 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
+import uk.ac.ebi.atlas.web.controllers.rest.admin.UpdateAnnotationsController;
 
 import java.util.Set;
 
@@ -62,27 +63,20 @@ public class updateAnnotationsControllerTest {
     }
 
     @Test
-    public void testUpdateAnnotations() throws Exception {
+    public void testLoadGeneNames() throws Exception {
         Set<String> set = Sets.newHashSet(SPECIES);
 
-        String result = subject.updateAnnotations(set);
+        String result = subject.loadGeneNames(set);
         assertThat(result, is(UPDATED));
         verify(geneNamesImportCommandMock).loadGeneNames(Mockito.eq(set));
     }
 
     @Test
-    public void testUpdateDesignElements() throws Exception {
+    public void testLoadDesignElements() throws Exception {
 
-        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE.getName());
+        String result = subject.loadDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE.getName());
         assertThat(result, is(UPDATED));
         verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
     }
 
-    @Test
-    public void testUpdateAllArrayDesigns() throws Exception {
-
-        String result = subject.updateDesignElements(ARRAY_DESIGN, ARRAY_DESIGN_TYPE.getName());
-        assertThat(result, is(UPDATED));
-        verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ARRAY_DESIGN_TYPE);
-    }
 }

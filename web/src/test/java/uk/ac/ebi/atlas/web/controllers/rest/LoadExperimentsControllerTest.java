@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
+import uk.ac.ebi.atlas.web.controllers.rest.admin.LoadExperimentsController;
 
 import java.util.Date;
 import java.util.GregorianCalendar;

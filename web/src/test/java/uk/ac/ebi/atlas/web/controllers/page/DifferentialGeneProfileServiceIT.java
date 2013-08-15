@@ -33,7 +33,7 @@ import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.web.controllers.rest.LoadExperimentsController;
+import uk.ac.ebi.atlas.web.controllers.rest.admin.LoadExperimentsController;
 
 import javax.inject.Inject;
 import java.io.IOException;

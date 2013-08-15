@@ -35,6 +35,7 @@ import javax.inject.Inject;
 
 @Controller
 @Scope("request")
+@RequestMapping(value = "/admin")
 public class BioentityIndexController {
     private static final Logger LOGGER = Logger.getLogger(BioentityIndexController.class);
 
@@ -71,5 +72,5 @@ public class BioentityIndexController {
 
         return bioentityIndexMonitor.reportProgress();
 
-   }
+    }
 }

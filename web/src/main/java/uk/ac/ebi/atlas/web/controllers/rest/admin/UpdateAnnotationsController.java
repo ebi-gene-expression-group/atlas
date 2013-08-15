@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -37,6 +37,7 @@ import java.util.Set;
 
 @Controller
 @Scope("request")
+@RequestMapping("/admin")
 public class UpdateAnnotationsController {
 
     private GeneNamesImportCommand geneNamesImportCommand;
@@ -50,27 +51,27 @@ public class UpdateAnnotationsController {
         this.designElementLoader = designElementLoader;
     }
 
-    @RequestMapping("/updateAnnotations")
+    @RequestMapping("/load/gene-names")
     @ResponseBody
-    public String updateAnnotations(@RequestParam("species") Set<String> species) {
+    public String loadGeneNames(@RequestParam("species") Set<String> species) {
 
         geneNamesImportCommand.loadGeneNames(species);
 
         return "Updated";
     }
 
-    @RequestMapping("/updateMiRnaAnnotations")
+    @RequestMapping("/load/mirna")
     @ResponseBody
-    public String updateMiRnaAnnotations() {
+    public String loadMiRnaAnnotations() {
 
         int count = geneNamesImportCommand.loadMiRnaNames();
 
         return "Updated " + count + " miRNA names";
     }
 
-    @RequestMapping("/updateDesignElements")
+    @RequestMapping("/load/design-elements")
     @ResponseBody
-    public String updateDesignElements(@RequestParam("arrayDesign") String arrayDesign,
+    public String loadDesignElements(@RequestParam("arrayDesign") String arrayDesign,
                                        @RequestParam(value = "type", required = false) String type) {
         //ToDo: maybe create Command similar to GeneNamesImportCommand
         ArrayDesignType arrayDesignType;

@@ -20,17 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
 import com.google.gson.Gson;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
@@ -44,6 +41,7 @@ import java.util.UUID;
 
 @Controller
 @Scope("request")
+@RequestMapping("/admin")
 public class LoadExperimentsController {
 
     private static final Logger LOGGER = Logger.getLogger(LoadExperimentsController.class);
@@ -97,7 +95,7 @@ public class LoadExperimentsController {
         return "Experiment " + experimentAccession + " successfully updated.";
     }
 
-    @RequestMapping("/listExperiments")
+    @RequestMapping(value = "/listExperiments", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public String listExperiments(@RequestParam(value="accession", required = false) Set<String> experimentAccessions) {
         List<ExperimentDTO> experiments;

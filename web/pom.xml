@@ -103,6 +103,9 @@
                 <configuration>
                     <!-- application path always starts with /-->
                     <path>/gxa</path>
+                    <tomcatUsers>
+                        src/test/resources/tomcat-users.xml
+                    </tomcatUsers>
                 </configuration>
                 <executions>
                     <execution>

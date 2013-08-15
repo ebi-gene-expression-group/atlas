@@ -22,31 +22,26 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
-import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.FeedbackHomePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.path.json.JsonPath.from;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.StringStartsWith.startsWith;
+import static org.hamcrest.Matchers.*;
 
 public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
+
+    private static final String USERNAME = "TEST_USER";
+    private static final String PASSWORD = "TEST_PASSWORD";
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-698";
 
@@ -54,18 +49,25 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
     private String accessKey;
 
+    private static RequestSpecification authenticatedRequestSpec;
+
+    @BeforeClass
+    public static void initRestAssuredRequestSpec(){
+        RestAssured.reset();
+        RestAssured.port = 9090;
+        authenticatedRequestSpec = given().auth().basic(USERNAME, PASSWORD);
+    }
+
     @Before
     public void init() {
-        EndPoint endPoint = new EndPoint("/gxa/updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, containsString(EXPERIMENT_ACCESSION));
 
-        endPoint = new EndPoint("/gxa/listExperiments?accession=" + EXPERIMENT_ACCESSION);
+        given().spec(authenticatedRequestSpec).expect().body(containsString(EXPERIMENT_ACCESSION))
+                .when().get("/gxa/admin/updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
 
-        Type t = new TypeToken<List<ExperimentDTO>>() {}.getType();
-        List<ExperimentDTO> experiments = new Gson().fromJson(endPoint.getResponseBody().asString(), t);
-        assertThat(experiments.size(), is(1));
-        accessKey = experiments.get(0).getAccessKey();
+        String jsonResponse = given().spec(authenticatedRequestSpec)
+                .get("/gxa/admin/listExperiments?accession=" + EXPERIMENT_ACCESSION).body().asString();
+
+        accessKey = from(jsonResponse).get("accessKey[0]");
 
         subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
         subject.get();
@@ -73,9 +75,8 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
     @After
     public void cleanup() {
-        EndPoint endPoint = new EndPoint("/gxa/updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, containsString(EXPERIMENT_ACCESSION));
+        given().spec(authenticatedRequestSpec).expect().body(containsString(EXPERIMENT_ACCESSION))
+                .when().get("/gxa/admin/updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
 
     @Test(expected = NoSuchElementException.class)

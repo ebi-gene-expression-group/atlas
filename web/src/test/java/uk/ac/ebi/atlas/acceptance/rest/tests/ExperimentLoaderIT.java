@@ -22,136 +22,116 @@
 
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
+import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 
-import javax.naming.directory.SearchResult;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.jayway.restassured.RestAssured.expect;
 import static org.hamcrest.Matchers.*;
 
-public class ExperimentLoaderIT {
+public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
+
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-599";
+
+    @Before
+    public void init(){
+    }
 
     @After
     public void cleanup() {
-        EndPoint endPoint = new EndPoint("/gxa/updateExperiment?accession=E-MTAB-599&private=false");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, containsString("E-MTAB-599"));
+        expect().body(containsString(EXPERIMENT_ACCESSION)).
+            when().get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
-
 
     @Test
     public void testListExperiments() {
-        EndPoint endPoint = new EndPoint("/gxa/listExperiments");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, containsString("E-MTAB-599"));
+        expect().body(containsString(EXPERIMENT_ACCESSION)).when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
     }
 
     @Test
     public void testListSelectedExperiments() {
-        EndPoint endPoint = new EndPoint("/gxa/listExperiments?accession=E-MTAB-599,E-MTAB-513");
-        List<ExperimentDTO> experiments = fromJson(endPoint);
-        Collection<String> accessions = Collections2.transform(experiments, new Function<ExperimentDTO, String>(){
-            @Override
-            public String apply(uk.ac.ebi.atlas.experimentloader.ExperimentDTO experimentDTO) {
-                return experimentDTO.getExperimentAccession();
-            }
-        });
-        assertThat(experiments, hasSize(2));
-        assertThat(accessions, hasItems("E-MTAB-599", "E-MTAB-513"));
+
+        expect().body("experimentAccession", containsInAnyOrder(EXPERIMENT_ACCESSION, "E-MTAB-513")).when()
+                .get("listExperiments?accession=" + EXPERIMENT_ACCESSION + ",E-MTAB-513");
+
     }
 
     @Test
     public void testDeleteAndLoadExperimentPublic() {
-        EndPoint endPoint = new EndPoint("/gxa/deleteExperiment?accession=E-MTAB-599");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment E-MTAB-599 successfully deleted."));
-        endPoint = new EndPoint("/gxa/listExperiments");
-        result = endPoint.getResponseBody().asString();
-        assertThat(result, not(containsString("E-MTAB-599")));
 
-        endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-599&type=BASELINE&private=false");
-        result = endPoint.getResponseBody().asString();
-        assertThat(result, startsWith("Experiment E-MTAB-599 loaded, accessKey:"));
-        endPoint = new EndPoint("/gxa/listExperiments?accession=E-MTAB-599");
-        List<ExperimentDTO> experiments = fromJson(endPoint);
-        assertThat(experiments.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(experiments.get(0).isPrivate(), is(false));
+        expect().body(is("Experiment E-MTAB-599 successfully deleted.")).when()
+                .get("deleteExperiment?accession=" + EXPERIMENT_ACCESSION);
+
+        expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
+
+        expect().body(startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
+                .get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&type=BASELINE&private=false");
+
+        expect().body("experimentAccession", hasItem(EXPERIMENT_ACCESSION))
+                .and().body("isPrivate", contains(false))
+                .when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
+
     }
 
     @Test
     public void testDeleteAndLoadExperimentPrivate() {
-        EndPoint endPoint = new EndPoint("/gxa/deleteExperiment?accession=E-MTAB-599");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment E-MTAB-599 successfully deleted."));
 
-        endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-599&type=BASELINE&private=true");
-        result = endPoint.getResponseBody().asString();
-        assertThat(result, startsWith("Experiment E-MTAB-599 loaded, accessKey:"));
-        endPoint = new EndPoint("/gxa/listExperiments?accession=E-MTAB-599");
-        List<ExperimentDTO> experiments = fromJson(endPoint);
-        assertThat(experiments.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(experiments.get(0).isPrivate(), is(true));
-    }
+        expect().body(is("Experiment E-MTAB-599 successfully deleted.")).when()
+                .get("deleteExperiment?accession=" + EXPERIMENT_ACCESSION);
 
-    private List<ExperimentDTO> fromJson(EndPoint endPoint){
-        String experimentsString = endPoint.getResponseBody().asString();
-        Type t = new TypeToken<List<ExperimentDTO>>() {}.getType();
-        return new Gson().fromJson(experimentsString, t);
+        expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
+
+        expect().body(startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
+                .get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&type=BASELINE&private=true");
+
+        expect().body("experimentAccession", hasItem(EXPERIMENT_ACCESSION))
+                .and().body("isPrivate", contains(true))
+                .when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
+
     }
 
     @Test
     public void testDeleteNonExisting() {
-        EndPoint endPoint = new EndPoint("/gxa/deleteExperiment?accession=E-MTAB-BLA");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment not found for experiment accession: E-MTAB-BLA"));
+        String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
+
+        expect().body(is("Experiment not found for experiment accession: " + blablaExperimentAccession))
+                .when().get("deleteExperiment?accession=" + blablaExperimentAccession);
     }
 
     @Test
     public void loadShouldFailWhenExperimentHasAlreadyBeenImported() {
-        EndPoint endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-599&type=BASELINE");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, is("Experiment with experimentAccession E-MTAB-599 has been already imported."));
+        expect().body(is("Experiment with experimentAccession " + EXPERIMENT_ACCESSION + " has been already imported."))
+                .when().get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&type=BASELINE");
     }
 
     @Test
     public void testLoadInvalidExperiment() {
-        EndPoint endPoint = new EndPoint("/gxa/loadExperiment?accession=E-MTAB-BLA&type=BASELINE");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, containsString("Required file can not be read"));
-        endPoint = new EndPoint("/gxa/listExperiments");
-        result = endPoint.getResponseBody().asString();
-        assertThat(result, not(containsString("E-MTAB-BLA")));
+        String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
+
+        expect().body(startsWith("Required file can not be read"))
+                .when().get("loadExperiment?accession=" + blablaExperimentAccession + "&type=BASELINE");
+
+        expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + blablaExperimentAccession);
+
     }
 
     @Test
     public void testUpdate(){
-        EndPoint endPoint = new EndPoint("/gxa/updateExperiment?accession=E-MTAB-599&private=true");
-        String result = endPoint.getResponseBody().asString();
-        assertThat(result, containsString("E-MTAB-599"));
 
-        endPoint = new EndPoint("/gxa/listExperiments?accession=E-MTAB-599");
-        List<ExperimentDTO> experiments = fromJson(endPoint);
-        assertThat(experiments.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(experiments.get(0).isPrivate(), is(true));
+        expect().body(is("Experiment E-MTAB-599 successfully updated.")).when()
+                .get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
 
-        endPoint = new EndPoint("/gxa/updateExperiment?accession=E-MTAB-599&private=false");
-        result = endPoint.getResponseBody().asString();
-        assertThat(result, containsString("E-MTAB-599"));
+        expect().body("experimentAccession", contains(EXPERIMENT_ACCESSION))
+                .and().body("isPrivate", contains(true))
+                .when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
 
-        endPoint = new EndPoint("/gxa/listExperiments?accession=E-MTAB-599");
-        experiments = fromJson(endPoint);
-        assertThat(experiments.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(experiments.get(0).isPrivate(), is(false));
+        expect().body(is("Experiment E-MTAB-599 successfully updated.")).when()
+                .get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
+
+        expect().body("experimentAccession", contains(EXPERIMENT_ACCESSION))
+                .and().body("isPrivate", contains(false))
+                .when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
 
     }
 

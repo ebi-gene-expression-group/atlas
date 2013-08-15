@@ -20,22 +20,33 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.acceptance.rest.fixtures;
 
-import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.authentication.BasicAuthScheme;
+import com.jayway.restassured.builder.RequestSpecBuilder;
+import org.junit.BeforeClass;
 
-import static com.jayway.restassured.RestAssured.expect;
-import static org.hamcrest.Matchers.is;
+public class RestAssuredAuthenticatedFixture {
 
-public class BioentityIndexControllerIT extends RestAssuredAuthenticatedFixture {
+    private static final String USERNAME = "TEST_USER";
+    private static final String PASSWORD = "TEST_PASSWORD";
 
-    @Test
-    public void statusShouldBeInitialized() {
+    @BeforeClass
+    public static void initRestAssured(){
 
-        expect().statusCode(200).and().body(is("INITIALIZED")).when().get("buildIndex/status");
+        BasicAuthScheme authScheme = new BasicAuthScheme();
+        authScheme.setUserName(USERNAME);
+        authScheme.setPassword(PASSWORD);
+
+        RestAssured.basePath = "/gxa/admin";
+
+        RestAssured.port = 9090;
+
+        RestAssured.requestSpecification = new RequestSpecBuilder().setAuth(authScheme).build();
 
     }
 
-}
 
+
+}
