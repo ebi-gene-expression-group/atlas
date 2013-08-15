@@ -78,9 +78,6 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "download-logFold")
     private WebElement downloadLogFoldLink;
 
-    @FindBy(id = "display-levels")
-    private WebElement displayLevelsButton;
-
     @FindBy(className = "gradient-level-min")
     private WebElement gradientLevelsMin;
 
@@ -232,16 +229,20 @@ public class HeatmapTablePage extends TablePage {
         return geneCount.getText();
     }
 
-    public void clickDisplayLevelsButton() {
-        WebDriverWait wait = new WebDriverWait(driver, 50L);
-        wait.pollingEvery(2, TimeUnit.SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(By.id("display-levels")));
+    public WebElement getDisplayLevelsButton() {
+        FluentWait wait = new WebDriverWait(driver, 40L)
+                .pollingEvery(200, TimeUnit.MILLISECONDS);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("display-levels")));
 
-        displayLevelsButton.click();
+        return driver.findElement(By.id("display-levels"));
+    }
+
+    public void clickDisplayLevelsButton() {
+        getDisplayLevelsButton().click();
     }
 
     public String getDisplayLevelsButtonValue() {
-        return displayLevelsButton.getText();
+        return getDisplayLevelsButton().getText();
     }
 
     public boolean areGradientLevelsHidden() {
