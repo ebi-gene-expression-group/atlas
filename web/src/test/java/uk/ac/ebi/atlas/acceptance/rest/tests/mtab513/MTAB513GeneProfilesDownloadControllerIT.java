@@ -94,7 +94,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(266));
+        assertThat(lines.length, is(267));
     }
 
 }

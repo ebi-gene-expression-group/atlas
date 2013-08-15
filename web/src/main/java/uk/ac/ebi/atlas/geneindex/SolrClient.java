@@ -102,7 +102,7 @@ public class SolrClient {
 
     }
 
-    public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String... propertyNames) {
+    public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String type, String... propertyNames) {
         StringBuilder sb = new StringBuilder();
         sb.append(SolrQueryService.PROPERTY_LOWER_FIELD);
         sb.append(":\"");
@@ -115,7 +115,10 @@ public class SolrClient {
             sb.append("\" OR ");
         }
         sb.delete(sb.length() - 3, sb.length());
-        sb.append(")");
+        sb.append(") AND ");
+        sb.append(SolrQueryService.BIOENTITY_TYPE);
+        sb.append(":");
+        sb.append(type);
 
         return solrQueryService.fetchGeneIdentifiersFromSolr(sb.toString());
     }

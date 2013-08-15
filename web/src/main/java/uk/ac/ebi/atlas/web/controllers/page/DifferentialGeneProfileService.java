@@ -103,7 +103,7 @@ public class DifferentialGeneProfileService {
     }
 
     private void filterMatureRNADifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
-        Set<String> matureRNAsForMirbaseId = solrClient.fetchGeneIdentifiersFromSolr(identifier, "hairpin_id");
+        Set<String> matureRNAsForMirbaseId = solrClient.fetchGeneIdentifiersFromSolr(identifier, "mirna", "hairpin_id");
         if (matureRNAsForMirbaseId.size() > 0) {
             for (String matureRNAIdentifier : matureRNAsForMirbaseId) {
                 processDifferentialProfilesForIdentifier(matureRNAIdentifier, cutoff, species);
