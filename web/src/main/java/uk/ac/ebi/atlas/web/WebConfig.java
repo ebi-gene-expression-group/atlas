@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
+import uk.ac.ebi.atlas.web.interceptors.AdminInterceptor;
 import uk.ac.ebi.atlas.web.interceptors.ExperimentInterceptor;
 
 import javax.inject.Inject;
@@ -35,6 +36,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Inject
     private ExperimentInterceptor experimentInterceptor;
+    @Inject
+    private AdminInterceptor adminInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -54,6 +57,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(experimentInterceptor).addPathPatterns("/experiments/**");
+        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
     }
 
 }
