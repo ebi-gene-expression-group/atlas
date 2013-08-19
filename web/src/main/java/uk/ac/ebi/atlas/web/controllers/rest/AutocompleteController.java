@@ -53,12 +53,14 @@ public class AutocompleteController {
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species") String species) {
-        if (query.trim().length() == 0) {
-            return "";
+    public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species", required = false) String species) {
+        if (StringUtils.isBlank(query)) {
+            return StringUtils.EMPTY;
         }
 
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
+
+        species = StringUtils.lowerCase(species);
 
         if (!StringUtils.containsWhitespace(query)) {
             suggestions.addAll(solrClient.findGeneIdSuggestionsInName(query, species));

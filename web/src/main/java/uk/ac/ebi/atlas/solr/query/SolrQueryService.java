@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import com.sun.istack.internal.Nullable;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -105,7 +106,7 @@ public class SolrQueryService {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(SPECIES_FIELD + ":\"").append(species).append("\"");
+        sb.append(SPECIES_FIELD + ":\"").append(species.toLowerCase()).append("\"");
 
         appendBioEntityTypes(sb, new String[]{BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA});
 
@@ -308,7 +309,9 @@ public class SolrQueryService {
         query.append(PROPERTY_EDGENGRAM_FIELD + ":\"");
         query.append(geneName);
         query.append("\"");
-        appendSpecies(query, species);
+        if (StringUtils.isNotBlank(species)){
+            appendSpecies(query, species);
+        }
         appendBioEntityTypes(query, bioentityTypes);
         query.append(" AND (");
         for (int i = 0; i < propertyTypes.length; i++) {

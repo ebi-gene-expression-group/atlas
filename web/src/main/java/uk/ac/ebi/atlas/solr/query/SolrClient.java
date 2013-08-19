@@ -174,22 +174,22 @@ public class SolrClient {
 
         checkArgument(StringUtils.isNotBlank(species));
 
-        return solrQueryService.getGeneIdsForSpecies(species.toLowerCase());
+        return solrQueryService.getGeneIdsForSpecies(species);
     }
 
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
-        return solrQueryService.getGeneIdSuggestionsInName(geneName, species.toLowerCase());
+        return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
     }
 
     public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
 
-        return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species.toLowerCase());
+        return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
     }
 
     public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
 
-        return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species.toLowerCase());
+        return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
 
     }
 
@@ -201,8 +201,12 @@ public class SolrClient {
             return Lists.newArrayList();
         }
 
-        String jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species.toLowerCase());
-
+        String jsonString;
+        if (StringUtils.isNotBlank(species)){
+            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
+        } else {
+            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken);
+        }
         return extractCollations(jsonString);
     }
 

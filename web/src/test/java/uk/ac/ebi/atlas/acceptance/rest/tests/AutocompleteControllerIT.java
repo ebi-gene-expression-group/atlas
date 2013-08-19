@@ -33,6 +33,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 public class AutocompleteControllerIT {
@@ -55,7 +56,7 @@ public class AutocompleteControllerIT {
     }
 
 
-    @Test //ToDo: make it more specific
+    @Test
     public void shouldReturnNonEmptyJSonObject(){
         //given
         ResponseBody responseBody = subject.getResponse().body();
@@ -65,6 +66,22 @@ public class AutocompleteControllerIT {
         List<String> suggestions = gson.fromJson(jsonString, List.class);
 
         assertThat(suggestions, hasItems("asp","aspm"));
+        assertThat(suggestions, hasSize(15));
+
+    }
+
+    @Test
+    public void shouldReturnNonEmptyJSonObjectForBlankSpecies(){
+        //given
+        EndPoint emptySpeciesRequest = new EndPoint(END_POINT_URL,"query=ASP");
+        ResponseBody responseBody = emptySpeciesRequest.getResponse().body();
+        String jsonString = responseBody.asString();
+        Gson gson = new Gson();
+        //when
+        List<String> suggestions = gson.fromJson(jsonString, List.class);
+
+        assertThat(suggestions, hasItems("asp","aspm"));
+        assertThat(suggestions, hasSize(15));
 
     }
 
