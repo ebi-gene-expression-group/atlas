@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.experimentloader;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterBuilder;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
@@ -55,7 +55,7 @@ public class ExperimentCRUD {
     private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
-    private ExperimentDesignWriterBuilder experimentDesignWriterBuilder;
+    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
     private TranscriptProfileDAO transcriptProfileDAO;
     private ExperimentTrader experimentTrader;
@@ -67,14 +67,14 @@ public class ExperimentCRUD {
                           DesignElementMappingLoader designElementLoader,
                           ExperimentDAO experimentDAO,
                           TranscriptProfileDAO transcriptProfileDAO,
-                          ExperimentDesignWriterBuilder experimentDesignWriterBuilder, ExperimentTrader experimentTrader) {
+                          ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentTrader experimentTrader) {
         this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
         this.transcriptProfileDAO = transcriptProfileDAO;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
         this.experimentDAO = experimentDAO;
-        this.experimentDesignWriterBuilder = experimentDesignWriterBuilder;
+        this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
     }
 
@@ -107,12 +107,12 @@ public class ExperimentCRUD {
 
     void generateExperimentDesignFile(String accession, ExperimentType experimentType) throws IOException {
 
-        ExperimentDesignWriter experimentDesignWriter =
-                experimentDesignWriterBuilder.forExperimentAccession(accession)
+        ExperimentDesignFileWriter experimentDesignFileWriter =
+                experimentDesignFileWriterBuilder.forExperimentAccession(accession)
                         .withExperimentType(experimentType)
                         .build();
 
-        experimentDesignWriter.write(accession);
+        experimentDesignFileWriter.write(accession);
     }
 
     void loadTranscripts(String accession) {

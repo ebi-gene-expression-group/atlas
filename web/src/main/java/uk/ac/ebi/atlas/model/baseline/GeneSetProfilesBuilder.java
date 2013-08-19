@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import javax.inject.Inject;
 import javax.inject.Named;

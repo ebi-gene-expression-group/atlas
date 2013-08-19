@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
-import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Set;

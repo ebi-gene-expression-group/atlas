@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrClient;
 
 import javax.inject.Inject;
 import java.util.LinkedHashSet;

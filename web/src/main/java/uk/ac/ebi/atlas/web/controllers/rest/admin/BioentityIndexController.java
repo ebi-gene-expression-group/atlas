@@ -28,8 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.solr.index.BioentityIndexAdmin;
-import uk.ac.ebi.atlas.solr.index.BioentityIndexMonitor;
+import uk.ac.ebi.atlas.solr.admin.BioentityIndexAdmin;
+import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
 
 import javax.inject.Inject;
 

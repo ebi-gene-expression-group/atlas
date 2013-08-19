@@ -26,7 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 
 import javax.inject.Inject;

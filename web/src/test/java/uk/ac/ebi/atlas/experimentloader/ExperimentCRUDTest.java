@@ -29,8 +29,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriter;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignWriterBuilder;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
@@ -56,7 +56,7 @@ public class ExperimentCRUDTest {
     private static final String ACCESS_KEY = "AN_UUID";
 
     @Mock
-    private ExperimentDesignWriter experimentDesignWriterMock;
+    private ExperimentDesignFileWriter experimentDesignFileWriterMock;
 
     @Mock
     private CSVWriter csvWriterMock;
@@ -79,7 +79,7 @@ public class ExperimentCRUDTest {
     private ExperimentCRUD subject;
 
     @Mock
-    private ExperimentDesignWriterBuilder experimentDesignWriterBuilderMock;
+    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilderMock;
 
     @Mock
     private ExperimentDAO experimentDAOMock;
@@ -97,28 +97,28 @@ public class ExperimentCRUDTest {
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
-        given(experimentDesignWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignWriterBuilderMock);
-        given(experimentDesignWriterBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(experimentDesignWriterBuilderMock);
-        given(experimentDesignWriterBuilderMock.build()).willReturn(experimentDesignWriterMock);
+        given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
+        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
+        given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
         subject = new ExperimentCRUD(transcriptProfileLoaderMock,
                 arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock, transcriptProfileDAOMock,
-                experimentDesignWriterBuilderMock, experimentTraderMock);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock);
     }
 
     @Test
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
         subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-        verify(experimentDesignWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
-        verify(experimentDesignWriterBuilderMock).withExperimentType(ExperimentType.BASELINE);
-        verify(experimentDesignWriterBuilderMock).build();
-        verify(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION);
+        verify(experimentDesignFileWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.BASELINE);
+        verify(experimentDesignFileWriterBuilderMock).build();
+        verify(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
     }
 
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
-        willThrow(new IOException()).given(experimentDesignWriterMock).write(EXPERIMENT_ACCESSION);
+        willThrow(new IOException()).given(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
         subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 

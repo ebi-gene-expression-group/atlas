@@ -25,9 +25,9 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import javax.inject.Inject;
 import java.util.Collections;

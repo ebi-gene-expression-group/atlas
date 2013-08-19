@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrClient;
 
 import java.util.List;
 

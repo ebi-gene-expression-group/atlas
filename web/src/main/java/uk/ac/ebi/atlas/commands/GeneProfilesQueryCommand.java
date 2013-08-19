@@ -26,9 +26,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneindex.GeneQueryResponse;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrClient;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;

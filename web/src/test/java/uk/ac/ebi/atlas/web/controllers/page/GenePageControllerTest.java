@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.geneindex.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrClient;
 import uk.ac.ebi.atlas.web.BioEntityCardProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
