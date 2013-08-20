@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import uk.ac.ebi.atlas.web.SearchRequest;
 
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,8 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+
+        modelAndView.addObject("searchRequest", new SearchRequest());
 
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
         stopWatch.stop();

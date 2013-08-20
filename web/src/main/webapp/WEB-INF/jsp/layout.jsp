@@ -1,5 +1,5 @@
 <%--
-  ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -110,6 +110,8 @@
             src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/autocompleteModule.js"></script>
 
     <!-- fancybox start -->
     <link rel="stylesheet"
@@ -124,6 +126,7 @@
             $(document).ready(function () {
 
                 initExperimentPageButtonsAndTooltips();
+                autocompleteModule.init();
 
             });
         })(jQuery);

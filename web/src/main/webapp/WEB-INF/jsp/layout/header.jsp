@@ -1,5 +1,6 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
-  ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -66,7 +67,34 @@
         <!-- local-search -->
         <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
 
-        <!-- local search ... the search box in the header ... should go here -->
+        <div class="grid_12 omega">
+            <form method="get" action="experiments/all" name="local-search" id="local-search">
+
+                <fieldset>
+
+                    <div class="left">
+                        <label>
+                            <input id="local-searchbox" name="queryString" value="${param.queryString}" maxlenght="900"/>
+                        </label>
+                        <!-- Include some example searchterms - keep them short and few! -->
+                        <span class="examples">Examples:
+                                        <a href="experiments/all?queryString=kinase">kinase</a>,
+                                        <a href="experiments/all?queryString=ASPM">ASPM</a>,
+                                        <a href="experiments/all?queryString=REACT 1619">REACT 1619</a>,
+                                        <a href="experiments/all?queryString=GO:0007165">GO:0007165</a>, ...</span>
+                    </div>
+
+                    <div class="right">
+                        <input id="submit-button" class="submit" type="submit" value="Search"/>
+                        <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
+                             with whatever features you want available -->
+                        <span class="adv"><a title="Advanced" id="adv-search" href="../search">Advanced</a></span>
+                    </div>
+
+                </fieldset>
+
+            </form>
+        </div>
 
         <!-- /local-search -->
 

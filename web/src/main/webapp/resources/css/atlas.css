@@ -28,6 +28,10 @@
     margin-right: auto;
 }
 
+div#local-search form fieldset, form#local-search fieldset {
+    background-color: #E1EEE9;
+}
+
 #global-footer.grid_24 .grid_4 {
     width: 15%;
 }

@@ -58,6 +58,8 @@ public class SolrClient {
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
+    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE_NO_SPECIES = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     @Value("#{configuration['index.server.url']}")
@@ -205,7 +207,7 @@ public class SolrClient {
         if (StringUtils.isNotBlank(species)){
             jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
         } else {
-            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken);
+            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE_NO_SPECIES, multiTermToken);
         }
         return extractCollations(jsonString);
     }

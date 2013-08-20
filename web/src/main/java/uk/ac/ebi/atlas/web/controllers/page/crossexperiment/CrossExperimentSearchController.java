@@ -24,24 +24,18 @@ package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.SearchRequest;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Scope("request")
 public class CrossExperimentSearchController {
 
     @RequestMapping(value = "/experiments/all")
-    public String search(@ModelAttribute("searchRequest") @Valid SearchRequest searchRequest){
+    public String search(@RequestParam(value = "queryString") String queryString){
 
-        return "home?geneQuery=" + searchRequest.getGeneQuery();
+        return "redirect:/home?queryString=" + queryString;
+
     }
 
 }
