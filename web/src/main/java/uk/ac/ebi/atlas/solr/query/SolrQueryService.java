@@ -26,7 +26,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import com.sun.istack.internal.Nullable;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -277,7 +276,11 @@ public class SolrQueryService {
                         .append("{!lucene q.op=OR df=" + propertyName + "} ")
                         .append("(" + propertyName + ":").append(escapedGeneQuery).append(")");
 
-        appendSpecies(sb, species);
+        if (StringUtils.isNotBlank(species)){
+
+            appendSpecies(sb, species);
+
+        }
 
         appendBioEntityTypes(sb, bioEntityTypes);
 

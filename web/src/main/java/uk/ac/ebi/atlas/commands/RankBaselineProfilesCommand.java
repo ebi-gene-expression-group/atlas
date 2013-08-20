@@ -53,7 +53,6 @@ public class RankBaselineProfilesCommand extends RankProfilesCommand<BaselinePro
         this.geneSetProfilesBuilder = geneSetProfilesBuilder;
     }
 
-
     @Override
     protected BaselineProfilesList createGeneProfilesList(Queue<BaselineProfile> geneProfiles) {
         return new BaselineProfilesList(geneProfiles);

@@ -72,9 +72,9 @@ public class GeneProfilesQueryCommandTest {
         geneQueryResponse.addGeneIds(GENE_QUERY, Sets.newHashSet(A_GENE_IDENTIFIER));
 
         // no filtering should be done here
-        when(solrClientMock.findGeneSets(GENE_QUERY, false, SPECIES, false)).thenReturn(geneQueryResponse);
-        when(solrClientMock.findGeneSets("A", false, SPECIES, false)).thenReturn(geneQueryResponse);
-        when(solrClientMock.findGeneSets("QUERY", false, SPECIES, false)).thenReturn(geneQueryResponse);
+        when(solrClientMock.findGeneIdsOrSets(GENE_QUERY, false, SPECIES, false)).thenReturn(geneQueryResponse);
+        when(solrClientMock.findGeneIdsOrSets("A", false, SPECIES, false)).thenReturn(geneQueryResponse);
+        when(solrClientMock.findGeneIdsOrSets("QUERY", false, SPECIES, false)).thenReturn(geneQueryResponse);
 
         // filter by species
         when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);

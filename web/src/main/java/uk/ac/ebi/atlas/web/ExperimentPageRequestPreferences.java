@@ -31,21 +31,13 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 
-public abstract class ExperimentPageRequestPreferences {
+public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
     static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
-
-    private static final int GENE_QUERY_MAX_LENGTH = 900;
-
-    private static final int EXPRESSION_LEVEL_MIN = 0;
 
     private static final int HEATMAP_SIZE_MIN = 0;
 
     private static final int HEATMAP_SIZE_MAX = 1000;
-
-    @Size(max = GENE_QUERY_MAX_LENGTH,
-            message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
-    private String geneQuery = getDefaultGeneQuery();
 
     private Double cutoff = getDefaultCutoff();
 
@@ -61,13 +53,9 @@ public abstract class ExperimentPageRequestPreferences {
 
     private boolean specific = true;
 
-    private boolean exactMatch = true;
-
     private boolean displayLevels;
 
     private boolean displayGeneDistribution;
-
-    private boolean geneSetMatch;
 
     private String rootContext;
 
@@ -124,8 +112,6 @@ public abstract class ExperimentPageRequestPreferences {
     //must be public because the jsp needs to access it
     public abstract Double getDefaultCutoff();
 
-    protected abstract String getDefaultGeneQuery();
-
     public void setCutoff(Double cutoff) {
         if (cutoff != null) {
             this.cutoff = cutoff;
@@ -140,14 +126,6 @@ public abstract class ExperimentPageRequestPreferences {
         this.specific = specific;
     }
 
-    public boolean isGeneSetMatch() {
-        return geneSetMatch;
-    }
-
-    public void setGeneSetMatch(boolean geneSetMatch) {
-        this.geneSetMatch = geneSetMatch;
-    }
-
     public boolean getDisplayLevels() {
         return displayLevels;
     }
@@ -156,42 +134,6 @@ public abstract class ExperimentPageRequestPreferences {
         this.displayLevels = displayLevels;
     }
 
-    public String getGeneQuery() {
-        return this.geneQuery;
-    }
-
-    public void setGeneQuery(String geneQuery) {
-        if (!areQuotesMatching(geneQuery)) {
-            this.geneQuery = geneQuery + "\"";
-        } else {
-            this.geneQuery = geneQuery;
-        }
-    }
-
-    boolean areQuotesMatching(String searchText) {
-        int numberOfDoubleQuotes = StringUtils.countMatches(searchText, "\"");
-        return numberOfDoubleQuotes % 2 == 0;
-    }
-
-
-    public String toString() {
-        return Objects.toStringHelper(this.getClass())
-                .add("geneQuery", geneQuery)
-                .add("queryFactorType", queryFactorType)
-                .add("cutoff", cutoff)
-                .add("serializedFilterFactors", serializedFilterFactors)
-                .add("specific", specific)
-                .add("exactMatch", exactMatch)
-                .toString();
-    }
-
-    public boolean isExactMatch() {
-        return exactMatch;
-    }
-
-    public void setExactMatch(boolean exactMatch) {
-        this.exactMatch = exactMatch;
-    }
 
     public String getRootContext() {
         return rootContext;
@@ -200,4 +142,15 @@ public abstract class ExperimentPageRequestPreferences {
     public void setRootContext(String rootContext) {
         this.rootContext = rootContext;
     }
+
+    public String toString() {
+        return Objects.toStringHelper(this.getClass())
+                .addValue(super.toString())
+                .add("queryFactorType", queryFactorType)
+                .add("cutoff", cutoff)
+                .add("serializedFilterFactors", serializedFilterFactors)
+                .add("specific", specific)
+                .toString();
+    }
+
 }

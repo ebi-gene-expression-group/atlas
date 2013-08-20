@@ -20,29 +20,28 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web;
+package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
+public class PropertyLink {
 
-import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+    private String text;
 
-public class DifferentialRequestPreferences extends ExperimentPageRequestPreferences {
+    private String url;
 
-    public static final double DEFAULT_CUTOFF = 0.05d;
-
-    private Regulation regulation = Regulation.UP_DOWN;
-
-    @Override
-    public Double getDefaultCutoff() {
-        return DEFAULT_CUTOFF;
+    public PropertyLink(String text, String url) {
+        this.text = text;
+        this.url = url;
     }
 
-    public Regulation getRegulation() {
-        return regulation;
+    public PropertyLink(String text) {
+        this(text, "");
     }
 
-    public void setRegulation(Regulation regulation) {
-        this.regulation = regulation;
+    public String getText() {
+        return text;
     }
 
+    public String getUrl() {
+        return url;
+    }
 }

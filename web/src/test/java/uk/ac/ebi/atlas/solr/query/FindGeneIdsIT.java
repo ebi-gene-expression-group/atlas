@@ -50,7 +50,7 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "GO:0008134 \"p53 binding\"";
         //when
-        GeneQueryResponse result = subject.findGeneSets(geneQuery, false, SPECIES, false);
+        GeneQueryResponse result = subject.findGeneIdsOrSets(geneQuery, false, SPECIES, false);
 
         //some genes are found
         assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000112592"));
@@ -64,7 +64,7 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "ENSG00000131759 \"mRNA splicing, via spliceosome\"";
         //when
-        GeneQueryResponse result = subject.findGeneSets(geneQuery, true, SPECIES, false);
+        GeneQueryResponse result = subject.findGeneIdsOrSets(geneQuery, true, SPECIES, false);
 
         //some genes are found
         assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000084072"));
@@ -78,7 +78,7 @@ public class FindGeneIdsIT {
         //given
         String query = "\"NOTHING FOUND\"";
 
-        GeneQueryResponse geneQueryResponse = subject.findGeneSets(query, false, SPECIES, false);
+        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets(query, false, SPECIES, false);
 
         assertThat(geneQueryResponse.isEmpty(), is(true));
 

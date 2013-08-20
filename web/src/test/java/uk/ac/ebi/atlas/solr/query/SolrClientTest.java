@@ -156,7 +156,7 @@ public class SolrClientTest {
 
         when(bioentityPropertyValueTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
 
-        GeneQueryResponse geneQueryResponse = subject.findGeneSets(GENE_QUERY, false, MUS_MUSCULUS, true);
+        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets(GENE_QUERY, false, MUS_MUSCULUS, true);
 
         verify(bioentityPropertyValueTokenizerMock).split("A QUERY");
 

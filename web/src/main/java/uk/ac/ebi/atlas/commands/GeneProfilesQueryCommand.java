@@ -73,7 +73,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
             return new GeneProfileInputStreamFilter(inputStream, geneIdsForSpecies, requestContext.getSelectedQueryFactors());
         }
 
-        GeneQueryResponse geneQueryResponse = solrClient.findGeneSets(requestContext.getGeneQuery(),
+        GeneQueryResponse geneQueryResponse = solrClient.findGeneIdsOrSets(requestContext.getGeneQuery(),
                 requestContext.isExactMatch(),
                 requestContext.getFilteredBySpecies(),
                 requestContext.isGeneSetMatch());

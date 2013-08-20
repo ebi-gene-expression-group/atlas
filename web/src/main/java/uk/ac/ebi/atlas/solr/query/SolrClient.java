@@ -151,7 +151,7 @@ public class SolrClient {
         return species.iterator().next();
     }
 
-    public GeneQueryResponse findGeneSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
+    public GeneQueryResponse findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
 
         checkArgument(StringUtils.isNotBlank(geneQuery));
 
