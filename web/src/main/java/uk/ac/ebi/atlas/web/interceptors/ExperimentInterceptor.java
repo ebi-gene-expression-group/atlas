@@ -26,7 +26,6 @@ import org.apache.log4j.Logger;
 import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import uk.ac.ebi.atlas.web.SearchRequest;
 
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +51,6 @@ public class ExperimentInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-
-        modelAndView.addObject("searchRequest", new SearchRequest());
 
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
         stopWatch.stop();
