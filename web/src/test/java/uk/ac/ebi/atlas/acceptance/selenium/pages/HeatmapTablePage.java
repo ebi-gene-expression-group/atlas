@@ -230,15 +230,18 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public WebElement getDisplayLevelsButton() {
-        FluentWait wait = new WebDriverWait(driver, 40L)
-                .pollingEvery(200, TimeUnit.MILLISECONDS);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("display-levels")));
+        new FluentWait<>(driver)
+                .withTimeout(40, TimeUnit.SECONDS)
+                .pollingEvery(200, TimeUnit.MILLISECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("display-levels")));
 
         return driver.findElement(By.id("display-levels"));
     }
 
     public void clickDisplayLevelsButton() {
-        getDisplayLevelsButton().click();
+        WebElement displayLevelsButton = getDisplayLevelsButton();
+
+        displayLevelsButton.click();
     }
 
     public String getDisplayLevelsButtonValue() {
