@@ -50,18 +50,16 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     private String logFoldChangePathTemplate;
 
-    private ExperimentDAO experimentDAO;
-
     @Inject
     public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader,
                                             @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate, ExperimentDAO experimentDAO) {
         this.configurationTrader = configurationTrader;
         this.logFoldChangePathTemplate = logFoldChangePathTemplate;
-        this.experimentDAO = experimentDAO;
     }
 
     @Override
-    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species,
+                                        List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -74,7 +72,9 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
         boolean hasLogFoldChangeFile = Files.exists(Paths.get(logFoldChangeFileLocation));
 
-        return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames, hasLogFoldChangeFile, pubMedIds, experimentDesign);
+        return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
+                                        contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames,
+                                        hasLogFoldChangeFile, pubMedIds, experimentDesign);
 
     }
 }

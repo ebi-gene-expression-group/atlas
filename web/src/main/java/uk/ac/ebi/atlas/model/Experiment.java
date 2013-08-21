@@ -36,24 +36,28 @@ public class Experiment implements Serializable {
     private Map<String, String> speciesMapping;
     private String accession;
     private String description;
+    private String investigationTitle;
     private String displayName;
     private boolean hasExtraInfoFile;
     private Date lastUpdate;
 
-    public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+    public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
+                      boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
         this.accession = accession;
         this.displayName = displayName;
         this.description = description;
+        this.investigationTitle = investigationTitle;
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.species = new TreeSet<>(species);
         this.speciesMapping = speciesMapping;
         this.pubMedIds = pubMedIds;
     }
 
-    public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+    public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile,
+                      Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
         this(type, accession, lastUpdate, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
     }
 
@@ -110,5 +114,9 @@ public class Experiment implements Serializable {
             return Character.toUpperCase(speciesName.charAt(0)) + speciesName.substring(1);
         }
         return "";
+    }
+
+    public String getInvestigationTitle() {
+        return investigationTitle;
     }
 }

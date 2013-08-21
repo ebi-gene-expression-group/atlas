@@ -91,4 +91,8 @@ public class MageTabLimpopoUtils {
         }
 
     }
+
+    public String extractInvestigationTitle(MAGETABInvestigation investigation) {
+        return investigation.IDF.investigationTitle;
+    }
 }

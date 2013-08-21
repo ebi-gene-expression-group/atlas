@@ -57,6 +57,7 @@ public class BaselineExperimentBuilder {
     private List<String> pubMedIds;
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
+    private String investigationTitle;
 
     @Inject
     BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -163,6 +164,11 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withInvestigationTitle(String investigationTitle) {
+        this.investigationTitle = investigationTitle;
         return this;
     }
 }

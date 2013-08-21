@@ -48,7 +48,8 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
     }
 
     @Override
-    protected DifferentialExperiment load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected DifferentialExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
+                                          Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 

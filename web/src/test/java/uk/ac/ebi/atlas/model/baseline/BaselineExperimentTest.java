@@ -84,9 +84,8 @@ public class BaselineExperimentTest {
         experimentRunsMock.put(runMock2.getAccession(), runMock2);
 
         subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
-                experimentRunsMock, "description",
-                "displayName", Sets.newHashSet("species"), speciesMapping, DEFAULT_QUERY_FACTOR_TYPE,
-                Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID), experimentDesignMock);
+                experimentRunsMock, "description", "displayName", Sets.newHashSet("species"), speciesMapping,
+                DEFAULT_QUERY_FACTOR_TYPE, Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID), experimentDesignMock);
 
 
     }

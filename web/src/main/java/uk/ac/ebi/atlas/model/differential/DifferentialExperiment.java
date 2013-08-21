@@ -40,7 +40,8 @@ public class DifferentialExperiment extends Experiment {
         this(ExperimentType.DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
     }
 
-    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts,
+                                     String description, boolean hasExtraInfoFile, Set<String> species, List<String> pubMedIds, ExperimentDesign experimentDesign) {
         super(experimentType, accession, lastUpdate, description, hasExtraInfoFile, species, null, pubMedIds, experimentDesign);
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);

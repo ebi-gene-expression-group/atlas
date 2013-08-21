@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
@@ -91,38 +90,41 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
-        String experimentDescription = fetchExperimentDescription(experimentAccession);
+        MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
 
-        Set<String> species = extractSpecies(experimentAccession);
+        String experimentDescription = fetchExperimentDescription(experimentAccession, investigation);
 
-        List<String> pubMedIds = extractPubMedIds(experimentAccession);
+        Set<String> species = extractSpecies(investigation);
+
+        List<String> pubMedIds = extractPubMedIds(investigation);
 
         return load(experimentDTO, experimentDescription, species, pubMedIds, hasExtraInfoFile, experimentDesign);
 
     }
 
-    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
+    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species,
+                              List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
-    String fetchExperimentDescription(String experimentAccession) {
-        // TODO: move this information to database and only call once during experiment load
+    final String fetchExperimentDescription(String experimentAccession, MAGETABInvestigation investigation) {
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            return "Error connecting to ArrayExpress!";
+            return extractInvestigationTitle(investigation);
         }
     }
 
-    Set<String> extractSpecies(String experimentAccession) throws MalformedURLException, ParseException {
-        // TODO: move this information to database and only call once during experiment load
-        MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+    final Set<String> extractSpecies(MAGETABInvestigation investigation) {
         return mageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
     }
 
-    protected List<String> extractPubMedIds(String experimentAccession) throws MalformedURLException, ParseException {
-        // TODO: move this information to database and only call once during experiment load
-        MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+    final List<String> extractPubMedIds(MAGETABInvestigation investigation) {
         return mageTabLimpopoUtils.extractPubMedIdsFromIDF(investigation);
     }
+
+    final String extractInvestigationTitle(MAGETABInvestigation investigation) {
+        return mageTabLimpopoUtils.extractInvestigationTitle(investigation);
+    }
+
 
 }
