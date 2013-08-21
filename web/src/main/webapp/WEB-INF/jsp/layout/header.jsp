@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="right">
-                        <input id="submit-button" class="submit" type="submit" value="Search"/>
+                        <input id="submit-searchbox" class="submit" type="submit" value="Search"/>
                         <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
                              with whatever features you want available -->
                         <span class="adv"><a title="Advanced" id="adv-search" href="../search">Advanced</a></span>
