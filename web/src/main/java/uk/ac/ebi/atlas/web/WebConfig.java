@@ -47,9 +47,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
-        viewControllerRegistry.addViewController("/help.html").setViewName("help");
-        viewControllerRegistry.addViewController("/baseline-atlas-help.html").setViewName("baseline-atlas-help");
-        viewControllerRegistry.addViewController("/differential-atlas-help.html").setViewName("differential-atlas-help");
         viewControllerRegistry.addViewController("/experiments").setViewName("experiments");
         viewControllerRegistry.addViewController("/experiments/").setViewName("experiments");
     }

@@ -77,14 +77,6 @@
         <put-attribute name="menu" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/help/help.jsp"/>
     </definition>
-    <definition name="differential-atlas-help" extends="base.definition">
-        <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/help/differential-atlas-help.jsp"/>
-    </definition>
-    <definition name="baseline-atlas-help" extends="base.definition">
-        <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/help/baseline-atlas-help.jsp"/>
-    </definition>
 
     <definition name="widget.base.definition" template="/WEB-INF/jsp/widget-layout.jsp">
         <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
