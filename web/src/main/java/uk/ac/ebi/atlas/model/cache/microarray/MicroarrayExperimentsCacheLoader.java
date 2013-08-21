@@ -61,15 +61,12 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
     }
 
     @Override
-    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration = configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
         Set<Contrast> contrasts = microarrayExperimentConfiguration.getContrasts();
-
-        Set<String> species = extractSpecies(experimentAccession);
-        List<String> pubMedIds = extractPubMedIds(experimentAccession);
 
         SortedSet<String> arrayDesignNames = microarrayExperimentConfiguration.getArrayDesignNames();
 

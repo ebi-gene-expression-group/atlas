@@ -80,7 +80,6 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     private MicroarrayExperimentsCacheLoader subject;
 
-
     @Before
     public void setUp() throws Exception {
         subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", experimentDAOMock);
@@ -90,7 +89,6 @@ public class MicroarrayExperimentsCacheLoaderTest {
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
-        when(mageTabLimpopoUtilsMock.extractSpeciesFromSDRF(investigationMock)).thenReturn(Sets.newHashSet(SPECIES));
 
         ExperimentDTO experimentDTO = new ExperimentDTO(ACCESSION, ExperimentType.MICROARRAY, new Date(), false, ACCESS_KEY);
         when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTO);
@@ -98,7 +96,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Test
     public void testLoad() throws Exception {
-        MicroarrayExperiment microarrayExperiment = subject.load(experimentDTOMock, "description", false, experimentDesignMock);
+        MicroarrayExperiment microarrayExperiment = subject.load(experimentDTOMock, "description", Sets.newHashSet(SPECIES), null, false, experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGNS));
         assertThat(microarrayExperiment.getSpecies(), hasItem(SPECIES));

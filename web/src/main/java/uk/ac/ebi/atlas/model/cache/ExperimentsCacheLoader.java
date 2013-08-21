@@ -91,13 +91,19 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
-        return load(experimentDTO, fetchExperimentDescription(experimentAccession), hasExtraInfoFile, experimentDesign);
+        String experimentDescription = fetchExperimentDescription(experimentAccession);
+
+        Set<String> species = extractSpecies(experimentAccession);
+
+        List<String> pubMedIds = extractPubMedIds(experimentAccession);
+
+        return load(experimentDTO, experimentDescription, species, pubMedIds, hasExtraInfoFile, experimentDesign);
 
     }
 
-    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
+    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
-    private String fetchExperimentDescription(String experimentAccession) {
+    String fetchExperimentDescription(String experimentAccession) {
         // TODO: move this information to database and only call once during experiment load
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
@@ -107,7 +113,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
         }
     }
 
-    protected Set<String> extractSpecies(String experimentAccession) throws MalformedURLException, ParseException {
+    Set<String> extractSpecies(String experimentAccession) throws MalformedURLException, ParseException {
         // TODO: move this information to database and only call once during experiment load
         MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
         return mageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);

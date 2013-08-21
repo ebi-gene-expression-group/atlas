@@ -69,7 +69,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
     }
 
     @Override
-    protected BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -98,7 +98,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .build();
 
         Map<String, ExperimentRun> processedExperimentRuns = mageTabParser.getProcessedExperimentRuns();
-        List<String> pubMedIds = extractPubMedIds(experimentAccession);
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, processedExperimentRuns);
 
