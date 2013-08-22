@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commands.download;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
@@ -9,6 +10,8 @@ import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.PrintWriter;
+
+import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Named
 public class DataWriterFactory {
@@ -110,7 +113,7 @@ public class DataWriterFactory {
                             PrintWriter responseWriter, HeaderBuilder analyticsDataHeaderBuilder) {
 
         expressionsWriter.setHeaderBuilder(analyticsDataHeaderBuilder);
-        expressionsWriter.setResponseWriter(responseWriter);
+        expressionsWriter.setResponseWriter(new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER));
         expressionsWriter.setExperimentAccession(experimentAccession);
     }
 

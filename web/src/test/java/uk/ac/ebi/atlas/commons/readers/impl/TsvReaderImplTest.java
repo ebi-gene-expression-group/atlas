@@ -38,9 +38,6 @@ import static org.hamcrest.Matchers.is;
 @RunWith(MockitoJUnitRunner.class)
 public class TsvReaderImplTest {
 
-    private static final String PATH_TEMPLATE = "A_PATH_TEMPLATE";
-    private static final String EXPERIMENT_ACCESSION = "experimentAccession";
-
     private TsvReaderImpl subject;
 
     private InputStreamReader tsvFileInputStreamReaderMock;

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +49,7 @@ public class MicroarrayDataWriterTest {
     private TsvReaderUtils tsvReaderUtilsMock;
 
     @Mock
-    private PrintWriter printWriterMock;
+    private CSVWriter csvWriterMock;
 
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
@@ -79,7 +80,7 @@ public class MicroarrayDataWriterTest {
         subject = new MicroarrayDataWriter(tsvReaderUtilsMock, geneNamesProviderMock, mappingProviderMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
         subject.setHeaderBuilder(headerBuilder);
-        subject.setResponseWriter(printWriterMock);
+        subject.setResponseWriter(csvWriterMock);
         subject.setArrayDesignAccession(ARRAY_DESIGN_ACC);
     }
 
@@ -94,9 +95,9 @@ public class MicroarrayDataWriterTest {
         subject.setExperimentAccession("Exp1");
         Long count = subject.write();
 
-        verify(printWriterMock).write("Gene name\tDesign Element\tC1\tC2\tC3\n", 0, 34);
+        verify(csvWriterMock).writeNext(new String[]{"Gene name","Design Element","C1","C2","C3"});
 
-        verify(printWriterMock).write("name1\tde123\t1\t0\t10.5\n", 0, 21);
+        verify(csvWriterMock).writeNext(new String[]{"name1","de123","1","0","10.5"});
 
         assertThat(count, is(1L));
     }

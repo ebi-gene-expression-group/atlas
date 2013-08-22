@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +47,7 @@ public class ExpressionsWriterImplTest {
     private TsvReaderUtils tsvReaderUtilsMock;
 
     @Mock
-    private PrintWriter printWriterMock;
+    private CSVWriter csvWriterMock;
 
     @Mock
     private GeneNamesProvider geneNamesProviderMock;
@@ -55,7 +56,8 @@ public class ExpressionsWriterImplTest {
     private CSVReader csvReaderMock;
 
     private String[] header = {"Gene", "SRR057596", "SRR057597", "SRR057598"};
-    private String[] line = {"ens1", "1", "0", "10.5"};
+    private String[] line1 = {"ens1", "1", "0", "10.5"};
+    private String[] line2 = {"ens2", "1", "0", "10.\"5"};
 
     private ExpressionsWriterImpl subject;
 
@@ -63,17 +65,19 @@ public class ExpressionsWriterImplTest {
     public void initSubject() throws Exception {
         when(tsvReaderUtilsMock.build(anyString())).thenReturn(csvReaderMock);
         when(csvReaderMock.readNext()).thenReturn(header)
-                .thenReturn(line)
+                .thenReturn(line1)
+                .thenReturn(line2)
                 .thenReturn(null);
 
         when(geneNamesProviderMock.getGeneName("ens1")).thenReturn("name1");
+        when(geneNamesProviderMock.getGeneName("ens2")).thenReturn("name2");
 
         RnaSeqRawDataHeaderBuilder headerBuilder = new RnaSeqRawDataHeaderBuilder();
 
         subject = new ExpressionsWriterImpl(tsvReaderUtilsMock, geneNamesProviderMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
         subject.setHeaderBuilder(headerBuilder);
-        subject.setResponseWriter(printWriterMock);
+        subject.setResponseWriter(csvWriterMock);
     }
 
     @Test
@@ -87,10 +91,12 @@ public class ExpressionsWriterImplTest {
         subject.setExperimentAccession("Exp1");
         Long count = subject.write();
 
-        verify(printWriterMock).write("Gene name\tGene Id\tSRR057596\tSRR057597\tSRR057598\n", 0, 48);
+        verify(csvWriterMock).writeNext(new String[]{"Gene name","Gene Id","SRR057596","SRR057597","SRR057598"});
 
-        verify(printWriterMock).write("name1\tens1\t1\t0\t10.5\n", 0, 20);
+        verify(csvWriterMock).writeNext(new String[]{"name1","ens1","1","0","10.5"});
 
-        assertThat(count, is(1L));
+        verify(csvWriterMock).writeNext(new String[]{"name2","ens2","1","0","10.\"5"});
+
+        assertThat(count, is(2L));
     }
 }

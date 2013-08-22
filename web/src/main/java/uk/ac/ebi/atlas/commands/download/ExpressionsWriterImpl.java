@@ -30,9 +30,8 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         this.geneNamesProvider = geneNamesProvider;
     }
 
-
-    public void setResponseWriter(PrintWriter responseWriter) {
-        csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER);
+    public void setResponseWriter(CSVWriter csvWriter) {
+        this.csvWriter = csvWriter;
     }
 
     public void setExperimentAccession(String experimentAccession) {
