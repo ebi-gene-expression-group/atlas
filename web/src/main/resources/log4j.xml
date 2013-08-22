@@ -44,6 +44,11 @@
         <appender-ref ref="atlas"/>
     </logger>
 
+    <logger name="uk.ac.ebi.atlas.web.interceptors.AdminInterceptor" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="atlas"/>
+    </logger>
+
     <root>
         <level value="ERROR"/>
         <appender-ref ref="atlas"/>
