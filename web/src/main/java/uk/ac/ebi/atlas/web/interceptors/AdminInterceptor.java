@@ -46,7 +46,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         String adminRequestLog = MessageFormat.format(ADMIN_REQUEST_LOG_TEMPLATE,
                 username, request.getRequestURI(), request.getQueryString());
 
-        LOGGER.fatal(adminRequestLog);
+        LOGGER.info(adminRequestLog);
 
         return true;
     }
