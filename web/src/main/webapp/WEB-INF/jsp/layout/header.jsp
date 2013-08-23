@@ -80,7 +80,7 @@
                         <span class="examples">Examples:
                                         <a href="experiments/all?queryString=kinase">kinase</a>,
                                         <a href="experiments/all?queryString=ASPM">ASPM</a>,
-                                        <a href="experiments/all?queryString=REACT 1619">REACT 1619</a>,
+                                        <a href="experiments/all?queryString=REACT_1619">REACT_1619</a>,
                                         <a href="experiments/all?queryString=GO:0007165">GO:0007165</a>, ...</span>
                     </div>
 
@@ -88,7 +88,9 @@
                         <input id="submit-searchbox" class="submit" type="submit" value="Search"/>
                         <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
                              with whatever features you want available -->
+                        <!--
                         <span class="adv"><a title="Advanced" id="adv-search" href="../search">Advanced</a></span>
+                        -->
                     </div>
 
                 </fieldset>
