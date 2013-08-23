@@ -98,12 +98,4 @@ public class GeneProfilesQueryCommandTest {
 
     }
 
-    @Test
-    public void givenEmptyGeneQuerySolrClientFindGeneIdsShouldNotBeInvoked() throws GenesNotFoundException {
-
-        subject.execute("");
-
-        verify(solrClientMock, times(1)).findGeneIdsForSpecies(SPECIES);
-    }
-
 }
