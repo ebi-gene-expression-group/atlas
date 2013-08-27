@@ -29,6 +29,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -104,7 +105,7 @@ public class SolrClient {
 
     }
 
-    public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String type, String... propertyNames) {
+    public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, String... propertyNames) {
         StringBuilder sb = new StringBuilder();
         sb.append(SolrQueryService.PROPERTY_LOWER_FIELD);
         sb.append(":\"");
@@ -120,7 +121,7 @@ public class SolrClient {
         sb.append(") AND ");
         sb.append(SolrQueryService.BIOENTITY_TYPE);
         sb.append(":");
-        sb.append(type);
+        sb.append(bioentityType);
 
         return solrQueryService.fetchGeneIdentifiersFromSolr(sb.toString());
     }
@@ -157,6 +158,8 @@ public class SolrClient {
 
         checkArgument(StringUtils.isNotBlank(geneQuery));
 
+        species = limitSpeciesNameToTwoWords(species);
+
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         if (tokenizeQuery) {
@@ -172,30 +175,48 @@ public class SolrClient {
 
     }
 
+    String limitSpeciesNameToTwoWords(String species) {
+        String[] words = StringUtils.split(species);
+        if (ArrayUtils.getLength(words.length) > 2){
+            return words[0].concat(" ").concat(words[1]);
+        }
+        return species;
+    }
+
     public Set<String> findGeneIdsForSpecies(String species) {
 
         checkArgument(StringUtils.isNotBlank(species));
+
+        species = limitSpeciesNameToTwoWords(species);
 
         return solrQueryService.getGeneIdsForSpecies(species);
     }
 
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
+        species = limitSpeciesNameToTwoWords(species);
+
         return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
     }
 
     public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
+
+        species = limitSpeciesNameToTwoWords(species);
 
         return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
     }
 
     public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
 
+        species = limitSpeciesNameToTwoWords(species);
+
         return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
 
     }
 
     public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
+
+        species = limitSpeciesNameToTwoWords(species);
 
         Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
 
