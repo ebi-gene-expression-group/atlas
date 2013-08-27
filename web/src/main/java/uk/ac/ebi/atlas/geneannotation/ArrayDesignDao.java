@@ -39,6 +39,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Named
 @Scope("singleton")
@@ -57,12 +58,12 @@ public class ArrayDesignDao {
 
         String query = "INSERT INTO designelement_mapping(designelement, identifier, type, arraydesign) VALUES(?, ?, ?,?)";
 
-        final ArrayList<String> keys = Lists.newArrayList(annotations.keySet());
+        final List<Map.Entry<String, String>> entries = Lists.newArrayList(annotations.entrySet());
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, keys.get(i));
-                ps.setString(2, annotations.get(keys.get(i)));
+                ps.setString(1, entries.get(i).getValue());
+                ps.setString(2, entries.get(i).getKey());
                 ps.setString(3, type);
                 ps.setString(4, arrayDesign);
             }
