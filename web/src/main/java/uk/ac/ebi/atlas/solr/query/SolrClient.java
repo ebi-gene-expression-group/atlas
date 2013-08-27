@@ -176,8 +176,9 @@ public class SolrClient {
     }
 
     String limitSpeciesNameToTwoWords(String species) {
+
         String[] words = StringUtils.split(species);
-        if (ArrayUtils.getLength(words.length) > 2){
+        if (ArrayUtils.getLength(words) > 2){
             return words[0].concat(" ").concat(words[1]);
         }
         return species;
