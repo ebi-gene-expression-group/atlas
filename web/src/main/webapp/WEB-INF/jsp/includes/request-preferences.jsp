@@ -27,6 +27,7 @@
 
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
+        <input type="hidden" name="accessKey" value="${param.accessKey}"></hidden>
         <form:hidden path="serializedFilterFactors"/>
         <form:hidden path="queryFactorType"/>
         <form:hidden path="rootContext"/>
