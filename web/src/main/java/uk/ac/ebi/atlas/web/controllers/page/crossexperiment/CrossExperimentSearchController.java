@@ -26,15 +26,37 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.solr.BioentityType;
+import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+
+import javax.inject.Inject;
 
 @Controller
 @Scope("request")
 public class CrossExperimentSearchController {
 
+    private SolrClient solrClient;
+
+    @Inject
+    public CrossExperimentSearchController(SolrClient solrClient){
+
+        this.solrClient = solrClient;
+    }
+
     @RequestMapping(value = "/experiments/all")
     public String search(@RequestParam(value = "queryString") String queryString){
 
-        return "redirect:/home?queryString=" + queryString;
+        String bioentityTypeString;
+
+        try{
+            BioentityType bioentityType = solrClient.findBioentityType(queryString);
+            bioentityTypeString = bioentityType.name().toLowerCase();
+        } catch(ResourceNotFoundException e){
+            bioentityTypeString = "geneset";
+        }
+
+        return "redirect:/" + bioentityTypeString + "s/" + queryString;
 
     }
 

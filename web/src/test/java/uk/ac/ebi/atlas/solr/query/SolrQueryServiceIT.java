@@ -30,6 +30,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.solr.BioentityType;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -137,6 +139,23 @@ public class SolrQueryServiceIT {
 
         assertThat(subject.getPropertyValuesForIdentifier("ENSG00000179218", "symbol"), hasItem("CALR"));
         assertThat(subject.getPropertyValuesForIdentifier("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
+
+    }
+
+
+    @Test
+    public void shouldReturnTheRightBioentityType() throws SolrServerException {
+
+        assertThat(subject.getBioentityType("ENSG00000179218"), is(BioentityType.GENE));
+        assertThat(subject.getBioentityType("ENSP00000355434"), is(BioentityType.PROTEIN));
+        assertThat(subject.getBioentityType("ENST00000559981"), is(BioentityType.TRANSCRIPT));
+
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void shouldThrowResourceNotFoundException() throws SolrServerException {
+
+        subject.getBioentityType("XYZEMC2");
 
     }
 

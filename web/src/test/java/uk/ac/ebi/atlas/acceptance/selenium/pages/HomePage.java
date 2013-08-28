@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePage extends AtlasPage {
+public class HomePage extends GlobalSearchPage {
 
     @FindBy(id = "species-nav")
     private WebElement speciesNav;

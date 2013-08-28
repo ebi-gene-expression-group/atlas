@@ -31,7 +31,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class BioEntityPage extends HeatmapTablePage {
 
@@ -118,12 +117,14 @@ public class BioEntityPage extends HeatmapTablePage {
         return infoPaneBody.isDisplayed();
     }
 
-    public void clickInfoCard() {
+    public void clickInfoCard(boolean expectToOpen) {
         infoPaneHeader.click();
 
-        By infoCardBodyId = By.id("infoBody");
-        WebDriverWait wait = new WebDriverWait(driver, 4L);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(infoCardBodyId));
+        if(!expectToOpen){
+            By infoCardBodyId = By.id("infoBody");
+            WebDriverWait wait = new WebDriverWait(driver, 4L);
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(infoCardBodyId));
+        }
     }
 
     public boolean isBaselineProfileExpanded() {
@@ -197,9 +198,9 @@ public class BioEntityPage extends HeatmapTablePage {
         return table.findElements(By.tagName("tr")).size();
     }
 
-    public List<String> getPropertiesTableRow(int index) {
+    public List<String> getPropertiesTableRow(int zeroStartingIndex) {
         List<String> row = Lists.newArrayList();
-        WebElement rowElement = table.findElements(By.tagName("tr")).get(index);
+        WebElement rowElement = table.findElements(By.tagName("tr")).get(zeroStartingIndex);
         for (WebElement dataElement : rowElement.findElements(By.tagName("td"))) {
             row.add(dataElement.getText());
         }

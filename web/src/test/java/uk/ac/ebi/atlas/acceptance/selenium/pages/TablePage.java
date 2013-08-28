@@ -32,7 +32,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class TablePage extends AtlasPage {
+abstract class TablePage extends GlobalSearchPage {
 
     private static final String CELL_XPATH_TEMPLATE = "tbody/tr[%d]/td[%d]";
     private static final String BOTTOM_CELL_XPATH_TEMPLATE = "tbody/tr[last()]/td[%d]";

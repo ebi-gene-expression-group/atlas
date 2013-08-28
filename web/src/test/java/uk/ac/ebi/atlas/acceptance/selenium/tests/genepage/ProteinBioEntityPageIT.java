@@ -50,7 +50,7 @@ public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
     @Test
     public void checkCardExpansion() {
         assertThat(subject.isInfoCardExpanded(), is(true));
-        subject.clickInfoCard();
+        subject.clickInfoCard(false);
         assertThat(subject.isInfoCardExpanded(), is(false));
     }
 

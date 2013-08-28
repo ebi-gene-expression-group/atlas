@@ -37,9 +37,12 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.solr.BioentityType;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -369,4 +372,21 @@ public class SolrQueryService {
         sb.delete(indexOfOR, indexOfOR + 4);
         sb.append(")");
     }
+
+    BioentityType getBioentityType(String bioentityId) {
+        String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, bioentityId);
+        SolrQuery solrQuery = new SolrQuery(query);
+        QueryResponse response = executeSolrQuery(solrQuery);
+        SolrDocumentList solrDocuments = response.getResults();
+        if (solrDocuments.isEmpty()) {
+            throw new ResourceNotFoundException("bioentity not found for identifier: " + bioentityId);
+        }
+        String bioentityTypeAlias = (String) solrDocuments.get(0).get(BIOENTITY_TYPE);
+        return BioentityType.get(bioentityTypeAlias);
+    }
+
+    private static final String BIOENTITY_TYPE_QUERY =
+            "bioentity_identifier:\"{0}\" AND (property_name:\"ensgene\"" +
+                    "OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") AND property_value_lower: \"{0}\"";
+
 }
