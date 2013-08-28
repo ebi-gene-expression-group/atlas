@@ -53,7 +53,7 @@ public class FileBasedPropertyMappingFinder implements PropertyMappingFinder {
             //Skip first line with header
             csvReader.readNext();
             while ((inputLine = csvReader.readNext()) != null) {
-                result.put(inputLine[0], inputLine[1]);
+                result.put(inputLine[1], inputLine[0]);
             }
         } catch (IOException e) {
             e.printStackTrace();

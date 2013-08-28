@@ -36,10 +36,8 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Named
 @Scope("singleton")
@@ -62,8 +60,8 @@ public class ArrayDesignDao {
         BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, entries.get(i).getValue());
-                ps.setString(2, entries.get(i).getKey());
+                ps.setString(1, entries.get(i).getKey());
+                ps.setString(2, entries.get(i).getValue());
                 ps.setString(3, type);
                 ps.setString(4, arrayDesign);
             }
