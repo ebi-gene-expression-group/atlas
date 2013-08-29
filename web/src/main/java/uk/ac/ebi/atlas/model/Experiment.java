@@ -36,7 +36,6 @@ public class Experiment implements Serializable {
     private Map<String, String> speciesMapping;
     private String accession;
     private String description;
-    private String investigationTitle;
     private String displayName;
     private boolean hasExtraInfoFile;
     private Date lastUpdate;
@@ -49,7 +48,6 @@ public class Experiment implements Serializable {
         this.accession = accession;
         this.displayName = displayName;
         this.description = description;
-        this.investigationTitle = investigationTitle;
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.species = new TreeSet<>(species);
         this.speciesMapping = speciesMapping;
@@ -116,7 +114,4 @@ public class Experiment implements Serializable {
         return "";
     }
 
-    public String getInvestigationTitle() {
-        return investigationTitle;
-    }
 }
