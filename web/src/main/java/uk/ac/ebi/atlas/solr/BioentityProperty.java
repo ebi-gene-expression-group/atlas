@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.admin.index;
+package uk.ac.ebi.atlas.solr;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.beans.Field;
@@ -50,7 +50,7 @@ public class BioentityProperty {
     public BioentityProperty(){
     }
 
-    BioentityProperty(String bioentityIdentifier, String bioentityType, String species, String name, String value) {
+    public BioentityProperty(String bioentityIdentifier, String bioentityType, String species, String name, String value) {
         checkArgument(StringUtils.isNotBlank(value),"Invalid blank property value");
 
         this.bioentityType = bioentityType;

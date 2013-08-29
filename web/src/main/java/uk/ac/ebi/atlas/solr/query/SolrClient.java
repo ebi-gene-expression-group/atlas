@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.solr.BioentityType;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -113,14 +113,14 @@ public class SolrClient {
         sb.append(queryString);
         sb.append("\" AND (");
         for (String propertyName : propertyNames) {
-            sb.append(SolrQueryService.PROPERTY_TYPE_FIELD);
+            sb.append(SolrQueryService.PROPERTY_NAME_FIELD);
             sb.append(":\"");
             sb.append(propertyName);
             sb.append("\" OR ");
         }
         sb.delete(sb.length() - 3, sb.length());
         sb.append(") AND ");
-        sb.append(SolrQueryService.BIOENTITY_TYPE);
+        sb.append(SolrQueryService.BIOENTITY_TYPE_FIELD);
         sb.append(":");
         sb.append(bioentityType);
 
@@ -129,7 +129,7 @@ public class SolrClient {
 
     public String findSpeciesForBioentityId(String identifier) {
 
-        return getSpeciesForPropertyValue(identifier, SolrQueryService.IDENTIFIER_FIELD);
+        return getSpeciesForPropertyValue(identifier, SolrQueryService.BIOENTITY_IDENTIFIER_FIELD);
 
     }
 
@@ -279,7 +279,7 @@ public class SolrClient {
         }
     }
 
-    public BioentityType findBioentityType(String bioentityId) {
-        return solrQueryService.getBioentityType(bioentityId);
+    public BioentityProperty findBioentityType(String bioentityId) {
+        return solrQueryService.getBioentity(bioentityId);
     }
 }

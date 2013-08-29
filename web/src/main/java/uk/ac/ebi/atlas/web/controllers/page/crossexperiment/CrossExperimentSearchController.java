@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -47,17 +48,27 @@ public class CrossExperimentSearchController {
     @RequestMapping(value = "/experiments/all")
     public String search(@RequestParam(value = "queryString") String queryString){
 
-        String bioentityTypeString;
+        String bioentityType;
+        String bioentityIdentifier;
 
         try{
-            BioentityType bioentityType = solrClient.findBioentityType(queryString);
-            bioentityTypeString = bioentityType.name().toLowerCase();
+            BioentityProperty bioentity = solrClient.findBioentityType(queryString);
+
+            bioentityType = extractBioentityType(bioentity).toLowerCase();
+            bioentityIdentifier = bioentity.getBioentityIdentifier();
         } catch(ResourceNotFoundException e){
-            bioentityTypeString = "geneset";
+            bioentityType = "geneset";
+            bioentityIdentifier = queryString;
         }
 
-        return "redirect:/" + bioentityTypeString + "s/" + queryString;
+        return "redirect:/" + bioentityType + "s/" + bioentityIdentifier;
 
+    }
+
+    // bioentity.getBioentityType() may return ens<type> or mirna
+    // so here we use BioentityType to normalize and sanitize solr bioentity_type value
+    private String extractBioentityType(BioentityProperty bioentity) {
+        return BioentityType.get(bioentity.getBioentityType()).name();
     }
 
 }

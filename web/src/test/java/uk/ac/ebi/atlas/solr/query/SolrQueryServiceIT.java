@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.solr.BioentityType;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -142,20 +142,37 @@ public class SolrQueryServiceIT {
 
     }
 
-
     @Test
     public void shouldReturnTheRightBioentityType() throws SolrServerException {
 
-        assertThat(subject.getBioentityType("ENSG00000179218"), is(BioentityType.GENE));
-        assertThat(subject.getBioentityType("ENSP00000355434"), is(BioentityType.PROTEIN));
-        assertThat(subject.getBioentityType("ENST00000559981"), is(BioentityType.TRANSCRIPT));
+        assertThat(subject.getBioentity("ENSG00000179218").getBioentityType(), is("ensgene"));
+        assertThat(subject.getBioentity("ENSP00000355434").getBioentityType(), is("ensprotein"));
+        assertThat(subject.getBioentity("ENST00000559981").getBioentityType(), is("enstranscript"));
 
     }
+
+    @Test
+    public void shouldFindCaseInsentiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
+
+        BioentityProperty bioentityProperty = subject.getBioentity("enSG00000179218");
+        assertThat(bioentityProperty.getBioentityType(), is("ensgene"));
+        assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSG00000179218"));
+
+        bioentityProperty = subject.getBioentity("enSP00000355434");
+        assertThat(bioentityProperty.getBioentityType(), is("ensprotein"));
+        assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSP00000355434"));
+
+        bioentityProperty = subject.getBioentity("enST00000559981");
+        assertThat(bioentityProperty.getBioentityType(), is("enstranscript"));
+        assertThat(bioentityProperty.getBioentityIdentifier(), is("ENST00000559981"));
+
+    }
+
 
     @Test(expected = ResourceNotFoundException.class)
     public void shouldThrowResourceNotFoundException() throws SolrServerException {
 
-        subject.getBioentityType("XYZEMC2");
+        subject.getBioentity("XYZEMC2");
 
     }
 

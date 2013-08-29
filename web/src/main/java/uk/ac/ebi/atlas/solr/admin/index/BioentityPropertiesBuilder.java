@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 
 import javax.inject.Named;
 import java.util.List;

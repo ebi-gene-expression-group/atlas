@@ -75,9 +75,9 @@ public class SolrQueryServiceTest {
         // then
         assertThat(s, is(SolrQueryService.PROPERTY_EDGENGRAM_FIELD + ":\"geneName\" AND " +
                 SolrQueryService.SPECIES_FIELD + ":\"species\" AND (" +
-                SolrQueryService.BIOENTITY_TYPE + ":\"ensgene\") AND (" +
-                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " +
-                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
+                SolrQueryService.BIOENTITY_TYPE_FIELD + ":\"ensgene\") AND (" +
+                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype1\" OR " +
+                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype2\")"));
     }
 
     @Test
@@ -87,9 +87,9 @@ public class SolrQueryServiceTest {
         String s = subject.buildCompositeQueryIdentifier("ENSMUS000000", Lists.newArrayList("prototype1", "prototype2"));
 
         // then
-        assertThat(s, is(SolrQueryService.IDENTIFIER_FIELD + ":\"ENSMUS000000\" AND (" +
-                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype1\" OR " +
-                SolrQueryService.PROPERTY_TYPE_FIELD + ":\"prototype2\")"));
+        assertThat(s, is(SolrQueryService.BIOENTITY_IDENTIFIER_FIELD + ":\"ENSMUS000000\" AND (" +
+                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype1\" OR " +
+                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype2\")"));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class SolrQueryServiceTest {
         assertThat(s, is("{!lucene q.op=OR df=" + SolrQueryService.PROPERTY_SEARCH_FIELD + "} (" +
                 SolrQueryService.PROPERTY_SEARCH_FIELD + ":query_string) AND " +
                 SolrQueryService.SPECIES_FIELD + ":\"sapiens\" AND (" +
-                SolrQueryService.BIOENTITY_TYPE + ":\"ensgene\")"));
+                SolrQueryService.BIOENTITY_TYPE_FIELD + ":\"ensgene\")"));
 
     }
 

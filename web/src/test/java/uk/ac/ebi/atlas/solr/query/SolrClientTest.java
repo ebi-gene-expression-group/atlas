@@ -60,7 +60,7 @@ public class SolrClientTest {
 
     private static final List<String> TOOLTIP_PROPERTY_TYPES = Arrays.asList(CSV_TOOLTIP_PROPERTY_TYPES.split(","));
 
-    private static final String EXPECTED_TOOLTIP_QUERY = SolrQueryService.IDENTIFIER_FIELD + ":\"ENSG00000132604\" AND (" + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"synonym\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"goterm\" OR " + SolrQueryService.PROPERTY_TYPE_FIELD + ":\"interproterm\")";
+    private static final String EXPECTED_TOOLTIP_QUERY = SolrQueryService.BIOENTITY_IDENTIFIER_FIELD + ":\"ENSG00000132604\" AND (" + SolrQueryService.PROPERTY_NAME_FIELD + ":\"synonym\" OR " + SolrQueryService.PROPERTY_NAME_FIELD + ":\"goterm\" OR " + SolrQueryService.PROPERTY_NAME_FIELD + ":\"interproterm\")";
 
     private static final String MUS_MUSCULUS = "mus musculus";
     private static final HashSet<String> SPECIES = Sets.newHashSet(MUS_MUSCULUS);
@@ -95,7 +95,7 @@ public class SolrClientTest {
         when(solrQueryServiceMock.querySolrForProperties(anyString(), anyInt())).thenReturn(results);
 //        when(solrQueryServiceMock.getSpeciesForIdentifier(IDENTIFIER)).thenReturn(SPECIES);
         when(solrQueryServiceMock.getPropertyValuesForIdentifier(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
-        when(solrQueryServiceMock.getSpeciesForPropertyValue(IDENTIFIER, SolrQueryService.IDENTIFIER_FIELD)).thenReturn(SPECIES);
+        when(solrQueryServiceMock.getSpeciesForPropertyValue(IDENTIFIER, SolrQueryService.BIOENTITY_IDENTIFIER_FIELD)).thenReturn(SPECIES);
 
         when(bioentityPropertyValueTokenizerMock.split(IDENTIFIER)).thenReturn(Lists.newArrayList(IDENTIFIER));
 

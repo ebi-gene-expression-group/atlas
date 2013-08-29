@@ -33,6 +33,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.mockito.AnswerWithSelf;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
 
 import java.io.IOException;

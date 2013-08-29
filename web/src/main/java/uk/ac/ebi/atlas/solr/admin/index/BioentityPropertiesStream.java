@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.solr.admin.index;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 
 import java.io.Closeable;
 import java.io.IOException;

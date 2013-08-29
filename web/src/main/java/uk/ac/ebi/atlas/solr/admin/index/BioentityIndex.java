@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
 
 import javax.inject.Inject;
