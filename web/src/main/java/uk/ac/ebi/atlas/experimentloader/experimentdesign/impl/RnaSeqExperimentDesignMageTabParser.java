@@ -47,7 +47,7 @@ public class RnaSeqExperimentDesignMageTabParser extends MageTabParser<ScanNode>
 
         Set<AssayNode<ScanNode>> assayNodes = Sets.newLinkedHashSet();
         for (ScanNode scanNode : sdrf.getNodes(ScanNode.class)) {
-            assayNodes.add(new AssayNode(scanNode.comments.get(ENA_RUN), scanNode));
+            assayNodes.add(new AssayNode(scanNode.comments.get(ENA_RUN).iterator().next(), scanNode));
         }
         return assayNodes;
     }
