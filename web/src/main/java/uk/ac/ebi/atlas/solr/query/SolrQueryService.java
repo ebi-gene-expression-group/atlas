@@ -163,7 +163,7 @@ public class SolrQueryService {
 
     Collection<String> getSpeciesForPropertyValue(String propertyValue) {
 
-        SolrQuery query = new SolrQuery(PROPERTY_LOWER_FIELD + ":" + propertyValue);
+        SolrQuery query = new SolrQuery(PROPERTY_LOWER_FIELD + ":\"" + propertyValue + "\"");
         return extractAllSpecies(query);
 
     }

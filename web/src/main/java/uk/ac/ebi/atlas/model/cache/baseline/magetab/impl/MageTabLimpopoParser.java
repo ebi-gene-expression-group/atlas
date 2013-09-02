@@ -234,7 +234,7 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
 
     ExperimentRun buildExperimentRun(ScanNode scanNode) {
         checkState(factorNamesByType != null, "Please invoke the extractFactorNames method first");
-        ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN));
+        ExperimentRun experimentRun = new ExperimentRun(scanNode.comments.get(ENA_RUN).iterator().next());
 
         Collection<AssayNode> assayNodes = GraphUtils.findUpstreamNodes(scanNode, AssayNode.class);
 
