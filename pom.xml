@@ -549,18 +549,26 @@
     <profiles>
         <!-- environment profiles -->
         <profile>
-            <id>lime</id>
+            <id>dev</id>
             <properties>
+                <!--
                 <deploy.host>lime</deploy.host>
                 <deploy.port>14092</deploy.port>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
+                -->
+                <h2.database.location>/srv/gxa/data/h2/atlas</h2.database.location>
+                <data.files.location>/srv/gxa/data</data.files.location>
             </properties>
         </profile>
         <profile>
             <id>www-test</id>
             <properties>
+                <!--
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
                 <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2/atlas</h2.database.location>
+                -->
+                <h2.database.location>/srv/gxa/data/h2/atlas</h2.database.location>
+                <data.files.location>/srv/gxa/data</data.files.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
@@ -590,46 +598,47 @@
         </profile>
 
         <!-- execution profiles -->
-        <profile>
-            <!-- deploys war artifact to a remote or local tomcat 7 instance using tomcat manager interface -->
-            <id>deploy.tomcat7</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.tomcat.maven</groupId>
-                        <artifactId>tomcat7-maven-plugin</artifactId>
-                        <configuration>
-                            <path>/gxa</path>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>tomcat-deploy</id>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                                <phase>install</phase>
-                                <configuration>
-                                    <url>http://${deploy.host}:${deploy.port}/manager/html</url>
-                                    <username>tomcat</username>
-                                    <password>tomcat</password>
-                                    <path>/gxa</path>
-                                    <update>true</update>
-                                    <!-- optional only if you want to use a preconfigured server.xml file -->
-                                    <!--
-                                    <serverXml>src/main/tomcatconf/server.xml</serverXml>
-                                    -->
-                                    <!-- optional values which can be configurable -->
-                                    <!--
-                                    <attachArtifactClassifier>default value is exec-war but you can customize</attachArtifactClassifier>
-                                    <attachArtifactClassifierType>default value is jar</attachArtifactClassifierType>
-                                    -->
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+
+        <!--<profile>-->
+            <!--&lt;!&ndash; deploys war artifact to a remote or local tomcat 7 instance using tomcat manager interface &ndash;&gt;-->
+            <!--<id>deploy.tomcat7</id>-->
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.apache.tomcat.maven</groupId>-->
+                        <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+                        <!--<configuration>-->
+                            <!--<path>/gxa</path>-->
+                        <!--</configuration>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<id>tomcat-deploy</id>-->
+                                <!--<goals>-->
+                                    <!--<goal>deploy</goal>-->
+                                <!--</goals>-->
+                                <!--<phase>install</phase>-->
+                                <!--<configuration>-->
+                                    <!--<url>http://${deploy.host}:${deploy.port}/manager/html</url>-->
+                                    <!--<username>tomcat</username>-->
+                                    <!--<password>tomcat</password>-->
+                                    <!--<path>/gxa</path>-->
+                                    <!--<update>true</update>-->
+                                    <!--&lt;!&ndash; optional only if you want to use a preconfigured server.xml file &ndash;&gt;-->
+                                    <!--&lt;!&ndash;-->
+                                    <!--<serverXml>src/main/tomcatconf/server.xml</serverXml>-->
+                                    <!--&ndash;&gt;-->
+                                    <!--&lt;!&ndash; optional values which can be configurable &ndash;&gt;-->
+                                    <!--&lt;!&ndash;-->
+                                    <!--<attachArtifactClassifier>default value is exec-war but you can customize</attachArtifactClassifier>-->
+                                    <!--<attachArtifactClassifierType>default value is jar</attachArtifactClassifierType>-->
+                                    <!--&ndash;&gt;-->
+                                <!--</configuration>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
 
     </profiles>
 
