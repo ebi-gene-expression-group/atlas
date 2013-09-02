@@ -108,4 +108,20 @@ public class BioentityPropertiesBuilderTest {
         //then
         assertThat(bioentityProperties, hasSize(21));
     }
+
+    @Test
+    public void shouldBuildPropertiesSplittingValuesOnSeparatorSkipIdentifier() throws Exception {
+        subject = new BioentityPropertiesBuilder();
+        //when
+        List<BioentityProperty> bioentityProperties = subject
+                .forPropertyNames(GENE_PROPERTY_NAMES)
+                .forBioentityType(BIOENTITY_TYPE)
+                .forSpecies(SPECIES)
+                .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
+                .withPropertyValues(GENE_PROPERTY_VALUES)
+                .withIdentifierAsProperty(false)
+                .build();
+        //then
+        assertThat(bioentityProperties, hasSize(20));
+    }
 }

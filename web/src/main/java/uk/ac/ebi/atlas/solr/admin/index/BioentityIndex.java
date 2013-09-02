@@ -42,6 +42,7 @@ import java.util.Collection;
 public class BioentityIndex {
 
     private static final Logger LOGGER = Logger.getLogger(BioentityIndex.class);
+    private static final String REACTOME_DIR = "reactome";
 
     private BioentityIndexMonitor bioentityIndexMonitor;
     private final BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder;
@@ -57,7 +58,7 @@ public class BioentityIndex {
 
     public void indexAll(final DirectoryStream<Path> directoryStream) {
         try {
-            indexDirectory(directoryStream);
+            indexDirectory(directoryStream, false);
 
             solrServer.commit();
 
@@ -73,26 +74,29 @@ public class BioentityIndex {
 
     }
 
-    void indexDirectory(DirectoryStream<Path> bioentityPropertiesDirectoryStream) throws IOException, SolrServerException {
+    void indexDirectory(DirectoryStream<Path> bioentityPropertiesDirectoryStream, boolean isReactomeDirectory) throws IOException, SolrServerException {
         try (DirectoryStream<Path> directoryStream = bioentityPropertiesDirectoryStream) {
 
             for (Path path : directoryStream) {
 
                 if (Files.isDirectory(path)) {
-                    indexDirectory(Files.newDirectoryStream(path));
+                    isReactomeDirectory = path.toString().contains(REACTOME_DIR);
+                    indexDirectory(Files.newDirectoryStream(path), isReactomeDirectory);
                 } else if (Files.isRegularFile(path)) {
-                    indexFile(path);
+                    indexFile(path, isReactomeDirectory);
                 }
             }
         }
     }
 
-    void indexFile(Path filePath) throws IOException, SolrServerException {
+    void indexFile(Path filePath, boolean isReactome) throws IOException, SolrServerException {
 
         if (filePath.toString().endsWith(".tsv")) {
 
+            bioentityPropertiesStreamBuilder.forPath(filePath).isForReactome(isReactome);
+
             try (BioentityPropertiesStream bioentityBioentityPropertiesStream =
-                         bioentityPropertiesStreamBuilder.forPath(filePath).build()) {
+                         bioentityPropertiesStreamBuilder.build()) {
 
                 LOGGER.info("<indexFile> streaming started for file: " + filePath);
 
@@ -109,7 +113,6 @@ public class BioentityIndex {
                 bioentityIndexMonitor.completed(filePath);
 
             }
-
 
         }
 

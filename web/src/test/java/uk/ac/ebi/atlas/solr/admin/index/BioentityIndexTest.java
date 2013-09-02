@@ -68,6 +68,11 @@ public class BioentityIndexTest {
     private Path tsvFilePath2;
     private Path nonTsvFilePath;
 
+    private Path mirbasePath;
+    private Path reactomePath;
+    private Path reactomeFilePath1;
+
+
     private BioentityIndex subject;
 
     @Before
@@ -78,6 +83,11 @@ public class BioentityIndexTest {
         tsvFilePath1 = Files.createFile(tempDirectoryPath.resolve("temp-file1.tsv"));
         tsvFilePath2 = Files.createFile(tempDirectoryPath.resolve("temp-file2.tsv"));
         nonTsvFilePath = Files.createFile(tempDirectoryPath.resolve("temp-file.abc"));
+
+
+        reactomePath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity-properties/reactome");
+        reactomePath = Files.createDirectories(reactomePath);
+        reactomeFilePath1 = Files.createFile(reactomePath.resolve("react-file1.tsv"));
 
         streamBuilderMock = mock(BioentityPropertiesStreamBuilder.class, new AnswerWithSelf(BioentityPropertiesStreamBuilder.class));
         given(streamBuilderMock.build()).willReturn(propertiesStreamMock);
@@ -93,6 +103,10 @@ public class BioentityIndexTest {
         Files.delete(tsvFilePath2);
         Files.delete(nonTsvFilePath);
         Files.delete(tempDirectoryPath);
+
+        Files.delete(reactomeFilePath1);
+        Files.delete(reactomePath);
+
     }
 
     @Test
@@ -152,6 +166,21 @@ public class BioentityIndexTest {
         given(solrServerMock.deleteByQuery(anyString())).willThrow(IOException.class);
 
         subject.deleteAll();
+    }
+
+    @Test
+    public void findReactomeDirectory() throws Exception {
+
+        subject.indexAll(Files.newDirectoryStream(reactomePath.getParent()));
+
+        InOrder inOrder = inOrder(streamBuilderMock);
+        inOrder.verify(streamBuilderMock).forPath(reactomeFilePath1);
+        inOrder.verify(streamBuilderMock).isForReactome(true);
+        inOrder.verify(streamBuilderMock).build();
+
+
+
+
     }
 
 }
