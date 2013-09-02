@@ -551,22 +551,13 @@
         <profile>
             <id>dev</id>
             <properties>
-                <!--
-                <deploy.host>lime</deploy.host>
-                <deploy.port>14092</deploy.port>
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
-                -->
                 <h2.database.location>/srv/gxa/data/h2/atlas</h2.database.location>
                 <data.files.location>/srv/gxa/data</data.files.location>
             </properties>
         </profile>
         <profile>
-            <id>www-test</id>
+            <id>test</id>
             <properties>
-                <!--
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data</data.files.location>
-                <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2/atlas</h2.database.location>
-                -->
                 <h2.database.location>/srv/gxa/data/h2/atlas</h2.database.location>
                 <data.files.location>/srv/gxa/data</data.files.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
