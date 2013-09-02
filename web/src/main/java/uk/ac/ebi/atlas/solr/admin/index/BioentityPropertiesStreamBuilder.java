@@ -42,6 +42,8 @@ public class BioentityPropertiesStreamBuilder {
     private BioentityPropertiesBuilder bioentityPropertiesBuilder;
     private Path bioentityPropertiesFilePath;
 
+    private boolean isForReactome;
+
     @Inject
     public BioentityPropertiesStreamBuilder(BioentityPropertiesBuilder bioentityPropertiesBuilder) {
         this.bioentityPropertiesBuilder = bioentityPropertiesBuilder;
@@ -52,9 +54,15 @@ public class BioentityPropertiesStreamBuilder {
         return this;
     }
 
+    public BioentityPropertiesStreamBuilder isForReactome(boolean forReactome) {
+        isForReactome = forReactome;
+        return this;
+    }
+
     public BioentityPropertiesStream build() throws IOException {
         Reader fileReader = Files.newBufferedReader(bioentityPropertiesFilePath, Charsets.UTF_8);
         CSVReader csvReader = new CSVReader(fileReader, '\t', CSVWriter.NO_QUOTE_CHARACTER);
+        bioentityPropertiesBuilder.withIdentifierAsProperty(!isForReactome);
         return new BioentityPropertiesStream(csvReader, bioentityPropertiesBuilder, getSpecies());
     }
 

@@ -47,6 +47,8 @@ public class BioentityPropertiesBuilder {
     private List<String> propertyValues;
     private String species;
 
+    private boolean addIdentifierAsProperty = true;
+
     public BioentityPropertiesBuilder forBioentityType(String bioentityType){
         this.bioentityType = bioentityType;
         return this;
@@ -69,6 +71,11 @@ public class BioentityPropertiesBuilder {
 
     public BioentityPropertiesBuilder withPropertyValues(List<String> propertyValues){
         this.propertyValues = propertyValues;
+        return this;
+    }
+
+    public BioentityPropertiesBuilder withIdentifierAsProperty(boolean withIdentifierAsProperty){
+        this.addIdentifierAsProperty = withIdentifierAsProperty;
         return this;
     }
 
@@ -111,7 +118,10 @@ public class BioentityPropertiesBuilder {
                 }
             }
         }
-        bioentityProperties.add(new BioentityProperty(bioentityIdentifier, bioentityType, species, bioentityType, bioentityIdentifier));
+
+        if (addIdentifierAsProperty) {
+            bioentityProperties.add(new BioentityProperty(bioentityIdentifier, bioentityType, species, bioentityType, bioentityIdentifier));
+        }
 
         return bioentityProperties;
     }
