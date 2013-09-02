@@ -20,8 +20,5 @@
   ~ http://gxa.github.com/gxa
   -->
 
-<solr persistent="true">
-  <cores adminPath="/admin/cores" defaultCoreName="gxa" host="${host:}">
-    <core name="gxa" instanceDir="gxa" />
-  </cores>
+<solr>
 </solr>
