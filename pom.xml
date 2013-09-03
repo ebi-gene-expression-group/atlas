@@ -44,12 +44,6 @@
         <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
         <solr.host>localhost</solr.host>
         <gxa.server.url>http://ves-hx-74:8080/gxa</gxa.server.url>
-        <deploy.host>
-            <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
-        </deploy.host>
-        <deploy.port>
-            <!-- this value must be set in environment profiles for whom we want to deploy on tomcat using tomcat manager interface -->
-        </deploy.port>
         <!-- set the next two properties to non empty value only if you want
         to run the selenium tests against a different host/port than localhost:9090 -->
         <integration.test.host>lime</integration.test.host>
@@ -470,12 +464,6 @@
             </releases>
             <snapshots/>
         </repository>
-
-        <!--
-        * Oracle Drivers: http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html
-
-        Please download and install those yourself.
-        -->
     </repositories>
 
     <pluginRepositories>
@@ -569,9 +557,6 @@
                 <solr.host>lime</solr.host>
                 <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data/h2/atlas</h2.database.location>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <!--<integration.experiment.identifiers>-->
-                    <!--E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276-->
-                <!--</integration.experiment.identifiers>-->
             </properties>
         </profile>
         <profile>
@@ -581,42 +566,10 @@
                 <solr.host>lime</solr.host>
                 <h2.database.location>${user.home}/ATLAS3.TEST/data/h2/atlas</h2.database.location>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <!--<integration.experiment.identifiers>-->
-                    <!--E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276-->
-                <!--</integration.experiment.identifiers>-->
             </properties>
         </profile>
 
         <!-- execution profiles -->
-
-        <!--<profile>-->
-            <!--&lt;!&ndash; deploys war artifact to a remote or local tomcat 7 instance using tomcat manager interface &ndash;&gt;-->
-            <!--<id>deploy.tomcat7</id>-->
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>org.apache.tomcat.maven</groupId>-->
-                        <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>tomcat-deploy</id>-->
-                                <!--<goals>-->
-                                    <!--<goal>deploy</goal>-->
-                                <!--</goals>-->
-                                <!--<phase>install</phase>-->
-                                <!--<configuration>-->
-                                    <!--<url>http://${deploy.host}:${deploy.port}/manager/html</url>-->
-                                    <!--<username>tomcat</username>-->
-                                    <!--<password>tomcat</password>-->
-                                    <!--<path>/gxa</path>-->
-                                    <!--<update>true</update>-->
-                                <!--</configuration>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
 
     </profiles>
 

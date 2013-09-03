@@ -84,15 +84,7 @@ public class ApplicationProperties {
     public String getFeedbackEmailAddress() {
         return configurationProperties.getProperty("feedback.email");
     }
-/*
-    public Set<String> getTestCaseExperimentAccessions() {
-        Set<String> testCaseExperimentAccessions = Sets.newHashSet();
-        if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
-            testCaseExperimentAccessions.addAll(getStringValues("integration.experiment.identifiers"));
-        }
-        return testCaseExperimentAccessions;
-    }
-*/
+
     public Set<String> getArrayDesignAccessions() {
         return getStringValues("arraydesign.accessions");
     }

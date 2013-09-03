@@ -136,14 +136,7 @@ public class ExperimentTrader {
     }
 
     Set<String> getPublicExperimentAccessions(ExperimentType... experimentType) {
-        Set<String> experimentAccessions = experimentDAO.findPublicExperimentAccessions(experimentType);
-
-        // this filtering is for integration tests using only subset of all experiments
-//        Set<String> testCaseExperimentAccession = applicationProperties.getTestCaseExperimentAccessions();
-//        if (CollectionUtils.isNotEmpty(testCaseExperimentAccession)) {
-//            return Sets.intersection(experimentAccessions, testCaseExperimentAccession);
-//        }
-        return experimentAccessions;
+        return experimentDAO.findPublicExperimentAccessions(experimentType);
     }
 
 }
