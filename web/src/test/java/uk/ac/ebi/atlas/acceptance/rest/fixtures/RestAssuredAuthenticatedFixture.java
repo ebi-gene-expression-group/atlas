@@ -34,12 +34,11 @@ public class RestAssuredAuthenticatedFixture {
 
     public static final String SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY = "selenium.test.portnumber";
 
-    private static final String USERNAME = "TEST_USER";
-    private static final String PASSWORD = "TEST_PASSWORD";
+    private static final String USERNAME = "me";
+    private static final String PASSWORD = "drink";
 
     @BeforeClass
     public static void initRestAssured(){
-
         BasicAuthScheme authScheme = new BasicAuthScheme();
         authScheme.setUserName(USERNAME);
         authScheme.setPassword(PASSWORD);
