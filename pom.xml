@@ -41,9 +41,7 @@
         <!-- default values for configuration properties,
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
-        <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
         <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
-        <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/data/h2-lime/atlas</h2.database.location>
         <solr.host>localhost</solr.host>
         <gxa.server.url>http://ves-hx-74:8080/gxa</gxa.server.url>
         <deploy.host>
@@ -54,9 +52,8 @@
         </deploy.port>
         <!-- set the next two properties to non empty value only if you want
         to run the selenium tests against a different host/port than localhost:9090 -->
-        <integration.test.host/>
-        <integration.test.portnumber/>
-        <integration.experiment.identifiers/>
+        <integration.test.host>lime</integration.test.host>
+        <integration.test.portnumber>14092</integration.test.portnumber>
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
         <mail.smtp.host>mailtrap.io</mail.smtp.host>
@@ -570,10 +567,11 @@
             <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
                 <solr.host>lime</solr.host>
+                <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data/h2/atlas</h2.database.location>
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <integration.experiment.identifiers>
-                    E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276
-                </integration.experiment.identifiers>
+                <!--<integration.experiment.identifiers>-->
+                    <!--E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276-->
+                <!--</integration.experiment.identifiers>-->
             </properties>
         </profile>
         <profile>
@@ -582,9 +580,10 @@
                 <!-- change to integrate with a solr running on localhost rather than the default remote host -->
                 <solr.host>lime</solr.host>
                 <h2.database.location>${user.home}/ATLAS3.TEST/data/h2/atlas</h2.database.location>
-                <integration.experiment.identifiers>
-                    E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276
-                </integration.experiment.identifiers>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <!--<integration.experiment.identifiers>-->
+                    <!--E-GEOD-3779,E-TABM-713,E-MTAB-513,E-MTAB-599,E-GEOD-26284,E-GEOD-30352,E-GEOD-22351,E-GEOD-38400,E-GEOD-21860,E-MTAB-698,E-MTAB-1066,E-GEOD-43049,E-TABM-51,E-TABM-713,E-MEXP-1276-->
+                <!--</integration.experiment.identifiers>-->
             </properties>
         </profile>
 
@@ -598,9 +597,6 @@
                     <!--<plugin>-->
                         <!--<groupId>org.apache.tomcat.maven</groupId>-->
                         <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
-                        <!--<configuration>-->
-                            <!--<path>/gxa</path>-->
-                        <!--</configuration>-->
                         <!--<executions>-->
                             <!--<execution>-->
                                 <!--<id>tomcat-deploy</id>-->
@@ -614,15 +610,6 @@
                                     <!--<password>tomcat</password>-->
                                     <!--<path>/gxa</path>-->
                                     <!--<update>true</update>-->
-                                    <!--&lt;!&ndash; optional only if you want to use a preconfigured server.xml file &ndash;&gt;-->
-                                    <!--&lt;!&ndash;-->
-                                    <!--<serverXml>src/main/tomcatconf/server.xml</serverXml>-->
-                                    <!--&ndash;&gt;-->
-                                    <!--&lt;!&ndash; optional values which can be configurable &ndash;&gt;-->
-                                    <!--&lt;!&ndash;-->
-                                    <!--<attachArtifactClassifier>default value is exec-war but you can customize</attachArtifactClassifier>-->
-                                    <!--<attachArtifactClassifierType>default value is jar</attachArtifactClassifierType>-->
-                                    <!--&ndash;&gt;-->
                                 <!--</configuration>-->
                             <!--</execution>-->
                         <!--</executions>-->

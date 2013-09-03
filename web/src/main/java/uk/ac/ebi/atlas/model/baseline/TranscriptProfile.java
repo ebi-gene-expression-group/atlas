@@ -76,4 +76,11 @@ public class TranscriptProfile implements Serializable {
         return Objects.hash(geneId, transcriptId, expressions);
     }
 
+    @Override
+    public String toString(){
+        return "TranscriptProfile: geneId = " + geneId
+                + ", transcriptId = " + transcriptId
+                + ", expressions = " + expressions;
+    }
+
 }
