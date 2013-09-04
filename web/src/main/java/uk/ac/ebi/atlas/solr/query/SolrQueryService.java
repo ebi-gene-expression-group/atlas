@@ -59,6 +59,11 @@ public class SolrQueryService {
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
     public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
+    private static final String BIOENTITY_TYPE_QUERY =
+            "(property_name:\"ensgene\"" +
+                    "OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") AND property_value_lower: \"{0}\"";
+
+
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
     private static final int PROPERTY_VALUES_LIMIT = 1000;
     private static final int DEFAULT_LIMIT = 15;
@@ -72,28 +77,35 @@ public class SolrQueryService {
     private static final String BIOENTITY_TYPE_PROTEIN = "ensprotein";
     private static final String BIOENTITY_TYPE_TRANSCRIPT = "enstranscript";
 
-
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
-    @Value("#{configuration['index.types.name']}")
-    private String[] namePropertyTypes;
+    @Value("#{configuration['index.property_names.bioentity_name']}")
+    private String[] bioentityNamePropertyNames;
 
-    @Value("#{configuration['index.types.synonym']}")
-    private String[] synonymPropertyTypes;
+    @Value("#{configuration['index.property_names.synonym']}")
+    private String[] synonymPropertyNames;
 
-    @Value("#{configuration['index.types.identifier']}")
-    private String[] identifierPropertyTypes;
+    @Value("#{configuration['index.property_names.identifier']}")
+    private String[] identifierPropertyNames;
 
-    @Value("#{configuration['index.types.description']}")
-    private String descriptionPropertyTypes;
+    @Value("#{configuration['index.property_names.description']}")
+    private String descriptionPropertyNames;
 
-    @Inject
     private SolrServer solrServer;
 
-    SortedSetMultimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
+    private SolrQueryBuilderFactory solrQueryBuilderFactory;
 
-        String queryString = buildCompositeQueryIdentifier(identifier, propertyTypes);
+    @Inject
+    public SolrQueryService(SolrServer solrServer, SolrQueryBuilderFactory solrQueryBuilderFactory){
+        this.solrServer = solrServer;
+        this.solrQueryBuilderFactory = solrQueryBuilderFactory;
+    }
+
+    SortedSetMultimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
+
+        String queryString = solrQueryBuilderFactory.create()
+                            .withPropertyNames(propertyTypes).buildBioentityQuery(identifier);
 
         return querySolrForProperties(queryString, PROPERTY_VALUES_LIMIT);
     }
@@ -101,39 +113,36 @@ public class SolrQueryService {
     Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
 
         String queryString = buildGeneQuery(geneQuery, exactMatch, species, BIOENTITY_TYPE_GENE
-                            , BIOENTITY_TYPE_MIRNA);
+                , BIOENTITY_TYPE_MIRNA);
 
         return fetchGeneIdentifiersFromSolr(queryString);
     }
 
-    List<String> getGeneIdSuggestionsInName(String geneName, String species) {
+    List<String> getGeneIdSuggestionsInName(String queryString, String species) {
 
-        String[] propertyTypes = namePropertyTypes;
-
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
-                                                                        , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT);
-
-        return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
+        return getGeneIdSuggestions(queryString, species, bioentityNamePropertyNames);
     }
 
-    List<String> getGeneIdSuggestionsInSynonym(String geneName, String species) {
+    List<String> getGeneIdSuggestionsInSynonym(String queryString, String species) {
 
-        String[] propertyTypes = synonymPropertyTypes;
-
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
-                                                                        , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT);
-
-        return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
+        return getGeneIdSuggestions(queryString, species, synonymPropertyNames);
     }
 
-    List<String> getGeneIdSuggestionsInIdentifier(String geneName, String species) {
+    List<String> getGeneIdSuggestionsInIdentifier(String queryString, String species) {
 
-        String[] propertyTypes = identifierPropertyTypes;
+        return getGeneIdSuggestions(queryString, species, identifierPropertyNames);
+    }
 
-        String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
-                                                                        , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT);
+    List<String> getGeneIdSuggestions(String queryString, String species, String[] propertyNames) {
 
-        return getSolrResultsForQuery(queryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
+        String suggestionsQueryString = solrQueryBuilderFactory.create()
+                .withSpecies(species)
+                .withBioentityTypes(BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
+                        , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT)
+                .withPropertyNames(propertyNames)
+                .buildAutocompleteSuggestionQuery(queryString);
+
+        return getSolrResultsForQuery(suggestionsQueryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
     }
 
     String getSpeciesForIdentifier(String identifier) {
@@ -282,49 +291,6 @@ public class SolrQueryService {
         return sb.toString();
     }
 
-    String buildCompositeQueryIdentifier(String identifier, List<String> propertyTypes) {
-
-        StringBuilder query = new StringBuilder();
-        query.append(BIOENTITY_IDENTIFIER_FIELD + ":\"");
-        query.append(identifier);
-        query.append("\" AND (");
-        for (int i = 0; i < propertyTypes.size(); i++) {
-            query.append(PROPERTY_NAME_FIELD + ":\"");
-            query.append(propertyTypes.get(i));
-            if (i < propertyTypes.size() - 1) {
-                query.append("\" OR ");
-            } else {
-                query.append("\"");
-            }
-        }
-        query.append(")");
-        return query.toString();
-    }
-
-    String buildCompositeQuery(String geneName, String species, String[] propertyTypes, String... bioentityTypes) {
-
-        StringBuilder query = new StringBuilder();
-        query.append(PROPERTY_EDGENGRAM_FIELD + ":\"");
-        query.append(geneName);
-        query.append("\"");
-        if (StringUtils.isNotBlank(species)){
-            appendSpecies(query, species);
-        }
-        appendBioEntityTypes(query, bioentityTypes);
-        query.append(" AND (");
-        for (int i = 0; i < propertyTypes.length; i++) {
-            query.append(PROPERTY_NAME_FIELD + ":\"");
-            query.append(propertyTypes[i]);
-            if (i < propertyTypes.length - 1) {
-                query.append("\" OR ");
-            } else {
-                query.append("\"");
-            }
-        }
-        query.append(")");
-        return query.toString();
-    }
-
     SolrQuery buildSolrQuery(String queryString, String facedField, int facetLimit) {
         SolrQuery solrQuery = new SolrQuery(queryString);
 
@@ -386,9 +352,5 @@ public class SolrQueryService {
                                         " is not being indexed in solr");
 
     }
-
-    private static final String BIOENTITY_TYPE_QUERY =
-            "(property_name:\"ensgene\"" +
-                    "OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") AND property_value_lower: \"{0}\"";
 
 }

@@ -43,7 +43,6 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -74,7 +73,7 @@ public class SolrClient {
     private final SolrQueryService solrQueryService;
 
     @Inject
-    public SolrClient(@Value("#{configuration['index.types.tooltip']}") String[] tooltipPropertyTypes, RestTemplate restTemplate, SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+    public SolrClient(@Value("#{configuration['index.property_names.tooltip']}") String[] tooltipPropertyTypes, RestTemplate restTemplate, SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
         this.tooltipPropertyTypes = tooltipPropertyTypes;
         this.restTemplate = restTemplate;
         this.solrQueryService = solrQueryService;
@@ -83,12 +82,11 @@ public class SolrClient {
 
     public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
 
-        List<String> propertyTypes = Arrays.asList(tooltipPropertyTypes);
-        return fetchProperties(identifier, propertyTypes);
+        return fetchProperties(identifier, tooltipPropertyTypes);
 
     }
 
-    public SortedSetMultimap<String, String> fetchGenePageProperties(String identifier, List<String> propertyTypes) {
+    public SortedSetMultimap<String, String> fetchGenePageProperties(String identifier, String[] propertyTypes) {
         SortedSetMultimap<String, String> propertiesByType = fetchProperties(identifier, propertyTypes);
         if (propertiesByType.isEmpty()) {
             throw new ResultNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
@@ -96,7 +94,7 @@ public class SolrClient {
         return propertiesByType;
     }
 
-    SortedSetMultimap<String, String> fetchProperties(String identifier, List<String> propertyTypes) {
+    SortedSetMultimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
 
         return solrQueryService.fetchProperties(identifier, propertyTypes);
 

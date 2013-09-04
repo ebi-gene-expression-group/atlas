@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.collect.Lists;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +42,12 @@ public class SolrQueryServiceTest {
     @Mock
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
+    @Mock
+    private SolrQueryBuilderFactory solrQueryBuilderFactoryMock;
+
     @Before
     public void setUp() throws Exception {
-        subject = new SolrQueryService();
+        subject = new SolrQueryService(null, solrQueryBuilderFactoryMock);
     }
 
     @Test
@@ -64,32 +66,6 @@ public class SolrQueryServiceTest {
         assertThat(query.getQuery(), is("query"));
         assertThat(query.getFacetLimit(), is(-1));
 
-    }
-
-    @Test
-    public void testBuildCompositeQuery() {
-
-        // given
-        String s = subject.buildCompositeQuery("geneName", "species", new String[]{"prototype1", "prototype2"}, "ensgene");
-
-        // then
-        assertThat(s, is(SolrQueryService.PROPERTY_EDGENGRAM_FIELD + ":\"geneName\" AND " +
-                SolrQueryService.SPECIES_FIELD + ":\"species\" AND (" +
-                SolrQueryService.BIOENTITY_TYPE_FIELD + ":\"ensgene\") AND (" +
-                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype1\" OR " +
-                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype2\")"));
-    }
-
-    @Test
-    public void testBuildCompositeQueryIdentifier() {
-
-        // given
-        String s = subject.buildCompositeQueryIdentifier("ENSMUS000000", Lists.newArrayList("prototype1", "prototype2"));
-
-        // then
-        assertThat(s, is(SolrQueryService.BIOENTITY_IDENTIFIER_FIELD + ":\"ENSMUS000000\" AND (" +
-                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype1\" OR " +
-                SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype2\")"));
     }
 
     @Test

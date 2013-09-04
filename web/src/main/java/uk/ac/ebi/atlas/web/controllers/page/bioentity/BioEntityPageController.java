@@ -29,7 +29,10 @@ import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.solr.query.SolrClient;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 public abstract class BioEntityPageController {
 
@@ -88,16 +91,14 @@ public abstract class BioEntityPageController {
 
     protected abstract boolean isDisplayedInPropertyList(String propertyType);
 
-    abstract List<String> getPagePropertyTypes();
+    abstract String[] getPagePropertyTypes();
 
     abstract String getBioentityPropertyName();
 
     protected void initBioentityPropertyService(String identifier) {
         String species = solrClient.findSpeciesForBioentityId(identifier);
 
-        List<String> queryPropertyTypes = getPagePropertyTypes();
-
-        SortedSetMultimap<String, String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, queryPropertyTypes);
+        SortedSetMultimap<String, String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, getPagePropertyTypes());
         SortedSet<String> entityNames = propertyValuesByType.get(getBioentityPropertyName());
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);

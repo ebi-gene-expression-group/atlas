@@ -32,7 +32,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertThat;
 
@@ -44,14 +43,14 @@ public class FetchGenePagePropertiesIT {
     @Inject
     private SolrClient subject;
 
-    @Value("#{configuration['index.types.genepage']}")
+    @Value("#{configuration['index.property_names.genepage']}")
     private String[] genePagePropertyTypes;
 
     @Test
     public void testFetchTooltipProperties() throws Exception {
 
         // given
-        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", Arrays.asList(genePagePropertyTypes));
+        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", genePagePropertyTypes);
 
         // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,design_element
 

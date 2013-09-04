@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
@@ -78,9 +77,8 @@ public class SolrQueryServiceIT {
     @Test
     public void testQuerySolrForProperties() throws SolrServerException {
 
-        // given
-        String queryString = subject.buildCompositeQueryIdentifier("ENSG00000109819", Lists.newArrayList("goterm"));
-        Multimap<String, String> multimap = subject.querySolrForProperties(queryString, 100);
+        //when
+        Multimap<String, String> multimap = subject.fetchProperties("ENSG00000109819", new String[]{"goterm"});
 
         // then
         assertThat(multimap.get("goterm"), hasItems("RNA splicing", "cellular response to oxidative stress", "cellular glucose homeostasis"));
