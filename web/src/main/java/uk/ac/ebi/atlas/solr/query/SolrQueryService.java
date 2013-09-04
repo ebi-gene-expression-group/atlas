@@ -107,19 +107,6 @@ public class SolrQueryService {
         return fetchGeneIdentifiersFromSolr(queryString);
     }
 
-    Set<String> getGeneIdsForSpecies(String species) {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(SPECIES_FIELD + ":\"").append(species.toLowerCase()).append("\"");
-
-        appendBioEntityTypes(sb, new String[]{BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA});
-
-        String queryString = sb.toString();
-
-        return fetchGeneIdentifiersFromSolr(queryString);
-    }
-
     List<String> getGeneIdSuggestionsInName(String geneName, String species) {
 
         String[] propertyTypes = namePropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
