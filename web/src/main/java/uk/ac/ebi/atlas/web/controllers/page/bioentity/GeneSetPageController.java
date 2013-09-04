@@ -47,12 +47,12 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private BioEntityPropertyService bioEntityPropertyService;
 
-
     private ReactomeBiomartClient reactomeBiomartClient;
-    private String geneSetPagePropertyTypes;
+
+    private String[] geneSetPagePropertyTypes;
 
     @Value("#{configuration['index.types.genesetpage']}")
-    void setGenePagePropertyTypes(String geneSetPagePropertyTypes) {
+    void setGenePagePropertyTypes(String[] geneSetPagePropertyTypes) {
         this.geneSetPagePropertyTypes = geneSetPagePropertyTypes;
     }
 
@@ -89,7 +89,7 @@ public class GeneSetPageController extends BioEntityPageController {
 
     @Override
     List<String> getPagePropertyTypes() {
-        return Lists.newArrayList(geneSetPagePropertyTypes.split(","));
+        return Lists.newArrayList(geneSetPagePropertyTypes);
     }
 
     @Override

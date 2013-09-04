@@ -67,27 +67,23 @@ public class SolrClient {
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
-    @Value("#{configuration['index.types.tooltip']}")
-    private String tooltipPropertyTypes;
+    private String[] tooltipPropertyTypes;
 
     private RestTemplate restTemplate;
 
     private final SolrQueryService solrQueryService;
 
     @Inject
-    public SolrClient(RestTemplate restTemplate, SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+    public SolrClient(@Value("#{configuration['index.types.tooltip']}") String[] tooltipPropertyTypes, RestTemplate restTemplate, SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+        this.tooltipPropertyTypes = tooltipPropertyTypes;
         this.restTemplate = restTemplate;
         this.solrQueryService = solrQueryService;
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
     }
 
-    void setTooltipPropertyTypes(String tooltipPropertyTypes) {
-        this.tooltipPropertyTypes = tooltipPropertyTypes;
-    }
-
     public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
 
-        List<String> propertyTypes = Arrays.asList(tooltipPropertyTypes.trim().split(","));
+        List<String> propertyTypes = Arrays.asList(tooltipPropertyTypes);
         return fetchProperties(identifier, propertyTypes);
 
     }
