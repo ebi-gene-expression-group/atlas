@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -36,7 +35,6 @@ import uk.ac.ebi.atlas.solr.query.SolrClient;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.SortedSet;
 
 @Controller
@@ -51,7 +49,7 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private String[] geneSetPagePropertyTypes;
 
-    @Value("#{configuration['index.types.genesetpage']}")
+    @Value("#{configuration['index.property_names.genesetpage']}")
     void setGenePagePropertyTypes(String[] geneSetPagePropertyTypes) {
         this.geneSetPagePropertyTypes = geneSetPagePropertyTypes;
     }
@@ -88,8 +86,8 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    List<String> getPagePropertyTypes() {
-        return Lists.newArrayList(geneSetPagePropertyTypes);
+    String[] getPagePropertyTypes() {
+        return geneSetPagePropertyTypes;
     }
 
     @Override
