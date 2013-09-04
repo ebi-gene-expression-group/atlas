@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -34,7 +35,7 @@ public class ConditionPropertiesBuilder {
                                                                             String contrastId,
                                                                             AssayGroup assayGroup) {
 
-           Collection<ConditionProperty> conditions = Lists.newLinkedList();
+           Collection<ConditionProperty> conditions = Sets.newHashSet();
 
            for (String assayAccession : assayGroup) {
                Map<String,String> properties = experiment.getExperimentDesign().getFactors(assayAccession);

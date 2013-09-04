@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import org.apache.solr.client.solrj.beans.Field;
 
+import java.util.Objects;
+
 public class ConditionProperty {
 
     @Field("experiment_accession")
@@ -65,5 +67,16 @@ public class ConditionProperty {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int hashCode() {return Objects.hash(experimentAccession, groupType, contrastId, value, name);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {return true;}
+        if (obj == null || getClass() != obj.getClass()) {return false;}
+        final ConditionProperty other = (ConditionProperty) obj;
+        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.groupType, other.groupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.value, other.value) && Objects.equals(this.name, other.name);
     }
 }

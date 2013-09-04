@@ -27,19 +27,26 @@ public class ConditionsIndex {
         this.conditionPropertiesBuilder = conditionPropertiesBuilder;
     }
 
-    public void indexExperiment(DifferentialExperiment experiment) throws IOException, SolrServerException {
+    public void indexExperiment(DifferentialExperiment experiment) {
 
         LOGGER.info("<indexExperiment> " + experiment.getAccession());
 
-        deleteExperiment(experiment.getAccession());
+        try {
+            deleteExperiment(experiment.getAccession());
 
-        Collection<ConditionProperty> conditionProperties = conditionPropertiesBuilder.buildProperties(experiment);
+            Collection<ConditionProperty> conditionProperties = conditionPropertiesBuilder.buildProperties(experiment);
 
-        conditionsSolrServer.addBeans(conditionProperties);
+            conditionsSolrServer.addBeans(conditionProperties);
 
-        conditionsSolrServer.commit();
+            conditionsSolrServer.commit();
 
-        optimize();
+            //ToDO: (NK) Do we need to optimise after every experiment?
+            optimize();
+
+        } catch (SolrServerException | IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException(e);
+        }
 
     }
 
