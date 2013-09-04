@@ -56,9 +56,7 @@ public class SolrClientTest {
 
     private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym", "ortholog", "goterm", "interproterm", "ensfamily_description", "enstranscript", "mgi_description", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "design_element");
 
-    private static final String CSV_TOOLTIP_PROPERTY_TYPES = "synonym,goterm,interproterm";
-
-    private static final List<String> TOOLTIP_PROPERTY_TYPES = Arrays.asList(CSV_TOOLTIP_PROPERTY_TYPES.split(","));
+    private static final String[] TOOLTIP_PROPERTY_TYPES = new String[]{"synonym","goterm","interproterm"};
 
     private static final String EXPECTED_TOOLTIP_QUERY = SolrQueryService.BIOENTITY_IDENTIFIER_FIELD + ":\"ENSG00000132604\" AND (" + SolrQueryService.PROPERTY_NAME_FIELD + ":\"synonym\" OR " + SolrQueryService.PROPERTY_NAME_FIELD + ":\"goterm\" OR " + SolrQueryService.PROPERTY_NAME_FIELD + ":\"interproterm\")";
 
@@ -88,9 +86,9 @@ public class SolrClientTest {
     public void initSubject() throws Exception {
 
         doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
-        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, TOOLTIP_PROPERTY_TYPES);
+        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, Lists.newArrayList(TOOLTIP_PROPERTY_TYPES));
         doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
-        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, TOOLTIP_PROPERTY_TYPES);
+        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, Lists.newArrayList(TOOLTIP_PROPERTY_TYPES));
 
         when(solrQueryServiceMock.querySolrForProperties(anyString(), anyInt())).thenReturn(results);
 //        when(solrQueryServiceMock.getSpeciesForIdentifier(IDENTIFIER)).thenReturn(SPECIES);
@@ -102,7 +100,7 @@ public class SolrClientTest {
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(getClass(), "solrAutocompleteResponse.json");
         when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
 
-        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
+        subject = new SolrClient(TOOLTIP_PROPERTY_TYPES, restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
     }
 
     @Test
@@ -130,8 +128,6 @@ public class SolrClientTest {
 
     @Test
     public void testFetchTooltipProperties() throws Exception {
-        subject.setTooltipPropertyTypes(CSV_TOOLTIP_PROPERTY_TYPES);
-
         SortedSetMultimap<String, String> multimap = subject.fetchTooltipProperties(IDENTIFIER);
         assertThat(multimap, is(results));
 

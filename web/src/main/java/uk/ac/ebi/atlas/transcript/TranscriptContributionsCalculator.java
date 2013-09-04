@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Lists;
+import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -37,6 +38,7 @@ import java.util.List;
 
 @Named
 public class TranscriptContributionsCalculator {
+    private static final Logger LOGGER = Logger.getLogger(TranscriptContributionsCalculator.class);
 
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
 
@@ -54,6 +56,8 @@ public class TranscriptContributionsCalculator {
 
         List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(transcriptProfileDAO.findTranscriptProfiles(experimentAccession, geneId));
 
+        LOGGER.debug("<getTranscriptContributions> transcriptProfiles:" + transcriptProfiles);
+
         int factorIndex = getFactorIndex(experimentAccession, factorGroup);
 
         return createTranscriptContributions(transcriptProfiles, factorIndex);
@@ -64,10 +68,15 @@ public class TranscriptContributionsCalculator {
         BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+
+        LOGGER.debug("<getFactorIndex> experimentalFactors: " + experimentalFactors);
+
         return experimentalFactors.getFactorIndex(factorGroup);
     }
 
     TranscriptContributions createTranscriptContributions(List<TranscriptProfile> transcriptProfiles, int factorIndex) {
+        LOGGER.debug("<createTranscriptContributions> factorIndex: " + factorIndex);
+
         Collections.sort(transcriptProfiles, getReverseTranscriptProfileComparator(factorIndex));
 
         TranscriptContributions transcriptContributions = new TranscriptContributions();

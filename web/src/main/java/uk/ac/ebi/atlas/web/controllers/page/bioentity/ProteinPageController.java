@@ -39,10 +39,10 @@ public class ProteinPageController extends BioEntityPageController {
 
     public static final String GENE_NAME_PROPERTY_TYPE = "uniprot";
 
-    private String proteinPagePropertyTypes;
+    private String[] proteinPagePropertyTypes;
 
     @Value("#{configuration['index.types.proteinpage']}")
-    void setProteinPagePropertyTypes(String proteinPagePropertyTypes) {
+    void setProteinPagePropertyTypes(String[] proteinPagePropertyTypes) {
         this.proteinPagePropertyTypes = proteinPagePropertyTypes;
     }
 
@@ -53,7 +53,7 @@ public class ProteinPageController extends BioEntityPageController {
 
     @Override
     List<String> getPagePropertyTypes() {
-        return Lists.newArrayList(proteinPagePropertyTypes.split(","));
+        return Lists.newArrayList(proteinPagePropertyTypes);
     }
 
     @Override

@@ -103,27 +103,21 @@
                 <configuration>
                     <!-- application path always starts with /-->
                     <path>/gxa</path>
-                    <tomcatUsers>
-                        src/test/resources/tomcat-users.xml
-                    </tomcatUsers>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>tomcat-run</id>
+                        <id>tomcat-deploy</id>
                         <goals>
-                            <goal>run-war</goal>
+                            <goal>deploy</goal>
                         </goals>
                         <phase>pre-integration-test</phase>
                         <configuration>
-                            <fork>true</fork>
+                            <url>http://lime:14092/manager/html</url>
+                            <username>tomcat</username>
+                            <password>tomcat</password>
+                            <path>/gxa</path>
+                            <update>true</update>
                         </configuration>
-                    </execution>
-                    <execution>
-                        <id>tomcat-shutdown</id>
-                        <goals>
-                            <goal>shutdown</goal>
-                        </goals>
-                        <phase>post-integration-test</phase>
                     </execution>
                 </executions>
             </plugin>

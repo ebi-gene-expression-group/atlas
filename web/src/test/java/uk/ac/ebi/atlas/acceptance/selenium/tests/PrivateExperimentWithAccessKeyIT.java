@@ -22,17 +22,17 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
+import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
 
+import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.path.json.JsonPath.from;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,32 +40,24 @@ import static org.hamcrest.Matchers.*;
 
 public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
-    private static final String USERNAME = "TEST_USER";
-    private static final String PASSWORD = "TEST_PASSWORD";
-
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-698";
 
     private HeatmapTableWithSearchFormAndBarChartPage subject;
 
     private String accessKey;
 
-    private static RequestSpecification authenticatedRequestSpec;
-
     @BeforeClass
     public static void initRestAssuredRequestSpec(){
-        RestAssured.reset();
-        RestAssured.port = 9090;
-        authenticatedRequestSpec = given().auth().basic(USERNAME, PASSWORD);
+        RestAssuredAuthenticatedFixture.initRestAssured();
     }
 
     @Before
     public void init() {
 
-        given().spec(authenticatedRequestSpec).expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("/gxa/admin/updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
+        expect().body(containsString(EXPERIMENT_ACCESSION))
+                .when().get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
 
-        String jsonResponse = given().spec(authenticatedRequestSpec)
-                .get("/gxa/admin/listExperiments?accession=" + EXPERIMENT_ACCESSION).body().asString();
+        String jsonResponse = given().get("listExperiments?accession=" + EXPERIMENT_ACCESSION).body().asString();
 
         accessKey = from(jsonResponse).get("accessKey[0]");
 
@@ -75,8 +67,8 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
     @After
     public void cleanup() {
-        given().spec(authenticatedRequestSpec).expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("/gxa/admin/updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
+        expect().body(containsString(EXPERIMENT_ACCESSION))
+                .when().get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
 
     @Test(expected = NoSuchElementException.class)

@@ -62,7 +62,6 @@ public class SolrQueryService {
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
     private static final int PROPERTY_VALUES_LIMIT = 1000;
     private static final int DEFAULT_LIMIT = 15;
-    private static final String CONFIG_SPLIT_REGEX = ",";
     private static final String PROPERTY_VALUE_FIELD = "property_value";
 
     // changed from 100000
@@ -78,13 +77,13 @@ public class SolrQueryService {
     private String serverURL;
 
     @Value("#{configuration['index.types.name']}")
-    private String namePropertyTypes;
+    private String[] namePropertyTypes;
 
     @Value("#{configuration['index.types.synonym']}")
-    private String synonymPropertyTypes;
+    private String[] synonymPropertyTypes;
 
     @Value("#{configuration['index.types.identifier']}")
-    private String identifierPropertyTypes;
+    private String[] identifierPropertyTypes;
 
     @Value("#{configuration['index.types.description']}")
     private String descriptionPropertyTypes;
@@ -107,22 +106,9 @@ public class SolrQueryService {
         return fetchGeneIdentifiersFromSolr(queryString);
     }
 
-    Set<String> getGeneIdsForSpecies(String species) {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(SPECIES_FIELD + ":\"").append(species.toLowerCase()).append("\"");
-
-        appendBioEntityTypes(sb, new String[]{BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA});
-
-        String queryString = sb.toString();
-
-        return fetchGeneIdentifiersFromSolr(queryString);
-    }
-
     List<String> getGeneIdSuggestionsInName(String geneName, String species) {
 
-        String[] propertyTypes = namePropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
+        String[] propertyTypes = namePropertyTypes;
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
                                                                         , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT);
@@ -132,7 +118,7 @@ public class SolrQueryService {
 
     List<String> getGeneIdSuggestionsInSynonym(String geneName, String species) {
 
-        String[] propertyTypes = synonymPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
+        String[] propertyTypes = synonymPropertyTypes;
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
                                                                         , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT);
@@ -142,7 +128,7 @@ public class SolrQueryService {
 
     List<String> getGeneIdSuggestionsInIdentifier(String geneName, String species) {
 
-        String[] propertyTypes = identifierPropertyTypes.trim().split(CONFIG_SPLIT_REGEX);
+        String[] propertyTypes = identifierPropertyTypes;
 
         String queryString = buildCompositeQuery(geneName, species, propertyTypes, BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
                                                                         , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT);

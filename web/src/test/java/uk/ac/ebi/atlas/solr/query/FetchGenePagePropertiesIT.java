@@ -45,13 +45,13 @@ public class FetchGenePagePropertiesIT {
     private SolrClient subject;
 
     @Value("#{configuration['index.types.genepage']}")
-    private String genePagePropertyTypes;
+    private String[] genePagePropertyTypes;
 
     @Test
     public void testFetchTooltipProperties() throws Exception {
 
         // given
-        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", Arrays.asList(genePagePropertyTypes.split(",")));
+        Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", Arrays.asList(genePagePropertyTypes));
 
         // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,design_element
 

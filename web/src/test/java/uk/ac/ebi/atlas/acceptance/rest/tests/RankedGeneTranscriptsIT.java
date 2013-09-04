@@ -36,9 +36,6 @@ public class RankedGeneTranscriptsIT {
 
     private static final String E_MTAB_599_URL_TEMPLATE = "/gxa/json/transcripts/E-MTAB-599";
 
-    private static final String E_GEOD_26284_URL_TEMPLATE = "/gxa/json/transcripts/E-GEOD-26284";
-
-
     @Test
     public void testEMTAB513RankedGeneTranscriptsOneTranscript() {
         EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000211855&factorType=ORGANISM_PART&factorValue=leukocyte&selectedFilterFactorsJson=[]");
@@ -62,29 +59,6 @@ public class RankedGeneTranscriptsIT {
     }
 
     @Test
-    public void testEMTAB513RankedGeneTranscriptsThreeTranscripts() {
-        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000175305&factorType=ORGANISM_PART&factorValue=brain&selectedFilterFactorsJson=[]");
-
-        ResponseBody responseBody = responseAssertions(subject);
-
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":8,\"expressedTranscriptsCount\":3,\"transcriptExpressions\":{\"ENST00000396133\":1.0,\"ENST00000520509\":0.6,\"ENST00000308108\":0.5}}"));
-
-
-    }
-
-    @Test
-    public void testEMTAB513RankedGeneTranscriptsFourTranscripts() {
-        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000112812&factorType=ORGANISM_PART&factorValue=lung&selectedFilterFactorsJson=[]");
-
-        ResponseBody responseBody = responseAssertions(subject);
-
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":20,\"expressedTranscriptsCount\":4,\"transcriptExpressions\":{\"ENST00000377456\":1.0,\"ENST00000421826\":0.6,\"ENST00000492575\":0.6,\"Others\":0.1}}"));
-
-
-    }
-
-
-    @Test
     public void testEMTAB599RankedGeneTranscriptsOneTranscript() {
         EndPoint subject = new EndPoint(E_MTAB_599_URL_TEMPLATE, "geneId=ENSMUSG00000064356&factorType=ORGANISM_PART&factorValue=liver&selectedFilterFactorsJson=[]");
 
@@ -103,49 +77,6 @@ public class RankedGeneTranscriptsIT {
 
         assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":2,\"expressedTranscriptsCount\":2,\"transcriptExpressions\":{\"ENSMUST00000022314\":905.0,\"ENSMUST00000170719\":584.0}}"));
 
-
-    }
-
-    @Test
-    public void testEMTAB599RankedGeneTranscriptsThreeTranscripts() {
-        EndPoint subject = new EndPoint(E_MTAB_599_URL_TEMPLATE, "geneId=ENSMUSG00000078688&factorType=ORGANISM_PART&factorValue=liver&selectedFilterFactorsJson=[]");
-
-        ResponseBody responseBody = responseAssertions(subject);
-
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":3,\"expressedTranscriptsCount\":3,\"transcriptExpressions\":{\"ENSMUST00000107490\":199.0,\"ENSMUST00000148940\":93.0,\"ENSMUST00000074700\":19.0}}"));
-
-
-    }
-
-    @Test
-    public void testEMTAB599RankedGeneTranscriptsFourTranscripts() {
-        EndPoint subject = new EndPoint(E_MTAB_599_URL_TEMPLATE, "geneId=ENSMUSG00000022212&factorType=ORGANISM_PART&factorValue=hippocampus&selectedFilterFactorsJson=[]");
-
-        ResponseBody responseBody = responseAssertions(subject);
-
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"expressedTranscriptsCount\":4,\"transcriptExpressions\":{\"ENSMUST00000163767\":111.0,\"ENSMUST00000074225\":41.0,\"ENSMUST00000165262\":35.0,\"Others\":14.0}}"));
-
-
-    }
-
-    @Test
-    public void testEGEOD26284RankedGeneTranscripts() {
-        EndPoint subject = new EndPoint(E_GEOD_26284_URL_TEMPLATE, "geneId=ENSG00000142185&factorType=CELL_LINE" +
-                "&factorValue=CD34-positive mobilized cell cell line" +
-                "&selectedFilterFactorsJson=[{\"type\":\"RNA\",\"value\":\"total RNA\"},{\"type\":\"CELLULAR_COMPONENT\",\"value\":\"whole cell\"}]");
-
-        ResponseBody responseBody = responseAssertions(subject);
-
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":7,\"expressedTranscriptsCount\":4,\"transcriptExpressions\":{\"ENST00000490982\":0.5,\"ENST00000397928\":0.4,\"ENST00000397932\":0.3,\"Others\":0.1}}"));
-
-
-        subject = new EndPoint(E_GEOD_26284_URL_TEMPLATE, "geneId=ENSG00000131652&factorType=CELL_LINE" +
-                "&factorValue=IMR-90" +
-                "&selectedFilterFactorsJson=[{\"type\":\"RNA\",\"value\":\"total RNA\"},{\"type\":\"CELLULAR_COMPONENT\",\"value\":\"whole cell\"}]");
-
-        responseBody = responseAssertions(subject);
-
-        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":10,\"expressedTranscriptsCount\":2,\"transcriptExpressions\":{\"ENST00000326266\":5.0,\"ENST00000253952\":1.0}}"));
 
     }
 

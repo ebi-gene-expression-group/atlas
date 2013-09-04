@@ -66,6 +66,8 @@ public class TranscriptProfileDAO {
     }
 
     public Collection<TranscriptProfile> findTranscriptProfiles(String experimentAccession, String geneId) {
+        LOGGER.debug("<findTranscriptProfiles> experimentAccession = " + experimentAccession
+                       + ", geneId = " + geneId);
         return jdbcTemplate.query(TRANSCRIPT_PROFILE_QUERY,
                 new String[]{experimentAccession, geneId},
                 new TranscriptProfileRowMapper());

@@ -61,7 +61,7 @@ public class JsonAutocompleteTest {
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         jsonAutocompleteEmptyResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.emptySuggestions.json");
 
-        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
+        subject = new SolrClient(null, restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
     }
 
     @Test

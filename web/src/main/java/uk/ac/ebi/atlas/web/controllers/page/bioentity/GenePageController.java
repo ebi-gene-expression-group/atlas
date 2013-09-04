@@ -41,12 +41,12 @@ public class GenePageController extends BioEntityPageController {
 
     public static final String BIOENTITY_PROPERTY_NAME = "symbol";
 
-    private String bioentityPropertyNames;
+    private String[] bioentityPropertyNames;
 
     private DifferentialGeneProfileService differentialGeneProfileService;
 
     @Value("#{configuration['index.types.genepage']}")
-    void setBioentityPropertyNames(String bioentityPropertyNames) {
+    void setBioentityPropertyNames(String[] bioentityPropertyNames) {
         this.bioentityPropertyNames = bioentityPropertyNames;
     }
 
@@ -79,7 +79,7 @@ public class GenePageController extends BioEntityPageController {
 
     @Override
     List<String> getPagePropertyTypes() {
-        return Lists.newArrayList(bioentityPropertyNames.split(","));
+        return Lists.newArrayList(bioentityPropertyNames);
     }
 
     @Override
