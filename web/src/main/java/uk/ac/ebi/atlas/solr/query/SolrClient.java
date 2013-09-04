@@ -185,15 +185,6 @@ public class SolrClient {
         return species;
     }
 
-    public Set<String> findGeneIdsForSpecies(String species) {
-
-        checkArgument(StringUtils.isNotBlank(species));
-
-        species = limitSpeciesNameToTwoWords(species);
-
-        return solrQueryService.getGeneIdsForSpecies(species);
-    }
-
     public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
 
         species = limitSpeciesNameToTwoWords(species);
