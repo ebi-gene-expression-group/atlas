@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import org.apache.solr.client.solrj.beans.Field;
 
+import java.util.Collection;
 import java.util.Objects;
 
 public class ConditionProperty {
@@ -15,21 +16,38 @@ public class ConditionProperty {
     @Field("contrast_id")
     private String contrastId;
 
-    @Field("property_value")
-    private String value;
+//    @Field("property_value")
+//    private String value;
+//
+//    @Field("property_name")
+//    private String name;
 
-    @Field("property_name")
-    private String name;
+    @Field("property_values")
+    private Collection<String> values;
 
-    public ConditionProperty(String experimentAccession, String groupType, String contrastId, String name, String value) {
+    public ConditionProperty() {
+    }
+
+    public ConditionProperty(String experimentAccession, String groupType, String contrastId, Collection<String> values) {
         this.experimentAccession = experimentAccession;
         this.groupType = groupType;
         this.contrastId = contrastId;
-        this.value = value;
-        this.name = name;
+        this.values = values;
+    }
+
+    @Override
+    public int hashCode() {return Objects.hash(experimentAccession, groupType, contrastId, values);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {return true;}
+        if (obj == null || getClass() != obj.getClass()) {return false;}
+        final ConditionProperty other = (ConditionProperty) obj;
+        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.groupType, other.groupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.values, other.values);
     }
 
     public String getExperimentAccession() {
+
         return experimentAccession;
     }
 
@@ -53,30 +71,11 @@ public class ConditionProperty {
         this.contrastId = contrastId;
     }
 
-    public String getValue() {
-        return value;
+    public Collection<String> getValues() {
+        return values;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int hashCode() {return Objects.hash(experimentAccession, groupType, contrastId, value, name);}
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
-        final ConditionProperty other = (ConditionProperty) obj;
-        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.groupType, other.groupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.value, other.value) && Objects.equals(this.name, other.name);
+    public void setValues(Collection<String> values) {
+        this.values = values;
     }
 }

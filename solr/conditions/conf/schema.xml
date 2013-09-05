@@ -60,7 +60,7 @@ http://wiki.apache.org/solr/SchemaXml
 
         <fieldtype name="integer" class="solr.IntField" omitNorms="true"/>
 
-	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
 
         <!-- <![CDATA[ A text field that uses WordDelimiterFilter to enable splitting and matching of
              words on case-change, alpha numeric boundaries, and non-alphanumeric chars,
@@ -80,7 +80,7 @@ http://wiki.apache.org/solr/SchemaXml
                         catenateWords="1" catenateNumbers="1" catenateAll="0"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
-		<filter class="solr.PorterStemFilterFactory"/>
+                <filter class="solr.PorterStemFilterFactory"/>
             </analyzer>
             <analyzer type="query">
                 <tokenizer class="solr.WhitespaceTokenizerFactory"/>
@@ -90,7 +90,7 @@ http://wiki.apache.org/solr/SchemaXml
                         catenateWords="0" catenateNumbers="0" catenateAll="0"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
-		<filter class="solr.PorterStemFilterFactory"/>
+                <filter class="solr.PorterStemFilterFactory"/>
             </analyzer>
         </fieldtype>
 
@@ -153,22 +153,20 @@ http://wiki.apache.org/solr/SchemaXml
 
         <field name="contrast_id" type="string" indexed="true" stored="true"/>
 
-        <field name="property_value" type="string" indexed="true" stored="true"/>
-
-        <field name="property_name" type="string" indexed="true" stored="true"/>
+        <field name="property_values" type="string" indexed="true" stored="true" multiValued="true"/>
 
         <!--ToDo: check if the following fields are needed-->
-        <field name="property_value_autocomplete" type="text_standard" indexed="true" stored="false"/>
+        <!--<field name="property_value_autocomplete" type="text_standard" indexed="true" stored="false"/>-->
 
-        <field name="property_value_edgengram" type="text_edgengram" indexed="true" stored="false" omitNorms="true"/>
+        <!--<field name="property_value_edgengram" type="text_edgengram" indexed="true" stored="false" omitNorms="true"/>-->
 
-        <field name="property_value_lower" type="text_lower" indexed="true" stored="false"/>
+        <!--<field name="property_value_lower" type="text_lower" indexed="true" stored="false"/>-->
 
-        <field name="property_value_search" type="text" indexed="true" stored="false"/>
+        <field name="property_value_search" type="text" indexed="true" stored="false" multiValued="true"/>
 
-	<field name="_version_" type="long" indexed="true"  stored="true"/> 
+        <field name="_version_" type="long" indexed="true" stored="true"/>
 
-	<field name="text" type="string" indexed="true" stored="false" multiValued="true"/>
+        <field name="text" type="string" indexed="true" stored="false" multiValued="true"/>
     </fields>
 
     <defaultSearchField>property_value_search</defaultSearchField>
@@ -179,12 +177,12 @@ http://wiki.apache.org/solr/SchemaXml
          is added to the index.  It's used either to index the same field differently,
          or to add multiple fields to the same field for easier/faster searching.  ]]> -->
 
-    <copyField source="property_value" dest="property_value_autocomplete"/>
+    <!--<copyField source="property_value" dest="property_value_autocomplete"/>-->
 
-    <copyField source="property_value" dest="property_value_edgengram"/>
+    <!--<copyField source="property_value" dest="property_value_edgengram"/>-->
 
-    <copyField source="property_value" dest="property_value_lower"/>
+    <!--<copyField source="property_value" dest="property_value_lower"/>-->
 
-    <copyField source="property_value" dest="property_value_search"/>
+    <copyField source="property_values" dest="property_value_search"/>
 
 </schema>

@@ -49,6 +49,7 @@ public class ConditionsIndexIT {
     }
 
 
+    //TODO: Use embedded (in memory) Solr!
     @Test
     public void testIndex() throws Exception {
 

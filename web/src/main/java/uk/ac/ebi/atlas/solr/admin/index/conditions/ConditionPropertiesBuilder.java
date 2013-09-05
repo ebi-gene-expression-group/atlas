@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,11 +43,14 @@ public class ConditionPropertiesBuilder {
 
                properties.putAll(experiment.getExperimentDesign().getSamples(assayAccession));
 
+               Set<String> values = new HashSet<>();
                for (String name : properties.keySet()) {
-                   ConditionProperty conditionProperty = new ConditionProperty(experiment.getAccession(),
-                           groupType, contrastId, name, properties.get(name));
-                   conditions.add(conditionProperty);
+                   values.add(properties.get(name));
+
                }
+               ConditionProperty conditionProperty = new ConditionProperty(experiment.getAccession(),
+                                          groupType, contrastId, values);
+               conditions.add(conditionProperty);
            }
 
            return conditions;
