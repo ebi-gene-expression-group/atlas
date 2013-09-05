@@ -231,7 +231,7 @@ public class HeatmapTablePage extends TablePage {
 
     public WebElement getDisplayLevelsButton() {
         new FluentWait<>(driver)
-                .withTimeout(80, TimeUnit.SECONDS)
+                .withTimeout(200, TimeUnit.SECONDS)
                 .pollingEvery(200, TimeUnit.MILLISECONDS)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("display-levels")));
 
