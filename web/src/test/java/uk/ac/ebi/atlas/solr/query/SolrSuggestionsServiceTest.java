@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.solr.query;
 
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,10 +39,13 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class JsonAutocompleteTest {
+public class SolrSuggestionsServiceTest {
 
     @Mock
     private RestTemplate restTemplateMock;
@@ -51,7 +56,7 @@ public class JsonAutocompleteTest {
     @Mock
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
-    private SolrClient subject;
+    private SolrSuggestionsService subject;
 
     private String jsonAutocompleteResponse;
     private String jsonAutocompleteEmptyResponse;
@@ -61,7 +66,9 @@ public class JsonAutocompleteTest {
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
         jsonAutocompleteEmptyResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.emptySuggestions.json");
 
-        subject = new SolrClient(null, restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
+        given(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).willReturn(jsonAutocompleteResponse);
+
+        subject = new SolrSuggestionsService(restTemplateMock, null, null);
     }
 
     @Test
@@ -82,4 +89,23 @@ public class JsonAutocompleteTest {
         List<String> suggestions = subject.extractCollations("{}");
         assertThat(suggestions, is(empty()));
     }
+
+    @Test
+    public void testExtractSuggestion() {
+        //given
+        String suggestion = subject.extractSuggestion("\"musk\" AND species:\"mus musculus\"");
+
+        MatcherAssert.assertThat(suggestion, Matchers.is("musk"));
+    }
+
+    @Test
+    public void findGenePropertiesShouldReturnEmptyListWhenTermContainsNonSpellCheckableCharacters() {
+        assertThat(subject.findGenePropertySuggestions("hello > boy", "mus mus"), Matchers.is(empty()));
+    }
+
+    @Test
+    public void findGenePropertiesShouldNotReturnEmptyList() {
+        assertThat(subject.findGenePropertySuggestions("p53", "mus mus"), Matchers.is(not(empty())));
+    }
+
 }

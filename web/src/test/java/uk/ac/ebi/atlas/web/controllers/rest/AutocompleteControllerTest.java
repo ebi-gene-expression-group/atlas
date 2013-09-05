@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrSuggestionsService;
 
 import java.util.List;
 
@@ -50,19 +50,19 @@ public class AutocompleteControllerTest {
     private BaselineRequestContext requestContextMock;
 
     @Mock
-    private SolrClient solrClientMock;
+    private SolrSuggestionsService solrSuggestionsServiceMock;
 
     @Before
     public void setUp() throws Exception {
 
         List<String> suggestions = Lists.newArrayList("Value1", "Value2");
 
-        when(solrClientMock.findGeneIdSuggestionsInName(QUERY_STRING, SPECIES)).thenReturn(suggestions);
-        when(solrClientMock.findGenePropertySuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
+        when(solrSuggestionsServiceMock.findGeneIdSuggestionsInName(QUERY_STRING, SPECIES)).thenReturn(suggestions);
+        when(solrSuggestionsServiceMock.findGenePropertySuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
 
         when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
 
-        subject = new AutocompleteController(solrClientMock);
+        subject = new AutocompleteController(solrSuggestionsServiceMock);
 
     }
 

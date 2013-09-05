@@ -22,11 +22,13 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -40,13 +42,13 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
-public class FindAutocompleteSuggestionsIT {
+public class SolrSuggestionsServiceIT {
 
     private static final String HOMO_SAPIENS_SPECIES = "homo sapiens";
     private static final String MUS_MUSCULUS_SPECIES = "mus musculus";
 
     @Inject
-    private SolrClient subject;
+    private SolrSuggestionsService subject;
 
     @Test
     public void findGeneNameSuggestionsForPartialGeneNames() {
@@ -194,4 +196,16 @@ public class FindAutocompleteSuggestionsIT {
         assertThat(properties.size(), is(15));
         assertThat(properties, hasItems("protein b", "p binding", "protein binding"));
     }
+
+    @Test
+    public void testGetSolrResultsForQuery() throws SolrServerException, GenesNotFoundException {
+
+        // given
+        List<String> geneNames = subject.getGeneIdSuggestionsInName("aspm", "homo sapiens");
+
+        // then
+        assertThat(geneNames, contains("aspm"));
+
+    }
+
 }
