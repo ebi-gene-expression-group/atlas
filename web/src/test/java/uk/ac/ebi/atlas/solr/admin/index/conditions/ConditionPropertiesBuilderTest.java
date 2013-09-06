@@ -69,7 +69,7 @@ public class ConditionPropertiesBuilderTest {
 
         Collection<ConditionProperty> result = subject.buildProperties(experimentMock);
 
-        assertThat(result.size(), is(4));
-//        assertThat(result.contains(new ConditionProperty("EXP-1", "reference", "g1_g2", "fn1", "fv1")), is(true));
+        assertThat(result.size(), is(2));
+        assertThat(result.contains(new ConditionProperty("EXP-1", "reference", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
     }
 }
