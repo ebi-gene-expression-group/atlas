@@ -27,7 +27,11 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <bean scope="singleton" id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-        <constructor-arg value="http://${solr.host}:8983/solr/"/>
+        <constructor-arg value="http://${solr.host}:8983/solr/gxa"/>
+    </bean>
+
+    <bean scope="singleton" id="conditionsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg value="http://${solr.host}:8983/solr/conditions"/>
     </bean>
 
 </beans>

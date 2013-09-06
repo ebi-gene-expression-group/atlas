@@ -70,8 +70,6 @@ public class BioentityIndex {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
-
-
     }
 
     void indexDirectory(DirectoryStream<Path> bioentityPropertiesDirectoryStream, boolean isReactomeDirectory) throws IOException, SolrServerException {
