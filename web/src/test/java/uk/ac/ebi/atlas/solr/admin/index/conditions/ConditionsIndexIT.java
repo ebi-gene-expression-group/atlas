@@ -12,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCacheLoader;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -53,8 +52,8 @@ public class ConditionsIndexIT {
     @Test
     public void testIndex() throws Exception {
 
-        DifferentialExperiment experiment = cacheLoader.load(DIFFERENTIAL_ACCESION);
-
-        subject.indexExperiment(experiment);
+//        DifferentialExperiment experiment = cacheLoader.load(DIFFERENTIAL_ACCESION);
+//
+//        subject.indexExperiment(experiment);
     }
 }
