@@ -119,4 +119,10 @@ public class ExperimentalFactors implements Serializable {
     public List<FactorGroup> getOrderedFactorGroups() {
         return ImmutableList.copyOf(orderedFactorGroups);
     }
+
+    @Override
+    public String toString(){
+        return "ExperimentalFactors: orderedFactorGroups = " + orderedFactorGroups
+                + ", factorsByType = " + factorsByType;
+    }
 }

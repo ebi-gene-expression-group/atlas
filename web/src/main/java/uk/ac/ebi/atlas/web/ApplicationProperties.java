@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import org.h2.util.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
@@ -84,14 +83,6 @@ public class ApplicationProperties {
 
     public String getFeedbackEmailAddress() {
         return configurationProperties.getProperty("feedback.email");
-    }
-
-    public Set<String> getTestCaseExperimentAccessions() {
-        Set<String> testCaseExperimentAccessions = Sets.newHashSet();
-        if (!StringUtils.isNullOrEmpty(configurationProperties.getProperty("integration.experiment.identifiers"))) {
-            testCaseExperimentAccessions.addAll(getStringValues("integration.experiment.identifiers"));
-        }
-        return testCaseExperimentAccessions;
     }
 
     public Set<String> getArrayDesignAccessions() {

@@ -26,51 +26,34 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.utils.Files;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.core.IsNot.not;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.anyVararg;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrClientTest {
 
     private static final String IDENTIFIER = "ENSG00000132604";
 
-    private static final List<String> GENE_PAGE_PROPERTY_TYPES = Lists.newArrayList("synonym", "ortholog", "goterm", "interproterm", "ensfamily_description", "enstranscript", "mgi_description", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "design_element");
+    private static final String[] GENE_PAGE_PROPERTY_TYPES = new String[]{"synonym", "ortholog", "goterm", "interproterm", "ensfamily_description", "enstranscript", "mgi_description", "entrezgene", "uniprot", "mgi_id", "gene_biotype", "design_element"};
 
-    private static final String CSV_TOOLTIP_PROPERTY_TYPES = "synonym,goterm,interproterm";
-
-    private static final List<String> TOOLTIP_PROPERTY_TYPES = Arrays.asList(CSV_TOOLTIP_PROPERTY_TYPES.split(","));
-
-    private static final String EXPECTED_TOOLTIP_QUERY = SolrQueryService.BIOENTITY_IDENTIFIER_FIELD + ":\"ENSG00000132604\" AND (" + SolrQueryService.PROPERTY_NAME_FIELD + ":\"synonym\" OR " + SolrQueryService.PROPERTY_NAME_FIELD + ":\"goterm\" OR " + SolrQueryService.PROPERTY_NAME_FIELD + ":\"interproterm\")";
+    private static final String[] TOOLTIP_PROPERTY_TYPES = new String[]{"synonym","goterm","interproterm"};
 
     private static final String MUS_MUSCULUS = "mus musculus";
     private static final HashSet<String> SPECIES = Sets.newHashSet(MUS_MUSCULUS);
 
     private static final String SYMBOL = "symbol";
-
-    private static final String GENE_QUERY = "A QUERY";
-
-    @Mock
-    private RestTemplate restTemplateMock;
 
     @Mock
     private SolrQueryService solrQueryServiceMock;
@@ -80,62 +63,30 @@ public class SolrClientTest {
 
     private SolrClient subject;
 
-    private SortedSetMultimap<String, String> results = TreeMultimap.create();
-
     private String jsonAutocompleteResponse;
+
+    @Mock
+    private SolrQueryBuilderFactory solrQueryBuilderFactoryMock;
 
     @Before
     public void initSubject() throws Exception {
 
-        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
-        doCallRealMethod().when(solrQueryServiceMock).fetchProperties(IDENTIFIER, TOOLTIP_PROPERTY_TYPES);
-        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
-        doCallRealMethod().when(solrQueryServiceMock).buildCompositeQueryIdentifier(IDENTIFIER, TOOLTIP_PROPERTY_TYPES);
+        SortedSetMultimap<String,String> mockMultimap = TreeMultimap.create();
+        given(solrQueryServiceMock.fetchProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES)).willReturn(mockMultimap);
 
-        when(solrQueryServiceMock.querySolrForProperties(anyString(), anyInt())).thenReturn(results);
-//        when(solrQueryServiceMock.getSpeciesForIdentifier(IDENTIFIER)).thenReturn(SPECIES);
-        when(solrQueryServiceMock.getPropertyValuesForIdentifier(IDENTIFIER, SYMBOL)).thenReturn(Lists.newArrayList(SYMBOL));
-        when(solrQueryServiceMock.getSpeciesForPropertyValue(IDENTIFIER, SolrQueryService.BIOENTITY_IDENTIFIER_FIELD)).thenReturn(SPECIES);
+        given(solrQueryServiceMock.getPropertyValuesForIdentifier(IDENTIFIER, SYMBOL)).willReturn(Lists.newArrayList(SYMBOL));
+        given(solrQueryServiceMock.getSpeciesForPropertyValue(IDENTIFIER, SolrQueryService.BIOENTITY_IDENTIFIER_FIELD)).willReturn(SPECIES);
 
-        when(bioentityPropertyValueTokenizerMock.split(IDENTIFIER)).thenReturn(Lists.newArrayList(IDENTIFIER));
+        given(bioentityPropertyValueTokenizerMock.split(IDENTIFIER)).willReturn(Lists.newArrayList(IDENTIFIER));
 
         jsonAutocompleteResponse = Files.readTextFileFromClasspath(getClass(), "solrAutocompleteResponse.json");
-        when(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).thenReturn(jsonAutocompleteResponse);
 
-        subject = new SolrClient(restTemplateMock, solrQueryServiceMock, bioentityPropertyValueTokenizerMock);
+        subject = new SolrClient(TOOLTIP_PROPERTY_TYPES, solrQueryServiceMock, bioentityPropertyValueTokenizerMock, solrQueryBuilderFactoryMock);
     }
 
-    @Test
-    public void testExtractSuggestion() {
-        //given
-        String suggestion = subject.extractSuggestion("\"musk\" AND species:\"mus musculus\"");
-
-        assertThat(suggestion, is("musk"));
-    }
-
-    @Test
-    public void findGenePropertiesShouldReturnEmptyListWhenTermContainsNonSpellCheckableCharacters() {
-        assertThat(subject.findGenePropertySuggestions("hello > boy", "mus mus"), is(empty()));
-    }
-
-    @Test
-    public void findGenePropertiesShouldNotReturnEmptyList() {
-        assertThat(subject.findGenePropertySuggestions("p53", "mus mus"), is(not(empty())));
-    }
-
-    @Test(expected = ResultNotFoundException.class)
+    @Test(expected = BioentityNotFoundException.class)
     public void testFetchGenePageProperties() throws Exception {
         subject.fetchGenePageProperties(IDENTIFIER, GENE_PAGE_PROPERTY_TYPES);
-    }
-
-    @Test
-    public void testFetchTooltipProperties() throws Exception {
-        subject.setTooltipPropertyTypes(CSV_TOOLTIP_PROPERTY_TYPES);
-
-        SortedSetMultimap<String, String> multimap = subject.fetchTooltipProperties(IDENTIFIER);
-        assertThat(multimap, is(results));
-
-        verify(solrQueryServiceMock).querySolrForProperties(EXPECTED_TOOLTIP_QUERY, 1000);
     }
 
     @Test
@@ -147,24 +98,5 @@ public class SolrClientTest {
     public void testFindPropertyValuesForGeneId() throws Exception {
         assertThat(subject.findPropertyValuesForGeneId(IDENTIFIER, SYMBOL), hasItem(SYMBOL));
     }
-
-    @Test
-    public void testGetSelectedGeneIdsPerQueryToken() throws GenesNotFoundException, SolrServerException {
-
-        when(solrQueryServiceMock.getGeneIds("A", false, MUS_MUSCULUS)).thenReturn(Sets.newHashSet(IDENTIFIER));
-        when(solrQueryServiceMock.getGeneIds("QUERY", false, MUS_MUSCULUS)).thenReturn(Sets.newHashSet(IDENTIFIER));
-
-        when(bioentityPropertyValueTokenizerMock.split(GENE_QUERY)).thenReturn(Lists.newArrayList("A", "QUERY"));
-
-        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets(GENE_QUERY, false, MUS_MUSCULUS, true);
-
-        verify(bioentityPropertyValueTokenizerMock).split("A QUERY");
-
-        verify(solrQueryServiceMock).getGeneIds("A", false, MUS_MUSCULUS);
-        verify(solrQueryServiceMock).getGeneIds("QUERY", false, MUS_MUSCULUS);
-
-        assertThat(geneQueryResponse.getQueryTerms(), containsInAnyOrder("A", "QUERY"));
-    }
-
 
 }

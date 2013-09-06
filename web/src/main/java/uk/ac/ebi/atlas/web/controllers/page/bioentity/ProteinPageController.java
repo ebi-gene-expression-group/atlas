@@ -22,16 +22,12 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.web.controllers.page.bioentity.BioEntityPageController;
-
-import java.util.List;
 
 @Controller
 @Scope("request")
@@ -39,10 +35,10 @@ public class ProteinPageController extends BioEntityPageController {
 
     public static final String GENE_NAME_PROPERTY_TYPE = "uniprot";
 
-    private String proteinPagePropertyTypes;
+    private String[] proteinPagePropertyTypes;
 
-    @Value("#{configuration['index.types.proteinpage']}")
-    void setProteinPagePropertyTypes(String proteinPagePropertyTypes) {
+    @Value("#{configuration['index.property_names.proteinpage']}")
+    void setProteinPagePropertyTypes(String[] proteinPagePropertyTypes) {
         this.proteinPagePropertyTypes = proteinPagePropertyTypes;
     }
 
@@ -52,8 +48,8 @@ public class ProteinPageController extends BioEntityPageController {
     }
 
     @Override
-    List<String> getPagePropertyTypes() {
-        return Lists.newArrayList(proteinPagePropertyTypes.split(","));
+    String[] getPagePropertyTypes() {
+        return proteinPagePropertyTypes;
     }
 
     @Override

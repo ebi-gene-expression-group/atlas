@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrSuggestionsService;
 
 import javax.inject.Inject;
 import java.util.LinkedHashSet;
@@ -43,11 +43,11 @@ public class AutocompleteController {
 
     private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
 
-    private SolrClient solrClient;
+    private SolrSuggestionsService solrSuggestionsService;
 
     @Inject
-    public AutocompleteController(SolrClient solrClient) {
-        this.solrClient = solrClient;
+    public AutocompleteController(SolrSuggestionsService solrSuggestionsService) {
+        this.solrSuggestionsService = solrSuggestionsService;
     }
 
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
@@ -63,19 +63,19 @@ public class AutocompleteController {
         species = StringUtils.lowerCase(species);
 
         if (!StringUtils.containsWhitespace(query)) {
-            suggestions.addAll(solrClient.findGeneIdSuggestionsInName(query, species));
+            suggestions.addAll(solrSuggestionsService.findGeneIdSuggestionsInName(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrClient.findGeneIdSuggestionsInSynonym(query, species));
+            suggestions.addAll(solrSuggestionsService.findGeneIdSuggestionsInSynonym(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrClient.findGeneIdSuggestionsInIdentifier(query, species));
+            suggestions.addAll(solrSuggestionsService.findGeneIdSuggestionsInIdentifier(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrClient.findGenePropertySuggestions(query, species));
+            suggestions.addAll(solrSuggestionsService.findGenePropertySuggestions(query, species));
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);

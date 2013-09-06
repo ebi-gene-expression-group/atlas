@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
-import java.util.List;
 
 @Controller
 @Scope("request")
@@ -41,12 +39,12 @@ public class GenePageController extends BioEntityPageController {
 
     public static final String BIOENTITY_PROPERTY_NAME = "symbol";
 
-    private String bioentityPropertyNames;
+    private String[] bioentityPropertyNames;
 
     private DifferentialGeneProfileService differentialGeneProfileService;
 
-    @Value("#{configuration['index.types.genepage']}")
-    void setBioentityPropertyNames(String bioentityPropertyNames) {
+    @Value("#{configuration['index.property_names.genepage']}")
+    void setBioentityPropertyNames(String[] bioentityPropertyNames) {
         this.bioentityPropertyNames = bioentityPropertyNames;
     }
 
@@ -78,8 +76,8 @@ public class GenePageController extends BioEntityPageController {
     }
 
     @Override
-    List<String> getPagePropertyTypes() {
-        return Lists.newArrayList(bioentityPropertyNames.split(","));
+    String[] getPagePropertyTypes() {
+        return bioentityPropertyNames;
     }
 
     @Override

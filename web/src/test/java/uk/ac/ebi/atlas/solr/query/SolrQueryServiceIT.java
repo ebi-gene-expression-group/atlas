@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
@@ -34,8 +33,6 @@ import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
-import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -52,77 +49,13 @@ public class SolrQueryServiceIT {
     private SolrQueryService subject;
 
     @Test
-    public void testGetSolrResultsForQuery() throws SolrServerException {
-
-        // given
-        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property_value", 100);
-
-        // then
-        assertThat(geneNames, contains("ASPM"));
-
-    }
-
-    @Test
-    public void testGetSolrResultsForMultiTermQuery() throws SolrServerException {
-
-        // given
-        String queryString = subject.buildGeneQuery("aspm splicing", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        List<String> geneNames = subject.getSolrResultsForQuery(queryString, "property_value", 100);
-
-        // then
-        assertThat(geneNames, hasItems("ASPM", "RNA splicing", "mRNA splicing, via spliceosome", "RNA splicing, via transesterification reactions"));
-
-    }
-
-    @Test
     public void testQuerySolrForProperties() throws SolrServerException {
 
-        // given
-        String queryString = subject.buildCompositeQueryIdentifier("ENSG00000109819", Lists.newArrayList("goterm"));
-        Multimap<String, String> multimap = subject.querySolrForProperties(queryString, 100);
+        //when
+        Multimap<String, String> multimap = subject.fetchProperties("ENSG00000109819", new String[]{"goterm"});
 
         // then
         assertThat(multimap.get("goterm"), hasItems("RNA splicing", "cellular response to oxidative stress", "cellular glucose homeostasis"));
-
-    }
-
-    @Test
-    public void testFetchGeneIdentifiersFromSolr() throws SolrServerException {
-
-        // given
-        String queryString = subject.buildGeneQuery("aspm", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
-
-        // then
-        assertThat(geneIds.size(), is(1));
-        assertThat(geneIds, hasItem("ENSG00000066279"));
-
-    }
-
-    @Test
-    public void testFetchGeneIdentifiersFromSolrMany() throws SolrServerException {
-
-        // given
-        String queryString = subject.buildGeneQuery("protein", false, "homo sapiens", BIOENTITY_TYPE_GENE);
-        Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
-
-        // then
-        assertThat(geneIds.size(), lessThan(200000));
-        assertThat(geneIds, hasItems("ENSG00000126773", "ENSG00000183878"));
-
-    }
-
-    @Test
-    public void testFetchProteinIdentifiersFromSolrMany() throws SolrServerException {
-
-        // given
-        String queryString = subject.buildGeneQuery("protein", false, "homo sapiens", BIOENTITY_TYPE_PROTEIN);
-        Set<String> geneIds = subject.fetchGeneIdentifiersFromSolr(queryString);
-
-        // then
-        assertThat(geneIds.size(), lessThan(200000));
-        assertThat(geneIds, hasItems("ENSP00000286301"));
 
     }
 

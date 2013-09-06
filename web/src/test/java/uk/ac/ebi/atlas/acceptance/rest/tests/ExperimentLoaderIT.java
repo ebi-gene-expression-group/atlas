@@ -95,13 +95,13 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     public void testDeleteNonExisting() {
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
-        expect().body(is("Experiment not found for experiment accession: " + blablaExperimentAccession))
+        expect().body(is("ResourceNotFoundException: Experiment not found for experiment accession: " + blablaExperimentAccession))
                 .when().get("deleteExperiment?accession=" + blablaExperimentAccession);
     }
 
     @Test
     public void loadShouldFailWhenExperimentHasAlreadyBeenImported() {
-        expect().body(is("Experiment with experimentAccession " + EXPERIMENT_ACCESSION + " has been already imported."))
+        expect().body(is("IllegalStateException: Experiment with experimentAccession " + EXPERIMENT_ACCESSION + " has been already imported."))
                 .when().get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&type=BASELINE");
     }
 
@@ -109,7 +109,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     public void testLoadInvalidExperiment() {
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
-        expect().body(startsWith("Required file can not be read"))
+        expect().body(startsWith("IllegalStateException: Required file can not be read"))
                 .when().get("loadExperiment?accession=" + blablaExperimentAccession + "&type=BASELINE");
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + blablaExperimentAccession);

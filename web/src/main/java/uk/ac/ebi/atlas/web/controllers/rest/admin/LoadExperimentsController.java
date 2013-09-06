@@ -61,10 +61,9 @@ public class LoadExperimentsController {
     @ResponseBody
     public String handleException(Exception e) {
         LOGGER.error(e.getMessage(), e);
-        return e.getMessage();
+        return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
-    //ToDo (NK): Do we want to throw IOException here?
     @RequestMapping("/loadExperiment")
     @ResponseBody
     public String loadExperiment(@RequestParam("accession") String experimentAccession,
