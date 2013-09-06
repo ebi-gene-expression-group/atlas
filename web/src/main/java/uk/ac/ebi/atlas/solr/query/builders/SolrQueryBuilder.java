@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.solr.query.builders;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -37,59 +37,51 @@ import static com.google.common.base.Preconditions.checkArgument;
  * If you need to build different query strings within the same client process
  * you must use a new instance of builder for each query.
  */
-public class SolrQueryBuilder {
+public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
 
-    public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
     public static final String PROPERTY_NAME_FIELD = "property_name";
 
-    private StringBuilder queryStringBuilder = new StringBuilder();
+    public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
 
-    public SolrQueryBuilder withSpecies(String species){
+    protected StringBuilder queryStringBuilder = new StringBuilder();
+
+    public T withSpecies(String species){
         if (StringUtils.isNotBlank(species)){
             queryStringBuilder.append(" AND species:\"").append(species).append("\"");
         }
-        return this;
+        return getThis();
     }
 
-    public SolrQueryBuilder withPropertyNames(String[] propertyNames){
-        checkArgument(ArrayUtils.isNotEmpty(propertyNames));
-
-        List<String> propertyNameConditions = transformToConditions(PROPERTY_NAME_FIELD, propertyNames);
-
-        queryStringBuilder.append(" AND (");
-        Joiner.on(" OR ").appendTo(queryStringBuilder, propertyNameConditions).append(")");
-        return this;
-    }
-
-    public SolrQueryBuilder withBioentityTypes(String... bioentityTypes){
+    public T withBioentityTypes(String... bioentityTypes){
         checkArgument(ArrayUtils.isNotEmpty(bioentityTypes));
 
         List<String> bioentityTypeConditions = transformToConditions(BIOENTITY_TYPE_FIELD, bioentityTypes);
 
         queryStringBuilder.append(" AND (");
         Joiner.on(" OR ").appendTo(queryStringBuilder, bioentityTypeConditions).append(")");
-        return this;
+        return getThis();
     }
 
-    public String buildAutocompleteSuggestionQuery(String queryString) {
+    public T withPropertyNames(String[] propertyNames){
+        checkArgument(ArrayUtils.isNotEmpty(propertyNames));
 
-        return "property_value_edgengram:\"" + queryString + "\"" + queryStringBuilder.toString();
+        List<String> propertyNameConditions = transformToConditions(PROPERTY_NAME_FIELD, propertyNames);
+
+        queryStringBuilder.append(" AND (");
+        Joiner.on(" OR ").appendTo(queryStringBuilder, propertyNameConditions).append(")");
+        return getThis();
     }
 
-    public String buildBioentityQuery(String bioentityId) {
-
-        return "bioentity_identifier:\"" + bioentityId + "\"" + queryStringBuilder.toString();
-    }
-
-    private List<String> transformToConditions(final String filedName, String[] values){
-        return Lists.transform(Lists.newArrayList(values), new Function<String, String>(){
+    protected List<String> transformToConditions(final String filedName, String[] values){
+        return Lists.transform(Lists.newArrayList(values), new Function<String, String>() {
             @Override
-            public String apply(java.lang.String bioEntityType) {
+            public String apply(String bioEntityType) {
                 return filedName.concat(":\"").concat(bioEntityType).concat("\"");
             }
         });
 
     }
 
+    protected abstract T getThis();
 
 }

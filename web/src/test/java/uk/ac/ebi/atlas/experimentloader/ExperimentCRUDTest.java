@@ -37,7 +37,9 @@ import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
@@ -90,6 +92,12 @@ public class ExperimentCRUDTest {
     @Mock
     private ExperimentTrader experimentTraderMock;
 
+    @Mock
+    private ConditionsIndex conditionsIndexMock;
+
+    @Mock
+    DifferentialExperiment differentialExperimentMock;
+
     @Before
     public void setUp() throws Exception {
 
@@ -99,11 +107,15 @@ public class ExperimentCRUDTest {
 
         given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
+        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
+
+        given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
+
 
         subject = new ExperimentCRUD(transcriptProfileLoaderMock,
                 arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock, transcriptProfileDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, conditionsIndexMock);
     }
 
     @Test
@@ -114,6 +126,18 @@ public class ExperimentCRUDTest {
         verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.BASELINE);
         verify(experimentDesignFileWriterBuilderMock).build();
         verify(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
+    }
+
+    @Test
+    public void updateExperimentConditionsIndexShouldReindexDiffExperiment() throws Exception {
+        subject.updateExperimentConditionsIndex(EXPERIMENT_ACCESSION, ExperimentType.DIFFERENTIAL);
+        verify(conditionsIndexMock).indexExperiment(differentialExperimentMock);
+    }
+
+    @Test
+    public void updateExperimentConditionsIndexShouldNotReindexBaselineExperiment() throws Exception {
+        subject.updateExperimentConditionsIndex(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verifyZeroInteractions(conditionsIndexMock);
     }
 
     @Test(expected = IOException.class)

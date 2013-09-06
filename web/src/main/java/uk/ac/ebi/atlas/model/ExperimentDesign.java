@@ -99,6 +99,14 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
+    public Map<String, String> getFactors(String runOrAssay) {
+        return factors.get(runOrAssay);
+    }
+
+    public Map<String, String> getSamples(String runOrAssay) {
+        return samples.get(runOrAssay);
+    }
+
     public SortedSet<String> getAllRunOrAssay() {
         return Sets.newTreeSet(samples.keySet());
     }

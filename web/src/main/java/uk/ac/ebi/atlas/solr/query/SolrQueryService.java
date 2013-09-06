@@ -31,13 +31,13 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -50,12 +50,12 @@ import java.util.Set;
 @Named
 @Scope("singleton") //can be singleton because HttpSolrServer is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SolrQueryService {
+    private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
 
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
     public static final String SPECIES_FIELD = "species";
     public static final String PROPERTY_NAME_FIELD = "property_name";
-    public static final String PROPERTY_SEARCH_FIELD = "property_value_search";
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
     public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
@@ -63,31 +63,15 @@ public class SolrQueryService {
             "(property_name:\"ensgene\"" +
                     "OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") AND property_value_lower: \"{0}\"";
 
-
-    private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
     private static final int PROPERTY_VALUES_LIMIT = 1000;
-    private static final int DEFAULT_LIMIT = 15;
     private static final String PROPERTY_VALUE_FIELD = "property_value";
 
     // changed from 100000
-    private static final int MAX_GENE_IDS_TO_FETCH = 1000000;
 
-    private static final String BIOENTITY_TYPE_GENE = "ensgene";
-    private static final String BIOENTITY_TYPE_MIRNA = "mirna";
-    private static final String BIOENTITY_TYPE_PROTEIN = "ensprotein";
-    private static final String BIOENTITY_TYPE_TRANSCRIPT = "enstranscript";
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
-    @Value("#{configuration['index.property_names.bioentity_name']}")
-    private String[] bioentityNamePropertyNames;
-
-    @Value("#{configuration['index.property_names.synonym']}")
-    private String[] synonymPropertyNames;
-
-    @Value("#{configuration['index.property_names.identifier']}")
-    private String[] identifierPropertyNames;
 
     @Value("#{configuration['index.property_names.description']}")
     private String descriptionPropertyNames;
@@ -104,46 +88,11 @@ public class SolrQueryService {
 
     SortedSetMultimap<String, String> fetchProperties(String identifier, String[] propertyTypes) {
 
-        String queryString = solrQueryBuilderFactory.create()
+        SolrQuery solrQuery = solrQueryBuilderFactory.createPropertyValueQueryBuilder()
                             .withPropertyNames(propertyTypes).buildBioentityQuery(identifier);
-
-        return querySolrForProperties(queryString, PROPERTY_VALUES_LIMIT);
+        return querySolrForProperties(solrQuery, PROPERTY_VALUES_LIMIT);
     }
 
-    Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
-
-        String queryString = buildGeneQuery(geneQuery, exactMatch, species, BIOENTITY_TYPE_GENE
-                , BIOENTITY_TYPE_MIRNA);
-
-        return fetchGeneIdentifiersFromSolr(queryString);
-    }
-
-    List<String> getGeneIdSuggestionsInName(String queryString, String species) {
-
-        return getGeneIdSuggestions(queryString, species, bioentityNamePropertyNames);
-    }
-
-    List<String> getGeneIdSuggestionsInSynonym(String queryString, String species) {
-
-        return getGeneIdSuggestions(queryString, species, synonymPropertyNames);
-    }
-
-    List<String> getGeneIdSuggestionsInIdentifier(String queryString, String species) {
-
-        return getGeneIdSuggestions(queryString, species, identifierPropertyNames);
-    }
-
-    List<String> getGeneIdSuggestions(String queryString, String species, String[] propertyNames) {
-
-        String suggestionsQueryString = solrQueryBuilderFactory.create()
-                .withSpecies(species)
-                .withBioentityTypes(BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
-                        , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT)
-                .withPropertyNames(propertyNames)
-                .buildAutocompleteSuggestionQuery(queryString);
-
-        return getSolrResultsForQuery(suggestionsQueryString, PROPERTY_LOWER_FIELD, DEFAULT_LIMIT);
-    }
 
     String getSpeciesForIdentifier(String identifier) {
 
@@ -203,15 +152,8 @@ public class SolrQueryService {
         return species;
     }
 
-    Set<String> fetchGeneIdentifiersFromSolr(String queryString) {
+    Set<String> fetchGeneIdentifiersFromSolr(SolrQuery solrQuery) {
         Set<String> results = Sets.newHashSet();
-
-        SolrQuery solrQuery = new SolrQuery(queryString);
-        solrQuery.setFields(BIOENTITY_IDENTIFIER_FIELD);
-        solrQuery.setParam("group", true);
-        solrQuery.setParam("group.field", BIOENTITY_IDENTIFIER_FIELD);
-        solrQuery.setParam("group.main", true);
-        solrQuery.setRows(MAX_GENE_IDS_TO_FETCH);
 
         LOGGER.debug("<fetchGeneIdentifiersFromSolr> processing solr query: " + solrQuery.toString());
 
@@ -235,8 +177,7 @@ public class SolrQueryService {
         }
     }
 
-    SortedSetMultimap<String, String> querySolrForProperties(String queryString, int limitResults) {
-        SolrQuery solrQuery = new SolrQuery(queryString);
+    SortedSetMultimap<String, String> querySolrForProperties(SolrQuery solrQuery, int limitResults) {
         solrQuery.setRows(limitResults);
         solrQuery.setFields(PROPERTY_VALUE_FIELD, PROPERTY_NAME_FIELD);
 
@@ -252,77 +193,6 @@ public class SolrQueryService {
         }
 
         return results;
-    }
-
-    List<String> getSolrResultsForQuery(String queryString, String resultField, int limitResults) {
-        SolrQuery solrQuery = buildSolrQuery(queryString, resultField, limitResults);
-
-        LOGGER.debug("<getSolrResultsForQuery> processing solr query: " + solrQuery.getQuery());
-
-        QueryResponse solrResponse = executeSolrQuery(solrQuery);
-
-        List<String> geneNames = Lists.newArrayList();
-        if (solrResponse.getFacetFields().get(0).getValues() != null) {
-            for (FacetField.Count facetField : solrResponse.getFacetFields().get(0).getValues()) {
-                geneNames.add(facetField.getName());
-            }
-        }
-        return geneNames;
-    }
-
-    String buildGeneQuery(String query, boolean exactMatch, String species, String... bioEntityTypes) {
-        String propertyName = exactMatch ? PROPERTY_LOWER_FIELD : PROPERTY_SEARCH_FIELD;
-
-        String escapedGeneQuery = customEscape(query);
-
-        StringBuilder sb =
-                new StringBuilder()
-                        .append("{!lucene q.op=OR df=" + propertyName + "} ")
-                        .append("(" + propertyName + ":").append(escapedGeneQuery).append(")");
-
-        if (StringUtils.isNotBlank(species)){
-
-            appendSpecies(sb, species);
-
-        }
-
-        appendBioEntityTypes(sb, bioEntityTypes);
-
-        return sb.toString();
-    }
-
-    SolrQuery buildSolrQuery(String queryString, String facedField, int facetLimit) {
-        SolrQuery solrQuery = new SolrQuery(queryString);
-
-        solrQuery.addFacetField(facedField);
-        solrQuery.setRows(0);
-        solrQuery.setFacet(true);
-        solrQuery.setFacetLimit(facetLimit);
-        solrQuery.setFacetMinCount(1);
-        return solrQuery;
-    }
-
-
-    String customEscape(String searchText) {
-        return searchText.replace(":", "\\:");
-    }
-
-    private void appendSpecies(StringBuilder sb, String species) {
-        sb.append(" AND " + SPECIES_FIELD + ":\"")
-                .append(species)
-                .append("\"");
-    }
-
-    private void appendBioEntityTypes(StringBuilder sb, String[] bioEntityTypes) {
-        sb.append(" AND (");
-        for (String bioEntityType : bioEntityTypes) {
-            sb.append(BIOENTITY_TYPE_FIELD + ":\"")
-                    .append(bioEntityType)
-                    .append("\" OR ");
-        }
-        int indexOfOR = sb.lastIndexOf(" OR ");
-        sb.delete(indexOfOR, indexOfOR + 4);
-        sb.append(")");
     }
 
     BioentityProperty getBioentity(String bioentityId) {
@@ -347,9 +217,7 @@ public class SolrQueryService {
             }
         }
 
-        throw new IllegalStateException("Bioentity " + bioentityId + " properties are indexed but for unknown reasons " +
-                                        "the identity property (the one with name set to species and value set to identifier)" +
-                                        " is not being indexed in solr");
+        throw new IllegalStateException("Solr index is missing document with property_name set to species and property_value set to identifier for bioentity with id: " + bioentityId);
 
     }
 

@@ -20,19 +20,23 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.solr.query.builders;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.context.annotation.Scope;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResultNotFoundException extends RuntimeException {
+import javax.inject.Named;
 
-    public ResultNotFoundException(String message) {
-        super(message);
+//we need a factory because a client may need to build multiple different queries in one single method (i.e. autocomplete suggestions)
+@Named
+@Scope("singleton")
+public class SolrQueryBuilderFactory {
+
+    public PropertyValueQueryBuilder createPropertyValueQueryBuilder(){
+        return new PropertyValueQueryBuilder();
     }
 
-    public ResultNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+    public BioentityIdentifierQueryBuilder createGeneBioentityIdentifierQueryBuilder(){
+        return new BioentityIdentifierQueryBuilder();
     }
+
 }

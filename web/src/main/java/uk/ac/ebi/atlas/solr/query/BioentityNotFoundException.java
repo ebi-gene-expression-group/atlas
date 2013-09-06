@@ -22,17 +22,13 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.inject.Named;
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class BioentityNotFoundException extends RuntimeException {
 
-//we need a factory because a client may need to build multiple different queries in one single method (i.e. autocomplete suggestions)
-@Named
-@Scope("singleton")
-public class SolrQueryBuilderFactory {
-
-    public SolrQueryBuilder create(){
-        return new SolrQueryBuilder();
+    public BioentityNotFoundException(String message) {
+        super(message);
     }
-
 }
