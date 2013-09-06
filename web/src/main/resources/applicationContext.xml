@@ -78,6 +78,8 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
@@ -85,8 +87,21 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
+    <!--<bean id="dataSourceOracle" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">-->
+        <!--<property name="driverClassName" value="${oracle.jdbc.driverClassName}"/>-->
+        <!--<property name="url" value="${oracle.jdbc.url}"/>-->
+        <!--<property name="username" value="${oracle.jdbc.username}"/>-->
+        <!--<property name="password" value="${oracle.jdbc.password}"/>-->
+    <!--</bean>-->
 
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+ <bean id="dataSourceOracle" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@burns.ebi.ac.uk:1521:ATLASDEV"/>
+        <property name="username" value="atlas3"/>
+        <property name="password" value="atlas3"/>
+    </bean>
+
+
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath:atlas-schema.sql"/>
