@@ -22,62 +22,62 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
-@Scope("prototype") //can't be singleton because RestTemplate is not thread safe
+@Scope("singleton")
 public class SolrClient {
-    private static final Logger LOGGER = Logger.getLogger(SolrClient.class);
 
-    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
-
-    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
-
-    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE_NO_SPECIES = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+    private static final String BIOENTITY_TYPE_GENE = "ensgene";
+    private static final String BIOENTITY_TYPE_MIRNA = "mirna";
 
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
+
+    private SolrQueryBuilderFactory solrQueryBuilderFactory;
 
     @Value("#{configuration['index.server.url']}")
     private String serverURL;
 
-    private String[] tooltipPropertyTypes;
+    @Value("#{configuration['index.property_names.bioentity_name']}")
+    private String[] bioentityNamePropertyNames;
 
-    private RestTemplate restTemplate;
+    @Value("#{configuration['index.property_names.synonym']}")
+    private String[] synonymPropertyNames;
+
+    @Value("#{configuration['index.property_names.identifier']}")
+    private String[] identifierPropertyNames;
+
+
+    private String[] tooltipPropertyTypes;
 
     private final SolrQueryService solrQueryService;
 
     @Inject
-    public SolrClient(@Value("#{configuration['index.property_names.tooltip']}") String[] tooltipPropertyTypes, RestTemplate restTemplate, SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+    public SolrClient(@Value("#{configuration['index.property_names.tooltip']}") String[] tooltipPropertyTypes,
+                      SolrQueryService solrQueryService,
+                      BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
+                      SolrQueryBuilderFactory solrQueryBuilderFactory) {
         this.tooltipPropertyTypes = tooltipPropertyTypes;
-        this.restTemplate = restTemplate;
         this.solrQueryService = solrQueryService;
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
+        this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
     public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
@@ -89,7 +89,7 @@ public class SolrClient {
     public SortedSetMultimap<String, String> fetchGenePageProperties(String identifier, String[] propertyTypes) {
         SortedSetMultimap<String, String> propertiesByType = fetchProperties(identifier, propertyTypes);
         if (propertiesByType.isEmpty()) {
-            throw new ResultNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
+            throw new BioentityNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
         }
         return propertiesByType;
     }
@@ -101,24 +101,13 @@ public class SolrClient {
     }
 
     public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, String... propertyNames) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(SolrQueryService.PROPERTY_LOWER_FIELD);
-        sb.append(":\"");
-        sb.append(queryString);
-        sb.append("\" AND (");
-        for (String propertyName : propertyNames) {
-            sb.append(SolrQueryService.PROPERTY_NAME_FIELD);
-            sb.append(":\"");
-            sb.append(propertyName);
-            sb.append("\" OR ");
-        }
-        sb.delete(sb.length() - 3, sb.length());
-        sb.append(") AND ");
-        sb.append(SolrQueryService.BIOENTITY_TYPE_FIELD);
-        sb.append(":");
-        sb.append(bioentityType);
 
-        return solrQueryService.fetchGeneIdentifiersFromSolr(sb.toString());
+        SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
+                                            .forQueryString(queryString, false)
+                                            .withBioentityTypes(bioentityType)
+                                            .withPropertyNames(propertyNames).build();
+
+        return solrQueryService.fetchGeneIdentifiersFromSolr(solrQuery);
     }
 
     public String findSpeciesForBioentityId(String identifier) {
@@ -159,11 +148,11 @@ public class SolrClient {
 
         if (tokenizeQuery) {
             for (String queryToken : bioentityPropertyValueTokenizer.split(geneQuery)) {
-                Set<String> geneIds = solrQueryService.getGeneIds(queryToken, exactMatch, species);
+                Set<String> geneIds = getGeneIds(queryToken, exactMatch, species);
                 geneQueryResponse.addGeneIds(queryToken, geneIds);
             }
         } else {
-            Set<String> geneIds = solrQueryService.getGeneIds(geneQuery, exactMatch, species);
+            Set<String> geneIds = getGeneIds(geneQuery, exactMatch, species);
             geneQueryResponse.addGeneIds(geneQuery, geneIds);
         }
         return geneQueryResponse;
@@ -179,92 +168,17 @@ public class SolrClient {
         return species;
     }
 
-    public List<String> findGeneIdSuggestionsInName(String geneName, String species) {
-
-        species = limitSpeciesNameToTwoWords(species);
-
-        return solrQueryService.getGeneIdSuggestionsInName(geneName, species);
-    }
-
-    public List<String> findGeneIdSuggestionsInSynonym(String geneName, String species) {
-
-        species = limitSpeciesNameToTwoWords(species);
-
-        return solrQueryService.getGeneIdSuggestionsInSynonym(geneName, species);
-    }
-
-    public List<String> findGeneIdSuggestionsInIdentifier(String geneName, String species) {
-
-        species = limitSpeciesNameToTwoWords(species);
-
-        return solrQueryService.getGeneIdSuggestionsInIdentifier(geneName, species);
-
-    }
-
-    public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
-
-        species = limitSpeciesNameToTwoWords(species);
-
-        Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
-
-        if (notSpellCheckableMatcher.find()) {
-            return Lists.newArrayList();
-        }
-
-        String jsonString;
-        if (StringUtils.isNotBlank(species)){
-            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
-        } else {
-            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE_NO_SPECIES, multiTermToken);
-        }
-        return extractCollations(jsonString);
-    }
-
-    JsonElement extractSuggestionsElement(String jsonString) {
-        JsonObject spellCheckObject = new JsonParser().parse(jsonString).getAsJsonObject().getAsJsonObject("spellcheck");
-        if (spellCheckObject != null) {
-            return spellCheckObject.get("suggestions");
-        }
-        return null;
-    }
-
-    List<String> extractCollations(String jsonString) {
-        List<String> suggestionStrings = new ArrayList<>();
-
-        JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
-
-        if (suggestionsElement != null && suggestionsElement.isJsonArray()) {
-
-            JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
-
-            for (JsonElement suggestionElement : suggestionElements) {
-                JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
-                if ("collation".equals(suggestionEntry.get(0).getAsString())) {
-                    String collation = suggestionEntry.get(1).getAsString();
-                    suggestionStrings.add(extractSuggestion(collation));
-                }
-            }
-        }
-        return suggestionStrings;
-    }
-
-    String extractSuggestion(String collation) {
-        return StringUtils.split(collation, "\"")[0];
-    }
-
-    String getJsonResponse(String restQueryTemplate, Object... arguments) {
-        checkArgument(arguments != null && arguments.length > 0);
-        try {
-
-            return restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
-
-        } catch (RestClientException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw e;
-        }
-    }
-
     public BioentityProperty findBioentityType(String bioentityId) {
         return solrQueryService.getBioentity(bioentityId);
     }
+
+    Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
+
+        SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
+                .forQueryString(geneQuery, true).withExactMatch(exactMatch)
+                .withSpecies(species).withBioentityTypes(BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA).build();
+
+        return solrQueryService.fetchGeneIdentifiersFromSolr(solrQuery);
+    }
+
 }
