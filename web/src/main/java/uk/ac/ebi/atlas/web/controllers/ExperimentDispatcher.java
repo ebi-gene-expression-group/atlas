@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -85,16 +85,16 @@ public final class ExperimentDispatcher {
 
     private ApplicationProperties applicationProperties;
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     private ExperimentTrader experimentTrader;
 
     @Inject
     private ExperimentDispatcher(ExperimentTrader experimentTrader,
-                                 ApplicationProperties applicationProperties, SolrClient solrClient) {
+                                 ApplicationProperties applicationProperties, SolrQueryService solrQueryService) {
         this.experimentTrader = experimentTrader;
         this.applicationProperties = applicationProperties;
-        this.solrClient = solrClient;
+        this.solrQueryService = solrQueryService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}",
@@ -128,7 +128,7 @@ public final class ExperimentDispatcher {
 
         String species = null;
         try{
-            species = solrClient.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+            species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
         } catch(Exception e){
             model.addAttribute("errorMessage", "Species could not be determined");
             return "widget-error";

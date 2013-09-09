@@ -41,11 +41,9 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.page.bioentity.DifferentialGeneProfileProperties;
-import uk.ac.ebi.atlas.web.controllers.page.bioentity.DifferentialGeneProfileService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -68,7 +66,7 @@ public class DifferentialGeneProfileServiceTest {
     private ExperimentTrader experimentTraderMock;
 
     @Mock
-    private SolrClient solrClientMock;
+    private SolrQueryService solrQueryServiceMock;
 
     @Mock
     private RankRnaSeqProfilesCommand rankRnaSeqProfilesCommandMock;
@@ -116,7 +114,7 @@ public class DifferentialGeneProfileServiceTest {
     @Before
     public void setUp() throws Exception {
         when(experimentTraderMock.getDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(EXPERIMENT_ACCESSION));
-        when(solrClientMock.findSpeciesForBioentityId(IDENTIFIER)).thenReturn(SPECIE);
+        when(solrQueryServiceMock.findSpeciesForBioentityId(IDENTIFIER)).thenReturn(SPECIE);
 
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(differentialExperimentMock);
         when(microarrayExperimentsCacheMock.getExperiment(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentMock);
@@ -146,7 +144,7 @@ public class DifferentialGeneProfileServiceTest {
         // to have a non-empty list
         differentialProfilesList.add(differentialProfileMock);
 
-        subject = new DifferentialGeneProfileService(experimentTraderMock, solrClientMock,
+        subject = new DifferentialGeneProfileService(experimentTraderMock, solrQueryServiceMock,
                 rnaSeqRequestContextBuilderMock, microarrayRequestContextBuilderMock,
                 rnaSeqDiffExperimentsCacheMock, microarrayExperimentsCacheMock,
                 rankProfilesCommandFactoryMock, differentialGeneProfilePropertiesMock);

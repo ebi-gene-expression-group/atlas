@@ -28,7 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 
@@ -39,6 +39,7 @@ import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 
 @Named("bioEntityPropertyService")
@@ -47,7 +48,7 @@ public class BioEntityPropertyService {
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     private UniProtClient uniProtClient;
 
@@ -66,8 +67,8 @@ public class BioEntityPropertyService {
     private ArrayDesignDao arrayDesignDao;
 
     @Inject
-    public BioEntityPropertyService(SolrClient solrClient, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient, ArrayDesignDao arrayDesignDao) {
-        this.solrClient = solrClient;
+    public BioEntityPropertyService(SolrQueryService solrQueryService, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient, ArrayDesignDao arrayDesignDao) {
+        this.solrQueryService = solrQueryService;
         this.uniProtClient = uniProtClient;
         this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeBiomartClient = reactomeBiomartClient;
@@ -108,7 +109,7 @@ public class BioEntityPropertyService {
 
     private void addMirBaseSequence() {
         String mirbase_id = propertyValuesByType.get("mirbase_id").first();
-        List<String> mirbase_sequence = solrClient.findPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
+        Set<String> mirbase_sequence = solrQueryService.findPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
         propertyValuesByType.putAll("mirbase_sequence", mirbase_sequence);
     }
 
@@ -145,13 +146,13 @@ public class BioEntityPropertyService {
 
     String transformOrthologToSymbol(String identifier) {
         try {
-            String species = solrClient.findSpeciesForBioentityId(identifier);
+            String species = solrQueryService.findSpeciesForBioentityId(identifier);
 
             String speciesToken = " (" + StringUtils.capitalize(species) + ")";
 
-            List<String> propertyValuesForGeneId = solrClient.findPropertyValuesForGeneId(identifier, "symbol");
+            Set<String> propertyValuesForGeneId = solrQueryService.findPropertyValuesForGeneId(identifier, "symbol");
             if (!propertyValuesForGeneId.isEmpty()) {
-                String symbol = propertyValuesForGeneId.get(0);
+                String symbol = propertyValuesForGeneId.iterator().next();
                 return symbol + speciesToken;
             }
             return identifier + speciesToken;

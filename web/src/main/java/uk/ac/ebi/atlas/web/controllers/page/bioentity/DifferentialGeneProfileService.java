@@ -38,20 +38,23 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
 @Named("differentialGeneProfileService")
 @Scope("request")
 public class DifferentialGeneProfileService {
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
 
@@ -69,7 +72,7 @@ public class DifferentialGeneProfileService {
 
     @Inject
     public DifferentialGeneProfileService(ExperimentTrader experimentTrader,
-                                          SolrClient solrClient,
+                                          SolrQueryService solrQueryService,
                                           RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           MicroarrayRequestContextBuilder microarrayRequestContextBuilder,
                                           RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
@@ -77,7 +80,7 @@ public class DifferentialGeneProfileService {
                                           RankProfilesCommandFactory rankProfilesCommandFactory,
                                           DifferentialGeneProfileProperties differentialGeneProfileProperties) {
         this.experimentTrader = experimentTrader;
-        this.solrClient = solrClient;
+        this.solrQueryService = solrQueryService;
         this.rnaSeqRequestContextBuilder = rnaSeqRequestContextBuilder;
         this.microarrayRequestContextBuilder = microarrayRequestContextBuilder;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
@@ -88,13 +91,13 @@ public class DifferentialGeneProfileService {
 
     public DifferentialGeneProfileProperties initDifferentialProfilesListForIdentifier(String geneQuery, double cutoff) {
 
-        String species = solrClient.findSpeciesForBioentityId(geneQuery);
+        String species = solrQueryService.findSpeciesForBioentityId(geneQuery);
         species = StringUtils.capitalize(species);
 
-        List<String> mirbase_id = solrClient.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
-        if (mirbase_id.size() > 0) {
+        Set<String> mirbaseIds = solrQueryService.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
+        if (mirbaseIds.size() > 0) {
             // there should be a one to one mapping between ENSEMBL gene IDs and miRBase IDs
-            filterMatureRNADifferentialProfilesForIdentifier(mirbase_id.get(0), cutoff, species);
+            filterMatureRNADifferentialProfilesForIdentifier(mirbaseIds.iterator().next(), cutoff, species);
         } else {
             filterMatureRNADifferentialProfilesForIdentifier(geneQuery, cutoff, species);
         }
@@ -103,7 +106,7 @@ public class DifferentialGeneProfileService {
     }
 
     private void filterMatureRNADifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
-        Set<String> matureRNAsForMirbaseId = solrClient.fetchGeneIdentifiersFromSolr(identifier, "mirna", "hairpin_id");
+        Set<String> matureRNAsForMirbaseId = solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "mirna", "hairpin_id");
         if (matureRNAsForMirbaseId.size() > 0) {
             for (String matureRNAIdentifier : matureRNAsForMirbaseId) {
                 processDifferentialProfilesForIdentifier(matureRNAIdentifier, cutoff, species);

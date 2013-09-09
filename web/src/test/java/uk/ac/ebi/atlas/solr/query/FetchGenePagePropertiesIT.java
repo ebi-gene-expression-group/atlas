@@ -41,7 +41,7 @@ import static org.junit.Assert.assertThat;
 public class FetchGenePagePropertiesIT {
 
     @Inject
-    private SolrClient subject;
+    private SolrQueryService subject;
 
     @Value("#{configuration['index.property_names.genepage']}")
     private String[] genePagePropertyTypes;

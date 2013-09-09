@@ -31,14 +31,13 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 
 import javax.inject.Inject;
@@ -61,11 +60,6 @@ public class SolrSuggestionsService {
 
     private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE_NO_SPECIES = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
-    private static final String BIOENTITY_TYPE_GENE = "ensgene";
-    private static final String BIOENTITY_TYPE_MIRNA = "mirna";
-    private static final String BIOENTITY_TYPE_PROTEIN = "ensprotein";
-    private static final String BIOENTITY_TYPE_TRANSCRIPT = "enstranscript";
-
     @Value("#{configuration['index.property_names.bioentity_name']}")
     private String[] bioentityNamePropertyNames;
 
@@ -82,10 +76,10 @@ public class SolrSuggestionsService {
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
 
-    private SolrServer solrServer;
+    private GxaSolrServer solrServer;
 
     @Inject
-    public SolrSuggestionsService(RestTemplate restTemplate, SolrQueryBuilderFactory solrQueryBuilderFactory, SolrServer solrServer) {
+    public SolrSuggestionsService(RestTemplate restTemplate, SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrServer solrServer) {
         this.restTemplate = restTemplate;
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.solrServer = solrServer;
@@ -160,8 +154,7 @@ public class SolrSuggestionsService {
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createPropertyValueQueryBuilder()
                 .withSpecies(species)
-                .withBioentityTypes(BIOENTITY_TYPE_GENE, BIOENTITY_TYPE_MIRNA
-                        , BIOENTITY_TYPE_PROTEIN, BIOENTITY_TYPE_TRANSCRIPT)
+                .withBioentityTypes(BioentityType.getAllSolrAliases())
                 .withPropertyNames(propertyNames)
                 .buildPropertyValueAutocompleteQuery(queryString);
 
@@ -172,7 +165,7 @@ public class SolrSuggestionsService {
 
         LOGGER.debug("<getSolrResultsForQuery> processing solr query: " + solrQuery.getQuery());
 
-        QueryResponse solrResponse = executeSolrQuery(solrQuery);
+        QueryResponse solrResponse = solrServer.query(solrQuery);
 
         List<String> geneNames = Lists.newArrayList();
         if (solrResponse.getFacetFields().get(0).getValues() != null) {
@@ -181,17 +174,6 @@ public class SolrSuggestionsService {
             }
         }
         return geneNames;
-    }
-
-    QueryResponse executeSolrQuery(SolrQuery solrQuery) {
-        try {
-            QueryResponse queryResponse = solrServer.query(solrQuery);
-            LOGGER.info("<executeSolrQuery> Solr query time: " + queryResponse.getQTime() + " status code: " + queryResponse.getStatus());
-            return queryResponse;
-        } catch (SolrServerException e) {
-            LOGGER.error("<executeSolrQuery> error querying solr service", e);
-            throw new IllegalStateException(e);
-        }
     }
 
     JsonElement extractSuggestionsElement(String jsonString) {

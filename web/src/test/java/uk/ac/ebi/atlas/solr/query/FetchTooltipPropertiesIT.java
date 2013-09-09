@@ -40,7 +40,7 @@ import static org.junit.Assert.assertThat;
 public class FetchTooltipPropertiesIT {
 
     @Inject
-    private SolrClient subject;
+    private SolrQueryService subject;
 
 
     @Test

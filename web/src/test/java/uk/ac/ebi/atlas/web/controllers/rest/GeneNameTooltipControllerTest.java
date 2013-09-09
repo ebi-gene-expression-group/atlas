@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -54,7 +54,7 @@ public class GeneNameTooltipControllerTest {
     private GeneNameTooltipController subject;
 
     @Mock
-    private SolrClient solrClientMock;
+    private SolrQueryService solrQueryServiceMock;
 
     @Mock
     private Resource htmlTemplateResourceMock;
@@ -64,7 +64,7 @@ public class GeneNameTooltipControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new GeneNameTooltipController(solrClientMock, htmlTemplateResourceMock);
+        subject = new GeneNameTooltipController(solrQueryServiceMock, htmlTemplateResourceMock);
 
         InputStream inputStream = new ByteArrayInputStream("{0} {1} {2} {3}".getBytes());
 
@@ -87,7 +87,7 @@ public class GeneNameTooltipControllerTest {
         hashMultimap.put(SYNONYM, SYNONYM_1);
         hashMultimap.put(SYNONYM, SYNONYM_2);
 
-        when(solrClientMock.fetchTooltipProperties(IDENTIFIER)).thenReturn(hashMultimap);
+        when(solrQueryServiceMock.fetchTooltipProperties(IDENTIFIER)).thenReturn(hashMultimap);
         subject.initTemplate();
 
         String tooltipContent = subject.getTooltipContent(GENE_NAME, IDENTIFIER);

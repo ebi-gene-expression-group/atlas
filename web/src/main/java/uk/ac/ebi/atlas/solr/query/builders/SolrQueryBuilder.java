@@ -24,11 +24,14 @@ package uk.ac.ebi.atlas.solr.query.builders;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -52,28 +55,28 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
         return getThis();
     }
 
-    public T withBioentityTypes(String... bioentityTypes){
-        checkArgument(ArrayUtils.isNotEmpty(bioentityTypes));
+    public T withBioentityTypes(Set<String> bioentityTypes){
+        checkArgument(CollectionUtils.isNotEmpty(bioentityTypes));
 
-        List<String> bioentityTypeConditions = transformToConditions(BIOENTITY_TYPE_FIELD, bioentityTypes);
+        Collection<String> bioentityTypeConditions = transformToConditions(BIOENTITY_TYPE_FIELD, bioentityTypes);
 
         queryStringBuilder.append(" AND (");
         Joiner.on(" OR ").appendTo(queryStringBuilder, bioentityTypeConditions).append(")");
         return getThis();
     }
 
-    public T withPropertyNames(String[] propertyNames){
+    public T withPropertyNames(String... propertyNames){
         checkArgument(ArrayUtils.isNotEmpty(propertyNames));
 
-        List<String> propertyNameConditions = transformToConditions(PROPERTY_NAME_FIELD, propertyNames);
+        Collection<String> propertyNameConditions = transformToConditions(PROPERTY_NAME_FIELD, Sets.newHashSet(propertyNames));
 
         queryStringBuilder.append(" AND (");
         Joiner.on(" OR ").appendTo(queryStringBuilder, propertyNameConditions).append(")");
         return getThis();
     }
 
-    protected List<String> transformToConditions(final String filedName, String[] values){
-        return Lists.transform(Lists.newArrayList(values), new Function<String, String>() {
+    protected Collection<String> transformToConditions(final String filedName, Set<String> values){
+        return Collections2.transform(values, new Function<String, String>() {
             @Override
             public String apply(String bioEntityType) {
                 return filedName.concat(":\"").concat(bioEntityType).concat("\"");

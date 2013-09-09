@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -37,12 +37,12 @@ import javax.inject.Inject;
 @Scope("request")
 public class CrossExperimentSearchController {
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     @Inject
-    public CrossExperimentSearchController(SolrClient solrClient){
+    public CrossExperimentSearchController(SolrQueryService solrQueryService){
 
-        this.solrClient = solrClient;
+        this.solrQueryService = solrQueryService;
     }
 
     @RequestMapping(value = "/experiments/all")
@@ -52,7 +52,7 @@ public class CrossExperimentSearchController {
         String bioentityIdentifier;
 
         try{
-            BioentityProperty bioentity = solrClient.findBioentityType(queryString);
+            BioentityProperty bioentity = solrQueryService.findBioentityType(queryString);
 
             bioentityType = extractBioentityType(bioentity).toLowerCase();
             bioentityIdentifier = bioentity.getBioentityIdentifier();

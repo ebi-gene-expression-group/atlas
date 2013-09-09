@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.query.builders;
 
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 
 /**
@@ -30,6 +31,7 @@ import org.apache.solr.client.solrj.SolrQuery;
  * you must use a new instance of builder for each query.
  */
 public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityIdentifierQueryBuilder>{
+    private static final Logger LOGGER = Logger.getLogger(BioentityIdentifierQueryBuilder.class);
 
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String PROPERTY_SEARCH_FIELD = "property_value_search";
@@ -63,7 +65,9 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
 
         queryStringBuilder.insert(0, queryConditionBuilder);
 
-        return buildQueryObject(queryStringBuilder.toString());
+        SolrQuery solrQuery = buildQueryObject(queryStringBuilder.toString());
+
+        return solrQuery;
     }
 
     private SolrQuery buildQueryObject(String queryString) {
@@ -74,7 +78,9 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
         solrQuery.setParam("group.field", BIOENTITY_IDENTIFIER_FIELD);
         solrQuery.setParam("group.main", true);
         solrQuery.setRows(MAX_GENE_IDS_TO_FETCH);
-        System.out.println("-----------------> " + solrQuery.getQuery());
+
+        LOGGER.debug("<buildQueryObject> solr query: " + solrQuery.toString());
+
         return solrQuery;
     }
 

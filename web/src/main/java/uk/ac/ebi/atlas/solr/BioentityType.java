@@ -32,10 +32,17 @@ public enum BioentityType {
     PROTEIN("ensprotein"),
     TRANSCRIPT("enstranscript");
 
+    private static Set<String> allSolrAliases = Sets.newHashSet();
+
+    static {
+        for (BioentityType bioentityType:BioentityType.values()) {
+            allSolrAliases.addAll(bioentityType.getSolrAliases());
+        }
+    }
+
     private Set<String> solrAliases;
 
     private BioentityType(String... solrAliases){
-
         this.solrAliases = Sets.newHashSet(solrAliases);
     }
 
@@ -46,6 +53,14 @@ public enum BioentityType {
             }
         }
         throw new IllegalArgumentException("Unknown bioentityType solrAlias: " + solrAlias);
+    }
+
+    public static Set<String> getAllSolrAliases() {
+        return Sets.newHashSet(allSolrAliases);
+    }
+
+    public Set<String> getSolrAliases(){
+        return solrAliases;
     }
 
 }
