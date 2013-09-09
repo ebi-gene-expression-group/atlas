@@ -69,7 +69,7 @@ public class SolrSuggestionsService {
     @Value("#{configuration['index.property_names.identifier']}")
     private String[] identifierPropertyNames;
 
-    @Value("#{configuration['index.server.url']}")
+    @Value("#{configuration['index.server.gxa.url']}")
     private String serverURL;
 
     private RestTemplate restTemplate;
