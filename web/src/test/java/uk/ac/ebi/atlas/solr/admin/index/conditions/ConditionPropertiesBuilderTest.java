@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -71,6 +70,6 @@ public class ConditionPropertiesBuilderTest {
         Collection<ConditionProperty> result = subject.buildProperties(experimentMock);
 
         assertThat(result.size(), is(2));
-        assertThat(result.contains(new ConditionProperty("EXP-1", "reference", "g1_g2", Lists.newArrayList("fv1", "sv1"))), is(true));
+        assertThat(result.contains(new ConditionProperty("EXP-1", "reference", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
     }
 }

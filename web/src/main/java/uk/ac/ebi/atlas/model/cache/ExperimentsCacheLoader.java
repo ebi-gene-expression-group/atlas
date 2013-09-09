@@ -82,6 +82,8 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     @Override
     public T load(String experimentAccession) throws ParseException, IOException {
 
+        LOGGER.info("loading experiment with accession: " + experimentAccession);
+
         String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
 
         boolean hasExtraInfoFile = Files.exists(Paths.get(extraInfoFileLocation));

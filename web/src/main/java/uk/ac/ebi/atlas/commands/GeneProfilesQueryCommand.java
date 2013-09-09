@@ -28,18 +28,17 @@ import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Set;
 
 public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements Command<T> {
 
     private static final Logger LOGGER = Logger.getLogger(GeneProfilesQueryCommand.class);
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     private RequestContext requestContext;
 
@@ -48,8 +47,8 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
     }
 
     @Inject
-    public void setSolrClient(SolrClient solrClient) {
-        this.solrClient = solrClient;
+    public void setSolrQueryService(SolrQueryService solrQueryService) {
+        this.solrQueryService = solrQueryService;
     }
 
     public T execute(String experimentAccession) throws GenesNotFoundException {
@@ -72,7 +71,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
             return new GeneProfileInputStreamFilter(inputStream, requestContext.getSelectedQueryFactors());
         }
 
-        GeneQueryResponse geneQueryResponse = solrClient.findGeneIdsOrSets(requestContext.getGeneQuery(),
+        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(requestContext.getGeneQuery(),
                 requestContext.isExactMatch(),
                 requestContext.getFilteredBySpecies(),
                 requestContext.isGeneSetMatch());

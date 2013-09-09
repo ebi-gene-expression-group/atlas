@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.*;
 public class FindGeneIdsIT {
 
     @Inject
-    private SolrClient subject;
+    private SolrQueryService subject;
 
     private static final String SPECIES = "homo sapiens";
 

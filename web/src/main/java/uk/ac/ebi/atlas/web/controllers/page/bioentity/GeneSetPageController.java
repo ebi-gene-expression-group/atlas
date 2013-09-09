@@ -31,7 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 
 import javax.inject.Inject;
@@ -41,7 +41,7 @@ import java.util.SortedSet;
 @Scope("request")
 public class GeneSetPageController extends BioEntityPageController {
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     private BioEntityPropertyService bioEntityPropertyService;
 
@@ -55,8 +55,8 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrClient solrClient, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient) {
-        this.solrClient = solrClient;
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient) {
+        this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeBiomartClient = reactomeBiomartClient;
     }
@@ -75,7 +75,7 @@ public class GeneSetPageController extends BioEntityPageController {
     @Override
     protected void initBioentityPropertyService(String identifier) {
         String trimmedIdentifier = identifier.replaceAll("\"", "");
-        String species = solrClient.getSpeciesForPropertyValue(trimmedIdentifier);
+        String species = solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier);
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
         propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());

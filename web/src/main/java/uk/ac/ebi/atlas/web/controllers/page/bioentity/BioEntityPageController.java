@@ -26,7 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
@@ -38,7 +38,7 @@ public abstract class BioEntityPageController {
 
     protected static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     private BioEntityCardProperties bioEntityCardProperties;
 
@@ -55,8 +55,8 @@ public abstract class BioEntityPageController {
     }
 
     @Inject
-    public void setSolrClient(SolrClient solrClient) {
-        this.solrClient = solrClient;
+    public void setSolrQueryService(SolrQueryService solrQueryService) {
+        this.solrQueryService = solrQueryService;
     }
 
     public String showBioentityPage(String identifier, Model model) {
@@ -73,7 +73,7 @@ public abstract class BioEntityPageController {
     }
 
     private void findEnsemblIDsForMirBaseID(String mirBaseID, Model model) {
-        Set<String> ensemblIDs = solrClient.fetchGeneIdentifiersFromSolr(mirBaseID, "ensgene", "mirbase_id");
+        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(mirBaseID, "ensgene", "mirbase_id");
         if (ensemblIDs.size() > 0) {
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
         }
@@ -96,9 +96,9 @@ public abstract class BioEntityPageController {
     abstract String getBioentityPropertyName();
 
     protected void initBioentityPropertyService(String identifier) {
-        String species = solrClient.findSpeciesForBioentityId(identifier);
+        String species = solrQueryService.findSpeciesForBioentityId(identifier);
 
-        SortedSetMultimap<String, String> propertyValuesByType = solrClient.fetchGenePageProperties(identifier, getPagePropertyTypes());
+        SortedSetMultimap<String, String> propertyValuesByType = solrQueryService.fetchGenePageProperties(identifier, getPagePropertyTypes());
         SortedSet<String> entityNames = propertyValuesByType.get(getBioentityPropertyName());
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);

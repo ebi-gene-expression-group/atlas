@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -41,9 +42,6 @@ import static org.hamcrest.Matchers.*;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
 public class SolrQueryServiceIT {
-
-    private static final String BIOENTITY_TYPE_GENE = "ensgene";
-    private static final String BIOENTITY_TYPE_PROTEIN = "ensprotein";
 
     @Inject
     private SolrQueryService subject;
@@ -60,52 +58,66 @@ public class SolrQueryServiceIT {
     }
 
     @Test
-    public void testGetSpeciesForIdentifier() throws SolrServerException {
-
-        assertThat(subject.getSpeciesForIdentifier("ENSG00000179218"), is("homo sapiens"));
-        assertThat(subject.getSpeciesForIdentifier("ENSMUSG00000029816"), is("mus musculus"));
-
-    }
-
-    @Test
     public void testGetPropertyValuesForIdentifier() throws SolrServerException {
 
-        assertThat(subject.getPropertyValuesForIdentifier("ENSG00000179218", "symbol"), hasItem("CALR"));
-        assertThat(subject.getPropertyValuesForIdentifier("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
+        assertThat(subject.findPropertyValuesForGeneId("ENSG00000179218", "symbol"), hasItem("CALR"));
+        assertThat(subject.findPropertyValuesForGeneId("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
 
     }
 
     @Test
     public void shouldReturnTheRightBioentityType() throws SolrServerException {
 
-        assertThat(subject.getBioentity("ENSG00000179218").getBioentityType(), is("ensgene"));
-        assertThat(subject.getBioentity("ENSP00000355434").getBioentityType(), is("ensprotein"));
-        assertThat(subject.getBioentity("ENST00000559981").getBioentityType(), is("enstranscript"));
+        assertThat(subject.findBioentityType("ENSG00000179218").getBioentityType(), is("ensgene"));
+        assertThat(subject.findBioentityType("ENSP00000355434").getBioentityType(), is("ensprotein"));
+        assertThat(subject.findBioentityType("ENST00000559981").getBioentityType(), is("enstranscript"));
 
     }
 
     @Test
     public void shouldFindCaseInsentiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
 
-        BioentityProperty bioentityProperty = subject.getBioentity("enSG00000179218");
+        BioentityProperty bioentityProperty = subject.findBioentityType("enSG00000179218");
         assertThat(bioentityProperty.getBioentityType(), is("ensgene"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSG00000179218"));
 
-        bioentityProperty = subject.getBioentity("enSP00000355434");
+        bioentityProperty = subject.findBioentityType("enSP00000355434");
         assertThat(bioentityProperty.getBioentityType(), is("ensprotein"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSP00000355434"));
 
-        bioentityProperty = subject.getBioentity("enST00000559981");
+        bioentityProperty = subject.findBioentityType("enST00000559981");
         assertThat(bioentityProperty.getBioentityType(), is("enstranscript"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENST00000559981"));
 
     }
 
+    @Test
+    public void testFetchGeneIdentifiersFromSolr() throws SolrServerException, GenesNotFoundException {
+
+        // given
+        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets("aspm", false, "homo sapiens", false);
+
+        // then
+        assertThat(geneQueryResponse.getAllGeneIds(), contains("ENSG00000066279"));
+
+    }
+
+    @Test
+    public void testFetchGeneIdentifiersFromSolrMany() throws SolrServerException, GenesNotFoundException {
+
+        // given
+        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets("protein", false, "homo sapiens", false);
+
+        // then
+        assertThat(geneQueryResponse.getAllGeneIds().size(), lessThan(200000));
+        assertThat(geneQueryResponse.getAllGeneIds(), hasItems("ENSG00000126773", "ENSG00000183878"));
+
+    }
 
     @Test(expected = ResourceNotFoundException.class)
     public void shouldThrowResourceNotFoundException() throws SolrServerException {
 
-        subject.getBioentity("XYZEMC2");
+        subject.findBioentityType("XYZEMC2");
 
     }
 

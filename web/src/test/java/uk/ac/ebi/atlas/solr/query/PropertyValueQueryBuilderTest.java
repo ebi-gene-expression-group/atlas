@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.collect.Sets;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +43,7 @@ public class PropertyValueQueryBuilderTest {
     @Test
     public void testBuildAutocompleteSuggestionQuery() throws Exception {
         // given
-        SolrQuery solrQuery = subject.withSpecies("species").withBioentityTypes("ensgene")
+        SolrQuery solrQuery = subject.withSpecies("species").withBioentityTypes(Sets.newHashSet("ensgene"))
                 .withPropertyNames(new String[]{"prototype1", "prototype2"}).buildPropertyValueAutocompleteQuery("geneX");
 
         // then

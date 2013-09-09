@@ -35,7 +35,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.solr.query.SolrClient;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -54,16 +54,16 @@ public class GeneNameTooltipController {
     private static final String WORD_SPAN_CLOSE = "</span>";
     private static final int NUMBER_OF_TERMS_TO_SHOW = 20;
 
-    private SolrClient solrClient;
+    private SolrQueryService solrQueryService;
 
     private Resource htmlTemplateResource;
 
     private String htmlTemplate;
 
     @Inject
-    public GeneNameTooltipController(SolrClient solrClient,
+    public GeneNameTooltipController(SolrQueryService solrQueryService,
                                      @Value("classpath:/html-templates/geneNameTooltipTemplate.html") Resource htmlTemplateResource) {
-        this.solrClient = solrClient;
+        this.solrQueryService = solrQueryService;
         this.htmlTemplateResource = htmlTemplateResource;
     }
 
@@ -83,7 +83,7 @@ public class GeneNameTooltipController {
     public String getTooltipContent(@RequestParam(value = "geneName") String geneName,
                                     @RequestParam(value = "identifier") String identifier) {
 
-        Multimap<String, String> multimap = solrClient.fetchTooltipProperties(identifier);
+        Multimap<String, String> multimap = solrQueryService.fetchTooltipProperties(identifier);
 
         String synonyms = buildSynonyms(identifier, multimap);
 
