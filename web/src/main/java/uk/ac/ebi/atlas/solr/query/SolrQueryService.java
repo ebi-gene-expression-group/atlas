@@ -69,7 +69,7 @@ public class SolrQueryService {
     // changed from 100000
 
 
-    @Value("#{configuration['index.server.url']}")
+    @Value("#{configuration['index.server.gxa.url']}")
     private String serverURL;
 
 

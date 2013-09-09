@@ -52,7 +52,7 @@ public class SolrClient {
 
     private SolrQueryBuilderFactory solrQueryBuilderFactory;
 
-    @Value("#{configuration['index.server.url']}")
+    @Value("#{configuration['index.server.gxa.url']}")
     private String serverURL;
 
     @Value("#{configuration['index.property_names.bioentity_name']}")
