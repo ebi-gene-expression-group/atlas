@@ -15,7 +15,7 @@ public class BioEntityNameDao {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public BioEntityNameDao(@Qualifier("dataSource") DataSource dataSource) {
+    public BioEntityNameDao(@Qualifier("dataSourceOracle") DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
