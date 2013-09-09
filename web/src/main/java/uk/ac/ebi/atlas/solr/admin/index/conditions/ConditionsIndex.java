@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.Collection;
 
 @Named
 @Scope("prototype")
@@ -29,35 +28,36 @@ public class ConditionsIndex {
 
     public void indexExperiment(DifferentialExperiment experiment) {
 
-        LOGGER.info("<indexExperiment> " + experiment.getAccession());
-
-        try {
-            deleteExperiment(experiment.getAccession());
-
-            Collection<ConditionProperty> conditionProperties = conditionPropertiesBuilder.buildProperties(experiment);
-
-            conditionsSolrServer.addBeans(conditionProperties);
-
-            conditionsSolrServer.commit();
-
-            //ToDO: (NK) Do we need to optimise after every experiment?
-            optimize();
-
-        } catch (SolrServerException | IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-        }
+//        LOGGER.info("<indexExperiment> " + experiment.getAccession());
+//
+//        try {
+//            deleteExperiment(experiment.getAccession());
+//
+//            Collection<ConditionProperty> conditionProperties = conditionPropertiesBuilder.buildProperties(experiment);
+//
+//            conditionsSolrServer.addBeans(conditionProperties);
+//
+//            conditionsSolrServer.commit();
+//
+//            //ToDO: (NK) Do we need to optimise after every experiment?
+//            optimize();
+//
+//        } catch (SolrServerException | IOException e) {
+//            LOGGER.error(e.getMessage(), e);
+//            throw new IllegalStateException(e);
+//        }
 
     }
 
     public void deleteExperiment(String accession) {
-        try {
-            conditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
-            conditionsSolrServer.commit();
-        } catch (SolrServerException | IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-        }
+//        try {
+//            LOGGER.debug("<deleteExperiment> conditionsSolrServer.host: " + ((HttpSolrServer) conditionsSolrServer).getBaseURL());
+//            conditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
+//            conditionsSolrServer.commit();
+//        } catch (SolrServerException | IOException e) {
+//            LOGGER.error(e.getMessage(), e);
+//            throw new IllegalStateException(e);
+//        }
     }
 
     void optimize() {
