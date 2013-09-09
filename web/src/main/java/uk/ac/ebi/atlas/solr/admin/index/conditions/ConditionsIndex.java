@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -52,6 +53,7 @@ public class ConditionsIndex {
 
     public void deleteExperiment(String accession) {
         try {
+            LOGGER.debug("<deleteExperiment> conditionsSolrServer.host: " + ((HttpSolrServer) conditionsSolrServer).getBaseURL());
             conditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
             conditionsSolrServer.commit();
         } catch (SolrServerException | IOException e) {
