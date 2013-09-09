@@ -52,14 +52,14 @@ public class ConditionsIndex {
     }
 
     public void deleteExperiment(String accession) {
-        try {
-            LOGGER.debug("<deleteExperiment> conditionsSolrServer.host: " + ((HttpSolrServer) conditionsSolrServer).getBaseURL());
-            conditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
-            conditionsSolrServer.commit();
-        } catch (SolrServerException | IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-        }
+//        try {
+//            LOGGER.debug("<deleteExperiment> conditionsSolrServer.host: " + ((HttpSolrServer) conditionsSolrServer).getBaseURL());
+//            conditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
+//            conditionsSolrServer.commit();
+//        } catch (SolrServerException | IOException e) {
+//            LOGGER.error(e.getMessage(), e);
+//            throw new IllegalStateException(e);
+//        }
     }
 
     void optimize() {
