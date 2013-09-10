@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -39,13 +40,15 @@ public class ConditionsIndex {
 
     private static final Logger LOGGER = Logger.getLogger(ConditionsIndex.class);
 
-    private SolrServer conditionsSolrServer;
+    private HttpSolrServer conditionsSolrServer;
 
     private ConditionPropertiesBuilder conditionPropertiesBuilder;
 
     @Inject
-    public ConditionsIndex(SolrServer conditionsSolrServer, ConditionPropertiesBuilder conditionPropertiesBuilder) {
+    public ConditionsIndex(HttpSolrServer conditionsSolrServer, ConditionPropertiesBuilder conditionPropertiesBuilder) {
         this.conditionsSolrServer = conditionsSolrServer;
+        conditionsSolrServer.setMaxRetries(1);
+        conditionsSolrServer.setUseMultiPartPost(true);
         this.conditionPropertiesBuilder = conditionPropertiesBuilder;
     }
 
