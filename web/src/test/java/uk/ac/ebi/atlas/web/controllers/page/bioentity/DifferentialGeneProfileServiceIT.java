@@ -33,8 +33,6 @@ import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.web.controllers.page.bioentity.DifferentialGeneProfileProperties;
-import uk.ac.ebi.atlas.web.controllers.page.bioentity.DifferentialGeneProfileService;
 import uk.ac.ebi.atlas.web.controllers.rest.admin.LoadExperimentsController;
 
 import javax.inject.Inject;
@@ -45,7 +43,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml"})
 public class DifferentialGeneProfileServiceIT {
 
     private static final String E_GEOD_22351 = "E-GEOD-22351";

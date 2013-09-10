@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.arrayContaining;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml"})
 public class TsvReaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";

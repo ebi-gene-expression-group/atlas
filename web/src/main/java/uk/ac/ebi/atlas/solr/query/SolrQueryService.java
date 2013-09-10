@@ -68,9 +68,6 @@ public class SolrQueryService {
 
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
-    @Value("#{configuration['index.server.gxa.url']}")
-    private String serverURL;
-
     @Value("#{configuration['index.property_names.description']}")
     private String descriptionPropertyNames;
 
