@@ -43,11 +43,11 @@ public class DifferentialGeneProfileLink {
     }
 
     public String getContrastDisplayName() {
-        return contrast.getDisplayName();
+        return expression.getContrast().getDisplayName();
     }
 
     public String getContrastId() {
-        return contrast.getId();
+        return expression.getContrast().getId();
     }
 
     public String getExperimentAccession() {
