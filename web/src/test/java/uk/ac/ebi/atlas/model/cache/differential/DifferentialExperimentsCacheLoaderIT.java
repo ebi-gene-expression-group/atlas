@@ -44,7 +44,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml"})
 public class DifferentialExperimentsCacheLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
