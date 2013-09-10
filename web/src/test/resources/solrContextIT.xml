@@ -34,7 +34,7 @@
         <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/gxa"/>
     </bean>
 
-    <bean scope="singleton" id="conditionsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    <bean scope="singleton" id="conditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
         <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/conditions"/>
     </bean>
 

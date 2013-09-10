@@ -47,8 +47,6 @@ public class ConditionsIndex {
     @Inject
     public ConditionsIndex(HttpSolrServer conditionsSolrServer, ConditionPropertiesBuilder conditionPropertiesBuilder) {
         this.conditionsSolrServer = conditionsSolrServer;
-        conditionsSolrServer.setMaxRetries(1);
-        conditionsSolrServer.setUseMultiPartPost(true);
         this.conditionPropertiesBuilder = conditionPropertiesBuilder;
     }
 
