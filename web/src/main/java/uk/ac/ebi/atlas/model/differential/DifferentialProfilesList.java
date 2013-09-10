@@ -29,7 +29,7 @@ import java.util.Collection;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class DifferentialProfilesList<T extends DifferentialProfile> extends GeneProfilesList<T> implements DifferentialExpressionLimits{
+public class DifferentialProfilesList<T extends DifferentialProfile> extends GeneProfilesList<T> implements DifferentialExpressionLimitsInterface {
 
 
     public DifferentialProfilesList(Collection<T> collection) {

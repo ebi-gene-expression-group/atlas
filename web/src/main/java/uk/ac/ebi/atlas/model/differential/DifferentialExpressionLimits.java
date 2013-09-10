@@ -1,11 +1,32 @@
 package uk.ac.ebi.atlas.model.differential;
 
-public interface DifferentialExpressionLimits {
-    double getMaxUpRegulatedExpressionLevel();
+public class DifferentialExpressionLimits implements DifferentialExpressionLimitsInterface {
+    private double maxUpRegulatedExpressionLevel;
+    private double minUpRegulatedExpressionLevel;
+    private double maxDownRegulatedExpressionLevel;
+    private double minDownRegulatedExpressionLevel;
 
-    double getMinUpRegulatedExpressionLevel();
+    public DifferentialExpressionLimits(double maxUpRegulatedExpressionLevel, double minUpRegulatedExpressionLevel, double maxDownRegulatedExpressionLevel, double minDownRegulatedExpressionLevel) {
 
-    double getMaxDownRegulatedExpressionLevel();
+        this.maxUpRegulatedExpressionLevel = maxUpRegulatedExpressionLevel;
+        this.minUpRegulatedExpressionLevel = minUpRegulatedExpressionLevel;
+        this.maxDownRegulatedExpressionLevel = maxDownRegulatedExpressionLevel;
+        this.minDownRegulatedExpressionLevel = minDownRegulatedExpressionLevel;
+    }
 
-    double getMinDownRegulatedExpressionLevel();
+    public double getMaxUpRegulatedExpressionLevel() {
+        return maxUpRegulatedExpressionLevel;
+    }
+
+    public double getMinUpRegulatedExpressionLevel() {
+        return minUpRegulatedExpressionLevel;
+    }
+
+    public double getMaxDownRegulatedExpressionLevel() {
+        return maxDownRegulatedExpressionLevel;
+    }
+
+    public double getMinDownRegulatedExpressionLevel() {
+        return minDownRegulatedExpressionLevel;
+    }
 }

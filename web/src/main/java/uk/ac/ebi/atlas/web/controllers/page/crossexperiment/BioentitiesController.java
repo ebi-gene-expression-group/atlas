@@ -28,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits;
 
 import java.util.List;
 
@@ -41,6 +42,9 @@ public class BioentitiesController {
         List<DifferentialBioentityExpression> differentialBioentityExpressions = null;
 
         model.addAttribute("differentialBioentityExpressions", differentialBioentityExpressions);
+
+        DifferentialExpressionLimits differentialExpressionLimits = null;
+        model.addAttribute("differentialExpressionLimits", differentialExpressionLimits);
 
         return "bioEntities";
     }

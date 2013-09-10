@@ -29,7 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimitsInterface;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
@@ -57,7 +57,7 @@ public class GenePageController extends BioEntityPageController {
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
 
-        DifferentialExpressionLimits differentialProfilesListMapForIdentifier =
+        DifferentialExpressionLimitsInterface differentialProfilesListMapForIdentifier =
                 differentialGeneProfileService.initDifferentialProfilesListForIdentifier(identifier, cutoff == null ?
                         DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
         model.addAttribute("geneProfiles", differentialProfilesListMapForIdentifier);

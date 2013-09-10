@@ -81,11 +81,11 @@
                         <c:choose>
                             <c:when test="${expression.overExpressed}">
                                 <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - differentialExpressionLimits.getMaxUpRegulatedExpressionLevel(), 1 - differentialExpressionLimits.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
                             </c:when>
                             <c:otherwise>
                                 <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - differentialExpressionLimits.getMaxDownRegulatedExpressionLevel(), 1 - differentialExpressionLimits.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
                             </c:otherwise>
                         </c:choose>
 
@@ -102,30 +102,10 @@
 
                 <c:if test="${expressionLevel != 0}">
 
-                    <c:choose>
-                        <c:when test="${expression.notApplicable}">
-                            <c:set var="foldChange" value="N/A"/>
-                        </c:when>
-                        <c:otherwise>
-                            <fmt:formatNumber type="number"
-                                              maxFractionDigits="2"
-                                              value="${expression.foldChange}"
-                                              groupingUsed="false"
-                                              var="foldChange"/>
-                            <c:if test="${type.isMicroarray()}">
-                                <fmt:formatNumber type="number"
-                                                  maxFractionDigits="2"
-                                                  value="${expression.tstatistic}"
-                                                  groupingUsed="false"
-                                                  var="tstatistic"/>
-                            </c:if>
-                        </c:otherwise>
-                    </c:choose>
 
-                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                        ${'data-fold-change="'.concat(foldChange).concat('"')}
-                         data-organism-part="${firstInRow}" data-color="${cellColour}">
-                            ${numberUtils.htmlFormatDouble(expressionLevel)}
+
+                    <div class="hide_cell" data-color="${cellColour}">
+                        ${numberUtils.htmlFormatDouble(expressionLevel)}
                     </div>
 
                 </c:if>

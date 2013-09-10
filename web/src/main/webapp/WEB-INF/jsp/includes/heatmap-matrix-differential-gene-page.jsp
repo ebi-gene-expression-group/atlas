@@ -28,6 +28,7 @@
 <c:if test="${not empty preferences.rootContext}">
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
+!!! ${type.isMicroarray()}
 
 <table id="diff-heatmap-table" class="table-grid">
     <thead>
@@ -96,13 +97,7 @@
                                               value="${expression.foldChange}"
                                               groupingUsed="false"
                                               var="foldChange"/>
-                            <c:if test="${type.isMicroarray()}">
-                                <fmt:formatNumber type="number"
-                                                  maxFractionDigits="2"
-                                                  value="${expression.tstatistic}"
-                                                  groupingUsed="false"
-                                                  var="tstatistic"/>
-                            </c:if>
+
                         </c:otherwise>
                     </c:choose>
 
