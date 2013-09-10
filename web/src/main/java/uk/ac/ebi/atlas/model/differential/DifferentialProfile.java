@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> {
+public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> implements DifferentialExpressionLimits{
 
     private static final double MIN_EXPRESSION_LEVEL = 1D;
     private static final int MAX_PVALUE = 1;

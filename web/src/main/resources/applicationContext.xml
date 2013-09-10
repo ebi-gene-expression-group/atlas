@@ -57,7 +57,8 @@
         <lookup-method name="createBitIndexBuilder" bean="bitIndexBuilder"/>
     </bean>
 
-    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype" factory-method="newSingleThreadExecutor" />
+    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype"
+          factory-method="newSingleThreadExecutor"/>
 
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
         <constructor-arg ref="httpClientConnectionManager"/>
@@ -87,20 +88,12 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <!--<bean id="dataSourceOracle" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">-->
-        <!--<property name="driverClassName" value="${oracle.jdbc.driverClassName}"/>-->
-        <!--<property name="url" value="${oracle.jdbc.url}"/>-->
-        <!--<property name="username" value="${oracle.jdbc.username}"/>-->
-        <!--<property name="password" value="${oracle.jdbc.password}"/>-->
-    <!--</bean>-->
-
- <bean id="dataSourceOracle" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@burns.ebi.ac.uk:1521:ATLASDEV"/>
-        <property name="username" value="atlas3"/>
-        <property name="password" value="atlas3"/>
+    <bean id="dataSourceOracle" class="oracle.jdbc.pool.OracleDataSource">
+        <property name="dataSourceName" value="ds"/>
+        <property name="URL" value="${oracle.jdbc.url}"/>
+        <property name="user" value="${oracle.jdbc.username}"/>
+        <property name="password" value="${oracle.jdbc.password}"/>
     </bean>
-
 
 
     <jdbc:initialize-database data-source="dataSource">

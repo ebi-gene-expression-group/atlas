@@ -92,15 +92,15 @@ public class DifferentialGeneProfileService {
     public DifferentialGeneProfileProperties initDifferentialProfilesListForIdentifier(String geneQuery, double cutoff) {
 
         String species = solrQueryService.findSpeciesForBioentityId(geneQuery);
-        species = StringUtils.capitalize(species);
+                species = StringUtils.capitalize(species);
 
-        Set<String> mirbaseIds = solrQueryService.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
-        if (mirbaseIds.size() > 0) {
-            // there should be a one to one mapping between ENSEMBL gene IDs and miRBase IDs
-            filterMatureRNADifferentialProfilesForIdentifier(mirbaseIds.iterator().next(), cutoff, species);
-        } else {
-            filterMatureRNADifferentialProfilesForIdentifier(geneQuery, cutoff, species);
-        }
+                Set<String> mirbaseIds = solrQueryService.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
+                if (mirbaseIds.size() > 0) {
+                    // there should be a one to one mapping between ENSEMBL gene IDs and miRBase IDs
+                    filterMatureRNADifferentialProfilesForIdentifier(mirbaseIds.iterator().next(), cutoff, species);
+                } else {
+                    filterMatureRNADifferentialProfilesForIdentifier(geneQuery, cutoff, species);
+                }
 
         return differentialGeneProfileProperties;
     }
