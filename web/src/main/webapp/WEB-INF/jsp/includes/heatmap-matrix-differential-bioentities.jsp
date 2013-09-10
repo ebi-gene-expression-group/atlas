@@ -54,10 +54,10 @@
     <c:forEach items="${differentialBioentityExpressions}"
                var="differentialBioentityExpression">
         <tr>
-            <td class="horizontal-header-cell contrastNameCell">
+            <td class="horizontal-header-cell">
                 ${differentialBioentityExpression.bioentityId}
             </td>
-            <td class="horizontal-header-cell contrastNameCell">
+            <td class="horizontal-header-cell">
                     ${differentialBioentityExpression.designElement}
             </td>
             <td class="horizontal-header-cell contrastNameCell">

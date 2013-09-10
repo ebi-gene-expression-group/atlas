@@ -62,12 +62,12 @@
         </ul>
 
         <c:choose>
-            <c:when test="${totalNumberOfResults > 0}">
+            <c:when test="${not empty differentialBioentityExpressions}">
 
                 <div id="diffProfileBody" class="bioEntityCard">
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                        <span>${totalNumberOfResults} search result(s) found</span>
-                        <span style="float: right">False Discovery Rate cutoff: ${fdrCutoff}</span>
+                        <span>${differentialBioentityExpressions.size()} search result(s) found</span>
+                        <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
                     </div>
 
                     <div id="heatmap-div" style="display:none;">
@@ -84,7 +84,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <c:import url="includes/heatmap-matrix-differential-gene-page.jsp"/>
+                                    <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
                                 </td>
                             </tr>
                         </table>

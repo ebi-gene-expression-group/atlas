@@ -28,7 +28,6 @@
 <c:if test="${not empty preferences.rootContext}">
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
-!!! ${type.isMicroarray()}
 
 <table id="diff-heatmap-table" class="table-grid">
     <thead>
