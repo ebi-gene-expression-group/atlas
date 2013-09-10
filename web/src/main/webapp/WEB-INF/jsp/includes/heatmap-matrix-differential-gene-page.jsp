@@ -43,17 +43,17 @@
     <tbody>
 
     <c:set var="count" value="0"/>
-    <c:forEach items="${differentialGeneProfileProperties.differentialGeneProfileLinks}"
-               var="differentialGeneProfileLink">
+    <c:forEach items="${differentialGeneProfileProperties.differentialGeneExpressions}"
+               var="differentialBioentityExpression">
         <c:set var="count" value="${count + 1}"/>
         <tr class=${count % 2 == 0 ? 'even' : 'odd'}>
             <td class="horizontal-header-cell contrastNameCell"
-                data-experiment-accession="${differentialGeneProfileLink.experimentAccession}"
-                data-contrast-id="${differentialGeneProfileLink.contrastId}">
-                <a href="experiments/${differentialGeneProfileLink.url}">${differentialGeneProfileLink.contrastDisplayName}</a>
+                data-experiment-accession="${differentialBioentityExpression.experimentAccession}"
+                data-contrast-id="${differentialBioentityExpression.contrastId}">
+                <a href="experiments/${differentialBioentityExpression.experimentPageUrl}">${differentialBioentityExpression.contrastDisplayName}</a>
             </td>
 
-            <c:set var="expression" value="${differentialGeneProfileLink.expression}"/>
+            <c:set var="expression" value="${differentialBioentityExpression.expression}"/>
 
             <c:set var="expressionLevel"
                    value="${expression.level}"/>

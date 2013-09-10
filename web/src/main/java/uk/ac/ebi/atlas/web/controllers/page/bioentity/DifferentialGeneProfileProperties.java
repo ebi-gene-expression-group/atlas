@@ -101,9 +101,9 @@ public class DifferentialGeneProfileProperties implements DifferentialExpression
     /*
     * used in bioEntity.jsp
     */
-    public List<DifferentialGeneProfileLink> getDifferentialGeneProfileLinks() {
+    public List<DifferentialBioentityExpression> getDifferentialGeneExpressions() {
 
-        List<DifferentialGeneProfileLink> differentialGeneProfileLinks = Lists.newArrayList();
+        List<DifferentialBioentityExpression> differentialBioentityExpressions = Lists.newArrayList();
 
         for (String experimentAccession : experimentToDifferentialProfilesListMap.keySet()) {
             DifferentialProfilesList differentialProfilesList = experimentToDifferentialProfilesListMap.get(experimentAccession);
@@ -112,21 +112,21 @@ public class DifferentialGeneProfileProperties implements DifferentialExpression
                 for (Object condition : profile.getConditions()) {
                     Contrast contrast = (Contrast) condition;
                     String identifier = profile.getId();
-                    DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(identifier,
-                            contrast, experimentAccession, (DifferentialExpression) profile.getExpression(contrast));
-                    differentialGeneProfileLinks.add(differentialGeneProfileLink);
+                    DifferentialBioentityExpression differentialBioentityExpression = new DifferentialBioentityExpression(identifier,
+                            experimentAccession, (DifferentialExpression) profile.getExpression(contrast), null, null);
+                    differentialBioentityExpressions.add(differentialBioentityExpression);
                 }
             }
         }
 
-        Collections.sort(differentialGeneProfileLinks, new Comparator<DifferentialGeneProfileLink>() {
+        Collections.sort(differentialBioentityExpressions, new Comparator<DifferentialBioentityExpression>() {
             @Override
-            public int compare(DifferentialGeneProfileLink o1, DifferentialGeneProfileLink o2) {
-                return o1.getValue() - o2.getValue() < 0 ? -1 : 1;
+            public int compare(DifferentialBioentityExpression o1, DifferentialBioentityExpression o2) {
+                return o1.getExpression().getLevel() - o2.getExpression().getLevel() < 0 ? -1 : 1;
             }
         });
 
-        return differentialGeneProfileLinks;
+        return differentialBioentityExpressions;
     }
 
     /*
