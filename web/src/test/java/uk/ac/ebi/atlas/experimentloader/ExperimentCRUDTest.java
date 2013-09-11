@@ -128,18 +128,6 @@ public class ExperimentCRUDTest {
         verify(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
     }
 
-    @Test
-    public void updateExperimentConditionsIndexShouldReindexDiffExperiment() throws Exception {
-        subject.updateExperimentConditionsIndex(EXPERIMENT_ACCESSION, ExperimentType.DIFFERENTIAL);
-        verify(conditionsIndexMock).indexExperiment(differentialExperimentMock);
-    }
-
-    @Test
-    public void updateExperimentConditionsIndexShouldNotReindexBaselineExperiment() throws Exception {
-        subject.updateExperimentConditionsIndex(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-        verifyZeroInteractions(conditionsIndexMock);
-    }
-
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
         willThrow(new IOException()).given(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
