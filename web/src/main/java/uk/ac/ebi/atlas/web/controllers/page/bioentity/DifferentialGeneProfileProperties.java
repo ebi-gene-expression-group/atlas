@@ -25,10 +25,7 @@ package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.*;
 
 import javax.inject.Named;
 import java.util.*;
@@ -38,7 +35,7 @@ import static java.lang.Math.min;
 
 @Named("differentialGeneProfileProperties")
 @Scope("request")
-public class DifferentialGeneProfileProperties {
+public class DifferentialGeneProfileProperties implements DifferentialExpressionLimitsInterface {
 
     private Map<String, DifferentialProfilesList<DifferentialProfile>> experimentToDifferentialProfilesListMap = Maps.newHashMap();
 
@@ -56,6 +53,7 @@ public class DifferentialGeneProfileProperties {
         return experimentToDifferentialProfilesListMap.put(experimentAccession, differentialProfilesList);
     }
 
+    @Override
     public double getMaxUpRegulatedExpressionLevel() {
         double maxUpRegulatedExpressionLevel = 0;
         for (DifferentialProfilesList<DifferentialProfile> differentialProfilesList : experimentToDifferentialProfilesListMap.values()) {
@@ -66,6 +64,7 @@ public class DifferentialGeneProfileProperties {
         return maxUpRegulatedExpressionLevel == 0 ? Double.NaN : maxUpRegulatedExpressionLevel;
     }
 
+    @Override
     public double getMinUpRegulatedExpressionLevel() {
         double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
         for (DifferentialProfilesList<DifferentialProfile> differentialProfilesList : experimentToDifferentialProfilesListMap.values()) {
@@ -77,6 +76,7 @@ public class DifferentialGeneProfileProperties {
     }
 
 
+    @Override
     public double getMaxDownRegulatedExpressionLevel() {
         double maxDownRegulatedExpressionLevel = 0;
         for (DifferentialProfilesList<DifferentialProfile> differentialProfilesList : experimentToDifferentialProfilesListMap.values()) {
@@ -87,6 +87,7 @@ public class DifferentialGeneProfileProperties {
         return maxDownRegulatedExpressionLevel == 0 ? Double.NaN : maxDownRegulatedExpressionLevel;
     }
 
+    @Override
     public double getMinDownRegulatedExpressionLevel() {
         double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
         for (DifferentialProfilesList<DifferentialProfile> differentialProfilesList : experimentToDifferentialProfilesListMap.values()) {
@@ -100,9 +101,9 @@ public class DifferentialGeneProfileProperties {
     /*
     * used in bioEntity.jsp
     */
-    public List<DifferentialGeneProfileLink> getDifferentialGeneProfileLinks() {
+    public List<DifferentialBioentityExpression> getDifferentialGeneExpressions() {
 
-        List<DifferentialGeneProfileLink> differentialGeneProfileLinks = Lists.newArrayList();
+        List<DifferentialBioentityExpression> differentialBioentityExpressions = Lists.newArrayList();
 
         for (String experimentAccession : experimentToDifferentialProfilesListMap.keySet()) {
             DifferentialProfilesList differentialProfilesList = experimentToDifferentialProfilesListMap.get(experimentAccession);
@@ -111,21 +112,21 @@ public class DifferentialGeneProfileProperties {
                 for (Object condition : profile.getConditions()) {
                     Contrast contrast = (Contrast) condition;
                     String identifier = profile.getId();
-                    DifferentialGeneProfileLink differentialGeneProfileLink = new DifferentialGeneProfileLink(identifier,
-                            contrast, experimentAccession, (DifferentialExpression) profile.getExpression(contrast));
-                    differentialGeneProfileLinks.add(differentialGeneProfileLink);
+                    DifferentialBioentityExpression differentialBioentityExpression = new DifferentialBioentityExpression(identifier,
+                            experimentAccession, (DifferentialExpression) profile.getExpression(contrast), null, null);
+                    differentialBioentityExpressions.add(differentialBioentityExpression);
                 }
             }
         }
 
-        Collections.sort(differentialGeneProfileLinks, new Comparator<DifferentialGeneProfileLink>() {
+        Collections.sort(differentialBioentityExpressions, new Comparator<DifferentialBioentityExpression>() {
             @Override
-            public int compare(DifferentialGeneProfileLink o1, DifferentialGeneProfileLink o2) {
-                return o1.getValue() - o2.getValue() < 0 ? -1 : 1;
+            public int compare(DifferentialBioentityExpression o1, DifferentialBioentityExpression o2) {
+                return o1.getExpression().getLevel() - o2.getExpression().getLevel() < 0 ? -1 : 1;
             }
         });
 
-        return differentialGeneProfileLinks;
+        return differentialBioentityExpressions;
     }
 
     /*

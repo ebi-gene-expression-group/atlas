@@ -20,49 +20,57 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.bioentity;
+package uk.ac.ebi.atlas.model.differential;
 
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+public class DifferentialBioentityExpression {
 
-public class DifferentialGeneProfileLink {
-
-    private String geneQuery;
-
-    private Contrast contrast;
+    private String bioentityId;
 
     private String experimentAccession;
 
     private DifferentialExpression expression;
 
-    public DifferentialGeneProfileLink(String geneQuery, Contrast contrast, String experimentAccession, DifferentialExpression expression) {
-        this.geneQuery = geneQuery;
-        this.contrast = contrast;
+    private String species;
+
+    private String designElement;
+
+    public DifferentialBioentityExpression(String bioentityId, String experimentAccession, DifferentialExpression expression, String species, String designElement) {
+        this.bioentityId = bioentityId;
         this.experimentAccession = experimentAccession;
         this.expression = expression;
+        this.species = species;
+        this.designElement = designElement;
+    }
+
+    public String getBioentityId() {
+        return bioentityId;
     }
 
     public String getContrastDisplayName() {
-        return contrast.getDisplayName();
+        return expression.getContrast().getDisplayName();
     }
 
     public String getContrastId() {
-        return contrast.getId();
+        return expression.getContrast().getId();
     }
 
     public String getExperimentAccession() {
         return experimentAccession;
     }
 
-    public String getUrl() {
-        return experimentAccession + "?geneQuery=" + geneQuery + "&queryFactorValues=" + contrast.getId();
+    public String getExperimentPageUrl() {
+        return experimentAccession + "?geneQuery=" + bioentityId + "&queryFactorValues=" + getContrastId();
     }
 
     public DifferentialExpression getExpression() {
         return expression;
     }
 
-    public double getValue() {
-        return expression.getLevel();
+    public String getSpecies() {
+        return species;
+    }
+
+    public String getDesignElement() {
+        return designElement;
     }
 }

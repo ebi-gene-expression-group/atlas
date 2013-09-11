@@ -76,6 +76,6 @@ public class ConditionsIndexIT {
 
 //        DifferentialExperiment experiment = cacheLoader.load(DIFFERENTIAL_ACCESION);
 //
-//        subject.indexExperiment(experiment);
+//        subject.updateConditions(experiment);
     }
 }

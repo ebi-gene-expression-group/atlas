@@ -33,6 +33,15 @@
     <thead>
     <tr>
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Identifier</div>
+        </th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Design Element</div>
+        </th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Organism</div>
+        </th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
             <div>Contrast</div>
         </th>
         <th class="horizontal-header-cell" style="padding: 5px;">
@@ -42,11 +51,18 @@
     </thead>
     <tbody>
 
-    <c:set var="count" value="0"/>
-    <c:forEach items="${differentialGeneProfileProperties.differentialGeneExpressions}"
+    <c:forEach items="${differentialBioentityExpressions}"
                var="differentialBioentityExpression">
-        <c:set var="count" value="${count + 1}"/>
-        <tr class=${count % 2 == 0 ? 'even' : 'odd'}>
+        <tr>
+            <td class="horizontal-header-cell">
+                ${differentialBioentityExpression.bioentityId}
+            </td>
+            <td class="horizontal-header-cell">
+                    ${differentialBioentityExpression.designElement}
+            </td>
+            <td class="horizontal-header-cell contrastNameCell">
+                    ${differentialBioentityExpression.species}
+            </td>
             <td class="horizontal-header-cell contrastNameCell"
                 data-experiment-accession="${differentialBioentityExpression.experimentAccession}"
                 data-contrast-id="${differentialBioentityExpression.contrastId}">
@@ -65,11 +81,11 @@
                         <c:choose>
                             <c:when test="${expression.overExpressed}">
                                 <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - differentialExpressionLimits.getMaxUpRegulatedExpressionLevel(), 1 - differentialExpressionLimits.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
                             </c:when>
                             <c:otherwise>
                                 <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - differentialExpressionLimits.getMaxDownRegulatedExpressionLevel(), 1 - differentialExpressionLimits.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
                             </c:otherwise>
                         </c:choose>
 
@@ -86,24 +102,10 @@
 
                 <c:if test="${expressionLevel != 0}">
 
-                    <c:choose>
-                        <c:when test="${expression.notApplicable}">
-                            <c:set var="foldChange" value="N/A"/>
-                        </c:when>
-                        <c:otherwise>
-                            <fmt:formatNumber type="number"
-                                              maxFractionDigits="2"
-                                              value="${expression.foldChange}"
-                                              groupingUsed="false"
-                                              var="foldChange"/>
 
-                        </c:otherwise>
-                    </c:choose>
 
-                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                        ${'data-fold-change="'.concat(foldChange).concat('"')}
-                         data-organism-part="${firstInRow}" data-color="${cellColour}">
-                            ${numberUtils.htmlFormatDouble(expressionLevel)}
+                    <div class="hide_cell" data-color="${cellColour}">
+                        ${numberUtils.htmlFormatDouble(expressionLevel)}
                     </div>
 
                 </c:if>

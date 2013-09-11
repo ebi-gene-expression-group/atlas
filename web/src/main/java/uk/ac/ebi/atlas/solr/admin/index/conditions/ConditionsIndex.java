@@ -27,6 +27,8 @@ import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
@@ -40,40 +42,53 @@ public class ConditionsIndex {
 
     private static final Logger LOGGER = Logger.getLogger(ConditionsIndex.class);
 
-    private HttpSolrServer conditionsSolrServer;
+    private SolrServer conditionsSolrServer;
 
     private ConditionPropertiesBuilder conditionPropertiesBuilder;
 
+    private ExperimentTrader experimentTrader;
+
     @Inject
-    public ConditionsIndex(HttpSolrServer conditionsSolrServer, ConditionPropertiesBuilder conditionPropertiesBuilder) {
+    public ConditionsIndex(SolrServer conditionsSolrServer, ConditionPropertiesBuilder conditionPropertiesBuilder, ExperimentTrader experimentTrader) {
         this.conditionsSolrServer = conditionsSolrServer;
         this.conditionPropertiesBuilder = conditionPropertiesBuilder;
+        this.experimentTrader = experimentTrader;
     }
 
-    public void indexExperiment(DifferentialExperiment experiment) {
+    public void updateConditions(String experimentAccession) {
 
-        LOGGER.info("<indexExperiment> " + experiment.getAccession());
+        LOGGER.info("<updateConditions> " + experimentAccession);
 
-        try {
-            deleteExperiment(experiment.getAccession());
+        removeConditions(experimentAccession);
 
-            Collection<ConditionProperty> conditionProperties = conditionPropertiesBuilder.buildProperties(experiment);
+        addConditions(experimentAccession);
 
-            conditionsSolrServer.addBeans(conditionProperties);
+        //ToDO: (NK) Do we need to optimise after every experiment?
+        optimize();
 
-            conditionsSolrServer.commit();
+    }
 
-            //ToDO: (NK) Do we need to optimise after every experiment?
-            optimize();
+    public void addConditions(String experimentAccession) {
+        try{
+            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+
+            if(experiment instanceof DifferentialExperiment){
+                //ToDo: (NK) find a way to remove casting
+                Collection<ConditionProperty> conditionProperties =
+                        conditionPropertiesBuilder.buildProperties((DifferentialExperiment)experiment);
+
+                conditionsSolrServer.addBeans(conditionProperties);
+
+                conditionsSolrServer.commit();
+            }
 
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
-
     }
 
-    public void deleteExperiment(String accession) {
+    public void removeConditions(String accession) {
         try {
             conditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
             conditionsSolrServer.commit();
