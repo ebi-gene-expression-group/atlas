@@ -23,6 +23,9 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
@@ -50,6 +53,8 @@ public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumF
 
     @Test
     public void checkSelectedProfiles() {
+        WebDriverWait wait = new WebDriverWait(driver, 4L);
+        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
         assertThat(subject.isBaselineProfileExpanded(), is(true));
         subject.clickDisplayLevelsButton();
         assertThat(subject.getSelectedProfiles(), contains("DAPL1"));
