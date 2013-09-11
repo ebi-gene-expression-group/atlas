@@ -22,6 +22,9 @@
 
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.response.Response;
+import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,13 +32,16 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
 public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-599";
+    private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-21860";
 
     @Before
     public void init(){
+
     }
 
     @After
@@ -58,7 +64,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     }
 
     @Test
-    public void testDeleteAndLoadExperimentPublic() {
+    public void testDeleteAndLoadBaselineExperimentPublic() {
 
         expect().body(is("Experiment E-MTAB-599 successfully deleted.")).when()
                 .get("deleteExperiment?accession=" + EXPERIMENT_ACCESSION);
@@ -75,7 +81,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     }
 
     @Test
-    public void testDeleteAndLoadExperimentPrivate() {
+    public void testDeleteAndLoadBaselineExperimentPrivate() {
 
         expect().body(is("Experiment E-MTAB-599 successfully deleted.")).when()
                 .get("deleteExperiment?accession=" + EXPERIMENT_ACCESSION);
@@ -117,22 +123,63 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdateDifferentialExperiment(){
 
-        expect().body(is("Experiment E-MTAB-599 successfully updated.")).when()
-                .get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
+        expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
+                .get("updateExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=true");
 
-        expect().body("experimentAccession", contains(EXPERIMENT_ACCESSION))
+        expect().body("experimentAccession", contains(DIFFERENTIAL_EXPERIMENT_ACCESSION))
                 .and().body("isPrivate", contains(true))
-                .when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
+                .when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
-        expect().body(is("Experiment E-MTAB-599 successfully updated.")).when()
-                .get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
+        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 
-        expect().body("experimentAccession", contains(EXPERIMENT_ACCESSION))
+
+        expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
+                .get("updateExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
+
+        expect().body("experimentAccession", contains(DIFFERENTIAL_EXPERIMENT_ACCESSION))
                 .and().body("isPrivate", contains(false))
-                .when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
+                .when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
+
+        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
+
 
     }
+
+    @Test
+    public void testDeleteAndLoadDifferentialExperimentPublic() {
+
+        expect().body(is("Experiment E-GEOD-21860 successfully deleted.")).when()
+                .get("deleteExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
+
+        expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
+
+        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
+
+        expect().body(startsWith("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
+                .get("loadExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&type=DIFFERENTIAL&private=false");
+
+        expect().body("experimentAccession", hasItem(DIFFERENTIAL_EXPERIMENT_ACCESSION))
+                .and().body("isPrivate", contains(false))
+                .when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
+
+        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
+
+    }
+
+    private int countConditionProperties(String experimentAccession){
+        Response conditionIndexResponse = queryConditionIndex(experimentAccession);
+
+        String responseBody = conditionIndexResponse.body().asString();
+
+        return Integer.parseInt(StringUtils.substringBetween(responseBody, "\"numFound\":", ","));
+    }
+
+    private Response queryConditionIndex(String experimentAccession){
+        return RestAssured.get("http://lime:8983/solr/conditions/select?q=experiment_accession:"
+                + experimentAccession + "&wt=json&indent=true");
+    }
+
 
 }
