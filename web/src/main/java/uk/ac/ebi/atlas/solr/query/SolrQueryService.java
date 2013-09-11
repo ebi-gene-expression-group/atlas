@@ -90,7 +90,8 @@ public class SolrQueryService {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
-    public BioentityProperty findBioentityType(String bioentityId) {
+    //ToDo: name doesnt correspond to result, why not to use queryResponse.getBeans
+    public BioentityProperty findBioentityProperty(String bioentityId) {
         String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, bioentityId);
         SolrQuery solrQuery = new SolrQuery(query);
         QueryResponse response = solrServer.query(solrQuery);
