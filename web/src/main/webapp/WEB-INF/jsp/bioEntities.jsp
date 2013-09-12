@@ -62,11 +62,11 @@
         </ul>
 
         <c:choose>
-            <c:when test="${not empty differentialBioentityExpressions}">
+            <c:when test="${not empty geneProfiles}">
 
                 <div id="diffProfileBody" class="bioEntityCard">
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                        <span>${differentialBioentityExpressions.size()} search result(s) found</span>
+                        <span>${geneProfiles.size()} search result(s) found</span>
                         <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
                     </div>
 

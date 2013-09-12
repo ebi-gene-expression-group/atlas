@@ -35,7 +35,7 @@ import static java.lang.Math.min;
 
 @Named("differentialGeneProfileProperties")
 @Scope("request")
-public class DifferentialGeneProfileProperties implements DifferentialExpressionLimitsInterface {
+public class DifferentialGeneProfileProperties implements DifferentialExpressionLimits {
 
     private Map<String, DifferentialProfilesList<DifferentialProfile>> experimentToDifferentialProfilesListMap = Maps.newHashMap();
 
