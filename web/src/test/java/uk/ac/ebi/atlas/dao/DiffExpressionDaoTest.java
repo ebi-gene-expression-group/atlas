@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,8 +40,19 @@ public class DiffExpressionDaoTest {
         List<IndexedContrast> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
         DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts);
 
-        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS where ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) AND  rownum < ? order by PVAL"));
-        assertThat(query.getValues(), contains("exp1", "c1", "exp2", "c2"));
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS where ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) AND rownum <= ? order by PVAL"));
+        assertThat(query.getValues(), is(new String[]{"exp1", "c1", "exp2", "c2", "50"}));
+
+    }
+
+    @Test
+    public void testBuildIndexedContrastQueryWithEmptyList() throws Exception {
+
+        List<IndexedContrast> indexedContrasts = Lists.newArrayList();
+        DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts);
+
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS where rownum <= ? order by PVAL"));
+        assertThat(query.getValues().length, is(1));
 
     }
 }

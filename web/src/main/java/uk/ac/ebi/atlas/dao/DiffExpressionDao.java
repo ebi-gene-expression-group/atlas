@@ -5,19 +5,13 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import uk.ac.ebi.atlas.model.ContrastTrader;
-import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedContrast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -46,7 +40,7 @@ public class DiffExpressionDao {
             .append(" FROM VW_DIFFANALYTICS where ")
             .toString();
 
-    static final String ROWNUM_ORDER_BY_PVAL = " rownum < ? order by PVAL";
+    static final String ROWNUM_ORDER_BY_PVAL = "rownum <= ? order by PVAL";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -74,18 +68,13 @@ public class DiffExpressionDao {
         IndexedContrastQuery indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts);
         List<DifferentialBioentityExpression> result = jdbcTemplate.query(indexedContrastQuery.getQuery(),
                 new DifferentialBioentityExpressionRowMapper(contrastTrader),
-                indexedContrastQuery.getValues(),
-                RESULT_SIZE);
+                indexedContrastQuery.getValues());
 
         return result;
     }
 
     IndexedContrastQuery buildIndexedContrastQuery(Collection<IndexedContrast> indexedContrasts) {
         IndexedContrastQuery query = new IndexedContrastQuery();
-
-        StringBuilder queryStringBuilder = new StringBuilder();
-        queryStringBuilder.append(SELECT_QUERY)
-                .append("(");
 
         List<String> queryParts = Lists.newArrayList();
 
@@ -99,48 +88,20 @@ public class DiffExpressionDao {
 
         Joiner joiner = Joiner.on(" OR ");
 
-        joiner.appendTo(queryStringBuilder, queryParts)
-                .append(") AND ")
-                .append(ROWNUM_ORDER_BY_PVAL);
+        StringBuilder queryStringBuilder = new StringBuilder();
+        queryStringBuilder.append(SELECT_QUERY);
 
+        if (!indexedContrasts.isEmpty()) {
+
+            queryStringBuilder .append("(");
+            joiner.appendTo(queryStringBuilder, queryParts)
+                    .append(") AND ");
+        }
+
+        queryStringBuilder.append(ROWNUM_ORDER_BY_PVAL);
 
         query.setQueryString(queryStringBuilder.toString());
         return query;
-    }
-
-    static class DifferentialBioentityExpressionRowMapper implements RowMapper<DifferentialBioentityExpression> {
-
-        private ContrastTrader contrastTrader;
-
-        DifferentialBioentityExpressionRowMapper(ContrastTrader contrastTrader) {
-            this.contrastTrader = contrastTrader;
-        }
-
-        @Override
-        public DifferentialBioentityExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
-            String experimentAccession = rs.getString(EXPERIMENT);
-            String contrastId = rs.getString(CONTRASTID);
-            Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
-            DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(PVALUE), rs.getDouble(LOG_2_FOLD), rs.getString(TSTAT), contrast);
-
-
-            return new DifferentialBioentityExpression(
-                    rs.getString(IDENTIFIER),
-                    experimentAccession,
-                    expression,
-                    rs.getString(ORGANISM),
-                    rs.getString(DESIGNELEMENT));
-        }
-
-        DifferentialExpression buildDifferentialExpression(double pValue, double foldChange, String tstatistic, Contrast contrast) {
-
-            if (tstatistic == null) {
-                return new DifferentialExpression(pValue, foldChange, contrast);
-            }
-            return new MicroarrayExpression(pValue, foldChange, Double.parseDouble(tstatistic), contrast);
-
-
-        }
     }
 
     static class IndexedContrastQuery {
@@ -151,8 +112,9 @@ public class DiffExpressionDao {
             values.add(value);
         }
 
-        List<String> getValues() {
-            return values;
+        String[] getValues() {
+            values.add(String.valueOf(RESULT_SIZE));
+            return values.toArray(new String[values.size()]);
         }
 
         String getQuery() {
