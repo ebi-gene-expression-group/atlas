@@ -6,7 +6,7 @@
 #
 ## Source function library.
 #. /etc/rc.d/init.d/functions
-TOMCAT_HOME=$1
+TOMCAT_HOME=$2
 SHUTDOWN_WAIT=20
 
 tomcat_pid() {
