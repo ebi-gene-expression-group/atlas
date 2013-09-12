@@ -33,6 +33,15 @@
     <thead>
     <tr>
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Identifier</div>
+        </th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Design Element</div>
+        </th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Organism</div>
+        </th>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
             <div>Contrast</div>
         </th>
         <th class="horizontal-header-cell" style="padding: 5px;">
@@ -42,11 +51,18 @@
     </thead>
     <tbody>
 
-    <c:set var="count" value="0"/>
-    <c:forEach items="${differentialGeneProfileProperties.differentialGeneExpressions}"
+    <c:forEach items="${geneProfiles}"
                var="differentialBioentityExpression">
-        <c:set var="count" value="${count + 1}"/>
-        <tr class=${count % 2 == 0 ? 'even' : 'odd'}>
+        <tr>
+            <td class="horizontal-header-cell">
+                ${differentialBioentityExpression.bioentityId}
+            </td>
+            <td class="horizontal-header-cell">
+                    ${differentialBioentityExpression.designElement}
+            </td>
+            <td class="horizontal-header-cell contrastNameCell">
+                    ${differentialBioentityExpression.species}
+            </td>
             <td class="horizontal-header-cell contrastNameCell"
                 data-experiment-accession="${differentialBioentityExpression.experimentAccession}"
                 data-contrast-id="${differentialBioentityExpression.contrastId}">
@@ -86,24 +102,10 @@
 
                 <c:if test="${expressionLevel != 0}">
 
-                    <c:choose>
-                        <c:when test="${expression.notApplicable}">
-                            <c:set var="foldChange" value="N/A"/>
-                        </c:when>
-                        <c:otherwise>
-                            <fmt:formatNumber type="number"
-                                              maxFractionDigits="2"
-                                              value="${expression.foldChange}"
-                                              groupingUsed="false"
-                                              var="foldChange"/>
 
-                        </c:otherwise>
-                    </c:choose>
 
-                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                        ${'data-fold-change="'.concat(foldChange).concat('"')}
-                         data-organism-part="${firstInRow}" data-color="${cellColour}">
-                            ${numberUtils.htmlFormatDouble(expressionLevel)}
+                    <div class="hide_cell" data-color="${cellColour}">
+                        ${numberUtils.htmlFormatDouble(expressionLevel)}
                     </div>
 
                 </c:if>

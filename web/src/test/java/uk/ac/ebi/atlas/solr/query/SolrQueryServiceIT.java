@@ -68,24 +68,24 @@ public class SolrQueryServiceIT {
     @Test
     public void shouldReturnTheRightBioentityType() throws SolrServerException {
 
-        assertThat(subject.findBioentityType("ENSG00000179218").getBioentityType(), is("ensgene"));
-        assertThat(subject.findBioentityType("ENSP00000355434").getBioentityType(), is("ensprotein"));
-        assertThat(subject.findBioentityType("ENST00000559981").getBioentityType(), is("enstranscript"));
+        assertThat(subject.findBioentityProperty("ENSG00000179218").getBioentityType(), is("ensgene"));
+        assertThat(subject.findBioentityProperty("ENSP00000355434").getBioentityType(), is("ensprotein"));
+        assertThat(subject.findBioentityProperty("ENST00000559981").getBioentityType(), is("enstranscript"));
 
     }
 
     @Test
     public void shouldFindCaseInsentiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
 
-        BioentityProperty bioentityProperty = subject.findBioentityType("enSG00000179218");
+        BioentityProperty bioentityProperty = subject.findBioentityProperty("enSG00000179218");
         assertThat(bioentityProperty.getBioentityType(), is("ensgene"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSG00000179218"));
 
-        bioentityProperty = subject.findBioentityType("enSP00000355434");
+        bioentityProperty = subject.findBioentityProperty("enSP00000355434");
         assertThat(bioentityProperty.getBioentityType(), is("ensprotein"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSP00000355434"));
 
-        bioentityProperty = subject.findBioentityType("enST00000559981");
+        bioentityProperty = subject.findBioentityProperty("enST00000559981");
         assertThat(bioentityProperty.getBioentityType(), is("enstranscript"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENST00000559981"));
 
@@ -117,7 +117,7 @@ public class SolrQueryServiceIT {
     @Test(expected = ResourceNotFoundException.class)
     public void shouldThrowResourceNotFoundException() throws SolrServerException {
 
-        subject.findBioentityType("XYZEMC2");
+        subject.findBioentityProperty("XYZEMC2");
 
     }
 

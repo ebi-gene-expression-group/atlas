@@ -90,28 +90,21 @@ public class SolrQueryService {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
-    public BioentityProperty findBioentityType(String bioentityId) {
+    public BioentityProperty findBioentityProperty(String bioentityId) {
         String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, bioentityId);
         SolrQuery solrQuery = new SolrQuery(query);
         QueryResponse response = solrServer.query(solrQuery);
-        SolrDocumentList solrDocuments = response.getResults();
-        if (solrDocuments.isEmpty()) {
+        List<BioentityProperty> bioentityProperties = response.getBeans(BioentityProperty.class);
+        if(bioentityProperties.isEmpty()){
             throw new ResourceNotFoundException("bioentity not found for bioentityIdentifier: " + bioentityId);
         }
-        for (SolrDocument solrDocument: solrDocuments){
-            String bioentityIdentifier = (String) solrDocument.get(BIOENTITY_IDENTIFIER_FIELD);
-            String propertyValue = (String) solrDocument.get(PROPERTY_VALUE_FIELD);
+        for (BioentityProperty bioentityProperty: bioentityProperties){
+            String bioentityIdentifier = bioentityProperty.getBioentityIdentifier();
+            String propertyValue = bioentityProperty.getValue();
             if (bioentityIdentifier.equals(propertyValue)){
-
-                String bioentityType = (String) solrDocument.get(BIOENTITY_TYPE_FIELD);
-                String species = (String) solrDocument.get(SPECIES_FIELD);
-                String propertyName = (String) solrDocument.get(PROPERTY_NAME_FIELD);
-
-                return new BioentityProperty(bioentityIdentifier, bioentityType, species, propertyName, propertyValue);
-
+                return bioentityProperty;
             }
         }
-
         throw new IllegalStateException("Solr index is missing document with property_name set to species and property_value set to bioentityIdentifier for bioentity with id: " + bioentityId);
     }
 

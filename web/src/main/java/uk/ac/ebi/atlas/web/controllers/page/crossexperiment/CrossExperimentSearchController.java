@@ -52,7 +52,7 @@ public class CrossExperimentSearchController {
         String bioentityIdentifier;
 
         try{
-            BioentityProperty bioentity = solrQueryService.findBioentityType(queryString);
+            BioentityProperty bioentity = solrQueryService.findBioentityProperty(queryString);
 
             bioentityType = extractBioentityType(bioentity).toLowerCase();
             bioentityIdentifier = bioentity.getBioentityIdentifier();
