@@ -40,8 +40,8 @@ public class DiffExpressionDaoTest {
         List<IndexedContrast> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
         DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts);
 
-        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS where ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) AND rownum <= ? order by PVAL"));
-        assertThat(query.getValues(), is(new String[]{"exp1", "c1", "exp2", "c2", "50"}));
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS where ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
+        assertThat(query.getValues(), is(new String[]{"exp1", "c1", "exp2", "c2"}));
 
     }
 
@@ -51,8 +51,8 @@ public class DiffExpressionDaoTest {
         List<IndexedContrast> indexedContrasts = Lists.newArrayList();
         DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts);
 
-        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS where rownum <= ? order by PVAL"));
-        assertThat(query.getValues().length, is(1));
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS order by PVAL"));
+        assertThat(query.getValues().length, is(0));
 
     }
 }

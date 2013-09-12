@@ -37,10 +37,10 @@ public class DiffExpressionDao {
             .append(PVALUE).append(", ")
             .append(LOG_2_FOLD).append(", ")
             .append(TSTAT)
-            .append(" FROM VW_DIFFANALYTICS where ")
+            .append(" FROM VW_DIFFANALYTICS ")
             .toString();
 
-    static final String ROWNUM_ORDER_BY_PVAL = "rownum <= ? order by PVAL";
+    static final String ORDER_BY_PVAL = "order by PVAL";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -56,7 +56,7 @@ public class DiffExpressionDao {
     }
 
     public List<DifferentialBioentityExpression> getExpressions() {
-        String query = SELECT_QUERY + ROWNUM_ORDER_BY_PVAL;
+        String query = SELECT_QUERY + ORDER_BY_PVAL;
 
         List<DifferentialBioentityExpression> result = jdbcTemplate.query(query, new DifferentialBioentityExpressionRowMapper(contrastTrader), RESULT_SIZE);
 
@@ -66,6 +66,7 @@ public class DiffExpressionDao {
     public List<DifferentialBioentityExpression> getExpressions(Collection<IndexedContrast> indexedContrasts) {
 
         IndexedContrastQuery indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts);
+        jdbcTemplate.setMaxRows(RESULT_SIZE);
         List<DifferentialBioentityExpression> result = jdbcTemplate.query(indexedContrastQuery.getQuery(),
                 new DifferentialBioentityExpressionRowMapper(contrastTrader),
                 indexedContrastQuery.getValues());
@@ -93,12 +94,12 @@ public class DiffExpressionDao {
 
         if (!indexedContrasts.isEmpty()) {
 
-            queryStringBuilder .append("(");
+            queryStringBuilder .append("where (");
             joiner.appendTo(queryStringBuilder, queryParts)
-                    .append(") AND ");
+                    .append(") ");
         }
 
-        queryStringBuilder.append(ROWNUM_ORDER_BY_PVAL);
+        queryStringBuilder.append(ORDER_BY_PVAL);
 
         query.setQueryString(queryStringBuilder.toString());
         return query;
@@ -113,7 +114,7 @@ public class DiffExpressionDao {
         }
 
         String[] getValues() {
-            values.add(String.valueOf(RESULT_SIZE));
+//            values.add(String.valueOf(RESULT_SIZE));
             return values.toArray(new String[values.size()]);
         }
 
