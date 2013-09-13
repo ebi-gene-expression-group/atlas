@@ -53,4 +53,13 @@ public class DiffExpressionDaoIT {
         assertThat(expressions.get(1).getBioentityId(), is("FBgn0040393"));
 
     }
+
+    @Test
+    public void testGetResultCount() throws Exception {
+        IndexedContrast indexedContrast1 = new IndexedContrast("E-MTAB-1066", "g2_g3");
+
+        int resultCount = subject.getResultCount(Lists.newArrayList(indexedContrast1));
+        assertThat(resultCount, is(129));
+    }
+
 }

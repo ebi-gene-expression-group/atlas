@@ -24,6 +24,8 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -50,6 +52,11 @@ public class ConditionsSearchService {
     }
 
     public Collection<IndexedContrast> findContrasts(String queryString) {
+
+        if (StringUtils.isEmpty(queryString)) {
+            return Lists.newArrayList();
+        }
+
         try {
             QueryResponse queryResponse = conditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
             List<ConditionProperty> beans = queryResponse.getBeans(ConditionProperty.class);

@@ -19,7 +19,7 @@
  *
  * http://gxa.github.com/gxa
  */
-
+/*
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
 import com.google.common.collect.Lists;
@@ -29,6 +29,7 @@ import uk.ac.ebi.atlas.model.differential.*;
 
 import javax.inject.Named;
 import java.util.*;
+import java.util.concurrent.locks.Condition;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -40,14 +41,6 @@ public class DifferentialGeneProfileProperties implements DifferentialExpression
     private Map<String, DifferentialProfilesList<DifferentialProfile>> experimentToDifferentialProfilesListMap = Maps.newHashMap();
 
     private double fdrCutoff;
-
-    public Set<String> getAllExperimentAccessions() {
-        return experimentToDifferentialProfilesListMap.keySet();
-    }
-
-    public DifferentialProfilesList getDifferentialProfilesListForExperiment(String experimentAccession) {
-        return experimentToDifferentialProfilesListMap.get(experimentAccession);
-    }
 
     public DifferentialProfilesList putDifferentialProfilesListForExperiment(String experimentAccession, DifferentialProfilesList differentialProfilesList) {
         return experimentToDifferentialProfilesListMap.put(experimentAccession, differentialProfilesList);
@@ -98,22 +91,17 @@ public class DifferentialGeneProfileProperties implements DifferentialExpression
         return minDownRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : minDownRegulatedExpressionLevel;
     }
 
-    /*
-    * used in bioEntity.jsp
-    */
     public List<DifferentialBioentityExpression> getDifferentialGeneExpressions() {
 
         List<DifferentialBioentityExpression> differentialBioentityExpressions = Lists.newArrayList();
 
         for (String experimentAccession : experimentToDifferentialProfilesListMap.keySet()) {
             DifferentialProfilesList differentialProfilesList = experimentToDifferentialProfilesListMap.get(experimentAccession);
-            for (Object item : differentialProfilesList) {
-                DifferentialProfile profile = (DifferentialProfile) item;
-                for (Object condition : profile.getConditions()) {
-                    Contrast contrast = (Contrast) condition;
-                    String identifier = profile.getId();
+            for (DifferentialProfile differentialProfile : differentialProfilesList) {
+                for (Contrast contrast : (Set<Contrast>)differentialProfile.getConditions()) {
+                    String identifier = differentialProfile.getId();
                     DifferentialBioentityExpression differentialBioentityExpression = new DifferentialBioentityExpression(identifier,
-                            experimentAccession, (DifferentialExpression) profile.getExpression(contrast), null, null);
+                            experimentAccession, (DifferentialExpression) differentialProfile.getExpression(contrast), null, null);
                     differentialBioentityExpressions.add(differentialBioentityExpression);
                 }
             }
@@ -129,16 +117,12 @@ public class DifferentialGeneProfileProperties implements DifferentialExpression
         return differentialBioentityExpressions;
     }
 
-    /*
-    * used in bioEntity.jsp
-    */
     public int getTotalNumberOfResults() {
         int count = 0;
         for (String experimentAccession : experimentToDifferentialProfilesListMap.keySet()) {
             DifferentialProfilesList differentialProfilesList = experimentToDifferentialProfilesListMap.get(experimentAccession);
-            for (Object item : differentialProfilesList) {
-                DifferentialProfile profile = (DifferentialProfile) item;
-                count += profile.getConditions().size();
+            for (DifferentialProfile differentialProfile : differentialProfilesList) {
+                count += differentialProfile.getConditions().size();
             }
         }
         return count;
@@ -148,10 +132,9 @@ public class DifferentialGeneProfileProperties implements DifferentialExpression
         this.fdrCutoff = fdrCutoff;
     }
 
-    /*
-     * used in bioEntity.jsp
-     */
     public double getFdrCutoff() {
         return fdrCutoff;
     }
 }
+
+*/

@@ -28,22 +28,54 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DifferentialExpressions extends ArrayList<DifferentialBioentityExpression> implements DifferentialExpressionLimits {
+public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioentityExpression> implements DifferentialExpressionLimits {
+
+    private int totalNumberOfResults;
+
+    private Double minUpRegulated;
+    private Double maxUpRegulated;
+    private Double minDownRegulated;
+    private Double maxDownRegulated;
+
+    public DifferentialBioentityExpressions(int totalNumberOfResults){
+        this.totalNumberOfResults = totalNumberOfResults;
+    }
+
+    public DifferentialBioentityExpressions(List<DifferentialBioentityExpression> differentialBioentityExpressions, int totalNumberOfResults) {
+        super(differentialBioentityExpressions);
+        this.totalNumberOfResults = totalNumberOfResults;
+    }
 
     public double getMaxUpRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.UP).apply(this);
+        if (maxUpRegulated == null) {
+            maxUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(Lists.reverse(this));
+        }
+        return maxUpRegulated;
     }
 
     public double getMinUpRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.UP).apply(Lists.reverse(this));
+        if(minUpRegulated == null) {
+            minUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(this);
+        }
+        return minUpRegulated;
     }
 
     public double getMaxDownRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.DOWN).apply(this);
+        if(maxDownRegulated ==null) {
+            maxDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(Lists.reverse(this));
+        }
+        return maxDownRegulated;
     }
 
     public double getMinDownRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.DOWN).apply(Lists.reverse(this));
+        if (minDownRegulated == null) {
+            minDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(this);
+        }
+        return minDownRegulated;
+    }
+
+    public int getTotalNumberOfResults() {
+        return totalNumberOfResults;
     }
 
     static class FindTopLevelByRegulation implements Function<List<DifferentialBioentityExpression>, Double>{
@@ -63,7 +95,7 @@ public class DifferentialExpressions extends ArrayList<DifferentialBioentityExpr
                     return differentialExpression.getLevel();
                 }
             }
-            return Double.NaN;
+            return 0.0;
         }
     }
 

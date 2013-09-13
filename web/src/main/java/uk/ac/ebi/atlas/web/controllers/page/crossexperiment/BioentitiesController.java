@@ -27,33 +27,43 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+
+import javax.inject.Inject;
 
 @Controller
 @Scope("request")
 public class BioentitiesController {
 
+    private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
+
+    @Inject
+    public BioentitiesController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+        this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
+    }
+
     @RequestMapping(value = "/query")
-    public String showResultPage(@RequestParam (required = false) String condition, Model model) {
+    public String showResultPage(@RequestParam (value="condition", required = false) String condition, Model model) {
 
         model.addAttribute("entityIdentifier", condition);
 
-        //model.addAttribute("differentialBioentityExpressions", differentialBioentityExpressions);
+        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(condition);
 
-        //DifferentialExpressions differentialExpressions = mockDifferentialExpressionLimits();
-        model.addAttribute("geneProfiles", mockDifferentialExpressions());
+        model.addAttribute("bioentities", bioentityExpressions);
 
         model.addAttribute("preferences", new DifferentialRequestPreferences());
+
         return "bioEntities";
     }
 
-    private DifferentialExpressions mockDifferentialExpressions() {
-        DifferentialExpressions differentialExpressions = new DifferentialExpressions();
-        differentialExpressions.add(mockDifferentialBioentityExpression(1, true));
-        differentialExpressions.add(mockDifferentialBioentityExpression(2, true));
-        differentialExpressions.add(mockDifferentialBioentityExpression(3, false));
-        return differentialExpressions;
+    private DifferentialBioentityExpressions mockDifferentialExpressions() {
+        DifferentialBioentityExpressions differentialBioentityExpressions = new DifferentialBioentityExpressions(2011);
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(1, true));
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(2, true));
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(3, false));
+        return differentialBioentityExpressions;
     }
 
     private DifferentialBioentityExpression mockDifferentialBioentityExpression(int index, boolean upRegulated) {

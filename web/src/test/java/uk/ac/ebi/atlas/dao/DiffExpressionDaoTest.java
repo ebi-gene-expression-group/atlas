@@ -38,9 +38,22 @@ public class DiffExpressionDaoTest {
         IndexedContrast indexedContrast2 = new IndexedContrast("exp2", "c2");
 
         List<IndexedContrast> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
-        DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts);
+        DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts, DiffExpressionDao.SELECT_QUERY);
 
-        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS where ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
+        assertThat(query.getValues(), is(new String[]{"exp1", "c1", "exp2", "c2"}));
+
+    }
+
+    @Test
+    public void testBuildIndexedContrastCountQuery() throws Exception {
+        IndexedContrast indexedContrast1 = new IndexedContrast("exp1", "c1");
+        IndexedContrast indexedContrast2 = new IndexedContrast("exp2", "c2");
+
+        List<IndexedContrast> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
+        DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts, DiffExpressionDao.COUNT_QUERY);
+
+        assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
         assertThat(query.getValues(), is(new String[]{"exp1", "c1", "exp2", "c2"}));
 
     }
@@ -49,10 +62,12 @@ public class DiffExpressionDaoTest {
     public void testBuildIndexedContrastQueryWithEmptyList() throws Exception {
 
         List<IndexedContrast> indexedContrasts = Lists.newArrayList();
-        DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts);
+        DiffExpressionDao.IndexedContrastQuery query = subject.buildIndexedContrastQuery(indexedContrasts, DiffExpressionDao.SELECT_QUERY);
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS order by PVAL"));
         assertThat(query.getValues().length, is(0));
 
     }
+
+
 }
