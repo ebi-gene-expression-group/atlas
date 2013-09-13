@@ -34,8 +34,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -45,10 +44,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 @Named("differentialGeneProfileService")
 @Scope("request")
@@ -66,9 +62,10 @@ public class DifferentialGeneProfileService {
 
     private RankProfilesCommandFactory rankProfilesCommandFactory;
 
-    private DifferentialGeneProfileProperties differentialGeneProfileProperties;
-
     private ExperimentTrader experimentTrader;
+
+    private List<DifferentialBioentityExpression> differentialBioentityExpressions = new ArrayList<DifferentialBioentityExpression>();
+
 
     @Inject
     public DifferentialGeneProfileService(ExperimentTrader experimentTrader,
@@ -77,8 +74,7 @@ public class DifferentialGeneProfileService {
                                           MicroarrayRequestContextBuilder microarrayRequestContextBuilder,
                                           RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                           MicroarrayExperimentsCache microarrayExperimentsCache,
-                                          RankProfilesCommandFactory rankProfilesCommandFactory,
-                                          DifferentialGeneProfileProperties differentialGeneProfileProperties) {
+                                          RankProfilesCommandFactory rankProfilesCommandFactory) {
         this.experimentTrader = experimentTrader;
         this.solrQueryService = solrQueryService;
         this.rnaSeqRequestContextBuilder = rnaSeqRequestContextBuilder;
@@ -86,23 +82,29 @@ public class DifferentialGeneProfileService {
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.rankProfilesCommandFactory = rankProfilesCommandFactory;
-        this.differentialGeneProfileProperties = differentialGeneProfileProperties;
     }
 
-    public DifferentialGeneProfileProperties initDifferentialProfilesListForIdentifier(String geneQuery, double cutoff) {
+    public DifferentialBioentityExpressions initDifferentialBioentityExpressions(String geneQuery, double cutoff) {
 
         String species = solrQueryService.findSpeciesForBioentityId(geneQuery);
-                species = StringUtils.capitalize(species);
+        species = StringUtils.capitalize(species);
 
-                Set<String> mirbaseIds = solrQueryService.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
-                if (mirbaseIds.size() > 0) {
-                    // there should be a one to one mapping between ENSEMBL gene IDs and miRBase IDs
-                    filterMatureRNADifferentialProfilesForIdentifier(mirbaseIds.iterator().next(), cutoff, species);
-                } else {
-                    filterMatureRNADifferentialProfilesForIdentifier(geneQuery, cutoff, species);
-                }
+        Set<String> mirbaseIds = solrQueryService.findPropertyValuesForGeneId(geneQuery, "mirbase_id");
+        if (mirbaseIds.size() > 0) {
+            // there should be a one to one mapping between ENSEMBL gene IDs and miRBase IDs
+            filterMatureRNADifferentialProfilesForIdentifier(mirbaseIds.iterator().next(), cutoff, species);
+        } else {
+            filterMatureRNADifferentialProfilesForIdentifier(geneQuery, cutoff, species);
+        }
 
-        return differentialGeneProfileProperties;
+        Collections.sort(differentialBioentityExpressions, new Comparator<DifferentialBioentityExpression>() {
+            @Override
+            public int compare(DifferentialBioentityExpression o1, DifferentialBioentityExpression o2) {
+                return o1.getExpression().getLevel() - o2.getExpression().getLevel() < 0 ? -1 : 1;
+            }
+        });
+
+        return new DifferentialBioentityExpressions(differentialBioentityExpressions, differentialBioentityExpressions.size());
     }
 
     private void filterMatureRNADifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
@@ -117,15 +119,12 @@ public class DifferentialGeneProfileService {
     }
 
     private void processDifferentialProfilesForIdentifier(String identifier, double cutoff, String species) {
-        // set cutoff used to calculate profile lists for showing on web page
-        differentialGeneProfileProperties.setFdrCutoff(cutoff);
 
         for (String experimentAccession : experimentTrader.getDifferentialExperimentAccessions()) {
             try {
-                DifferentialProfilesList retrievedProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, identifier, cutoff, species);
-                if (!retrievedProfilesList.isEmpty()) {
-                    differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, retrievedProfilesList);
-                }
+                DifferentialProfilesList differentialProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, identifier, cutoff, species);
+                addAllDifferentialBaselineExpressions(experimentAccession, differentialProfilesList);
+
             } catch (GenesNotFoundException e) {
                 // this happens when the experiment does not contain identifier
             }
@@ -133,14 +132,26 @@ public class DifferentialGeneProfileService {
 
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
             try {
-                Collection<DifferentialProfilesList> retrievedProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, identifier, cutoff, species);
-                if (!retrievedProfilesLists.isEmpty()) {
-                    for (DifferentialProfilesList differentialProfilesList : retrievedProfilesLists) {
-                        differentialGeneProfileProperties.putDifferentialProfilesListForExperiment(experimentAccession, differentialProfilesList);
+                Collection<DifferentialProfilesList> differentialProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, identifier, cutoff, species);
+                if (!differentialProfilesLists.isEmpty()) {
+                    for (DifferentialProfilesList differentialProfilesList : differentialProfilesLists) {
+                        addAllDifferentialBaselineExpressions(experimentAccession, differentialProfilesList);
                     }
                 }
             } catch (GenesNotFoundException e) {
                 // this happens when the experiment does not contain identifier
+            }
+        }
+    }
+
+    private void addAllDifferentialBaselineExpressions(String experimentAccession, DifferentialProfilesList<DifferentialProfile> differentialProfilesList) {
+        for(DifferentialProfile<DifferentialExpression> differentialProfile:differentialProfilesList){
+            for (Contrast contrast : differentialProfile.getConditions()) {
+
+                DifferentialBioentityExpression differentialBioentityExpression =
+                    new DifferentialBioentityExpression(differentialProfile.getId(), experimentAccession,
+                            differentialProfile.getExpression(contrast), null, null);
+                differentialBioentityExpressions.add(differentialBioentityExpression);
             }
         }
     }

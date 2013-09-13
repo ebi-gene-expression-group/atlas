@@ -82,55 +82,6 @@ public class DifferentialGeneProfileServiceIT {
         loadExperimentsController.deleteExperiment(E_MTAB_698);
     }
 
-
-    @Test
-    public void testGetDifferentialProfilesListForIdentifierFirst() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(FIRST_IDENTIFIER, FDR_CUTOFF);
-        assertThat(differentialGeneProfileProperties, is(not(nullValue())));
-        assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), contains(E_GEOD_22351));
-        DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_22351);
-        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesListForExperiment.get(0);
-        assertThat(differentialProfile.getId(), is(FIRST_IDENTIFIER));
-        assertThat(differentialProfile.getConditions().size(), is(1));
-    }
-
-    @Test
-    public void testGetDifferentialProfilesListForIdentifierSecond() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(SECOND_IDENTIFIER, FDR_CUTOFF);
-        assertThat(differentialGeneProfileProperties, is(not(nullValue())));
-        assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), containsInAnyOrder(E_GEOD_22351));
-        DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_22351);
-        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesListForExperiment.get(0);
-        assertThat(differentialProfile.getId(), is(SECOND_IDENTIFIER));
-        assertThat(differentialProfile.getConditions().size(), is(1));
-    }
-
-    @Test
-    public void testGetDifferentialProfilesListForIdentifierThird() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(THIRD_IDENTIFIER, FDR_CUTOFF);
-        assertThat(differentialGeneProfileProperties, is(not(nullValue())));
-        assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), containsInAnyOrder(E_MTAB_698, E_GEOD_22351));
-        DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_MTAB_698);
-        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesListForExperiment.get(0);
-        assertThat(differentialProfile.getId(), is(THIRD_IDENTIFIER));
-        assertThat(differentialProfile.getConditions().size(), is(1));
-        differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_22351);
-        differentialProfile = (DifferentialProfile) differentialProfilesListForExperiment.get(0);
-        assertThat(differentialProfile.getId(), is(THIRD_IDENTIFIER));
-        assertThat(differentialProfile.getConditions().size(), is(1));
-    }
-
-    @Test
-    public void testGetDifferentialProfilesListForIdentifierFourth() throws Exception {
-        DifferentialGeneProfileProperties differentialGeneProfileProperties = subject.initDifferentialProfilesListForIdentifier(FOURTH_IDENTIFIER, FDR_CUTOFF);
-        assertThat(differentialGeneProfileProperties, is(not(nullValue())));
-        assertThat(differentialGeneProfileProperties.getAllExperimentAccessions(), contains(E_GEOD_38400));
-        DifferentialProfilesList differentialProfilesListForExperiment = differentialGeneProfileProperties.getDifferentialProfilesListForExperiment(E_GEOD_38400);
-        DifferentialProfile differentialProfile = (DifferentialProfile) differentialProfilesListForExperiment.get(0);
-        assertThat(differentialProfile.getId(), is(FOURTH_IDENTIFIER));
-        assertThat(differentialProfile.getConditions().size(), is(3));
-    }
-
     @Test
     public void testRetrieveDifferentialProfileForExperimentEGEOD22351First() throws Exception {
         DifferentialProfilesList differentialProfilesList = subject.retrieveDifferentialProfilesForRnaSeqExperiment(E_GEOD_22351, FIRST_IDENTIFIER, FDR_CUTOFF, MUS_MUSCULUS);

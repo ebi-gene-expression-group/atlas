@@ -26,7 +26,6 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
@@ -51,7 +50,8 @@ import java.util.Collections;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialGeneProfileServiceTest {
@@ -102,9 +102,6 @@ public class DifferentialGeneProfileServiceTest {
     private RankProfilesCommandFactory rankProfilesCommandFactoryMock;
 
     @Mock
-    private DifferentialGeneProfileProperties differentialGeneProfilePropertiesMock;
-
-    @Mock
     private DifferentialProfile differentialProfileMock;
 
     private DifferentialProfilesList differentialProfilesList = new DifferentialProfilesList(Collections.emptyList());
@@ -147,18 +144,7 @@ public class DifferentialGeneProfileServiceTest {
         subject = new DifferentialGeneProfileService(experimentTraderMock, solrQueryServiceMock,
                 rnaSeqRequestContextBuilderMock, microarrayRequestContextBuilderMock,
                 rnaSeqDiffExperimentsCacheMock, microarrayExperimentsCacheMock,
-                rankProfilesCommandFactoryMock, differentialGeneProfilePropertiesMock);
-    }
-
-    @Test
-    public void testGetDifferentialProfilesList() throws Exception {
-        assertThat(subject.initDifferentialProfilesListForIdentifier(IDENTIFIER, CUTOFF), is(differentialGeneProfilePropertiesMock));
-        verify(experimentTraderMock).getDifferentialExperimentAccessions();
-        verify(experimentTraderMock).getMicroarrayExperimentAccessions();
-        verify(rnaSeqDiffExperimentsCacheMock).getExperiment(EXPERIMENT_ACCESSION);
-        ArgumentCaptor<DifferentialProfilesList> argumentCaptor = ArgumentCaptor.forClass(DifferentialProfilesList.class);
-        verify(differentialGeneProfilePropertiesMock).putDifferentialProfilesListForExperiment(eq(EXPERIMENT_ACCESSION), argumentCaptor.capture());
-        assertThat((DifferentialProfile) argumentCaptor.getValue().get(0), is(differentialProfileMock));
+                rankProfilesCommandFactoryMock);
     }
 
     @Test

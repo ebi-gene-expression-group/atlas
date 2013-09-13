@@ -116,12 +116,12 @@
             </ul>
 
             <c:choose>
-                <c:when test="${differentialGeneProfileProperties.totalNumberOfResults > 0}">
+            <c:when test="${not empty bioentities}">
 
                     <div id="diffProfileBody" class="bioEntityCard">
                         <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                            <span>${differentialGeneProfileProperties.totalNumberOfResults} search result(s) found</span>
-                            <span style="float: right">False Discovery Rate cutoff: ${differentialGeneProfileProperties.fdrCutoff}</span>
+                        <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                        <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
                         </div>
 
                         <div id="heatmap-div" style="display:none;">
