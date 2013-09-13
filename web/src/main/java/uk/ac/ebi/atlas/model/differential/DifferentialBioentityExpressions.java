@@ -32,6 +32,11 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
 
     private int totalNumberOfResults;
 
+    private Double minUpRegulated;
+    private Double maxUpRegulated;
+    private Double minDownRegulated;
+    private Double maxDownRegulated;
+
     public DifferentialBioentityExpressions(int totalNumberOfResults){
         this.totalNumberOfResults = totalNumberOfResults;
     }
@@ -42,19 +47,31 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
     }
 
     public double getMaxUpRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.UP).apply(this);
+        if (maxUpRegulated == null) {
+            maxUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(Lists.reverse(this));
+        }
+        return maxUpRegulated;
     }
 
     public double getMinUpRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.UP).apply(Lists.reverse(this));
+        if(minUpRegulated == null) {
+            minUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(this);
+        }
+        return minUpRegulated;
     }
 
     public double getMaxDownRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.DOWN).apply(this);
+        if(maxDownRegulated ==null) {
+            maxDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(Lists.reverse(this));
+        }
+        return maxDownRegulated;
     }
 
     public double getMinDownRegulatedExpressionLevel() {
-        return new FindTopLevelByRegulation(Regulation.DOWN).apply(Lists.reverse(this));
+        if (minDownRegulated == null) {
+            minDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(this);
+        }
+        return minDownRegulated;
     }
 
     public int getTotalNumberOfResults() {
@@ -78,7 +95,7 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
                     return differentialExpression.getLevel();
                 }
             }
-            return Double.NaN;
+            return 0.0;
         }
     }
 
