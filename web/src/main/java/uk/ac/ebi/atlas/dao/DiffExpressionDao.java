@@ -40,6 +40,7 @@ public class DiffExpressionDao {
             .append(" FROM VW_DIFFANALYTICS ")
             .toString();
 
+    static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
     static final String ORDER_BY_PVAL = "order by PVAL";
 
     private JdbcTemplate jdbcTemplate;
@@ -55,17 +56,9 @@ public class DiffExpressionDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<DifferentialBioentityExpression> getExpressions() {
-        String query = SELECT_QUERY + ORDER_BY_PVAL;
-
-        List<DifferentialBioentityExpression> result = jdbcTemplate.query(query, new DifferentialBioentityExpressionRowMapper(contrastTrader), RESULT_SIZE);
-
-        return result;
-    }
-
     public List<DifferentialBioentityExpression> getExpressions(Collection<IndexedContrast> indexedContrasts) {
 
-        IndexedContrastQuery indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts);
+        IndexedContrastQuery indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, SELECT_QUERY);
         jdbcTemplate.setMaxRows(RESULT_SIZE);
         List<DifferentialBioentityExpression> result = jdbcTemplate.query(indexedContrastQuery.getQuery(),
                 new DifferentialBioentityExpressionRowMapper(contrastTrader),
@@ -74,7 +67,14 @@ public class DiffExpressionDao {
         return result;
     }
 
-    IndexedContrastQuery buildIndexedContrastQuery(Collection<IndexedContrast> indexedContrasts) {
+    public int getResultCount(Collection<IndexedContrast> indexedContrasts) {
+
+        IndexedContrastQuery query = buildIndexedContrastQuery(indexedContrasts, COUNT_QUERY);
+
+        return jdbcTemplate.queryForObject(query.getQuery(), Integer.class, query.getValues());
+    }
+
+    IndexedContrastQuery buildIndexedContrastQuery(Collection<IndexedContrast> indexedContrasts, String queryBeginning) {
         IndexedContrastQuery query = new IndexedContrastQuery();
 
         List<String> queryParts = Lists.newArrayList();
@@ -90,11 +90,11 @@ public class DiffExpressionDao {
         Joiner joiner = Joiner.on(" OR ");
 
         StringBuilder queryStringBuilder = new StringBuilder();
-        queryStringBuilder.append(SELECT_QUERY);
+        queryStringBuilder.append(queryBeginning);
 
         if (!indexedContrasts.isEmpty()) {
 
-            queryStringBuilder .append("where (");
+            queryStringBuilder .append("WHERE (");
             joiner.appendTo(queryStringBuilder, queryParts)
                     .append(") ");
         }

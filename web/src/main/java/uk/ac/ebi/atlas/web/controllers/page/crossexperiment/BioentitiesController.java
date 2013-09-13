@@ -27,12 +27,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+
+import javax.inject.Inject;
 
 @Controller
 @Scope("request")
 public class BioentitiesController {
+
+    private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
+
+    @Inject
+    public BioentitiesController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+        this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
+    }
 
     @RequestMapping(value = "/query")
     public String showResultPage(@RequestParam (required = false) String condition, Model model) {
@@ -47,20 +57,20 @@ public class BioentitiesController {
 
     private DifferentialBioentityExpressions mockDifferentialExpressions() {
         DifferentialBioentityExpressions differentialBioentityExpressions = new DifferentialBioentityExpressions(2011);
-        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(1, true));
-        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(2, true));
-        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(3, false));
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(0.001, true));
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(0.002, true));
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(0.03, false));
         return differentialBioentityExpressions;
     }
 
-    private DifferentialBioentityExpression mockDifferentialBioentityExpression(int index, boolean upRegulated) {
+    private DifferentialBioentityExpression mockDifferentialBioentityExpression(double index, boolean upRegulated) {
         DifferentialExpression differentialExpression = mockDifferentialExpression(index, upRegulated);
 
         return new DifferentialBioentityExpression("bioentityId" + index, "experimentAccession" + index,
                                                     differentialExpression, "species" + index, "designElement" + index);
     }
 
-    private DifferentialExpression mockDifferentialExpression(int index, boolean upRegulated) {
+    private DifferentialExpression mockDifferentialExpression(double index, boolean upRegulated) {
         return new DifferentialExpression(index,upRegulated? index : -index,
                     new Contrast("contrastId" + index,"arrayDesignAccession" + index, new AssayGroup("referenceAssayAccession" + index)
                             ,new AssayGroup("testAssayAccession" + index),"contrastDisplayName" + index));

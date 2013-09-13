@@ -30,9 +30,9 @@ import java.util.List;
 
 public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioentityExpression> implements DifferentialExpressionLimits {
 
-    private long totalNumberOfResults;
+    private int totalNumberOfResults;
 
-    public DifferentialBioentityExpressions(long totalNumberOfResults){
+    public DifferentialBioentityExpressions(int totalNumberOfResults){
         this.totalNumberOfResults = totalNumberOfResults;
     }
 
@@ -57,7 +57,7 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
         return new FindTopLevelByRegulation(Regulation.DOWN).apply(Lists.reverse(this));
     }
 
-    public long getTotalNumberOfResults() {
+    public int getTotalNumberOfResults() {
         return totalNumberOfResults;
     }
 

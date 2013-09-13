@@ -51,7 +51,7 @@
     </thead>
     <tbody>
 
-    <c:forEach items="${geneProfiles}"
+    <c:forEach items="${bioentities}"
                var="differentialBioentityExpression">
         <tr>
             <td class="horizontal-header-cell">
@@ -81,11 +81,11 @@
                         <c:choose>
                             <c:when test="${expression.overExpressed}">
                                 <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 1 - bioentities.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
                             </c:when>
                             <c:otherwise>
                                 <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - bioentities.getMaxDownRegulatedExpressionLevel(), 1 - bioentities.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
                             </c:otherwise>
                         </c:choose>
 
