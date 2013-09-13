@@ -66,7 +66,7 @@
 
                 <div id="diffProfileBody" class="bioEntityCard">
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                        <span>${bioentities.totalNumberOfResults} search result(s) found</span>
+                        <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
                         <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
                     </div>
 
