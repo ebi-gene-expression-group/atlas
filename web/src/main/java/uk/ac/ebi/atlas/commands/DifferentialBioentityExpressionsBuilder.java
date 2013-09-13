@@ -28,6 +28,7 @@ public class DifferentialBioentityExpressionsBuilder {
 
     public DifferentialBioentityExpressions build(String query) {
 
+        //ToDo: (NK) handle case when query is empty here
         Collection<IndexedContrast> contrasts = conditionsSearchService.findContrasts(query);
         List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(contrasts);
         int resultCount = diffExpressionDao.getResultCount(contrasts);
