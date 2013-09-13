@@ -39,21 +39,18 @@ public class BioentitiesController {
 
         model.addAttribute("entityIdentifier", condition);
 
-        //model.addAttribute("differentialBioentityExpressions", differentialBioentityExpressions);
-
-        //DifferentialExpressions differentialExpressions = mockDifferentialExpressionLimits();
-        model.addAttribute("geneProfiles", mockDifferentialExpressions());
+        model.addAttribute("bioentities", mockDifferentialExpressions());
 
         model.addAttribute("preferences", new DifferentialRequestPreferences());
         return "bioEntities";
     }
 
-    private DifferentialExpressions mockDifferentialExpressions() {
-        DifferentialExpressions differentialExpressions = new DifferentialExpressions();
-        differentialExpressions.add(mockDifferentialBioentityExpression(1, true));
-        differentialExpressions.add(mockDifferentialBioentityExpression(2, true));
-        differentialExpressions.add(mockDifferentialBioentityExpression(3, false));
-        return differentialExpressions;
+    private DifferentialBioentityExpressions mockDifferentialExpressions() {
+        DifferentialBioentityExpressions differentialBioentityExpressions = new DifferentialBioentityExpressions(2011);
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(1, true));
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(2, true));
+        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(3, false));
+        return differentialBioentityExpressions;
     }
 
     private DifferentialBioentityExpression mockDifferentialBioentityExpression(int index, boolean upRegulated) {

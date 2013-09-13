@@ -34,7 +34,8 @@ public class DifferentialBioentityExpression {
 
     private String designElement;
 
-    public DifferentialBioentityExpression(String bioentityId, String experimentAccession, DifferentialExpression expression, String species, String designElement) {
+    public DifferentialBioentityExpression(String bioentityId, String experimentAccession, DifferentialExpression expression,
+                                           String species, String designElement) {
         this.bioentityId = bioentityId;
         this.experimentAccession = experimentAccession;
         this.expression = expression;
