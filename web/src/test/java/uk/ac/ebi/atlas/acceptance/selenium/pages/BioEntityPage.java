@@ -154,8 +154,8 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public String getContrastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
-        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
-        hoverOnElement(firstGeneProfileCell);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
@@ -166,8 +166,8 @@ public class BioEntityPage extends HeatmapTablePage {
     //This is not working with PhantomJS browser :((
     public String getContrastSummaryTooltipTableData(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableRowIndex,
                                                      int zeroBasedTooltipTableColumnIndex) {
-        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
-        hoverOnElement(firstGeneProfileCell);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
                 + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
@@ -177,8 +177,8 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public String getContrastSummaryTooltipExperimentDescription(int zeroBasedExpressionLevelIndex) {
-        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
-        hoverOnElement(firstGeneProfileCell);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastExperimentDescription']");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
@@ -187,8 +187,8 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public String getContrastSummaryTooltipContrastDescription(int zeroBasedExpressionLevelIndex) {
-        WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
-        hoverOnElement(firstGeneProfileCell);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastDescription']");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
