@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.fixture;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.internal.RemoteDriverFactory;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.internal.FirefoxDriverFactory;
 
 
 public abstract class SinglePageSeleniumFixture {
@@ -34,12 +34,12 @@ public abstract class SinglePageSeleniumFixture {
 
     protected WebDriver driver;
 
-
     @Before
     public void initDriver() {
         // change the factory to FirefoxDriverFactory or PhantomJSDriverFactory
         // if you want to use a local browser
-        driver = new RemoteDriverFactory().create();
+        //driver = new PhantomJSDriverFactory().create();
+        driver = new FirefoxDriverFactory().create();
         getStartingPage();
     }
 

@@ -106,6 +106,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     protected abstract void addExpressionToBuilder(K expression);
 
+    //ToDo (B): something wrong with the name of this method, it is used to add design element, not gene name, see how the implementation is used...
     protected abstract void addGeneColumnValueToBuilder(String geneName);
 
     protected TsvRowBuffer<K> getTsvRowBuffer() {

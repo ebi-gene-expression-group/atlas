@@ -28,7 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
-import uk.ac.ebi.atlas.model.differential.*;
+import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
@@ -58,24 +58,4 @@ public class BioentitiesController {
         return "bioEntities";
     }
 
-    private DifferentialBioentityExpressions mockDifferentialExpressions() {
-        DifferentialBioentityExpressions differentialBioentityExpressions = new DifferentialBioentityExpressions(2011);
-        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(1, true));
-        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(2, true));
-        differentialBioentityExpressions.add(mockDifferentialBioentityExpression(3, false));
-        return differentialBioentityExpressions;
-    }
-
-    private DifferentialBioentityExpression mockDifferentialBioentityExpression(int index, boolean upRegulated) {
-        DifferentialExpression differentialExpression = mockDifferentialExpression(index, upRegulated);
-
-        return new DifferentialBioentityExpression("bioentityId" + index, "experimentAccession" + index,
-                                                    differentialExpression, "species" + index, "designElement" + index);
-    }
-
-    private DifferentialExpression mockDifferentialExpression(int index, boolean upRegulated) {
-        return new DifferentialExpression(index,upRegulated? index : -index,
-                    new Contrast("contrastId" + index,"arrayDesignAccession" + index, new AssayGroup("referenceAssayAccession" + index)
-                            ,new AssayGroup("testAssayAccession" + index),"contrastDisplayName" + index));
-    }
 }

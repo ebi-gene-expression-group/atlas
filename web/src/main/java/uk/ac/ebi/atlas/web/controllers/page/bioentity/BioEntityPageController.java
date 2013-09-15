@@ -69,7 +69,7 @@ public abstract class BioEntityPageController {
 
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
-        return "bioEntity";
+        return "bioEntities";
     }
 
     private void findEnsemblIDsForMirBaseID(String mirBaseID, Model model) {

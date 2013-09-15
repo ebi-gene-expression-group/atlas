@@ -27,8 +27,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
@@ -51,54 +50,52 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
     @Test
     public void checkSelectedProfiles() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getSelectedProfiles(), contains(
+        assertThat(subject.getContrastColumn(), contains(
                 "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'",
                 "treatment: 'salicylic acid' vs 'Silwet' at time: '28 hours' in ecotype: 'Col-0'"));
-        assertThat(subject.getFirstGeneProfile(), contains("8.94 × 10-4"));
-        assertThat(subject.getLastGeneProfile(), contains("0.186"));
-        assertThat(subject.getSelectedProfiles().size(), is(2));
+        assertThat(subject.getPValues(), hasItems("8.94 × 10-4", "0.186"));
     }
 
     //This will fail with PhantomJS
     @Test
     public void checkContrastSummaryTooltipTableHeader() {
-        assertThat(subject.getContastSummaryTooltipTableHeader(0, 0), is("Property"));
-        assertThat(subject.getContastSummaryTooltipTableHeader(0, 1), is("Test value"));
-        assertThat(subject.getContastSummaryTooltipTableHeader(0, 2), is("Reference value"));
+        assertThat(subject.getContrastSummaryTooltipTableHeader(0, 0), is("Property"));
+        assertThat(subject.getContrastSummaryTooltipTableHeader(0, 1), is("Test value"));
+        assertThat(subject.getContrastSummaryTooltipTableHeader(0, 2), is("Reference value"));
     }
 
     @Test
     public void checkContrastSummaryTooltipTableFirstRow() {
-        assertThat(subject.getContastSummaryTooltipTableData(0, 0, 0), is("ecotype"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 0, 1), is("Col-0"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 0, 2), is("Col-0"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 0), is("ecotype"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 1), is("Col-0"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 2), is("Col-0"));
     }
 
     @Test
     public void checkContrastSummaryTooltipTableSecondRow() {
-        assertThat(subject.getContastSummaryTooltipTableData(0, 1, 0), is("growth condition"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 1, 1), is("0.3 millimolar salicylic acid"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 1, 2), is("0.02 percent Silwet"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 1, 0), is("growth condition"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 1, 1), is("0.3 millimolar salicylic acid"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 1, 2), is("0.02 percent Silwet"));
     }
 
     @Test
     public void checkContrastSummaryTooltipTableThirdRow() {
-        assertThat(subject.getContastSummaryTooltipTableData(0, 2, 0), is("time"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 2, 1), is("4"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 2, 2), is("4"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 0), is("time"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 1), is("4"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 2), is("4"));
     }
 
     @Test
     public void checkContrastSummaryTooltipTableFourthRow() {
-        assertThat(subject.getContastSummaryTooltipTableData(0, 3, 0), is("age"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 3, 1), is("6-7"));
-        assertThat(subject.getContastSummaryTooltipTableData(0, 3, 2), is("6-7"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 0), is("age"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 1), is("6-7"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 2), is("6-7"));
     }
 
     @Test
     public void checkContrastSummaryTooltipExperimentAndContrastDescription() {
-        assertThat(subject.getContastSummaryTooltipExperimentDescription(0), is("Transcription profiling by array of seven ecotypes of Arabidopsis thaliana after time course treatment with salicylic acid."));
-        assertThat(subject.getContastSummaryTooltipContrastDescription(0), is("treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'"));
+        assertThat(subject.getContrastSummaryTooltipExperimentDescription(0), is("Transcription profiling by array of seven ecotypes of Arabidopsis thaliana after time course treatment with salicylic acid."));
+        assertThat(subject.getContrastSummaryTooltipContrastDescription(0), is("treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'"));
     }
 
 }

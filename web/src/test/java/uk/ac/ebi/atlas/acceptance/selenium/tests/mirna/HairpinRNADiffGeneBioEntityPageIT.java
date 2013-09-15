@@ -27,8 +27,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class HairpinRNADiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
@@ -51,12 +50,10 @@ public class HairpinRNADiffGeneBioEntityPageIT extends SinglePageSeleniumFixture
     @Test
     public void checkMatureRNADiffProfilesArePresentForHairpinRNA() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getSelectedProfiles(), contains("disease state: 'sepsis' vs 'control'",
+        assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'",
                 "disease state: 'sepsis' vs 'control'",
                 "disease state: 'sepsis' vs 'control'"));
-        assertThat(subject.getFirstGeneProfile(), contains("0.001"));
-        assertThat(subject.getLastGeneProfile(), contains("0.031"));
-        assertThat(subject.getSelectedProfiles().size(), is(3));
+        assertThat(subject.getPValues(), hasItems("0.001", "0.002", "0.031"));
     }
 
 }

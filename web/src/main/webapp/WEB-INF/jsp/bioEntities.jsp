@@ -39,6 +39,57 @@
 
 <section class="grid_23 extra-padding">
     <div id="accordion">
+        <c:if test="${not empty entityIdentifier}">
+            <ul id="infoHeader" class="bioEntityCardHeader">
+                <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
+                     src="resources/images/bioentity_info_transparent_bkg.png"/>
+            <span class="bioEntityCardBioentityName">
+                <c:forEach var="entityName" varStatus="loopStatus" items="${bioEntityPropertyService.entityNames}">
+                    ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
+                </c:forEach>
+            </span>
+                <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
+                <span class="bioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
+                <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
+            </ul>
+
+            <div id="infoBody" class="bioEntityCard">
+                <table id="bioEntityCardTable">
+                    <c:forEach var="propertyType" items="${propertyNames.keySet()}">
+                        <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
+                        <c:if test="${propertyLinks.size() > 0}">
+                            <tr>
+                                <td class="bioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
+                                <td class="bioEntityCardPropertyValue">
+                                    <c:set var="count" value="0"/>
+                                    <c:forEach var="propertyLink" items="${propertyLinks}">
+
+                                        <c:set var="count" value="${count + 1}"/>
+                                        <c:set var="comma" value=""/>
+                                        <c:if test="${count < propertyLinks.size()}">
+                                            <c:set var="comma" value=","/>
+                                        </c:if>
+
+                                        <c:set var="preLinkHTML" value=""/>
+                                        <c:set var="postLinkHTML" value=""/>
+                                        <c:if test="${not propertyLink.getUrl().isEmpty()}">
+                                            <c:set var="preLinkHTML"
+                                                   value="<a class=\"bioEntityCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
+                                            <c:set var="postLinkHTML" value="</a>"/>
+                                        </c:if>
+
+                                        <span>${preLinkHTML}${propertyLink.getText()}${postLinkHTML}${comma}</span>
+
+                                    </c:forEach>
+                                </td>
+                            </tr>
+                        </c:if>
+                    </c:forEach>
+                </table>
+            </div>
+
+        </c:if>
+
 
         <ul id="baselineProfileHeader" class="bioEntityCardHeader">
             <img id="baseline-info-image" title="Baseline Expression"
@@ -50,52 +101,58 @@
 
         <div id="baselineProfileBody" class="bioEntityCard">
 
+            <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
+                <span style="float: right">Expression Level cut-off: 0.5</span>
+            </div>
 
+            <div id="widgetBody"></div>
         </div>
 
+        <c:if test="${bioentities != null}">
+            <ul id="diffProfileHeader" class="bioEntityCardHeader">
+                <img id="differential-info-image" title="Differential Expression"
+                     style="position: absolute; left: 0.5em; "
+                     src="resources/images/updown_transparent_bkg.png"/>
+                <span class="bioEntityCardBioentityName">Differential Expression</span>
+            </ul>
 
-        <ul id="diffProfileHeader" class="bioEntityCardHeader">
-            <img id="differential-info-image" title="Differential Expression"
-                 style="position: absolute; left: 0.5em; "
-                 src="resources/images/updown_transparent_bkg.png"/>
-            <span class="bioEntityCardBioentityName">Differential Expression</span>
-        </ul>
+            <c:choose>
+                <c:when test="${not empty bioentities}">
 
-        <c:choose>
-            <c:when test="${not empty bioentities}">
+                    <div id="diffProfileBody" class="bioEntityCard">
+                        <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                            <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                            <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
+                        </div>
 
-                <div id="diffProfileBody" class="bioEntityCard">
-                    <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                        <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
-                        <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
+                        <div id="heatmap-div" style="display:none;">
+                            <table style="margin-left:auto;margin-right:auto;">
+                                <tr>
+                                    <td>
+                                        <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
+                                            <label for='display-levels'>Display levels</label>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
+                                        <c:import url="includes/gradient-legend.jsp"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-
-                    <div id="heatmap-div" style="display:none;">
-                        <table style="margin-left:auto;margin-right:auto;">
-                            <tr>
-                                <td>
-                                    <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                                        <label for='display-levels'>Display levels</label>
-                                    </button>
-                                </td>
-                                <td>
-                                    <c:import url="includes/gradient-legend.jsp"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div>No differential experiments were found for ${entityIdentifier} </div>
-            </c:otherwise>
-        </c:choose>
-
+                </c:when>
+                <c:otherwise>
+                    <div>No differential experiments were found for ${entityIdentifier} </div>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
     </div>
 </section>
 

@@ -145,7 +145,15 @@ public class BioEntityPage extends HeatmapTablePage {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
-    public String getContastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
+    public List<String> getContrastColumn(){
+        return getColumnValues(this.diffHeatmapTable, 3);
+    }
+
+    public List<String> getPValues(){
+        return getColumnValues(this.diffHeatmapTable, 4);
+    }
+
+    public String getContrastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
         WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
         hoverOnElement(firstGeneProfileCell);
 
@@ -156,8 +164,8 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     //This is not working with PhantomJS browser :((
-    public String getContastSummaryTooltipTableData(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableRowIndex,
-                                                    int zeroBasedTooltipTableColumnIndex) {
+    public String getContrastSummaryTooltipTableData(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableRowIndex,
+                                                     int zeroBasedTooltipTableColumnIndex) {
         WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
         hoverOnElement(firstGeneProfileCell);
 
@@ -168,7 +176,7 @@ public class BioEntityPage extends HeatmapTablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getContastSummaryTooltipExperimentDescription(int zeroBasedExpressionLevelIndex) {
+    public String getContrastSummaryTooltipExperimentDescription(int zeroBasedExpressionLevelIndex) {
         WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
         hoverOnElement(firstGeneProfileCell);
 
@@ -178,7 +186,7 @@ public class BioEntityPage extends HeatmapTablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getContastSummaryTooltipContrastDescription(int zeroBasedExpressionLevelIndex) {
+    public String getContrastSummaryTooltipContrastDescription(int zeroBasedExpressionLevelIndex) {
         WebElement firstGeneProfileCell = getGeneProfileCell(0, zeroBasedExpressionLevelIndex - 1);
         hoverOnElement(firstGeneProfileCell);
 

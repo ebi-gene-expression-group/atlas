@@ -123,7 +123,7 @@ public class DifferentialGeneProfileService {
         for (String experimentAccession : experimentTrader.getDifferentialExperimentAccessions()) {
             try {
                 DifferentialProfilesList differentialProfilesList = retrieveDifferentialProfilesForRnaSeqExperiment(experimentAccession, identifier, cutoff, species);
-                addAllDifferentialBaselineExpressions(experimentAccession, differentialProfilesList);
+                addAllDifferentialBaselineExpressions(experimentAccession, differentialProfilesList, species);
 
             } catch (GenesNotFoundException e) {
                 // this happens when the experiment does not contain identifier
@@ -135,7 +135,7 @@ public class DifferentialGeneProfileService {
                 Collection<DifferentialProfilesList> differentialProfilesLists = retrieveDifferentialProfilesForMicroarrayExperiment(experimentAccession, identifier, cutoff, species);
                 if (!differentialProfilesLists.isEmpty()) {
                     for (DifferentialProfilesList differentialProfilesList : differentialProfilesLists) {
-                        addAllDifferentialBaselineExpressions(experimentAccession, differentialProfilesList);
+                        addAllDifferentialBaselineExpressions(experimentAccession, differentialProfilesList, species);
                     }
                 }
             } catch (GenesNotFoundException e) {
@@ -144,13 +144,14 @@ public class DifferentialGeneProfileService {
         }
     }
 
-    private void addAllDifferentialBaselineExpressions(String experimentAccession, DifferentialProfilesList<DifferentialProfile> differentialProfilesList) {
+    private void addAllDifferentialBaselineExpressions(String experimentAccession,
+                                                       DifferentialProfilesList<DifferentialProfile> differentialProfilesList,
+                                                       String species) {
         for(DifferentialProfile<DifferentialExpression> differentialProfile:differentialProfilesList){
             for (Contrast contrast : differentialProfile.getConditions()) {
-
                 DifferentialBioentityExpression differentialBioentityExpression =
                     new DifferentialBioentityExpression(differentialProfile.getId(), experimentAccession,
-                            differentialProfile.getExpression(contrast), null, null);
+                            differentialProfile.getExpression(contrast), species, null);
                 differentialBioentityExpressions.add(differentialBioentityExpression);
             }
         }
