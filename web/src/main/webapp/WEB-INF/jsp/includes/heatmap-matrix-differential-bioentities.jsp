@@ -35,7 +35,7 @@
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
             <div>Identifier</div>
         </th>
-        <c:if test="${empty entityIdentifier}">
+        <c:if test="${not singleBioentityPage}">
             <th  id="design-element-header" class="horizontal-header-cell" style="padding: 5px; text-align:center;">
                 <div>Design Element</div>
             </th>
