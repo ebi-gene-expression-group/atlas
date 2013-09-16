@@ -78,33 +78,26 @@
             <c:set var="expressionLevel"
                    value="${expression.level}"/>
 
-            <c:if test="${expressionLevel != 0}">
+            <c:if test="${! empty expressionLevel}">
 
                 <c:choose>
-                    <c:when test="${expressionLevel != 0}">
-                        <c:choose>
-                            <c:when test="${expression.overExpressed}">
-                                <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 1 - bioentities.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="cellColour"
-                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - bioentities.getMaxDownRegulatedExpressionLevel(), 1 - bioentities.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
-                            </c:otherwise>
-                        </c:choose>
-
-                        <c:set var="style" value="background-color:${cellColour}"/>
+                    <c:when test="${expression.overExpressed}">
+                        <c:set var="cellColour"
+                               value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 1 - bioentities.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
                     </c:when>
                     <c:otherwise>
-                        <c:set var="style" value=""/>
+                        <c:set var="cellColour"
+                               value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - bioentities.getMaxDownRegulatedExpressionLevel(), 1 - bioentities.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
                     </c:otherwise>
                 </c:choose>
 
+                <c:set var="style" value="background-color:${cellColour}"/>
+
             </c:if>
 
-            <td style="${expressionLevel != 0? style : ''}">
+            <td style="${style}">
 
-                <c:if test="${expressionLevel != 0}">
+                <c:if test="${not empty expressionLevel}">
 
                     <c:choose>
                         <c:when test="${expression.notApplicable}">
