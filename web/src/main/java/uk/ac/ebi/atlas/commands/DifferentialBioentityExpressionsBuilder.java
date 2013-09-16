@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commands;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
@@ -11,6 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
 @Scope("request")
@@ -28,7 +31,8 @@ public class DifferentialBioentityExpressionsBuilder {
 
     public DifferentialBioentityExpressions build(String query) {
 
-        //ToDo: (NK) handle case when query is empty here
+        checkArgument(StringUtils.isNotBlank(query));
+
         Collection<IndexedContrast> contrasts = conditionsSearchService.findContrasts(query);
         List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(contrasts);
         int resultCount = diffExpressionDao.getResultCount(contrasts);

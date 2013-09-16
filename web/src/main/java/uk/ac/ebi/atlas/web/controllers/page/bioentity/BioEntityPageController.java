@@ -67,6 +67,8 @@ public abstract class BioEntityPageController {
 
         model.addAttribute("entityIdentifier", identifier);
 
+        model.addAttribute("singleBioentityPage", true);
+
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         return "bioEntities";
