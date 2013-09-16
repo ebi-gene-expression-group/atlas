@@ -26,200 +26,212 @@
 
 <input type="text" value="${entityIdentifier}" style="display: none" id="searchterm">
 
-<section class="grid_17 alpha extra-padding">
-    <h2 class="strapline">
-        Expression Atlas results for <span class="searchterm">${entityIdentifier}</span>
-    </h2>
-</section>
-<aside id="search-extras" class="grid_6 omega shortcuts expander">
-    <div id="ebi_search_results"><h3 data-icon="u" class="slideToggle icon icon-functional">Show more data from
-        EMBL-EBI</h3>
-    </div>
-</aside>
+<c:choose>
+    <c:when test="${empty entityIdentifier}">
+        <section class="grid_17 alpha extra-padding">
+            <h2 class="strapline">
+                Please specify at least one query condition
+            </h2>
+        </section>
+    </c:when>
+    <c:otherwise>
+        <section class="grid_17 alpha extra-padding">
+            <h2 class="strapline">
+                Expression Atlas results for <span class="searchterm">${entityIdentifier}</span>
+            </h2>
+        </section>
+        <aside id="search-extras" class="grid_6 omega shortcuts expander">
+            <div id="ebi_search_results"><h3 data-icon="u" class="slideToggle icon icon-functional">Show more data from
+                EMBL-EBI</h3>
+            </div>
+        </aside>
 
-<section class="grid_23 extra-padding">
-    <div id="accordion">
-        <c:if test="${singleBioentityPage}">
-            <ul id="infoHeader" class="bioEntityCardHeader">
-                <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
-                     src="resources/images/bioentity_info_transparent_bkg.png"/>
-            <span class="bioEntityCardBioentityName">
-                <c:forEach var="entityName" varStatus="loopStatus" items="${bioEntityPropertyService.entityNames}">
-                    ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
-                </c:forEach>
-            </span>
-                <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
-                <span class="bioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
-                <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
-            </ul>
-
-            <div id="infoBody" class="bioEntityCard">
-                <table id="bioEntityCardTable">
-                    <c:forEach var="propertyType" items="${propertyNames.keySet()}">
-                        <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
-                        <c:if test="${propertyLinks.size() > 0}">
-                            <tr>
-                                <td class="bioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
-                                <td class="bioEntityCardPropertyValue">
-                                    <c:set var="count" value="0"/>
-                                    <c:forEach var="propertyLink" items="${propertyLinks}">
-
-                                        <c:set var="count" value="${count + 1}"/>
-                                        <c:set var="comma" value=""/>
-                                        <c:if test="${count < propertyLinks.size()}">
-                                            <c:set var="comma" value=","/>
-                                        </c:if>
-
-                                        <c:set var="preLinkHTML" value=""/>
-                                        <c:set var="postLinkHTML" value=""/>
-                                        <c:if test="${not propertyLink.getUrl().isEmpty()}">
-                                            <c:set var="preLinkHTML"
-                                                   value="<a class=\"bioEntityCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
-                                            <c:set var="postLinkHTML" value="</a>"/>
-                                        </c:if>
-
-                                        <span>${preLinkHTML}${propertyLink.getText()}${postLinkHTML}${comma}</span>
-
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:if>
+        <section class="grid_23 extra-padding">
+            <div id="accordion">
+                <c:if test="${singleBioentityPage}">
+                    <ul id="infoHeader" class="bioEntityCardHeader">
+                        <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
+                             src="resources/images/bioentity_info_transparent_bkg.png"/>
+                <span class="bioEntityCardBioentityName">
+                    <c:forEach var="entityName" varStatus="loopStatus" items="${bioEntityPropertyService.entityNames}">
+                        ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
                     </c:forEach>
-                </table>
-            </div>
+                </span>
+                        <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
+                        <span class="bioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
+                        <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
+                    </ul>
 
-        </c:if>
+                    <div id="infoBody" class="bioEntityCard">
+                        <table id="bioEntityCardTable">
+                            <c:forEach var="propertyType" items="${propertyNames.keySet()}">
+                                <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
+                                <c:if test="${propertyLinks.size() > 0}">
+                                    <tr>
+                                        <td class="bioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
+                                        <td class="bioEntityCardPropertyValue">
+                                            <c:set var="count" value="0"/>
+                                            <c:forEach var="propertyLink" items="${propertyLinks}">
 
+                                                <c:set var="count" value="${count + 1}"/>
+                                                <c:set var="comma" value=""/>
+                                                <c:if test="${count < propertyLinks.size()}">
+                                                    <c:set var="comma" value=","/>
+                                                </c:if>
 
-        <ul id="baselineProfileHeader" class="bioEntityCardHeader">
-            <img id="baseline-info-image" title="Baseline Expression"
-                 style="position: absolute; left: 0.5em; "
-                 src="resources/images/allup2_transparent_bkg.png"/>
-            <span class="bioEntityCardBioentityName">Baseline Expression</span>
-        </ul>
+                                                <c:set var="preLinkHTML" value=""/>
+                                                <c:set var="postLinkHTML" value=""/>
+                                                <c:if test="${not propertyLink.getUrl().isEmpty()}">
+                                                    <c:set var="preLinkHTML"
+                                                           value="<a class=\"bioEntityCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
+                                                    <c:set var="postLinkHTML" value="</a>"/>
+                                                </c:if>
 
+                                                <span>${preLinkHTML}${propertyLink.getText()}${postLinkHTML}${comma}</span>
 
-        <div id="baselineProfileBody" class="bioEntityCard">
-
-            <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
-                <span style="float: right">Expression Level cut-off: 0.5</span>
-            </div>
-
-            <div id="widgetBody"></div>
-        </div>
-
-        <c:if test="${bioentities != null}">
-            <ul id="diffProfileHeader" class="bioEntityCardHeader">
-                <img id="differential-info-image" title="Differential Expression"
-                     style="position: absolute; left: 0.5em; "
-                     src="resources/images/updown_transparent_bkg.png"/>
-                <span class="bioEntityCardBioentityName">Differential Expression</span>
-            </ul>
-
-            <c:choose>
-                <c:when test="${not empty bioentities}">
-
-                    <div id="diffProfileBody" class="bioEntityCard">
-                        <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                            <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
-                            <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
-                        </div>
-
-                        <div id="heatmap-div" style="display:none;">
-                            <table style="margin-left:auto;margin-right:auto;">
-                                <tr>
-                                    <td>
-                                        <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                                            <label for='display-levels'>Display levels</label>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
-                                        <c:import url="includes/gradient-legend.jsp"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                            </c:forEach>
+                                        </td>
+                                    </tr>
+                                </c:if>
+                            </c:forEach>
+                        </table>
                     </div>
-                </c:when>
-                <c:otherwise>
-                    <div>No differential experiments were found for ${entityIdentifier} </div>
-                </c:otherwise>
-            </c:choose>
-        </c:if>
-    </div>
-</section>
 
-<section id="contrastInfo" style="display:none">
-    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
-    <div id="contrastDescription" style="text-align: center"></div>
-    <table class='table-grid' style="padding: 0px; margin: 0px;">
-        <thead>
-        <tr>
-            <th class='header-cell'>
-                Property
-            </th>
-            <th class='header-cell'>
-                Test value
-            </th>
-            <th class='header-cell'>
-                Reference value
-            </th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</section>
+                </c:if>
 
 
-<br/>
-
-<div id="help-placeholder" style="display: none"></div>
-
-<script src="${pageContext.request.contextPath}/resources/js/contrastInfoTooltipModule.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
-<script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
-
-
-<script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-<script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
-
-<script>
-
-    window.onload = function () {
-
-        var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : 1};
-
-        $("#bioentity-info-image").tooltip();
-        $("#differential-info-image").tooltip();
-
-        $("#accordion").accordion({
-            collapsible: true,
-            active: openPanelIndex,
-            heightStyle: "content",
-            icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
-            header: "ul"
-        });
+                <ul id="baselineProfileHeader" class="bioEntityCardHeader">
+                    <img id="baseline-info-image" title="Baseline Expression"
+                         style="position: absolute; left: 0.5em; "
+                         src="resources/images/allup2_transparent_bkg.png"/>
+                    <span class="bioEntityCardBioentityName">Baseline Expression</span>
+                </ul>
 
 
-        contrastInfoTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');
+                <div id="baselineProfileBody" class="bioEntityCard">
 
-        var widgetParameters = "&propertyType=bioentity_identifier";
-        if (${isGeneSet == true}) {
-            widgetParameters = "&geneSetMatch=true";
-        }
+                    <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                        <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
+                        <span style="float: right">Expression Level cut-off: 0.5</span>
+                    </div>
 
-        new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
-            target: "widgetBody"
-        });
-    };
-</script>
+                    <div id="widgetBody"></div>
+                </div>
+
+                <c:if test="${bioentities != null}">
+                    <ul id="diffProfileHeader" class="bioEntityCardHeader">
+                        <img id="differential-info-image" title="Differential Expression"
+                             style="position: absolute; left: 0.5em; "
+                             src="resources/images/updown_transparent_bkg.png"/>
+                        <span class="bioEntityCardBioentityName">Differential Expression</span>
+                    </ul>
+
+                    <c:choose>
+                        <c:when test="${not empty bioentities}">
+
+                            <div id="diffProfileBody" class="bioEntityCard">
+                                <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                                    <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                                    <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
+                                </div>
+
+                                <div id="heatmap-div" style="display:none;">
+                                    <table style="margin-left:auto;margin-right:auto;">
+                                        <tr>
+                                            <td>
+                                                <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
+                                                    <label for='display-levels'>Display levels</label>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
+                                                <c:import url="includes/gradient-legend.jsp"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div>No differential experiments were found for ${entityIdentifier} </div>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+            </div>
+        </section>
+
+        <section id="contrastInfo" style="display:none">
+            <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
+            <div id="contrastDescription" style="text-align: center"></div>
+            <table class='table-grid' style="padding: 0px; margin: 0px;">
+                <thead>
+                <tr>
+                    <th class='header-cell'>
+                        Property
+                    </th>
+                    <th class='header-cell'>
+                        Test value
+                    </th>
+                    <th class='header-cell'>
+                        Reference value
+                    </th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+
+        <br/>
+
+        <div id="help-placeholder" style="display: none"></div>
+
+        <script src="${pageContext.request.contextPath}/resources/js/contrastInfoTooltipModule.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
+        <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
+
+
+        <script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
+
+        <script>
+
+            window.onload = function () {
+
+                var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : 1};
+
+                $("#bioentity-info-image").tooltip();
+                $("#differential-info-image").tooltip();
+
+                $("#accordion").accordion({
+                    collapsible: true,
+                    active: openPanelIndex,
+                    heightStyle: "content",
+                    icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
+                    header: "ul"
+                });
+
+
+                contrastInfoTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');
+
+                var widgetParameters = "&propertyType=bioentity_identifier";
+                if (${isGeneSet == true}) {
+                    widgetParameters = "&geneSetMatch=true";
+                }
+
+                new Biojs.AtlasHeatmap({
+                    featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
+                    target: "widgetBody"
+                });
+            };
+        </script>
+
+    </c:otherwise>
+</c:choose>
 
 
