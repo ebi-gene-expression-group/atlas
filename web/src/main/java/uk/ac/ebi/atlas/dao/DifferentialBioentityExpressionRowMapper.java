@@ -12,6 +12,9 @@ import java.sql.SQLException;
 
 class DifferentialBioentityExpressionRowMapper implements RowMapper<DifferentialBioentityExpression> {
 
+    //Used to handle positive/negative infinite values in the DB
+    private static final int INFINITY_VALUE = 1000000;
+
     private ContrastTrader contrastTrader;
 
     DifferentialBioentityExpressionRowMapper(ContrastTrader contrastTrader) {
@@ -28,6 +31,7 @@ class DifferentialBioentityExpressionRowMapper implements RowMapper<Differential
 
         return new DifferentialBioentityExpression(
                 rs.getString(DiffExpressionDao.IDENTIFIER),
+                rs.getString(DiffExpressionDao.NAME),
                 experimentAccession,
                 expression,
                 rs.getString(DiffExpressionDao.ORGANISM),
@@ -35,6 +39,13 @@ class DifferentialBioentityExpressionRowMapper implements RowMapper<Differential
     }
 
     DifferentialExpression buildDifferentialExpression(double pValue, double foldChange, String tstatistic, Contrast contrast) {
+
+        if (foldChange == INFINITY_VALUE) {
+            foldChange = Double.POSITIVE_INFINITY;
+        }
+        if (foldChange == -INFINITY_VALUE) {
+            foldChange = Double.NEGATIVE_INFINITY;
+        }
 
         if (tstatistic == null) {
             return new DifferentialExpression(pValue, foldChange, contrast);

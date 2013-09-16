@@ -150,7 +150,7 @@ public class DifferentialGeneProfileService {
         for(DifferentialProfile<DifferentialExpression> differentialProfile:differentialProfilesList){
             for (Contrast contrast : differentialProfile.getConditions()) {
                 DifferentialBioentityExpression differentialBioentityExpression =
-                    new DifferentialBioentityExpression(differentialProfile.getId(), experimentAccession,
+                    new DifferentialBioentityExpression(differentialProfile.getId(), differentialProfile.getId(), experimentAccession,
                             differentialProfile.getExpression(contrast), species, null);
                 differentialBioentityExpressions.add(differentialBioentityExpression);
             }
